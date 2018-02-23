@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{64b82de4-2768-4ad2-b95d-b3615fcc482e}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Build_Block_Menu.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Cameras.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Characters.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Factory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\FactoryUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\LevelLoader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Lights.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\MasterAssetList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Shapes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Testing.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\FirstPersonCameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\FreeCameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\LightComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\RenderComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\StaticCameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\ThirdPersonCameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\GameObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutineUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene\Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene\SceneManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Factory\Factory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Factory\LevelLoader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\FirstPersonCameraComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\FreeCameraComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\LightComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\RenderComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\StaticCameraComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\ThirdPersonCameraComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\GameObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene\Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene\SceneManager.h" />
+  </ItemGroup>
+</Project>

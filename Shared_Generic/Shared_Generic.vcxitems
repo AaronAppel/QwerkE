@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{7cc66b38-57ba-406a-b003-f8e18ba25b1f}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics_Header.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\XinputInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\glew.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\glxew.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\wglew.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glfw\GLFW\glfw3.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glfw\GLFW\glfw3native.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imconfig.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_internal.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_rect_pack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_textedit.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_truetype.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathConstants.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MyMatrix.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MyQuaternion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\main.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MyMatrix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MyQuaternion.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.cpp" />
+  </ItemGroup>
+</Project>
