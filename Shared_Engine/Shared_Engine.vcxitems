@@ -38,6 +38,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\SceneManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\DataManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameCore.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
@@ -54,7 +58,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene\Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene\SceneManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\DataManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameCore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.h" />
   </ItemGroup>
 </Project>

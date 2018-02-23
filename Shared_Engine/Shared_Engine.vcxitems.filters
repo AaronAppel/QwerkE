@@ -16,6 +16,9 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{0abc2477-afaa-4465-8fc9-edcef9cb4c9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{182994df-f8df-4ce2-a86b-b9bd2a50f6ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\GameObject.cpp">
@@ -90,6 +93,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\DataManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameCore.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\GameObject.h">
@@ -138,5 +153,18 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\DataManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameCore.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

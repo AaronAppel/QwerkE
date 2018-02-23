@@ -34,14 +34,41 @@
     <Filter Include="Libraries\MyImGUI">
       <UniqueIdentifier>{1ec3cd10-afce-449c-b0fc-0f4952671dd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Containers">
+      <UniqueIdentifier>{b05de150-f681-4527-8f49-ba56e1cf2397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\FBO">
+      <UniqueIdentifier>{ca31a9a6-8c67-42df-a821-c4d817676dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\CubeMap">
+      <UniqueIdentifier>{4a0ce912-c9d5-452e-9f39-5d832fa029b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ShaderProgram">
+      <UniqueIdentifier>{389a1fff-253b-49e8-aa03-6d6f140b9f4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sprite">
+      <UniqueIdentifier>{a0678917-4f8f-4c1a-9998-e7cae48b5dd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{e4275454-a0cf-41e6-aee8-a8bd926816bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Model">
+      <UniqueIdentifier>{2819f940-d499-4c76-aa1d-fe8fe6785977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{1ad39b83-0065-49e6-b47d-be0c6b019545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\FileIO">
+      <UniqueIdentifier>{0dffd7ac-2a22-4f83-889f-b5ed3325733c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Tween">
+      <UniqueIdentifier>{55c72b00-0565-4743-a691-381d011e66fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\cJSON_Interface">
+      <UniqueIdentifier>{d16f8cc7-7ba5-436f-bc7e-ebc93eae567a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics_Header.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\XinputInterface.h">
-      <Filter>Libraries\EasyXinput</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h">
       <Filter>Libraries\glew</Filter>
     </ClInclude>
@@ -111,6 +138,107 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h">
       <Filter>Libraries\MyImGUI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.h">
+      <Filter>Libraries\EasyXinput</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics_Header.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\ObjectPool.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\Barrel.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\CPPList.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\Mesh.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshFactory.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshUtilities.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\VertexData.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\FBO\FrameBufferObject.h">
+      <Filter>Graphics\FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\CubeMap\CubeMap.h">
+      <Filter>Graphics\CubeMap</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderProgram.h">
+      <Filter>Graphics\ShaderProgram</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderFactory.h">
+      <Filter>Graphics\ShaderProgram</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\OpenGLManager.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\OpenGLHelpers.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Sprite\Sprite.h">
+      <Filter>Graphics\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Model\Model.h">
+      <Filter>Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\LightData.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\MaterialData.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Input\Controller.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Input\InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\SmartPointer.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\GUID.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Timer.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.h">
+      <Filter>Utilities\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.h">
+      <Filter>Utilities\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.h">
+      <Filter>Utilities\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\Tween.h">
+      <Filter>Utilities\Tween</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.h">
+      <Filter>Utilities\Tween</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.h">
+      <Filter>Libraries\cJSON_Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.h">
+      <Filter>Libraries\cJSON_Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -154,6 +282,99 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.cpp">
       <Filter>Libraries\MyImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.cpp">
+      <Filter>Libraries\EasyXinput</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Containers\Barrel.cpp">
+      <Filter>Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\Mesh.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshFactory.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshHelpers.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshShapes.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshUtilities.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\FBO\FrameBufferObject.cpp">
+      <Filter>Graphics\FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\CubeMap\CubeMap.cpp">
+      <Filter>Graphics\CubeMap</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderProgram.cpp">
+      <Filter>Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\Basic2DShader.cpp">
+      <Filter>Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\Basic3DShader.cpp">
+      <Filter>Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderFactory.cpp">
+      <Filter>Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\LitMaterial.cpp">
+      <Filter>Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\OpenGLManager.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\OpenGLHelpers.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Sprite\Sprite.cpp">
+      <Filter>Graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Model\Model.cpp">
+      <Filter>Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\AssignGLFWKeys.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\AssignWin32Keys.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\Controller.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.cpp">
+      <Filter>Utilities\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp">
+      <Filter>Utilities\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp">
+      <Filter>Utilities\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.cpp">
+      <Filter>Utilities\Tween</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.cpp">
+      <Filter>Libraries\cJSON_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.cpp">
+      <Filter>Libraries\cJSON_Interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

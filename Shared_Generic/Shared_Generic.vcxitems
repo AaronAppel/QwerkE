@@ -14,8 +14,29 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\Barrel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\CPPList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\ObjectPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\CubeMap\CubeMap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\FBO\FrameBufferObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\LightData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\MaterialData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\Mesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\VertexData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Model\Model.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\OpenGLHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\OpenGLManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderProgram.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Sprite\Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics_Header.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\XinputInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Input\Controller.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Input\InputManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\glew.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\glxew.h" />
@@ -39,8 +60,44 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\GUID.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\SmartPointer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Timer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\Tween.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Containers\Barrel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\CubeMap\CubeMap.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\FBO\FrameBufferObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\Mesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshShapes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Model\Model.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\OpenGLHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\OpenGLManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\Basic2DShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\Basic3DShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\LitMaterial.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderProgram.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Sprite\Sprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\AssignGLFWKeys.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\AssignWin32Keys.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\Controller.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input\InputManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp" />
@@ -55,5 +112,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.cpp" />
   </ItemGroup>
 </Project>

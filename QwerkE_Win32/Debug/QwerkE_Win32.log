@@ -1,212 +1,442 @@
 ﻿  QwerkE.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(40): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(40): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(40): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(40): error C2086: 'int vector': redefinition
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): note: see declaration of 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(41): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(41): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(41): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(41): error C2086: 'int vector': redefinition
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): note: see declaration of 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(42): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(42): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(42): error C2086: 'int vector': redefinition
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): note: see declaration of 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(49): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(49): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(49): error C2086: 'int vector': redefinition
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): note: see declaration of 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(50): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(50): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(50): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(50): error C2086: 'int vector': redefinition
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): note: see declaration of 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(51): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(51): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(51): error C2086: 'int vector': redefinition
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): note: see declaration of 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(52): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(52): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(52): error C2086: 'int vector': redefinition
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(39): note: see declaration of 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(60): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(60): error C2061: syntax error: identifier 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(65): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjsoninterface.h(65): error C2061: syntax error: identifier 'vector'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\datamanager.h(40): error C3646: 'GetPositionFromcJSONItem': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\datamanager.h(40): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\datamanager.h(40): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(12): error C2079: 'Factory' uses undefined class 'BLUE_Box_API'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(13): error C2059: syntax error: 'public'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(15): error C2588: '::~Factory': illegal global destructor
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(15): error C2373: 'Factory': redefinition; different type modifiers
+  c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(11): note: see declaration of 'Factory'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(21): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(22): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(25): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(26): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(27): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(28): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(31): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(34): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(39): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(46): error C2065: 'vec2': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(46): error C2146: syntax error: missing ')' before identifier 'size'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(47): error C2065: 'vec2': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(47): error C2146: syntax error: missing ')' before identifier 'size'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(52): error C2059: syntax error: 'private'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(59): error C2027: use of undefined type 'GameObject'
+  c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(5): note: see declaration of 'GameObject'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(66): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(67): error C2059: syntax error: '}'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.h(67): error C2143: syntax error: missing ';' before '}'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\levelloader.h(15): error C2061: syntax error: identifier 'Factory'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(19): error C2061: syntax error: identifier 'eComponentTags'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C2039: 'string': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C3646: 'GetName': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(34): error C3646: 'GetPosition': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(34): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(34): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(35): error C3646: 'GetRotation': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(35): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(35): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(36): error C3646: 'GetScale': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(36): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(36): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(37): error C2061: syntax error: identifier 'eComponentTags'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(40): error C2061: syntax error: identifier 'eRoutineTypes'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(41): error C3646: 'GetTag': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(41): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(41): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(44): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(45): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(46): error C2039: 'string': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(46): error C2061: syntax error: identifier 'string'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(47): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(48): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(49): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(51): error C2061: syntax error: identifier 'eGameObjectTags'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C2039: 'string': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C3646: 'm_Name': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(56): error C3646: 'm_Tag': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(56): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(56): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(58): error C3646: 'm_Position': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(58): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(58): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(59): error C3646: 'm_Rotation': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(59): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(59): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(60): error C3646: 'm_Scale': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(60): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(60): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(65): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(65): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(65): fatal error C1003: error count exceeds 100; stopping compilation
+  ResourceManager.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\resourcemanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  GameStateManager.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\gamestatemanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  GameCore.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\gamecore.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  DataManager.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\datamanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   SceneManager.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\scene\scenemanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\scene\scenemanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Scene.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\scene\scene.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\scene\scene.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Routine.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   RenderRoutineUtilities.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutineutilities.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutineutilities.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   RenderRoutine.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(19): error C2061: syntax error: identifier 'eComponentTags'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(33): error C2039: 'string': is not a member of 'std'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(33): error C3646: 'GetName': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(33): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(33): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(34): error C3646: 'GetPosition': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(34): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(34): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(35): error C3646: 'GetRotation': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(35): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(35): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(36): error C3646: 'GetScale': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(36): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(36): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(37): error C2061: syntax error: identifier 'eComponentTags'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(40): error C2061: syntax error: identifier 'eRoutineTypes'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(41): error C3646: 'GetTag': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(41): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(41): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(44): error C2061: syntax error: identifier 'vec3'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(45): error C2061: syntax error: identifier 'vec3'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(46): error C2039: 'string': is not a member of 'std'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(46): error C2061: syntax error: identifier 'string'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(47): error C2061: syntax error: identifier 'vec3'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(48): error C2061: syntax error: identifier 'vec3'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(49): error C2061: syntax error: identifier 'vec3'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(51): error C2061: syntax error: identifier 'eGameObjectTags'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(55): error C2039: 'string': is not a member of 'std'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(55): error C3646: 'm_Name': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(55): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(55): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(56): error C3646: 'm_Tag': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(56): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(56): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(58): error C3646: 'm_Position': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(58): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(58): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(59): error C3646: 'm_Rotation': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(59): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(59): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(60): error C3646: 'm_Scale': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(60): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(60): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(63): error C2039: 'vector': is not a member of 'std'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(63): error C2143: syntax error: missing ';' before '<'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(63): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(65): error C2039: 'vector': is not a member of 'std'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(65): error C2143: syntax error: missing ';' before '<'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(65): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(65): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(68): error C2039: 'map': is not a member of 'std'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(68): error C2143: syntax error: missing ';' before '<'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(68): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(72): error C3646: 'm_Forward': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(72): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(72): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(73): error C3646: 'm_Up': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(73): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(73): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(74): error C3646: 'm_Right': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(74): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(74): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(19): error C2065: 'm_Components': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(19): error C2228: left of '.erase' must have class/struct/union
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(19): note: type is 'unknown-type'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(19): error C2065: 'tag': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(44): error C2065: 'm_Position': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(44): error C2065: 'position': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(45): error C2065: 'm_Rotation': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(45): error C2065: 'rotation': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(46): error C2065: 'm_Name': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(46): error C2065: 'name': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(49): error C2065: 'm_Scale': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(49): error C2065: 'scale': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(51): error C2065: 'm_Tag': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.h(51): error C2065: 'tag': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(26): error C3646: 'GetRoutineType': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2061: syntax error: identifier 'eRoutineTypes'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(36): error C3646: 'm_Type': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(36): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'm_Type': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'type': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\graphics\mesh\mesh.h(29): error C2061: syntax error: identifier 'GLenum'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\graphics\mesh\mesh.h(43): error C3646: 'm_PrimitiveType': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\graphics\mesh\mesh.h(43): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\graphics\mesh\mesh.h(43): error C2238: unexpected token(s) preceding ';'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\graphics\mesh\mesh.h(29): error C2065: 'm_PrimitiveType': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\graphics\mesh\mesh.h(29): error C2065: 'type': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(11): error C2660: 'GameObject::GetComponent': function does not take 1 arguments
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(21): error C2660: 'GameObject::GetComponent': function does not take 1 arguments
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(22): error C2027: use of undefined type 'RenderComponent'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.h(9): note: see declaration of 'RenderComponent'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(22): error C2227: left of '->GetMesh' must point to class/struct/union/generic type
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(23): error C2027: use of undefined type 'RenderComponent'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.h(9): note: see declaration of 'RenderComponent'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(23): error C2227: left of '->GetShader' must point to class/struct/union/generic type
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(30): error C2027: use of undefined type 'ShaderProgram'
-  c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\graphics\mesh\mesh.h(5): note: see declaration of 'ShaderProgram'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(30): error C2227: left of '->Use' must point to class/struct/union/generic type
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2065: 'uint': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2146: syntax error: missing ';' before identifier 'i'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2143: syntax error: missing ';' before '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2143: syntax error: missing ')' before '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2059: syntax error: '='
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2065: 'i': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): fatal error C1003: error count exceeds 100; stopping compilation
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(19): error C2061: syntax error: identifier 'eComponentTags'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C2039: 'string': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C3646: 'GetName': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(33): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(34): error C3646: 'GetPosition': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(34): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(34): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(35): error C3646: 'GetRotation': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(35): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(35): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(36): error C3646: 'GetScale': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(36): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(36): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(37): error C2061: syntax error: identifier 'eComponentTags'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(40): error C2061: syntax error: identifier 'eRoutineTypes'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(41): error C3646: 'GetTag': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(41): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(41): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(44): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(45): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(46): error C2039: 'string': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(46): error C2061: syntax error: identifier 'string'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(47): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(48): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(49): error C2061: syntax error: identifier 'vec3'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(51): error C2061: syntax error: identifier 'eGameObjectTags'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C2039: 'string': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C3646: 'm_Name': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(55): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(56): error C3646: 'm_Tag': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(56): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(56): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(58): error C3646: 'm_Position': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(58): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(58): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(59): error C3646: 'm_Rotation': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(59): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(59): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(60): error C3646: 'm_Scale': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(60): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(60): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(63): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(65): error C2039: 'vector': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(65): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(65): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(65): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(68): error C2039: 'map': is not a member of 'std'
+  c:\users\aaron appel\desktop\github\qwerke\qwerke_win32\predefined c++ types (compiler internal)(238): note: see declaration of 'std'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(68): error C2143: syntax error: missing ';' before '<'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(68): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(68): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(72): error C3646: 'm_Forward': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(72): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(72): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(73): error C3646: 'm_Up': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(73): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(73): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(74): error C3646: 'm_Right': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(74): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(74): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(19): error C2065: 'm_Components': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(19): error C2228: left of '.erase' must have class/struct/union
+  c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(19): note: type is 'unknown-type'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(19): error C2065: 'tag': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(44): error C2065: 'm_Position': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(44): error C2065: 'position': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(45): error C2065: 'm_Rotation': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(45): error C2065: 'rotation': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(46): error C2065: 'm_Name': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(46): error C2065: 'name': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(49): error C2065: 'm_Scale': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(49): error C2065: 'scale': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(51): error C2065: 'm_Tag': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.h(51): error C2065: 'tag': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C3646: 'GetRoutineType': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2059: syntax error: '('
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2061: syntax error: identifier 'eRoutineTypes'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(36): error C3646: 'm_Type': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(36): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'm_Type': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'type': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.h(29): error C2061: syntax error: identifier 'GLenum'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.h(43): error C3646: 'm_PrimitiveType': unknown override specifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.h(43): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.h(43): error C2238: unexpected token(s) preceding ';'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.h(29): error C2065: 'm_PrimitiveType': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.h(29): error C2065: 'type': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(11): error C2660: 'GameObject::GetComponent': function does not take 1 arguments
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(21): error C2660: 'GameObject::GetComponent': function does not take 1 arguments
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(22): error C2027: use of undefined type 'RenderComponent'
+  c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.h(9): note: see declaration of 'RenderComponent'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(22): error C2227: left of '->GetMesh' must point to class/struct/union/generic type
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(23): error C2027: use of undefined type 'RenderComponent'
+  c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.h(9): note: see declaration of 'RenderComponent'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(23): error C2227: left of '->GetShader' must point to class/struct/union/generic type
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(30): error C2027: use of undefined type 'ShaderProgram'
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.h(5): note: see declaration of 'ShaderProgram'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(30): error C2227: left of '->Use' must point to class/struct/union/generic type
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2065: 'uint': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2146: syntax error: missing ';' before identifier 'i'
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2143: syntax error: missing ';' before '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2143: syntax error: missing ')' before '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2059: syntax error: '='
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): error C2065: 'i': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.cpp(35): fatal error C1003: error count exceeds 100; stopping compilation
   GameObject.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\gameobject.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   ThirdPersonCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\thirdpersoncameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\thirdpersoncameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   StaticCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\staticcameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\staticcameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   RenderComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\rendercomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\rendercomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   LightComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\lightcomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\lightcomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   FreeCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\freecameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\freecameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   FirstPersonCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\firstpersoncameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\firstpersoncameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Component.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\component.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\component.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   CameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\gameobject\components\cameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\cameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Testing.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\testing.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Shapes.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\shapes.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  MasterAssetList.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\masterassetlist.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Lights.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\lights.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  LevelLoader.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\levelloader.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\testing.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Generating Code...
   Compiling...
+  Shapes.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\shapes.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  MasterAssetList.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\masterassetlist.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Lights.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\lights.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  LevelLoader.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\levelloader.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   FactoryUtilities.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\factoryutilities.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factoryutilities.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Factory.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\factory.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Characters.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\characters.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\characters.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Cameras.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\cameras.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\cameras.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Build_Block_Menu.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_engine\factory\build_block_menu.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\build_block_menu.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  TweenFuncs.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\tween\tweenfuncs.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  StringHelpers.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\stringhelpers.cpp(65): error C2079: 'stream' uses undefined class 'std::basic_stringstream<char,std::char_traits<char>,std::allocator<char>>'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\stringhelpers.cpp(65): error C2440: 'initializing': cannot convert from 'const char *' to 'int'
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\stringhelpers.cpp(65): note: There is no context in which this conversion is possible
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\stringhelpers.cpp(67): warning C4552: '>>': operator has no effect; expected operator with side-effect
+  PrintFunctions.cpp
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
+  ImageHelpers.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\imagehelpers.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
+  OBJLoader.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\fileio\objloader.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  MyFileWriter.cpp
+  FileUtilities.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\utilities\fileio\fileutilities.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
   MyImGUI.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\myimgui\myimgui.cpp(1): fatal error C1083: Cannot open include file: '../main.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\myimgui\myimgui.cpp(1): fatal error C1083: Cannot open include file: '../main.h': No such file or directory
   VectorMathHelpers.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(3): error C2065: 'Vector2': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(3): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(4): error C2143: syntax error: missing ';' before '{'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(4): error C2447: '{': missing function header (old-style formal list?)
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(8): error C2065: 'Vector3': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(8): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(9): error C2143: syntax error: missing ';' before '{'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(9): error C2447: '{': missing function header (old-style formal list?)
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(13): error C2065: 'Vector3': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(13): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(14): error C2143: syntax error: missing ';' before '{'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(14): error C2447: '{': missing function header (old-style formal list?)
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(18): error C2065: 'Vector3': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(18): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(19): error C2143: syntax error: missing ';' before '{'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(19): error C2447: '{': missing function header (old-style formal list?)
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(23): error C2065: 'Vector3': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(23): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(24): error C2143: syntax error: missing ';' before '{'
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(24): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(3): error C2065: 'Vector2': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(3): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(4): error C2143: syntax error: missing ';' before '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(4): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(8): error C2065: 'Vector3': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(8): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(9): error C2143: syntax error: missing ';' before '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(9): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(13): error C2065: 'Vector3': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(13): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(14): error C2143: syntax error: missing ';' before '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(14): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(18): error C2065: 'Vector3': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(18): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(19): error C2143: syntax error: missing ';' before '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(19): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(23): error C2065: 'Vector3': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(23): error C2146: syntax error: missing ')' before identifier 'a_TipPosition'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(24): error C2143: syntax error: missing ';' before '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vectormathhelpers.cpp(24): error C2447: '{': missing function header (old-style formal list?)
   Vector.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\vector.cpp(10): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\vector.cpp(10): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   ValueChecking.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\valuechecking.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\valuechecking.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Generating Code...
+  Compiling...
   MyQuaternion.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\myquaternion.cpp(10): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\myquaternion.cpp(10): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   MyMatrix.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\mymatrix.cpp(10): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\mymatrix.cpp(10): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   MathStuff.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\mathstuff.cpp(7): error C3861: 'rand': identifier not found
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\mathstuff.cpp(12): error C3861: 'rand': identifier not found
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\mathstuff.cpp(12): error C2065: 'RAND_MAX': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\mathstuff.cpp(7): error C3861: 'rand': identifier not found
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\mathstuff.cpp(12): error C3861: 'rand': identifier not found
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\mathstuff.cpp(12): error C2065: 'RAND_MAX': undeclared identifier
   MathFunctions.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\math\mathfunctions.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\math\mathfunctions.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   lodepng.cpp
   main.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\imgui\main.cpp(9): fatal error C1083: Cannot open include file: 'GL/gl3w.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\imgui\main.cpp(9): fatal error C1083: Cannot open include file: 'GL/gl3w.h': No such file or directory
   imgui_impl_glfw_gl3.cpp
-c:\users\aaron appel\desktop\github\qwerke\qwerke\shared_generic\libraries\imgui\imgui_impl_glfw_gl3.cpp(35): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\imgui\imgui_impl_glfw_gl3.cpp(35): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
   imgui_draw.cpp
   imgui_demo.cpp
   imgui.cpp
+  EasyXinput.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\easyxinput\easyxinput.h(125): error C2143: syntax error: missing ';' before '*'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\easyxinput\easyxinput.h(125): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\easyxinput\easyxinput.h(125): error C2238: unexpected token(s) preceding ';'
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
+  InputManager.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\input\inputmanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Controller.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\input\controller.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  AssignWin32Keys.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\input\assignwin32keys.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  AssignGLFWKeys.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\input\assignglfwkeys.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Sprite.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\sprite\sprite.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  ShaderProgram.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(3): error C2653: 'ShaderProgram': is not a class or namespace name
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(3): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(4): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(8): error C2510: 'ShaderProgram': left of '::' must be a class/struct/union
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(8): error C2065: 'eShaderTypes': undeclared identifier
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(8): error C2146: syntax error: missing ')' before identifier 'type'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(9): error C2143: syntax error: missing ';' before '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(9): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(13): error C2510: 'ShaderProgram': left of '::' must be a class/struct/union
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(14): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(15): warning C4508: 'ShaderProgram': function should return a value; 'void' return type assumed
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(17): warning C4346: 'ShaderProgram': dependent name is not a type
+  c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(17): note: prefix with 'typename' to indicate a type
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(18): error C2063: 'ShaderProgram': not a function
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(18): error C2226: syntax error: unexpected type '::ShaderProgram'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(18): error C2059: syntax error: '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(18): error C2143: syntax error: missing ';' before '{'
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(18): error C2447: '{': missing function header (old-style formal list?)
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(23): fatal error C1903: unable to recover from previous error(s); stopping compilation
+  ShaderFactory.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderfactory.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
+  LitMaterial.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\litmaterial.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Basic3DShader.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\basic3dshader.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Generating Code...
+  Compiling...
+  Basic2DShader.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\basic2dshader.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  OpenGLManager.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\openglmanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  OpenGLHelpers.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\openglhelpers.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
+  Model.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\model\model.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  MeshUtilities.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshutilities.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  MeshShapes.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshshapes.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
+  MeshHelpers.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshhelpers.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
+  MeshFactory.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshfactory.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Mesh.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  FrameBufferObject.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\fbo\framebufferobject.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  CubeMap.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\cubemap\cubemap.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+  Barrel.cpp
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\containers\barrel.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   Generating Code...
