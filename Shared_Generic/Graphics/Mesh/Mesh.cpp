@@ -1,4 +1,9 @@
-#include "stdafx.h"
+#include "Mesh.h"
+#include "VertexData.h"
+#include "Graphics/ShaderProgram/ShaderProgram.h"
+#include "Graphics/OpenGLHelpers.h"
+#include <assert.h>
+#include <vector>
 
 Mesh::Mesh()
 {

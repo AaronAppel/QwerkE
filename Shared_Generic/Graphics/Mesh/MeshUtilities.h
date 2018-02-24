@@ -1,5 +1,9 @@
-#ifndef __MeshUtilities_H__
-#define __MeshUtilities_H__
+#ifndef _MeshUtilities_H_
+#define _MeshUtilities_H_
+
+#include "Math_Includes.h"
+#include "VertexData.h"
+#include <vector>
 
 /* Mesh modifications */
 // scale
@@ -17,4 +21,4 @@ void PaintObject(std::vector<VertexData> &verts, vec4 color); // vertex color
 // Edit IBO
 void InvertFaces(unsigned int oldIBO[], unsigned int arraySize); // reverse winding order
 
-#endif //!__MeshUtilities_H__
+#endif //!_MeshUtilities_H_

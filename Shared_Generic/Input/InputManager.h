@@ -1,6 +1,8 @@
 #ifndef __InputManager_H_
 #define __InputManager_H_
 
+class Controller;
+
 enum eKeys
 {
 	eKeys_MIN = 0,

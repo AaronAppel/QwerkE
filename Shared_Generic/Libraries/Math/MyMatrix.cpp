@@ -7,11 +7,13 @@
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#include "stdafx.h"
 #include "MathHelpers.h"
 #include "Vector.h"
 #include "MyQuaternion.h"
 #include "MyMatrix.h"
+#include "Libraries/glew/GL/glew.h"
+#include "MathConstants.h"
+
 
 void MyMatrix::SetIdentity()
 {
@@ -248,7 +250,7 @@ void MyMatrix::CreateFrustum(float left, float right, float bottom, float top, f
     float deltaY = top - bottom;
     float deltaZ = farZ - nearZ;
 
-    MyAssert( nearZ > 0.0f && farZ > 0.0f && deltaX > 0.0f && deltaY > 0.0f && deltaZ > 0.0f );
+    // MyAssert( nearZ > 0.0f && farZ > 0.0f && deltaX > 0.0f && deltaY > 0.0f && deltaZ > 0.0f );
 
     m11 = 2.0f * nearZ / deltaX;
     m12 = m13 = m14 = 0.0f;
@@ -296,7 +298,7 @@ void MyMatrix::CreateOrtho(float left, float right, float bottom, float top, flo
     float deltaY = (top - bottom);
     float deltaZ = (farZ - nearZ);
 
-    MyAssert( (deltaX != 0.0f) && (deltaY != 0.0f) && (deltaZ != 0.0f) );
+    // MyAssert( (deltaX != 0.0f) && (deltaY != 0.0f) && (deltaZ != 0.0f) );
 
     m11 = 2.0f / deltaX;
     m12 = m13 = m14 = 0;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Graphics_Header.h"
 
 std::string ShaderFactory::Basic3DShaderVert(std::string vertString)
 {

@@ -19,6 +19,9 @@
     <Filter Include="Systems">
       <UniqueIdentifier>{182994df-f8df-4ce2-a86b-b9bd2a50f6ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{2af0efa9-8e7a-4a1e-943b-bfcd77a44163}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\GameObject.cpp">

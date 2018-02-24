@@ -1,6 +1,8 @@
 #ifndef __Factory_H
 #define __Factory_H
 
+#include "QwerkE_Include.h"
+
 class ResourceManager;
 class GameObject;
 class Scene;
@@ -8,7 +10,7 @@ class MenuWindow;
 class MenuItem;
 class Menu;
 
-class BLUE_Box_API Factory
+class Factory
 {
 public:
 	Factory(ResourceManager* resources);

@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include "Graphics_Header.h"
+#include "FileUtilities.h"
+#include "Utilities/PrintFunctions.h"
 
 // TwinMatrix reference: https://pastebin.com/b5EuEyxj
 Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bool invertFaces)
@@ -12,7 +14,7 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 	if (buffer == 0 || length == 0)
 	{
 		delete[] buffer;
-		OutputMessage("\nMesh: ImportOBJMesh() error reading %s\n", fileDirectory);
+		OutputPrint("\nMesh: ImportOBJMesh() error reading %s\n", fileDirectory);
 		return 0;
 	}
 	// read and store file text
@@ -88,7 +90,7 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 				&tempVertexIndices[2], &tempUVIndices[2], &tempNormalIndices[2]);
 			if (matches != 9)
 			{
-				OutputMessage("\nMeshHelpers: ImportOBJMesh() -> Error reading %s.\n", fileDirectory);
+				OutputPrint("\nMeshHelpers: ImportOBJMesh() -> Error reading %s.\n", fileDirectory);
 			}
 			/* Save values */
 			VertexIndices.push_back(tempVertexIndices[0] - 1); // OBJ exporter thinks first index is 1 instead of 0

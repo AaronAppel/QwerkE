@@ -239,6 +239,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.h">
       <Filter>Libraries\cJSON_Interface</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Math_Includes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">

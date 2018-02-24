@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "Graphics/ShaderProgram/ShaderFactory.h"
+#include <string>
 
 std::string ShaderFactory::LitMaterialVert(std::string vertString)
 {

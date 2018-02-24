@@ -1,4 +1,105 @@
-#include "pch.h"
+#include "Utilities/PrintFunctions.h"
+
+#include <fstream>
+#include <iostream>
+#include <string>
+
+#define _Win32
+
+#ifdef _Win32
+#include <windows.h>
+#include <vector>
+// https://msdn.microsoft.com/en-us/library/windows/desktop/aa364418(v=vs.85).aspx
+// https://msdn.microsoft.com/en-us/library/windows/desktop/aa365740(v=vs.85).aspx
+// https://stackoverflow.com/questions/26475540/c-having-problems-with-a-simple-example-of-findfirstfile
+
+std::vector<std::string> ReadDir(const char* directory)
+{
+	std::vector<std::string> fileList;
+
+	WIN32_FIND_DATA ffd;
+	HANDLE hand = INVALID_HANDLE_VALUE;
+	// hand = FindFirstFile("C:\\Users\\appe0011\\Documents\\GitHub\\L2_ByteCode\\Game\\Data\\Items\\*.*", &ffd); // TODO: Change hard coded dir
+	std::string dir = directory;
+	dir.append("*.*");
+	hand = FindFirstFile(dir.c_str(), &ffd);
+
+	// valid directory?
+	if (INVALID_HANDLE_VALUE == hand)
+	{
+		int bp = 1; // error
+		return fileList;
+	}
+
+	// read directory
+	do
+	{
+		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+		{
+			// std::cout << ffd.cFileName << std::endl;
+		}
+		else
+		{
+			std::cout << ffd.cFileName << std::endl;
+			fileList.push_back(ffd.cFileName);
+		}
+	} while (FindNextFile(hand, &ffd) != 0);
+
+	DWORD dwError = GetLastError();
+	if (dwError != ERROR_NO_MORE_FILES)
+	{
+		//DisplayErrorBox(TEXT("FindFirstFile"));
+		int bp = 1;
+	}
+
+	FindClose(hand);
+	return fileList;
+}
+
+#else
+// MAC
+// Linux
+// Android
+#endif // _Win32
+
+
+int CharToInt(char num)
+{
+	return num - 49;
+}
+
+void WriteRawBytesToFile(const char* filename, const char* data, int numBytes)
+{
+	std::ofstream oStream;
+	oStream.open(filename, std::ios_base::binary);
+	if (oStream.is_open())
+	{
+		oStream.write((char*)data, numBytes);
+		oStream.close();
+	}
+}
+
+char* ReadRawBytesFromFile(const char* filename)
+{
+	std::ifstream iStream;
+	iStream.open(filename, std::ios_base::binary);
+
+	char* data = nullptr;
+	if (iStream.is_open())
+	{
+		int size = 0;
+		iStream.seekg(0, std::ios::end);
+		size = (int)iStream.tellg();
+
+		data = new char[size];
+		iStream.read(data, size);
+		iStream.close();
+		return data;
+	}
+
+	return nullptr; // pass bytes back
+}
+
 
 // FileUtilities.cpp
 char* LoadFile(const char* filename)
@@ -49,17 +150,17 @@ char* LoadCompleteFile(const char* filename, long* length)
 
 	if (filecontents == 0)
 	{
-		OutputMessage("\nUtilityWin32: LoadCompleteFile() encountered errors loading \"%s\"-> ", filename);
+		OutputPrint("\nUtilityWin32: LoadCompleteFile() encountered errors loading \"%s\"-> ", filename);
 		if (error == 2)
 		{
-			OutputMessage("No such file or directory!");
+			OutputPrint("No such file or directory!");
 		}
 	}
 
 	return filecontents;
 }
 
-void WriteStringToFile(char* filename, char* string)
+void WriteStringToFile(const char* filename, const char* string)
 {
 	FILE* filehandle;
 	errno_t error = fopen_s(&filehandle, filename, "w+");

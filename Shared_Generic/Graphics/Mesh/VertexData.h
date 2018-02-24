@@ -1,6 +1,8 @@
 #ifndef __VERTEXDATA_H__
 #define __VERTEXDATA_H__
 
+#include "Math_Includes.h"
+
 struct VertexData
 {
 	vec3 position;

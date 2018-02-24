@@ -1,6 +1,9 @@
 #ifndef __CubeMap_H__
 #define __CubeMap_H__
 
+#include <vector>
+#include <string>
+
 struct CubeMapData
 {
 	const char* m_PosX = 0; // GL_TEXTURE_CUBE_MAP_POSITIVE_X

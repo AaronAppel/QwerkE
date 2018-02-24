@@ -2,6 +2,7 @@
 #define __MathHelpers_H__
 
 // Aaron Appel -> START
+#include <cmath>
 
 #define atan2 atan2f
 

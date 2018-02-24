@@ -1,4 +1,12 @@
-#include "stdafx.h"
+#include "RenderRoutine.h"
+#include "Math_Includes.h"
+#include "Graphics/ShaderProgram/ShaderProgram.h"
+#include "GameObject/GameObject.h"
+#include "GameObject/Components/Component.h"
+#include "GameObject/Components/CameraComponent.h"
+#include "GameObject/Components/RenderComponent.h"
+#include "GameObject/Components/LightComponent.h"
+#include "Graphics/MaterialData.h"
 
 // Private functions
 /* Vertex uniform value assignment */

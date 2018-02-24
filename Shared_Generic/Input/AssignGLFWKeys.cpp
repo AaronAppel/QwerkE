@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "InputManager.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
 
 // Windows 32 bit
 void InputManager::AssignGLFWKeys()

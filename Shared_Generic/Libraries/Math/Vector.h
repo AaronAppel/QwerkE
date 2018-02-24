@@ -49,7 +49,7 @@ public:
     inline Vector2 operator +=(const Vector2& o) { this->x += o.x; this->y += o.y; return *this; }
     inline Vector2 operator -=(const Vector2& o) { this->x -= o.x; this->y -= o.y; return *this; }
 
-    float& operator[] (int i) { MyAssert(i>=0 && i<2); return *(&x + i); }
+    // float& operator[] (int i) { MyAssert(i>=0 && i<2); return *(&x + i); }
 };
 
 class Vector3
@@ -99,7 +99,7 @@ public:
     inline Vector3 operator +=(const Vector3& o) { this->x += o.x; this->y += o.y; this->z += o.z; return *this; }
     inline Vector3 operator -=(const Vector3& o) { this->x -= o.x; this->y -= o.y; this->z -= o.z; return *this; }
 
-    float& operator[] (int i) { MyAssert(i>=0 && i<3); return *(&x + i); }
+    // float& operator[] (int i) { MyAssert(i>=0 && i<3); return *(&x + i); }
 
     //inline void operator =(const Vector2& o) { x = o.x; y = o.y; z = 0; } // couldn't make this work, used a constructor instead.
 };
@@ -151,7 +151,7 @@ public:
     inline Vector4 operator +(const Vector4& o) const { return Vector4(this->x + o.x, this->y + o.y, this->z + o.z, this->w + o.w); }
     inline Vector4 operator -(const Vector4& o) const { return Vector4(this->x - o.x, this->y - o.y, this->z - o.z, this->w - o.w); }
 
-    float& operator[] (int i) { MyAssert(i>=0 && i<4); return *(&x + i); }
+    // float& operator[] (int i) { MyAssert(i>=0 && i<4); return *(&x + i); }
 };
 
 class Vector2Int

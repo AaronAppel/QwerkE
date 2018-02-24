@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Math_Includes.h"
 
 double BounceEaseIn(double t, double b, double c, double d);
 double BounceEaseOut(double t, double b, double c, double d);

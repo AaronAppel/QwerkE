@@ -4,19 +4,20 @@
 // This class requires access to OpenGL functions.
 // https ://stackoverflow.com/questions/440144/in-opengl-is-there-a-way-to-get-a-list-of-all-uniforms-attribs-used-by-a-shade
 
+#include "Libraries/glew/GL/glew.h"
+
 class ShaderProgram
 {
 public:
 	ShaderProgram(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir);
-    ShaderProgram(eShaderTypes type);
-    ShaderProgram();
+	ShaderProgram();
 	~ShaderProgram();
 
 	/* Setup */
 	bool Init(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir);
-	
+
 	GLuint ReCompile1Shader(GLenum shaderType, const char* shaderString); // recompile 1 shader by type (vert, frag, geo)
-    GLuint ReCompileShader(); // recompile shader 
+    GLuint ReCompileShader(); // recompile shader
 
 	/* Utility */
 	void SetShaderStringData(GLenum shaderType, const char* shaderString);

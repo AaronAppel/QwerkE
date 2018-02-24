@@ -1,13 +1,10 @@
-// include openGL extensions
+#include "Graphics_Header.h"
+#include "Utilities/FileIO/FileUtilities.h"
+#include <string> // TODO: 1 use at bottom could be avoided
 
-ShaderProgram::ShaderProgram(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir);
+ShaderProgram::ShaderProgram(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir)
 {
 	Init(vertFileDir, fragFileDir, geoFileDir);
-}
-
-ShaderProgram::ShaderProgram(eShaderTypes type)
-{
-    Init(type);
 }
 
 ShaderProgram::ShaderProgram()
@@ -68,18 +65,18 @@ GLuint ShaderProgram::ReCompileShader()
     BuildShaderProgram(); // build using new string data
 }
 
-void SetShaderStringData(GLenum shaderType, const char* shaderString)
+void ShaderProgram::SetShaderStringData(GLenum shaderType, const char* shaderString)
 {
 	switch (shaderType)
 	{
 	case GL_VERTEX_SHADER:
-		m_VertString = shaderstring;
+		m_VertString = shaderString;
 		break;
 	case GL_FRAGMENT_SHADER:
-		m_FragString = shaderstring;
+		m_FragString = shaderString;
 		break;
 	case GL_GEOMETRY_SHADER:
-		m_GeoString = shaderstring;
+		m_GeoString = shaderString;
 		break;
 	}
 }
@@ -121,7 +118,7 @@ void ShaderProgram::CleanUp()
 	m_ProgramHandle = 0;
 }
 
-bool BuildShaderProgram()
+bool ShaderProgram::BuildShaderProgram()
 {
     // shader strings should have been loaded by Init(), ShaderFactory, or SetStringData()
     // compile shaders
@@ -158,7 +155,7 @@ GLuint ShaderProgram::CompileShader(GLenum shaderType, const char* shaderString)
 		GLchar infoLog[512];
 		glGetShaderInfoLog(shaderHandle, 512, NULL, infoLog);
 
-		char* shaderTypeString;
+		const char* shaderTypeString;
 		if (shaderType == GL_VERTEX_SHADER)
 			shaderTypeString = "GL_VERTEX_SHADER";
 		else if (shaderType == GL_FRAGMENT_SHADER)

@@ -5,6 +5,8 @@
 // TODO: Add multiple device functionality (XBOX controller, Joystick etc..)
 
 // TODO: Create Event() and Command() systems for input.
+#include "Math_Includes.h"
+#include "Engine_Enums.h"
 
 class Controller
 {

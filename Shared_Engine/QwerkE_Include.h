@@ -6,7 +6,10 @@
 // system includes. Try to avoid these...
 
 /* generic includes */
+#include "Engine_Enums.h"
+
 // libraries
+#include "Math_Includes.h"
 #include "../Shared_Generic/Libraries_Include.h"
 // graphics
 #include "../Shared_Generic/Graphics_Header.h"

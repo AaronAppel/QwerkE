@@ -1,6 +1,3 @@
-#include "stdafx.h"
-#pragma warning(disable:4996)
-
 /*
   Copyright (c) 2009 Dave Gamble
 

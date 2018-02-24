@@ -1,10 +1,11 @@
 #include "MathStuff.h"
+#include <stdlib.h>
 #include <time.h>
 
-// TODO: seed rand()
+// TODO: srand (time(NULL));
 int RandomNumber()
 {
-    return rand(); 
+    return rand();
 }
 
 float RandomNumberInRange(float min, float max)

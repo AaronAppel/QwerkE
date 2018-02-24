@@ -1,5 +1,5 @@
-#include "pch.h"
 #include <stdio.h>
+#include <cstring>
 
 // ImageHelpers.cpp
 void Flip32BitImageVertically(unsigned char* buffer, unsigned int width, unsigned int height)

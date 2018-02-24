@@ -2,6 +2,7 @@
 #include "RenderRoutine.h"
 #include "Engine_Enums.h"
 #include "Graphics\Mesh\Mesh.h"
+#include "Graphics_Header.h"
 
 #include <assert.h>
 
@@ -32,7 +33,7 @@ void RenderRoutine::Draw(GameObject* cameraObject)
 	// Lighting
 	// if (m_LightingEnabled) { SetupLightingUniforms(); };
 
-	for (uint i = 0; i < m_UniformSetupList.size(); i++)
+	for (unsigned int i = 0; i < m_UniformSetupList.size(); i++)
 	{
 		(this->*m_UniformSetupList.at(i))(t_pCamera); // Call setup function
 	}

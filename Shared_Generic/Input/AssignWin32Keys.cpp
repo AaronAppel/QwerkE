@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "InputManager.h"
+#include <Windows.h>
 
 // Windows 32 bit
 void InputManager::AssignWin32Keys()

@@ -1,6 +1,9 @@
 #ifndef __GAMEOBJECT_H_
 #define __GAMEOBJECT_H_
 
+#include "QwerkE_Include.h"
+#include <map>
+
 class Scene;
 class Component;
 class Routine;

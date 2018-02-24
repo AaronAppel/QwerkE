@@ -1,4 +1,5 @@
 #include "StringHelpers.h"
+#include <sstream>
 
 const char* DeepCopyString(const char* string)
 {

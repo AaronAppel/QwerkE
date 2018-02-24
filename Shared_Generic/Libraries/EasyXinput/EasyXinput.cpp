@@ -1,5 +1,4 @@
 #include "EasyXinput.h"
-#include <Xinput.h>
 #include <cmath>
 
 #define Xin_Success 0

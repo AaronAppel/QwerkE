@@ -1,4 +1,8 @@
-#include "stdafx.h"
+#include "Libraries/cJSON_Interface/cJSON.h"
+#include "Libraries/cJSON_Interface/cJSONInterface.h"
+#include "Utilities/FileIO/FileUtilities.h"
+#include "Utilities/PrintFunctions.h"
+#include <vector>
 
 cJSON* OpencJSONStream(const char* fileDirectory)
 {
@@ -11,7 +15,7 @@ cJSON* OpencJSONStream(const char* fileDirectory)
 
 		if (root == nullptr)
 		{
-			OutputMessage("\nOpencJSONStream(): Could not open cJSON stream. Possible compile error. Check %s file for typos!\n\n", fileDirectory);
+			OutputPrint("\nOpencJSONStream(): Could not open cJSON stream. Possible compile error. Check %s file for typos!\n\n", fileDirectory);
 		}
 		return root;
 	}
@@ -576,7 +580,7 @@ bool FileExists(const char* filename) // TODO:: Move to helpers.h/.cpp
 	}
 	else
 	{
-		OutputMessage("\nFileExists(): Could not find file. Ensure %s exists!\n\n", filename);
+		OutputPrint("\nFileExists(): Could not find file. Ensure %s exists!\n\n", filename);
 		return false; // could not find file
 	}
 }
@@ -587,7 +591,7 @@ void CreateNewFile(const char* filename) // checks if file already exists
 
 	if (error == 0)
 	{
-		OutputMessage("\nCreateNewFile(): %s already exists\n\n", filename);
+		OutputPrint("\nCreateNewFile(): %s already exists\n\n", filename);
 		fclose(filehandle);
 	}
 	else if (filehandle == nullptr)

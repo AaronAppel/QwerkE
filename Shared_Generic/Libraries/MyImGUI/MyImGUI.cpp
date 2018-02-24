@@ -1,4 +1,8 @@
-#include "../main.h"
+#include "Libraries/imgui/imgui.h"
+#include "Libraries/imgui/imgui_impl_glfw_gl3.h"
+#include "Libraries/MyImGUI/MyImGUI.h"
+#include "Libraries/MyGLFW/"
+#include "Utilities/PrintFunctions.h"
 
 static void ShowExampleAppCustomNodeGraph(bool* nodeMenu);
 
@@ -17,7 +21,7 @@ void MyImGUI::Init(MyGLFW* window)
 #ifdef _glfw3_h_
 	ImGui_ImplGlfwGL3_Init(window->GetWindow(), true);
 #else
-	OutputMessage("\nImGUI Uninitialized!");
+	OutputPrint("\nImGUI Uninitialized!");
 	assert(0);
 #endif
 
@@ -98,7 +102,7 @@ void MyImGUI::Render()
 	if (show_test_window)
 	{
 		ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-		ImGui::ShowTestWindow(&show_test_window);
+		ImGui::ShowTestWindow();
 	}
 
 	if (show_window_3)

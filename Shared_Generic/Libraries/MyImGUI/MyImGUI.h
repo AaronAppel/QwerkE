@@ -1,6 +1,8 @@
 #ifndef __MYIMGUI_H__
 #define __MYIMGUI_H__
 
+class MyGLFW;
+
 class MyImGUI
 {
 public:

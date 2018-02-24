@@ -1,6 +1,9 @@
 #ifndef __Sprite_H__
 #define __Sprite_H__
 
+#include "Math_Includes.h"
+#include "Graphics/Mesh/Mesh.h"
+
 class Mesh;
 class ShaderProgram;
 

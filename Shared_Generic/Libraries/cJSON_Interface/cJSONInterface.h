@@ -2,6 +2,7 @@
 #define __CJSONINTERFACE_H_
 
 #include "cJSON.h"
+#include <vector>
 
 //////////////////////////
 // possible TODO:: Add classes for easy root creation

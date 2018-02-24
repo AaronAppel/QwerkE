@@ -6,16 +6,19 @@
 // https://msdn.microsoft.com/en-ca/library/windows/desktop/ee417001(v=vs.85).aspx <- microsoft tutorial
 // "The constant XINPUT_GAMEPAD_TRIGGER_THRESHOLD may be used as the value which bLeftTrigger and bRightTrigger must be greater than to register as pressed." - MSDN XINPUT_GAMEPAD structure
 // XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE
-// #include <Xinput.h>
+
+#include <Xinput.h>
 // #include Xinput.lib, Xinput9_1_0.lib or other version
 
 /*  HOW TO USE
-XinputHandler newHandler = new XinputHanlder(int playerCount, bool debugEnabled = false);
+XinputHandler newHandler = new XinputHanlder(4);
 ...
 newHanlder->ResetStates();
 newHanlder->SetPlayer(0);
 newHanlder->UpdatePlayerState();
-newHanlder->AButtonIsDown();
+if(newHanlder->AButtonIsDown())
+    m_Player->Jump();
+...
 */
 
 // TODO:: increase efficiency

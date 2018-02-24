@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include "Graphics/Sprite/Sprite.h"
+#include "Graphics/ShaderProgram/ShaderProgram.h"
+#include "Graphics/Mesh/Mesh.h"
 
 Sprite2D::Sprite2D()
 {

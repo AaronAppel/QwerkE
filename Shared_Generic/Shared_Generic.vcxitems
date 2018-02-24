@@ -59,8 +59,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.h" />

@@ -1,6 +1,9 @@
 #ifndef __MESH_H__
 #define __MESH_H__
 
+#include "Libraries/glew/GL/glew.h"
+#include <string>
+
 struct VertexData;
 class ShaderProgram;
 class Mesh;

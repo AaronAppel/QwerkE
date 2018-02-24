@@ -1,6 +1,8 @@
 #ifndef __Model_H_
 #define __Model_H_
 
+#include <vector>
+
 class Mesh;
 class ShaderProgram;
 

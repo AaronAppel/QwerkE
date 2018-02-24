@@ -1,5 +1,7 @@
-#ifndef __MeshFactory_H__
-#define __MeshFactory_H__
+#ifndef _MeshFactory_H_
+#define _MeshFactory_H_
+
+#include "Math_Includes.h"
 
 struct VertexData;
 class Mesh;
@@ -27,4 +29,4 @@ public:
 	void GenerateCube(Mesh* mesh, vec3 size, bool invertFaces = false);
 };
 
-#endif //!__MeshFactory_H__
+#endif //!_MeshFactory_H_

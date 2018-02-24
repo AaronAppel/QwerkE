@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include "Input/InputManager.h"
+#include "Input/Controller.h"
+#include "Engine_Enums.h"
 
 InputManager::InputManager()
 {

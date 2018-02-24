@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include <stdlib.h>
 
 int RandomInt(int max, int min) // Returns random integer within range
 {
