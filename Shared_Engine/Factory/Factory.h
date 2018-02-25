@@ -62,7 +62,7 @@ private:
 
 	/* Private functions */
 	// GameObjects
-	GameObject* CreateGameObject(Scene* scene) { return new GameObject(scene); };
+	GameObject* CreateGameObject(Scene* scene);
 
 	// Block_Menu
 	Menu* CreateMenu();

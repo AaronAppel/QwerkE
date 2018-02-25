@@ -1,4 +1,10 @@
 #include "Factory.h"
+#include "GameObject/Components/CameraComponent.h"
+#include "GameObject/Components/FirstPersonCameraComponent.h"
+#include "GameObject/Components/ThirdPersonCameraComponent.h"
+#include "GameObject/Components/FreeCameraComponent.h"
+#include "GameObject/Components/StaticCameraComponent.h"
+#include "Utilities/Helpers.h"
 
 /* Cameras */
 //First Person
@@ -22,7 +28,7 @@ GameObject* Factory::CreateStaticCamera(Scene* scene, vec3 position)
 	return InternalCreateCamera(scene, position, CamType_Static);
 }
 
-BLUE_Box_Internal GameObject* Factory::InternalCreateCamera(Scene* scene, vec3 position, eCamType camType)
+GameObject* Factory::InternalCreateCamera(Scene* scene, vec3 position, eCamType camType)
 {
 	GameObject* t_pCamera = this->CreateGameObject(scene);
 	t_pCamera->SetTag(GO_Tag_Camera);

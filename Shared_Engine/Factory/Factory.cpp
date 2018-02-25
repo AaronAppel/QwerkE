@@ -14,3 +14,7 @@ void Factory::ClearResources()
 {
 	m_pResources->DeleteAllResources(); // TODO: Shouldn't have access to resources through factory
 }
+GameObject* Factory::CreateGameObject(Scene* scene)
+{
+	return new GameObject(scene);
+}

@@ -4,6 +4,7 @@
 #include "GameObject/Components/RenderComponent.h"
 #include "GameObject/Components/LightComponent.h"
 #include "Systems/ResourceManager.h"
+#include "GameObject/Routines/RenderRoutine.h"
 
 /* Lights */
 // Point Light

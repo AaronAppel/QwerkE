@@ -139,5 +139,5 @@ void LevelLoader::LoadScene(Scene* scene, const char* fileDir)
 
 	// END
 	ClosecJSONStream(root);
-	OutputMessage("\nDataManager: Scene loaded!\n");
+	OutputPrint("\nDataManager: Scene loaded!\n");
 }

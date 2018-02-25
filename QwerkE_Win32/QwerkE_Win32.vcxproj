@@ -80,9 +80,11 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedIncludeFiles>$(SolutionDir)QwerkE_Win32/QwerkE.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -93,9 +95,11 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedIncludeFiles>$(SolutionDir)QwerkE_Win32/QwerkE.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -108,11 +112,13 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedIncludeFiles>$(SolutionDir)QwerkE_Win32/QwerkE.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -125,11 +131,13 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedIncludeFiles>$(SolutionDir)QwerkE_Win32/QwerkE.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

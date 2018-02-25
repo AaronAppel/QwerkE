@@ -1,8 +1,8 @@
-#ifndef __OpenGLManager_H__
-#define __OpenGLManager_H__
+#ifndef _OpenGLManager_H_
+#define _OpenGLManager_H_
 
 // graphics
-#define Wind_CCW 1 // For invert faces
+// #define Wind_CCW 1 // For invert faces
 #include "Math_Includes.h"
 
 class OpenGLManager
@@ -30,4 +30,4 @@ private:
 };
 
 
-#endif //__OpenGLManager_H__
+#endif // !_OpenGLManager_H_

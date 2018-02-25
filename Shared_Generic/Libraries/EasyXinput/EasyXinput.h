@@ -40,7 +40,7 @@ struct XinVec2
 	XinVec2(float aX, float aY)	{ x = aX; y = aY; }
 	XinVec2(float a) { x = a; y = a; }
 	float Length() const; // avoid including <cmath> in .h
-	float Set(float aX, float aY) { x = aX; y = aY; };
+	void Set(float aX, float aY) { x = aX; y = aY; };
 	XinVec2 operator /(const float a) { return XinVec2(this->x / a, this->y / a); };
 	XinVec2 operator *(const float a) { return XinVec2(this->x * a, this->y * a); };
 };
@@ -125,7 +125,7 @@ private:
 
 	// TODO: reduce polling by generating events.
 	// Or let input manager handle that
-	XINPUT_STATE* m_PlayerStates;
+	XINPUT_STATE** m_PlayerStates;
 };
 
 #endif // !_EasyXinput_H_
