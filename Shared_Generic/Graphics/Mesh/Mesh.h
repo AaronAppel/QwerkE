@@ -1,5 +1,5 @@
-#ifndef __MESH_H__
-#define __MESH_H__
+#ifndef _Mesh_H_
+#define _Mesh_H_
 
 #include "Libraries/glew/GL/glew.h"
 #include <string>
@@ -54,4 +54,4 @@ private:
 	void NullDraw() {}; // TODO: Create event... { OutputMessage("\nMesh: Draw() function* never set properly.\n"); }// NULL
 };
 
-#endif //__MESH_H__
+#endif //!_Mesh_H_

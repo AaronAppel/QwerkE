@@ -1,4 +1,4 @@
-#include "library.h"
+#include "Libraries/MyGLFW/MyGLFW.h"
 
 static void error_callback(int error, const char* description)
 {

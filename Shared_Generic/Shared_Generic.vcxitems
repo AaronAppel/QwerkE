@@ -69,6 +69,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Math_Includes.h" />
@@ -92,8 +93,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\FBO\FrameBufferObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\Mesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshFactory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshHelpers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshShapes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Model\Model.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\OpenGLHelpers.cpp" />
@@ -122,7 +121,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\main.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.cpp" />
@@ -131,6 +129,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp" />

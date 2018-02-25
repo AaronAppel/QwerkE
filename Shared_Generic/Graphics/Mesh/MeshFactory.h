@@ -8,7 +8,7 @@ struct VertexData;
 class Mesh;
 class Model;
 
-//  TODO: Class unnecessary
+// TODO: Class unnecessary
 
 class MeshFactory
 {

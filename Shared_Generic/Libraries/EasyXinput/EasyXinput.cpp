@@ -38,7 +38,8 @@ void XinputHandler::ResetStates()
 
 bool XinputHandler::UpdatePlayerState(int player)
 {
-	DWORD result = XInputGetState(player, m_PlayerStates[player]); // XInputGetState(PORT, &ControllerState );
+	// TODO: Figure out why XInputGetState gives LNK2019
+	DWORD result = 0;// = XInputGetState((DWORD)player, m_PlayerStates[player]); // XInputGetState(PORT, &ControllerState );
 	if (result == Xin_Success)
 		return true;
 	else
