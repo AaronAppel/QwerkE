@@ -1,147 +1,42 @@
-﻿  QwerkE.cpp
+﻿  EasyXinput.cpp
 c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
-  PrintFunctions.cpp
-c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
-  main.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\imgui\main.cpp(9): fatal error C1083: Cannot open include file: 'GL/gl3w.h': No such file or directory
-  imgui_impl_glfw_gl3.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\imgui\imgui_impl_glfw_gl3.cpp(35): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
-  cJSON.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(156): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(162): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(170): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(171): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(172): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(265): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(276): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(302): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(381): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(382): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(383): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(450): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\cjson_interface\cjson.cpp(648): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
-  MyImGUI.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\myimgui\myimgui.cpp(4): fatal error C1083: Cannot open include file: 'Libraries/MyGLFW/': No such file or directory
-  EasyXinput.cpp
-c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
-  ShaderProgram.cpp
-  ShaderFactory.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderfactory.cpp(39): error C3861: 'DeepCopyString': identifier not found
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderfactory.cpp(64): error C3861: 'DeepCopyString': identifier not found
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderfactory.cpp(135): error C3861: 'DeepCopyString': identifier not found
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderfactory.cpp(136): error C3861: 'DeepCopyString': identifier not found
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderfactory.cpp(137): error C3861: 'DeepCopyString': identifier not found
-  OpenGLManager.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\openglmanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  OpenGLHelpers.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\openglhelpers.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
-  Model.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\model\model.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  MeshUtilities.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshutilities.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  MeshShapes.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshshapes.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
-  MeshHelpers.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshhelpers.cpp(1): fatal error C1083: Cannot open include file: 'pch.h': No such file or directory
-  MeshFactory.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\meshfactory.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Mesh.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\mesh\mesh.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  FrameBufferObject.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\fbo\framebufferobject.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  CubeMap.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\cubemap\cubemap.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Barrel.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\containers\barrel.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Generating Code...
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\graphics\shaderprogram\shaderprogram.cpp(66): error C4716: 'ShaderProgram::ReCompileShader': must return a value
-  Compiling...
-  ResourceManager.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\resourcemanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  GameStateManager.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\gamestatemanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
   GameCore.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\gamecore.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   DataManager.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\systems\datamanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  SceneManager.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\scene\scenemanager.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
+  TestScene.cpp
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Scene.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\scene\scene.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Routine.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C3646: 'GetRoutineType': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2061: syntax error: identifier 'eRoutineTypes'
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(36): error C3646: 'm_Type': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(36): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'm_Type': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'type': undeclared identifier
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   RenderRoutineUtilities.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C3646: 'GetRoutineType': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2059: syntax error: '('
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(26): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2061: syntax error: identifier 'eRoutineTypes'
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(36): error C3646: 'm_Type': unknown override specifier
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(36): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'm_Type': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\routine.h(31): error C2065: 'type': undeclared identifier
-c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\glew\gl\glew.h(280): error C2371: 'GLuint': redefinition; different basic types
-  c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\routines\renderroutine.h(12): note: see declaration of 'GLuint'
 c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   RenderRoutine.cpp
 c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   GameObject.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\gameobject.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   ThirdPersonCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\thirdpersoncameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  StaticCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\staticcameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  RenderComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\rendercomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  LightComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\lightcomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   FreeCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\freecameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   FirstPersonCameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\firstpersoncameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Component.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\component.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   CameraComponent.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\gameobject\components\cameracomponent.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Testing.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\testing.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Shapes.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\shapes.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  Generating Code...
-  Compiling...
-  MasterAssetList.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\masterassetlist.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Lights.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\lights.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   LevelLoader.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\levelloader.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
-  FactoryUtilities.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factoryutilities.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Factory.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\factory.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Characters.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\characters.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Cameras.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\cameras.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Build_Block_Menu.cpp
-c:\users\aaron appel\desktop\github\qwerke\shared_engine\factory\build_block_menu.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+c:\users\aaron appel\desktop\github\qwerke\shared_generic\libraries\block_menu\menuitems\menuitem.h(63): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winnt.h(154): fatal error C1189: #error:  "No Target Architecture"
   Generating Code...

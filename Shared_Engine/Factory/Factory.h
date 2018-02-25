@@ -1,7 +1,11 @@
-#ifndef __Factory_H
-#define __Factory_H
+#ifndef _Factory_H_
+#define _Factory_H_
 
 #include "QwerkE_Include.h"
+#include "Math_Includes.h"
+#include "Engine_Enums.h"
+#include "GameObject/GameObject.h"
+#include "Scene/Scene.h"
 
 class ResourceManager;
 class GameObject;
@@ -68,4 +72,4 @@ private:
 	GameObject* InternalCreateCamera(Scene* scene, vec3 position, eCamType camType);
 };
 
-#endif //__Factory_H
+#endif //!_Factory_H_

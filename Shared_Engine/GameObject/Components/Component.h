@@ -1,6 +1,8 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
 
+#include "Engine_Enums.h"
+
 class GameObject;
 
 class Component
@@ -20,7 +22,7 @@ public:
 
 	// setters
 	void SetParent(GameObject* a_Parent) { m_pParent = a_Parent; };
-	void SetComponentTag(eComponentTags a_Tag) {	m_ComponentTag = a_Tag; };
+	void SetComponentTag(eComponentTags a_Tag) { m_ComponentTag = a_Tag; };
 
 protected:
 	Component(); // cannot instantiate a Component()

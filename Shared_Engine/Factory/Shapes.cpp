@@ -1,4 +1,11 @@
-#include "stdafx.h"
+#include "Factory.h"
+#include "Scene/Scene.h"
+#include "Utilities/Helpers.h"
+#include "Engine_Enums.h"
+#include "GameObject/Components/Component.h"
+#include "GameObject/Components/RenderComponent.h"
+#include "Systems/ResourceManager.h"
+#include "GameObject/Routines/RenderRoutine.h"
 
 /* Shapes */
 GameObject* Factory::CreateCube(Scene* scene, vec3 position)

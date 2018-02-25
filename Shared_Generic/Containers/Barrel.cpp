@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Containers/Barrel.h"
 
 Barrel::Barrel(float limit, float pourValue) :
 	m_Limit(limit),

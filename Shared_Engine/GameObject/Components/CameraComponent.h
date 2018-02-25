@@ -1,5 +1,11 @@
-#ifndef __CAMERACOMPONENT_H_
-#define __CAMERACOMPONENT_H_
+#ifndef _CameraComponent_H_
+#define _CameraComponent_H_
+
+#include "QwerkE_Global_Constants.h"
+#include "Math_Includes.h"
+#include "Libraries/glew/GL/glew.h"
+#include "GameObject/Components/Component.h"
+#include "Engine_Enums.h"
 
 const vec3 g_WORLDUP = vec3(0, -1, 0); // TODO: Fix inverted world Y-axis
 
@@ -74,4 +80,4 @@ protected:
 	void UpdateParentPosition(vec3 m_Position);
 };
 
-#endif //__CAMERACOMPONENT_H_
+#endif //!_CameraComponent_H_

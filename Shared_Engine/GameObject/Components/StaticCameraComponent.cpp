@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "GameObject/Components/CameraComponent.h"
+#include "GameObject/Components/StaticCameraComponent.h"
+#include "Math_Includes.h"
+#include "Engine_Enums.h"
 
 StaticCameraComponent::StaticCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
 	CameraComponent(position, up, yaw, pitch)

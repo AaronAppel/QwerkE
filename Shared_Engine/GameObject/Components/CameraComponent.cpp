@@ -1,4 +1,9 @@
-#include "stdafx.h"
+#include "Component.h"
+#include "Engine_Enums.h"
+#include "CameraComponent.h"
+#include "Math_Includes.h"
+#include "GameObject/GameObject.h"
+#include "Utilities/DebugHelpers.h"
 
 // public functions
 // Constructor with vectors

@@ -1,123 +1,9 @@
-#include "pch.h"
+#include "MeshFactory.h"
+#include "Utilities/FileIO/FileUtilities.h"
+#include "MeshUtilities.h"
+#include <vector>
 
-Mesh* Mesh::ImportOBJMesh(const char* fileDirectory, vec3 objScale, vec2 UVScale, bool invertFaces)
-{
-	// find file
-	long length = 0;
-	char* buffer = LoadCompleteFile(fileDirectory, &length);
-	if (buffer == 0 || length == 0)
-	{
-		delete buffer;
-		return 0;
-	}
-
-	// read and store file text
-	char* next_token = 0;
-	char* line = strtok_s(buffer, "\n", &next_token);
-
-	std::vector<std::string> stringList;
-
-	while (line)
-	{
-		//OutputMessage("%s\n", line);
-		stringList.push_back(line);
-		line = strtok_s(0, "\n", &next_token);
-	}
-	// parse file for data
-	std::vector<VertexData> verts; // VertexData data
-	std::vector<unsigned int> indices; // IBO data
-
-	unsigned int textureCounter = 0;
-	unsigned int normalCounter = 0;
-
-	for (unsigned int i = 0; i < stringList.size(); i++) // stringList.size() = number of lines in file
-	{
-		std::string loopString = stringList.at(i);
-
-		if (loopString.at(0) == 'v') // check type of info
-		{
-			if (loopString.at(1) == ' ')
-			{
-				// read vertex data, create VBO
-				vec3 vertexPosition = vec3(0, 0, 0);
-
-				sscanf_s(loopString.data(), "%*s %f %f %f", &vertexPosition.x, &vertexPosition.y, &vertexPosition.z);// tempString.data(), tempString.length(), &tempInteger);
-
-				verts.push_back(VertexData(vec3(vertexPosition.x, vertexPosition.y, vertexPosition.z), vec4(255, 255, 255, 255), vec2(0, 1), vec3(0, 0, 0)));
-			}
-			else if (loopString.at(1) == 't')
-			{
-				// uv coords
-				vec2 vertexUV = vec2(0, 0);
-				sscanf_s(loopString.data(), "%*s %f %f", &vertexUV.x, &vertexUV.y);
-				//verts.at(textureCounter).uv = vertexUV;
-				textureCounter++;
-			}
-			else if (loopString.at(1) == 'n')
-			{
-				// normal
-				vec3 vertexNormal = vec3(0, 0, 0);
-				sscanf_s(loopString.data(), "%*s %f %f %f", &vertexNormal.x, &vertexNormal.y, &vertexNormal.z);
-				//verts.at(normalCounter).normal = vertexNormal;
-				normalCounter++;
-			}
-
-		}
-		else if (loopString.at(0) == 'f')
-		{
-			// read faces, create IBO
-			int tempVariable[] = { 0,0,0 };
-			sscanf_s(loopString.data(), "%*s %i %*s %i %*s %i", &tempVariable[0], &tempVariable[1], &tempVariable[2]);
-			indices.push_back(tempVariable[0] - 1); // OBJ exporter thinks first index is 1
-			indices.push_back(tempVariable[1] - 1);
-			indices.push_back(tempVariable[2] - 1);
-		}
-	}
-
-	// generate mesh
-	Mesh* t_pNewMesh = new Mesh();
-
-	// scale vertices
-	if (objScale != vec3(1.0f, 1.0f, 1.0f))
-	{
-		t_pNewMesh->ScaleVertices(verts.data(), verts.size(), objScale);
-	}
-
-	// generate UVCOORDS
-	t_pNewMesh->CalculateUVCoords(verts); // default scale 1,1
-
-	// scale UVCOORDS
-	if (UVScale != vec2(1.0f, 1.0f))
-	{
-		t_pNewMesh->ScaleUVCOORDS(verts.data(), verts.size(), UVScale);
-	}
-
-	// invert faces
-	if (invertFaces)
-	{
-		t_pNewMesh->InvertFaces(indices.data(), indices.size());
-	}
-
-	// initialize mesh
-	t_pNewMesh->BufferMeshData(verts.size(), verts.data(), indices.size(), indices.data()); // GL_STATIC_DRAW
-	t_pNewMesh->m_PrimitiveType = GL_TRIANGLES;
-
-	// cleanup
-	delete[] buffer;
-
-	return t_pNewMesh;
-
-	/*
-	char* sentence = "Rudolph is 12 years old";
-	char str[20];
-	int i;
-
-	sscanf_s(sentence, "%s %*s %d", str, 20, &i);
-	OutputMessage("%s\n", str);
-	*/
-}
-
-void Mesh::ScaleUVCOORDS(VertexData verts[], int numVerts, vec2 UVScale)
+void ScaleUVCOORDS(VertexData verts[], int numVerts, vec2 UVScale)
 {
 	for (int i = 0; i < numVerts; i++)
 	{
@@ -136,7 +22,7 @@ void Mesh::ScaleUVCOORDS(VertexData verts[], int numVerts, vec2 UVScale)
 	}
 }
 
-void Mesh::CalculateUVCoords(std::vector<VertexData> &verts) // fill UV coordinates of each vertex value based on its current position in object space
+void CalculateUVCoords(std::vector<VertexData> &verts) // fill UV coordinates of each vertex value based on its current position in object space
 {
 	// initialize temporary storage values to a valid vertex position to compare with
 	VertexData t_InitializeValue = verts.at(0);
@@ -204,9 +90,9 @@ void Mesh::CalculateUVCoords(std::vector<VertexData> &verts) // fill UV coordina
 	}
 }
 
-void Mesh::CalculateUVCoords(VertexData vertArray[], int numVertices) // fill UV coordinates of each vertex value based on its current position in object space
+void CalculateUVCoords(VertexData vertArray[], int numVertices) // fill UV coordinates of each vertex value based on its current position in object space
 {
-	// initialize temporary storage values to a valid vertice position to compare with
+	// initialize temporary storage values to a valid vertex position to compare with
 	std::vector<VertexData> verts;
 
 	for (int i = 0; i < numVertices; i++)
@@ -286,9 +172,9 @@ void Mesh::CalculateUVCoords(VertexData vertArray[], int numVertices) // fill UV
 	}
 }
 
-void Mesh::CalculateXZUVCoords(VertexData vertArray[], int numVertices) // fill UV coordinates of each vertex value based on its current position in object space
+void CalculateXZUVCoords(VertexData vertArray[], int numVertices) // fill UV coordinates of each vertex value based on its current position in object space
 {
-	// initialize temporary storage values to a valid vertice position to compare with
+	// initialize temporary storage values to a valid vertex position to compare with
 	std::vector<VertexData> verts;
 
 	for (int i = 0; i < numVertices; i++)
@@ -368,7 +254,7 @@ void Mesh::CalculateXZUVCoords(VertexData vertArray[], int numVertices) // fill 
 	}
 }
 
-void Mesh::PaintObject(std::vector<VertexData> &verts, vec4 color)
+void PaintObject(std::vector<VertexData> &verts, vec4 color)
 {
 	for (VertexData t_LoopVar : verts)
 	{
@@ -376,7 +262,7 @@ void Mesh::PaintObject(std::vector<VertexData> &verts, vec4 color)
 	}
 }
 
-void Mesh::InvertFaces(unsigned int oldIBO[], unsigned int arraySize)
+void InvertFaces(unsigned int oldIBO[], unsigned int arraySize)
 {
 	unsigned int* newIBO = new unsigned int[arraySize];
 
@@ -393,7 +279,7 @@ void Mesh::InvertFaces(unsigned int oldIBO[], unsigned int arraySize)
 	delete[] newIBO;
 }
 
-void Mesh::ScaleVertices(VertexData verts[], int numVerts, vec3 scale)
+void ScaleVertices(VertexData verts[], int numVerts, vec3 scale)
 {
 	// TODO:: Finish implementing proper vertex scaling
 

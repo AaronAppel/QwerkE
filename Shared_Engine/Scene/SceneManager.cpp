@@ -1,4 +1,8 @@
-#include "stdafx.h"
+#include "SceneManager.h"
+#include "Engine_Enums.h"
+#include "Scene/Scene.h"
+#include "TestScene.h"
+#include <map>
 
 SceneManager::SceneManager()
 {

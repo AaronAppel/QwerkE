@@ -1,6 +1,10 @@
 #ifndef __LightComponent_H_
 #define __LightComponent_H_
 
+#include "GameObject/Components/Component.h"
+#include "Engine_Enums.h"
+#include "Math_Includes.h"
+
 class MyMatrix;
 
 class LightComponent : public Component

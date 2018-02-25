@@ -1,4 +1,8 @@
-#include "stdafx.h"
+#include "Systems/ResourceManager.h"
+#include "Graphics_Header.h"
+#include "Graphics/OpenGLHelpers.h"
+#include "Graphics/MaterialData.h"
+#include "Graphics/ShaderProgram/ShaderFactory.h"
 
 // TODO: Load all files in folder. This avoids hard coded assets names and allows easy adding/removal of assets.
 // Objects may need to switch to assets ids. ids would act as indices in the asset list and would prevent crashing if assets are removed.
@@ -80,7 +84,8 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 	// 3D
 	else if (shaderName == "Basic3D")
 	{
-		shader->Init(eShader_Basic3D);
+		ShaderFactory temp;
+		shader = temp.CreateShader(eShader_Basic3D);
 	}
 	else if (shaderName == "LitMaterial")
 	{
@@ -207,26 +212,27 @@ MaterialData* ResourceManager::InstantiateMaterial(const char* matName)
 
 Model* ResourceManager::InstantiateModel(const char* modelName)
 {
+	MeshFactory meshFact;
 	Model* model;
 	if (modelName == "LightBulb") // Asset name
 	{
-		model = ImportOBJModel("Resources/Models/Light_Bulb.obj"); // Asset directory
+		model = meshFact.ImportOBJModel("Resources/Models/Light_Bulb.obj"); // Asset directory
 	}
 	else if (modelName == "CubeModel")
 	{
-		model = ImportOBJModel("Resources/Models/1M_CubeModel.obj", vec3(0.05f, 0.05f, 0.05f));
+		model = meshFact.ImportOBJModel("Resources/Models/1M_CubeModel.obj", vec3(0.05f, 0.05f, 0.05f));
 	}
 	else if (modelName == "Pyramid")
 	{
-		model = ImportOBJModel("Resources/Models/Pyramid.obj");
+		model = meshFact.ImportOBJModel("Resources/Models/Pyramid.obj");
 	}
 	else if (modelName == "Nano_Suit")
 	{
-		model = ImportOBJModel("Resources/Models/Crysis_Nanosuit/nanosuit.obj");
+		model = meshFact.ImportOBJModel("Resources/Models/Crysis_Nanosuit/nanosuit.obj");
 	}
 	else if (modelName == "NullMesh")
 	{
-		model = ImportOBJModel("Resources/Models/Teapot.obj");
+		model = meshFact.ImportOBJModel("Resources/Models/Teapot.obj");
 	}
 	else
 	{

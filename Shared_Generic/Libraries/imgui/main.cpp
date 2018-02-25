@@ -6,7 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 #include <stdio.h>
-#include <GL/gl3w.h>    // This example is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
+#include <GL/glew.h>    // This example is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
 #include <GLFW/glfw3.h>
 
 static void error_callback(int error, const char* description)
@@ -29,7 +29,7 @@ int main(int, char**)
     GLFWwindow* window = glfwCreateWindow(1280, 720, "ImGui OpenGL3 example", NULL, NULL);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
-    gl3wInit();
+    glewInit();
 
     // Setup ImGui binding
     ImGui::CreateContext();
@@ -43,8 +43,8 @@ int main(int, char**)
     //ImGui::StyleColorsClassic();
 
     // Load Fonts
-    // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them. 
-    // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple. 
+    // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+    // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
     // - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
     // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
     // - Read 'misc/fonts/README.txt' for more instructions and details.
@@ -77,7 +77,7 @@ int main(int, char**)
             static float f = 0.0f;
             static int counter = 0;
             ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f    
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state

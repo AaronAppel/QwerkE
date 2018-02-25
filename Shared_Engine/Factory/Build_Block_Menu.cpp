@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "Libraries/Block_Menu/Block_Menu.h"
+#include "Factory.h"
+#include "Systems/ResourceManager.h"
+#include "Math_Includes.h"
 
 extern int g_WindowWidth, g_WindowHeight;
 

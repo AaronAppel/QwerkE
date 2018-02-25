@@ -1,5 +1,10 @@
-#ifndef __RENDERCOMPONENT_H__
-#define __RENDERCOMPONENT_H__
+#ifndef _RenderComponent_H_
+#define _RenderComponent_H_
+
+#include "GameObject/Components/Component.h"
+#include "Libraries/glew/GL/glew.h"
+#include "Math_Includes.h"
+#include <vector>
 
 class Mesh;
 class ShaderProgram;
@@ -42,4 +47,4 @@ private:
 	MaterialData* m_Material = nullptr;
 };
 
-#endif //__RENDERCOMPONENT_H__
+#endif //!_RenderComponent_H_

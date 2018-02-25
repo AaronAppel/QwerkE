@@ -2,9 +2,11 @@
 #define _MeshFactory_H_
 
 #include "Math_Includes.h"
+#include "Graphics/Model/Model.h"
 
 struct VertexData;
 class Mesh;
+class Model;
 
 //  TODO: Class unnecessary
 
@@ -13,6 +15,10 @@ class MeshFactory
 public:
 	MeshFactory() {};
 	~MeshFactory() {};
+
+	/* OBJ loading */
+	Mesh* ImportOBJMesh(const char* fileDirectory, vec3 objScale, vec2 UVScale, bool invertFaces);
+	Model* ImportOBJModel(const char* fileDirectory, vec3 objScale = vec3(1,1,1), vec2 UVScale = vec2(1,1), bool invertFaces = false) { return new Model(); }; // TODO: Write function
 
 	/* Mesh creation */
 	// defined in MeshShapes.cpp

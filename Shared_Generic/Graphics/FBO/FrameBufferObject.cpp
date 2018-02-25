@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Graphics_Header.h"
 
 extern int g_WindowWidth, g_WindowHeight;
 

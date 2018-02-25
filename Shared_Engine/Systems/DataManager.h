@@ -16,10 +16,11 @@
 	User also uses factory to create objects by creating custom object
 	save/load functions some 7where in game specific code.
 */
+#include "Math_Includes.h"
 
 class Scene;
-class Factory;
 class GameObject;
+class Factory;
 struct cJSON;
 
 class DataManager

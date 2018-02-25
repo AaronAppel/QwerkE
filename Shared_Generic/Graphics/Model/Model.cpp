@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Graphics_Header.h"
 
 Model::Model()
 {

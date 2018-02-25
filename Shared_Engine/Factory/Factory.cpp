@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "Factory.h"
+#include "Systems/ResourceManager.h"
 
 Factory::Factory(ResourceManager* resources) // TODO: Get Resource Manager in constructor?
 {

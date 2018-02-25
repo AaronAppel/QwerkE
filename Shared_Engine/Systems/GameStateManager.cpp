@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Systems/GameStateManager.h"
 
 GameStateManager::GameStateManager()
 {

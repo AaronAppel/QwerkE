@@ -1,7 +1,7 @@
 #include "Libraries/imgui/imgui.h"
 #include "Libraries/imgui/imgui_impl_glfw_gl3.h"
 #include "Libraries/MyImGUI/MyImGUI.h"
-#include "Libraries/MyGLFW/"
+#include "Libraries/MyGLFW/MyGLFW.h"
 #include "Utilities/PrintFunctions.h"
 
 static void ShowExampleAppCustomNodeGraph(bool* nodeMenu);
@@ -186,10 +186,10 @@ void MyImGUI::Render()
 			{
 				if (i > 0) ImGui::SameLine();
 				ImGui::PushID(i);
-				ImGui::PushStyleColor(ImGuiCol_FrameBg, ImColor::HSV(i / 7.0f, 0.5f, 0.5f));
+				/*ImGui::PushStyleColor(ImGuiCol_FrameBg, ImColor::HSV(i / 7.0f, 0.5f, 0.5f));
 				ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImColor::HSV(i / 7.0f, 0.6f, 0.5f));
 				ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImColor::HSV(i / 7.0f, 0.7f, 0.5f));
-				ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImColor::HSV(i / 7.0f, 0.9f, 0.9f));
+				ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImColor::HSV(i / 7.0f, 0.9f, 0.9f));*/
 				ImGui::VSliderFloat("##v", ImVec2(18, 160), &values[i], 0.0f, 1.0f, "");
 				if (ImGui::IsItemActive() || ImGui::IsItemHovered())
 					ImGui::SetTooltip("%.3f", values[i]);
@@ -265,7 +265,7 @@ void MyImGUI::Render()
 		static float color;
 		ImGui::ColorEdit3("ColorEdit:", &color);
 
-		ImGui::ColorButton(ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+		ImGui::ColorButton("desc_id", ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
 		ImGui::End();
 	}
 		// RENDER
@@ -356,7 +356,7 @@ void ShowExampleAppCustomNodeGraph(bool* nodeMenu)
 	ImGui::Checkbox("Show grid", &show_grid);
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1, 1));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, ImColor(60, 60, 70, 200));
+	// ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, ImColor(60, 60, 70, 200));
 	ImGui::BeginChild("scrolling_region", ImVec2(0, 0), true, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove);
 	ImGui::PushItemWidth(120.0f);
 

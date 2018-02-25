@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "Menu.h"
+#include "../Windows/MenuWindow.h"
 
 Menu::Menu()
 {
@@ -6,7 +7,7 @@ Menu::Menu()
 
 Menu::~Menu()
 {
-	for (uint i = 0; i < m_Windows.size(); i++)
+	for (unsigned int i = 0; i < m_Windows.size(); i++)
 	{
 		delete m_Windows.at(i);
 	}

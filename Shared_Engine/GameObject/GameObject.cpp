@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "GameObject.h"
+#include "Scene/Scene.h"
+#include "GameObject/Routines/Routine.h"
+#include "GameObject/Components/Component.h"
 
 GameObject::GameObject(Scene* scene)
 {

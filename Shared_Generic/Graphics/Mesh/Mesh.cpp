@@ -2,6 +2,8 @@
 #include "VertexData.h"
 #include "Graphics/ShaderProgram/ShaderProgram.h"
 #include "Graphics/OpenGLHelpers.h"
+#include "Utilities/StringHelpers.h"
+#include <string>
 #include <assert.h>
 #include <vector>
 

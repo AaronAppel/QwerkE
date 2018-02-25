@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "ExampleWindow.h"
 
 ExampleWindow::ExampleWindow()
 {

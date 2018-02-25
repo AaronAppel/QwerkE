@@ -67,6 +67,9 @@
     <Filter Include="Libraries\cJSON_Interface">
       <UniqueIdentifier>{d16f8cc7-7ba5-436f-bc7e-ebc93eae567a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\Block_Menu">
+      <UniqueIdentifier>{56ca37ce-f6cd-4b99-bfa5-34bdb835e0c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h">
@@ -243,6 +246,39 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h">
       <Filter>Libraries\Math</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Helpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\MyLinkedList.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuManager.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\MenuItem.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Menus\Menu.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\ExampleWindow.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\MenuWindow.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Block_Menu.h">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -379,6 +415,33 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.cpp">
       <Filter>Libraries\cJSON_Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Helpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuManager.cpp">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.cpp">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.cpp">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\MenuItem.cpp">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Menus\Menu.cpp">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\ExampleWindow.cpp">
+      <Filter>Libraries\Block_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\MenuWindow.cpp">
+      <Filter>Libraries\Block_Menu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

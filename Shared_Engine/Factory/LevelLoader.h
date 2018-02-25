@@ -5,6 +5,7 @@
 	Inherits from DataManager(). The code is still abstracted
 	but the user has access to protected helpers.
 */
+#include "Systems/DataManager.h"
 
 class Scene;
 class Factory;

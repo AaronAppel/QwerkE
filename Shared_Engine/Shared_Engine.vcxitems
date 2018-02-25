@@ -18,7 +18,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Cameras.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Characters.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Factory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\FactoryUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\LevelLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Lights.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\MasterAssetList.cpp" />
@@ -38,6 +37,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\SceneManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene\TestScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\DataManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.cpp" />
@@ -58,9 +58,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE_Global_Constants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene\Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene\SceneManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene\TestScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\DataManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameCore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.h" />

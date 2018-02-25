@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include "ImageItem.h"
+#include "Graphics/Mesh/Mesh.h"
+#include "Graphics/ShaderProgram/ShaderProgram.h"
 
 ImageItem::ImageItem(Mesh* mesh) : MenuItem(mesh)
 {

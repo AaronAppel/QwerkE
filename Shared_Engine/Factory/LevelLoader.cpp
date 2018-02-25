@@ -1,4 +1,11 @@
-#include "stdafx.h"
+#include "LevelLoader.h"
+#include "Libraries/cJSON_Interface/cJSONInterface.h"
+#include "Scene/Scene.h"
+#include "Utilities/PrintFunctions.h"
+#include "Factory.h"
+#include "Engine_Enums.h"
+#include <string>
+#include <map>
 
 LevelLoader::LevelLoader(Factory* factory) : DataManager(factory)
 {
@@ -46,7 +53,7 @@ void LevelLoader::SaveScene(Scene* scene, const char* fileDir)
 
 	// WRITE TO FILE
 	PrintRootObjectToFile(fileDir, root);
-	OutputMessage("\nDataManager: Scene saved!\n");
+	OutputPrint("\nDataManager: Scene saved!\n");
 	// delete root
 }
 
@@ -55,7 +62,7 @@ void LevelLoader::LoadScene(Scene* scene, const char* fileDir)
 	if (scene == nullptr) { return; } // null scene
 	if (FileExists(fileDir) == false)
 	{
-		OutputMessage("\nDataManager: LoadScene() could not open file for reading.\n");
+		OutputPrint("\nDataManager: LoadScene() could not open file for reading.\n");
 		return;
 	}
 
@@ -63,7 +70,7 @@ void LevelLoader::LoadScene(Scene* scene, const char* fileDir)
 	cJSON* root = OpencJSONStream(fileDir);
 	if (root == nullptr) // Compile error
 	{
-		OutputMessage("\nDataManager: LoadScene() null root object.\n");
+		OutputPrint("\nDataManager: LoadScene() null root object.\n");
 		return;
 	}
 

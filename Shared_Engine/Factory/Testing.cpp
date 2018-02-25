@@ -1,4 +1,9 @@
-#include "stdafx.h"
+#include "Factory.h"
+#include "Scene/Scene.h"
+#include "Utilities/Helpers.h"
+#include "GameObject/Components/RenderComponent.h"
+#include "Systems/ResourceManager.h"
+#include "GameObject/Routines/RenderRoutine.h"
 
 // Scenery + Props
 GameObject* Factory::CreateSkyBox(Scene* scene, vec3 position)
@@ -17,7 +22,7 @@ GameObject* Factory::CreateSkyBox(Scene* scene, vec3 position)
 
 	RenderRoutine* renderRoutine = new RenderRoutine();
 	// Add
-	t_SkyBox->AddComponent(renderComp);
+	t_SkyBox->AddComponent((Component*)renderComp);
 	t_SkyBox->AddRoutine((Routine*)renderRoutine);
 
 	if (scene->AddObjectToScene(t_SkyBox)) // Add to render list
@@ -45,7 +50,7 @@ GameObject* Factory::CreateTestModel(Scene* scene, vec3 position)
 	renderComp->SetMaterial(m_pResources->GetMaterial("UV_Map"));
 
 	renderComp->SetColour(vec4(RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), 1));
-	t_Model->AddComponent(renderComp);
+	t_Model->AddComponent((Component*)renderComp);
 
 	RenderRoutine* renderRoutine = new RenderRoutine();
 	t_Model->AddRoutine((Routine*)renderRoutine);

@@ -1,5 +1,8 @@
-#ifndef __MENUMANAGER_H_
-#define __MENUMANAGER_H_
+#ifndef _MenuManager_H_
+#define _MenuManager_H_
+
+#include "Math_Includes.h"
+#include <vector>
 
 class Menu;
 
@@ -22,4 +25,4 @@ private:
 
 };
 
-#endif // __MENUMANAGER_H_
+#endif // !_MenuManager_H_

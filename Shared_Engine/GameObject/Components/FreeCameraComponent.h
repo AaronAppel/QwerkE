@@ -1,5 +1,12 @@
-#ifndef __FreeCameraComponent_H_
-#define __FreeCameraComponent_H_
+#ifndef _FreeCameraComponent_H_
+#define _FreeCameraComponent_H_
+
+#include "Engine_Enums.h"
+#include "Math_Includes.h"
+#include "Libraries/glew/GL/glew.h"
+#include "GameObject/Components/Component.h"
+#include "GameObject/Components/CameraComponent.h"
+#include "QwerkE_Global_Constants.h"
 
 class FreeCameraComponent : public CameraComponent
 {
@@ -15,4 +22,4 @@ private:
 
 };
 
-#endif //!__FreeCameraComponent_H_
+#endif //!_FreeCameraComponent_H_

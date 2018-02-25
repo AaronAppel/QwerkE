@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "Systems/ResourceManager.h"
+// #include "Graphics_Header.h"
+#include "Libraries/glew/GL/glew.h"
+#include <map>
 
 ResourceManager::ResourceManager()
 {
@@ -7,45 +10,6 @@ ResourceManager::ResourceManager()
 ResourceManager::~ResourceManager()
 {
 	DeleteAllResources();
-}
-std::basic_string<TCHAR> toTCHAR(const std::string &s)
-{
-#ifdef UNICODE
-	std::basic_string<TCHAR> result;
-	int len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), s.length(), NULL, 0);
-	if (len > 0)
-	{
-		result.resize(len);
-		MultiByteToWideChar(CP_ACP, 0, s.c_str(), s.length(), &result[0], len);
-	}
-	return result;
-#else
-	return s;
-#endif
-}
-void ResourceManager::LoadDirectory(const char* folder)
-{
-    // TODO: Find a good way of getting the names of files in a folder/directory
-
-	tinydir_dir dir;
-	int i;
-	// tinydir_open_sorted(&dir, folder);
-	std::basic_string<TCHAR> result = toTCHAR(std::string(folder));
-	tinydir_open(&dir, result.data());
-	for (i = 0; i < dir.n_files; i++)
-	{
-		tinydir_file file;
-		tinydir_readfile_n(&dir, &file, i);
-
-		printf("%s", file.name);
-		if (file.is_dir)
-		{
-			printf("/");
-		}
-		printf("\n");
-	}
-
-	tinydir_close(&dir);
 }
 
 void ResourceManager::DeleteAllResources()

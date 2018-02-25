@@ -1,8 +1,8 @@
-#include "stdafx.h"
+#include "Factory.h"
 
 /* Cameras */
 //First Person
-BLUE_Box_Internal GameObject* Factory::CreateFreeCamera(Scene* scene, vec3 position)
+GameObject* Factory::CreateFreeCamera(Scene* scene, vec3 position)
 {
 	return InternalCreateCamera(scene, position, CamType_FreeCam); // TODO: Is this a good way of re-using CreateCamera()?
 }

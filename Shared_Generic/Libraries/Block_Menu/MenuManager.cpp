@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include "MenuManager.h"
+#include "Menus/Menu.h"
+#include "Engine_Enums.h"
 
 MenuManager::MenuManager()
 {

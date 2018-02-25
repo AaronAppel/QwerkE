@@ -1,4 +1,9 @@
-#include "stdafx.h"
+#include "GameObject/Components/FreeCameraComponent.h"
+#include "Math_Includes.h"
+#include "GameObject/Components/CameraComponent.h"
+#include "Engine_Enums.h"
+#include "Component.h"
+#include "GameObject/GameObject.h"
 
 FreeCameraComponent::FreeCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
 	CameraComponent(position, up, yaw, pitch)

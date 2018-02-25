@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include "Graphics/OpenGLManager.h"
+#include "Graphics_Header.h"
+#include "Math_Includes.h"
 
 OpenGLManager::OpenGLManager()
 {

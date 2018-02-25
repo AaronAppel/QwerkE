@@ -1,4 +1,10 @@
-#include "stdafx.h"
+#include "Scene.h"
+#include "Systems/GameCore.h"
+#include "GameObject/GameObject.h"
+#include "GameObject/Components/Component.h"
+#include "GameObject/Components/CameraComponent.h"
+#include "Input/Controller.h"
+#include "Utilities/DebugHelpers.h"
 
 extern int g_WindowWidth;
 extern int g_WindowHeight;

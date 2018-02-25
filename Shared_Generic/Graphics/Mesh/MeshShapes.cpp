@@ -1,7 +1,10 @@
-#include "pch.h"
+#include "MeshFactory.h"
+#include "VertexData.h"
+#include "Mesh.h"
+#include "MeshUtilities.h"
 
 /* Mesh creation */
-Mesh* Mesh::CreateBox(vec2 size)
+Mesh* MeshFactory::CreateBox(vec2 size)
 {
 	VertexData verts[4];
 
@@ -17,7 +20,7 @@ Mesh* Mesh::CreateBox(vec2 size)
 
 	return pMesh;
 };
-Mesh* Mesh::CreateCircle(float radius, unsigned int points, vec2 UVScale)
+Mesh* MeshFactory::CreateCircle(float radius, unsigned int points, vec2 UVScale)
 {
 	std::vector<VertexData> verts;
 	verts.push_back(VertexData(vec3(0, 0, 0), vec4(255, 255, 255, 255), vec2(0, 1), vec3(0, 0, 0))); // center
@@ -49,19 +52,19 @@ Mesh* Mesh::CreateCircle(float radius, unsigned int points, vec2 UVScale)
 	Mesh* t_pNewMesh = new Mesh();
 
 	// generate UVCOORDS
-	t_pNewMesh->CalculateXZUVCoords(verts.data(), verts.size()); // default scale 1,1
+	CalculateXZUVCoords(verts.data(), verts.size()); // default scale 1,1
 															// scale UVCOORDS
 	if (UVScale != vec2(1.0f, 1.0f))
 	{
-		t_pNewMesh->ScaleUVCOORDS(verts.data(), verts.size(), UVScale);
+		ScaleUVCOORDS(verts.data(), verts.size(), UVScale);
 	}
 
 	// initialize mesh
 	t_pNewMesh->BufferMeshData(verts.size(), verts.data(), indices.size(), indices.data()); // GL_STATIC_DRAW
-	t_pNewMesh->m_PrimitiveType = GL_TRIANGLES;
+	t_pNewMesh->SetPrimitiveType(GL_TRIANGLES);
 	return t_pNewMesh;
 }
-Mesh* Mesh::CreateCube(vec3 size, vec2 UVScale, bool invertFaces)
+Mesh* MeshFactory::CreateCube(vec3 size, vec2 UVScale, bool invertFaces)
 {
 	// TODO:: Fix UV values
 	// image
@@ -130,21 +133,21 @@ Mesh* Mesh::CreateCube(vec3 size, vec2 UVScale, bool invertFaces)
 	// scale UVCOORDS
 	if (UVScale != vec2(1.0f, 1.0f))
 	{
-		t_pNewMesh->ScaleUVCOORDS(verts, 24, UVScale);
+		ScaleUVCOORDS(verts, 24, UVScale);
 	}
 
 	if (invertFaces) // invert faces
 	{
-		t_pNewMesh->InvertFaces(indices, 36);
+		InvertFaces(indices, 36);
 	}
 
 	t_pNewMesh->BufferMeshData(24, verts, 36, indices); // GL_STATIC_DRAW
-	t_pNewMesh->m_PrimitiveType = GL_TRIANGLES;
+	t_pNewMesh->SetPrimitiveType(GL_TRIANGLES);
 
 	return t_pNewMesh;
 }
 // worldSize, number of vertices, UVPos,
-Mesh* Mesh::CreatePlane(vec2 size, vec2 NumOfVerts, vec2 UVScale) // pivot, size, UVStart, UVOffset
+Mesh* MeshFactory::CreatePlane(vec2 size, vec2 NumOfVerts, vec2 UVScale) // pivot, size, UVStart, UVOffset
 {
 	//// variables
 	int numVertsX = (int)NumOfVerts.x;
@@ -211,13 +214,13 @@ Mesh* Mesh::CreatePlane(vec2 size, vec2 NumOfVerts, vec2 UVScale) // pivot, size
 	Mesh* pMesh = new Mesh();
 
 	// generate UVCOORDS
-	pMesh->CalculateXZUVCoords(verts, numVerts);
+	CalculateXZUVCoords(verts, numVerts);
 
 	// scale UVCOORDS
-	pMesh->ScaleUVCOORDS(verts, numVerts, UVScale);
+	ScaleUVCOORDS(verts, numVerts, UVScale);
 
 	pMesh->BufferMeshData(numVerts, verts, numOfIndices, indices); // GL_STATIC_DRAW
-	pMesh->m_PrimitiveType = GL_TRIANGLES;
+	pMesh->SetPrimitiveType(GL_TRIANGLES);
 
 	//pMesh->m_PrimitiveType = GL_POINTS;
 	//glPointSize(10);
@@ -230,7 +233,7 @@ Mesh* Mesh::CreatePlane(vec2 size, vec2 NumOfVerts, vec2 UVScale) // pivot, size
 	return pMesh;
 }
 /* Mesh data assignment*/
-void Mesh::GenerateBox(vec2 size)
+void MeshFactory::GenerateBox(Mesh* mesh, vec2 size, bool invertFaces)
 {
 	std::vector<VertexData> tempList;
 	tempList.push_back(VertexData(vec3(0.5f * size.x, 0.5f * size.y, 0.0f), vec4(1,1,1,1), vec2(1,1), vec3(0,0,0)));
@@ -243,10 +246,10 @@ void Mesh::GenerateBox(vec2 size)
 		1, 2, 3  // Second Triangle
 	};
 
-	this->BufferMeshData(4, tempList.data(), 6, indices);
+	mesh->BufferMeshData(4, tempList.data(), 6, indices);
 }
 
-void Mesh::GenerateCube(vec3 size)
+void MeshFactory::GenerateCube(Mesh* mesh, vec3 size, bool invertFaces)
 {
 	std::vector<VertexData> tempList;
 	// front
@@ -281,5 +284,5 @@ void Mesh::GenerateCube(vec3 size)
 		3,7,4
 	};
 
-	this->BufferMeshData(8, tempList.data(), 36, indices);
+	mesh->BufferMeshData(8, tempList.data(), 36, indices);
 }

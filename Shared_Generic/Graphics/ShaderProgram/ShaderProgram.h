@@ -5,6 +5,7 @@
 // https ://stackoverflow.com/questions/440144/in-opengl-is-there-a-way-to-get-a-list-of-all-uniforms-attribs-used-by-a-shade
 
 #include "Libraries/glew/GL/glew.h"
+#include <vector>
 
 class ShaderProgram
 {
@@ -17,7 +18,7 @@ public:
 	bool Init(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir);
 
 	GLuint ReCompile1Shader(GLenum shaderType, const char* shaderString); // recompile 1 shader by type (vert, frag, geo)
-    GLuint ReCompileShader(); // recompile shader
+    bool ReCompileShader(); // recompile shader
 
 	/* Utility */
 	void SetShaderStringData(GLenum shaderType, const char* shaderString);
@@ -45,6 +46,11 @@ public:
 	// matrices
 	void SetUniformMat4(const char* name, const GLfloat* matrix);
 
+	// uniform list
+	std::vector<std::string> GetAttributeList() { return m_AttributeList; };
+	std::vector<std::string> GetUniformList() { return m_UniformList; };
+	void SetUniformList(std::vector<std::string> list) { m_UniformList = list; };
+
 private:
 	/* Variables */
 	const char* m_VertString = 0;
@@ -60,6 +66,11 @@ private:
     bool BuildShaderProgram(); // return BuildSucceeded == true
 	GLuint CompileShader(GLenum shaderType, const char* shaderString);
 	GLuint LinkShaders(GLuint vert, GLuint frag, GLuint geo);
+
+	void SetupAttributeList(); // TODO:: Parse m_VertString and m_FragString for all attributes and store them in m_AttributesList
+	void SetupUniformList(); // TODO:: Parse shaderstrings and m_FragString for all uniforms and store them in m_UniformList
+	std::vector<std::string> m_AttributeList; // Shader->SetupAttributes() sets up values. Mesh->SetupShaderAttributes() uses the list to enable vertex array data.
+	std::vector<std::string> m_UniformList; // GameObject->RenderRoutine->Draw() sets values
 };
 
 #endif //_ShaderProgram_H_

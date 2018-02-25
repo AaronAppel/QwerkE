@@ -2,14 +2,12 @@
 #define __RenderRoutine_H__
 
 #include "Routine.h"
-
+#include "Libraries/glew/GL/glew.h"
 #include <vector>
 
 class GameObject;
 class RenderComponent;
 class CameraComponent;
-
-typedef int GLuint;
 
 class RenderRoutine;
 typedef void (RenderRoutine::*SetupUniformFunction)(CameraComponent* a_Camera); // Setup shader values function

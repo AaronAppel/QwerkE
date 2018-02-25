@@ -1,6 +1,8 @@
 #ifndef __ROUTINE_H__
 #define __ROUTINE_H__
 
+#include "Engine_Enums.h"
+
 class GameObject;
 
 class Routine

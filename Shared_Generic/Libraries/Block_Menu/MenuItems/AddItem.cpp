@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "AddItem.h"
+#include "../Windows/MenuWindow.h"
+#include "Graphics/ShaderProgram/ShaderProgram.h"
+#include "Graphics/Mesh/Mesh.h"
 
 AddButton::AddButton(Mesh* mesh) : MenuItem(mesh)
 {

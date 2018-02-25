@@ -1,6 +1,9 @@
 #ifndef __SceneManager_H__
 #define __SceneManager_H__
 
+#include "Engine_Enums.h"
+#include <map>
+
 class GameCore;
 class Scene;
 

@@ -1,4 +1,9 @@
-#include "stdafx.h"
+#include "Factory.h"
+#include "Scene/Scene.h"
+#include "Utilities/Helpers.h"
+#include "GameObject/Components/RenderComponent.h"
+#include "GameObject/Components/LightComponent.h"
+#include "Systems/ResourceManager.h"
 
 /* Lights */
 // Point Light

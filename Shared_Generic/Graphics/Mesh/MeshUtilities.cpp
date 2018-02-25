@@ -1,4 +1,6 @@
-#include "stdafx.h"
+#include "MeshUtilities.h"
+#include "VertexData.h"
+#include "Math_Includes.h"
 
 void ScaleUVCOORDS(VertexData verts[], int numVerts, vec2 UVScale)
 {

@@ -1,4 +1,8 @@
-#include "stdafx.h"
+#include "GameCore.h"
+#include "Math_Includes.h"
+#include "ResourceManager.h"
+#include "Factory/Factory.h"
+#include "Graphics/OpenGLManager.h"
 
 GameCore::GameCore()
 {

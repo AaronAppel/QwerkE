@@ -1,5 +1,6 @@
 #include "Graphics_Header.h"
 #include "Utilities/FileIO/FileUtilities.h"
+#include "Utilities/StringHelpers.h"
 #include <string> // TODO: 1 use at bottom could be avoided
 
 ShaderProgram::ShaderProgram(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir)
@@ -58,11 +59,11 @@ GLuint ShaderProgram::ReCompile1Shader(GLenum shaderType, const char* shaderStri
 	return result;
 }
 
-GLuint ShaderProgram::ReCompileShader()
+bool ShaderProgram::ReCompileShader()
 {
     CleanUp(); // TODO: evaluate which shaders to keep based on changes to strings or handles
 
-    BuildShaderProgram(); // build using new string data
+    return BuildShaderProgram(); // build using new string data
 }
 
 void ShaderProgram::SetShaderStringData(GLenum shaderType, const char* shaderString)
@@ -261,4 +262,148 @@ void ShaderProgram::SetUniformFloat4(const char* name, float value1, float value
 void ShaderProgram::SetUniformMat4(const char* name, const GLfloat* matrix)
 {
 	glUniformMatrix4fv(glGetUniformLocation(m_ProgramHandle, name), 1, GL_FALSE, matrix);
+}
+// private uniform and attribute setup
+void ShaderProgram::SetupAttributeList()
+{
+	// TODO: Handle "in" and "attribute"
+	if (m_VertString == 0)
+	{
+		return;
+	}
+	// store string in temp buffer
+	char* buffer = (char*)DeepCopyString(m_VertString); // Delete buffer when done
+
+														// store lines in std::vector
+	char* next_token = 0;
+	char* line = strtok_s(buffer, "\n", &next_token);
+
+	std::vector<std::string> vertStringList;
+
+	while (line)
+	{
+		//OutputMessage("%s\n", line);
+		vertStringList.push_back(line);
+		line = strtok_s(0, "\n", &next_token);
+	}
+	delete[] buffer; // cleanup
+
+					 /* Populate .vert attributes */
+					 // vert
+	for (uint i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
+	{
+		std::string loopString = vertStringList.at(i);
+		if (loopString.at(0) == 'i' && loopString.find("in") != loopString.npos) // starts with 'i' and has "in" in line
+		{
+			uint size = 20;
+			std::string t_Variable;
+			sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
+			strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
+
+			std::string loopString;
+			int counter = 2; // remove 'u_' from beginning
+			while (t_Variable[counter] != '\0')
+			{
+				loopString.push_back(t_Variable[counter]);
+				counter++;
+			}
+
+			m_AttributeList.push_back(loopString);
+		}
+		// duplicates caught in .vert by compiler
+	}
+}
+void ShaderProgram::SetupUniformList()
+{
+	if (m_VertString == 0 || m_FragString == 0)
+	{
+		return;
+	}
+	// vert
+	// store string in temp buffer
+	char* buffer = (char*)DeepCopyString(m_VertString);
+
+	// store lines in std::vector
+	char* next_token = 0;
+	char* line = strtok_s(buffer, "\n", &next_token);
+
+	std::vector<std::string> vertStringList;
+	std::vector<std::string> fragStringList;
+
+	while (line)
+	{
+		//OutputMessage("%s\n", line);
+		vertStringList.push_back(line);
+		line = strtok_s(0, "\n", &next_token);
+	}
+	delete[] buffer; // cleanup
+
+					 // frag
+	buffer = (char*)DeepCopyString(m_FragString);
+	line = strtok_s(buffer, "\n", &next_token);
+
+	while (line)
+	{
+		//OutputMessage("%s\n", line);
+		fragStringList.push_back(line);
+		line = strtok_s(0, "\n", &next_token);
+	}
+	delete[] buffer; // cleanup
+
+					 /* Populate .vert uniforms */
+					 // VERTEX
+	for (uint i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
+	{
+		std::string loopString = vertStringList.at(i);
+		if (loopString.at(0) == 'u' && loopString.find("uniform") != loopString.npos) // starts with 'u' and has uniform in line
+		{
+			uint size = 20;
+			std::string t_Variable;
+			sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
+			strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
+
+			std::string loopString;
+			int counter = 2; // remove 'u_' from beginning
+			while (t_Variable[counter] != '\0')
+			{
+				loopString.push_back(t_Variable[counter]);
+				counter++;
+			}
+			m_UniformList.push_back(loopString);
+		}
+		// duplicates caught in .vert by compiler
+	}
+	// FRAGMENT
+	/* Populate .frag uniforms */
+	for (uint i = 0; i < fragStringList.size(); i++) // stringList.size() = number of lines in file
+	{
+		std::string loopString = fragStringList.at(i);
+		if (loopString.at(0) == 'u' && loopString.find("uniform") != loopString.npos)
+		{
+			uint size = 20;
+			std::string t_Variable;
+			sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
+			strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
+
+			std::string loopString;
+			int counter = 2; // remove 'u_' from beginning
+			while (t_Variable[counter] != '\0')
+			{
+				loopString.push_back(t_Variable[counter]);
+				counter++;
+			}
+			for (uint i = 0; i < m_UniformList.size(); i++) // check for duplicates
+			{
+				if (StringCompare(loopString.c_str(), m_UniformList.at(i)))
+				{
+					int bp = 1; // duplicate
+				}
+				else
+				{
+					m_UniformList.push_back(loopString);
+					break;
+				}
+			}
+		}
+	}
 }

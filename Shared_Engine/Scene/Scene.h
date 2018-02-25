@@ -1,6 +1,11 @@
 #ifndef __Scene_H__
 #define __Scene_H__
 
+#include "Containers/MyLinkedList.h"
+#include "Math_Includes.h"
+#include "Engine_Enums.h"
+#include <map>
+
 extern int g_WindowWidth, g_WindowHeight;
 
 class GameCore;
@@ -8,6 +13,7 @@ class MyMatrix;
 class SceneManager;
 class GameObject;
 
+class Scene; // forward declare for function* typedef
 typedef void (Scene::*UpdateFunc)(double deltatime); // Scene pause
 
 // TODO: Create derived classes for scenes like SplashScreen, GameScene, etc

@@ -1,6 +1,10 @@
 #ifndef __ResourceManager_H__
 #define __ResourceManager_H__
 
+#include "Libraries/glew/GL/glew.h"
+#include <string>
+#include <map>
+
 class Mesh;
 class ShaderProgram;
 class Model;
@@ -34,7 +38,7 @@ public:
 	Model* GetModel(const char* name);
 
 	// Load directory
-	void LoadDirectory(const char* folder);
+	// void LoadDirectory(const char* folder);
 
 	// Cleanup
 	void DeleteAllResources();

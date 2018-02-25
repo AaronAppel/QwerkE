@@ -1,6 +1,10 @@
 #ifndef __GameCore_H__
 #define __GameCore_H__
 
+#include "Math_Includes.h"
+#include "Engine_Enums.h"
+#include "Libraries/glew/GL/glew.h"
+
 class SceneManager;
 class ResourceManager;
 class Factory;
