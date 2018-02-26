@@ -16,9 +16,9 @@ public:
 	GLuint GetTextureID() { return textureColorbuffer; };
 
 private:
-	GLuint framebuffer;
-	GLuint textureColorbuffer;
-	GLuint rbo;
+	GLuint framebuffer = 0;
+	GLuint textureColorbuffer = 0;
+	GLuint rbo = 0;
 };
 
 #endif //__FrameBufferObject_H__

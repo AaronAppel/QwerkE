@@ -4,6 +4,9 @@ extern int g_WindowWidth, g_WindowHeight;
 
 FrameBufferObject::FrameBufferObject()
 {
+	framebuffer = 0;
+	textureColorbuffer = 0;
+	rbo = 0;
 }
 
 FrameBufferObject::~FrameBufferObject()

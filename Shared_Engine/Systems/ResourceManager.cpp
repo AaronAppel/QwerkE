@@ -52,7 +52,7 @@ ShaderProgram* ResourceManager::GetShader(const char* name)
 	{
 		return m_HotShaders[name];
 	}
-	return InstantiateShader(name);
+	return InstantiateShader(name); // TODO: Should The resource manager create assets?
 }
 
 GLuint ResourceManager::GetTexture(const char* name)

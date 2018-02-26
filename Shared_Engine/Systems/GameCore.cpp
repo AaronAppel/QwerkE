@@ -16,7 +16,7 @@ GameCore::GameCore()
 	m_pDataManager = new LevelLoader(m_pFactory);
 
 	m_FBO = new FrameBufferObject();
-	m_FBO->Init();
+	// m_FBO->Init();
 }
 
 GameCore::~GameCore()

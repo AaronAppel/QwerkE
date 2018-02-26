@@ -55,6 +55,7 @@ Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 
 ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 {
+	// Read directory for file?
 	ShaderProgram* shader = new ShaderProgram();
 	// 2D
 	if (shaderName == "Basic2DTex") // Asset name
