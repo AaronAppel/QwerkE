@@ -12,6 +12,7 @@
 #include "Libraries/EasyXinput/EasyXinput.h"
 #include "Graphics/OpenGLHelpers.h"
 #include "Utilities/PrintFunctions.h"
+#include "Graphics/FontRendering/FontTest.h"
 
 int g_WindowWidth = 1600, g_WindowHeight = 900; // (1280x720)(1600x900)(1920x1080)(2560x1440)
 double g_TimeSinceExe = 0.0f;
@@ -25,7 +26,7 @@ extern XinputHandler* g_XinputHandler = nullptr;
 int main()
 {
 	//// setup
-	g_MainWindow = new MyGLFW("Title", vec2(g_WindowWidth, g_WindowHeight), vec2(400, 400));
+	g_MainWindow = new MyGLFW("Title", vec2(g_WindowWidth, g_WindowHeight), vec2(200, 200));
 
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -49,6 +50,11 @@ int main()
 	// Xinput
 	g_XinputHandler = new XinputHandler(1); // (numPlayers)
 	g_XinputHandler->SetPlayer(0); // Set player controller to poll
+
+	// Assets
+	ShaderProgram* shader = new ShaderProgram("../Shared_Generic/Resources/Shaders/text.vert", "../Shared_Generic/Resources/Shaders/text.frag", 0);
+
+	LoadFonts();
 
 	// background image or HUD layout
 	// TODO:: Add background image
@@ -112,6 +118,9 @@ int main()
 			ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
 			// m_Background->Draw();
+
+			RenderText(shader, "This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+			RenderText(shader, "(C) LearnOpenGL.com", 540.0f, 850.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 
 			g_MainWindow->SwapBuffers(); // Flip new image (buffer) to screen
 			CheckforGLErrors(__FILE__, __LINE__);

@@ -10,6 +10,9 @@
 #include "Libraries/imgui/imgui.h"
 #include "Libraries/imgui/imgui_impl_glfw_gl3.h"
 
+#include "Libraries/freetype2/ft2build.h"
+#include FT_FREETYPE_H
+
 // defines, structs, typedefs
 #define Wind_CCW 0
 enum eShaderTypes

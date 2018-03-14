@@ -70,6 +70,15 @@
     <Filter Include="Libraries\Block_Menu">
       <UniqueIdentifier>{56ca37ce-f6cd-4b99-bfa5-34bdb835e0c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\freetype2">
+      <UniqueIdentifier>{7777f6eb-3e35-4fe4-a3dd-d07ee4deb689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\FontRendering">
+      <UniqueIdentifier>{a05a351f-ae6b-467d-843d-a54dc628eb0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{066f99a8-799f-49ac-8797-3d7cf6fb37f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h">
@@ -282,6 +291,285 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h">
       <Filter>Libraries\MyGLFW</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftconfig.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftheader.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftmodule.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftoption.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftstdlib.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\freetype.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftadvanc.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbbox.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbdf.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbitmap.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbzip2.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftcache.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftchapters.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftcid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftdriver.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fterrdef.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fterrors.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftfntfmt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgasp.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftglyph.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgxval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgzip.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftimage.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftincrem.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlcdfil.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlist.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlzw.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmac.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmm.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmodapi.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmoderr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftotval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftoutln.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftparams.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftpfr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftrender.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsizes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsnames.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftstroke.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsynth.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsystem.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fttrigon.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fttypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftwinfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\autohint.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\cffotypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\cfftypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftcalc.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftdebug.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftdrv.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftgloadr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\fthash.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftmemory.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftobjs.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftpic.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftpsprop.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftrfork.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftserv.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftstream.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\fttrace.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftvalid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\internal.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\psaux.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\pshints.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svbdf.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svcfftl.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svcid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svfntfmt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svgldict.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svgxval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svkern.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svmetric.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svmm.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svotval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpfr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpostnm.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svprop.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpscmap.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpsinfo.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svsfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svttcmap.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svtteng.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svttglyf.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svwinfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\sfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\t1types.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\tttypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\t1tables.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ttnameid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\tttables.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\tttags.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\ft2build.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\FontRendering\FontTest.h">
+      <Filter>Graphics\FontRendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -440,5 +728,16 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp">
       <Filter>Libraries\MyGLFW</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\FontRendering\FontTest.cpp">
+      <Filter>Graphics\FontRendering</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Resources\Shaders\text.frag">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Resources\Shaders\text.vert">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

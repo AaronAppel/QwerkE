@@ -1,6 +1,11 @@
 #ifndef _Math_Includes_H_
 #define _Math_Includes_H_
 
+// GLM
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <cmath>
 #include "Libraries/Math/MathConstants.h"
 #include "Libraries/Math/MathFunctions.h"
@@ -27,10 +32,5 @@ typedef Vector4Int ivec4;
 typedef MyMatrix mat4;
 // uint
 typedef unsigned int uint;
-
-// measurement
-#define METER 100
-#define CM 10
-#define MM 1
 
 #endif // !_Math_Includes_H_

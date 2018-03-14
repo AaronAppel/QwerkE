@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-#define _Win32
+#define _Win32 // TODO: Fix multi platform
 
 #ifdef _Win32
 #include <windows.h>
@@ -15,14 +15,14 @@
 
 std::vector<std::string> ReadDir(const char* directory)
 {
-	std::vector<std::string> fileList;
+	// variables
+	std::vector<std::string> fileList; // list of file names with extensions
+	WIN32_FIND_DATA ffd; // file data object
+	HANDLE hand = INVALID_HANDLE_VALUE; // file handle
+	std::string dir = directory; // used for easy appending
 
-	WIN32_FIND_DATA ffd;
-	HANDLE hand = INVALID_HANDLE_VALUE;
-	// hand = FindFirstFile("C:\\Users\\appe0011\\Documents\\GitHub\\L2_ByteCode\\Game\\Data\\Items\\*.*", &ffd); // TODO: Change hard coded dir
-	std::string dir = directory;
-	dir.append("*.*");
-	hand = FindFirstFile(dir.c_str(), &ffd);
+	dir.append("*.*"); // append "search for all" instruction
+	hand = FindFirstFile(dir.c_str(), &ffd); // get the first file in directory
 
 	// valid directory?
 	if (INVALID_HANDLE_VALUE == hand)
@@ -55,8 +55,30 @@ std::vector<std::string> ReadDir(const char* directory)
 	FindClose(hand);
 	return fileList;
 }
-
 #else
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <filesystem>
+// TODO: Look at std::filesystem
+// http://www.modernescpp.com/index.php/c-17-more-details-about-the-library
+//http://www.martinbroadhurst.com/list-the-files-in-a-directory-in-c.html
+//struct path_leaf_string
+//{
+//	std::string operator()(const std::filesystem::directory_entry& entry) const
+//	{
+//		return entry.path().leaf().string();
+//	}
+//};
+//
+//void read_directory(const std::string& name, stringvec& v)
+//{
+//	std::filesystem::path p(name);
+//	std::filesystem::directory_iterator start(p);
+//	std::filesystem::directory_iterator end;
+//	std::transform(start, end, std::back_inserter(v), path_leaf_string());
+//}
+
 // MAC
 // Linux
 // Android
