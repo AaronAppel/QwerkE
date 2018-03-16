@@ -4,6 +4,7 @@
 // Include this to use the framework
 
 // system includes. Try to avoid these...
+#include <stdio.h>
 
 /* generic includes */
 #include "Engine_Enums.h"

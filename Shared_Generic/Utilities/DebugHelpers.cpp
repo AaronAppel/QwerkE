@@ -1,5 +1,5 @@
 #include "DebugHelpers.h"
-#include "Systems/GameCore.h"
+#include "../Shared_Engine/Systems/GameCore.h"
 #include "Libraries/glfw/GLFW/glfw3.h"
 #include "Libraries/MyGLFW/MyGLFW.h"
 

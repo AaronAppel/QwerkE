@@ -164,6 +164,160 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\AutopatcherPatchContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\AutopatcherRepositoryInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Base64Encoder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\BitStream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetSlidingWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetUDT.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CheckSum.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudServer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CommandParserInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConnectionGraph2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConsoleServer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DataCompressor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DirectoryDeltaTransfer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DR_SHA1.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BinarySearchTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BPlusTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BytePool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ByteQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Hash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Heap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTreeFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTreeNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_LinkedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_List.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Map.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_MemoryPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Multilist.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_OrderedChannelHeap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_OrderedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Queue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_QueueLinkedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_RangeList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Table.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ThreadsafeAllocatingQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Tree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_WeightedGraph.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DynDNS.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmailSender.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmptyHeader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EpochTimeToString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Export.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListNodeContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransfer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransferCBInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileOperations.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FormatString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FullyConnectedMesh2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Getche.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Gets.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GetTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\gettimeofday.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GridSectorizer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\IncrementalReadInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\InternalPacket.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Itoa.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Kbhit.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LinuxStrings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LocklessTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LogCommandParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageFilter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageIdentifiers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MTUSize.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeFeatureIncludes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeFeatureIncludesOverrides.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughServer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionServer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketConsoleLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketFileLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketizedTCP.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketOutputWindowLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketPriority.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PluginInterface2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS3Includes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS4Includes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rackspace.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakAlloca.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakAssert.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakMemoryOverride.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetCommandParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetDefines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetDefinesOverrides.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSmartPtr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetStatistics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTransport2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetVersion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeerInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakSleep.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakThread.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakWString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rand.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RandSync.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReadyEvent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RefCountedObj.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RelayPlugin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReliabilityLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaManager3.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Router2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RPC4Plugin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SecureHandshake.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SendToThread.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SignaledEvent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleMutex.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleTCPServer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SingleProducerConsumer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketDefines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketIncludes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StatisticsHistory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringCompressor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringTable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SuperFastHash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TableSerializer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TCPInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamBalancer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TelnetTransport.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadsafePacketLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TransportInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TwoWayAuthentication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPForwarder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCoordinator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyServer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableDeltaSerializer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableListDeltaTracker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariadicSQLParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VitaIncludes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WindowsIncludes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WSAStartupSingleton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\XBox360Includes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\_FindFirst.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.h" />
@@ -211,11 +365,21 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MyMatrix.cpp" />
@@ -225,6 +389,324 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Base64Encoder.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\BitStream.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetSlidingWindow.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetUDT.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CheckSum.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudClient.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudCommon.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudServer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CommandParserInterface.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConnectionGraph2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConsoleServer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DataCompressor.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DirectoryDeltaTransfer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DR_SHA1.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BytePool.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ByteQueue.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTree.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Table.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DynDNS.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmailSender.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EpochTimeToString.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileList.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransfer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileOperations.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FormatString.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FullyConnectedMesh2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Getche.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Gets.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GetTime.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\gettimeofday.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GridSectorizer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\IncrementalReadInterface.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Itoa.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LinuxStrings.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LocklessTypes.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LogCommandParser.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageFilter.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughClient.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughServer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionClient.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionCommon.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionServer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDManager.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDObject.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketConsoleLogger.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketFileLogger.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketizedTCP.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketLogger.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketOutputWindowLogger.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PluginInterface2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS4Includes.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rackspace.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakMemoryOverride.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetCommandParser.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_360_720.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Berkley.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Berkley_NativeClient.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_NativeClient.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_PS3_PS4.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_PS4.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Vita.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_WindowsStore8.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Windows_Linux.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Windows_Linux_360.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetStatistics.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTransport2.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTypes.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakSleep.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakString.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakThread.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakWString.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rand.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RandSync.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReadyEvent.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RelayPlugin.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReliabilityLayer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaManager3.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Router2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RPC4Plugin.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SecureHandshake.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SendToThread.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SignaledEvent.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleMutex.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketLayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StatisticsHistory.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringCompressor.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringTable.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SuperFastHash.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TableSerializer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TCPInterface.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamBalancer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamManager.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TelnetTransport.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadsafePacketLogger.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TwoWayAuthentication.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPForwarder.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyClient.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCoordinator.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyServer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableDeltaSerializer.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableListDeltaTracker.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariadicSQLParser.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VitaIncludes.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WSAStartupSingleton.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\_FindFirst.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp" />

@@ -79,6 +79,9 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{066f99a8-799f-49ac-8797-3d7cf6fb37f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\RakNet">
+      <UniqueIdentifier>{16ed1e26-f734-410c-a06b-5394bca6658e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h">
@@ -570,6 +573,468 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\FontRendering\FontTest.h">
       <Filter>Graphics\FontRendering</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\AutopatcherPatchContext.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\AutopatcherRepositoryInterface.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Base64Encoder.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\BitStream.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetSlidingWindow.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetUDT.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CheckSum.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudClient.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudCommon.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudServer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CommandParserInterface.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConnectionGraph2.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConsoleServer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DataCompressor.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DirectoryDeltaTransfer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DR_SHA1.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BinarySearchTree.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BPlusTree.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BytePool.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ByteQueue.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Hash.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Heap.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTree.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTreeFactory.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTreeNode.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_LinkedList.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_List.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Map.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_MemoryPool.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Multilist.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_OrderedChannelHeap.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_OrderedList.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Queue.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_QueueLinkedList.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_RangeList.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Table.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ThreadsafeAllocatingQueue.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Tree.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_WeightedGraph.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DynDNS.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmailSender.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmptyHeader.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EpochTimeToString.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Export.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileList.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListNodeContext.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransfer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransferCBInterface.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileOperations.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FormatString.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FullyConnectedMesh2.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Getche.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Gets.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GetTime.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\gettimeofday.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GridSectorizer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection2.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\IncrementalReadInterface.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\InternalPacket.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Itoa.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Kbhit.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LinuxStrings.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LocklessTypes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LogCommandParser.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageFilter.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageIdentifiers.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MTUSize.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeFeatureIncludes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeFeatureIncludesOverrides.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeTypes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughClient.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughServer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionClient.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionCommon.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionServer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDManager.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDObject.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketConsoleLogger.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketFileLogger.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketizedTCP.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketLogger.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketOutputWindowLogger.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketPool.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketPriority.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PluginInterface2.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS3Includes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS4Includes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rackspace.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakAlloca.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakAssert.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakMemoryOverride.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetCommandParser.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetDefines.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetDefinesOverrides.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSmartPtr.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetStatistics.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTime.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTransport2.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTypes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetVersion.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeerInterface.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakSleep.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakString.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakThread.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakWString.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rand.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RandSync.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReadyEvent.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RefCountedObj.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RelayPlugin.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReliabilityLayer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaEnums.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaManager3.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Router2.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RPC4Plugin.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SecureHandshake.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SendToThread.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SignaledEvent.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleMutex.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleTCPServer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SingleProducerConsumer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketDefines.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketIncludes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketLayer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StatisticsHistory.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringCompressor.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringTable.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SuperFastHash.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TableSerializer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TCPInterface.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamBalancer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamManager.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TelnetTransport.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadPool.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadsafePacketLogger.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TransportInterface.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TwoWayAuthentication.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPForwarder.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyClient.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCommon.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCoordinator.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyServer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableDeltaSerializer.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableListDeltaTracker.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariadicSQLParser.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VitaIncludes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WindowsIncludes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WSAStartupSingleton.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\XBox360Includes.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\_FindFirst.h">
+      <Filter>Libraries\RakNet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -730,6 +1195,336 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\FontRendering\FontTest.cpp">
       <Filter>Graphics\FontRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Base64Encoder.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\BitStream.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetSlidingWindow.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetUDT.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CheckSum.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudClient.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudCommon.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudServer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CommandParserInterface.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConnectionGraph2.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConsoleServer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DataCompressor.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DirectoryDeltaTransfer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DR_SHA1.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BytePool.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ByteQueue.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTree.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Table.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DynDNS.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmailSender.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EpochTimeToString.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileList.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransfer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileOperations.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FormatString.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FullyConnectedMesh2.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Getche.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Gets.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GetTime.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\gettimeofday.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GridSectorizer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection2.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\IncrementalReadInterface.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Itoa.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LinuxStrings.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LocklessTypes.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LogCommandParser.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageFilter.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughClient.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughServer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionClient.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionCommon.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionServer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDManager.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDObject.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketConsoleLogger.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketFileLogger.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketizedTCP.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketLogger.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketOutputWindowLogger.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PluginInterface2.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS4Includes.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rackspace.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakMemoryOverride.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetCommandParser.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_360_720.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Berkley.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Berkley_NativeClient.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_NativeClient.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_PS3_PS4.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_PS4.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Vita.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_WindowsStore8.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Windows_Linux.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Windows_Linux_360.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetStatistics.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTransport2.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTypes.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakSleep.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakString.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakThread.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakWString.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rand.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RandSync.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReadyEvent.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RelayPlugin.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReliabilityLayer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaManager3.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Router2.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RPC4Plugin.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SecureHandshake.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SendToThread.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SignaledEvent.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleMutex.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketLayer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StatisticsHistory.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringCompressor.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringTable.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SuperFastHash.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TableSerializer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TCPInterface.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamBalancer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamManager.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TelnetTransport.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadsafePacketLogger.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TwoWayAuthentication.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPForwarder.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyClient.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCoordinator.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyServer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableDeltaSerializer.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableListDeltaTracker.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariadicSQLParser.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VitaIncludes.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WSAStartupSingleton.cpp">
+      <Filter>Libraries\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\_FindFirst.cpp">
+      <Filter>Libraries\RakNet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
