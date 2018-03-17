@@ -10,13 +10,11 @@
 // #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+// standard libraries
+// map, vector, string, etc
+
 // libraries
 #include "Libraries_Include.h"
 
-// independent files (constants, enums, types, etc)
-// maybe later
-
-// utilities
-// maybe later
 
 #endif // !_PCH_H_

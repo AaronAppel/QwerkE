@@ -1,5 +1,5 @@
-#ifndef __GlobalConstants_H_
-#define __GlobalConstants_H_
+#ifndef _GlobalConstants_H_
+#define _GlobalConstants_H_
 
 // Window settings
 const int g_DefaultWindowWidth = 1280, g_DefaultWindowHeight = 720;

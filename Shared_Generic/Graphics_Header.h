@@ -1,18 +1,6 @@
 #ifndef _Graphics_Header_H_
 #define _Graphics_Header_H_
 
-// glew, other opengl stuff
-// all files that projects needs to draw
-
-// 3rd party graphics libraries
-#include "Libraries/glew/GL/glew.h"
-#include "Libraries/glfw/GLFW/glfw3.h"
-#include "Libraries/imgui/imgui.h"
-#include "Libraries/imgui/imgui_impl_glfw_gl3.h"
-
-#include "Libraries/freetype2/ft2build.h"
-#include FT_FREETYPE_H
-
 // defines, structs, typedefs
 #define Wind_CCW 0
 enum eShaderTypes
