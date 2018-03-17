@@ -84,1447 +84,347 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h">
-      <Filter>Libraries\glew</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\glew.h">
-      <Filter>Libraries\glew</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\glxew.h">
-      <Filter>Libraries\glew</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\wglew.h">
-      <Filter>Libraries\glew</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glfw\GLFW\glfw3.h">
-      <Filter>Libraries\glfw</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glfw\GLFW\glfw3native.h">
-      <Filter>Libraries\glfw</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imconfig.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_internal.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_rect_pack.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_textedit.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_truetype.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.h">
-      <Filter>Libraries\lodepng</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathConstants.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathHelpers.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MyMatrix.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MyQuaternion.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h">
-      <Filter>Libraries\MyImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\EasyXinput\EasyXinput.h">
       <Filter>Libraries\EasyXinput</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics_Header.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\ObjectPool.h">
-      <Filter>Containers</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\lodepng\lodepng.h">
+      <Filter>Libraries\lodepng</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\Barrel.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\CPPList.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\Mesh.h">
-      <Filter>Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshFactory.h">
-      <Filter>Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshUtilities.h">
-      <Filter>Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Mesh\VertexData.h">
-      <Filter>Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\FBO\FrameBufferObject.h">
-      <Filter>Graphics\FBO</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\CubeMap\CubeMap.h">
-      <Filter>Graphics\CubeMap</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderProgram.h">
-      <Filter>Graphics\ShaderProgram</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderFactory.h">
-      <Filter>Graphics\ShaderProgram</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\OpenGLManager.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\OpenGLHelpers.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Sprite\Sprite.h">
-      <Filter>Graphics\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\Model\Model.h">
-      <Filter>Graphics\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\LightData.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\MaterialData.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Input\Controller.h">
-      <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Input\InputManager.h">
-      <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\SmartPointer.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\GUID.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Timer.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.h">
-      <Filter>Utilities\FileIO</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.h">
-      <Filter>Utilities\FileIO</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.h">
-      <Filter>Utilities\FileIO</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\Tween.h">
-      <Filter>Utilities\Tween</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.h">
-      <Filter>Utilities\Tween</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.h">
-      <Filter>Libraries\cJSON_Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.h">
-      <Filter>Libraries\cJSON_Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Math_Includes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h">
-      <Filter>Libraries\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Helpers.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\MyLinkedList.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuManager.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\MenuItem.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Menus\Menu.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\ExampleWindow.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\MenuWindow.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Block_Menu.h">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h">
-      <Filter>Libraries\MyGLFW</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftconfig.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftconfig.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftheader.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftheader.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftmodule.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftmodule.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftoption.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftoption.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftstdlib.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftstdlib.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\freetype.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\freetype.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftadvanc.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftadvanc.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbbox.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbbox.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbdf.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbdf.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbitmap.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbitmap.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbzip2.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbzip2.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftcache.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftcache.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftchapters.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftchapters.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftcid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftcid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftdriver.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftdriver.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fterrdef.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fterrdef.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fterrors.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fterrors.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftfntfmt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftfntfmt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgasp.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftgasp.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftglyph.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftglyph.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgxval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftgxval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgzip.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftgzip.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftimage.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftimage.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftincrem.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftincrem.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlcdfil.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftlcdfil.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlist.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftlist.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlzw.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftlzw.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmac.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmac.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmm.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmm.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmodapi.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmodapi.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmoderr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmoderr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftotval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftotval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftoutln.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftoutln.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftparams.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftparams.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftpfr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftpfr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftrender.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftrender.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsizes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsizes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsnames.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsnames.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftstroke.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftstroke.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsynth.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsynth.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsystem.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsystem.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fttrigon.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fttrigon.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fttypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fttypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftwinfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftwinfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\autohint.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\autohint.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\cffotypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\cffotypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\cfftypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\cfftypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftcalc.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftcalc.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftdebug.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftdebug.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftdrv.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftdrv.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftgloadr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftgloadr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\fthash.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\fthash.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftmemory.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftmemory.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftobjs.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftobjs.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftpic.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftpic.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftpsprop.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftpsprop.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftrfork.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftrfork.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftserv.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftserv.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftstream.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftstream.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\fttrace.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\fttrace.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftvalid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftvalid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\internal.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\internal.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\psaux.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\psaux.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\pshints.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\pshints.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svbdf.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svbdf.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svcfftl.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svcfftl.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svcid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svcid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svfntfmt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svfntfmt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svgldict.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svgldict.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svgxval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svgxval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svkern.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svkern.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svmetric.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svmetric.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svmm.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svmm.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svotval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svotval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpfr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpfr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpostnm.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpostnm.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svprop.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svprop.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpscmap.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpscmap.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpsinfo.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpsinfo.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svsfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svsfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svttcmap.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svttcmap.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svtteng.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svtteng.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svttglyf.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svttglyf.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svwinfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svwinfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\sfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\sfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\t1types.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\t1types.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\tttypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\tttypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\t1tables.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\t1tables.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ttnameid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ttnameid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\tttables.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\tttables.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\tttags.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\tttags.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\ft2build.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\ft2build.h">
       <Filter>Libraries\freetype2</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics\FontRendering\FontTest.h">
-      <Filter>Graphics\FontRendering</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\AutopatcherPatchContext.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\AutopatcherRepositoryInterface.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Base64Encoder.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\BitStream.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetSlidingWindow.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetUDT.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CheckSum.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudClient.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudCommon.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudServer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CommandParserInterface.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConnectionGraph2.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConsoleServer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DataCompressor.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DirectoryDeltaTransfer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DR_SHA1.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BinarySearchTree.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BPlusTree.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BytePool.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ByteQueue.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Hash.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Heap.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTree.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTreeFactory.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTreeNode.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_LinkedList.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_List.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Map.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_MemoryPool.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Multilist.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_OrderedChannelHeap.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_OrderedList.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Queue.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_QueueLinkedList.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_RangeList.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Table.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ThreadsafeAllocatingQueue.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Tree.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_WeightedGraph.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DynDNS.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmailSender.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmptyHeader.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EpochTimeToString.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Export.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileList.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListNodeContext.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransfer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransferCBInterface.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileOperations.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FormatString.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FullyConnectedMesh2.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Getche.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Gets.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GetTime.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\gettimeofday.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GridSectorizer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection2.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\IncrementalReadInterface.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\InternalPacket.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Itoa.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Kbhit.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LinuxStrings.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LocklessTypes.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LogCommandParser.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageFilter.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageIdentifiers.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MTUSize.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeFeatureIncludes.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeFeatureIncludesOverrides.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NativeTypes.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughClient.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughServer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionClient.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionCommon.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionServer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDManager.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDObject.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketConsoleLogger.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketFileLogger.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketizedTCP.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketLogger.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketOutputWindowLogger.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketPool.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketPriority.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PluginInterface2.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS3Includes.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS4Includes.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rackspace.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakAlloca.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakAssert.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakMemoryOverride.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetCommandParser.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetDefines.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetDefinesOverrides.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSmartPtr.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetStatistics.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTime.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTransport2.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTypes.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetVersion.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeerInterface.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakSleep.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakString.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakThread.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakWString.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rand.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RandSync.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReadyEvent.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RefCountedObj.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RelayPlugin.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReliabilityLayer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaEnums.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaManager3.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Router2.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RPC4Plugin.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SecureHandshake.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SendToThread.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SignaledEvent.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleMutex.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleTCPServer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SingleProducerConsumer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketDefines.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketIncludes.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketLayer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StatisticsHistory.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringCompressor.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringTable.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SuperFastHash.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TableSerializer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TCPInterface.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamBalancer.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamManager.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TelnetTransport.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadPool.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadsafePacketLogger.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TransportInterface.h">
-      <Filter>Libraries\RakNet</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TwoWayAuthentication.h">
-      <Filter>Libraries\RakNet</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPForwarder.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\eglew.h">
+      <Filter>Libraries\glew</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyClient.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\glew.h">
+      <Filter>Libraries\glew</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCommon.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\glxew.h">
+      <Filter>Libraries\glew</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCoordinator.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\wglew.h">
+      <Filter>Libraries\glew</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyServer.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glfw\GLFW\glfw3.h">
+      <Filter>Libraries\glfw</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableDeltaSerializer.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glfw\GLFW\glfw3native.h">
+      <Filter>Libraries\glfw</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableListDeltaTracker.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imconfig.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariadicSQLParser.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VitaIncludes.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_impl_glfw_gl3.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WindowsIncludes.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_internal.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WSAStartupSingleton.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\stb_rect_pack.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\XBox360Includes.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\stb_textedit.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\_FindFirst.h">
-      <Filter>Libraries\RakNet</Filter>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\stb_truetype.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp">
-      <Filter>Libraries\lodepng</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.cpp">
-      <Filter>Libraries\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.cpp">
-      <Filter>Libraries\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MyMatrix.cpp">
-      <Filter>Libraries\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MyQuaternion.cpp">
-      <Filter>Libraries\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.cpp">
-      <Filter>Libraries\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.cpp">
-      <Filter>Libraries\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp">
-      <Filter>Libraries\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.cpp">
-      <Filter>Libraries\MyImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.cpp">
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\EasyXinput\EasyXinput.cpp">
       <Filter>Libraries\EasyXinput</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Containers\Barrel.cpp">
-      <Filter>Containers</Filter>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\lodepng\lodepng.cpp">
+      <Filter>Libraries\lodepng</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\Mesh.cpp">
-      <Filter>Graphics\Mesh</Filter>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui.cpp">
+      <Filter>Libraries\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshFactory.cpp">
-      <Filter>Graphics\Mesh</Filter>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_demo.cpp">
+      <Filter>Libraries\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Mesh\MeshUtilities.cpp">
-      <Filter>Graphics\Mesh</Filter>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_draw.cpp">
+      <Filter>Libraries\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\FBO\FrameBufferObject.cpp">
-      <Filter>Graphics\FBO</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\CubeMap\CubeMap.cpp">
-      <Filter>Graphics\CubeMap</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderProgram.cpp">
-      <Filter>Graphics\ShaderProgram</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\Basic2DShader.cpp">
-      <Filter>Graphics\ShaderProgram</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\Basic3DShader.cpp">
-      <Filter>Graphics\ShaderProgram</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\ShaderFactory.cpp">
-      <Filter>Graphics\ShaderProgram</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\ShaderProgram\LitMaterial.cpp">
-      <Filter>Graphics\ShaderProgram</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\OpenGLManager.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\OpenGLHelpers.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Sprite\Sprite.cpp">
-      <Filter>Graphics\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\Model\Model.cpp">
-      <Filter>Graphics\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Input\AssignGLFWKeys.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Input\AssignWin32Keys.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Input\Controller.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Input\InputManager.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.cpp">
-      <Filter>Utilities\FileIO</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp">
-      <Filter>Utilities\FileIO</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp">
-      <Filter>Utilities\FileIO</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.cpp">
-      <Filter>Utilities\Tween</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.cpp">
-      <Filter>Libraries\cJSON_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.cpp">
-      <Filter>Libraries\cJSON_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Helpers.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuManager.cpp">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.cpp">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.cpp">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\MenuItem.cpp">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Menus\Menu.cpp">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\ExampleWindow.cpp">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\MenuWindow.cpp">
-      <Filter>Libraries\Block_Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp">
-      <Filter>Libraries\MyGLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics\FontRendering\FontTest.cpp">
-      <Filter>Graphics\FontRendering</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Base64Encoder.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\BitStream.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetSlidingWindow.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CCRakNetUDT.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CheckSum.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudClient.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudCommon.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CloudServer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\CommandParserInterface.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConnectionGraph2.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ConsoleServer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DataCompressor.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DirectoryDeltaTransfer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DR_SHA1.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_BytePool.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_ByteQueue.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_HuffmanEncodingTree.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DS_Table.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\DynDNS.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EmailSender.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\EpochTimeToString.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileList.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileListTransfer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FileOperations.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FormatString.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\FullyConnectedMesh2.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Getche.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Gets.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GetTime.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\gettimeofday.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\GridSectorizer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\HTTPConnection2.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\IncrementalReadInterface.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Itoa.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LinuxStrings.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LocklessTypes.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\LogCommandParser.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\MessageFilter.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughClient.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatPunchthroughServer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionClient.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionCommon.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NatTypeDetectionServer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDManager.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\NetworkIDObject.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketConsoleLogger.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketFileLogger.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketizedTCP.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketLogger.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PacketOutputWindowLogger.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PluginInterface2.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\PS4Includes.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rackspace.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakMemoryOverride.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetCommandParser.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_360_720.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Berkley.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Berkley_NativeClient.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_NativeClient.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_PS3_PS4.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_PS4.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Vita.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_WindowsStore8.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Windows_Linux.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetSocket2_Windows_Linux_360.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetStatistics.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTransport2.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakNetTypes.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakPeer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakSleep.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakString.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakThread.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RakWString.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Rand.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RandSync.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReadyEvent.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RelayPlugin.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReliabilityLayer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ReplicaManager3.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\Router2.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\RPC4Plugin.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SecureHandshake.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SendToThread.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SignaledEvent.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SimpleMutex.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SocketLayer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StatisticsHistory.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringCompressor.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\StringTable.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\SuperFastHash.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TableSerializer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TCPInterface.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamBalancer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TeamManager.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TelnetTransport.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\ThreadsafePacketLogger.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\TwoWayAuthentication.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPForwarder.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyClient.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyCoordinator.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\UDPProxyServer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableDeltaSerializer.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariableListDeltaTracker.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VariadicSQLParser.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\VitaIncludes.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\WSAStartupSingleton.cpp">
-      <Filter>Libraries\RakNet</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\RakNet\Source\_FindFirst.cpp">
-      <Filter>Libraries\RakNet</Filter>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_impl_glfw_gl3.cpp">
+      <Filter>Libraries\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

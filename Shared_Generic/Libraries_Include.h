@@ -1,14 +1,30 @@
 #ifndef _Libraries_Include_H_
 #define _Libraries_Include_H_
 
-#include "Libraries/cJSON_Interface/cJSONInterface.h"
-#include "Libraries/EasyXinput/EasyXinput.h"
-#include "Libraries/lodepng/lodepng.h"
+// include all libraries in the "Libraries" folder //
 
-// http://www.raknet.net/raknet/manual/tutorialsample3.html
-//#include "Libraries/RakNet/Source/RakPeerInterface.h"
-//#include "Libraries/RakNet/Source/MessageIdentifiers.h"
-//#include "Libraries/RakNet/Source/BitStream.h"
-//#include "Libraries/RakNet/Source/RakNetTypes.h"  // MessageID
+// HID //
+#include "Libraries/EasyXinput/EasyXinput.h"
+
+// FILES //
+// JSON parsing
+// #include "cJSON.h"
+#include "Libraries/cJSON_Interface/cJSONInterface.h"
+
+// image loading
+#include "Libraries/lodepng/lodepng.h"
+// TODO: stb_image
+
+// font rendering
+#include "Libraries/freetype2/ft2build.h"
+#include FT_FREETYPE_H
+
+// graphics //
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
+
+// GUIs //
+#include "Libraries/imgui/imgui.h"
+#include "Libraries/imgui/imgui_impl_glfw_gl3.h"
 
 #endif // !_Libraries_Include_H_

@@ -8,6 +8,7 @@
 
 /* generic includes */
 #include "Engine_Enums.h"
+#include "Global_Constants.h"
 
 // libraries
 #include "Math_Includes.h"
