@@ -14,7 +14,10 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)Graphics_Header.h" />
+=======
+>>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftconfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftheader.h" />
@@ -122,6 +125,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_textedit.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\imgui\stb_truetype.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.h" />
+<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
@@ -146,6 +150,17 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyImGUI\MyImGUI.cpp" />
+=======
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\EasyXinput\EasyXinput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp" />
+>>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Resources\Shaders\text.frag" />

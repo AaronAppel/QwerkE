@@ -25,7 +25,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
+<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE_Include.h" />
+=======
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE_Include.h" />
+>>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
     <ClInclude Include="$(MSBuildThisFileDirectory)Global_Constants.h" />
   </ItemGroup>
 </Project>

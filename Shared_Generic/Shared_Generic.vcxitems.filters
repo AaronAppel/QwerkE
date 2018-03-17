@@ -87,6 +87,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\GL\eglew.h">
       <Filter>Libraries\glew</Filter>
     </ClInclude>
@@ -140,297 +141,348 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h">
       <Filter>Libraries\MyGLFW</Filter>
+=======
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\EasyXinput\EasyXinput.h">
+      <Filter>Libraries\EasyXinput</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftconfig.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\lodepng\lodepng.h">
+      <Filter>Libraries\lodepng</Filter>
+>>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftconfig.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftheader.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftheader.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftmodule.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftmodule.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftoption.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftoption.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\config\ftstdlib.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\config\ftstdlib.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\freetype.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\freetype.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftadvanc.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftadvanc.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbbox.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbbox.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbdf.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbdf.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbitmap.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbitmap.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftbzip2.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftbzip2.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftcache.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftcache.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftchapters.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftchapters.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftcid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftcid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftdriver.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftdriver.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fterrdef.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fterrdef.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fterrors.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fterrors.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftfntfmt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftfntfmt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgasp.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftgasp.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftglyph.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftglyph.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgxval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftgxval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftgzip.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftgzip.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftimage.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftimage.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftincrem.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftincrem.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlcdfil.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftlcdfil.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlist.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftlist.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftlzw.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftlzw.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmac.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmac.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmm.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmm.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmodapi.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmodapi.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftmoderr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftmoderr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftotval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftotval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftoutln.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftoutln.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftparams.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftparams.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftpfr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftpfr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftrender.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftrender.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsizes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsizes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsnames.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsnames.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftstroke.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftstroke.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsynth.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsynth.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftsystem.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftsystem.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fttrigon.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fttrigon.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\fttypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\fttypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ftwinfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ftwinfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\autohint.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\autohint.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\cffotypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\cffotypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\cfftypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\cfftypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftcalc.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftcalc.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftdebug.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftdebug.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftdrv.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftdrv.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftgloadr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftgloadr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\fthash.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\fthash.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftmemory.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftmemory.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftobjs.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftobjs.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftpic.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftpic.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftpsprop.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftpsprop.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftrfork.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftrfork.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftserv.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftserv.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftstream.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftstream.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\fttrace.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\fttrace.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\ftvalid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\ftvalid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\internal.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\internal.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\psaux.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\psaux.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\pshints.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\pshints.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svbdf.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svbdf.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svcfftl.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svcfftl.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svcid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svcid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svfntfmt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svfntfmt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svgldict.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svgldict.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svgxval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svgxval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svkern.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svkern.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svmetric.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svmetric.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svmm.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svmm.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svotval.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svotval.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpfr.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpfr.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpostnm.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpostnm.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svprop.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svprop.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpscmap.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpscmap.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svpsinfo.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svpsinfo.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svsfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svsfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svttcmap.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svttcmap.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svtteng.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svtteng.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svttglyf.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svttglyf.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\services\svwinfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\services\svwinfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\sfnt.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\sfnt.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\t1types.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\t1types.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\tttypes.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\internal\tttypes.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\t1tables.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\t1tables.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\ttnameid.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\ttnameid.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\tttables.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\tttables.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\tttags.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\freetype\tttags.h">
       <Filter>Libraries\freetype2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\ft2build.h">
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\freetype2\ft2build.h">
       <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\eglew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\glew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\glxew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\GL\wglew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glfw\GLFW\glfw3.h">
+      <Filter>Libraries\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glfw\GLFW\glfw3native.h">
+      <Filter>Libraries\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imconfig.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_impl_glfw_gl3.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_internal.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\stb_rect_pack.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\stb_textedit.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\stb_truetype.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
+>>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\EasyXinput\EasyXinput.cpp">
+      <Filter>Libraries\EasyXinput</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\lodepng\lodepng.cpp">
+      <Filter>Libraries\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui.cpp">
       <Filter>Libraries\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_demo.cpp">
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_demo.cpp">
       <Filter>Libraries\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_draw.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui_impl_glfw_gl3.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp">
       <Filter>Libraries\lodepng</Filter>
     </ClCompile>
@@ -442,6 +494,13 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp">
       <Filter>Libraries\MyGLFW</Filter>
+=======
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_draw.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\imgui\imgui_impl_glfw_gl3.cpp">
+      <Filter>Libraries\imgui</Filter>
+>>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
