@@ -1,35 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="GameObject">
-      <UniqueIdentifier>{255181b0-abeb-4df9-9797-345e9dc86f12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Components">
-      <UniqueIdentifier>{de8903f3-0413-418b-89dd-ebb5b329f5c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Routines">
-      <UniqueIdentifier>{f53dee3b-fdaf-4e8f-8073-ea6c4bcf213e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Factory">
-      <UniqueIdentifier>{322e43be-82eb-49c1-b277-fd75a4971c14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{0abc2477-afaa-4465-8fc9-edcef9cb4c9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems">
-      <UniqueIdentifier>{182994df-f8df-4ce2-a86b-b9bd2a50f6ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{2af0efa9-8e7a-4a1e-943b-bfcd77a44163}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
-<<<<<<< HEAD
-    <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE_Include.h" />
-=======
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE_Include.h" />
->>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Global_Constants.h" />
   </ItemGroup>
 </Project>

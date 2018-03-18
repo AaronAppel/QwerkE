@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 #include "QwerkE.h"
->>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
 
 // TODO: No Globals!
 int g_WindowWidth = 1280, g_WindowHeight = 720;
@@ -9,7 +6,6 @@ const char* g_WindowTitle = "Title";
 
 int main()
 {
-<<<<<<< HEAD
 	// setup //
 	/* glfw */
 	GLFWwindow* window;
@@ -59,36 +55,6 @@ int main()
 	ImGui_ImplGlfwGL3_Shutdown(); // shutdown imgui
 	ImGui::DestroyContext(); // destroy imgui
 	glfwTerminate(); // shutdown glfw
-=======
-    /* glfw */
-    GLFWwindow* window;
-
-    if (!glfwInit())
-        return 0; // glfw crashed
-
-    window = glfwCreateWindow(g_WindowWidth, g_WindowHeight, g_WindowTitle, NULL, NULL);
-    if (!window)
-        return 0; // glfw crashed
-
-    glfwMakeContextCurrent(window);
-
-    /* glew */
-    if (glewInit() != GLEW_OK)
-        return 0; // glew crashed
-
-    /* opengl */
-    glViewport(0, 0, g_WindowWidth , g_WindowHeight);
-
-    /* imgui */
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImGui_ImplGlfwGL3_Init(window, true);
-
-    glfwDestroyWindow(window); // destroy window
-    ImGui_ImplGlfwGL3_Shutdown(); // shutdown imgui
-    ImGui::DestroyContext(); // destroy imgui
-    glfwTerminate(); // shutdown glfw
->>>>>>> 990ef9e83d0b87d69c131228323d7a20d5d11aa1
 
     return 0;
 }
