@@ -78,6 +78,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -90,6 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -104,6 +106,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -120,6 +123,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
