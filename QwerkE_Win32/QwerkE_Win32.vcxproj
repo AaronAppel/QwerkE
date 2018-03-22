@@ -78,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/glm/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>"PCH.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
@@ -87,7 +87,7 @@
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_DLL_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_LibStatic_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/pThreads/lib/x86;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -97,7 +97,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/glm/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>$(SolutionDir)Qwerk_Win32/PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
@@ -105,7 +105,7 @@
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_DLL_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_LibStatic_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/pThreads/lib/x86;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -117,7 +117,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/glm/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>"PCH.h"</ForcedIncludeFiles>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
@@ -127,7 +127,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_DLL_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_LibStatic_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/pThreads/lib/x86;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -139,7 +139,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)Shared_Generic/Libraries/glm/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>"PCH.h"</ForcedIncludeFiles>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
@@ -149,7 +149,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_DLL_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;RakNet_VS2008_LibStatic_Debug_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Shared_Generic/Libraries/pThreads/lib/x86;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

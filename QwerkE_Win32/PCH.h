@@ -6,21 +6,24 @@
 /////////////////////////////////////////////////
 
 #pragma warning(disable : 4996) // old sprintf warnings in RakNet
-#define _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_DEPRECATE
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS // old sprintf warnings in RakNet
+#define _CRT_SECURE_NO_DEPRECATE // old sprintf warnings in RakNet
+#define _WINSOCK_DEPRECATED_NO_WARNINGS // old warnings in RakNet
 
 // platform includes
 #if _WIN32
 // include inside WIN32 projects to use QwerkE framework
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
+//#include <WinSock2.h> // TODO: Remove?
 #include <Windows.h>
 #endif // _WIN32
 
 // standard libraries
 // map, vector, string, etc
+// TODO: Is including this here a good idea
 #include <string>
+#include <stdio.h>
 
 // libraries
 #include "../Shared_Generic/Libraries_Include.h"

@@ -45,11 +45,12 @@
 
 
 // SETUP:
-    // Unfortunately you may need to add an additional include directory for GLEW, GLFW, and Freetype2 because
+    // Unfortunately you may need to add an additional include directory for GLEW, GLFW, and because
     // of how their files look for each other.
 
     // Other than that you should only need to #include QwerkE.h and make sure the file structure
     // is kept the same as how it is distributed from https://github.com/AaronAppel/QwerkE.
+	// Ensure you are using the proper libraries and other files when developing for x86 vs x64.
 
 // USAGE:
     // #include "QwerkE_Include.h"

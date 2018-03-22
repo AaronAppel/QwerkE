@@ -1,7 +1,7 @@
 #ifndef _Libraries_Include_H_
 #define _Libraries_Include_H_
 
-// TODO: Add Boost, Bullet3D, PThreads
+// TODO: Add Boost, Bullet3D
 
 //////////////////////////////
 // FILES //
@@ -42,16 +42,14 @@
 
 //////////////////////////////
 // threading
-// #include "pThreads/pthread.h"
+#define HAVE_STRUCT_TIMESPEC // really?
+#include "Libraries/pThreads/pthread.h"
 //////////////////////////////
 
 //////////////////////////////
 // networking
 // http://www.raknet.net/raknet/manual/tutorialsample3.html
 //#include "Libraries/RakNet/Source/RakPeerInterface.h"
-//#include "Libraries/RakNet/Source/MessageIdentifiers.h"
-//#include "Libraries/RakNet/Source/BitStream.h"
-//#include "Libraries/RakNet/Source/RakNetTypes.h"  // MessageID
 //////////////////////////////
 
 //////////////////////////////

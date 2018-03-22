@@ -11,17 +11,17 @@ int main()
 	GLFWwindow* window;
 
 	if (!glfwInit())
-		return 0; // glfw crashed
+		return 0; // glfw error
 
 	window = glfwCreateWindow(g_WindowWidth, g_WindowHeight, g_WindowTitle, NULL, NULL);
 	if (!window)
-		return 0; // glfw crashed
+		return 0; // glfw error
 
 	glfwMakeContextCurrent(window);
 
 	/* glew */
 	if (glewInit() != GLEW_OK)
-		return 0; // glew crashed
+		return 0; // glew error
 
 	/* opengl */
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
