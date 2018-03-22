@@ -49,7 +49,8 @@
 //////////////////////////////
 // networking
 // http://www.raknet.net/raknet/manual/tutorialsample3.html
-//#include "Libraries/RakNet/Source/RakPeerInterface.h"
+#include "Libraries/RakNet/Source/RakPeerInterface.h"
+#include "Libraries/RakNet/Source/MessageIdentifiers.h"
 //////////////////////////////
 
 //////////////////////////////
