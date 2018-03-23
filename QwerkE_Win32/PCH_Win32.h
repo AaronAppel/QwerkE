@@ -1,5 +1,5 @@
-#ifndef _PCH_H_
-#define _PCH_H_
+#ifndef _PCH_Win32_H_
+#define _PCH_Win32_H_
 
 /////////////////////////////////////////////////
 // include STATIC code that does not change often
@@ -44,4 +44,4 @@
 // #include "Graphics_Header.h"
 
 
-#endif // !_PCH_H_
+#endif // !_PCH_Win32_H_

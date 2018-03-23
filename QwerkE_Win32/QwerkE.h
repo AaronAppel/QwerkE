@@ -65,7 +65,4 @@
 // API:
     // WIP
 
-    // Internal:
-        // WIP
-
 #endif // !_QwerkE_H_
