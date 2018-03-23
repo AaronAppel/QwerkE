@@ -21,6 +21,7 @@ imgui: https://github.com/ocornut/imgui
 freetype2: https://www.freetype.org/index.html
 glm: https://github.com/g-truc/glm
 pthreads: https://github.com/coapp-packages/pthreads
+vlc: https://github.com/videolan/vlc
 
 ## License
 This project is licensed under the BSD3 License - see the LICENSE file for details.
