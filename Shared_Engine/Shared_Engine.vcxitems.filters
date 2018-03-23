@@ -4,5 +4,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Global_Constants.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Load_Libs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
   </ItemGroup>
 </Project>

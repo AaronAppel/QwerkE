@@ -65,4 +65,13 @@
 #include <glm/gtc/type_ptr.hpp>
 /////////////////////////////
 
+//////////////////////////////
+// physics
+//////////////////////////////
+// TODO: Add necessary headers.
+// TODO: Remove unecessary headers.
+// Consider creating a library for bullet projects.
+#include "Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+/////////////////////////////
+
 #endif // !_Libraries_Include_H_

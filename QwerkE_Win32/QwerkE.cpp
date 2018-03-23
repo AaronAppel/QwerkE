@@ -31,7 +31,7 @@ int main()
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui_ImplGlfwGL3_Init(window, true);
-
+    
 	// game loop //
 	while (!glfwWindowShouldClose(window))
 	{
