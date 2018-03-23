@@ -1,7 +1,7 @@
 #ifndef _Libraries_Include_H_
 #define _Libraries_Include_H_
 
-// TODO: Add Boost, Bullet3D
+// TODO: Add Bullet3D
 
 //////////////////////////////
 // FILES //
@@ -19,13 +19,15 @@
 //////////////////////////////
 
 //////////////////////////////
-// HID//
+// HID //
+//////////////////////////////
 // xbox controller
 #include "Libraries/EasyXinput/EasyXinput.h"
 //////////////////////////////
 
 //////////////////////////////
 // Graphics //
+//////////////////////////////
 // window creation
 #include "Libraries/glew/GL/glew.h"
 
@@ -35,6 +37,7 @@
 
 //////////////////////////////
 // GUIs //
+//////////////////////////////
 // imgui
 #include "Libraries/imgui/imgui.h"
 #include "Libraries/imgui/imgui_impl_glfw_gl3.h"
@@ -48,6 +51,7 @@
 
 //////////////////////////////
 // networking
+//////////////////////////////
 // http://www.raknet.net/raknet/manual/tutorialsample3.html
 #include "Libraries/RakNet/Source/RakPeerInterface.h"
 #include "Libraries/RakNet/Source/MessageIdentifiers.h"
@@ -55,6 +59,7 @@
 
 //////////////////////////////
 // math
+//////////////////////////////
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

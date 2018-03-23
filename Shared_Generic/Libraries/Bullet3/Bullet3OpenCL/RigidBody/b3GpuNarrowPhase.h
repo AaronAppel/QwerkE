@@ -24,7 +24,7 @@ protected:
 
 public:
 
-	
+
 
 
 	b3GpuNarrowPhase(cl_context vtx, cl_device_id dev, cl_command_queue q, const struct b3Config& config);
@@ -36,11 +36,11 @@ public:
 
 	int registerCompoundShape(b3AlignedObjectArray<b3GpuChildShape>* childShapes);
 	int registerFace(const b3Vector3& faceNormal, float faceConstant);
-	
+
 	int	registerConcaveMesh(b3AlignedObjectArray<b3Vector3>* vertices, b3AlignedObjectArray<int>* indices,const float* scaling);
-	
+
 	//do they need to be merged?
-	
+
 	int	registerConvexHullShape(b3ConvexUtility* utilPtr);
 	int	registerConvexHullShape(const float* vertices, int strideInBytes, int numVertices, const float* scaling);
 
@@ -55,9 +55,9 @@ public:
 	void setObjectTransformCpu(float* position, float* orientation , int bodyIndex);
 	void setObjectVelocityCpu(float* linVel, float* angVel, int bodyIndex);
 
-	
+
 	virtual void computeContacts(cl_mem broadphasePairs, int numBroadphasePairs, cl_mem aabbsWorldSpace, int numObjects);
-	
+
 
 	cl_mem	getBodiesGpu();
 	const struct b3RigidBodyData* getBodiesCpu() const;
@@ -80,7 +80,7 @@ public:
 	int	getNumContactsGpu() const;
 
 	cl_mem	getAabbLocalSpaceBufferGpu();
-	
+
 	int getNumRigidBodies() const;
 
 	int allocateCollidable();
