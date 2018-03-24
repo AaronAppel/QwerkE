@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="QwerkE.cpp" />
     <ClCompile Include="PCH_Win32.cpp" />
+    <ClCompile Include="QwerkE_Win32.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="QwerkE.h" />
     <ClInclude Include="PCH_Win32.h" />
   </ItemGroup>
 </Project>

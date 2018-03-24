@@ -5,43 +5,40 @@
 // include STATIC code that does not change often
 /////////////////////////////////////////////////
 
+#include "Engine_Defines.h"
+
+// TODO: Move pragma warnings and use pop warnings
 #pragma warning(disable : 4996) // old sprintf warnings in RakNet
 #define _CRT_SECURE_NO_WARNINGS // old sprintf warnings in RakNet
 #define _CRT_SECURE_NO_DEPRECATE // old sprintf warnings in RakNet
 #define _WINSOCK_DEPRECATED_NO_WARNINGS // old warnings in RakNet
 
 // platform includes
-#if _WIN32
-// include inside WIN32 projects to use QwerkE framework
+#if defined(_Q32bit) && defined(_QWindows)
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
-//#include <WinSock2.h> // TODO: Remove?
 #include <Windows.h>
-#endif // _WIN32
+#else
+#pragma warning "Define Platform!"
+#endif // !platform
 
 // standard libraries
 // map, vector, string, etc
 // TODO: Is including this here a good idea?
+// Does it save compile time?
 #include <string>
 #include <stdio.h>
+#include <map>
+#include <vector>
 
 // constants, enums
 #include "Global_Constants.h"
 #include "Engine_Enums.h"
 
-// load .lib + .dlls
-#include "Load_Libs.h"
+// containers
 
 // libraries
 #include "../Shared_Generic/Libraries_Include.h"
-
-// containers
-
-// math
-// #include "Math_Includes.h"
-
-// graphics
-// #include "Graphics_Header.h"
 
 
 #endif // !_PCH_Win32_H_

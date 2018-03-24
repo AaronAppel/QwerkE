@@ -14,10 +14,9 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Global_Constants.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Load_Libs.h" />
   </ItemGroup>
 </Project>
