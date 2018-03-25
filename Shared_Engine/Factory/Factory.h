@@ -1,7 +1,6 @@
 #ifndef _Factory_H_
 #define _Factory_H_
 
-#include "QwerkE_Include.h"
 #include "Math_Includes.h"
 #include "Engine_Enums.h"
 #include "GameObject/GameObject.h"

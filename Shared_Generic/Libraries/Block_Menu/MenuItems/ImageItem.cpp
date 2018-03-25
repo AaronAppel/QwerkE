@@ -1,6 +1,6 @@
 #include "ImageItem.h"
-#include "Graphics/Mesh/Mesh.h"
-#include "Graphics/ShaderProgram/ShaderProgram.h"
+#include "../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
+#include "../Shared_Engine/Systems/Graphics/ShaderProgram/ShaderProgram.h"
 
 ImageItem::ImageItem(Mesh* mesh) : MenuItem(mesh)
 {

@@ -2,6 +2,7 @@
 #include "Factory.h"
 #include "Systems/ResourceManager.h"
 #include "Math_Includes.h"
+#include "../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
 
 extern int g_WindowWidth, g_WindowHeight;
 

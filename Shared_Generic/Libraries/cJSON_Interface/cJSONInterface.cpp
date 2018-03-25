@@ -2,7 +2,7 @@
 #include "Libraries/cJSON_Interface/cJSONInterface.h"
 #include "Utilities/FileIO/FileUtilities.h"
 #include "Utilities/PrintFunctions.h"
-#include "../QwerkE_Win32/QwerkE.h"
+
 #include <vector>
 
 cJSON* OpencJSONStream(const char* fileDirectory)

@@ -1,8 +1,8 @@
 #include "Systems/ResourceManager.h"
-#include "Graphics_Header.h"
-#include "Graphics/OpenGLHelpers.h"
-#include "Graphics/MaterialData.h"
-#include "Graphics/ShaderProgram/ShaderFactory.h"
+#include "../Systems/Graphics_Header.h"
+#include "../Systems/Graphics/OpenGLHelpers.h"
+#include "../Systems/Graphics/MaterialData.h"
+#include "../Systems/Graphics/ShaderProgram/ShaderFactory.h"
 
 // TODO: Load all files in folder. This avoids hard coded assets names and allows easy adding/removal of assets.
 // Objects may need to switch to assets ids. ids would act as indices in the asset list and would prevent crashing if assets are removed.

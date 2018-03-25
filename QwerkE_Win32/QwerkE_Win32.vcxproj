@@ -78,13 +78,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/Bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ForcedIncludeFiles>$(SolutionDir)QwerkE_Win32/PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PrecompiledHeaderFile>$(SolutionDir)QwerkE_Win32/PCH_Win32.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <ShowIncludes>false</ShowIncludes>
-      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
@@ -97,12 +97,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/Bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ForcedIncludeFiles>$(SolutionDir)Qwerk_Win32/PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>RakNet_VS2008_DLL_Debug_Win32.lib;glew32d.lib;glfw3dll.lib;freetype.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -117,12 +117,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/CL/;$(SolutionDir)Shared_Generic/Libraries/Bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ForcedIncludeFiles>"PCH.h"</ForcedIncludeFiles>
-      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -139,12 +139,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/CL/;$(SolutionDir)Shared_Generic/Libraries/Bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)QwerkE_Win32;$(SolutionDir)Shared_Engine/Systems/;$(SolutionDir)Shared_Generic/Libraries/RakNet/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/;$(SolutionDir)QwerkE_Win32/;$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/glfw/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)Shared_Generic/Libraries/glew/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ForcedIncludeFiles>"PCH.h"</ForcedIncludeFiles>
-      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -156,6 +156,9 @@
   <ItemGroup>
     <ClCompile Include="PCH_Win32.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="QwerkE_Win32.cpp" />
   </ItemGroup>

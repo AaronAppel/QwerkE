@@ -1,6 +1,18 @@
+#include "../QwerkE.h" // include engine
+
 // TODO: No Globals!
-int g_WindowWidth = 1280, g_WindowHeight = 720;
+int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
 const char* g_WindowTitle = "Title";
+
+float g_FrameRate = 0.0f;
+extern MyGLFW* g_MainWindow = nullptr;
+extern GameCore* g_GameCore = nullptr;
+extern const int g_NumPlayers; // InputManager.h
+extern InputManager* g_InputManager = nullptr;
+extern Controller* g_Player1Controller = nullptr;
+extern XinputHandler* g_XinputHandler = nullptr;
+extern bool g_Debugging = false;
+extern double g_TimeSinceExe = 0.0f;
 
 int main()
 {

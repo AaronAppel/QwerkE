@@ -1,6 +1,9 @@
-#include "Graphics_Header.h"
+#include "../../Shared_Engine/Systems/Graphics_Header.h"
 #include "FileUtilities.h"
 #include "Utilities/PrintFunctions.h"
+
+// TODO: Consider abstracting functionality. Maybe
+// abstract the mesh class and just pass vector2/3[]s back
 
 // TwinMatrix reference: https://pastebin.com/b5EuEyxj
 Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bool invertFaces)

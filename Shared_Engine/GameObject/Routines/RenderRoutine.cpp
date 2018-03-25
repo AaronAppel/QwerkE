@@ -3,10 +3,10 @@
 #include "GameObject/Components/RenderComponent.h"
 #include "RenderRoutine.h"
 #include "Engine_Enums.h"
-#include "Graphics/Mesh/Mesh.h"
-#include "Graphics_Header.h"
-#include "Graphics/MaterialData.h"
-#include "Graphics/OpenGLHelpers.h"
+#include "../../Systems/Graphics/Model/Mesh/Mesh.h"
+#include "../../Systems/Graphics_Header.h"
+#include "../../Systems/Graphics/MaterialData.h"
+#include "../../Systems/Graphics/OpenGLHelpers.h"
 #include "Utilities/StringHelpers.h"
 
 #include <assert.h>

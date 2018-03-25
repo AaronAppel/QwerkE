@@ -2,7 +2,7 @@
 #include "GameObject/Components/CameraComponent.h"
 #include "GameObject/Components/ThirdPersonCameraComponent.h"
 #include "GameObject/GameObject.h"
-#include "QwerkE_Global_Constants.h"
+#include "Global_Constants.h"
 
 ThirdPersonCameraComponent::ThirdPersonCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
 	CameraComponent(position, up, yaw, pitch)

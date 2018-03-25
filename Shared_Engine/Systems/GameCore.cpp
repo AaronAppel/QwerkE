@@ -3,6 +3,9 @@
 #include "ResourceManager.h"
 #include "Factory/Factory.h"
 #include "Graphics/OpenGLManager.h"
+#include "Graphics/FBO/FrameBufferObject.h"
+#include "Factory/LevelLoader.h"
+#include "Scene/SceneManager.h"
 
 GameCore::GameCore()
 {

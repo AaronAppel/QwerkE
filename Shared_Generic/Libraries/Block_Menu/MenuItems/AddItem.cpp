@@ -1,7 +1,7 @@
 #include "AddItem.h"
 #include "../Windows/MenuWindow.h"
-#include "Graphics/ShaderProgram/ShaderProgram.h"
-#include "Graphics/Mesh/Mesh.h"
+#include "../Shared_Engine/Systems/Graphics/ShaderProgram/ShaderProgram.h"
+#include "../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
 
 AddButton::AddButton(Mesh* mesh) : MenuItem(mesh)
 {

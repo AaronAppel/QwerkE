@@ -5,22 +5,14 @@
 // include STATIC code that does not change often
 /////////////////////////////////////////////////
 
-#include "Engine_Defines.h"
+#include "../Shared_Engine/Engine_Defines.h"
+#include "../Shared_Engine/Engine_Platform.h"
 
 // TODO: Move pragma warnings and use pop warnings
 #pragma warning(disable : 4996) // old sprintf warnings in RakNet
 #define _CRT_SECURE_NO_WARNINGS // old sprintf warnings in RakNet
 #define _CRT_SECURE_NO_DEPRECATE // old sprintf warnings in RakNet
 #define _WINSOCK_DEPRECATED_NO_WARNINGS // old warnings in RakNet
-
-// platform includes
-#if defined(_Q32bit) && defined(_QWindows)
-#include <SDKDDKVer.h>
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#else
-#pragma warning "Define Platform!"
-#endif // !platform
 
 // standard libraries
 // map, vector, string, etc
@@ -32,13 +24,12 @@
 #include <vector>
 
 // constants, enums
-#include "Global_Constants.h"
-#include "Engine_Enums.h"
+#include "../Shared_Engine/Global_Constants.h"
+#include "../Shared_Engine/Engine_Enums.h"
 
 // containers
 
 // libraries
 #include "../Shared_Generic/Libraries_Include.h"
-
 
 #endif // !_PCH_Win32_H_

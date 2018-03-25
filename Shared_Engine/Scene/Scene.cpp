@@ -3,8 +3,10 @@
 #include "GameObject/GameObject.h"
 #include "GameObject/Components/Component.h"
 #include "GameObject/Components/CameraComponent.h"
-#include "Input/Controller.h"
+#include "../Systems/Input/InputManager.h"
 #include "Utilities/DebugHelpers.h"
+#include "Systems/Input/Controller.h"
+#include "Systems/DataManager.h"
 
 extern int g_WindowWidth;
 extern int g_WindowHeight;

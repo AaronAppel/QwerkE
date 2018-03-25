@@ -36,13 +36,13 @@
 // lodepng
 #include "Libraries/lodepng/lodepng.h"
 // stb
-#include "stb_image.h"
+#include "../Shared_Generic/Libraries/stb_image.h"
 
 // font loading/rendering
 // freetype2
 #pragma comment( lib, "../Shared_Generic/Libraries/freetype2/freetype.lib" )
 #include "Libraries/freetype2/ft2build.h"
-#include FT_FREETYPE_H
+#include "../Shared_Generic/Libraries/freetype2/freetype/freetype.h"
 //////////////////////////////
 
 //////////////////////////////
@@ -73,6 +73,7 @@
 // TODO: Check for architecture and debug/release
 #pragma comment( lib, "../Shared_Generic/Libraries/glfw/glfw3.lib" )
 #include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/MyGLFW/MyGLFW.h"
 //////////////////////////////
 
 //////////////////////////////
@@ -82,6 +83,8 @@
 // imgui
 #include "Libraries/imgui/imgui.h"
 #include "Libraries/imgui/imgui_impl_glfw_gl3.h"
+// BlockMenu
+#include "Libraries/Block_Menu/Block_Menu.h"
 //////////////////////////////
 
 //////////////////////////////
@@ -109,9 +112,9 @@
 // math
 //////////////////////////////
 // glm
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "../Shared_Generic/Libraries/glm/glm.hpp"
+#include "../Shared_Generic/Libraries/glm/gtc/matrix_transform.hpp"
+#include "../Shared_Generic/Libraries/glm/gtc/type_ptr.hpp"
 /////////////////////////////
 
 //////////////////////////////

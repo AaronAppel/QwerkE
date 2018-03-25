@@ -7,9 +7,6 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{3b9f4c8e-f6ae-47a8-a01b-eb40de778f23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input">
-      <UniqueIdentifier>{a9a0f2dd-eace-45d1-8e81-32714c6d356e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libraries">
       <UniqueIdentifier>{dd1a0f16-1d55-4386-a7b9-14d36e9c3183}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,27 @@
     </Filter>
     <Filter Include="Libraries\Bullet">
       <UniqueIdentifier>{bb60a4b4-0aa4-42f4-ba33-812e130df263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\FileIO">
+      <UniqueIdentifier>{adee2512-af60-4e4c-821b-fab5cb0829ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\MyGLFW">
+      <UniqueIdentifier>{d85b22d0-9034-4999-ac70-32e1e6d65e17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\BlockMenu">
+      <UniqueIdentifier>{db5ea406-9f35-4b78-a132-b2b6db802d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\BlockMenu\MenuItems">
+      <UniqueIdentifier>{f966a31e-05c5-4dfd-8c80-cdb1d72633b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\BlockMenu\Menus">
+      <UniqueIdentifier>{de914f91-b850-4e93-8b1c-8b6a45c5add7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\BlockMenu\Windows">
+      <UniqueIdentifier>{1b2990df-3e01-496b-b65b-4bf4efa3f633}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\cJSON">
+      <UniqueIdentifier>{b0e09cf5-fee1-4f7a-a9f7-05741b18b940}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2457,6 +2475,105 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Bullet3\Bullet3Collision\NarrowPhaseCollision\shared\b3UpdateAabbs.h">
       <Filter>Libraries\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.h">
+      <Filter>Utilities\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.h">
+      <Filter>Utilities\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.h">
+      <Filter>Utilities\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Timer.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\GUID.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Helpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\SmartPointer.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h">
+      <Filter>Libraries\MyGLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Block_Menu.h">
+      <Filter>Libraries\BlockMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuManager.h">
+      <Filter>Libraries\BlockMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.h">
+      <Filter>Libraries\BlockMenu\MenuItems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\ExampleWindow.h">
+      <Filter>Libraries\BlockMenu\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\MenuWindow.h">
+      <Filter>Libraries\BlockMenu\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\MenuItem.h">
+      <Filter>Libraries\BlockMenu\MenuItems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.h">
+      <Filter>Libraries\BlockMenu\MenuItems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Menus\Menu.h">
+      <Filter>Libraries\BlockMenu\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MyMatrix.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MyQuaternion.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathConstants.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\MathHelpers.h">
+      <Filter>Libraries\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.h">
+      <Filter>Libraries\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.h">
+      <Filter>Libraries\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.h">
+      <Filter>Libraries\lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\CallbackFunctions.h">
+      <Filter>Libraries\MyGLFW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -2473,6 +2590,87 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\glm\detail\glm.cpp">
       <Filter>Libraries\glm</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\OBJLoader.cpp">
+      <Filter>Utilities\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp">
+      <Filter>Utilities\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp">
+      <Filter>Utilities\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Helpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp">
+      <Filter>Libraries\MyGLFW</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuManager.cpp">
+      <Filter>Libraries\BlockMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.cpp">
+      <Filter>Libraries\BlockMenu\MenuItems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\ExampleWindow.cpp">
+      <Filter>Libraries\BlockMenu\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Windows\MenuWindow.cpp">
+      <Filter>Libraries\BlockMenu\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\MenuItem.cpp">
+      <Filter>Libraries\BlockMenu\MenuItems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.cpp">
+      <Filter>Libraries\BlockMenu\MenuItems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Menus\Menu.cpp">
+      <Filter>Libraries\BlockMenu\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathStuff.cpp">
+      <Filter>Libraries\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MyMatrix.cpp">
+      <Filter>Libraries\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MyQuaternion.cpp">
+      <Filter>Libraries\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.cpp">
+      <Filter>Libraries\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.cpp">
+      <Filter>Libraries\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp">
+      <Filter>Libraries\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\MathFunctions.cpp">
+      <Filter>Libraries\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSONInterface.cpp">
+      <Filter>Libraries\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\cJSON_Interface\cJSON.cpp">
+      <Filter>Libraries\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp">
+      <Filter>Libraries\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\CallBackFunctions.cpp">
+      <Filter>Libraries\MyGLFW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

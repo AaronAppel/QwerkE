@@ -1,6 +1,6 @@
 #include "MenuWindow.h"
-#include "Graphics/ShaderProgram/ShaderProgram.h"
-#include "Graphics/Mesh/Mesh.h"
+#include "../Shared_Engine/Systems/Graphics/ShaderProgram/ShaderProgram.h"
+#include "../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
 #include "../MenuItems/ImageItem.h"
 
 MenuWindow::MenuWindow(ShaderProgram* shader, Mesh* mesh, int items)

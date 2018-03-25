@@ -3,6 +3,8 @@
 #include "GameObject/GameObject.h"
 #include "TestScene.h"
 #include "Systems/GameCore.h"
+#include "Factory/Factory.h"
+#include "Systems/DataManager.h"
 
 TestScene::TestScene(GameCore* pGame) :
 	Scene(pGame)

@@ -9,8 +9,9 @@
 #define RAD_TO_DEG 57.295779513082320876798154814105f
 
 // measurement
-#define METER 100
-#define CM 10
-#define MM 1
+// TODO: Better names
+#define _QMETER 100
+#define _QCM 10
+#define _QMM 1
 
 #endif // !_MathConstants_H_

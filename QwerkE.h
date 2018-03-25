@@ -45,8 +45,11 @@
 
 
 // SETUP:
-    // Unfortunately you may need to add an additional include directory for GLEW, GLFW, and because
+    // Unfortunately you may need to add an additional include directory for GLEW, GLFW, and GLM because
     // of how their files look for each other.
+
+	// Additional includes...
+	// glew, glfw, glm, freetype2, bullet3
 
     // Other than that you should only need to #include QwerkE.h and make sure the file structure
     // is kept the same as how it is distributed from https://github.com/AaronAppel/QwerkE.
@@ -65,6 +68,7 @@
 // API:
     // WIP
 
-// #include...
+// START:
+#include "Engine_Include.h"
 
 #endif // !_QwerkE_H_

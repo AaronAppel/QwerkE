@@ -5,5 +5,323 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Global_Constants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Platform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\Controller.h">
+      <Filter>Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.h">
+      <Filter>Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\OpenGLHelpers.h">
+      <Filter>Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\OpenGLManager.h">
+      <Filter>Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\LightData.h">
+      <Filter>Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\MaterialData.h">
+      <Filter>Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\CubeMap\CubeMap.h">
+      <Filter>Systems\Graphics\Special\CubeMap</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\FBO\FrameBufferObject.h">
+      <Filter>Systems\Graphics\Special\FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\FontRendering\FontTest.h">
+      <Filter>Systems\Graphics\Special\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\Sprite\Sprite.h">
+      <Filter>Systems\Graphics\Special\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\ShaderProgram\ShaderFactory.h">
+      <Filter>Systems\Graphics\ShaderProgram</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\ShaderProgram\ShaderProgram.h">
+      <Filter>Systems\Graphics\ShaderProgram</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Model.h">
+      <Filter>Systems\Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Mesh\Mesh.h">
+      <Filter>Systems\Graphics\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Mesh\MeshFactory.h">
+      <Filter>Systems\Graphics\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Mesh\MeshUtilities.h">
+      <Filter>Systems\Graphics\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Mesh\VertexData.h">
+      <Filter>Systems\Graphics\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics_Header.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\Input.h">
+      <Filter>Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\DataManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameCore.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene\TestScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene\Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene\SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\GameObject.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutine.h">
+      <Filter>Entities\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.h">
+      <Filter>Entities\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\FirstPersonCameraComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\FreeCameraComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\LightComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\RenderComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\StaticCameraComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\ThirdPersonCameraComponent.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Factory\Factory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Factory\LevelLoader.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{afbcdda9-609a-4267-b478-395e47a4edf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Input">
+      <UniqueIdentifier>{fa3516d9-0b75-40b3-ac1c-9ed3b0e75c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics">
+      <UniqueIdentifier>{35213edf-ca06-481b-971c-8a4a817de09d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Event">
+      <UniqueIdentifier>{c7ae3cf1-9b46-40fd-bed6-57849c44f849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\ShaderProgram">
+      <UniqueIdentifier>{fd18fd0e-6dca-4b95-b808-2ec43f831fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Special">
+      <UniqueIdentifier>{a4f52436-655f-408a-9d74-6b264bfa28ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Special\Sprite">
+      <UniqueIdentifier>{b64d1f2b-5086-420d-adce-3f48d4245cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Special\FBO">
+      <UniqueIdentifier>{ef0b26aa-6ea9-46eb-936f-dd46d2dbfd9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Special\CubeMap">
+      <UniqueIdentifier>{58eb3b95-3d16-4c56-817a-52644fd5456a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Special\Font">
+      <UniqueIdentifier>{03ca2d39-8051-4982-858e-f1ba7b9d587d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Model">
+      <UniqueIdentifier>{437e8f24-b267-4717-8602-1761826a0265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Model\Mesh">
+      <UniqueIdentifier>{c4c3cdb8-7799-40c2-9777-b76964be2d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{faf13ca9-27a5-4f58-bb30-3c60ab951ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{d35a87e3-c61d-47ac-8f0a-cfdb309a8c91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Components">
+      <UniqueIdentifier>{1bebee7a-31b6-4da7-8b7d-65037b938582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Routines">
+      <UniqueIdentifier>{a6ee4862-c896-4395-bbd9-68da75a06f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{20b4cb59-c08d-47ba-9286-583c95d1621d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\Controller.cpp">
+      <Filter>Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.cpp">
+      <Filter>Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\AssignGLFWKeys.cpp">
+      <Filter>Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\AssignWin32Keys.cpp">
+      <Filter>Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\OpenGLHelpers.cpp">
+      <Filter>Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\OpenGLManager.cpp">
+      <Filter>Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\CubeMap\CubeMap.cpp">
+      <Filter>Systems\Graphics\Special\CubeMap</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\FBO\FrameBufferObject.cpp">
+      <Filter>Systems\Graphics\Special\FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\FontRendering\FontTest.cpp">
+      <Filter>Systems\Graphics\Special\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\Sprite\Sprite.cpp">
+      <Filter>Systems\Graphics\Special\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\ShaderProgram\Basic2DShader.cpp">
+      <Filter>Systems\Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\ShaderProgram\Basic3DShader.cpp">
+      <Filter>Systems\Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\ShaderProgram\LitMaterial.cpp">
+      <Filter>Systems\Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\ShaderProgram\ShaderFactory.cpp">
+      <Filter>Systems\Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\ShaderProgram\ShaderProgram.cpp">
+      <Filter>Systems\Graphics\ShaderProgram</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Model.cpp">
+      <Filter>Systems\Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Mesh\Mesh.cpp">
+      <Filter>Systems\Graphics\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Mesh\MeshFactory.cpp">
+      <Filter>Systems\Graphics\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\Model\Mesh\MeshUtilities.cpp">
+      <Filter>Systems\Graphics\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameCore.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\DataManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene\TestScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene\Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene\SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\GameObject.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutine.cpp">
+      <Filter>Entities\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\RenderRoutineUtilities.cpp">
+      <Filter>Entities\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Routines\Routine.cpp">
+      <Filter>Entities\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\FirstPersonCameraComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\FreeCameraComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\LightComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\RenderComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\StaticCameraComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\ThirdPersonCameraComponent.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Cameras.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Characters.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Factory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\LevelLoader.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Lights.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\MasterAssetList.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Shapes.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Testing.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Build_Block_Menu.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@
 #include "GameObject/Components/RenderComponent.h"
 #include "Systems/ResourceManager.h"
 #include "GameObject/Routines/RenderRoutine.h"
+#include "../Systems/Graphics/Model/Model.h"
 
 // Scenery + Props
 GameObject* Factory::CreateSkyBox(Scene* scene, vec3 position)

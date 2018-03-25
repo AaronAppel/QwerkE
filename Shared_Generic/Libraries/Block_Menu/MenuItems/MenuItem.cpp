@@ -1,8 +1,8 @@
 #include "MenuItem.h"
-#include "Graphics/Mesh/Mesh.h"
+#include "../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
 #include "Math_Includes.h"
 #include "Libraries/glfw/GLFW/glfw3.h"
-#include "Graphics/ShaderProgram/ShaderProgram.h"
+#include "../Shared_Engine/Systems/Graphics/ShaderProgram/ShaderProgram.h"
 #include "../Windows/MenuWindow.h"
 
 MenuItem::MenuItem(Mesh* mesh)
