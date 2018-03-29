@@ -1,5 +1,7 @@
-#ifndef __CallBackFunctions_H_
-#define __CallBackFunctions_H_
+#ifndef _CallBackFunctions_H_
+#define _CallBackFunctions_H_
+
+#include "MyGLFW.h"
 
 // setup
 // void SetCursor();

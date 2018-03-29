@@ -56,8 +56,8 @@ private:
 	const char* m_UniformPrefix = nullptr; // = blue_GetUniformPrefix();
 	const char* m_TransferPrefix = nullptr; // = blue_GetTransferPrefix(); // t_ means the variable is being transferred from one shader to another
 
-											/* Add Shader Variables */
-											// structs
+	/* Add Shader Variables */
+	// structs
 	void AddMaterialStruct(std::string &string);
 	void AddUniformMaterialStruct(const char* name, std::string &string);
 

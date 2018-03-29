@@ -2,7 +2,10 @@
 #define __GAMEOBJECT_H_
 
 #include "Math_Includes.h"
+#include "Engine_Enums.h"
+
 #include <map>
+#include <vector>
 
 class Scene;
 class Component;

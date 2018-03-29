@@ -9,6 +9,8 @@
 #include "../../Systems/Graphics/MaterialData.h"
 #include "Scene/Scene.h"
 
+#include <string>
+
 // Private functions
 /* Vertex uniform value assignment */
 void RenderRoutine::Setup3DTransform(CameraComponent* camera)

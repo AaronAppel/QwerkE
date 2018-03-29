@@ -6,6 +6,8 @@
 #include "GameObject/Components/StaticCameraComponent.h"
 #include "Utilities/Helpers.h"
 
+#include <string>
+
 /* Cameras */
 //First Person
 GameObject* Factory::CreateFreeCamera(Scene* scene, vec3 position)

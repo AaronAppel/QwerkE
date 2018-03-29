@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Include.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Build_Block_Menu.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Cameras.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Characters.cpp" />
@@ -109,5 +111,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\Controller.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.cpp" />
   </ItemGroup>
 </Project>

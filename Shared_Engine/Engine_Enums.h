@@ -2,6 +2,22 @@
 #ifndef _EngineEnums_H_
 #define _EngineEnums_H_
 
+enum class eEngineMessage : std::uint8_t
+{
+	_QSuccess = 0,
+	_QFail,
+
+	_QMax
+};
+
+enum class eEngineServices : std::uint8_t
+{
+	Resource_Manager = 0,
+	Input_Manager,
+
+	Service_Max
+};
+
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum eCamera_Movement
 {

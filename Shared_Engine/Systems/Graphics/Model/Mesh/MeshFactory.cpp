@@ -265,7 +265,6 @@ Mesh* MeshFactory::CreateBox(vec2 size)
 
 	Mesh* pMesh = new Mesh();
 	pMesh->BufferMeshData(4, verts, 6, indices); // GL_STATIC_DRAW
-
 	return pMesh;
 };
 Mesh* MeshFactory::CreateCircle(float radius, unsigned int points, vec2 UVScale)

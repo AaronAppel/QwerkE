@@ -58,7 +58,7 @@ void OpenGLManager::ViewPortSize(int x, int y, int width, int height)
 void OpenGLManager::ClearScreen()
 {
 	// CheckforGLErrors(__FILE__, __LINE__);
-	glClearColor(m_ClearColor.x, m_ClearColor.y, m_ClearColor.z, m_ClearColor.w);
+	glClearColor(m_ClearColor.x, m_ClearColor.y, m_ClearColor.z, m_ClearColor.w); // TODO: Don't reset every frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen to color
 }
 

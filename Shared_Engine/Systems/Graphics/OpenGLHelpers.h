@@ -9,8 +9,8 @@ void CheckforGLErrors(const char* file, int line);
 GLuint Load2DTexture(const char* filename, bool flipVertically = 0);
 GLuint LoadCubeMapTexture(const char* filename);
 
-char* blue_GetAttributePrefix();
-char* blue_GetUniformPrefix();
-char* blue_GetTransferPrefix();
+char* GetAttributePrefix();
+char* GetUniformPrefix();
+char* GetTransferPrefix();
 
 #endif // !_OpenGLHelpers_H_

@@ -4,9 +4,6 @@
     <Filter Include="Containers">
       <UniqueIdentifier>{81819a96-7811-488d-947d-6f35e06341a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{3b9f4c8e-f6ae-47a8-a01b-eb40de778f23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libraries">
       <UniqueIdentifier>{dd1a0f16-1d55-4386-a7b9-14d36e9c3183}</UniqueIdentifier>
     </Filter>

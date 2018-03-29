@@ -68,7 +68,7 @@ void Mesh::SetupShaderAttributes(ShaderProgram* shader)
 	{
 		if (StringCompare(attributes.at(i), "Position"))
 		{
-			GLuint aPos = glGetAttribLocation(t_ShaderHandle, DispStrCombine(blue_GetAttributePrefix(), "Position").c_str());
+			GLuint aPos = glGetAttribLocation(t_ShaderHandle, DispStrCombine(GetAttributePrefix(), "Position").c_str());
 			if (aPos != -1)
 			{
 				glVertexAttribPointer(aPos, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid*)offsetof(VertexData, position));
@@ -77,7 +77,7 @@ void Mesh::SetupShaderAttributes(ShaderProgram* shader)
 		}
 		if (StringCompare(attributes.at(i), "Color"))
 		{
-			GLuint aColor = glGetAttribLocation(t_ShaderHandle, DispStrCombine(blue_GetAttributePrefix(), "Color").c_str());
+			GLuint aColor = glGetAttribLocation(t_ShaderHandle, DispStrCombine(GetAttributePrefix(), "Color").c_str());
 			if (aColor != -1)
 			{
 				glVertexAttribPointer(aColor, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid*)offsetof(VertexData, color));
@@ -86,7 +86,7 @@ void Mesh::SetupShaderAttributes(ShaderProgram* shader)
 		}
 		if (StringCompare(attributes.at(i), "UV"))
 		{
-			GLuint aUV = glGetAttribLocation(t_ShaderHandle, DispStrCombine(blue_GetAttributePrefix(), "UV").c_str());
+			GLuint aUV = glGetAttribLocation(t_ShaderHandle, DispStrCombine(GetAttributePrefix(), "UV").c_str());
 			if (aUV != -1)
 			{
 				glVertexAttribPointer(aUV, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid*)offsetof(VertexData, UV));
@@ -95,7 +95,7 @@ void Mesh::SetupShaderAttributes(ShaderProgram* shader)
 		}
 		if (StringCompare(attributes.at(i), "Normal"))
 		{
-			GLuint aNormal = glGetAttribLocation(t_ShaderHandle, DispStrCombine(blue_GetAttributePrefix(), "Normal").c_str());
+			GLuint aNormal = glGetAttribLocation(t_ShaderHandle, DispStrCombine(GetAttributePrefix(), "Normal").c_str());
 			if (aNormal != -1)
 			{
 				glVertexAttribPointer(aNormal, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid*)offsetof(VertexData, normal));

@@ -1,6 +1,8 @@
 #include "FontTest.h"
 #include "../../Graphics_Header.h"
 #include "../ShaderProgram/ShaderProgram.h"
+#include "freetype2/ft2build.h"
+#include "freetype2/freetype/freetype.h"
 
 #include <iostream>
 #include <map>

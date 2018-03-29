@@ -1,6 +1,8 @@
 #include "../../Graphics_Header.h"
 #include "Utilities/FileIO/FileUtilities.h"
 #include "Utilities/StringHelpers.h"
+#include "../OpenGLHelpers.h"
+#include "Utilities/StringHelpers.h"
 
 #include <string> // TODO: 1 use at bottom could be avoided
 
@@ -140,6 +142,9 @@ bool ShaderProgram::BuildShaderProgram()
     m_ProgramHandle = LinkShaders(m_VertShaderHandle, m_FragShaderHandle, m_GeoShaderHandle);
     if (m_ProgramHandle == 0) { return false; } // check if null program
 
+	SetupAttributeList();
+	SetupUniformList();
+
     return true; // shader built properly
 }
 // Returns new shader handle is successful, else 0
@@ -262,7 +267,8 @@ void ShaderProgram::SetUniformFloat4(const char* name, float value1, float value
 // matrix
 void ShaderProgram::SetUniformMat4(const char* name, const GLfloat* matrix)
 {
-	glUniformMatrix4fv(glGetUniformLocation(m_ProgramHandle, name), 1, GL_FALSE, matrix);
+	// TODO: Improve uniform prefixing
+	glUniformMatrix4fv(glGetUniformLocation(m_ProgramHandle, DispStrCombine(GetUniformPrefix(), name).c_str()), 1, GL_FALSE, matrix);
 }
 // private uniform and attribute setup
 void ShaderProgram::SetupAttributeList()
@@ -275,7 +281,7 @@ void ShaderProgram::SetupAttributeList()
 	// store string in temp buffer
 	char* buffer = (char*)DeepCopyString(m_VertString); // Delete buffer when done
 
-														// store lines in std::vector
+	// store lines in std::vector
 	char* next_token = 0;
 	char* line = strtok_s(buffer, "\n", &next_token);
 
@@ -289,8 +295,8 @@ void ShaderProgram::SetupAttributeList()
 	}
 	delete[] buffer; // cleanup
 
-					 /* Populate .vert attributes */
-					 // vert
+	/* Populate .vert attributes */
+	// vert
 	for (uint i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
 	{
 		std::string loopString = vertStringList.at(i);
@@ -330,6 +336,7 @@ void ShaderProgram::SetupUniformList()
 
 	std::vector<std::string> vertStringList;
 	std::vector<std::string> fragStringList;
+	// TODO: Geo shader uniforms
 
 	while (line)
 	{

@@ -18,7 +18,7 @@ void OutputPrint(const char* message, ...)
 	OutputDebugStringA(buffer);
 }
 
-static void ConsolePrint(const char* message)
+void ConsolePrint(const char* message)
 {
 	fprintf(stderr, message);
 }

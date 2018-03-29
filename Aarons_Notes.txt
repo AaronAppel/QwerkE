@@ -1,0 +1,10 @@
+Make sure each project builds with PCHs off and no pch.h force include.
+This is to allow easy code intergration/extraction. The PCHs are just to speed
+up the build and do not introduce a file dependency since all files should
+already #include necessary files.
+// TODO: Make sure #includes are minimal and require the least amount of
+// outside code files
+Remember that right now there are platform define issues where files need
+<windows.h> included before they work because of platform specific libraries.
+This is currently being solved by force #including "Engine_Defines.h",
+"Engine_Platform.h".

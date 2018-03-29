@@ -127,6 +127,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Factory\LevelLoader.h">
       <Filter>Factory</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -322,6 +323,10 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Build_Block_Menu.cpp">
       <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

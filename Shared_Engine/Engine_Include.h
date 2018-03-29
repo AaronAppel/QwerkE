@@ -4,8 +4,9 @@
 #include "Engine_Defines.h" // platform, architecture,
 #include "Engine_Platform.h" // platform libraries
 
-#include "../Shared_Generic/Libraries_Include.h" // openGL, Bullet, GLFW, etc
+// enums, constants
 
+#include "../Shared_Generic/Libraries_Include.h" // openGL, Bullet, GLFW, etc
 
 //////////////////////////////
 // Infrastructure //

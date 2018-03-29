@@ -112,7 +112,7 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 	m_HotShaders[shaderName] = shader;
 	return shader;
 }
-
+// TODO: Look at resource creation again. Should Resource Manager create assets or just store them?
 GLuint ResourceManager::InstantiateTexture(const char* textureName)
 {
 	GLuint textureHandle = -1;
@@ -122,7 +122,7 @@ GLuint ResourceManager::InstantiateTexture(const char* textureName)
 	}
 	else if (textureName == "FlashHeal")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/FlashHeal.png");
+		textureHandle = Load2DTexture("../Shared_Generic/Resources/Textures/FlashHeal.png", true);
 	}
 	else if (textureName == "ExampleBackground")
 	{
