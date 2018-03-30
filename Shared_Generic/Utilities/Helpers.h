@@ -4,7 +4,7 @@
 // current system time
 double MyGetSystemTime();
 
-char* helpers_DeepCopyString(const char* original);
+double helpers_Time();
 
 // seed rand()
 //int RandomNumber() { return rand(); };

@@ -40,8 +40,8 @@ GameCore* debug_GetGameCore()
 	return g_GameCore;
 }
 
-extern double g_TimeSinceExe;
+extern double g_TimeSinceLastFrame;
 double debug_GetDeltaTime()
 {
-	return g_TimeSinceExe;
+	return g_TimeSinceLastFrame;
 }

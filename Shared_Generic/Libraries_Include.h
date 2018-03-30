@@ -63,12 +63,12 @@
 #else
 // TODO: Is there a 64 bit openGL library?
 #endif
-// window creation //
+// openGL extensions wrangler //
 // GLEW
 // TODO: Check for architecture and debug/release
 #pragma comment( lib, "../Shared_Generic/Libraries/glew/glew32d.lib" )
 #include "Libraries/glew/GL/glew.h"
-// openGL extensions wrangler //
+// window creation //
 // GLFW
 // TODO: Check for architecture and debug/release
 #pragma comment( lib, "../Shared_Generic/Libraries/glfw/glfw3.lib" )

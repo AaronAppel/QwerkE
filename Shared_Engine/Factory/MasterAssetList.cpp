@@ -4,9 +4,8 @@
 #include "../Systems/Graphics/MaterialData.h"
 #include "../Systems/Graphics/ShaderProgram/ShaderFactory.h"
 
-// TODO: Load all files in folder. This avoids hard coded assets names and allows easy adding/removal of assets.
-// Objects may need to switch to assets ids. ids would act as indices in the asset list and would prevent crashing if assets are removed.
-
+// TODO: Load all files in folder. This avoids hard coded assets names and allows easy adding/removal of assets even at runtime.
+// Objects may need to switch to assets ids. ids would act as unique identifiers in the asset list and would prevent crashing.
 void ResourceManager::Init()
 {
 }
@@ -17,7 +16,7 @@ Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 {
 	MeshFactory t_MeshFactory;
 	Mesh* mesh = nullptr;
-    // TODO: Dereference *s
+    // TODO: Dereference *s?
 	if (meshName == "Box") // Asset name
 	{
 		mesh = new Mesh();

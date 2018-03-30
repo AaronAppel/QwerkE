@@ -3,6 +3,8 @@
 #include "Engine_Enums.h"
 #include "Utilities/PrintFunctions.h"
 #include "Engine.h"
+#include "Application.h"
+#include "Libraries_Initialize.h"
 
 // TODO: No Globals!
 int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -16,34 +18,28 @@ extern InputManager* g_InputManager = nullptr;
 extern Controller* g_Player1Controller = nullptr;
 extern XinputHandler* g_XinputHandler = nullptr;
 extern bool g_Debugging = false;
-extern double g_TimeSinceExe = 0.0f;
+extern double g_TimeSinceLastFrame = 0.0f;
 
 int main()
 {
-	// setup //
-	/* glfw */
+	if (Libs_Setup() == false) // setup libraries
+	{
+		ConsolePrint("\nMain(): Error loading libraries! Closing application\n");
+		return 0; // failure
+	}
+
 	GLFWwindow* window;
-
-	if (!glfwInit())
-		return 0; // glfw error
-
 	window = glfwCreateWindow(g_WindowWidth, g_WindowHeight, g_WindowTitle, NULL, NULL);
 	if (!window)
 		return 0; // glfw error
 
 	glfwMakeContextCurrent(window);
 
-	/* glew */
-	if (glewInit() != GLEW_OK)
-		return 0; // glew error
-
 	/* opengl */
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 	glClearColor(1, 1, 1, 1); // white
 
 	/* imgui */
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui_ImplGlfwGL3_Init(window, true);
 
 	// start experimental //
@@ -52,6 +48,8 @@ int main()
 	{
 		ConsolePrint("Main(): Error loading services!");
 	}
+
+	engine.Run();
 
 	ShaderProgram shader;
 	shader.Init("../Shared_Generic/Resources/Shaders/Sprite2D.vert", "../Shared_Generic/Resources/Shaders/Sprite2D.frag", NULL);
@@ -68,6 +66,20 @@ int main()
 	sprite.SetShader(&shader);
 	sprite.SetTexture(texture);
 	// end experimental //
+
+	// Start FPS //
+	// Deltatime
+	double deltaTime = 0.0f; // Time between current frame and last frame
+	double lastFrame = 0.0f; // Time of last frame
+	g_TimeSinceLastFrame = 0.0f; // Amount of seconds since the last frame ran
+	// Limit framerate
+	int FPS_MAX = 1; // maximum number of frames that can be run be second
+	float FPS_MAX_DELTA = 1.0f / FPS_MAX;
+	// Printing framerate
+	float printPeriod = 3.0f; // Print period in seconds
+	float timeSincePrint = 0.0f;
+	short framesSincePrint = 0;
+	// End FPS //
 
 	// game loop //
 	while (!glfwWindowShouldClose(window))
@@ -95,9 +107,7 @@ int main()
 	glDeleteTextures(1, &texture);
 
 	glfwDestroyWindow(window); // destroy window
-	ImGui_ImplGlfwGL3_Shutdown(); // shutdown imgui
-	ImGui::DestroyContext(); // destroy imgui
-	glfwTerminate(); // shutdown glfw
+	Libs_TearDown(); // unload libraries
 
     return 0;
 }

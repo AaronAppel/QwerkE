@@ -2571,6 +2571,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\CallbackFunctions.h">
       <Filter>Libraries\MyGLFW</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Initialize.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -2669,6 +2671,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\CallBackFunctions.cpp">
       <Filter>Libraries\MyGLFW</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Libraries\glm\detail\func_common.inl">

@@ -19,15 +19,6 @@ double helpers_Time()
 double helpers_Time() { return 0.0f; }
 #endif // _WIN32
 
-char* helpers_DeepCopyString(const char* original)
-{
-	return _strdup(original);
-	//char* copy = new char[strlen(original) + 1]; // memory allocation
-	//memcpy(copy, original, strlen(original) + 1);
-
-	//return copy;
-}
-
 static unsigned int g_UniqueID = 0; // static counter to increment for unique value
 int helpers_GetUniqueID()
 {
