@@ -13,7 +13,7 @@ public:
 	SceneManager();
 	~SceneManager();
 
-	void Initialize(GameCore* gamecore);
+	void Initialize();
 
 	void ResetScene(eSceneTypes type);
 	void ResetAll();
@@ -43,7 +43,6 @@ private:
 
 	// variables
 	bool m_IsRunning = true; // Add step-through and pause/play button functionality in debug mode
-	GameCore* m_pGameCore = nullptr;
 	Scene* m_CurrentScene = nullptr;
 	//std::queue<Event*> m_EventQueue;
 	std::map<eSceneTypes, Scene*> m_Scenes;

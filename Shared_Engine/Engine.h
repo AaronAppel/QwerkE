@@ -4,6 +4,9 @@
 // This may need to become an abstract class that gets inherited
 // by platform specific implementations
 
+class GLFWwindow;
+class Editor;
+
 class Engine
 {
 public:
@@ -24,6 +27,7 @@ public:
 private:
 	GLFWwindow* m_Window = nullptr;
 	bool m_IsRunning = false;
+    Editor* m_Editor;
 };
 
 #endif // !_Engine_H_

@@ -1,7 +1,7 @@
 #ifndef __Sprite_H__
 #define __Sprite_H__
 
-#include "../../Shared_Generic/Math_Includes.h"
+#include "Math_Includes.h"
 #include "../Model/Mesh/Mesh.h"
 
 class Mesh;

@@ -15,6 +15,15 @@ enum class eEngineServices : std::uint8_t
 	Resource_Manager = 0,
 	Input_Manager,
 	AppWindow,
+    Audio_Manager,
+    Data_Manager,
+    // Graphics (OpenGLManager)
+    Event_System,
+    Scene_Manager,
+    Factory_Entity,
+    Factory_Mesh,
+    Factory_Shader,
+    Editor,
 
 	Service_Max
 };

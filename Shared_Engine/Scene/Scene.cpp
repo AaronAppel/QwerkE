@@ -7,20 +7,14 @@
 #include "Utilities/DebugHelpers.h"
 #include "Systems/Input/Controller.h"
 #include "Systems/DataManager.h"
+#include "Systems/ServiceLocator.h"
 
 extern int g_WindowWidth;
 extern int g_WindowHeight;
 
-Scene::Scene(GameCore* pGame) :
-	m_pGameCore(pGame)
+Scene::Scene()
 {
-	m_pSceneManager = m_pGameCore->GetSceneManager();
-
-	//m_pMenuManager = new MenuManager();
-
-	//float t_ScreenToWorld = WORLD_TO_SCREEN_RATIO / 2.0f; // 2:1 screen ratio. / 2 to change from screen to clip space
-
-	//m_ViewWindowSize = vec2(g_WindowWidth * t_ScreenToWorld, g_WindowHeight * t_ScreenToWorld);
+    m_pSceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 }
 
 Scene::~Scene()
@@ -240,13 +234,15 @@ void Scene::SetIsPaused(bool isPaused)
 
 void Scene::SaveScene()
 {
-	DataManager* t_pDataManager = m_pGameCore->GetDataManager();
-	t_pDataManager->SaveScene(this, m_LevelFileDir);
+    // TODO: Resolve feature
+	//DataManager* t_pDataManager = m_pGameCore->GetDataManager();
+	//t_pDataManager->SaveScene(this, m_LevelFileDir);
 }
 
 void Scene::LoadScene()
 {
-	DataManager* t_pDataManager = m_pGameCore->GetDataManager();
-	t_pDataManager->LoadScene(this, m_LevelFileDir);
+    // TODO: Resolve feature
+	//DataManager* t_pDataManager = m_pGameCore->GetDataManager();
+	//t_pDataManager->LoadScene(this, m_LevelFileDir);
 	SetupCameras();
 }

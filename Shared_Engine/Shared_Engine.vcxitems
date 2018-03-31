@@ -15,11 +15,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Platform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Factory\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Factory\LevelLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.h" />
@@ -63,7 +65,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Build_Block_Menu.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Cameras.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Characters.cpp" />

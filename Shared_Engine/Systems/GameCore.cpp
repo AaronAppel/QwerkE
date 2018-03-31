@@ -13,7 +13,7 @@ GameCore::GameCore()
 	m_pProjectionMatrix->SetIdentity();
 	m_pResourceManager = new ResourceManager();
 	//m_pAudioManager = new AudioManager();
-	m_pFactory = new Factory(m_pResourceManager);
+	m_pFactory = new Factory();
 	m_pSceneManager = new SceneManager();
 	m_pGLManager = new OpenGLManager();
 	m_pDataManager = new LevelLoader(m_pFactory);
@@ -60,7 +60,7 @@ void GameCore::Initialize() // TODO:: Is this a reset or should that be a separa
 	m_pGLManager->ResetGLState();
 
 	// m_pFactory->LoadScene(eSceneTypes::Scene_TestScene); // load assets for this scene
-	m_pSceneManager->Initialize(this);
+	m_pSceneManager->Initialize();
 	m_pSceneManager->DisableAll();
 }
 

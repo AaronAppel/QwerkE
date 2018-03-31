@@ -5,7 +5,7 @@
 
 class ShaderProgram;
 typedef float GLfloat;
-#include "glm/glm.hpp"
+#include "Libraries/glm/glm/glm.hpp"
 
 void LoadFonts();
 void RenderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);

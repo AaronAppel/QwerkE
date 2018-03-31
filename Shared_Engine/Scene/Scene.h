@@ -20,7 +20,7 @@ typedef void (Scene::*UpdateFunc)(double deltatime); // Scene pause
 class Scene // Abstract class
 {
 public:
-    Scene(GameCore* pGame);
+    Scene();
     virtual ~Scene();
 
     virtual void OnWindowResize(unsigned int width, unsigned int height);
@@ -76,7 +76,6 @@ protected:
 	const char* m_LevelFileDir = "Uninitialized";
 	void Draw(GameObject* camera);
 	SceneManager* m_pSceneManager = nullptr;
-	GameCore* m_pGameCore = nullptr;
 	MyMatrix* m_pViewMatrix = nullptr; // TODO:: create cameras with different view matrices
 
 	std::map<std::string, GameObject*> m_pGameObjects;

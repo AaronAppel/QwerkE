@@ -1,9 +1,10 @@
 #include "Factory.h"
 #include "Systems/ResourceManager.h"
+#include "Systems/ServiceLocator.h"
 
-Factory::Factory(ResourceManager* resources) // TODO: Get Resource Manager in constructor?
+Factory::Factory()
 {
-	m_pResources = resources;
+	m_pResources = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
 }
 
 Factory::~Factory()

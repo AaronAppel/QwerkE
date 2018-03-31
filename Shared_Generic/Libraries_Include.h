@@ -112,9 +112,9 @@
 // math
 //////////////////////////////
 // glm
-#include "../Shared_Generic/Libraries/glm/glm.hpp"
-#include "../Shared_Generic/Libraries/glm/gtc/matrix_transform.hpp"
-#include "../Shared_Generic/Libraries/glm/gtc/type_ptr.hpp"
+#include "../Shared_Generic/Libraries/glm/glm/glm.hpp"
+#include "../Shared_Generic/Libraries/glm/glm/gtc/matrix_transform.hpp"
+#include "../Shared_Generic/Libraries/glm/glm/gtc/type_ptr.hpp"
 /////////////////////////////
 
 //////////////////////////////

@@ -5,11 +5,10 @@
 #include "Systems/GameCore.h"
 #include "Factory/Factory.h"
 #include "Systems/DataManager.h"
+#include "Systems/ServiceLocator.h"
 
-TestScene::TestScene(GameCore* pGame) :
-	Scene(pGame)
+TestScene::TestScene() : Scene()
 {
-	m_pSceneManager = pGame->GetSceneManager();
 	m_ID = Scene_TestScene;
 	m_LevelFileDir = "Resources/LevelData/TestScene.json";
 }
@@ -21,11 +20,12 @@ TestScene::~TestScene()
 
 void TestScene::Initialize()
 {
-	Factory* t_pFactory = m_pGameCore->GetFactory();
-	ResourceManager* t_pResourceManager = m_pGameCore->GetResourceManager();
-	DataManager* t_pDataManager = m_pGameCore->GetDataManager();
+    Factory* t_pFactory = (Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity);
+	ResourceManager* t_pResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
+	// TODO: Resolve feature
+    //DataManager* t_pDataManager = m_pGameCore->GetDataManager();
 
-	t_pDataManager->LoadScene(this, m_LevelFileDir); // Load scene
+	//t_pDataManager->LoadScene(this, m_LevelFileDir); // Load scene
 	Scene::SetupCameras();
 
 	if (false)

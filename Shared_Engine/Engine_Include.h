@@ -5,11 +5,23 @@
 #include "Engine_Platform.h" // platform libraries
 
 // enums, constants
-
-#include "../Shared_Generic/Libraries_Include.h" // openGL, Bullet, GLFW, etc
+#include "Engine_Enums.h"
+#include "Global_Constants.h"
 
 //////////////////////////////
-// Infrastructure //
+// Libraries //
+//////////////////////////////
+#include "../Shared_Generic/Libraries_Include.h" // openGL, Bullet, GLFW, etc
+//////////////////////////////
+
+//////////////////////////////
+// Engine //
+//////////////////////////////
+#include "Engine.h"
+//////////////////////////////
+
+//////////////////////////////
+// Infrastructure/Systems //
 //////////////////////////////
 // Graphics //
 #include "Systems/Graphics_Header.h"

@@ -2,9 +2,9 @@
 #define _Math_Includes_H_
 
 // GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "Libraries/glm/glm/glm.hpp"
+#include "Libraries/glm/glm/gtc/matrix_transform.hpp"
+#include "Libraries/glm/glm//gtc/type_ptr.hpp"
 
 #include <cmath>
 #include "Libraries/Math/MathConstants.h"

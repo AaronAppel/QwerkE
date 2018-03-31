@@ -16,7 +16,7 @@ class Menu;
 class Factory
 {
 public:
-	Factory(ResourceManager* resources);
+	Factory();
 	~Factory();
 
 	void ClearResources();

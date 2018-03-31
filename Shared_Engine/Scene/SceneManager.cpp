@@ -25,14 +25,12 @@ SceneManager::~SceneManager()
 	}
 }
 
-void SceneManager::Initialize(GameCore* gamecore)
+void SceneManager::Initialize()
 {
-	m_pGameCore = gamecore;
-
 	// *Do not enable scenes in here*
 	// instantiate and LoadScene() (splash, main menu, game etc...)
 	// test screen
-	Scene* temp = new TestScene(m_pGameCore);
+	Scene* temp = new TestScene();
 	temp->Initialize();
 	m_CurrentScene = temp; // Set current
 	m_Scenes[temp->GetSceneID()] = temp;

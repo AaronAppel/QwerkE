@@ -128,6 +128,8 @@
       <Filter>Factory</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -138,9 +140,6 @@
     </Filter>
     <Filter Include="Systems\Graphics">
       <UniqueIdentifier>{35213edf-ca06-481b-971c-8a4a817de09d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Event">
-      <UniqueIdentifier>{c7ae3cf1-9b46-40fd-bed6-57849c44f849}</UniqueIdentifier>
     </Filter>
     <Filter Include="Systems\Graphics\ShaderProgram">
       <UniqueIdentifier>{fd18fd0e-6dca-4b95-b808-2ec43f831fdd}</UniqueIdentifier>
@@ -180,6 +179,12 @@
     </Filter>
     <Filter Include="Factory">
       <UniqueIdentifier>{20b4cb59-c08d-47ba-9286-583c95d1621d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Events">
+      <UniqueIdentifier>{c7ae3cf1-9b46-40fd-bed6-57849c44f849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{9cd9d01e-0c42-48db-a17a-94a6969674b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -328,5 +333,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp" />
   </ItemGroup>
 </Project>

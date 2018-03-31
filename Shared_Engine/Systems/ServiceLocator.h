@@ -1,15 +1,24 @@
 #ifndef _ServiceLocator_H_
 #define _ServiceLocator_H_
 
+// Class ServiceLocator provides global access for systems
+// necessary throughout the code such as memory management,
+// audio playback, input, etc.
+// To add a system add it to RegisterService(), UnregisterService,
+// GetService(), and ServicesLoaded().
+
 #include "Engine_Enums.h"
 #include "Utilities/PrintFunctions.h"
 #include "Systems/ResourceManager.h"
 #include "Systems/Input/InputManager.h"
-#include "glfw/glfw3.h"
 
 class ResourceManager;
 class InputManager;
 class GLFWwindow;
+class EventManager;
+class SceneManager;
+class Factory;
+class Editor;
 
 namespace QwerkE
 {
@@ -33,6 +42,10 @@ namespace QwerkE
 		static ResourceManager* m_ResourceManager;
 		static InputManager* m_InputManager;
 		static GLFWwindow* m_AppWindow;
+        static EventManager* m_EventManager;
+        static SceneManager* m_SceneManager;
+        static Factory* m_Factory;
+        static Editor* m_Editor;
 	};
 }
 

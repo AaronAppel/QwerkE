@@ -1,6 +1,9 @@
 #ifndef _Engine_Defines_H_
 #define _Engine_Defines_H_
 
+#define IncludeDir "../Shared_Generic/Utilities/FileIO/FileUtilities.h"
+// #include IncludeDir
+
 /* Defines values to be used in other ares of code.
    Creates typedefs to make development more convenient*/
 

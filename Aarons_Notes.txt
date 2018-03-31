@@ -8,3 +8,9 @@ Remember that right now there are platform define issues where files need
 <windows.h> included before they work because of platform specific libraries.
 This is currently being solved by force #including "Engine_Defines.h",
 "Engine_Platform.h".
+
+How useful would a flie finder program be?
+It would take something like "#include "file.h"" and replace it with
+"#include "../../Folder/file.h""
+Something to think about. It is nice to allow for file movement and auto
+#includes but is that just too lazy or too error prone?

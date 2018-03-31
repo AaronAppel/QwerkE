@@ -6,7 +6,7 @@
 class TestScene: public Scene
 {
 public:
-	TestScene(GameCore* pGame);
+	TestScene();
     virtual ~TestScene();
 
     void Initialize();

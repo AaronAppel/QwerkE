@@ -2,7 +2,7 @@
 #define __ImageItem_H_
 
 #include "MenuItem.h"
-#include "GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 class Mesh;
 class ShaderProgram;
