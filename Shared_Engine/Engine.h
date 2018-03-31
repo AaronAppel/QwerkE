@@ -11,6 +11,7 @@ public:
 	~Engine();
 
 	eEngineMessage Startup();
+	eEngineMessage TearDown();
 
 	void Run();
 
@@ -21,6 +22,7 @@ public:
 	bool StillRunning() { return m_IsRunning; };
 
 private:
+	GLFWwindow* m_Window = nullptr;
 	bool m_IsRunning = false;
 };
 

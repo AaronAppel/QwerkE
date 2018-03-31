@@ -3,20 +3,32 @@
 #include "Systems/ServiceLocator.h"
 #include "Engine_Enums.h"
 #include "Utilities/Helpers.h"
+#include "Libraries_Initialize.h"
 
-extern float g_FrameRate;
-extern double g_TimeSinceLastFrame;
+extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
+extern const char* g_WindowTitle = "QwerkE";
+
+extern float g_FrameRate = 0.0f;
+extern double g_TimeSinceLastFrame = 0.0;
 
 Engine::Engine()
 {
+	// init? maybe if _QTest defined or something
 }
 
 Engine::~Engine()
 {
+	// deletion checks
 }
 
 eEngineMessage Engine::Startup()
 {
+	if (Libs_Setup() == false) // setup libraries
+	{
+		ConsolePrint("\Startup(): Error loading libraries! Closing application\n");
+		return eEngineMessage::_QFail; // failure
+	}
+
 	// load and register systems
 	// Audio, Networking, Graphics (Renderer, GUI), Utilities (Conversion, FileIO, Printing),
 	// Physics, Event, Debug, Memory, Window, Application, Input, Resources
@@ -26,7 +38,25 @@ eEngineMessage Engine::Startup()
 	InputManager* inputManager = new InputManager();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::Input_Manager, inputManager);
 
+	m_Window = glfwCreateWindow(g_WindowWidth, g_WindowHeight, g_WindowTitle, NULL, NULL);
+	glfwMakeContextCurrent(m_Window);
+	QwerkE::ServiceLocator::RegisterService(eEngineServices::AppWindow, m_Window);
+
 	return QwerkE::ServiceLocator::ServicesLoaded();
+}
+
+eEngineMessage Engine::TearDown()
+{
+	delete (ResourceManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Resource_Manager);
+
+	delete (InputManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Input_Manager);
+
+	glfwDestroyWindow((GLFWwindow*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::AppWindow));
+
+	Libs_TearDown(); // unload libraries
+
+	// TODO: Safety checks?
+	return eEngineMessage::_QSuccess;
 }
 
 void Engine::Run()
@@ -47,7 +77,7 @@ void Engine::Run()
 	short framesSincePrint = 0;
 	// End FPS //
 
-	while (m_IsRunning) // TODO: 'ESC' key down or something
+	while (glfwWindowShouldClose(m_Window) == false) // TODO: 'ESC' key down or something
 	{
 		// setup frame
 		// Calculate deltatime of current frame
@@ -62,8 +92,8 @@ void Engine::Run()
 			timeSincePrint = 0.0f;
 			framesSincePrint = 0;
 		}
+
 		timeSincePrint += (float)deltaTime;
-		// MAX_FPS (limit framerate)
 		g_TimeSinceLastFrame += deltaTime;
 
 		if (g_TimeSinceLastFrame >= FPS_MAX_DELTA) // Run frame?
@@ -98,9 +128,9 @@ void Engine::Update()
 	// TODO: Update editor and/or game code
 	static int counter = 0;
 	counter++;
-	if (counter > 1200)
+	if (counter > 600)
 	{
-		m_IsRunning = false;
+		glfwSetWindowShouldClose(m_Window, true);
 	}
 }
 

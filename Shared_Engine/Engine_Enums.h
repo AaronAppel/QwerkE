@@ -14,6 +14,7 @@ enum class eEngineServices : std::uint8_t
 {
 	Resource_Manager = 0,
 	Input_Manager,
+	AppWindow,
 
 	Service_Max
 };

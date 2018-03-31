@@ -891,6 +891,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\CallBackFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries_Initialize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp" />

@@ -2672,6 +2672,7 @@
       <Filter>Libraries\MyGLFW</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries_Initialize.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Libraries\glm\detail\func_common.inl">

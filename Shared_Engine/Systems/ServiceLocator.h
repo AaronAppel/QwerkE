@@ -5,9 +5,11 @@
 #include "Utilities/PrintFunctions.h"
 #include "Systems/ResourceManager.h"
 #include "Systems/Input/InputManager.h"
+#include "glfw/glfw3.h"
 
 class ResourceManager;
 class InputManager;
+class GLFWwindow;
 
 namespace QwerkE
 {
@@ -21,7 +23,7 @@ namespace QwerkE
 		// Physics, Event, Debug, Memory, Window, Application, Input, Resources
 		static void RegisterService(eEngineServices serviceType, void* service);
 
-		static void UnregisterService(eEngineServices serviceType); // TODO: Potentially dangerous!
+		static void* UnregisterService(eEngineServices serviceType); // TODO: Potentially dangerous!
 
 		static void* GetService(eEngineServices serviceType);
 		// TODO: Improve logic and code design
@@ -30,6 +32,7 @@ namespace QwerkE
 	private:
 		static ResourceManager* m_ResourceManager;
 		static InputManager* m_InputManager;
+		static GLFWwindow* m_AppWindow;
 	};
 }
 

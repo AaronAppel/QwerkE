@@ -4,6 +4,13 @@
 /* Defines values to be used in other ares of code.
    Creates typedefs to make development more convenient*/
 
+// TODO: Define API level for various functionality
+#define _QTest // Working example to show functionality
+#define _QEasy // Beginner API
+#define _QMedium // Simple control
+#define _QHard // Mixed control
+#define _QUltra // Full control
+
 // define platform and architecture
 // Compilers: Microsoft C++, GCC, Intel CC
 // TODO: Look at how to determine platform and architecture
