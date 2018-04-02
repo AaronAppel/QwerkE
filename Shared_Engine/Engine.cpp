@@ -9,6 +9,7 @@
 #include "Factory/Factory.h"
 #include "Editor/Editor.h"
 #include "Systems/Graphics/Sprite/Sprite.h"
+#include "Systems/Graphics_Header.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -99,16 +100,18 @@ eEngineMessage Engine::TearDown()
 	return eEngineMessage::_QSuccess;
 }
 
-Sprite2D* g_Sprite = new Sprite2D();
+Sprite2D* g_Sprite;
 void Engine::Run()
 {
+    glClearColor(1, 1, 1, 1);
 	// turn on depth buffer testing
 	glDisable(GL_DEPTH_TEST);
 
 	// depth cull for efficiency
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);
+	if(Wind_CCW) glFrontFace(GL_CCW);
+    else glFrontFace(GL_CW);
 
 	// turn on alpha blending
 	glEnable(GL_BLEND);
@@ -116,13 +119,17 @@ void Engine::Run()
 
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
+    m_SceneManager->Initialize();
+    m_SceneManager->GetCurrentScene()->SetIsEnabled(true);
+
 	ResourceManager* rMan = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
-	g_Sprite->SetPosition(vec2(0,0));
+    g_Sprite = new Sprite2D(); // TEMP:
+	g_Sprite->SetPosition(vec3(0,0,0));
 	g_Sprite->SetMesh(rMan->GetMesh("Box"));
 	g_Sprite->SetShader(rMan->GetShader("Sprite2D"));
 	g_Sprite->SetTexture(rMan->GetTexture("PeriodicHeal"));
 
-	// Deltatime + FPS Tracking//
+	// Deltatime + FPS Tracking //
 	// Deltatime
 	double deltaTime = 0.0f; // Time between current frame and last frame
 	double lastFrame = helpers_Time(); // Time of last frame initialized to current time
@@ -216,7 +223,7 @@ void Engine::Draw()
 	// TODO: Render game
 	m_SceneManager->Draw();
 	m_Editor->Draw();
-	g_Sprite->Draw();
+	// g_Sprite->Draw();
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(m_Window);

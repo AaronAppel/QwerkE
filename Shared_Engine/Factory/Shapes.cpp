@@ -19,7 +19,7 @@ GameObject* Factory::CreateCube(Scene* scene, vec3 position)
 	// Assign assets from ResourceManager()
 	renderComp->SetMesh(m_pResources->GetMesh("TutorialCube")); // CreCube
 	// renderComp->SetModel(m_pResources->GetModel("CubeModel"));
-	renderComp->SetShader(m_pResources->GetShader("LitMaterial"));
+	renderComp->SetShader(m_pResources->GetShader("Basic3D"));
 	renderComp->SetMaterial(m_pResources->GetMaterial("container"));
 
 	renderComp->SetColour(vec4(RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), 1));
