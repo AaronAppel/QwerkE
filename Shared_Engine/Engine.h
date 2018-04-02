@@ -6,6 +6,7 @@
 
 class GLFWwindow;
 class Editor;
+class SceneManager;
 
 class Engine
 {
@@ -19,7 +20,8 @@ public:
 	void Run();
 
 	void NewFrame();
-	void Update();
+	void Input();
+	void Update(double deltatime);
 	void Draw();
 
 	bool StillRunning() { return m_IsRunning; };
@@ -27,7 +29,8 @@ public:
 private:
 	GLFWwindow* m_Window = nullptr;
 	bool m_IsRunning = false;
-    Editor* m_Editor;
+	SceneManager* m_SceneManager = nullptr;
+    Editor* m_Editor = nullptr;
 };
 
 #endif // !_Engine_H_

@@ -3,6 +3,19 @@
 #include "../Systems/Graphics/OpenGLHelpers.h"
 #include "../Systems/Graphics/MaterialData.h"
 #include "../Systems/Graphics/ShaderProgram/ShaderFactory.h"
+#include "Utilities/StringHelpers.h"
+
+const char* Test(const char* a, const char* b)
+{
+	int size = 0;
+	size = strlen(a) + strlen(b);
+
+	char* newString = new char[size]; // RAM:
+	strcpy_s(newString, strlen(a) + 1, a);
+	strcat_s(newString, size + 1, b);
+
+	return newString;
+}
 
 // TODO: Load all files in folder. This avoids hard coded assets names and allows easy adding/removal of assets even at runtime.
 // Objects may need to switch to assets ids. ids would act as unique identifiers in the asset list and would prevent crashing.
@@ -14,6 +27,9 @@ void ResourceManager::Init()
 // TODO: Handle errors and deleting assets before returning nullptr
 Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 {
+	// TODO: Use MeshDir
+#define MeshDir(a) Test("../Shared_Generic/Resources/Shaders/", a) // Folder or shaders
+
 	MeshFactory t_MeshFactory;
 	Mesh* mesh = nullptr;
     // TODO: Dereference *s?
@@ -54,32 +70,35 @@ Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 
 ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 {
+#define ShaderDir(a) Test("../Shared_Generic/Resources/Shaders/", a) // Folder or shaders
+
 	// Read directory for file?
 	ShaderProgram* shader = new ShaderProgram();
 	// 2D
 	if (shaderName == "Basic2DTex") // Asset name
 	{
-		shader->Init("Resources/Shaders/Basic2DTex.vert", "Resources/Shaders/Basic2DTex.frag", NULL); // Asset directories
+		shader->Init(ShaderDir("Basic2DTex.vert"), ShaderDir("Basic2DTex.frag"), NULL); // Asset directories
 	}
 	else if (shaderName == "2DMenu")
 	{
-		shader->Init("Resources/Shaders/2DMenu.vert", "Resources/Shaders/2DMenu.frag", NULL);
+		shader->Init(ShaderDir("2DMenu.vert"), ShaderDir("2DMenu.frag"), NULL);
 	}
 	else if (shaderName == "Basic2D")
 	{
 		// shader->Init(eShader_Basic2D);
+		// shader->Init(ShaderDir("2DMenuText.vert"), ShaderDir("2DMenuText.frag"), NULL);
 	}
 	else if (shaderName == "2DMenuText")
 	{
-		shader->Init("Resources/Shaders/2DMenuText.vert", "Resources/Shaders/2DMenuText.frag", NULL);
+		shader->Init(ShaderDir("2DMenuText.vert"), ShaderDir("2DMenuText.frag"), NULL);
 	}
 	else if (shaderName == "Basic2DTransform")
 	{
-		shader->Init("Resources/Shaders/Basic2DTransform.vert", "Resources/Shaders/Basic2DTransform.frag", NULL);
+		shader->Init(ShaderDir("Basic2DTransform.vert"), ShaderDir("Basic2DTransform.frag"), NULL);
 	}
 	else if (shaderName == "Sprite2D")
 	{
-		shader->Init("Resources/Shaders/Sprite2D.vert", "Resources/Shaders/Sprite2D.frag", NULL);
+		shader->Init(ShaderDir("Sprite2D.vert"), ShaderDir("Sprite2D.frag"), NULL);
 	}
 	// 3D
 	else if (shaderName == "Basic3D")
@@ -89,15 +108,15 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 	}
 	else if (shaderName == "LitMaterial")
 	{
-		shader->Init("Resources/Shaders/LitMaterial.vert", "Resources/Shaders/LitMaterial.frag", NULL);
+		shader->Init(ShaderDir("LitMaterial.vert"), ShaderDir("LitMaterial.frag"), NULL);
 	}
 	else if (shaderName == "vec3Material")
 	{
-		shader->Init("Resources/Shaders/vec3Material.vert", "Resources/Shaders/vec3Material.frag", NULL);
+		shader->Init(ShaderDir("vec3Material.vert"), ShaderDir("vec3Material.frag"), NULL);
 	}
 	else if (shaderName == "BasicLighting")
 	{
-		shader->Init("Resources/Shaders/BasicLighting.vert", "Resources/Shaders/BasicLighting.frag", NULL);
+		shader->Init(ShaderDir("vec3Material.vert"), ShaderDir("vec3Material.frag"), NULL);
 	}
 	else if (shaderName == "Box2D_Debug")
 	{
@@ -114,58 +133,59 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 // TODO: Look at resource creation again. Should Resource Manager create assets or just store them?
 GLuint ResourceManager::InstantiateTexture(const char* textureName)
 {
+#define TextureDir(a) Test("../Shared_Generic/Resources/Textures/", a) // Folder or shaders
 	GLuint textureHandle = -1;
 	if (textureName == "PeriodicHeal") // Asset name
 	{
-		textureHandle = Load2DTexture("Resources/Textures/PeriodicHeal.png"); // Asset directory
+		textureHandle = Load2DTexture(TextureDir("PeriodicHeal.png")); // Asset directory
 	}
 	else if (textureName == "FlashHeal")
 	{
-		textureHandle = Load2DTexture("../Shared_Generic/Resources/Textures/FlashHeal.png", true);
+		textureHandle = Load2DTexture(TextureDir("FlashHeal.png"), true);
 	}
 	else if (textureName == "ExampleBackground")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/ExampleBackground.png");
+		textureHandle = Load2DTexture(TextureDir("ExampleBackground.png"));
 	}
 	else if (textureName == "container")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/container.png");
+		textureHandle = Load2DTexture(TextureDir("container.png"));
 	}
 	else if (textureName == "container_specular")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/container_specular.png");
+		textureHandle = Load2DTexture(TextureDir("container_specular.png"));
 	}
 	else if (textureName == "Blue_Engine_UI1")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/Blue_Engine_UI1.png");
+		textureHandle = Load2DTexture(TextureDir("Blue_Engine_UI1.png"));
 	}
 	else if (textureName == "Blue_Engine_UI2")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/Blue_Engine_UI2.png");
+		textureHandle = Load2DTexture(TextureDir("Blue_Engine_UI2.png"));
 	}
 	else if (textureName == "UV_Map")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/UVMap.png");
+		textureHandle = Load2DTexture(TextureDir("UV_Map.png"));
 	}
 	else if (textureName == "Menu_Border1")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/Menu_Border1.png");
+		textureHandle = Load2DTexture(TextureDir("Menu_Border1.png"));
 	}
 	else if (textureName == "arm_dif")
 	{
-		textureHandle = Load2DTexture("Resources/Models/Crysis_Nanosuit/tex/arm_dif.png");
+		textureHandle = Load2DTexture(TextureDir("arm_dif.png"));
 	}
 	else if (textureName == "arm_spec")
 	{
-		textureHandle = Load2DTexture("Resources/Models/Crysis_Nanosuit/tex/arm_spec.png");
+		textureHandle = Load2DTexture(TextureDir("arm_spec.png"));
 	}
 	else if (textureName == "white_canvas")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/white_canvas.png");
+		textureHandle = Load2DTexture(TextureDir("white_canvas.png"));
 	}
 	else if (textureName == "null")
 	{
-		textureHandle = Load2DTexture("Resources/Textures/null_texture.png");
+		textureHandle = Load2DTexture(TextureDir("null.png"));
 	}
 	// Cube map
 	else if (false)
@@ -183,6 +203,8 @@ GLuint ResourceManager::InstantiateTexture(const char* textureName)
 
 MaterialData* ResourceManager::InstantiateMaterial(const char* matName)
 {
+	// TODO: Use MaterialDir
+#define MaterialDir(a) Test("../Shared_Generic/Resources/Textures/", a) // Folder or shaders
 	MaterialData* material = nullptr;
 	if (matName == "container") // Asset name
 	{
@@ -212,6 +234,9 @@ MaterialData* ResourceManager::InstantiateMaterial(const char* matName)
 
 Model* ResourceManager::InstantiateModel(const char* modelName)
 {
+	// TODO: Use ModelDir
+#define ModelDir(a) Test("../Shared_Generic/Resources/Textures/", a) // Folder or shaders
+
 	MeshFactory meshFact;
 	Model* model;
 	if (modelName == "LightBulb") // Asset name

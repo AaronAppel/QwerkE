@@ -135,17 +135,17 @@ GLuint LoadCubeMapTexture(const char* filename)
 	return texhandle;
 }
 
-char* GetAttributePrefix()
+char* Helper_GetAttributePrefix()
 {
 	return (char*)"a_"; // for attributes or i_ for inputs
 }
 
-char* GetUniformPrefix()
+char* Helper_GetUniformPrefix()
 {
 	return (char*)"u_"; // uniforms
 }
 
-char* GetTransferPrefix()
+char* Helper_GetTransferPrefix()
 {
 	return (char*)"t_"; // for transfers or v_ for varyings
 }

@@ -6,6 +6,7 @@
 #include "GameObject/Components/RenderComponent.h"
 #include "Systems/ResourceManager.h"
 #include "GameObject/Routines/RenderRoutine.h"
+#include "Systems/Graphics/OpenGLHelpers.h"
 
 /* Shapes */
 GameObject* Factory::CreateCube(Scene* scene, vec3 position)
@@ -47,7 +48,9 @@ GameObject* Factory::CreatePlane(Scene* scene, vec3 position)
 	RenderComponent* renderComp = new RenderComponent();
 	renderComp->SetMesh(m_pResources->GetMesh("Plane"));
 
+	CheckforGLErrors(__FILE__, __LINE__);
 	renderComp->SetShader(m_pResources->GetShader("LitMaterial"));
+	CheckforGLErrors(__FILE__, __LINE__);
 	renderComp->SetMaterial(m_pResources->GetMaterial("container"));
 
 	renderComp->SetColour(vec4(RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), 1)); // random intial colour

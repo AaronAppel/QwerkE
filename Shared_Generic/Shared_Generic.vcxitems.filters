@@ -2051,9 +2051,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Timer.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\GUID.h">
       <Filter>Utilities</Filter>
     </ClInclude>
@@ -2134,7 +2131,10 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Initialize.h" />
-    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glew\eglew.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\eglew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\glxew.h">
       <Filter>Libraries\glew</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2162,9 +2162,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp">
       <Filter>Utilities\FileIO</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\DebugHelpers.cpp">
-      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Helpers.cpp">
       <Filter>Utilities</Filter>
@@ -2234,7 +2231,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries_Initialize.cpp" />
-    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Libraries\glm\glm.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\glm\glm.cpp">
       <Filter>Libraries\glm</Filter>
     </ClCompile>
   </ItemGroup>

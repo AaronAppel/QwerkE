@@ -3,7 +3,7 @@
 #include "CameraComponent.h"
 #include "Math_Includes.h"
 #include "GameObject/GameObject.h"
-#include "Utilities/DebugHelpers.h"
+#include "Systems/ServiceLocator.h"
 
 // public functions
 // Constructor with vectors
@@ -20,9 +20,11 @@ CameraComponent::CameraComponent(vec3 position, vec3 up, float yaw, float pitch)
 	UpdateCameraVectors();
 	m_ComponentTag = Component_Camera;
 
+	GLFWwindow* window = (GLFWwindow*)(QwerkE::ServiceLocator::GetService(eEngineServices::AppWindow));
 	int x, y;
-	debug_GetCurrentWindowSize(&x, &y); // temporary
+	glfwGetWindowSize(window, &x, &y);
 	m_ViewportSize = vec2(x, y);
+
 	UpdateCameraVectors();
 }
 // Constructor with scalar values
@@ -34,9 +36,11 @@ CameraComponent::CameraComponent(float posX, float posY, float posZ, float upX, 
 	m_Pitch = pitch;
 	UpdateCameraVectors();
 
+	GLFWwindow* window = (GLFWwindow*)(QwerkE::ServiceLocator::GetService(eEngineServices::AppWindow));
 	int x, y;
-	debug_GetCurrentWindowSize(&x, &y); // temporary
+	glfwGetWindowSize(window, &x, &y);
 	m_ViewportSize = vec2(x, y);
+
 	UpdateCameraVectors();
 }
 

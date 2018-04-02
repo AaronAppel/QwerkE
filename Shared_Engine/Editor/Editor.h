@@ -5,6 +5,10 @@
 // editor.
 // Components include GUI windows, scenegraph, shader creator, etc.
 
+#include "SceneGraph/SceneGraph.h"
+
+class SceneGraph;
+
 class Editor
 {
 public:
@@ -16,7 +20,7 @@ public:
     void Draw();
 
 private:
-
+	SceneGraph * m_SceneGraph = nullptr;
 };
 
 #endif // !_Editor_H_

@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
@@ -66,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Factory\Build_Block_Menu.cpp" />

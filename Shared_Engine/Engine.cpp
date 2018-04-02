@@ -8,6 +8,7 @@
 #include "Scene/SceneManager.h"
 #include "Factory/Factory.h"
 #include "Editor/Editor.h"
+#include "Systems/Graphics/Sprite/Sprite.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -62,15 +63,16 @@ eEngineMessage Engine::Startup()
     EventManager* eventManager = new EventManager();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Event_System, eventManager);
 
-    SceneManager* sceneManager = new SceneManager();
-    sceneManager->Initialize();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Scene_Manager, sceneManager);
+	m_SceneManager = new SceneManager();
+    QwerkE::ServiceLocator::RegisterService(eEngineServices::Scene_Manager, m_SceneManager);
 
     Factory* factory = new Factory();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Factory_Entity, factory);
 
     m_Editor = new Editor();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Editor, m_Editor);
+
+	m_SceneManager->Initialize(); // Order Dependency
 
 	return QwerkE::ServiceLocator::ServicesLoaded();
 }
@@ -85,9 +87,11 @@ eEngineMessage Engine::TearDown()
 
     delete (EventManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Event_System);
 
-    delete (SceneManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Scene_Manager);
+	delete m_SceneManager;
 
     delete (Factory*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Factory_Entity);
+
+	delete m_Editor;
 
 	Libs_TearDown(); // unload libraries
 
@@ -95,11 +99,30 @@ eEngineMessage Engine::TearDown()
 	return eEngineMessage::_QSuccess;
 }
 
+Sprite2D* g_Sprite = new Sprite2D();
 void Engine::Run()
 {
-	m_IsRunning = true;
+	// turn on depth buffer testing
+	glDisable(GL_DEPTH_TEST);
 
-	// Start FPS //
+	// depth cull for efficiency
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
+
+	// turn on alpha blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
+
+	ResourceManager* rMan = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
+	g_Sprite->SetPosition(vec2(0,0));
+	g_Sprite->SetMesh(rMan->GetMesh("Box"));
+	g_Sprite->SetShader(rMan->GetShader("Sprite2D"));
+	g_Sprite->SetTexture(rMan->GetTexture("PeriodicHeal"));
+
+	// Deltatime + FPS Tracking//
 	// Deltatime
 	double deltaTime = 0.0f; // Time between current frame and last frame
 	double lastFrame = helpers_Time(); // Time of last frame initialized to current time
@@ -109,11 +132,11 @@ void Engine::Run()
     g_TimeSinceLastFrame = FPS_MAX; // Amount of seconds since the last frame ran initialized to run 1st time
 	// Printing framerate
 	float printPeriod = 3.0f; // Print period in seconds
-	float timeSincePrint = printPeriod; // Seconds since last print initiliazed to print 1st frame
+	float timeSincePrint = printPeriod; // Seconds since last print initialized to print 1st frame
 	short framesSincePrint = 0;
-	// End FPS //
 
-	while (glfwWindowShouldClose(m_Window) == false) // TODO: 'ESC' key down or something
+	// Application Loop
+	while (glfwWindowShouldClose(m_Window) == false) // Run until close requested
 	{
 		// setup frame
 		// Calculate deltatime of current frame
@@ -138,23 +161,16 @@ void Engine::Run()
 		{
 			/* Game Loop */
 			/* New Frame */
-            glfwPollEvents(); // TODO: Better GLFW interface?
-            ImGui_ImplGlfwGL3_NewFrame();
+			Engine::NewFrame();
 
 			/* Input */
-			// g_MainWindow->CheckInput();
-			// ProcessXInput();
+			Engine::Input();
+
 			/* Logic */
-			// Engine::Update();
+			Engine::Update(g_TimeSinceLastFrame);
+
 			/* Render */
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			Engine::Draw();
-
-            ImGui::ShowDemoWindow();
-
-            ImGui::Render();
-            ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
-            glfwSwapBuffers(m_Window);
 
             // FPS
 			framesSincePrint++; // Framerate tracking
@@ -169,24 +185,39 @@ void Engine::Run()
 
 void Engine::NewFrame()
 {
+	/* Reset */
 	// TODO: Reset things...
+	m_Editor->NewFrame();
+
+	ImGui_ImplGlfwGL3_NewFrame();
 }
 
-void Engine::Update()
+void Engine::Input()
+{
+	glfwPollEvents(); // TODO: Better GLFW interface?
+
+	// g_MainWindow->CheckInput();
+	// ProcessXInput();
+}
+
+void Engine::Update(double deltatime)
 {
 	// TODO: Update editor and/or game code
-	static int counter = 0;
-	counter++;
-	if (counter > 600)
-	{
+	m_SceneManager->Update(deltatime);
+	m_Editor->Update();
+
+	if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(m_Window, true);
-	}
-    ((EventManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Event_System))->QueueEvent();
 }
 
 void Engine::Draw()
 {
-	// TODO: Render game and editor
-	// g_MainWindow->SwapBuffers(); // Flip new image (buffer) to screen
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// TODO: Render game
+	m_SceneManager->Draw();
+	m_Editor->Draw();
+	g_Sprite->Draw();
+	ImGui::Render();
+	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+	glfwSwapBuffers(m_Window);
 }

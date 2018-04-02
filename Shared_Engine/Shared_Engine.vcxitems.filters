@@ -128,8 +128,13 @@
       <Filter>Factory</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h">
+      <Filter>Editor\SceneGraph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -185,6 +190,9 @@
     </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{9cd9d01e-0c42-48db-a17a-94a6969674b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\SceneGraph">
+      <UniqueIdentifier>{cd1e2ea2-d163-4c85-b755-f867e58b0bbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -333,7 +341,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp">
+      <Filter>Editor\SceneGraph</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

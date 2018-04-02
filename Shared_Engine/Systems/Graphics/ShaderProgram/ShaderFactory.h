@@ -6,6 +6,7 @@
 //enum eShaderTypes {};
 // NOTE: add \n to beginning of string ex."\nText"
 #include "../../Graphics_Header.h"
+#include "Systems/Graphics/OpenGLHelpers.h"
 
 #include <string>
 
@@ -52,9 +53,9 @@ private:
 	std::string LitMaterialFrag(std::string fragString);
 
 	/* Values */
-	const char* m_AttributePrefix = nullptr; // = blue_GetAttributePrefix(); // TODO: a_ probably works for attributes
-	const char* m_UniformPrefix = nullptr; // = blue_GetUniformPrefix();
-	const char* m_TransferPrefix = nullptr; // = blue_GetTransferPrefix(); // t_ means the variable is being transferred from one shader to another
+	const char* m_AttributePrefix = Helper_GetAttributePrefix(); // = blue_GetAttributePrefix(); // TODO: a_ probably works for attributes
+	const char* m_UniformPrefix = Helper_GetUniformPrefix(); // = blue_GetUniformPrefix();
+	const char* m_TransferPrefix = Helper_GetTransferPrefix(); // = blue_GetTransferPrefix(); // t_ means the variable is being transferred from one shader to another
 
 	/* Add Shader Variables */
 	// structs

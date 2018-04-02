@@ -4,7 +4,6 @@
 #include "GameObject/Components/Component.h"
 #include "GameObject/Components/CameraComponent.h"
 #include "../Systems/Input/InputManager.h"
-#include "Utilities/DebugHelpers.h"
 #include "Systems/Input/Controller.h"
 #include "Systems/DataManager.h"
 #include "Systems/ServiceLocator.h"
@@ -65,7 +64,7 @@ void Scene::ResetScene()
 
 void Scene::p_Update(double deltatime)
 {
-	Controller* t_Controller = debug_GetPlayerController();
+	Controller* t_Controller = ((InputManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager)))->GetController(0); // TODO: Clean up
 	CameraComponent* t_ActiveCamera = ((CameraComponent*)m_CameraList.At(m_CurrentCamera)->GetComponent(Component_Camera));
 	// Temporary active camera control
 	// Mouse

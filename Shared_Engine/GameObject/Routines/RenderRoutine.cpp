@@ -57,8 +57,6 @@ void RenderRoutine::Draw(GameObject* cameraObject)
 //// Private functions
 void RenderRoutine::SetDrawFunction() // Assign function pointers and initialize values
 {
-	CheckforGLErrors(__FILE__, __LINE__);
-
 	Mesh* t_pMesh = m_pRender->GetMesh();
 	ShaderProgram* t_pShader = m_pRender->GetShader();
 
