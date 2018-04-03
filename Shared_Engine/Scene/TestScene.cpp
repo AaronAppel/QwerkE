@@ -7,6 +7,7 @@
 #include "Systems/DataManager.h"
 #include "Systems/ServiceLocator.h"
 #include "Systems/Graphics/OpenGLHelpers.h"
+#include "Systems/Graphics/Sprite/Sprite.h"
 
 TestScene::TestScene() : Scene()
 {
@@ -32,7 +33,7 @@ void TestScene::Initialize()
 	// return;
 	{
 		// Create scene cameras
-		const int t_CamMax = 5;
+		const int t_CamMax = 1;
 		for (int i = 0; i < t_CamMax; i++)
 		{
 			t_pFactory->CreateFreeCamera(this, vec3(0, 0, -2.5f * (i + 2) * 2));
@@ -43,7 +44,7 @@ void TestScene::Initialize()
 
 	{	// Create scene objects
 		// cubes
-		int cubes = 0;
+		int cubes = 1;
 		for (float i = 0; i < cubes; i++)
 		{
 			t_pFactory->CreateCube(this, vec3(i, i, i));

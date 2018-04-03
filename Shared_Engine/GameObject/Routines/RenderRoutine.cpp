@@ -116,5 +116,5 @@ void RenderRoutine::SetDrawFunction() // Assign function pointers and initialize
 		}
 	}
 
-	CheckforGLErrors(__FILE__, __LINE__);
+	CheckforGLErrors(__FILE__, __LINE__); // DEBUG:
 }

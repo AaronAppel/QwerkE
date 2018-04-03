@@ -10,6 +10,7 @@
 #include "Editor/Editor.h"
 #include "Systems/Graphics/Sprite/Sprite.h"
 #include "Systems/Graphics_Header.h"
+#include "Systems/Graphics/FBO/FrameBufferObject.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -25,6 +26,8 @@ extern bool g_Debugging = false;
 
 extern float g_FrameRate = 0.0f;
 extern double g_TimeSinceLastFrame = 0.0;
+
+FrameBufferObject* g_FBO = new FrameBufferObject();
 
 Engine::Engine()
 {
@@ -103,9 +106,11 @@ eEngineMessage Engine::TearDown()
 Sprite2D* g_Sprite;
 void Engine::Run()
 {
+	g_FBO->Init();
+
     glClearColor(1, 1, 1, 1);
 	// turn on depth buffer testing
-	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	// depth cull for efficiency
 	glEnable(GL_CULL_FACE);
@@ -219,9 +224,16 @@ void Engine::Update(double deltatime)
 
 void Engine::Draw()
 {
+	// TEMP: Render scene to texture
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// TODO: Render game
+	g_FBO->Bind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_SceneManager->Draw();
+	g_FBO->UnBind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180));
+
 	m_Editor->Draw();
 	// g_Sprite->Draw();
 	ImGui::Render();

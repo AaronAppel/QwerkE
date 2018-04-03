@@ -65,9 +65,9 @@ private:
 	vec3 m_Rotation = 0;
 	vec3 m_Scale = 1.0f;
 
-	int m_BaseUpdateListSize = 5;
+	int m_BaseUpdateListSize = 0;
 	std::vector<Routine*> m_UpdateList;
-	int m_BaseDrawListSize = 2;
+	int m_BaseDrawListSize = 0;
 	std::vector<Routine*> m_DrawList;
 	int m_RenderOrder = 100;
 
