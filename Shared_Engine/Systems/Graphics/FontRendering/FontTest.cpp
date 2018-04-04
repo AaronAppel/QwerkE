@@ -99,10 +99,12 @@ void RenderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloat y, G
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(g_WindowWidth), 0.0f, static_cast<GLfloat>(g_WindowHeight));
 
 	shader->Use();
-	glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
+	// glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	shader->SetUniformMat4("projection", glm::value_ptr(projection));
 	// Activate corresponding render state
-	glUniform3f(glGetUniformLocation(shader->GetProgram(), "textColor"), color.x, color.y, color.z);
+	// glUniform3f(glGetUniformLocation(shader->GetProgram(), "textColor"), color.x, color.y, color.z);
+	shader->SetUniformFloat3("textColor", color.x, color.y, color.z);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);
 
@@ -127,10 +129,13 @@ void RenderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloat y, G
 		{ xpos + w, ypos,       1.0, 1.0 },
 		{ xpos + w, ypos + h,   1.0, 0.0 }
 		};
+
 		// Render glyph texture over quad
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 		// Update content of VBO memory
+
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // Be sure to use glBufferSubData and not glBufferData
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -141,4 +146,6 @@ void RenderText(ShaderProgram *shader, std::string text, GLfloat x, GLfloat y, G
 	}
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	CheckforGLErrors(__FILE__, __LINE__); // Load fonts
 }

@@ -73,9 +73,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameCore.h">
       <Filter>Systems</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.h">
-      <Filter>Systems</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
@@ -134,6 +131,19 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h">
       <Filter>Editor\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CallbackFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\QwerKE_eKeys.h">
+      <Filter>Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\PhysicsManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\MessageManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Renderer.h">
+      <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -256,9 +266,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameCore.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameStateManager.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
@@ -347,6 +354,16 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp">
       <Filter>Editor\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CallBackFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\PhysicsManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\MessageManager.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Renderer.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

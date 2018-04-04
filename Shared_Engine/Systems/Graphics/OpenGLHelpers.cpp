@@ -22,7 +22,7 @@ void CheckforGLErrors(char* file, int line)
 {
 	GLenum error = glGetError();
 	if (error != 0)
-		OutputPrint("\nglGetError: Error caught in file %s, line %i -> ", file, line);
+		OutputPrint("\nglGetError: Error caught in file %s(%i) -> Error %i ", file, line, error);
 	if (error == GL_INVALID_VALUE)
 		OutputPrint("Invalid value. Can't find value.", error);
 	if (error == GL_INVALID_OPERATION)
@@ -33,7 +33,7 @@ void CheckforGLErrors(const char* file, int line)
 {
 	GLenum error = glGetError();
 	if (error != 0)
-		OutputPrint("\nglGetError: Error caught in file %s, line %i -> ", file, line);
+		OutputPrint("\nglGetError: Error caught in file %s(%i) -> Error %i ", file, line, error);
 	if (error == GL_INVALID_VALUE)
 		OutputPrint("Invalid value. Can't find value.", error);
 	if (error == GL_INVALID_OPERATION)

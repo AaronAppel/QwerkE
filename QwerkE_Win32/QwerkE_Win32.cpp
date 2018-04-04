@@ -7,7 +7,7 @@ int main() // End user implementation
 	Engine engine;
 	if (engine.Startup() == eEngineMessage::_QFail)
 	{
-		ConsolePrint("Main(): Error loading services!");
+		OutputPrint("Main(): Error loading services!");
 		return 0;
 	}
 

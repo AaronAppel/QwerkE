@@ -11,6 +11,10 @@
 #include "Systems/Graphics/Sprite/Sprite.h"
 #include "Systems/Graphics_Header.h"
 #include "Systems/Graphics/FBO/FrameBufferObject.h"
+#include "CallbackFunctions.h"
+#include "Systems/PhysicsManager.h"
+#include "Systems/Renderer.h"
+#include "Systems/MessageManager.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -76,6 +80,15 @@ eEngineMessage Engine::Startup()
     m_Editor = new Editor();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Editor, m_Editor);
 
+	PhysicsManager* physicsManager = new PhysicsManager();
+	QwerkE::ServiceLocator::RegisterService(eEngineServices::PhysicsManager, physicsManager);
+
+	MessageManager* messageManager = new MessageManager();
+	QwerkE::ServiceLocator::RegisterService(eEngineServices::MessageManager, messageManager);
+
+	Renderer* renderer = new Renderer();
+	QwerkE::ServiceLocator::RegisterService(eEngineServices::Renderer, renderer);
+
 	m_SceneManager->Initialize(); // Order Dependency
 
 	return QwerkE::ServiceLocator::ServicesLoaded();
@@ -97,6 +110,12 @@ eEngineMessage Engine::TearDown()
 
 	delete m_Editor;
 
+	delete (PhysicsManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::PhysicsManager);
+
+	delete (MessageManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::MessageManager);
+
+	delete (Renderer*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Renderer);
+
 	Libs_TearDown(); // unload libraries
 
 	// TODO: Safety checks?
@@ -107,14 +126,15 @@ Sprite2D* g_Sprite;
 void Engine::Run()
 {
 	g_FBO->Init();
+	SetupCallbacks(m_Window);
 
     glClearColor(1, 1, 1, 1);
 	// turn on depth buffer testing
 	glEnable(GL_DEPTH_TEST);
 
 	// depth cull for efficiency
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	// Testing: glEnable(GL_CULL_FACE);
+	// Testing: glCullFace(GL_BACK);
 	if(Wind_CCW) glFrontFace(GL_CCW);
     else glFrontFace(GL_CW);
 
@@ -235,6 +255,7 @@ void Engine::Draw()
 	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180));
 
 	m_Editor->Draw();
+	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Text");
 	// g_Sprite->Draw();
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

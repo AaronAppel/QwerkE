@@ -19,10 +19,14 @@ class EventManager;
 class SceneManager;
 class Factory;
 class Editor;
+class PhysicsManager;
+class MessageManager;
+class Renderer;
 
 namespace QwerkE
 {
 	// TODO: Improve service accessing
+	// Think of toggling register/unregister
 	class ServiceLocator
 	{
 	public:
@@ -46,6 +50,9 @@ namespace QwerkE
         static SceneManager* m_SceneManager;
         static Factory* m_Factory;
         static Editor* m_Editor;
+		static PhysicsManager* m_PhysicsManager;
+		static MessageManager* m_MessageManager;
+		static Renderer* m_Renderer;
 	};
 }
 

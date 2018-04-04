@@ -1,9 +1,9 @@
-#ifndef __CallBackFunctions_H_
-#define __CallBackFunctions_H_
+#ifndef _CallBackFunctions_H_
+#define _CallBackFunctions_H_
 
 // setup
-void SetCursor();
-void SetupCallbacks(MyGLFW* window);
+// void SetCursor(); TODO:
+void SetupCallbacks(GLFWwindow* window);
 // input
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void char_callback(GLFWwindow* window, unsigned int codePoint);
@@ -25,4 +25,4 @@ void framebuffer_resize_callback(GLFWwindow* window, int x, int y);
 void error_callback(int error, const char* description);
 // file
 void file_drop_callback(GLFWwindow* window, int count, const char** paths);
-#endif // !__CallBackFunctions_H_
+#endif // !_CallBackFunctions_H_

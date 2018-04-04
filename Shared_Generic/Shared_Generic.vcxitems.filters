@@ -2126,9 +2126,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.h">
       <Filter>Libraries\lodepng</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\CallbackFunctions.h">
-      <Filter>Libraries\MyGLFW</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Initialize.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\eglew.h">
@@ -2225,9 +2222,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp">
       <Filter>Libraries\lodepng</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\CallBackFunctions.cpp">
-      <Filter>Libraries\MyGLFW</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries_Initialize.cpp" />

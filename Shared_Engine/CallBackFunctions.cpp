@@ -1,62 +1,70 @@
-#include "Main.h"
+#include "CallbackFunctions.h"
+#include "Systems/ServiceLocator.h"
 
+// TODO: No Globals!
 extern MyGLFW* g_MainWindow;
 extern int g_WindowWidth, g_WindowHeight;
-extern bool g_Debugging;
+InputManager* l_InputManager;
 
-void SetupCallbacks(MyGLFW* window)
+void SetupCallbacks(GLFWwindow* window)
 {
+	l_InputManager = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
 	// input
-	window->SetKeyCallback(key_callback);
-	window->SetScrollCallback(scroll_callback);
-	window->SetCharCallback(char_callback);
-	window->SetCharModsCallback(char_mods_callback);
-	window->SetCursorMoveCallback(cursor_position_callback);
-	window->SetMouseButtonCallback(mouse_button_callback);
+	glfwSetKeyCallback(window, key_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetCharCallback(window, char_callback);
+	glfwSetCharModsCallback(window, char_mods_callback);
+	glfwSetCursorPosCallback(window, cursor_position_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	// window
-	window->SetWindowMoveCallback(window_position_callback);
-	window->SetWindowResizeCallback(window_resize_callback);
-	window->SetWindowCloseCallback(window_close_callback);
-	window->SetWindowRefreshCallback(window_refresh_callback);
-	window->SetWindowFocusCallback(window_focus_callback);
-	window->SetWindowIconifyCallback(window_iconify_callback);
-	window->SetFrameBufferResizeCallback(framebuffer_resize_callback);
+	glfwSetWindowPosCallback(window, window_position_callback);
+	glfwSetWindowSizeCallback(window, window_resize_callback);
+	glfwSetWindowCloseCallback(window, window_close_callback);
+	glfwSetWindowRefreshCallback(window, window_refresh_callback);
+	glfwSetWindowFocusCallback(window, window_focus_callback);
+	glfwSetWindowIconifyCallback(window, window_iconify_callback);
+	glfwSetFramebufferSizeCallback(window, framebuffer_resize_callback);
 	// error
-	window->SetErrorCallback(error_callback);
+	glfwSetErrorCallback(error_callback);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (action == GLFW_PRESS)
-	{
-		// handle keys
-		if (key == GLFW_KEY_ESCAPE)
-			g_MainWindow->RequestClose();
+	{		
+		l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key),
+			eKeyState::eKeyState_Press);
 	}
 	else if (action == GLFW_RELEASE)
 	{
+		l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key), 
+			eKeyState::eKeyState_Release);
 	}
-
-	// check if keyIsDown
-	int state = glfwGetKey(window, GLFW_KEY_E);
-	if (state == GLFW_PRESS) {} // do something
 }
 void char_callback(GLFWwindow* window, unsigned int codePoint)
 {
+	// TODO: Tell InputManager that a key state changed
+	// l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key), eKeyState::eKeyState_Down);
 	int bp = 1;
 }
 void char_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods)
 {
+	// TODO: Tell InputManager that a key state changed
+	// l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key), eKeyState::eKeyState_Down);
 	// spacebar
 	// ~ to =
 	int bp = 1;
 }
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
+	// TODO: Tell InputManager that the mouse moved
+	// l_InputManager->ProcessMouse();
 	ypos = (double)g_WindowHeight - ypos; // invert y
 }
 void cursor_enter_callback(GLFWwindow* window, int entered)
 {
+	// TODO: Tell InputManager that the mouse moved
+	// l_InputManager->ProcessMouse();
 	if (entered == GLFW_TRUE)
 	{
 		// mouse entered window rectangle
@@ -68,6 +76,9 @@ void cursor_enter_callback(GLFWwindow* window, int entered)
 }
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
+	// TODO: Tell InputManager that the mouse changed
+	// l_InputManager->ProcessMouse();
+	
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) // Right
 	{
 	}
@@ -89,9 +100,13 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 }
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
+	// TODO: Tell InputManager that the mouse moved
+	// l_InputManager->ProcessMouse();
 }
 void joystick_callback(int joy, int event)
 {
+	// TODO: Tell InputManager that a joystick changed
+	// l_InputManager->ProcessGamePad/Joystick();
 	// joystick button pressed
 	int bp = 1;
 }

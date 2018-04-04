@@ -122,6 +122,10 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 	{
 		// InstantiateShader("Data/Shaders/Box2DDebug.vert", "Data/Shaders/Box2DDebug.frag", NULL, "Box2D_Debug");
 	}
+	else if (shaderName == "text")
+	{
+		shader->Init(ShaderDir("text.vert"), ShaderDir("text.frag"), NULL);
+	}
 	else
 	{
 		return nullptr;

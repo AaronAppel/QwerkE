@@ -64,42 +64,45 @@ void Scene::ResetScene()
 
 void Scene::p_Update(double deltatime)
 {
-	Controller* t_Controller = ((InputManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager)))->GetController(0); // TODO: Clean up
-	CameraComponent* t_ActiveCamera = ((CameraComponent*)m_CameraList.At(m_CurrentCamera)->GetComponent(Component_Camera));
+	// Controller* t_Controller = ((InputManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager)))->GetController(0); // TODO: Clean up
+	// CameraComponent* t_ActiveCamera = ((CameraComponent*)m_CameraList.At(m_CurrentCamera)->GetComponent(Component_Camera));
 	// Temporary active camera control
 	// Mouse
-	{
-		vec2 t_MouseDelta = t_Controller->GetMousePosDelta();
-		t_ActiveCamera->ProcessMouseMovement(t_MouseDelta.x, t_MouseDelta.y);
-		// m_Zoom
-		t_ActiveCamera->ProcessMouseScroll(t_Controller->GetMouseScrollDelta());
-	}
+	// {
+	//	vec2 t_MouseDelta = t_Controller->GetMousePosDelta();
+	//	t_ActiveCamera->ProcessMouseMovement(t_MouseDelta.x, t_MouseDelta.y);
+	//	// m_Zoom
+	//	t_ActiveCamera->ProcessMouseScroll(t_Controller->GetMouseScrollDelta());
+	//}
 
-	// Keyboard
-	if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveForward))
-	{
-		t_ActiveCamera->ProcessKeyboard(eCamera_Movement::FORWARD, (float)deltatime);
-	}
-	if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveBackward))
-	{
-		t_ActiveCamera->ProcessKeyboard(eCamera_Movement::BACKWARD, (float)deltatime);
-	}
-	if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveLeft))
-	{
-		t_ActiveCamera->ProcessKeyboard(eCamera_Movement::LEFT, (float)deltatime);
-	}
-	if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveRight))
-	{
-		t_ActiveCamera->ProcessKeyboard(eCamera_Movement::RIGHT, (float)deltatime);
-	}
-	if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveUp))
-	{
-		t_ActiveCamera->ProcessKeyboard(eCamera_Movement::UP, (float)deltatime);
-	}
-	if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveDown))
-	{
-		t_ActiveCamera->ProcessKeyboard(eCamera_Movement::DOWN, (float)deltatime);
-	}
+	//// Keyboard
+	//if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveForward))
+	//{
+	//	t_ActiveCamera->ProcessKeyboard(eCamera_Movement::FORWARD, (float)deltatime);
+	//}
+	//if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveBackward))
+	//{
+	//	t_ActiveCamera->ProcessKeyboard(eCamera_Movement::BACKWARD, (float)deltatime);
+	//}
+	//if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveLeft))
+	//{
+	//	t_ActiveCamera->ProcessKeyboard(eCamera_Movement::LEFT, (float)deltatime);
+	//}
+	//if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveRight))
+	//{
+	//	t_ActiveCamera->ProcessKeyboard(eCamera_Movement::RIGHT, (float)deltatime);
+	//}
+	//if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveUp))
+	//{
+	//	t_ActiveCamera->ProcessKeyboard(eCamera_Movement::UP, (float)deltatime);
+	//}
+	//if (t_Controller->IsButtonPressed(eGameButtons::Button_MoveDown))
+	//{
+	//	t_ActiveCamera->ProcessKeyboard(eCamera_Movement::DOWN, (float)deltatime);
+	//}
+
+	// InputManager* inputManager = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
+	
 
 	// update all of the Scene objects in the list.
 	for (auto object : m_pGameObjects)

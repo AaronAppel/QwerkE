@@ -4,18 +4,7 @@
 
 InputManager::InputManager()
 {
-	// Setup system key maps
-	#ifdef _glfw3_h_
-		AssignGLFWKeys();
-
-	#elif _QWin32
-		AssignWin32Keys();
-
-	#elif _QMac32 // 64
-
-	#else
-			// Other Platforms or default layout
-	#endif
+	AssignSystemKeys();
 
 	// Create controllers
 	for (int i = 0; i < g_NumPlayers; i++)
@@ -36,14 +25,19 @@ InputManager::~InputManager()
 
 void InputManager::ProcessKeyEvent(eKeys key, eKeyState state)
 {
-	if (state == eKeyState::eKeyState_Up)
+	if (state == eKeyState::eKeyState_Release)
 	{
-		m_KeyState[m_Keys[key]] = true; // TODO: Test
+		m_KeyStates[key] = false; // TODO: Test
 	}
-	else if(state == eKeyState::eKeyState_Down)
+	else
 	{
-		m_KeyState[m_Keys[key]] = false;
+		m_KeyStates[key] = true;
 	}
+}
+
+eKeys InputManager::GetKeyCode(int key)
+{
+	return (eKeys)m_KeyCodex[key]; // TODO: Make sure this works is cross platform
 }
 
 void InputManager::SetupControllers()

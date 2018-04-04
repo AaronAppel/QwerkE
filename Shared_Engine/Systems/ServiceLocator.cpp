@@ -10,6 +10,9 @@ namespace QwerkE
     SceneManager* QwerkE::ServiceLocator::m_SceneManager = nullptr;
     Factory* QwerkE::ServiceLocator::m_Factory = nullptr;
     Editor* QwerkE::ServiceLocator::m_Editor = nullptr;
+	PhysicsManager* QwerkE::ServiceLocator::m_PhysicsManager = nullptr;
+	MessageManager* QwerkE::ServiceLocator::m_MessageManager = nullptr;
+	Renderer* QwerkE::ServiceLocator::m_Renderer = nullptr;
 
 	void ServiceLocator::RegisterService(eEngineServices serviceType, void* service)
 	{
@@ -36,6 +39,15 @@ namespace QwerkE
         case eEngineServices::Editor:
             ServiceLocator::m_Editor = (Editor*)service;
             break;
+		case eEngineServices::PhysicsManager:
+			ServiceLocator::m_PhysicsManager = (PhysicsManager*)service;
+			break;
+		case eEngineServices::MessageManager:
+			ServiceLocator::m_MessageManager = (MessageManager*)service;
+			break;
+		case eEngineServices::Renderer:
+			ServiceLocator::m_Renderer = (Renderer*)service;
+			break;
 		default:
 			ConsolePrint("ServiceLocator::RegisterService(): Invalid service!");
 			break;
@@ -81,6 +93,21 @@ namespace QwerkE
             ServiceLocator::m_Editor = nullptr;
             return temp;
             break;
+		case eEngineServices::PhysicsManager:
+			temp = ServiceLocator::m_PhysicsManager;
+			ServiceLocator::m_PhysicsManager = nullptr;
+			return temp;
+			break;
+		case eEngineServices::MessageManager:
+			temp = ServiceLocator::m_MessageManager;
+			ServiceLocator::m_MessageManager = nullptr;
+			return temp;
+			break;
+		case eEngineServices::Renderer:
+			temp = ServiceLocator::m_Renderer;
+			ServiceLocator::m_Renderer = nullptr;
+			return temp;
+			break;
 		default:
 			ConsolePrint("ServiceLocator::UnregisterService(): Invalid service!");
 			break;
@@ -112,6 +139,15 @@ namespace QwerkE
         case eEngineServices::Editor:
             return ServiceLocator::m_Editor;
             break;
+		case eEngineServices::PhysicsManager:
+			return ServiceLocator::m_PhysicsManager;
+			break;
+		case eEngineServices::MessageManager:
+			return ServiceLocator::m_MessageManager;
+			break;
+		case eEngineServices::Renderer:
+			return ServiceLocator::m_Renderer;
+			break;
 		default:
 			ConsolePrint("ServiceLocator::GetService(): Invalid service!");
 			break;
@@ -152,6 +188,18 @@ namespace QwerkE
                 if (ServiceLocator::m_Editor == nullptr)
                     return eEngineMessage::_QFail; // not loaded
                 break;
+			case eEngineServices::PhysicsManager:
+				if (ServiceLocator::m_PhysicsManager == nullptr)
+					return eEngineMessage::_QFail; // not loaded
+				break;
+			case eEngineServices::MessageManager:
+				if (ServiceLocator::m_MessageManager == nullptr)
+					return eEngineMessage::_QFail; // not loaded
+				break;
+			case eEngineServices::Renderer:
+				if (ServiceLocator::m_Renderer == nullptr)
+					return eEngineMessage::_QFail; // not loaded
+				break;
 			}
 
 			i = (eEngineServices)((int)i + 1); // increment service
