@@ -145,6 +145,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Renderer.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\AudioManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -363,6 +366,9 @@
       <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Renderer.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\AudioManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>

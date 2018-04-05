@@ -2048,9 +2048,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Timer.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\GUID.h">
       <Filter>Utilities</Filter>
     </ClInclude>
@@ -2133,6 +2130,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\glxew.h">
       <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\Timer.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\MyLinkedList.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\ObjectPool.h">
+      <Filter>Containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

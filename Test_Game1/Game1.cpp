@@ -1,10 +1,14 @@
-// #include "PCH.h"
+// platform
+#include <sdkddkver.h>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 #include "Game1.h"
-//#include "../Shared_Engine/QwerkE_Include.h"
+#include "../QwerkE.h"
 
 int main()
 {
-	// load
+	// load	
 
 	while (false)
 	{

@@ -32,8 +32,8 @@ namespace QwerkE
 	public:
 		// Services need to be instantiated, then registered
 		// TODO: Services...
-		// Audio, Networking, Graphics (Renderer, GUI), Utilities (Conversion, FileIO, Printing),
-		// Physics, Event, Debug, Memory, Window, Application, Input, Resources
+		// Audio, Networking, Graphics, Utilities (some type of file managers?),
+		// Debug, Memory, Application
 		static void RegisterService(eEngineServices serviceType, void* service);
 
 		static void* UnregisterService(eEngineServices serviceType); // TODO: Potentially dangerous!

@@ -41,6 +41,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene\Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene\SceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene\TestScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\AudioManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\DataManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameCore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\CubeMap\CubeMap.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene\TestScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\AudioManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\DataManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\CubeMap\CubeMap.cpp" />

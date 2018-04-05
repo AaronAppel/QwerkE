@@ -15,6 +15,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\MyLinkedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\ObjectPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Containers\Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Block_Menu.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.h" />
@@ -704,7 +707,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\SmartPointer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
