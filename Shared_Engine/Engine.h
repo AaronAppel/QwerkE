@@ -4,7 +4,9 @@
 // This may need to become an abstract class that gets inherited
 // by platform specific implementations
 
-class GLFWwindow;
+#include "Engine_Enums.h"
+
+struct GLFWwindow;
 class Editor;
 class SceneManager;
 

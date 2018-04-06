@@ -1,8 +1,14 @@
+#include "../../../Engine_Defines.h"
+#include "../../../Engine_Platform.h" // TODO: Need?
 #include "../../Graphics_Header.h"
 #include "../../../../Shared_Generic/Utilities/FileIO/FileUtilities.h"
 #include "../../../../Shared_Generic/Utilities/StringHelpers.h"
 #include "../OpenGLHelpers.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+#include <cstring>
 #include <string> // TODO: 1 use at bottom could be avoided
 
 ShaderProgram::ShaderProgram(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir)

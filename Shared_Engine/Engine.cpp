@@ -1,12 +1,13 @@
 #include "Engine.h"
+#include "../Shared_Generic/Libraries/glew/GL/glew.h"
+#include "../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
+#include "../Shared_Generic/Libraries/imgui/imgui.h"
+#include "../Shared_Generic/Libraries/imgui/imgui_impl_glfw_gl3.h"
 #include "Systems/ResourceManager.h"
 #include "Systems/ServiceLocator.h"
 #include "Engine_Enums.h"
 #include "../Shared_Generic/Utilities/Helpers.h"
 #include "../Shared_Generic/Libraries_Initialize.h"
-#include "../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
-#include "../Shared_Generic/Libraries/imgui/imgui.h"
-#include "../Shared_Generic/Libraries/imgui/imgui_impl_glfw_gl3.h"
 #include "Events/EventManager.h"
 #include "Scene/SceneManager.h"
 #include "Systems/Factory/Factory.h"
@@ -140,7 +141,7 @@ void Engine::Run()
 	g_FBO->Init();
 	SetupCallbacks(m_Window);
 
-    glClearColor(1, 1, 1, 1);
+    glClearColor(0.5f, 0.7f, 0.7f, 1.0f);
 	// turn on depth buffer testing
 	glEnable(GL_DEPTH_TEST);
 

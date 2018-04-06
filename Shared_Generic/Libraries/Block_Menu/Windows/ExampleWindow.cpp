@@ -1,6 +1,7 @@
 #include "ExampleWindow.h"
 
-ExampleWindow::ExampleWindow()
+ExampleWindow::ExampleWindow(vec2 resolution) :
+	MenuWindow(resolution)
 {
 }
 

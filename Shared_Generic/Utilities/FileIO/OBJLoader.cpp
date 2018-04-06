@@ -1,6 +1,12 @@
+#include "OBJLoader.h"
 #include "../../../Shared_Engine/Systems/Graphics_Header.h"
 #include "FileUtilities.h"
 #include "../PrintFunctions.h"
+#include "../../../Shared_Engine/Systems/Graphics/Model/Model.h"
+#include "../../../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
+#include "../../../Shared_Engine/Systems/Graphics/Model/Mesh/MeshUtilities.h"
+
+#include <cstring>
 
 // TODO: Consider abstracting functionality. Maybe
 // abstract the mesh class and just pass vector2/3[]s back

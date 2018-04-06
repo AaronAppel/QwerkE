@@ -9,7 +9,7 @@ AddButton::AddButton(Mesh* mesh) : MenuItem(mesh)
 
 AddButton::~AddButton()
 {
-	MenuItem* item = new MenuItem();
+	MenuItem* item = new MenuItem(vec2(1,1));
 	item->SetMesh(m_Mesh);
 	item->SetParentWindow(m_ParentWindow);
 
@@ -30,7 +30,7 @@ void AddButton::Draw()
 void AddButton::LeftClick()
 {
 	// TODO:: check menu item list size
-	MenuItem* item = new MenuItem();
+	MenuItem* item = new MenuItem(vec2(1,1));
 	item->SetMesh(m_Mesh);
 	item->SetParentWindow(m_ParentWindow);
 

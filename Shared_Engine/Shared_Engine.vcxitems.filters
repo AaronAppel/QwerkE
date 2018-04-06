@@ -144,9 +144,7 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\LevelLoader.h" />
-    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\Debugger.h">
-      <Filter>Systems</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Debugger.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -352,8 +350,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\MasterAssetList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Shapes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Testing.cpp" />
-    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\Debugger.cpp">
-      <Filter>Systems</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Debugger.cpp" />
   </ItemGroup>
 </Project>

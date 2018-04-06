@@ -1,5 +1,6 @@
 #include "MenuManager.h"
 #include "Menus/Menu.h"
+// TODO: Remove dependency and transition into a library
 #include "../../../Shared_Engine/Engine_Enums.h"
 
 MenuManager::MenuManager()

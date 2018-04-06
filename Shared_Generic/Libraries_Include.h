@@ -74,7 +74,6 @@
 // TODO: Check for architecture and debug/release
 #pragma comment( lib, "../Shared_Generic/Libraries/glfw/glfw3.lib" ) // load
 #include "Libraries/glfw/GLFW/glfw3.h"
-#include "Libraries/MyGLFW/MyGLFW.h"
 //////////////////////////////
 
 //////////////////////////////

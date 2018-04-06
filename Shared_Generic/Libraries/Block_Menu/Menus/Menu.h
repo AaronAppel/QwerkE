@@ -9,7 +9,7 @@ class MenuWindow;
 class Menu
 {
 public:
-	Menu();
+	Menu(vec2 resoultion);
 	~Menu();
 
 	void Update(vec2 mousePos);
@@ -24,6 +24,7 @@ public:
 
 private:
 	std::vector<MenuWindow*> m_Windows;
+	vec2 m_Resolution = vec2(0,0);
 	// menu state
 	// menu identifier
 	// menu interface for things like numWindows

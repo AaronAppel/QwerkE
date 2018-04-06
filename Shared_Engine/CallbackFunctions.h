@@ -1,6 +1,9 @@
 #ifndef _CallBackFunctions_H_
 #define _CallBackFunctions_H_
 
+#include "../Shared_Generic/Libraries/glew/GL/glew.h"
+#include "../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
+
 // setup
 // void SetCursor(); TODO:
 void SetupCallbacks(GLFWwindow* window);

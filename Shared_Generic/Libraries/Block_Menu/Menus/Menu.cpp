@@ -1,8 +1,9 @@
 #include "Menu.h"
 #include "../Windows/MenuWindow.h"
 
-Menu::Menu()
+Menu::Menu(vec2 resoultion)
 {
+	m_Resolution = m_Resolution;
 }
 
 Menu::~Menu()

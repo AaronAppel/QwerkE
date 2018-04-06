@@ -1,23 +1,21 @@
 #include "../../../Shared_Generic/Libraries/Block_Menu/Block_Menu.h"
 #include "Factory.h"
 #include "../../../Shared_Generic/Math_Includes.h"
-#include "../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
+#include "../Graphics/Model/Mesh/Mesh.h"
 #include "../../Systems/ResourceManager.h"
-
-extern int g_WindowWidth, g_WindowHeight;
 
 // Internal Creation Functions
 Menu* Factory::CreateMenu()
 {
-	return new Menu();
+	return new Menu(vec2(0,0));
 }
 MenuWindow* Factory::CreateMenuWindow()
 {
-	return new MenuWindow();
+	return new MenuWindow(vec2(0, 0));
 }
 MenuItem* Factory::CreateMenuItem()
 {
-	return new MenuItem();
+	return new MenuItem(vec2(0, 0));
 }
 /* Block_Menu */
 // Menus

@@ -21,12 +21,10 @@ class Mesh;
 class Menu;
 class ShaderProgram;
 
-extern int g_WindowWidth, g_WindowHeight;
-
 class MenuWindow
 {
 public:
-	MenuWindow() {};
+	MenuWindow(vec2 resolution) { m_Resolution = resolution; };
 	MenuWindow(ShaderProgram* shader, Mesh* mesh, int items = 0);
 	~MenuWindow();
 
@@ -96,7 +94,7 @@ protected:
 
 	vec2 m_Position = vec2(1, 1);
 	vec2 m_Size = vec2(1, 1);
-	vec2 m_Resolution = vec2(g_WindowWidth, g_WindowHeight);
+	vec2 m_Resolution = vec2(0,0);
 	float m_Angle = 0.0f;
 
 	Block_Menu_Gizmo m_PositionGizmo = Block_Menu_Gizmo(vec2(1, 1), vec2(100, 100)); // pos as % of window size from bottom left, pixel width and height

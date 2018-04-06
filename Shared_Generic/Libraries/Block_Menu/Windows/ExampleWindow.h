@@ -6,7 +6,7 @@
 class ExampleWindow : public MenuWindow
 {
 public:
-	ExampleWindow();
+	ExampleWindow(vec2 resolution);
 	~ExampleWindow();
 
 	void Init();

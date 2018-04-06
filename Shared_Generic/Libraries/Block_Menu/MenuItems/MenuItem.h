@@ -8,12 +8,10 @@ class Mesh;
 class MenuWindow;
 class ShaderProgram;
 
-extern int g_WindowWidth, g_WindowHeight;
-
 class MenuItem
 {
 public:
-	MenuItem() {};
+	MenuItem(vec2 resolution) { m_Resolution = resolution; };
 	MenuItem(Mesh* mesh);
 	~MenuItem();
 
@@ -65,7 +63,7 @@ protected:
 
 	vec2 m_Size = vec2(0.5f, 0.5f); // percentage of parent window size
 	vec2 m_Position = vec2(0.5f, 0.5f); // percentage of parent window size for position
-	vec2 m_Resolution = vec2(g_WindowWidth, g_WindowHeight); // TODO:: get resolution better
+	vec2 m_Resolution = vec2(0, 0);
 	float m_Rotation = 0.0f; // 2D rotation
 
 	mat4 m_Transform;

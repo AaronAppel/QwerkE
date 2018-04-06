@@ -10,11 +10,12 @@ int main()
 {
 	// load
 
-	while (false)
-	{
-		// input
-		// logic
-		// render
-	}
+	Engine engine;
+	engine.Startup();
+
+	engine.Run();
+
+	engine.TearDown();
+
 	return 0;
 }

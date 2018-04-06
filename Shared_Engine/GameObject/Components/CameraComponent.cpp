@@ -4,6 +4,7 @@
 #include "../GameObject.h"
 #include "../../../Shared_Generic/Math_Includes.h"
 #include "../../../Shared_Engine/Engine_Enums.h"
+#include "../../../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
 
 // public functions
 // Constructor with vectors
