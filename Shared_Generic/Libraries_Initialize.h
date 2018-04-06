@@ -7,6 +7,7 @@
 //////////////////////////////
 
 // TODO: Use _QFail and other error messages?
+// TODO: Hide loading/unloading behind load/splash screen?
 bool Libs_Setup();
 
 void Libs_TearDown();

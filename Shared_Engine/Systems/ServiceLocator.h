@@ -22,6 +22,8 @@ class Editor;
 class PhysicsManager;
 class MessageManager;
 class Renderer;
+class AudioManager;
+class Debugger;
 
 namespace QwerkE
 {
@@ -53,6 +55,8 @@ namespace QwerkE
 		static PhysicsManager* m_PhysicsManager;
 		static MessageManager* m_MessageManager;
 		static Renderer* m_Renderer;
+        static AudioManager* m_AudioManager;
+        static Debugger* m_Debugger;
 	};
 }
 

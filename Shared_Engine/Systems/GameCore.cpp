@@ -3,8 +3,8 @@
 #include "Graphics/OpenGLManager.h"
 #include "Graphics/FBO/FrameBufferObject.h"
 #include "../../../Shared_Generic/Math_Includes.h"
-#include "../Factory/Factory.h"
-#include "../Factory/LevelLoader.h"
+#include "../Systems/Factory/Factory.h"
+#include "../Systems/Factory/LevelLoader.h"
 #include "../Scene/SceneManager.h"
 
 GameCore::GameCore()

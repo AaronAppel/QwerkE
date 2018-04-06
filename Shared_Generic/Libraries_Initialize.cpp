@@ -1,5 +1,7 @@
-#ifndef _Libraries_Initialize_H_
-#define _Libraries_Initialize_H_
+#include "../../../Shared_Engine/Engine_Defines.h"
+#include "../../../Shared_Engine/Engine_Platform.h"
+
+// TODO: Hide loading behind load/splash screen?
 
 //////////////////////////////
 // Setup any libraries that have program wide states
@@ -128,5 +130,3 @@ void Libs_TearDown()
 	ImGui::DestroyContext(); // destroy imgui
 	glfwTerminate(); // shutdown glfw
 }
-
-#endif // !_Libraries_Initialize_H_

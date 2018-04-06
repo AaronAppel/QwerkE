@@ -2,6 +2,7 @@
 #define _Libraries_Include_H_
 
 // Include/Exclude libraries based on platform, architecture, configuration
+// TODO: Hide loading/unloading behind load/splash screen?
 // TODO: Clean up #ifs
 #ifdef _Q32bit // architecture
 // platform
@@ -40,7 +41,7 @@
 
 // font loading/rendering
 // freetype2
-#pragma comment( lib, "../Shared_Generic/Libraries/freetype2/freetype.lib" )
+#pragma comment( lib, "../Shared_Generic/Libraries/freetype2/freetype.lib" ) // load
 #include "Libraries/freetype2/ft2build.h"
 #include "Libraries/freetype2/freetype/freetype.h"
 //////////////////////////////
@@ -59,19 +60,19 @@
 // //
 // open graphics library
 #ifdef _Q32bit
-#pragma comment( lib, "opengl32.lib" )
+#pragma comment( lib, "opengl32.lib" ) // load
 #else
 // TODO: Is there a 64 bit openGL library?
 #endif
 // openGL extensions wrangler //
 // GLEW
 // TODO: Check for architecture and debug/release
-#pragma comment( lib, "../Shared_Generic/Libraries/glew/glew32d.lib" )
+#pragma comment( lib, "../Shared_Generic/Libraries/glew/glew32d.lib" ) // load
 #include "Libraries/glew/GL/glew.h"
 // window creation //
 // GLFW
 // TODO: Check for architecture and debug/release
-#pragma comment( lib, "../Shared_Generic/Libraries/glfw/glfw3.lib" )
+#pragma comment( lib, "../Shared_Generic/Libraries/glfw/glfw3.lib" ) // load
 #include "Libraries/glfw/GLFW/glfw3.h"
 #include "Libraries/MyGLFW/MyGLFW.h"
 //////////////////////////////
@@ -92,7 +93,7 @@
 //////////////////////////////
 // pthreads
 // TODO: Check for architecture and debug/release
-#pragma comment( lib, "../Shared_Generic/Libraries/pThreads/lib/x86/pthreadVC2.lib" )
+#pragma comment( lib, "../Shared_Generic/Libraries/pThreads/lib/x86/pthreadVC2.lib" ) // load
 #define HAVE_STRUCT_TIMESPEC
 #include "Libraries/pThreads/pthread.h"
 //////////////////////////////
@@ -102,7 +103,7 @@
 //////////////////////////////
 // RakNet
 // TODO: Check for architecture and debug/release
-#pragma comment( lib, "../Shared_Generic/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" )
+#pragma comment( lib, "../Shared_Generic/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" ) // load
 // http://www.raknet.net/raknet/manual/tutorialsample3.html
 #include "Libraries/RakNet/Source/RakPeerInterface.h"
 #include "Libraries/RakNet/Source/MessageIdentifiers.h"
@@ -123,13 +124,13 @@
 // Bullet3
 // TODO: Check for architecture
 #if _DEBUG
-#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/BulletCollision.lib" )
-#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/BulletDynamics.lib" )
-#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/LinearMath.lib" )
+#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/BulletCollision.lib" ) // load
+#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/BulletDynamics.lib" ) // load
+#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/LinearMath.lib" ) // load
 #else // Release
-#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Release/BulletCollision.lib" )
-#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Release/BulletDynamics.lib" )
-#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Release/LinearMath.lib" )
+#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Release/BulletCollision.lib" ) // load
+#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Release/BulletDynamics.lib" ) // load
+#pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Release/LinearMath.lib" ) // load
 #endif
 
 // TODO: Add necessary headers.

@@ -2,6 +2,8 @@
 #ifndef _EngineEnums_H_
 #define _EngineEnums_H_
 
+#include <cstdint>
+
 enum class eEngineMessage : std::uint8_t
 {
 	_QSuccess = 0,
@@ -27,6 +29,7 @@ enum class eEngineServices : std::uint8_t
 	PhysicsManager,
 	MessageManager,
 	Renderer,
+    Debugger,
 
 	Service_Max
 };

@@ -20,3 +20,9 @@ If a #include has "../../../" then it may have an issue
 with projects not located at the same "depth" because the
 3 directories up is not referring to the file, but rather
 the working directory of the project.
+
+Apr 6th 2018
+Trying to get rid of additional include directories. Freetype2 is proving
+to be rather intrusive and I don't see how to nicely change the folder structure
+without altering the source #includes. I will have to check on this later.
+Bullet is also dependent on a globally #included root folder.

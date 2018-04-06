@@ -1,8 +1,8 @@
 #include "CallbackFunctions.h"
 #include "Systems/ServiceLocator.h"
+#include "../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
 
 // TODO: No Globals!
-extern MyGLFW* g_MainWindow;
 extern int g_WindowWidth, g_WindowHeight;
 InputManager* l_InputManager;
 

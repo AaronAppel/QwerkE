@@ -1,5 +1,5 @@
 #include "DataManager.h"
-#include "../Factory/Factory.h"
+#include "Factory/Factory.h"
 #include "../../../Shared_Generic/Libraries/cJSON_Interface/cJSONInterface.h"
 #include "../GameObject/GameObject.h"
 #include "../GameObject/Components/CameraComponent.h"

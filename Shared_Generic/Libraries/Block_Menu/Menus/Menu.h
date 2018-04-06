@@ -1,7 +1,7 @@
-#ifndef __MENU_H_
-#define __MENU_H_
+#ifndef _Menu_H_
+#define _Menu_H_
 
-#include "Math_Includes.h"
+#include "../../Math_Includes.h"
 #include <vector>
 
 class MenuWindow;
@@ -30,4 +30,4 @@ private:
 	// menu types like overlay, tooltip, opaque etc
 };
 
-#endif // __MENU_H_
+#endif // !_Menu_H_

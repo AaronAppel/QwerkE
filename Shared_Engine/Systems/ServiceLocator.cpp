@@ -13,6 +13,8 @@ namespace QwerkE
 	PhysicsManager* QwerkE::ServiceLocator::m_PhysicsManager = nullptr;
 	MessageManager* QwerkE::ServiceLocator::m_MessageManager = nullptr;
 	Renderer* QwerkE::ServiceLocator::m_Renderer = nullptr;
+    AudioManager* QwerkE::ServiceLocator::m_AudioManager = nullptr;
+    Debugger* QwerkE::ServiceLocator::m_Debugger = nullptr;
 
 	void ServiceLocator::RegisterService(eEngineServices serviceType, void* service)
 	{
@@ -48,6 +50,12 @@ namespace QwerkE
 		case eEngineServices::Renderer:
 			ServiceLocator::m_Renderer = (Renderer*)service;
 			break;
+        case eEngineServices::Audio_Manager:
+            ServiceLocator::m_AudioManager = (AudioManager*)service;
+            break;
+        case eEngineServices::Debugger:
+            ServiceLocator::m_Debugger = (Debugger*)service;
+            break;
 		default:
 			ConsolePrint("ServiceLocator::RegisterService(): Invalid service!");
 			break;
@@ -108,6 +116,16 @@ namespace QwerkE
 			ServiceLocator::m_Renderer = nullptr;
 			return temp;
 			break;
+        case eEngineServices::Audio_Manager:
+            temp = ServiceLocator::m_AudioManager;
+            ServiceLocator::m_AudioManager = nullptr;
+            return temp;
+            break;
+        case eEngineServices::Debugger:
+            temp = ServiceLocator::m_Debugger;
+            ServiceLocator::m_Debugger = nullptr;
+            return temp;
+            break;
 		default:
 			ConsolePrint("ServiceLocator::UnregisterService(): Invalid service!");
 			break;
@@ -148,6 +166,12 @@ namespace QwerkE
 		case eEngineServices::Renderer:
 			return ServiceLocator::m_Renderer;
 			break;
+        case eEngineServices::Audio_Manager:
+            return ServiceLocator::m_AudioManager;
+            break;
+        case eEngineServices::Debugger:
+            return ServiceLocator::m_Debugger;
+            break;
 		default:
 			ConsolePrint("ServiceLocator::GetService(): Invalid service!");
 			break;
@@ -200,6 +224,14 @@ namespace QwerkE
 				if (ServiceLocator::m_Renderer == nullptr)
 					return eEngineMessage::_QFail; // not loaded
 				break;
+            case eEngineServices::Audio_Manager:
+                if (ServiceLocator::m_AudioManager == nullptr)
+                    return eEngineMessage::_QFail; // not loaded
+                break;
+            case eEngineServices::Debugger:
+                if (ServiceLocator::m_Debugger == nullptr)
+                    return eEngineMessage::_QFail; // not loaded
+                break;
 			}
 
 			i = (eEngineServices)((int)i + 1); // increment service

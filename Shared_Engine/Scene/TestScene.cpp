@@ -7,7 +7,7 @@
 #include "../GameObject/GameObject.h"
 #include "../Engine_Enums.h"
 #include "../Systems/GameCore.h"
-#include "../Factory/Factory.h"
+#include "../Systems/Factory/Factory.h"
 
 TestScene::TestScene() : Scene()
 {

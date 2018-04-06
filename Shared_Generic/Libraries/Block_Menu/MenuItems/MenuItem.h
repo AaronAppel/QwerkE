@@ -1,8 +1,8 @@
 #ifndef _MenuItem_H_
 #define _MenuItem_H_
 
-#include "Math_Includes.h"
-#include "Containers/MyLinkedList.h"
+#include "../../../Math_Includes.h"
+#include "../../Containers/MyLinkedList.h"
 
 class Mesh;
 class MenuWindow;

@@ -1,9 +1,9 @@
 #ifndef _MenuWindow_H_
 #define _MenuWindow_H_
 
-#include "Math_Includes.h"
-#include "Containers/MyLinkedList.h"
-#include "Libraries/glew/GL/glew.h"
+#include "../../../Math_Includes.h"
+#include "../../Containers/MyLinkedList.h"
+#include "../glew/GL/glew.h"
 
 struct Block_Menu_Gizmo
 {

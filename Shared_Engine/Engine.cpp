@@ -2,11 +2,14 @@
 #include "Systems/ResourceManager.h"
 #include "Systems/ServiceLocator.h"
 #include "Engine_Enums.h"
-#include "../../../Shared_Generic/Utilities/Helpers.h"
-#include "../../../Shared_Generic/Libraries_Initialize.h"
+#include "../Shared_Generic/Utilities/Helpers.h"
+#include "../Shared_Generic/Libraries_Initialize.h"
+#include "../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
+#include "../Shared_Generic/Libraries/imgui/imgui.h"
+#include "../Shared_Generic/Libraries/imgui/imgui_impl_glfw_gl3.h"
 #include "Events/EventManager.h"
 #include "Scene/SceneManager.h"
-#include "Factory/Factory.h"
+#include "Systems/Factory/Factory.h"
 #include "Editor/Editor.h"
 #include "Systems/Graphics/Sprite/Sprite.h"
 #include "Systems/Graphics_Header.h"
@@ -15,17 +18,17 @@
 #include "Systems/PhysicsManager.h"
 #include "Systems/Renderer.h"
 #include "Systems/MessageManager.h"
+#include "Systems/AudioManager.h"
+#include "Systems/Debugger.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
 extern const char* g_WindowTitle = "QwerkE";
 
-extern MyGLFW* g_MainWindow = nullptr;
 extern GameCore* g_GameCore = nullptr;
 extern const int g_NumPlayers; // Defined in InputManager.h
 extern InputManager* g_InputManager = nullptr;
 extern Controller* g_Player1Controller = nullptr;
-extern XinputHandler* g_XinputHandler = nullptr;
 extern bool g_Debugging = false;
 
 extern float g_FrameRate = 0.0f;
@@ -89,6 +92,12 @@ eEngineMessage Engine::Startup()
 	Renderer* renderer = new Renderer();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::Renderer, renderer);
 
+    AudioManager* audioManager = new AudioManager();
+    QwerkE::ServiceLocator::RegisterService(eEngineServices::Audio_Manager, audioManager);
+
+    Debugger* debugger = new Debugger();
+    QwerkE::ServiceLocator::RegisterService(eEngineServices::Debugger, debugger);
+
 	m_SceneManager->Initialize(); // Order Dependency
 
 	return QwerkE::ServiceLocator::ServicesLoaded();
@@ -116,13 +125,16 @@ eEngineMessage Engine::TearDown()
 
 	delete (Renderer*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Renderer);
 
+    delete (AudioManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Audio_Manager);
+
+    delete (Debugger*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Debugger);
+
 	Libs_TearDown(); // unload libraries
 
 	// TODO: Safety checks?
 	return eEngineMessage::_QSuccess;
 }
 
-Sprite2D* g_Sprite;
 void Engine::Run()
 {
 	g_FBO->Init();
@@ -146,13 +158,6 @@ void Engine::Run()
 
     m_SceneManager->Initialize();
     m_SceneManager->GetCurrentScene()->SetIsEnabled(true);
-
-	ResourceManager* rMan = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
-    g_Sprite = new Sprite2D(); // TEMP:
-	g_Sprite->SetPosition(vec3(0,0,0));
-	g_Sprite->SetMesh(rMan->GetMesh("Box"));
-	g_Sprite->SetShader(rMan->GetShader("Sprite2D"));
-	g_Sprite->SetTexture(rMan->GetTexture("PeriodicHeal"));
 
 	// Deltatime + FPS Tracking //
 	// Deltatime
@@ -227,18 +232,15 @@ void Engine::NewFrame()
 void Engine::Input()
 {
 	glfwPollEvents(); // TODO: Better GLFW interface?
-
-	// g_MainWindow->CheckInput();
-	// ProcessXInput();
+    // TODO: Tell input manager it is a new frame and it should update key states
 }
 
 void Engine::Update(double deltatime)
 {
-	// TODO: Update editor and/or game code
 	m_SceneManager->Update(deltatime);
 	m_Editor->Update();
 
-	if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE))
+	if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE)) // DEBUG: A simple way to close the window while testing
 		glfwSetWindowShouldClose(m_Window, true);
 }
 
@@ -251,13 +253,16 @@ void Engine::Draw()
 	m_SceneManager->Draw();
 	g_FBO->UnBind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // TEMP: End
 
 	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180));
 
 	m_Editor->Draw();
-	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Text");
-	// g_Sprite->Draw();
+
+	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Text"); // TEST:
+
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
-	glfwSwapBuffers(m_Window);
+
+	glfwSwapBuffers(m_Window); // Change frame buffers
 }
