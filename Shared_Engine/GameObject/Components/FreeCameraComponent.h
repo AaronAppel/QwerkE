@@ -1,12 +1,12 @@
 #ifndef _FreeCameraComponent_H_
 #define _FreeCameraComponent_H_
 
-#include "Engine_Enums.h"
-#include "Math_Includes.h"
-#include "Libraries/glew/GL/glew.h"
-#include "GameObject/Components/Component.h"
-#include "GameObject/Components/CameraComponent.h"
-#include "Global_Constants.h"
+#include "../../Engine_Enums.h"
+#include "../../../Shared_Generic/Math_Includes.h"
+#include "../../../Shared_Generic/Libraries/glew/GL/glew.h"
+#include "Component.h"
+#include "CameraComponent.h"
+#include "../../Global_Constants.h"
 
 class FreeCameraComponent : public CameraComponent
 {

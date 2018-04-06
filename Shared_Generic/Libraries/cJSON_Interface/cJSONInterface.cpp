@@ -1,7 +1,7 @@
-#include "Libraries/cJSON_Interface/cJSON.h"
-#include "Libraries/cJSON_Interface/cJSONInterface.h"
-#include "Utilities/FileIO/FileUtilities.h"
-#include "Utilities/PrintFunctions.h"
+#include "../cJSON_Interface/cJSON.h"
+#include "cJSONInterface.h"
+#include "../../Utilities/FileIO/FileUtilities.h"
+#include "../../Utilities/PrintFunctions.h"
 
 #include <vector>
 

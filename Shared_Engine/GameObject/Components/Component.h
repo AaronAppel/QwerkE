@@ -1,7 +1,7 @@
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
+#ifndef _Component_H_
+#define _Component_H_
 
-#include "Engine_Enums.h"
+#include "../../Engine_Enums.h"
 
 class GameObject;
 
@@ -30,4 +30,4 @@ protected:
 	eComponentTags m_ComponentTag = Component_Null;
 };
 
-#endif //__COMPONENT_H__
+#endif //!_Component_H_

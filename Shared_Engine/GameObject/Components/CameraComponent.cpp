@@ -1,9 +1,9 @@
 #include "Component.h"
-#include "Engine_Enums.h"
 #include "CameraComponent.h"
-#include "Math_Includes.h"
-#include "GameObject/GameObject.h"
-#include "Systems/ServiceLocator.h"
+#include "../../Systems/ServiceLocator.h"
+#include "../GameObject.h"
+#include "../../../Shared_Generic/Math_Includes.h"
+#include "../../../Shared_Engine/Engine_Enums.h"
 
 // public functions
 // Constructor with vectors
@@ -21,6 +21,7 @@ CameraComponent::CameraComponent(vec3 position, vec3 up, float yaw, float pitch)
 	m_ComponentTag = Component_Camera;
 
 	GLFWwindow* window = (GLFWwindow*)(QwerkE::ServiceLocator::GetService(eEngineServices::AppWindow));
+
 	int x, y;
 	glfwGetWindowSize(window, &x, &y);
 	m_ViewportSize = vec2(x, y);

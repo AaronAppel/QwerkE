@@ -6,6 +6,7 @@
 // that need to be initialized before used
 //////////////////////////////
 
+#include "Libraries_Include.h"
 #include "Utilities/PrintFunctions.h"
 
 // TODO: Use _QFail and other error messages?

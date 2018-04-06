@@ -1,8 +1,8 @@
-#ifndef __GAMEOBJECT_H_
-#define __GAMEOBJECT_H_
+#ifndef _GameObject_H_
+#define _GameObject_H_
 
-#include "Math_Includes.h"
-#include "Engine_Enums.h"
+#include "../../../Shared_Generic/Math_Includes.h"
+#include "../Engine_Enums.h"
 
 #include <map>
 #include <vector>
@@ -80,4 +80,4 @@ private:
 	vec3 m_Right = vec3(1, 0, 0);
 };
 
-#endif //!__GAMEOBJECT_H_
+#endif //!_GameObject_H_

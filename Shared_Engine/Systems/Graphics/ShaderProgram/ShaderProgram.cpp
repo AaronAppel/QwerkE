@@ -1,8 +1,7 @@
 #include "../../Graphics_Header.h"
-#include "Utilities/FileIO/FileUtilities.h"
-#include "Utilities/StringHelpers.h"
+#include "../../../Shared_Generic/Utilities/FileIO/FileUtilities.h"
+#include "../../../Shared_Generic/Utilities/StringHelpers.h"
 #include "../OpenGLHelpers.h"
-#include "Utilities/StringHelpers.h"
 
 #include <string> // TODO: 1 use at bottom could be avoided
 

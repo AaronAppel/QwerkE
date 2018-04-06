@@ -1,8 +1,9 @@
-#ifndef __RenderRoutine_H__
-#define __RenderRoutine_H__
+#ifndef _RenderRoutine_H_
+#define _RenderRoutine_H_
 
 #include "Routine.h"
-#include "Libraries/glew/GL/glew.h"
+#include "../../../Shared_Generic/Libraries/glew/GL/glew.h"
+
 #include <vector>
 
 class GameObject;
@@ -49,4 +50,4 @@ private:
 	void SetupTextureUniforms(GLuint textures[], int size);
 };
 
-#endif //__RENDERROUTINE_H__
+#endif //!_RenderRoutine_H_

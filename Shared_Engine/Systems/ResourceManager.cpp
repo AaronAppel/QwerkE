@@ -1,6 +1,5 @@
-#include "Systems/ResourceManager.h"
-// #include "Graphics_Header.h"
-#include "Libraries/glew/GL/glew.h"
+#include "ResourceManager.h"
+#include "../../Shared_Generic/Libraries/glew/GL/glew.h"
 #include <map>
 
 ResourceManager::ResourceManager()

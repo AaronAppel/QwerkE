@@ -3,10 +3,9 @@
 
 // TODO: Create child/sub classes for different types of controllers (mouse/keyboard, gamepad, joysticks etc).
 // TODO: Add multiple device functionality (XBOX controller, Joystick etc..)
-
 // TODO: Create Event() and Command() systems for input.
-#include "Math_Includes.h"
-#include "Engine_Enums.h"
+#include "../../../Shared_Generic/Math_Includes.h"
+#include "../../Engine_Enums.h"
 
 class Controller
 {

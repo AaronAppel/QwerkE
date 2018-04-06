@@ -7,10 +7,10 @@
 // To add a system add it to RegisterService(), UnregisterService,
 // GetService(), and ServicesLoaded().
 
-#include "Engine_Enums.h"
-#include "Utilities/PrintFunctions.h"
-#include "Systems/ResourceManager.h"
-#include "Systems/Input/InputManager.h"
+#include "../Engine_Enums.h"
+#include "./../../Shared_Generic/Utilities/PrintFunctions.h"
+#include "ResourceManager.h"
+#include "Input/InputManager.h"
 
 class ResourceManager;
 class InputManager;

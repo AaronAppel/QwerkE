@@ -1,8 +1,8 @@
-#include "GameObject/Components/Component.h"
-#include "GameObject/Components/CameraComponent.h"
-#include "GameObject/Components/ThirdPersonCameraComponent.h"
-#include "GameObject/GameObject.h"
-#include "Global_Constants.h"
+#include "CameraComponent.h"
+#include "ThirdPersonCameraComponent.h"
+#include "../GameObject.h"
+#include "../../Global_Constants.h"
+#include "Component.h"
 
 ThirdPersonCameraComponent::ThirdPersonCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
 	CameraComponent(position, up, yaw, pitch)

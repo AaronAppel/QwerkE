@@ -36,13 +36,13 @@
 // lodepng
 #include "Libraries/lodepng/lodepng.h"
 // stb
-#include "../Shared_Generic/Libraries/stb_image.h"
+#include "Libraries/stb_image.h"
 
 // font loading/rendering
 // freetype2
 #pragma comment( lib, "../Shared_Generic/Libraries/freetype2/freetype.lib" )
 #include "Libraries/freetype2/ft2build.h"
-#include "../Shared_Generic/Libraries/freetype2/freetype/freetype.h"
+#include "Libraries/freetype2/freetype/freetype.h"
 //////////////////////////////
 
 //////////////////////////////

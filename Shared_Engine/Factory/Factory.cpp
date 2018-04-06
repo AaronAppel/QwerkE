@@ -1,6 +1,6 @@
 #include "Factory.h"
-#include "Systems/ResourceManager.h"
-#include "Systems/ServiceLocator.h"
+#include "../Systems/ResourceManager.h"
+#include "../Systems/ServiceLocator.h"
 
 Factory::Factory()
 {

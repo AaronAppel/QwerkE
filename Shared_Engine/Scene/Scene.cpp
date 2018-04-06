@@ -1,12 +1,12 @@
 #include "Scene.h"
-#include "Systems/GameCore.h"
-#include "GameObject/GameObject.h"
-#include "GameObject/Components/Component.h"
-#include "GameObject/Components/CameraComponent.h"
+#include "../Systems/GameCore.h"
+#include "../GameObject/GameObject.h"
+#include "../GameObject/Components/Component.h"
+#include "../GameObject/Components/CameraComponent.h"
 #include "../Systems/Input/InputManager.h"
-#include "Systems/Input/Controller.h"
-#include "Systems/DataManager.h"
-#include "Systems/ServiceLocator.h"
+#include "../Systems/Input/Controller.h"
+#include "../Systems/DataManager.h"
+#include "../Systems/ServiceLocator.h"
 
 extern int g_WindowWidth;
 extern int g_WindowHeight;
@@ -102,7 +102,7 @@ void Scene::p_Update(double deltatime)
 	//}
 
 	// InputManager* inputManager = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
-	
+
 
 	// update all of the Scene objects in the list.
 	for (auto object : m_pGameObjects)

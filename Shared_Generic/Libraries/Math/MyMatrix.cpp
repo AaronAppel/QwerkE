@@ -11,7 +11,7 @@
 #include "Vector.h"
 #include "MyQuaternion.h"
 #include "MyMatrix.h"
-#include "Libraries/glew/GL/glew.h"
+#include "../../../Shared_Generic/Libraries/glew/GL/glew.h"
 #include "MathConstants.h"
 
 

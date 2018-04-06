@@ -1,7 +1,7 @@
 #include "GameObject.h"
-#include "Scene/Scene.h"
-#include "GameObject/Routines/Routine.h"
-#include "GameObject/Components/Component.h"
+#include "../Scene/Scene.h"
+#include "Routines/Routine.h"
+#include "Components/Component.h"
 
 GameObject::GameObject(Scene* scene)
 {

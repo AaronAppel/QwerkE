@@ -1,5 +1,5 @@
 #include "../../Graphics_Header.h"
-#include "Utilities/StringHelpers.h"
+#include "../../../Shared_Generic/Utilities/StringHelpers.h"
 
 ShaderProgram* ShaderFactory::CreateShader(eShaderTypes type)
 {

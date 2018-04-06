@@ -1,10 +1,10 @@
 #include "Factory.h"
-#include "Scene/Scene.h"
-#include "Utilities/Helpers.h"
-#include "GameObject/Components/RenderComponent.h"
-#include "GameObject/Components/LightComponent.h"
-#include "Systems/ResourceManager.h"
-#include "GameObject/Routines/RenderRoutine.h"
+#include "../Scene/Scene.h"
+#include "../../../Shared_Generic/Utilities/Helpers.h"
+#include "../GameObject/Components/RenderComponent.h"
+#include "../GameObject/Components/LightComponent.h"
+#include "../Systems/ResourceManager.h"
+#include "../GameObject/Routines/RenderRoutine.h"
 
 /* Lights */
 // Point Light

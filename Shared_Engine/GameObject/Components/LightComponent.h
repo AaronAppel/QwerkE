@@ -1,9 +1,9 @@
-#ifndef __LightComponent_H_
-#define __LightComponent_H_
+#ifndef _LightComponent_H_
+#define _LightComponent_H_
 
-#include "GameObject/Components/Component.h"
-#include "Engine_Enums.h"
-#include "Math_Includes.h"
+#include "../../GameObject/Components/Component.h"
+#include "../../Engine_Enums.h"
+#include "../../../Shared_Generic/Math_Includes.h"
 
 class MyMatrix;
 
@@ -33,4 +33,4 @@ private:
 	eLightType m_Type = LightType_NULL;
 };
 
-#endif //__LightComponent_H_
+#endif //!_LightComponent_H_

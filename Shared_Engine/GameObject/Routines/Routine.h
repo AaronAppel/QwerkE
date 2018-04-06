@@ -1,7 +1,7 @@
-#ifndef __ROUTINE_H__
-#define __ROUTINE_H__
+#ifndef _Routine_H_
+#define _Routine_H_
 
-#include "Engine_Enums.h"
+#include "../../Engine_Enums.h"
 
 class GameObject;
 
@@ -38,4 +38,4 @@ protected:
 	eRoutineTypes m_Type;
 };
 
-#endif //__ROUTINE_H__
+#endif //!_Routine_H_

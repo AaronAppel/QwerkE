@@ -1,6 +1,6 @@
 #include "EventManager.h"
-#include "Utilities/PrintFunctions.h"
-#include "Utilities/Helpers.h"
+#include "../../../Shared_Generic/Utilities/PrintFunctions.h"
+#include "../../../Shared_Generic/Utilities/Helpers.h"
 
 EventManager::EventManager()
 {

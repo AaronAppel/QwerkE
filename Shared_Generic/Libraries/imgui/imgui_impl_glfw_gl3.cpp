@@ -32,13 +32,13 @@
 #include "imgui_impl_glfw_gl3.h"
 
 // GL3W/GLFW
-#include "Libraries/glew/GL/glew.h" // This example is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "../glew/GL/glew.h" // This example is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
+#include "../glfw/GLFW/glfw3.h"
 #ifdef _WIN32
 #undef APIENTRY
 #define GLFW_EXPOSE_NATIVE_WIN32
 #define GLFW_EXPOSE_NATIVE_WGL
-#include "Libraries/glfw/GLFW/glfw3native.h"
+#include "../glfw/GLFW/glfw3native.h"
 #endif
 
 // Data
@@ -53,7 +53,7 @@ static unsigned int g_VboHandle = 0, g_VaoHandle = 0, g_ElementsHandle = 0;
 
 // OpenGL3 Render function.
 // (this used to be set in io.RenderDrawListsFn and called by ImGui::Render(), but you can now call this directly from your main loop)
-// Note that this implementation is little overcomplicated because we are saving/setting up/restoring every OpenGL state explicitly, in order to be able to run within any OpenGL engine that doesn't do so. 
+// Note that this implementation is little overcomplicated because we are saving/setting up/restoring every OpenGL state explicitly, in order to be able to run within any OpenGL engine that doesn't do so.
 void ImGui_ImplGlfwGL3_RenderDrawData(ImDrawData* draw_data)
 {
     // Avoid rendering when minimized, scale coordinates for retina displays (screen coordinates != framebuffer coordinates)

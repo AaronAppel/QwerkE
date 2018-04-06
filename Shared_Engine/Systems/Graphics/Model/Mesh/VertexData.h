@@ -1,7 +1,8 @@
-#ifndef __VERTEXDATA_H__
-#define __VERTEXDATA_H__
+#ifndef _VertexData_H_
+#define _VertexData_H_
 
-#include "Math_Includes.h"
+#include "../../../../../Shared_Generic/Math_Includes.h"
+
 
 struct VertexData
 {
@@ -18,4 +19,4 @@ struct VertexData
 		normal = a_normal;
 	}
 };
-#endif //__VERTEXDATA_H__
+#endif //!_VertexData_H_

@@ -1,12 +1,12 @@
 #include "Factory.h"
-#include "Scene/Scene.h"
-#include "Utilities/Helpers.h"
-#include "Engine_Enums.h"
-#include "GameObject/Components/Component.h"
-#include "GameObject/Components/RenderComponent.h"
-#include "Systems/ResourceManager.h"
-#include "GameObject/Routines/RenderRoutine.h"
-#include "Systems/Graphics/OpenGLHelpers.h"
+#include "../Scene/Scene.h"
+#include "../../../Shared_Generic/Utilities/Helpers.h"
+#include "../../Shared_Engine/Engine_Enums.h"
+#include "../GameObject/Components/Component.h"
+#include "../GameObject/Components/RenderComponent.h"
+#include "../Systems/ResourceManager.h"
+#include "../GameObject/Routines/RenderRoutine.h"
+#include "../Systems/Graphics/OpenGLHelpers.h"
 
 /* Shapes */
 GameObject* Factory::CreateCube(Scene* scene, vec3 position)

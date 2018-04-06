@@ -1,13 +1,13 @@
-#include "GameObject/GameObject.h"
-#include "GameObject/Routines/Routine.h"
-#include "GameObject/Components/RenderComponent.h"
+#include "../GameObject.h"
+#include "../Routines/Routine.h"
+#include "../Components/RenderComponent.h"
 #include "RenderRoutine.h"
-#include "Engine_Enums.h"
+#include "../../Engine_Enums.h"
 #include "../../Systems/Graphics/Model/Mesh/Mesh.h"
 #include "../../Systems/Graphics_Header.h"
 #include "../../Systems/Graphics/MaterialData.h"
 #include "../../Systems/Graphics/OpenGLHelpers.h"
-#include "Utilities/StringHelpers.h"
+#include "../../../Shared_Generic/Utilities/StringHelpers.h"
 
 #include <assert.h>
 

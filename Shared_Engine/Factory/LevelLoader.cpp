@@ -1,9 +1,10 @@
 #include "LevelLoader.h"
-#include "Libraries/cJSON_Interface/cJSONInterface.h"
-#include "Scene/Scene.h"
-#include "Utilities/PrintFunctions.h"
 #include "Factory.h"
-#include "Engine_Enums.h"
+#include "../../../Shared_Generic/Libraries/cJSON_Interface/cJSONInterface.h"
+#include "../Scene/Scene.h"
+#include "../../../Shared_Generic/Utilities/PrintFunctions.h"
+#include "../Engine_Enums.h"
+
 #include <string>
 #include <map>
 

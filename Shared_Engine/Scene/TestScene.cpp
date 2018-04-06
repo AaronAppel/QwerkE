@@ -1,13 +1,13 @@
 #include "SceneManager.h"
-#include "Engine_Enums.h"
-#include "GameObject/GameObject.h"
 #include "TestScene.h"
-#include "Systems/GameCore.h"
-#include "Factory/Factory.h"
-#include "Systems/DataManager.h"
-#include "Systems/ServiceLocator.h"
-#include "Systems/Graphics/OpenGLHelpers.h"
-#include "Systems/Graphics/Sprite/Sprite.h"
+#include "../Systems/DataManager.h"
+#include "../Systems/ServiceLocator.h"
+#include "../Systems/Graphics/OpenGLHelpers.h"
+#include "../Systems/Graphics/Sprite/Sprite.h"
+#include "../GameObject/GameObject.h"
+#include "../Engine_Enums.h"
+#include "../Systems/GameCore.h"
+#include "../Factory/Factory.h"
 
 TestScene::TestScene() : Scene()
 {

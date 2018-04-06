@@ -1,11 +1,11 @@
 #ifndef _CameraComponent_H_
 #define _CameraComponent_H_
 
-#include "Global_Constants.h"
-#include "Math_Includes.h"
-#include "Libraries/glew/GL/glew.h"
-#include "GameObject/Components/Component.h"
-#include "Engine_Enums.h"
+#include "../../Global_Constants.h"
+#include "../../Math_Includes.h"
+#include "../../../Shared_Generic/Libraries/glew/GL/glew.h"
+#include "../../Engine_Enums.h"
+#include "../Components/Component.h"
 
 const vec3 g_WORLDUP = vec3(0, -1, 0); // TODO: Fix inverted world Y-axis
 

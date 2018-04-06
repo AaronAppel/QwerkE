@@ -1,10 +1,10 @@
 #ifndef _Factory_H_
 #define _Factory_H_
 
-#include "Math_Includes.h"
-#include "Engine_Enums.h"
-#include "GameObject/GameObject.h"
-#include "Scene/Scene.h"
+#include "../../Shared_Generic/Math_Includes.h"
+#include "../Engine_Enums.h"
+#include "../GameObject/GameObject.h"
+#include "../Scene/Scene.h"
 
 class ResourceManager;
 class GameObject;

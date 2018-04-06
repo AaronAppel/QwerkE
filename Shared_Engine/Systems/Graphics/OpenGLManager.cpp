@@ -1,6 +1,6 @@
 #include "OpenGLManager.h"
 #include "../Graphics_Header.h"
-#include "Math_Includes.h"
+#include "../../../Shared_Generic/Math_Includes.h"
 
 OpenGLManager::OpenGLManager()
 {

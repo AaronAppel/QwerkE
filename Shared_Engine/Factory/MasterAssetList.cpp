@@ -1,9 +1,9 @@
-#include "Systems/ResourceManager.h"
+#include "../Systems/ResourceManager.h"
 #include "../Systems/Graphics_Header.h"
 #include "../Systems/Graphics/OpenGLHelpers.h"
 #include "../Systems/Graphics/MaterialData.h"
 #include "../Systems/Graphics/ShaderProgram/ShaderFactory.h"
-#include "Utilities/StringHelpers.h"
+#include "../../../Shared_Generic/Utilities/StringHelpers.h"
 
 const char* Test(const char* a, const char* b)
 {

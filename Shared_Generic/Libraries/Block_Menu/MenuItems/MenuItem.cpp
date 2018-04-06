@@ -1,7 +1,7 @@
 #include "MenuItem.h"
 #include "../Shared_Engine/Systems/Graphics/Model/Mesh/Mesh.h"
-#include "Math_Includes.h"
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "../../../Math_Includes.h"
+#include "../../glew/GL/glew.h"
 #include "../Shared_Engine/Systems/Graphics/ShaderProgram/ShaderProgram.h"
 #include "../Windows/MenuWindow.h"
 

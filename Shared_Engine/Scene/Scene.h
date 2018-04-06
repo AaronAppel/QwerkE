@@ -1,9 +1,9 @@
-#ifndef __Scene_H__
-#define __Scene_H__
+#ifndef _Scene_H_
+#define _Scene_H_
 
-#include "Containers/MyLinkedList.h"
-#include "Math_Includes.h"
-#include "Engine_Enums.h"
+#include "../../Shared_Generic/Containers/MyLinkedList.h"
+#include "../../Shared_Generic/Math_Includes.h"
+#include "../Engine_Enums.h"
 #include <map>
 
 extern int g_WindowWidth, g_WindowHeight;
@@ -95,4 +95,4 @@ protected:
 	vec2 m_ViewWindowSize = vec2(g_WindowWidth, g_WindowHeight); // screen size
 };
 
-#endif //__Scene_H__
+#endif //!_Scene_H_

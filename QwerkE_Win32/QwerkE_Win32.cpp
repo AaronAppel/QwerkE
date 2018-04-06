@@ -1,6 +1,7 @@
 #include "../QwerkE.h" // include engine
-#include "Engine_Enums.h"
-#include "Utilities/PrintFunctions.h"
+
+#include "../Shared_Engine/Engine_Enums.h"
+#include "../Shared_Generic/Utilities/PrintFunctions.h"
 
 int main() // End user implementation
 {

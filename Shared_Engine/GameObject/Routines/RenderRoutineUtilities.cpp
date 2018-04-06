@@ -1,13 +1,13 @@
 #include "RenderRoutine.h"
-#include "Math_Includes.h"
 #include "../../Systems/Graphics/ShaderProgram/ShaderProgram.h"
-#include "GameObject/GameObject.h"
-#include "GameObject/Components/Component.h"
-#include "GameObject/Components/CameraComponent.h"
-#include "GameObject/Components/RenderComponent.h"
-#include "GameObject/Components/LightComponent.h"
+#include "../GameObject.h"
+#include "../../GameObject/Components/Component.h"
+#include "../../GameObject/Components/CameraComponent.h"
+#include "../../GameObject/Components/RenderComponent.h"
+#include "../../GameObject/Components/LightComponent.h"
 #include "../../Systems/Graphics/MaterialData.h"
-#include "Scene/Scene.h"
+#include "../../Scene/Scene.h"
+#include "../../../Shared_Generic/Math_Includes.h"
 
 #include <string>
 

@@ -1,7 +1,7 @@
-#ifndef __SceneManager_H__
-#define __SceneManager_H__
+#ifndef _SceneManager_H_
+#define _SceneManager_H_
 
-#include "Engine_Enums.h"
+#include "../Engine_Enums.h"
 #include <map>
 
 class GameCore;
@@ -49,4 +49,4 @@ private:
 	//PlayerController* m_pController = nullptr;
 };
 
-#endif //__SceneManager_H__
+#endif //_SceneManager_H_

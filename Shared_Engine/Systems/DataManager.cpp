@@ -1,9 +1,9 @@
 #include "DataManager.h"
-#include "Factory/Factory.h"
-#include "Libraries/cJSON_Interface/cJSONInterface.h"
-#include "GameObject/GameObject.h"
-#include "GameObject/Components/CameraComponent.h"
-#include "GameObject/Components/LightComponent.h"
+#include "../Factory/Factory.h"
+#include "../../../Shared_Generic/Libraries/cJSON_Interface/cJSONInterface.h"
+#include "../GameObject/GameObject.h"
+#include "../GameObject/Components/CameraComponent.h"
+#include "../GameObject/Components/LightComponent.h"
 
 DataManager::DataManager(Factory* factory)
 {

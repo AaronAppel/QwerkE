@@ -2063,9 +2063,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\SmartPointer.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h">
-      <Filter>Libraries\MyGLFW</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\Block_Menu.h">
       <Filter>Libraries\BlockMenu</Filter>
     </ClInclude>
@@ -2168,9 +2165,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.cpp">
       <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp">
-      <Filter>Libraries\MyGLFW</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuManager.cpp">
       <Filter>Libraries\BlockMenu</Filter>

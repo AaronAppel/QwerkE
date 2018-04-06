@@ -1,10 +1,10 @@
 #include "Factory.h"
-#include "GameObject/Components/CameraComponent.h"
-#include "GameObject/Components/FirstPersonCameraComponent.h"
-#include "GameObject/Components/ThirdPersonCameraComponent.h"
-#include "GameObject/Components/FreeCameraComponent.h"
-#include "GameObject/Components/StaticCameraComponent.h"
-#include "Utilities/Helpers.h"
+#include "../../../Shared_Generic/Utilities/Helpers.h"
+#include "../GameObject/Components/CameraComponent.h"
+#include "../GameObject/Components/FirstPersonCameraComponent.h"
+#include "../GameObject/Components/FreeCameraComponent.h"
+#include "../GameObject/Components/StaticCameraComponent.h"
+#include "../GameObject/Components/ThirdPersonCameraComponent.h"
 
 #include <string>
 

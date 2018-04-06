@@ -1,4 +1,7 @@
-// #include "PCH.h"
+#include <sdkddkver.h>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 #include "Game1.h"
 //#include "../Shared_Engine/QwerkE_Include.h"
 

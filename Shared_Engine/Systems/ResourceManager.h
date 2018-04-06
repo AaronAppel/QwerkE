@@ -1,7 +1,7 @@
-#ifndef __ResourceManager_H__
-#define __ResourceManager_H__
+#ifndef _ResourceManager_H_
+#define _ResourceManager_H_
 
-#include "Libraries/glew/GL/glew.h"
+#include "../../Shared_Generic/Libraries/glew/GL/glew.h"
 #include <string>
 #include <map>
 
@@ -76,4 +76,4 @@ private:
 	const char* m_TextureDir = "Resources/Textures/";
 };
 
-#endif //__ResourceManager_H__
+#endif //!_ResourceManager_H_

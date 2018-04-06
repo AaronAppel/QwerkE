@@ -533,7 +533,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\pThreads\pthread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\pThreads\sched.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\pThreads\semaphore.h" />
@@ -740,7 +739,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\MyGLFW\MyGLFW.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries_Initialize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\FileIO\MyFileWriter.cpp" />

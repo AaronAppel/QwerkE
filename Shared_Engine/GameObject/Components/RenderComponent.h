@@ -1,9 +1,11 @@
 #ifndef _RenderComponent_H_
 #define _RenderComponent_H_
 
-#include "GameObject/Components/Component.h"
-#include "Libraries/glew/GL/glew.h"
-#include "Math_Includes.h"
+#include "../Components/Component.h"
+#include "../../../Shared_Generic/Libraries/glew/GL/glew.h"
+#include "../../../Shared_Generic/Math_Includes.h"
+#include "../Components/Component.h"
+
 #include <vector>
 
 class Mesh;

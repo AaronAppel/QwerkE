@@ -1,8 +1,8 @@
 #include "../Graphics_Header.h"
-#include "Utilities/PrintFunctions.h"
-#include "Utilities/FileIO/FileUtilities.h"
-#include "Libraries/lodepng/lodepng.h"
-#include "Utilities/ImageHelpers.h"
+#include "../../../Shared_Generic/Utilities/PrintFunctions.h"
+#include "../../../Shared_Generic/Utilities/FileIO/FileUtilities.h"
+#include "../../../Shared_Generic/Utilities/ImageHelpers.h"
+#include "../../../Shared_Generic/Libraries/lodepng/lodepng.h"
 
 // http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
 

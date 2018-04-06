@@ -6,7 +6,7 @@
 //enum eShaderTypes {};
 // NOTE: add \n to beginning of string ex."\nText"
 #include "../../Graphics_Header.h"
-#include "Systems/Graphics/OpenGLHelpers.h"
+#include "../OpenGLHelpers.h"
 
 #include <string>
 

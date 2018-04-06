@@ -1,7 +1,7 @@
-#include "GameObject/Components/CameraComponent.h"
-#include "GameObject/Components/StaticCameraComponent.h"
-#include "Math_Includes.h"
-#include "Engine_Enums.h"
+#include "../Components/CameraComponent.h"
+#include "../Components/StaticCameraComponent.h"
+#include "../../../Shared_Generic/Math_Includes.h"
+#include "../../Engine_Enums.h"
 
 StaticCameraComponent::StaticCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
 	CameraComponent(position, up, yaw, pitch)

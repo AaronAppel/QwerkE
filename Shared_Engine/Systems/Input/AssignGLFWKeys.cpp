@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "../../../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
 
 // Windows 32 bit
 void InputManager::AssignGLFWKeys()
@@ -52,7 +52,7 @@ void InputManager::AssignGLFWKeys()
 	m_KeyCodex[GLFW_KEY_CAPS_LOCK] = eKeys_CapsLock,
 	m_KeyCodex[GLFW_KEY_NUM_LOCK] = eKeys_NumLock;
 	m_KeyCodex[GLFW_KEY_SCROLL_LOCK] = eKeys_ScrollLock;
-	
+
 	// Key Pad
 	m_KeyCodex[GLFW_KEY_KP_DECIMAL] = eKeys_Pad_Decimal;
 	m_KeyCodex[GLFW_KEY_ENTER] = eKeys_Pad_Return;
