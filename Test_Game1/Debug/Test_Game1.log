@@ -1,6 +1,0 @@
-﻿  Engine.cpp
-c:\users\appe0011\documents\github\qwerke\shared_engine\systems\servicelocator.h(17): warning C4099: 'GLFWwindow': type name first seen using 'struct' now seen using 'class'
-  c:\users\appe0011\documents\github\qwerke\shared_generic\libraries\imgui\imgui_impl_glfw_gl3.h(14): note: see declaration of 'GLFWwindow'
-c:\users\appe0011\documents\github\qwerke\shared_engine\engine.cpp(57): warning C4129: 'S': unrecognized character escape sequence
-  Test_Game1.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\Test_Game1.exe
-  Test_Game1.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\Test_Game1.pdb (Partial PDB)
