@@ -8,6 +8,9 @@
 #include "../Engine_Enums.h"
 #include "../Systems/GameCore.h"
 #include "../Systems/Factory/Factory.h"
+#include "../Systems/Graphics/Model/Mesh/Mesh.h"
+#include "../Systems/Graphics/Model/Mesh/MeshFactory.h"
+#include "../Systems/Graphics/ShaderProgram/ShaderProgram.h"
 
 TestScene::TestScene() : Scene()
 {
@@ -19,13 +22,18 @@ TestScene::~TestScene()
 {
 	m_CameraList.Clear();
 }
-
+ShaderProgram* g_Shader2;
+Mesh* g_TestMesh;
 void TestScene::Initialize()
 {
     Factory* t_pFactory = (Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity);
 	ResourceManager* t_pResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
 	// TODO: Resolve feature
     //DataManager* t_pDataManager = m_pGameCore->GetDataManager();
+
+	g_Shader2 = t_pResourceManager->GetShader("Basic2D");
+	g_TestMesh = MeshFactory::CreateBox(vec2(1,1));
+	g_TestMesh->SetupShaderAttributes(g_Shader2);
 
 	//t_pDataManager->LoadScene(this, m_LevelFileDir); // Load scene
 	Scene::SetupCameras();
@@ -34,10 +42,7 @@ void TestScene::Initialize()
 	{
 		// Create scene cameras
 		const int t_CamMax = 1;
-		for (int i = 0; i < t_CamMax; i++)
-		{
-			t_pFactory->CreateFreeCamera(this, vec3(0, 0, -2.5f * (i + 2) * 2));
-		}
+		t_pFactory->CreateFreeCamera(this, vec3(0, 0, -5));
 		// setup view/projection matrices
 		Scene::SetupCameras();
 	}
@@ -45,15 +50,7 @@ void TestScene::Initialize()
 	{	// Create scene objects
 		// cubes
 		int cubes = 1;
-		for (float i = 0; i < cubes; i++)
-		{
-			t_pFactory->CreateCube(this, vec3(i, i, i));
-		}
-		//GameObject* nanosuit = t_pFactory->CreateTestModel(this, vec3(0, -1, 0));
-		//if (nanosuit)
-		{
-			//nanosuit->SetRotation(vec3(0, 180, 0));
-		}
+		t_pFactory->CreateCube(this, vec3(0,0,0));
 
 		// plane
 		t_pFactory->CreatePlane(this, vec3(0, -1, 0));
@@ -77,4 +74,8 @@ void TestScene::p_Update(double deltatime)
 void TestScene::Draw()
 {
 	Scene::Draw(m_CameraList.At(m_CurrentCamera));
+
+	g_Shader2->Use();
+	g_Shader2->SetUniformFloat4("ObjectColour", 0.0f, 0.5f, 1.0f, 1.0f);
+	g_TestMesh->Draw();
 }

@@ -14,7 +14,7 @@ std::string ShaderFactory::Basic2DShaderVert(std::string vertString)
 	/* Body */
 	OpenMain(vertString);
 
-	vertString.append("\ngl_Position = vec4(i_Position, 1.0);");
+	vertString.append("\ngl_Position = vec4(t_Position, 1.0);");
 
 	CloseMain(vertString);
 
@@ -33,7 +33,7 @@ std::string ShaderFactory::Basic2DShaderFrag(std::string fragString)
 
 	/* Body */
 	OpenMain(fragString); // end header / begin body
-	fragString.append("\ngl_FragColor = vec4(1,1,1,1);");
+	fragString.append("\ngl_FragColor = vec4(1,1,1,1);"); // TODO: Add color?
 
 	CloseMain(fragString);
 

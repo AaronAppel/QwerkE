@@ -269,6 +269,7 @@ Mesh* MeshFactory::CreateBox(vec2 size)
 };
 Mesh* MeshFactory::CreateCircle(float radius, unsigned int points, vec2 UVScale)
 {
+	// TODO: Ability to draw XZ OR XY axis
 	std::vector<VertexData> verts;
 	verts.push_back(VertexData(vec3(0, 0, 0), vec4(255, 255, 255, 255), vec2(0, 1), vec3(0, 0, 0))); // center
 
@@ -400,6 +401,7 @@ Mesh* MeshFactory::CreateCube(vec3 size, vec2 UVScale, bool invertFaces)
 // worldSize, number of vertices, UVPos,
 Mesh* MeshFactory::CreatePlane(vec2 size, vec2 NumOfVerts, vec2 UVScale) // pivot, size, UVStart, UVOffset
 {
+	// TODO: Ability to create XY plane
 	//// variables
 	int numVertsX = (int)NumOfVerts.x;
 	int numVertsY = (int)NumOfVerts.y;

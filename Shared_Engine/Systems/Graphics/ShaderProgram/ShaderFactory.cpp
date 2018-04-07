@@ -14,6 +14,7 @@ ShaderProgram* ShaderFactory::CreateShader(eShaderTypes type)
 ShaderProgram* ShaderFactory::CreateShader(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir)
 {
 	ShaderProgram* shader = new ShaderProgram();
+	shader->Init(vertFileDir, fragFileDir, geoFileDir);
 	return shader;
 }
 

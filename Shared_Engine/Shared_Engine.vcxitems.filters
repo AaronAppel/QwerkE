@@ -142,9 +142,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\AudioManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\Factory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\LevelLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Debugger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\Factory.h">
+      <Filter>Systems\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\LevelLoader.h">
+      <Filter>Systems\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -341,15 +345,33 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\AudioManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Build_Block_Menu.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Cameras.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Characters.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Factory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\LevelLoader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Lights.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\MasterAssetList.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Shapes.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Testing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Debugger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Testing.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Factory.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\LevelLoader.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Lights.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Build_Block_Menu.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Cameras.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Characters.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\MasterAssetList.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Shapes.cpp">
+      <Filter>Systems\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

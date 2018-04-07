@@ -21,6 +21,8 @@
 #include "Systems/MessageManager.h"
 #include "Systems/AudioManager.h"
 #include "Systems/Debugger.h"
+#include "Systems/Graphics/Model/Mesh/MeshFactory.h"
+#include "Systems/Graphics/ShaderProgram/ShaderFactory.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -135,7 +137,8 @@ eEngineMessage Engine::TearDown()
 	// TODO: Safety checks?
 	return eEngineMessage::_QSuccess;
 }
-
+Mesh* g_Mesh;
+ShaderProgram* g_Shader;
 void Engine::Run()
 {
 	g_FBO->Init();
@@ -148,8 +151,8 @@ void Engine::Run()
 	// depth cull for efficiency
 	// Testing: glEnable(GL_CULL_FACE);
 	// Testing: glCullFace(GL_BACK);
-	if(Wind_CCW) glFrontFace(GL_CCW);
-    else glFrontFace(GL_CW);
+	// if(Wind_CCW) glFrontFace(GL_CCW);
+    //else glFrontFace(GL_CW);
 
 	// turn on alpha blending
 	glEnable(GL_BLEND);
@@ -159,6 +162,14 @@ void Engine::Run()
 
     m_SceneManager->Initialize();
     m_SceneManager->GetCurrentScene()->SetIsEnabled(true);
+
+	// TEST: Get a mesh rendering
+	g_Mesh = MeshFactory::CreateBox(vec2(1,1));
+	ShaderFactory shaderFactory;
+	g_Shader = shaderFactory.CreateShader("../Shared_Generic/Resources/Shaders/Basic2D.vert", "../Shared_Generic/Resources/Shaders/Basic2D.frag", NULL);
+	g_Mesh->SetupShaderAttributes(g_Shader);
+
+	// TEST: End
 
 	// Deltatime + FPS Tracking //
 	// Deltatime
@@ -259,6 +270,10 @@ void Engine::Draw()
 	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180));
 
 	m_Editor->Draw();
+
+	g_Shader->Use();
+	g_Shader->SetUniformFloat4("ObjectColour", 0.2f, 0.8f, 0.9f, 1.0f);
+	g_Mesh->Draw();
 
 	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Text"); // TEST:
 

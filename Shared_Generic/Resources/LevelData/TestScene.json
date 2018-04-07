@@ -32,34 +32,16 @@
 					"Position":	[{
 							"PositionX":	0,
 							"PositionY":	0,
-							"PositionZ":	0
+							"PositionZ":	-5
 						}]
 				}],
 			"Camera1":	[{
-					"ObjectTag":	1,
-					"CamType":	2,
-					"Position":	[{
-							"PositionX":	0,
-							"PositionY":	0,
-							"PositionZ":	-10
-						}]
-				}],
-			"Camera2":	[{
-					"ObjectTag":	1,
-					"CamType":	1,
-					"Position":	[{
-							"PositionX":	0,
-							"PositionY":	0,
-							"PositionZ":	-10
-						}]
-				}],
-			"Camera3":	[{
 					"ObjectTag":	1,
 					"CamType":	0,
 					"Position":	[{
 							"PositionX":	0,
 							"PositionY":	0,
-							"PositionZ":	-15
+							"PositionZ":	-10
 						}]
 				}]
 		}],
@@ -71,15 +53,6 @@
 							"PositionX":	0,
 							"PositionY":	2,
 							"PositionZ":	-3
-						}]
-				}],
-			"Light1":	[{
-					"ObjectTag":	2,
-					"LightType": 0,
-					"Position":	[{
-							"PositionX":	10,
-							"PositionY":	5,
-							"PositionZ":	10
 						}]
 				}]
 		}]

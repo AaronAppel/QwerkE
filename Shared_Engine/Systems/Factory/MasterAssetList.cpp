@@ -86,7 +86,7 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 	else if (shaderName == "Basic2D")
 	{
 		// shader->Init(eShader_Basic2D);
-		// shader->Init(ShaderDir("2DMenuText.vert"), ShaderDir("2DMenuText.frag"), NULL);
+		shader->Init(ShaderDir("Basic2D.vert"), ShaderDir("Basic2D.frag"), NULL);
 	}
 	else if (shaderName == "2DMenuText")
 	{
