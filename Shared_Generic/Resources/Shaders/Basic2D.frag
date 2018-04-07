@@ -1,11 +1,11 @@
 // Basic2D.frag
 #version 330 core
 
-uniform vec4 u_ObjectColour;
+uniform vec4 u_ObjectColor;
 
-out vec4 t_Colour;
+out vec4 t_Color;
 
 void main()
 {
-    t_Colour = u_ObjectColour;
+    t_Color = u_ObjectColor;
 }

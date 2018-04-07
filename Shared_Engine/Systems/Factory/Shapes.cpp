@@ -17,11 +17,11 @@ GameObject* Factory::CreateCube(Scene* scene, vec3 position)
 	t_Cube->SetRenderOrder(50);
 	RenderComponent* renderComp = new RenderComponent();
 	// Assign assets from ResourceManager()
-	renderComp->SetMesh(m_pResources->GetMesh("TutorialCube")); // CreCube
+	renderComp->SetMesh(m_pResources->GetMesh("Cube")); // CreCube
 	// renderComp->SetModel(m_pResources->GetModel("CubeModel"));
 	renderComp->SetShader(m_pResources->GetShader("Basic3D"));
 	renderComp->SetColour(vec4(0,1,0,1));
-	renderComp->SetMaterial(m_pResources->GetMaterial("container"));
+	//renderComp->SetMaterial(m_pResources->GetMaterial("container"));
 
 	renderComp->SetColour(vec4(RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), 1));
 	t_Cube->AddComponent(renderComp);
@@ -36,8 +36,8 @@ GameObject* Factory::CreateCube(Scene* scene, vec3 position)
 		return t_Cube;
 	}
 
-	delete t_Cube;
-	return nullptr;
+	// delete t_Cube;
+	return t_Cube;
 }
 
 GameObject* Factory::CreatePlane(Scene* scene, vec3 position)

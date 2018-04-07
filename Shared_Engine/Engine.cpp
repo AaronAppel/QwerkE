@@ -273,9 +273,9 @@ void Engine::Draw()
 
 	g_Shader->Use();
 	g_Shader->SetUniformFloat4("ObjectColour", 0.2f, 0.8f, 0.9f, 1.0f);
-	g_Mesh->Draw();
+	// g_Mesh->Draw();
 
-	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Text"); // TEST:
+	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Sample Text"); // TEST:
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

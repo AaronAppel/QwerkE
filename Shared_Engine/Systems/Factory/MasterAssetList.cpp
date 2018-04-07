@@ -38,6 +38,10 @@ Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 		mesh = new Mesh();
 		t_MeshFactory.GenerateBox(mesh, vec2(1, 1));
 	}
+	else if (meshName == "Circle")
+	{
+		mesh = MeshFactory::CreateCircle(1.0f, 20, vec2(1,1));
+	}
 	else if (meshName == "Cube")
 	{
 		mesh = new Mesh();

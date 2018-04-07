@@ -22,8 +22,8 @@ TestScene::~TestScene()
 {
 	m_CameraList.Clear();
 }
-ShaderProgram* g_Shader2;
-Mesh* g_TestMesh;
+ShaderProgram* g_Shader2; // TEST:
+Mesh* g_TestMesh; // TEST:
 void TestScene::Initialize()
 {
     Factory* t_pFactory = (Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity);
@@ -32,7 +32,7 @@ void TestScene::Initialize()
     //DataManager* t_pDataManager = m_pGameCore->GetDataManager();
 
 	g_Shader2 = t_pResourceManager->GetShader("Basic2D");
-	g_TestMesh = MeshFactory::CreateBox(vec2(1,1));
+	g_TestMesh = MeshFactory::CreateBox(vec2(0.5f, 0.5f));
 	g_TestMesh->SetupShaderAttributes(g_Shader2);
 
 	//t_pDataManager->LoadScene(this, m_LevelFileDir); // Load scene
@@ -42,7 +42,7 @@ void TestScene::Initialize()
 	{
 		// Create scene cameras
 		const int t_CamMax = 1;
-		t_pFactory->CreateFreeCamera(this, vec3(0, 0, -5));
+		t_pFactory->CreateFreeCamera(this, vec3(0, 0, 5));
 		// setup view/projection matrices
 		Scene::SetupCameras();
 	}
@@ -50,10 +50,10 @@ void TestScene::Initialize()
 	{	// Create scene objects
 		// cubes
 		int cubes = 1;
-		t_pFactory->CreateCube(this, vec3(0,0,0));
-
+		GameObject* obj = t_pFactory->CreateCube(this, vec3(0,0,20));
+		obj->SetRotation(vec3(45,45,45));
 		// plane
-		t_pFactory->CreatePlane(this, vec3(0, -1, 0));
+		// t_pFactory->CreatePlane(this, vec3(0, -1, 0));
 	}
 
 	{	// Create scene lighting
@@ -73,9 +73,11 @@ void TestScene::p_Update(double deltatime)
 
 void TestScene::Draw()
 {
+	//g_Shader2->Use();
+	//g_Shader2->SetUniformFloat4("ObjectColour", 1.0f, 0.5f, 1.0f, 1.0f);
 	Scene::Draw(m_CameraList.At(m_CurrentCamera));
 
-	g_Shader2->Use();
-	g_Shader2->SetUniformFloat4("ObjectColour", 0.0f, 0.5f, 1.0f, 1.0f);
-	g_TestMesh->Draw();
+	//g_Shader2->Use();
+	//g_Shader2->SetUniformFloat4("ObjectColour", 1.0f, 0.5f, 1.0f, 1.0f);
+	//g_TestMesh->Draw();
 }

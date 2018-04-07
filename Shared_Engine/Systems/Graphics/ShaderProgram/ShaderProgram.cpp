@@ -3,6 +3,7 @@
 #include "../../Graphics_Header.h"
 #include "../../../../Shared_Generic/Utilities/FileIO/FileUtilities.h"
 #include "../../../../Shared_Generic/Utilities/StringHelpers.h"
+#include "../../../../Shared_Generic/Utilities/PrintFunctions.h"
 #include "../OpenGLHelpers.h"
 
 #include <stdlib.h>
@@ -177,8 +178,8 @@ GLuint ShaderProgram::CompileShader(GLenum shaderType, const char* shaderString)
 
 		char* next_token = 0;
 		char* ShaderName = strtok_s((char*)shaderString, "\n", &next_token);
-		// OutputMessage("\n%s: ShaderProgram: CompileShader() %s compile error-> ", ShaderName, shaderTypeString);
-		// OutputMessage(infoLog); // OpenGL message
+		OutputPrint("\n%s: ShaderProgram: CompileShader() %s compile error-> ", ShaderName, shaderTypeString);
+		OutputPrint(infoLog); // OpenGL message
 
 		// cleanup
 		glDeleteShader(shaderHandle);
@@ -363,8 +364,7 @@ void ShaderProgram::SetupUniformList()
 	}
 	delete[] buffer; // cleanup
 
-					 /* Populate .vert uniforms */
-					 // VERTEX
+	/* Populate .vert uniforms */
 	for (uint i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
 	{
 		std::string loopString = vertStringList.at(i);
@@ -382,11 +382,10 @@ void ShaderProgram::SetupUniformList()
 				loopString.push_back(t_Variable[counter]);
 				counter++;
 			}
+			// TODO: Check for duplicates? Caught by compiler?
 			m_UniformList.push_back(loopString);
 		}
-		// duplicates caught in .vert by compiler
 	}
-	// FRAGMENT
 	/* Populate .frag uniforms */
 	for (uint i = 0; i < fragStringList.size(); i++) // stringList.size() = number of lines in file
 	{
@@ -405,18 +404,8 @@ void ShaderProgram::SetupUniformList()
 				loopString.push_back(t_Variable[counter]);
 				counter++;
 			}
-			for (uint i = 0; i < m_UniformList.size(); i++) // check for duplicates
-			{
-				if (StringCompare(loopString.c_str(), m_UniformList.at(i)))
-				{
-					int bp = 1; // duplicate
-				}
-				else
-				{
-					m_UniformList.push_back(loopString);
-					break;
-				}
-			}
+			// TODO: Check for duplicates? Caught by compiler?
+			m_UniformList.push_back(loopString);
 		}
 	}
 }
