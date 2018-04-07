@@ -19,7 +19,7 @@ SceneManager::~SceneManager()
 		m_EventQueue.pop();
 		delete pEvent;
 	}*/
-	for (int i = 0; i < Scene_Max; i++)
+	for (int i = 0; i < m_Scenes.size(); i++)
 	{
 		Scene* temp = m_Scenes[(eSceneTypes)i];
 		delete temp;
@@ -56,6 +56,12 @@ void SceneManager::EnableScene(eSceneTypes type)
 	m_Scenes[type]->SetIsEnabled(true);
 }
 
+void SceneManager::SetCurrentScene(eSceneTypes type)
+{
+    // TODO: Make sure scene exists
+    m_CurrentScene = m_Scenes[type];
+}
+
 void SceneManager::DisableScene(eSceneTypes type)
 {
 	m_Scenes[type]->SetIsEnabled(false);
@@ -63,19 +69,33 @@ void SceneManager::DisableScene(eSceneTypes type)
 
 void SceneManager::DisableAll()
 {
-	for (int i = 0; i < Scene_Max; i++)
+	for (int i = 0; i < m_Scenes.size(); i++)
 	{
 		Scene* temp = m_Scenes[(eSceneTypes)i];
 		temp->SetIsEnabled(false);
 	}
 }
 
+void SceneManager::AddScene(Scene* scene)
+{
+    // TODO: Check if it already exists
+    m_Scenes[scene->GetSceneID()] = scene;
+}
+
+Scene* SceneManager::RemoveScene(Scene* scene)
+{
+    // TODO: Check if it exists
+    Scene* returnScene = m_Scenes[scene->GetSceneID()];
+    m_Scenes[scene->GetSceneID()] = nullptr; // TODO: Remove from map
+    return returnScene;
+}
+
 void SceneManager::Update(double deltatime) // update SceneTypes from bottom up (Max-)
 {
 	//this->ProcessEvents();
-	for (int i = Scene_Max - 1; i >= 0; i--)
+	for (int i = m_Scenes.size() - 1; i >= 0; i--)
 	{
-		Scene* temp = m_Scenes[(eSceneTypes)i];
+		Scene* temp = m_CurrentScene;
 		if (m_IsRunning) // Add step-through and pause/play button functionality in debug mode
 		if (temp->GetIsEnabled())
 		{
@@ -86,10 +106,10 @@ void SceneManager::Update(double deltatime) // update SceneTypes from bottom up 
 
 void SceneManager::Draw() // draw SceneTypes from top down (0+)
 {
-	// TODO:: might want to only draw specific scenes from gamecore
-	for (int i = 0; i < Scene_Max; i++)
+	// TODO:: might want to only draw specific scenes
+	for (int i = 0; i < m_Scenes.size(); i++)
 	{
-		Scene* temp = m_Scenes[(eSceneTypes)i];
+		Scene* temp = m_CurrentScene;
 		if (temp->GetIsEnabled())
 		{
 			temp->Draw();

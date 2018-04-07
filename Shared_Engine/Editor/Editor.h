@@ -8,6 +8,7 @@
 #include "SceneGraph/SceneGraph.h"
 
 class SceneGraph;
+class ShaderProgram;
 
 class Editor
 {
@@ -18,6 +19,8 @@ public:
     void NewFrame();
     void Update();
     void Draw();
+
+    void DrawShaderEditor(ShaderProgram* shader);
 
 private:
 	SceneGraph * m_SceneGraph = nullptr;

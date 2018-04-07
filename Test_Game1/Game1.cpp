@@ -5,6 +5,7 @@
 
 #include "Game1.h"
 #include "../QwerkE.h"
+#include "GameScene.h"
 
 int main()
 {
@@ -12,6 +13,10 @@ int main()
 
 	Engine engine;
 	engine.Startup();
+
+    SceneManager* sceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
+    sceneManager->AddScene(new GameScene());
+    sceneManager->SetCurrentScene(eSceneTypes::Scene_GameScene);
 
 	engine.Run();
 

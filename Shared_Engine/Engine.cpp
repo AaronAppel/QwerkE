@@ -21,6 +21,7 @@
 #include "Systems/MessageManager.h"
 #include "Systems/AudioManager.h"
 #include "Systems/Debugger.h"
+#include "Systems/Time.h"
 #include "Systems/Graphics/Model/Mesh/MeshFactory.h"
 #include "Systems/Graphics/ShaderProgram/ShaderFactory.h"
 
@@ -101,6 +102,9 @@ eEngineMessage Engine::Startup()
     Debugger* debugger = new Debugger();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Debugger, debugger);
 
+    Time* time = new Time();
+    QwerkE::ServiceLocator::RegisterService(eEngineServices::Time, time);
+
 	m_SceneManager->Initialize(); // Order Dependency
 
 	return QwerkE::ServiceLocator::ServicesLoaded();
@@ -132,6 +136,8 @@ eEngineMessage Engine::TearDown()
 
     delete (Debugger*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Debugger);
 
+    delete (Time*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Time);
+
 	Libs_TearDown(); // unload libraries
 
 	// TODO: Safety checks?
@@ -141,6 +147,9 @@ Mesh* g_Mesh;
 ShaderProgram* g_Shader;
 void Engine::Run()
 {
+    // TODO: Set deltatime
+    ((Time*)QwerkE::ServiceLocator::GetService(eEngineServices::Time))->SetDeltatime(&g_TimeSinceLastFrame);
+    
 	g_FBO->Init();
 	SetupCallbacks(m_Window);
 
@@ -160,13 +169,13 @@ void Engine::Run()
 
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
-    m_SceneManager->Initialize();
-    m_SceneManager->GetCurrentScene()->SetIsEnabled(true);
+    //m_SceneManager->Initialize();
+    //m_SceneManager->GetCurrentScene()->SetIsEnabled(true);
 
 	// TEST: Get a mesh rendering
 	g_Mesh = MeshFactory::CreateBox(vec2(1,1));
 	ShaderFactory shaderFactory;
-	g_Shader = shaderFactory.CreateShader("../Shared_Generic/Resources/Shaders/Basic2D.vert", "../Shared_Generic/Resources/Shaders/Basic2D.frag", NULL);
+	g_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader");
 	g_Mesh->SetupShaderAttributes(g_Shader);
 
 	// TEST: End
@@ -258,8 +267,9 @@ void Engine::Update(double deltatime)
 
 void Engine::Draw()
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // new frame
+
 	// TEMP: Render scene to texture
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	g_FBO->Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_SceneManager->Draw();
@@ -270,10 +280,9 @@ void Engine::Draw()
 	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180));
 
 	m_Editor->Draw();
+    m_Editor->DrawShaderEditor(g_Shader);
 
-	g_Shader->Use();
-	g_Shader->SetUniformFloat4("ObjectColour", 0.2f, 0.8f, 0.9f, 1.0f);
-	// g_Mesh->Draw();
+    m_SceneManager->Draw();
 
 	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Sample Text"); // TEST:
 

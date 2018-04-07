@@ -17,6 +17,8 @@ public:
 	/* Setup */
 	bool Init(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir);
 
+    // TODO: GLuint ReCompile1Shader(GLenum shaderType); // uses m_????String that might have been changed
+    // TODO: GLuint ReCompile1Shader(GLenum shaderType, const char* shaderFileDir); // recompile 1 shader file
 	GLuint ReCompile1Shader(GLenum shaderType, const char* shaderString); // recompile 1 shader by type (vert, frag, geo)
     bool ReCompileShader(); // recompile shader
 
@@ -28,6 +30,9 @@ public:
 	/* Getters + Setters */
 	// Getters
 	GLuint GetProgram() { return m_ProgramHandle; };
+    const char* GetVertString() { return m_VertString; };
+    const char* GetFragString() { return m_FragString; };
+    const char* GetGeoString() { return m_GeoString; };
 
 	/* Texture setup */
 	void SetupTextures(GLuint textures[], int numTextures);

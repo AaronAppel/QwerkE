@@ -1841,7 +1841,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.h">
       <Filter>Libraries\lodepng</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Initialize.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\glew\eglew.h">
       <Filter>Libraries\glew</Filter>
@@ -2220,7 +2219,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\lodepng\lodepng.cpp">
       <Filter>Libraries\lodepng</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries_Initialize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\glm\glm.cpp">
       <Filter>Libraries\glm</Filter>

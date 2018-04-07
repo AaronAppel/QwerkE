@@ -4,6 +4,7 @@
 #include "../../Systems/Graphics/MaterialData.h"
 #include "../../Systems/Graphics/ShaderProgram/ShaderFactory.h"
 #include "../../../Shared_Generic/Utilities/StringHelpers.h"
+#include "../../../Shared_Generic/Utilities/PrintFunctions.h"
 
 const char* Test(const char* a, const char* b)
 {
@@ -28,7 +29,7 @@ void ResourceManager::Init()
 Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 {
 	// TODO: Use MeshDir
-#define MeshDir(a) Test("../Shared_Generic/Resources/Shaders/", a) // Folder or shaders
+#define MeshDir(a) Test("../Shared_Generic/Resources/Models/", a) // Folder or shaders
 
 	MeshFactory t_MeshFactory;
 	Mesh* mesh = nullptr;
@@ -63,8 +64,13 @@ Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 	{
 		mesh = t_MeshFactory.TutorialCube(vec3(1,1,1));
 	}
+    else if (meshName == "Teapot")
+    {
+        mesh = t_MeshFactory.ImportOBJMesh(MeshDir("Teapot.obj"), vec3(0.5f,0.5f,0.5f), vec2(1,1), false);
+    }
 	else
 	{
+        ConsolePrint("\nInstantiateMesh(): Mesh not found!\n");
 		return nullptr;
 	}
 	m_HotMeshes[meshName] = mesh; // Add to active list
@@ -130,8 +136,13 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 	{
 		shader->Init(ShaderDir("text.vert"), ShaderDir("text.frag"), NULL);
 	}
+    else if (shaderName == "TestShader")
+    {
+        shader->Init(ShaderDir("TestShader.vert"), ShaderDir("TestShader.frag"), NULL);
+    }
 	else
 	{
+        ConsolePrint("\nInstantiateShader(): Shader not found!\n");
 		return nullptr;
 	}
 
@@ -141,6 +152,7 @@ ShaderProgram* ResourceManager::InstantiateShader(const char* shaderName)
 // TODO: Look at resource creation again. Should Resource Manager create assets or just store them?
 GLuint ResourceManager::InstantiateTexture(const char* textureName)
 {
+    // TODO: OpenGLHelpers.cpp is a different directory.
 #define TextureDir(a) Test("../Shared_Generic/Resources/Textures/", a) // Folder or shaders
 	GLuint textureHandle = -1;
 	if (textureName == "PeriodicHeal") // Asset name
@@ -193,7 +205,7 @@ GLuint ResourceManager::InstantiateTexture(const char* textureName)
 	}
 	else if (textureName == "null")
 	{
-		textureHandle = Load2DTexture(TextureDir("null.png"));
+		textureHandle = Load2DTexture(TextureDir("null_texture.png"));
 	}
 	// Cube map
 	else if (false)
@@ -202,7 +214,8 @@ GLuint ResourceManager::InstantiateTexture(const char* textureName)
 	}
 	else
 	{
-		textureHandle = -1; // failure
+		textureHandle = GetTexture("null"); // failure
+        ConsolePrint("\nInstantiateTexture(): Texture not found!\n");
 	}
 
 	m_HotTextures[textureName] = textureHandle;
@@ -230,9 +243,14 @@ MaterialData* ResourceManager::InstantiateMaterial(const char* matName)
 	{
 		material = new MaterialData(GetTexture("UV_Map"), GetTexture("UV_Map"), GetTexture("white_canvas"));
 	}
+    else if (matName == "null")
+    {
+        material = new MaterialData(GetTexture("null"), GetTexture("null"), GetTexture("null"));
+    }
 	else
 	{
-		return nullptr;
+        ConsolePrint("\nInstantiateMaterial(): Material not found!\n");
+		return GetMaterial("null");
 	}
 
 	m_HotMaterials[matName] = material;
@@ -269,6 +287,7 @@ Model* ResourceManager::InstantiateModel(const char* modelName)
 	}
 	else
 	{
+        ConsolePrint("\nInstantiateModel(): Model not found!\n");
 		return nullptr;
 	}
 	// TODO: nullptr checks

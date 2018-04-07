@@ -91,7 +91,7 @@ Mesh* MeshFactory::ImportOBJMesh(const char* fileDirectory, vec3 objScale, vec2 
 	// generate UVCOORDS
 	CalculateUVCoords(verts); // default scale 1,1
 
-										  // scale UVCOORDS
+	// scale UVCOORDS
 	if (UVScale != vec2(1.0f, 1.0f))
 	{
 		ScaleUVCOORDS(verts.data(), verts.size(), UVScale);

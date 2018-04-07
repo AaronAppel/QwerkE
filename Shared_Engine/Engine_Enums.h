@@ -30,6 +30,7 @@ enum class eEngineServices : std::uint8_t
 	MessageManager,
 	Renderer,
     Debugger,
+    Time,
 
 	Service_Max
 };
@@ -54,6 +55,7 @@ enum eComponentTags
 	Component_Light,
 	Component_Controller,
 	Component_Render,
+    Component_Print,
 	Component_SkyBox,
 	Component_Animation,
 	Component_Character,
@@ -108,6 +110,7 @@ enum eSceneTypes
 	//// list in order of opening if possible
 	// fullscreen
 	Scene_TestScene = 0,
+    Scene_GameScene,
 	// overlays
 	// Scene_OverLays,
 	// *options

@@ -19,8 +19,12 @@ public:
 	void ResetAll();
 
 	void EnableScene(eSceneTypes type);
+    void SetCurrentScene(eSceneTypes type);
 	void DisableScene(eSceneTypes type);
 	void DisableAll();
+
+    void AddScene(Scene* scene);
+    Scene* RemoveScene(Scene* scene);
 
 	//void QueueEvent(Event* pEvent);
 

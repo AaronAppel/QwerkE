@@ -1,0 +1,29 @@
+﻿  Editor.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  QwerkE_Win32.cpp
+  OBJLoader.cpp
+  MenuWindow.cpp
+  MenuItem.cpp
+  ImageItem.cpp
+  AddItem.cpp
+  Sprite.cpp
+  ShaderProgram.cpp
+  ShaderFactory.cpp
+  LitMaterial.cpp
+  Basic3DShader.cpp
+  Basic2DShader.cpp
+  OpenGLManager.cpp
+  OpenGLHelpers.cpp
+  MeshFactory.cpp
+  Mesh.cpp
+  FontTest.cpp
+  FrameBufferObject.cpp
+  CubeMap.cpp
+  MasterAssetList.cpp
+  TestScene.cpp
+  RenderRoutineUtilities.cpp
+  RenderRoutine.cpp
+  Engine.cpp
+  QwerkE_Win32.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\QwerkE_Win32.exe
+  QwerkE_Win32.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\QwerkE_Win32.pdb (Partial PDB)

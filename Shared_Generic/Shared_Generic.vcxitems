@@ -14,7 +14,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Containers\MyLinkedList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Containers\ObjectPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Containers\Timer.h" />
@@ -708,7 +707,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\ImageItem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\MenuItem.cpp" />

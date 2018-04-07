@@ -17,11 +17,11 @@ GameObject* Factory::CreateCube(Scene* scene, vec3 position)
 	t_Cube->SetRenderOrder(50);
 	RenderComponent* renderComp = new RenderComponent();
 	// Assign assets from ResourceManager()
-	renderComp->SetMesh(m_pResources->GetMesh("Cube")); // CreCube
+	renderComp->SetMesh(m_pResources->GetMesh("Teapot")); // CreCube
 	// renderComp->SetModel(m_pResources->GetModel("CubeModel"));
-	renderComp->SetShader(m_pResources->GetShader("Basic3D"));
+	renderComp->SetShader(m_pResources->GetShader("TestShader"));
 	renderComp->SetColour(vec4(0,1,0,1));
-	//renderComp->SetMaterial(m_pResources->GetMaterial("container"));
+	renderComp->SetMaterial(m_pResources->GetMaterial("test"));
 
 	renderComp->SetColour(vec4(RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), RandFloatInRange(0.0f, 1.0f), 1));
 	t_Cube->AddComponent(renderComp);

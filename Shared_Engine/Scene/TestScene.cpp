@@ -11,6 +11,7 @@
 #include "../Systems/Graphics/Model/Mesh/Mesh.h"
 #include "../Systems/Graphics/Model/Mesh/MeshFactory.h"
 #include "../Systems/Graphics/ShaderProgram/ShaderProgram.h"
+#include "../Systems/Time.h"
 
 TestScene::TestScene() : Scene()
 {
@@ -22,19 +23,15 @@ TestScene::~TestScene()
 {
 	m_CameraList.Clear();
 }
-ShaderProgram* g_Shader2; // TEST:
-Mesh* g_TestMesh; // TEST:
+
+GameObject* obj;
 void TestScene::Initialize()
 {
     Factory* t_pFactory = (Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity);
 	ResourceManager* t_pResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
 	// TODO: Resolve feature
     //DataManager* t_pDataManager = m_pGameCore->GetDataManager();
-
-	g_Shader2 = t_pResourceManager->GetShader("Basic2D");
-	g_TestMesh = MeshFactory::CreateBox(vec2(0.5f, 0.5f));
-	g_TestMesh->SetupShaderAttributes(g_Shader2);
-
+    
 	//t_pDataManager->LoadScene(this, m_LevelFileDir); // Load scene
 	Scene::SetupCameras();
 
@@ -50,7 +47,7 @@ void TestScene::Initialize()
 	{	// Create scene objects
 		// cubes
 		int cubes = 1;
-		GameObject* obj = t_pFactory->CreateCube(this, vec3(0,0,20));
+		obj = t_pFactory->CreateCube(this, vec3(0,-5, 60));
 		obj->SetRotation(vec3(45,45,45));
 		// plane
 		// t_pFactory->CreatePlane(this, vec3(0, -1, 0));
@@ -68,6 +65,9 @@ void TestScene::Initialize()
 
 void TestScene::p_Update(double deltatime)
 {
+    obj->SetRotation(vec3(obj->GetRotation().x,
+        obj->GetRotation().y + 0.01f / ((Time*)QwerkE::ServiceLocator::GetService(eEngineServices::Time))->GetDeltaTime(),
+        0));
 	Scene::p_Update(deltatime);
 }
 

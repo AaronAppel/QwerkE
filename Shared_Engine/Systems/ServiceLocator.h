@@ -24,6 +24,7 @@ class MessageManager;
 class Renderer;
 class AudioManager;
 class Debugger;
+class Time;
 
 namespace QwerkE
 {
@@ -57,6 +58,7 @@ namespace QwerkE
 		static Renderer* m_Renderer;
         static AudioManager* m_AudioManager;
         static Debugger* m_Debugger;
+        static Time* m_Time;
 	};
 }
 
