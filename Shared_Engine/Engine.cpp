@@ -24,6 +24,7 @@
 #include "Systems/Time.h"
 #include "Systems/Graphics/Model/Mesh/MeshFactory.h"
 #include "Systems/Graphics/ShaderProgram/ShaderFactory.h"
+#include "Systems/JobManager.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -105,6 +106,9 @@ eEngineMessage Engine::Startup()
     Time* time = new Time();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Time, time);
 
+	JobManager* jobManager = new JobManager();
+	QwerkE::ServiceLocator::RegisterService(eEngineServices::JobManager, jobManager);
+
 	m_SceneManager->Initialize(); // Order Dependency
 
 	return QwerkE::ServiceLocator::ServicesLoaded();
@@ -138,6 +142,8 @@ eEngineMessage Engine::TearDown()
 
     delete (Time*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Time);
 
+	delete (JobManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::JobManager);
+
 	Libs_TearDown(); // unload libraries
 
 	// TODO: Safety checks?
@@ -149,7 +155,7 @@ void Engine::Run()
 {
     // TODO: Set deltatime
     ((Time*)QwerkE::ServiceLocator::GetService(eEngineServices::Time))->SetDeltatime(&g_TimeSinceLastFrame);
-    
+
 	g_FBO->Init();
 	SetupCallbacks(m_Window);
 

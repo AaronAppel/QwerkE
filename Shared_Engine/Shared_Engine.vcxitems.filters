@@ -149,7 +149,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\LevelLoader.h">
       <Filter>Systems\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\Time.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Time.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\JobManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
@@ -376,7 +377,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Shapes.cpp">
       <Filter>Systems\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\Time.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Time.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\JobManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>

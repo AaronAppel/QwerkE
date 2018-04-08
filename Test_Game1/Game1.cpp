@@ -17,6 +17,7 @@ int main()
     SceneManager* sceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
     sceneManager->AddScene(new GameScene());
     sceneManager->SetCurrentScene(eSceneTypes::Scene_GameScene);
+	sceneManager->GetCurrentScene()->SetIsEnabled(true);
 
 	engine.Run();
 

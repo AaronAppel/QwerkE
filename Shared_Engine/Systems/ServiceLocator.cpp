@@ -16,6 +16,7 @@ namespace QwerkE
     AudioManager* QwerkE::ServiceLocator::m_AudioManager = nullptr;
     Debugger* QwerkE::ServiceLocator::m_Debugger = nullptr;
     Time* QwerkE::ServiceLocator::m_Time = nullptr;
+    JobManager* QwerkE::ServiceLocator::m_JobManager = nullptr;
 
 	void ServiceLocator::RegisterService(eEngineServices serviceType, void* service)
 	{
@@ -60,6 +61,9 @@ namespace QwerkE
         case eEngineServices::Time:
             ServiceLocator::m_Time = (Time*)service;
             break;
+		case eEngineServices::JobManager:
+			ServiceLocator::m_JobManager = (JobManager*)service;
+			break;
 		default:
 			ConsolePrint("ServiceLocator::RegisterService(): Invalid service!");
 			break;
@@ -135,8 +139,14 @@ namespace QwerkE
             ServiceLocator::m_Time = nullptr;
             return temp;
             break;
+		case eEngineServices::JobManager:
+			temp = ServiceLocator::m_JobManager;
+			ServiceLocator::m_JobManager = nullptr;
+			return temp;
+			break;
 		default:
 			ConsolePrint("ServiceLocator::UnregisterService(): Invalid service!");
+			return nullptr;
 			break;
 		}
 	}
@@ -184,8 +194,12 @@ namespace QwerkE
         case eEngineServices::Time:
             return ServiceLocator::m_Time;
             break;
+		case eEngineServices::JobManager:
+			return ServiceLocator::m_JobManager;
+			break;
 		default:
 			ConsolePrint("ServiceLocator::GetService(): Invalid service!");
+			return nullptr;
 			break;
 		}
 	}
@@ -248,6 +262,10 @@ namespace QwerkE
                 if (ServiceLocator::m_Time == nullptr)
                     return eEngineMessage::_QFail; // not loaded
                 break;
+			case eEngineServices::JobManager:
+				if (ServiceLocator::m_JobManager == nullptr)
+					return eEngineMessage::_QFail; // not loaded
+				break;
 			}
 
 			i = (eEngineServices)((int)i + 1); // increment service

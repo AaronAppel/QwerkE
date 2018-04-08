@@ -31,6 +31,7 @@ enum class eEngineServices : std::uint8_t
 	Renderer,
     Debugger,
     Time,
+	JobManager,
 
 	Service_Max
 };
@@ -66,6 +67,7 @@ enum eComponentTags
 enum eRoutineTypes
 {
 	Routine_Render = 0,
+	Routine_Print,
 	Routine_Max,
 	Routine_NULL
 };

@@ -35,7 +35,7 @@ public:
 protected:
 	int m_Priority = 0; // render order / update order
 	GameObject* m_pParent = nullptr;
-	eRoutineTypes m_Type;
+	eRoutineTypes m_Type = eRoutineTypes::Routine_NULL;
 };
 
 #endif //!_Routine_H_

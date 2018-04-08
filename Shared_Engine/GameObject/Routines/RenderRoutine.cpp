@@ -16,6 +16,7 @@ void RenderRoutine::Initialize()
 	m_pParent->AddDrawRoutine(this);
 	m_pRender = (RenderComponent*)m_pParent->GetComponent(Component_Render);
 	SetDrawFunction();
+	m_Type = eRoutineTypes::Routine_Render;
 }
 
 void RenderRoutine::Draw(GameObject* cameraObject)

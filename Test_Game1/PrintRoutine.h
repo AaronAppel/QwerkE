@@ -18,7 +18,7 @@ public:
 
 private:
     float m_PrintPeriod = 3.0f;
-    float m_TimePassed = 0.0f;
+    float m_TimePassed = m_PrintPeriod;
 
     PrintComponent* m_pPrint = nullptr;
 };

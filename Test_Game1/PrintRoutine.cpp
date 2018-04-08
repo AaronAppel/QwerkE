@@ -13,6 +13,7 @@ void PrintRoutine::Initialize()
 {
     m_pParent->AddUpdateRoutine(this);
     m_pPrint = (PrintComponent*)m_pParent->GetComponent(Component_Print);
+	m_Type = eRoutineTypes::Routine_Print;
 }
 
 void PrintRoutine::Update(double a_Deltatime)

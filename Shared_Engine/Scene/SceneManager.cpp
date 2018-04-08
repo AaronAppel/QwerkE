@@ -60,6 +60,7 @@ void SceneManager::SetCurrentScene(eSceneTypes type)
 {
     // TODO: Make sure scene exists
     m_CurrentScene = m_Scenes[type];
+	// TODO: Enable new current scene?
 }
 
 void SceneManager::DisableScene(eSceneTypes type)
@@ -92,14 +93,12 @@ Scene* SceneManager::RemoveScene(Scene* scene)
 
 void SceneManager::Update(double deltatime) // update SceneTypes from bottom up (Max-)
 {
-	//this->ProcessEvents();
-	for (int i = m_Scenes.size() - 1; i >= 0; i--)
+	if (m_CurrentScene)
 	{
-		Scene* temp = m_CurrentScene;
 		if (m_IsRunning) // Add step-through and pause/play button functionality in debug mode
-		if (temp->GetIsEnabled())
+		if (m_CurrentScene->GetIsEnabled())
 		{
-			temp->Update(deltatime);
+			m_CurrentScene->Update(deltatime);
 		}
 	}
 }
@@ -107,12 +106,11 @@ void SceneManager::Update(double deltatime) // update SceneTypes from bottom up 
 void SceneManager::Draw() // draw SceneTypes from top down (0+)
 {
 	// TODO:: might want to only draw specific scenes
-	for (int i = 0; i < m_Scenes.size(); i++)
+	if (m_CurrentScene)
 	{
-		Scene* temp = m_CurrentScene;
-		if (temp->GetIsEnabled())
+		if (m_CurrentScene->GetIsEnabled())
 		{
-			temp->Draw();
+			m_CurrentScene->Draw();
 		}
 	}
 }
