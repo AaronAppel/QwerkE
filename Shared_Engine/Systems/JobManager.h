@@ -6,7 +6,7 @@
 	https://computing.llnl.gov/tutorials/pthreads/
 */
 
-#include "../Shared_Generic/Libraries/pThreads/pthread.h"
+#include "../../Shared_Generic/Libraries/pThreads/pthread.h"
 
 class QJob
 {

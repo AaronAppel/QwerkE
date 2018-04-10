@@ -1,6 +1,7 @@
 #ifndef _Libraries_Include_H_
 #define _Libraries_Include_H_
 
+// TODO: Consider having multiple Library_Include files for each platform. Easier management
 // Include/Exclude libraries based on platform, architecture, configuration
 // TODO: Hide loading/unloading behind load/splash screen?
 // TODO: Clean up #ifs
@@ -74,6 +75,16 @@
 // TODO: Check for architecture and debug/release
 #pragma comment( lib, "../Shared_Generic/Libraries/glfw/glfw3.lib" ) // load
 #include "Libraries/glfw/GLFW/glfw3.h"
+//////////////////////////////
+
+//////////////////////////////
+// Audio //
+//////////////////////////////
+// TODO: Setup OpenAL
+// https://ffainelli.github.io/openal-example/
+#include "Libraries/OpenAL/include/al.h"
+#include "Libraries/OpenAL/include/alc.h"
+#pragma comment( lib, "../Shared_Generic/Libraries/OpenAL/libs/Win32/OpenAL32.lib" ) // load
 //////////////////////////////
 
 //////////////////////////////

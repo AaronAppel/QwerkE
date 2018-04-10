@@ -64,6 +64,9 @@
     <Filter Include="Libraries\cJSON">
       <UniqueIdentifier>{b0e09cf5-fee1-4f7a-a9f7-05741b18b940}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\OpenAL">
+      <UniqueIdentifier>{c275ad8b-a789-4701-a4e6-8bb45d6a812e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
@@ -2132,6 +2135,24 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\freetype2\freetype\internal\tttypes.h">
       <Filter>Libraries\Freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\al.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\alc.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\efx-creative.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\EFX-Util.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\efx.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\xram.h">
+      <Filter>Libraries\OpenAL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

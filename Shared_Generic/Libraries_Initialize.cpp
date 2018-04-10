@@ -121,6 +121,34 @@ bool Libs_Setup()
 	// Load anything?
 	//////////////////////////////
 
+	//////////////////////////////
+	// Audio
+	//////////////////////////////
+	// OpenAL
+	ALCdevice* device;
+
+	device = alcOpenDevice(NULL);
+	if (!device)
+	{
+		// error
+		OutputPrint("\nError loading OpenAL!\n");
+	}
+	else
+	{
+		alcCloseDevice(device);
+	}
+
+	if (false)
+	{
+		/*alDeleteSources(1, &source);
+		alDeleteBuffers(1, &buffer);
+		device = alcGetContextsDevice(context);
+		alcMakeContextCurrent(NULL);
+		alcDestroyContext(context);
+		alcCloseDevice(device);*/
+	}
+	//////////////////////////////
+
 	return errorFree;
 }
 

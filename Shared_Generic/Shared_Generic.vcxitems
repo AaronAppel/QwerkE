@@ -535,6 +535,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\ValueChecking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Math\VectorMathHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\al.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\alc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\efx-creative.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\EFX-Util.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\efx.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\OpenAL\include\xram.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\pThreads\pthread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\pThreads\sched.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\pThreads\semaphore.h" />
