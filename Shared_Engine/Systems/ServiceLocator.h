@@ -46,7 +46,11 @@ namespace QwerkE
 		// TODO: Improve logic and code design
 		static eEngineMessage ServicesLoaded(); // determine if all services are loaded
 
+		static void LockServices(bool locking) { m_IsLocked = locking; }
+
 	private:
+		static bool m_IsLocked; // TODO: Improve security/error prevention
+
 		static ResourceManager* m_ResourceManager;
 		static InputManager* m_InputManager;
 		static GLFWwindow* m_AppWindow;

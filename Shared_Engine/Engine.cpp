@@ -64,6 +64,8 @@ eEngineMessage Engine::Startup()
 	// load and register systems
 	// Audio, Networking, Graphics (Renderer, GUI), Utilities (Conversion, FileIO, Printing),
 	// Physics, Event, Debug, Memory, Window, Application, Input, Resources
+	QwerkE::ServiceLocator::LockServices(false);
+
 	ResourceManager* resourceManager = new ResourceManager();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::Resource_Manager, resourceManager);
 
@@ -175,9 +177,6 @@ void Engine::Run()
 
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
-    //m_SceneManager->Initialize();
-    //m_SceneManager->GetCurrentScene()->SetIsEnabled(true);
-
 	// TEST: Get a mesh rendering
 	g_Mesh = MeshFactory::CreateBox(vec2(1,1));
 	ShaderFactory shaderFactory;
@@ -185,6 +184,7 @@ void Engine::Run()
 	g_Mesh->SetupShaderAttributes(g_Shader);
 
 	// TEST: End
+	QwerkE::ServiceLocator::LockServices(true);
 
 	// Deltatime + FPS Tracking //
 	// Deltatime
@@ -245,6 +245,9 @@ void Engine::Run()
 			// skip frame
 		}
 	}
+
+	// unlock services for clean up
+	QwerkE::ServiceLocator::LockServices(false);
 }
 
 void Engine::NewFrame()

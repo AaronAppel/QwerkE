@@ -30,3 +30,11 @@ Bullet is also dependent on a globally #included root folder.
 Apr 6th 2018
 Got TestGame project running by ading a reference to engine.
 Is that good or bad? It might be better to remove references in the future.
+
+Apr 9th 2018
+Some services should be easier to access without worrying about restrictions
+or security. Prime services would be managers or utilities that do not hold
+persistent data members but instead are comprised of static or global functions.
+Examples include Math, Graphics, Input(possible exception), and more.
+It would be nicer/easier to access QwerkE::Math or even QMath instead of getting
+the service and then manipulating it in a long call.

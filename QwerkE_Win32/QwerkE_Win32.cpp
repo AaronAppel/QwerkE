@@ -12,6 +12,10 @@ int main() // End user implementation
 		return 0;
 	}
 
+	SceneManager* sceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
+	sceneManager->Initialize(); // Setup test scene
+	sceneManager->GetCurrentScene()->SetIsEnabled(true);
+
 	engine.Run();
 
 	engine.TearDown();

@@ -46,7 +46,7 @@ Mesh* ResourceManager::InstantiateMesh(const char* meshName)
 	else if (meshName == "Cube")
 	{
 		mesh = new Mesh();
-		t_MeshFactory.GenerateCube(mesh, vec3(1, 1, 1));
+		t_MeshFactory.GenerateCube(mesh, vec3(1, 1, 1)); // TODO: Has UV issues
 	}
 	else if (meshName == "CreBox")
 	{

@@ -7,6 +7,14 @@
 /* Defines values to be used in other ares of code.
    Creates typedefs to make development more convenient*/
 
+// TODO: Define release and debug versions
+#ifdef _RELEASE
+#define _QRelease
+#define NDEBUG // leave out assert()s
+#else
+#define _QDEBUG
+#endif
+
 // TODO: Define API level for various functionality
 #define _QTest // Working example to show functionality
 #define _QEasy // Beginner API

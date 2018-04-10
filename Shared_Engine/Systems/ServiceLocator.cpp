@@ -1,8 +1,12 @@
 #include "ServiceLocator.h"
 
+#include <assert.h>
+
 namespace QwerkE
 {
 	// init variables
+	bool QwerkE::ServiceLocator::m_IsLocked = true; // must be unlocked to edit
+
 	ResourceManager* QwerkE::ServiceLocator::m_ResourceManager = nullptr;
 	InputManager* QwerkE::ServiceLocator::m_InputManager = nullptr;
 	GLFWwindow* QwerkE::ServiceLocator::m_AppWindow = nullptr;
@@ -20,6 +24,8 @@ namespace QwerkE
 
 	void ServiceLocator::RegisterService(eEngineServices serviceType, void* service)
 	{
+		assert(m_IsLocked == false); // Services are locked
+
 		switch (serviceType)
 		{
 		case eEngineServices::Resource_Manager:
@@ -72,6 +78,8 @@ namespace QwerkE
 
 	void* ServiceLocator::UnregisterService(eEngineServices serviceType) // TODO: Potentially dangerous!
 	{
+		assert(m_IsLocked == false); // Services are locked
+
 		void* temp = nullptr;
 		switch (serviceType)
 		{

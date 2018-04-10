@@ -31,7 +31,7 @@ void TestScene::Initialize()
 	ResourceManager* t_pResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
 	// TODO: Resolve feature
     //DataManager* t_pDataManager = m_pGameCore->GetDataManager();
-    
+
 	//t_pDataManager->LoadScene(this, m_LevelFileDir); // Load scene
 	Scene::SetupCameras();
 
@@ -47,7 +47,7 @@ void TestScene::Initialize()
 	{	// Create scene objects
 		// cubes
 		int cubes = 1;
-		obj = t_pFactory->CreateCube(this, vec3(0,-5, 60));
+		obj = t_pFactory->CreateCube(this, vec3(0,0, 20));
 		obj->SetRotation(vec3(45,45,45));
 		// plane
 		// t_pFactory->CreatePlane(this, vec3(0, -1, 0));
@@ -66,7 +66,7 @@ void TestScene::Initialize()
 void TestScene::p_Update(double deltatime)
 {
     obj->SetRotation(vec3(obj->GetRotation().x,
-        obj->GetRotation().y + 0.01f / ((Time*)QwerkE::ServiceLocator::GetService(eEngineServices::Time))->GetDeltaTime(),
+        obj->GetRotation().y + 0.001f / ((Time*)QwerkE::ServiceLocator::GetService(eEngineServices::Time))->GetDeltaTime(),
         0));
 	Scene::p_Update(deltatime);
 }
