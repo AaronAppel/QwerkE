@@ -151,7 +151,7 @@ eEngineMessage Engine::TearDown()
 	// TODO: Safety checks?
 	return eEngineMessage::_QSuccess;
 }
-Mesh* g_Mesh;
+
 ShaderProgram* g_Shader;
 void Engine::Run()
 {
@@ -177,13 +177,8 @@ void Engine::Run()
 
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
-	// TEST: Get a mesh rendering
-	g_Mesh = MeshFactory::CreateBox(vec2(1,1));
-	ShaderFactory shaderFactory;
 	g_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader");
-	g_Mesh->SetupShaderAttributes(g_Shader);
 
-	// TEST: End
 	QwerkE::ServiceLocator::LockServices(true);
 
 	// Deltatime + FPS Tracking //

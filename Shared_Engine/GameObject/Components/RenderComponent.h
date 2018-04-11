@@ -31,7 +31,7 @@ public:
 
 	// setters
 	void SetMesh(Mesh* mesh) { m_pMesh = mesh; };
-	void SetShader(ShaderProgram* shader) { m_pShader = shader; };
+	void SetShader(ShaderProgram* shader);
 	void SetTexture(GLuint texture) { m_CurrentTexture = texture; };
 	void SetColour(vec4 Colour) { m_Colour = Colour; };
 	void SetMaterial(MaterialData* mat) { m_Material = mat; };

@@ -29,6 +29,7 @@ public:
 
 	/* Getters + Setters */
 	// Getters
+	// TODO: GLuint GetShaderName() {}
 	GLuint GetProgram() { return m_ProgramHandle; };
     const char* GetVertString() { return m_VertString; };
     const char* GetFragString() { return m_FragString; };

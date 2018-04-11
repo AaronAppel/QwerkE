@@ -1,4 +1,4 @@
-// LitMaterial.vert
+// EmptyShader.vert
 #version 330 core
 
 // Attribute input

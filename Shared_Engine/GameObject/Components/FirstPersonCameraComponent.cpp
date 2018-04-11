@@ -22,9 +22,9 @@ void FirstPersonCameraComponent::ProcessKeyboard(eCamera_Movement direction, flo
 
 	float velocity = m_MovementSpeed * deltaTime;
 	if (direction == FORWARD)
-		m_Position -= m_Front * velocity;
-	if (direction == BACKWARD)
 		m_Position += m_Front * velocity;
+	if (direction == BACKWARD)
+		m_Position -= m_Front * velocity;
 	if (direction == LEFT)
 		m_Position -= m_Right * velocity;
 	if (direction == RIGHT)

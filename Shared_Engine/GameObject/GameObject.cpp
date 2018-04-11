@@ -157,7 +157,7 @@ void GameObject::Deactivate()
 	}
 }
 
-Routine* GameObject::GetFirstUpdateRoutine(eRoutineTypes type)
+Routine* GameObject::GetFirstUpdateRoutineOfType(eRoutineTypes type)
 {
 	Routine* t_ReturnRoutine = nullptr;
 	for (uint i = 0; i < m_UpdateList.size(); i++)
@@ -168,6 +168,20 @@ Routine* GameObject::GetFirstUpdateRoutine(eRoutineTypes type)
 		}
 	}
 	return t_ReturnRoutine;
+}
+
+Routine* GameObject::GetFirstDrawRoutineOfType(eRoutineTypes type)
+{
+	Routine* rRoutine = nullptr;
+	for (unsigned int i = 0; i < m_DrawList.size(); i++)
+	{
+		if (m_DrawList.at(i)->GetRoutineType() == type)
+		{
+			rRoutine = m_DrawList.at(i);
+			break;
+		}
+	}
+	return rRoutine;
 }
 
 void GameObject::SetPosition(vec3 position)

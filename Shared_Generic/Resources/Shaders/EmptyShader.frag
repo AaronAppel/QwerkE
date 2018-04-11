@@ -1,4 +1,4 @@
-// LitMaterial.frag
+// EmptyShader.frag
 #version 330 core
 
 // Vertex input

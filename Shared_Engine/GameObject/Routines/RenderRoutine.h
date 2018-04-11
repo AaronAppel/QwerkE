@@ -23,6 +23,8 @@ public:
 
 	void Draw(GameObject* a_Camera);
 
+	void ResetUniformList() { SetDrawFunction(); };
+
 private:
 	/* Private variables */
 	RenderComponent* m_pRender;

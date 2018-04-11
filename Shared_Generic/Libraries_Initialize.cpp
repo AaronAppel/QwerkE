@@ -125,18 +125,19 @@ bool Libs_Setup()
 	// Audio
 	//////////////////////////////
 	// OpenAL
-	ALCdevice* device;
+	// TODO: Fix OpenAL so it does not crash when the SDK is uninstalled
+	//ALCdevice* device;
 
-	device = alcOpenDevice(NULL);
-	if (!device)
-	{
-		// error
-		OutputPrint("\nError loading OpenAL!\n");
-	}
-	else
-	{
-		alcCloseDevice(device);
-	}
+	//device = alcOpenDevice(NULL);
+	//if (!device)
+	//{
+	//	// error
+	//	OutputPrint("\nError loading OpenAL!\n");
+	//}
+	//else
+	//{
+	//	alcCloseDevice(device);
+	//}
 
 	if (false)
 	{

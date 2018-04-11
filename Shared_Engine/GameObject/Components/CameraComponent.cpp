@@ -113,6 +113,6 @@ void CameraComponent::UpdateCameraVectors()
 	// *m_ProjMatrix = glm::perspective(glm::radians(m_Zoom), m_ViewportSize.x / m_ViewportSize.y, m_CAMNEAR, m_CAMFAR);
 
 	// view
-	m_ViewMatrix->CreateLookAtView(m_Position, UP, m_TargetPosition);
+	m_ViewMatrix->CreateLookAtView(m_Position, vec3(0,1,0), m_TargetPosition);
 	// *m_ViewMatrix = glm::lookAt(m_Position, m_TargetPosition + m_Front, m_CamUp);
 }

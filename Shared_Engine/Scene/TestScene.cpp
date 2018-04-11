@@ -46,7 +46,10 @@ void TestScene::Initialize()
 
 	{	// Create scene objects
 		// cubes
-		int cubes = 1;
+		int cubes = 2;
+		t_pFactory->CreateCube(this, vec3(2, 2, 30));
+		t_pFactory->CreateCube(this, vec3(-2, 1, 40));
+
 		obj = t_pFactory->CreateCube(this, vec3(0,0, 20));
 		obj->SetRotation(vec3(45,45,45));
 		// plane

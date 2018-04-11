@@ -64,6 +64,8 @@ void RenderRoutine::SetDrawFunction() // Assign function pointers and initialize
 	/* Safety check */
 	// TODO: Setup NULL Meshes and Shaders for debugging
 	if (t_pShader == nullptr) { return; } // nullptr*?
+	m_UniformSetupList.clear(); // reset list when changing shaders
+
 	if (t_pMesh == nullptr)
     {
         Model* t_Model = m_pRender->GetModel();

@@ -31,21 +31,38 @@ void SetupCallbacks(GLFWwindow* window)
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if (action == GLFW_PRESS)
-	{		
+	{
 		l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key),
 			eKeyState::eKeyState_Press);
 	}
 	else if (action == GLFW_RELEASE)
 	{
-		l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key), 
+		l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key),
 			eKeyState::eKeyState_Release);
 	}
+	// imgui
+	ImGuiIO& io = ImGui::GetIO();
+	if (action == GLFW_PRESS)
+		io.KeysDown[key] = true;
+	if (action == GLFW_RELEASE)
+		io.KeysDown[key] = false;
+
+	//(void)mods; // Modifiers are not reliable across systems
+	io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+	io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+	io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+	io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 }
 void char_callback(GLFWwindow* window, unsigned int codePoint)
 {
 	// TODO: Tell InputManager that a key state changed
 	// l_InputManager->ProcessKeyEvent(l_InputManager->GetKeyCode(key), eKeyState::eKeyState_Down);
 	int bp = 1;
+
+	// imgui
+	ImGuiIO& io = ImGui::GetIO();
+	if (codePoint > 0 && codePoint < 0x10000)
+		io.AddInputCharacter((unsigned short)codePoint);
 }
 void char_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods)
 {
@@ -78,7 +95,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
 	// TODO: Tell InputManager that the mouse changed
 	// l_InputManager->ProcessMouse();
-	
+
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) // Right
 	{
 	}
@@ -97,11 +114,19 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
 	{
 	}
+
+	// imgui
+	// io.MouseDown[i] = ;
 }
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	// TODO: Tell InputManager that the mouse moved
 	// l_InputManager->ProcessMouse();
+
+	// imgui
+	ImGuiIO& io = ImGui::GetIO();
+	io.MouseWheelH += (float)xoffset;
+	io.MouseWheel += (float)yoffset;
 }
 void joystick_callback(int joy, int event)
 {

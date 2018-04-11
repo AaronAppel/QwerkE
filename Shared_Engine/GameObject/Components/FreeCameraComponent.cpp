@@ -24,9 +24,9 @@ void FreeCameraComponent::ProcessKeyboard(eCamera_Movement direction, float delt
 	{
 		float velocity = m_MovementSpeed * deltaTime;
 		if (direction == FORWARD)
-			m_Position -= m_Front * velocity;
-		if (direction == BACKWARD)
 			m_Position += m_Front * velocity;
+		if (direction == BACKWARD)
+			m_Position -= m_Front * velocity;
 		if (direction == LEFT)
 			m_Position -= m_Right * velocity;
 		if (direction == RIGHT)
@@ -41,18 +41,18 @@ void FreeCameraComponent::ProcessKeyboard(eCamera_Movement direction, float delt
 		float velocity = m_MovementSpeed * deltaTime;
 		if (direction == FORWARD)
 		{
-			m_TargetPosition -= m_Front * velocity;
-			m_Position -= m_Front * velocity;
-		}
-		if (direction == BACKWARD)
-		{
 			m_TargetPosition += m_Front * velocity;
 			m_Position += m_Front * velocity;
 		}
+		if (direction == BACKWARD)
+		{
+			m_TargetPosition -= m_Front * velocity;
+			m_Position -= m_Front * velocity;
+		}
 		if (direction == LEFT)
 		{
-			m_TargetPosition += m_Right * velocity; // Strafe
-			m_Position += m_Right * velocity;
+			m_TargetPosition -= m_Right * velocity; // Strafe
+			m_Position -= m_Right * velocity;
 
 			/*
 			mat4 temp;
@@ -63,8 +63,8 @@ void FreeCameraComponent::ProcessKeyboard(eCamera_Movement direction, float delt
 		}
 		if (direction == RIGHT)
 		{
-			m_TargetPosition -= m_Right * velocity; // Strafe
-			m_Position -= m_Right * velocity;
+			m_TargetPosition += m_Right * velocity; // Strafe
+			m_Position += m_Right * velocity;
 
 			/*
 			mat4 temp; // Rotate

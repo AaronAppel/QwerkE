@@ -3,6 +3,9 @@
 
 // A window that shows entities and their hierarchal relationship
 
+class SceneManager;
+class ResourceManager;
+
 class SceneGraph
 {
 public:
@@ -12,7 +15,8 @@ public:
 	void Draw();
 
 private:
-
+	SceneManager * m_SceneManager = nullptr;
+	ResourceManager * m_ResourceManager = nullptr;
 };
 
 #endif // !_Editor_H_

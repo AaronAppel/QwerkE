@@ -41,9 +41,10 @@ public:
 	vec3 GetRotation() { return m_Rotation; };
 	vec3 GetScale() { return m_Scale; };
 	Component* GetComponent(eComponentTags tag);
+	Routine* GetFirstDrawRoutineOfType(eRoutineTypes type);
+	Routine* GetFirstUpdateRoutineOfType(eRoutineTypes type);
 	int GetRenderOrder() { return m_RenderOrder; };
 	Scene* GetScene() { return m_pScene; };
-	Routine* GetFirstUpdateRoutine(eRoutineTypes type); // first by tag
 	eGameObjectTags GetTag() { return m_Tag; }
 
 	// setters

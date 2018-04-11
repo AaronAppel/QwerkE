@@ -35,20 +35,6 @@ void Editor::Draw()
 	DrawSceneList();
 }
 
-int repl_callback(ImGuiTextEditCallbackData *data)
-{
-    if (data->EventChar != 0)
-    {
-        char re[2] = { '\0' };
-        re[0] = (char)data->EventChar;
-        data->InsertChars(data->CursorPos, re);
-
-    }
-
-    //log("callback called\n");
-    return 0;
-}
-
 void Editor::DrawSceneList()
 {
 	ImGui::Begin("Scene List");
@@ -65,31 +51,56 @@ void Editor::DrawSceneList()
 		}
 		if (ImGui::Button("GameScene") || m_Input->GetIsKeyDown(eKeys::eKeys_2))
 		{
-			m_SceneManager->SetCurrentScene(eSceneTypes::Scene_GameScene);
+			// m_SceneManager->SetCurrentScene(eSceneTypes::Scene_GameScene);
 		}
 	}
 
 	ImGui::End();
 }
 
+int repl_callback(ImGuiTextEditCallbackData *data)
+{
+	if (data->EventKey == 21) // left click
+	{
+		int bp = 1;
+	}
+	if (data->EventChar != 0)
+	{
+		*(char*)data->UserData = data->EventChar;
+	}
+	if (data->EventKey != 21)
+	{
+		*(char*)data->UserData = 65;
+	}
+
+	if (false)
+	{
+		/*
+		char re[2] = { '\0' };
+		re[0] = (char)data->EventChar;
+		data->InsertChars(data->CursorPos, re);
+		*/
+	}
+	return 0;
+}
+
 void Editor::DrawShaderEditor(ShaderProgram* shader)
 {
-    const int bufferSize = 10000;
-    static char buffer[bufferSize];
+    const int bufferSize = 1000;
+	static char buffer[bufferSize] = {0};
     static GLuint currentShader = 0;
-
-    // TEST: Text field to recompile shader
-    ImGui::Begin("Shader Editor");
 
     if (currentShader != shader->GetProgram())
     {
         // strcpy_s(buffer, (char*)shader->GetVertString());
-        strcpy_s(buffer, (char*)shader->GetFragString());
+		currentShader = shader->GetProgram();
+        strcpy_s(buffer, bufferSize, (const char*)shader->GetFragString());
     }
 
-    if (ImGui::InputTextMultiline("Shader Body", buffer, bufferSize, ImVec2(300, 200), ImGuiInputTextFlags_CallbackAlways, repl_callback))
+	ImGui::Begin("Shader Editor");
+    if (ImGui::InputTextMultiline("", buffer, bufferSize, ImVec2(400, 250)))
     {
-        int bp = 1;
+		// buffer was changed
     }
 
     if (ImGui::Button("Recompile"))
@@ -97,9 +108,9 @@ void Editor::DrawShaderEditor(ShaderProgram* shader)
         int bp = 1;
         //shader->ReCompile1Shader(GL_VERTEX_SHADER, buffer);
         long length;
-        char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
-        shader->SetShaderStringData(GL_FRAGMENT_SHADER, newShaderString);
-        shader->ReCompile1Shader(GL_FRAGMENT_SHADER, newShaderString);
+        // char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
+        shader->SetShaderStringData(GL_FRAGMENT_SHADER, buffer);
+        shader->ReCompile1Shader(GL_FRAGMENT_SHADER, buffer);
     }
 
     ImGui::End();

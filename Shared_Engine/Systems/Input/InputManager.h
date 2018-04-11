@@ -10,7 +10,7 @@ const int g_NumPlayers = 1;
 // TODO: Create GLFW callback functions to link for GLFW projects
 // TODO: Add input functions for non-GLFW projects
 // TODO: Add input query functions such as WNDPROC for getting input and CheckInput() game loop function.
-
+// TODO: Track input per frame for events
 class InputManager
 {
 public:
@@ -22,7 +22,7 @@ public:
 	void ProcessKeyEvent(eKeys key, eKeyState state);
 
 	eKeys GetKeyCode(int key); // TOOD: Better way for public access to m_KeyCode?
-	
+
 	// check if keyIsDown
 	bool GetIsKeyDown(eKeys key)
 	{
