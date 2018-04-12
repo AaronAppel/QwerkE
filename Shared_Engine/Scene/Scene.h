@@ -51,7 +51,7 @@ public:
 
 	/* Getters + Setters */
 	// getters
-    GameObject* GetGameObject(const char* name) { return m_pGameObjects[name]; }
+    GameObject* GetGameObject(const char* name);
 	bool GetIsEnabled() { return m_IsEnabled; };
 	SceneManager* GetSceneManager() { return m_pSceneManager; };
 	Linear2LinkedList<GameObject*> GetCameraList() { return m_CameraList; };

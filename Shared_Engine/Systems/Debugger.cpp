@@ -1,36 +1,43 @@
 #include "Debugger.h"
 #include "../../Shared_Generic/Utilities/PrintFunctions.h"
 
-Debugger::Debugger()
+#ifdef _QDEBUG
+namespace QwerkE
 {
-}
+    bool Debugger::m_ConsoleIsOpen = false;
 
-Debugger::~Debugger()
-{
-}
+    Debugger::Debugger()
+    {
+    }
 
-void Debugger::ToggleConsole()
-{
-    m_ConsoleIsOpen = !m_ConsoleIsOpen;
-    if (m_ConsoleIsOpen)
+    Debugger::~Debugger()
     {
-        ConsolePrint("\nConsole opened!");
     }
-    else
-    {
-        ConsolePrint("\nConsole closed!");
-    }
-}
 
-void Debugger::SetConsoleVisible(bool visibility)
-{
-    m_ConsoleIsOpen = visibility;
-    if (m_ConsoleIsOpen)
+    void Debugger::ToggleConsole()
     {
-        ConsolePrint("\nConsole opened!");
+        m_ConsoleIsOpen = !m_ConsoleIsOpen;
+        if (m_ConsoleIsOpen)
+        {
+            ConsolePrint("\nConsole opened!");
+        }
+        else
+        {
+            ConsolePrint("\nConsole closed!");
+        }
     }
-    else
+
+    void Debugger::SetConsoleVisible(bool visibility)
     {
-        ConsolePrint("\nConsole closed!");
+        m_ConsoleIsOpen = visibility;
+        if (m_ConsoleIsOpen)
+        {
+            ConsolePrint("\nConsole opened!");
+        }
+        else
+        {
+            ConsolePrint("\nConsole closed!");
+        }
     }
 }
+#endif // !_QDEBUG

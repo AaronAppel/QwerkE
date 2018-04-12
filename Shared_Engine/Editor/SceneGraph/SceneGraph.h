@@ -2,19 +2,22 @@
 #define _SceneGraph_H_
 
 // A window that shows entities and their hierarchal relationship
+// Selecting an entity will show its data in the entity editor
 
 class SceneManager;
 class ResourceManager;
+class Editor;
 
 class SceneGraph
 {
 public:
-	SceneGraph();
+	SceneGraph(Editor* editor);
 	~SceneGraph();
 
 	void Draw();
 
 private:
+    Editor* m_Editor = nullptr;
 	SceneManager * m_SceneManager = nullptr;
 	ResourceManager * m_ResourceManager = nullptr;
 };

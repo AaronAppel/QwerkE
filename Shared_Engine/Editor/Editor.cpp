@@ -6,10 +6,12 @@
 #include "../Systems/Input/InputManager.h"
 #include "../Systems/Renderer.h"
 #include "../Scene/SceneManager.h"
+#include "EntityEditor.h"
 
 Editor::Editor()
 {
-	m_SceneGraph = new SceneGraph();
+	m_SceneGraph = new SceneGraph(this);
+    m_EntityEditor = new EntityEditor(this);
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 	m_Input = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
 }
@@ -17,4 +19,10 @@ Editor::Editor()
 Editor::~Editor()
 {
 	delete m_SceneGraph;
+    delete m_EntityEditor;
+}
+
+EntityEditor* Editor::GetEntityEditor()
+{
+    return m_EntityEditor;
 }

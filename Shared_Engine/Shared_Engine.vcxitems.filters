@@ -159,6 +159,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Math.h" />
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Editor\EntityEditor.h">
+      <Filter>Editor\EntityEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -217,6 +221,9 @@
     </Filter>
     <Filter Include="Systems\Factory">
       <UniqueIdentifier>{71c347c0-505f-48b8-bd36-9c8720fda000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\EntityEditor">
+      <UniqueIdentifier>{4ebc45b0-f29b-4cec-a3a3-380dda1dfdc5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +399,10 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Math.cpp" />
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Editor\EntityEditor.cpp">
+      <Filter>Editor\EntityEditor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ class SceneGraph;
 class ShaderProgram;
 class SceneManager;
 class InputManager;
+class EntityEditor;
 
 class Editor // abstract
 {
@@ -25,14 +26,17 @@ public:
 	virtual void DrawSceneList() = 0;
 	virtual void DrawShaderEditor(ShaderProgram* shader) = 0;
 
+    // Getters
+    EntityEditor* GetEntityEditor();
+
 protected:
 	// panels
 	SceneGraph * m_SceneGraph = nullptr;
 	void* m_ActionWindow = nullptr; // TODO: Game and Scene windows. Multi scene views
-	void* m_EntityEditor = nullptr; // TODO: Change routine/component data
+    EntityEditor* m_EntityEditor = nullptr; // Change routine/component data for an entity
 	void* m_MenuBar = nullptr; // TODO: Top menu bar with acces to settings like save, preferences, etc
 	void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
-									 // system access
+	// system access
 	SceneManager* m_SceneManager = nullptr;
 	InputManager* m_Input = nullptr;
 };

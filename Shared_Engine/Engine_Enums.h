@@ -29,8 +29,6 @@ enum class eEngineServices : std::uint8_t
 	PhysicsManager,
 	MessageManager,
 	Renderer,
-    Debugger,
-    Time,
 	JobManager,
 
 	Service_Max

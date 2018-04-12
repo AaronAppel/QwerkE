@@ -17,6 +17,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CallbackFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\QwerKE_eKeys.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\JobManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Math.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\MessageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\PhysicsManager.h" />
@@ -78,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)CallBackFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
@@ -130,6 +133,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\Controller.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\JobManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Math.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\MessageManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\PhysicsManager.cpp" />

@@ -107,9 +107,6 @@ eEngineMessage Engine::Startup()
     AudioManager* audioManager = new AudioManager();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Audio_Manager, audioManager);
 
-    Debugger* debugger = new Debugger();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Debugger, debugger);
-
 	JobManager* jobManager = new JobManager();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::JobManager, jobManager);
 
@@ -141,8 +138,6 @@ eEngineMessage Engine::TearDown()
 	delete (Renderer*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Renderer);
 
     delete (AudioManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Audio_Manager);
-
-    delete (Debugger*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Debugger);
 
 	delete (JobManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::JobManager);
 
@@ -180,7 +175,7 @@ void Engine::Run()
 	g_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader");
 
 	QwerkE::ServiceLocator::LockServices(true);
-
+    
 	// TEST:
 	NetworkManager netMan;
 	// netMan.test(); // test server
@@ -286,12 +281,14 @@ void Engine::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // TEMP: End
 
+    ImGui::Begin("Scene Window - Engine.cpp");
 	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180), ImVec2(0,1), ImVec2(1,0));
+    ImGui::End();
 
 	m_Editor->Draw();
-    m_Editor->DrawShaderEditor(g_Shader);
+    m_Editor->DrawShaderEditor(g_Shader); // TODO: ShaderEditor should be part of the Editor() class
 
-    m_SceneManager->Draw();
+    //m_SceneManager->Draw();
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

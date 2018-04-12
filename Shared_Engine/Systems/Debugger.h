@@ -1,17 +1,24 @@
 #ifndef _Debugger_H_
 #define _Debugger_H_
 
-class Debugger
+#include "../Engine_Defines.h"
+
+#ifdef _QDEBUG
+namespace QwerkE
 {
-public:
-    Debugger();
-    ~Debugger();
+    class Debugger
+    {
+    public:
+        Debugger();
+        ~Debugger();
 
-    void ToggleConsole();
-    void SetConsoleVisible(bool visibility);
+        static void ToggleConsole();
+        static void SetConsoleVisible(bool visibility);
 
-private:
-    bool m_ConsoleIsOpen = false;
-};
+    private:
+        static bool m_ConsoleIsOpen;
+    };
+}
+#endif // !_QDEBUG
 
 #endif // !_Debugger_H_

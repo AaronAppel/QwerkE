@@ -18,7 +18,6 @@ namespace QwerkE
 	MessageManager* QwerkE::ServiceLocator::m_MessageManager = nullptr;
 	Renderer* QwerkE::ServiceLocator::m_Renderer = nullptr;
     AudioManager* QwerkE::ServiceLocator::m_AudioManager = nullptr;
-    Debugger* QwerkE::ServiceLocator::m_Debugger = nullptr;
     JobManager* QwerkE::ServiceLocator::m_JobManager = nullptr;
 
 	void ServiceLocator::RegisterService(eEngineServices serviceType, void* service)
@@ -59,9 +58,6 @@ namespace QwerkE
 			break;
         case eEngineServices::Audio_Manager:
             ServiceLocator::m_AudioManager = (AudioManager*)service;
-            break;
-        case eEngineServices::Debugger:
-            ServiceLocator::m_Debugger = (Debugger*)service;
             break;
 		case eEngineServices::JobManager:
 			ServiceLocator::m_JobManager = (JobManager*)service;
@@ -133,11 +129,6 @@ namespace QwerkE
             ServiceLocator::m_AudioManager = nullptr;
             return temp;
             break;
-        case eEngineServices::Debugger:
-            temp = ServiceLocator::m_Debugger;
-            ServiceLocator::m_Debugger = nullptr;
-            return temp;
-            break;
 		case eEngineServices::JobManager:
 			temp = ServiceLocator::m_JobManager;
 			ServiceLocator::m_JobManager = nullptr;
@@ -186,9 +177,6 @@ namespace QwerkE
 			break;
         case eEngineServices::Audio_Manager:
             return ServiceLocator::m_AudioManager;
-            break;
-        case eEngineServices::Debugger:
-            return ServiceLocator::m_Debugger;
             break;
 		case eEngineServices::JobManager:
 			return ServiceLocator::m_JobManager;
@@ -248,10 +236,6 @@ namespace QwerkE
 				break;
             case eEngineServices::Audio_Manager:
                 if (ServiceLocator::m_AudioManager == nullptr)
-                    return eEngineMessage::_QFail; // not loaded
-                break;
-            case eEngineServices::Debugger:
-                if (ServiceLocator::m_Debugger == nullptr)
                     return eEngineMessage::_QFail; // not loaded
                 break;
 			case eEngineServices::JobManager:

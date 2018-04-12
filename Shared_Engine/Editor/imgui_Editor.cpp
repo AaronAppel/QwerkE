@@ -6,12 +6,12 @@
 #include "../Systems/Input/InputManager.h"
 #include "../Systems/Renderer.h"
 #include "../Scene/SceneManager.h"
+#include "EntityEditor.h"
 
 extern float g_FrameRate;
 
 imgui_Editor::imgui_Editor()
 {
-	m_SceneGraph = new SceneGraph();
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 	m_Input = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
 }
@@ -33,6 +33,7 @@ void imgui_Editor::Draw()
 {
 	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont(std::to_string(g_FrameRate).c_str()); // TEST:
 	m_SceneGraph->Draw();
+    m_EntityEditor->Draw();
 	DrawSceneList();
 }
 

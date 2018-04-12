@@ -14,7 +14,7 @@ public:
     // register callbacks/listeners
 
 private:
-
+    // eventlist
 };
 
 #endif //!_EventManager_H_

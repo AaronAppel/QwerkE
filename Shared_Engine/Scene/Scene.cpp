@@ -246,3 +246,12 @@ void Scene::LoadScene()
 	//t_pDataManager->LoadScene(this, m_LevelFileDir);
 	SetupCameras();
 }
+
+GameObject* Scene::GetGameObject(const char* name)
+{
+    if (m_pGameObjects.find(name) != m_pGameObjects.end())
+    {
+        return m_pGameObjects[name];
+    }
+    return nullptr;
+}

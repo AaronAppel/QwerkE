@@ -23,7 +23,6 @@ class PhysicsManager;
 class MessageManager;
 class Renderer;
 class AudioManager;
-class Debugger;
 class JobManager;
 
 namespace QwerkE
@@ -61,7 +60,6 @@ namespace QwerkE
 		static MessageManager* m_MessageManager;
 		static Renderer* m_Renderer;
         static AudioManager* m_AudioManager;
-        static Debugger* m_Debugger;
 		static JobManager* m_JobManager;
 	};
 }
