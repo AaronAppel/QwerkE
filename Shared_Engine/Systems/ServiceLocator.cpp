@@ -19,7 +19,6 @@ namespace QwerkE
 	Renderer* QwerkE::ServiceLocator::m_Renderer = nullptr;
     AudioManager* QwerkE::ServiceLocator::m_AudioManager = nullptr;
     Debugger* QwerkE::ServiceLocator::m_Debugger = nullptr;
-    Time* QwerkE::ServiceLocator::m_Time = nullptr;
     JobManager* QwerkE::ServiceLocator::m_JobManager = nullptr;
 
 	void ServiceLocator::RegisterService(eEngineServices serviceType, void* service)
@@ -63,9 +62,6 @@ namespace QwerkE
             break;
         case eEngineServices::Debugger:
             ServiceLocator::m_Debugger = (Debugger*)service;
-            break;
-        case eEngineServices::Time:
-            ServiceLocator::m_Time = (Time*)service;
             break;
 		case eEngineServices::JobManager:
 			ServiceLocator::m_JobManager = (JobManager*)service;
@@ -142,11 +138,6 @@ namespace QwerkE
             ServiceLocator::m_Debugger = nullptr;
             return temp;
             break;
-        case eEngineServices::Time:
-            temp = ServiceLocator::m_Time;
-            ServiceLocator::m_Time = nullptr;
-            return temp;
-            break;
 		case eEngineServices::JobManager:
 			temp = ServiceLocator::m_JobManager;
 			ServiceLocator::m_JobManager = nullptr;
@@ -198,9 +189,6 @@ namespace QwerkE
             break;
         case eEngineServices::Debugger:
             return ServiceLocator::m_Debugger;
-            break;
-        case eEngineServices::Time:
-            return ServiceLocator::m_Time;
             break;
 		case eEngineServices::JobManager:
 			return ServiceLocator::m_JobManager;
@@ -264,10 +252,6 @@ namespace QwerkE
                 break;
             case eEngineServices::Debugger:
                 if (ServiceLocator::m_Debugger == nullptr)
-                    return eEngineMessage::_QFail; // not loaded
-                break;
-            case eEngineServices::Time:
-                if (ServiceLocator::m_Time == nullptr)
                     return eEngineMessage::_QFail; // not loaded
                 break;
 			case eEngineServices::JobManager:

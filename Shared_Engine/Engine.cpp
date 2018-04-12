@@ -110,9 +110,6 @@ eEngineMessage Engine::Startup()
     Debugger* debugger = new Debugger();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Debugger, debugger);
 
-    Time* time = new Time();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Time, time);
-
 	JobManager* jobManager = new JobManager();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::JobManager, jobManager);
 
@@ -147,8 +144,6 @@ eEngineMessage Engine::TearDown()
 
     delete (Debugger*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Debugger);
 
-    delete (Time*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Time);
-
 	delete (JobManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::JobManager);
 
 	Libs_TearDown(); // unload libraries
@@ -161,8 +156,8 @@ ShaderProgram* g_Shader;
 void Engine::Run()
 {
     // TODO: Set deltatime
-    ((Time*)QwerkE::ServiceLocator::GetService(eEngineServices::Time))->SetDeltatime(&g_TimeSinceLastFrame);
-
+    QwerkE::Time::SetDeltatime(&g_TimeSinceLastFrame);
+    
 	g_FBO->Init();
 	SetupCallbacks(m_Window);
 
@@ -291,7 +286,7 @@ void Engine::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // TEMP: End
 
-	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180));
+	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180), ImVec2(0,1), ImVec2(1,0));
 
 	m_Editor->Draw();
     m_Editor->DrawShaderEditor(g_Shader);

@@ -1,17 +1,20 @@
 #ifndef _Time_H_
 #define _Time_H_
 
-class Time
+namespace QwerkE
 {
-public:
-    Time();
-    ~Time();
+    class Time
+    {
+    public:
+        Time();
+        ~Time();
 
-    void SetDeltatime(double* deltaTime);
-    double GetDeltaTime();
+        static void SetDeltatime(double* deltaTime);
+        static double GetDeltaTime();
 
-private:
-    const double* m_DeltaTime;
-};
+    private:
+        static const double* m_DeltaTime;
+    };
+}
 
 #endif // !_Time_H_

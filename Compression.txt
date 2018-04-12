@@ -1,0 +1,3 @@
+I am looking to improve push and pull speeds by zipping/unzipping some folders.
+For now I will be zipping the Shared_Generic/Libraries folder which should be
+the largest folder by size.
