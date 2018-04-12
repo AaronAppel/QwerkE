@@ -68,6 +68,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\QwerKE_eKeys.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\JobManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\MessageManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\PhysicsManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.h" />
@@ -130,6 +131,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\JobManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\MessageManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\PhysicsManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ResourceManager.cpp" />

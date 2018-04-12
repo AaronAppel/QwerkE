@@ -25,6 +25,7 @@
 #include "Systems/Graphics/Model/Mesh/MeshFactory.h"
 #include "Systems/Graphics/ShaderProgram/ShaderFactory.h"
 #include "Systems/JobManager.h"
+#include "Systems/NetworkManager.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -184,6 +185,11 @@ void Engine::Run()
 	g_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader");
 
 	QwerkE::ServiceLocator::LockServices(true);
+
+	// TEST:
+	NetworkManager netMan;
+	// netMan.test(); // test server
+	// TEST: END
 
 	// Deltatime + FPS Tracking //
 	// Deltatime

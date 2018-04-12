@@ -156,6 +156,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -386,6 +389,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp">
       <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

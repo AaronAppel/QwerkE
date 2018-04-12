@@ -104,9 +104,11 @@
 //////////////////////////////
 // pthreads
 // TODO: Check for architecture and debug/release
-#pragma comment( lib, "../Shared_Generic/Libraries/pThreads/lib/x86/pthreadVC2.lib" ) // load
+// TODO: Remove have struct order dependency
+#ifndef HAVE_STRUCT_TIMESPEC
 #define HAVE_STRUCT_TIMESPEC
-#include "Libraries/pThreads/pthread.h"
+#endif
+#pragma comment( lib, "../Shared_Generic/Libraries/pThreads/lib/x86/pthreadVC2.lib" ) // load
 //////////////////////////////
 
 //////////////////////////////
@@ -116,8 +118,6 @@
 // TODO: Check for architecture and debug/release
 #pragma comment( lib, "../Shared_Generic/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" ) // load
 // http://www.raknet.net/raknet/manual/tutorialsample3.html
-#include "Libraries/RakNet/Source/RakPeerInterface.h"
-#include "Libraries/RakNet/Source/MessageIdentifiers.h"
 //////////////////////////////
 
 //////////////////////////////
