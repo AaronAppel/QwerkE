@@ -10,7 +10,7 @@ class SceneGraph
 {
 public:
 	SceneGraph();
-    ~SceneGraph();
+	~SceneGraph();
 
 	void Draw();
 

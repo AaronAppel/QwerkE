@@ -30,7 +30,7 @@ public:
     Model* GetModel() { return m_Model; };
 
 	// setters
-	void SetMesh(Mesh* mesh) { m_pMesh = mesh; };
+	void SetMesh(Mesh* mesh);
 	void SetShader(ShaderProgram* shader);
 	void SetTexture(GLuint texture) { m_CurrentTexture = texture; };
 	void SetColour(vec4 Colour) { m_Colour = Colour; };

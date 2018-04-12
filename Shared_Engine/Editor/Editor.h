@@ -12,23 +12,29 @@ class ShaderProgram;
 class SceneManager;
 class InputManager;
 
-class Editor
+class Editor // abstract
 {
 public:
-    Editor();
-    ~Editor();
+	Editor();
+	virtual ~Editor();
 
-    void NewFrame();
-    void Update();
-    void Draw();
+	virtual void NewFrame() = 0;
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
 
-	void DrawSceneList();
-    void DrawShaderEditor(ShaderProgram* shader);
+	virtual void DrawSceneList() = 0;
+	virtual void DrawShaderEditor(ShaderProgram* shader) = 0;
 
-private:
+protected:
+	// panels
 	SceneGraph * m_SceneGraph = nullptr;
-	SceneManager * m_SceneManager = nullptr;
-	InputManager * m_Input = nullptr;
+	void* m_ActionWindow = nullptr; // TODO: Game and Scene windows. Multi scene views
+	void* m_EntityEditor = nullptr; // TODO: Change routine/component data
+	void* m_MenuBar = nullptr; // TODO: Top menu bar with acces to settings like save, preferences, etc
+	void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
+									 // system access
+	SceneManager* m_SceneManager = nullptr;
+	InputManager* m_Input = nullptr;
 };
 
 #endif // !_Editor_H_

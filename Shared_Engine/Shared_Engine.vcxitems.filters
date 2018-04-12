@@ -153,6 +153,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\JobManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -380,6 +383,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Time.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\JobManager.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp">
+      <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

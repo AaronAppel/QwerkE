@@ -11,7 +11,7 @@
 #include "Events/EventManager.h"
 #include "Scene/SceneManager.h"
 #include "Systems/Factory/Factory.h"
-#include "Editor/Editor.h"
+#include "Editor/imgui_Editor.h"
 #include "Systems/Graphics/Sprite/Sprite.h"
 #include "Systems/Graphics_Header.h"
 #include "Systems/Graphics/FBO/FrameBufferObject.h"
@@ -87,7 +87,11 @@ eEngineMessage Engine::Startup()
     Factory* factory = new Factory();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Factory_Entity, factory);
 
-    m_Editor = new Editor();
+#ifdef IMGUI_API
+    m_Editor = (Editor*)new imgui_Editor();
+#else
+	m_Editor;
+#endif
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Editor, m_Editor);
 
 	PhysicsManager* physicsManager = new PhysicsManager();
@@ -287,8 +291,6 @@ void Engine::Draw()
     m_Editor->DrawShaderEditor(g_Shader);
 
     m_SceneManager->Draw();
-
-	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont("Sample Text"); // TEST:
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

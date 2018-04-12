@@ -1,6 +1,7 @@
 #include "RenderComponent.h"
 #include "../GameObject.h"
 #include "../Routines/RenderRoutine.h"
+#include "../../Systems/Graphics/Model/Mesh/Mesh.h"
 
 RenderComponent::RenderComponent()
 {
@@ -15,6 +16,11 @@ RenderComponent::~RenderComponent()
 {
 }
 
+void RenderComponent::SetMesh(Mesh* mesh)
+{
+	m_pMesh = mesh;
+	m_pMesh->SetupShaderAttributes(m_pShader);
+}
 void RenderComponent::SetShader(ShaderProgram* shader)
 {
 	m_pShader = shader;
