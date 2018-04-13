@@ -7,8 +7,7 @@
 #include "../Systems/Renderer.h"
 #include "../Scene/SceneManager.h"
 #include "EntityEditor.h"
-
-extern float g_FrameRate;
+#include "../Systems/Time.h"
 
 imgui_Editor::imgui_Editor()
 {
@@ -31,7 +30,29 @@ void imgui_Editor::Update()
 
 void imgui_Editor::Draw()
 {
-	((Renderer*)QwerkE::ServiceLocator::GetService(eEngineServices::Renderer))->DrawFont(std::to_string(g_FrameRate).c_str()); // TEST:
+	// menu
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("Menu"))
+		{
+			static int index = 0;
+			static const int size = 5;
+			const char* d[size] = { "one", "two", "three", "four", "five"};
+			ImGui::ListBox("", &index, d, size, 3);
+			ImGui::EndMenu();
+		}
+
+		// FPS display
+		static bool showFPS = true;
+		if (ImGui::Button("FPS"))
+			showFPS = !showFPS;
+		ImGui::SameLine();
+		if (showFPS) ImGui::Text("%4.2f", QwerkE::Time::GetFrameRate());
+
+
+		ImGui::EndMainMenuBar();
+	}
+
 	m_SceneGraph->Draw();
     m_EntityEditor->Draw();
 	DrawSceneList();

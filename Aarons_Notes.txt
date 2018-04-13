@@ -39,7 +39,10 @@ Examples include Math, Graphics, Input(possible exception), and more.
 It would be nicer/easier to access QwerkE::Math or even QMath instead of getting
 the service and then manipulating it in a long call.
 
-Apr 10th
+Apr 10th 2018
 Going to need a better system for .dlls. Maybe create a folder for them and find
 a way to link them nicely. There are going to be more and more with additional
 libraries getting added.
+
+Apr 13th 2018
+Redesign the WindowManager() and Window() classes.

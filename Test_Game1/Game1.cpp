@@ -4,6 +4,8 @@
 #include <Windows.h>
 #include "../Shared_Engine/Engine_Platform.h"
 
+#include "../Shared_Engine/Engine_Enums.h"
+
 #include "Game1.h"
 #include "../QwerkE.h"
 #include "GameScene.h"

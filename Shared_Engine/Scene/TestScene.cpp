@@ -69,7 +69,7 @@ void TestScene::Initialize()
 void TestScene::p_Update(double deltatime)
 {
     obj->SetRotation(vec3(obj->GetRotation().x,
-        obj->GetRotation().y + 0.001f / QwerkE::Time::GetDeltaTime(),
+        obj->GetRotation().y + 0.002f / QwerkE::Time::GetDeltaTime(),
         0));
 	Scene::p_Update(deltatime);
 }

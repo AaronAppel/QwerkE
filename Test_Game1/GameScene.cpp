@@ -31,7 +31,6 @@ void GameScene::Initialize()
     // return;
     {
         // Create scene cameras
-        const int t_CamMax = 1;
         t_pFactory->CreateFreeCamera(this, vec3(0, 0, 5));
         // setup view/projection matrices
         Scene::SetupCameras();
@@ -39,8 +38,9 @@ void GameScene::Initialize()
 
     {	// Create scene objects
         // cubes
-        int cubes = 1;
-        obj2 = t_pFactory->CreateCube(this, vec3(0, -5, 60));
+		t_pFactory->CreatePlane(this, vec3(0, -1, 40));
+
+        obj2 = t_pFactory->CreateCube(this, vec3(0, 1, 40));
         obj2->SetRotation(vec3(45, 45, 45));
         obj2->AddComponent((Component*)new PrintComponent());
         obj2->AddRoutine((Routine*)new PrintRoutine());
@@ -58,6 +58,9 @@ void GameScene::Initialize()
 
 void GameScene::p_Update(double deltatime)
 {
+	obj2->SetRotation(vec3(obj2->GetRotation().x,
+		obj2->GetRotation().y + 0.002f / QwerkE::Time::GetDeltaTime(),
+		0));
     Scene::p_Update(deltatime);
 }
 

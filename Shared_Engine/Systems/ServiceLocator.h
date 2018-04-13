@@ -14,7 +14,6 @@
 
 class ResourceManager;
 class InputManager;
-class GLFWwindow;
 class EventManager;
 class SceneManager;
 class Factory;
@@ -24,6 +23,7 @@ class MessageManager;
 class Renderer;
 class AudioManager;
 class JobManager;
+class Window;
 
 namespace QwerkE
 {
@@ -51,7 +51,6 @@ namespace QwerkE
 
 		static ResourceManager* m_ResourceManager;
 		static InputManager* m_InputManager;
-		static GLFWwindow* m_AppWindow;
         static EventManager* m_EventManager;
         static SceneManager* m_SceneManager;
         static Factory* m_Factory;
@@ -61,6 +60,7 @@ namespace QwerkE
 		static Renderer* m_Renderer;
         static AudioManager* m_AudioManager;
 		static JobManager* m_JobManager;
+		static Window* m_Window;
 	};
 }
 

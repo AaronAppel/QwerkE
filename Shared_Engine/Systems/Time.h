@@ -12,8 +12,12 @@ namespace QwerkE
         static void SetDeltatime(double* deltaTime);
         static double GetDeltaTime();
 
+		static void SetFrameRate(float* framesPerSecond);
+		static float GetFrameRate();
+
     private:
         static const double* m_DeltaTime;
+		static const float* m_FPS;
     };
 }
 

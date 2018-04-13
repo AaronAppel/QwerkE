@@ -1,7 +1,10 @@
-#ifndef __InputManager_H_
-#define __InputManager_H_
+#ifndef _InputManager_H_
+#define _InputManager_H_
 
 #include "QwerKE_eKeys.h"
+#include "../../Engine_Defines.h"
+#include "../../Engine_Platform.h"
+#include "../../../Shared_Generic/Libraries_Include.h"
 
 class Controller;
 
@@ -56,15 +59,17 @@ private:
 	{
 		AssignMacKeys();
 	}
-#else
-	// Other Platforms or default layout
+#elif _QMac32 // 64
 	void AssignSystemKeys()
 	{
 		AssignLinuxKeys();
 	}
+#else
+	// Other Platforms or default layout
+#error "No system defined. Cannot assign keys."
 #endif
 	// Controller* m_Controllers[g_NumPlayers];
 	void SetupControllers();
 };
 
-#endif //__InputManager_H_
+#endif // !_InputManager_H_

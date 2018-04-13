@@ -26,6 +26,8 @@
 #include "Systems/Graphics/ShaderProgram/ShaderFactory.h"
 #include "Systems/JobManager.h"
 #include "Systems/NetworkManager.h"
+#include "Systems/Window.h"
+#include "Systems/WindowManager.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -37,7 +39,6 @@ extern InputManager* g_InputManager = nullptr;
 extern Controller* g_Player1Controller = nullptr;
 extern bool g_Debugging = false;
 
-extern float g_FrameRate = 0.0f;
 extern double g_TimeSinceLastFrame = 0.0;
 
 FrameBufferObject* g_FBO = new FrameBufferObject();
@@ -73,11 +74,12 @@ eEngineMessage Engine::Startup()
 	InputManager* inputManager = new InputManager();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::Input_Manager, inputManager);
 
-	m_Window = glfwCreateWindow(g_WindowWidth, g_WindowHeight, g_WindowTitle, NULL, NULL);
-    glfwSwapInterval(0); // TODO: Add VSynch control and toggling
-	glfwMakeContextCurrent(m_Window);
-    ImGui_ImplGlfwGL3_Init(m_Window, true);
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::AppWindow, m_Window);
+	Window* window = new Window(g_WindowWidth, g_WindowHeight, g_WindowTitle);
+	m_Window = (GLFWwindow*)window->GetWindow();
+	WindowManager* windowManager = new WindowManager();
+	windowManager->AddWindow(window);
+
+	QwerkE::ServiceLocator::RegisterService(eEngineServices::WindowManager, windowManager);
 
     EventManager* eventManager = new EventManager();
     QwerkE::ServiceLocator::RegisterService(eEngineServices::Event_System, eventManager);
@@ -121,7 +123,7 @@ eEngineMessage Engine::TearDown()
 
 	delete (InputManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Input_Manager);
 
-	glfwDestroyWindow((GLFWwindow*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::AppWindow));
+	delete ((WindowManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::WindowManager));
 
     delete (EventManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Event_System);
 
@@ -150,9 +152,10 @@ eEngineMessage Engine::TearDown()
 ShaderProgram* g_Shader;
 void Engine::Run()
 {
-    // TODO: Set deltatime
+	float frameRate = 0.0f;
     QwerkE::Time::SetDeltatime(&g_TimeSinceLastFrame);
-    
+	QwerkE::Time::SetFrameRate(&frameRate);
+
 	g_FBO->Init();
 	SetupCallbacks(m_Window);
 
@@ -175,7 +178,7 @@ void Engine::Run()
 	g_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader");
 
 	QwerkE::ServiceLocator::LockServices(true);
-    
+
 	// TEST:
 	NetworkManager netMan;
 	// netMan.test(); // test server
@@ -206,8 +209,8 @@ void Engine::Run()
         // FPS display + tracking
 		if (timeSincePrint >= printPeriod) // print period
 		{
-			g_FrameRate = 1.0f / timeSincePrint * framesSincePrint;
-			OutputPrint("\nFPS: %f", g_FrameRate); // FPS printout
+			frameRate = 1.0f / timeSincePrint * framesSincePrint;
+			OutputPrint("\nFPS: %f", frameRate); // FPS printout
             OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
 			timeSincePrint = 0.0f;
 			framesSincePrint = 0;
@@ -249,9 +252,8 @@ void Engine::NewFrame()
 {
 	/* Reset */
 	// TODO: Reset things...
-	m_Editor->NewFrame();
-
 	ImGui_ImplGlfwGL3_NewFrame();
+	m_Editor->NewFrame();
 }
 
 void Engine::Input()
@@ -282,7 +284,7 @@ void Engine::Draw()
     // TEMP: End
 
     ImGui::Begin("Scene Window - Engine.cpp");
-	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(320, 180), ImVec2(0,1), ImVec2(1,0));
+	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(400, 225), ImVec2(0,1), ImVec2(1,0));
     ImGui::End();
 
 	m_Editor->Draw();

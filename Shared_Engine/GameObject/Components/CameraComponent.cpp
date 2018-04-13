@@ -5,6 +5,8 @@
 #include "../../../Shared_Generic/Math_Includes.h"
 #include "../../../Shared_Engine/Engine_Enums.h"
 #include "../../../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
+#include "../../Systems/WindowManager.h"
+#include "../../Systems/Window.h"
 
 // public functions
 // Constructor with vectors
@@ -21,7 +23,8 @@ CameraComponent::CameraComponent(vec3 position, vec3 up, float yaw, float pitch)
 	UpdateCameraVectors();
 	m_ComponentTag = Component_Camera;
 
-	GLFWwindow* window = (GLFWwindow*)(QwerkE::ServiceLocator::GetService(eEngineServices::AppWindow));
+	WindowManager* windowManager = (WindowManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager));
+	GLFWwindow* window = (GLFWwindow*)((Window*)windowManager->GetWindow(0))->GetWindow();
 
 	int x, y;
 	glfwGetWindowSize(window, &x, &y);
@@ -38,7 +41,9 @@ CameraComponent::CameraComponent(float posX, float posY, float posZ, float upX, 
 	m_Pitch = pitch;
 	UpdateCameraVectors();
 
-	GLFWwindow* window = (GLFWwindow*)(QwerkE::ServiceLocator::GetService(eEngineServices::AppWindow));
+	WindowManager* windowManager = (WindowManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager));
+	GLFWwindow* window = (GLFWwindow*)((Window*)windowManager->GetWindow(0))->GetWindow();
+
 	int x, y;
 	glfwGetWindowSize(window, &x, &y);
 	m_ViewportSize = vec2(x, y);

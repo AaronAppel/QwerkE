@@ -16,7 +16,6 @@ enum class eEngineServices : std::uint8_t
 {
 	Resource_Manager = 0,
 	Input_Manager,
-	AppWindow,
     Audio_Manager,
     Data_Manager,
     // Graphics (OpenGLManager)
@@ -30,6 +29,7 @@ enum class eEngineServices : std::uint8_t
 	MessageManager,
 	Renderer,
 	JobManager,
+	WindowManager,
 
 	Service_Max
 };
