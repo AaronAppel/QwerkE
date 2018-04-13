@@ -119,7 +119,6 @@
       <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
@@ -166,7 +165,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\WindowManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.h">
+      <Filter>Editor\EntityEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventManager.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Logger.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -214,9 +224,6 @@
     <Filter Include="Entities\Routines">
       <UniqueIdentifier>{a6ee4862-c896-4395-bbd9-68da75a06f70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Systems\Events">
-      <UniqueIdentifier>{c7ae3cf1-9b46-40fd-bed6-57849c44f849}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{9cd9d01e-0c42-48db-a17a-94a6969674b1}</UniqueIdentifier>
     </Filter>
@@ -228,6 +235,9 @@
     </Filter>
     <Filter Include="Editor\EntityEditor">
       <UniqueIdentifier>{4ebc45b0-f29b-4cec-a3a3-380dda1dfdc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{7285c16c-1b6a-4fde-b2c7-dd816b73c409}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -346,7 +356,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\ServiceLocator.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -411,6 +420,17 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\WindowManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.cpp">
+      <Filter>Editor\EntityEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\Event.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Logger.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
 #include "../../GameObject/GameObject.h"
 #include "../../GameObject/Components/RenderComponent.h"
 #include "../Editor.h"
-#include "../EntityEditor.h"
+#include "../EntityEditor/EntityEditor.h"
 
 #include <map>
 #include <string>

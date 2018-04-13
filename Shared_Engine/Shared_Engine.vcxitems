@@ -17,7 +17,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CallbackFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
@@ -25,6 +25,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Platform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Input\QwerKE_eKeys.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\JobManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Logger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Math.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\MessageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.h" />
@@ -82,10 +84,11 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)CallBackFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\Event.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.cpp" />
@@ -135,6 +138,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\Controller.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Input\InputManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\JobManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Logger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Math.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\MessageManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\NetworkManager.cpp" />

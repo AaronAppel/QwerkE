@@ -6,7 +6,7 @@
 #include "../Systems/Input/InputManager.h"
 #include "../Systems/Renderer.h"
 #include "../Scene/SceneManager.h"
-#include "EntityEditor.h"
+#include "EntityEditor/EntityEditor.h"
 
 Editor::Editor()
 {

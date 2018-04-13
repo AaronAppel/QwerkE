@@ -1,12 +1,12 @@
 #include "EntityEditor.h"
 #include "../../../Shared_Generic/Libraries/imgui/imgui.h"
-#include "../Scene/SceneManager.h"
-#include "../Systems/ResourceManager.h"
-#include "../Scene/Scene.h"
-#include "../Systems/ServiceLocator.h"
-#include "../GameObject/GameObject.h"
-#include "../GameObject/Components/RenderComponent.h"
-#include "Editor.h"
+#include "../../Scene/SceneManager.h"
+#include "../../Systems/ResourceManager.h"
+#include "../../Scene/Scene.h"
+#include "../../Systems/ServiceLocator.h"
+#include "../../GameObject/GameObject.h"
+#include "../../GameObject/Components/RenderComponent.h"
+#include "../Editor.h"
 
 #include <map>
 #include <string>

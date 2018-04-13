@@ -287,7 +287,7 @@ void Engine::Draw()
     // TEMP: End
 
     ImGui::Begin("Scene Window - Engine.cpp");
-	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(400, 225), ImVec2(0,1), ImVec2(1,0));
+	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(1600 / 3, 900 / 3), ImVec2(0,1), ImVec2(1,0));
     ImGui::End();
 
 	m_Editor->Draw();
