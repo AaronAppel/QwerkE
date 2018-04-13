@@ -12,7 +12,7 @@ class SceneManager;
 
 class Engine
 {
-public:
+public: // External API
 	Engine();
 	~Engine();
 

@@ -39,8 +39,6 @@ extern InputManager* g_InputManager = nullptr;
 extern Controller* g_Player1Controller = nullptr;
 extern bool g_Debugging = false;
 
-extern double g_TimeSinceLastFrame = 0.0;
-
 FrameBufferObject* g_FBO = new FrameBufferObject();
 
 Engine::Engine()
@@ -156,8 +154,11 @@ eEngineMessage Engine::TearDown()
 
 void Engine::Run()
 {
+	m_IsRunning = true;
+
+	double timeSinceLastFrame = 0.0;
 	float frameRate = 0.0f;
-    QwerkE::Time::SetDeltatime(&g_TimeSinceLastFrame);
+    QwerkE::Time::SetDeltatime(&timeSinceLastFrame);
 	QwerkE::Time::SetFrameRate(&frameRate);
 
 	g_FBO->Init();
@@ -183,7 +184,7 @@ void Engine::Run()
 
 	// TEST:
     NetworkManager* netMan = (NetworkManager*)QwerkE::ServiceLocator::GetService(eEngineServices::NetworkManager);
-	netMan->test(); // test server
+	// netMan->test(); // test server/client
 	// TEST: END
 
 	// Deltatime + FPS Tracking //
@@ -193,7 +194,7 @@ void Engine::Run()
 	// Limit framerate
 	int FPS_MAX = 120; // maximum number of frames that can be run be second
 	float FPS_MAX_DELTA = 1.0f / FPS_MAX;
-    g_TimeSinceLastFrame = FPS_MAX; // Amount of seconds since the last frame ran initialized to run 1st time
+	timeSinceLastFrame = FPS_MAX; // Amount of seconds since the last frame ran initialized to run 1st time
 	// Printing framerate
 	float printPeriod = 3.0f; // Print period in seconds
 	float timeSincePrint = printPeriod; // Seconds since last print initialized to print 1st frame
@@ -219,9 +220,9 @@ void Engine::Run()
 		}
 
 		timeSincePrint += (float)deltaTime;
-        g_TimeSinceLastFrame += deltaTime;
+		timeSinceLastFrame += deltaTime;
 
-		if (g_TimeSinceLastFrame >= FPS_MAX_DELTA) // Run frame?
+		if (timeSinceLastFrame >= FPS_MAX_DELTA) // Run frame?
 		{
 			/* Game Loop */
 			/* New Frame */
@@ -231,14 +232,14 @@ void Engine::Run()
 			Engine::Input();
 
 			/* Logic */
-			Engine::Update(g_TimeSinceLastFrame);
+			Engine::Update(timeSinceLastFrame);
 
 			/* Render */
 			Engine::Draw();
 
             // FPS
 			framesSincePrint++; // Framerate tracking
-			g_TimeSinceLastFrame = 0.0; // FPS_Max
+			timeSinceLastFrame = 0.0; // FPS_Max
 		}
 		else
 		{

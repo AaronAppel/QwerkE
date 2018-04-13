@@ -1,0 +1,3 @@
+btSoftBody.cpp line 3041 had an uninitialized variable "btScalar* deltaV"
+that was throwing C4703 warning/error. I initialized the value to nullptr.
+-Aaron Appel
