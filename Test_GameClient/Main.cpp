@@ -56,10 +56,11 @@ int main()
 		std::cin >> str;
 		if (str[0] == 'a' || str[0] == 'A')
 		{
-			strcpy_s(str, g_IP);
+			//strcpy_s(str, g_IP);
+            // m_IP = peer->GetLocalIP(0); // TODO: Get local IP address
 		}
 		printf("Starting the client.\n");
-		peer->Connect(str, SERVER_PORT, 0, 0);
+		peer->Connect(peer->GetLocalIP(0), SERVER_PORT, 0, 0); // TODO: Handle local and external IP addresses
 
 	}
 

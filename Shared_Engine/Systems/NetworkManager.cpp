@@ -57,13 +57,15 @@ int NetworkManager::test()
 		peer->SetMaximumIncomingConnections(MAX_CLIENTS);
 	}
 	else {
-		printf("Enter server IP or hit enter for %s\n", m_IP);
+		printf("Enter server IP or hit enter to auto detect IP\n");
 		std::cin >> str;
-		if (str[0] == 0) {
-			strcpy_s(str, m_IP.c_str());
+        // TODO: Error handling
+		if (str[0] == 'a' || str[0] == 'A') {
+			// strcpy_s(str, m_IP.c_str());
+            m_IP = peer->GetLocalIP(0); // TODO: Get local IP address
 		}
 		printf("Starting the client.\n");
-		peer->Connect(str, SERVER_PORT, 0, 0);
+		peer->Connect(str, SERVER_PORT, 0, 0); // TODO: Handle local and external IP addresses
 	}
 
 	while (1)

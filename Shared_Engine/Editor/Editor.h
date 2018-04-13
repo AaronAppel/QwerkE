@@ -24,7 +24,6 @@ public:
 	virtual void Draw() = 0;
 
 	virtual void DrawSceneList() = 0;
-	virtual void DrawShaderEditor(ShaderProgram* shader) = 0;
 
     // Getters
     EntityEditor* GetEntityEditor();
@@ -39,6 +38,8 @@ protected:
 	// system access
 	SceneManager* m_SceneManager = nullptr;
 	InputManager* m_Input = nullptr;
+
+    void DrawShaderEditor(ShaderProgram* shader);
 };
 
 #endif // !_Editor_H_

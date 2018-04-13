@@ -14,10 +14,8 @@ public:
 	void Draw();
 
 	void DrawSceneList();
-	void DrawShaderEditor(ShaderProgram* shader);
 
 private:
-
 };
 
 #endif // !_Editor_H_

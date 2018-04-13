@@ -160,13 +160,13 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Math.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Window.h">
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\WindowManager.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -405,12 +405,12 @@
       <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Math.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Window.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\WindowManager.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor.cpp" />
   </ItemGroup>
 </Project>

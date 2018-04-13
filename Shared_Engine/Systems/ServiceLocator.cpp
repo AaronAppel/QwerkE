@@ -19,6 +19,7 @@ namespace QwerkE
     AudioManager* QwerkE::ServiceLocator::m_AudioManager = nullptr;
     JobManager* QwerkE::ServiceLocator::m_JobManager = nullptr;
 	Window* QwerkE::ServiceLocator::m_Window = nullptr;
+    NetworkManager* QwerkE::ServiceLocator::m_NetworkManager = nullptr;
 
 	void ServiceLocator::RegisterService(eEngineServices serviceType, void* service)
 	{
@@ -62,6 +63,9 @@ namespace QwerkE
 		case eEngineServices::WindowManager:
 			ServiceLocator::m_Window = (Window*)service;
 			break;
+        case eEngineServices::NetworkManager:
+            ServiceLocator::m_NetworkManager = (NetworkManager*)service;
+            break;
 		default:
 			ConsolePrint("ServiceLocator::RegisterService(): Invalid service!");
 			break;
@@ -134,6 +138,11 @@ namespace QwerkE
 			ServiceLocator::m_Window = nullptr;
 			return temp;
 			break;
+        case eEngineServices::NetworkManager:
+            temp = ServiceLocator::m_NetworkManager;
+            ServiceLocator::m_NetworkManager = nullptr;
+            return temp;
+            break;
 		default:
 			ConsolePrint("ServiceLocator::UnregisterService(): Invalid service!");
 			return nullptr;
@@ -181,6 +190,9 @@ namespace QwerkE
 		case eEngineServices::WindowManager:
 			return ServiceLocator::m_Window;
 			break;
+        case eEngineServices::NetworkManager:
+            return ServiceLocator::m_NetworkManager;
+            break;
 		default:
 			ConsolePrint("ServiceLocator::GetService(): Invalid service!");
 			return nullptr;
@@ -242,6 +254,10 @@ namespace QwerkE
 				if (ServiceLocator::m_Window == nullptr)
 					return eEngineMessage::_QFail; // not loaded
 				break;
+            case eEngineServices::NetworkManager:
+                if (ServiceLocator::m_NetworkManager == nullptr)
+                    return eEngineMessage::_QFail; // not loaded
+                break;
 			}
 
 			i = (eEngineServices)((int)i + 1); // increment service

@@ -24,6 +24,7 @@ class Renderer;
 class AudioManager;
 class JobManager;
 class Window;
+class NetworkManager;
 
 namespace QwerkE
 {
@@ -34,7 +35,7 @@ namespace QwerkE
 	public:
 		// Services need to be instantiated, then registered
 		// TODO: Services...
-		// Audio, Networking, Graphics, Utilities (some type of file managers?),
+		// Networking, Graphics, Utilities (some type of file managers?),
 		// Debug, Memory, Application
 		static void RegisterService(eEngineServices serviceType, void* service);
 
@@ -61,6 +62,7 @@ namespace QwerkE
         static AudioManager* m_AudioManager;
 		static JobManager* m_JobManager;
 		static Window* m_Window;
+        static NetworkManager* m_NetworkManager;
 	};
 }
 

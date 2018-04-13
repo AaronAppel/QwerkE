@@ -112,6 +112,9 @@ eEngineMessage Engine::Startup()
 	JobManager* jobManager = new JobManager();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::JobManager, jobManager);
 
+    NetworkManager* network = new NetworkManager();
+    QwerkE::ServiceLocator::RegisterService(eEngineServices::NetworkManager, network);
+
 	m_SceneManager->Initialize(); // Order Dependency
 
 	return QwerkE::ServiceLocator::ServicesLoaded();
@@ -143,13 +146,14 @@ eEngineMessage Engine::TearDown()
 
 	delete (JobManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::JobManager);
 
+    delete (NetworkManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::NetworkManager);
+
 	Libs_TearDown(); // unload libraries
 
 	// TODO: Safety checks?
 	return eEngineMessage::_QSuccess;
 }
 
-ShaderProgram* g_Shader;
 void Engine::Run()
 {
 	float frameRate = 0.0f;
@@ -174,14 +178,12 @@ void Engine::Run()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
-
-	g_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader");
-
+    
 	QwerkE::ServiceLocator::LockServices(true);
 
 	// TEST:
-	NetworkManager netMan;
-	// netMan.test(); // test server
+    NetworkManager* netMan = (NetworkManager*)QwerkE::ServiceLocator::GetService(eEngineServices::NetworkManager);
+	netMan->test(); // test server
 	// TEST: END
 
 	// Deltatime + FPS Tracking //
@@ -288,7 +290,6 @@ void Engine::Draw()
     ImGui::End();
 
 	m_Editor->Draw();
-    m_Editor->DrawShaderEditor(g_Shader); // TODO: ShaderEditor should be part of the Editor() class
 
     //m_SceneManager->Draw();
 

@@ -30,6 +30,9 @@ void imgui_Editor::Update()
 
 void imgui_Editor::Draw()
 {
+    // windows
+    static bool shaderEditor = false;
+
 	// menu
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -42,6 +45,19 @@ void imgui_Editor::Draw()
 			ImGui::EndMenu();
 		}
 
+        if (ImGui::BeginMenu("Tools"))
+        {
+            const int size = 1;
+            static const char* toolsList[size] = {"Shader Editor"};
+            static bool* toolsStates[size] = { &shaderEditor };
+
+            for (int i = 0; i < size; i++)
+            {
+                ImGui::Checkbox(toolsList[i], toolsStates[i]);
+            }
+            ImGui::EndMenu();
+        }
+
 		// FPS display
 		static bool showFPS = true;
 		if (ImGui::Button("FPS"))
@@ -52,6 +68,11 @@ void imgui_Editor::Draw()
 
 		ImGui::EndMainMenuBar();
 	}
+    
+    if (shaderEditor)
+    {        
+        DrawShaderEditor((ShaderProgram*)((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader"));
+    }
 
 	m_SceneGraph->Draw();
     m_EntityEditor->Draw();
@@ -76,61 +97,6 @@ void imgui_Editor::DrawSceneList()
 		{
 			// m_SceneManager->SetCurrentScene(eSceneTypes::Scene_GameScene);
 		}
-	}
-
-	ImGui::End();
-}
-
-void imgui_Editor::DrawShaderEditor(ShaderProgram* shader)
-{
-	const int bufferSize = 2000;
-	static char vertBuffer[bufferSize] = { 0 };
-	static char fragBuffer[bufferSize] = { 0 };
-	static GLuint currentShader = 0;
-
-	if (currentShader != shader->GetProgram())
-	{
-		// strcpy_s(buffer, (char*)shader->GetVertString());
-		currentShader = shader->GetProgram();
-		strcpy_s(vertBuffer, bufferSize, (const char*)shader->GetVertString());
-		strcpy_s(fragBuffer, bufferSize, (const char*)shader->GetFragString());
-	}
-
-	ImGui::Begin("Shader Editor");
-	//ImGui::ShowTestWindow();
-	if (ImGui::CollapsingHeader("Vertex"))
-	{
-		if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(400, 250)))
-		{
-			// buffer was changed
-		}
-	}
-	if (ImGui::CollapsingHeader("Fragment"))
-	{
-		if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(400, 250)))
-		{
-			// buffer was changed
-		}
-	}
-
-	if (ImGui::Button("Recompile Vert"))
-	{
-		int bp = 1;
-		//shader->ReCompile1Shader(GL_VERTEX_SHADER, buffer);
-		long length;
-		// char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
-		shader->SetShaderStringData(GL_VERTEX_SHADER, vertBuffer);
-		shader->ReCompile1Shader(GL_VERTEX_SHADER, vertBuffer);
-	}
-
-	if (ImGui::Button("Recompile Frag"))
-	{
-		int bp = 1;
-		//shader->ReCompile1Shader(GL_VERTEX_SHADER, buffer);
-		long length;
-		// char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
-		shader->SetShaderStringData(GL_FRAGMENT_SHADER, fragBuffer);
-		shader->ReCompile1Shader(GL_FRAGMENT_SHADER, fragBuffer);
 	}
 
 	ImGui::End();

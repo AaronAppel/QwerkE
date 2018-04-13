@@ -30,6 +30,7 @@ enum class eEngineServices : std::uint8_t
 	Renderer,
 	JobManager,
 	WindowManager,
+    NetworkManager,
 
 	Service_Max
 };
