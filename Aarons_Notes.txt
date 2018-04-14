@@ -46,3 +46,7 @@ libraries getting added.
 
 Apr 13th 2018
 Redesign the WindowManager() and Window() classes.
+
+Apr 14th 208
+Learning C++ Refection.
+https://stackoverflow.com/questions/41453/how-can-i-add-reflection-to-a-c-application

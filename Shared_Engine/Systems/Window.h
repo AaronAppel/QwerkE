@@ -4,26 +4,32 @@
 #include "../Math/Vector.h"
 #include "../../Shared_Generic/Math_Includes.h"
 
-class GLFWwindow;
+struct GLFWwindow;
 
 // TODO: Create windows for different libraries
-class Window
+class Window // abstract
 {
 public:
 	Window(int windowWidth, int windowHeight, const char* windowTitle);
-	~Window();
+	virtual ~Window();
 
 	void SetResolution(vec2 resolution) { m_Resolution = resolution; }
 	vec2 GetResolution() { return m_Resolution; }
+    
+    virtual void* GetContext() = 0; // TODO: Remove
 
-	void* GetWindow() { return m_Window; }
+    virtual void SwapBuffers() = 0;
 
-private:
+    void SetClosing(bool closing) { m_IsClosing = closing; };
+    bool IsClosing() { return m_IsClosing; };
+
+protected:
+    // TODO: Expand interface. Remember to be generic for all libraries.
 	vec2 m_Resolution = vec2(16, 9);
-
-#ifdef _glfw3_h_
-	GLFWwindow* m_Window = nullptr;
-#endif // !_glfw3_h_
+    vec2 m_ScreenSize = m_Resolution * 0.5f;
+    bool m_IsFocused = false;
+    bool m_IsClosing = false;
+    const char* m_WindowTitle = "null";
 };
 
 #endif // !_Window_H_

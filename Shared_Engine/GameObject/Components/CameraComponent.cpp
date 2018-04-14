@@ -24,11 +24,8 @@ CameraComponent::CameraComponent(vec3 position, vec3 up, float yaw, float pitch)
 	m_ComponentTag = Component_Camera;
 
 	WindowManager* windowManager = (WindowManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager));
-	GLFWwindow* window = (GLFWwindow*)((Window*)windowManager->GetWindow(0))->GetWindow();
-
-	int x, y;
-	glfwGetWindowSize(window, &x, &y);
-	m_ViewportSize = vec2(x, y);
+	Window* window = (Window*)windowManager->GetWindow(0);
+	m_ViewportSize = window->GetResolution();
 
 	UpdateCameraVectors();
 }
@@ -41,12 +38,9 @@ CameraComponent::CameraComponent(float posX, float posY, float posZ, float upX, 
 	m_Pitch = pitch;
 	UpdateCameraVectors();
 
-	WindowManager* windowManager = (WindowManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager));
-	GLFWwindow* window = (GLFWwindow*)((Window*)windowManager->GetWindow(0))->GetWindow();
-
-	int x, y;
-	glfwGetWindowSize(window, &x, &y);
-	m_ViewportSize = vec2(x, y);
+    WindowManager* windowManager = (WindowManager*)(QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager));
+    Window* window = (Window*)windowManager->GetWindow(0);
+    m_ViewportSize = window->GetResolution();
 
 	UpdateCameraVectors();
 }

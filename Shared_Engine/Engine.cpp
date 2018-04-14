@@ -28,6 +28,7 @@
 #include "Systems/NetworkManager.h"
 #include "Systems/Window.h"
 #include "Systems/WindowManager.h"
+#include "Systems/glfw_Window.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -55,7 +56,7 @@ eEngineMessage Engine::Startup()
 {
 	if (Libs_Setup() == false) // setup libraries
 	{
-		ConsolePrint("\Startup(): Error loading libraries! Closing application\n");
+		ConsolePrint("\Startup(): Error loading libraries!\n");
 		return eEngineMessage::_QFail; // failure
 	}
 
@@ -72,10 +73,15 @@ eEngineMessage Engine::Startup()
 	InputManager* inputManager = new InputManager();
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::Input_Manager, inputManager);
 
-	Window* window = new Window(g_WindowWidth, g_WindowHeight, g_WindowTitle);
-	m_Window = (GLFWwindow*)window->GetWindow();
+#ifdef _glfw3_h_
+    m_Window = new glfw_Window(g_WindowWidth, g_WindowHeight, g_WindowTitle);
+#else
+    // win32 window or something
+    Window* window = new Window(g_WindowWidth, g_WindowHeight, g_WindowTitle);
+#endif // !_glfw3_h_
+
 	WindowManager* windowManager = new WindowManager();
-	windowManager->AddWindow(window);
+	windowManager->AddWindow(m_Window);
 
 	QwerkE::ServiceLocator::RegisterService(eEngineServices::WindowManager, windowManager);
 
@@ -154,6 +160,9 @@ eEngineMessage Engine::TearDown()
 
 void Engine::Run()
 {
+    // TODO: check if(initialized) in case user defined simple API.
+    // Might want to create another function for the game loop and
+    // leave Run() smaller and abstracted from the functionality.
 	m_IsRunning = true;
 
 	double timeSinceLastFrame = 0.0;
@@ -162,8 +171,9 @@ void Engine::Run()
 	QwerkE::Time::SetFrameRate(&frameRate);
 
 	g_FBO->Init();
-	SetupCallbacks(m_Window);
 
+    // TODO: GL state init should be in a Window() or OpenGLManager()
+    // class or some type of ::Graphics() system.
     glClearColor(0.5f, 0.7f, 0.7f, 1.0f);
 	// turn on depth buffer testing
 	glEnable(GL_DEPTH_TEST);
@@ -172,7 +182,7 @@ void Engine::Run()
 	// Testing: glEnable(GL_CULL_FACE);
 	// Testing: glCullFace(GL_BACK);
 	// if(Wind_CCW) glFrontFace(GL_CCW);
-    //else glFrontFace(GL_CW);
+    // else glFrontFace(GL_CW);
 
 	// turn on alpha blending
 	glEnable(GL_BLEND);
@@ -201,7 +211,7 @@ void Engine::Run()
 	short framesSincePrint = 0;
 
 	// Application Loop
-	while (glfwWindowShouldClose(m_Window) == false) // Run until close requested
+	while (m_Window->IsClosing() == false) // Run until close requested
 	{
 		// setup frame
 		// Calculate deltatime of current frame
@@ -269,9 +279,14 @@ void Engine::Update(double deltatime)
 {
 	m_SceneManager->Update(deltatime);
 	m_Editor->Update();
-
-	if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE)) // DEBUG: A simple way to close the window while testing
-		glfwSetWindowShouldClose(m_Window, true);
+    
+	//if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE)) // DEBUG: A simple way to close the window while testing
+    InputManager* inputManager = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
+    if (inputManager->GetIsKeyDown(eKeys::eKeys_Escape))
+    {
+        WindowManager* windowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
+        windowManager->GetWindow(0)->SetClosing(true);        
+    }
 }
 
 void Engine::Draw()
@@ -297,5 +312,5 @@ void Engine::Draw()
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
-	glfwSwapBuffers(m_Window); // Change frame buffers
+    m_Window->SwapBuffers(); // Change frame buffers
 }

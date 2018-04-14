@@ -177,6 +177,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Logger.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\InputEvent.h" />
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\glfw_Window.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -430,6 +434,10 @@
       <Filter>Events</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Logger.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\InputEvent.cpp" />
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\glfw_Window.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>

@@ -27,6 +27,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Platform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Events\Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\InputEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject\Components\FirstPersonCameraComponent.h" />
@@ -48,6 +49,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Factory\LevelLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\GameCore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\glfw_Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\CubeMap\CubeMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\FBO\FrameBufferObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Graphics\FontRendering\FontTest.h" />
@@ -90,6 +92,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\Event.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\InputEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\CameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\Component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject\Components\FirstPersonCameraComponent.cpp" />
@@ -118,6 +121,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Shapes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Factory\Testing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\GameCore.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\glfw_Window.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\CubeMap\CubeMap.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\FBO\FrameBufferObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Graphics\FontRendering\FontTest.cpp" />

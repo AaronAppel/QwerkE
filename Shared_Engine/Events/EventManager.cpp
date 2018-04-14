@@ -16,7 +16,6 @@ void EventManager::QueueEvent(Event* _event)
 {
 	if (m_EventList.size() < m_EventMax)
 	{
-		Event* _event = new Event();
 		_event->SetID(helpers_GetUniqueID());
 		m_EventList.push(_event);
 		OutputPrint("Event %i Queued!", _event->GetID());

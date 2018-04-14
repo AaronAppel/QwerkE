@@ -146,7 +146,7 @@ bool ShaderProgram::BuildShaderProgram()
     if (m_VertShaderHandle == 0 && m_FragShaderHandle == 0 && m_GeoShaderHandle == 0) // null handles
     {
         CleanUp(); // deallocate memory
-        assert(0); // DEBUG:
+        assert(0); // DEBUG: Error compiling ShaderProgram().
         return false;
     }
 

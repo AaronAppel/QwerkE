@@ -30,6 +30,21 @@ namespace QwerkE
 {
 	// TODO: Improve service accessing
 	// Think of toggling register/unregister
+    // Should code ask for system*s to keep or is this dangerous because
+    //  a system could change during runtime?
+    // Consider inline ing service locator sunctions for runtime efficiency
+
+    // To avoid dependencies redesign how services are registered/unregistered
+    // for order dependency issues.
+    
+    // Consider returning NULL objects if service is nullptr;
+    // Try to avoid if(null) check inside a getter(). Make sure services are
+    // initialized at start to null and have null checks inside a register() call.
+    
+    // Consider limiting accessible scope on systems like NetworkManager to only a
+    // few classes. Maybe create a INetwork interface that needs to be implemented
+    // by a class to access the network service... or something like that.
+
 	class ServiceLocator
 	{
 	public:

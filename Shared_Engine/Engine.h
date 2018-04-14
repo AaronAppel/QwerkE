@@ -1,14 +1,21 @@
 #ifndef _Engine_H_
 #define _Engine_H_
 
-// This may need to become an abstract class that gets inherited
-// by platform specific implementations
+// Try to keep this class properly abstracted so it
+// can perform on multiple platforms without needing
+// inherited subclasses.
 
-#include "Engine_Enums.h"
+#include "Engine_Enums.h" // eEngineMessage
 
 struct GLFWwindow;
 class Editor;
 class SceneManager;
+class Window;
+
+// If only 1 engine should exist at a time then it could be wrapped in
+// the QwerkE namespace and have static functions like a singleton or 
+// service. Or just find a nother way to prevent multiple instances
+// while offering a nice interface.
 
 class Engine
 {
@@ -29,7 +36,7 @@ public: // External API
 	bool StillRunning() { return m_IsRunning; };
 
 private:
-	GLFWwindow* m_Window = nullptr;
+    Window* m_Window = nullptr;
 	bool m_IsRunning = false;
 	SceneManager* m_SceneManager = nullptr;
     Editor* m_Editor = nullptr;

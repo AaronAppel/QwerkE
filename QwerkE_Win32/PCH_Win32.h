@@ -9,10 +9,10 @@
 #include "../Shared_Engine/Engine_Platform.h"
 
 // TODO: Move pragma warnings and use pop warnings
-#pragma warning(disable : 4996) // old sprintf warnings in RakNet
-#define _CRT_SECURE_NO_WARNINGS // old sprintf warnings in RakNet
-#define _CRT_SECURE_NO_DEPRECATE // old sprintf warnings in RakNet
-#define _WINSOCK_DEPRECATED_NO_WARNINGS // old warnings in RakNet
+//#pragma warning(disable : 4996) // old sprintf warnings in RakNet
+//#define _CRT_SECURE_NO_WARNINGS // old sprintf warnings in RakNet
+//#define _CRT_SECURE_NO_DEPRECATE // old sprintf warnings in RakNet
+//#define _WINSOCK_DEPRECATED_NO_WARNINGS // old warnings in RakNet
 
 // standard libraries
 // map, vector, string, etc
@@ -31,5 +31,10 @@
 
 // libraries
 #include "../Shared_Generic/Libraries_Include.h"
+
+/////////////////////////////////////////////////
+// include ENGINE code temporarily for faster build times
+/////////////////////////////////////////////////
+#include "Additional_Includes.h"
 
 #endif // !_PCH_Win32_H_
