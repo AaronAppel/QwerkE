@@ -5,6 +5,7 @@
 // Include/Exclude libraries based on platform, architecture, configuration
 // TODO: Hide loading/unloading behind load/splash screen?
 // TODO: Clean up #ifs
+// TODO: Remove QwerkE specific defines
 #ifdef _Q32bit // architecture
 // platform
 #ifdef _QWindows
@@ -134,7 +135,7 @@
 //////////////////////////////
 // Bullet3
 // TODO: Check for architecture
-#if _DEBUG
+#if _DEBUG // and windows specific?
 #pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/BulletCollision.lib" ) // load
 #pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/BulletDynamics.lib" ) // load
 #pragma comment( lib, "../Shared_Generic/Libraries/Bullet3/lib/Win32/Debug/LinearMath.lib" ) // load
@@ -147,7 +148,7 @@
 // TODO: Add necessary headers.
 // TODO: Remove unecessary headers.
 // Consider creating a library for bullet projects.
-#include "Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+// #include "Libraries/Bullet3/btAabbUtil2.h"
 /////////////////////////////
 
 #endif // !_Libraries_Include_H_

@@ -7,12 +7,12 @@ glfw_Window::glfw_Window(int windowWidth, int windowHeight, const char* windowTi
 {
     m_Window = glfwCreateWindow(windowWidth, windowHeight, windowTitle, NULL, NULL);
     assert(m_Window);
-    glfwSetWindowCloseCallback(m_Window, close_callback);
     glfwSwapInterval(0); // TODO: Add VSynch control and toggling
     glfwMakeContextCurrent(m_Window);
     ImGui_ImplGlfwGL3_Init(m_Window, true);
     m_IsFocused = true;
-    SetupCallbacks(m_Window);
+    SetupCallbacks(m_Window); // TODO: Window won't respond to clicking corner 'x'... sometimes?
+	glfwSetWindowCloseCallback(m_Window, close_callback);
 }
 
 glfw_Window::~glfw_Window()
