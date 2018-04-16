@@ -27,24 +27,24 @@ void PhysicsWorld::CreateWorld()
 {
 	assert(m_pDynamicsWorld == 0);
 
-	//// btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
-	//m_pBroadphase = new btDbvtBroadphase();
+	// btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
+	m_pBroadphase = new btDbvtBroadphase();
 
-	//// Collision configuration contains default setup for memory, collision setup.
-	////   Advanced users can create their own configuration.
-	//m_pCollisionConfiguration = new btDefaultCollisionConfiguration();
+	// Collision configuration contains default setup for memory, collision setup.
+	//   Advanced users can create their own configuration.
+	m_pCollisionConfiguration = new btDefaultCollisionConfiguration();
 
-	//// Use the default collision m_pDispatcher.
-	////   For parallel processing you can use a diffent m_pDispatcher (see Extras/BulletMultiThreaded).
-	//m_pDispatcher = new btCollisionDispatcher(m_pCollisionConfiguration);
+	// Use the default collision m_pDispatcher.
+	//   For parallel processing you can use a diffent m_pDispatcher (see Extras/BulletMultiThreaded).
+	m_pDispatcher = new btCollisionDispatcher(m_pCollisionConfiguration);
 
-	//// The default constraint m_pSolver.
-	////   For parallel processing you can use a different m_pSolver (see Extras/BulletMultiThreaded).
-	//m_pSolver = new btSequentialImpulseConstraintSolver();
+	// The default constraint m_pSolver.
+	//   For parallel processing you can use a different m_pSolver (see Extras/BulletMultiThreaded).
+	m_pSolver = new btSequentialImpulseConstraintSolver();
 
-	//m_pDynamicsWorld = new btDiscreteDynamicsWorld(m_pDispatcher, m_pBroadphase, m_pSolver, m_pCollisionConfiguration);
+	m_pDynamicsWorld = new btDiscreteDynamicsWorld(m_pDispatcher, m_pBroadphase, m_pSolver, m_pCollisionConfiguration);
 
-	//m_pDynamicsWorld->setGravity(btVector3(0, -10, 0));
+	m_pDynamicsWorld->setGravity(btVector3(0, -10, 0));
 }
 
 void PhysicsWorld::Update(float deltatime)

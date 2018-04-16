@@ -1,0 +1,6 @@
+﻿  PhysicsWorld.cpp
+c:\users\appe0011\documents\github\qwerke\shared_engine\systems\physicsworld.cpp(77): warning C4150: deletion of pointer to incomplete type 'btCollisionShape'; no destructor called
+  c:\users\appe0011\documents\github\qwerke\shared_generic\libraries\bullet3\bulletcollision\collisiondispatch\btcollisionworld.h(75): note: see declaration of 'btCollisionShape'
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  QwerkE_Win32.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\QwerkE_Win32.exe
+  QwerkE_Win32.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\QwerkE_Win32.pdb (Partial PDB)
