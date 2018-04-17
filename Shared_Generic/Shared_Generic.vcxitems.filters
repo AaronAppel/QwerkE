@@ -67,6 +67,9 @@
     <Filter Include="Libraries\OpenAL">
       <UniqueIdentifier>{c275ad8b-a789-4701-a4e6-8bb45d6a812e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\Tween">
+      <UniqueIdentifier>{bdf56414-fce4-467a-9ce1-529d22ac55d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries_Include.h" />
@@ -1065,6 +1068,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Bullet3\LinearMath\btVector3.h">
       <Filter>Libraries\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Utilities\Tween\Tween.h">
+      <Filter>Utilities\Tween</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Utilities\Tween\TweenFuncs.h">
+      <Filter>Utilities\Tween</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -1184,6 +1193,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Bullet3\LinearMath\btVector3.cpp">
       <Filter>Libraries\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Utilities\Tween\TweenFuncs.cpp">
+      <Filter>Utilities\Tween</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

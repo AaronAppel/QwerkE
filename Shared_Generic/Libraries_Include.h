@@ -125,11 +125,15 @@
 //////////////////////////////
 // math
 //////////////////////////////
-// glm
-#include "../Shared_Generic/Libraries/glm/glm/glm.hpp"
-#include "../Shared_Generic/Libraries/glm/glm/gtc/matrix_transform.hpp"
-#include "../Shared_Generic/Libraries/glm/glm/gtc/type_ptr.hpp"
+#include "Math_Includes.h" // all math related files included in here
 /////////////////////////////
+
+//////////////////////////////
+// physics
+//////////////////////////////
+#include "Utilities/Tween/Tween.h"
+#include "Utilities/Tween/TweenFuncs.h"
+//////////////////////////////
 
 //////////////////////////////
 // physics

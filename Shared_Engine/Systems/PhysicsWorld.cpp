@@ -1,11 +1,11 @@
 #include "PhysicsWorld.h"
-#include "../Shared_Generic/Libraries/Bullet3/BulletCollision/BroadphaseCollision/btAxisSweep3.h"
-#include "../Shared_Generic/Libraries/Bullet3/BulletDynamics/Character/btCharacterControllerInterface.h"
-#include "../Shared_Generic/Libraries/Bullet3/LinearMath/btAabbUtil2.h"
-#include "../Shared_Generic/Libraries/Bullet3/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
-#include "../Shared_Generic/Libraries/Bullet3/BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
-#include "../Shared_Generic/Libraries/Bullet3/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
-#include "../Shared_Generic/Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "../../Shared_Generic/Libraries/Bullet3/BulletCollision/BroadphaseCollision/btAxisSweep3.h"
+#include "../../Shared_Generic/Libraries/Bullet3/BulletDynamics/Character/btCharacterControllerInterface.h"
+#include "../../Shared_Generic/Libraries/Bullet3/LinearMath/btAabbUtil2.h"
+#include "../../Shared_Generic/Libraries/Bullet3/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
+#include "../../Shared_Generic/Libraries/Bullet3/BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
+#include "../../Shared_Generic/Libraries/Bullet3/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+#include "../../Shared_Generic/Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 
 PhysicsWorld::PhysicsWorld()
 {

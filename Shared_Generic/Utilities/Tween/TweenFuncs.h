@@ -1,6 +1,8 @@
 #ifndef __TweenFuncs_H__
 #define __TweenFuncs_H__
 
+typedef float(*TweenFunc) (float startvalue, float valuerange, double timepassed, double totaltime);
+
 float TweenFunc_Linear(float startvalue, float valuerange, double timepassed, double totaltime);
 float TweenFunc_SineEaseIn(float startvalue, float valuerange, double timepassed, double totaltime);
 float TweenFunc_SineEaseOut(float startvalue, float valuerange, double timepassed, double totaltime);

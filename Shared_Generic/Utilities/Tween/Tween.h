@@ -1,19 +1,19 @@
 #ifndef __Tween_H__
 #define __Tween_H__
 
-typedef float (*TweenFunc) (float startvalue, float valuerange, double timepassed, double totaltime);
+#include "TweenFuncs.h"
 
 class Tween
 {
 public:
-    Tween();
+    Tween() {}
 
     Tween(float min, float range, float timeSpan) :
         m_StartingValue(min),
         m_Range(range),
         m_EndTime(timeSpan) {}
 
-    ~Tween();
+    ~Tween() {}
 
     void SetTween(TweenFunc function) { m_pTweenFunction = function; }
 
@@ -37,6 +37,8 @@ public:
     }
 
 	float Progress() { return m_pTweenFunction(m_StartingValue, m_Range, m_ElapsedTime, m_EndTime); };
+
+    // TODO: Callbacks
 
 private:
 	TweenFunc m_pTweenFunction = nullptr;

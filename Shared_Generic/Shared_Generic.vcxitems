@@ -348,6 +348,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\SmartPointer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\Tween.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Block_Menu\MenuItems\AddItem.cpp" />
@@ -400,5 +402,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\ImageHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\PrintFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\StringHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.cpp" />
   </ItemGroup>
 </Project>

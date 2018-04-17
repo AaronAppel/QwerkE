@@ -2,6 +2,7 @@
 #define _glfw_Window_H_
 
 #include "Window.h"
+#include "../../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
 
 class glfw_Window : public Window
 {
