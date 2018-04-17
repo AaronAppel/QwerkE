@@ -85,8 +85,9 @@
 // https://ffainelli.github.io/openal-example/
 // TODO: Crashing if I uninstall SDK
 #pragma comment( lib, "../Shared_Generic/Libraries/OpenAL/libs/Win32/OpenAL32.lib" ) // load
-#include "Libraries/OpenAL/include/al.h"
-#include "Libraries/OpenAL/include/alc.h"
+#pragma comment( lib, "../Shared_Generic/Libraries/OpenAL/libs/Win32/EFX-Util_MT/EFX-Util.lib" ) // load
+//#include "Libraries/OpenAL/include/al.h"
+//#include "Libraries/OpenAL/include/alc.h"
 //////////////////////////////
 
 //////////////////////////////
