@@ -23,19 +23,19 @@ GameObject::~GameObject()
 		delete l_LoopVar.second;
 	}
 	m_Components.clear();
-	for (uint i = 0; i < m_UpdateList.size(); i++)
+	for (unsigned int i = 0; i < m_UpdateList.size(); i++)
 	{
 		if (m_UpdateList.at(i) != nullptr)
 		{
 			m_UpdateList.at(i)->CleanUp(); // detach foreign routines
 		}
 	}
-	for (uint i = 0; i < m_UpdateList.size(); i++)
+	for (unsigned int i = 0; i < m_UpdateList.size(); i++)
 	{
 		delete m_UpdateList.at(i); // TODO: Delete or nullptr?
 	}
 	m_UpdateList.clear();
-	for (uint i = 0; i < m_DrawList.size(); i++)
+	for (unsigned int i = 0; i < m_DrawList.size(); i++)
 	{
 		delete m_DrawList.at(i);
 	}
@@ -44,7 +44,7 @@ GameObject::~GameObject()
 
 void GameObject::Update(double deltatime)
 {
-	for (uint i = 0; i < m_UpdateList.size(); i++)
+	for (unsigned int i = 0; i < m_UpdateList.size(); i++)
 	{
 		if (m_UpdateList.at(i) != nullptr)
 		{
@@ -56,7 +56,7 @@ void GameObject::Update(double deltatime)
 
 void GameObject::Draw(GameObject* camera)
 {
-	for (uint i = 0; i < m_DrawList.size(); i++)
+	for (unsigned int i = 0; i < m_DrawList.size(); i++)
 	{
 		if (m_DrawList.at(i) != nullptr)
 		{
@@ -82,7 +82,7 @@ void GameObject::AddRoutine(Routine* routine)
 
 void GameObject::AddUpdateRoutine(Routine* routine)
 {
-	for (uint i = 0; i < m_UpdateList.size(); i++)
+	for (unsigned int i = 0; i < m_UpdateList.size(); i++)
 	{
 		if (m_UpdateList.at(i) == nullptr)
 		{
@@ -95,7 +95,7 @@ void GameObject::AddUpdateRoutine(Routine* routine)
 
 void GameObject::AddDrawRoutine(Routine* routine)
 {
-	for (uint i = 0; i < m_DrawList.size(); i++)
+	for (unsigned int i = 0; i < m_DrawList.size(); i++)
 	{
 		if (m_DrawList.at(i) == nullptr)
 		{
@@ -108,14 +108,14 @@ void GameObject::AddDrawRoutine(Routine* routine)
 
 void GameObject::RemoveRoutine(Routine* routine) // TODO:: handle removing routines
 {
-	for (uint i = 0; i < m_UpdateList.size(); i++)
+	for (unsigned int i = 0; i < m_UpdateList.size(); i++)
 	{
 		if (m_UpdateList.at(i) == routine) // pointer comparison
 		{
 			m_UpdateList.at(i) = nullptr; // routine needs to be delete by creator
 		}
 	}
-	for (uint i = 0; i < m_DrawList.size(); i++)
+	for (unsigned int i = 0; i < m_DrawList.size(); i++)
 	{
 		if (m_DrawList.at(i) == routine) // pointer comparison
 		{
@@ -160,7 +160,7 @@ void GameObject::Deactivate()
 Routine* GameObject::GetFirstUpdateRoutineOfType(eRoutineTypes type)
 {
 	Routine* t_ReturnRoutine = nullptr;
-	for (uint i = 0; i < m_UpdateList.size(); i++)
+	for (unsigned int i = 0; i < m_UpdateList.size(); i++)
 	{
 		if (m_UpdateList.at(i)->GetRoutineType() == type)
 		{

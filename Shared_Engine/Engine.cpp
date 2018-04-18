@@ -56,7 +56,7 @@ eEngineMessage Engine::Startup()
 {
 	if (Libs_Setup() == false) // setup libraries
 	{
-		ConsolePrint("\Startup(): Error loading libraries!\n");
+		ConsolePrint("\nStartup(): Error loading libraries!\n");
 		return eEngineMessage::_QFail; // failure
 	}
 

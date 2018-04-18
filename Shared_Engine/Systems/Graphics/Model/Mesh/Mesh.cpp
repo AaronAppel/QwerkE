@@ -64,7 +64,7 @@ void Mesh::SetupShaderAttributes(ShaderProgram* shader)
 
 	/* Assign ShaderProgram() attribute data */
 	std::vector<std::string> attributes = shader->GetAttributeList();
-	for (uint i = 0; i < attributes.size(); i++)
+	for (unsigned int i = 0; i < attributes.size(); i++)
 	{
 		if (StringCompare(attributes.at(i), "Position"))
 		{

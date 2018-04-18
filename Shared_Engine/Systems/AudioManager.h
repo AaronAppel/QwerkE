@@ -19,11 +19,13 @@ public:
 	// music, effect, dialogue
 
 private:
+    /*
     ALCdevice* Device;
     ALCcontext* Context;
     ALboolean g_bEAX;
     ALsizei NUM_BUFFERS;
     ALuint* g_Buffers;
+    */
 };
 
 #endif // !_AudioManager_H_

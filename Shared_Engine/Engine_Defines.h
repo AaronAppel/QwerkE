@@ -43,6 +43,6 @@
 
 // type definitions
 // TODO: Is there an easy way of reducing typing without coupling files like typedef does
-typedef unsigned int uint; // less typing and easier to read
+// typedef unsigned int uint; // less typing and easier to read
 
 #endif // !_Engine_Defines_H_

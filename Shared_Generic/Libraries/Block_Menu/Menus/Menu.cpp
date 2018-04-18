@@ -17,7 +17,7 @@ Menu::~Menu()
 
 void Menu::Update(vec2 mousePos)
 {
-	for (uint i = 0; i < m_Windows.size(); i++)
+	for (unsigned int i = 0; i < m_Windows.size(); i++)
 	{
 		MenuWindow* tempWindow = m_Windows.at(i); // position is screen space coords
 		vec2 windowPos = tempWindow->GetPosition();
@@ -33,7 +33,7 @@ void Menu::Update(vec2 mousePos)
 
 void Menu::Draw()
 {
-	for (uint i = 0; i < m_Windows.size(); i++)
+	for (unsigned int i = 0; i < m_Windows.size(); i++)
 	{
 		m_Windows.at(i)->Draw();
 	}
@@ -41,7 +41,7 @@ void Menu::Draw()
 
 void Menu::LeftClick(vec2 mousePos)
 {
-	for (uint i = 0; i < m_Windows.size(); i++)
+	for (unsigned int i = 0; i < m_Windows.size(); i++)
 	{
 		m_Windows.at(i)->LeftClick(mousePos);
 	}

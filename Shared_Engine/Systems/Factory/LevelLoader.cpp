@@ -80,7 +80,7 @@ void LevelLoader::LoadScene(Scene* scene, const char* fileDir)
 	// CREATE OBJECTS
 	cJSON* t_JSONObjectList = GetItemFromObjectByKey(root, "ObjectList");
 	std::vector<cJSON*> t_GameObjects = GetAllItemsFromArray(t_JSONObjectList);
-	for (uint i = 0; i < t_GameObjects.size(); i++)
+	for (unsigned int i = 0; i < t_GameObjects.size(); i++)
 	{
 		cJSON* tempObject = GetItemFromArrayByKey(t_GameObjects.at(i), "Position");
 		vec3 position = GetPositionFromcJSONItem(tempObject);

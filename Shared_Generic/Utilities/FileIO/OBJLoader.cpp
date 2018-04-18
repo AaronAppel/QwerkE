@@ -44,16 +44,16 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 	std::vector<vec2> uvs; // texture data
 	std::vector<vec3> normals; // normal data
 
-	std::vector<uint> VertexIndices;
-	std::vector<uint> UVIndices;
-	std::vector<uint> NormalIndices;
+	std::vector<unsigned int> VertexIndices;
+	std::vector<unsigned int> UVIndices;
+	std::vector<unsigned int> NormalIndices;
 
 	std::vector<Mesh*> m_Meshes;
 	std::string objectName = "Long Name For Buffer Purpose";
 	Mesh* pMesh = nullptr;
-	std::vector<uint> rangeList;
+	std::vector<unsigned int> rangeList;
 
-	for (uint i = 0; i < stringList.size(); i++)
+	for (unsigned int i = 0; i < stringList.size(); i++)
 	{
 		std::string loopString = stringList.at(i);
 		if (loopString.find("# object") != loopString.npos) // check type of info
@@ -62,7 +62,7 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 			pMesh = new Mesh();
 			m_Meshes.push_back(pMesh);
 			pMesh->SetName(objectName);
-			uint temp = 0;
+			unsigned int temp = 0;
 			rangeList.push_back(temp);
 		}
 		if (loopString.at(0) == 'v') // check type of info
@@ -118,7 +118,7 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 	////////////////////////////////////Setup VertexData///////////////////////////////////////////
 	/* Create VertexData list */
 	std::vector<VertexData> t_VertexData;
-	for (uint i = 0; i < verts.size(); i++)
+	for (unsigned int i = 0; i < verts.size(); i++)
 	{
 		// First vertex
 		VertexData t_Vertex;
@@ -130,7 +130,7 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 		t_VertexData.push_back(t_Vertex);
 	}
 	/* Setup UVs and Normals */
-	for (uint i = 0; i < VertexIndices.size(); i++)
+	for (unsigned int i = 0; i < VertexIndices.size(); i++)
 	{
 		// Go through each face array list (1/1/1 2/2/2 3/3/3)
 		// and set the values for each vertex.uv, .normal
@@ -169,12 +169,12 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 	else // TODO: Finish loading multiple mesh models
 	{
 		int loopcounter = 0;
-		for (uint objectIndex = 0; objectIndex < m_Meshes.size(); objectIndex++)
+		for (unsigned int objectIndex = 0; objectIndex < m_Meshes.size(); objectIndex++)
 		{
 			// per mesh
 			std::vector<VertexData> t_TempVertList;
 			t_ObjectVertsList.push_back(t_TempVertList);
-			for (uint j = loopcounter; j < rangeList.at(objectIndex) + loopcounter; j++) // vertList
+			for (unsigned int j = loopcounter; j < rangeList.at(objectIndex) + loopcounter; j++) // vertList
 			{
 				// Use face data
 				// pushback all vertices for each object
@@ -187,8 +187,8 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 		}
 	}
 	// Setup list of indices for each object
-	std::vector<std::vector<uint>> t_IndexList;
-	for (uint i = 0; i < m_Meshes.size(); i++) // indexList
+	std::vector<std::vector<unsigned int>> t_IndexList;
+	for (unsigned int i = 0; i < m_Meshes.size(); i++) // indexList
 	{
 		int size = 0;
 		for (int j = 0; j < size; j++)
@@ -199,7 +199,7 @@ Model* ImportOBJModel(const char* fileDirectory, vec3 objScale, vec2 UVScale, bo
 
 	////////////////////////////////////Buffer meshes///////////////////////////////////////////
 	// buffer each mesh
-	for (uint i = 0; i < m_Meshes.size(); i++)
+	for (unsigned int i = 0; i < m_Meshes.size(); i++)
 	{
 		m_Meshes.at(i)->BufferMeshData(t_VertexData.size(), t_VertexData.data(), VertexIndices.size(), VertexIndices.data());
 	}

@@ -20,7 +20,7 @@ public:
     GameCore();
     virtual ~GameCore();
 
-    void OnWindowResize(uint width, uint height);
+    void OnWindowResize(unsigned int width, unsigned int height);
     void Initialize();
 
 	/* Getters + Setters */
@@ -37,7 +37,7 @@ public:
 	bool DebugDrawEnabled() { return m_DebugDrawEnabled; };
 
 	// Setters
-	void SetScreenSize(vec2 screensize) { m_WindowWidth = (uint)screensize.x, m_WindowHeight = (uint)screensize.y; };
+	void SetScreenSize(vec2 screensize) { m_WindowWidth = (unsigned int)screensize.x, m_WindowHeight = (unsigned int)screensize.y; };
 	void SetClearColor(vec4 color) { m_ClearColor = color; };
 
 	// Utility
@@ -54,8 +54,8 @@ protected:
 	FrameBufferObject* m_FBO;
 	MyMatrix* m_pProjectionMatrix = nullptr;
 
-	uint m_WindowWidth = 0;
-	uint m_WindowHeight = 0;
+    unsigned int m_WindowWidth = 0;
+    unsigned int m_WindowHeight = 0;
 
 	bool m_DebugDrawEnabled = false; // Box2D
 

@@ -1068,12 +1068,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\Bullet3\LinearMath\btVector3.h">
       <Filter>Libraries\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Utilities\Tween\Tween.h">
-      <Filter>Utilities\Tween</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Utilities\Tween\TweenFuncs.h">
-      <Filter>Utilities\Tween</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\Tween.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\imgui\imgui.cpp">
@@ -1194,8 +1190,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Libraries\Bullet3\LinearMath\btVector3.cpp">
       <Filter>Libraries\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Generic\Utilities\Tween\TweenFuncs.cpp">
-      <Filter>Utilities\Tween</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utilities\Tween\TweenFuncs.cpp" />
   </ItemGroup>
 </Project>

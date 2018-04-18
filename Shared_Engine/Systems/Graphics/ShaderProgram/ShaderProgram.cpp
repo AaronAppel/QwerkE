@@ -313,12 +313,12 @@ void ShaderProgram::SetupAttributeList()
 
 	/* Populate .vert attributes */
 	// vert
-	for (uint i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
+	for (unsigned int i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
 	{
 		std::string loopString = vertStringList.at(i);
 		if (loopString.at(0) == 'i' && loopString.find("in") != loopString.npos) // starts with 'i' and has "in" in line
 		{
-			uint size = 20;
+            unsigned int size = 20;
 			std::string t_Variable;
 			sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
 			strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
@@ -375,12 +375,12 @@ void ShaderProgram::SetupUniformList()
 	delete[] buffer; // cleanup
 
 	/* Populate .vert uniforms */
-	for (uint i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
+	for (unsigned int i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file
 	{
 		std::string loopString = vertStringList.at(i);
 		if (loopString.at(0) == 'u' && loopString.find("uniform") != loopString.npos) // starts with 'u' and has uniform in line
 		{
-			uint size = 20;
+            unsigned int size = 20;
 			std::string t_Variable;
 			sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
 			strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
@@ -397,12 +397,12 @@ void ShaderProgram::SetupUniformList()
 		}
 	}
 	/* Populate .frag uniforms */
-	for (uint i = 0; i < fragStringList.size(); i++) // stringList.size() = number of lines in file
+	for (unsigned int i = 0; i < fragStringList.size(); i++) // stringList.size() = number of lines in file
 	{
 		std::string loopString = fragStringList.at(i);
 		if (loopString.at(0) == 'u' && loopString.find("uniform") != loopString.npos)
 		{
-			uint size = 20;
+            unsigned int size = 20;
 			std::string t_Variable;
 			sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
 			strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end

@@ -60,6 +60,8 @@ void Editor::DrawShaderEditor(ShaderProgram* shader)
         }
     }
 
+    // TODO: Fix error with recompiling a shader, then deleting the shader strings.
+
     if (ImGui::Button("Recompile Vert"))
     {
         int bp = 1;
@@ -76,6 +78,7 @@ void Editor::DrawShaderEditor(ShaderProgram* shader)
         //shader->ReCompile1Shader(GL_VERTEX_SHADER, buffer);
         long length;
         // char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
+
         shader->SetShaderStringData(GL_FRAGMENT_SHADER, fragBuffer);
         shader->ReCompile1Shader(GL_FRAGMENT_SHADER, fragBuffer);
     }

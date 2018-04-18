@@ -43,7 +43,7 @@ GameCore::~GameCore()
 	m_FBO = 0;
 }
 
-void GameCore::OnWindowResize(uint width, uint height)
+void GameCore::OnWindowResize(unsigned int width, unsigned int height)
 {
 	// TODO:: Add support for multiple windows
     glViewport( 0, 0, width, height );

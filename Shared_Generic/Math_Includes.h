@@ -30,7 +30,5 @@ typedef Vector4Int ivec4;
 // matrix
 #include "Libraries/Math/MyMatrix.h"
 typedef MyMatrix mat4;
-// uint
-typedef unsigned int uint;
 
 #endif // !_Math_Includes_H_

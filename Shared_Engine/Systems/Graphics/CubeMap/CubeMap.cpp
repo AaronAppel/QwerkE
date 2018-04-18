@@ -30,7 +30,7 @@ void CubeMap::Init()
 
 GLuint CubeMap::loadCubemap(std::vector<std::string> faces)
 {
-	uint textureID = -1;
+    unsigned int textureID = -1;
 	/*
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);

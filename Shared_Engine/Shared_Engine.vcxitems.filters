@@ -178,8 +178,10 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Events\InputEvent.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\glfw_Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Systems\PhysicsWorld.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\glfw_Window.h">
       <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
@@ -438,8 +440,10 @@
       <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\InputEvent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\glfw_Window.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Systems\PhysicsWorld.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\appe0011\Documents\GitHub\QwerkE\Shared_Engine\Systems\glfw_Window.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>

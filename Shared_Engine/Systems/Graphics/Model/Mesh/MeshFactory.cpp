@@ -162,7 +162,7 @@ Mesh* MeshFactory::CreateTestModel()
 	std::vector<unsigned int> NormalIndices;
 
 	/* Read data */
-	for (uint i = 0; i < stringList.size(); i++)
+	for (unsigned int i = 0; i < stringList.size(); i++)
 	{
 		std::string loopString = stringList.at(i);
 
@@ -223,7 +223,7 @@ Mesh* MeshFactory::CreateTestModel()
 
 	/* Create VertexData list */
 	std::vector<VertexData> t_VertexData;
-	for (uint i = 0; i < verts.size(); i++)
+	for (unsigned int i = 0; i < verts.size(); i++)
 	{
 		// First vertex
 		VertexData t_Vertex;
@@ -237,7 +237,7 @@ Mesh* MeshFactory::CreateTestModel()
 	}
 
 	/* Setup UVs and Normals */
-	for (uint i = 0; i < VertexIndices.size(); i++)
+	for (unsigned int i = 0; i < VertexIndices.size(); i++)
 	{
 		t_VertexData.at(VertexIndices[i]).UV = uvs[UVIndices[i]];
 		t_VertexData.at(VertexIndices[i]).normal = normals.at(NormalIndices[NormalIndices[i]]);
