@@ -17,18 +17,18 @@ public:
 
     void SetTween(TweenFunc function) { m_pTweenFunction = function; }
 
-    float Tween::Tick(double a_Deltatime)
+    float Tick(double a_Deltatime)
     {
         m_ElapsedTime += a_Deltatime;
         return m_pTweenFunction(m_StartingValue, m_Range, m_ElapsedTime, m_EndTime);
     }
 
-    void Tween::Reset()
+    void Reset()
     {
         Reset(m_StartingValue, m_Range, m_EndTime);
     }
 
-    void Tween::Reset(float min, float range, float time)
+    void Reset(float min, float range, float time)
     {
         m_ElapsedTime = 0.0f; // reset timer
         m_StartingValue = min;
