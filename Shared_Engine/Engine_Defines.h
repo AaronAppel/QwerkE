@@ -27,7 +27,7 @@
 // TODO: Look at how to determine platform and architecture
 // TODO: Look at a good way to handle DEBUG vs RELEASE modes
 // TOTO: Fix ugly _Q defines
-#if _WIN32
+#ifdef _WIN32
 #define _QWindows
 #define _Q32bit
 

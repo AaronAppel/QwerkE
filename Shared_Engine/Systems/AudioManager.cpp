@@ -2,18 +2,20 @@
 #include "../../Shared_Generic/Utilities/PrintFunctions.h"
 
 // OpenAL Reference: https://www.openal.org/documentation/OpenAL_Programmers_Guide.pdf
+// wav loading: https://blog.csdn.net/u011417605/article/details/49662535
 const char* test_wav = "../../Shared_Generic/Resources/Sounds/Test.wav";
 
 AudioManager::AudioManager()
 {
     // Initialization
-    /*
+    
     Device = alcOpenDevice(NULL); // select the "preferred device"
 
     if (Device) {
         Context = alcCreateContext(Device, NULL);
         alcMakeContextCurrent(Context);
     }
+    /*
     // Check for EAX 2.0 support
     g_bEAX = alIsExtensionPresent("EAX2.0");
     // Generate Buffers
