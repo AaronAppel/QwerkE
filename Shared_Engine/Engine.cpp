@@ -223,7 +223,7 @@ void Engine::Run()
 		if (timeSincePrint >= printPeriod) // print period
 		{
 			frameRate = 1.0f / timeSincePrint * framesSincePrint;
-			OutputPrint("\nFPS: %f", frameRate); // FPS printout
+			// OutputPrint("\nFPS: %f", frameRate); // FPS printout
             // OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
 			timeSincePrint = 0.0f;
 			framesSincePrint = 0;

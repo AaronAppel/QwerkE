@@ -58,7 +58,7 @@ protected:
 	Mesh* m_Mesh = nullptr;
 	ShaderProgram* m_Shader = nullptr;
 
-	vec4 m_OriginalColor = vec4(0.2, 0.4,0.6f, 1.0f); // Used when no image
+	vec4 m_OriginalColor = vec4(0.2f, 0.4f, 0.6f, 1.0f); // Used when no image
 	vec4 m_Color = vec4(0.9f,0.9f,0.9f,1.0f); // Current colour
 
 	vec2 m_Size = vec2(0.5f, 0.5f); // percentage of parent window size

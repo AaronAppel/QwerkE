@@ -2,12 +2,12 @@
 #include "../../Shared_Generic/Utilities/PrintFunctions.h"
 
 // OpenAL Reference: https://www.openal.org/documentation/OpenAL_Programmers_Guide.pdf
-const char* test_wav = "../../Shared_Generic/Resources/Sounds/Test.wav";
+// wav loading: https://blog.csdn.net/u011417605/article/details/49662535
+// const char* test_wav = "../../Shared_Generic/Resources/Sounds/Test.wav";
 
 AudioManager::AudioManager()
 {
     // Initialization
-    /*
     Device = alcOpenDevice(NULL); // select the "preferred device"
 
     if (Device) {
@@ -25,6 +25,7 @@ AudioManager::AudioManager()
         // DisplayALError("alGenBuffers :", error);
         return;
     }
+    /*
     // Load test.wav
     loadWAVFile(test_wav, &format, &data, &size, &freq, &loop);
     if ((error = alGetError()) != AL_NO_ERROR)
