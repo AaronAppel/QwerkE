@@ -39,7 +39,7 @@ protected:
 	SceneManager* m_SceneManager = nullptr;
 	InputManager* m_Input = nullptr;
 
-    void DrawShaderEditor(ShaderProgram* shader);
+    void DrawShaderEditor(ShaderProgram* shader); // TODO: Create a ShaderEditor() class and store a member
 };
 
 #endif // !_Editor_H_

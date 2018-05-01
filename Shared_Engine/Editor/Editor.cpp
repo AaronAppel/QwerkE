@@ -1,6 +1,7 @@
 #include "Editor.h"
 #include "../Systems/Graphics/ShaderProgram/ShaderProgram.h"
 #include "../../Shared_Generic/Utilities/FileIO/FileUtilities.h"
+#include "../../Shared_Generic/Utilities/StringHelpers.h"
 #include "../../Shared_Generic/Libraries/imgui/imgui.h"
 #include "../Systems/ServiceLocator.h"
 #include "../Systems/Input/InputManager.h"
@@ -29,17 +30,24 @@ EntityEditor* Editor::GetEntityEditor()
 
 void Editor::DrawShaderEditor(ShaderProgram* shader)
 {
+	assert(shader != nullptr); // DEBUG
+
+	// TEST: temporary variables for testing
     const int bufferSize = 2000;
     static char vertBuffer[bufferSize] = { 0 };
     static char fragBuffer[bufferSize] = { 0 };
+	static char geoBuffer[bufferSize] = { 0 };
+
     static GLuint currentShader = 0;
 
     if (currentShader != shader->GetProgram())
     {
         // strcpy_s(buffer, (char*)shader->GetVertString());
         currentShader = shader->GetProgram();
+		// TODO: Handle null shader strings
         strcpy_s(vertBuffer, bufferSize, (const char*)shader->GetVertString());
         strcpy_s(fragBuffer, bufferSize, (const char*)shader->GetFragString());
+		// strcpy_s(geoBuffer, bufferSize, (const char*)shader->GetGeoString());
     }
 
     // TODO: boolean to open/close window
@@ -59,29 +67,35 @@ void Editor::DrawShaderEditor(ShaderProgram* shader)
             // buffer was changed
         }
     }
-
-    // TODO: Fix error with recompiling a shader, then deleting the shader strings.
+	if (ImGui::CollapsingHeader("Geometry"))
+	{
+		if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(400, 250)))
+		{
+			// buffer was changed
+		}
+	}
 
     if (ImGui::Button("Recompile Vert"))
     {
-        int bp = 1;
-        //shader->ReCompile1Shader(GL_VERTEX_SHADER, buffer);
-        long length;
-        // char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
-        shader->SetShaderStringData(GL_VERTEX_SHADER, vertBuffer);
-        shader->ReCompile1Shader(GL_VERTEX_SHADER, vertBuffer);
+		shader->ReCompile1Shader(GL_VERTEX_SHADER, DeepCopyString(vertBuffer)); // Good enough for now, but should remove allocation calls
+
+		// can also load shader from file
+		// long length;
+		// char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.vert", &length);
     }
 
     if (ImGui::Button("Recompile Frag"))
     {
-        int bp = 1;
-        //shader->ReCompile1Shader(GL_VERTEX_SHADER, buffer);
-        long length;
-        // char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
+		shader->ReCompile1Shader(GL_FRAGMENT_SHADER, DeepCopyString(fragBuffer)); // Good enough for now, but should remove allocation calls
 
-        shader->SetShaderStringData(GL_FRAGMENT_SHADER, fragBuffer);
-        shader->ReCompile1Shader(GL_FRAGMENT_SHADER, fragBuffer);
+		// can also load shader from file
+		// long length;
+		// char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
     }
 
+	if (ImGui::Button("Recompile Geo"))
+	{
+		// TODO: Handle geometry shader editing.
+	}
     ImGui::End();
 }

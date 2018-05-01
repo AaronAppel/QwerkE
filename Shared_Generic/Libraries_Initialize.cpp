@@ -18,7 +18,7 @@ bool Libs_Setup()
 
     // Setup/Load libraries based on platform, architecture, configuration
     // TODO: Clean up #ifs
-#ifdef _Q32bit // architecture
+#ifdef _Q32Bit // architecture
 // platform
 #ifdef _QWindows
 // TODO: setup libraries
@@ -30,7 +30,7 @@ bool Libs_Setup()
 #pragma warning "Define Platform!"
 #endif
 
-#elif _Q64bit // architecture
+#elif _Q64Bit // architecture
 // platform
 #ifdef _QWindows
 #elif _Android

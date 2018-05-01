@@ -189,8 +189,8 @@ void Engine::Run()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
-    
-	QwerkE::ServiceLocator::LockServices(true);
+
+	QwerkE::ServiceLocator::LockServices(true); // prevent service changes
 
 	// TEST:
     NetworkManager* netMan = (NetworkManager*)QwerkE::ServiceLocator::GetService(eEngineServices::NetworkManager);
@@ -224,7 +224,7 @@ void Engine::Run()
 		{
 			frameRate = 1.0f / timeSincePrint * framesSincePrint;
 			OutputPrint("\nFPS: %f", frameRate); // FPS printout
-            OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
+            // OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
 			timeSincePrint = 0.0f;
 			framesSincePrint = 0;
 		}
@@ -279,13 +279,13 @@ void Engine::Update(double deltatime)
 {
 	m_SceneManager->Update(deltatime);
 	m_Editor->Update();
-    
+
 	//if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE)) // DEBUG: A simple way to close the window while testing
     InputManager* inputManager = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
     if (inputManager->GetIsKeyDown(eKeys::eKeys_Escape))
     {
         WindowManager* windowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
-        windowManager->GetWindow(0)->SetClosing(true);        
+        windowManager->GetWindow(0)->SetClosing(true);
     }
 }
 

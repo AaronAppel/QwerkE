@@ -68,9 +68,9 @@ void imgui_Editor::Draw()
 
 		ImGui::EndMainMenuBar();
 	}
-    
+
     if (shaderEditor)
-    {        
+    {
         DrawShaderEditor((ShaderProgram*)((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader"));
     }
 

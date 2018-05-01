@@ -6,3 +6,7 @@ arial.ttf
 vera.ttf
 https://github.com/JotJunior/PHP-Boleto-ZF2/blob/master/public/assets/fonts/
 License: Unknown
+
+FREESCPT.TTF
+https://fontzone.net/font-details/freestyle-script
+License: Unknown

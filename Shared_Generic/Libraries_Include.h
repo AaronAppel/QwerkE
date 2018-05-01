@@ -6,7 +6,7 @@
 // TODO: Hide loading/unloading behind load/splash screen?
 // TODO: Clean up #ifs
 // TODO: Remove QwerkE specific defines
-#ifdef _Q32bit // architecture
+#ifdef _Q32Bit // architecture
 // platform
 #ifdef _QWindows
 // TODO: Add libraries
@@ -16,7 +16,7 @@
 #elif _Linux
 #endif
 
-#elif _Q64bit // architecture
+#elif _Q64Bit // architecture
 // platform
 #ifdef _QWindows
 #elif _Android
@@ -61,7 +61,7 @@
 //////////////////////////////
 // //
 // open graphics library
-#ifdef _Q32bit
+#ifdef _Q32Bit
 #pragma comment( lib, "opengl32.lib" ) // load
 #else
 // TODO: Is there a 64 bit openGL library?

@@ -2,11 +2,11 @@
 #define _Engine_Platform_H_
 
 // platform includes
-#if defined(_Q32bit) && defined(_QWindows)
+#if defined(_Q32Bit) && defined(_QWindows)
 #include <SDKDDKVer.h>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-#elif defined(_Q64bit) && defined(_QWindows)
+#elif defined(_Q64Bit) && defined(_QWindows)
 #else
 #pragma warning "Define Platform!"
 #endif // !platform

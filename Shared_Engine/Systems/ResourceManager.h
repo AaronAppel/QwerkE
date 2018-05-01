@@ -45,7 +45,7 @@ public:
 
 private:
 	// Hot lists
-	std::map<std::string, Mesh*> m_HotMeshes;
+	std::map<std::string, Mesh*> m_HotMeshes; // TODO: Rename
 	std::map<std::string, ShaderProgram*> m_HotShaders;
 	std::map<std::string, GLuint> m_HotTextures;
 	std::map<std::string, MaterialData*> m_HotMaterials;

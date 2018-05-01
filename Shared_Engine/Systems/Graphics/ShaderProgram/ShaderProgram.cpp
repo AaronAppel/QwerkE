@@ -42,34 +42,78 @@ bool ShaderProgram::Init(const char* vertFileDir, const char* fragFileDir, const
 // Returns new shader handle is successful, else 0
 GLuint ShaderProgram::ReCompile1Shader(GLenum shaderType, const char* shaderString)
 {
-    GLuint handle = CompileShader(shaderType, shaderString);
+	// Note: Future code may try to re-use shaders. If that is the case then they
+	// cannot be delete when a program is no longer using it. Maybe keep track of shaders
+	// separately and use a reference counter to delete.
 
-	if (handle > 0) // Success
+	// Note: Shaders are not unlinked before linking to a new program in case the linking
+	// fails. OpenGL will throw an error message. Consider finding a better solution.
+	// Maybe glDetachShader()
+
+	// TODO: Can cleanup the 3 condition if statements everywhere with a GLuint*.
+
+    GLuint handle = CompileShader(shaderType, shaderString); // create a new shader
+
+	if (handle > 0) // compiled
 	{
-        // TODO: Delete old shader before overwriting it
-		if (shaderType == GL_VERTEX_SHADER) { m_VertShaderHandle = handle; }
-		else if (shaderType == GL_FRAGMENT_SHADER) { m_FragShaderHandle = handle; }
-		else if (shaderType == GL_GEOMETRY_SHADER) { m_GeoShaderHandle = handle; }
+		// temp handles in case linking fails
+		GLuint tempVert = m_VertShaderHandle;
+		GLuint tempFrag = m_FragShaderHandle;
+		GLuint tempGeo = m_GeoShaderHandle;
 
-		// re-link shaders
-        GLuint result = LinkShaders(m_ProgramHandle, m_VertShaderHandle, m_FragShaderHandle);
+		// overwrite the 1 shader being recompiled
+		if (shaderType == GL_VERTEX_SHADER) { tempVert = handle; }
+		else if (shaderType == GL_FRAGMENT_SHADER) { tempFrag = handle; }
+		else if (shaderType == GL_GEOMETRY_SHADER) { tempGeo = handle; }
 
-        CheckforGLErrors(__FILE__, __LINE__);
-        if (result > 0)
+		// create a new and linked program
+        GLuint result = LinkShaders(tempVert, tempFrag, tempGeo);
+
+        CheckforGLErrors(__FILE__, __LINE__); // Currently throws error because shaders are already linked
+
+        if (result > 0) // linked
         {
+			// delete old shader
+			if (shaderType == GL_VERTEX_SHADER) { glDeleteShader(m_VertShaderHandle); }
+			else if (shaderType == GL_FRAGMENT_SHADER) { glDeleteShader(m_FragShaderHandle); }
+			else if (shaderType == GL_GEOMETRY_SHADER) { glDeleteShader(m_GeoShaderHandle); }
+
+			// save new shader handle
+			if (shaderType == GL_VERTEX_SHADER) { m_VertShaderHandle = handle; }
+			else if (shaderType == GL_FRAGMENT_SHADER) { m_FragShaderHandle = handle; }
+			else if (shaderType == GL_GEOMETRY_SHADER) { m_GeoShaderHandle = handle; }
+
+			// save new string data
+			if (shaderType == GL_VERTEX_SHADER)
+			{
+				delete[] m_VertString;
+				m_VertString = shaderString;
+			}
+			else if (shaderType == GL_FRAGMENT_SHADER)
+			{
+				delete[] m_FragString;
+				m_FragString = shaderString;
+			}
+			else if (shaderType == GL_GEOMETRY_SHADER)
+			{
+				delete[] m_GeoString;
+				m_GeoString = shaderString;
+			}
+
             glDeleteProgram(m_ProgramHandle);
             m_ProgramHandle = result; // update program handle
         }
         else
         {
             OutputPrint("\nRecompile1Shader(): Error linking shaders!");
-            // TODO: Delete handle
+			glDeleteProgram(result); // TODO: needed?
+			glDeleteShader(handle);
         }
 	}
 	else
 	{
         OutputPrint("ReCompileShader(): Error recompiling %s. No changes were made.\n");// TODO: Nice message with GetShaderName(shaderString));
-        // TODO: Delete handle
+		glDeleteShader(handle);
 	}
     CheckforGLErrors(__FILE__, __LINE__);
 	return handle;
@@ -77,22 +121,27 @@ GLuint ShaderProgram::ReCompile1Shader(GLenum shaderType, const char* shaderStri
 
 bool ShaderProgram::ReCompileShader()
 {
-    CleanUp(); // TODO: evaluate which shaders to keep based on changes to strings or handles
+    // TODO: How to handle data deletion and re-initialization?
 
     return BuildShaderProgram(); // build using new string data
 }
 
 void ShaderProgram::SetShaderStringData(GLenum shaderType, const char* shaderString)
 {
+	if (shaderString != nullptr) // if nullptr do not alter
+
 	switch (shaderType)
 	{
 	case GL_VERTEX_SHADER:
+		delete[] m_VertString;
 		m_VertString = shaderString;
 		break;
 	case GL_FRAGMENT_SHADER:
+		delete[] m_FragString;
 		m_FragString = shaderString;
 		break;
 	case GL_GEOMETRY_SHADER:
+		delete[] m_GeoString;
 		m_GeoString = shaderString;
 		break;
 	}
@@ -143,7 +192,7 @@ bool ShaderProgram::BuildShaderProgram()
     if (m_FragString) m_FragShaderHandle = CompileShader(GL_FRAGMENT_SHADER, m_FragString);
     if (m_GeoString) m_GeoShaderHandle = CompileShader(GL_GEOMETRY_SHADER, m_GeoString);
 
-    if (m_VertShaderHandle == 0 && m_FragShaderHandle == 0 && m_GeoShaderHandle == 0) // null handles
+    if (m_VertShaderHandle == 0 && m_FragShaderHandle == 0 && m_GeoShaderHandle == 0) // no valid program
     {
         CleanUp(); // deallocate memory
         assert(0); // DEBUG: Error compiling ShaderProgram().
@@ -195,7 +244,7 @@ GLuint ShaderProgram::CompileShader(GLenum shaderType, const char* shaderString)
 
 	return shaderHandle;
 }
-// Returns new program handle is successful, else 0
+// Returns new program handle if successful, else 0
 GLuint ShaderProgram::LinkShaders(GLuint vert, GLuint frag, GLuint geo)
 {
 	GLuint result = 0;

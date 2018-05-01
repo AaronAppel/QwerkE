@@ -1,3 +1,6 @@
+// It is required to add the following preprocessor defines to this project properties.
+// Win32Bit/Win64Bit, and DEBUG/RELEASE
+
 #include "../QwerkE.h" // include engine
 
 #include "../Shared_Engine/Engine_Enums.h"
@@ -9,6 +12,7 @@ int main() // End user implementation
 	if (engine.Startup() == eEngineMessage::_QFail)
 	{
 		OutputPrint("\nMain(): Error loading services!\n");
+		assert(false);
 		return 0;
 	}
 
