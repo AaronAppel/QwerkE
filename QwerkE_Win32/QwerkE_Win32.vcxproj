@@ -100,10 +100,6 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;Win64Bit;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-=======
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/OpenAL/include/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
->>>>>>> a445bbfae874c9d4f54ea83bdc5c4c373ea70c32
       <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
