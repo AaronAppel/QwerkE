@@ -1,4 +1,4 @@
-#ifndef _QwerkE_H_
+ifndef _QwerkE_H_
 #define _QwerkE_H_
 
 // ORIGINAL SOURCE LINK: https://github.com/AaronAppel/QwerkE

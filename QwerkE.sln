@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QwerkE_Win32", "QwerkE_Win32\QwerkE_Win32.vcxproj", "{EB24FD20-896B-47F3-9332-EB44537CA914}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QwerkE_Windows", "QwerkE_Win32\QwerkE_Win32.vcxproj", "{EB24FD20-896B-47F3-9332-EB44537CA914}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Engine", "Shared_Engine\Shared_Engine.vcxitems", "{64B82DE4-2768-4AD2-B95D-B3615FCC482E}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Game", "Shared_Game\Shared_Game.vcxitems", "{26644421-E135-4E7C-B81C-8A80A9AA1FDC}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Generic", "Shared_Generic\Shared_Generic.vcxitems", "{7CC66B38-57BA-406A-B003-F8E18BA25B1F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test_Game1", "Test_Game1\Test_Game1.vcxproj", "{03F57039-F0C6-4ADD-AC84-61E01A0CF463}"
 EndProject
@@ -17,14 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test_GameClient", "Test_Gam
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Shared_Engine\Shared_Engine.vcxitems*{03f57039-f0c6-4add-ac84-61e01a0cf463}*SharedItemsImports = 4
-		Shared_Game\Shared_Game.vcxitems*{03f57039-f0c6-4add-ac84-61e01a0cf463}*SharedItemsImports = 4
-		Shared_Generic\Shared_Generic.vcxitems*{03f57039-f0c6-4add-ac84-61e01a0cf463}*SharedItemsImports = 4
-		Shared_Game\Shared_Game.vcxitems*{26644421-e135-4e7c-b81c-8a80a9aa1fdc}*SharedItemsImports = 9
 		Shared_Engine\Shared_Engine.vcxitems*{64b82de4-2768-4ad2-b95d-b3615fcc482e}*SharedItemsImports = 9
-		Shared_Generic\Shared_Generic.vcxitems*{7cc66b38-57ba-406a-b003-f8e18ba25b1f}*SharedItemsImports = 9
 		Shared_Engine\Shared_Engine.vcxitems*{eb24fd20-896b-47f3-9332-eb44537ca914}*SharedItemsImports = 4
-		Shared_Generic\Shared_Generic.vcxitems*{eb24fd20-896b-47f3-9332-eb44537ca914}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

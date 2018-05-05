@@ -47,6 +47,14 @@ libraries getting added.
 Apr 13th 2018
 Redesign the WindowManager() and Window() classes.
 
-Apr 14th 208
+Apr 14th 2018
 Learning C++ Refection.
 https://stackoverflow.com/questions/41453/how-can-i-add-reflection-to-a-c-application
+
+May 5th 2018
+The new engine/editor might be completely private. Should users be able to
+hook into it? I guess I should stay open source so at least let users see how
+the code works. I think that giving users the ability to extend and replace
+components would be really cool. The only negative I see is the cost of
+developing an engine that is made to be dynamic. There is also the cost of
+documentation although I should already be doing that for myself to some degree.
