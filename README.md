@@ -1,5 +1,7 @@
-# QwerkE
-A simple engine or framework I am creating to learn basic game engine structure.
+# Qwerk_Engine
+*This project is a work in progess*
+A simple engine or runtime editor for the QwerkE framework.
+QwerkEngine framework lives here: https://github.com/AaronAppel/QwerkE_Framework
 
 ## Getting Started
 ...
