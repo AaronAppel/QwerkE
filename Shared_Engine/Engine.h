@@ -8,6 +8,8 @@
 #include "Engine_Enums.h" // eEngineMessage
 
 class Editor;
+class SceneManager;
+class Window;
 
 // If only 1 engine should exist at a time then it could be wrapped in
 // the QwerkE namespace and have static functions like a singleton or
@@ -20,9 +22,6 @@ public: // External API
 	Engine();
 	~Engine();
 
-	eEngineMessage Startup();
-	eEngineMessage TearDown();
-
 	void Run();
 
 	void NewFrame();
@@ -34,6 +33,8 @@ public: // External API
 
 private:
 	// Framework*
+	Window* m_Window = nullptr;
+	SceneManager* m_SceneManager = nullptr;
 	bool m_IsRunning = false;
     Editor* m_Editor = nullptr;
 };

@@ -78,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/OpenAL/include/;$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/OpenAL/include/;$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/bullet3/;$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;Win32Bit;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>
@@ -163,7 +163,7 @@
     <ClCompile Include="QwerkE_Windows.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Additional_Includes.h" />
+    <ClInclude Include="Engine_Additional_Includes.h" />
     <ClInclude Include="PCH_Win32.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

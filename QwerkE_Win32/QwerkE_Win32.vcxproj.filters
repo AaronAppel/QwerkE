@@ -6,6 +6,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH_Win32.h" />
-    <ClInclude Include="Additional_Includes.h" />
+    <ClInclude Include="Engine_Additional_Includes.h" />
   </ItemGroup>
 </Project>

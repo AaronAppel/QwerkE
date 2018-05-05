@@ -1,0 +1,3 @@
+[submodule "QwerkE_Framework"]
+	path = QwerkE_Framework
+	url = https://github.com/AaronAppel/QwerkE_Framework.git

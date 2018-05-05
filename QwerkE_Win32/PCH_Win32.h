@@ -5,8 +5,8 @@
 // include STATIC code that does not change often
 /////////////////////////////////////////////////
 
-#include "../Shared_Engine/Engine_Defines.h"
-#include "../Shared_Engine/Engine_Platform.h"
+#include "../QwerkE_Framework/QwerkE_Framework/QwerkE_Defines.h"
+#include "../QwerkE_Framework/QwerkE_Framework/QwerkE_Platform.h"
 
 // TODO: Move pragma warnings and use pop warnings
 //#pragma warning(disable : 4996) // old sprintf warnings in RakNet
@@ -24,17 +24,17 @@
 #include <vector>
 
 // constants, enums
-#include "../Shared_Engine/Global_Constants.h"
-#include "../Shared_Engine/Engine_Enums.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Global_Constants.h"
+#include "../QwerkE_Framework/QwerkE_Framework/QwerkE_Enums.h"
 
 // containers
 
 // libraries
-#include "../Shared_Generic/Libraries_Include.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries_Include.h"
 
 /////////////////////////////////////////////////
 // include ENGINE code temporarily for faster build times
 /////////////////////////////////////////////////
-#include "Additional_Includes.h"
+#include "Engine_Additional_Includes.h"
 
 #endif // !_PCH_Win32_H_

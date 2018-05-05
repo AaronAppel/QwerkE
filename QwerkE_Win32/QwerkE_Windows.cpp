@@ -5,10 +5,11 @@
 // Add a runtime editor that has extra functionality like:
 // level editor, entity editor, shader editor, scripting, etc...
 
-#include "../QwerkE.h" // include engine
+#include "../QwerkE_Framework/QwerkE.h" // include engine
 
 // #include "../Shared_Engine/Engine_Enums.h"
 
 int main() // End user implementation
 {
+	return 0;
 }

@@ -21,7 +21,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Debugger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
@@ -29,6 +28,5 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Debugger.cpp" />
   </ItemGroup>
 </Project>

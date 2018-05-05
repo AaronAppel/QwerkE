@@ -10,7 +10,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h">
       <Filter>Editor\SceneGraph</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Systems\Debugger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
@@ -40,7 +39,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp">
       <Filter>Editor\SceneGraph</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Systems\Debugger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>

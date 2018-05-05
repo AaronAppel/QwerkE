@@ -1,34 +1,37 @@
 #include "Engine.h"
-#include "../Shared_Generic/Libraries/glew/GL/glew.h"
-#include "../Shared_Generic/Libraries/glfw/GLFW/glfw3.h"
-#include "../Shared_Generic/Libraries/imgui/imgui.h"
-#include "../Shared_Generic/Libraries/imgui/imgui_impl_glfw_gl3.h"
-#include "Systems/ResourceManager.h"
-#include "Systems/ServiceLocator.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Framework.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/glew/GL/glew.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/glfw/GLFW/glfw3.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui_impl_glfw_gl3.h"
 #include "Engine_Enums.h"
-#include "../Shared_Generic/Utilities/Helpers.h"
-#include "../Shared_Generic/Libraries_Initialize.h"
-#include "Events/EventManager.h"
-#include "Scene/SceneManager.h"
-#include "Systems/Factory/Factory.h"
 #include "Editor/imgui_Editor.h"
-#include "Systems/Graphics/Sprite/Sprite.h"
-#include "Systems/Graphics_Header.h"
-#include "Systems/Graphics/FBO/FrameBufferObject.h"
-#include "CallbackFunctions.h"
-#include "Systems/PhysicsManager.h"
-#include "Systems/Renderer.h"
-#include "Systems/MessageManager.h"
-#include "Systems/AudioManager.h"
-#include "Systems/Debugger.h"
-#include "Systems/Time.h"
-#include "Systems/Graphics/Model/Mesh/MeshFactory.h"
-#include "Systems/Graphics/ShaderProgram/ShaderFactory.h"
-#include "Systems/JobManager.h"
-#include "Systems/NetworkManager.h"
-#include "Systems/Window.h"
-#include "Systems/WindowManager.h"
-#include "Systems/glfw_Window.h"
+
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
+#include "../QwerkE_Framework/QwerkE_Common/Utilities/Helpers.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries_Initialize.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Events/EventManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Scene/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Factory/Factory.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Sprite/Sprite.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics_Header.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/FBO/FrameBufferObject.h"
+
+#include "../QwerkE_Framework/QwerkE_Framework/CallbackFunctions.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Physics/PhysicsManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/MessageManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Debugger.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Time.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Model/Mesh/MeshFactory.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderFactory.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/JobManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Networking/NetworkManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/Window.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/WindowManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/glfw_Window.h"
 
 // TODO: No Globals!
 extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
@@ -52,117 +55,14 @@ Engine::~Engine()
 	// deletion checks
 }
 
-eEngineMessage Engine::Startup()
-{
-	if (Libs_Setup() == false) // setup libraries
-	{
-		ConsolePrint("\nStartup(): Error loading libraries!\n");
-		return eEngineMessage::_QFail; // failure
-	}
-
-    // TODO: Try to reduce or avoid order dependency in system creation
-
-	// load and register systems
-	// Audio, Networking, Graphics (Renderer, GUI), Utilities (Conversion, FileIO, Printing),
-	// Physics, Event, Debug, Memory, Window, Application, Input, Resources
-	QwerkE::ServiceLocator::LockServices(false);
-
-	ResourceManager* resourceManager = new ResourceManager();
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::Resource_Manager, resourceManager);
-
-	InputManager* inputManager = new InputManager();
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::Input_Manager, inputManager);
-
-#ifdef _glfw3_h_
-    m_Window = new glfw_Window(g_WindowWidth, g_WindowHeight, g_WindowTitle);
-#else
-    // win32 window or something
-    Window* window = new Window(g_WindowWidth, g_WindowHeight, g_WindowTitle);
-#endif // !_glfw3_h_
-
-	WindowManager* windowManager = new WindowManager();
-	windowManager->AddWindow(m_Window);
-
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::WindowManager, windowManager);
-
-    EventManager* eventManager = new EventManager();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Event_System, eventManager);
-
-	m_SceneManager = new SceneManager();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Scene_Manager, m_SceneManager);
-
-    Factory* factory = new Factory();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Factory_Entity, factory);
-
-#ifdef IMGUI_API
-    m_Editor = (Editor*)new imgui_Editor();
-#else
-	m_Editor;
-#endif
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Editor, m_Editor);
-
-	PhysicsManager* physicsManager = new PhysicsManager();
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::PhysicsManager, physicsManager);
-
-	MessageManager* messageManager = new MessageManager();
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::MessageManager, messageManager);
-
-	Renderer* renderer = new Renderer();
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::Renderer, renderer);
-
-    AudioManager* audioManager = new AudioManager();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::Audio_Manager, audioManager);
-
-	JobManager* jobManager = new JobManager();
-	QwerkE::ServiceLocator::RegisterService(eEngineServices::JobManager, jobManager);
-
-    NetworkManager* network = new NetworkManager();
-    QwerkE::ServiceLocator::RegisterService(eEngineServices::NetworkManager, network);
-
-	m_SceneManager->Initialize(); // Order Dependency
-
-	return QwerkE::ServiceLocator::ServicesLoaded();
-}
-
-eEngineMessage Engine::TearDown()
-{
-	delete (ResourceManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Resource_Manager);
-
-	delete (InputManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Input_Manager);
-
-	delete ((WindowManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::WindowManager));
-
-    delete (EventManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Event_System);
-
-	delete m_SceneManager;
-
-    delete (Factory*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Factory_Entity);
-
-	delete m_Editor;
-
-	delete (PhysicsManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::PhysicsManager);
-
-	delete (MessageManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::MessageManager);
-
-	delete (Renderer*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Renderer);
-
-    delete (AudioManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::Audio_Manager);
-
-	delete (JobManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::JobManager);
-
-    delete (NetworkManager*)QwerkE::ServiceLocator::UnregisterService(eEngineServices::NetworkManager);
-
-	Libs_TearDown(); // unload libraries
-
-	// TODO: Safety checks?
-	return eEngineMessage::_QSuccess;
-}
-
 void Engine::Run()
 {
     // TODO: check if(initialized) in case user defined simple API.
     // Might want to create another function for the game loop and
     // leave Run() smaller and abstracted from the functionality.
+	Framework framework;
+	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
+
 	m_IsRunning = true;
 
 	double timeSinceLastFrame = 0.0;
@@ -211,7 +111,7 @@ void Engine::Run()
 	short framesSincePrint = 0;
 
 	// Application Loop
-	while (m_Window->IsClosing() == false) // Run until close requested
+	while (framework.StillRunning() == true) // Run until close requested
 	{
 		// setup frame
 		// Calculate deltatime of current frame
