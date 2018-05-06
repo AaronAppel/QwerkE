@@ -6,10 +6,10 @@
 
 #pragma comment( lib, "../Shared_Generic/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" ) // load
 
-#include "../Shared_Generic/Libraries/RakNet/Source/RakPeerInterface.h"
-#include "../Shared_Generic/Libraries/RakNet/Source/RakNetTypes.h"
-#include "../Shared_Generic/Libraries/RakNet/Source/MessageIdentifiers.h"
-#include "../Shared_Generic/Libraries/RakNet/Source/BitStream.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/RakPeerInterface.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/RakNetTypes.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/MessageIdentifiers.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/BitStream.h"
 
 #define MAX_CLIENTS 10
 #define SERVER_PORT 60000

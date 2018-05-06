@@ -8,8 +8,13 @@
 #include "../QwerkE_Framework/QwerkE.h" // include engine
 
 // #include "../Shared_Engine/Engine_Enums.h"
+#include "../Shared_Engine/Engine.h"
 
 int main() // End user implementation
 {
+	Engine engine;
+
+	engine;
+
 	return 0;
 }

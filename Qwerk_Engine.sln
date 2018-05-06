@@ -20,6 +20,8 @@ Global
 		QwerkE_Framework\QwerkE_Framework\QwerkE_Framework.vcxitems*{1632d713-ea31-4c99-a364-447c70e7a758}*SharedItemsImports = 9
 		Shared_Engine\Shared_Engine.vcxitems*{64b82de4-2768-4ad2-b95d-b3615fcc482e}*SharedItemsImports = 9
 		QwerkE_Framework\QwerkE_Common\QwerkE_Common.vcxitems*{e86d5770-08c5-4bc8-a65d-36f233233aeb}*SharedItemsImports = 9
+		QwerkE_Framework\QwerkE_Common\QwerkE_Common.vcxitems*{eb24fd20-896b-47f3-9332-eb44537ca914}*SharedItemsImports = 4
+		QwerkE_Framework\QwerkE_Framework\QwerkE_Framework.vcxitems*{eb24fd20-896b-47f3-9332-eb44537ca914}*SharedItemsImports = 4
 		Shared_Engine\Shared_Engine.vcxitems*{eb24fd20-896b-47f3-9332-eb44537ca914}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

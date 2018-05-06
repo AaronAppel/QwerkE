@@ -33,18 +33,6 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/WindowManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/glfw_Window.h"
 
-// TODO: No Globals!
-extern int g_WindowWidth = 1280, g_WindowHeight = 720; // (1280x720)(1600x900)(1920x1080)(2560x1440)
-extern const char* g_WindowTitle = "QwerkE";
-
-extern GameCore* g_GameCore = nullptr;
-extern const int g_NumPlayers; // Defined in InputManager.h
-extern InputManager* g_InputManager = nullptr;
-extern Controller* g_Player1Controller = nullptr;
-extern bool g_Debugging = false;
-
-FrameBufferObject* g_FBO = new FrameBufferObject();
-
 Engine::Engine()
 {
 	// init? maybe if _QTest defined or something
@@ -69,8 +57,6 @@ void Engine::Run()
 	float frameRate = 0.0f;
     QwerkE::Time::SetDeltatime(&timeSinceLastFrame);
 	QwerkE::Time::SetFrameRate(&frameRate);
-
-	g_FBO->Init();
 
     // TODO: GL state init should be in a Window() or OpenGLManager()
     // class or some type of ::Graphics() system.
@@ -192,18 +178,6 @@ void Engine::Update(double deltatime)
 void Engine::Draw()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // new frame
-
-	// TEMP: Render scene to texture
-	g_FBO->Bind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_SceneManager->Draw();
-	g_FBO->UnBind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // TEMP: End
-
-    ImGui::Begin("Scene Window - Engine.cpp");
-	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(1600 / 3, 900 / 3), ImVec2(0,1), ImVec2(1,0));
-    ImGui::End();
 
 	m_Editor->Draw();
 
