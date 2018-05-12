@@ -1,3 +1,2 @@
 ﻿  Main.cpp
-  Test_GameClient.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\Test_GameClient.exe
-  Test_GameClient.vcxproj -> C:\Users\appe0011\Documents\GitHub\QwerkE\Debug\Test_GameClient.pdb (Partial PDB)
+LINK : fatal error LNK1104: cannot open file '../QwerkE_Common/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib'

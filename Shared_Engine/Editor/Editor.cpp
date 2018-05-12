@@ -81,7 +81,7 @@ void Editor::DrawShaderEditor(ShaderProgram* shader)
 
 		// can also load shader from file
 		// long length;
-		// char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.vert", &length);
+		// char* newShaderString = LoadCompleteFile("../Shared_Common/Resources/Shaders/TestShader.vert", &length);
     }
 
     if (ImGui::Button("Recompile Frag"))
@@ -90,7 +90,7 @@ void Editor::DrawShaderEditor(ShaderProgram* shader)
 
 		// can also load shader from file
 		// long length;
-		// char* newShaderString = LoadCompleteFile("../Shared_Generic/Resources/Shaders/TestShader.frag", &length);
+		// char* newShaderString = LoadCompleteFile("../Shared_Common/Resources/Shaders/TestShader.frag", &length);
     }
 
 	if (ImGui::Button("Recompile Geo"))

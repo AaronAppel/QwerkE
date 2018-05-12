@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string.h>
 
-#pragma comment( lib, "../Shared_Generic/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" ) // load
+#pragma comment( lib, "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" ) // load
 
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/RakPeerInterface.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/RakNetTypes.h"

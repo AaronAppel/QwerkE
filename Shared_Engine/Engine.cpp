@@ -48,7 +48,8 @@ void Engine::Run()
     // TODO: check if(initialized) in case user defined simple API.
     // Might want to create another function for the game loop and
     // leave Run() smaller and abstracted from the functionality.
-	Framework framework;
+	QwerkE::Framework::Startup();
+	QwerkE::Framework::Run();
 
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 
@@ -68,8 +69,8 @@ void Engine::Run()
 	// depth cull for efficiency
 	// Testing: glEnable(GL_CULL_FACE);
 	// Testing: glCullFace(GL_BACK);
-	// if(Wind_CCW) glFrontFace(GL_CCW);
-    // else glFrontFace(GL_CW);
+	if(Wind_CCW) glFrontFace(GL_CCW);
+    else glFrontFace(GL_CW);
 
 	// turn on alpha blending
 	glEnable(GL_BLEND);
@@ -78,11 +79,6 @@ void Engine::Run()
 	glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
 	QwerkE::ServiceLocator::LockServices(true); // prevent service changes
-
-	// TEST:
-    NetworkManager* netMan = (NetworkManager*)QwerkE::ServiceLocator::GetService(eEngineServices::NetworkManager);
-	// netMan->test(); // test server/client
-	// TEST: END
 
 	// Deltatime + FPS Tracking //
 	// Deltatime
@@ -98,7 +94,7 @@ void Engine::Run()
 	short framesSincePrint = 0;
 
 	// Application Loop
-	while (framework.StillRunning() == true) // Run until close requested
+	while (QwerkE::Framework::StillRunning() == true) // Run until close requested
 	{
 		// setup frame
 		// Calculate deltatime of current frame
