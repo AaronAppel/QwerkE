@@ -14,7 +14,7 @@ int main() // End user implementation
 {
 	Engine engine;
 
-	engine;
+	engine.Run();
 
 	return 0;
 }

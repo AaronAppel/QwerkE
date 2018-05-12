@@ -13,16 +13,19 @@ class Window;
 
 // If only 1 engine should exist at a time then it could be wrapped in
 // the QwerkE namespace and have static functions like a singleton or
-// service. Or just find a nother way to prevent multiple instances
+// service. Or just find another way to prevent multiple instances
 // while offering a nice interface.
+
+// What engine functionality should be user accessible?
 
 class Engine
 {
-public: // External API
+public:
 	Engine();
 	~Engine();
 
 	void Run();
+	void Stop() {} // TODO:
 
 	void NewFrame();
 	void Input();

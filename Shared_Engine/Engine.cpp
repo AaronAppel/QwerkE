@@ -49,6 +49,7 @@ void Engine::Run()
     // Might want to create another function for the game loop and
     // leave Run() smaller and abstracted from the functionality.
 	Framework framework;
+
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 
 	m_IsRunning = true;

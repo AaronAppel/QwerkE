@@ -58,3 +58,10 @@ the code works. I think that giving users the ability to extend and replace
 components would be really cool. The only negative I see is the cost of
 developing an engine that is made to be dynamic. There is also the cost of
 documentation although I should already be doing that for myself to some degree.
+
+May 6th 2018
+So libraries are a pain. I am trying to dynamically use .dlls and .libs by detecting
+platform and architecture but it is proving difficult. Some libraries name their files
+the exact same for all versions which is just dumb. If I ever do that shoot me. The 
+solution I have is to create projects for not only every platform and architecture, but
+also debug and release moeds. This means 4 projects per platform, or 2 if I drop 32 bit.
