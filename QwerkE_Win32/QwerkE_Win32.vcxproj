@@ -80,7 +80,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/OpenAL/include/;$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/bullet3/;$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/OpenAL/include/;$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/bullet3/;$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/;$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;Win32Bit;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>

@@ -12,9 +12,7 @@
 
 int main() // End user implementation
 {
-	Engine engine;
-
-	engine.Run();
+	QwerkE::Engine::Run();
 
 	return 0;
 }

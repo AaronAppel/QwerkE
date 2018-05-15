@@ -8,11 +8,15 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Time.h"
 #include "EntityEditor/EntityEditor.h"
 #include "imgui_Editor.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/FBO/FrameBufferObject.h"
+
+FrameBufferObject* g_FBO = new FrameBufferObject();
 
 imgui_Editor::imgui_Editor()
 {
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 	m_Input = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
+	g_FBO->Init();
 }
 
 imgui_Editor::~imgui_Editor()
@@ -32,6 +36,19 @@ void imgui_Editor::Draw()
 {
     // windows
     static bool shaderEditor = false;
+
+	// scene view
+	// TEMP: Render scene to texture
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	g_FBO->Bind();
+	m_SceneManager->Draw();
+	g_FBO->UnBind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// TEMP: End
+
+	ImGui::Begin("Scene Window - Framework.cpp");
+	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(1600 / 3, 900 / 3), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::End();
 
 	// menu
 	if (ImGui::BeginMainMenuBar())

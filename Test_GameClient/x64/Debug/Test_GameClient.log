@@ -1,2 +1,2 @@
 ﻿  Main.cpp
-c:\users\aaron appel\desktop\github\qwerk_engine\test_gameclient\main.cpp(9): fatal error C1083: Cannot open include file: '../Shared_Generic/Libraries/RakNet/Source/RakPeerInterface.h': No such file or directory
+RakNet_VS2008_DLL_Debug_Win32.lib(RakNet_VS2008_DLL_Debug_Win32.dll) : fatal error LNK1112: module machine type 'x86' conflicts with target machine type 'x64'

@@ -18,28 +18,20 @@ class Window;
 
 // What engine functionality should be user accessible?
 
-class Engine
+namespace QwerkE
 {
-public:
-	Engine();
-	~Engine();
+	namespace Engine
+	{
+		void Run();
+		void Stop();
 
-	void Run();
-	void Stop() {} // TODO:
+		void NewFrame();
+		void Input();
+		void Update(double deltatime);
+		void Draw();
 
-	void NewFrame();
-	void Input();
-	void Update(double deltatime);
-	void Draw();
-
-	bool StillRunning() { return m_IsRunning; };
-
-private:
-	// Framework*
-	Window* m_Window = nullptr;
-	SceneManager* m_SceneManager = nullptr;
-	bool m_IsRunning = false;
-    Editor* m_Editor = nullptr;
-};
+		bool StillRunning();
+	}
+}
 
 #endif // !_Engine_H_

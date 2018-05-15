@@ -6,6 +6,8 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Model/Mesh/Mesh.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Model/Model.h"
 #include "../Editor.h"
 
 #include <map>
@@ -55,6 +57,26 @@ void EntityEditor::Draw()
     {
         rComp->SetMaterial(m_ResourceManager->GetMaterial(materials[matIndex]));
     }
+
+	if (ImGui::Button("Tris"))
+	{
+		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_TRIANGLES);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Points"))
+	{
+		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_POINTS);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Lines"))
+	{
+		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_LINES);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Strips"))
+	{
+		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_LINE_STRIP);
+	}
 
     float colors[4] = { rComp->GetColour().x, rComp->GetColour().y, rComp->GetColour().z, rComp->GetColour().w };
     ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);

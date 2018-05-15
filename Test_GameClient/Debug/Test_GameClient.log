@@ -1,2 +1,1 @@
-﻿  Main.cpp
-LINK : fatal error LNK1104: cannot open file '../QwerkE_Common/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib'
+﻿  Test_GameClient.vcxproj -> C:\Users\Aaron Appel\Desktop\GitHub\Qwerk_Engine\Debug\Test_GameClient.exe

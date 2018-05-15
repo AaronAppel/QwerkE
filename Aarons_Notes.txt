@@ -65,3 +65,12 @@ platform and architecture but it is proving difficult. Some libraries name their
 the exact same for all versions which is just dumb. If I ever do that shoot me. The 
 solution I have is to create projects for not only every platform and architecture, but
 also debug and release moeds. This means 4 projects per platform, or 2 if I drop 32 bit.
+
+May 14th 2018
+I finally found a decentish fix for loading assets from projects with different working
+directories. Now I have to ask myself "How does someone ask for a file?". Should users
+ask for a file using the "extension.file"? Having shortform names like "Teapot" is not
+a huge convenience and requires large amounts of overhead to support so screw that I guess.
+Asking for a file by appending it's name to a call also means I can say "Material20/ambient.png"
+to specify a different folder than expected, I am not hardcoding as much. This also means
+users need to remember the folder structure but that is acceptable for the time being.
