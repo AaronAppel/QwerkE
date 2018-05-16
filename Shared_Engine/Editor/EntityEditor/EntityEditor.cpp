@@ -6,8 +6,8 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Model/Mesh/Mesh.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Model/Model.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/Model.h"
 #include "../Editor.h"
 
 #include <map>

@@ -24,7 +24,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Debugger/Debugger.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Components/Time.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Model/Mesh/MeshFactory.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/MeshFactory.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderFactory.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/JobManager/JobManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Networking/NetworkManager.h"
