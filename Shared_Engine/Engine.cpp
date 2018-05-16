@@ -10,24 +10,23 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/Helpers.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries_Initialize.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Events/EventManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Scene/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Scenes/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Factory/Factory.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Sprite/Sprite.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics_Header.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/FBO/FrameBufferObject.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Sprite.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Graphics_Header.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
 
 #include "../QwerkE_Framework/QwerkE_Framework/CallbackFunctions.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Physics/PhysicsManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/MessageManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Debugger.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Time.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Debugger/Debugger.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Components/Time.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Model/Mesh/MeshFactory.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderFactory.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/JobManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/JobManager/JobManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Networking/NetworkManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/Window.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/WindowManager.h"
@@ -195,6 +194,7 @@ namespace QwerkE
 				WindowManager* windowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
 				m_Window->GetWindow(0)->SetClosing(true); // close glfw
 				Framework::Stop();
+				Engine::Stop();
 			}
 		}
 

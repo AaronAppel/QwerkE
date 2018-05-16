@@ -4,11 +4,11 @@
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Scene/SceneManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Time.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Scenes/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Components/Time.h"
 #include "EntityEditor/EntityEditor.h"
 #include "imgui_Editor.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/FBO/FrameBufferObject.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
 
 FrameBufferObject* g_FBO = new FrameBufferObject();
 
