@@ -74,3 +74,10 @@ a huge convenience and requires large amounts of overhead to support so screw th
 Asking for a file by appending it's name to a call also means I can say "Material20/ambient.png"
 to specify a different folder than expected, I am not hardcoding as much. This also means
 users need to remember the folder structure but that is acceptable for the time being.
+
+May 16th 2018
+Now that I have model loading mostly working, I want to avoid having to detect model vs mesh
+everywhere and handle them differently. I am thinking of just using a Model class that has one
+or more meshes. An easy fix since right now models just hold a vector of meshes and iterates
+through them each frame. I need the model to behave the same in every possible condition when
+rendering so this should be a fix until I get fancier with my rendering pipeline.

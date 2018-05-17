@@ -81,6 +81,8 @@ namespace QwerkE
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+			glPointSize(10);
+
 			glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
 			QwerkE::ServiceLocator::LockServices(true); // prevent service changes

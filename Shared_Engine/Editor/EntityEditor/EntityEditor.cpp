@@ -23,7 +23,7 @@ EntityEditor::EntityEditor(Editor* editor)
 EntityEditor::~EntityEditor()
 {
 }
-
+// imgui styling: https://www.unknowncheats.me/forum/direct3d/189635-imgui-style-settings.html
 void EntityEditor::Draw()
 {
     static bool isOpen = true;
@@ -36,52 +36,72 @@ void EntityEditor::Draw()
         return; // no object selected
     }
 
+	ImGui::Text(thing->GetName().c_str()); // object name
+
+	// Draw properties for object components like render, character, etc
+
     static int meshIndex = 0;
     static int shaderIndex = 0;
     static int matIndex = 0;
     const char* meshes[3] = { "Plane", "TutorialCube", "Box" };
-    const char* shaders[3] = { "LitMaterial", "Basic3D", "TestShader" };
-    const char* materials[3] = { "container", "UV_Map", "null" };
+    const char* shaders[4] = { "LitMaterial", "Basic3D", "TestShader", "Basic2D" };
+    const char* materials[3] = { "container.mat", "UV_Map.mat", "null_material.mat" };
 
-    RenderComponent* rComp = (RenderComponent*)thing->GetComponent(Component_Render);
-    ImGui::Text(thing->GetName().c_str());
-    if (ImGui::ListBox("Meshes", &meshIndex, meshes, 3, 3))
-    {
-        rComp->SetMesh(m_ResourceManager->GetMesh(meshes[meshIndex]));
-    }
-    if (ImGui::ListBox("Shaders", &shaderIndex, shaders, 3, 3))
-    {
-        rComp->SetShader(m_ResourceManager->GetShader(shaders[shaderIndex]));
-    }
-    if (ImGui::ListBox("Materials", &matIndex, materials, 3, 3))
-    {
-        rComp->SetMaterial(m_ResourceManager->GetMaterial(materials[matIndex]));
-    }
+	ImGuiCol idx = ImGuiCol_FrameBg;
+	ImVec4 col = ImVec4(0,0,0,0);
 
-	if (ImGui::Button("Tris"))
+	if(ImGui::CollapsingHeader("RenderComponent"))
 	{
-		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_TRIANGLES);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Points"))
-	{
-		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_POINTS);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Lines"))
-	{
-		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_LINES);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Strips"))
-	{
-		rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_LINE_STRIP);
-	}
+		ImGui::PushStyleColor(idx, col);
+		// ImGui::PushStyleVar();
+		RenderComponent* rComp = (RenderComponent*)thing->GetComponent(Component_Render);
+		if (ImGui::ListBox("Meshes", &meshIndex, meshes, 3, 3))
+		{
+			rComp->SetMesh(m_ResourceManager->GetMesh(meshes[meshIndex]));
+		}
+		if (ImGui::ListBox("Shaders", &shaderIndex, shaders, 4, 3))
+		{
+			rComp->SetShader(m_ResourceManager->GetShader(shaders[shaderIndex]));
+		}
+		if (ImGui::ListBox("Materials", &matIndex, materials, 3, 3))
+		{
+			rComp->SetMaterial(m_ResourceManager->GetMaterial(materials[matIndex]));
+		}
 
-    float colors[4] = { rComp->GetColour().x, rComp->GetColour().y, rComp->GetColour().z, rComp->GetColour().w };
-    ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);
-    rComp->SetColour(vec4(colors[0], colors[1], colors[2], colors[3]));
+		if (ImGui::Button("Tris"))
+		{
+			rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_TRIANGLES);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("TriStrip"))
+		{
+			rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_TRIANGLE_STRIP);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("TriFan"))
+		{
+			rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_TRIANGLE_FAN);
+		}
+		if (ImGui::Button("Points"))
+		{
+			rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_POINTS);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Lines"))
+		{
+			rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_LINES);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Strips"))
+		{
+			rComp->GetModel()->m_Meshes[1]->SetPrimitiveType(GL_LINE_STRIP);
+		}
 
+		float colors[4] = { rComp->GetColour().x, rComp->GetColour().y, rComp->GetColour().z, rComp->GetColour().w };
+		ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);
+		rComp->SetColour(vec4(colors[0], colors[1], colors[2], colors[3]));
+		ImGui::PopStyleColor();
+	}
 
     ImGui::End();
 }
