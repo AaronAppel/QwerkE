@@ -11,6 +11,7 @@ class Editor;
 
 #include <string>
 
+// TODO: Change this to be an abstract base class that gets inherited by library version like imgui or BlockMenu
 class EntityEditor // abstract
 {
 public:

@@ -28,6 +28,27 @@ void SceneGraph::Draw()
 	static bool isOpen = true;
 	ImGui::Begin("SceneGraph", &isOpen);
 
+	if(ImGui::Button("Actors"))
+	{
+		// switch to actors
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Cams"))
+	{
+		// switch to cameras
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Lights"))
+	{
+		// switch to lights
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Other"))
+	{
+		// switch to ???... particles, boundaries, etc
+	}
+	ImGui::Separator();
+
 	std::map<std::string, GameObject*> entities = m_SceneManager->GetCurrentScene()->GetObjectList();
 	std::map<std::string, GameObject*>::iterator thing;
 
