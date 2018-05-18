@@ -81,3 +81,10 @@ everywhere and handle them differently. I am thinking of just using a Model clas
 or more meshes. An easy fix since right now models just hold a vector of meshes and iterates
 through them each frame. I need the model to behave the same in every possible condition when
 rendering so this should be a fix until I get fancier with my rendering pipeline.
+
+May 17th 2018
+I am thinking about how to #include files in a smarter way. One thought I had related to end user's
+usage and how they will be #including files. If a dev only wants the rendering portion of the framework,
+that is all they should get. Not a parts of input or anything else. If I define major systems early on
+and try to keep them isolated, then it would super to easy to just pick and choose features by #including
+1 file and not another.

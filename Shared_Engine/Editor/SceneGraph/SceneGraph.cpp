@@ -1,6 +1,6 @@
 #include "SceneGraph.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Scenes/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"

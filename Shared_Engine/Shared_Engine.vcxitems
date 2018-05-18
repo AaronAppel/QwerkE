@@ -17,6 +17,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
@@ -26,6 +27,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
   </ItemGroup>

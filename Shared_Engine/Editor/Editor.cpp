@@ -6,7 +6,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Scenes/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "EntityEditor/EntityEditor.h"
 
 Editor::Editor()

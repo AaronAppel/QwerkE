@@ -11,7 +11,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/Helpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Events/EventManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Scenes/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Factory/Factory.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Sprite.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Graphics_Header.h"

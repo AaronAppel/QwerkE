@@ -1,5 +1,6 @@
 del /Q /F /S /AH .vs\*
 del /Q /F /S x64
+del /Q /F /S enc_temp_folder
 rmdir /Q /S .vs
 rmdir /Q /S x64
 

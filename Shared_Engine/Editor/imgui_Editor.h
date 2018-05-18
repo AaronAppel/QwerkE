@@ -3,6 +3,8 @@
 
 #include "Editor.h"
 
+class ResourceViewer;
+
 class imgui_Editor : Editor
 {
 public:
@@ -16,6 +18,7 @@ public:
 	void DrawSceneList();
 
 private:
+	ResourceViewer* m_ResourceViewer = nullptr;
 };
 
 #endif // !_Editor_H_

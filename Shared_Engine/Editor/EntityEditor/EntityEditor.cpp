@@ -1,6 +1,6 @@
 #include "EntityEditor.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Scenes/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
@@ -77,7 +77,7 @@ void EntityEditor::Draw()
     static const char* meshes[3] = { "Plane", "TutorialCube", "Box" };
     static const char* shaders[4] = { "LitMaterial", "Basic3D", "TestShader", "Basic2D" };
     static const char* materials[4] = { "container.mat", "UV_Map.mat", "null_material.mat", "green_canvas.png" };
-	static const char* models[3] = { "nanosuit/nanosuit.obj", "Alexstrasza/Alexstrasza.obj", "sci-fi-assault-rifle/All.fbx.fbx" };
+	static const char* models[3] = { "nanosuit/nanosuit.obj", "Alexstrasza/Alexstrasza.obj", "scifi_assault_rifle/scifi_assault_rifle.obj" };
 
 	ImGuiCol idx = ImGuiCol_FrameBg; // TODO: Style imgui windows for editing
 	ImVec4 col = ImVec4(0,0,0,0);

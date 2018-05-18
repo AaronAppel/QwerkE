@@ -16,6 +16,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.h">
       <Filter>Editor\EntityEditor</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.h">
+      <Filter>Editor\ResourceViewer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -29,6 +32,12 @@
     </Filter>
     <Filter Include="Editor\EntityEditor">
       <UniqueIdentifier>{4ebc45b0-f29b-4cec-a3a3-380dda1dfdc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\ResourceViewer">
+      <UniqueIdentifier>{45d40182-ecdb-4611-b1b6-816e7a7d0b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\DirectoryViewer">
+      <UniqueIdentifier>{7fb84237-2264-4139-bc83-134134e904b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.cpp">
       <Filter>Editor\EntityEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.cpp">
+      <Filter>Editor\ResourceViewer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

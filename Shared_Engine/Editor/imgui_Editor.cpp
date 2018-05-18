@@ -4,23 +4,27 @@
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Scenes/SceneManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Components/Time.h"
 #include "EntityEditor/EntityEditor.h"
 #include "imgui_Editor.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
+#include "ResourceViewer/ResourceViewer.h"
 
-FrameBufferObject* g_FBO = new FrameBufferObject();
+// TODO: No globals!
+static FrameBufferObject* g_FBO = new FrameBufferObject();
 
 imgui_Editor::imgui_Editor()
 {
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 	m_Input = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
 	g_FBO->Init();
+	m_ResourceViewer = new ResourceViewer();
 }
 
 imgui_Editor::~imgui_Editor()
 {
+	delete m_ResourceViewer;
 }
 
 void imgui_Editor::NewFrame()
@@ -39,13 +43,13 @@ void imgui_Editor::Draw()
 
 	// scene view
 	// TEMP: Render scene to texture
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	g_FBO->Bind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_SceneManager->Draw();
 	g_FBO->UnBind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// TEMP: End
 
+	m_ResourceViewer->Draw();
 	ImGui::Begin("Scene Window - Framework.cpp");
 	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(1600 / 3, 900 / 3), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
