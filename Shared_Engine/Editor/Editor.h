@@ -23,23 +23,16 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	virtual void DrawSceneList() = 0;
-
-    // Getters
-    EntityEditor* GetEntityEditor();
-
 protected:
 	// panels
 	SceneGraph * m_SceneGraph = nullptr;
 	void* m_ActionWindow = nullptr; // TODO: Game and Scene windows. Multi scene views
-    EntityEditor* m_EntityEditor = nullptr; // Change routine/component data for an entity
+    void* m_EntityEditor = nullptr; // Change routine/component data for an entity
 	void* m_MenuBar = nullptr; // TODO: Top menu bar with acces to settings like save, preferences, etc
 	void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
 	// system access
 	SceneManager* m_SceneManager = nullptr;
 	InputManager* m_Input = nullptr;
-
-    void DrawShaderEditor(ShaderProgram* shader); // TODO: Create a ShaderEditor() class and store a member
 };
 
 #endif // !_Editor_H_

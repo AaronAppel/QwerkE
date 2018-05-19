@@ -181,7 +181,7 @@ void ResourceViewer::DrawModelThumbnails()
 		m_FBO->UnBind();
 
 		// m_ImageHandles.push_back(CopyFBOToTexture(*m_FBO, 1280, 720));
-		m_ModelImageHandles.push_back(tempTexture);
+		// m_ModelImageHandles.push_back(tempTexture);
 	}
-
+	m_ModelImageHandles.push_back(m_FBO->GetTextureID());
 }

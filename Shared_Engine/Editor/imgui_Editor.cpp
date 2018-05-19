@@ -10,21 +10,26 @@
 #include "imgui_Editor.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
 #include "ResourceViewer/ResourceViewer.h"
-
-// TODO: No globals!
-static FrameBufferObject* g_FBO = new FrameBufferObject();
+#include "ShaderEditor/imgui_ShaderEditor.h"
+#include "SceneViewer/imgui_SceneViewer.h"
 
 imgui_Editor::imgui_Editor()
 {
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
 	m_Input = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
-	g_FBO->Init();
+	m_EntityEditor = new EntityEditor(this);
+
 	m_ResourceViewer = new ResourceViewer();
+	m_ShaderEditor = new imgui_ShaderEditor();
+	m_SceneViewer = new imgui_SceneViewer();
 }
 
 imgui_Editor::~imgui_Editor()
 {
+	delete m_EntityEditor;
 	delete m_ResourceViewer;
+	delete m_ShaderEditor;
+	delete m_SceneViewer;
 }
 
 void imgui_Editor::NewFrame()
@@ -40,19 +45,6 @@ void imgui_Editor::Draw()
 {
     // windows
     static bool shaderEditor = false;
-
-	// scene view
-	// TEMP: Render scene to texture
-	g_FBO->Bind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_SceneManager->Draw();
-	g_FBO->UnBind();
-	// TEMP: End
-
-	m_ResourceViewer->Draw();
-	ImGui::Begin("Scene Window - Framework.cpp");
-	ImGui::Image(ImTextureID(g_FBO->GetTextureID()), ImVec2(1600 / 3, 900 / 3), ImVec2(0, 1), ImVec2(1, 0));
-	ImGui::End();
 
 	// menu
 	if (ImGui::BeginMainMenuBar())
@@ -86,39 +78,15 @@ void imgui_Editor::Draw()
 		ImGui::SameLine();
 		if (showFPS) ImGui::Text("%4.2f", QwerkE::Time::GetFrameRate());
 
-
 		ImGui::EndMainMenuBar();
 	}
 
     if (shaderEditor)
     {
-        DrawShaderEditor((ShaderProgram*)((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader"));
-    }
-
-	m_SceneGraph->Draw();
-    m_EntityEditor->Draw();
-	DrawSceneList();
-}
-
-void imgui_Editor::DrawSceneList()
-{
-	ImGui::Begin("Scene List");
-
-	// TODO: Think of adding multi window support for viewing more than 1
-	// enabled scene at a time. Going to have to look at how input would
-	// work for that.
-	m_SceneManager; // size
-	for (int i = 0; i < 1; i++)
-	{
-		if (ImGui::Button("TestScene") || m_Input->GetIsKeyDown(eKeys::eKeys_1))
-		{
-			m_SceneManager->SetCurrentScene(eSceneTypes::Scene_TestScene);
-		}
-		if (ImGui::Button("GameScene") || m_Input->GetIsKeyDown(eKeys::eKeys_2))
-		{
-			// m_SceneManager->SetCurrentScene(eSceneTypes::Scene_GameScene);
-		}
+		m_ShaderEditor->Draw();
 	}
 
-	ImGui::End();
+	m_SceneViewer->Draw();
+	m_SceneGraph->Draw();
+    m_EntityEditor->Draw();
 }

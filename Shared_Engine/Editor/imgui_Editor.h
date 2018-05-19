@@ -3,7 +3,10 @@
 
 #include "Editor.h"
 
+class imgui_ShaderEditor;
+class imgui_SceneViewer;
 class ResourceViewer;
+class EntityEditor;
 
 class imgui_Editor : Editor
 {
@@ -15,10 +18,13 @@ public:
 	void Update();
 	void Draw();
 
-	void DrawSceneList();
+	EntityEditor* GetEntityEditor() { return m_EntityEditor; }
 
 private:
 	ResourceViewer* m_ResourceViewer = nullptr;
+	imgui_ShaderEditor* m_ShaderEditor = nullptr;
+	imgui_SceneViewer* m_SceneViewer = nullptr;
+	EntityEditor* m_EntityEditor = nullptr;
 };
 
 #endif // !_Editor_H_

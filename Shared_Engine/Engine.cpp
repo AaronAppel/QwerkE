@@ -33,7 +33,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/glfw_Window.h"
 
 // private engine variables
-static WindowManager* m_Window = nullptr;
+static WindowManager* m_WindowManager = nullptr;
 static SceneManager* m_SceneManager = nullptr;
 static bool m_IsRunning = false;
 static Editor* m_Editor = nullptr;
@@ -56,7 +56,7 @@ namespace QwerkE
 
 			m_Editor = (Editor*)new imgui_Editor();
 
-			m_Window = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
+			m_WindowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
 
 			m_IsRunning = true;
 
@@ -194,7 +194,7 @@ namespace QwerkE
 			if (inputManager->GetIsKeyDown(eKeys::eKeys_Escape))
 			{
 				WindowManager* windowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
-				m_Window->GetWindow(0)->SetClosing(true); // close glfw
+				m_WindowManager->GetWindow(0)->SetClosing(true); // close glfw
 				Framework::Stop();
 				Engine::Stop();
 			}
@@ -206,19 +206,10 @@ namespace QwerkE
 
 			m_Editor->Draw();
 
-			if (true)
-			{
-				QwerkE::Framework::Draw();
-			}
-			else
-			{
-				m_SceneManager->Draw();
+			ImGui::Render();
+			ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
-				ImGui::Render();
-				ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
-
-				m_Window->GetWindow(0)->SwapBuffers();
-			}
+			m_WindowManager->GetWindow(0)->SwapBuffers();
 		}
 
 		bool Engine::StillRunning()

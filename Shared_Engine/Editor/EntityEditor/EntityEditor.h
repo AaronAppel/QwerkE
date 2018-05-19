@@ -8,6 +8,7 @@
 class SceneManager;
 class ResourceManager;
 class Editor;
+class imgui_EditComponent;
 
 #include <string>
 
@@ -28,6 +29,7 @@ private:
     ResourceManager * m_ResourceManager = nullptr;
 
     std::string m_CurrentEntity = "Null";
+	imgui_EditComponent* m_EditComponent = nullptr;
 };
 
 #endif // !_EntityEditor

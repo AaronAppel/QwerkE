@@ -19,6 +19,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.h">
       <Filter>Editor\ResourceViewer</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneViewer\imgui_SceneViewer.h">
+      <Filter>Editor\SceneViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ShaderEditor\imgui_ShaderEditor.h">
+      <Filter>Editor\ShaderEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.h">
+      <Filter>Editor\EntityEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -39,6 +48,12 @@
     <Filter Include="Editor\DirectoryViewer">
       <UniqueIdentifier>{7fb84237-2264-4139-bc83-134134e904b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\SceneViewer">
+      <UniqueIdentifier>{04002f28-cdb6-40b6-af86-5957c0c312b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\ShaderEditor">
+      <UniqueIdentifier>{85d8c941-e160-4f64-92c8-28ac1e2537d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
@@ -56,6 +71,15 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.cpp">
       <Filter>Editor\ResourceViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneViewer\imgui_SceneViewer.cpp">
+      <Filter>Editor\SceneViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ShaderEditor\imgui_ShaderEditor.cpp">
+      <Filter>Editor\ShaderEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.cpp">
+      <Filter>Editor\EntityEditor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

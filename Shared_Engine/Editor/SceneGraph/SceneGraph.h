@@ -7,7 +7,9 @@
 class SceneManager;
 class ResourceManager;
 class Editor;
+class imgui_Editor;
 
+// TODO: Change name to imgui_SceneGraph
 class SceneGraph
 {
 public:
@@ -17,9 +19,9 @@ public:
 	void Draw();
 
 private:
-    Editor* m_Editor = nullptr;
-	SceneManager * m_SceneManager = nullptr;
-	ResourceManager * m_ResourceManager = nullptr;
+	imgui_Editor* m_Editor = nullptr;
+	SceneManager* m_SceneManager = nullptr;
+	ResourceManager* m_ResourceManager = nullptr;
 };
 
 #endif // !_Editor_H_
