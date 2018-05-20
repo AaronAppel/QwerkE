@@ -7,7 +7,7 @@
 #include "Engine_Enums.h"
 #include "Editor/imgui_Editor.h"
 
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/Helpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Events/EventManager.h"
@@ -68,6 +68,7 @@ namespace QwerkE
 			// TODO: GL state init should be in a Window() or OpenGLManager()
 			// class or some type of ::Graphics() system.
 			glClearColor(0.5f, 0.7f, 0.7f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			// turn on depth buffer testing
 			glEnable(GL_DEPTH_TEST);
 			glPointSize(10);
@@ -208,11 +209,6 @@ namespace QwerkE
 		void Engine::Draw()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // new frame
-
-			if(ImGui::Button("Play Sound"))
-			{
-				((AudioManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Audio_Manager))->PlaySound();
-			}
 
 			m_Editor->Draw();
 

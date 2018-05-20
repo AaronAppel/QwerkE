@@ -77,7 +77,7 @@ void imgui_SceneViewer::DrawSceneList()
 	// TODO: Think of adding multi window support for viewing more than 1
 	// enabled scene at a time. Going to have to look at how input would
 	// work for that.
-	int counter = 0;
+	int counter = 1;
 	ImVec2 winSize = ImGui::GetWindowSize();
 	ImVec2 imageSize = ImVec2(100.0f, 100.0f);
 	int m_ItemsPerRow = winSize.x / (imageSize.x * 1.5f) + 1; // (* up the image size for feel), + avoid dividing by 0

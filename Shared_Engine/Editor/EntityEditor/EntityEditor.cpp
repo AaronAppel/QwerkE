@@ -2,7 +2,7 @@
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Scenes/Scene.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/Mesh.h"
@@ -18,6 +18,7 @@ EntityEditor::EntityEditor(Editor* editor)
     m_Editor = editor;
     m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
     m_ResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
+
 	m_EditComponent = new imgui_EditComponent();
 }
 

@@ -23,6 +23,7 @@ public:
 	void ToggleFullScreenScene() { m_ShowingGUI = !m_ShowingGUI; };
 
 private:
+	bool m_ShowingExampleWindow = false;
 	bool m_ShowingShaderEditor = false;
 	bool m_ShowingGUI = true;
 	ResourceViewer* m_ResourceViewer = nullptr;

@@ -5,7 +5,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../Editor.h"
 #include "../EntityEditor/EntityEditor.h"
 #include "../imgui_Editor.h"

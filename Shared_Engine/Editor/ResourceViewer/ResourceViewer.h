@@ -9,7 +9,6 @@
 #include <vector>
 
 class ResourceManager;
-class Mesh;
 class ShaderProgram;
 class Model;
 class Scene;
@@ -29,7 +28,6 @@ private:
 
 	int m_CurrentResource = 1;
 
-	const std::map<std::string, Mesh*>* m_Meshes = nullptr;
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
 	const std::map<std::string, GLuint>* m_Textures = nullptr;
 	const std::map<std::string, Model*>* m_Models = nullptr;
@@ -37,17 +35,16 @@ private:
 	// const std::map<std::string, int>* m_Levels = nullptr;
 	// const std::map<std::string, Sound*>* m_Sounds = nullptr;
 
-	// Model/mesh viewing
+	// Model viewing
 	unsigned char m_ItemsPerRow = 4;
 	ImVec2 m_ImageSize = ImVec2(64, 64);
 
 	FrameBufferObject* m_FBO;
-	std::vector<GLuint> m_ImageHandles;
-	void DrawMeshThumbnails();
 	std::vector<GLuint> m_ModelImageHandles;
 	void DrawModelThumbnails();
 
-	GameObject* m_Subject = nullptr;
+	GameObject* m_Subject = nullptr; // model to draw
+	GameObject* m_TagPlane = nullptr; // asset tag plane
 	Scene* m_ViewerScene = nullptr;
 };
 

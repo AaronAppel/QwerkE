@@ -3,6 +3,7 @@
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Components/Time.h"
@@ -43,6 +44,12 @@ void imgui_Editor::Update()
 
 void imgui_Editor::Draw()
 {
+	// imgui reference
+	if (m_ShowingExampleWindow)
+	{
+		ImGui::ShowDemoWindow();
+	}
+
 	// menu
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -50,8 +57,11 @@ void imgui_Editor::Draw()
 		{
 			static int index = 0;
 			static const int size = 5;
-			const char* d[size] = { "one", "two", "three", "four", "five"};
-			ImGui::ListBox("", &index, d, size, 3);
+			const char* d[size] = { "ExampleWindow", "two", "three", "four", "five"};
+			if (ImGui::ListBox("", &index, d, size, 3))
+			{
+				if (index == 0) m_ShowingExampleWindow = !m_ShowingExampleWindow;
+			}
 			ImGui::EndMenu();
 		}
 
@@ -80,13 +90,20 @@ void imgui_Editor::Draw()
 		ImGui::EndMainMenuBar();
 	}
 
-    if (m_ShowingShaderEditor)
-    {
-		m_ShaderEditor->Draw();
-	}
-
 	if (m_ShowingGUI)
 	{
+		if (m_ShowingShaderEditor)
+		{
+			m_ShaderEditor->Draw();
+		}
+		if (ImGui::Begin("Audio"))
+		{
+			if (ImGui::Button("Play Sound"))
+			{
+				((AudioManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Audio_Manager))->PlaySound();
+			}
+			ImGui::End();
+		}
 		m_ResourceViewer->Draw();
 		m_SceneViewer->Draw();
 		m_SceneGraph->Draw();
