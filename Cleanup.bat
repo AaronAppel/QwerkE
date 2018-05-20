@@ -14,6 +14,10 @@ cd QwerkE_Framework
 call Cleanup.bat
 cd ../
 
+cd QwerkE_Documentation
+call Cleanup.bat
+cd ../
+
 cd Test_Game1
 del /Q /F /S Debug
 del /Q /F /S x64

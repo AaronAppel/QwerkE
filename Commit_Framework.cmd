@@ -1,5 +1,5 @@
 rem https://stackoverflow.com/questions/18972156/how-to-pass-input-to-exe-in-batch-file
-cd QwerkE_framework
+cd QwerkE_Framework
 
 rem grab any new files or changes. Maybe have merge issues here
 git pull
