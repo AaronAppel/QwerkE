@@ -1,3 +1,6 @@
 [submodule "QwerkE_Framework"]
 	path = QwerkE_Framework
 	url = https://github.com/AaronAppel/QwerkE_Framework.git
+[submodule "QwerkE_Documentation"]
+	path = QwerkE_Documentation
+	url = https://github.com/AaronAppel/QwerkE_Documentation.git
