@@ -31,6 +31,8 @@ void imgui_EditComponent::Draw(GameObject* entity)
 
 	if (ImGui::CollapsingHeader("RenderComponent"))
 	{
+		// TODO: Show values from the shader base on attributes and uniforms.
+
 		ImGui::PushStyleColor(idx, col);
 		// ImGui::PushStyleVar();
 		RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Render);

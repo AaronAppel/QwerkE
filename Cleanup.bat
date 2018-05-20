@@ -10,14 +10,6 @@ rmdir /Q /S Debug
 del /Q /F /S /AH Release
 rmdir /Q /S Release
 
-cd QwerkE_Framework
-call Cleanup.bat
-cd ../
-
-cd QwerkE_Documentation
-call Cleanup.bat
-cd ../
-
 cd Test_Game1
 del /Q /F /S Debug
 del /Q /F /S x64
@@ -44,3 +36,10 @@ rmdir /Q /S Debug
 rmdir /Q /S x64
 rmdir /Q /S Release
 cd ../
+
+cd QwerkE_Framework
+call Cleanup.bat
+cd ../
+
+cd QwerkE_Documentation
+call Cleanup.bat

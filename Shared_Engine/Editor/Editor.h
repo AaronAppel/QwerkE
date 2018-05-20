@@ -13,6 +13,9 @@ class SceneManager;
 class InputManager;
 class EntityEditor;
 
+// TODO: Add cross panel communication to support features such as
+// drag and drop textures, trigger callbacks, input, etc.
+// Or just stop using editor subclasses and switch to base functions only.
 class Editor // abstract
 {
 public:

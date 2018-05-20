@@ -10,7 +10,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/CameraComponent.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/Camera/CameraComponent.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/glew/GL/glew.h"
 
 // TODO: Remove
