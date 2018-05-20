@@ -11,6 +11,8 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 
+extern int g_WindowWidth, g_WindowHeight; // TODO: Fix
+
 imgui_SceneViewer::imgui_SceneViewer()
 {
 	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
@@ -42,14 +44,29 @@ void imgui_SceneViewer::Draw()
 
 void imgui_SceneViewer::DrawSceneView()
 {
+	static bool isOpen = true;
+	ImGui::Begin("Scene Window - Framework.cpp", &isOpen, ImGuiWindowFlags_NoScrollbar);
+
 	// render scene to fbo
 	m_FBO->Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_SceneManager->Draw();
 	m_FBO->UnBind();
 
-	ImGui::Begin("Scene Window - Framework.cpp");
-	ImGui::Image(ImTextureID(m_FBO->GetTextureID()), ImVec2(1600 / 3, 900 / 3), ImVec2(0, 1), ImVec2(1, 0));
+	ImVec2 winSize = ImGui::GetWindowSize();
+
+	ImVec2 imageSize = winSize;
+
+	// TODO: Fix image width. A larger panel has more space on the right.
+	// TODO: Consider centering image on panel.
+	imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
+	imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
+
+	ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + 35)); // snap window height to scale
+
+	// render texture as image
+	ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
+
 	ImGui::End();
 }
 
@@ -70,7 +87,7 @@ void imgui_SceneViewer::DrawSceneList()
 		if (counter % m_ItemsPerRow)
 			ImGui::SameLine();
 
-		if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || m_Input->GetIsKeyDown((eKeys)(eKeys::eKeys_0 + counter)))
+		if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || m_Input->FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
 		{
 			m_SceneManager->SetCurrentScene(p.second->GetSceneID());
 		}

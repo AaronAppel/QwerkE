@@ -23,6 +23,8 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
+	virtual void ToggleFullScreenScene() = 0;
+
 protected:
 	// panels
 	SceneGraph * m_SceneGraph = nullptr;

@@ -20,7 +20,11 @@ public:
 
 	EntityEditor* GetEntityEditor() { return m_EntityEditor; }
 
+	void ToggleFullScreenScene() { m_ShowingGUI = !m_ShowingGUI; };
+
 private:
+	bool m_ShowingShaderEditor = false;
+	bool m_ShowingGUI = true;
 	ResourceViewer* m_ResourceViewer = nullptr;
 	imgui_ShaderEditor* m_ShaderEditor = nullptr;
 	imgui_SceneViewer* m_SceneViewer = nullptr;

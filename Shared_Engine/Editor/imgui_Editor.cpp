@@ -43,9 +43,6 @@ void imgui_Editor::Update()
 
 void imgui_Editor::Draw()
 {
-    // windows
-    static bool shaderEditor = false;
-
 	// menu
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -62,7 +59,7 @@ void imgui_Editor::Draw()
         {
             const int size = 1;
             static const char* toolsList[size] = {"Shader Editor"};
-            static bool* toolsStates[size] = { &shaderEditor };
+            static bool* toolsStates[size] = { &m_ShowingShaderEditor };
 
             for (int i = 0; i < size; i++)
             {
@@ -70,6 +67,8 @@ void imgui_Editor::Draw()
             }
             ImGui::EndMenu();
         }
+
+		if (ImGui::Checkbox("GUI", &m_ShowingGUI));
 
 		// FPS display
 		static bool showFPS = true;
@@ -81,12 +80,20 @@ void imgui_Editor::Draw()
 		ImGui::EndMainMenuBar();
 	}
 
-    if (shaderEditor)
+    if (m_ShowingShaderEditor)
     {
 		m_ShaderEditor->Draw();
 	}
 
-	m_SceneViewer->Draw();
-	m_SceneGraph->Draw();
-    m_EntityEditor->Draw();
+	if (m_ShowingGUI)
+	{
+		m_ResourceViewer->Draw();
+		m_SceneViewer->Draw();
+		m_SceneGraph->Draw();
+		m_EntityEditor->Draw();
+	}
+	else
+	{
+		m_SceneManager->Draw();
+	}
 }

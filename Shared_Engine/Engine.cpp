@@ -162,6 +162,7 @@ namespace QwerkE
 		{
 			/* Reset */
 			// TODO: Reset things...
+			((InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager))->NewFrame();
 			ImGui_ImplGlfwGL3_NewFrame();
 			m_Editor->NewFrame();
 		}
@@ -181,17 +182,21 @@ namespace QwerkE
 
 			//if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE)) // DEBUG: A simple way to close the window while testing
 			InputManager* inputManager = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
-			if (inputManager->GetIsKeyDown(eKeys::eKeys_P)) // pause entire scene
+			if (inputManager->FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
 			{
 				m_SceneManager->GetCurrentScene()->TogglePauseState();
 			}
-			if (inputManager->GetIsKeyDown(eKeys::eKeys_F)) // pause actor updates
+			if (inputManager->FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
+			{
+				m_Editor->ToggleFullScreenScene();
+			}
+			if (inputManager->FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press)) // pause actor updates
 			{
 				static bool isFrozen = false;
 				isFrozen = !isFrozen; // toggle bool
 				m_SceneManager->GetCurrentScene()->SetIsFrozen(isFrozen);
 			}
-			if (inputManager->GetIsKeyDown(eKeys::eKeys_Escape))
+			if (inputManager->FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
 				WindowManager* windowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
 				m_WindowManager->GetWindow(0)->SetClosing(true); // close glfw
@@ -203,6 +208,11 @@ namespace QwerkE
 		void Engine::Draw()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // new frame
+
+			if(ImGui::Button("Play Sound"))
+			{
+				((AudioManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Audio_Manager))->PlaySound();
+			}
 
 			m_Editor->Draw();
 
