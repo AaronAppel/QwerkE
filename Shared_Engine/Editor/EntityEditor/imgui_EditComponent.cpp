@@ -73,8 +73,8 @@ void imgui_EditComponent::Draw(GameObject* entity)
 				int counter = 0; // TODO: Remove
 				for (const auto &p : *m_Materials)
 				{
-					m_MatStrings.push_back(p.second->name.c_str());
-					if (p.second->name.c_str()) m_MatIndex = counter;
+					m_MatStrings.push_back(p.second->s_Name.c_str());
+					if (p.second->s_Name.c_str()) m_MatIndex = counter;
 					counter++;
 				}
 				counter = 0;
@@ -127,7 +127,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 				ImGui::NextColumn();
 
 				// material
-				if (ImGui::Selectable(renderables->at(i).s_Material->name.c_str()))
+				if (ImGui::Selectable(renderables->at(i).s_Material->s_Name.c_str()))
 				{
 					m_ShowMaterialList = true;
 					m_Materialindex = i;
