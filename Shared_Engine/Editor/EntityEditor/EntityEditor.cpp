@@ -6,7 +6,6 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/Model.h"
 #include "imgui_EditComponent.h"
 #include "../Editor.h"
 

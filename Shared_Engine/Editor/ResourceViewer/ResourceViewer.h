@@ -10,10 +10,10 @@
 
 class ResourceManager;
 class ShaderProgram;
-class Model;
 class Scene;
 class GameObject;
 class FrameBufferObject;
+class Mesh;
 
 class ResourceViewer
 {
@@ -30,7 +30,7 @@ private:
 
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
 	const std::map<std::string, GLuint>* m_Textures = nullptr;
-	const std::map<std::string, Model*>* m_Models = nullptr;
+	const std::map<std::string, Mesh*>* m_Meshes = nullptr;
 	// const std::map<std::string, GLuint>* m_Fonts = nullptr;
 	// const std::map<std::string, int>* m_Levels = nullptr;
 	// const std::map<std::string, Sound*>* m_Sounds = nullptr;

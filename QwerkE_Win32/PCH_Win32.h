@@ -24,7 +24,7 @@
 #include <vector>
 
 // constants, enums
-#include "../QwerkE_Framework/QwerkE_Framework/Global_Constants.h"
+#include "../QwerkE_Framework/QwerkE_Framework/QwerkE_Global_Constants.h"
 #include "../QwerkE_Framework/QwerkE_Framework/QwerkE_Enums.h"
 
 // containers

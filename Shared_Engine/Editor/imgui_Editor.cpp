@@ -100,7 +100,7 @@ void imgui_Editor::Draw()
 		{
 			if (ImGui::Button("Play Sound"))
 			{
-				((AudioManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Audio_Manager))->PlaySound();
+				((AudioManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Audio_Manager))->PlaySound("bounce.wav");
 			}
 			ImGui::End();
 		}

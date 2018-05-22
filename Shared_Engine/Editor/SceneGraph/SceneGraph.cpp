@@ -3,7 +3,6 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../Editor.h"
@@ -30,34 +29,47 @@ void SceneGraph::Draw()
 	{
 		if (ImGui::Button("Actors"))
 		{
-			// switch to actors
+			m_CurrentList = 0;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Cams"))
 		{
-			// switch to cameras
+			m_CurrentList = 1;
 		}
-		ImGui::SameLine();
 		if (ImGui::Button("Lights"))
 		{
-			// switch to lights
+			m_CurrentList = 2;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Other"))
 		{
 			// switch to ???... particles, boundaries, etc
+			m_CurrentList = 3;
 		}
 		ImGui::Separator();
 
 		std::map<std::string, GameObject*> entities = m_SceneManager->GetCurrentScene()->GetObjectList();
 		std::map<std::string, GameObject*>::iterator thing;
 
-		for (thing = entities.begin(); thing != entities.end(); thing++)
+		switch (m_CurrentList)
 		{
-			if (ImGui::Button(thing->second->GetName().c_str()))
+		case 0: // Actors
+			for (thing = entities.begin(); thing != entities.end(); thing++)
 			{
-				m_Editor->GetEntityEditor()->SetCurrentEntity(thing->second->GetName());
+				if (ImGui::Button(thing->second->GetName().c_str()))
+				{
+					m_Editor->GetEntityEditor()->SetCurrentEntity(thing->second->GetName());
+				}
 			}
+			break;
+		case 1: // Cams
+			break;
+		case 2: // Lights
+			break;
+		case 3: // Other
+			break;
+		default:
+			break;
 		}
 		ImGui::End();
 	}

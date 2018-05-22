@@ -4,11 +4,9 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/Model.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderProgram.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/Camera/CameraComponent.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/glew/GL/glew.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Scenes/Scene.h"
@@ -23,15 +21,14 @@ ResourceViewer::ResourceViewer()
 {
 	m_ResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
 	m_Textures = m_ResourceManager->LookAtTextures();
-	m_Models = m_ResourceManager->LookAtModels();
 	m_Shaders = m_ResourceManager->LookAtShaders();
+	m_Meshes = m_ResourceManager->LookAtMeshes();
 	m_FBO = new FrameBufferObject();
 	m_FBO->Init();
 
 	m_ViewerScene = new ViewerScene();
 	m_Subject = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(0, -4, 40));
 	m_TagPlane = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreatePlane(m_ViewerScene, vec3(2, -2, 10));
-	((RenderComponent*)m_TagPlane->GetComponent(eComponentTags::Component_Render))->SetShader(m_ResourceManager->GetShader("Basic3D"));
 	m_TagPlane->SetRotation(vec3(90,0,0));
 	m_TagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));
 
@@ -138,7 +135,7 @@ void ResourceViewer::DrawModelThumbnails()
 	// dump old values. maybe calculate what changed in the future
 	m_ModelImageHandles.clear();
 
-	for (const auto &p : *m_Models)
+	for (const auto &p : *m_Meshes)
 	{
 		m_FBO->Bind();
 
@@ -146,8 +143,8 @@ void ResourceViewer::DrawModelThumbnails()
 		// ((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetMesh(m_ResourceManager->GetMesh("Circle"));
 
 		// TODO: RenderRoutine needs to update its uniform functions properly
-		((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetModel(p.second);
-		((RenderComponent*)m_TagPlane->GetComponent(Component_Render))->SetColour(vec4(128, 128, 128, 255)); // TODO: use model asset tag color
+		//((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetModel(p.second);
+		//((RenderComponent*)m_TagPlane->GetComponent(Component_Render))->SetColour(vec4(128, 128, 128, 255)); // TODO: use model asset tag color
 
 		// draw scene
 		m_ViewerScene->Draw();

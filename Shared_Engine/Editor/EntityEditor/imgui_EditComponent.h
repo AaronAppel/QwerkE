@@ -3,9 +3,9 @@
 
 class GameObject;
 class ResourceManager;
-class Model;
 class ShaderProgram;
 struct MaterialData;
+class ModelComponent;
 
 class imgui_EditComponent
 {
@@ -22,17 +22,27 @@ private:
 	int m_MatIndex = 0;
 	int m_ShaderIndex = 0;
 	int m_TextureIndex = 0;
-	int m_ModelIndex = 0;
 
 	const std::map<std::string, MaterialData*>* m_Materials = nullptr;
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
 	const std::map<std::string, GLuint>* m_Textures = nullptr;
-	const std::map<std::string, Model*>* m_Models = nullptr;
+	const std::map<std::string, Mesh*>* m_Meshes = nullptr;
 
-	std::vector<const char*> m_MatStrings;
 	std::vector<const char*> m_ShaderStrings;
+	std::vector<const char*> m_MatStrings;
 	std::vector<const char*> m_TextureStrings;
-	std::vector<const char*> m_ModelStrings;
+	std::vector<const char*> m_MeshStrings;
+
+	bool m_ShowShaderList = false;
+	int m_Shaderindex = 0;
+	bool m_ShowMaterialList = false;
+	int m_Materialindex = 0;
+	bool m_ShowMeshList = false;
+	int m_Meshindex = 0;
+
+	void ShowShaderMenu(ModelComponent* rComp);
+	void ShowMaterialMenu(ModelComponent* rComp);
+	void ShowMeshMenu(ModelComponent* rComp);
 };
 
 #endif // !_imgui_EditComponent_H_

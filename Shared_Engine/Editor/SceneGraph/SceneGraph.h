@@ -19,6 +19,7 @@ public:
 	void Draw();
 
 private:
+	int m_CurrentList = 0;
 	imgui_Editor* m_Editor = nullptr;
 	SceneManager* m_SceneManager = nullptr;
 	ResourceManager* m_ResourceManager = nullptr;
