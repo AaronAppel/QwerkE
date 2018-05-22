@@ -19,7 +19,7 @@
 
 #include "../QwerkE_Framework/QwerkE_Framework/CallbackFunctions.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Physics/PhysicsManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/MessageManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Debugger/Debugger.h"

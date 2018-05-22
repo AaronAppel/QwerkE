@@ -7,7 +7,7 @@
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/ModelComponent.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Texture.h"
 
 imgui_EditComponent::imgui_EditComponent()
@@ -31,7 +31,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 
 	if (ImGui::Button("Refresh")) { m_RefreshFlag = 1; }
 
-	ModelComponent* rComp = (ModelComponent*)entity->GetComponent(Component_Model);
+	RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Model);
 
 	if (rComp)
 		if (ImGui::CollapsingHeader("RenderComponent"))
@@ -182,7 +182,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 	}
 }
 
-void imgui_EditComponent::ShowShaderMenu(ModelComponent* rComp)
+void imgui_EditComponent::ShowShaderMenu(RenderComponent* rComp)
 {
 	if (ImGui::Begin("Shader Selector", &m_ShowShaderList))
 	{
@@ -200,7 +200,7 @@ void imgui_EditComponent::ShowShaderMenu(ModelComponent* rComp)
 	}
 }
 
-void imgui_EditComponent::ShowMaterialMenu(ModelComponent* rComp)
+void imgui_EditComponent::ShowMaterialMenu(RenderComponent* rComp)
 {
 	if (ImGui::Begin("Material Selector", &m_ShowMaterialList))
 	{
@@ -218,7 +218,7 @@ void imgui_EditComponent::ShowMaterialMenu(ModelComponent* rComp)
 	}
 }
 
-void imgui_EditComponent::ShowMeshMenu(ModelComponent* rComp)
+void imgui_EditComponent::ShowMeshMenu(RenderComponent* rComp)
 {
 	if (ImGui::Begin("Mesh Selector", &m_ShowMeshList))
 	{

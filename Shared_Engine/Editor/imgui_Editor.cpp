@@ -4,7 +4,7 @@
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Components/Time.h"
 #include "EntityEditor/EntityEditor.h"

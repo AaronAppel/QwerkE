@@ -5,7 +5,7 @@ class GameObject;
 class ResourceManager;
 class ShaderProgram;
 struct MaterialData;
-class ModelComponent;
+class RenderComponent;
 
 class imgui_EditComponent
 {
@@ -40,9 +40,9 @@ private:
 	bool m_ShowMeshList = false;
 	int m_Meshindex = 0;
 
-	void ShowShaderMenu(ModelComponent* rComp);
-	void ShowMaterialMenu(ModelComponent* rComp);
-	void ShowMeshMenu(ModelComponent* rComp);
+	void ShowShaderMenu(RenderComponent* rComp);
+	void ShowMaterialMenu(RenderComponent* rComp);
+	void ShowMeshMenu(RenderComponent* rComp);
 };
 
 #endif // !_imgui_EditComponent_H_

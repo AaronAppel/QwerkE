@@ -5,7 +5,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderProgram.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "EntityEditor/EntityEditor.h"
 
