@@ -36,12 +36,12 @@ void imgui_EditComponent::Draw(GameObject* entity)
 	RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Model);
 
 	if (rComp)
-		if (ImGui::CollapsingHeader("RenderComponent"))
+		if (ImGui::CollapsingHeader("RenderComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			// TODO: Show values from the shader base on attributes and uniforms.
 			// ImGui::PushStyleVar(); ImGui::PushStyleColor(idx, col);
 
-			const std::vector<Renderable>* renderables = rComp->LookAtRenderableList();
+			std::vector<Renderable>* renderables = (std::vector<Renderable>*)rComp->LookAtRenderableList();
 
 			// populate asset names
 			if (m_RefreshFlag)
@@ -121,7 +121,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 					ImGui::NextColumn();
 
 				// shader
-				if (ImGui::Selectable(renderables->at(i).s_Shader->s_Name.c_str()))
+				if (ImGui::Selectable(renderables->at(i).GetShaderSchematic()->s_Name.c_str()))
 				{
 					m_ShowShaderList = true;
 					m_Shaderindex = i;
@@ -129,7 +129,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 				ImGui::NextColumn();
 
 				// material
-				if (ImGui::Selectable(renderables->at(i).s_Material->s_Name.c_str()))
+				if (ImGui::Selectable(renderables->at(i).GetMaterialSchematic()->s_Name.c_str()))
 				{
 					m_ShowMaterialList = true;
 					m_Materialindex = i;
@@ -137,7 +137,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 				ImGui::NextColumn();
 
 				// mesh
-				if (ImGui::Selectable(renderables->at(i).s_Mesh->GetName().c_str()))
+				if (ImGui::Selectable(renderables->at(i).GetMesh()->GetName().c_str()))
 				{
 					m_ShowMeshList = true;
 					m_Meshindex = i;
@@ -178,7 +178,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			// ImGui::PopStyleColor();
 		}
 
-	if (ImGui::CollapsingHeader("OtherComponent"))
+	if (ImGui::CollapsingHeader("OtherComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Text("TODO: Handle other components!");
 	}
