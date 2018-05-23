@@ -6,6 +6,7 @@ class ResourceManager;
 class ShaderProgram;
 struct MaterialData;
 class RenderComponent;
+class Mesh;
 
 class imgui_EditComponent
 {

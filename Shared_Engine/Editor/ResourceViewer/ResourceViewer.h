@@ -26,7 +26,7 @@ public:
 private:
 	ResourceManager * m_ResourceManager = nullptr;
 
-	int m_CurrentResource = 1;
+	int m_CurrentResource = 0;
 
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
 	const std::map<std::string, GLuint>* m_Textures = nullptr;

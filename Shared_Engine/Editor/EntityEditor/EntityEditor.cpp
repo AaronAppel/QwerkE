@@ -33,13 +33,18 @@ void EntityEditor::Draw()
 	{
 		if (thing == nullptr)
 		{
+			// TODO: What if the scene is empty? What does map return? nullptr I hope
+			thing = m_SceneManager->GetCurrentScene()->GetObjectList().begin()->second;
+		}
+		if (thing == nullptr)
+		{
 			ImGui::End();
 			return; // no object selected
 		}
 		//// Begine drawing entity data...
 		// Draw generic GameObject data like transform and name
-		static std::string name = thing->GetName().c_str() + std::to_string(' '); // extra space for editing
-		ImGui::InputText("Name: ", (char*)name.data(), name.size());
+		// std::string name = thing->GetName().c_str() + ' '; // extra space for editing
+		ImGui::InputText("Name: ", (char*)thing->GetName().c_str(), thing->GetName().size());
 		// thing->SetName(); // TODO: Scene map probably needs to handle name changes
 
 		static float pos[3] = { 0.0f, 0.0f, 0.0f };

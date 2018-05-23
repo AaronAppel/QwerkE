@@ -13,7 +13,6 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Events/EventManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Factory/Factory.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Sprite.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
 

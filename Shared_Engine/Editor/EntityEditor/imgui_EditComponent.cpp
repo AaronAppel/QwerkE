@@ -9,6 +9,8 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Texture.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Renderable.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/ShaderProgramData.h"
 
 imgui_EditComponent::imgui_EditComponent()
 {
@@ -119,7 +121,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 					ImGui::NextColumn();
 
 				// shader
-				if (ImGui::Selectable(renderables->at(i).s_Shader->GetName().c_str()))
+				if (ImGui::Selectable(renderables->at(i).s_Shader->s_Name.c_str()))
 				{
 					m_ShowShaderList = true;
 					m_Shaderindex = i;
@@ -192,7 +194,7 @@ void imgui_EditComponent::ShowShaderMenu(RenderComponent* rComp)
 		{
 			if (ImGui::Selectable(m_ShaderStrings[i]))
 			{
-				rComp->SetShaderAtIndex(m_Shaderindex, m_ResourceManager->GetShader(m_ShaderStrings[i]));
+				rComp->SetShaderAtIndex(m_Shaderindex, m_ResourceManager->GetShaderProgramData(m_ShaderStrings[i]));
 			}
 		}
 

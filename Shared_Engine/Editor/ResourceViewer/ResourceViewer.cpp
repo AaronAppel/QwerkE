@@ -98,7 +98,7 @@ void ResourceViewer::Draw()
 				{
 					ImGui::BeginTooltip();
 					// image name or something might be better. use newly create asset tags
-					ImGui::Text(std::to_string(m_ModelImageHandles[0]).c_str());
+					ImGui::Text(std::to_string(p.second).c_str());
 					ImGui::Text("TagName");
 					ImGui::EndTooltip();
 				}
