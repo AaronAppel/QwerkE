@@ -57,6 +57,7 @@ void ResourceViewer::Draw()
 		{
 			DrawModelThumbnails();
 		}
+		ImGui::SameLine();
 
 		// select what resource to view
 		if(ImGui::Button("Images"))

@@ -54,7 +54,6 @@ namespace QwerkE
 
 			// QwerkE::Framework::Run();
 
-			m_Editor = (Editor*)new imgui_Editor();
 
 			m_WindowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
 
@@ -69,6 +68,9 @@ namespace QwerkE
 			// class or some type of ::Graphics() system.
 			glClearColor(0.5f, 0.7f, 0.7f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			m_Editor = (Editor*)new imgui_Editor();
+
 			// turn on depth buffer testing
 			glEnable(GL_DEPTH_TEST);
 			glPointSize(10);
