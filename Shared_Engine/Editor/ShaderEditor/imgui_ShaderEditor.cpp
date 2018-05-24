@@ -55,21 +55,21 @@ void imgui_ShaderEditor::Draw()
 	//ImGui::ShowTestWindow();
 	if (ImGui::CollapsingHeader("Vertex"))
 	{
-		if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(400, 250)))
+		if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, 275)))
 		{
 			// buffer was changed
 		}
 	}
 	if (ImGui::CollapsingHeader("Fragment"))
 	{
-		if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(400, 250)))
+		if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, 275)))
 		{
 			// buffer was changed
 		}
 	}
 	if (ImGui::CollapsingHeader("Geometry"))
 	{
-		if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(400, 250)))
+		if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, 275)))
 		{
 			// buffer was changed
 		}

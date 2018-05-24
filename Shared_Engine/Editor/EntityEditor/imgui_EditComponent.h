@@ -20,9 +20,6 @@ private:
 	ResourceManager* m_ResourceManager = nullptr;
 
 	bool m_RefreshFlag = 1;
-	int m_MatIndex = 0;
-	int m_ShaderIndex = 0;
-	int m_TextureIndex = 0;
 
 	const std::map<std::string, MaterialData*>* m_Materials = nullptr;
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
@@ -34,12 +31,14 @@ private:
 	std::vector<const char*> m_TextureStrings;
 	std::vector<const char*> m_MeshStrings;
 
-	bool m_ShowShaderList = false;
-	int m_Shaderindex = 0;
-	bool m_ShowMaterialList = false;
-	int m_Materialindex = 0;
-	bool m_ShowMeshList = false;
-	int m_Meshindex = 0;
+	int m_RenderableIndex = 0; // current renderable selected
+
+	bool m_ShowShaderList = true;
+	int m_Shaderindex = 0; // deprecated
+	bool m_ShowMaterialList = true;
+	int m_Materialindex = 0; // deprecated
+	bool m_ShowMeshList = true;
+	int m_Meshindex = 0; // deprecated
 
 	void ShowShaderMenu(RenderComponent* rComp);
 	void ShowMaterialMenu(RenderComponent* rComp);

@@ -30,11 +30,13 @@ void imgui_EditComponent::Draw(GameObject* entity)
 	ImGuiCol idx = ImGuiCol_FrameBg; // TODO: Style imgui windows for editing
 	ImVec4 col = ImVec4(0, 0, 0, 0);
 
-	if (ImGui::Button("Refresh")) { m_RefreshFlag = 1; }
+	if (ImGui::Button("Refresh")) { /*m_RefreshFlag = 1*/; } // broken
 
 	RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Model);
 
 	if (rComp)
+		ImGui::SameLine();
+		ImGui::Text(rComp->GetSchematicName().c_str());
 		if (ImGui::CollapsingHeader("RenderComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			// TODO: Show values from the shader base on attributes and uniforms.
@@ -71,19 +73,13 @@ void imgui_EditComponent::Draw(GameObject* entity)
 				m_TextureStrings.clear();
 				m_MeshStrings.clear();
 
-				int counter = 0; // TODO: Remove
 				for (const auto &p : *m_Materials)
 				{
 					m_MatStrings.push_back(p.second->s_Name.c_str());
-					if (p.second->s_Name.c_str()) m_MatIndex = counter;
-					counter++;
 				}
-				counter = 0;
 				for (const auto &p : *m_Shaders)
 				{
 					m_ShaderStrings.push_back(DeepCopyString(p.second->GetName().c_str())); //RAM:
-					if (p.second->GetName().c_str()) m_ShaderIndex = counter;
-					counter++;
 				}
 				for (const auto &p : *m_Textures)
 				{
@@ -94,11 +90,14 @@ void imgui_EditComponent::Draw(GameObject* entity)
 					m_MeshStrings.push_back(DeepCopyString(p.second->GetName().c_str())); //RAM:
 				}
 				// TODO: Textures + Meshes
-				counter = 0;
 			}
 
-			ImGui::Columns(3, "RenderablesHeader", false);  // 3-ways, no border
+			ImGui::Columns(4, "RenderablesHeader", false);  // 3-ways, no border
 			{
+				// name
+				ImGui::Text("Name/ID");
+				ImGui::NextColumn();
+
 				// shader
 				ImGui::Text("Shader");
 				ImGui::NextColumn();
@@ -113,25 +112,33 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			ImGui::Columns(1);
 			ImGui::Separator();
 
-			ImGui::Columns(3, "mycolumns3", true);  // 3-ways, no border
+			ImGui::Columns(4, "mycolumns3", true);  // 3-ways, no border
 			for (int i = 0; i < renderables->size(); i++)
 			{
 				if (i > 0)
 					ImGui::NextColumn();
 
 				// shader
+				if (ImGui::Selectable(renderables->at(i).GetRenderableName().c_str(), m_RenderableIndex == i, ImGuiSelectableFlags_SpanAllColumns))
+				{
+					m_RenderableIndex = i;
+				}
+				ImGui::NextColumn();
+
+				// shader
 				if (ImGui::Selectable(renderables->at(i).GetShaderSchematic()->GetName().c_str()))
 				{
 					m_ShowShaderList = true;
-					m_Shaderindex = i;
+					m_RenderableIndex = i;
 				}
 				ImGui::NextColumn();
 
 				// material
+				// if (i == m_Materialindex) ImGui::PushStyleColor(ImGuiCol(1), ImVec4(1,1,1,1));
 				if (ImGui::Selectable(renderables->at(i).GetMaterialSchematic()->s_Name.c_str()))
 				{
 					m_ShowMaterialList = true;
-					m_Materialindex = i;
+					m_RenderableIndex = i;
 				}
 				ImGui::NextColumn();
 
@@ -139,7 +146,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 				if (ImGui::Selectable(renderables->at(i).GetMesh()->GetName().c_str()))
 				{
 					m_ShowMeshList = true;
-					m_Meshindex = i;
+					m_RenderableIndex = i;
 				}
 			}
 			ImGui::Columns(1);
@@ -193,7 +200,7 @@ void imgui_EditComponent::ShowShaderMenu(RenderComponent* rComp)
 		{
 			if (ImGui::Selectable(m_ShaderStrings[i]))
 			{
-				rComp->SetShaderAtIndex(m_Shaderindex, m_ResourceManager->GetShaderProgram(m_ShaderStrings[i]));
+				rComp->SetShaderAtIndex(m_RenderableIndex, m_ResourceManager->GetShaderProgram(m_ShaderStrings[i]));
 			}
 		}
 
@@ -211,7 +218,7 @@ void imgui_EditComponent::ShowMaterialMenu(RenderComponent* rComp)
 		{
 			if (ImGui::Selectable(m_MatStrings[i]))
 			{
-				rComp->SetMaterialAtIndex(m_Materialindex, m_ResourceManager->GetMaterial(m_MatStrings[i]));
+				rComp->SetMaterialAtIndex(m_RenderableIndex, m_ResourceManager->GetMaterial(m_MatStrings[i]));
 			}
 		}
 
@@ -229,7 +236,7 @@ void imgui_EditComponent::ShowMeshMenu(RenderComponent* rComp)
 		{
 			if (ImGui::Selectable(m_MeshStrings[i]))
 			{
-				rComp->SetMeshAtIndex(m_Meshindex, m_ResourceManager->GetMesh(m_MeshStrings[i]));
+				rComp->SetMeshAtIndex(m_RenderableIndex, m_ResourceManager->GetMesh(m_MeshStrings[i]));
 			}
 		}
 

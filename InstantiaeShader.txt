@@ -1,9 +1,0 @@
-
-	else if (shaderName == "vec3Material")
-	{
-		shader->Init(ShaderFolderPath("vec3Material.vert"), ShaderFolderPath("vec3Material.frag"), NULL);
-	}
-	else if (shaderName == "BasicLighting")
-	{
-		shader->Init(ShaderFolderPath("vec3Material.vert"), ShaderFolderPath("vec3Material.frag"), NULL);
-	}
