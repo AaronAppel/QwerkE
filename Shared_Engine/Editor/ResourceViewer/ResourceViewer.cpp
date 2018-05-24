@@ -36,7 +36,7 @@ ResourceViewer::ResourceViewer()
 
 	m_ViewerScene->Initialize();
 	m_ViewerScene->SetIsEnabled(true);
-	((CameraComponent*)m_ViewerScene->GetCameraList().At(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
+	((CameraComponent*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
 
 	((SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager))->AddScene(m_ViewerScene);
 
@@ -67,6 +67,7 @@ void ResourceViewer::Draw()
 		ImGui::SameLine();
 		if (ImGui::Button("Shaders"))
 			m_CurrentResource = 2;
+		ImGui::SameLine();
 		if (ImGui::Button("Fonts"))
 			m_CurrentResource = 3;
 		ImGui::SameLine();

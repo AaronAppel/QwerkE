@@ -186,17 +186,33 @@ namespace QwerkE
 			InputManager* inputManager = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
 			if (inputManager->FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
 			{
-				m_SceneManager->GetCurrentScene()->TogglePauseState();
+				static bool paused = false;
+				paused = !paused;
+				if (paused)
+				{
+					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Paused);
+				}
+				else
+				{
+					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
+				}
+			}
+			if (inputManager->FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
+			{
+				static bool frozen = false;
+				frozen = !frozen;
+				if (frozen)
+				{
+					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Frozen);
+				}
+				else
+				{
+					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
+				}
 			}
 			if (inputManager->FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
 			{
 				m_Editor->ToggleFullScreenScene();
-			}
-			if (inputManager->FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press)) // pause actor updates
-			{
-				static bool isFrozen = false;
-				isFrozen = !isFrozen; // toggle bool
-				m_SceneManager->GetCurrentScene()->SetIsFrozen(isFrozen);
 			}
 			if (inputManager->FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{

@@ -32,7 +32,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 
 	if (ImGui::Button("Refresh")) { /*m_RefreshFlag = 1*/; } // broken
 
-	RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Model);
+	RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Render);
 
 	if (rComp)
 		ImGui::SameLine();

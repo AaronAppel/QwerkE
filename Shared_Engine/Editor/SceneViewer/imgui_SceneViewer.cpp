@@ -46,6 +46,18 @@ void imgui_SceneViewer::DrawSceneView()
 	static bool isOpen = true;
 	ImGui::Begin("Scene Window - Framework.cpp", &isOpen, ImGuiWindowFlags_NoScrollbar);
 
+	// save/load + state
+	static int selection = 0;
+	const char* states [] = {"Running0", "Frozen0", "Paused0", "Animating"};
+	if (ImGui::Combo("Scene State: ", &selection,  states, 3))
+	{
+		m_SceneManager->GetCurrentScene()->SetState((eSceneState)selection);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Save")) m_SceneManager->GetCurrentScene()->SaveScene();
+	ImGui::SameLine();
+	if (ImGui::Button("Load")) m_SceneManager->GetCurrentScene()->LoadScene();
+
 	// render scene to fbo
 	m_FBO->Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -61,7 +73,7 @@ void imgui_SceneViewer::DrawSceneView()
 	imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
 	imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
 
-	ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + 35)); // snap window height to scale
+	ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y)); // snap window height to scale
 
 	// render texture as image
 	ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
