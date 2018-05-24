@@ -3,9 +3,8 @@
 //#include "../../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderProgram.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/FrameBufferObject.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/Camera/CameraComponent.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/glew/GL/glew.h"
@@ -21,7 +20,7 @@ ResourceViewer::ResourceViewer()
 {
 	m_ResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
 	m_Textures = m_ResourceManager->LookAtTextures();
-	m_Shaders = m_ResourceManager->LookAtShaders();
+	m_Shaders = m_ResourceManager->LookAtShaderProgram();
 	m_Meshes = m_ResourceManager->LookAtMeshes();
 	m_FBO = new FrameBufferObject();
 	m_FBO->Init();

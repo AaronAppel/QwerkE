@@ -17,7 +17,7 @@ public:
 	const ShaderProgram* GetShader() { return m_Shader; };
 
 private:
-	ShaderProgram* m_Shader = nullptr;
+	ShaderProgram * m_Shader = nullptr;
 };
 
 #endif // !_imgui_ShaderEditor_H_

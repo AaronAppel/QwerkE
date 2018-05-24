@@ -1,18 +1,19 @@
 #include "imgui_ShaderEditor.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderProgram.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Components/Time.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/FrameBufferObject.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/FrameBufferObject.h"
 #include "../../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
+#include "../../QwerkE_Framework/Graphics/Shader/ShaderProgram.h"
+#include "../../QwerkE_Framework/Graphics/Shader/ShaderComponent.h"
 
 imgui_ShaderEditor::imgui_ShaderEditor()
 {
-	m_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShader("TestShader");
+	m_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShaderProgram("TestShader");
 }
 
 imgui_ShaderEditor::~imgui_ShaderEditor()
@@ -45,8 +46,8 @@ void imgui_ShaderEditor::Draw()
 		// strcpy_s(buffer, (char*)shader->GetVertString());
 		currentShader = m_Shader->GetProgram();
 		// TODO: Handle null shader strings
-		strcpy_s(vertBuffer, bufferSize, (const char*)m_Shader->GetVertString());
-		strcpy_s(fragBuffer, bufferSize, (const char*)m_Shader->GetFragString());
+		strcpy_s(vertBuffer, bufferSize, m_Shader->GetFragShader()->GetStringData());
+		strcpy_s(fragBuffer, bufferSize, m_Shader->GetFragShader()->GetStringData());
 		// strcpy_s(geoBuffer, bufferSize, (const char*)shader->GetGeoString());
 	}
 
@@ -73,17 +74,20 @@ void imgui_ShaderEditor::Draw()
 			// buffer was changed
 		}
 	}
-
+	// TODO: Add recompile functionality back in. Although this should only be for certain shaders
+	// like "modifiable" tagged ones. Or something...
 	if (ImGui::Button("Recompile Vert"))
 	{
 		// Good enough for now, but should remove allocation calls
-		m_Shader->ReCompile1Shader(GL_VERTEX_SHADER, DeepCopyString(vertBuffer));
+		// m_Shader->ReCompile1Shader(GL_VERTEX_SHADER, DeepCopyString(vertBuffer));
 	}
 
+	// TODO: Add recompile functionality back in. Although this should only be for certain shaders
+	// like "modifiable" tagged ones. Or something...
 	if (ImGui::Button("Recompile Frag"))
 	{
 		// Good enough for now, but should remove allocation calls
-		m_Shader->ReCompile1Shader(GL_FRAGMENT_SHADER, DeepCopyString(fragBuffer));
+		// m_Shader->ReCompile1Shader(GL_FRAGMENT_SHADER, DeepCopyString(fragBuffer));
 	}
 
 	if (ImGui::Button("Recompile Geo"))

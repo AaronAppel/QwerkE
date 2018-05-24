@@ -8,7 +8,7 @@
 #include "SceneGraph/SceneGraph.h"
 
 class SceneGraph;
-class ShaderProgram;
+struct ShaderProgram;
 class SceneManager;
 class InputManager;
 class EntityEditor;

@@ -2,7 +2,6 @@
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderProgram.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Input/InputManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer/Renderer.h"

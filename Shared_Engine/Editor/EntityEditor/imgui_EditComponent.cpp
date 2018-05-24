@@ -1,16 +1,15 @@
 #include "imgui_EditComponent.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/MaterialData.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/ShaderProgram/ShaderProgram.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/MaterialData.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Components/RenderComponent.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Texture.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/Renderable.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Graphics/Gfx_Classes/ShaderProgramData.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/Texture.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/Renderable.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/Shader/ShaderProgram.h"
 
 imgui_EditComponent::imgui_EditComponent()
 {
@@ -18,7 +17,7 @@ imgui_EditComponent::imgui_EditComponent()
 
 	m_Materials = m_ResourceManager->LookAtMaterials();
 	m_Textures = m_ResourceManager->LookAtTextures();
-	m_Shaders = m_ResourceManager->LookAtShaders();
+	m_Shaders = m_ResourceManager->LookAtShaderProgram();
 	m_Meshes = m_ResourceManager->LookAtMeshes();
 }
 
@@ -121,7 +120,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 					ImGui::NextColumn();
 
 				// shader
-				if (ImGui::Selectable(renderables->at(i).GetShaderSchematic()->s_Name.c_str()))
+				if (ImGui::Selectable(renderables->at(i).GetShaderSchematic()->GetName().c_str()))
 				{
 					m_ShowShaderList = true;
 					m_Shaderindex = i;
@@ -194,7 +193,7 @@ void imgui_EditComponent::ShowShaderMenu(RenderComponent* rComp)
 		{
 			if (ImGui::Selectable(m_ShaderStrings[i]))
 			{
-				rComp->SetShaderAtIndex(m_Shaderindex, m_ResourceManager->GetShaderProgramData(m_ShaderStrings[i]));
+				rComp->SetShaderAtIndex(m_Shaderindex, m_ResourceManager->GetShaderProgram(m_ShaderStrings[i]));
 			}
 		}
 
