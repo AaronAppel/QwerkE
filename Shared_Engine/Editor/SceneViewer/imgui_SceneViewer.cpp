@@ -49,10 +49,12 @@ void imgui_SceneViewer::DrawSceneView()
 	// save/load + state
 	static int selection = 0;
 	const char* states [] = {"Running0", "Frozen0", "Paused0", "Animating"};
-	if (ImGui::Combo("Scene State: ", &selection,  states, 3))
+	ImGui::PushItemWidth(150);
+	if (ImGui::ListBox("Scene State: ", &selection, states, 4, 1))
 	{
 		m_SceneManager->GetCurrentScene()->SetState((eSceneState)selection);
 	}
+	ImGui::PopItemWidth();
 	ImGui::SameLine();
 	if (ImGui::Button("Save")) m_SceneManager->GetCurrentScene()->SaveScene();
 	ImGui::SameLine();

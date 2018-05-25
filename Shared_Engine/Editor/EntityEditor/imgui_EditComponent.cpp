@@ -35,6 +35,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 	RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Render);
 
 	if (rComp)
+	{
 		ImGui::SameLine();
 		ImGui::Text(rComp->GetSchematicName().c_str());
 		if (ImGui::CollapsingHeader("RenderComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
@@ -95,7 +96,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			ImGui::Columns(4, "RenderablesHeader", false);  // 3-ways, no border
 			{
 				// name
-				ImGui::Text("Name/ID");
+				ImGui::Text("RenderableID");
 				ImGui::NextColumn();
 
 				// shader
@@ -184,9 +185,10 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			// ImGui::PopStyleColor();
 		}
 
-	if (ImGui::CollapsingHeader("OtherComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImGui::Text("TODO: Handle other components!");
+		if (ImGui::CollapsingHeader("OtherComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			ImGui::Text("TODO: Handle other components!");
+		}
 	}
 }
 
