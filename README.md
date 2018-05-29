@@ -1,34 +1,47 @@
 # Qwerk_Engine
-*This project is a work in progess*
+*This project is a work in progess and is continually in an unstable state*  
 A simple engine or runtime editor for the QwerkE framework.
 QwerkEngine framework lives here: https://github.com/AaronAppel/QwerkE_Framework
 
 ## Getting Started
-...
+An introduction to QwerkE.
 
-## Examples
-### Installing
-...
+WIP: wwwgithub.com/AaronAppel/QwerkE_Documentation  
+
+## Examples  
+### Installing  
+How to install QwerkEngine and the accompanying framework.
 
 ### Usage
+Simple example usage of QwerkEngine.
+
+WIP: wwwgithub.com/AaronAppel/QwerkE_Documentation  
+~~~cpp  
+int main()
+{
+    cout << "Awaiting Documentation..." << endl;
+}  
+~~~
 ...
 
 ## 3rd Party Libraries
-glew: https://github.com/nigels-com/glew
-glfw: https://github.com/glfw/glfw
-RakNet: https://github.com/facebookarchive/RakNet
-lodepng: https://github.com/lvandeve/lodepng
-stb: https://github.com/nothings/stb
-imgui: https://github.com/ocornut/imgui
-freetype2: https://www.freetype.org/index.html
-glm: https://github.com/g-truc/glm
-pthreads: https://github.com/coapp-packages/pthreads
-vlc: https://github.com/videolan/vlc
+Libraries I utilize to deliver features.
+
+- glew: www.github.com/nigels-com/glew  
+- glfw: www.github.com/glfw/glfw  
+- RakNet: www.github.com/facebookarchive/RakNet  
+- lodepng: www.github.com/lvandeve/lodepng  
+- stb_image: www.github.com/nothings/stb  
+- imgui: www.github.com/ocornut/imgui  
+- freetype2: www.freetype.org/index.html  
+- glm: www.github.com/g-truc/glm  
+- pthreads: www.github.com/coapp-packages/pthreads  
+- assimp: www.github.com/assimp/assimp  
+- OpenAL: www.openal.org  
+// - vlc: www.github.com/videolan/vlc  
 
 ## License
-This project is licensed under the BSD3 License - see the LICENSE file for details.
+This project is licensed under the BSD3 License - see the LICENSE file for details.  
 
 ## Acknowledgments
 ...
-
-https://help.github.com/articles/basic-writing-and-formatting-syntax/
