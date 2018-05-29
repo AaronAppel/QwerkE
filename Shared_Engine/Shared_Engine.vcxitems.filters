@@ -28,6 +28,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.h">
       <Filter>Editor\EntityEditor</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\MaterialEditor.h">
+      <Filter>Editor\ResourceViewer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.cpp">
       <Filter>Editor\EntityEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\MaterialEditor.cpp">
+      <Filter>Editor\ResourceViewer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

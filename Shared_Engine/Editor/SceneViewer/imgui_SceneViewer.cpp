@@ -44,43 +44,46 @@ void imgui_SceneViewer::Draw()
 void imgui_SceneViewer::DrawSceneView()
 {
 	static bool isOpen = true;
-	ImGui::Begin("Scene Window - Framework.cpp", &isOpen, ImGuiWindowFlags_NoScrollbar);
-
-	// save/load + state
-	static int selection = 0;
-	const char* states [] = {"Running0", "Frozen0", "Paused0", "Animating"};
-	ImGui::PushItemWidth(150);
-	if (ImGui::ListBox("Scene State: ", &selection, states, 4, 1))
+	if (ImGui::Begin("Scene Window - Framework.cpp", &isOpen, ImGuiWindowFlags_NoScrollbar))
 	{
-		m_SceneManager->GetCurrentScene()->SetState((eSceneState)selection);
+		// save/load + state
+		static int selection = 0;
+		selection = (char)m_SceneManager->GetCurrentScene()->GetState();
+		const char* states[] = { "Running", "Frozen", "Paused", "SlowMo", "Animating" };
+		ImGui::PushItemWidth(150);
+		if (ImGui::Combo("Scene State", &selection, states, 5))
+		{
+			m_SceneManager->GetCurrentScene()->SetState((eSceneState)selection);
+		}
+		ImGui::SameLine();
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+		if (ImGui::Button("Save")) m_SceneManager->GetCurrentScene()->SaveScene();
+		ImGui::SameLine();
+		if (ImGui::Button("Load")) m_SceneManager->GetCurrentScene()->LoadScene();
+
+		// render scene to fbo
+		m_FBO->Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		m_SceneManager->Draw();
+		m_FBO->UnBind();
+
+		ImVec2 winSize = ImGui::GetWindowSize();
+
+		ImVec2 imageSize = winSize;
+
+		// TODO: Fix image width. A larger panel has more space on the right.
+		// TODO: Consider centering image on panel.
+		imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
+		imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
+
+		ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + 60)); // snap window height to scale
+
+		// render texture as image
+		ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
+
+		ImGui::End();
 	}
-	ImGui::PopItemWidth();
-	ImGui::SameLine();
-	if (ImGui::Button("Save")) m_SceneManager->GetCurrentScene()->SaveScene();
-	ImGui::SameLine();
-	if (ImGui::Button("Load")) m_SceneManager->GetCurrentScene()->LoadScene();
-
-	// render scene to fbo
-	m_FBO->Bind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_SceneManager->Draw();
-	m_FBO->UnBind();
-
-	ImVec2 winSize = ImGui::GetWindowSize();
-
-	ImVec2 imageSize = winSize;
-
-	// TODO: Fix image width. A larger panel has more space on the right.
-	// TODO: Consider centering image on panel.
-	imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
-	imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
-
-	ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y)); // snap window height to scale
-
-	// render texture as image
-	ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
-
-	ImGui::End();
 }
 
 void imgui_SceneViewer::DrawSceneList()

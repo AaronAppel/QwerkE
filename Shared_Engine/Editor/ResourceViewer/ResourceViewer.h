@@ -14,6 +14,9 @@ class Scene;
 class GameObject;
 class FrameBufferObject;
 class Mesh;
+class Texture;
+class Material;
+class MaterialEditor;
 
 class ResourceViewer
 {
@@ -28,8 +31,13 @@ private:
 
 	int m_CurrentResource = 0;
 
+	MaterialEditor* m_MaterialEditor = nullptr;
+	bool m_ShowMatEditor = false;
+	std::string m_MatName = "Uninitialized";
+
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
-	const std::map<std::string, GLuint>* m_Textures = nullptr;
+	const std::map<std::string, Material*>* m_Materials = nullptr;
+	const std::map<std::string, Texture*>* m_Textures = nullptr;
 	const std::map<std::string, Mesh*>* m_Meshes = nullptr;
 	// const std::map<std::string, GLuint>* m_Fonts = nullptr;
 	// const std::map<std::string, int>* m_Levels = nullptr;

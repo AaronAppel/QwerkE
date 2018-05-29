@@ -2,7 +2,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Graphics/MaterialData.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/Material.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Entities/GameObject.h"
@@ -11,13 +11,15 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/Renderable.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/Shader/ShaderProgram.h"
 
+#include <vector>
+#include <string>
+
 imgui_EditComponent::imgui_EditComponent()
 {
 	m_ResourceManager = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager));
 
 	m_Materials = m_ResourceManager->LookAtMaterials();
-	m_Textures = m_ResourceManager->LookAtTextures();
-	m_Shaders = m_ResourceManager->LookAtShaderProgram();
+	m_Shaders = m_ResourceManager->LookAtShaderPrograms();
 	m_Meshes = m_ResourceManager->LookAtMeshes();
 }
 
@@ -30,7 +32,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 	ImGuiCol idx = ImGuiCol_FrameBg; // TODO: Style imgui windows for editing
 	ImVec4 col = ImVec4(0, 0, 0, 0);
 
-	if (ImGui::Button("Refresh")) { /*m_RefreshFlag = 1*/; } // broken
+	if (ImGui::Button("Refresh")) { m_RefreshFlag = 1; } // broken
 
 	RenderComponent* rComp = (RenderComponent*)entity->GetComponent(Component_Render);
 
@@ -44,7 +46,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			// ImGui::PushStyleVar(); ImGui::PushStyleColor(idx, col);
 
 			std::vector<Renderable>* renderables = (std::vector<Renderable>*)rComp->LookAtRenderableList();
-
+			if (m_RenderableIndex > renderables->size()) m_RenderableIndex = 0;
 			// populate asset names
 			if (m_RefreshFlag)
 			{
@@ -60,10 +62,6 @@ void imgui_EditComponent::Draw(GameObject* entity)
 				{
 					delete m_ShaderStrings[i];
 				}
-				for (size_t i = 0; i < m_TextureStrings.size(); i++)
-				{
-					delete m_TextureStrings[i];
-				}
 				for (size_t i = 0; i < m_MeshStrings.size(); i++)
 				{
 					delete m_MeshStrings[i];
@@ -71,20 +69,15 @@ void imgui_EditComponent::Draw(GameObject* entity)
 
 				m_MatStrings.clear();
 				m_ShaderStrings.clear();
-				m_TextureStrings.clear();
 				m_MeshStrings.clear();
 
 				for (const auto &p : *m_Materials)
 				{
-					m_MatStrings.push_back(p.second->s_Name.c_str());
+					m_MatStrings.push_back(DeepCopyString(p.second->GetMaterialName().c_str()));
 				}
 				for (const auto &p : *m_Shaders)
 				{
 					m_ShaderStrings.push_back(DeepCopyString(p.second->GetName().c_str())); //RAM:
-				}
-				for (const auto &p : *m_Textures)
-				{
-					m_TextureStrings.push_back(DeepCopyString(std::to_string(p.second).c_str())); //RAM:
 				}
 				for (const auto &p : *m_Meshes)
 				{
@@ -136,7 +129,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 
 				// material
 				// if (i == m_Materialindex) ImGui::PushStyleColor(ImGuiCol(1), ImVec4(1,1,1,1));
-				if (ImGui::Selectable(renderables->at(i).GetMaterialSchematic()->s_Name.c_str()))
+				if (ImGui::Selectable(renderables->at(i).GetMaterialSchematic()->GetMaterialName().c_str()))
 				{
 					m_ShowMaterialList = true;
 					m_RenderableIndex = i;
@@ -157,31 +150,66 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			if (m_ShowMaterialList) ShowMaterialMenu(rComp);
 			if (m_ShowMeshList) ShowMeshMenu(rComp);
 
-			// draw data
+			// shader uniforms and attributes
+			const std::vector<std::string>* attributes = rComp->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeAttributes();
+			ImGui::Button("Attributes");
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				for (int i = 0; i < attributes->size(); i++)
+				{
+					ImGui::Text(attributes->at(i).c_str());
+				}
+				ImGui::EndTooltip();
+			}
+			ImGui::SameLine();
+			const std::vector<std::string>* uniforms = rComp->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeUniforms();
+			ImGui::Button("Uniforms");
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				for (int i = 0; i < uniforms->size(); i++)
+				{
+					ImGui::Text(uniforms->at(i).c_str());
+				}
+				ImGui::EndTooltip();
+			}
+			ImGui::SameLine();
 
 			// render primitive/mode
 			// TODO: Find a good way to set renderable mesh primitive
-			if (ImGui::Button("Tris"))
-				// TODO: determine the proper mesh index
-				;// rComp->GetModel()->m_Meshes[0]->SetPrimitiveType(GL_TRIANGLES);
-			ImGui::SameLine();
-			if (ImGui::Button("TriStrip"))
-				;// rComp->GetModel()->m_Meshes[0]->SetPrimitiveType(GL_TRIANGLE_STRIP);
-			ImGui::SameLine();
-			if (ImGui::Button("TriFan"))
-				;// rComp->GetModel()->m_Meshes[0]->SetPrimitiveType(GL_TRIANGLE_FAN);
-			if (ImGui::Button("Points"))
-				;// rComp->GetModel()->m_Meshes[0]->SetPrimitiveType(GL_POINTS);
-			ImGui::SameLine();
-			if (ImGui::Button("Lines"))
-				;// rComp->GetModel()->m_Meshes[0]->SetPrimitiveType(GL_LINES);
-			ImGui::SameLine();
-			if (ImGui::Button("Strips"))
-				;// rComp->GetModel()->m_Meshes[0]->SetPrimitiveType(GL_LINE_STRIP);
+			static int selection = 0;
+			const char* primitives[] = { "Tris", "TriStrip", "TriFan", "Points" ,"Lines", "Strips" };
+			ImGui::PushItemWidth(150);
+			if (ImGui::Combo("Primitive", &selection, primitives, 5))
+			{
+				switch (selection)
+				{
+				case 0:
+					rComp->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLES);
+					break;
+				case 1:
+					rComp->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_STRIP);
+					break;
+				case 2:
+					rComp->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_FAN);
+					break;
+				case 3:
+					rComp->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_POINTS);
+					break;
+				case 4:
+					rComp->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINES);
+					break;
+				case 5:
+					rComp->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINE_STRIP);
+					break;
+				}
+			}
+			ImGui::PopItemWidth();
 
-			;// float colors[4] = { rComp->GetColour().x, rComp->GetColour().y, rComp->GetColour().z, rComp->GetColour().w };
-			;// ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);
-			;// rComp->SetColour(vec4(colors[0], colors[1], colors[2], colors[3]));
+			// float colors[4] = { rComp->GetColour().x, rComp->GetColour().y, rComp->GetColour().z, rComp->GetColour().w };
+			// ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);
+			// rComp->SetColour(vec4(colors[0], colors[1], colors[2], colors[3]));
 			// ImGui::PopStyleColor();
 		}
 
@@ -196,14 +224,16 @@ void imgui_EditComponent::ShowShaderMenu(RenderComponent* rComp)
 {
 	if (ImGui::Begin("Shader Selector", &m_ShowShaderList))
 	{
-		ImGui::SetWindowFocus();
-
 		for (size_t i = 0; i < m_ShaderStrings.size(); i++)
 		{
 			if (ImGui::Selectable(m_ShaderStrings[i]))
 			{
 				rComp->SetShaderAtIndex(m_RenderableIndex, m_ResourceManager->GetShaderProgram(m_ShaderStrings[i]));
 			}
+		}
+		if (ImGui::IsItemClicked(1))
+		{
+			static bool shaderEditor = true; // TODO:
 		}
 
 		ImGui::End();
@@ -214,13 +244,15 @@ void imgui_EditComponent::ShowMaterialMenu(RenderComponent* rComp)
 {
 	if (ImGui::Begin("Material Selector", &m_ShowMaterialList))
 	{
-		ImGui::SetWindowFocus();
-
 		for (size_t i = 0; i < m_MatStrings.size(); i++)
 		{
 			if (ImGui::Selectable(m_MatStrings[i]))
 			{
 				rComp->SetMaterialAtIndex(m_RenderableIndex, m_ResourceManager->GetMaterial(m_MatStrings[i]));
+			}
+			if (ImGui::IsItemClicked(1))
+			{
+				static bool materialEditor = true; // TODO:
 			}
 		}
 
@@ -232,8 +264,6 @@ void imgui_EditComponent::ShowMeshMenu(RenderComponent* rComp)
 {
 	if (ImGui::Begin("Mesh Selector", &m_ShowMeshList))
 	{
-		ImGui::SetWindowFocus();
-
 		for (size_t i = 0; i < m_MeshStrings.size(); i++)
 		{
 			if (ImGui::Selectable(m_MeshStrings[i]))

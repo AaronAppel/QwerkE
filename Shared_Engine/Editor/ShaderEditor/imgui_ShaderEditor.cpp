@@ -13,7 +13,8 @@
 
 imgui_ShaderEditor::imgui_ShaderEditor()
 {
-	m_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShaderProgram("TestShader");
+	m_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShaderProgram(null_shader);
+	m_ShaderList = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->LookAtShaderPrograms();
 }
 
 imgui_ShaderEditor::~imgui_ShaderEditor()
@@ -40,6 +41,17 @@ void imgui_ShaderEditor::Draw()
 	static char geoBuffer[bufferSize] = { 0 };
 
 	static GLuint currentShader = 0;
+
+	static bool showShaderList = false;
+	ImGui::Checkbox("ShaderList", &showShaderList);
+	if(showShaderList)
+	for (auto p : *m_ShaderList)
+	{
+		if (ImGui::Button(p.second->GetName().c_str()))
+		{
+			m_Shader = p.second;
+		}
+	}
 
 	if (currentShader != m_Shader->GetProgram())
 	{
@@ -87,7 +99,7 @@ void imgui_ShaderEditor::Draw()
 	if (ImGui::Button("Recompile Frag"))
 	{
 		// Good enough for now, but should remove allocation calls
-		// m_Shader->ReCompile1Shader(GL_FRAGMENT_SHADER, DeepCopyString(fragBuffer));
+		m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, DeepCopyString(fragBuffer));
 	}
 
 	if (ImGui::Button("Recompile Geo"))

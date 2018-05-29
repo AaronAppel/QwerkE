@@ -16,7 +16,7 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/FrameBufferObject.h"
 
-#include "../QwerkE_Framework/QwerkE_Framework/CallbackFunctions.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Window/CallbackFunctions.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Physics/PhysicsManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/MessageManager.h"
@@ -160,12 +160,9 @@ namespace QwerkE
 			m_IsRunning = false;
 		}
 
-		void Engine::NewFrame()
+		void Engine::NewFrame() /* Reset */
 		{
-			/* Reset */
-			// TODO: Reset things...
-			((InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager))->NewFrame();
-			ImGui_ImplGlfwGL3_NewFrame();
+			Framework::NewFrame();
 			m_Editor->NewFrame();
 		}
 

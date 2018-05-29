@@ -28,54 +28,49 @@ EntityEditor::~EntityEditor()
 // imgui styling: https://www.unknowncheats.me/forum/direct3d/189635-imgui-style-settings.html
 void EntityEditor::Draw()
 {
-	GameObject* thing = m_SceneManager->GetCurrentScene()->GetGameObject(m_CurrentEntity.c_str());
+	if (m_CurrentEntity == nullptr)
+	{
+		// TODO: What if the scene is empty? What does map return? nullptr I hope
+		m_CurrentEntity = m_SceneManager->GetCurrentScene()->GetObjectList().begin()->second;
+	}
+	if(m_CurrentEntity)
 	if (ImGui::Begin("Entity Editor"))
 	{
-		if (thing == nullptr)
-		{
-			// TODO: What if the scene is empty? What does map return? nullptr I hope
-			thing = m_SceneManager->GetCurrentScene()->GetObjectList().begin()->second;
-		}
-		if (thing == nullptr)
-		{
-			ImGui::End();
-			return; // no object selected
-		}
-		//// Begine drawing entity data...
+		//// Begin drawing entity data...
 		// Draw generic GameObject data like transform and name
-		// std::string name = thing->GetName().c_str() + ' '; // extra space for editing
-		ImGui::InputText("Name: ", (char*)thing->GetName().c_str(), thing->GetName().size());
-		// thing->SetName(); // TODO: Scene map probably needs to handle name changes
+		// std::string name = m_CurrentEntity->GetName().c_str() + ' '; // extra space for editing
+		ImGui::InputText("Name: ", (char*)m_CurrentEntity->GetName().c_str(), m_CurrentEntity->GetName().size());
+		// m_CurrentEntity->SetName(); // TODO: Scene map probably needs to handle name changes
 
 		static float pos[3] = { 0.0f, 0.0f, 0.0f };
-		pos[0] = thing->GetPosition().x;
-		pos[1] = thing->GetPosition().y;
-		pos[2] = thing->GetPosition().z;
+		pos[0] = m_CurrentEntity->GetPosition().x;
+		pos[1] = m_CurrentEntity->GetPosition().y;
+		pos[2] = m_CurrentEntity->GetPosition().z;
 		static float rot[3] = { 0.0f, 0.0f, 0.0f };
-		rot[0] = thing->GetRotation().x;
-		rot[1] = thing->GetRotation().y;
-		rot[2] = thing->GetRotation().z;
+		rot[0] = m_CurrentEntity->GetRotation().x;
+		rot[1] = m_CurrentEntity->GetRotation().y;
+		rot[2] = m_CurrentEntity->GetRotation().z;
 		static float scale[3] = { 1.0f, 1.0f, 1.0f };
-		scale[0] = thing->GetScale().x;
-		scale[1] = thing->GetScale().y;
-		scale[2] = thing->GetScale().z;
+		scale[0] = m_CurrentEntity->GetScale().x;
+		scale[1] = m_CurrentEntity->GetScale().y;
+		scale[2] = m_CurrentEntity->GetScale().z;
 
 		if (ImGui::InputFloat3("Pos: ", pos))
 		{
-			thing->SetPosition(vec3(pos[0], pos[1], pos[2]));
+			m_CurrentEntity->SetPosition(vec3(pos[0], pos[1], pos[2]));
 		}
 		if (ImGui::InputFloat3("Rot: ", rot))
 		{
-			thing->SetRotation(vec3(rot[0], rot[1], rot[2]));
+			m_CurrentEntity->SetRotation(vec3(rot[0], rot[1], rot[2]));
 		}
 		if (ImGui::InputFloat3("Scale: ", scale))
 		{
-			thing->SetScale(vec3(scale[0], scale[1], scale[2]));
+			m_CurrentEntity->SetScale(vec3(scale[0], scale[1], scale[2]));
 		}
 		ImGui::Separator();
 
 		// Draw properties for object components like render, character, etc
-		m_EditComponent->Draw(thing);
+		m_EditComponent->Draw(m_CurrentEntity);
 
 		ImGui::End();
 	}

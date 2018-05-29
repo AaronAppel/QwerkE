@@ -7,6 +7,7 @@
 // TODO: Create an imgui_EntityEditor class
 class SceneManager;
 class ResourceManager;
+class GameObject;
 class Editor;
 class imgui_EditComponent;
 
@@ -21,14 +22,14 @@ public:
 
     virtual void Draw();
 
-    void SetCurrentEntity(std::string entityName) { m_CurrentEntity = entityName; };
+    void SetCurrentEntity(GameObject* object) { m_CurrentEntity = object; };
 
 private:
     Editor* m_Editor = nullptr;
     SceneManager * m_SceneManager = nullptr;
     ResourceManager * m_ResourceManager = nullptr;
 
-    std::string m_CurrentEntity = "Null";
+	GameObject* m_CurrentEntity = nullptr;
 	imgui_EditComponent* m_EditComponent = nullptr;
 };
 

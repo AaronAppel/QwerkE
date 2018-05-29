@@ -4,7 +4,8 @@
 class GameObject;
 class ResourceManager;
 class ShaderProgram;
-struct MaterialData;
+class Material;
+class Texture;
 class RenderComponent;
 class Mesh;
 
@@ -21,14 +22,12 @@ private:
 
 	bool m_RefreshFlag = 1;
 
-	const std::map<std::string, MaterialData*>* m_Materials = nullptr;
+	const std::map<std::string, Material*>* m_Materials = nullptr;
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
-	const std::map<std::string, GLuint>* m_Textures = nullptr;
 	const std::map<std::string, Mesh*>* m_Meshes = nullptr;
 
 	std::vector<const char*> m_ShaderStrings;
 	std::vector<const char*> m_MatStrings;
-	std::vector<const char*> m_TextureStrings;
 	std::vector<const char*> m_MeshStrings;
 
 	int m_RenderableIndex = 0; // current renderable selected

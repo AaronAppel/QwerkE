@@ -1,6 +1,9 @@
 #ifndef _imgui_ShaderEditor_H_
 #define _imgui_ShaderEditor_H_
 
+#include <map>
+#include <string>
+
 class ShaderProgram;
 
 class imgui_ShaderEditor
@@ -17,7 +20,8 @@ public:
 	const ShaderProgram* GetShader() { return m_Shader; };
 
 private:
-	ShaderProgram * m_Shader = nullptr;
+	const std::map<std::string, ShaderProgram*>* m_ShaderList = nullptr;
+	ShaderProgram* m_Shader = nullptr;
 };
 
 #endif // !_imgui_ShaderEditor_H_
