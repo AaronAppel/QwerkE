@@ -3,7 +3,6 @@
 //#include "../../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
-#include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/FrameBufferObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/Material.h"
@@ -16,8 +15,10 @@
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Scenes/ViewerScene.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/Factory/Factory.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/Texture.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Graphics/Shader/ShaderProgram.h"
 #include "MaterialEditor.h"
 
 #include <string>
@@ -26,20 +27,18 @@ ResourceViewer::ResourceViewer()
 {
 	m_MaterialEditor = new MaterialEditor();
 	m_ResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
-	m_Materials = m_ResourceManager->LookAtMaterials();
-	m_Textures = m_ResourceManager->LookAtTextures();
-	m_Shaders = m_ResourceManager->LookAtShaderPrograms();
-	m_Meshes = m_ResourceManager->LookAtMeshes();
-
-	m_Sounds = m_ResourceManager->LookAtSounds();
-
+	m_Materials = m_ResourceManager->SeeMaterials();
+	m_Textures = m_ResourceManager->SeeTextures();
+	m_Shaders = m_ResourceManager->SeeShaderPrograms();
+	m_Meshes = m_ResourceManager->SeeMeshes();
+	m_Sounds = m_ResourceManager->SeeSounds();
 	m_FBO = new FrameBufferObject();
 	m_FBO->Init();
 
 	m_ViewerScene = new ViewerScene();
 	m_Subject = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(0, -4, 40));
 	m_TagPlane = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreatePlane(m_ViewerScene, vec3(2, -2, 10));
-	m_TagPlane->SetRotation(vec3(90,0,0));
+	m_TagPlane->SetRotation(vec3(90, 0, 0));
 	m_TagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));
 
 	m_ViewerScene->AddObjectToScene(m_Subject);
@@ -62,7 +61,7 @@ ResourceViewer::~ResourceViewer()
 
 void ResourceViewer::Draw()
 {
-	if(ImGui::Begin("ResourceViewer"))
+	if (ImGui::Begin("ResourceViewer"))
 	{
 		if (ImGui::Button("Refresh"))
 		{
@@ -71,7 +70,7 @@ void ResourceViewer::Draw()
 		ImGui::SameLine();
 
 		// select what resource to view
-		if(ImGui::Button("Textures"))
+		if (ImGui::Button("Textures"))
 			m_CurrentResource = 0;
 		ImGui::SameLine();
 		if (ImGui::Button("Materials"))
@@ -111,7 +110,7 @@ void ResourceViewer::Draw()
 					ImGui::BeginTooltip();
 					// image name or something might be better. use newly create asset tags
 
-					if(ImGui::IsMouseDown(0))
+					if (ImGui::IsMouseDown(0))
 					{
 						ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(256, 256), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
 					}
@@ -150,7 +149,7 @@ void ResourceViewer::Draw()
 			}
 			break;
 		case 2:
-			for (const auto &p : *m_Shaders)
+			for (auto p : *m_Shaders)
 			{
 				if (counter % m_ItemsPerRow)
 					ImGui::SameLine();
@@ -161,13 +160,15 @@ void ResourceViewer::Draw()
 				if (ImGui::IsItemHovered())
 				{
 					ImGui::BeginTooltip();
-					ImGui::Text("ShaderData");
+					ImGui::Text(std::to_string(p.second->GetProgram()).c_str());
 					ImGui::EndTooltip();
 				}
+				counter++;
 			}
 			break;
 		case 3:
-			break;
+			// for (m_Fonts)
+		break;
 		case 4:
 			for (int i = 0; i < m_ModelImageHandles.size(); i++)
 			{
@@ -201,6 +202,7 @@ void ResourceViewer::Draw()
 					ImGui::Text(std::to_string(p.second).c_str());
 					ImGui::EndTooltip();
 				}
+				counter++;
 			}
 			break;
 		}
@@ -208,7 +210,7 @@ void ResourceViewer::Draw()
 		if (m_ShowMatEditor)
 		{
 			m_MaterialEditor->Draw(((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetMaterial(
-			m_MatName.c_str()));
+				m_MatName.c_str()));
 		}
 
 		ImGui::End();

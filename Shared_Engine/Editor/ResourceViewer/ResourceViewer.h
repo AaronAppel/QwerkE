@@ -3,13 +3,10 @@
 
 #include "../../QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../../QwerkE_Common/Libraries/glew/GL/glew.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/OpenAL/include/al.h"
 
 #include <string>
 #include <map>
 #include <vector>
-
-typedef unsigned int ALuint;
 
 class ResourceManager;
 class ShaderProgram;
@@ -20,6 +17,8 @@ class Mesh;
 class Texture;
 class Material;
 class MaterialEditor;
+
+typedef unsigned int ALuint;
 
 class ResourceViewer
 {
@@ -39,13 +38,12 @@ private:
 	std::string m_MatName = "Uninitialized";
 
 	const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
-	const std::map<std::string, ALuint>* m_Sounds = nullptr;
 	const std::map<std::string, Material*>* m_Materials = nullptr;
 	const std::map<std::string, Texture*>* m_Textures = nullptr;
 	const std::map<std::string, Mesh*>* m_Meshes = nullptr;
+	const std::map<std::string, ALuint>* m_Sounds = nullptr;
 	// const std::map<std::string, GLuint>* m_Fonts = nullptr;
 	// const std::map<std::string, int>* m_Levels = nullptr;
-	// const std::map<std::string, Sound*>* m_Sounds = nullptr;
 
 	// Model viewing
 	unsigned char m_ItemsPerRow = 4;

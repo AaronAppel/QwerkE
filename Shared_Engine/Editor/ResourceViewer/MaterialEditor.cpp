@@ -9,7 +9,7 @@
 
 MaterialEditor::MaterialEditor()
 {
-	m_TextureList = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->LookAtTextures();
+	m_TextureList = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->SeeTextures();
 }
 
 MaterialEditor::~MaterialEditor()
@@ -20,8 +20,7 @@ void MaterialEditor::Draw(Material* material)
 {
 	// NOTE: For now just replace existing texture.
 	// In the future think of a way to preserve old data.
-	static bool isOpen = true;
-	if (ImGui::Begin("Material Editor"), &isOpen)
+	if (ImGui::Begin("Material Editor"))
 	{
 		const std::map<eMaterialMaps, Texture*>* textures = material->SeeMaterials();
 		// display material textures
@@ -61,10 +60,10 @@ void MaterialEditor::Draw(Material* material)
 		}
 
 		ImGui::Separator();
-		counter = textures->size() + 1;
+		counter = textures->size();
 		for (auto p : *m_TextureList)
 		{
-			if (counter % (textures->size() + 1))
+			if (counter % textures->size())
 				ImGui::SameLine();
 
 			ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(64, 64), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);

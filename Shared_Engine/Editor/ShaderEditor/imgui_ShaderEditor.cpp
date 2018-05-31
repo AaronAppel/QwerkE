@@ -14,7 +14,7 @@
 imgui_ShaderEditor::imgui_ShaderEditor()
 {
 	m_Shader = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetShaderProgram(null_shader);
-	m_ShaderList = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->LookAtShaderPrograms();
+	m_ShaderList = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->SeeShaderPrograms();
 }
 
 imgui_ShaderEditor::~imgui_ShaderEditor()

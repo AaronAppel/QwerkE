@@ -95,14 +95,6 @@ void imgui_Editor::Draw()
 		{
 			m_ShaderEditor->Draw();
 		}
-		if (ImGui::Begin("Audio"))
-		{
-			if (ImGui::Button("Play Sound"))
-			{
-				((AudioManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Audio_Manager))->PlaySound("bounce.wav");
-			}
-			ImGui::End();
-		}
 		m_ResourceViewer->Draw();
 		m_SceneViewer->Draw();
 		m_SceneGraph->Draw();

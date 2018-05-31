@@ -18,9 +18,9 @@ imgui_EditComponent::imgui_EditComponent()
 {
 	m_ResourceManager = ((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager));
 
-	m_Materials = m_ResourceManager->LookAtMaterials();
-	m_Shaders = m_ResourceManager->LookAtShaderPrograms();
-	m_Meshes = m_ResourceManager->LookAtMeshes();
+	m_Materials = m_ResourceManager->SeeMaterials();
+	m_Shaders = m_ResourceManager->SeeShaderPrograms();
+	m_Meshes = m_ResourceManager->SeeMeshes();
 }
 
 imgui_EditComponent::~imgui_EditComponent()
