@@ -28,7 +28,8 @@ SceneGraph::~SceneGraph()
 
 void SceneGraph::Draw()
 {
-	if (ImGui::Begin("SceneGraph"))
+	static bool isOpen = true;
+	if (ImGui::Begin("SceneGraph"), &isOpen)
 	{
 		if (ImGui::Button("Actors"))
 		{

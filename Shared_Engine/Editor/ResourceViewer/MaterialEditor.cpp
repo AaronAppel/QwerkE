@@ -20,7 +20,8 @@ void MaterialEditor::Draw(Material* material)
 {
 	// NOTE: For now just replace existing texture.
 	// In the future think of a way to preserve old data.
-	if (ImGui::Begin("Material Editor"))
+	static bool isOpen = true;
+	if (ImGui::Begin("Material Editor"), &isOpen)
 	{
 		const std::map<eMaterialMaps, Texture*>* textures = material->SeeMaterials();
 		// display material textures
@@ -60,10 +61,10 @@ void MaterialEditor::Draw(Material* material)
 		}
 
 		ImGui::Separator();
-		counter = textures->size();
+		counter = textures->size() + 1;
 		for (auto p : *m_TextureList)
 		{
-			if (counter % textures->size())
+			if (counter % (textures->size() + 1))
 				ImGui::SameLine();
 
 			ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(64, 64), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);

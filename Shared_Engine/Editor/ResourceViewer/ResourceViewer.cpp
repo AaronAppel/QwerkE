@@ -3,6 +3,7 @@
 //#include "../../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/FrameBufferObject.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Framework/Graphics/Material.h"
@@ -29,6 +30,9 @@ ResourceViewer::ResourceViewer()
 	m_Textures = m_ResourceManager->LookAtTextures();
 	m_Shaders = m_ResourceManager->LookAtShaderPrograms();
 	m_Meshes = m_ResourceManager->LookAtMeshes();
+
+	m_Sounds = m_ResourceManager->LookAtSounds();
+
 	m_FBO = new FrameBufferObject();
 	m_FBO->Init();
 
@@ -145,10 +149,26 @@ void ResourceViewer::Draw()
 				counter++;
 			}
 			break;
-		case 4:
-			if (counter % m_ItemsPerRow)
-				ImGui::SameLine();
+		case 2:
+			for (const auto &p : *m_Shaders)
+			{
+				if (counter % m_ItemsPerRow)
+					ImGui::SameLine();
 
+				if (ImGui::Button(p.first.c_str()))
+				{
+				}
+				if (ImGui::IsItemHovered())
+				{
+					ImGui::BeginTooltip();
+					ImGui::Text("ShaderData");
+					ImGui::EndTooltip();
+				}
+			}
+			break;
+		case 3:
+			break;
+		case 4:
 			for (int i = 0; i < m_ModelImageHandles.size(); i++)
 			{
 				if (counter % m_ItemsPerRow)
@@ -163,6 +183,24 @@ void ResourceViewer::Draw()
 					ImGui::EndTooltip();
 				}
 				counter++;
+			}
+			break;
+		case 5:
+			for (auto p : *m_Sounds)
+			{
+				if (counter % m_ItemsPerRow)
+					ImGui::SameLine();
+
+				if (ImGui::Button(p.first.c_str()))
+				{
+					((AudioManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Audio_Manager))->PlaySound(p.first.c_str());
+				}
+				if (ImGui::IsItemHovered())
+				{
+					ImGui::BeginTooltip();
+					ImGui::Text(std::to_string(p.second).c_str());
+					ImGui::EndTooltip();
+				}
 			}
 			break;
 		}
