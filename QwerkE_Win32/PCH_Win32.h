@@ -2,8 +2,11 @@
 #define _PCH_Win32_H_
 
 /////////////////////////////////////////////////
-// include STATIC code that does not change often
+// PCH_Win32.h
+// For faster compiling.
 /////////////////////////////////////////////////
+
+#include "QwerkE_Windows.h"
 
 #include "../QwerkE_Framework/QwerkE_Framework/QwerkE_Defines.h"
 #include "../QwerkE_Framework/QwerkE_Framework/QwerkE_Platform.h"

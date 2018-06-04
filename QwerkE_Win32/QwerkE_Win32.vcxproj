@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="Engine_Additional_Includes.h" />
     <ClInclude Include="PCH_Win32.h" />
+    <ClInclude Include="QwerkE_Windows.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -20,7 +20,8 @@ void MaterialEditor::Draw(Material* material)
 {
 	// NOTE: For now just replace existing texture.
 	// In the future think of a way to preserve old data.
-	if (ImGui::Begin("Material Editor"))
+	static bool isOpen = true;
+	if (ImGui::Begin("Material Editor"), &isOpen)
 	{
 		const std::map<eMaterialMaps, Texture*>* textures = material->SeeMaterials();
 		// display material textures
