@@ -33,7 +33,7 @@
 // containers
 
 // libraries
-#include "../QwerkE_Framework/QwerkE_Common/Libraries_Include.h"
+#include "../QwerkE_Framework/QwerkE_Framework/Libraries_Include.h"
 
 /////////////////////////////////////////////////
 // include ENGINE code temporarily for faster build times
