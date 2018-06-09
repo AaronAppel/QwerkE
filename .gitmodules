@@ -1,8 +1,7 @@
 [submodule "QwerkE_Framework"]
 	path = QwerkE_Framework
 	url = https://github.com/AaronAppel/QwerkE_Framework.git
+	branch = master
 [submodule "QwerkE_Documentation"]
 	path = QwerkE_Documentation
 	url = https://github.com/AaronAppel/QwerkE_Documentation.git
-[submodule "qwerke_framework"]
-	branch = master

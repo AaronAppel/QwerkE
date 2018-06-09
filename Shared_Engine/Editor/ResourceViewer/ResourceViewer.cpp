@@ -179,6 +179,10 @@ void ResourceViewer::Draw()
 				if (ImGui::IsItemHovered())
 				{
 					ImGui::BeginTooltip();
+					if (ImGui::IsMouseDown(0))
+					{
+						ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), ImVec2(256, 256), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
+					}
 					// image name or something might be better. use newly create asset tags
 					ImGui::Text(std::to_string(m_ModelImageHandles[0]).c_str());
 					ImGui::EndTooltip();
