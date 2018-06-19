@@ -219,6 +219,8 @@ void ResourceViewer::Draw()
 
 		ImGui::End();
 	}
+	else
+		ImGui::End();
 }
 
 void ResourceViewer::DrawModelThumbnails()

@@ -136,4 +136,6 @@ void SceneGraph::Draw()
 		ImGui::PopItemWidth();
 		ImGui::End();
 	}
+	else
+		ImGui::End();
 }

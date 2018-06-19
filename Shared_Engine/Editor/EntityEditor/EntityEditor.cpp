@@ -74,4 +74,6 @@ void EntityEditor::Draw()
 
 		ImGui::End();
 	}
+	else
+		ImGui::End();
 }

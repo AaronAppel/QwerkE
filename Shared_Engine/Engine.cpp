@@ -37,6 +37,34 @@ static SceneManager* m_SceneManager = nullptr;
 static bool m_IsRunning = false;
 static Editor* m_Editor = nullptr;
 
+struct FrameTimer
+{
+	double timeSinceLastFrame = 0.0;
+	float frameRate = 0.0f;
+	double deltaTime = 0.0f; // Time between current frame and last frame
+	double lastFrame = 0.0f; // Time of last frame initialized to current time
+
+	// Limit framerate
+	int FPS_MAX = 120; // maximum number of frames that can be run be second
+	float FPS_MAX_DELTA = 1.0f / FPS_MAX;
+
+	// timeSinceLastFrame = FPS_MAX; // Amount of seconds since the last frame ran initialized to run 1st time
+	// Printing framerate
+	float printPeriod = 3.0f; // Print period in seconds
+	float timeSincePrint = 0.0f; // Seconds since last print initialized to print 1st frame
+	short framesSincePrint = 0;
+
+	FrameTimer() {}
+	FrameTimer(int maxFPS, float printPeriod)
+	{
+		FPS_MAX = maxFPS;
+		timeSincePrint = printPeriod;
+		FPS_MAX_DELTA = 1.0f / FPS_MAX;
+		timeSinceLastFrame = FPS_MAX;
+	}
+	~FrameTimer() {}
+};
+
 namespace QwerkE
 {
 	namespace Engine
@@ -46,29 +74,32 @@ namespace QwerkE
 			// TODO: check if(initialized) in case user defined simple API.
 			// Might want to create another function for the game loop and
 			// leave Run() smaller and abstracted from the functionality.
-			QwerkE::Framework::Startup();
+			if (QwerkE::Framework::Startup() == eEngineMessage::_QFailure)
+			{
+				ConsolePrint("\nFramework failed to load! Shutting down engine.\n");
+				return;
+			}
+
+			QwerkE::ServiceLocator::LockServices(true); // prevent service changes
 
 			m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
-			m_SceneManager->GetCurrentScene()->SetIsEnabled(true);
-
-			// QwerkE::Framework::Run();
-
+			m_SceneManager->GetCurrentScene()->SetIsEnabled(true); // enable default scene
 
 			m_WindowManager = (WindowManager*)QwerkE::ServiceLocator::GetService(eEngineServices::WindowManager);
 
 			m_IsRunning = true;
 
-			double timeSinceLastFrame = 0.0;
-			float frameRate = 0.0f;
-			QwerkE::Time::SetDeltatime(&timeSinceLastFrame);
-			QwerkE::Time::SetFrameRate(&frameRate);
+			// Deltatime
+			FrameTimer fps(120, 3.0f);
+			fps.lastFrame = helpers_Time(); // Time of last frame initialized to current time
+
+			QwerkE::Time::SetDeltatime(&fps.timeSinceLastFrame);
+			QwerkE::Time::SetFrameRate(&fps.frameRate);
 
 			// TODO: GL state init should be in a Window() or OpenGLManager()
 			// class or some type of ::Graphics() system.
 			glClearColor(0.5f, 0.7f, 0.7f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			m_Editor = (Editor*)new imgui_Editor();
 
 			// turn on depth buffer testing
 			glEnable(GL_DEPTH_TEST);
@@ -87,20 +118,11 @@ namespace QwerkE
 
 			glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
-			QwerkE::ServiceLocator::LockServices(true); // prevent service changes
-
-			// Deltatime + FPS Tracking //
-			// Deltatime
-			double deltaTime = 0.0f; // Time between current frame and last frame
-			double lastFrame = helpers_Time(); // Time of last frame initialized to current time
-			// Limit framerate
-			int FPS_MAX = 120; // maximum number of frames that can be run be second
-			float FPS_MAX_DELTA = 1.0f / FPS_MAX;
-			timeSinceLastFrame = FPS_MAX; // Amount of seconds since the last frame ran initialized to run 1st time
-			// Printing framerate
-			float printPeriod = 3.0f; // Print period in seconds
-			float timeSincePrint = printPeriod; // Seconds since last print initialized to print 1st frame
-			short framesSincePrint = 0;
+#ifdef dearimgui
+			m_Editor = (Editor*)new imgui_Editor();
+#else
+			m_Editor = (Editor*)new ????_Editor();
+#endif // editor
 
 			// Application Loop
 			while (m_IsRunning) // Run until close requested
@@ -108,25 +130,26 @@ namespace QwerkE
 				// setup frame
 				// Calculate deltatime of current frame
 				double currentFrame = helpers_Time();
-				deltaTime = currentFrame - lastFrame; // time since last frame
-				lastFrame = currentFrame; // save last frame
+				fps.deltaTime = currentFrame - fps.lastFrame; // time since last frame
+				fps.lastFrame = currentFrame; // save last frame
 
 				// FPS display + tracking
-				if (timeSincePrint >= printPeriod) // print period
+				if (fps.timeSincePrint >= fps.printPeriod) // print period
 				{
-					frameRate = 1.0f / timeSincePrint * framesSincePrint;
+					fps.frameRate = 1.0f / fps.timeSincePrint * fps.framesSincePrint;
 					// OutputPrint("\nFPS: %f", frameRate); // FPS printout
 					// OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
-					timeSincePrint = 0.0f;
-					framesSincePrint = 0;
+					fps.timeSincePrint = 0.0f;
+					fps.framesSincePrint = 0;
 				}
 
-				timeSincePrint += (float)deltaTime;
-				timeSinceLastFrame += deltaTime;
+				fps.timeSincePrint += (float)fps.deltaTime;
+				fps.timeSinceLastFrame += fps.deltaTime;
 
-				if (timeSinceLastFrame >= FPS_MAX_DELTA) // Run frame?
+				// if(fps.framesSincePrint < fps.FPS_MAX) // TODO: Consider using frame count for more calculating framerate
+				/* Application Loop */
+				if (fps.timeSinceLastFrame >= fps.FPS_MAX_DELTA) // Run frame?
 				{
-					/* Game Loop */
 					/* New Frame */
 					Engine::NewFrame();
 
@@ -134,16 +157,16 @@ namespace QwerkE
 					Engine::Input();
 
 					/* Logic */
-					Engine::Update(timeSinceLastFrame);
+					Engine::Update(fps.timeSinceLastFrame);
 
 					/* Render */
 					Engine::Draw();
 
 					// FPS
-					framesSincePrint++; // Framerate tracking
-					timeSinceLastFrame = 0.0; // FPS_Max
+					fps.framesSincePrint++; // Framerate tracking
+					fps.timeSinceLastFrame = 0.0; // FPS_Max
 				}
-				else
+				// else
 				{
 					// skip frame
 				}

@@ -84,6 +84,8 @@ void imgui_SceneViewer::DrawSceneView()
 
 		ImGui::End();
 	}
+	else
+		ImGui::End();
 }
 
 void imgui_SceneViewer::DrawSceneList()

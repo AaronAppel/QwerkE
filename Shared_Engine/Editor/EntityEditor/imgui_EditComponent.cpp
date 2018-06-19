@@ -238,6 +238,8 @@ void imgui_EditComponent::ShowShaderMenu(RenderComponent* rComp)
 
 		ImGui::End();
 	}
+	else
+		ImGui::End();
 }
 
 void imgui_EditComponent::ShowMaterialMenu(RenderComponent* rComp)
@@ -258,6 +260,8 @@ void imgui_EditComponent::ShowMaterialMenu(RenderComponent* rComp)
 
 		ImGui::End();
 	}
+	else
+		ImGui::End();
 }
 
 void imgui_EditComponent::ShowMeshMenu(RenderComponent* rComp)
@@ -274,4 +278,6 @@ void imgui_EditComponent::ShowMeshMenu(RenderComponent* rComp)
 
 		ImGui::End();
 	}
+	else
+		ImGui::End();
 }

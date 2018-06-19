@@ -72,7 +72,10 @@ void imgui_Editor::Draw()
 
             for (int i = 0; i < size; i++)
             {
-				if (ImGui::Checkbox(toolsList[i], toolsStates[i])) m_ShowingShaderEditor = toolsStates[i];
+				if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
+				{
+					m_ShowingShaderEditor = *toolsStates[i];
+				}
             }
             ImGui::EndMenu();
         }
