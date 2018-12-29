@@ -99,7 +99,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)QwerkE_Framework/QwerkE_Common/Libraries/freetype2;$(SolutionDir)Shared_Generic/Libraries/bullet3/;$(SolutionDir)Shared_Generic/Libraries/freetype2/;$(SolutionDir)QwerkE_Win32/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>Qwerk_Engine;DEBUG;Win64Bit;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>"PCH_Win32.h";%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PrecompiledHeaderFile>"PCH_Win32.h"</PrecompiledHeaderFile>

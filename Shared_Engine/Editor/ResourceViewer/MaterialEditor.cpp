@@ -57,6 +57,7 @@ void MaterialEditor::Draw(Material* material)
 			}
 			if (ImGui::IsItemClicked())
 				m_CurrentMap = p.first;
+
 			counter++;
 		}
 
@@ -81,6 +82,7 @@ void MaterialEditor::Draw(Material* material)
 				// TODO: It is possible to add a map to a material without one.
 				// Handle that properly.
 				material->SetTexture(p.second, m_CurrentMap);
+				OutputPrint("Set %s mat to %i\n", p.second->s_Name.c_str(), m_CurrentMap);
 			}
 			counter++;
 		}
