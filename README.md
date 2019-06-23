@@ -6,16 +6,16 @@ QwerkEngine framework lives here: https://github.com/AaronAppel/QwerkE_Framework
 ## Getting Started
 An introduction to QwerkE.
 
-WIP: wwwgithub.com/AaronAppel/QwerkE_Documentation  
+WIP: www.github.com/AaronAppel/QwerkE_Documentation  
 
 ## Examples  
 ### Installing  
-How to install QwerkEngine and the accompanying framework.
+TODO: How to install QwerkEngine and the accompanying framework.
 
 ### Usage
 Simple example usage of QwerkEngine.
 
-WIP: wwwgithub.com/AaronAppel/QwerkE_Documentation  
+WIP: www.github.com/AaronAppel/QwerkE_Documentation  
 ~~~cpp  
 int main()
 {
