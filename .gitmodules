@@ -5,3 +5,4 @@
 [submodule "QwerkE_Documentation"]
 	path = QwerkE_Documentation
 	url = https://github.com/AaronAppel/QwerkE_Documentation.git
+	branch = master

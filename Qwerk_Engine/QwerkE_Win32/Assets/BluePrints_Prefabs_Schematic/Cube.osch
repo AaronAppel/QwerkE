@@ -1,0 +1,11 @@
+{
+	"Name":	"Cube.osch",
+	"Renderables":	[{
+		"Cube": [{
+			"Shader":	"LitMaterial",
+			"Material":	"null_material.msch",
+			"MeshFile":	"Cube.obj",
+			"MeshName": "Cube"
+			}]
+		}]
+}

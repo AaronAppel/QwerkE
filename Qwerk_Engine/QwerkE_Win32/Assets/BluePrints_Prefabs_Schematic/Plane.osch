@@ -1,0 +1,11 @@
+{
+	"Name":	"plane.osch",
+	"Renderables":	[{
+		"Cube": [{
+			"Shader":	"LitMaterial",
+			"Material":	"null_material.msch",
+			"MeshFile":	"Plane.obj",
+			"MeshName": "Plane"
+			}]
+		}]
+}

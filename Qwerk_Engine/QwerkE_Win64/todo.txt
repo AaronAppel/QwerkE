@@ -1,0 +1,3 @@
+-Import shared code from Win32 project
+-Determine which libraries need to be changed to 64 bit and integrate them
+-Update utilities to utilize 64 bit architecture

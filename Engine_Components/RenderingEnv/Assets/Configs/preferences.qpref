@@ -1,0 +1,15 @@
+{
+	"Preferences":	[{
+		"Scenes": [{
+			"main.qscene": [{
+				"enabled": 1,
+				"state": 1
+			}],
+			"TestScene.qscene": [{
+				"enabled": 0,
+				"state": 0
+			}]
+		}],
+		"MaxEnabledScenes": 1
+	}]
+}

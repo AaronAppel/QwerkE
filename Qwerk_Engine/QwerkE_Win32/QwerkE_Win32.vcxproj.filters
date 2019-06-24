@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Engine_Additional_Includes.h" />
+    <ClInclude Include="PCH_Win32.h" />
+    <ClInclude Include="QwerkE_Windows.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PCH_Win32.cpp" />
+    <ClCompile Include="QwerkE_Windows.cpp" />
+  </ItemGroup>
+</Project>
