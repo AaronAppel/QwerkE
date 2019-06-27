@@ -1,5 +1,4 @@
-/.vs/
-*.obj
+.vs/
 *.tlog
 *.log
 *.pdb
@@ -9,3 +8,8 @@
 *.ipch
 *.pch
 *.VC.db
+*.suo
+*.opendb
+Engine_Components/RenderingEnv/.vs/
+Engine_Components/RenderingEnv/Debug/
+Qwerk_Engine/QwerkE_Win32/Debug/

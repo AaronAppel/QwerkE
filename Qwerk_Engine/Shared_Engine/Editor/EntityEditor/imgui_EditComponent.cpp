@@ -152,7 +152,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 
 			// shader uniforms and attributes
 			const std::vector<std::string>* attributes = rComp->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeAttributes(); // TODO: Fix out of bounds when m_RenderableIndex is too high
-			ImGui::Button("Attributes");
+			ImGui::Button("Attr");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::BeginTooltip();
@@ -164,7 +164,7 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			}
 			ImGui::SameLine();
 			const std::vector<std::string>* uniforms = rComp->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeUniforms();
-			ImGui::Button("Uniforms");
+			ImGui::Button("Unif");
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::BeginTooltip();
@@ -177,11 +177,10 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			ImGui::SameLine();
 
 			// render primitive/mode
-			// TODO: Find a good way to set renderable mesh primitive
 			static int selection = 0;
-			const char* primitives[] = { "Tris", "TriStrip", "TriFan", "Points" ,"Lines", "Strips" };
-			ImGui::PushItemWidth(150);
-			if (ImGui::Combo("Primitive", &selection, primitives, 5))
+			const char* primitives[] = { "Tris", "TriStrip", "TriFan", "Points" ,"Lines", "LineStrip" };
+			ImGui::PushItemWidth(90);
+			if (ImGui::Combo("Prim", &selection, primitives, 5))
 			{
 				switch (selection)
 				{
@@ -205,7 +204,20 @@ void imgui_EditComponent::Draw(GameObject* entity)
 					break;
 				}
 			}
-			ImGui::PopItemWidth();
+            ImGui::PopItemWidth();
+
+            ImGui::SameLine();
+            ImGui::Button("+Renderable");
+            if (ImGui::IsItemClicked())
+            {
+                Renderable renderable;
+                renderable.SetMaterial(m_ResourceManager->GetMaterial(null_material));
+                renderable.SetShader(m_ResourceManager->GetShaderProgram(null_shader));
+                renderable.SetMesh(m_ResourceManager->GetMesh(null_mesh));
+
+                rComp->AddRenderable(renderable);
+                rComp->GetParent()->GetFirstDrawRoutineOfType(Routine_Render)->Initialize();
+            }
 
 			// float colors[4] = { rComp->GetColour().x, rComp->GetColour().y, rComp->GetColour().z, rComp->GetColour().w };
 			// ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);
