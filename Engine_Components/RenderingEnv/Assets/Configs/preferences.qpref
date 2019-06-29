@@ -1,13 +1,13 @@
 {
 	"Framework": [{
 		"QuickLoad":	0,
-		"MaxConcurrentThreadCount":	10,
+		"MaxConcurrentThreadCount":	10
 	}],
 	"Libraries":	[{
 			"Audio":	"OpenAL",
 			"Networking":	"RakNet",
 			"Physics":	"Bullet3D",
-			"Rendering":	"OpenGL,
+			"Rendering":	"OpenGL",
 			"Window":	"GLFW3"
 		}],
 	"Scenes":	[{
@@ -22,6 +22,6 @@
 			"JobManagerMultiThreadedEnabled":	1,
 			"LoggingEnabled":	0,
 			"NetworkingEnabled":	0,
-			"PhysicsEnabled":	0
+			"PhysicsEnabled":	1
 		}]
 }

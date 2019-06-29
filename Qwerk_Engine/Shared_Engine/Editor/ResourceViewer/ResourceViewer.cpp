@@ -36,7 +36,10 @@ ResourceViewer::ResourceViewer()
 	m_FBO->Init();
 
 	m_ViewerScene = new ViewerScene();
-	m_Subject = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(0, -4, 40));
+
+	m_Subject = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(0, -3.5, 15));
+	m_Subject->SetRotation(vec3(0,180,0));
+
 	m_TagPlane = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreatePlane(m_ViewerScene, vec3(2, -2, 10));
 	m_TagPlane->SetRotation(vec3(90, 0, 0));
 	m_TagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));

@@ -13,10 +13,10 @@ uniform vec3 u_CamPos;
 
 uniform vec3 u_LightColor;
 
-uniform sampler2D u_AmbientTexture; // ambient Handle
-uniform sampler2D u_DiffuseTexture; // diffuse Handle
-uniform sampler2D u_SpecularTexture; // specular Handle
-uniform float u_Shine; // object specific shine
+uniform sampler2D u_AmbientTexture; // Ambient handle
+uniform sampler2D u_DiffuseTexture; // Diffuse handle
+uniform sampler2D u_SpecularTexture; // Specular handle
+uniform float u_Shine; // Object specific shine
 
 // Output
 out vec4 t_FragColor;

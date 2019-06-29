@@ -11,6 +11,8 @@ uniform mat4 u_WorldMat;
 uniform mat4 u_ViewMat;
 uniform mat4 u_ProjMat;
 
+// uniform sampler2D u_NormalTexture; // Normal handle
+
 // Output
 out vec3 t_FragPos;
 out vec3 t_VertexPos;
