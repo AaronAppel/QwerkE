@@ -1,8 +1,27 @@
 {
-	"Preferences":	[{
-		"Scenes": [{
-			"1": "Empty.qscene"
+	"Framework": [{
+		"QuickLoad":	0,
+		"MaxConcurrentThreadCount":	10,
+	}],
+	"Libraries":	[{
+			"Audio":	"OpenAL",
+			"Networking":	"RakNet",
+			"Physics":	"Bullet3D",
+			"Rendering":	"OpenGL,
+			"Window":	"GLFW3"
 		}],
-		"MaxEnabledScenes": 1
-	}]
+	"Scenes":	[{
+			"0":	"Empty.qscene"
+		}],
+	"SceneSettings":	[{
+			"MaxEnabledScenes":	1
+		}],
+	"Systems":	[{
+			"AudioEnabled":	0,
+			"DebuggingEnabled":	0,
+			"JobManagerMultiThreadedEnabled":	1,
+			"LoggingEnabled":	0,
+			"NetworkingEnabled":	0,
+			"PhysicsEnabled":	0
+		}]
 }
