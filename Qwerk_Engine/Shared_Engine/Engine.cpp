@@ -112,7 +112,9 @@ namespace QwerkE
 			glLineWidth(10);
 
 			// depth cull for efficiency
-			glEnable(GL_CULL_FACE);
+			// TODO: This is also in the framework
+			// glEnable(GL_CULL_FACE);
+			// glDisable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
 			if (Wind_CCW) glFrontFace(GL_CCW);
 			else glFrontFace(GL_CW);

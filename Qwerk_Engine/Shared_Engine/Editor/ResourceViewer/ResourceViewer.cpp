@@ -47,6 +47,8 @@ ResourceViewer::ResourceViewer()
 	m_ViewerScene->AddObjectToScene(m_Subject);
 	m_ViewerScene->AddObjectToScene(m_TagPlane);
 
+	m_TagPlane = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(2, -2, 10));
+
 	m_ViewerScene->Initialize();
 	m_ViewerScene->SetIsEnabled(true);
 	((CameraComponent*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
