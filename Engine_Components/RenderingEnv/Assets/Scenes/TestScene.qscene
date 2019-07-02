@@ -12,9 +12,9 @@
 							"RotationZ":	0
 						}],
 					"Scale":	[{
-							"ScaleX":	1,
-							"ScaleY":	1,
-							"ScaleZ":	1
+							"ScaleX":	10,
+							"ScaleY":	10,
+							"ScaleZ":	10
 						}],
 					"ObjectTag":	7,
 					"ComponentList":	[{
@@ -23,9 +23,9 @@
 									"SchematicName":	"None",
 									"Renderables":	[{
 											"Uninitialized":	[{
-													"Shader":	"LitMaterial.ssch",
+													"Shader":	"LitMaterialNormal.ssch",
 													"Material":	"brickwall.msch",
-													"MeshFile":	"None",
+													"MeshFile":	"Cube.obj",
 													"MeshName":	"Cube"
 												}]
 										}]
@@ -45,9 +45,9 @@
 	"CameraList":	[{
 			"Camera0":	[{
 					"Position":	[{
-							"PositionX":	0,
-							"PositionY":	0,
-							"PositionZ":	5
+							"PositionX":	48.361660,
+							"PositionY":	0.669474,
+							"PositionZ":	8.253688
 						}],
 					"Rotation":	[{
 							"RotationX":	0,
@@ -67,7 +67,7 @@
 								}],
 							"4":	[{
 									"ComponentName":	"Render",
-									"SchematicName":	"camera.osch",
+									"SchematicName":	"None",
 									"Renderables":	[{
 											"Camera":	[{
 													"Shader":	"LitMaterial.ssch",
@@ -82,16 +82,19 @@
 							"UpdateRoutines":	[{
 							}],
 							"DrawRoutines":	[{
-							}]
+									"0":	[{
+											"RoutineName":	"Render"
+										}]
+								}]
 						}]
 				}]
 		}],
 	"LightList":	[{
 			"Light2":	[{
 					"Position":	[{
-							"PositionX":	0,
-							"PositionY":	5,
-							"PositionZ":	-10
+							"PositionX":	15,
+							"PositionY":	3,
+							"PositionZ":	35
 						}],
 					"Rotation":	[{
 							"RotationX":	0,
@@ -110,7 +113,7 @@
 								}],
 							"4":	[{
 									"ComponentName":	"Render",
-									"SchematicName":	"light.osch",
+									"SchematicName":	"None",
 									"Renderables":	[{
 											"Light":	[{
 													"Shader":	"Basic3D.ssch",
@@ -125,7 +128,10 @@
 							"UpdateRoutines":	[{
 							}],
 							"DrawRoutines":	[{
-							}]
+									"0":	[{
+											"RoutineName":	"Render"
+										}]
+								}]
 						}]
 				}]
 		}]

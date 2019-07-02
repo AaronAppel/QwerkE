@@ -11,7 +11,7 @@
 			"Window":	"GLFW3"
 		}],
 	"Scenes":	[{
-			"0":	"Empty.qscene"
+			"0":	"TestScene.qscene"
 		}],
 	"SceneSettings":	[{
 			"MaxEnabledScenes":	1

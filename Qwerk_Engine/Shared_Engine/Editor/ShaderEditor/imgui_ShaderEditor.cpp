@@ -63,29 +63,30 @@ void imgui_ShaderEditor::Draw()
 		// strcpy_s(buffer, (char*)shader->GetVertString());
 		currentShader = m_Shader->GetProgram();
 		// TODO: Handle null shader strings
-		strcpy_s(vertBuffer, bufferSize, m_Shader->GetFragShader()->GetStringData());
+		strcpy_s(vertBuffer, bufferSize, m_Shader->GetVertShader()->GetStringData());
 		strcpy_s(fragBuffer, bufferSize, m_Shader->GetFragShader()->GetStringData());
 		// strcpy_s(geoBuffer, bufferSize, (const char*)shader->GetGeoString());
 	}
 
 	//ImGui::ShowTestWindow();
+    int windowHeight = 400;
 	if (ImGui::CollapsingHeader("Vertex"))
 	{
-		if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, 275)))
+		if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, windowHeight)))
 		{
 			// buffer was changed
 		}
 	}
 	if (ImGui::CollapsingHeader("Fragment"))
 	{
-		if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, 275)))
+		if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, windowHeight)))
 		{
 			// buffer was changed
 		}
 	}
 	if (ImGui::CollapsingHeader("Geometry"))
 	{
-		if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, 275)))
+		if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, windowHeight)))
 		{
 			// buffer was changed
 		}
