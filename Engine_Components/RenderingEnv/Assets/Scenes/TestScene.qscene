@@ -7,7 +7,7 @@
 							"PositionZ":	50
 						}],
 					"Rotation":	[{
-							"RotationX":	0,
+							"RotationX":	90,
 							"RotationY":	0,
 							"RotationZ":	0
 						}],
@@ -25,8 +25,8 @@
 											"Uninitialized":	[{
 													"Shader":	"LitMaterialNormal.ssch",
 													"Material":	"brickwall.msch",
-													"MeshFile":	"Cube.obj",
-													"MeshName":	"Cube"
+													"MeshFile":	"Plane.obj",
+													"MeshName":	"Plane"
 												}]
 										}]
 								}]
@@ -45,9 +45,9 @@
 	"CameraList":	[{
 			"Camera0":	[{
 					"Position":	[{
-							"PositionX":	48.361660,
-							"PositionY":	0.669474,
-							"PositionZ":	8.253688
+							"PositionX":	1.753607,
+							"PositionY":	0,
+							"PositionZ":	-5.942273
 						}],
 					"Rotation":	[{
 							"RotationX":	0,
@@ -92,7 +92,7 @@
 	"LightList":	[{
 			"Light2":	[{
 					"Position":	[{
-							"PositionX":	15,
+							"PositionX":	8,
 							"PositionY":	3,
 							"PositionZ":	35
 						}],
@@ -116,7 +116,7 @@
 									"SchematicName":	"None",
 									"Renderables":	[{
 											"Light":	[{
-													"Shader":	"Basic3D.ssch",
+													"Shader":	"null_shader.ssch",
 													"Material":	"null_material.msch",
 													"MeshFile":	"null_mesh.obj",
 													"MeshName":	"null_mesh"
