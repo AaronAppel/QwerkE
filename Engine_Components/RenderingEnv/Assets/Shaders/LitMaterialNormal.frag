@@ -23,17 +23,16 @@ out vec4 t_FragColor;
 
 void main()
 {
+	vec3 norm = normalize(t_Normal);
+	// norm = texture(u_NormalsTexture, t_UV).rgb;
+	vec3 lightDir = normalize(u_LightPos - t_FragPos);
+
     // ambient
 	float ambientStrength = 0.2;
     vec3 ambient = ambientStrength * texture(u_AmbientTexture, t_UV).rgb;
 	
     // diffuse
-	vec3 norm = normalize(t_Normal);
-	// norm = texture(u_NormalsTexture, t_UV).rgb;
-	vec3 lightDir = normalize(u_LightPos - t_FragPos);
-	
-	float diff = max(dot(norm, lightDir), 0.0);
-	
+	float diff = max(dot(norm, lightDir), 0.0);	
 	vec3 diffuse = u_LightColor * diff * texture(u_DiffuseTexture, t_UV).rgb;
 	
     // specular
