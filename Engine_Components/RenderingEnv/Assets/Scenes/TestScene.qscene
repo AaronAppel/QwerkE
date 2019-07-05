@@ -12,9 +12,9 @@
 							"RotationZ":	0
 						}],
 					"Scale":	[{
-							"ScaleX":	10,
-							"ScaleY":	10,
-							"ScaleZ":	10
+							"ScaleX":	1,
+							"ScaleY":	1,
+							"ScaleZ":	1
 						}],
 					"ObjectTag":	7,
 					"ComponentList":	[{
@@ -25,8 +25,8 @@
 											"Uninitialized":	[{
 													"Shader":	"LitMaterialNormal.ssch",
 													"Material":	"brickwall.msch",
-													"MeshFile":	"Uninitialized",
-													"MeshName":	"Test_Plane"
+													"MeshFile":	"None",
+													"MeshName":	"Create_Quad"
 												}]
 										}]
 								}]
@@ -38,19 +38,19 @@
 											"Speed":	0.500000,
 											"TransformValues":	[{
 													"Position":	[{
-															"PositionX":	"0.000000",
-															"PositionY":	"0.000000",
-															"PositionZ":	"0.000000"
+															"PositionX":	0,
+															"PositionY":	0,
+															"PositionZ":	0
 														}],
 													"Rotation":	[{
-															"RotationX":	"0.000000",
-															"RotationY":	"0.000000",
-															"RotationZ":	"0.500000"
+															"RotationX":	0,
+															"RotationY":	0,
+															"RotationZ":	0.5
 														}],
 													"Scale":	[{
-															"ScaleX":	"0.000000",
-															"ScaleY":	"0.000000",
-															"ScaleZ":	"0.000000"
+															"ScaleX":	0,
+															"ScaleY":	0,
+															"ScaleZ":	0
 														}]
 												}]
 										}]

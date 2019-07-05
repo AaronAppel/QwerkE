@@ -5,13 +5,13 @@
 in vec3 a_Position;
 in vec3 a_Normal;
 in vec2 a_UV;
+in vec2 a_Tangent;
+in vec2 a_Bitangent;
 
 // Uniforms
 uniform mat4 u_WorldMat;
 uniform mat4 u_ViewMat;
 uniform mat4 u_ProjMat;
-
-// uniform sampler2D u_NormalTexture; // Normal handle
 
 // Output
 out vec3 t_FragPos;

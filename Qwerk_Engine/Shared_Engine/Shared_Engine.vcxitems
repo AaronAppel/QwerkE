@@ -14,6 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ConfigEditor\ConfigEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ConfigEditor\ConfigEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.cpp" />
