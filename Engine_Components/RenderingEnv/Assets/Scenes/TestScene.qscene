@@ -7,7 +7,7 @@
 							"PositionZ":	50
 						}],
 					"Rotation":	[{
-							"RotationX":	75,
+							"RotationX":	110,
 							"RotationY":	0,
 							"RotationZ":	0
 						}],
@@ -25,8 +25,8 @@
 											"Uninitialized":	[{
 													"Shader":	"LitMaterialNormal.ssch",
 													"Material":	"brickwall.msch",
-													"MeshFile":	"Plane.obj",
-													"MeshName":	"Plane"
+													"MeshFile":	"Uninitialized",
+													"MeshName":	"Test_Plane"
 												}]
 										}]
 								}]
@@ -38,20 +38,20 @@
 											"Speed":	0.500000,
 											"TransformValues":	[{
 													"Position":	[{
-															"PositionX":	0.000000,
-															"PositionY":	0.000000,
-															"PositionZ":	0.000000
+															"PositionX":	"0.000000",
+															"PositionY":	"0.000000",
+															"PositionZ":	"0.000000"
 														}],
 													"Rotation":	[{
-															"RotationX":	0.000000,
-															"RotationY":	0.000000,
-															"RotationZ":	0.500000
-													}],
+															"RotationX":	"0.000000",
+															"RotationY":	"0.000000",
+															"RotationZ":	"0.500000"
+														}],
 													"Scale":	[{
-															"ScaleX":	0.000000,
-															"ScaleY":	0.000000,
-															"ScaleZ":	0.000000
-													}]
+															"ScaleX":	"0.000000",
+															"ScaleY":	"0.000000",
+															"ScaleZ":	"0.000000"
+														}]
 												}]
 										}]
 								}],
@@ -66,9 +66,9 @@
 	"CameraList":	[{
 			"Camera0":	[{
 					"Position":	[{
-							"PositionX":	1.753607,
-							"PositionY":	0,
-							"PositionZ":	-6.193150
+							"PositionX":	0.671588,
+							"PositionY":	2.833586,
+							"PositionZ":	-24.776312
 						}],
 					"Rotation":	[{
 							"RotationX":	0,
