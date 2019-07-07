@@ -4,17 +4,17 @@
 					"Position":	[{
 							"PositionX":	0,
 							"PositionY":	0,
-							"PositionZ":	50
+							"PositionZ":	0
 						}],
 					"Rotation":	[{
-							"RotationX":	110,
-							"RotationY":	0,
+							"RotationX":	298.750000,
+							"RotationY":	298.750000,
 							"RotationZ":	0
 						}],
 					"Scale":	[{
-							"ScaleX":	1,
-							"ScaleY":	1,
-							"ScaleZ":	1
+							"ScaleX":	7.5,
+							"ScaleY":	7.5,
+							"ScaleZ":	7.5
 						}],
 					"ObjectTag":	7,
 					"ComponentList":	[{
@@ -26,7 +26,7 @@
 													"Shader":	"LitMaterialNormal.ssch",
 													"Material":	"brickwall.msch",
 													"MeshFile":	"None",
-													"MeshName":	"Create_Quad"
+													"MeshName":	"Test_Plane"
 												}]
 										}]
 								}]
@@ -43,9 +43,9 @@
 															"PositionZ":	0
 														}],
 													"Rotation":	[{
-															"RotationX":	0,
-															"RotationY":	0,
-															"RotationZ":	0.5
+															"RotationX":	0.250000,
+															"RotationY":	0.250000,
+															"RotationZ":	0
 														}],
 													"Scale":	[{
 															"ScaleX":	0,
@@ -66,9 +66,9 @@
 	"CameraList":	[{
 			"Camera0":	[{
 					"Position":	[{
-							"PositionX":	0.671588,
-							"PositionY":	2.833586,
-							"PositionZ":	-24.776312
+							"PositionX":	0.601731,
+							"PositionY":	3.901664,
+							"PositionZ":	-60.358925
 						}],
 					"Rotation":	[{
 							"RotationX":	0,
@@ -113,9 +113,9 @@
 	"LightList":	[{
 			"Light2":	[{
 					"Position":	[{
-							"PositionX":	8,
-							"PositionY":	3,
-							"PositionZ":	35
+							"PositionX":	0,
+							"PositionY":	8,
+							"PositionZ":	-3
 						}],
 					"Rotation":	[{
 							"RotationX":	0,

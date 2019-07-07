@@ -99,7 +99,6 @@ void imgui_ShaderEditor::Draw()
         m_Shader->RecompileShaderType(GL_VERTEX_SHADER, DeepCopyString(fragBuffer));
 	}
 
-	// TODO: Add recompile functionality back in. Although this should only be for certain shaders
 	// like "modifiable" tagged ones. Or something...
 	if (ImGui::Button("Recompile Fragment"))
 	{
@@ -111,6 +110,22 @@ void imgui_ShaderEditor::Draw()
 	{
         // TODO: Handle geometry shader editing.
         // m_Shader->RecompileShaderType(GL_GEOMETRY_SHADER, DeepCopyString(fragBuffer));
+	}
+
+	// Reload from file
+	if (ImGui::Button("Reload Vertex"))
+	{
+		if (FileExists(ShaderFolderPath(m_Shader->GetVertShader()->GetName().c_str())))
+			m_Shader->RecompileShaderType(GL_VERTEX_SHADER, LoadCompleteFile(ShaderFolderPath(m_Shader->GetVertShader()->GetName().c_str()))); // RAM passed to shader
+	}
+	if (ImGui::Button("Reload Fragment"))
+	{
+		if (FileExists(ShaderFolderPath(m_Shader->GetFragShader()->GetName().c_str())))
+			m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, LoadCompleteFile(ShaderFolderPath(m_Shader->GetFragShader()->GetName().c_str()))); // RAM passed to shader
+	}
+	if (ImGui::Button("Reload Geometry"))
+	{
+		// TODO: Handle geometry shader editing.
 	}
 	ImGui::End();
 

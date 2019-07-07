@@ -1,47 +1,42 @@
 // LitMaterialNormal.frag
 #version 330 core
 
-// Input
-in vec3 t_Normal;
-in vec3 t_FragPos;
-in vec3 t_VertexPos;
-in vec2 t_UV;
+in VS_OUT {
+    vec3 FragPos;
+    vec2 TexCoords;
+    vec3 TangentLightPos;
+    vec3 TangentViewPos;
+    vec3 TangentFragPos;
+} fs_in;
 
 // Uniforms
-uniform vec3 u_LightPos;
-uniform vec3 u_LightColor;
-uniform vec3 u_CamPos;
-
-uniform sampler2D u_AmbientTexture; // Ambient handle
 uniform sampler2D u_DiffuseTexture; // Diffuse handle
-uniform sampler2D u_SpecularTexture; // Specular handle
 uniform sampler2D u_NormalsTexture; // Normals handle
-uniform float u_Shine; // Object specific shine
 
 // Output
 out vec4 t_FragColor;
 
 void main()
-{
-	vec3 norm = normalize(t_Normal);
-	// norm = texture(u_NormalsTexture, t_UV).rgb;
-	vec3 lightDir = normalize(u_LightPos - t_FragPos);
-
+{           
+     // obtain normal from normal map in range [0,1]
+    vec3 normal = texture(u_NormalsTexture, fs_in.TexCoords).rgb;
+    // transform normal vector to range [-1,1]
+    normal = normalize(normal * 2.0 - 1.0);  // this normal is in tangent space
+   
+    // get diffuse color
+    vec3 color = texture(u_DiffuseTexture, fs_in.TexCoords).rgb;
     // ambient
-	float ambientStrength = 0.2;
-    vec3 ambient = ambientStrength * texture(u_AmbientTexture, t_UV).rgb;
-	
+    vec3 ambient = 0.5 * color;
     // diffuse
-	float diff = max(dot(norm, lightDir), 0.0);	
-	vec3 diffuse = u_LightColor * diff * texture(u_DiffuseTexture, t_UV).rgb;
-	
+    vec3 lightDir = normalize(fs_in.TangentLightPos - fs_in.TangentFragPos);
+    float diff = max(dot(lightDir, normal), 0.0);
+    vec3 diffuse = diff * color;
     // specular
-    vec3 viewDir = normalize(u_CamPos - t_FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Shine);
-	
-	vec3 specular = spec * texture(u_SpecularTexture, t_UV).rgb;
-	
-	// combine
-	t_FragColor = vec4(ambient + diffuse + specular, 1.0);
+    vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
+    vec3 reflectDir = reflect(-lightDir, normal);
+    vec3 halfwayDir = normalize(lightDir + viewDir);  
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+
+    vec3 specular = vec3(0.2) * spec;
+    t_FragColor = vec4(ambient + diffuse + specular, 1.0);
 }
