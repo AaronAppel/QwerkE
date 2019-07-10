@@ -96,7 +96,7 @@ void imgui_Editor::Draw()
 	{
 		if (m_ShowingShaderEditor)
 		{
-			m_ShaderEditor->Draw();
+			m_ShaderEditor->Draw(&m_ShowingShaderEditor);
 		}
 		m_ResourceViewer->Draw();
 		m_SceneViewer->Draw();

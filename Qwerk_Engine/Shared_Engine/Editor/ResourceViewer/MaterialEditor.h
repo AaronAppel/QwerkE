@@ -16,7 +16,7 @@ public:
 	MaterialEditor();
 	~MaterialEditor();
 
-	void Draw(Material* material);
+	void Draw(Material* material, bool* isOpen);
 
 private:
 	eMaterialMaps m_CurrentMap = eMaterialMaps::MatMap_Null;

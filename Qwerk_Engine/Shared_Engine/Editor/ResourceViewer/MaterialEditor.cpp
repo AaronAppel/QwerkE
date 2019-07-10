@@ -16,12 +16,11 @@ MaterialEditor::~MaterialEditor()
 {
 }
 
-void MaterialEditor::Draw(Material* material)
+void MaterialEditor::Draw(Material* material, bool* isOpen)
 {
 	// NOTE: For now just replace existing texture.
 	// In the future think of a way to preserve old data.
-	static bool isOpen = true;
-	if (ImGui::Begin("Material Editor"), &isOpen)
+	if (ImGui::Begin("Material Editor", isOpen))
 	{
 		const std::map<eMaterialMaps, Texture*>* textures = material->SeeMaterials();
 		// display material textures

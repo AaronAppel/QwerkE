@@ -217,7 +217,7 @@ void ResourceViewer::Draw()
 		if (m_ShowMatEditor)
 		{
 			m_MaterialEditor->Draw(((ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager))->GetMaterial(
-				m_MatName.c_str()));
+				m_MatName.c_str()), &m_ShowMatEditor);
 		}
 
 		ImGui::End();

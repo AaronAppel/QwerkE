@@ -198,8 +198,7 @@ namespace QwerkE
 
 		void Engine::Input()
 		{
-			glfwPollEvents(); // TODO: Better GLFW interface?
-			// TODO: Tell input manager it is a new frame and it should update key states
+			Framework::Input();
 		}
 
 		void Engine::Update(double deltatime)

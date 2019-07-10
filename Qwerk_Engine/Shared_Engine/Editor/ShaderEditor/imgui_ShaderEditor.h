@@ -14,7 +14,7 @@ public:
 
 	void NewFrame();
 	void Update();
-	void Draw();
+	void Draw(bool *isOpen);
 
 	void SetShader(ShaderProgram* shader) { m_Shader = shader; };
 	const ShaderProgram* GetShader() { return m_Shader; };

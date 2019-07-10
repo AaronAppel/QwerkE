@@ -30,7 +30,7 @@ void imgui_ShaderEditor::Update()
 
 }
 
-void imgui_ShaderEditor::Draw()
+void imgui_ShaderEditor::Draw(bool *isOpen)
 {
 	if (m_Shader == nullptr)
 	{
@@ -47,7 +47,7 @@ void imgui_ShaderEditor::Draw()
 
     static bool showShaderList = false;
 
-    ImGui::Begin("Shader Editor");
+    ImGui::Begin("Shader Editor", isOpen);
 	ImGui::Checkbox("ShaderList", &showShaderList);
 	if(showShaderList)
 	for (auto p : *m_ShaderList)
