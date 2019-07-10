@@ -52,27 +52,35 @@ void SceneGraph::Draw()
 		}
 		ImGui::SameLine();
 		// object creation
-		static bool creator = false;
 		if (ImGui::Button("Add+"))
 		{
-			creator = !creator;
+            ImGui::OpenPopup("Create Object");
 		}
-		if (creator)
+
+        if (ImGui::BeginPopup("Create Object"))
+        {
+            ImGui::Text("Objects_TODO");
+            ImGui::Separator();
+
+            const char* names[] = { "Empty", "Light", "Camera", "Sphere" };
+            for (int i = 0; i < IM_ARRAYSIZE(names); i++)
+                if (ImGui::Selectable(names[i]))
+                    int i = 0; // selected option index is i
+            ImGui::EndPopup();
+        }
+		/*if (ImGui::Begin("Create Object", &creator))
 		{
-			if (ImGui::BeginPopup("Create Object"))
+			if (ImGui::Button("Create"))
 			{
-
-
-				if (ImGui::Button("Create"))
-				{
-					GameObject* result = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreateTestModel(
-						m_SceneManager->GetCurrentScene(), vec3(0,0,0));
-					result->SetName(StringAppend("Object", std::to_string(UniqueID()).c_str()));
-					m_SceneManager->GetCurrentScene()->AddObjectToScene(result);
-				}
-				ImGui::End();
+				GameObject* result = ((Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity))->CreateEmptyGameObject(
+					m_SceneManager->GetCurrentScene(), vec3(0,0,0));
+				result->SetName(StringAppend("Object", std::to_string(UniqueID()).c_str()));
+				m_SceneManager->GetCurrentScene()->AddObjectToScene(result);
+                creator = false;
 			}
-		}
+			ImGui::End();
+		}*/
+
 		ImGui::Separator();
 
 		std::map<std::string, GameObject*> entities = m_SceneManager->GetCurrentScene()->GetObjectList();
