@@ -206,19 +206,6 @@ void imgui_EditComponent::Draw(GameObject* entity)
 			}
             ImGui::PopItemWidth();
 
-            ImGui::SameLine();
-            ImGui::Button("+Renderable");
-            if (ImGui::IsItemClicked())
-            {
-                Renderable renderable;
-                renderable.SetMaterial(m_ResourceManager->GetMaterial(null_material));
-                renderable.SetShader(m_ResourceManager->GetShaderProgram(null_shader));
-                renderable.SetMesh(m_ResourceManager->GetMesh(null_mesh));
-
-                rComp->AddRenderable(renderable);
-                rComp->GetParent()->GetFirstDrawRoutineOfType(Routine_Render)->Initialize();
-            }
-
 			// float colors[4] = { rComp->GetColour().x, rComp->GetColour().y, rComp->GetColour().z, rComp->GetColour().w };
 			// ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);
 			// rComp->SetColour(vec4(colors[0], colors[1], colors[2], colors[3]));

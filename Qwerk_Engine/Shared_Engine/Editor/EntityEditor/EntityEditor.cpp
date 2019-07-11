@@ -5,7 +5,10 @@
 #include "../QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
 #include "../QwerkE_Framework/Systems/ServiceLocator.h"
 #include "../QwerkE_Framework/Entities/GameObject.h"
+#include "../QwerkE_Framework/Entities/Components/RenderComponent.h"
+#include "../QwerkE_Framework/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Graphics/Renderable.h"
 #include "imgui_EditComponent.h"
 #include "../Editor.h"
 
@@ -18,7 +21,11 @@ EntityEditor::EntityEditor(Editor* editor)
     m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
     m_ResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
 
+#ifdef dearimgui
 	m_EditComponent = new imgui_EditComponent();
+#else
+#pragma error "Define gui library!"
+#endif // dearimgui
 }
 
 EntityEditor::~EntityEditor()
@@ -68,6 +75,17 @@ void EntityEditor::Draw()
 			m_CurrentEntity->SetScale(vec3(scale[0], scale[1], scale[2]));
 		}
 		ImGui::Separator();
+		if (ImGui::Button("+Renderable"))
+		{
+			Renderable renderable;
+			renderable.SetMaterial(m_ResourceManager->GetMaterial(null_material));
+			renderable.SetShader(m_ResourceManager->GetShaderProgram(null_shader));
+			renderable.SetMesh(m_ResourceManager->GetMesh(null_mesh));
+
+			RenderComponent* rComp = (RenderComponent*)m_CurrentEntity->GetComponent(Component_Render);
+			rComp->AddRenderable(renderable);
+			rComp->GetParent()->GetFirstDrawRoutineOfType(Routine_Render)->Initialize();
+		}
 
 		// Draw properties for object components like render, character, etc
 		m_EditComponent->Draw(m_CurrentEntity);

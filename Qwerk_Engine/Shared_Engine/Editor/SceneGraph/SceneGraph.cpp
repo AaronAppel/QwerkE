@@ -45,12 +45,6 @@ void SceneGraph::Draw()
 			m_CurrentList = 2;
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Other"))
-		{
-			// switch to ???... particles, boundaries, etc
-			m_CurrentList = 3;
-		}
-		ImGui::SameLine();
 		// object creation
 		if (ImGui::Button("Add+"))
 		{
@@ -59,13 +53,34 @@ void SceneGraph::Draw()
 
         if (ImGui::BeginPopup("Create Object"))
         {
-            ImGui::Text("Objects_TODO");
+            ImGui::Text("Object Types");
             ImGui::Separator();
 
             const char* names[] = { "Empty", "Light", "Camera", "Sphere" };
             for (int i = 0; i < IM_ARRAYSIZE(names); i++)
-                if (ImGui::Selectable(names[i]))
-                    int i = 0; // selected option index is i
+				if (ImGui::Selectable(names[i]))
+				{
+					Scene* scene = m_SceneManager->GetCurrentScene();
+					Factory* factory = (Factory*) QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity);
+
+					switch (i)
+					{
+					case 0:
+						scene->AddObjectToScene(factory->CreateEmptyGameObject(scene, vec3(0,0,0)));
+						break;
+					case 1:
+						scene->AddLight(factory->CreateLight(scene, vec3(0, 0, 0)));
+						break;
+					case 2:
+						scene->AddCamera(factory->CreateFreeCamera(scene, vec3(0, 0, 0)));
+						break;
+					case 3:
+						scene->AddObjectToScene(factory->CreateSphere(scene, vec3(0, 0, 0)));
+						break;
+					default:
+						break;
+					}
+				}
             ImGui::EndPopup();
         }
 		/*if (ImGui::Begin("Create Object", &creator))
@@ -133,11 +148,6 @@ void SceneGraph::Draw()
 					m_Editor->GetEntityEditor()->SetCurrentEntity(lights[i]);
 				}
 				counter++;
-			}
-			break;
-		case 3: // Other
-			if (ImGui::Button("What else is there?"))
-			{
 			}
 			break;
 		}
