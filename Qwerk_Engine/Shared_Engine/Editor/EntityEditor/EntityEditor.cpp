@@ -77,14 +77,16 @@ void EntityEditor::Draw()
 		ImGui::Separator();
 		if (ImGui::Button("+Renderable"))
 		{
-			Renderable renderable;
+			// TODO:  : renderable.SetMaterial(m_ResourceManager->GetMaterial(null_material));
+
+			/*Renderable renderable;
 			renderable.SetMaterial(m_ResourceManager->GetMaterial(null_material));
 			renderable.SetShader(m_ResourceManager->GetShaderProgram(null_shader));
 			renderable.SetMesh(m_ResourceManager->GetMesh(null_mesh));
 
 			RenderComponent* rComp = (RenderComponent*)m_CurrentEntity->GetComponent(Component_Render);
 			rComp->AddRenderable(renderable);
-			rComp->GetParent()->GetFirstDrawRoutineOfType(Routine_Render)->Initialize();
+			rComp->GetParent()->GetFirstDrawRoutineOfType(Routine_Render)->Initialize();*/
 		}
 
 		// Draw properties for object components like render, character, etc
