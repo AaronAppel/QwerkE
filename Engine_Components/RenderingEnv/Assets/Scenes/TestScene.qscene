@@ -7,14 +7,14 @@
 							"PositionZ":	0
 						}],
 					"Rotation":	[{
-							"RotationX":	298.750000,
-							"RotationY":	298.750000,
+							"RotationX":	333,
+							"RotationY":	333,
 							"RotationZ":	0
 						}],
 					"Scale":	[{
-							"ScaleX":	7.5,
-							"ScaleY":	7.5,
-							"ScaleZ":	7.5
+							"ScaleX":	7.500000,
+							"ScaleY":	7.500000,
+							"ScaleZ":	7.500000
 						}],
 					"ObjectTag":	7,
 					"ComponentList":	[{

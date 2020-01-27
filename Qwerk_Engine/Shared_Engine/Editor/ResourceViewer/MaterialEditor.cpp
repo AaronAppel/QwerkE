@@ -61,10 +61,10 @@ void MaterialEditor::Draw(Material* material, bool* isOpen)
 		}
 
 		ImGui::Separator();
-		counter = textures->size();
+		counter = 0;
 		for (auto p : *m_TextureList)
 		{
-			if (counter % textures->size())
+			if (counter % 6)
 				ImGui::SameLine();
 
 			ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(64, 64), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);

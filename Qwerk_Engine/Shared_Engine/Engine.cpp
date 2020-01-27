@@ -8,9 +8,11 @@
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/glew/GL/glew.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/glfw/GLFW/glfw3.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui_impl_glfw_gl3.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui_impl_glfw.h"
+#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui_impl_opengl3.h"
 
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/Helpers.h"
+#include "../QwerkE_Framework/QwerkE_Common/Utilities/ProgramArgs.h"
 
 #include "../QwerkE_Framework/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
@@ -74,14 +76,29 @@ namespace QwerkE
 {
 	namespace Engine
 	{
-		void Engine::Run()
+		void Engine::Run(std::map<const char*, const char*> &args)
 		{
+			// Handle program arguments
+			if (args.find(key_ProjectName) != args.end())
+			{
+				// Load project (reusable method)
+				// Could find and save preferences file path
+			}
+
 			// TODO: check if(initialized) in case user defined simple API.
 			// Might want to create another function for the game loop and
 			// leave Run() smaller and abstracted from the functionality.
-			if (QwerkE::Framework::Startup() == eEngineMessage::_QFailure)
+
+			std::uint_fast8_t flags = 0;
+
+			// TEMP: Turn off components like this until the data can be read from a file
+			flags &= ~Flag_Physics;
+			flags &= ~Flag_Renderer;
+			flags &= ~Flag_Audio;
+
+			if (QwerkE::Framework::Startup(flags) == eEngineMessage::_QFailure)
 			{
-				ConsolePrint("\nFramework failed to load! Shutting down engine.\n");
+				ConsolePrint("\nQwerk Framework failed to load! Shutting down engine.\n");
 				return;
 			}
 
@@ -94,7 +111,7 @@ namespace QwerkE
 
 			m_IsRunning = true;
 
-			// Deltatime
+			// Delta time
 			FrameTimer fps(120, 3.0f);
 			fps.lastFrame = helpers_Time(); // Time of last frame initialized to current time
 
@@ -256,7 +273,16 @@ namespace QwerkE
 			m_Editor->Draw();
 
 			ImGui::Render();
-			ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+            ImGuiIO io = ImGui::GetIO();
+            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+            {
+                GLFWwindow* backup_current_context = glfwGetCurrentContext();
+                ImGui::UpdatePlatformWindows();
+                ImGui::RenderPlatformWindowsDefault();
+                glfwMakeContextCurrent(backup_current_context);
+            }
 
 			m_WindowManager->GetWindow(0)->SwapBuffers();
 		}

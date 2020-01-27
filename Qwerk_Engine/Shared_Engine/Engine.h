@@ -25,7 +25,7 @@ namespace QwerkE
 {
 	namespace Engine
 	{
-		void Run();
+		void Run(std::map<const char*, const char*> &args);
 		void Stop();
 
 		void NewFrame();
