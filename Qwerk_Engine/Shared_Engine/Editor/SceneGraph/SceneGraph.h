@@ -4,25 +4,27 @@
 // A window that shows entities and their hierarchal relationship
 // Selecting an entity will show its data in the entity editor
 
-class SceneManager;
-class ResourceManager;
-class Editor;
-class imgui_Editor;
+namespace QwerkE {
 
-// TODO: Change name to imgui_SceneGraph
-class SceneGraph
-{
-public:
-	SceneGraph(Editor* editor);
-	~SceneGraph();
+    class SceneManager;
+    class ResourceManager;
+    class Editor;
+    class imgui_Editor;
 
-	void Draw();
+    // TODO: Change name to imgui_SceneGraph
+    class SceneGraph
+    {
+    public:
+        SceneGraph(Editor* editor);
+        ~SceneGraph();
 
-private:
-	int m_CurrentList = 0;
-	imgui_Editor* m_Editor = nullptr;
-	SceneManager* m_SceneManager = nullptr;
-	ResourceManager* m_ResourceManager = nullptr;
-};
+        void Draw();
 
+    private:
+        int m_CurrentList = 0;
+        imgui_Editor* m_Editor = nullptr;
+        SceneManager* m_SceneManager = nullptr;
+    };
+
+}
 #endif // !_Editor_H_

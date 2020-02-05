@@ -38,10 +38,17 @@ Libraries I utilize to deliver features.
 - pthreads: www.github.com/coapp-packages/pthreads  
 - assimp: www.github.com/assimp/assimp  
 - OpenAL: www.openal.org  
-// - vlc: www.github.com/videolan/vlc  
+// not currently used - vlc: www.github.com/videolan/vlc  
+// not currently used - nVidia video codec: https://developer.nvidia.com/nvidia-video-codec-sdk  
 
 ## License
 This project is licensed under the BSD3 License - see the LICENSE file for details.  
+
+## References
+learnopengl.com
+The Cherno : YouTube (https://www.youtube.com/user/TheChernoProject), github (https://github.com/TheCherno)
+Thin Matrix : YouTube (https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ)
+Game engine Architecure Third Edition by Jason Gregory
 
 ## Acknowledgments
 ...

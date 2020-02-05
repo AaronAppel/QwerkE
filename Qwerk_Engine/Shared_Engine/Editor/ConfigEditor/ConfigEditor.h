@@ -1,14 +1,17 @@
 #ifndef _Config_Editor_H_
 #define _Config_Editor_H_
 
-class ConfigEditor
-{
-public:
+namespace QwerkE {
 
-    void Draw();
+    class ConfigEditor
+    {
+    public:
 
-private:
-    std::string m_CurrentConfigFile = gc_DefaultStringValue;
-};
+        void Draw();
 
+    private:
+        std::string m_CurrentConfigFile = gc_DefaultStringValue;
+    };
+
+}
 #endif //!_Config_Editor_H_

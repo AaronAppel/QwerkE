@@ -1,7 +1,7 @@
 #include "imgui_SceneViewer.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/Systems/ServiceLocator.h"
+#include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/Input/InputManager.h"
 #include "../QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../QwerkE_Framework/Systems/SceneManager.h"
@@ -12,105 +12,109 @@
 
 extern int g_WindowWidth, g_WindowHeight; // TODO: Fix
 
-imgui_SceneViewer::imgui_SceneViewer()
-{
-	m_SceneManager = (SceneManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Scene_Manager);
-	m_Scenes = m_SceneManager->LookAtScenes();
-	m_Input = (InputManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Input_Manager);
-	m_FBO = new FrameBufferObject();
-	m_FBO->Init();
-}
+namespace QwerkE {
 
-imgui_SceneViewer::~imgui_SceneViewer()
-{
-	delete m_FBO;
-}
+    imgui_SceneViewer::imgui_SceneViewer()
+    {
+        m_SceneManager = (SceneManager*)QwerkE::Services::GetService(eEngineServices::Scene_Manager);
+        m_Scenes = m_SceneManager->LookAtScenes();
+        m_Input = (InputManager*)QwerkE::Services::GetService(eEngineServices::Input_Manager);
+        m_FBO = new FrameBufferObject();
+        m_FBO->Init();
+    }
 
-void imgui_SceneViewer::NewFrame()
-{
-}
+    imgui_SceneViewer::~imgui_SceneViewer()
+    {
+        delete m_FBO;
+    }
 
-void imgui_SceneViewer::Update()
-{
+    void imgui_SceneViewer::NewFrame()
+    {
+    }
 
-}
+    void imgui_SceneViewer::Update()
+    {
 
-void imgui_SceneViewer::Draw()
-{
-	DrawSceneView();
-	DrawSceneList();
-}
+    }
 
-void imgui_SceneViewer::DrawSceneView()
-{
-	static bool isOpen = true;
-	if (ImGui::Begin("Scene Window - Framework.cpp", &isOpen, ImGuiWindowFlags_NoScrollbar))
-	{
-		// save/load + state
-		static int selection = 0;
-		selection = (char)m_SceneManager->GetCurrentScene()->GetState();
-		const char* states[] = { "Running", "Frozen", "Paused", "SlowMo", "Animating" };
-		ImGui::PushItemWidth(150);
-		if (ImGui::Combo("Scene State", &selection, states, 5))
-		{
-			m_SceneManager->GetCurrentScene()->SetState((eSceneState)selection);
-		}
-		ImGui::SameLine();
-		ImGui::PopItemWidth();
-		ImGui::SameLine();
-		if (ImGui::Button("Save")) m_SceneManager->GetCurrentScene()->SaveScene();
-		ImGui::SameLine();
-		if (ImGui::Button("Reload")) m_SceneManager->GetCurrentScene()->ReloadScene();
+    void imgui_SceneViewer::Draw()
+    {
+        DrawSceneView();
+        DrawSceneList();
+    }
 
-		// render scene to fbo
-		m_FBO->Bind();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		m_SceneManager->Draw();
-		m_FBO->UnBind();
+    void imgui_SceneViewer::DrawSceneView()
+    {
+        static bool isOpen = true;
+        if (ImGui::Begin("Scene Window - Framework.cpp", &isOpen, ImGuiWindowFlags_NoScrollbar))
+        {
+            // save/load + state
+            static int selection = 0;
+            selection = (char)m_SceneManager->GetCurrentScene()->GetState();
+            const char* states[] = { "Running", "Frozen", "Paused", "SlowMo", "Animating" };
+            ImGui::PushItemWidth(150);
+            if (ImGui::Combo("Scene State", &selection, states, 5))
+            {
+                m_SceneManager->GetCurrentScene()->SetState((eSceneState)selection);
+            }
+            ImGui::SameLine();
+            ImGui::PopItemWidth();
+            ImGui::SameLine();
+            if (ImGui::Button("Save")) m_SceneManager->GetCurrentScene()->SaveScene();
+            ImGui::SameLine();
+            if (ImGui::Button("Reload")) m_SceneManager->GetCurrentScene()->ReloadScene();
 
-		ImVec2 winSize = ImGui::GetWindowSize();
+            // render scene to fbo
+            m_FBO->Bind();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            m_SceneManager->Draw();
+            m_FBO->UnBind();
 
-		ImVec2 imageSize = winSize;
+            ImVec2 winSize = ImGui::GetWindowSize();
 
-		// TODO: Fix image width. A larger panel has more space on the right.
-		// TODO: Consider centering image on panel.
-		imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
-		imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
+            ImVec2 imageSize = winSize;
 
-		ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + 60)); // snap window height to scale
+            // TODO: Fix image width. A larger panel has more space on the right.
+            // TODO: Consider centering image on panel.
+            imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
+            imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
 
-		// render texture as image
-		ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
+            ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + 60)); // snap window height to scale
 
-		ImGui::End();
-	}
-	else
-		ImGui::End();
-}
+            // render texture as image
+            ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
 
-void imgui_SceneViewer::DrawSceneList()
-{
-	ImGui::Begin("Scene List");
+            ImGui::End();
+        }
+        else
+            ImGui::End();
+    }
 
-	// TODO: Think of adding multi window support for viewing more than 1
-	// enabled scene at a time. Going to have to look at how input would
-	// work for that.
-	int counter = 1;
-	ImVec2 winSize = ImGui::GetWindowSize();
-	ImVec2 imageSize = ImVec2(100.0f, 100.0f);
-	int m_ItemsPerRow = winSize.x / (imageSize.x * 1.5f) + 1; // (* up the image size for feel), + avoid dividing by 0
+    void imgui_SceneViewer::DrawSceneList()
+    {
+        ImGui::Begin("Scene List");
 
-	for (const auto &p : *m_SceneManager->LookAtScenes()) // save pointer?
-	{
-		if (counter % m_ItemsPerRow)
-			ImGui::SameLine();
+        // TODO: Think of adding multi window support for viewing more than 1
+        // enabled scene at a time. Going to have to look at how input would
+        // work for that.
+        int counter = 1;
+        ImVec2 winSize = ImGui::GetWindowSize();
+        ImVec2 imageSize = ImVec2(100.0f, 100.0f);
+        int m_ItemsPerRow = winSize.x / (imageSize.x * 1.5f) + 1; // (* up the image size for feel), + avoid dividing by 0
 
-		if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || m_Input->FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
-		{
-			m_SceneManager->SetCurrentScene(p.second->GetSceneID());
-		}
-		counter++;
-	}
+        for (const auto& p : *m_SceneManager->LookAtScenes()) // save pointer?
+        {
+            if (counter % m_ItemsPerRow)
+                ImGui::SameLine();
 
-	ImGui::End();
+            if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || m_Input->FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
+            {
+                m_SceneManager->SetCurrentScene(p.second->GetSceneID());
+            }
+            counter++;
+        }
+
+        ImGui::End();
+    }
+
 }

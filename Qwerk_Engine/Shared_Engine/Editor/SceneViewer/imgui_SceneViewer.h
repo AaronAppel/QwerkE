@@ -10,23 +10,26 @@ class InputManager;
 class FrameBufferObject;
 class Scene;
 
-class imgui_SceneViewer
-{
-public:
-	imgui_SceneViewer();
-	~imgui_SceneViewer();
+namespace QwerkE {
 
-	void NewFrame();
-	void Update();
-	void Draw();
+    class imgui_SceneViewer
+    {
+    public:
+        imgui_SceneViewer();
+        ~imgui_SceneViewer();
 
-private:
-	void DrawSceneView();
-	void DrawSceneList();
-	InputManager* m_Input = nullptr;
-	SceneManager* m_SceneManager = nullptr;
-	FrameBufferObject* m_FBO = nullptr;
-	const std::map<eSceneTypes, Scene*>* m_Scenes = nullptr;
-};
+        void NewFrame();
+        void Update();
+        void Draw();
 
+    private:
+        void DrawSceneView();
+        void DrawSceneList();
+        InputManager* m_Input = nullptr;
+        SceneManager* m_SceneManager = nullptr;
+        FrameBufferObject* m_FBO = nullptr;
+        const std::map<eSceneTypes, Scene*>* m_Scenes = nullptr;
+    };
+
+}
 #endif // !_imgui_SceneViewer_H_

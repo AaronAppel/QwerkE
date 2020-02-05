@@ -8,19 +8,21 @@
 
 class Material;
 class Texture;
-class ResourceManager;
 
-class MaterialEditor
-{
-public:
-	MaterialEditor();
-	~MaterialEditor();
+namespace QwerkE {
 
-	void Draw(Material* material, bool* isOpen);
+    class MaterialEditor
+    {
+    public:
+        MaterialEditor();
+        ~MaterialEditor();
 
-private:
-	eMaterialMaps m_CurrentMap = eMaterialMaps::MatMap_Null;
-	const std::map<std::string, Texture*>* m_TextureList = nullptr;
-};
+        void Draw(Material* material, bool* isOpen);
 
+    private:
+        eMaterialMaps m_CurrentMap = eMaterialMaps::MatMap_Null;
+        const std::map<std::string, Texture*>* m_TextureList = nullptr;
+    };
+
+}
 #endif // !_MaterialEditor_H_

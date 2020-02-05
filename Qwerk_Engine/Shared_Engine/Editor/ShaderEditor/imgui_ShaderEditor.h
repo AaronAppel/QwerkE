@@ -6,22 +6,25 @@
 
 class ShaderProgram;
 
-class imgui_ShaderEditor
-{
-public:
-	imgui_ShaderEditor();
-	~imgui_ShaderEditor();
+namespace QwerkE {
 
-	void NewFrame();
-	void Update();
-	void Draw(bool *isOpen);
+    class imgui_ShaderEditor
+    {
+    public:
+        imgui_ShaderEditor();
+        ~imgui_ShaderEditor();
 
-	void SetShader(ShaderProgram* shader) { m_Shader = shader; };
-	const ShaderProgram* GetShader() { return m_Shader; };
+        void NewFrame();
+        void Update();
+        void Draw(bool* isOpen);
 
-private:
-	const std::map<std::string, ShaderProgram*>* m_ShaderList = nullptr;
-	ShaderProgram* m_Shader = nullptr;
-};
+        void SetShader(ShaderProgram* shader) { m_Shader = shader; };
+        const ShaderProgram* GetShader() { return m_Shader; };
 
+    private:
+        const std::map<std::string, ShaderProgram*>* m_ShaderList = nullptr;
+        ShaderProgram* m_Shader = nullptr;
+    };
+
+}
 #endif // !_imgui_ShaderEditor_H_

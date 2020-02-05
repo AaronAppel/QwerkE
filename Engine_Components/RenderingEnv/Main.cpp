@@ -8,13 +8,14 @@
 
 int main(int argc, char **argv)
 {
+	// TODO: Move argument handling code into engine
 	// Greeting
 	// std::cout << "-- Qwerk Engine 0.1 --\n" << argc;
 
 	int counter;
 	printf("Program Name Is: %s", argv[0]);
 	if (argc == 1)
-		printf("\nNo Extra Command Line Argument Passed Other Than Program Name");
+		printf("\nNo Extra Command Line Argument Passed Other Than Program Name\n");
 	if (argc >= 2)
 	{
 		printf("\nNumber Of Arguments Passed: %d", argc);

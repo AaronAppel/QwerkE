@@ -21,8 +21,8 @@ class Window;
 
 // What engine functionality should be user accessible?
 
-namespace QwerkE
-{
+namespace QwerkE {
+
 	namespace Engine
 	{
 		void Run(std::map<const char*, const char*> &args);
@@ -35,6 +35,6 @@ namespace QwerkE
 
 		bool StillRunning();
 	}
-}
 
+}
 #endif // !_Engine_H_

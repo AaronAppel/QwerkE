@@ -3,33 +3,36 @@
 
 #include "Editor.h"
 
-class imgui_ShaderEditor;
-class imgui_SceneViewer;
-class ResourceViewer;
-class EntityEditor;
+namespace QwerkE {
 
-class imgui_Editor : Editor
-{
-public:
-	imgui_Editor();
-	~imgui_Editor();
+    class imgui_ShaderEditor;
+    class imgui_SceneViewer;
+    class ResourceViewer;
+    class EntityEditor;
 
-	void NewFrame();
-	void Update();
-	void Draw();
+    class imgui_Editor : Editor
+    {
+    public:
+        imgui_Editor();
+        ~imgui_Editor();
 
-	EntityEditor* GetEntityEditor() { return m_EntityEditor; }
+        void NewFrame();
+        void Update();
+        void Draw();
 
-	void ToggleFullScreenScene() { m_ShowingGUI = !m_ShowingGUI; };
+        EntityEditor* GetEntityEditor() { return m_EntityEditor; }
 
-private:
-	bool m_ShowingExampleWindow = false;
-	bool m_ShowingShaderEditor = false;
-	bool m_ShowingGUI = true;
-	ResourceViewer* m_ResourceViewer = nullptr;
-	imgui_ShaderEditor* m_ShaderEditor = nullptr;
-	imgui_SceneViewer* m_SceneViewer = nullptr;
-	EntityEditor* m_EntityEditor = nullptr;
-};
+        void ToggleFullScreenScene() { m_ShowingGUI = !m_ShowingGUI; };
 
+    private:
+        bool m_ShowingExampleWindow = false;
+        bool m_ShowingShaderEditor = false;
+        bool m_ShowingGUI = true;
+        ResourceViewer* m_ResourceViewer = nullptr;
+        imgui_ShaderEditor* m_ShaderEditor = nullptr;
+        imgui_SceneViewer* m_SceneViewer = nullptr;
+        EntityEditor* m_EntityEditor = nullptr;
+    };
+
+}
 #endif // !_Editor_H_

@@ -16,7 +16,7 @@
 		}],
 	
 	"Plugins":	[{
-			"PluginName":	"plugingID"
+			"pluginID":	"PluginName"
 		}],
 		
 	"UI":	[{	

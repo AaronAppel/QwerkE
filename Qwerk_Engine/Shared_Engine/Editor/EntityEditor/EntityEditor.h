@@ -1,36 +1,37 @@
-#ifndef _EntityEditor
-#define _EntityEditor
+#ifndef _Entity_Editor_H_
+#define _Entity_Editor_H_
 
 // A window that shows data for an entity and gives a GUI
 // to allow for data to easily be modified
 
-// TODO: Create an imgui_EntityEditor class
-class SceneManager;
-class ResourceManager;
-class GameObject;
-class Editor;
-class imgui_EditComponent;
-
 #include <string>
 
-// TODO: Change this to be an abstract base class that gets inherited by library version like imgui or BlockMenu
-class EntityEditor // abstract
-{
-public:
-    EntityEditor(Editor* editor);
-    ~EntityEditor();
+namespace QwerkE {
 
-    virtual void Draw();
+    // TODO: Create an imgui_EntityEditor class
+    class SceneManager;
+    class GameObject;
+    class Editor;
+    class imgui_EditComponent;
 
-    void SetCurrentEntity(GameObject* object) { m_CurrentEntity = object; };
+    // TODO: Change this to be an abstract base class that gets inherited by library version like ImGui or BlockMenu
+    class EntityEditor // abstract
+    {
+    public:
+        EntityEditor(Editor* editor);
+        ~EntityEditor();
 
-private:
-    Editor* m_Editor = nullptr;
-    SceneManager * m_SceneManager = nullptr;
-    ResourceManager * m_ResourceManager = nullptr;
+        virtual void Draw();
 
-	GameObject* m_CurrentEntity = nullptr;
-	imgui_EditComponent* m_EditComponent = nullptr;
-};
+        void SetCurrentEntity(GameObject* object) { m_CurrentEntity = object; };
 
-#endif // !_EntityEditor
+    private:
+        Editor* m_Editor = nullptr;
+        SceneManager* m_SceneManager = nullptr;
+
+        GameObject* m_CurrentEntity = nullptr;
+        imgui_EditComponent* m_EditComponent = nullptr;
+    };
+
+}
+#endif // !_Entity_Editor_H_
