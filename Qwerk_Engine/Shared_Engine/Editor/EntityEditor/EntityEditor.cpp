@@ -2,7 +2,7 @@
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/Scenes/Scene.h"
-#include "../QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
+#include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/Entities/Components/RenderComponent.h"
@@ -78,12 +78,12 @@ namespace QwerkE {
 				ImGui::Separator();
 				if (ImGui::Button("+Renderable"))
 				{
-					// TODO:  : renderable.SetMaterial(m_ResourceManager->GetMaterial(null_material));
+					// TODO:  : renderable.SetMaterial(m_Resources->GetMaterial(null_material));
 
 					/*Renderable renderable;
-					renderable.SetMaterial(m_ResourceManager->GetMaterial(null_material));
-					renderable.SetShader(m_ResourceManager->GetShaderProgram(null_shader));
-					renderable.SetMesh(m_ResourceManager->GetMesh(null_mesh));
+					renderable.SetMaterial(m_Resources->GetMaterial(null_material));
+					renderable.SetShader(m_Resources->GetShaderProgram(null_shader));
+					renderable.SetMesh(m_Resources->GetMesh(null_mesh));
 
 					RenderComponent* rComp = (RenderComponent*)m_CurrentEntity->GetComponent(Component_Render);
 					rComp->AddRenderable(renderable);

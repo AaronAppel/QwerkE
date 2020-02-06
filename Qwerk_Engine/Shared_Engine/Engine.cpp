@@ -18,7 +18,8 @@
 #include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
 #include "../QwerkE_Framework/Graphics/Mesh/MeshFactory.h"
 
-#include "../QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
+#include "../QwerkE_Framework/Systems/Input/Input.h"
+#include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/Events/EventManager.h"
 #include "../QwerkE_Framework/Systems/SceneManager.h"
@@ -179,7 +180,7 @@ namespace QwerkE {
 					Engine::NewFrame();
 
 					/* Input */
-					Engine::Input();
+					Engine::PollInput();
 
 					/* Logic */
 					Engine::Update(fps.timeSinceLastFrame);
@@ -213,12 +214,12 @@ namespace QwerkE {
 		{
 			Framework::NewFrame();
             m_Editor->NewFrame();
-			// NOTE: ImGUI::NewFrame() is in Framework::Input()!
+			// NOTE: ImGUI::NewFrame() is in Framework::PollInput()!
 		}
 
-		void Engine::Input()
+		void Engine::PollInput()
 		{
-			Framework::Input();
+			Framework::PollInput();
 		}
 
 		void Engine::Update(double deltatime)
@@ -228,8 +229,8 @@ namespace QwerkE {
 
 			// QwerkE::Framework::Update();
 
-			InputManager* inputManager = (InputManager*)QwerkE::Services::GetService(eEngineServices::Input_Manager);
-			if (inputManager->FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
+			Input* input = (Input*)Services::GetService(eEngineServices::Input_Manager);
+			if (input->FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
 			{
 				static bool paused = false;
 				paused = !paused;
@@ -242,7 +243,7 @@ namespace QwerkE {
 					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
-			if (inputManager->FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
+			if (input->FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
 			{
 				static bool frozen = false;
 				frozen = !frozen;
@@ -255,11 +256,11 @@ namespace QwerkE {
 					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
-			if (inputManager->FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
+			if (input->FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
 			{
 				m_Editor->ToggleFullScreenScene();
 			}
-			if (inputManager->FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
+			if (input->FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
 				WindowManager* windowManager = (WindowManager*)QwerkE::Services::GetService(eEngineServices::WindowManager);
 				m_WindowManager->GetWindow(0)->SetClosing(true); // close glfw

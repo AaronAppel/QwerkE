@@ -29,7 +29,7 @@ namespace QwerkE {
 		void Stop();
 
 		void NewFrame();
-		void Input();
+		void PollInput();
 		void Update(double deltatime);
 		void Draw();
 

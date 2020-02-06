@@ -1,5 +1,5 @@
 #include "imgui_EditComponent.h"
-#include "../QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
+#include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/Entities/Routines/RenderRoutine.h"
@@ -17,7 +17,7 @@
 namespace QwerkE {
 
     imgui_EditComponent::imgui_EditComponent()
-        : m_Materials(Services::Resources.SeeMaterials()), m_Shaders(Services::Resources.SeeShaderPrograms()), m_Meshes(Services::Resources.SeeMeshes())
+        : m_Materials(Resources::SeeMaterials()), m_Shaders(Resources::SeeShaderPrograms()), m_Meshes(Resources::SeeMeshes())
     {
     }
 
@@ -225,7 +225,7 @@ namespace QwerkE {
             {
                 if (ImGui::Selectable(m_ShaderStrings[i]))
                 {
-                    rComp->SetShaderAtIndex(m_RenderableIndex, Services::Resources.GetShaderProgram(m_ShaderStrings[i]));
+                    rComp->SetShaderAtIndex(m_RenderableIndex, Resources::GetShaderProgram(m_ShaderStrings[i]));
                 }
             }
             if (ImGui::IsItemClicked(1))
@@ -247,7 +247,7 @@ namespace QwerkE {
             {
                 if (ImGui::Selectable(m_MatStrings[i]))
                 {
-                    rComp->SetMaterialAtIndex(m_RenderableIndex, Services::Resources.GetMaterial(m_MatStrings[i]));
+                    rComp->SetMaterialAtIndex(m_RenderableIndex, Resources::GetMaterial(m_MatStrings[i]));
                 }
                 if (ImGui::IsItemClicked(1))
                 {
@@ -269,7 +269,7 @@ namespace QwerkE {
             {
                 if (ImGui::Selectable(m_MeshStrings[i]))
                 {
-                    rComp->SetMeshAtIndex(m_RenderableIndex, Services::Resources.GetMesh(m_MeshStrings[i]));
+                    rComp->SetMeshAtIndex(m_RenderableIndex, Resources::GetMesh(m_MeshStrings[i]));
                 }
             }
 

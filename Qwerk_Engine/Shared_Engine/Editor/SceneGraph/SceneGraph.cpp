@@ -7,7 +7,7 @@
 #include "../imgui_Editor.h"
 #include "../QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/Systems/Services.h"
-#include "../QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
+#include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Factory/Factory.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/GUID.h"

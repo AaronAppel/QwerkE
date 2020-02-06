@@ -15,7 +15,7 @@
 #include "../QwerkE_Framework/Scenes/ViewerScene.h"
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/SceneManager.h"
-#include "../QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
+#include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/Systems/Factory/Factory.h"
@@ -28,11 +28,11 @@ namespace QwerkE {
     ResourceViewer::ResourceViewer()
     {
         m_MaterialEditor = new MaterialEditor();
-        m_Materials = Services::Resources.SeeMaterials();
-        m_Textures = Services::Resources.SeeTextures();
-        m_Shaders = Services::Resources.SeeShaderPrograms();
-        m_Meshes = Services::Resources.SeeMeshes();
-        m_Sounds = Services::Resources.SeeSounds();
+        m_Materials = Resources::SeeMaterials();
+        m_Textures = Resources::SeeTextures();
+        m_Shaders = Resources::SeeShaderPrograms();
+        m_Meshes = Resources::SeeMeshes();
+        m_Sounds = Resources::SeeSounds();
         m_FBO = new FrameBufferObject();
         m_FBO->Init();
 
@@ -217,7 +217,7 @@ namespace QwerkE {
 
             if (m_ShowMatEditor)
             {
-                m_MaterialEditor->Draw(Services::Resources.GetMaterial(m_MatName.c_str()), &m_ShowMatEditor);
+                m_MaterialEditor->Draw(Resources::GetMaterial(m_MatName.c_str()), &m_ShowMatEditor);
             }
 
             ImGui::End();
@@ -238,7 +238,7 @@ namespace QwerkE {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // TODO: Loop through renderables to setup
-            //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetMeshAtIndex(0, m_ResourceManager->GetMesh(null_mesh));
+            //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetMeshAtIndex(0, m_Resources->GetMesh(null_mesh));
 
             // TODO: RenderRoutine needs to update its uniform functions properly
             //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetModel(p.second);

@@ -10,7 +10,7 @@
 class SceneGraph;
 class ShaderProgram;
 class SceneManager;
-class InputManager;
+class Input;
 class EntityEditor;
 
 namespace QwerkE {
@@ -39,7 +39,7 @@ namespace QwerkE {
         void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
         // system access
         SceneManager* m_SceneManager = nullptr;
-        InputManager* m_Input = nullptr;
+        Input* m_Input = nullptr;
     };
 
 }

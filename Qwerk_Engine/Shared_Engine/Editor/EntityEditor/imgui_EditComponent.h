@@ -8,7 +8,7 @@
 namespace QwerkE {
 
     class GameObject;
-    class ResourceManager;
+    class Resources;
     class ShaderProgram;
     class Material;
     class Texture;

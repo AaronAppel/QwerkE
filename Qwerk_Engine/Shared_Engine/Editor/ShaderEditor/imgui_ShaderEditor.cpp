@@ -2,7 +2,7 @@
 #include "../../../QwerkE_Framework/QwerkE_Common/Utilities/FileIO/FileUtilities.h"
 #include "../../../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
 #include "../../../QwerkE_Framework/Systems/Services.h"
-#include "../../../QwerkE_Framework/Systems/Input/InputManager.h"
+#include "../../../QwerkE_Framework/Systems/Input/Input.h"
 #include "../../../QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../../../QwerkE_Framework/Systems/SceneManager.h"
 #include "../../../QwerkE_Framework/Modules/Time.h"
@@ -15,8 +15,8 @@ namespace QwerkE {
 
     imgui_ShaderEditor::imgui_ShaderEditor()
     {
-        m_Shader = Services::Resources.GetShaderProgram(null_shader);
-        m_ShaderList = Services::Resources.SeeShaderPrograms();
+        m_Shader = Resources::GetShaderProgram(null_shader);
+        m_ShaderList = Resources::SeeShaderPrograms();
     }
 
     imgui_ShaderEditor::~imgui_ShaderEditor()
@@ -36,7 +36,7 @@ namespace QwerkE {
     {
         if (m_Shader == nullptr)
         {
-            m_Shader = Services::Resources.GetShaderProgram(null_shader);
+            m_Shader = Resources::GetShaderProgram(null_shader);
         }
 
         // TEST: temporary variables for testing

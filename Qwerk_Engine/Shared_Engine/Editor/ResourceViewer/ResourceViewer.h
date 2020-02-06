@@ -12,7 +12,7 @@ namespace QwerkE {
 
     typedef unsigned int ALuint;
 
-    class ResourceManager;
+    class Resources;
     class ShaderProgram;
     class Scene;
     class GameObject;

@@ -7,7 +7,7 @@
 namespace QwerkE {
 
     class SceneManager;
-    class ResourceManager;
+    class Resources;
     class Editor;
     class imgui_Editor;
 

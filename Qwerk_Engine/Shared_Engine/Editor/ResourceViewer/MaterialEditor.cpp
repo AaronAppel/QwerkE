@@ -3,7 +3,7 @@
 #include "../QwerkE_Framework/Graphics/Texture.h"
 #include "../QwerkE_Framework/Headers/QwerkE_Enums.h"
 #include "../QwerkE_Framework/Systems/Services.h"
-#include "../QwerkE_Framework/Systems/ResourceManager/ResourceManager.h"
+#include "../QwerkE_Framework/Systems/Resources/Resources.h"
 
 #include <map>
 
@@ -11,7 +11,7 @@ namespace QwerkE {
 
     MaterialEditor::MaterialEditor()
     {
-        m_TextureList = Services::Resources.SeeTextures();
+        m_TextureList = Resources::SeeTextures();
     }
 
     MaterialEditor::~MaterialEditor()

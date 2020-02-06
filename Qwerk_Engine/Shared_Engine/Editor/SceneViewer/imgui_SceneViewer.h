@@ -6,7 +6,7 @@
 #include <map>
 
 class SceneManager;
-class InputManager;
+class Input;
 class FrameBufferObject;
 class Scene;
 
@@ -25,7 +25,7 @@ namespace QwerkE {
     private:
         void DrawSceneView();
         void DrawSceneList();
-        InputManager* m_Input = nullptr;
+        Input* m_Input = nullptr;
         SceneManager* m_SceneManager = nullptr;
         FrameBufferObject* m_FBO = nullptr;
         const std::map<eSceneTypes, Scene*>* m_Scenes = nullptr;
