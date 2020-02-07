@@ -228,8 +228,7 @@ namespace QwerkE {
 
 			// Framework::Update();
 
-			Input* input = (Input*)Services::GetService(eEngineServices::Input_Manager);
-			if (input->FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
+			if (Input::FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
 			{
 				static bool paused = false;
 				paused = !paused;
@@ -242,7 +241,7 @@ namespace QwerkE {
 					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
-			if (input->FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
+			if (Input::FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
 			{
 				static bool frozen = false;
 				frozen = !frozen;
@@ -255,11 +254,11 @@ namespace QwerkE {
 					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
-			if (input->FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
+			if (Input::FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
 			{
 				m_Editor->ToggleFullScreenScene();
 			}
-			if (input->FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
+			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
 				WindowManager* windowManager = (WindowManager*)Services::GetService(eEngineServices::WindowManager);
 				m_WindowManager->GetWindow(0)->SetClosing(true); // close glfw

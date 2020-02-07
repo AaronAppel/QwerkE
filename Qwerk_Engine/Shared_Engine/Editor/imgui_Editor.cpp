@@ -17,7 +17,6 @@ namespace QwerkE {
 
     imgui_Editor::imgui_Editor()
     {
-        m_Input = (Input*)QwerkE::Services::GetService(eEngineServices::Input_Manager);
         m_EntityEditor = new EntityEditor(this);
 
         m_ResourceViewer = new ResourceViewer();

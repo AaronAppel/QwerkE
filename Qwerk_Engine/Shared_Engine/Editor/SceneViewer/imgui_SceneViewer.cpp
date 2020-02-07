@@ -16,7 +16,6 @@ namespace QwerkE {
     imgui_SceneViewer::imgui_SceneViewer()
     {
         m_Scenes = Scenes::LookAtScenes();
-        m_Input = (Input*)QwerkE::Services::GetService(eEngineServices::Input_Manager);
         m_FBO = new FrameBufferObject();
         m_FBO->Init();
     }
@@ -104,7 +103,7 @@ namespace QwerkE {
             if (counter % m_ItemsPerRow)
                 ImGui::SameLine();
 
-            if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || m_Input->FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
+            if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || Input::FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
             {
                 Scenes::SetCurrentScene(p.second->GetSceneID());
             }

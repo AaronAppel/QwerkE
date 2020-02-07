@@ -8,7 +8,6 @@ namespace QwerkE {
     Editor::Editor()
     {
         m_SceneGraph = new SceneGraph(this);
-        m_Input = (Input*)QwerkE::Services::GetService(eEngineServices::Input_Manager);
     }
 
     Editor::~Editor()
