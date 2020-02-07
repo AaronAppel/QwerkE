@@ -22,7 +22,7 @@
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/Events/EventManager.h"
-#include "../QwerkE_Framework/Systems/SceneManager.h"
+#include "../QwerkE_Framework/Systems/Scenes.h"
 #include "../QwerkE_Framework/Systems/Factory/Factory.h"
 #include "../QwerkE_Framework/Systems/Window/CallbackFunctions.h"
 #include "../QwerkE_Framework/Systems/Physics/PhysicsManager.h"
@@ -42,8 +42,8 @@
 namespace QwerkE {
 
     // private engine variables
-    static QwerkE::WindowManager* m_WindowManager = nullptr;
-    static QwerkE::SceneManager* m_SceneManager = nullptr;
+    static WindowManager* m_WindowManager = nullptr;
+    static Scenes* m_Scenes = nullptr;
     static bool m_IsRunning = false;
     static Editor* m_Editor = nullptr;
 
@@ -99,18 +99,17 @@ namespace QwerkE {
 			flags &= ~Flag_Renderer;
 			flags &= ~Flag_Audio;
 
-			if (QwerkE::Framework::Startup(ConfigsFolderPath("preferences.qpref"), flags) == eEngineMessage::_QFailure)
+			if (Framework::Startup(ConfigsFolderPath("preferences.qpref"), flags) == eEngineMessage::_QFailure)
 			{
 				ConsolePrint("\nQwerk Framework failed to load! Shutting down engine.\n");
 				return;
 			}
 
-			QwerkE::Services::LockServices(true); // prevent service changes
+			Services::LockServices(true); // prevent service changes
 
-			m_SceneManager = (SceneManager*)QwerkE::Services::GetService(eEngineServices::Scene_Manager);
-			m_SceneManager->GetCurrentScene()->SetIsEnabled(true); // enable default scene
+			Scenes::GetCurrentScene()->SetIsEnabled(true); // enable default scene
 
-			m_WindowManager = (WindowManager*)QwerkE::Services::GetService(eEngineServices::WindowManager);
+			m_WindowManager = (WindowManager*)Services::GetService(eEngineServices::WindowManager);
 
 			m_IsRunning = true;
 
@@ -118,8 +117,8 @@ namespace QwerkE {
 			FrameTimer fps(120, 3.0f);
 			fps.lastFrame = helpers_Time(); // Time of last frame initialized to current time
 
-			QwerkE::Time::SetDeltatime(&fps.timeSinceLastFrame);
-			QwerkE::Time::SetFrameRate(&fps.frameRate);
+			Time::SetDeltatime(&fps.timeSinceLastFrame);
+			Time::SetFrameRate(&fps.frameRate);
 
 			// TODO: GL state init should be in a Window() or OpenGLManager()
 			// class or some type of ::Graphics() system.
@@ -200,9 +199,9 @@ namespace QwerkE {
 			}
 
 			// unlock services for clean up
-			QwerkE::Services::LockServices(false);
+			Services::LockServices(false);
 
-			QwerkE::Framework::TearDown();
+			Framework::TearDown();
 		}
 
 		void Engine::Stop()
@@ -224,10 +223,10 @@ namespace QwerkE {
 
 		void Engine::Update(double deltatime)
 		{
-			m_SceneManager->Update(deltatime);
+			m_Scenes->Update(deltatime);
 			m_Editor->Update();
 
-			// QwerkE::Framework::Update();
+			// Framework::Update();
 
 			Input* input = (Input*)Services::GetService(eEngineServices::Input_Manager);
 			if (input->FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
@@ -236,11 +235,11 @@ namespace QwerkE {
 				paused = !paused;
 				if (paused)
 				{
-					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Paused);
+					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Paused);
 				}
 				else
 				{
-					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
+					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
 			if (input->FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
@@ -249,11 +248,11 @@ namespace QwerkE {
 				frozen = !frozen;
 				if (frozen)
 				{
-					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Frozen);
+					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Frozen);
 				}
 				else
 				{
-					m_SceneManager->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
+					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
 			if (input->FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
@@ -262,7 +261,7 @@ namespace QwerkE {
 			}
 			if (input->FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
-				WindowManager* windowManager = (WindowManager*)QwerkE::Services::GetService(eEngineServices::WindowManager);
+				WindowManager* windowManager = (WindowManager*)Services::GetService(eEngineServices::WindowManager);
 				m_WindowManager->GetWindow(0)->SetClosing(true); // close glfw
 				Framework::Stop();
 				Engine::Stop();

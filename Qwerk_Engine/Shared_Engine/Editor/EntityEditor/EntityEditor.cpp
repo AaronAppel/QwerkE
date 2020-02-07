@@ -1,6 +1,5 @@
 #include "EntityEditor.h"
 #include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
@@ -20,7 +19,6 @@ namespace QwerkE {
 	EntityEditor::EntityEditor(Editor* editor)
 	{
 		m_Editor = editor;
-		m_SceneManager = (SceneManager*)QwerkE::Services::GetService(eEngineServices::Scene_Manager);
 
 #ifdef dearimgui
 		m_EditComponent = new imgui_EditComponent();
@@ -39,7 +37,7 @@ namespace QwerkE {
 		if (m_CurrentEntity == nullptr)
 		{
 			// TODO: What if the scene is empty? What does map return? nullptr I hope
-			m_CurrentEntity = m_SceneManager->GetCurrentScene()->GetObjectList().begin()->second;
+			m_CurrentEntity = m_Scenes->GetCurrentScene()->GetObjectList().begin()->second;
 		}
 		if (m_CurrentEntity)
 			if (ImGui::Begin("Entity Editor"))

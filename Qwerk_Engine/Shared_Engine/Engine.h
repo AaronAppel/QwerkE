@@ -11,7 +11,7 @@
 #include "Engine_Enums.h" // eEngineMessage
 
 class Editor;
-class SceneManager;
+class Scenes;
 class Window;
 
 // If only 1 engine should exist at a time then it could be wrapped in

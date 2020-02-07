@@ -12,7 +12,6 @@ namespace QwerkE {
 
     typedef unsigned int ALuint;
 
-    class Resources;
     class ShaderProgram;
     class Scene;
     class GameObject;
@@ -22,6 +21,7 @@ namespace QwerkE {
     class Material;
     class MaterialEditor;
 
+    // TODO: Rename class to imgui_ResourceViewer
     class ResourceViewer
     {
     public:
@@ -31,7 +31,7 @@ namespace QwerkE {
         void Draw();
 
     private:
-        int m_CurrentResource = 0;
+        int m_CurrentResource = 0; // TODO: Consider keeping an index for all windows for back tracking
 
         MaterialEditor* m_MaterialEditor = nullptr;
         bool m_ShowMatEditor = false;

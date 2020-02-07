@@ -4,7 +4,7 @@
 #include "../QwerkE_Framework/Systems/Input/Input.h"
 #include "../QwerkE_Framework/Systems/Audio/AudioManager.h"
 #include "../QwerkE_Framework/Systems/Renderer/Renderer.h"
-#include "../QwerkE_Framework/Systems/SceneManager.h"
+#include "../QwerkE_Framework/Systems/Scenes.h"
 #include "../QwerkE_Framework/Modules/Time.h"
 #include "EntityEditor/EntityEditor.h"
 #include "imgui_Editor.h"
@@ -17,7 +17,6 @@ namespace QwerkE {
 
     imgui_Editor::imgui_Editor()
     {
-        m_SceneManager = (SceneManager*)QwerkE::Services::GetService(eEngineServices::Scene_Manager);
         m_Input = (Input*)QwerkE::Services::GetService(eEngineServices::Input_Manager);
         m_EntityEditor = new EntityEditor(this);
 
@@ -89,7 +88,7 @@ namespace QwerkE {
             if (ImGui::Button("FPS"))
                 showFPS = !showFPS;
             ImGui::SameLine();
-            if (showFPS) ImGui::Text("%4.2f", QwerkE::Time::GetFrameRate());
+            if (showFPS) ImGui::Text("%4.2f", Time::GetFrameRate());
 
             ImGui::EndMainMenuBar();
         }
@@ -107,7 +106,7 @@ namespace QwerkE {
         }
         else
         {
-            m_SceneManager->Draw();
+            m_Scenes->Draw();
         }
     }
 

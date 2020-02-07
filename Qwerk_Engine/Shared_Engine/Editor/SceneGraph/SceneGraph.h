@@ -6,7 +6,7 @@
 
 namespace QwerkE {
 
-    class SceneManager;
+    class Scenes;
     class Resources;
     class Editor;
     class imgui_Editor;
@@ -23,7 +23,7 @@ namespace QwerkE {
     private:
         int m_CurrentList = 0;
         imgui_Editor* m_Editor = nullptr;
-        SceneManager* m_SceneManager = nullptr;
+        Scenes* m_Scenes = nullptr;
     };
 
 }

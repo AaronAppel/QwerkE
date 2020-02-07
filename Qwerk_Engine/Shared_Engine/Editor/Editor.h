@@ -9,7 +9,7 @@
 
 class SceneGraph;
 class ShaderProgram;
-class SceneManager;
+class Scenes;
 class Input;
 class EntityEditor;
 
@@ -38,7 +38,7 @@ namespace QwerkE {
         void* m_MenuBar = nullptr; // TODO: Top menu bar with acces to settings like save, preferences, etc
         void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
         // system access
-        SceneManager* m_SceneManager = nullptr;
+        Scenes* m_Scenes = nullptr;
         Input* m_Input = nullptr;
     };
 

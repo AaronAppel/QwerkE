@@ -9,7 +9,7 @@
 namespace QwerkE {
 
     // TODO: Create an imgui_EntityEditor class
-    class SceneManager;
+    class Scenes;
     class GameObject;
     class Editor;
     class imgui_EditComponent;
@@ -27,7 +27,7 @@ namespace QwerkE {
 
     private:
         Editor* m_Editor = nullptr;
-        SceneManager* m_SceneManager = nullptr;
+        Scenes* m_Scenes = nullptr;
 
         GameObject* m_CurrentEntity = nullptr;
         imgui_EditComponent* m_EditComponent = nullptr;

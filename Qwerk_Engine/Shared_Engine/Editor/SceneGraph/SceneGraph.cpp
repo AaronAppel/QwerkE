@@ -5,9 +5,7 @@
 #include "../Editor.h"
 #include "../EntityEditor/EntityEditor.h"
 #include "../imgui_Editor.h"
-#include "../QwerkE_Framework/Systems/SceneManager.h"
 #include "../QwerkE_Framework/Systems/Services.h"
-#include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Factory/Factory.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/GUID.h"
@@ -18,8 +16,7 @@
 namespace QwerkE {
 
 	SceneGraph::SceneGraph(Editor* editor)
-		: m_Editor((imgui_Editor*)editor),
-	      m_SceneManager((SceneManager*)QwerkE::Services::GetService(eEngineServices::Scene_Manager))
+		: m_Editor((imgui_Editor*)editor)
 	{
 	}
 
@@ -46,7 +43,8 @@ namespace QwerkE {
 				m_CurrentList = 2;
 			}
 			ImGui::SameLine();
-			// object creation
+
+			// Object creation
 			if (ImGui::Button("Add+"))
 			{
 				ImGui::OpenPopup("Create Object");
@@ -61,22 +59,21 @@ namespace QwerkE {
 				for (int i = 0; i < IM_ARRAYSIZE(names); i++)
 					if (ImGui::Selectable(names[i]))
 					{
-						Scene* scene = m_SceneManager->GetCurrentScene();
-						Factory* factory = (Factory*)QwerkE::Services::GetService(eEngineServices::Factory_Entity);
+						Scene* scene = m_Scenes->GetCurrentScene();
 
 						switch (i)
 						{
 						case 0:
-							scene->AddObjectToScene(factory->CreateEmptyGameObject(scene, vec3(0, 0, 0)));
+							scene->AddObjectToScene(Factory::CreateEmptyGameObject(scene, vec3(0, 0, 0)));
 							break;
 						case 1:
-							scene->AddLight(factory->CreateLight(scene, vec3(0, 0, 0)));
+							scene->AddLight(Factory::CreateLight(scene, vec3(0, 0, 0)));
 							break;
 						case 2:
-							scene->AddCamera(factory->CreateFreeCamera(scene, vec3(0, 0, 0)));
+							scene->AddCamera(Factory::CreateFreeCamera(scene, vec3(0, 0, 0)));
 							break;
 						case 3:
-							scene->AddObjectToScene(factory->CreateSphere(scene, vec3(0, 0, 0)));
+							scene->AddObjectToScene(Factory::CreateSphere(scene, vec3(0, 0, 0)));
 							break;
 						default:
 							break;
@@ -89,9 +86,9 @@ namespace QwerkE {
 				if (ImGui::Button("Create"))
 				{
 					GameObject* result = ((Factory*)QwerkE::Services::GetService(eEngineServices::Factory_Entity))->CreateEmptyGameObject(
-						m_SceneManager->GetCurrentScene(), vec3(0,0,0));
+						m_Scenes->GetCurrentScene(), vec3(0,0,0));
 					result->SetName(StringAppend("Object", std::to_string(UniqueID()).c_str()));
-					m_SceneManager->GetCurrentScene()->AddObjectToScene(result);
+					m_Scenes->GetCurrentScene()->AddObjectToScene(result);
 					creator = false;
 				}
 				ImGui::End();
@@ -99,9 +96,9 @@ namespace QwerkE {
 
 			ImGui::Separator();
 
-			std::map<std::string, GameObject*> entities = m_SceneManager->GetCurrentScene()->GetObjectList();
-			std::vector<GameObject*> cameras = m_SceneManager->GetCurrentScene()->GetCameraList();
-			std::vector<GameObject*> lights = m_SceneManager->GetCurrentScene()->GetLightList();
+			std::map<std::string, GameObject*> entities = m_Scenes->GetCurrentScene()->GetObjectList();
+			std::vector<GameObject*> cameras = m_Scenes->GetCurrentScene()->GetCameraList();
+			std::vector<GameObject*> lights = m_Scenes->GetCurrentScene()->GetLightList();
 			std::map<std::string, GameObject*>::iterator thing;
 
 			int itemWidth = 100;

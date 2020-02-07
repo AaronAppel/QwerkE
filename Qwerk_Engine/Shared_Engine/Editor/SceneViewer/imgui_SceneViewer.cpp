@@ -4,8 +4,7 @@
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/Input/Input.h"
 #include "../QwerkE_Framework/Systems/Renderer/Renderer.h"
-#include "../QwerkE_Framework/Systems/SceneManager.h"
-#include "../QwerkE_Framework/Modules/Time.h"
+#include "../QwerkE_Framework/Systems/Scenes.h"
 #include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
 #include "../QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
@@ -16,8 +15,7 @@ namespace QwerkE {
 
     imgui_SceneViewer::imgui_SceneViewer()
     {
-        m_SceneManager = (SceneManager*)QwerkE::Services::GetService(eEngineServices::Scene_Manager);
-        m_Scenes = m_SceneManager->LookAtScenes();
+        m_Scenes = Scenes::LookAtScenes();
         m_Input = (Input*)QwerkE::Services::GetService(eEngineServices::Input_Manager);
         m_FBO = new FrameBufferObject();
         m_FBO->Init();
@@ -34,7 +32,6 @@ namespace QwerkE {
 
     void imgui_SceneViewer::Update()
     {
-
     }
 
     void imgui_SceneViewer::Draw()
@@ -50,24 +47,24 @@ namespace QwerkE {
         {
             // save/load + state
             static int selection = 0;
-            selection = (char)m_SceneManager->GetCurrentScene()->GetState();
+            selection = (char)Scenes::GetCurrentScene()->GetState();
             const char* states[] = { "Running", "Frozen", "Paused", "SlowMo", "Animating" };
             ImGui::PushItemWidth(150);
             if (ImGui::Combo("Scene State", &selection, states, 5))
             {
-                m_SceneManager->GetCurrentScene()->SetState((eSceneState)selection);
+                Scenes::GetCurrentScene()->SetState((eSceneState)selection);
             }
             ImGui::SameLine();
             ImGui::PopItemWidth();
             ImGui::SameLine();
-            if (ImGui::Button("Save")) m_SceneManager->GetCurrentScene()->SaveScene();
+            if (ImGui::Button("Save")) Scenes::GetCurrentScene()->SaveScene();
             ImGui::SameLine();
-            if (ImGui::Button("Reload")) m_SceneManager->GetCurrentScene()->ReloadScene();
+            if (ImGui::Button("Reload")) Scenes::GetCurrentScene()->ReloadScene();
 
             // render scene to fbo
             m_FBO->Bind();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            m_SceneManager->Draw();
+            Scenes::Draw();
             m_FBO->UnBind();
 
             ImVec2 winSize = ImGui::GetWindowSize();
@@ -102,14 +99,14 @@ namespace QwerkE {
         ImVec2 imageSize = ImVec2(100.0f, 100.0f);
         int m_ItemsPerRow = winSize.x / (imageSize.x * 1.5f) + 1; // (* up the image size for feel), + avoid dividing by 0
 
-        for (const auto& p : *m_SceneManager->LookAtScenes()) // save pointer?
+        for (const auto& p : *Scenes::LookAtScenes()) // save pointer?
         {
             if (counter % m_ItemsPerRow)
                 ImGui::SameLine();
 
             if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || m_Input->FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
             {
-                m_SceneManager->SetCurrentScene(p.second->GetSceneID());
+                Scenes::SetCurrentScene(p.second->GetSceneID());
             }
             counter++;
         }

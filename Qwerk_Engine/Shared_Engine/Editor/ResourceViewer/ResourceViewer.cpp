@@ -14,7 +14,7 @@
 #include "../QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/Scenes/ViewerScene.h"
 #include "../QwerkE_Framework/Systems/Services.h"
-#include "../QwerkE_Framework/Systems/SceneManager.h"
+#include "../QwerkE_Framework/Systems/Scenes.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/Audio/AudioManager.h"
@@ -41,7 +41,7 @@ namespace QwerkE {
         // m_Subject = ((Factory*)QwerkE::Services::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(0, -3.5, 15));
         // m_Subject->SetRotation(vec3(0,180,0));
 
-        m_TagPlane = ((Factory*)QwerkE::Services::GetService(eEngineServices::Factory_Entity))->CreatePlane(m_ViewerScene, vec3(2, -2, 10));
+        m_TagPlane = Factory::CreatePlane(m_ViewerScene, vec3(2, -2, 10));
         m_TagPlane->SetRotation(vec3(90, 0, 0));
         m_TagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));
 
@@ -52,7 +52,7 @@ namespace QwerkE {
         m_ViewerScene->SetIsEnabled(true);
         ((CameraComponent*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
 
-        ((SceneManager*)QwerkE::Services::GetService(eEngineServices::Scene_Manager))->AddScene(m_ViewerScene);
+        Scenes::AddScene(m_ViewerScene);
 
         DrawModelThumbnails();
     }

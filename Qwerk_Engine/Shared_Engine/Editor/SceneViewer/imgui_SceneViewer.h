@@ -5,12 +5,11 @@
 
 #include <map>
 
-class SceneManager;
-class Input;
-class FrameBufferObject;
-class Scene;
-
 namespace QwerkE {
+
+    class Input;
+    class FrameBufferObject;
+    class Scene;
 
     class imgui_SceneViewer
     {
@@ -26,7 +25,6 @@ namespace QwerkE {
         void DrawSceneView();
         void DrawSceneList();
         Input* m_Input = nullptr;
-        SceneManager* m_SceneManager = nullptr;
         FrameBufferObject* m_FBO = nullptr;
         const std::map<eSceneTypes, Scene*>* m_Scenes = nullptr;
     };
