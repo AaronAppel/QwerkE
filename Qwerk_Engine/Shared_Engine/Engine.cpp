@@ -32,7 +32,7 @@
 #include "../QwerkE_Framework/Systems/Debugger/Debugger.h"
 #include "../QwerkE_Framework/Systems/ShaderFactory/ShaderFactory.h"
 #include "../QwerkE_Framework/Systems/JobManager/JobManager.h"
-#include "../QwerkE_Framework/Systems/Networking/NetworkManager.h"
+#include "../QwerkE_Framework/Systems/Network/Network.h"
 #include "../QwerkE_Framework/Systems/Window/Window.h"
 #include "../QwerkE_Framework/Systems/Window/WindowManager.h"
 #include "../QwerkE_Framework/Systems/Window/glfw_Window.h"
