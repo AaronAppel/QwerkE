@@ -20,7 +20,6 @@
 
 #include "../QwerkE_Framework/Systems/Input/Input.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
-#include "../QwerkE_Framework/Systems/Services.h"
 #include "../QwerkE_Framework/Systems/Events/EventManager.h"
 #include "../QwerkE_Framework/Systems/Scenes.h"
 #include "../QwerkE_Framework/Systems/Factory/Factory.h"
@@ -34,16 +33,15 @@
 #include "../QwerkE_Framework/Systems/Jobs/Jobs.h"
 #include "../QwerkE_Framework/Systems/Network/Network.h"
 #include "../QwerkE_Framework/Systems/Window/Window.h"
-#include "../QwerkE_Framework/Systems/Window/WindowManager.h"
+#include "../QwerkE_Framework/Systems/Window/Windows.h"
 #include "../QwerkE_Framework/Systems/Window/glfw_Window.h"
 
 #include "../QwerkE_Framework/Modules/Time.h"
 
 namespace QwerkE {
 
-    // private engine variables
-    static WindowManager* m_WindowManager = nullptr;
-    static Scenes* m_Scenes = nullptr;
+	// TODO: No more static
+    // Private engine variables
     static bool m_IsRunning = false;
     static Editor* m_Editor = nullptr;
 
@@ -105,11 +103,7 @@ namespace QwerkE {
 				return;
 			}
 
-			Services::LockServices(true); // prevent service changes
-
 			Scenes::GetCurrentScene()->SetIsEnabled(true); // enable default scene
-
-			m_WindowManager = (WindowManager*)Services::GetService(eEngineServices::WindowManager);
 
 			m_IsRunning = true;
 
@@ -198,9 +192,6 @@ namespace QwerkE {
 				}
 			}
 
-			// unlock services for clean up
-			Services::LockServices(false);
-
 			Framework::TearDown();
 		}
 
@@ -223,7 +214,7 @@ namespace QwerkE {
 
 		void Engine::Update(double deltatime)
 		{
-			m_Scenes->Update(deltatime);
+			Scenes::Update(deltatime);
 			m_Editor->Update();
 
 			// Framework::Update();
@@ -234,11 +225,11 @@ namespace QwerkE {
 				paused = !paused;
 				if (paused)
 				{
-					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Paused);
+					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Paused);
 				}
 				else
 				{
-					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
+					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
 			if (Input::FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
@@ -247,11 +238,11 @@ namespace QwerkE {
 				frozen = !frozen;
 				if (frozen)
 				{
-					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Frozen);
+					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Frozen);
 				}
 				else
 				{
-					m_Scenes->GetCurrentScene()->SetState(eSceneState::SceneState_Running);
+					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
 			if (Input::FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
@@ -260,8 +251,7 @@ namespace QwerkE {
 			}
 			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
-				WindowManager* windowManager = (WindowManager*)Services::GetService(eEngineServices::WindowManager);
-				m_WindowManager->GetWindow(0)->SetClosing(true); // close glfw
+				Windows::GetWindow(0)->SetClosing(true);
 				Framework::Stop();
 				Engine::Stop();
 			}
@@ -269,7 +259,7 @@ namespace QwerkE {
 
 		void Engine::Draw()
 		{
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // new frame
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // New frame
 
 			DockingSetup();
 
@@ -287,7 +277,7 @@ namespace QwerkE {
                 glfwMakeContextCurrent(backup_current_context);
             }
 
-			m_WindowManager->GetWindow(0)->SwapBuffers();
+			Windows::GetWindow(0)->SwapBuffers();
 		}
 
 		bool Engine::StillRunning()

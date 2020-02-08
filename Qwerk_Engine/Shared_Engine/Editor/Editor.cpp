@@ -1,6 +1,4 @@
 #include "Editor.h"
-#include "../QwerkE_Framework/Systems/Services.h"
-#include "../QwerkE_Framework/Systems/Input/Input.h"
 #include "EntityEditor/EntityEditor.h"
 
 namespace QwerkE {
