@@ -17,7 +17,7 @@
 #include "../QwerkE_Framework/Systems/Scenes.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Services.h"
-#include "../QwerkE_Framework/Systems/Audio/AudioManager.h"
+#include "../QwerkE_Framework/Systems/Audio/Audio.h"
 #include "../QwerkE_Framework/Systems/Factory/Factory.h"
 #include "MaterialEditor.h"
 
@@ -202,7 +202,7 @@ namespace QwerkE {
 
                     if (ImGui::Button(p.first.c_str()))
                     {
-                        ((AudioManager*)QwerkE::Services::GetService(eEngineServices::Audio_Manager))->PlaySound(p.first.c_str());
+                        Audio::PlaySound(p.first.c_str());
                     }
                     if (ImGui::IsItemHovered())
                     {
