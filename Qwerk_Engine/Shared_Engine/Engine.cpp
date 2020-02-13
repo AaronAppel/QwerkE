@@ -35,6 +35,7 @@
 #include "../QwerkE_Framework/Systems/Window/Window.h"
 #include "../QwerkE_Framework/Systems/Window/Windows.h"
 #include "../QwerkE_Framework/Systems/Window/glfw_Window.h"
+#include "../QwerkE_Framework/Systems/Profiler/Profiler.h"
 
 #include "../QwerkE_Framework/Modules/Time.h"
 
@@ -78,7 +79,10 @@ namespace QwerkE {
         void DockingSetup();
 
 		void Engine::Run(std::map<const char*, const char*> &args)
-		{
+        {
+            Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
+			PROFILE_SCOPE("Run");
+
 			// Handle program arguments
 			if (args.find(key_ProjectName) != args.end())
 			{
@@ -192,6 +196,7 @@ namespace QwerkE {
 				}
 			}
 
+            Instrumentor::Get().EndSession();
 			Framework::TearDown();
 		}
 
@@ -208,12 +213,14 @@ namespace QwerkE {
 		}
 
 		void Engine::PollInput()
-		{
+        {
+            PROFILE_SCOPE("Input");
 			Framework::PollInput();
 		}
 
 		void Engine::Update(double deltatime)
-		{
+        {
+            PROFILE_SCOPE("Update");
 			Scenes::Update(deltatime);
 			m_Editor->Update();
 
@@ -258,7 +265,8 @@ namespace QwerkE {
 		}
 
 		void Engine::Draw()
-		{
+        {
+            PROFILE_SCOPE("Render");
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // New frame
 
 			DockingSetup();

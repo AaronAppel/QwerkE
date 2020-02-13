@@ -10,10 +10,6 @@
 #include "Engine_Defines.h"
 #include "Engine_Enums.h" // eEngineMessage
 
-class Editor;
-class Scenes;
-class Window;
-
 // If only 1 engine should exist at a time then it could be wrapped in
 // the QwerkE namespace and have static functions like a singleton or
 // service. Or just find another way to prevent multiple instances
@@ -22,6 +18,10 @@ class Window;
 // What engine functionality should be user accessible?
 
 namespace QwerkE {
+
+    class Editor;
+    class Scenes;
+    class Window;
 
 	namespace Engine
 	{
