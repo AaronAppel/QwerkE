@@ -82,7 +82,7 @@ namespace QwerkE {
                     // TODO: It is possible to add a map to a material without one.
                     // Handle that properly.
                     material->SetTexture(p.second, m_CurrentMap);
-                    LOG_INFO("Set %s(%i) mat to map index %i\n", p.second->s_Name.c_str(), (unsigned int)p.second->s_Handle, (int)m_CurrentMap);
+                    LOG_INFO("Set {0}({1}) mat to map index {2}", p.second->s_Name.c_str(), (unsigned int)p.second->s_Handle, (int)m_CurrentMap);
                 }
                 counter++;
             }

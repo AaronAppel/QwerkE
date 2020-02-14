@@ -6,7 +6,7 @@
 
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/ProgramArgs.h"
 
-int main(int argc, char **argv)
+int main(unsigned int argc, char **argv)
 {
 	// TODO: Move argument handling code into engine
 	// Greeting

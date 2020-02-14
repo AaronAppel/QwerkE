@@ -7,11 +7,11 @@
 
 namespace QwerkE {
 
+    struct Texture;
     class GameObject;
     class Resources;
     class ShaderProgram;
     class Material;
-    class Texture;
     class RenderComponent;
     class Mesh;
 
@@ -34,7 +34,7 @@ namespace QwerkE {
         std::vector<const char*> m_MatStrings;
         std::vector<const char*> m_MeshStrings;
 
-        int m_RenderableIndex = 0; // Current renderable selected
+        unsigned int m_RenderableIndex = 0; // Current renderable selected
 
         bool m_ShowShaderList = true;
         int m_Shaderindex = 0; // deprecated

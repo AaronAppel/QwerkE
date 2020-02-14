@@ -79,7 +79,7 @@ namespace QwerkE {
                 ImGui::EndMenu();
             }
 
-            if (ImGui::Checkbox("GUI", &m_ShowingGUI));
+            if (ImGui::Checkbox("GUI", &m_ShowingGUI)) {}
 
             // FPS display
             static bool showFPS = true;

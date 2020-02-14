@@ -122,7 +122,7 @@ namespace QwerkE {
 				}
 				break;
 			case 1: // Cameras
-				for (int i = 0; i < cameras.size(); i++)
+				for (unsigned int i = 0; i < cameras.size(); i++)
 				{
 					if (counter % itemsPerRow)
 						ImGui::SameLine();
@@ -135,7 +135,7 @@ namespace QwerkE {
 				}
 				break;
 			case 2: // Lights
-				for (int i = 0; i < lights.size(); i++)
+				for (unsigned int i = 0; i < lights.size(); i++)
 				{
 					if (counter % itemsPerRow)
 						ImGui::SameLine();

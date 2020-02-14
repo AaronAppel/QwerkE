@@ -12,12 +12,12 @@ namespace QwerkE {
 
     typedef unsigned int ALuint;
 
+    struct Texture;
     class ShaderProgram;
     class Scene;
     class GameObject;
     class FrameBufferObject;
     class Mesh;
-    class Texture;
     class Material;
     class MaterialEditor;
 

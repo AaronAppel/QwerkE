@@ -104,7 +104,7 @@ namespace QwerkE {
                 ImGui::Separator();
 
                 ImGui::Columns(4, "mycolumns3", true);  // 3-ways, no border
-                for (int i = 0; i < renderables->size(); i++)
+                for (unsigned int i = 0; i < renderables->size(); i++)
                 {
                     if (i > 0)
                         ImGui::NextColumn();
@@ -153,7 +153,7 @@ namespace QwerkE {
                 if (ImGui::IsItemHovered())
                 {
                     ImGui::BeginTooltip();
-                    for (int i = 0; i < attributes->size(); i++)
+                    for (unsigned int i = 0; i < attributes->size(); i++)
                     {
                         ImGui::Text(attributes->at(i).c_str());
                     }
@@ -165,7 +165,7 @@ namespace QwerkE {
                 if (ImGui::IsItemHovered())
                 {
                     ImGui::BeginTooltip();
-                    for (int i = 0; i < uniforms->size(); i++)
+                    for (unsigned int i = 0; i < uniforms->size(); i++)
                     {
                         ImGui::Text(uniforms->at(i).c_str());
                     }

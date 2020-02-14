@@ -172,7 +172,7 @@ namespace QwerkE {
                 // for (m_Fonts)
                 break;
             case 4:
-                for (int i = 0; i < m_ModelImageHandles.size(); i++)
+                for (unsigned int i = 0; i < m_ModelImageHandles.size(); i++)
                 {
                     if (counter % m_ItemsPerRow)
                         ImGui::SameLine();

@@ -192,7 +192,7 @@ namespace QwerkE {
 				// else
 				{
 					// Skip frame
-					YieldProcessor;
+					YieldProcessor();
 				}
 			}
 
