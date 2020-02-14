@@ -1,5 +1,5 @@
 #include "SceneGraph.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
+#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/Entities/GameObject.h"
 #include "../Editor.h"

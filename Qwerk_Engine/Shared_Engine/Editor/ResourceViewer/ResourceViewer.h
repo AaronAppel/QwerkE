@@ -1,8 +1,8 @@
 #ifndef _ResourceViewer_H_
 #define _ResourceViewer_H_
 
-#include "../QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Common/Libraries/glew/GL/glew.h"
+#include "../Libraries/imgui/imgui.h"
+#include "../Libraries/glew/GL/glew.h"
 
 #include <string>
 #include <map>

@@ -5,11 +5,11 @@
 
 #include "../QwerkE_Framework/Framework.h"
 
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/glew/GL/glew.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/glfw/GLFW/glfw3.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui_impl_glfw.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui_impl_opengl3.h"
+#include "../QwerkE_Framework/Libraries/glew/GL/glew.h"
+#include "../QwerkE_Framework/Libraries/glfw/GLFW/glfw3.h"
+#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+#include "../QwerkE_Framework/Libraries/imgui/imgui_impl_glfw.h"
+#include "../QwerkE_Framework/Libraries/imgui/imgui_impl_opengl3.h"
 
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/Helpers.h"
 #include "../QwerkE_Framework/QwerkE_Common/Utilities/ProgramArgs.h"

@@ -53,7 +53,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ForcedIncludeFiles>../../QwerkE_Framework/Headers/QwerkE_Include.h;pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../QwerkE_Framework/QwerkE_Common/Libraries/freetype2/;$(SolutionDir)../../QwerkE_Framework/QwerkE_Common/Libraries/Bullet3/;$(SolutionDir)../../QwerkE_Framework/QwerkE_Common/Libraries/OpenAL/;$(SolutionDir)../../QwerkE_Framework/QwerkE_Common/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../QwerkE_Framework/Libraries/freetype2/;$(SolutionDir)../../QwerkE_Framework/Libraries/Bullet3/;$(SolutionDir)../../QwerkE_Framework/Libraries/OpenAL/;$(SolutionDir)../../QwerkE_Framework/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>Win32Bit;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>

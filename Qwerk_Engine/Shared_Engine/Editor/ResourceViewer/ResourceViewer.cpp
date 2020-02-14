@@ -1,6 +1,6 @@
 #include "ResourceViewer.h"
 // TODO: Why can't I include imgui.h? include order? It is #included in .h
-//#include "../../QwerkE_Framework/QwerkE_Common/Libraries/imgui/imgui.h"
+//#include "../../QwerkE_Framework/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
 #include "../QwerkE_Framework/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/Graphics/Material.h"
@@ -10,7 +10,7 @@
 #include "../QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/Entities/Components/Camera/CameraComponent.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/glew/GL/glew.h"
+#include "../QwerkE_Framework/Libraries/glew/GL/glew.h"
 #include "../QwerkE_Framework/Scenes/Scene.h"
 #include "../QwerkE_Framework/Scenes/ViewerScene.h"
 #include "../QwerkE_Framework/Systems/Scenes.h"

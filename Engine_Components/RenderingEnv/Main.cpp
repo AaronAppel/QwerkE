@@ -12,7 +12,7 @@ int main(unsigned int argc, char **argv)
 	// Greeting
 	// std::cout << "-- Qwerk Engine 0.1 --\n" << argc;
 
-	int counter;
+	unsigned int counter;
 	printf("Program Name Is: %s", argv[0]);
 	if (argc == 1)
 		printf("\nNo Extra Command Line Argument Passed Other Than Program Name\n");

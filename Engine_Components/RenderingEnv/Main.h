@@ -4,7 +4,7 @@
 #define Win32Bit
 #define FrameworkDir "../../QwerkE_Framework/"
 #define AssetsDir "Assets/"
-// #define LibrariesDir "../../QwerkE_Framework/QwerkE_Common/Libraries/"
+// #define LibrariesDir "../../QwerkE_Framework/Libraries/"
 
 #if 1 // Use the Engine?
 #include "../Qwerk_Engine/Shared_Engine/Engine.h"
