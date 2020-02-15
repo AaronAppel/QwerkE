@@ -6,8 +6,8 @@
 #include "../EntityEditor/EntityEditor.h"
 #include "../imgui_Editor.h"
 #include "../QwerkE_Framework/Systems/Factory/Factory.h"
-#include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
-#include "../QwerkE_Framework/QwerkE_Common/Utilities/GUID.h"
+#include "../../Systems/Misc/StringHelpers.h"
+#include "../../Systems/Misc/GUID.h"
 
 #include <map>
 #include <string>

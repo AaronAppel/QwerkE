@@ -1,7 +1,12 @@
 #ifndef _Main_H_
 #define _Main_H_
 
+#if _WIN32
 #define Win32Bit
+#else
+#define Win64Bit
+#endif
+
 #define FrameworkDir "../../QwerkE_Framework/"
 #define AssetsDir "Assets/"
 // #define LibrariesDir "../../QwerkE_Framework/Libraries/"

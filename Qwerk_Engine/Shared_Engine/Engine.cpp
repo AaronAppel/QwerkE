@@ -11,8 +11,8 @@
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_glfw.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_opengl3.h"
 
-#include "../QwerkE_Framework/QwerkE_Common/Utilities/Helpers.h"
-#include "../QwerkE_Framework/QwerkE_Common/Utilities/ProgramArgs.h"
+#include "../QwerkE_Framework/Systems/Misc/Helpers.h"
+#include "../QwerkE_Framework/Systems/Misc/ProgramArgs.h"
 
 #include "../QwerkE_Framework/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
@@ -37,7 +37,7 @@
 #include "../QwerkE_Framework/Systems/Window/glfw_Window.h"
 #include "../QwerkE_Framework/Systems/Profiler/Profiler.h"
 
-#include "../QwerkE_Framework/Modules/Time.h"
+#include "../QwerkE_Framework/Modules/Time/Time.h"
 
 namespace QwerkE {
 
@@ -102,8 +102,8 @@ namespace QwerkE {
 			flags &= ~Flag_Audio;
 
 			if (Framework::Startup(ConfigsFolderPath("preferences.qpref"), flags) == eEngineMessage::_QFailure)
-			{
-				ConsolePrint("\nQwerk Framework failed to load! Shutting down engine.\n");
+            {
+                Log::Safe("Qwerk Framework failed to load. Shutting down engine.");
 				return;
 			}
 

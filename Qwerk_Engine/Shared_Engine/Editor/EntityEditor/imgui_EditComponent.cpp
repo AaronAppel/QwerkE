@@ -1,6 +1,6 @@
 #include "imgui_EditComponent.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
-#include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
+#include "../../Systems/Misc/StringHelpers.h"
 #include "../QwerkE_Framework/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/Entities/Components/RenderComponent.h"

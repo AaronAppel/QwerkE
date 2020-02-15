@@ -1,12 +1,12 @@
 #include "imgui_SceneViewer.h"
-#include "../QwerkE_Framework/QwerkE_Common/Utilities/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Systems/Input/Input.h"
 #include "../QwerkE_Framework/Systems/Renderer/Renderer.h"
 #include "../QwerkE_Framework/Systems/Scenes.h"
 #include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
 #include "../QwerkE_Framework/Scenes/Scene.h"
-#include "../QwerkE_Framework/QwerkE_Common/Utilities/StringHelpers.h"
+#include "../../Systems/Misc/StringHelpers.h"
+#include "../../Systems/FileSystem/FileIO/FileUtilities.h"
 
 extern int g_WindowWidth, g_WindowHeight; // TODO: Fix
 

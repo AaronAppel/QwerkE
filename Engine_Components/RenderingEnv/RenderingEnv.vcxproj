@@ -34,7 +34,6 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-    <Import Project="..\..\QwerkE_Framework\QwerkE_Common\QwerkE_Common.vcxitems" Label="Shared" />
     <Import Project="..\..\QwerkE_Framework\QwerkE_Framework.vcxitems" Label="Shared" />
     <Import Project="..\..\Qwerk_Engine\Shared_Engine\Shared_Engine.vcxitems" Label="Shared" />
   </ImportGroup>
