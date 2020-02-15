@@ -86,7 +86,7 @@ namespace QwerkE {
             if (ImGui::Button("FPS"))
                 showFPS = !showFPS;
             ImGui::SameLine();
-            if (showFPS) ImGui::Text("%4.2f", Time::GetFrameRate());
+            if (showFPS) ImGui::Text("%4.2f", 1.0 / Time::Delta());
 
             ImGui::EndMainMenuBar();
         }

@@ -46,6 +46,7 @@ namespace QwerkE {
     static bool m_IsRunning = false;
     static Editor* m_Editor = nullptr;
 
+	// TODO: Deprecate. Maybe turn into a generic timer object
     struct FrameTimer
     {
         double timeSinceLastFrame = 0.0;
@@ -112,11 +113,8 @@ namespace QwerkE {
 			m_IsRunning = true;
 
 			// Delta time
-			FrameTimer fps(120, 3.0f);
-			fps.lastFrame = helpers_Time(); // Time of last frame initialized to current time
-
-			Time::SetDeltatime(&fps.timeSinceLastFrame);
-			Time::SetFrameRate(&fps.frameRate);
+			//FrameTimer fps(120, 3.0f);
+			//fps.lastFrame = Time::Now(); // Time of last frame initialized to current time
 
 			// TODO: GL state init should be in a Window() or OpenGLManager()
 			// class or some type of ::Graphics() system.
@@ -148,30 +146,37 @@ namespace QwerkE {
 			m_Editor = (Editor*)new ????_Editor();
 #endif // editor
 
+			// TODO: Move this to a window class
+			const unsigned char FPS_MAX = 120;
+			const float FPS_MAX_DELTA = 1.0f / FPS_MAX;
+
 			// Application Loop
 			while (m_IsRunning) // Run until close requested
 			{
 				// setup frame
 				// Calculate deltatime of current frame
-				double currentFrame = helpers_Time();
-				fps.deltaTime = currentFrame - fps.lastFrame; // time since last frame
-				fps.lastFrame = currentFrame; // save last frame
+				//double currentFrame = Time::Now();
+				//fps.deltaTime = Time::Delta();
+				//fps.lastFrame = currentFrame; // save last frame
 
-				// FPS display + tracking
-				if (fps.timeSincePrint >= fps.printPeriod) // print period
-				{
-					fps.frameRate = 1.0f / fps.timeSincePrint * fps.framesSincePrint;
-					// OutputPrint("\nFPS: %f", frameRate); // FPS printout
-					// OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
-					fps.timeSincePrint = 0.0f;
-					fps.framesSincePrint = 0;
-				}
+				//// FPS display + tracking
+				//if (fps.timeSincePrint >= fps.printPeriod) // print period
+				//{
+				//	fps.frameRate = 1.0f / fps.timeSincePrint * fps.framesSincePrint;
+				//	// OutputPrint("\nFPS: %f", frameRate); // FPS printout
+				//	// OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
+				//	fps.timeSincePrint = 0.0f;
+				//	fps.framesSincePrint = 0;
+				//}
 
-				fps.timeSincePrint += (float)fps.deltaTime;
-				fps.timeSinceLastFrame += fps.deltaTime;
+				//fps.timeSincePrint += (float)Time::Delta();
+				//fps.timeSinceLastFrame += Time::Delta();
 
-				/* Application Loop */
-				if (fps.timeSinceLastFrame >= fps.FPS_MAX_DELTA) // Run frame?
+                /* Application Loop */
+                Time::NewFrame();
+
+				double deltaTime = Time::Delta();
+				if (deltaTime >= FPS_MAX_DELTA) // Run frame?
 				{
 					/* New Frame */
 					Engine::NewFrame();
@@ -180,14 +185,14 @@ namespace QwerkE {
 					Engine::PollInput();
 
 					/* Logic */
-					Engine::Update(fps.timeSinceLastFrame);
+					Engine::Update(deltaTime);
 
 					/* Render */
 					Engine::Draw();
 
 					// FPS
-					fps.framesSincePrint++; // Framerate tracking
-					fps.timeSinceLastFrame = 0.0; // FPS_Max
+					//fps.framesSincePrint++; // Framerate tracking
+					//fps.timeSinceLastFrame = 0.0; // FPS_Max
 				}
 				// else
 				{
