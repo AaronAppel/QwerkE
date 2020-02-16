@@ -3,7 +3,7 @@
 
 #define Qwerk_Engine
 
-#include "../QwerkE_Framework/Systems/Misc/StringHelpers.h"
+#include "../QwerkE_Framework/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/Headers/QwerkE_Directory_Defines.h"
 
 /* Define program arguments */

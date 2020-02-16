@@ -11,18 +11,17 @@
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_glfw.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_opengl3.h"
 
-#include "../QwerkE_Framework/Systems/Misc/Helpers.h"
-#include "../QwerkE_Framework/Systems/Misc/ProgramArgs.h"
+#include "../QwerkE_Framework/Utilities/Helpers.h"
+#include "../QwerkE_Framework/Utilities/ProgramArgs.h"
 
 #include "../QwerkE_Framework/Graphics/Graphics_Header.h"
-#include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Graphics/Mesh/MeshFactory.h"
 
 #include "../QwerkE_Framework/Systems/Input/Input.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
 #include "../QwerkE_Framework/Systems/Events/EventManager.h"
-#include "../QwerkE_Framework/Systems/Scenes.h"
-#include "../QwerkE_Framework/Systems/Factory/Factory.h"
+#include "../QwerkE_Framework/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Systems/Window/CallbackFunctions.h"
 #include "../QwerkE_Framework/Systems/Physics/Physics.h"
 #include "../QwerkE_Framework/Systems/Renderer/Renderer.h"
@@ -41,43 +40,11 @@
 
 namespace QwerkE {
 
-	// TODO: No more static
-    // Private engine variables
-    static bool m_IsRunning = false;
-    static Editor* m_Editor = nullptr;
-
-	// TODO: Deprecate. Maybe turn into a generic timer object
-    struct FrameTimer
-    {
-        double timeSinceLastFrame = 0.0;
-        float frameRate = 0.0f;
-        double deltaTime = 0.0f; // Time between current frame and last frame
-        double lastFrame = 0.0f; // Time of last frame initialized to current time
-
-        // Limit framerate
-        int FPS_MAX = 120; // maximum number of frames that can be run be second
-        float FPS_MAX_DELTA = 1.0f / FPS_MAX;
-
-        // timeSinceLastFrame = FPS_MAX; // Amount of seconds since the last frame ran initialized to run 1st time
-        // Printing framerate
-        float printPeriod = 3.0f; // Print period in seconds
-        float timeSincePrint = 0.0f; // Seconds since last print initialized to print 1st frame
-        short framesSincePrint = 0;
-
-        FrameTimer() {}
-        FrameTimer(int maxFPS, float printPeriod)
-        {
-            FPS_MAX = maxFPS;
-            timeSincePrint = printPeriod;
-            FPS_MAX_DELTA = 1.0f / FPS_MAX;
-            timeSinceLastFrame = FPS_MAX;
-        }
-        ~FrameTimer() {}
-    };
-
 	namespace Engine
     {
-        void DockingSetup();
+        // Private engine variables
+        static bool m_IsRunning = false;
+        static Editor* m_Editor = nullptr;
 
 		void Engine::Run(std::map<const char*, const char*> &args)
         {
@@ -150,33 +117,13 @@ namespace QwerkE {
 			const unsigned char FPS_MAX = 120;
 			const float FPS_MAX_DELTA = 1.0f / FPS_MAX;
 
-			// Application Loop
-			while (m_IsRunning) // Run until close requested
+            /* Application Loop */
+			while (m_IsRunning)
 			{
-				// setup frame
-				// Calculate deltatime of current frame
-				//double currentFrame = Time::Now();
-				//fps.deltaTime = Time::Delta();
-				//fps.lastFrame = currentFrame; // save last frame
-
-				//// FPS display + tracking
-				//if (fps.timeSincePrint >= fps.printPeriod) // print period
-				//{
-				//	fps.frameRate = 1.0f / fps.timeSincePrint * fps.framesSincePrint;
-				//	// OutputPrint("\nFPS: %f", frameRate); // FPS printout
-				//	// OutputPrint("\nFrames: %i", framesSincePrint); // Frames printout
-				//	fps.timeSincePrint = 0.0f;
-				//	fps.framesSincePrint = 0;
-				//}
-
-				//fps.timeSincePrint += (float)Time::Delta();
-				//fps.timeSinceLastFrame += Time::Delta();
-
-                /* Application Loop */
                 Time::NewFrame();
 
 				double deltaTime = Time::Delta();
-				if (deltaTime >= FPS_MAX_DELTA) // Run frame?
+				if (deltaTime >= FPS_MAX_DELTA)
 				{
 					/* New Frame */
 					Engine::NewFrame();
@@ -189,15 +136,10 @@ namespace QwerkE {
 
 					/* Render */
 					Engine::Draw();
-
-					// FPS
-					//fps.framesSincePrint++; // Framerate tracking
-					//fps.timeSinceLastFrame = 0.0; // FPS_Max
 				}
-				// else
+				else
 				{
-					// Skip frame
-					YieldProcessor();
+					YieldProcessor(); // TODO: Look into proper yield behaviour
 				}
 			}
 
@@ -210,7 +152,7 @@ namespace QwerkE {
 			m_IsRunning = false;
 		}
 
-		void Engine::NewFrame() /* Reset */
+		void Engine::NewFrame()
 		{
 			Framework::NewFrame();
             m_Editor->NewFrame();
@@ -231,6 +173,7 @@ namespace QwerkE {
 
 			// Framework::Update();
 
+			// TODO: Move this behaviour into Scenes for scene specific behaviour managed by the scene manager
 			if (Input::FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
 			{
 				static bool paused = false;
@@ -271,10 +214,9 @@ namespace QwerkE {
 
 		void Engine::Draw()
         {
+			// TODO: Move library calls into an abstracted class like Window, etc
             PROFILE_SCOPE("Render");
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // New frame
-
-			DockingSetup();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             m_Editor->Draw();
 
@@ -296,70 +238,6 @@ namespace QwerkE {
 		bool Engine::StillRunning()
 		{
 			return m_IsRunning;
-		}
-
-		void DockingSetup()
-		{
-			// TODO: Move this code to a better place
-            static bool opt_fullscreen_persistant = true;
-            bool opt_fullscreen = opt_fullscreen_persistant;
-
-            static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
-            static ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-
-            if (opt_fullscreen) // fullscreen
-            {
-                ImGuiViewport* viewport = ImGui::GetMainViewport();
-                ImGui::SetNextWindowPos(viewport->Pos);
-                ImGui::SetNextWindowSize(viewport->Size);
-                ImGui::SetNextWindowViewport(viewport->ID);
-                ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-                ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-                window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-                window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-            }
-
-            static bool open = true;
-
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("DockSpace Demo", &open, window_flags);
-            ImGui::PopStyleVar();
-
-            if (opt_fullscreen)
-                ImGui::PopStyleVar(2);
-
-            ImGuiIO& io = ImGui::GetIO();
-            if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
-            {
-                ImGuiID dockspace_id = ImGui::GetID("QwerkEDockSpace");
-                ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-            }
-
-            static bool dockspaceOpen = true;
-
-            if (ImGui::BeginMenuBar())
-            {
-                if (ImGui::BeginMenu("Docking"))
-                {
-                    // Disabling fullscreen would allow the window to be moved to the front of other windows,
-                    // which we can't undo at the moment without finer window depth/z control.
-                    //ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
-
-                    if (ImGui::MenuItem("Flag: NoSplit", "", (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0))                 dockspace_flags ^= ImGuiDockNodeFlags_NoSplit;
-                    if (ImGui::MenuItem("Flag: NoResize", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0))                dockspace_flags ^= ImGuiDockNodeFlags_NoResize;
-                    if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))  dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode;
-                    if (ImGui::MenuItem("Flag: PassthruCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0))     dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode;
-                    if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0))          dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar;
-                    ImGui::Separator();
-                    if (ImGui::MenuItem("Close DockSpace", NULL, false, dockspaceOpen != NULL))
-                        dockspaceOpen = false;
-                    ImGui::EndMenu();
-                }
-
-                ImGui::EndMenuBar();
-            }
-
-            ImGui::End();
 		}
 	}
 }

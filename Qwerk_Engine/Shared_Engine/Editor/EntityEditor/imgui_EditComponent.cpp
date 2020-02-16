@@ -1,14 +1,14 @@
 #include "imgui_EditComponent.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
-#include "../../Systems/Misc/StringHelpers.h"
+#include "../../Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/Entities/GameObject.h"
 #include "../QwerkE_Framework/Entities/Components/RenderComponent.h"
-#include "../QwerkE_Framework/Graphics/Texture.h"
-#include "../QwerkE_Framework/Graphics/Renderable.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/Texture.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/Renderable.h"
 #include "../QwerkE_Framework/Graphics/Shader/ShaderProgram.h"
 #include "../QwerkE_Framework/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Graphics/Material.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/Material.h"
 
 #include <vector>
 #include <string>

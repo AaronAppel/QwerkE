@@ -6,7 +6,7 @@
 #include "../QwerkE_Framework/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Graphics/Renderable.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/Renderable.h"
 #include "imgui_EditComponent.h"
 #include "../Editor.h"
 

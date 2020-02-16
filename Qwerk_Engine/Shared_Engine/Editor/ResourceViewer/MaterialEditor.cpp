@@ -1,6 +1,6 @@
 #include "MaterialEditor.h"
-#include "../QwerkE_Framework/Graphics/Material.h"
-#include "../QwerkE_Framework/Graphics/Texture.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/Texture.h"
 #include "../QwerkE_Framework/Headers/QwerkE_Enums.h"
 #include "../QwerkE_Framework/Systems/Resources/Resources.h"
 

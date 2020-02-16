@@ -2,10 +2,10 @@
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Systems/Input/Input.h"
 #include "../QwerkE_Framework/Systems/Renderer/Renderer.h"
-#include "../QwerkE_Framework/Systems/Scenes.h"
-#include "../QwerkE_Framework/Graphics/FrameBufferObject.h"
+#include "../QwerkE_Framework/Scenes/Scenes.h"
+#include "../QwerkE_Framework/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Scenes/Scene.h"
-#include "../../Systems/Misc/StringHelpers.h"
+#include "../../Utilities/StringHelpers.h"
 #include "../../Systems/FileSystem/FileIO/FileUtilities.h"
 
 extern int g_WindowWidth, g_WindowHeight; // TODO: Fix
