@@ -114,17 +114,23 @@ namespace QwerkE {
 #endif // editor
 
 			// TODO: Move this to a window class
-			const unsigned char FPS_MAX = 120;
-			const float FPS_MAX_DELTA = 1.0f / FPS_MAX;
+			const unsigned char FPS_MAX = 144;
+			const double FPS_MAX_DELTA = 1.0 / FPS_MAX;
 
             /* Application Loop */
+			double deltaTime = 0.0;
+			double elapsedTime = 0.0;
+
 			while (m_IsRunning)
 			{
                 Time::NewFrame();
 
-				double deltaTime = Time::Delta();
-				if (deltaTime >= FPS_MAX_DELTA)
+				deltaTime = Time::Delta();
+				elapsedTime += deltaTime;
+				// if (elapsedTime >= FPS_MAX_DELTA)
 				{
+					elapsedTime = 0.0;
+
 					/* New Frame */
 					Engine::NewFrame();
 
@@ -137,10 +143,10 @@ namespace QwerkE {
 					/* Render */
 					Engine::Draw();
 				}
-				else
-				{
-					YieldProcessor(); // TODO: Look into proper yield behaviour
-				}
+				// else
+				// {
+				// 	YieldProcessor(); // TODO: Look into proper yield behaviour
+				// }
 			}
 
             Instrumentor::Get().EndSession();

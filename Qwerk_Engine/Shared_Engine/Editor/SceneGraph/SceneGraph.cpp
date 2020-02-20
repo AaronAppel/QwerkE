@@ -101,7 +101,7 @@ namespace QwerkE {
 			std::map<std::string, GameObject*>::iterator thing;
 
 			int itemWidth = 100;
-			int itemsPerRow = ImGui::GetWindowWidth() / itemWidth + 1;
+			int itemsPerRow = (int)ImGui::GetWindowWidth() / itemWidth + 1;
 
 			int counter = 0;
 			ImGui::PushItemWidth(50);

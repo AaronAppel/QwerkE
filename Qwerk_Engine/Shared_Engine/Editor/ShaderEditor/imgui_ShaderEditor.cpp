@@ -70,24 +70,24 @@ namespace QwerkE {
         }
 
         //ImGui::ShowTestWindow();
-        int windowHeight = 400;
+        float windowHeight = 400.0f;
         if (ImGui::CollapsingHeader("Vertex"))
         {
-            if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, windowHeight)))
+            if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20.0f, windowHeight)))
             {
                 // buffer was changed
             }
         }
         if (ImGui::CollapsingHeader("Fragment"))
         {
-            if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, windowHeight)))
+            if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20.0f, windowHeight)))
             {
                 // buffer was changed
             }
         }
         if (ImGui::CollapsingHeader("Geometry"))
         {
-            if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20, windowHeight)))
+            if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20.0f, windowHeight)))
             {
                 // buffer was changed
             }

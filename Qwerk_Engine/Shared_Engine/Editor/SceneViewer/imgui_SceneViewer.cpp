@@ -95,7 +95,7 @@ namespace QwerkE {
         int counter = 1;
         ImVec2 winSize = ImGui::GetWindowSize();
         ImVec2 imageSize = ImVec2(100.0f, 100.0f);
-        int m_ItemsPerRow = winSize.x / (imageSize.x * 1.5f) + 1; // (* up the image size for feel), + avoid dividing by 0
+        int m_ItemsPerRow = (int)(winSize.x / (imageSize.x * 1.5f) + 1.0f); // (* up the image size for feel), + avoid dividing by 0
 
         for (const auto& p : *Scenes::LookAtScenes()) // save pointer?
         {

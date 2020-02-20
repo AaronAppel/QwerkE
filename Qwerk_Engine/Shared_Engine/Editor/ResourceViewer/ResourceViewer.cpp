@@ -92,7 +92,7 @@ namespace QwerkE {
 
             // draw list of resources
             ImVec2 winSize = ImGui::GetWindowSize();
-            m_ItemsPerRow = winSize.x / (m_ImageSize.x * 1.5f) + 1; // (* up the image size for feel), + avoid dividing by 0
+            m_ItemsPerRow = (unsigned char)(winSize.x / (m_ImageSize.x * 1.5f) + 1.0f); // (* up the image size for feel), + avoid dividing by 0
             unsigned int counter = 0;
             ImGui::Separator();
             // TODO: Consider using imgui groups for easier hover support
