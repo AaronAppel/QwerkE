@@ -22,14 +22,14 @@ namespace QwerkE {
 
         EntityEditor* GetEntityEditor() { return m_EntityEditor; }
 
-        void ToggleFullScreenScene() { m_ShowingGUI = !m_ShowingGUI; };
+        void ToggleFullScreenScene() { m_ShowingEditorGUI = !m_ShowingEditorGUI; };
 
     private:
         void RenderDockingContext();
 
         bool m_ShowingExampleWindow = false;
         bool m_ShowingShaderEditor = false;
-        bool m_ShowingGUI = true;
+        bool m_ShowingEditorGUI = true;
         ResourceViewer* m_ResourceViewer = nullptr;
         imgui_ShaderEditor* m_ShaderEditor = nullptr;
         imgui_SceneViewer* m_SceneViewer = nullptr;

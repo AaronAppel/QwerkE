@@ -107,6 +107,7 @@ namespace QwerkE {
 
 			glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
+			// TODO: Move to better file
 #ifdef dearimgui
 			m_Editor = (Editor*)new imgui_Editor();
 #else
@@ -129,8 +130,6 @@ namespace QwerkE {
 				elapsedTime += deltaTime;
 				// if (elapsedTime >= FPS_MAX_DELTA)
 				{
-					elapsedTime = 0.0;
-
 					/* New Frame */
 					Engine::NewFrame();
 
@@ -138,15 +137,18 @@ namespace QwerkE {
 					Engine::PollInput();
 
 					/* Logic */
-					Engine::Update(deltaTime);
+					Engine::Update(elapsedTime);
 
 					/* Render */
-					Engine::Draw();
+                    Engine::Draw();
+
+                    elapsedTime = 0.0;
 				}
-				// else
-				// {
-				// 	YieldProcessor(); // TODO: Look into proper yield behaviour
-				// }
+				// TODO : Fix yield that broke after deltatime changes
+                // else
+                // {
+                // 	YieldProcessor(); // TODO: Look into proper yield behaviour
+                // }
 			}
 
             Instrumentor::Get().EndSession();
@@ -167,13 +169,16 @@ namespace QwerkE {
 
 		void Engine::PollInput()
         {
-            PROFILE_SCOPE("Input");
+            PROFILE_SCOPE("Engine Input");
 			Framework::PollInput();
 		}
 
 		void Engine::Update(double deltatime)
         {
-            PROFILE_SCOPE("Update");
+            PROFILE_SCOPE("Engine Update");
+
+			Physics::Tick();
+
 			Scenes::Update(deltatime);
 			m_Editor->Update();
 
@@ -193,6 +198,7 @@ namespace QwerkE {
 					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
+
 			if (Input::FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
 			{
 				static bool frozen = false;
@@ -206,10 +212,12 @@ namespace QwerkE {
 					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Running);
 				}
 			}
+
 			if (Input::FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
 			{
 				m_Editor->ToggleFullScreenScene();
 			}
+
 			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
 				Windows::GetWindow(0)->SetClosing(true);
@@ -221,7 +229,7 @@ namespace QwerkE {
 		void Engine::Draw()
         {
 			// TODO: Move library calls into an abstracted class like Window, etc
-            PROFILE_SCOPE("Render");
+            PROFILE_SCOPE("Engine Render");
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             m_Editor->Draw();

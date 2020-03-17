@@ -11,6 +11,7 @@
 #include "ResourceViewer/ResourceViewer.h"
 #include "ShaderEditor/imgui_ShaderEditor.h"
 #include "SceneViewer/imgui_SceneViewer.h"
+#include "../QwerkE_Framework/Systems/Profiler/Profiler.h"
 
 namespace QwerkE {
 
@@ -42,15 +43,85 @@ namespace QwerkE {
 
     void imgui_Editor::Draw()
     {
+        PROFILE_SCOPE("Editor Render");
+        if (m_ShowingEditorGUI == false)
+        {
+            if (ImGui::BeginMainMenuBar())
+            {
+                if (ImGui::BeginMenu("Menu"))
+                {
+                    static int index = 0;
+                    static const int size = 5;
+                    const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
+                    if (ImGui::ListBox("", &index, d, size, 3))
+                    {
+                        if (index == 0) m_ShowingExampleWindow = !m_ShowingExampleWindow;
+                    }
+                    ImGui::EndMenu();
+                }
+
+                if (ImGui::BeginMenu("Tools"))
+                {
+                    const int size = 1;
+                    static const char* toolsList[size] = { "Shader Editor" };
+                    static bool* toolsStates[size] = { &m_ShowingShaderEditor };
+
+                    for (int i = 0; i < size; i++)
+                    {
+                        if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
+                        {
+                            m_ShowingShaderEditor = *toolsStates[i];
+                        }
+                    }
+                    ImGui::EndMenu();
+                }
+
+                if (ImGui::Checkbox("GUI", &m_ShowingEditorGUI)) {}
+
+                static bool showFPS = true;
+                if (ImGui::Button("FPS"))
+                    showFPS = !showFPS;
+                ImGui::SameLine();
+                if (showFPS) ImGui::Text("%4.2f", 1.0 / Time::Delta());
+
+                if (ImGui::BeginMenu("Testing"))
+                {
+                    static bool clientServerEnabled = false;
+                    if (ImGui::Checkbox("Client/Server", &clientServerEnabled))
+                    {
+                        if (clientServerEnabled)
+                        {
+                            Network::Initialize();
+                        }
+                        else
+                        {
+                            Network::TearDown();
+                        }
+                    }
+
+                    if (clientServerEnabled)
+                    {
+                        Network::TestUpdate();
+                    }
+
+                    ImGui::EndMenu();
+                }
+
+                ImGui::EndMainMenuBar();
+            }
+
+            m_Scenes->Draw();
+
+            return;
+        }
+
         RenderDockingContext();
 
-        // imgui reference
         if (m_ShowingExampleWindow)
         {
             ImGui::ShowDemoWindow();
         }
 
-        // menu
         if (ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("Menu"))
@@ -81,33 +152,47 @@ namespace QwerkE {
                 ImGui::EndMenu();
             }
 
-            if (ImGui::Checkbox("GUI", &m_ShowingGUI)) {}
+            if (ImGui::Checkbox("GUI", &m_ShowingEditorGUI)) {}
 
-            // FPS display
             static bool showFPS = true;
             if (ImGui::Button("FPS"))
                 showFPS = !showFPS;
             ImGui::SameLine();
             if (showFPS) ImGui::Text("%4.2f", 1.0 / Time::Delta());
 
+            if (ImGui::BeginMenu("Testing"))
+            {
+                static bool clientServerEnabled = false;
+                if (ImGui::Checkbox("Client/Server", &clientServerEnabled))
+                {
+                    if (clientServerEnabled)
+                    {
+                        Network::Initialize();
+                    }
+                    else
+                    {
+                        Network::TearDown();
+                    }
+                }
+
+                if (clientServerEnabled)
+                {
+                    Network::TestUpdate();
+                }
+
+                ImGui::EndMenu();
+            }
+
             ImGui::EndMainMenuBar();
         }
 
-        if (m_ShowingGUI)
-        {
-            if (m_ShowingShaderEditor)
-            {
-                m_ShaderEditor->Draw(&m_ShowingShaderEditor);
-            }
-            m_ResourceViewer->Draw();
-            m_SceneViewer->Draw();
-            m_SceneGraph->Draw();
-            m_EntityEditor->Draw();
-        }
-        else
-        {
-            m_Scenes->Draw();
-        }
+        if (m_ShowingShaderEditor)
+            m_ShaderEditor->Draw(&m_ShowingShaderEditor);
+
+        m_ResourceViewer->Draw();
+        m_SceneViewer->Draw();
+        m_SceneGraph->Draw();
+        m_EntityEditor->Draw();
     }
 
     void imgui_Editor::RenderDockingContext()

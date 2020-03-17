@@ -4,17 +4,17 @@
 #include <iostream>
 #include <string.h>
 
-#pragma comment( lib, "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" ) // load
+#pragma comment( lib, "../../QwerkE_Framework/Libraries/RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" ) // load
 
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/RakPeerInterface.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/RakNetTypes.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/MessageIdentifiers.h"
-#include "../QwerkE_Framework/QwerkE_Common/Libraries/RakNet/Source/BitStream.h"
+#include "../../QwerkE_Framework/Libraries/RakNet/Source/RakPeerInterface.h"
+#include "../../QwerkE_Framework/Libraries/RakNet/Source/RakNetTypes.h"
+#include "../../QwerkE_Framework/Libraries/RakNet/Source/MessageIdentifiers.h"
+#include "../../QwerkE_Framework/Libraries/RakNet/Source/BitStream.h"
 
 #define MAX_CLIENTS 10
 #define SERVER_PORT 60000
 
-const char* g_IP = "172.18.38.65";
+const char* g_IP = "127.0.0.1";
 
 enum GameMessages
 {
@@ -87,7 +87,7 @@ int main()
 				// Bitstreams are easier to use than sending casted structures, and handle endian swapping automatically
 				RakNet::BitStream bsOut;
 				bsOut.Write((RakNet::MessageID)ID_GAME_MESSAGE_1);
-				bsOut.Write("Hello world");
+				bsOut.Write("Message received: Hello world");
 				peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 			}
 			break;

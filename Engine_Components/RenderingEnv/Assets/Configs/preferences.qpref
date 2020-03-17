@@ -1,6 +1,6 @@
 {
 	"Framework": [{
-		"QuickLoad":	0,
+		"QuickLoad":	1,
 		"MaxConcurrentThreadCount":	10
 	}],
 	"Libraries":	[{
@@ -17,10 +17,10 @@
 			"MaxEnabledScenes":	1
 		}],
 	"Systems":	[{
-			"AudioEnabled":	0,
+			"AudioEnabled":	1,
 			"DebuggingEnabled":	0,
 			"JobManagerMultiThreadedEnabled":	1,
-			"LoggingEnabled":	0,
+			"LoggingEnabled":	1,
 			"NetworkingEnabled":	0,
 			"PhysicsEnabled":	1
 		}]

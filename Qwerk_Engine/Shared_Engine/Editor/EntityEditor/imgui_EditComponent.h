@@ -13,6 +13,7 @@ namespace QwerkE {
     class ShaderProgram;
     class Material;
     class RenderComponent;
+    class PhysicsComponent;
     class Mesh;
 
     class imgui_EditComponent
@@ -24,7 +25,7 @@ namespace QwerkE {
         void Draw(GameObject* entity);
 
     private:
-        bool m_RefreshFlag = 1;
+        bool m_Refresh = 1;
 
         const std::map<std::string, Material*>* m_Materials = nullptr;
         const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
@@ -46,6 +47,11 @@ namespace QwerkE {
         void ShowShaderMenu(RenderComponent* rComp);
         void ShowMaterialMenu(RenderComponent* rComp);
         void ShowMeshMenu(RenderComponent* rComp);
+
+        void ShowRenderComponent(RenderComponent* rComp);
+        void ShowPhysicsComponent(PhysicsComponent* rComp);
+
+        GameObject* m_LastEntity = nullptr;
     };
 
 }
