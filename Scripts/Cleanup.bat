@@ -1,3 +1,5 @@
+cd ../
+
 del /Q /F /S /AH .vs\*
 del /Q /F /S x64
 rmdir /Q /S .vs
