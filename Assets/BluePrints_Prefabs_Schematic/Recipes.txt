@@ -1,0 +1,9 @@
+Names for object definitions...
+
+These are essentially prefabs, or at least an object that references other objects/assets to define a reusable template object.
+
+Possible names include:
+Recipes
+Schematics
+BluePrints
+Prefabs

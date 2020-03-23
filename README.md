@@ -4,7 +4,7 @@ A simple engine or runtime editor for the QwerkE framework.
 QwerkEngine framework lives here: https://github.com/AaronAppel/QwerkE_Framework
 
 ## Getting Started
-An introduction to QwerkE.
+Open the Qwerk_Engine folder in the root of the respository to find the solution.
 
 WIP: www.github.com/AaronAppel/QwerkE_Documentation  
 

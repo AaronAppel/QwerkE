@@ -1,0 +1,159 @@
+{
+	"ObjectList":	[{
+			"Nanosuit":	[{
+					"Position":	[{
+							"PositionX":	0,
+							"PositionY":	-2,
+							"PositionZ":	30
+						}],
+					"Rotation":	[{
+							"RotationX":	0,
+							"RotationY":	180,
+							"RotationZ":	0
+						}],
+					"Scale":	[{
+							"ScaleX":	1,
+							"ScaleY":	1,
+							"ScaleZ":	1
+						}],
+					"ObjectTag":	9,
+					"ComponentList":	[{
+							"4":	[{
+									"ComponentName":	"Render",
+									"SchematicName":	"None",
+									"Renderables":	[{
+											"Visor":	[{
+													"Shader":	"LitMaterial.ssch",
+													"Material":	"nanosuit_glass.msch",
+													"MeshFile":	"nanosuit.obj",
+													"MeshName":	"Visor"
+												}],
+											"Legs":	[{
+													"Shader":	"LitMaterial.ssch",
+													"Material":	"nanosuit_leg.msch",
+													"MeshFile":	"nanosuit.obj",
+													"MeshName":	"Legs"
+												}],
+											"Hands":	[{
+													"Shader":	"LitMaterial.ssch",
+													"Material":	"nanosuit_hand.msch",
+													"MeshFile":	"nanosuit.obj",
+													"MeshName":	"Hands"
+												}],
+											"Lights":	[{
+													"Shader":	"LitMaterial.ssch",
+													"Material":	"nanosuit_glass.msch",
+													"MeshFile":	"nanosuit.obj",
+													"MeshName":	"Lights"
+												}],
+											"Arms":	[{
+													"Shader":	"LitMaterial.ssch",
+													"Material":	"nanosuit_arm.msch",
+													"MeshFile":	"nanosuit.obj",
+													"MeshName":	"Arms"
+												}],
+											"Helmet":	[{
+													"Shader":	"LitMaterial.ssch",
+													"Material":	"nanosuit_helmet.msch",
+													"MeshFile":	"nanosuit.obj",
+													"MeshName":	"Helmet"
+												}],
+											"Body":	[{
+													"Shader":	"LitMaterial.ssch",
+													"Material":	"nanosuit_body.msch",
+													"MeshFile":	"nanosuit.obj",
+													"MeshName":	"Body"
+												}]
+										}]
+								}]
+						}],
+					"RoutineList":	[{
+							"UpdateRoutines":	[{
+							}],
+							"DrawRoutines":	[{
+									"0":	[{
+											"RoutineName":	"Render"
+										}]
+								}]
+						}]
+				}]
+		}],
+	"CameraList":	[{
+			"Camera0":	[{
+					"Position":	[{
+							"PositionX":	0.501858,
+							"PositionY":	0.401084,
+							"PositionZ":	5.958960
+						}],
+					"Rotation":	[{
+							"RotationX":	0,
+							"RotationY":	0,
+							"RotationZ":	0
+						}],
+					"Scale":	[{
+							"ScaleX":	1,
+							"ScaleY":	1,
+							"ScaleZ":	1
+						}],
+					"ObjectTag":	1,
+					"ComponentList":	[{
+							"0":	[{
+									"ComponentName":	"Camera",
+									"CamType":	0
+								}]
+						}],
+					"RoutineList":	[{
+							"UpdateRoutines":	[{
+							}],
+							"DrawRoutines":	[{
+							}]
+						}]
+				}]
+		}],
+	"LightList":	[{
+			"Light13":	[{
+					"Position":	[{
+							"PositionX":	0,
+							"PositionY":	5,
+							"PositionZ":	-10
+						}],
+					"Rotation":	[{
+							"RotationX":	0,
+							"RotationY":	0,
+							"RotationZ":	0
+						}],
+					"Scale":	[{
+							"ScaleX":	1,
+							"ScaleY":	1,
+							"ScaleZ":	1
+						}],
+					"ObjectTag":	2,
+					"ComponentList":	[{
+							"2":	[{
+									"ComponentName":	"Light"
+								}],
+							"4":	[{
+									"ComponentName":	"Render",
+									"SchematicName":	"None",
+									"Renderables":	[{
+											"Light":	[{
+													"Shader":	"Basic3D.ssch",
+													"Material":	"null_material.msch",
+													"MeshFile":	"null_mesh.obj",
+													"MeshName":	"null_mesh"
+												}]
+										}]
+								}]
+						}],
+					"RoutineList":	[{
+							"UpdateRoutines":	[{
+							}],
+							"DrawRoutines":	[{
+									"0":	[{
+											"RoutineName":	"Render"
+										}]
+								}]
+						}]
+				}]
+		}]
+}

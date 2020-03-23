@@ -1,0 +1,6 @@
+{
+	"Hotkeys": [{
+		"ToggleUI": "F", // Engine
+		"FreezeScene": "Z" // Framework
+	}]
+}

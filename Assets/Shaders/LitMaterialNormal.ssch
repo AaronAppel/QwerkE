@@ -1,0 +1,6 @@
+{
+	"Name":	"LitMaterialNormal.ssch",
+	"vert":	"LitMaterialNormal.vert",
+	"frag":	"LitMaterialNormal.frag",
+	"geo":	"null"
+}
