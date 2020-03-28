@@ -5,14 +5,12 @@
 // editor.
 // Components include GUI windows, scene graph, shader creator, etc.
 
-#include "SceneGraph/SceneGraph.h"
-
-class SceneGraph;
-class ShaderProgram;
-class Scenes;
-class EntityEditor;
-
 namespace QwerkE {
+
+    class SceneGraph;
+    class ShaderProgram;
+    class Scenes;
+    class EntityEditor;
 
     // TODO: Add cross panel communication to support features such as
     // drag and drop textures, trigger callbacks, input, etc.
@@ -36,8 +34,6 @@ namespace QwerkE {
         void* m_EntityEditor = nullptr; // Change routine/component data for an entity
         void* m_MenuBar = nullptr; // TODO: Top menu bar with acces to settings like save, preferences, etc
         void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
-        // system access
-        Scenes* m_Scenes = nullptr;
     };
 
 }

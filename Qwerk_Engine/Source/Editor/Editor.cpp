@@ -1,5 +1,7 @@
 #include "Editor.h"
-#include "EntityEditor/EntityEditor.h"
+
+// TODO: if (IMGUI_EDITOR)
+#include "imgui_Editor/SceneGraph/imgui_SceneGraph.h"
 
 namespace QwerkE {
 

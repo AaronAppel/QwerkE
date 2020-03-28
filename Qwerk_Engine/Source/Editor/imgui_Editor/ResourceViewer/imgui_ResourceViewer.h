@@ -1,5 +1,5 @@
-#ifndef _ResourceViewer_H_
-#define _ResourceViewer_H_
+#ifndef _imgui_ResourceViewer_H_
+#define _imgui_ResourceViewer_H_
 
 #include "../Libraries/imgui/imgui.h"
 #include "../Libraries/glew/GL/glew.h"
@@ -10,7 +10,7 @@
 
 namespace QwerkE {
 
-    typedef unsigned int ALuint;
+    typedef unsigned int ALuint; // TODO: Hide OAL library type
 
     struct Texture;
     class ShaderProgram;
@@ -59,4 +59,4 @@ namespace QwerkE {
     };
 
 }
-#endif // !_ResourceViewer_H_
+#endif // _imgui_ResourceViewer_H_

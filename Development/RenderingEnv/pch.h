@@ -2,8 +2,6 @@
 #define _pch_h_
 
 #include "Main.h"
-
-#include "../Headers/QwerkE_Defines.h"
-#include "../Headers/QwerkE_Platform.h"
+#include "../Source/Headers/PCH_Includes.h"
 
 #endif // _pch_h_

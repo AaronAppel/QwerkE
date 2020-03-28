@@ -27,4 +27,4 @@ namespace QwerkE {
     };
 
 }
-#endif // !_imgui_ShaderEditor_H_
+#endif // _imgui_ShaderEditor_H_

@@ -1,4 +1,4 @@
-#include "ConfigEditor.h"
+#include "imgui_ConfigEditor.h"
 
 namespace QwerkE {
 

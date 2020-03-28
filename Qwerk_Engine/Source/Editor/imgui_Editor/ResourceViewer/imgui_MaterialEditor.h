@@ -1,7 +1,7 @@
-#ifndef _MaterialEditor_H_
-#define _MaterialEditor_H_
+#ifndef _imgui_MaterialEditor_H_
+#define _imgui_MaterialEditor_H_
 
-#include "../QwerkE_Framework/Headers/QwerkE_Enums.h"
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
 
 #include <map>
 #include <string>
@@ -25,4 +25,4 @@ namespace QwerkE {
     };
 
 }
-#endif // !_MaterialEditor_H_
+#endif // _imgui_MaterialEditor_H_

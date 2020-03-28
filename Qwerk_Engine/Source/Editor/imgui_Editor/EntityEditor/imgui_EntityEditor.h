@@ -1,5 +1,5 @@
-#ifndef _Entity_Editor_H_
-#define _Entity_Editor_H_
+#ifndef _imgui_Entity_Editor_H_
+#define _imgui_Entity_Editor_H_
 
 // A window that shows data for an entity and gives a GUI
 // to allow for data to easily be modified
@@ -35,4 +35,4 @@ namespace QwerkE {
     };
 
 }
-#endif // !_Entity_Editor_H_
+#endif // _imgui_Entity_Editor_H_

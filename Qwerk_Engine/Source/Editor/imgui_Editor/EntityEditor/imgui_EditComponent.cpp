@@ -1,18 +1,18 @@
 #include "imgui_EditComponent.h"
-#include "../QwerkE_Framework/Systems/Resources/Resources.h"
-#include "../../Utilities/StringHelpers.h"
-#include "../QwerkE_Framework/Entities/Routines/RenderRoutine.h"
-#include "../QwerkE_Framework/Entities/GameObject.h"
-#include "../QwerkE_Framework/Entities/Components/RenderComponent.h"
-#include "../QwerkE_Framework/Entities/Components/PhysicsComponent.h"
-#include "../QwerkE_Framework/Graphics/DataTypes/Texture.h"
-#include "../QwerkE_Framework/Graphics/DataTypes/Renderable.h"
-#include "../QwerkE_Framework/Graphics/Shader/ShaderProgram.h"
-#include "../QwerkE_Framework/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "../QwerkE_Framework/Source/Utilities/StringHelpers.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/RenderRoutine.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/PhysicsComponent.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
 
 // TESTING:
-#include "../QwerkE_Framework/Entities/Components/Extended/Bullet3Component.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Extended/Bullet3Component.h"
 
 #include <vector>
 #include <string>

@@ -1,5 +1,5 @@
-#ifndef _Config_Editor_H_
-#define _Config_Editor_H_
+#ifndef _imgui_Config_Editor_H_
+#define _imgui_Config_Editor_H_
 
 namespace QwerkE {
 
@@ -14,4 +14,4 @@ namespace QwerkE {
     };
 
 }
-#endif //!_Config_Editor_H_
+#endif // _imgui_Config_Editor_H_

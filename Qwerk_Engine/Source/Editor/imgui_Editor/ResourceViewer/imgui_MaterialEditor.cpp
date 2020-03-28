@@ -1,8 +1,8 @@
-#include "MaterialEditor.h"
-#include "../QwerkE_Framework/Graphics/DataTypes/Material.h"
-#include "../QwerkE_Framework/Graphics/DataTypes/Texture.h"
-#include "../QwerkE_Framework/Headers/QwerkE_Enums.h"
-#include "../QwerkE_Framework/Systems/Resources/Resources.h"
+#include "imgui_MaterialEditor.h"
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
 
 #include <map>
 

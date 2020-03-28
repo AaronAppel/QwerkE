@@ -3,8 +3,8 @@
 
 #define Qwerk_Engine
 
-#include "../QwerkE_Framework/Utilities/StringHelpers.h"
-#include "../QwerkE_Framework/Headers/QwerkE_Directory_Defines.h"
+#include "../QwerkE_Framework/Source/Utilities/StringHelpers.h"
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Directory_Defines.h"
 
 /* Define program arguments */
 #define key_ProjectName "-projectName" // "-projectName" Look in projects folder for a project with the same name.

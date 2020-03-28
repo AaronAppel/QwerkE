@@ -14,32 +14,32 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ConfigEditor\ConfigEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\MaterialEditor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneViewer\imgui_SceneViewer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ShaderEditor\imgui_ShaderEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ConfigEditor\imgui_ConfigEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\EntityEditor\imgui_EditComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\EntityEditor\imgui_EntityEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\imgui_Editor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ResourceViewer\imgui_MaterialEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ResourceViewer\imgui_ResourceViewer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\SceneGraph\imgui_SceneGraph.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\SceneViewer\imgui_SceneViewer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ShaderEditor\imgui_ShaderEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Additional_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ConfigEditor\ConfigEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\Editor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\EntityEditor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\EntityEditor\imgui_EditComponent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\MaterialEditor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer\ResourceViewer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneGraph\SceneGraph.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\SceneViewer\imgui_SceneViewer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\ShaderEditor\imgui_ShaderEditor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ConfigEditor\imgui_ConfigEditor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\EntityEditor\imgui_EditComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\EntityEditor\imgui_EntityEditor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\imgui_Editor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ResourceViewer\imgui_MaterialEditor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ResourceViewer\imgui_ResourceViewer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\SceneGraph\imgui_SceneGraph.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\SceneViewer\imgui_SceneViewer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\ShaderEditor\imgui_ShaderEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
   </ItemGroup>
 </Project>

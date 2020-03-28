@@ -1,9 +1,16 @@
 #include "Engine.h"
 
 #include "Engine_Enums.h"
-#include "Editor/imgui_Editor.h"
 
-#include "../../QwerkE_Framework/Framework.h"
+// TODO: Properly support editor library switching
+#define IMGUI_EDITOR 1
+#if 1
+#include "Editor/imgui_Editor/imgui_Editor.h"
+#endif // 0
+
+// #include "../../QwerkE_Framework/QwerkE.h"
+
+#include "../../QwerkE_Framework/Source/Framework.h"
 
 #include "../../QwerkE_Framework/Libraries/glew/GL/glew.h"
 #include "../../QwerkE_Framework/Libraries/glfw/GLFW/glfw3.h"
@@ -11,32 +18,30 @@
 #include "../../QwerkE_Framework/Libraries/imgui/imgui_impl_glfw.h"
 #include "../../QwerkE_Framework/Libraries/imgui/imgui_impl_opengl3.h"
 
-#include "../../QwerkE_Framework/Utilities/Helpers.h"
-#include "../../QwerkE_Framework/Utilities/ProgramArgs.h"
+#include "../../QwerkE_Framework/Source/Utilities/Helpers.h"
+#include "../../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
 
-#include "../../QwerkE_Framework/Graphics/Graphics_Header.h"
-#include "../../QwerkE_Framework/Graphics/DataTypes/FrameBufferObject.h"
-#include "../../QwerkE_Framework/Graphics/Mesh/MeshFactory.h"
+#include "../../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
+#include "../../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
+#include "../../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
+#include "../../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 
-#include "../../QwerkE_Framework/Systems/Input/Input.h"
-#include "../../QwerkE_Framework/Systems/Resources/Resources.h"
-#include "../../QwerkE_Framework/Systems/Events/EventManager.h"
-#include "../../QwerkE_Framework/Scenes/Scenes.h"
-#include "../../QwerkE_Framework/Systems/Window/CallbackFunctions.h"
-#include "../../QwerkE_Framework/Systems/Physics/Physics.h"
-#include "../../QwerkE_Framework/Systems/Renderer/Renderer.h"
-#include "../../QwerkE_Framework/Systems/MessageManager.h"
-#include "../../QwerkE_Framework/Systems/Audio/Audio.h"
-#include "../../QwerkE_Framework/Systems/Debugger/Debugger.h"
-#include "../../QwerkE_Framework/Systems/ShaderFactory/ShaderFactory.h"
-#include "../../QwerkE_Framework/Systems/Jobs/Jobs.h"
-#include "../../QwerkE_Framework/Systems/Network/Network.h"
-#include "../../QwerkE_Framework/Systems/Window/Window.h"
-#include "../../QwerkE_Framework/Systems/Window/Windows.h"
-#include "../../QwerkE_Framework/Systems/Window/glfw_Window.h"
-#include "../../QwerkE_Framework/Systems/Profiler/Profiler.h"
-
-#include "../../QwerkE_Framework/Modules/Time/Time.h"
+#include "../../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
+#include "../../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
+#include "../../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "../../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "../../QwerkE_Framework/Source/Core/Events/EventManager.h"
+#include "../../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "../../QwerkE_Framework/Source/Core/Window/CallbackFunctions.h"
+#include "../../QwerkE_Framework/Source/Core/Physics/Physics.h"
+#include "../../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "../../QwerkE_Framework/Source/Core/Graphics/ShaderFactory/ShaderFactory.h"
+#include "../../QwerkE_Framework/Source/Core/Jobs/Jobs.h"
+#include "../../QwerkE_Framework/Source/Core/Network/Network.h"
+#include "../../QwerkE_Framework/Source/Core/Window/Window.h"
+#include "../../QwerkE_Framework/Source/Core/Window/Windows.h"
+#include "../../QwerkE_Framework/Source/Core/Window/glfw_Window.h"
+#include "../../QwerkE_Framework/Source/Core/Time/Time.h"
 
 namespace QwerkE {
 

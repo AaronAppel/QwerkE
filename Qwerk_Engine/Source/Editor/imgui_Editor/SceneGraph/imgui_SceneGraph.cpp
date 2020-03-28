@@ -1,13 +1,13 @@
-#include "SceneGraph.h"
+#include "imgui_SceneGraph.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/Scenes/Scene.h"
-#include "../QwerkE_Framework/Entities/GameObject.h"
-#include "../Editor.h"
-#include "../EntityEditor/EntityEditor.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
+#include "../../Editor.h"
+#include "../EntityEditor/imgui_EntityEditor.h"
 #include "../imgui_Editor.h"
-#include "../QwerkE_Framework/Systems/Factory/Factory.h"
-#include "../../Utilities/StringHelpers.h"
-#include "../../Systems/Resources/GUID.h"
+#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "../QwerkE_Framework/Source/Core/Resources/GUID.h"
+#include "../QwerkE_Framework/Source/Utilities/StringHelpers.h"
 
 #include <map>
 #include <string>

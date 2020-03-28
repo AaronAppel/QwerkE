@@ -1,7 +1,7 @@
 #ifndef _imgui_SceneViewer_H_
 #define _imgui_SceneViewer_H_
 
-#include "../QwerkE_Framework/Headers/QwerkE_Enums.h"
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
 
 #include <map>
 
@@ -28,4 +28,4 @@ namespace QwerkE {
     };
 
 }
-#endif // !_imgui_SceneViewer_H_
+#endif // _imgui_SceneViewer_H_

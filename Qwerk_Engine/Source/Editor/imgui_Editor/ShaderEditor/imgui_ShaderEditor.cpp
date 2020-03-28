@@ -1,14 +1,14 @@
 #include "imgui_ShaderEditor.h"
-#include "../../Utilities/StringHelpers.h"
-#include "../../Systems/FileSystem/FileIO/FileUtilities.h"
+#include "../../../QwerkE_Framework/Source/Utilities/StringHelpers.h"
+#include "../../../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
+#include "../../../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
+#include "../../../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "../../../QwerkE_Framework/Source/Core/Time/Time.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderComponent.h"
 #include "../../../QwerkE_Framework/Libraries/imgui/imgui.h"
-#include "../../../QwerkE_Framework/Systems/Input/Input.h"
-#include "../../../QwerkE_Framework/Systems/Renderer/Renderer.h"
-#include "../../../QwerkE_Framework/Scenes/Scenes.h"
-#include "../../../QwerkE_Framework/Modules/Time/Time.h"
-#include "../../../QwerkE_Framework/Graphics/DataTypes/FrameBufferObject.h"
-#include "../../../QwerkE_Framework/Graphics/Shader/ShaderProgram.h"
-#include "../../../QwerkE_Framework/Graphics/Shader/ShaderComponent.h"
 
 namespace QwerkE {
 

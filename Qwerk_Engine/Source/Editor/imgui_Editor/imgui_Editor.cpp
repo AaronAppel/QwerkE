@@ -1,17 +1,18 @@
-#include "../../Systems/FileSystem/FileIO/FileUtilities.h"
+#include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/Systems/Input/Input.h"
-#include "../QwerkE_Framework/Systems/Audio/Audio.h"
-#include "../QwerkE_Framework/Systems/Renderer/Renderer.h"
-#include "../QwerkE_Framework/Scenes/Scenes.h"
-#include "../QwerkE_Framework/Modules/Time/Time.h"
-#include "EntityEditor/EntityEditor.h"
+#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "../QwerkE_Framework/Source/Core/Time/Time.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
+#include "EntityEditor/imgui_EntityEditor.h"
 #include "imgui_Editor.h"
-#include "../QwerkE_Framework/Graphics/DataTypes/FrameBufferObject.h"
-#include "ResourceViewer/ResourceViewer.h"
+#include "ResourceViewer/imgui_ResourceViewer.h"
 #include "ShaderEditor/imgui_ShaderEditor.h"
 #include "SceneViewer/imgui_SceneViewer.h"
-#include "../QwerkE_Framework/Systems/Profiler/Profiler.h"
+#include "SceneGraph/imgui_SceneGraph.h"
+#include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
 
 namespace QwerkE {
 
@@ -110,8 +111,7 @@ namespace QwerkE {
                 ImGui::EndMainMenuBar();
             }
 
-            m_Scenes->Draw();
-
+            Scenes::GetCurrentScene()->Draw();
             return;
         }
 

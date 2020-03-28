@@ -55,4 +55,4 @@ namespace QwerkE {
     };
 
 }
-#endif // !_imgui_EditComponent_H_
+#endif // _imgui_EditComponent_H_
