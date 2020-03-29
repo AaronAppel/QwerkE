@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-#include "Engine_Enums.h"
+#include "Headers/Engine_Enums.h"
 
 // TODO: Properly support editor library switching
 #define IMGUI_EDITOR 1

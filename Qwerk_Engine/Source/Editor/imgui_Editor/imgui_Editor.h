@@ -5,11 +5,12 @@
 
 namespace QwerkE {
 
-    class imgui_ShaderEditor;
-    class imgui_SceneViewer;
     class ResourceViewer;
+    class ShaderEditor;
+    class SceneViewer;
     class EntityEditor;
 
+    // TODO: Consider deprecating header to use Editor.h
     class imgui_Editor : Editor
     {
     public:
@@ -31,10 +32,10 @@ namespace QwerkE {
         bool m_ShowingShaderEditor = false;
         bool m_ShowingEditorGUI = true;
         ResourceViewer* m_ResourceViewer = nullptr;
-        imgui_ShaderEditor* m_ShaderEditor = nullptr;
-        imgui_SceneViewer* m_SceneViewer = nullptr;
+        ShaderEditor* m_ShaderEditor = nullptr;
+        SceneViewer* m_SceneViewer = nullptr;
         EntityEditor* m_EntityEditor = nullptr;
     };
 
 }
-#endif // !_Editor_H_
+#endif // _imgui_Editor_H_

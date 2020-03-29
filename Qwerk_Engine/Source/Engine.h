@@ -7,8 +7,8 @@
 // can perform on multiple platforms without needing
 // inherited subclasses.
 
-#include "Engine_Defines.h"
-#include "Engine_Enums.h" // eEngineMessage
+#include "Headers/Engine_Defines.h"
+#include "Headers/Engine_Enums.h" // eEngineMessage
 
 // If only 1 engine should exist at a time then it could be wrapped in
 // the QwerkE namespace and have static functions like a singleton or

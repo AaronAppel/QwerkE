@@ -1,33 +1,36 @@
-#include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
+#include "imgui_Editor.h"
+#include "../EntityEditor.h"
+#include "../ResourceViewer.h"
+#include "../ShaderEditor.h"
+#include "../SceneViewer.h"
+#include "../SceneGraph.h"
+#include "../EditComponent.h"
+
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+#include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Source/Core/Time/Time.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
-#include "EntityEditor/imgui_EntityEditor.h"
-#include "imgui_Editor.h"
-#include "ResourceViewer/imgui_ResourceViewer.h"
-#include "ShaderEditor/imgui_ShaderEditor.h"
-#include "SceneViewer/imgui_SceneViewer.h"
-#include "SceneGraph/imgui_SceneGraph.h"
 #include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
 
 namespace QwerkE {
 
     imgui_Editor::imgui_Editor()
     {
-        m_EntityEditor = new EntityEditor(this);
-
+        m_EntityEditor = new EntityEditor();
+        m_SceneGraph = new SceneGraph(m_EntityEditor);
         m_ResourceViewer = new ResourceViewer();
-        m_ShaderEditor = new imgui_ShaderEditor();
-        m_SceneViewer = new imgui_SceneViewer();
+        m_ShaderEditor = new ShaderEditor();
+        m_SceneViewer = new SceneViewer();
     }
 
     imgui_Editor::~imgui_Editor()
     {
         delete m_EntityEditor;
+        delete m_SceneGraph;
         delete m_ResourceViewer;
         delete m_ShaderEditor;
         delete m_SceneViewer;
