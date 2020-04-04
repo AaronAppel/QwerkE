@@ -1,13 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Enums.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\Editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Additional_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\imgui_Editor.h">
       <Filter>Editor\imgui_Editor</Filter>
     </ClInclude>
@@ -35,20 +31,26 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ResourceViewer.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Headers\Engine_Additional_Includes.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Headers\Engine_Defines.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Systems">
-      <UniqueIdentifier>{afbcdda9-609a-4267-b478-395e47a4edf9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{9cd9d01e-0c42-48db-a17a-94a6969674b1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Editor\imgui_Editor">
       <UniqueIdentifier>{8d50ac33-b895-4b9c-a419-64b18ffdfdcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{cedbef3d-c0e4-4def-9c05-91bb8e4f13d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\imgui_Editor.cpp">
       <Filter>Editor\imgui_Editor</Filter>
     </ClCompile>
@@ -76,5 +78,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\imgui_ResourceViewer.cpp">
       <Filter>Editor\imgui_Editor</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
   </ItemGroup>
 </Project>

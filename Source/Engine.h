@@ -1,14 +1,13 @@
 #ifndef _Engine_H_
 #define _Engine_H_
 
-#include "../../QwerkE_Framework/Source/Headers/QwerkE_Include.h"
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Include.h"
 
 // Try to keep this class properly abstracted so it
 // can perform on multiple platforms without needing
 // inherited subclasses.
 
 #include "Headers/Engine_Defines.h"
-#include "Headers/Engine_Enums.h" // eEngineMessage
 
 // If only 1 engine should exist at a time then it could be wrapped in
 // the QwerkE namespace and have static functions like a singleton or
@@ -16,6 +15,8 @@
 // while offering a nice interface.
 
 // What engine functionality should be user accessible?
+
+#include <map>
 
 namespace QwerkE {
 

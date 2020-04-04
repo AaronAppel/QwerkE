@@ -18,8 +18,8 @@
  #pragma warning "Define platform!"
  #endif
 
-#define FrameworkDir "../QwerkE_Framework/"
-#define AssetsDir "../Assets/"
+#define FrameworkDir "QwerkE_Framework/"
+#define AssetsDir "Assets/"
 #include "../Engine.h"
 // #include "../../QwerkE_Framework/QwerkE.h"
 

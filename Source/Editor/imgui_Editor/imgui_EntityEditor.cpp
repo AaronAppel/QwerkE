@@ -5,7 +5,6 @@
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
-#include "../QwerkE_Framework/Source/Core/Physics/Libraries_Bullet3/b3_PhysicsFactory.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Extended/Bullet3Component.h"
@@ -13,6 +12,7 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/Extended/Bullet3Routine.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "../QwerkE_Framework/Source/Extended/Bullet3/b3_PhysicsFactory.h"
 
 #include <map>
 #include <string>

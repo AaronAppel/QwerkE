@@ -5,12 +5,10 @@
 // Add a runtime editor that has extra functionality like:
 // level editor, entity editor, shader editor, scripting, etc...
 
-
-#include "../Engine_Enums.h"
 #include "../Engine.h"
-#include<stdio.h>
+// #include<stdio.h>
 
-#include "../QwerkE_Framework/Utilities/ProgramArgs.h"
+#include "../../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
 
 int main(unsigned int argc, char **argv)
 {
