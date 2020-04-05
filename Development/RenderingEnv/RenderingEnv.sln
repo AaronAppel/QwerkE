@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderingEnv", "RenderingEnv.vcxproj", "{20E10CC8-A934-4B27-9132-44C5F4744096}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QwerkE_Framework", "..\..\QwerkE_Framework\QwerkE_Framework.vcxitems", "{B16D0585-C919-45A1-ABC8-E743E68A8F72}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Engine", "..\..\Qwerk_Engine\Source\Shared_Engine.vcxitems", "{64B82DE4-2768-4AD2-B95D-B3615FCC482E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Engine", "..\..\Source\Shared_Engine.vcxitems", "{64B82DE4-2768-4AD2-B95D-B3615FCC482E}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\QwerkE_Framework\QwerkE_Framework.vcxitems*{20e10cc8-a934-4b27-9132-44c5f4744096}*SharedItemsImports = 4
-		..\..\Qwerk_Engine\Source\Shared_Engine.vcxitems*{20e10cc8-a934-4b27-9132-44c5f4744096}*SharedItemsImports = 4
-		..\..\Qwerk_Engine\Source\Shared_Engine.vcxitems*{64b82de4-2768-4ad2-b95d-b3615fcc482e}*SharedItemsImports = 9
+		..\..\Source\Shared_Engine.vcxitems*{20e10cc8-a934-4b27-9132-44c5f4744096}*SharedItemsImports = 4
+		..\..\Source\Shared_Engine.vcxitems*{64b82de4-2768-4ad2-b95d-b3615fcc482e}*SharedItemsImports = 9
 		..\..\QwerkE_Framework\QwerkE_Framework.vcxitems*{b16d0585-c919-45a1-abc8-e743e68a8f72}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

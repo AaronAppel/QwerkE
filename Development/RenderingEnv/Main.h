@@ -12,7 +12,7 @@
 // #define LibrariesDir "../../QwerkE_Framework/Libraries/"
 
 #if 1 // Use the Engine?
-#include "../Qwerk_Engine/Source/Engine.h"
+#include "../../Source/Engine.h"
 #else // Or just the Framework?
 #include "../../QwerkE_Framework/QwerkE.h"
 #endif
