@@ -1,5 +1,5 @@
 #include "PrintComponent.h"
-#include "../Shared_Generic/Utilities/PrintFunctions.h"
+#include "../../../QwerkE_Framework/Source/Debug/Log/Log.h"
 
 PrintComponent::PrintComponent()
 {
@@ -11,5 +11,5 @@ PrintComponent::~PrintComponent()
 
 void PrintComponent::PrintMessage()
 {
-    ConsolePrint(m_Message);
+    LOG_INFO(m_Message);
 }

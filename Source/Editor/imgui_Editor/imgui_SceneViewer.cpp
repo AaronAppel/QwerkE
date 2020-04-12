@@ -59,10 +59,11 @@ namespace QwerkE {
             ImGui::SameLine();
             if (ImGui::Button("Reload")) currentScene->ReloadScene();
 
-            // render scene to fbo
+            // Render scene to FBO
             m_FBO->Bind();
+            // Renderer::NewFrame();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            Scenes::Draw();
+            Scenes::DrawCurrentScene();
             m_FBO->UnBind();
 
             ImVec2 winSize = ImGui::GetWindowSize();

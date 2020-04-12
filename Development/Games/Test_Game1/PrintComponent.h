@@ -1,7 +1,7 @@
 #ifndef _PrintComponent_H_
 #define _PrintComponent_H_
 
-#include "../Shared_Engine/GameObject/Components/Component.h"
+#include "../../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Component.h"
 
 class PrintComponent : Component
 {

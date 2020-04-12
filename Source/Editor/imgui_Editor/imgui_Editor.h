@@ -23,7 +23,7 @@ namespace QwerkE {
 
         EntityEditor* GetEntityEditor() { return m_EntityEditor; }
 
-        void ToggleFullScreenScene() { m_ShowingEditorGUI = !m_ShowingEditorGUI; };
+        void ToggleEditorUi() { m_ShowingEditorGUI = !m_ShowingEditorGUI; };
 
     private:
         void RenderDockingContext();

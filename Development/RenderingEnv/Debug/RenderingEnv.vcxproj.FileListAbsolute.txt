@@ -1,2 +1,0 @@
-C:\Users\User\Documents\GitHub\Qwerk_Engine\Development\RenderingEnv\Debug\RenderingEnv.exe
-C:\Users\User\Documents\GitHub\Qwerk_Engine\Development\RenderingEnv\Debug\RenderingEnv.pdb

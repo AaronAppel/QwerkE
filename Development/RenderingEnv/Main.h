@@ -17,4 +17,4 @@
 #include "../../QwerkE_Framework/QwerkE.h"
 #endif
 
-#endif // !_Main_H_
+#endif // _Main_H_

@@ -10,6 +10,7 @@
 
 #include "../QwerkE_Framework/Source/Framework.h"
 
+// TODO: Abstract libraries and remove extra includes
 #include "../QwerkE_Framework/Libraries/glew/GL/glew.h"
 #include "../QwerkE_Framework/Libraries/glfw/GLFW/glfw3.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
@@ -46,7 +47,7 @@ namespace QwerkE {
 	namespace Engine
     {
         // Private engine variables
-        static bool m_IsRunning = false;
+        static bool m_IsRunning = false; // TODO: Remove extra variable
         static Editor* m_Editor = nullptr;
 
 		void Engine::Run(std::map<const char*, const char*> &args)
@@ -78,39 +79,13 @@ namespace QwerkE {
 				return;
 			}
 
-			Scenes::GetCurrentScene()->SetIsEnabled(true); // enable default scene
+			Scenes::GetCurrentScene()->SetIsEnabled(true);
 
 			m_IsRunning = true;
 
-			// Delta time
-			//FrameTimer fps(120, 3.0f);
-			//fps.lastFrame = Time::Now(); // Time of last frame initialized to current time
+			Renderer::Initialize();
 
-			// TODO: GL state init should be in a Window() or OpenGLManager()
-			// class or some type of ::Graphics() system.
-			glClearColor(0.5f, 0.7f, 0.7f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			// turn on depth buffer testing
-			glEnable(GL_DEPTH_TEST);
-			glPointSize(10);
-			glLineWidth(10);
-
-			// depth cull for efficiency
-			// TODO: This is also in the framework
-			// glEnable(GL_CULL_FACE);
-			// glDisable(GL_CULL_FACE);
-			glCullFace(GL_BACK);
-			if (Wind_CCW) glFrontFace(GL_CCW);
-			else glFrontFace(GL_CW);
-
-			// turn on alpha blending
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-			glViewport(0, 0, g_WindowWidth, g_WindowHeight);
-
-			// TODO: Move to better file
+			// TODO: Move to editor class
 #ifdef dearimgui
 			m_Editor = (Editor*)new imgui_Editor();
 #else
@@ -160,6 +135,7 @@ namespace QwerkE {
 
 		void Engine::Stop()
 		{
+			Framework::Stop();
 			m_IsRunning = false;
 		}
 
@@ -167,7 +143,6 @@ namespace QwerkE {
 		{
 			Framework::NewFrame();
             m_Editor->NewFrame();
-			// NOTE: ImGUI::NewFrame() is in Framework::PollInput()!
 		}
 
 		void Engine::PollInput()
@@ -176,80 +151,32 @@ namespace QwerkE {
 			Framework::PollInput();
 		}
 
-		void Engine::Update(double deltatime)
+		void Engine::Update(double deltaTime)
         {
             PROFILE_SCOPE("Engine Update");
 
-			Physics::Tick();
+			Framework::Update(deltaTime);
 
-			Scenes::Update(deltatime);
 			m_Editor->Update();
 
-			// Framework::Update();
-
-			// TODO: Move this behaviour into Scenes for scene specific behaviour managed by the scene manager
-			if (Input::FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press)) // pause entire scene
+			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
-				static bool paused = false;
-				paused = !paused;
-				if (paused)
-				{
-					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Paused);
-				}
-				else
-				{
-					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Running);
-				}
-			}
-
-			if (Input::FrameKeyAction(eKeys::eKeys_Z, eKeyState::eKeyState_Press))// pause actor updates
-			{
-				static bool frozen = false;
-				frozen = !frozen;
-				if (frozen)
-				{
-					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Frozen);
-				}
-				else
-				{
-					Scenes::GetCurrentScene()->SetState(eSceneState::SceneState_Running);
-				}
+				Stop();
 			}
 
 			if (Input::FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
 			{
-				m_Editor->ToggleFullScreenScene();
-			}
-
-			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
-			{
-				Windows::GetWindow(0)->SetClosing(true);
-				Framework::Stop();
-				Engine::Stop();
+				m_Editor->ToggleEditorUi();
 			}
 		}
 
 		void Engine::Draw()
         {
-			// TODO: Move library calls into an abstracted class like Window, etc
-            PROFILE_SCOPE("Engine Render");
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			PROFILE_SCOPE("Engine Render");
 
-            m_Editor->Draw();
+			m_Editor->Draw();
 
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-            ImGuiIO& io = ImGui::GetIO();
-            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-            {
-                GLFWwindow* backup_current_context = glfwGetCurrentContext();
-                ImGui::UpdatePlatformWindows();
-                ImGui::RenderPlatformWindowsDefault();
-                glfwMakeContextCurrent(backup_current_context);
-            }
-
-			Windows::GetWindow(0)->SwapBuffers();
+			Framework::Draw();
 		}
 
 		bool Engine::StillRunning()

@@ -1,8 +1,7 @@
 #include "GameScene.h"
-#include "../Shared_Engine/Systems/ServiceLocator.h"
-#include "../Shared_Engine/Systems/Factory/Factory.h"
-#include "../Shared_Engine/Systems/ResourceManager.h"
-#include "../Shared_Engine/Systems/Time.h"
+#include "../../../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "../../../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "../../../QwerkE_Framework/Source/Core/Time/Time.h"
 #include "PrintComponent.h"
 #include "PrintRoutine.h"
 
@@ -20,27 +19,20 @@ GameScene::~GameScene()
 GameObject* obj2;
 void GameScene::Initialize()
 {
-    Factory* t_pFactory = (Factory*)QwerkE::ServiceLocator::GetService(eEngineServices::Factory_Entity);
-    ResourceManager* t_pResourceManager = (ResourceManager*)QwerkE::ServiceLocator::GetService(eEngineServices::Resource_Manager);
-    // TODO: Resolve feature
-    //DataManager* t_pDataManager = m_pGameCore->GetDataManager();
-
-    //t_pDataManager->LoadScene(this, m_LevelFileDir); // Load scene
     Scene::SetupCameras();
 
-    // return;
     {
         // Create scene cameras
-        t_pFactory->CreateFreeCamera(this, vec3(0, 0, 5));
+        Factory::CreateFreeCamera(this, vec3(0, 0, 5));
         // setup view/projection matrices
         Scene::SetupCameras();
     }
 
     {	// Create scene objects
         // cubes
-		t_pFactory->CreatePlane(this, vec3(0, -1, 40));
+        Factory::CreatePlane(this, vec3(0, -1, 40));
 
-        obj2 = t_pFactory->CreateCube(this, vec3(0, 1, 40));
+        obj2 = Factory::CreateCube(this, vec3(0, 1, 40));
         obj2->SetRotation(vec3(45, 45, 45));
         obj2->AddComponent((Component*)new PrintComponent());
         obj2->AddRoutine((Routine*)new PrintRoutine());
@@ -50,9 +42,9 @@ void GameScene::Initialize()
         int lights = 0;
         for (int i = 0; i < lights; i++)
         {
-            t_pFactory->CreateLight(this, vec3((i + 1) * -3.0f, (i + 1) * -1.0f, (i + 1) * -3.0f));
+            Factory::CreateLight(this, vec3((i + 1) * -3.0f, (i + 1) * -1.0f, (i + 1) * -3.0f));
         }
-        t_pFactory->CreateLight(this, vec3(0, 5, -10));
+        Factory::CreateLight(this, vec3(0, 5, -10));
     }
 }
 

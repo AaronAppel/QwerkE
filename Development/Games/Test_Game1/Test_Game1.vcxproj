@@ -55,6 +55,8 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
+    <Import Project="..\..\..\QwerkE_Framework\QwerkE_Framework.vcxitems" Label="Shared" />
+    <Import Project="..\..\..\Source\Shared_Engine.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -76,6 +78,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../QwerkE_Framework/Libraries/OpenAL/;$(SolutionDir)../../../QwerkE_Framework/Libraries/freetype2/;$(SolutionDir)../../../QwerkE_Framework/Libraries/Bullet3/;$(SolutionDir)../../../QwerkE_Framework/Libraries/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -116,15 +119,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game1.cpp" />
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="PrintComponent.cpp" />
-    <ClCompile Include="PrintRoutine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game1.h" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="PrintComponent.h" />
-    <ClInclude Include="PrintRoutine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,4 +3,6 @@
 
 #include "../../QwerkE_Framework/Source/Headers/PCH_Includes.h"
 
+#include "Main.h"
+
 #endif // _pch_h_

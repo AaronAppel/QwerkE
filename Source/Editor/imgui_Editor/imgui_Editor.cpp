@@ -114,7 +114,7 @@ namespace QwerkE {
                 ImGui::EndMainMenuBar();
             }
 
-            Scenes::GetCurrentScene()->Draw();
+            // Scenes::GetCurrentScene()->Draw();
             return;
         }
 
