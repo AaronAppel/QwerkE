@@ -1,5 +1,12 @@
 #include "../EditComponent.h"
 
+#include <vector>
+#include <string>
+
+#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
+
 #include "../QwerkE_Framework/Source/Utilities/StringHelpers.h"
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/RenderRoutine.h"
@@ -14,9 +21,6 @@
 
 // TESTING:
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Extended/Bullet3Component.h"
-
-#include <vector>
-#include <string>
 
 namespace QwerkE {
 
@@ -102,14 +106,12 @@ namespace QwerkE {
                 }
                 if (ImGui::IsItemClicked(1))
                 {
-                    static bool materialEditor = true; // TODO:
+                    static bool materialEditor = true; // #TODO:
                 }
             }
-
-            ImGui::End();
         }
-        else
-            ImGui::End();
+
+        ImGui::End();
     }
 
     void EditComponent::ShowMeshMenu(RenderComponent* rComp)

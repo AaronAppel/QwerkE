@@ -9,7 +9,7 @@
 namespace QwerkE {
 
     class Material;
-    class Texture;
+    struct Texture;
 
     class MaterialEditor
     {

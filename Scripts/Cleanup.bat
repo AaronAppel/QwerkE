@@ -1,5 +1,8 @@
 cd ../
 
+rem Delete all .dll files in engine root directory
+del *.dll
+
 del /Q /F instrumentor_log.json
 
 del /Q /F /S /AH .vs

@@ -5,8 +5,9 @@
 // Add a runtime editor that has extra functionality like:
 // level editor, entity editor, shader editor, scripting, etc...
 
+#include "Platform/QwerkE_Windows.h"
+
 #include "../Engine.h"
-// #include<stdio.h>
 
 #include "../../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
 
@@ -14,13 +15,16 @@ int main(unsigned int argc, char **argv)
 {
 	// TODO: Move argument handling code into engine
 	// Greeting
-	// std::cout << "-- Qwerk Engine 0.1 --\n" << argc;
+	// std::cout << "-- Qwerk Engine 0.1 (VER_MACRO) --\n" << argc;
 
 	unsigned int counter;
 	printf("Program Name Is: %s", argv[0]);
+
 	if (argc == 1)
+	{
 		printf("\nNo Extra Command Line Argument Passed Other Than Program Name\n");
-	if (argc >= 2)
+	}
+	else if (argc >= 2)
 	{
 		printf("\nNumber Of Arguments Passed: %d", argc);
 		printf("\n----Following Are The Command Line Arguments Passed----");

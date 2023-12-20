@@ -1,13 +1,14 @@
 #ifndef _ResourceViewer_H_
 #define _ResourceViewer_H_
 
-// TODO: Remove library includes
-#include "../Libraries/imgui/imgui.h"
-#include "../Libraries/glew/GL/glew.h"
-
 #include <string>
 #include <map>
 #include <vector>
+
+#include "Libraries/imgui/imgui.h"
+#include "Libraries/glew/GL/glew.h"
+
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
 
 namespace QwerkE {
 

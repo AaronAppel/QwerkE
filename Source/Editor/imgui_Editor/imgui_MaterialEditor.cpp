@@ -1,5 +1,9 @@
 #include "../MaterialEditor.h"
 
+#include "../Libraries/imgui/imgui.h"
+
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"

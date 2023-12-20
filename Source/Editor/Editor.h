@@ -7,8 +7,6 @@
 namespace QwerkE {
 
     class SceneGraph;
-    class ShaderProgram;
-    class Scenes;
     class EntityEditor;
 
     // TODO: Add cross panel communication to support features such as
@@ -26,14 +24,15 @@ namespace QwerkE {
 
         virtual void ToggleEditorUi() = 0;
 
-    protected:
+    protected: // #TODO private
         Editor() {}
-        // TODO Cleanup
+
         SceneGraph* m_SceneGraph;
         EntityEditor* m_EntityEditor; // Change routine/component data for an entity
-        void* m_ActionWindow; // TODO: Game and Scene windows. Multi scene views
-        void* m_MenuBar; // TODO: Top menu bar with access to settings like save, preferences, etc
-        void* m_ResourcePanel; // TODO: Access to resources and folder structure
+
+        void* m_ActionWindow = nullptr; // TODO: Game and Scene windows. Multi scene views
+        void* m_MenuBar = nullptr; // TODO: Top menu bar with access to settings like save, preferences, etc
+        void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
     };
 
 }

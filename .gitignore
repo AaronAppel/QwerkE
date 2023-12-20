@@ -1,4 +1,5 @@
 .vs/
+
 *.tlog
 *.log
 *.pdb
@@ -10,12 +11,22 @@
 *.VC.db
 *.suo
 *.opendb
+*.obj
+
+# TODO Review .dll includes
+# *.dll
+
+instrumentor_log.json
+
 Qwerk_Engine/Debug/*
 Qwerk_Engine/Release/*
+Qwerk_Engine/QwerkE_Win32/Debug/
+
+Qwerk_Framework/*
+
 Development/RenderingEnv/.vs/
 Development/RenderingEnv/Debug/*
 Development/RenderingEnv/Release/*
 Development/Games/Test_Game1/Debug/
 Development/Games/Test_Game1/Release/
-Qwerk_Engine/QwerkE_Win32/Debug/
-instrumentor_log.json
+

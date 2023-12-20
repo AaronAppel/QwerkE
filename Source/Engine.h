@@ -1,6 +1,14 @@
 #ifndef _Engine_H_
 #define _Engine_H_
 
+#ifndef FrameworkDir // #TODO Temp build fix
+#define FrameworkDir "../../QwerkE_Framework/"
+#endif // !FrameworkDir
+
+#ifndef AssetsDir // #TODO Temp build fix
+#define AssetsDir "Assets/"
+#endif // !AssetsDir
+
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Include.h"
 
 // Try to keep this class properly abstracted so it

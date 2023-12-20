@@ -1,12 +1,7 @@
 #include "imgui_Editor.h"
-#include "../EntityEditor.h"
-#include "../ResourceViewer.h"
-#include "../ShaderEditor.h"
-#include "../SceneViewer.h"
-#include "../SceneGraph.h"
-#include "../EditComponent.h"
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+
 #include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
@@ -15,6 +10,14 @@
 #include "../QwerkE_Framework/Source/Core/Time/Time.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
+#include "../QwerkE_Framework/Source/Core/Network/Network.h"
+
+#include "../EntityEditor.h"
+#include "../ResourceViewer.h"
+#include "../ShaderEditor.h"
+#include "../SceneViewer.h"
+#include "../SceneGraph.h"
+#include "../EditComponent.h"
 
 namespace QwerkE {
 
@@ -42,7 +45,6 @@ namespace QwerkE {
 
     void imgui_Editor::Update()
     {
-
     }
 
     void imgui_Editor::Draw()
@@ -84,9 +86,15 @@ namespace QwerkE {
 
                 static bool showFPS = true;
                 if (ImGui::Button("FPS"))
+                {
                     showFPS = !showFPS;
+                }
+
                 ImGui::SameLine();
-                if (showFPS) ImGui::Text("%4.2f", 1.0 / Time::Delta());
+                if (showFPS)
+                {
+                    ImGui::Text("%4.2f", 1.0 / Time::Delta());
+                }
 
                 if (ImGui::BeginMenu("Testing"))
                 {

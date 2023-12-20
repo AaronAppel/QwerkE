@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -81,7 +81,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>$(SolutionDir)Source/Platform/PCH_Win32.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>$(SolutionDir)Source/Platform/PCH_Win32.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/;$(Solutiondir)QwerkE_Framework/Libraries/Freetype2/;$(Solutiondir)QwerkE_Framework/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>A:\GitHub\Qwerk_Engine\QwerkE_Framework\Libraries\assimp\Release\x86;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm/gtx;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm;$(Solutiondir)QwerkE_Framework/Libraries/pThreads;$(Solutiondir)QwerkE_Framework/Libraries/glfw/GLFW;$(Solutiondir)QwerkE_Framework/Libraries/glew/GL;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletCollision;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletDynamics;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3;$(Solutiondir)QwerkE_Framework/Libraries/Freetype2;$(Solutiondir)QwerkE_Framework/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -90,6 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)QwerkE_Framework\Libraries\glfw\GLFW;$(SolutionDir)QwerkE_Framework\Libraries\glew\GL;$(SolutionDir)QwerkE_Framework\Libraries\freetype2;$(SolutionDir)QwerkE_Framework\Libraries;$(SolutionDir)QwerkE_Framework\Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

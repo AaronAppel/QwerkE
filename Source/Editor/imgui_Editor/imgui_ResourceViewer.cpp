@@ -1,10 +1,11 @@
 #include "../ResourceViewer.h"
-#include "../MaterialEditor.h"
 
-// TODO: Why can't I include imgui.h? include order? It is #included in .h
-//#include "../../QwerkE_Framework/Libraries/imgui/imgui.h"
+#include <string>
 
+#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Libraries/glew/GL/glew.h"
+
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
@@ -21,7 +22,7 @@
 #include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 
-#include <string>
+#include "../MaterialEditor.h"
 
 namespace QwerkE {
 

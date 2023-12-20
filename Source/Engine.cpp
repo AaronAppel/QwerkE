@@ -83,7 +83,8 @@ namespace QwerkE {
 
 			m_IsRunning = true;
 
-			Renderer::Initialize();
+			// TODO: Resolve missing definition
+			// Renderer::Initialize();
 
 			// TODO: Move to editor class
 #ifdef dearimgui
@@ -93,7 +94,7 @@ namespace QwerkE {
 #endif // editor
 
 			// TODO: Move this to a window class
-			const unsigned char FPS_MAX = 144;
+			const unsigned char FPS_MAX = 10; // #TODO Not working
 			const double FPS_MAX_DELTA = 1.0 / FPS_MAX;
 
             /* Application Loop */

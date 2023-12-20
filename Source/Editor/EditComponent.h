@@ -8,11 +8,11 @@
 namespace QwerkE {
 
     class GameObject;
-    class ShaderProgram;
     class Material;
-    class RenderComponent;
-    class PhysicsComponent;
     class Mesh;
+    class PhysicsComponent;
+    class RenderComponent;
+    class ShaderProgram;
 
     class EditComponent
     {

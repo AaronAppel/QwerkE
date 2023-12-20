@@ -1,6 +1,7 @@
 #include "../ShaderEditor.h"
 
 #include "../../../QwerkE_Framework/Libraries/imgui/imgui.h"
+
 #include "../../../QwerkE_Framework/Source/Utilities/StringHelpers.h"
 #include "../../../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
 #include "../../../QwerkE_Framework/Source/Core/Input/Input.h"
@@ -10,6 +11,7 @@
 #include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderComponent.h"
+#include "../../../QwerkE_Framework/Source/Core//Resources/Resources.h"
 
 namespace QwerkE {
 
@@ -29,7 +31,6 @@ namespace QwerkE {
 
     void ShaderEditor::Update()
     {
-
     }
 
     void ShaderEditor::Draw(bool* isOpen)
