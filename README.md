@@ -1,5 +1,5 @@
 # Qwerk_Engine
-*This project is a work in progess and is continually in an unstable state*  
+*This project is in progess and is continually in an unstable state*  
 A simple engine or runtime editor for the QwerkE framework.
 QwerkEngine framework lives here: https://github.com/AaronAppel/QwerkE_Framework
 
