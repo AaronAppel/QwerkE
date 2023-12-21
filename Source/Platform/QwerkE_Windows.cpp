@@ -5,8 +5,11 @@
 // Add a runtime editor that has extra functionality like:
 // level editor, entity editor, shader editor, scripting, etc...
 
-#include "Platform/QwerkE_Windows.h"
+#include <map>
 
+#include "PCH_Win32.h"
+
+#include "../Engine_Defines.h"
 #include "../Engine.h"
 
 #include "../../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
@@ -32,7 +35,7 @@ int main(unsigned int argc, char **argv)
 			printf("\nargv[%d]: %s", counter, argv[counter]);
 	}
 
-	// Look for key arguments
+	// Look for key_* arguments
 	/*if (ArgumentExists(argc, argv, key_ProjectName))
 	{
 		printf("\nFound key argument: %s", key_ProjectName);
@@ -51,5 +54,5 @@ int main(unsigned int argc, char **argv)
 
 	QwerkE::Engine::Run(pairs);
 
-	return 0;
+	return 0; // Consider returning an error code from the engine
 }

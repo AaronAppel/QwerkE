@@ -17,7 +17,7 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
 #include "../QwerkE_Framework/Source/Extended/Bullet3/b3_PhysicsFactory.h"
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_File_Defines.h"
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Defines.h"
 
 #include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
 

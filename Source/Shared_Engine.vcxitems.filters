@@ -32,12 +32,7 @@
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Headers\Engine_Additional_Includes.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Headers\Engine_Defines.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -45,9 +40,6 @@
     </Filter>
     <Filter Include="Editor\imgui_Editor">
       <UniqueIdentifier>{8d50ac33-b895-4b9c-a419-64b18ffdfdcc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{cedbef3d-c0e4-4def-9c05-91bb8e4f13d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

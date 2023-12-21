@@ -12,9 +12,7 @@
 *.suo
 *.opendb
 *.obj
-
-# TODO Review .dll includes
-# *.dll
+*.dll
 
 instrumentor_log.json
 
@@ -30,3 +28,4 @@ Development/RenderingEnv/Release/*
 Development/Games/Test_Game1/Debug/
 Development/Games/Test_Game1/Release/
 
+Debug/*

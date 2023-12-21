@@ -1,32 +1,29 @@
 #include "Engine.h"
 
-// TODO: Properly support editor library switching
-#define IMGUI_EDITOR 1
-#if 1
-#include "Editor/imgui_Editor/imgui_Editor.h"
-#endif // 0
-
-// #include "../../QwerkE_Framework/QwerkE.h"
-
 #include "../QwerkE_Framework/Source/Framework.h"
 
-// TODO: Abstract libraries and remove extra includes
 #include "../QwerkE_Framework/Libraries/glew/GL/glew.h"
 #include "../QwerkE_Framework/Libraries/glfw/GLFW/glfw3.h"
+
+#define IMGUI_EDITOR
+
+#ifdef IMGUI_EDITOR
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_glfw.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_opengl3.h"
 
-#include "../QwerkE_Framework/Source/Utilities/Helpers.h"
-#include "../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
+#include "Editor/imgui_Editor/imgui_Editor.h"
+#else
+#pragma warning "Define editor library!"
+#endif
+
+#include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
+#include "../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
 
 #include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
-
-#include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
-#include "../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
 #include "../QwerkE_Framework/Source/Core/Events/EventManager.h"
@@ -41,6 +38,9 @@
 #include "../QwerkE_Framework/Source/Core/Window/Windows.h"
 #include "../QwerkE_Framework/Source/Core/Window/glfw_Window.h"
 #include "../QwerkE_Framework/Source/Core/Time/Time.h"
+
+#include "../QwerkE_Framework/Source/Utilities/Helpers.h"
+#include "../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
 
 namespace QwerkE {
 
@@ -59,7 +59,9 @@ namespace QwerkE {
 			if (args.find(key_ProjectName) != args.end())
 			{
 				// Load project (reusable method)
-				// Could find and save preferences file path
+				// Could find and save preferences file path for recent project(s)
+				// Show options to choose from with a list of recent projects, ordered by date.
+				// Add an option to auto-load most recently opened project
 			}
 
 			// TODO: check if(initialized) in case user defined simple API.
@@ -178,11 +180,6 @@ namespace QwerkE {
 			m_Editor->Draw();
 
 			Framework::Draw();
-		}
-
-		bool Engine::StillRunning()
-		{
-			return m_IsRunning;
 		}
 	}
 }

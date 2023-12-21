@@ -25,8 +25,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\SceneViewer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Editor\ShaderEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Headers\Engine_Additional_Includes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Headers\Engine_Defines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine_Defines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Editor\imgui_Editor\imgui_ConfigEditor.cpp" />

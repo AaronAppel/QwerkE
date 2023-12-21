@@ -118,13 +118,13 @@ namespace QwerkE {
         // Reload from file
         if (ImGui::Button("Reload Vertex"))
         {
-            if (FileExists(ShaderFolderPath(m_Shader->GetVertShader()->GetName().c_str())))
-                m_Shader->RecompileShaderType(GL_VERTEX_SHADER, LoadCompleteFile(ShaderFolderPath(m_Shader->GetVertShader()->GetName().c_str()), nullptr)); // RAM passed to shader
+            if (FileExists(ShadersFolderPath(m_Shader->GetVertShader()->GetName().c_str())))
+                m_Shader->RecompileShaderType(GL_VERTEX_SHADER, LoadCompleteFile(ShadersFolderPath(m_Shader->GetVertShader()->GetName().c_str()), nullptr)); // RAM passed to shader
         }
         if (ImGui::Button("Reload Fragment"))
         {
-            if (FileExists(ShaderFolderPath(m_Shader->GetFragShader()->GetName().c_str())))
-                m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, LoadCompleteFile(ShaderFolderPath(m_Shader->GetFragShader()->GetName().c_str()), nullptr)); // RAM passed to shader
+            if (FileExists(ShadersFolderPath(m_Shader->GetFragShader()->GetName().c_str())))
+                m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, LoadCompleteFile(ShadersFolderPath(m_Shader->GetFragShader()->GetName().c_str()), nullptr)); // RAM passed to shader
         }
         if (ImGui::Button("Reload Geometry"))
         {

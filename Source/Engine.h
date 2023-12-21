@@ -1,30 +1,21 @@
 #ifndef _Engine_H_
 #define _Engine_H_
 
-#ifndef FrameworkDir // #TODO Temp build fix
-#define FrameworkDir "../../QwerkE_Framework/"
-#endif // !FrameworkDir
-
-#ifndef AssetsDir // #TODO Temp build fix
-#define AssetsDir "Assets/"
-#endif // !AssetsDir
+#include <map>
 
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Include.h"
 
-// Try to keep this class properly abstracted so it
-// can perform on multiple platforms without needing
-// inherited subclasses.
+#include "../../QwerkE_Framework/Source/Utilities/StringHelpers.h"
 
-#include "Headers/Engine_Defines.h"
+/* Define values to be used in other ares of code. */
+#define EngineDataFolderPath(fileName) StringAppend("Data/", fileName)
 
-// If only 1 engine should exist at a time then it could be wrapped in
-// the QwerkE namespace and have static functions like a singleton or
-// service. Or just find another way to prevent multiple instances
-// while offering a nice interface.
+/* Define program arguments */
+#define key_ProjectName "-projectName" // "-projectName" Look in projects folder for a project with the same name.
+// "-projectFilePath" Absolute or relative path to working directory.
+// etc...
 
 // What engine functionality should be user accessible?
-
-#include <map>
 
 namespace QwerkE {
 
@@ -41,8 +32,6 @@ namespace QwerkE {
 		void PollInput();
 		void Update(double deltatime);
 		void Draw();
-
-		bool StillRunning();
 	}
 
 }
