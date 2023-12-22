@@ -5,9 +5,9 @@
 // Add a runtime editor that has extra functionality like:
 // level editor, entity editor, shader editor, scripting, etc...
 
-#include <map>
-
 #include "PCH_Win32.h"
+
+#include <map>
 
 #include "../Engine_Defines.h"
 #include "../Engine.h"

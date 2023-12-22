@@ -1,5 +1,4 @@
-#ifndef _SceneViewer_H_
-#define _SceneViewer_H_
+#pragma once
 
 namespace QwerkE {
 
@@ -22,4 +21,3 @@ namespace QwerkE {
     };
 
 }
-#endif // _SceneViewer_H_

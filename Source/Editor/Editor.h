@@ -1,15 +1,11 @@
-#ifndef _Editor_H_
-#define _Editor_H_
-
-// Class Editor handles all code related to the engine editor.
-// Components include GUI windows, scene graph, shader creator, etc.
+#pragma once
 
 namespace QwerkE {
 
     class SceneGraph;
     class EntityEditor;
 
-    // TODO: Add cross panel communication to support features such as
+    // FEATURE: Add cross panel communication to support features such as
     // drag and drop textures, trigger callbacks, input, etc.
     // Or just stop using editor subclasses and switch to base functions only.
 
@@ -27,13 +23,12 @@ namespace QwerkE {
     protected: // #TODO private
         Editor() {}
 
-        SceneGraph* m_SceneGraph;
-        EntityEditor* m_EntityEditor; // Change routine/component data for an entity
+        SceneGraph* m_SceneGraph = nullptr;
+        EntityEditor* m_EntityEditor = nullptr;
 
-        void* m_ActionWindow = nullptr; // TODO: Game and Scene windows. Multi scene views
-        void* m_MenuBar = nullptr; // TODO: Top menu bar with access to settings like save, preferences, etc
-        void* m_ResourcePanel = nullptr; // TODO: Access to resources and folder structure
+        void* m_ActionWindow = nullptr; // FEATURE: Game and Scene windows. Multi scene views
+        void* m_MenuBar = nullptr;
+        void* m_ResourcePanel = nullptr;
     };
 
 }
-#endif // !_Editor_H_

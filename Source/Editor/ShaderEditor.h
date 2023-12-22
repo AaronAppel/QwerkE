@@ -1,5 +1,4 @@
-#ifndef _ShaderEditor_H_
-#define _ShaderEditor_H_
+#pragma once
 
 #include <map>
 #include <string>
@@ -27,4 +26,3 @@ namespace QwerkE {
     };
 
 }
-#endif // _ShaderEditor_H_

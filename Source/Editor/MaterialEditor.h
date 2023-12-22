@@ -1,10 +1,9 @@
-#ifndef _MaterialEditor_H_
-#define _MaterialEditor_H_
-
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
+#pragma once
 
 #include <map>
 #include <string>
+
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
 
 namespace QwerkE {
 
@@ -25,4 +24,3 @@ namespace QwerkE {
     };
 
 }
-#endif // _MaterialEditor_H_

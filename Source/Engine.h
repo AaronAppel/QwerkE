@@ -1,5 +1,4 @@
-#ifndef _Engine_H_
-#define _Engine_H_
+#pragma once
 
 #include <map>
 
@@ -35,4 +34,3 @@ namespace QwerkE {
 	}
 
 }
-#endif // !_Engine_H_

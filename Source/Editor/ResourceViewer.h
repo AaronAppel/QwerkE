@@ -1,5 +1,4 @@
-#ifndef _ResourceViewer_H_
-#define _ResourceViewer_H_
+#pragma once
 
 #include <string>
 #include <map>
@@ -61,4 +60,3 @@ namespace QwerkE {
     };
 
 }
-#endif // _ResourceViewer_H_

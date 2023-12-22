@@ -1,5 +1,4 @@
-#ifndef _Engine_Defines_H_
-#define _Engine_Defines_H_
+#pragma once
 
 // NOTE Separate from Engine.h for PCH
 
@@ -13,5 +12,3 @@
 #define FrameworkDir "QwerkE_Framework/"
 #define AssetsDir "Assets/"
 #define ProjectsDir AssetsDir "Projects/"
-
-#endif // _Engine_Defines_H_

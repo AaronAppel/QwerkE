@@ -79,8 +79,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>$(SolutionDir)Source/Platform/PCH_Win32.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>$(SolutionDir)Source/Platform/PCH_Win32.h</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>PCH_Win32.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>A:\GitHub\Qwerk_Engine\QwerkE_Framework\Libraries\assimp\Release\x86;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm/gtx;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm;$(Solutiondir)QwerkE_Framework/Libraries/pThreads;$(Solutiondir)QwerkE_Framework/Libraries/glfw/GLFW;$(Solutiondir)QwerkE_Framework/Libraries/glew/GL;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletCollision;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletDynamics;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3;$(Solutiondir)QwerkE_Framework/Libraries/Freetype2;$(Solutiondir)QwerkE_Framework/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -91,6 +91,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)QwerkE_Framework\Libraries\glfw\GLFW;$(SolutionDir)QwerkE_Framework\Libraries\glew\GL;$(SolutionDir)QwerkE_Framework\Libraries\freetype2;$(SolutionDir)QwerkE_Framework\Libraries;$(SolutionDir)QwerkE_Framework\Libraries\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>PCH_Win32.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -101,6 +104,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>PCH_Win32.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -115,6 +121,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>PCH_Win32.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -124,6 +133,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Platform\PCH_Win32.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Platform\QwerkE_Windows.cpp" />
   </ItemGroup>

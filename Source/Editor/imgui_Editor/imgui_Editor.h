@@ -1,5 +1,4 @@
-#ifndef _imgui_Editor_H_
-#define _imgui_Editor_H_
+#pragma once
 
 #include "../Editor.h"
 
@@ -38,4 +37,3 @@ namespace QwerkE {
     };
 
 }
-#endif // _imgui_Editor_H_

@@ -1,5 +1,4 @@
-#ifndef _Config_Editor_H_
-#define _Config_Editor_H_
+#pragma once
 
 #include <string>
 
@@ -18,4 +17,3 @@ namespace QwerkE {
     };
 
 }
-#endif // _Config_Editor_H_

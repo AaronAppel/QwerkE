@@ -1,5 +1,4 @@
-#ifndef _EditComponent_H_
-#define _EditComponent_H_
+#pragma once
 
 #include <map>
 #include <string>
@@ -53,4 +52,3 @@ namespace QwerkE {
     };
 
 }
-#endif // _EditComponent_H_
