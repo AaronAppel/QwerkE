@@ -18,13 +18,9 @@
 
 namespace QwerkE {
 
-    class Editor;
-    class Scenes;
-    class Window;
-
 	namespace Engine
 	{
-		void Run(std::map<const char*, const char*> &args);
+		QwerkE::eEngineMessage Run(std::map<const char*, const char*> &args);
 		void Stop();
 
 		void NewFrame();

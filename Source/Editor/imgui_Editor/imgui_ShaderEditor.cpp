@@ -46,13 +46,14 @@ namespace QwerkE {
         static char fragBuffer[bufferSize] = { 0 };
         static char geoBuffer[bufferSize] = { 0 };
 
-        static GLuint currentShader = 0;
-
+        static GLuint currentShaderProgram = 0;
         static bool showShaderList = false;
 
         ImGui::Begin("Shader Editor", isOpen);
         ImGui::Checkbox("ShaderList", &showShaderList);
+
         if (showShaderList)
+        {
             for (auto p : *m_ShaderList)
             {
                 if (ImGui::Button(p.second->GetName().c_str()))
@@ -60,41 +61,45 @@ namespace QwerkE {
                     m_Shader = p.second;
                 }
             }
+        }
 
-        if (currentShader != m_Shader->GetProgram())
+        if (currentShaderProgram != m_Shader->GetProgram())
         {
             // strcpy_s(buffer, (char*)shader->GetVertString());
-            currentShader = m_Shader->GetProgram();
-            // TODO: Handle null shader strings
+            currentShaderProgram = m_Shader->GetProgram();
+            // #TODO Handle null shader strings
             strcpy_s(vertBuffer, bufferSize, m_Shader->GetVertShader()->GetStringData());
             strcpy_s(fragBuffer, bufferSize, m_Shader->GetFragShader()->GetStringData());
             // strcpy_s(geoBuffer, bufferSize, (const char*)shader->GetGeoString());
         }
 
-        //ImGui::ShowTestWindow();
-        float windowHeight = 400.0f;
+        // ImGui::ShowTestWindow();
+
+        const float windowHeight = 400.0f; // #TODO Get window height dynamically or use a ratio of the current Window width
+        const float magicNumber = 20.0f; // #TODO Width offset?
+
         if (ImGui::CollapsingHeader("Vertex"))
         {
-            if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20.0f, windowHeight)))
+            if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
             {
-                // buffer was changed
+                // #TODO On buffer changed
             }
         }
         if (ImGui::CollapsingHeader("Fragment"))
         {
-            if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20.0f, windowHeight)))
+            if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
             {
-                // buffer was changed
+                // #TODO On buffer changed
             }
         }
         if (ImGui::CollapsingHeader("Geometry"))
         {
-            if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - 20.0f, windowHeight)))
+            if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
             {
-                // buffer was changed
+                // #TODO On buffer changed
             }
         }
-        // TODO: Add recompile functionality back in. Although this should only be for certain shaders
+        // #TODO Add recompile functionality back in. Although this should only be for certain shaders
         // like "modifiable" tagged ones. Or something...
         if (ImGui::Button("Recompile Vertex"))
         {
@@ -111,7 +116,7 @@ namespace QwerkE {
 
         if (ImGui::Button("Recompile Geometry"))
         {
-            // TODO: Handle geometry shader editing.
+            // #TODO Handle geometry shader editing.
             // m_Shader->RecompileShaderType(GL_GEOMETRY_SHADER, DeepCopyString(fragBuffer));
         }
 
@@ -119,19 +124,25 @@ namespace QwerkE {
         if (ImGui::Button("Reload Vertex"))
         {
             if (FileExists(ShadersFolderPath(m_Shader->GetVertShader()->GetName().c_str())))
+            {
+                // #TODO Use smart pointers to allocated object
                 m_Shader->RecompileShaderType(GL_VERTEX_SHADER, LoadCompleteFile(ShadersFolderPath(m_Shader->GetVertShader()->GetName().c_str()), nullptr)); // RAM passed to shader
+            }
         }
         if (ImGui::Button("Reload Fragment"))
         {
             if (FileExists(ShadersFolderPath(m_Shader->GetFragShader()->GetName().c_str())))
-                m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, LoadCompleteFile(ShadersFolderPath(m_Shader->GetFragShader()->GetName().c_str()), nullptr)); // RAM passed to shader
+            {
+                // #TODO Use smart pointers to allocated object
+                m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, LoadCompleteFile(ShadersFolderPath(m_Shader->GetFragShader()->GetName().c_str()), nullptr));
+            }
         }
         if (ImGui::Button("Reload Geometry"))
         {
-            // TODO: Handle geometry shader editing.
+            // #TODO Handle geometry shader editing.
         }
-        ImGui::End();
 
+        ImGui::End();
     }
 
 }

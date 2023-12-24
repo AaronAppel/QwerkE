@@ -9,9 +9,9 @@
 
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
 
-namespace QwerkE {
+typedef unsigned int ALuint; // #TODO Hide OAL library type
 
-    typedef unsigned int ALuint; // TODO: Hide OAL library type
+namespace QwerkE {
 
     struct Texture;
     class ShaderProgram;
@@ -22,8 +22,7 @@ namespace QwerkE {
     class Material;
     class MaterialEditor;
 
-    // TODO: Rename class to imgui_ResourceViewer
-    class ResourceViewer
+    class ResourceViewer // #TODO Rename class to imgui_ResourceViewer
     {
     public:
         ResourceViewer();
@@ -32,7 +31,7 @@ namespace QwerkE {
         void Draw();
 
     private:
-        int m_CurrentResource = 0; // TODO: Consider keeping an index for all windows for back tracking
+        int m_CurrentResource = 0; // #TODO Consider keeping an index for all windows for back tracking
 
         MaterialEditor* m_MaterialEditor = nullptr;
         bool m_ShowMatEditor = false;
@@ -43,19 +42,16 @@ namespace QwerkE {
         const std::map<std::string, Texture*>* m_Textures = nullptr;
         const std::map<std::string, Mesh*>* m_Meshes = nullptr;
         const std::map<std::string, ALuint>* m_Sounds = nullptr;
-        // const std::map<std::string, GLuint>* m_Fonts = nullptr;
-        // const std::map<std::string, int>* m_Levels = nullptr;
 
-        // Model viewing
-        unsigned char m_ItemsPerRow = 4;
-        ImVec2 m_ImageSize = ImVec2(64, 64);
+        unsigned char m_ModelsPerRow = 4;
+        ImVec2 m_ModelThumbnailPixelSize = ImVec2(64, 64);
 
         FrameBufferObject* m_FBO;
         std::vector<GLuint> m_ModelImageHandles;
         void DrawModelThumbnails();
 
-        GameObject* m_Subject = nullptr; // model to draw
-        GameObject* m_TagPlane = nullptr; // asset tag plane
+        GameObject* m_ModelToDraw = nullptr;
+        GameObject* m_AssetTagPlane = nullptr;
         Scene* m_ViewerScene = nullptr;
     };
 

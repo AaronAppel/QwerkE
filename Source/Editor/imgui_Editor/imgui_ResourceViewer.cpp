@@ -96,7 +96,7 @@ namespace QwerkE {
 
             // draw list of resources
             ImVec2 winSize = ImGui::GetWindowSize();
-            m_ItemsPerRow = (unsigned char)(winSize.x / (m_ImageSize.x * 1.5f) + 1.0f); // (* up the image size for feel), + avoid dividing by 0
+            m_ModelsPerRow = (unsigned char)(winSize.x / (m_ImageSize.x * 1.5f) + 1.0f); // (* up the image size for feel), + avoid dividing by 0
             unsigned int counter = 0;
             ImGui::Separator();
             // TODO: Consider using imgui groups for easier hover support
@@ -106,7 +106,7 @@ namespace QwerkE {
                 // draw texture thumbnails
                 for (const auto& p : *m_Textures)
                 {
-                    if (counter % m_ItemsPerRow)
+                    if (counter % m_ModelsPerRow)
                         ImGui::SameLine();
 
                     ImGui::ImageButton((ImTextureID)p.second->s_Handle, m_ImageSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
@@ -133,7 +133,7 @@ namespace QwerkE {
                 // draw material thumbnails
                 for (const auto& p : *m_Materials)
                 {
-                    if (counter % m_ItemsPerRow)
+                    if (counter % m_ModelsPerRow)
                         ImGui::SameLine();
 
                     ImGui::ImageButton((ImTextureID)p.second->GetMaterialByType(eMaterialMaps::MatMap_Diffuse)->s_Handle, m_ImageSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
@@ -157,7 +157,7 @@ namespace QwerkE {
             case 2:
                 for (auto p : *m_Shaders)
                 {
-                    if (counter % m_ItemsPerRow)
+                    if (counter % m_ModelsPerRow)
                         ImGui::SameLine();
 
                     if (ImGui::Button(p.first.c_str()))
@@ -178,7 +178,7 @@ namespace QwerkE {
             case 4:
                 for (unsigned int i = 0; i < m_ModelImageHandles.size(); i++)
                 {
-                    if (counter % m_ItemsPerRow)
+                    if (counter % m_ModelsPerRow)
                         ImGui::SameLine();
 
                     ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), m_ImageSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
@@ -199,7 +199,7 @@ namespace QwerkE {
             case 5:
                 for (auto p : *m_Sounds)
                 {
-                    if (counter % m_ItemsPerRow)
+                    if (counter % m_ModelsPerRow)
                         ImGui::SameLine();
 
                     if (ImGui::Button(p.first.c_str()))

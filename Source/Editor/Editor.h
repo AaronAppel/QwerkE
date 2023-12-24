@@ -9,7 +9,7 @@ namespace QwerkE {
     // drag and drop textures, trigger callbacks, input, etc.
     // Or just stop using editor subclasses and switch to base functions only.
 
-    class Editor // Abstract
+    class Editor
     {
     public:
         virtual ~Editor() {}
@@ -20,7 +20,7 @@ namespace QwerkE {
 
         virtual void ToggleEditorUi() = 0;
 
-    protected: // #TODO private
+    protected: // #TODO What should be private?
         Editor() {}
 
         SceneGraph* m_SceneGraph = nullptr;

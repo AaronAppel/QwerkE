@@ -16,9 +16,8 @@
 
 int main(unsigned int argc, char **argv)
 {
-	// TODO: Move argument handling code into engine
-	// Greeting
-	// std::cout << "-- Qwerk Engine 0.1 (VER_MACRO) --\n" << argc;
+	// #TODO Move argument handling code into engine. Pass program args into QwerkE::Engine::Run(argc, argv);
+	// std::cout << "-- Qwerk Engine 0.1 (VER_MACRO) --\n" << argc; // #TODO Define a version VER_MACRO
 
 	unsigned int counter;
 	printf("Program Name Is: %s", argv[0]);
@@ -52,7 +51,6 @@ int main(unsigned int argc, char **argv)
 	// Save environment variables info or references
 	// Save working directory
 
-	QwerkE::Engine::Run(pairs);
-
-	return 0; // Consider returning an error code from the engine
+	const int result = (int)QwerkE::Engine::Run(pairs);
+	return result;
 }

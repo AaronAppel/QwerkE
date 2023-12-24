@@ -47,10 +47,10 @@ namespace QwerkE {
 	namespace Engine
     {
         // Private engine variables
-        static bool m_IsRunning = false; // TODO: Remove extra variable
+        static bool m_IsRunning = false; // #TODO Remove extra variable
         static Editor* m_Editor = nullptr;
 
-		void Engine::Run(std::map<const char*, const char*> &args)
+		QwerkE::eEngineMessage Engine::Run(std::map<const char*, const char*> &args)
         {
             Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
 			PROFILE_SCOPE("Run");
@@ -64,7 +64,7 @@ namespace QwerkE {
 				// Add an option to auto-load most recently opened project
 			}
 
-			// TODO: check if(initialized) in case user defined simple API.
+			// #TODO check if(initialized) in case user defined simple API.
 			// Might want to create another function for the game loop and
 			// leave Run() smaller and abstracted from the functionality.
 
@@ -78,28 +78,24 @@ namespace QwerkE {
 			if (Framework::Startup(ConfigsFolderPath("preferences.qpref"), flags) == eEngineMessage::_QFailure)
             {
                 Log::Safe("Qwerk Framework failed to load. Shutting down engine.");
-				return;
+				return eEngineMessage::_QFailure;
 			}
 
 			Scenes::GetCurrentScene()->SetIsEnabled(true);
 
 			m_IsRunning = true;
 
-			// TODO: Resolve missing definition
-			// Renderer::Initialize();
-
-			// TODO: Move to editor class
+			// #TODO Move to editor class
 #ifdef dearimgui
 			m_Editor = (Editor*)new imgui_Editor();
 #else
 			m_Editor = (Editor*)new ????_Editor();
 #endif // editor
 
-			// TODO: Move this to a window class
-			const unsigned char FPS_MAX = 10; // #TODO Not working
+			// #TODO Move this to a window class
+			const unsigned char FPS_MAX = 120;
 			const double FPS_MAX_DELTA = 1.0 / FPS_MAX;
 
-            /* Application Loop */
 			double deltaTime = 0.0;
 			double elapsedTime = 0.0;
 
@@ -109,31 +105,28 @@ namespace QwerkE {
 
 				deltaTime = Time::Delta();
 				elapsedTime += deltaTime;
-				// if (elapsedTime >= FPS_MAX_DELTA)
+				if (elapsedTime >= FPS_MAX_DELTA)
 				{
-					/* New Frame */
 					Engine::NewFrame();
 
-					/* Input */
 					Engine::PollInput();
 
-					/* Logic */
 					Engine::Update(elapsedTime);
 
-					/* Render */
                     Engine::Draw();
 
                     elapsedTime = 0.0;
 				}
-				// TODO : Fix yield that broke after deltatime changes
-                // else
-                // {
-                // 	YieldProcessor(); // TODO: Look into proper yield behaviour
-                // }
+                else
+                {
+                	YieldProcessor();
+                }
 			}
 
             Instrumentor::Get().EndSession();
 			Framework::TearDown();
+
+			return QwerkE::eEngineMessage::_QSuccess;
 		}
 
 		void Engine::Stop()
