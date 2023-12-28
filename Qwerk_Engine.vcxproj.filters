@@ -15,9 +15,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Platform\QwerkE_Windows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Platform\PCH_Win32.h">
       <Filter>Source Files</Filter>
     </ClInclude>

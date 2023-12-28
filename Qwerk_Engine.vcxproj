@@ -81,7 +81,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH_Win32.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>A:\GitHub\Qwerk_Engine\QwerkE_Framework\Libraries\assimp\Release\x86;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm/gtx;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm;$(Solutiondir)QwerkE_Framework/Libraries/pThreads;$(Solutiondir)QwerkE_Framework/Libraries/glfw/GLFW;$(Solutiondir)QwerkE_Framework/Libraries/glew/GL;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletCollision;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletDynamics;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3;$(Solutiondir)QwerkE_Framework/Libraries/Freetype2;$(Solutiondir)QwerkE_Framework/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir)QwerkE_Framework/Libraries/Bullet3;$(Solutiondir)QwerkE_Framework/Libraries/assimp/Release/x86;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm/gtx;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm;$(Solutiondir)QwerkE_Framework/Libraries/pThreads;$(Solutiondir)QwerkE_Framework/Libraries/glfw/GLFW;$(Solutiondir)QwerkE_Framework/Libraries/glew/GL;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletCollision;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletDynamics;$(Solutiondir)QwerkE_Framework/Libraries/Freetype2;$(Solutiondir)QwerkE_Framework/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

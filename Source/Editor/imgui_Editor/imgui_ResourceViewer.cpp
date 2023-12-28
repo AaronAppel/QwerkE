@@ -28,13 +28,13 @@ namespace QwerkE {
 
     ResourceViewer::ResourceViewer()
     {
-        // TODO: Review references for necessity
         m_MaterialEditor = new MaterialEditor();
         m_Materials = Resources::SeeMaterials();
         m_Textures = Resources::SeeTextures();
         m_Shaders = Resources::SeeShaderPrograms();
         m_Meshes = Resources::SeeMeshes();
         m_Sounds = Resources::SeeSounds();
+
         m_FBO = new FrameBufferObject();
         m_FBO->Init();
 
@@ -43,12 +43,12 @@ namespace QwerkE {
         // m_Subject = ((Factory*)QwerkE::Services::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(0, -3.5, 15));
         // m_Subject->SetRotation(vec3(0,180,0));
 
-        m_TagPlane = Factory::CreatePlane(m_ViewerScene, vec3(2, -2, 10));
-        m_TagPlane->SetRotation(vec3(90, 0, 0));
-        m_TagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));
+        m_AssetTagPlane = Factory::CreatePlane(m_ViewerScene, vec3(2, -2, 10));
+        m_AssetTagPlane->SetRotation(vec3(90, 0, 0));
+        m_AssetTagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));
 
         // m_ViewerScene->AddObjectToScene(m_Subject);
-        m_ViewerScene->AddObjectToScene(m_TagPlane);
+        m_ViewerScene->AddObjectToScene(m_AssetTagPlane);
 
         m_ViewerScene->Initialize();
         m_ViewerScene->SetIsEnabled(true);
@@ -73,9 +73,9 @@ namespace QwerkE {
             {
                 DrawModelThumbnails();
             }
+
             ImGui::SameLine();
 
-            // select what resource to view
             if (ImGui::Button("Textures"))
                 m_CurrentResource = 0;
             ImGui::SameLine();
@@ -94,27 +94,28 @@ namespace QwerkE {
             if (ImGui::Button("Sounds"))
                 m_CurrentResource = 5;
 
-            // draw list of resources
             ImVec2 winSize = ImGui::GetWindowSize();
-            m_ModelsPerRow = (unsigned char)(winSize.x / (m_ImageSize.x * 1.5f) + 1.0f); // (* up the image size for feel), + avoid dividing by 0
-            unsigned int counter = 0;
+            m_ModelsPerRow = (unsigned char)(winSize.x / (m_ModelThumbnailPixelSize.x * 1.5f) + 1.0f); // (* up the image size for feel), + avoid dividing by 0
+
             ImGui::Separator();
-            // TODO: Consider using imgui groups for easier hover support
+
+            // #TODO Consider using imgui groups for easier hover support
+            unsigned int counter = 0;
             switch (m_CurrentResource)
             {
             case 0:
-                // draw texture thumbnails
                 for (const auto& p : *m_Textures)
                 {
                     if (counter % m_ModelsPerRow)
+                    {
                         ImGui::SameLine();
+                    }
 
-                    ImGui::ImageButton((ImTextureID)p.second->s_Handle, m_ImageSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
+                    ImGui::ImageButton((ImTextureID)p.second->s_Handle, m_ModelThumbnailPixelSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
 
                     if (ImGui::IsItemHovered())
                     {
                         ImGui::BeginTooltip();
-                        // image name or something might be better. use newly create asset tags
 
                         if (ImGui::IsMouseDown(0))
                         {
@@ -129,14 +130,14 @@ namespace QwerkE {
                     counter++;
                 }
                 break;
+
             case 1:
-                // draw material thumbnails
                 for (const auto& p : *m_Materials)
                 {
                     if (counter % m_ModelsPerRow)
                         ImGui::SameLine();
 
-                    ImGui::ImageButton((ImTextureID)p.second->GetMaterialByType(eMaterialMaps::MatMap_Diffuse)->s_Handle, m_ImageSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
+                    ImGui::ImageButton((ImTextureID)p.second->GetMaterialByType(eMaterialMaps::MatMap_Diffuse)->s_Handle, m_ModelThumbnailPixelSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
                     if (ImGui::IsItemHovered())
                     {
                         ImGui::BeginTooltip();
@@ -154,6 +155,7 @@ namespace QwerkE {
                     counter++;
                 }
                 break;
+
             case 2:
                 for (auto p : *m_Shaders)
                 {
@@ -162,7 +164,9 @@ namespace QwerkE {
 
                     if (ImGui::Button(p.first.c_str()))
                     {
+                        // #TODO Implement
                     }
+
                     if (ImGui::IsItemHovered())
                     {
                         ImGui::BeginTooltip();
@@ -172,16 +176,22 @@ namespace QwerkE {
                     counter++;
                 }
                 break;
+
             case 3:
-                // for (m_Fonts)
+                // Fonts m_Fonts
                 break;
+
             case 4:
                 for (unsigned int i = 0; i < m_ModelImageHandles.size(); i++)
                 {
                     if (counter % m_ModelsPerRow)
                         ImGui::SameLine();
 
-                    ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), m_ImageSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
+                    if (ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), m_ModelThumbnailPixelSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1))
+                    {
+                        // #TODO Implement
+                    }
+
                     if (ImGui::IsItemHovered())
                     {
                         ImGui::BeginTooltip();
@@ -189,13 +199,14 @@ namespace QwerkE {
                         {
                             ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), ImVec2(256, 256), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
                         }
-                        // image name or something might be better. use newly create asset tags
+
                         ImGui::Text(std::to_string(m_ModelImageHandles[0]).c_str());
                         ImGui::EndTooltip();
                     }
                     counter++;
                 }
                 break;
+
             case 5:
                 for (auto p : *m_Sounds)
                 {
@@ -206,6 +217,7 @@ namespace QwerkE {
                     {
                         Audio::PlaySound(p.first.c_str());
                     }
+
                     if (ImGui::IsItemHovered())
                     {
                         ImGui::BeginTooltip();
@@ -239,12 +251,12 @@ namespace QwerkE {
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            // TODO: Loop through renderables to setup
+            // #TODO Loop through renderables to setup
             //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetMeshAtIndex(0, m_Resources->GetMesh(null_mesh));
 
-            // TODO: RenderRoutine needs to update its uniform functions properly
+            // #TODO RenderRoutine needs to update its uniform functions properly
             //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetModel(p.second);
-            //((RenderComponent*)m_TagPlane->GetComponent(Component_Render))->SetColour(vec4(128, 128, 128, 255)); // TODO: use model asset tag color
+            //((RenderComponent*)m_AssetTagPlane->GetComponent(Component_Render))->SetColour(vec4(128, 128, 128, 255)); // #TODO use model asset tag color
 
             // draw scene
             m_ViewerScene->Draw();
