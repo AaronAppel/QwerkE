@@ -14,7 +14,6 @@ namespace QwerkE {
     {
     public:
         MaterialEditor();
-        ~MaterialEditor();
 
         void Draw(Material* material, bool* isOpen);
 

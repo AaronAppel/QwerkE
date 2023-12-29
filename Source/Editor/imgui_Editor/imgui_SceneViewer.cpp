@@ -20,19 +20,6 @@ namespace QwerkE {
         m_FBO->Init();
     }
 
-    SceneViewer::~SceneViewer()
-    {
-        delete m_FBO;
-    }
-
-    void SceneViewer::NewFrame()
-    {
-    }
-
-    void SceneViewer::Update()
-    {
-    }
-
     void SceneViewer::Draw()
     {
         DrawSceneView();
@@ -74,6 +61,7 @@ namespace QwerkE {
             imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
             imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
 
+            // #TODO Review scene viewer window resizing behaviour
             // const float scalar = 0.95f;
             // ImVec2 imageSize = ImVec2(winSize.x * scalar, winSize.y * scalar);
 

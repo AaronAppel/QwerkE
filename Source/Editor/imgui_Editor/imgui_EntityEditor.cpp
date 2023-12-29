@@ -63,7 +63,7 @@ namespace QwerkE {
             // Draw generic GameObject data like transform and name
             // std::string name = m_CurrentEntity->GetName().c_str() + ' '; // extra space for editing
             ImGui::InputText("Name: ", (char*)m_CurrentEntity->GetName().c_str(), m_CurrentEntity->GetName().size());
-            // m_CurrentEntity->SetName(); // TODO: Scene map probably needs to handle name changes
+            // m_CurrentEntity->SetName(); // #TODO Scene map probably needs to handle name changes
 
             static float pos[3] = { 0.0f, 0.0f, 0.0f };
             pos[0] = m_CurrentEntity->GetPosition().x;
@@ -115,8 +115,8 @@ namespace QwerkE {
                             renderable.SetMaterial(Resources::GetMaterial(null_material));
                             renderable.SetShader(Resources::GetShaderProgram(null_shader));
                             renderable.SetMesh(Resources::GetMesh(null_mesh));
-                            static int uniqueId = 0; // TODO: Implement GUIDs
-                            // NOTE: Currently if 2 or more renderables have the same name, you will not be able to select any one except the first in editor
+                            static int uniqueId = 0; // #FEATURE Implement GUIDs
+                            // #NOTE Currently if 2 or more renderables have the same name, you will not be able to select any one except the first in editor
                             renderable.SetRenderableName(std::to_string(uniqueId++));
 
                             RenderComponent* rComp = (RenderComponent*)m_CurrentEntity->GetComponent(Component_Render);
@@ -136,6 +136,7 @@ namespace QwerkE {
                             }
                         }
                         break;
+
                     case 1:
                         if (m_CurrentEntity->GetComponent(Component_Physics) == nullptr)
                         {
@@ -143,14 +144,27 @@ namespace QwerkE {
                             vec3 scale = m_CurrentEntity->GetScale();
                             btRigidBody* rigidBody = PhysicsFactory::CreateRigidCube(btVector3(position.x, position.y, position.z), scale.x, scale.y, scale.z, 1.0f);
                             PhysicsComponent* component = new Bullet3Component(rigidBody);
-                            m_CurrentEntity->AddComponent(component);
-                            Physics::RegisterObject(rigidBody);
+
+                            if (m_CurrentEntity->AddComponent(component))
+                            {
+                                Physics::RegisterObject(rigidBody);
+                            }
+                            else
+                            {
+                                delete component;
+                                delete rigidBody;
+                                break;
+                            }
 
                             Bullet3Routine* bulletRoutine = new Bullet3Routine();
-                            m_CurrentEntity->AddUpdateRoutine(bulletRoutine);
-                            bulletRoutine->Initialize();
-
-                            // TODO: Free bulletRoutine RAM
+                            if (m_CurrentEntity->AddUpdateRoutine(bulletRoutine))
+                            {
+                                bulletRoutine->Initialize();
+                            }
+                            else
+                            {
+                                delete bulletRoutine;
+                            }
                         }
                         break;
                     }
@@ -161,13 +175,9 @@ namespace QwerkE {
 
             // Draw properties for object components like render, character, etc
             m_EditComponent->Draw(m_CurrentEntity);
+        }
 
-            ImGui::End();
-        }
-        else
-        {
-            ImGui::End();
-        }
+        ImGui::End(); // #TODO Review if End() call is needed
 	}
 
 }

@@ -8,10 +8,8 @@ namespace QwerkE {
     {
     public:
         SceneViewer();
-        ~SceneViewer();
+        ~SceneViewer() { delete m_FBO; }
 
-        void NewFrame();
-        void Update();
         void Draw();
 
     private:
