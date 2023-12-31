@@ -39,93 +39,11 @@ namespace QwerkE {
         delete m_SceneViewer;
     }
 
-    void imgui_Editor::NewFrame()
-    {
-    }
-
-    void imgui_Editor::Update()
-    {
-    }
-
     void imgui_Editor::Draw()
     {
         PROFILE_SCOPE("Editor Render");
-        if (m_ShowingEditorGUI == false)
-        {
-            if (ImGui::BeginMainMenuBar())
-            {
-                if (ImGui::BeginMenu("Menu"))
-                {
-                    static int index = 0;
-                    static const int size = 5;
-                    const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
-                    if (ImGui::ListBox("", &index, d, size, 3))
-                    {
-                        if (index == 0) m_ShowingExampleWindow = !m_ShowingExampleWindow;
-                    }
-                    ImGui::EndMenu();
-                }
 
-                if (ImGui::BeginMenu("Tools"))
-                {
-                    const int size = 1;
-                    static const char* toolsList[size] = { "Shader Editor" };
-                    static bool* toolsStates[size] = { &m_ShowingShaderEditor };
-
-                    for (int i = 0; i < size; i++)
-                    {
-                        if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
-                        {
-                            m_ShowingShaderEditor = *toolsStates[i];
-                        }
-                    }
-                    ImGui::EndMenu();
-                }
-
-                if (ImGui::Checkbox("GUI", &m_ShowingEditorGUI)) {}
-
-                static bool showFPS = true;
-                if (ImGui::Button("FPS"))
-                {
-                    showFPS = !showFPS;
-                }
-
-                ImGui::SameLine();
-                if (showFPS)
-                {
-                    ImGui::Text("%4.2f", 1.0 / Time::Delta());
-                }
-
-                if (ImGui::BeginMenu("Testing"))
-                {
-                    static bool clientServerEnabled = false;
-                    if (ImGui::Checkbox("Client/Server", &clientServerEnabled))
-                    {
-                        if (clientServerEnabled)
-                        {
-                            Network::Initialize();
-                        }
-                        else
-                        {
-                            Network::TearDown();
-                        }
-                    }
-
-                    if (clientServerEnabled)
-                    {
-                        Network::TestUpdate();
-                    }
-
-                    ImGui::EndMenu();
-                }
-
-                ImGui::EndMainMenuBar();
-            }
-
-            // Scenes::GetCurrentScene()->Draw();
-            return;
-        }
-
+        DrawMainMenuBar();
         RenderDockingContext();
 
         if (m_ShowingExampleWindow)
@@ -133,72 +51,10 @@ namespace QwerkE {
             ImGui::ShowDemoWindow();
         }
 
-        if (ImGui::BeginMainMenuBar())
-        {
-            if (ImGui::BeginMenu("Menu"))
-            {
-                static int index = 0;
-                static const int size = 5;
-                const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
-                if (ImGui::ListBox("", &index, d, size, 3))
-                {
-                    if (index == 0) m_ShowingExampleWindow = !m_ShowingExampleWindow;
-                }
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Tools"))
-            {
-                const int size = 1;
-                static const char* toolsList[size] = { "Shader Editor" };
-                static bool* toolsStates[size] = { &m_ShowingShaderEditor };
-
-                for (int i = 0; i < size; i++)
-                {
-                    if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
-                    {
-                        m_ShowingShaderEditor = *toolsStates[i];
-                    }
-                }
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::Checkbox("GUI", &m_ShowingEditorGUI)) {}
-
-            static bool showFPS = true;
-            if (ImGui::Button("FPS"))
-                showFPS = !showFPS;
-            ImGui::SameLine();
-            if (showFPS) ImGui::Text("%4.2f", 1.0 / Time::Delta());
-
-            if (ImGui::BeginMenu("Testing"))
-            {
-                static bool clientServerEnabled = false;
-                if (ImGui::Checkbox("Client/Server", &clientServerEnabled))
-                {
-                    if (clientServerEnabled)
-                    {
-                        Network::Initialize();
-                    }
-                    else
-                    {
-                        Network::TearDown();
-                    }
-                }
-
-                if (clientServerEnabled)
-                {
-                    Network::TestUpdate();
-                }
-
-                ImGui::EndMenu();
-            }
-
-            ImGui::EndMainMenuBar();
-        }
-
         if (m_ShowingShaderEditor)
+        {
             m_ShaderEditor->Draw(&m_ShowingShaderEditor);
+        }
 
         m_ResourceViewer->Draw();
         m_SceneViewer->Draw();
@@ -268,6 +124,91 @@ namespace QwerkE {
         }
 
         ImGui::End();
+    }
+
+    void imgui_Editor::DrawMainMenuBar()
+    {
+        if (ImGui::BeginMainMenuBar())
+        {
+            if (ImGui::BeginMenu("Menu"))
+            {
+                static int index = 0;
+                static const int size = 5;
+                const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
+                if (ImGui::ListBox("", &index, d, size, 3))
+                {
+                    if (index == 0) m_ShowingExampleWindow = !m_ShowingExampleWindow;
+                }
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("Tools"))
+            {
+                const int size = 1;
+                static const char* toolsList[size] = { "Shader Editor" };
+                static bool* toolsStates[size] = { &m_ShowingShaderEditor };
+
+                for (int i = 0; i < size; i++)
+                {
+                    if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
+                    {
+                        m_ShowingShaderEditor = *toolsStates[i];
+                    }
+                }
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::Checkbox("GUI", &m_ShowingEditorGUI)) {}
+
+            static bool showFPS = true;
+            if (ImGui::Button("FPS"))
+            {
+                showFPS = !showFPS;
+            }
+
+            ImGui::SameLine();
+            if (showFPS)
+            {
+                // #TODO Review deltatime calculation and text positioning to avoid "flickering" and frequent resizing
+                ImGui::PushItemWidth(200.f);
+                const float deltaTime = Time::Delta();
+                if (deltaTime == 0.f)
+                {
+                    ImGui::Text("%1.1f", 0.f);
+                    // ImGui::Text("0.0");
+                }
+                else
+                {
+                    ImGui::Text("%1.1f", 1.0f / deltaTime);
+                }
+                ImGui::PopItemWidth();
+            }
+
+            if (ImGui::BeginMenu("Testing"))
+            {
+                static bool clientServerEnabled = false;
+                if (ImGui::Checkbox("Client/Server", &clientServerEnabled))
+                {
+                    if (clientServerEnabled)
+                    {
+                        Network::Initialize();
+                    }
+                    else
+                    {
+                        Network::TearDown();
+                    }
+                }
+
+                if (clientServerEnabled)
+                {
+                    Network::TestUpdate();
+                }
+
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMainMenuBar();
+        }
     }
 
 }

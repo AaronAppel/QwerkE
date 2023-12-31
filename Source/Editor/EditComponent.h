@@ -6,7 +6,9 @@
 
 namespace QwerkE {
 
+    class AudioComponent;
     class GameObject;
+    class LightComponent;
     class Material;
     class Mesh;
     class PhysicsComponent;
@@ -22,7 +24,7 @@ namespace QwerkE {
         void Draw(GameObject* entity);
 
     private:
-        bool m_Refresh = 1;
+        bool m_RefreshAssetStrings = 1;
 
         const std::map<std::string, Material*>* m_Materials = nullptr;
         const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
@@ -41,12 +43,16 @@ namespace QwerkE {
         bool m_ShowMeshList = true;
         int m_Meshindex = 0; // deprecated
 
+        void CleanUpAssetStrings();
+
         void ShowShaderMenu(RenderComponent* rComp);
         void ShowMaterialMenu(RenderComponent* rComp);
         void ShowMeshMenu(RenderComponent* rComp);
 
         void ShowRenderComponent(RenderComponent* rComp);
         void ShowPhysicsComponent(PhysicsComponent* rComp);
+        void ShowLightComponent(LightComponent* rComp);
+        void ShowAudioComponent(AudioComponent* rComp);
 
         GameObject* m_LastEntity = nullptr;
     };

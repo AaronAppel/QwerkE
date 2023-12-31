@@ -4,21 +4,19 @@
 
 namespace QwerkE {
 
-    class ResourceViewer;
-    class ShaderEditor;
-    class SceneViewer;
     class EntityEditor;
+    class ResourceViewer;
+    class SceneViewer;
+    class ShaderEditor;
 
-    // TODO: Consider deprecating header to use Editor.h
+    // #TODO Consider deprecating header to use Editor.h
     class imgui_Editor : Editor
     {
     public:
         imgui_Editor();
         ~imgui_Editor();
 
-        void NewFrame();
-        void Update();
-        void Draw();
+        void Draw() override;
 
         EntityEditor* GetEntityEditor() { return m_EntityEditor; }
 
@@ -26,6 +24,7 @@ namespace QwerkE {
 
     private:
         void RenderDockingContext();
+        void DrawMainMenuBar();
 
         bool m_ShowingExampleWindow = false;
         bool m_ShowingShaderEditor = false;

@@ -11,8 +11,9 @@
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/LightComponent.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/PhysicsComponent.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
@@ -31,6 +32,7 @@ namespace QwerkE {
 
     EditComponent::~EditComponent()
     {
+        CleanUpAssetStrings();
     }
 
     void EditComponent::Draw(GameObject* entity)
@@ -42,34 +44,59 @@ namespace QwerkE {
 
         m_LastEntity = entity;
 
-        ImGuiCol idx = ImGuiCol_FrameBg; // TODO: Style imgui windows for editing
-        ImVec4 col = ImVec4(0, 0, 0, 0);
-
-        if (ImGui::Button("Refresh")) { m_Refresh = true; } // broken
+        if (ImGui::Button("Refresh")) { m_RefreshAssetStrings = true; } // #TODO Bug review
 
         for (auto it = entity->SeeComponents()->begin(); it != entity->SeeComponents()->end(); ++it)
         {
-            // ImGui::SameLine();
-
             switch (it->first)
             {
             case eComponentTags::Component_Render:
                 ShowRenderComponent((RenderComponent*)it->second);
                 break;
+
             case eComponentTags::Component_Physics:
                 ShowPhysicsComponent((PhysicsComponent*)it->second);
                 break;
+
+            case eComponentTags::Component_Light:
+                ShowLightComponent((LightComponent*)it->second);
+                break;
+
+            case eComponentTags::Component_SoundListener:
+                ShowAudioComponent((AudioComponent*)it->second);
+                break;
+
             default:
 
                 // LOG_ERROR("Unknown component type found!");
 
                 if (ImGui::CollapsingHeader("OtherComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
                 {
-                    ImGui::Text("TODO: Handle other components!");
+                    ImGui::Text("#TODO Unhandled component type!");
                 }
                 break;
             }
         }
+    }
+
+    void EditComponent::CleanUpAssetStrings()
+    {
+        for (size_t i = 0; i < m_MatStrings.size(); i++)
+        {
+            delete m_MatStrings[i];
+        }
+        for (size_t i = 0; i < m_ShaderStrings.size(); i++)
+        {
+            delete m_ShaderStrings[i];
+        }
+        for (size_t i = 0; i < m_MeshStrings.size(); i++)
+        {
+            delete m_MeshStrings[i];
+        }
+
+        m_MatStrings.clear();
+        m_ShaderStrings.clear();
+        m_MeshStrings.clear();
     }
 
     void EditComponent::ShowShaderMenu(RenderComponent* rComp)
@@ -83,15 +110,13 @@ namespace QwerkE {
                     rComp->SetShaderAtIndex(m_RenderableIndex, Resources::GetShaderProgram(m_ShaderStrings[i]));
                 }
             }
+
             if (ImGui::IsItemClicked(1))
             {
-                static bool shaderEditor = true; // TODO:
+                static bool shaderEditor = true;
             }
-
-            ImGui::End();
         }
-        else
-            ImGui::End();
+        ImGui::End();
     }
 
     void EditComponent::ShowMaterialMenu(RenderComponent* rComp)
@@ -125,50 +150,30 @@ namespace QwerkE {
                     rComp->SetMeshAtIndex(m_RenderableIndex, Resources::GetMesh(m_MeshStrings[i]));
                 }
             }
-
-            ImGui::End();
         }
-        else
-            ImGui::End();
+        ImGui::End();
     }
 
-    void EditComponent::ShowRenderComponent(RenderComponent* component)
+    void EditComponent::ShowRenderComponent(RenderComponent* renderComponent)
     {
         if (ImGui::CollapsingHeader("RenderComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
         {
-            if (component->GetSchematicName().c_str())
+            if (renderComponent->GetSchematicName().c_str())
             {
-                ImGui::Text(component->GetSchematicName().c_str());
+                ImGui::Text(renderComponent->GetSchematicName().c_str());
             }
 
             // TODO: Show values from the shader base on attributes and uniforms.
             // ImGui::PushStyleVar(); ImGui::PushStyleColor(idx, col);
 
-            std::vector<Renderable>* renderables = (std::vector<Renderable>*)component->LookAtRenderableList();
+            std::vector<Renderable>* renderables = (std::vector<Renderable>*)renderComponent->LookAtRenderableList();
             if (m_RenderableIndex > renderables->size()) m_RenderableIndex = 0;
-            // populate asset names
-            if (m_Refresh)
+
+            if (m_RefreshAssetStrings)
             {
-                // Check to see what the current assets are
-                m_Refresh = false;
+                m_RefreshAssetStrings = false;
 
-                // cleanup RAM
-                for (size_t i = 0; i < m_MatStrings.size(); i++)
-                {
-                    delete m_MatStrings[i];
-                }
-                for (size_t i = 0; i < m_ShaderStrings.size(); i++)
-                {
-                    delete m_ShaderStrings[i];
-                }
-                for (size_t i = 0; i < m_MeshStrings.size(); i++)
-                {
-                    delete m_MeshStrings[i];
-                }
-
-                m_MatStrings.clear();
-                m_ShaderStrings.clear();
-                m_MeshStrings.clear();
+                CleanUpAssetStrings();
 
                 for (const auto& p : *m_Materials)
                 {
@@ -176,16 +181,17 @@ namespace QwerkE {
                 }
                 for (const auto& p : *m_Shaders)
                 {
-                    m_ShaderStrings.push_back(DeepCopyString(p.second->GetName().c_str())); //RAM:
+                    m_ShaderStrings.push_back(DeepCopyString(p.second->GetName().c_str()));
                 }
                 for (const auto& p : *m_Meshes)
                 {
-                    m_MeshStrings.push_back(DeepCopyString(p.second->GetName().c_str())); //RAM:
+                    m_MeshStrings.push_back(DeepCopyString(p.second->GetName().c_str()));
                 }
-                // TODO: Textures + Meshes
+
+                // #TODO Also show Textures + Meshes
             }
 
-            ImGui::Columns(4, "RenderablesHeader", false);  // 3-ways, no border
+            ImGui::Columns(4, "RenderablesHeader", false);
             {
                 ImGui::Text("Renderable");
                 ImGui::NextColumn();
@@ -241,12 +247,12 @@ namespace QwerkE {
             ImGui::Columns(1);
             ImGui::Separator();
 
-            if (m_ShowShaderList) ShowShaderMenu(component);
-            if (m_ShowMaterialList) ShowMaterialMenu(component);
-            if (m_ShowMeshList) ShowMeshMenu(component);
+            if (m_ShowShaderList) ShowShaderMenu(renderComponent);
+            if (m_ShowMaterialList) ShowMaterialMenu(renderComponent);
+            if (m_ShowMeshList) ShowMeshMenu(renderComponent);
 
             // Shader uniforms and attributes
-            const std::vector<std::string>* attributes = component->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeAttributes(); // TODO: Fix out of bounds when m_RenderableIndex is too high
+            const std::vector<std::string>* attributes = renderComponent->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeAttributes(); // TODO: Fix out of bounds when m_RenderableIndex is too high
             ImGui::Button("Attr");
             if (ImGui::IsItemHovered())
             {
@@ -258,7 +264,7 @@ namespace QwerkE {
                 ImGui::EndTooltip();
             }
             ImGui::SameLine();
-            const std::vector<std::string>* uniforms = component->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeUniforms();
+            const std::vector<std::string>* uniforms = renderComponent->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeUniforms();
             ImGui::Button("Unif");
             if (ImGui::IsItemHovered())
             {
@@ -280,22 +286,22 @@ namespace QwerkE {
                 switch (selection)
                 {
                 case 0:
-                    component->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLES);
+                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLES);
                     break;
                 case 1:
-                    component->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_STRIP);
+                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_STRIP);
                     break;
                 case 2:
-                    component->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_FAN);
+                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_FAN);
                     break;
                 case 3:
-                    component->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_POINTS);
+                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_POINTS);
                     break;
                 case 4:
-                    component->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINES);
+                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINES);
                     break;
                 case 5:
-                    component->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINE_STRIP);
+                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINE_STRIP);
                     break;
                 }
             }
@@ -329,10 +335,20 @@ namespace QwerkE {
             {
                 bulletComponent->ApplyForce(vec3(amount[0], amount[1], amount[2]));
             }
-
-            // TODO: Render component info
-            // pComp->;
         }
     }
 
+    void EditComponent::ShowLightComponent(LightComponent* pComp)
+    {
+        if (ImGui::CollapsingHeader("LightComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+        {
+        }
+    }
+
+    void EditComponent::ShowAudioComponent(AudioComponent* pComp)
+    {
+        if (ImGui::CollapsingHeader("AudioComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+        {
+        }
+    }
 }

@@ -1,0 +1,6 @@
+{
+	"WindowSize": [{
+		"WidthPixels": 1600,
+		"HeightPixels": 900
+	}]
+}

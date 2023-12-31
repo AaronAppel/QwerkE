@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+#include <vector>
+
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
 
 namespace QwerkE {
 
@@ -22,6 +25,9 @@ namespace QwerkE {
 
         GameObject* m_CurrentEntity = nullptr;
         EditComponent* m_EditComponent = nullptr;
+
+        std::vector<const char*> m_ListboxItemStrings = { "Renderable" };
+        std::vector<eComponentTags> m_ListboxItemTypes = { eComponentTags::Component_Render };
     };
 
 }

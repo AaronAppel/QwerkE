@@ -14,8 +14,8 @@ namespace QwerkE {
     public:
         virtual ~Editor() {}
 
-        virtual void NewFrame() = 0;
-        virtual void Update() = 0;
+        virtual void NewFrame() {}
+        virtual void Update() {}
         virtual void Draw() = 0;
 
         virtual void ToggleEditorUi() = 0;

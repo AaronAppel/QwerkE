@@ -1,8 +1,5 @@
 #include "../EntityEditor.h"
 
-#include <map>
-#include <string>
-
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 
 #include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
@@ -27,24 +24,21 @@
 
 namespace QwerkE {
 
-    static std::vector<const char*> listbox_item_strings = { "Renderable" };
-    static std::vector<eComponentTags> listbox_item_types = { eComponentTags::Component_Render };
-
 	EntityEditor::EntityEditor()
 	{
         m_EditComponent = new EditComponent();
 
         if (ConfigHelper::GetConfigData().systems.AudioEnabled)
         {
-            listbox_item_strings.push_back("Sound Listener");
-            listbox_item_strings.push_back("Sound Player");
-            listbox_item_types.push_back(eComponentTags::Component_SoundListener);
-            listbox_item_types.push_back(eComponentTags::Component_SoundPlayer);
+            m_ListboxItemStrings.push_back("Sound Listener");
+            m_ListboxItemStrings.push_back("Sound Player");
+            m_ListboxItemTypes.push_back(eComponentTags::Component_SoundListener);
+            m_ListboxItemTypes.push_back(eComponentTags::Component_SoundPlayer);
         }
         if (ConfigHelper::GetConfigData().systems.PhysicsEnabled)
         {
-            listbox_item_strings.push_back("Physics");
-            listbox_item_types.push_back(eComponentTags::Component_Physics);
+            m_ListboxItemStrings.push_back("Physics");
+            m_ListboxItemTypes.push_back(eComponentTags::Component_Physics);
         }
 	}
 
@@ -118,13 +112,12 @@ namespace QwerkE {
 
             if (showComponentSelector)
             {
-                // const char* listbox_items[] = { "Renderable", "Physics" };
                 static int listbox_item_current = eComponentTags::Component_Null;
                 const int itemsHeight = 4;
 
-                if (ImGui::ListBox("+Component", &listbox_item_current, listbox_item_strings.data(), listbox_item_strings.size(), itemsHeight))
+                if (ImGui::ListBox("+Component", &listbox_item_current, m_ListboxItemStrings.data(), m_ListboxItemStrings.size(), itemsHeight))
                 {
-                    switch (listbox_item_types[listbox_item_current])
+                    switch ((int)m_ListboxItemTypes.at(listbox_item_current))
                     {
                     case eComponentTags::Component_SoundListener:
                         if (!ConfigHelper::GetConfigData().systems.AudioEnabled)

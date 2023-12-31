@@ -93,20 +93,20 @@ namespace QwerkE {
 #endif // editor
 
 			// #TODO Move this to a window class
-			const unsigned char FPS_MAX = 120;
-			const double FPS_MAX_DELTA = 1.0 / FPS_MAX;
+			const float FPS_MAX = 120.0f;
+			const float FPS_MAX_DELTA = 1.0f / FPS_MAX;
 
-			double deltaTime = 0.0;
-			double elapsedTime = 0.0;
+			float elapsedTime = 0.f;
 
 			while (m_IsRunning)
 			{
-                Time::NewFrame();
+				elapsedTime = Time::Now() - elapsedTime;
 
-				deltaTime = Time::Delta();
-				elapsedTime += deltaTime;
 				if (elapsedTime >= FPS_MAX_DELTA)
 				{
+					elapsedTime = 0.f;
+					Time::NewFrame();
+
 					Engine::NewFrame();
 
 					Engine::PollInput();
@@ -114,8 +114,6 @@ namespace QwerkE {
 					Engine::Update(elapsedTime);
 
                     Engine::Draw();
-
-                    elapsedTime = 0.0;
 				}
                 else
                 {
@@ -147,7 +145,7 @@ namespace QwerkE {
 			Framework::PollInput();
 		}
 
-		void Engine::Update(double deltaTime)
+		void Engine::Update(float deltaTime)
         {
             PROFILE_SCOPE("Engine Update");
 

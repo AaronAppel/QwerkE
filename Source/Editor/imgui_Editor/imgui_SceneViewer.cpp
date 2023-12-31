@@ -33,13 +33,13 @@ namespace QwerkE {
         {
             Scene* currentScene = Scenes::GetCurrentScene();
 
-            m_currentEngineStateIndex = (char)currentScene->GetState();
-            const char* states[] = { "Running", "Frozen", "Paused", "SlowMo", "Animating" }; // #TODO Implement engine states
+            m_currentEngineStateIndex = (char)currentScene->GetIsPaused();
+            const char* states[] = { "Running", "Paused" };
 
             ImGui::PushItemWidth(150);
             if (ImGui::Combo("Scene State", &m_currentEngineStateIndex, states, sizeof(states)))
             {
-                currentScene->SetState((eSceneState)m_currentEngineStateIndex);
+                currentScene->SetIsPaused((bool)m_currentEngineStateIndex);
             }
             ImGui::PopItemWidth();
 
