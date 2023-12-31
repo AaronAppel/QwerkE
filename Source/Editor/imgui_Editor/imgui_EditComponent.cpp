@@ -1,7 +1,7 @@
 #include "../EditComponent.h"
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 

@@ -5,30 +5,47 @@
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 
-#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+
+#include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Extended/Bullet3Component.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/RenderRoutine.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/Extended/Bullet3Routine.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Source/Extended/Bullet3/b3_PhysicsFactory.h"
 
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Defines.h"
-
-#include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
 
 #include "../EditComponent.h"
 #include "../Editor.h"
 
 namespace QwerkE {
 
+    static std::vector<const char*> listbox_item_strings = { "Renderable" };
+    static std::vector<eComponentTags> listbox_item_types = { eComponentTags::Component_Render };
+
 	EntityEditor::EntityEditor()
 	{
         m_EditComponent = new EditComponent();
+
+        if (ConfigHelper::GetConfigData().systems.AudioEnabled)
+        {
+            listbox_item_strings.push_back("Sound Listener");
+            listbox_item_strings.push_back("Sound Player");
+            listbox_item_types.push_back(eComponentTags::Component_SoundListener);
+            listbox_item_types.push_back(eComponentTags::Component_SoundPlayer);
+        }
+        if (ConfigHelper::GetConfigData().systems.PhysicsEnabled)
+        {
+            listbox_item_strings.push_back("Physics");
+            listbox_item_types.push_back(eComponentTags::Component_Physics);
+        }
 	}
 
 	EntityEditor::~EntityEditor()
@@ -101,14 +118,25 @@ namespace QwerkE {
 
             if (showComponentSelector)
             {
-                const char* listbox_items[] = { "Renderable", "Physics" };
-                static int listbox_item_current = 1;
+                // const char* listbox_items[] = { "Renderable", "Physics" };
+                static int listbox_item_current = eComponentTags::Component_Null;
+                const int itemsHeight = 4;
 
-                if (ImGui::ListBox("+Component", &listbox_item_current, listbox_items, IM_ARRAYSIZE(listbox_items), 4))
+                if (ImGui::ListBox("+Component", &listbox_item_current, listbox_item_strings.data(), listbox_item_strings.size(), itemsHeight))
                 {
-                    switch (listbox_item_current)
+                    switch (listbox_item_types[listbox_item_current])
                     {
-                    case 0:
+                    case eComponentTags::Component_SoundListener:
+                        if (!ConfigHelper::GetConfigData().systems.AudioEnabled)
+                            break;
+                        break;
+
+                    case eComponentTags::Component_SoundPlayer:
+                        if (!ConfigHelper::GetConfigData().systems.AudioEnabled)
+                            break;
+                        break;
+
+                    case eComponentTags::Component_Render:
                         if (m_CurrentEntity->GetComponent(Component_Render) == nullptr)
                         {
                             Renderable renderable;
@@ -137,9 +165,12 @@ namespace QwerkE {
                         }
                         break;
 
-                    case 1:
+                    case eComponentTags::Component_Physics:
                         if (m_CurrentEntity->GetComponent(Component_Physics) == nullptr)
                         {
+                            if (!ConfigHelper::GetConfigData().systems.PhysicsEnabled)
+                                break;
+
                             vec3 position = m_CurrentEntity->GetPosition();
                             vec3 scale = m_CurrentEntity->GetScale();
                             btRigidBody* rigidBody = PhysicsFactory::CreateRigidCube(btVector3(position.x, position.y, position.z), scale.x, scale.y, scale.z, 1.0f);
