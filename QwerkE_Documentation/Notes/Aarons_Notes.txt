@@ -1,0 +1,98 @@
+Make sure each project builds with PCHs off and no pch.h force include.
+This is to allow easy code intergration/extraction. The PCHs are just to speed
+up the build and do not introduce a file dependency since all files should
+already #include necessary files.
+// TODO: Make sure #includes are minimal and require the least amount of
+// outside code files
+Remember that right now there are platform define issues where files need
+<windows.h> included before they work because of platform specific libraries.
+This is currently being solved by force #including "Engine_Defines.h",
+"Engine_Platform.h".
+
+How useful would a flie finder program be?
+It would take something like "#include "file.h"" and replace it with
+"#include "../../Folder/file.h""
+Something to think about. It is nice to allow for file movement and auto
+#includes but is that just too lazy or too error prone?
+
+Before giving away any code make sure to test #includes.
+If a #include has "../../../" then it may have an issue
+with projects not located at the same "depth" because the
+3 directories up is not referring to the file, but rather
+the working directory of the project.
+
+Apr 6th 2018
+Trying to get rid of additional include directories. Freetype2 is proving
+to be rather intrusive and I don't see how to nicely change the folder structure
+without altering the source #includes. I will have to check on this later.
+Bullet is also dependent on a globally #included root folder.
+
+Apr 6th 2018
+Got TestGame project running by ading a reference to engine.
+Is that good or bad? It might be better to remove references in the future.
+
+Apr 9th 2018
+Some services should be easier to access without worrying about restrictions
+or security. Prime services would be managers or utilities that do not hold
+persistent data members but instead are comprised of static or global functions.
+Examples include Math, Graphics, Input(possible exception), and more.
+It would be nicer/easier to access QwerkE::Math or even QMath instead of getting
+the service and then manipulating it in a long call.
+
+Apr 10th 2018
+Going to need a better system for .dlls. Maybe create a folder for them and find
+a way to link them nicely. There are going to be more and more with additional
+libraries getting added.
+
+Apr 13th 2018
+Redesign the WindowManager() and Window() classes.
+
+Apr 14th 2018
+Learning C++ Refection.
+https://stackoverflow.com/questions/41453/how-can-i-add-reflection-to-a-c-application
+
+May 5th 2018
+The new engine/editor might be completely private. Should users be able to
+hook into it? I guess I should stay open source so at least let users see how
+the code works. I think that giving users the ability to extend and replace
+components would be really cool. The only negative I see is the cost of
+developing an engine that is made to be dynamic. There is also the cost of
+documentation although I should already be doing that for myself to some degree.
+
+May 6th 2018
+So libraries are a pain. I am trying to dynamically use .dlls and .libs by detecting
+platform and architecture but it is proving difficult. Some libraries name their files
+the exact same for all versions which is just dumb. If I ever do that shoot me. The 
+solution I have is to create projects for not only every platform and architecture, but
+also debug and release moeds. This means 4 projects per platform, or 2 if I drop 32 bit.
+
+May 14th 2018
+I finally found a decentish fix for loading assets from projects with different working
+directories. Now I have to ask myself "How does someone ask for a file?". Should users
+ask for a file using the "extension.file"? Having shortform names like "Teapot" is not
+a huge convenience and requires large amounts of overhead to support so screw that I guess.
+Asking for a file by appending it's name to a call also means I can say "Material20/ambient.png"
+to specify a different folder than expected, I am not hardcoding as much. This also means
+users need to remember the folder structure but that is acceptable for the time being.
+
+May 16th 2018
+Now that I have model loading mostly working, I want to avoid having to detect model vs mesh
+everywhere and handle them differently. I am thinking of just using a Model class that has one
+or more meshes. An easy fix since right now models just hold a vector of meshes and iterates
+through them each frame. I need the model to behave the same in every possible condition when
+rendering so this should be a fix until I get fancier with my rendering pipeline.
+
+May 17th 2018
+I am thinking about how to #include files in a smarter way. One thought I had related to end user's
+usage and how they will be #including files. If a dev only wants the rendering portion of the framework,
+that is all they should get. Not a parts of input or anything else. If I define major systems early on
+and try to keep them isolated, then it would super to easy to just pick and choose features by #including
+1 file and not another.
+
+May 22nd 2018
+Today I am creating Object/MaterialRecipe files and I need to know how I want files referenced. I think I
+will bite the bullet. All textures need to be in the "Textures/" directory if they are to be loaded. I am
+no longer keeping model textures in a folder with the .obj. This is also good if I want to use textures
+from one model, on another model. The down side is organization of folders but it is no big deal right now.
+I guess I can also stop using folders for each model and just have the .obj easily accessed in the "Models/"
+directory. That actually works pretty well.
