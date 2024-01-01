@@ -12,15 +12,15 @@
 *.suo
 *.opendb
 *.obj
+
 *.dll
+!QwerkE_Framework/Libraries/**/*.dll
 
 instrumentor_log.json
 
 Qwerk_Engine/Debug/*
 Qwerk_Engine/Release/*
 Qwerk_Engine/QwerkE_Win32/Debug/
-
-Qwerk_Framework/*
 
 Development/RenderingEnv/.vs/
 Development/RenderingEnv/Debug/*
