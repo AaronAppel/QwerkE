@@ -53,7 +53,3 @@ cd ../
 cd QwerkE_Framework
 call Cleanup.bat
 cd ../
-
-cd QwerkE_Documentation
-call Cleanup.bat
-cd ../

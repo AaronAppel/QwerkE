@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RogueLike_Win32", "RogueLike_Win32\RogueLike_Win32.vcxproj", "{5B28C492-B251-432B-9BAD-376E1BDE78C1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QwerkE_Framework", "..\QwerkE_Framework\QwerkE_Framework\QwerkE_Framework.vcxitems", "{1632D713-EA31-4C99-A364-447C70E7A758}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QwerkE_Common", "..\QwerkE_Framework\QwerkE_Common\QwerkE_Common.vcxitems", "{E86D5770-08C5-4BC8-A65D-36F233233AEB}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\QwerkE_Framework\QwerkE_Framework\QwerkE_Framework.vcxitems*{1632d713-ea31-4c99-a364-447c70e7a758}*SharedItemsImports = 9
+		..\QwerkE_Framework\QwerkE_Common\QwerkE_Common.vcxitems*{5b28c492-b251-432b-9bad-376e1bde78c1}*SharedItemsImports = 4
+		..\QwerkE_Framework\QwerkE_Framework\QwerkE_Framework.vcxitems*{5b28c492-b251-432b-9bad-376e1bde78c1}*SharedItemsImports = 4
+		..\QwerkE_Framework\QwerkE_Common\QwerkE_Common.vcxitems*{e86d5770-08c5-4bc8-a65d-36f233233aeb}*SharedItemsImports = 9
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Debug|x64.ActiveCfg = Debug|x64
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Debug|x64.Build.0 = Debug|x64
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Debug|x86.ActiveCfg = Debug|Win32
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Debug|x86.Build.0 = Debug|Win32
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Release|x64.ActiveCfg = Release|x64
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Release|x64.Build.0 = Release|x64
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Release|x86.ActiveCfg = Release|Win32
+		{5B28C492-B251-432B-9BAD-376E1BDE78C1}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8045A432-7B2B-4E94-8A7E-5E8997930BDE}
+	EndGlobalSection
+EndGlobal
