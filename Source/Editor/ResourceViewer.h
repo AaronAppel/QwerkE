@@ -4,8 +4,8 @@
 #include <map>
 #include <vector>
 
-#include "Libraries/imgui/imgui.h"
-#include "Libraries/glew/GL/glew.h"
+#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+#include "../QwerkE_Framework/Libraries/glew/GL/glew.h"
 
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
 

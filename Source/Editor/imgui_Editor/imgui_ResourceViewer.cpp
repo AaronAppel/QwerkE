@@ -1,10 +1,5 @@
 #include "../ResourceViewer.h"
 
-#include <string>
-
-#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
-#include "../QwerkE_Framework/Libraries/glew/GL/glew.h"
-
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"

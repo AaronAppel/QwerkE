@@ -1,0 +1,13 @@
+/.vs/
+*.tlog
+*.log
+*.pdb
+*.idb
+*.ilk
+*.exe
+.ipch
+*.dll
+
+# TODO Review VS project file inclusion
+# *.vcx*
+# *.vcxitems
