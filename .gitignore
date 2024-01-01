@@ -17,15 +17,16 @@
 !QwerkE_Framework/Libraries/**/*.dll
 
 instrumentor_log.json
+// imgui.ini // Can stay for convenience purposes
 
-Qwerk_Engine/Debug/*
-Qwerk_Engine/Release/*
-Qwerk_Engine/QwerkE_Win32/Debug/
+// Build files
+Debug/*
+Release/*
+x64/*
 
+// Development branches
 Development/RenderingEnv/.vs/
 Development/RenderingEnv/Debug/*
 Development/RenderingEnv/Release/*
 Development/Games/Test_Game1/Debug/
 Development/Games/Test_Game1/Release/
-
-Debug/*

@@ -34,6 +34,7 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Source\Shared_Engine.vcxitems*{64b82de4-2768-4ad2-b95d-b3615fcc482e}*SharedItemsImports = 9
+		QwerkE_Framework\QwerkE_Framework.vcxitems*{91c8f4dc-b61b-46d7-b3d6-dd562656900f}*SharedItemsImports = 4
 		Source\Shared_Engine.vcxitems*{91c8f4dc-b61b-46d7-b3d6-dd562656900f}*SharedItemsImports = 4
 		QwerkE_Framework\QwerkE_Framework.vcxitems*{b16d0585-c919-45a1-abc8-e743e68a8f72}*SharedItemsImports = 9
 	EndGlobalSection

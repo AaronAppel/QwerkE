@@ -1,10 +1,10 @@
 ### #TODO Review this file
 
-Make sure the solution works if PCH are turned off and force #includes are also off
+Make sure the solution works if PCH are turned off and force \#includes are also off
 
-Only include necessary files in all #includes
+Only include necessary files in all \#includes
 
-Add file headers exlpaining what each file is used for and includes + #includes
+Add file headers exlpaining what each file is used for and includes + \#includes
 Add function, class headers that explain the purpose and use of each function, class.
 
 // TODO: Research and decide on coding standards.
