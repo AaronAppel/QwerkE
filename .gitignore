@@ -16,10 +16,16 @@
 *.dll
 !QwerkE_Framework/Libraries/**/*.dll
 
-instrumentor_log.json
-// imgui.ini // Can stay for convenience purposes
+// Symlink of root README.md file
+Documentation/README.md
 
-// Build files
+// Profiler log file
+instrumentor_log.json
+
+// imgui config file can stay for convenience purposes
+// imgui.ini
+
+// Local build files
 Debug/*
 Release/*
 x64/*

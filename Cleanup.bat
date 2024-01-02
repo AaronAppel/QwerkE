@@ -1,4 +1,4 @@
-cd ../
+rem cd ../
 
 rem Delete all .dll files in engine root directory
 del *.dll

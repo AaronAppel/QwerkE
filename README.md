@@ -1,29 +1,25 @@
 # Qwerk_Engine
-*This project is in progess and is continually in an unstable state*  
-A simple engine or runtime editor for the QwerkE framework.
-QwerkEngine framework lives here: https://github.com/AaronAppel/QwerkE_Framework
+### About
+I use this project to learn and develop a game engine for hobby.
+Ideally the engine can be useful for making my own games, or those who might brave the challenge of using it as well.
+
+The name QwerkE is simply endearing to me as it's a play on the "QWER" keyboard layout, with the later 'E' meaning editor or engine.
+
+\**This project is continually in development and should be considered unstable, until proven otherwise.*
 
 ## Getting Started
-Open the Qwerk_Engine folder in the root of the respository to find the solution.
-
-WIP: www.github.com/AaronAppel/QwerkE_Documentation  
+https://github.com/AaronAppel/Qwerk_Engine/tree/master/Documentation/GettingStarted.md
+[[GettingStarted]] #TODO Review alternative file reference
 
 ## Examples  
-### Installing  
-TODO: How to install QwerkEngine and the accompanying framework.
-
-### Usage
-https://github.com/AaronAppel/Qwerk_Engine/tree/master/Documentation/GettingStarted.md
-Simple example usage of QwerkEngine.
-
-WIP: www.github.com/AaronAppel/QwerkE_Documentation
+#TODO Simple example usage of QwerkEngine, or "How To Use" section
+Use game projects for examples to reference :
 ~~~cpp
 int main()
 {
-    cout << "Awaiting Documentation..." << endl;
+    cout << "Awaiting Examples..." << endl;
 }  
 ~~~
-...
 
 ## 3rd Party Libraries
 Libraries I utilize to deliver features :
@@ -40,13 +36,23 @@ Libraries I utilize to deliver features :
 - OpenAL: www.openal.org
 
 ## License
-This project is licensed under the BSD3 License - see the LICENSE file for details.  
+This project is licensed under the BSD3 License - see the LICENSE file for details.
 
 ## References
-learnopengl.com
-The Cherno : YouTube (https://www.youtube.com/user/TheChernoProject), github (https://github.com/TheCherno)
-Thin Matrix : YouTube (https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ)
-Game engine Architecure Third Edition by Jason Gregory
+Joey DeVries [learnopengl.com](learnopengl.com)
+The Cherno : [YouTube](https://www.youtube.com/user/TheChernoProject), [GitHub](https://github.com/TheCherno)
+Thin Matrix : [YouTube](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ)
+Game engine Architecture, Third Edition by Jason Gregory
 
-## Acknowledgments
-...
+## Resources and Tools
+Tools and other software I used throughout development.
+- [Visual Studio](https://visualstudio.microsoft.com/vs/) 2017, 2019, 2022
+- [GitHub](https://desktop.github.com/)
+- [Obsidian](https://obsidian.md/)
+
+## Acknowledgments and Thanks
+In no particular order :
+- Jimmy Lord : [FlatheadGames](http://www.flatheadgames.com)  https://github.com/jimmylord
+- Eric Bibeau
+- Aurelien Simoni
+- Antonio Santamaria

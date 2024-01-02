@@ -3,3 +3,6 @@ Remove a submodule :
 2. git rm <submodule_directory>
 3. rm -rf .git/modules/<submodule_directory>
 4. commit changes
+
+### Git corruption issues
+One solution is to delete the "pack" folder inside the .git/objects/ directory.
