@@ -1,0 +1,1 @@
+Only windows x86 or WIN32 is functional as of [7a59ca7](https://github.com/AaronAppel/Qwerk_Engine/commit/7a59ca72fc58a8ae8e1ecfd3e6b4b6600dc7b3b4), so WIN64 could be added if all included library files are added.

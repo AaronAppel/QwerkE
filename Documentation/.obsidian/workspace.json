@@ -66,9 +66,33 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "918580406c28aa0f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "QwerkE Standards/Including.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5a916880b3182b76",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Feature Development/x64 Architecture Support.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -153,7 +177,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Framework Read Me.md",
+                "file": "Feature Development/x64 Architecture Support.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -170,7 +194,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Framework Read Me.md",
+                "file": "Feature Development/x64 Architecture Support.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -182,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Framework Read Me.md"
+                "file": "Feature Development/x64 Architecture Support.md"
               }
             }
           }
@@ -203,21 +227,24 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2a946038204b18ff",
+  "active": "55628a392364c2db",
   "lastOpenFiles": [
+    "QwerkE Standards/Including.md",
+    "Feature Development/x64 Architecture Support.md",
+    "Feature Development",
+    "Solution Configuration/Additional Includes.md",
+    "GettingStarted.md",
+    "README.md.lnk",
+    "README.md - Shortcut.lnk",
+    "Framework Read Me.md",
+    "Solution Configuration",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/soft_oal.dll",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.user",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.filters",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Main.h",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Main.cpp",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RakNet_VS2008_DLL_Release_Win32.dll",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RakNet_VS2008_DLL_Debug_Win32.dll",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/PCH.cpp",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/PCH.h",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/OpenAL32.dll",
     "Sub Projects/QwerkE Games.md",
-    "Framework Read Me.md",
     "QwerkE Standards/Coding Standards.md",
     "Old Notes.md",
     "Old References.md",

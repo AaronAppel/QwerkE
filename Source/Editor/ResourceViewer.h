@@ -13,7 +13,6 @@ typedef unsigned int ALuint; // #TODO Hide OAL library type
 
 namespace QwerkE {
 
-    struct Texture;
     class ShaderProgram;
     class Scene;
     class GameObject;
@@ -21,6 +20,8 @@ namespace QwerkE {
     class Mesh;
     class Material;
     class MaterialEditor;
+
+    struct Texture;
 
     class ResourceViewer // #TODO Rename class to imgui_ResourceViewer
     {

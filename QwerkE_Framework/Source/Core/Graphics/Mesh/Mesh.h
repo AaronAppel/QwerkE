@@ -11,11 +11,12 @@
 namespace QwerkE {
 
     class Mesh;
-    struct MeshData;
     class ShaderProgram;
+
+    struct MeshData;
     struct VertexData;
 
-    typedef void (QwerkE::Mesh::* MeshFunction)();
+    typedef void (QwerkE::Mesh::* MeshFunction)();// #TODO Replace null draw with valid null data to draw nothing instead of using function pointers
 
     // #TODO Use macro functions to replace OpenGL specific functions.
     // The idea is to abstract library functionality without losing performance.
