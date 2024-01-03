@@ -17,7 +17,8 @@ namespace QwerkE {
         {
             // The Cherno https://www.youtube.com/watch?v=dZr-53LAlOw&ab_channel=TheCherno
             spdlog::set_pattern("%^[%T] %n: %v%$");
-            m_Logger = spdlog::stdout_color_mt("QwerkE");
+            const char* loggerName = "QwerkE";
+            m_Logger = spdlog::stdout_color_mt(loggerName);
             m_Logger->set_level(spdlog::level::trace);
 
             // https://github.com/gabime/spdlog
@@ -34,7 +35,7 @@ namespace QwerkE {
             // spdlog::register_logger(logger);
 
             m_initialized = true;
-            LOG_TRACE("Log initialized");
+            LOG_TRACE("Logger \"{0}\" initialized", loggerName);
         }
         else
         {

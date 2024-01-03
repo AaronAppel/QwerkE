@@ -9,40 +9,32 @@
 #include "../../Core/Resources/Resources.h"
 #include "../../Core/Audio/AudioSource.h"
 
-// OpenAL Reference: https://www.openal.org/documentation/OpenAL_Programmers_Guide.pdf
-
 namespace QwerkE {
 
 	bool OpenALAudioManager::Initialize()
 	{
 		std::string deviceName = list_audio_devices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
-		m_Device = alcOpenDevice(deviceName.c_str()); // select the "preferred device"
-
-		// #TODO :
-		// Log::Critical("Device error code {0}", Device);
-		// assert(m_Device); // ALDevice error
+		m_Device = alcOpenDevice(deviceName.c_str());
 
 		if (!m_Device)
 		{
-			Log::Safe("Error initializing audio system");
-			// LOG_CRITICAL("Error initializing audio system");
+			LOG_ERROR("Error initializing audio system! OpenAL error code {0}", alGetError());
 			return false;
 		}
 
 		m_Context = alcCreateContext(m_Device, NULL);
+		if (!m_Device)
+		{
+			LOG_ERROR("Error initializing audio system! OpenAL error code {0}", alGetError());
+			return false;
+		}
 		alcMakeContextCurrent(m_Context);
-
-		// Check for EAX 2.0 support
-		// g_bEAX = alIsExtensionPresent("EAX2.0"); // Why?
-		// const ALCchar* result = alcGetString(Device, AL_EXTENSIONS); // check for extensions
-		// if(result != nullptr) ConsolePrint("\nOpenAL extensions available!!!\n");
 
 		m_Source = new AudioSource();
 		m_Source->SetOrientation(vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0));
+		SetListenerOrientation(vec3(0, 0, 0), vec3(0, 0, 0)); // #TODO Review listener orientation set
 
-		SetListenerOrientation(vec3(0, 0, 0), vec3(0, 0, 0));
-
-		LOG_INFO("OpenAL loaded successfully");
+		LOG_TRACE("OpenAL loaded successfully");
 		return true;
 	}
 
@@ -69,7 +61,6 @@ namespace QwerkE {
 	{
 		m_Source->Play(Resources::GetSound(name));
 	}
-
 
 	void OpenALAudioManager::SetListenerOrientation(vec3 position, vec3 velocity)
 	{

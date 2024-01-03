@@ -54,10 +54,13 @@ namespace QwerkE {
 #define LOG_ERROR(...)      QwerkE::Log::m_Logger->error(__VA_ARGS__);
 #define LOG_CRITICAL(...)   QwerkE::Log::m_Logger->critical(__VA_ARGS__);
 
+#define BREAK __debugbreak();
+#define ASSERT(x, msg)   if ((x)) { } else { LOG_CRITICAL("Assert! {0}, {1}, in {2}() in {3}({4})", #x, msg, __FUNCTION__, __FILE__, __LINE__); BREAK }
+
 #else
 #define LOG_TRACE(...)      (void)0
 #define LOG_INFO(...)       (void)0
 #define LOG_WARN(...)       (void)0
 #define LOG_ERROR(...)      (void)0
 #define LOG_CRITICAL(...)   (void)0
-#endif // _QDebug
+#endif

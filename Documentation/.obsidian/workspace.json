@@ -52,14 +52,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "QwerkE Standards/Member Initialization.md",
+                "file": "References/Library References.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "829d56dec2e8397c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Known Issues and Gotchas.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -144,7 +156,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "QwerkE Standards/Member Initialization.md",
+                "file": "Known Issues and Gotchas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -161,7 +173,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "QwerkE Standards/Member Initialization.md",
+                "file": "Known Issues and Gotchas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -173,7 +185,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "QwerkE Standards/Member Initialization.md"
+                "file": "Known Issues and Gotchas.md"
               }
             }
           }
@@ -194,10 +206,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "28d1e7ec096c5d42",
+  "active": "829d56dec2e8397c",
   "lastOpenFiles": [
-    "QwerkE Standards/Including.md",
+    "References/Library References.md",
+    "Known Issues and Gotchas.md",
     "QwerkE Standards/Member Initialization.md",
+    "References",
+    "QwerkE Standards/Including.md",
     "Old Notes.md",
     "QwerkE Standards/Empty Function Body.md",
     "Feature Development/Engine Styling and Appearance.md",
@@ -229,9 +244,6 @@
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/soft_oal.dll",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.user",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.filters",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj",
-    "Sub Projects/QwerkE Games.md",
-    "2023-12-31.md",
-    "Welcome.md"
+    "Sub Projects/QwerkE Games.md"
   ]
 }

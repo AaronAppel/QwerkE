@@ -58,7 +58,6 @@ namespace QwerkE {
 		eEngineMessage Framework::Startup(std::string configFilePath, std::uint_fast8_t flags)
 		{
             Log::Initialize();
-			LOG_INFO("{0}({1})", __FILE__, __LINE__); // #TODO Remove test log
 
 			cJSON* root = OpencJSONStream(configFilePath.c_str()); // #TODO Remove engine behaviour
 			cJSON* systems = nullptr;
@@ -73,6 +72,7 @@ namespace QwerkE {
             // #TODO Load libraries dynamically. Need functions to load .dlls
 			// #TODO Avoid loading unused libraries. React to system flags
 
+			ASSERT(Libs_Setup(), "Error loading libraries!");
 			if (Libs_Setup() == false)
 			{
 				LOG_CRITICAL("Startup(): Error loading libraries!");

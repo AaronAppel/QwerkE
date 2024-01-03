@@ -12,12 +12,14 @@ namespace QwerkE {
 
     bool Libs_Setup()
     {
+        // #TODO Assert if currently initialized
+
         // #TODO Control initializing libraries if their systems are not enabled
         // const ConfigData configData = ConfigHelper::GetConfigData();
         // if (configData.systems.AudioEnabled) {}
         bool errorFree = true; // Return value. If error occurs set to false
 
-        Log::Safe("Libs_Setup(): Initializing libraries...\n");
+        LOG_TRACE("Libs_Setup(): Initializing libraries...");
 
         // Setup/Load libraries based on platform, architecture, configuration
         // TODO: Clean up #ifs
@@ -25,25 +27,25 @@ namespace QwerkE {
         FT_Library ft;
         if (FT_Init_FreeType(&ft))
         {
-            Log::Safe("Error loading freetype2!");
+            LOG_ERROR("Error loading freetype2!");
             errorFree = false;
         }
         else
         {
-            Log::Safe("Freetype Loaded,\n");
+            LOG_TRACE("Freetype Loaded,");
             FT_Done_FreeType(ft);
         }
 
         if (!glfwInit())
         {
-            Log::Safe("\nError loading GLFW step 1!\n");
+            LOG_ERROR("Error loading GLFW step 1!");
             errorFree = false;
         }
         else
         {
-            Log::Safe("GLFW Loaded,\n");
+            LOG_TRACE("GLFW Loaded,");
 
-            // TODO: Setup proper window hints
+            // TODO: Setup proper testWindow hints
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); //using OpenGL 4.3
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
@@ -58,11 +60,11 @@ namespace QwerkE {
             glfwWindowHint(GLFW_DEPTH_BITS, 0);
             glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
-            GLFWwindow* window;
-            window = glfwCreateWindow(100, 100, "Test", NULL, NULL);
-            if (!window)
+            GLFWwindow* testWindow;
+            testWindow = glfwCreateWindow(100, 100, "Test", NULL, NULL);
+            if (!testWindow)
             {
-                Log::Safe("\nError loading GLFW step 2!\n");
+                LOG_ERROR("Error loading GLFW step 2!");
                 errorFree = false;
 
                 /*int code = glfwGetError(NULL);
@@ -100,7 +102,7 @@ namespace QwerkE {
                     ConsolePrint("\nGLFW error GLFW_NO_WINDOW_CONTEXT!\n");
                     break;
                 case GLFW_NO_ERROR:
-                    ConsolePrint("\nNo error was detected, but GLFW was not able to create a window object!\n");
+                    ConsolePrint("\nNo error was detected, but GLFW was not able to create a testWindow object!\n");
                     break;
                 }*/
             }
@@ -108,30 +110,32 @@ namespace QwerkE {
             {
                 // openGL extensions wrangler //
                 // GLEW
-                glfwMakeContextCurrent(window);
+                glfwMakeContextCurrent(testWindow);
                 if (glewInit() != GLEW_OK)
                 {
-                    Log::Safe("\nError loading GLEW!\n");
+                    LOG_ERROR("Error loading GLEW!");
                     errorFree = false;
                 }
                 else
-                    Log::Safe("GLEW Loaded,\n");
+                {
+                    LOG_TRACE("GLEW Loaded,");
+                }
 
-                glfwDestroyWindow(window); // Clean up
+                glfwDestroyWindow(testWindow); // #TODO Review testWindow destroy
             }
         }
 
         ImGuiContext* context = ImGui::CreateContext();
         if (context == nullptr)
         {
-            Log::Safe("\nError loading imgui!\n");
+            LOG_ERROR("Error loading imgui!");
             errorFree = false;
         }
         else
         {
             ImGui::SetCurrentContext(context);
 
-            Log::Safe("imgui Loaded,\n");
+            LOG_TRACE("imgui Loaded,");
             ImGuiIO& io = ImGui::GetIO();
 
             io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
@@ -157,9 +161,13 @@ namespace QwerkE {
         }
 
         if (errorFree)
-            Log::Safe("Libs_Setup(): Libraries Initialized successfully\n\n");
+        {
+            LOG_TRACE("Libs_Setup(): Libraries Initialized successfully\n");
+        }
         else
-            Log::Safe("Libs_Setup(): Error loading libraries\n\n");
+        {
+            LOG_CRITICAL("Libs_Setup(): Error loading libraries!\n");
+        }
 
         return errorFree;
     }

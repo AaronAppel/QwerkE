@@ -14,7 +14,7 @@ xcopy "%sourceDir%freetype2\x86\freetype.dll" "%targetDir%freetype.dll*" /Y
 xcopy "%sourceDir%glew\glew32d.dll" "%targetDir%glew32d.dll*" /Y
 xcopy "%sourceDir%glfw\glfw3.dll" "%targetDir%glfw3.dll*" /Y
 xcopy "%sourceDir%OpenAL\libs\Win32\OpenAL32.dll" "%targetDir%OpenAL32.dll*" /Y
-rem xcopy "%sourceDir%OpenAL\libs\soft_oal.dll" "%targetDir%soft_oal.dll*" /Y
+xcopy "%sourceDir%OpenAL\libs\soft_oal.dll" "%targetDir%soft_oal.dll*" /Y
 xcopy "%sourceDir%pThreads\lib\x86\pthreadVC2.dll" "%targetDir%pthreadVC2.dll*" /Y
 xcopy "%sourceDir%RakNet\RakNet_VS2008_DLL_Debug_Win32.dll" "%targetDir%RakNet_VS2008_DLL_Debug_Win32.dll*" /Y
 xcopy "%sourceDir%RakNet\RakNet_VS2008_DLL_Release_Win32.dll" "%targetDir%RakNet_VS2008_DLL_Release_Win32.dll*" /Y
