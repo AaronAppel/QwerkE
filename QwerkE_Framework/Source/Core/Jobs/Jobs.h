@@ -7,7 +7,7 @@
 
 #include <queue>
 
-// TODO: Remove have struct order dependency
+// #TODO Remove have struct pthread order dependency
 #ifndef HAVE_STRUCT_TIMESPEC
 #define HAVE_STRUCT_TIMESPEC
 #endif
@@ -20,7 +20,7 @@
 
 namespace QwerkE {
 
-    void* LoadAssetData(void* value); // TODO: Improve logic
+    void* LoadAssetData(void* value);
 
     class QJob
     {

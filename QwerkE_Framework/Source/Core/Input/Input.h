@@ -56,6 +56,14 @@ namespace QwerkE {
 
         static bool FrameKeyAction(eKeys key, eKeyState state); // check if key was pressed or released this frame
 
+        // #TODO Support ProcessMouseScroll
+        // #TODO Hide public methods for processing input
+        static void ProcessMouseMove(vec2 position);
+        static void ProcessMouseMove(float x, float y);
+        static void ProcessMouseClick(eKeys key, eKeyState state);
+        static void ProcessKeyEvent(eKeys key, eKeyState state);
+        static eKeys GLFWToQwerkEKey(int key);
+
     private:
         Input() {}
         ~Input() {}
@@ -66,7 +74,6 @@ namespace QwerkE {
         // TODO: Clean up assign keys methods
         static void AssignGLFWKeys(InputDevice* device);
         static void SetupGLFWKeyCodex(); // TODO: Remove
-        static eKeys GLFWToQwerkEKey(int key);
         static void Initialize();
 #else
         // TODO:
@@ -74,13 +81,6 @@ namespace QwerkE {
         // void AssignMacKeys() {}
         // void AssignLinuxKeys() {}
 #endif // GLFW3
-
-        // Handle input
-        // TODO: ProcessMouseScroll
-        static void ProcessMouseMove(vec2 position);
-        static void ProcessMouseMove(float x, float y);
-        static void ProcessMouseClick(eKeys key, eKeyState state);
-        static void ProcessKeyEvent(eKeys key, eKeyState state);
 
         // Input devices
         static std::map<eInputDeviceTypes, InputDevice*> m_Devices;
@@ -93,16 +93,6 @@ namespace QwerkE {
 
         // Setup system key maps (rename platform?)
         static void AssignSystemKeys(InputDevice* device); // TODO: Change to a max keys buffer that only needs to track 10ish keys at a time
-
-        // TODO: Fix GLFW callbacks to avoid static functions
-        static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-        static void char_callback(GLFWwindow* window, unsigned int codePoint);
-        static void char_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods);
-        static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
-        static void cursor_enter_callback(GLFWwindow* window, int entered);
-        static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-        static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-        static void joystick_callback(int joy, int event);
 
         // Input events
         static void RaiseInputEvent(eKeys key, eKeyState state);

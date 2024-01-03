@@ -11,8 +11,8 @@ namespace QwerkE {
 
     // window
     void window_position_callback(GLFWwindow* window, int x, int y);
-    void window_resize_callback(GLFWwindow* window, int width, int height);
-    void window_close_callback(GLFWwindow* window);
+    void window_resized_callback(GLFWwindow* window, int width, int height);
+    void window_closed_callback(GLFWwindow* window);
     void window_refresh_callback(GLFWwindow* window);
     void window_focus_callback(GLFWwindow* window, int isFocused);
     void window_iconify_callback(GLFWwindow* window, int isIconified);

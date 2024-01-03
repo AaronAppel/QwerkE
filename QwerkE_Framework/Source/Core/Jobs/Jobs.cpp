@@ -42,11 +42,11 @@ namespace QwerkE {
         // TODO: Support all types of assets or files
 
         QImageFile fileData;
-        fileData.s_Name = (char*)value;
+        fileData.s_FileName = (char*)value;
 
-        if (FileExists(TexturesFolderPath(fileData.s_Name.c_str())))
+        if (FileExists(TexturesFolderPath(fileData.s_FileName.c_str())))
         {
-            fileData.s_Data = (char*)FileSystem::LoadImageFileData(TexturesFolderPath(fileData.s_Name.c_str()), &fileData.s_Width, &fileData.s_Height, (GLenum&)fileData.s_Channels, false);
+            fileData.s_Data = (char*)FileSystem::LoadImageFileData(TexturesFolderPath(fileData.s_FileName.c_str()), &fileData.s_Width, &fileData.s_Height, (GLenum&)fileData.s_Channels, false);
         }
 
         if (fileData.s_Data != nullptr)

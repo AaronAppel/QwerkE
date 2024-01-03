@@ -22,7 +22,7 @@ namespace QwerkE {
         unsigned int s_Handle = 0;
 #endif
 
-        std::string s_Name = gc_DefaultStringValue;
+        std::string s_FileName = gc_DefaultStringValue;
     };
 
 }

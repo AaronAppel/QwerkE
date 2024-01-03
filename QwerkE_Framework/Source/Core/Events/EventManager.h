@@ -16,11 +16,9 @@ namespace QwerkE {
 
         static void ProcessEvents();
 
-        // Register callbacks/listeners
-
     private:
-        EventManager() {}
-        ~EventManager() {}
+        EventManager() = default;
+        ~EventManager() = default;
 
         static const int m_EventMax;
         static std::queue<Event*> m_EventList;

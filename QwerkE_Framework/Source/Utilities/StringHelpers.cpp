@@ -72,6 +72,11 @@ bool StringCompare(const char* a, const char* b) // #TODO Rename for boolean ret
 	return strcmp(a, b) == 0;
 }
 
+bool StrCmp(std::string a, std::string b) // #TODO Rename for boolean return type
+{
+	return strcmp(a.c_str(), b.c_str()) == 0;
+}
+
 bool StringCompare(std::string a, std::string b) // #TODO Rename for boolean return type
 {
 	return strcmp(a.c_str(), b.c_str()) == 0;

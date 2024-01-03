@@ -15,9 +15,9 @@ namespace QwerkE {
 
     struct QFile
     {
-        std::string s_Name = gc_DefaultStringValue; // With .extension
+        std::string s_FileName = gc_DefaultStringValue;
         unsigned long s_Size = 0;
-        std::string s_Extension = gc_DefaultStringValue; // Only extension
+        std::string s_Extension = gc_DefaultStringValue;
         char* s_Data = nullptr;
 
         std::string Extension() {} // TODO:

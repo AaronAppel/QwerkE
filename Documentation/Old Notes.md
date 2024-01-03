@@ -50,7 +50,7 @@ Apr 13th 2018
 Redesign the WindowManager() and Window() classes.
 
 Apr 14th 2018
-Learning C++ Refection.
+Learning C++ Reflection.
 https://stackoverflow.com/questions/41453/how-can-i-add-reflection-to-a-c-application
 
 May 5th 2018

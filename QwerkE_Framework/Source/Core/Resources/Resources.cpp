@@ -212,11 +212,11 @@ namespace QwerkE {
 			{
 				Texture* tex = new Texture();
 				tex->s_Handle = m_Textures[null_texture]->s_Handle;
-				tex->s_Name = GetFileNameWithExt(name);
-				m_Textures[tex->s_Name] = tex;
+				tex->s_FileName = GetFileNameWithExt(name);
+				m_Textures[tex->s_FileName] = tex;
 
 				Jobs::ScheduleTask(new QLoadAsset(name));
-				return m_Textures[tex->s_Name];
+				return m_Textures[tex->s_FileName];
 			}
 			else
 			{

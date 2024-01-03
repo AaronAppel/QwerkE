@@ -43,7 +43,7 @@ namespace QwerkE {
 	{
 		// this function is meant to abstract file type from external code
 
-		soundFile.s_Name = GetFileNameWithExt(filePath);
+		soundFile.s_FileName = GetFileNameWithExt(filePath);
 		soundFile.s_Extension = GetFileExtension(filePath);
 
 		// read file data

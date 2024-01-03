@@ -9,9 +9,15 @@
 
 namespace QwerkE {
 
+    float Time::m_StartTime = 0.0;
     float Time::m_Delta = 0.0;
     float Time::m_CurrentFrame = 0.0;
     float Time::m_LastFrame = 0.0;
+
+    void Time::Initialize()
+    {
+        m_StartTime = Now();
+    }
 
     void Time::NewFrame()
     {

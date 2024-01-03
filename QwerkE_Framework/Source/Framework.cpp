@@ -11,7 +11,10 @@
 #endif
 
 #include "Headers/QwerkE_Enums.h"
+#include "Headers/QwerkE_Flags.h"
 #include "Headers/Libraries_Initialize.h"
+
+#include "Utilities/Helpers.h"
 
 #include "Core/Audio/Audio.h"
 #include "Core/DataManager/ConfigHelper.h"
@@ -37,7 +40,6 @@
 #include "Debug/Debugger/Debugger.h"
 #include "Debug/Log/Log.h"
 #include "FileSystem/FileSystem.h"
-#include "Utilities/Helpers.h"
 
 namespace QwerkE {
 
@@ -50,18 +52,19 @@ namespace QwerkE {
 	{
 		eEngineMessage Framework::Startup()
 		{
-			return Startup(ConfigsFolderPath("preferences.qpref"), 0); // Default flag settings
+			return Startup(ConfigsFolderPath("preferences.qpref"), Flag_Default);
 		}
 
 		eEngineMessage Framework::Startup(std::string configFilePath, std::uint_fast8_t flags)
 		{
             Log::Initialize();
+			LOG_INFO("{0}({1})", __FILE__, __LINE__); // #TODO Remove test log
 
 			cJSON* root = OpencJSONStream(configFilePath.c_str()); // #TODO Remove engine behaviour
 			cJSON* systems = nullptr;
 			if (root)
 			{
-				systems = GetItemFromRootByKey(root, "Systems"); // #TODO Use flags to see if systems are enabled/disabled
+				systems = GetItemFromRootByKey(root, "Systems"); // #TODO Use flags in QwerkE_Flags.h to see if systems are enabled/disabled
 			}
 
             ConfigHelper::LoadConfigData(configFilePath); // Init config data
@@ -70,10 +73,10 @@ namespace QwerkE {
             // #TODO Load libraries dynamically. Need functions to load .dlls
 			// #TODO Avoid loading unused libraries. React to system flags
 
-			if (Libs_Setup() == false) // setup libraries
+			if (Libs_Setup() == false)
 			{
-				Log::Safe("\nStartup(): Error loading libraries!\n");
-				return eEngineMessage::_QFailure; // failure
+				LOG_CRITICAL("Startup(): Error loading libraries!");
+				return eEngineMessage::_QFailure;
             }
 
             // #TODO Cleanup switch or if/else if statements below. Find a nice way to detect which library objects to load
@@ -94,31 +97,32 @@ namespace QwerkE {
 			{
 #ifdef GLFW3
 				m_Window = new glfw_Window(Renderer::g_WindowWidth, Renderer::g_WindowHeight, g_WindowTitle);
+				LOG_TRACE("Window created successfully");
 #endif
 			}
             else
             {
-				LOG_ERROR("No window library detected! Check config libraries value.");
-                assert(false);
+				LOG_ERROR("No window library detected! Check config libraries value."); // #TODO Review handling missing library declaration
+                assert(false); // #TODO Implement and swap to a QwerkE assert
             }
 
             Windows::AddWindow(m_Window);
 
-            Input::Initialize((GLFWwindow*)Windows::GetWindow(0)->GetContext());
+            Input::Initialize((GLFWwindow*)Windows::GetWindow(0)->GetContext()); // #TODO Remove glfw code
 
             cJSON* audioEnabled = GetItemFromArrayByKey(systems, "AudioEnabled");
             bool enabled = audioEnabled != nullptr ? (bool)audioEnabled->valuedouble : false; // #TODO Improve value handling
 
             if (config.systems.AudioEnabled && Audio::Initialize())
             {
-                Log::Safe("Audio system initialized with OpenAL."); // #TODO Swap with LOG_TRACE()
+                LOG_TRACE("Audio system initialized with OpenAL.");
             }
             else
             {
-				Log::Safe("No audio system loaded."); // #TODO Swap with LOG_WARNING()
+				LOG_WARN("No audio system loaded.");
             }
 
-            Resources::Initialize(); // #Dependency Audio, OpenGL, Window?
+            Resources::Initialize(); // #Dependencies Audio, OpenGL, Window?
 
 			Renderer::Initialize();
 			Renderer::DrawFont("Loading...");
@@ -130,23 +134,24 @@ namespace QwerkE {
 
 			if (JobManagerMultiThreadedEnabled != nullptr && JobManagerMultiThreadedEnabled->valueint == 1) // #TODO Replace with if (config.systems.JobManagerEnabled)
 			{
-				// Jobs::MaxThreads(10); // #TODO Setup thread max value and place it in data somewhere
-				Log::Safe("Jobs are using {0} threads"); // #TODO Swap with LOG_TRACE() and include number of threads in formatting
+				// Jobs::MaxThreads(config.framework.MaxConcurrentThreadCount);
+				LOG_TRACE("Jobs are using {0} threads", config.framework.MaxConcurrentThreadCount);
 			}
 			else
 			{
-				// Jobs::MaxThreads(1); // #TODO Setup thread max value and place it in data somewhere
-				Log::Safe("Jobs are running single threaded."); // #TODO Swap with LOG_WARNING()
+				// Jobs::MaxThreads(1);
+				// Jobs::
+				LOG_WARN("Jobs are running single threaded.");
 			}
 
 			if (config.systems.NetworkingEnabled)
 			{
 				Network::Initialize();
-				Log::Safe("Networking system initialized"); // #TODO Swap with LOG_TRACE()
+				LOG_TRACE("Networking system initialized");
 			}
 			else
 			{
-				Log::Safe("No network system loaded."); // #TODO Swap with LOG_WARNING()
+				LOG_WARN("No network system loaded.");
 			}
 
 			// #TODO load scene later, like in Run() as it's more than just initializing
@@ -277,10 +282,6 @@ namespace QwerkE {
             }
 
 			m_Window->SwapBuffers();
-		}
-
-		void Framework::EndFrame()
-		{
 		}
 
 		bool Framework::StillRunning()

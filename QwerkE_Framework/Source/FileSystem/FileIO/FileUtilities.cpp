@@ -32,13 +32,13 @@ bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 // https://msdn.microsoft.com/en-us/library/windows/desktop/aa365740(v=vs.85).aspx
 // https://stackoverflow.com/questions/26475540/c-having-problems-with-a-simple-example-of-findfirstfile
 // https://docs.microsoft.com/en-us/cpp/standard-library/filesystem-functions
-std::vector<std::string> ReadDir(const char* directory)
+std::vector<std::string> ReadDir(const char* directoryPath)
 {
 	// variables
 	std::vector<std::string> fileList; // list of file names with extensions
 	WIN32_FIND_DATA ffd; // file data object
 	HANDLE hand = INVALID_HANDLE_VALUE; // file handle
-	std::string dir = directory; // used for easy appending
+	std::string dir = directoryPath; // used for easy appending
 
 	dir.append("*.*"); // append "search for all" instruction
 	hand = FindFirstFile(dir.c_str(), &ffd); // get the first file in directory
@@ -103,20 +103,17 @@ std::vector<std::string> ReadDir(const char* directory)
 // Android
 #endif // _Win32
 
-void CreateUniqueFile(const char* filePath)
+bool CreateUniqueFile(const char* filePath)
 {
 	FILE* filehandle;
 
-	if (FileExists(filePath))
-	{
-		// OutputPrint("\nCreateNewFile(): %s already exists\n\n", filePath);
-		return; // already a file with that path
-	}
-	else
+	if (!FileExists(filePath))
 	{
 		errno_t error = fopen_s(&filehandle, filePath, "w+");
 		fclose(filehandle);
 	}
+	// OutputPrint("\n%s(): %s already exists\n\n", __FUNCTION__, filePath);
+	return false;
 }
 
 void WriteRawBytesToFile(const char* filename, const char* data, int numBytes)

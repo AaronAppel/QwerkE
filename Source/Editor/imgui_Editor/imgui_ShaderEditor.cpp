@@ -21,18 +21,6 @@ namespace QwerkE {
         m_ShaderList = Resources::SeeShaderPrograms();
     }
 
-    ShaderEditor::~ShaderEditor()
-    {
-    }
-
-    void ShaderEditor::NewFrame()
-    {
-    }
-
-    void ShaderEditor::Update()
-    {
-    }
-
     void ShaderEditor::Draw(bool* isOpen)
     {
         if (m_Shader == nullptr)
@@ -40,19 +28,10 @@ namespace QwerkE {
             m_Shader = Resources::GetShaderProgram(null_shader);
         }
 
-        // TEST: temporary variables for testing
-        const int bufferSize = 2000;
-        static char vertBuffer[bufferSize] = { 0 };
-        static char fragBuffer[bufferSize] = { 0 };
-        static char geoBuffer[bufferSize] = { 0 };
-
-        static GLuint currentShaderProgram = 0;
-        static bool showShaderList = false;
-
         ImGui::Begin("Shader Editor", isOpen);
-        ImGui::Checkbox("ShaderList", &showShaderList);
+        ImGui::Checkbox("ShaderList", &m_ShowShaderList);
 
-        if (showShaderList)
+        if (m_ShowShaderList)
         {
             for (auto p : *m_ShaderList)
             {
@@ -63,38 +42,36 @@ namespace QwerkE {
             }
         }
 
-        if (currentShaderProgram != m_Shader->GetProgram())
+        if (m_CurrentShaderProgram != (int)m_Shader->GetProgram())
         {
             // strcpy_s(buffer, (char*)shader->GetVertString());
-            currentShaderProgram = m_Shader->GetProgram();
+            m_CurrentShaderProgram = (int)m_Shader->GetProgram();
             // #TODO Handle null shader strings
-            strcpy_s(vertBuffer, bufferSize, m_Shader->GetVertShader()->GetStringData());
-            strcpy_s(fragBuffer, bufferSize, m_Shader->GetFragShader()->GetStringData());
-            // strcpy_s(geoBuffer, bufferSize, (const char*)shader->GetGeoString());
+            strcpy_s(m_VertBuffer, m_BufferSize, m_Shader->GetVertShader()->GetStringData());
+            strcpy_s(m_FragBuffer, m_BufferSize, m_Shader->GetFragShader()->GetStringData());
+            // strcpy_s(m_GeoBuffer, bufferSize, (const char*)shader->GetGeoString());
         }
 
-        // ImGui::ShowTestWindow();
-
         const float windowHeight = 400.0f; // #TODO Get window height dynamically or use a ratio of the current Window width
-        const float magicNumber = 20.0f; // #TODO Width offset?
+        const float magicNumber = 20.0f; // #TODO Is this value a width offset?
 
         if (ImGui::CollapsingHeader("Vertex"))
         {
-            if (ImGui::InputTextMultiline("", vertBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
+            if (ImGui::InputTextMultiline("", m_VertBuffer, m_BufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
             {
                 // #TODO On buffer changed
             }
         }
         if (ImGui::CollapsingHeader("Fragment"))
         {
-            if (ImGui::InputTextMultiline("", fragBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
+            if (ImGui::InputTextMultiline("", m_FragBuffer, m_BufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
             {
                 // #TODO On buffer changed
             }
         }
         if (ImGui::CollapsingHeader("Geometry"))
         {
-            if (ImGui::InputTextMultiline("", geoBuffer, bufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
+            if (ImGui::InputTextMultiline("", m_GeoBuffer, m_BufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
             {
                 // #TODO On buffer changed
             }
@@ -104,20 +81,20 @@ namespace QwerkE {
         if (ImGui::Button("Recompile Vertex"))
         {
             // Good enough for now, but should remove allocation calls
-            m_Shader->RecompileShaderType(GL_VERTEX_SHADER, DeepCopyString(fragBuffer));
+            m_Shader->RecompileShaderType(GL_VERTEX_SHADER, DeepCopyString(m_VertBuffer));
         }
 
         // like "modifiable" tagged ones. Or something...
         if (ImGui::Button("Recompile Fragment"))
         {
             // Good enough for now, but should remove allocation calls
-            m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, DeepCopyString(fragBuffer));
+            m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, DeepCopyString(m_FragBuffer));
         }
 
         if (ImGui::Button("Recompile Geometry"))
         {
             // #TODO Handle geometry shader editing.
-            // m_Shader->RecompileShaderType(GL_GEOMETRY_SHADER, DeepCopyString(fragBuffer));
+            // m_Shader->RecompileShaderType(GL_GEOMETRY_SHADER, DeepCopyString(m_GeoBuffer));
         }
 
         // Reload from file

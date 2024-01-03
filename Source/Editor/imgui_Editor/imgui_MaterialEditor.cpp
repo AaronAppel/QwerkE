@@ -54,7 +54,7 @@ namespace QwerkE {
                 if (ImGui::IsItemHovered())
                 {
                     ImGui::BeginTooltip();
-                    ImGui::Text(p.second->s_Name.c_str());
+                    ImGui::Text(p.second->s_FileName.c_str());
                     ImGui::Text(std::to_string(p.second->s_Handle).c_str());
                     //ImGui::Text("TagName");
                     ImGui::EndTooltip();
@@ -85,7 +85,7 @@ namespace QwerkE {
                 if (ImGui::IsItemHovered())
                 {
                     ImGui::BeginTooltip();
-                    ImGui::Text(p.second->s_Name.c_str());
+                    ImGui::Text(p.second->s_FileName.c_str());
                     ImGui::Text(std::to_string(p.second->s_Handle).c_str());
                     ImGui::EndTooltip();
                 }
@@ -94,7 +94,7 @@ namespace QwerkE {
                 {
                     // #TODO It is possible to add a map to a material without one?
                     material->SetTexture(p.second, m_CurrentMap);
-                    LOG_INFO("Set {0}({1}) mat to map index {2}", p.second->s_Name.c_str(), (unsigned int)p.second->s_Handle, (int)m_CurrentMap);
+                    LOG_INFO("Set {0}({1}) mat to map index {2}", p.second->s_FileName.c_str(), (unsigned int)p.second->s_Handle, (int)m_CurrentMap);
                 }
                 counter++;
             }

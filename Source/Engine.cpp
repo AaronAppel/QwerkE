@@ -96,24 +96,28 @@ namespace QwerkE {
 			const float FPS_MAX = 120.0f;
 			const float FPS_MAX_DELTA = 1.0f / FPS_MAX;
 
-			float elapsedTime = 0.f;
+			float lastIterationTime = Time::Now();
+			float lastFramestartTime = Time::Now();
+			float countDown = 0.f;
 
 			while (m_IsRunning)
 			{
-				elapsedTime = Time::Now() - elapsedTime;
+				countDown -= Time::Now() - lastIterationTime;
+				lastIterationTime = Time::Now();
 
-				if (elapsedTime >= FPS_MAX_DELTA)
+				if (countDown <= 0.f)
 				{
-					elapsedTime = 0.f;
 					Time::NewFrame();
 
 					Engine::NewFrame();
 
 					Engine::PollInput();
 
-					Engine::Update(elapsedTime);
+					Engine::Update(Time::Delta());
 
                     Engine::Draw();
+
+					countDown = FPS_MAX_DELTA;
 				}
                 else
                 {

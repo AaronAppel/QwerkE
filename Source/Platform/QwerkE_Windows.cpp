@@ -50,7 +50,11 @@ int main(unsigned int argc, char **argv)
 	// Save argument key/value pairs for use in engine
 	// Save environment variables info or references
 	// Save working directory
+	const QwerkE::eEngineMessage result = QwerkE::Engine::Run(pairs);
+	if (result != QwerkE::eEngineMessage::_QSuccess)
+	{
+		system("pause");
+	}
 
-	const int result = (int)QwerkE::Engine::Run(pairs);
-	return result;
+	return (int)result;
 }

@@ -194,7 +194,7 @@ namespace QwerkE {
 
         // save data
         // Note: I am not saving texture handles because they are not reliable.
-        // #TODO Should I use struct member names like "s_Name"?
+        // #TODO Should I use struct member names like "s_FileName"?
         cJSON* root = OpencJSONStream(filePath);
         if (!root) { return; }
 
@@ -212,7 +212,7 @@ namespace QwerkE {
         for (auto p : *matComponents)
         {
             Texture* texture = p.second;
-            AddItemToArray(names, CreateString(std::to_string((int)p.first).c_str(), texture->s_Name.c_str()));
+            AddItemToArray(names, CreateString(std::to_string((int)p.first).c_str(), texture->s_FileName.c_str()));
         }
 
         // AddItemToArray(Names, CreateString("AmbientName", mat->s_AmbientName.c_str()));

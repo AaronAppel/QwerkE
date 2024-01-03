@@ -198,7 +198,7 @@ namespace QwerkE {
             }
 
             // TODO: Support external material loading
-            // resMan->AddMaterial(data->s_Name.c_str(), data); // add initialized material
+            // resMan->AddMaterial(data->s_FileName.c_str(), data); // add initialized material
         }
 
         matNames.push_back(name.C_Str()); // get name for mat loading later

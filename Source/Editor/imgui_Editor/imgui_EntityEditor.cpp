@@ -47,7 +47,6 @@ namespace QwerkE {
         delete m_EditComponent;
 	}
 
-	// ImGui styling: https://www.unknowncheats.me/forum/direct3d/189635-imgui-style-settings.html
 	void EntityEditor::Draw()
 	{
 		if (m_CurrentEntity == nullptr)
@@ -73,17 +72,22 @@ namespace QwerkE {
             //// Begin drawing entity data...
             // Draw generic GameObject data like transform and name
             // std::string name = m_CurrentEntity->GetName().c_str() + ' '; // extra space for editing
-            ImGui::InputText("Name: ", (char*)m_CurrentEntity->GetName().c_str(), m_CurrentEntity->GetName().size());
+            if (ImGui::InputText("Name: ", (char*)m_CurrentEntity->GetName().c_str(), m_CurrentEntity->GetName().size()))
+            {
+
+            }
             // m_CurrentEntity->SetName(); // #TODO Scene map probably needs to handle name changes
 
             static float pos[3] = { 0.0f, 0.0f, 0.0f };
             pos[0] = m_CurrentEntity->GetPosition().x;
             pos[1] = m_CurrentEntity->GetPosition().y;
             pos[2] = m_CurrentEntity->GetPosition().z;
+
             static float rot[3] = { 0.0f, 0.0f, 0.0f };
             rot[0] = m_CurrentEntity->GetRotation().x;
             rot[1] = m_CurrentEntity->GetRotation().y;
             rot[2] = m_CurrentEntity->GetRotation().z;
+
             static float scale[3] = { 1.0f, 1.0f, 1.0f };
             scale[0] = m_CurrentEntity->GetScale().x;
             scale[1] = m_CurrentEntity->GetScale().y;

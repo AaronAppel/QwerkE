@@ -17,7 +17,7 @@ namespace QwerkE {
         {
             // Take loaded char* data and feed it to OpenGL for a handle
             // Texture* texture = new Texture();
-            // texture->s_Name = m_Asset.s_Name;
+            // texture->s_FileName = m_Asset.s_FileName;
             // texture->s_Handle = LoadTextureDataToOpenGL(m_Asset); // #TODO Remove OpenGL dependency
 
             int handle = LoadTextureDataToOpenGL(m_Asset);
@@ -25,7 +25,7 @@ namespace QwerkE {
             if (handle > 0) // if (texture->s_Handle > 0)
             {
                 // Update texture data in resource manager
-                Resources::UpdateTexture(m_Asset.s_Name.c_str(), handle);
+                Resources::UpdateTexture(m_Asset.s_FileName.c_str(), handle);
             }
             else
             {

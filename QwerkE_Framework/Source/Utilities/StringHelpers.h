@@ -2,12 +2,9 @@
 
 #include <string>
 
-// Easy to use utility functions for use with std:string
-// FEATURE: GetStringExtension()
-
-// FEATURE: String append function that takes a variable number of char*s and appends them in order
 const char* StringAppend(const char* a, const char* b);
 const char* StringAppend(const char* a, const char* b, const char* c);
+// const char* StringAppend(va_list); // FEATURE: String append function that takes a variable number of char*s and appends them in order
 
 char* DeepCopyString(const char* string);
 
@@ -16,11 +13,10 @@ const char* CombineStrings(std::string a, std::string b);
 
 std::string DispStrCombine(const char* a, const char* b);
 
-// TODO: Just macro define strcmp for a nicer name
+bool StrCmp(std::string a, std::string b);
 bool StringCompare(std::string a, std::string b);
 
 bool SearchForString(std::string line, std::string word);
-
 
 int StringToInt(const char* string);
 

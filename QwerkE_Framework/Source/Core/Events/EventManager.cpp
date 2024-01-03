@@ -16,16 +16,24 @@ namespace QwerkE {
     void EventManager::Initialize()
     {
         mutex = new pthread_mutex_t();
+        *mutex = PTHREAD_MUTEX_INITIALIZER;
     }
 
     void EventManager::Shutdown()
     {
-        delete mutex; // #TODO Delete events
+        for (size_t i = 0; i < m_EventList.size(); i++)
+        {
+            if (Event* event = m_EventList.front())
+            {
+                delete event;
+            }
+        }
+        delete mutex;
     }
 
     void EventManager::QueueEvent(Event* _event)
     {
-        // pthread_mutex_lock(mutex);
+        pthread_mutex_lock(mutex);
         // #TODO Implement thread safe API for multi threaded event queuing
         if (m_EventList.size() < m_EventMax)
         {
@@ -37,7 +45,7 @@ namespace QwerkE {
         {
             LOG_ERROR("Event list is full!");
         }
-        // pthread_mutex_unlock(mutex);
+        pthread_mutex_unlock(mutex);
     }
 
     void EventManager::ProcessEvents()

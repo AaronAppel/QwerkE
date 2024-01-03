@@ -110,11 +110,11 @@ namespace QwerkE {
 			Texture* texture = nullptr;
 			texture = new Texture();
 			texture->s_Handle = Load2DTexture(textureName);
-			texture->s_Name = GetFileNameWithExt(textureName);
+			texture->s_FileName = GetFileNameWithExt(textureName);
 
 			if (texture->s_Handle != 0)
 			{
-				m_Textures[texture->s_Name] = texture;
+				m_Textures[texture->s_FileName] = texture;
 				return texture;
 			}
 			else

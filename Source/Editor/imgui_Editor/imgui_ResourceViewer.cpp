@@ -117,7 +117,7 @@ namespace QwerkE {
                             ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(256, 256), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
                         }
 
-                        ImGui::Text(p.second->s_Name.c_str());
+                        ImGui::Text(p.second->s_FileName.c_str());
                         ImGui::Text(std::to_string(p.second->s_Handle).c_str());
                         //ImGui::Text("TagName");
                         ImGui::EndTooltip();

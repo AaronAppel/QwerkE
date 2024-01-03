@@ -8,11 +8,11 @@
 
 #include "../../Components/Component.h"
 
-const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis
+const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis and move to a better defines file
 
 namespace QwerkE {
 
-    class CameraComponent : public Component // abstract
+    class CameraComponent : public Component
     {
     public:
         virtual ~CameraComponent();

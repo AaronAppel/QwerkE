@@ -23,16 +23,43 @@
             "id": "14e63c6f58ac7507",
             "type": "leaf",
             "state": {
+              "type": "canvas",
+              "state": {
+                "file": "QwerkE Standards/Include Flow Diagram.canvas",
+                "viewState": {
+                  "x": -631.5747740532589,
+                  "y": -319.9568228673621,
+                  "zoom": 0.4375
+                }
+              }
+            }
+          },
+          {
+            "id": "322106121cc11225",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "Assets and Data/Supported File and Data Types.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "28d1e7ec096c5d42",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "QwerkE Standards/Member Initialization.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -77,7 +104,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#TODO",
+                "query": "c++",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -117,7 +144,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "QwerkE Standards/Member Initialization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,7 +161,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "QwerkE Standards/Member Initialization.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +173,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "QwerkE Standards/Member Initialization.md"
               }
             }
           }
@@ -167,47 +194,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "floating": {
-    "id": "2dc929b99759f977",
-    "type": "floating",
-    "children": [
-      {
-        "id": "0d4291dc0fb0cb7e",
-        "type": "window",
-        "children": [
-          {
-            "id": "739eec08380fc924",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "ffe176782bba9c2f",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "README.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical",
-        "x": 1894,
-        "y": 0,
-        "width": 2062,
-        "height": 1600,
-        "maximize": false,
-        "zoom": 0
-      }
-    ]
-  },
-  "active": "14e63c6f58ac7507",
+  "active": "28d1e7ec096c5d42",
   "lastOpenFiles": [
+    "QwerkE Standards/Including.md",
+    "QwerkE Standards/Member Initialization.md",
+    "Old Notes.md",
+    "QwerkE Standards/Empty Function Body.md",
+    "Feature Development/Engine Styling and Appearance.md",
+    "Variable Naming.md",
+    "Assets and Data/Supported File and Data Types.md",
+    "Assets and Data/Null Asset Handling.md",
+    "Assets and Data",
+    "QwerkE Standards/Include Flow Diagram.canvas",
     "QwerkE Standards/Commenting.md",
+    "QwerkE Standards/Namespace.md",
     "QwerkE Standards/Coding Standards.md",
+    "QwerkE Standards/Operators.md",
     "Framework Read Me.md",
     "README.md",
     "Z. Less Relevant/Markdown Syntax Reference.md",
@@ -217,10 +219,8 @@
     "Git and GitHub/Git.md",
     "Z. Less Relevant",
     "Old References.md",
-    "Old Notes.md",
     "TODO Symlink READ ME.md",
     "Feature Development/x64 Architecture Support.md",
-    "QwerkE Standards/Including.md",
     "Feature Development",
     "Solution Configuration/Additional Includes.md",
     "README.md.lnk",
@@ -230,7 +230,6 @@
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.user",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.filters",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Main.h",
     "Sub Projects/QwerkE Games.md",
     "2023-12-31.md",
     "Welcome.md"
