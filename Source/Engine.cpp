@@ -46,16 +46,16 @@ namespace QwerkE {
 
 	namespace Engine
     {
-        // Private engine variables
-        static bool m_IsRunning = false; // #TODO Remove extra variable
+        static bool m_IsRunning = false;
         static Editor* m_Editor = nullptr;
 
 		QwerkE::eEngineMessage Engine::Run(std::map<const char*, const char*> &args)
         {
+			// #TODO Open or close console output window using config.systems.ConsoleOutputWindowEnabled
+
             Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
 			PROFILE_SCOPE("Run");
 
-			// Handle program arguments
 			if (args.find(key_ProjectName) != args.end())
 			{
 				// Load project (reusable method)
@@ -68,14 +68,7 @@ namespace QwerkE {
 			// Might want to create another function for the game loop and
 			// leave Run() smaller and abstracted from the functionality.
 
-			std::uint_fast8_t flags = 0;
-
-			// TEMP: Turn off components like this until the data can be read from a file
-			flags &= ~Flag_Physics;
-			flags &= ~Flag_Renderer;
-			flags &= ~Flag_Audio;
-
-			if (Framework::Startup(ConfigsFolderPath("preferences.qpref"), flags) == eEngineMessage::_QFailure)
+			if (Framework::Startup(ConfigsFolderPath("preferences.qpref")) == eEngineMessage::_QFailure)
             {
                 Log::Safe("Qwerk Framework failed to load. Shutting down engine.");
 				return eEngineMessage::_QFailure;
@@ -83,29 +76,27 @@ namespace QwerkE {
 
 			Scenes::GetCurrentScene()->SetIsEnabled(true);
 
-			m_IsRunning = true;
-
 			// #TODO Move to editor class
 #ifdef dearimgui
 			m_Editor = (Editor*)new imgui_Editor();
 #else
 			m_Editor = (Editor*)new ????_Editor();
-#endif // editor
+#endif
 
-			// #TODO Move this to a window class
-			const float FPS_MAX = 120.0f;
-			const float FPS_MAX_DELTA = 1.0f / FPS_MAX;
+			const EngineSettings engineSettings = ConfigHelper::GetConfigData().engineSettings;
+			const unsigned int FPS_MAX = (int)(engineSettings.LimitFramerate) * engineSettings.MaxFramesPerSecond;
+			const float FPS_MAX_DELTA = FPS_MAX ? 1.0f / FPS_MAX : 0;
 
 			float lastIterationTime = Time::Now();
-			float lastFramestartTime = Time::Now();
-			float countDown = 0.f;
+			float timeUntilNextFrame = 0.f;
 
+			m_IsRunning = true;
 			while (m_IsRunning)
 			{
-				countDown -= Time::Now() - lastIterationTime;
+				timeUntilNextFrame -= Time::Now() - lastIterationTime;
 				lastIterationTime = Time::Now();
 
-				if (countDown <= 0.f)
+				if (timeUntilNextFrame <= 0.f)
 				{
 					Time::NewFrame();
 
@@ -117,7 +108,7 @@ namespace QwerkE {
 
                     Engine::Draw();
 
-					countDown = FPS_MAX_DELTA;
+					timeUntilNextFrame = FPS_MAX_DELTA;
 				}
                 else
                 {

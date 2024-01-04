@@ -10,22 +10,25 @@
 
 namespace QwerkE {
 
+    static bool s_IsInitialized = false;
+
     bool Libs_Setup()
     {
-        // #TODO Assert if currently initialized
+        // #TODO This logic tests to see if libraries can load, and then unloads them.
+        // This logic should exist in other systems.
+        // There may be some benefit to having test cases to see when a library fails to load,
+        // but that can be done in the specific system that uses it.
 
-        // #TODO Control initializing libraries if their systems are not enabled
-        // const ConfigData configData = ConfigHelper::GetConfigData();
+        ASSERT(!s_IsInitialized, "Libraries are already initialized!");
+
+        ConfigData configData = ConfigHelper::GetConfigData();
         // if (configData.systems.AudioEnabled) {}
-        bool errorFree = true; // Return value. If error occurs set to false
 
-        LOG_TRACE("Libs_Setup(): Initializing libraries...");
+        bool errorFree = true;
+        LOG_TRACE("{0}: Initializing libraries...", __FUNCTION__);
 
-        // Setup/Load libraries based on platform, architecture, configuration
-        // TODO: Clean up #ifs
-
-        FT_Library ft;
-        if (FT_Init_FreeType(&ft))
+        FT_Library freeType;
+        if (FT_Init_FreeType(&freeType))
         {
             LOG_ERROR("Error loading freetype2!");
             errorFree = false;
@@ -33,7 +36,7 @@ namespace QwerkE {
         else
         {
             LOG_TRACE("Freetype Loaded,");
-            FT_Done_FreeType(ft);
+            FT_Done_FreeType(freeType);
         }
 
         if (!glfwInit())
@@ -108,8 +111,6 @@ namespace QwerkE {
             }
             else
             {
-                // openGL extensions wrangler //
-                // GLEW
                 glfwMakeContextCurrent(testWindow);
                 if (glewInit() != GLEW_OK)
                 {
@@ -162,25 +163,25 @@ namespace QwerkE {
 
         if (errorFree)
         {
-            LOG_TRACE("Libs_Setup(): Libraries Initialized successfully\n");
+            LOG_TRACE("{0}: Libraries initialized successfully", __FUNCTION__);
         }
         else
         {
-            LOG_CRITICAL("Libs_Setup(): Error loading libraries!\n");
+            LOG_CRITICAL("{0}: Error loading libraries!", __FUNCTION__);
         }
 
+        s_IsInitialized = errorFree;
         return errorFree;
     }
 
     void Libs_TearDown()
     {
-        ImGui_ImplGlfw_Shutdown(); // shutdown imgui
-        ImGui::DestroyContext(); // destroy imgui
-        // TODO: OpenAL, Bullet, freetype2, GLEW?, RakNet
-
-        // Last to keep error logging functionality
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
         glfwTerminate();
         Log::Shutdown();
+
+        s_IsInitialized = false;
     }
 
 }

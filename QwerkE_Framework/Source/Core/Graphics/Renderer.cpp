@@ -47,13 +47,12 @@ namespace QwerkE {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void Renderer::DrawFont(const char* text)
+    void Renderer::DrawFont(const char* text, float x, float y, float scale)
     {
         // TODO: Improve font rendering
         RenderText(Resources::GetShaderProgram("font_shader.ssch"),
             std::string(text),
-            100, 100, // x, y
-            1.0f, // scale
+            x, y, scale,
             glm::vec3(0, 0, 0));
     }
 

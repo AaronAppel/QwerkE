@@ -2699,9 +2699,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Enums.h">
       <Filter>Source\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Flags.h">
-      <Filter>Source\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Global_Constants.h">
       <Filter>Source\Headers</Filter>
     </ClInclude>

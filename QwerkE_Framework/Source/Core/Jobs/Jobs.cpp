@@ -28,7 +28,6 @@ namespace QwerkE {
         }
     }
 
-    // Private
     void Jobs::ProcessNextTask()
     {
         QJob* next = m_JobList.front();

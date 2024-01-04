@@ -52,7 +52,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "References/Library References.md",
+                "file": "Feature Development/Scenes.md",
                 "mode": "source",
                 "source": false
               }
@@ -64,14 +64,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Known Issues and Gotchas.md",
+                "file": "Z. Less Relevant/Markdown Syntax Reference.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -156,7 +156,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Known Issues and Gotchas.md",
+                "file": "Feature Development/Scenes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -173,7 +173,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Known Issues and Gotchas.md",
+                "file": "Feature Development/Scenes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -185,7 +185,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Known Issues and Gotchas.md"
+                "file": "Feature Development/Scenes.md"
               }
             }
           }
@@ -206,44 +206,44 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "829d56dec2e8397c",
+  "active": "28d1e7ec096c5d42",
   "lastOpenFiles": [
+    "Z. Less Relevant/Bit Flags.md",
+    "Feature Development/Scenes.md",
+    "Old Notes.md",
+    "Framework Read Me.md",
+    "README.md",
+    "Z. Less Relevant/Bit Manipulation.md",
     "References/Library References.md",
+    "Git and GitHub/Git.md",
     "Known Issues and Gotchas.md",
+    "Known Issues.md",
+    "Solution Configuration/Additional Includes.md",
+    "Assets and Data/Supported File and Data Types.md",
+    "QwerkE Standards/Include Flow Diagram.canvas",
+    "QwerkE Standards/Coding Standards.md",
+    "Z. Less Relevant/Markdown Syntax Reference.md",
+    "QwerkE Standards/Conditional Statements.md",
     "QwerkE Standards/Member Initialization.md",
     "References",
     "QwerkE Standards/Including.md",
-    "Old Notes.md",
     "QwerkE Standards/Empty Function Body.md",
     "Feature Development/Engine Styling and Appearance.md",
     "Variable Naming.md",
-    "Assets and Data/Supported File and Data Types.md",
     "Assets and Data/Null Asset Handling.md",
     "Assets and Data",
-    "QwerkE Standards/Include Flow Diagram.canvas",
     "QwerkE Standards/Commenting.md",
     "QwerkE Standards/Namespace.md",
-    "QwerkE Standards/Coding Standards.md",
     "QwerkE Standards/Operators.md",
-    "Framework Read Me.md",
-    "README.md",
-    "Z. Less Relevant/Markdown Syntax Reference.md",
     "GettingStarted.md",
     "QwerkE Standards/Coding Standards Notes.md",
-    "Known Issues.md",
-    "Git and GitHub/Git.md",
     "Z. Less Relevant",
-    "Old References.md",
-    "TODO Symlink READ ME.md",
-    "Feature Development/x64 Architecture Support.md",
     "Feature Development",
-    "Solution Configuration/Additional Includes.md",
     "README.md.lnk",
     "README.md - Shortcut.lnk",
     "Solution Configuration",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/soft_oal.dll",
     "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.user",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.filters",
-    "Sub Projects/QwerkE Games.md"
+    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.filters"
   ]
 }

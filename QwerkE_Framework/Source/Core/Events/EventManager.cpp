@@ -11,7 +11,7 @@ namespace QwerkE {
     // #TODO Review QueueEvent() thread safety
     static pthread_mutex_t* mutex = nullptr;
     const int EventManager::m_EventMax = 100;
-    std::queue<Event*> EventManager::m_EventList;
+    std::queue<Event*> EventManager::m_EventQueue;
 
     void EventManager::Initialize()
     {
@@ -21,13 +21,16 @@ namespace QwerkE {
 
     void EventManager::Shutdown()
     {
-        for (size_t i = 0; i < m_EventList.size(); i++)
+        pthread_mutex_lock(mutex);
+        for (size_t i = 0; i < m_EventQueue.size(); i++)
         {
-            if (Event* event = m_EventList.front())
+            if (Event* event = m_EventQueue.front())
             {
                 delete event;
+                m_EventQueue.pop();
             }
         }
+        pthread_mutex_unlock(mutex);
         delete mutex;
     }
 
@@ -35,10 +38,10 @@ namespace QwerkE {
     {
         pthread_mutex_lock(mutex);
         // #TODO Implement thread safe API for multi threaded event queuing
-        if (m_EventList.size() < m_EventMax)
+        if (m_EventQueue.size() < m_EventMax)
         {
             _event->SetID(helpers_GetUniqueID());
-            m_EventList.push(_event);
+            m_EventQueue.push(_event);
             LOG_INFO("Event {0} Queued!", _event->GetID());
         }
         else
@@ -50,16 +53,18 @@ namespace QwerkE {
 
     void EventManager::ProcessEvents()
     {
-        int size = (int)m_EventList.size();
+        pthread_mutex_lock(mutex);
+        int size = (int)m_EventQueue.size(); // #TODO Track threads and limit number using ConfigData
 
         for (int i = 0; i < size; i++)
         {
-            Event* _event = m_EventList.front();
+            Event* _event = m_EventQueue.front();
             _event->Process();
 
             switch (_event->GetType())
             {
             case eEventTypes::eEvent_AssetLoaded:
+                LOG_TRACE("Asset loaded");
                 break;
             case eEventTypes::eEvent_JobQueued:
                 break;
@@ -73,8 +78,9 @@ namespace QwerkE {
                 break;
             }
 
-            m_EventList.pop();
+            m_EventQueue.pop();
         }
+        pthread_mutex_unlock(mutex);
     }
 
 }

@@ -48,7 +48,7 @@ namespace QwerkE {
 
     protected:
         // private constructors
-        CameraComponent(vec3 position = vec3(0.0f, 0.0f, 0.0f), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
+        CameraComponent(vec3 position = vec3::Zero(), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
         CameraComponent(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
         // Camera Attributes

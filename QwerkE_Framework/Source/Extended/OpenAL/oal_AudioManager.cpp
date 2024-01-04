@@ -18,14 +18,14 @@ namespace QwerkE {
 
 		if (!m_Device)
 		{
-			LOG_ERROR("Error initializing audio system! OpenAL error code {0}", alGetError());
+			LOG_ERROR("Error initializing audio device! OpenAL error code {0}", alGetError());
 			return false;
 		}
 
-		m_Context = alcCreateContext(m_Device, NULL);
-		if (!m_Device)
+		m_Context = alcCreateContext(m_Device, NULL); // #TODO there is a print in alc code that would be nice to avoid
+		if (!m_Context)
 		{
-			LOG_ERROR("Error initializing audio system! OpenAL error code {0}", alGetError());
+			LOG_ERROR("Error initializing audio context! OpenAL error code {0}", alGetError());
 			return false;
 		}
 		alcMakeContextCurrent(m_Context);

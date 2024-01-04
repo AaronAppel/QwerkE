@@ -37,8 +37,13 @@ namespace QwerkE {
         bool AudioEnabled = true;
         bool PhysicsEnabled = true;
         bool NetworkingEnabled = true;
-        bool DebuggingEnabled = true;
-        bool LoggingEnabled = true;
+        bool ConsoleOutputWindowEnabled = true;
+    };
+
+    struct EngineSettings
+    {
+        bool LimitFramerate = true;
+        int MaxFramesPerSecond = 120;
     };
 
     struct Controls
@@ -68,6 +73,8 @@ namespace QwerkE {
         ScenesData scenes;
         SceneSettings sceneSettings;
         Systems systems;
+        EngineSettings engineSettings;
+
         Controls controls;
     };
 

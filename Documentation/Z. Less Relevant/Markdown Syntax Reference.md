@@ -16,3 +16,4 @@ __Bold Underscore__
 `![image alt text](https://example.com/link-to-image)`
 `[link text](https://example.com/my-link "link title")`
 Embedded image with on-click link [![Title](link to image)](VideoLink "Hover Text")
+==Highlight==

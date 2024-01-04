@@ -6,8 +6,11 @@ namespace QwerkE {
 
     void CheckForOpenALErrors(const char* file, int line)
     {
-        switch (alGetError())
+        const ALenum alErrorCode = alGetError();
+        switch (alErrorCode)
         {
+        case AL_NO_ERROR:
+            break;
         case AL_INVALID_NAME: // Same as ALC_INVALID_DEVICE
             LOG_ERROR("AL_INVALID_NAME");
             break;

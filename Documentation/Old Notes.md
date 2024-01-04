@@ -1,7 +1,7 @@
 ### #TODO Review old file
 
 Make sure each project builds with PCHs off and no pch.h force include.
-This is to allow easy code intergration/extraction. The PCHs are just to speed
+This is to allow easy code integration/extraction. The PCHs are just to speed
 up the build and do not introduce a file dependency since all files should
 already \#include necessary files.
 // TODO: Make sure \#includes are minimal and require the least amount of
@@ -11,7 +11,7 @@ Remember that right now there are platform define issues where files need
 This is currently being solved by force \#including "Engine_Defines.h",
 "Engine_Platform.h".
 
-How useful would a flie finder program be?
+How useful would a file finder program be?
 It would take something like "#include "file.h"" and replace it with
 "#include "../../Folder/file.h""
 Something to think about. It is nice to allow for file movement and auto
@@ -30,7 +30,7 @@ without altering the source \#includes. I will have to check on this later.
 Bullet is also dependent on a globally \#included root folder.
 
 Apr 6th 2018
-Got TestGame project running by ading a reference to engine.
+Got TestGame project running by adding a reference to engine.
 Is that good or bad? It might be better to remove references in the future.
 
 Apr 9th 2018
@@ -66,10 +66,10 @@ So libraries are a pain. I am trying to dynamically use .dlls and .libs by detec
 platform and architecture but it is proving difficult. Some libraries name their files
 the exact same for all versions which is just dumb. If I ever do that shoot me. The 
 solution I have is to create projects for not only every platform and architecture, but
-also debug and release moeds. This means 4 projects per platform, or 2 if I drop 32 bit.
+also debug and release modes. This means 4 projects per platform, or 2 if I drop 32 bit.
 
 May 14th 2018
-I finally found a decentish fix for loading assets from projects with different working
+I finally found a decent-ish fix for loading assets from projects with different working
 directories. Now I have to ask myself "How does someone ask for a file?". Should users
 ask for a file using the "extension.file"? Having shortform names like "Teapot" is not
 a huge convenience and requires large amounts of overhead to support so screw that I guess.

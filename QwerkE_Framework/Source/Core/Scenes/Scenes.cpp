@@ -90,15 +90,7 @@ namespace QwerkE {
             m_CurrentScene = emptyScene;
             LOG_WARN("Null scene loaded because no valid scene was found in: {0}", prefPath);
 		}
-		// TODO: free prefPath memory
-	}
-
-	void Scenes::ResetAll()
-	{
-		for (int i = 0; i < Scene_Max; i++)
-		{
-			Scene* temp = m_Scenes[(eSceneTypes)i];
-		}
+		// TODO: Delete or manage prefPath memory
 	}
 
 	void Scenes::EnableScene(eSceneTypes type)

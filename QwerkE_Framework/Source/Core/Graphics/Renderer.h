@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Math/Vector.h"
+
 namespace QwerkE {
 
     class Renderer final
@@ -12,7 +14,7 @@ namespace QwerkE {
 
         static void NewFrame();
 
-        static void DrawFont(const char* text);
+        static void DrawFont(const char* text, float x = 100.f, float y = 100.f, float scale = 1.0f);
 
     private:
         Renderer() = default;

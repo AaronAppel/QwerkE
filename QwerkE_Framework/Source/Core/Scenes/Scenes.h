@@ -16,10 +16,6 @@ namespace QwerkE {
 
         static void Initialize();
 
-        static void ResetScene(eSceneTypes type);
-        static void ResetAll();
-
-        // TODO: Scene loading
         static void EnableScene(eSceneTypes type);
         static void SetCurrentScene(eSceneTypes type);
         static void DisableScene(eSceneTypes type);
@@ -28,30 +24,19 @@ namespace QwerkE {
         static void AddScene(Scene* scene);
         static Scene* RemoveScene(Scene* scene);
 
-        //void QueueEvent(Event* pEvent);
-
         static void Update(float deltatime);
         static void DrawCurrentScene();
         static void DrawScene(eSceneTypes scene);
 
-        /* Getters + Setters */
-        // getters
         static Scene* GetScene(eSceneTypes a_SceneType) { return m_Scenes[a_SceneType]; };
         static Scene* GetCurrentScene() { return m_CurrentScene; };
         static int SceneCount() { return (int)m_Scenes.size(); };
         static const std::map<eSceneTypes, Scene*>* LookAtScenes() { return &m_Scenes; };
 
     private:
-        // functions
-        //void ProcessEvents();
-        //void OnEvent(Event* pEvent);
-
-        // variables
-        static bool m_IsRunning; // Add step-through and pause/play button functionality in debug mode
+        static bool m_IsRunning;
         static Scene* m_CurrentScene;
-        //std::queue<Event*> m_EventQueue;
         static std::map<eSceneTypes, Scene*> m_Scenes;
-        //PlayerController* m_pController = nullptr;
     };
 
 }

@@ -20,7 +20,7 @@ namespace QwerkE {
         }
         else
         {
-            Log::Safe("Physics is currently disabled.");
+            LOG_WARN("Physics is currently disabled.");
         }
     }
 }

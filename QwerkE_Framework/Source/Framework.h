@@ -9,7 +9,7 @@ namespace QwerkE {
 	namespace Framework
 	{
 		eEngineMessage Startup();
-		eEngineMessage Startup(std::string configFilePath, std::uint_fast8_t flags);
+		eEngineMessage Startup(const std::string configFilePath);
 		eEngineMessage TearDown();
 
 		void Run();

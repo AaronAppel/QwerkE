@@ -11,7 +11,6 @@
 #endif
 
 #include "Headers/QwerkE_Enums.h"
-#include "Headers/QwerkE_Flags.h"
 #include "Headers/Libraries_Initialize.h"
 
 #include "Utilities/Helpers.h"
@@ -52,30 +51,21 @@ namespace QwerkE {
 	{
 		eEngineMessage Framework::Startup()
 		{
-			return Startup(ConfigsFolderPath("preferences.qpref"), Flag_Default);
+			return Startup(ConfigsFolderPath("preferences.qpref"));
 		}
 
-		eEngineMessage Framework::Startup(std::string configFilePath, std::uint_fast8_t flags)
+		eEngineMessage Framework::Startup(const std::string configFilePath)
 		{
             Log::Initialize();
 
-			cJSON* root = OpencJSONStream(configFilePath.c_str()); // #TODO Remove engine behaviour
-			cJSON* systems = nullptr;
-			if (root)
-			{
-				systems = GetItemFromRootByKey(root, "Systems"); // #TODO Use flags in QwerkE_Flags.h to see if systems are enabled/disabled
-			}
-
             ConfigHelper::LoadConfigData(configFilePath); // Init config data
-            const ConfigData config = ConfigHelper::GetConfigData();
+            const ConfigData& config = ConfigHelper::GetConfigData();
 
             // #TODO Load libraries dynamically. Need functions to load .dlls
-			// #TODO Avoid loading unused libraries. React to system flags
 
-			ASSERT(Libs_Setup(), "Error loading libraries!");
-			if (Libs_Setup() == false)
+			if (!Libs_Setup())
 			{
-				LOG_CRITICAL("Startup(): Error loading libraries!");
+				LOG_CRITICAL("{0} Error loading libraries!", __FUNCTION__);
 				return eEngineMessage::_QFailure;
             }
 
@@ -110,9 +100,6 @@ namespace QwerkE {
 
             Input::Initialize((GLFWwindow*)Windows::GetWindow(0)->GetContext()); // #TODO Remove glfw code
 
-            cJSON* audioEnabled = GetItemFromArrayByKey(systems, "AudioEnabled");
-            bool enabled = audioEnabled != nullptr ? (bool)audioEnabled->valuedouble : false; // #TODO Improve value handling
-
             if (config.systems.AudioEnabled && Audio::Initialize())
             {
                 LOG_TRACE("Audio system initialized with OpenAL.");
@@ -125,24 +112,10 @@ namespace QwerkE {
             Resources::Initialize(); // #Dependencies Audio, OpenGL, Window?
 
 			Renderer::Initialize();
-			Renderer::DrawFont("Loading...");
+			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.0f);
 			m_Window->SwapBuffers();
 
-			EventManager::Initialize();
-
-			cJSON* JobManagerMultiThreadedEnabled = GetItemFromArrayByKey(systems, "JobManagerMultiThreadedEnabled");
-
-			if (JobManagerMultiThreadedEnabled != nullptr && JobManagerMultiThreadedEnabled->valueint == 1) // #TODO Replace with if (config.systems.JobManagerEnabled)
-			{
-				// Jobs::MaxThreads(config.framework.MaxConcurrentThreadCount);
-				LOG_TRACE("Jobs are using {0} threads", config.framework.MaxConcurrentThreadCount);
-			}
-			else
-			{
-				// Jobs::MaxThreads(1);
-				// Jobs::
-				LOG_WARN("Jobs are running single threaded.");
-			}
+			EventManager::Initialize(); // #TODO Set max thread count with config.framework.MaxConcurrentThreadCount;
 
 			if (config.systems.NetworkingEnabled)
 			{
@@ -157,7 +130,6 @@ namespace QwerkE {
 			// #TODO load scene later, like in Run() as it's more than just initializing
 			Scenes::Initialize(); // #TODO Investigate other system dependencies as there are likely several
 
-			// No dependencies //
 			Physics::Initialize();
 
 			return eEngineMessage::_QSuccess;
@@ -165,12 +137,8 @@ namespace QwerkE {
 
 		eEngineMessage Framework::TearDown()
         {
-			// #TODO ShutdownSystems();
             EventManager::Shutdown();
-
-			Libs_TearDown(); // unload libraries
-
-			// #TODO Safety checks?
+			Libs_TearDown();
 			return eEngineMessage::_QSuccess;
 		}
 

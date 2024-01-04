@@ -29,12 +29,10 @@ namespace QwerkE {
             return;
         }
 
-        // Framework
         cJSON* framework = GetItemFromRootByKey(root, "Framework");
         m_ConfigData.framework.QuickLoad = (bool)GetItemFromArrayByKey(framework, "QuickLoad")->valueint;
         m_ConfigData.framework.MaxConcurrentThreadCount = GetItemFromArrayByKey(framework, "MaxConcurrentThreadCount")->valueint;
 
-        // Libraries
         cJSON* libraries = GetItemFromRootByKey(root, "Libraries");
         m_ConfigData.libraries.Audio = GetItemFromArrayByKey(libraries, "Audio")->valuestring;
         m_ConfigData.libraries.Networking = GetItemFromArrayByKey(libraries, "Networking")->valuestring;
@@ -42,7 +40,6 @@ namespace QwerkE {
         m_ConfigData.libraries.Rendering = GetItemFromArrayByKey(libraries, "Rendering")->valuestring;
         m_ConfigData.libraries.Window = GetItemFromArrayByKey(libraries, "Window")->valuestring;
 
-        // Scenes // #TODO Put scenes inside SceneSettings
         cJSON* scenes = GetItemFromRootByKey(root, "Scenes");
         std::vector<cJSON*> sceneList = GetAllItemsFromArray(scenes);
 
@@ -51,17 +48,18 @@ namespace QwerkE {
             m_ConfigData.scenes.fileNames.push_back(sceneList.at(i)->valuestring);
         }
 
-        // SceneSettings
         cJSON* sceneSettings = GetItemFromRootByKey(root, "SceneSettings");
         m_ConfigData.sceneSettings.MaxEnabledScenes = GetItemFromArrayByKey(sceneSettings, "MaxEnabledScenes")->valueint;
 
-        // Systems
         cJSON* systems = GetItemFromRootByKey(root, "Systems");
         m_ConfigData.systems.AudioEnabled = (bool)GetItemFromArrayByKey(systems, "AudioEnabled")->valueint;
-        m_ConfigData.systems.DebuggingEnabled = (bool)GetItemFromArrayByKey(systems, "DebuggingEnabled")->valueint;
-        m_ConfigData.systems.LoggingEnabled = (bool)GetItemFromArrayByKey(systems, "LoggingEnabled")->valueint;
         m_ConfigData.systems.NetworkingEnabled = (bool)GetItemFromArrayByKey(systems, "NetworkingEnabled")->valueint;
         m_ConfigData.systems.PhysicsEnabled = (bool)GetItemFromArrayByKey(systems, "PhysicsEnabled")->valueint;
+        m_ConfigData.systems.ConsoleOutputWindowEnabled = (bool)GetItemFromArrayByKey(systems, "ConsoleOutputWindowEnabled")->valueint;
+
+        cJSON* engineSettings = GetItemFromRootByKey(root, "EngineSettings");
+        m_ConfigData.engineSettings.LimitFramerate = (bool)GetItemFromArrayByKey(engineSettings, "LimitFramerate")->valueint;
+        m_ConfigData.engineSettings.MaxFramesPerSecond = GetItemFromArrayByKey(engineSettings, "MaxFramesPerSecond")->valueint;
 
         ClosecJSONStream(root);
     }
@@ -76,51 +74,42 @@ namespace QwerkE {
     {
         cJSON* root = CreateObject();
 
-        // Framework
         cJSON* framework = CreateArray("Framework");
         AddItemToArray(framework, CreateNumber("QuickLoad", (int)m_ConfigData.framework.QuickLoad));
         AddItemToArray(framework, CreateNumber("MaxConcurrentThreadCount", m_ConfigData.framework.MaxConcurrentThreadCount));
+        AddItemToRoot(root, framework);
 
-        // Libraries
         cJSON* libraries = CreateArray("Libraries");
-
         AddItemToArray(libraries, CreateString("Audio", m_ConfigData.libraries.Audio.c_str()));
         AddItemToArray(libraries, CreateString("Networking", m_ConfigData.libraries.Networking.c_str()));
         AddItemToArray(libraries, CreateString("Physics", m_ConfigData.libraries.Physics.c_str()));
         AddItemToArray(libraries, CreateString("Rendering", m_ConfigData.libraries.Rendering.c_str()));
         AddItemToArray(libraries, CreateString("Window", m_ConfigData.libraries.Window.c_str()));
-
         AddItemToRoot(root, libraries);
 
-        // Scenes // #TODO Put scenes inside SceneSettings
         cJSON* scenes = CreateArray("Scenes");
-
         for (unsigned int i = 0; i < m_ConfigData.scenes.fileNames.size(); i++)
         {
             AddItemToArray(scenes, CreateString(std::to_string(i).c_str(), m_ConfigData.scenes.fileNames[i].c_str()));
         }
-
         AddItemToRoot(root, scenes);
 
-        // SceneSettings
         cJSON* sceneSettings = CreateArray("SceneSettings");
-
         AddItemToArray(sceneSettings, CreateNumber("MaxEnabledScenes", m_ConfigData.sceneSettings.MaxEnabledScenes));
-
         AddItemToRoot(root, sceneSettings);
 
-        // Systems
         cJSON* systems = CreateArray("Systems");
-
-        AddItemToArray(systems, CreateNumber("AudioEnabled", (int)m_ConfigData.systems.AudioEnabled));
-        AddItemToArray(systems, CreateNumber("DebuggingEnabled", (int)m_ConfigData.systems.DebuggingEnabled));
-        AddItemToArray(systems, CreateNumber("LoggingEnabled", (int)m_ConfigData.systems.LoggingEnabled));
-        AddItemToArray(systems, CreateNumber("NetworkingEnabled", (int)m_ConfigData.systems.NetworkingEnabled));
-        AddItemToArray(systems, CreateNumber("PhysicsEnabled", (int)m_ConfigData.systems.PhysicsEnabled));
-
+        AddItemToArray(systems, CreateBool("AudioEnabled", m_ConfigData.systems.AudioEnabled));
+        AddItemToArray(systems, CreateBool("NetworkingEnabled", m_ConfigData.systems.NetworkingEnabled));
+        AddItemToArray(systems, CreateBool("PhysicsEnabled", m_ConfigData.systems.PhysicsEnabled));
+        AddItemToArray(systems, CreateBool("ConsoleOutputWindowEnabled", m_ConfigData.systems.ConsoleOutputWindowEnabled));
         AddItemToRoot(root, systems);
 
-        std::string path = ConfigsFolderPath("preferences.qpref"); // #TODO How to handle file names?
+        cJSON* engineSettings = CreateArray("EngineSettings");
+        AddItemToArray(engineSettings, CreateBool("LimitFramerate", m_ConfigData.engineSettings.LimitFramerate));
+        AddItemToArray(engineSettings, CreateNumber("MaxFramesPerSecond", (int)m_ConfigData.engineSettings.MaxFramesPerSecond));
+
+        std::string path = ConfigsFolderPath("preferences.qpref");
         PrintRootObjectToFile(path.c_str(), root);
     }
 

@@ -18,11 +18,9 @@
 
 struct Vector2
 {
-	// values
 	float x = 0.0f;
 	float y = 0.0f;
 
-	// constructors + destructors
 	Vector2() {}
 	Vector2(const float value) { x = value; y = value; }
 	Vector2(const float valueX, const float valueY) { x = valueX; y = valueY; }
@@ -73,21 +71,19 @@ struct Vector2
 
 struct Vector3
 {
-	// values
 	float x = 0.0f;
 	float y = 0.0f;
 	float z = 0.0f;
 
-	// constructors + destructors
 	Vector3() {}
 	Vector3(const float value) { x = value; y = value; z = value; }
 	Vector3(const float valueX, float valueY, float valueZ) { x = valueX; y = valueY; z = valueZ; }
 	Vector3(const int value) { x = (float)value; y = (float)value; z = (float)value; }
 	Vector3(const int valueX, int valueY, int valueZ) { x = (float)valueX; y = (float)valueY; z = (float)valueZ; }
 
-	~Vector3() {}
+	static Vector3 Zero() { return Vector3(0.f, 0.f, 0.f); }
 
-	// operator overloads
+	// Operator overloads
 	Vector3 operator +(const float value) const { return Vector3(x - value, y - value, z - value); }
 	Vector3 operator +(const Vector3& value) const { return Vector3(x + value.x, y + value.y, z + value.z); }
 
@@ -130,14 +126,12 @@ struct Vector3
 
 struct Vector4
 {
-	// values
 	float x = 0.0f;
 	float y = 0.0f;
 	float z = 0.0f;
 	float w = 0.0f;
 
-	// constructors + destructors
-	Vector4() {}
+	Vector4() = default;
 	Vector4(const float value) { x = value; y = value; }
 	Vector4(const float valueX, const float valueY, float valueZ, float valueW) { x = valueX; y = valueY; z = valueZ; w = valueW; }
 	Vector4(const int value) { x = (float)value; y = (float)value; z = (float)value; w = (float)value; }
@@ -150,7 +144,6 @@ struct Vector4
 	// helper + utility functions
 };
 
-// convenient typedefs
 typedef Vector2 vec2;
 typedef Vector3 vec3;
 typedef Vector4 vec4;

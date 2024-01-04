@@ -19,7 +19,6 @@ int main(unsigned int argc, char **argv)
 	// #TODO Move argument handling code into engine. Pass program args into QwerkE::Engine::Run(argc, argv);
 	// std::cout << "-- Qwerk Engine 0.1 (VER_MACRO) --\n" << argc; // #TODO Define a version VER_MACRO
 
-	unsigned int counter;
 	printf("Program Name Is: %s", argv[0]);
 
 	if (argc == 1)
@@ -30,17 +29,10 @@ int main(unsigned int argc, char **argv)
 	{
 		printf("\nNumber Of Arguments Passed: %d", argc);
 		printf("\n----Following Are The Command Line Arguments Passed----");
-		for (counter = 0; counter < argc; counter++)
+		for (int counter = 0; counter < argc; counter++)
 			printf("\nargv[%d]: %s", counter, argv[counter]);
 	}
 
-	// Look for key_* arguments
-	/*if (ArgumentExists(argc, argv, key_ProjectName))
-	{
-		printf("\nFound key argument: %s", key_ProjectName);
-	}*/
-
-	// Look for key/value argument pairs
 	std::map<const char*, const char*> pairs = ArgumentKeyValuePairs(argc, argv);
 	for (auto it = pairs.begin(); it != pairs.end(); ++it)
 	{
