@@ -1,4 +1,4 @@
-#include "../MaterialEditor.h"
+#include "QE_MaterialEditor.h"
 
 #include <map>
 

@@ -1,4 +1,4 @@
-#include "../EditComponent.h"
+#include "QE_EditComponent.h"
 
 #include <string>
 #include <vector>

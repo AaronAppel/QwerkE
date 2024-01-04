@@ -1,18 +1,14 @@
-// It is required to add the following preprocessor defines to this project properties.
-// Win32Bit/Win64Bit, and DEBUG/RELEASE
-
-// Use the QwerkE_Framework
-// Add a runtime editor that has extra functionality like:
-// level editor, entity editor, shader editor, scripting, etc...
 
 #include "PCH_Win32.h"
 
 #include <map>
-
-#include "../Engine_Defines.h"
-#include "../Engine.h"
+// #include <stdio.h> // #TODO Confirm platform declare order dependency
+#include <filesystem>
 
 #include "QC_ProgramArgs.h"
+
+#include "QE_Engine_Defines.h"
+#include "QE_Engine.h"
 
 int main(unsigned int argc, char **argv)
 {
@@ -39,9 +35,6 @@ int main(unsigned int argc, char **argv)
 		printf("\nFound pair: %s, %s", it->first, it->second);
 	}
 
-	// Save argument key/value pairs for use in engine
-	// Save environment variables info or references
-	// Save working directory
 	const QwerkE::eEngineMessage result = QwerkE::Engine::Run(pairs);
 	if (result != QwerkE::eEngineMessage::_QSuccess)
 	{

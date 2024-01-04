@@ -1,4 +1,4 @@
-#include "../ShaderEditor.h"
+#include "QE_ShaderEditor.h"
 
 #include "../../../QwerkE_Framework/Libraries/imgui/imgui.h"
 

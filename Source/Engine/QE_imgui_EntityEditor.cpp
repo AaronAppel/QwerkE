@@ -1,4 +1,4 @@
-#include "../EntityEditor.h"
+#include "QE_EntityEditor.h"
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 
@@ -19,8 +19,8 @@
 
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Defines.h"
 
-#include "../EditComponent.h"
-#include "../Editor.h"
+#include "QE_EditComponent.h"
+#include "QE_Editor.h"
 
 namespace QwerkE {
 

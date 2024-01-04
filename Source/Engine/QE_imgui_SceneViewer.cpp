@@ -1,4 +1,4 @@
-#include "../SceneViewer.h"
+#include "QE_SceneViewer.h"
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 

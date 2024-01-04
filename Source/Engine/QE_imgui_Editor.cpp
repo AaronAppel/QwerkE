@@ -1,4 +1,4 @@
-#include "imgui_Editor.h"
+#include "QE_imgui_Editor.h"
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 
@@ -12,12 +12,12 @@
 #include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
 #include "../QwerkE_Framework/Source/Core/Network/Network.h"
 
-#include "../EntityEditor.h"
-#include "../ResourceViewer.h"
-#include "../ShaderEditor.h"
-#include "../SceneViewer.h"
-#include "../SceneGraph.h"
-#include "../EditComponent.h"
+#include "QE_EntityEditor.h"
+#include "QE_ResourceViewer.h"
+#include "QE_ShaderEditor.h"
+#include "QE_SceneViewer.h"
+#include "QE_SceneGraph.h"
+#include "QE_EditComponent.h"
 
 namespace QwerkE {
 

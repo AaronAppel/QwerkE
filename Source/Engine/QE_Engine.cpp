@@ -1,4 +1,4 @@
-#include "Engine.h"
+#include "QE_Engine.h"
 
 #include "../QwerkE_Framework/Source/Framework.h"
 
@@ -12,7 +12,7 @@
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_glfw.h"
 #include "../QwerkE_Framework/Libraries/imgui/imgui_impl_opengl3.h"
 
-#include "Editor/imgui_Editor/imgui_Editor.h"
+#include "QE_imgui_Editor.h"
 #else
 #pragma warning "Define editor library!"
 #endif

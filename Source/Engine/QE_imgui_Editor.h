@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Editor.h"
+#include "QE_Editor.h"
 
 namespace QwerkE {
 

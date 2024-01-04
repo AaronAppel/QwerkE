@@ -1,4 +1,4 @@
-#include "../ResourceViewer.h"
+#include "QE_ResourceViewer.h"
 
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
@@ -17,7 +17,7 @@
 #include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 
-#include "../MaterialEditor.h"
+#include "QE_MaterialEditor.h"
 
 namespace QwerkE {
 

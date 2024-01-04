@@ -85,9 +85,6 @@
     <Filter Include="Source\FileSystem\FileIO">
       <UniqueIdentifier>{de52c0de-79f1-40b8-b0b6-fce2a4e42fe2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Utilities">
-      <UniqueIdentifier>{7fcbf7be-4b47-4a57-92d3-99769ab8641e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Core\Audio">
       <UniqueIdentifier>{bce20d9a-af1a-4367-b71a-f146b4e187ee}</UniqueIdentifier>
     </Filter>

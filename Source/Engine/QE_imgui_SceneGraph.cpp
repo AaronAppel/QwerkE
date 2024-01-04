@@ -1,4 +1,4 @@
-#include "../SceneGraph.h"
+#include "QE_SceneGraph.h"
 
 #include <map>
 #include <string>
@@ -13,8 +13,8 @@
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 #include "../QwerkE_Framework/Source/Core/Resources/GUID.h"
 
-#include "../Editor.h"
-#include "../EntityEditor.h"
+#include "QE_Editor.h"
+#include "QE_EntityEditor.h"
 
 namespace QwerkE {
 
