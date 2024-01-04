@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+#include "QC_StringHelpers.h"
+
 #include "../../Debug/Log/Log.h"
 
 #include "Entities/GameObject.h"
@@ -10,7 +12,6 @@
 #include "../DataManager/ConfigHelper.h"
 #include "../DataManager/DataManager.h"
 #include "../Input/Input.h"
-#include "../../Utilities/StringHelpers.h"
 
 namespace QwerkE {
 

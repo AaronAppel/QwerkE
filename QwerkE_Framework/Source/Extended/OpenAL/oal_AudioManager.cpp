@@ -1,11 +1,12 @@
 #include "oal_AudioManager.h"
 
+#include "QC_StringHelpers.h"
+
 #include "../../Headers/QwerkE_Defines.h"
 
 #include "oal_Helpers.h"
 #include "../../Debug/Log/Log.h"
 #include "../../FileSystem/FileSystem.h"
-#include "../../Utilities/StringHelpers.h"
 #include "../../Core/Resources/Resources.h"
 #include "../../Core/Audio/AudioSource.h"
 

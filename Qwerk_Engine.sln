@@ -7,7 +7,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Qwerk_Engine", "Qwerk_Engin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Engine", "Source\Shared_Engine.vcxitems", "{64B82DE4-2768-4AD2-B95D-B3615FCC482E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QwerkE_Framework", "QwerkE_Framework\QwerkE_Framework.vcxitems", "{B16D0585-C919-45A1-ABC8-E743E68A8F72}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Framework", "QwerkE_Framework\QwerkE_Framework.vcxitems", "{B16D0585-C919-45A1-ABC8-E743E68A8F72}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Common", "Source\Common\Shared_Common.vcxitems", "{487AB803-F826-45B7-AA8A-E9CF20B86BFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,10 @@ Global
 		SolutionGuid = {4D5CC2A9-7640-4DF8-8A66-FBFDDDADEB7A}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Source\Common\Shared_Common.vcxitems*{487ab803-f826-45b7-aa8a-e9cf20b86bff}*SharedItemsImports = 9
 		Source\Shared_Engine.vcxitems*{64b82de4-2768-4ad2-b95d-b3615fcc482e}*SharedItemsImports = 9
 		QwerkE_Framework\QwerkE_Framework.vcxitems*{91c8f4dc-b61b-46d7-b3d6-dd562656900f}*SharedItemsImports = 4
+		Source\Common\Shared_Common.vcxitems*{91c8f4dc-b61b-46d7-b3d6-dd562656900f}*SharedItemsImports = 4
 		Source\Shared_Engine.vcxitems*{91c8f4dc-b61b-46d7-b3d6-dd562656900f}*SharedItemsImports = 4
 		QwerkE_Framework\QwerkE_Framework.vcxitems*{b16d0585-c919-45a1-abc8-e743e68a8f72}*SharedItemsImports = 9
 	EndGlobalSection

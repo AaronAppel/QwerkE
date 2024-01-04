@@ -2,7 +2,8 @@
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
 
-#include "../QwerkE_Framework/Source/Utilities/StringHelpers.h"
+#include "QC_StringHelpers.h"
+
 #include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"

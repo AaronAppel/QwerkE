@@ -1,9 +1,10 @@
 #include "ShaderFactory.h"
 
+#include "QC_StringHelpers.h"
+
 #include "../../../FileSystem/FileIO/FileUtilities.h"
 #include "../../../Debug/Log/Log.h"
 
-#include "../../../Utilities/StringHelpers.h"
 #include "../Graphics_Header.h"
 #include "../../../Headers/QwerkE_Defines.h"
 

@@ -17,6 +17,9 @@
 #pragma warning "Define editor library!"
 #endif
 
+#include "QC_Helpers.h"
+#include "QC_ProgramArgs.h"
+
 #include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
 #include "../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
 
@@ -38,9 +41,6 @@
 #include "../QwerkE_Framework/Source/Core/Window/Windows.h"
 #include "../QwerkE_Framework/Source/Core/Window/glfw_Window.h"
 #include "../QwerkE_Framework/Source/Core/Time/Time.h"
-
-#include "../QwerkE_Framework/Source/Utilities/Helpers.h"
-#include "../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
 
 namespace QwerkE {
 

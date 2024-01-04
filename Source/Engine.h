@@ -4,7 +4,7 @@
 
 #include "../QwerkE_Framework/Source/Headers/QwerkE_Include.h"
 
-#include "../../QwerkE_Framework/Source/Utilities/StringHelpers.h"
+#include "QC_StringHelpers.h"
 
 /* Define values to be used in other ares of code. */
 #define EngineDataFolderPath(fileName) StringAppend("Data/", fileName)

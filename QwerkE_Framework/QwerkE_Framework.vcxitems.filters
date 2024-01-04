@@ -265,15 +265,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileSystem.cpp">
       <Filter>Source\FileSystem</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Utilities\StringHelpers.cpp">
-      <Filter>Source\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Utilities\Helpers.cpp">
-      <Filter>Source\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Utilities\ProgramArgs.cpp">
-      <Filter>Source\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.cpp">
       <Filter>Source\Core\Audio</Filter>
     </ClCompile>
@@ -2737,18 +2728,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileSystem.h">
       <Filter>Source\FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\ProgramArgs.h">
-      <Filter>Source\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\ReflectionMacros.h">
-      <Filter>Source\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\StringHelpers.h">
-      <Filter>Source\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\Helpers.h">
-      <Filter>Source\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.h">
       <Filter>Source\Core\Audio</Filter>

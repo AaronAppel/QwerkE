@@ -8,13 +8,14 @@
 #include "../../Libraries/assimp/material.h"
 #pragma warning( default : 26495 )
 
+#include "QC_StringHelpers.h"
+
 #include "../Core/Graphics/Mesh/Mesh.h"
 #include "../Core/Graphics/Mesh/MeshData.h"
 #include "../Core/Graphics/DataTypes/Material.h"
 #include "../Core/Graphics/DataTypes/Texture.h"
 #include "../Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../Core/Resources/Resources.h"
-#include "../Utilities/StringHelpers.h"
 #include "FileIO/FileUtilities.h"
 #include "../Headers/QwerkE_Defines.h"
 

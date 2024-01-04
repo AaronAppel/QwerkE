@@ -6,10 +6,11 @@
 
 #include "../../../../Libraries/glew/GL/glew.h"
 
+#include "QC_StringHelpers.h"
+
 #include "../../../Debug/Log/Log.h"
 
 #include "../GraphicsUtilities/GraphicsHelpers.h"
-#include "../../../Utilities/StringHelpers.h"
 #include "../Shader/ShaderVariable_Defines.h"
 
 #include "MeshData.h"

@@ -5,9 +5,10 @@
 
 #include "../Libraries/glew/GL/glew.h"
 
+#include "QC_StringHelpers.h"
+
 #include "../../../Headers/QwerkE_Global_Constants.h"
 
-#include "../../../Utilities/StringHelpers.h"
 #include "../GraphicsUtilities/GraphicsHelpers.h"
 
 namespace QwerkE {

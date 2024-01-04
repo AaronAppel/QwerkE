@@ -1,5 +1,7 @@
 #pragma once
 
+// #TODO Try to be specific with helpers. Delete this file but move functions to specifically named helper files
+
 double helpers_Time();
 
 // seed rand()
@@ -18,9 +20,8 @@ public:
     unsigned char b = 0;
     unsigned char a = 0;
 
-    MyColor()
-    {
-    }
+    MyColor() = default;
+
     MyColor(unsigned char nr, unsigned char ng, unsigned char nb, unsigned char na)
     {
         r = nr;

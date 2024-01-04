@@ -4,13 +4,6 @@
 #include <iostream>
 #include <vector>
 
-#include "LoadImageFile.h"
-#include "FileIO/FileUtilities.h"
-#include "FileIO/FileUtilities.h"
-#include "../Utilities/StringHelpers.h"
-#include "../Core/Resources/Resources.h"
-#include "../Debug/Log/Log.h"
-
 #pragma warning( disable : 26495 )
 #include "QwerkE_AssimpLoading.h"
 #include "../../Libraries/assimp/Importer.hpp"
@@ -19,6 +12,14 @@
 #include "../../Libraries/assimp/config.h"
 #include "../../Libraries/assimp/material.h"
 #pragma warning( default : 26495 )
+
+#include "QC_StringHelpers.h"
+
+#include "LoadImageFile.h"
+#include "FileIO/FileUtilities.h"
+#include "FileIO/FileUtilities.h"
+#include "../Core/Resources/Resources.h"
+#include "../Debug/Log/Log.h"
 
 #define QwerkE_Image_Library_stb 1 // #TODO Move somewhere better
 #define QwerkE_Image_Library_lodepng 1

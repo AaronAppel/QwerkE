@@ -5,8 +5,9 @@
 
 #include "../../Libraries/cJSON_Interface/cJSONInterface.h"
 
+#include "QC_StringHelpers.h"
+
 #include "../../../FileSystem/FileIO/FileUtilities.h"
-#include "../../../Utilities/StringHelpers.h"
 #include "OpenGL/OpenGLHelpers.h"
 #include "../../Scenes/Entities/Components/RenderComponent.h"
 #include "../../Resources/Resources.h"

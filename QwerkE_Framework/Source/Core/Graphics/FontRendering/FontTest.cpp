@@ -10,12 +10,13 @@
 #include "../../Libraries/glm/glm/gtc/type_ptr.hpp"
 #include "../../Libraries/glm/glm/gtc/matrix_transform.hpp"
 
+#include "QC_StringHelpers.h"
+
 #include "../../../Headers/QwerkE_Defines.h"
 
 #include "../../Graphics/Graphics_Header.h"
 #include "../../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../Shader/ShaderProgram.h"
-#include "../../../Utilities/StringHelpers.h"
 #include "../../Resources/Resources.h"
 #include "../Renderer.h"
 

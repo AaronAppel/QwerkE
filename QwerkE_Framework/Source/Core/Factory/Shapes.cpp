@@ -1,5 +1,7 @@
 #include "Factory.h"
-#include "../../Utilities/Helpers.h"
+
+#include "QC_Helpers.h"
+
 #include "../Resources/Resources.h"
 #include "../Scenes/Scene.h"
 #include "../../Headers/QwerkE_Enums.h"
@@ -10,7 +12,6 @@
 
 namespace QwerkE {
 
-    /* Shapes */
     GameObject* Factory::CreateCube(Scene* scene, vec3 position)
     {
         GameObject* t_Cube = new GameObject(scene, position);
@@ -28,7 +29,6 @@ namespace QwerkE {
             return t_Cube;
         }
 
-        // delete t_Cube;
         return t_Cube;
     }
 
@@ -49,7 +49,7 @@ namespace QwerkE {
             return t_Plane;
         }
 
-        delete t_Plane;
+        delete t_Plane; // #TODO Review delete
         return nullptr;
     }
 

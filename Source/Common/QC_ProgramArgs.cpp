@@ -1,6 +1,6 @@
-#include "ProgramArgs.h"
+#include "QC_ProgramArgs.h"
 
-#include "StringHelpers.h"
+#include "QC_StringHelpers.h"
 
 bool ArgumentExists(unsigned  int argc, char** argv, const char* argumentString)
 {

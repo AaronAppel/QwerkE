@@ -4,9 +4,10 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#include "../../Utilities/ReflectionMacros.h"
-
 #include "../../../Libraries/cJSON_Interface/cJSONInterface.h"
+
+#include "QC_ReflectionMacros.h"
+
 #include "../../Debug/Log/Log.h"
 #include "../../Headers/QwerkE_Defines.h"
 

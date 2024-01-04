@@ -12,7 +12,7 @@
 #include "../Engine_Defines.h"
 #include "../Engine.h"
 
-#include "../../QwerkE_Framework/Source/Utilities/ProgramArgs.h"
+#include "QC_ProgramArgs.h"
 
 int main(unsigned int argc, char **argv)
 {

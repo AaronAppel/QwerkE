@@ -13,7 +13,7 @@
 #include "Headers/QwerkE_Enums.h"
 #include "Headers/Libraries_Initialize.h"
 
-#include "Utilities/Helpers.h"
+#include "QC_Helpers.h"
 
 #include "Core/Audio/Audio.h"
 #include "Core/DataManager/ConfigHelper.h"

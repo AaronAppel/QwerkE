@@ -4,12 +4,14 @@
 #include <string>
 
 #include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+
+#include "QC_StringHelpers.h"
+
 #include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 #include "../QwerkE_Framework/Source/Core/Resources/GUID.h"
-#include "../QwerkE_Framework/Source/Utilities/StringHelpers.h"
 
 #include "../Editor.h"
 #include "../EntityEditor.h"

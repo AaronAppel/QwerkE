@@ -57,6 +57,7 @@
   <ImportGroup Label="Shared">
     <Import Project="Source\Shared_Engine.vcxitems" Label="Shared" />
     <Import Project="QwerkE_Framework\QwerkE_Framework.vcxitems" Label="Shared" />
+    <Import Project="Source\Common\Shared_Common.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -81,7 +82,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH_Win32.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(Solutiondir)QwerkE_Framework/Libraries/Bullet3;$(Solutiondir)QwerkE_Framework/Libraries/assimp/Release/x86;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm/gtx;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm;$(Solutiondir)QwerkE_Framework/Libraries/pThreads;$(Solutiondir)QwerkE_Framework/Libraries/glfw/GLFW;$(Solutiondir)QwerkE_Framework/Libraries/glew/GL;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletCollision;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletDynamics;$(Solutiondir)QwerkE_Framework/Libraries/Freetype2;$(Solutiondir)QwerkE_Framework/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir)Source/Common/;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3;$(Solutiondir)QwerkE_Framework/Libraries/assimp/Release/x86;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm/gtx;$(Solutiondir)QwerkE_Framework/Libraries/glm/glm;$(Solutiondir)QwerkE_Framework/Libraries/pThreads;$(Solutiondir)QwerkE_Framework/Libraries/glfw/GLFW;$(Solutiondir)QwerkE_Framework/Libraries/glew/GL;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletCollision;$(Solutiondir)QwerkE_Framework/Libraries/Bullet3/BulletDynamics;$(Solutiondir)QwerkE_Framework/Libraries/Freetype2;$(Solutiondir)QwerkE_Framework/Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

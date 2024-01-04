@@ -2,8 +2,9 @@
 
 #include "../../Headers/QwerkE_Defines.h"
 
+#include "QC_StringHelpers.h"
+
 #include "../../FileSystem/FileIO/FileUtilities.h"
-#include "../../Utilities/StringHelpers.h"
 
 #include "../Resources/Resources.h"
 

@@ -1,5 +1,8 @@
 #include "Factory.h"
 
+#include "QC_StringHelpers.h"
+#include "QC_Helpers.h"
+
 #include "../Graphics/Mesh/MeshFactory.h"
 #include "../Resources/Resources.h"
 #include "../Scenes/Scene.h"
@@ -9,8 +12,6 @@
 #include "../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../Graphics/Mesh/Mesh.h"
 #include "../../FileSystem/FileSystem.h"
-#include "../../Utilities/StringHelpers.h"
-#include "../../Utilities/Helpers.h"
 #include "../../Headers/QwerkE_Defines.h"
 
 namespace QwerkE {

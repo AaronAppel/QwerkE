@@ -1,10 +1,13 @@
 #include "Resources.h"
+
 #include "../../Libraries/glew/GL/glew.h"
+
+#include "QC_StringHelpers.h"
+
 #include "../Graphics/DataTypes/Material.h"
 #include "../Graphics/Shader/ShaderProgram.h"
 #include "../Graphics/Shader/ShaderComponent.h"
 #include "../Graphics/ShaderFactory/ShaderFactory.h"
-#include "../../Utilities/StringHelpers.h"
 #include "../../FileSystem/FileSystem.h"
 #include "../../Headers/QwerkE_Defines.h"
 #include "../Graphics/DataTypes/Texture.h"

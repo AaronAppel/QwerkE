@@ -4,6 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{b16d0585-c919-45a1-abc8-e743e68a8f72}</ItemsProjectGuid>
+    <ItemsProjectName>Shared_Framework</ItemsProjectName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -124,9 +125,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\QwerkE_AssimpLoading.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Initialize.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Utilities\Helpers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Utilities\ProgramArgs.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Utilities\StringHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Libraries\assimp\ai_assert.h" />
@@ -1064,10 +1062,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Global_Constants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Platform.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\Helpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\ProgramArgs.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\ReflectionMacros.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Utilities\StringHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Libraries\assimp\quaternion.inl" />

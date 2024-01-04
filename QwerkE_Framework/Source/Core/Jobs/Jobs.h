@@ -13,7 +13,7 @@
 #endif
 #include "../../Libraries/pThreads/pthread.h"
 
-#include "../../Utilities/StringHelpers.h"
+#include "QC_StringHelpers.h"
 #include "../Events/EventManager.h"
 #include "../Events/Event.h"
 #include "../Events/AssetLoadedEvent.h"

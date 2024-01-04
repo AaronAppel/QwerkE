@@ -1,4 +1,4 @@
-#include "StringHelpers.h"
+#include "QC_StringHelpers.h"
 
 const char* StringAppend(const char* a, const char* b)
 {

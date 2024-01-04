@@ -21,10 +21,11 @@
 #pragma error "Define model loading library!"
 #endif
 
+#include "QC_StringHelpers.h"
+
 #include "../Core/Resources/Resources.h"
 #include "../Core/Graphics/Mesh/Mesh.h"
 
-#include "../Utilities/StringHelpers.h"
 #include "FileIO/FileUtilities.h"
 
 #include "../Debug/Log/Log.h"

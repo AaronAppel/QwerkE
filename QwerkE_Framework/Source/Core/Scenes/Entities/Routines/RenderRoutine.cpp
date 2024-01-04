@@ -1,12 +1,13 @@
 #include "RenderRoutine.h"
 
+#include "QC_StringHelpers.h"
+
 #include "../../../../Headers/QwerkE_Enums.h"
 
 #include "../../../../Debug/Log/Log.h"
 
 #include "../../../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../../../Graphics/Graphics_Header.h"
-#include "../../../../Utilities/StringHelpers.h"
 #include "../GameObject.h"
 #include "../Routines/Routine.h"
 #include "../../../Graphics/DataTypes/Material.h"

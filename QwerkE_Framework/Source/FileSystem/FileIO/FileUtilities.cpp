@@ -1,9 +1,11 @@
 #include "FileUtilities.h"
-#include "../../Debug/Log/Log.h"
-#include "../../Utilities/StringHelpers.h"
 
 #include <fstream>
 #include <iostream>
+
+#include "QC_StringHelpers.h"
+
+#include "../../Debug/Log/Log.h"
 
 bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 {

@@ -1,6 +1,6 @@
 #include "Factory.h"
 
-#include "../../Utilities/Helpers.h"
+#include "QC_Helpers.h"
 
 #include "../Resources/Resources.h"
 

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{487ab803-f826-45b7-aa8a-e9cf20b86bff}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Helpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Helpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
+  </ItemGroup>
+</Project>

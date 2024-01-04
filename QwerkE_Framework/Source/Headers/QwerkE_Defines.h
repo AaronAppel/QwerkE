@@ -44,7 +44,7 @@
 #define LibrariesDir FrameworkDir "Libraries/"
 #endif
 
-#include "../Utilities/StringHelpers.h"
+#include "QC_StringHelpers.h"
 
 //USER: Set the offset from your project working directory
 // You must #define AssetDir "Assets/" (path to assets)

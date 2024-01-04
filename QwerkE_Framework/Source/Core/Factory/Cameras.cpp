@@ -4,8 +4,9 @@
 
 #include <string>
 
-#include "../../Utilities/Helpers.h"
-#include "../../Utilities/StringHelpers.h"
+#include "QC_Helpers.h"
+#include "QC_StringHelpers.h"
+
 #include "../../FileSystem/FileSystem.h"
 
 #include "../Resources/Resources.h"

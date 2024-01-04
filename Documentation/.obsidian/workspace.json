@@ -52,7 +52,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Feature Development/Scenes.md",
+                "file": "Solution Configuration/Projects.md",
                 "mode": "source",
                 "source": false
               }
@@ -116,7 +116,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "c++",
+                "query": "QF_*",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -156,7 +156,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Feature Development/Scenes.md",
+                "file": "Solution Configuration/Projects.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -173,7 +173,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Feature Development/Scenes.md",
+                "file": "Solution Configuration/Projects.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -185,7 +185,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Feature Development/Scenes.md"
+                "file": "Solution Configuration/Projects.md"
               }
             }
           }
@@ -208,8 +208,15 @@
   },
   "active": "28d1e7ec096c5d42",
   "lastOpenFiles": [
-    "Z. Less Relevant/Bit Flags.md",
+    "QwerkE Standards/Member Initialization.md",
+    "Solution Configuration/Projects.md",
+    "Solution Configuration/Additional Includes.md",
+    "Solution Configuration/Preprocessor Definitions.md",
+    "Solution Configuration/Precompiled Headers.md",
+    "QwerkE Standards/Namespace.md",
+    "QwerkE Standards/Coding Standards.md",
     "Feature Development/Scenes.md",
+    "Z. Less Relevant/Bit Flags.md",
     "Old Notes.md",
     "Framework Read Me.md",
     "README.md",
@@ -218,13 +225,10 @@
     "Git and GitHub/Git.md",
     "Known Issues and Gotchas.md",
     "Known Issues.md",
-    "Solution Configuration/Additional Includes.md",
     "Assets and Data/Supported File and Data Types.md",
     "QwerkE Standards/Include Flow Diagram.canvas",
-    "QwerkE Standards/Coding Standards.md",
     "Z. Less Relevant/Markdown Syntax Reference.md",
     "QwerkE Standards/Conditional Statements.md",
-    "QwerkE Standards/Member Initialization.md",
     "References",
     "QwerkE Standards/Including.md",
     "QwerkE Standards/Empty Function Body.md",
@@ -233,10 +237,6 @@
     "Assets and Data/Null Asset Handling.md",
     "Assets and Data",
     "QwerkE Standards/Commenting.md",
-    "QwerkE Standards/Namespace.md",
-    "QwerkE Standards/Operators.md",
-    "GettingStarted.md",
-    "QwerkE Standards/Coding Standards Notes.md",
     "Z. Less Relevant",
     "Feature Development",
     "README.md.lnk",
