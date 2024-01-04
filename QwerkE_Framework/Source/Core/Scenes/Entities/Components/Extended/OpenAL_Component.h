@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../../../../Libraries/OpenAL/include/al.h"
+#include "OpenAL/include/al.h"
 
 #include "../AudioComponent.h"
 

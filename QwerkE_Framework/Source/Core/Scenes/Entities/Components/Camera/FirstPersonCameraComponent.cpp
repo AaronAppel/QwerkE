@@ -3,7 +3,7 @@
 #include "FirstPersonCameraComponent.h"
 #include "../../../../../Headers/QwerkE_Enums.h"
 #include "../../GameObject.h"
-#include "../../../../../../Libraries/glew/GL/glew.h"
+#include "glew/GL/glew.h"
 
 namespace QwerkE {
 

@@ -1,6 +1,6 @@
 #include "QE_ConfigEditor.h"
 
-#include "../../../QwerkE_Framework/Libraries/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 namespace QwerkE {
 

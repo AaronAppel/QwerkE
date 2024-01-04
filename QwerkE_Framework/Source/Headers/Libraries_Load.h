@@ -41,9 +41,11 @@
 
 #pragma comment( lib, LibrariesDir "RakNet/RakNet_VS2008_DLL_Debug_Win32.lib" )
 
+#pragma warning( disable : 4099 )
 #pragma comment( lib, LibrariesDir "Bullet3/lib/Win32/Debug/BulletCollision.lib" )
 #pragma comment( lib, LibrariesDir "Bullet3/lib/Win32/Debug/BulletDynamics.lib" )
 #pragma comment( lib, LibrariesDir "Bullet3/lib/Win32/Debug/LinearMath.lib" )
+#pragma warning( default : 4099 )
 
 #elif defined(RELEASE)
 #define OpenGL

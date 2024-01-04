@@ -1,6 +1,6 @@
 #include "QE_imgui_Editor.h"
 
-#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 #include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"

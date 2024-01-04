@@ -1,6 +1,6 @@
 #include "../Component.h"
 
-#include "../../../../../../Libraries/glfw/GLFW/glfw3.h"
+#include "glfw/GLFW/glfw3.h"
 
 #include "../../../../../Headers/QwerkE_Enums.h"
 

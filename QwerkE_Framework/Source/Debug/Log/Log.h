@@ -10,7 +10,7 @@
 #pragma warning( disable : 26498 )
 #pragma warning( disable : 6387 )
 #pragma warning( disable : 4996 )
-#include <spdlog/spdlog.h>
+#include "spdlog/spdlog.h"
 // #include "../spdlog/spdlog.h"
 // #include "../spdlog/common.h"
 // #include "../spdlog/logger.h"

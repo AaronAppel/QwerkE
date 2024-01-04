@@ -3,7 +3,6 @@
 
 #include <map>
 // #include <stdio.h> // #TODO Confirm platform declare order dependency
-#include <filesystem>
 
 #include "QC_ProgramArgs.h"
 
@@ -25,7 +24,7 @@ int main(unsigned int argc, char **argv)
 	{
 		printf("\nNumber Of Arguments Passed: %d", argc);
 		printf("\n----Following Are The Command Line Arguments Passed----");
-		for (int counter = 0; counter < argc; counter++)
+		for (unsigned int counter = 0; counter < argc; counter++)
 			printf("\nargv[%d]: %s", counter, argv[counter]);
 	}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../../../../Libraries/glew/GL/glew.h"
+#include "glew/GL/glew.h"
 
 #include "../../../../../Headers/QwerkE_Global_Constants.h"
 
@@ -18,9 +18,6 @@ namespace QwerkE {
         void ProcessKeyboard(eCamera_Movement direction, float deltaTime);
         void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch);
         void ProcessMouseScroll(float yoffset);
-
-    private:
-
     };
 
 }

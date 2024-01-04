@@ -52,7 +52,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Solution Configuration/Projects.md",
+                "file": "QwerkE Standards/Language Versions.md",
                 "mode": "source",
                 "source": false
               }
@@ -156,7 +156,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Solution Configuration/Projects.md",
+                "file": "QwerkE Standards/Language Versions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -173,7 +173,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Solution Configuration/Projects.md",
+                "file": "QwerkE Standards/Language Versions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -185,7 +185,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Solution Configuration/Projects.md"
+                "file": "QwerkE Standards/Language Versions.md"
               }
             }
           }
@@ -208,8 +208,10 @@
   },
   "active": "28d1e7ec096c5d42",
   "lastOpenFiles": [
-    "QwerkE Standards/Member Initialization.md",
+    "Known Issues and Gotchas.md",
+    "QwerkE Standards/Language Versions.md",
     "Solution Configuration/Projects.md",
+    "QwerkE Standards/Member Initialization.md",
     "Solution Configuration/Additional Includes.md",
     "Solution Configuration/Preprocessor Definitions.md",
     "Solution Configuration/Precompiled Headers.md",
@@ -223,7 +225,6 @@
     "Z. Less Relevant/Bit Manipulation.md",
     "References/Library References.md",
     "Git and GitHub/Git.md",
-    "Known Issues and Gotchas.md",
     "Known Issues.md",
     "Assets and Data/Supported File and Data Types.md",
     "QwerkE Standards/Include Flow Diagram.canvas",
@@ -236,7 +237,6 @@
     "Variable Naming.md",
     "Assets and Data/Null Asset Handling.md",
     "Assets and Data",
-    "QwerkE Standards/Commenting.md",
     "Z. Less Relevant",
     "Feature Development",
     "README.md.lnk",

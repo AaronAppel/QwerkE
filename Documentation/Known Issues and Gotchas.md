@@ -4,3 +4,9 @@ If soft_oal.dll is not copied to the correct .dll directory with other .dlls lik
 ## Visual Studio Symbol Server
 An issue relating to Visual Studio symbol server issues can be solved by killing the symbol server with this command :
 TASKKILL /F /IM mspdbsrv.exe
+
+## Bullet Library files
+When moving bullet files, it's important to remember to NOT add any .cpp files to the solution. The \#includes won't work as QwerkE is currently configured.
+
+## GLM Math Library
+Same issue as Bullet with dummy.cpp, where it shouldn't be added to the Visual Studio solution or project.

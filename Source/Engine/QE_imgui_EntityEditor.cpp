@@ -1,6 +1,6 @@
 #include "QE_EntityEditor.h"
 
-#include "../QwerkE_Framework/Libraries/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 #include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"

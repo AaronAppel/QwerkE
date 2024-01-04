@@ -41,7 +41,7 @@
 #endif
 
 #ifndef LibrariesDir
-#define LibrariesDir FrameworkDir "Libraries/"
+#define LibrariesDir "Libraries/"
 #endif
 
 #include "QC_StringHelpers.h"

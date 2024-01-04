@@ -1,11 +1,10 @@
 #pragma once
 
 #include <string>
-// TODO: Remove
-#include "../../Libraries/OpenAL/include/al.h"
-#include "../../Libraries/glew/GL/glew.h"
 
 #include "../Headers/QwerkE_Global_Constants.h"
+
+typedef unsigned int GLenum;
 
 namespace QwerkE {
 
