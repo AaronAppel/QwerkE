@@ -1,7 +1,7 @@
 #include "QF_Jobs.h"
 
-#include "../QwerkE_Framework/Source/Core/Events/EventManager.h"
-#include "../QwerkE_Framework/Source/Core/Events/JobQueuedEvent.h"
+#include "QF_EventManager.h"
+#include "QF_JobQueuedEvent.h"
 #include "QF_FileUtilities.h"
 
 #include "QF_QwerkE_Defines.h"

@@ -1,4 +1,16 @@
-#include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
+#include "QF_Physics.h"
+
+#include "Libraries/Bullet3/LinearMath/btVector3.h"
+#include "Libraries/Bullet3/LinearMath/btAlignedObjectArray.h"
+
+#include "QF_QwerkE_Defines.h"
+
+#ifdef qw_BULLET3
+#elif qw_HAVOC
+#elif qw_PHYSX
+#else
+#pragma error "No physics library specified!"
+#endif
 
 #ifdef qw_BULLET3
 #include "QF_Profile.h"

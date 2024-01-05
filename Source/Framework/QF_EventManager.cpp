@@ -1,10 +1,10 @@
-#include "EventManager.h"
+#include "QF_EventManager.h"
 
 #include <pThreads/pthread.h> // #TODO Review referencing source files in project instead of what might be installed locally
 
 #include "QC_Helpers.h"
 
-#include "Event.h"
+#include "QF_Event.h"
 #include "QF_Log.h"
 
 namespace QwerkE {

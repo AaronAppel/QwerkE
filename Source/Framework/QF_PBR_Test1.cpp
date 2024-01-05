@@ -1,7 +1,7 @@
 #include "QF_PBR_Test1.h"
 
 #include "QF_QwerkE_Enums.h"
-#include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
+#include "QF_DataManager.h"
 #include "QF_GameObject.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"

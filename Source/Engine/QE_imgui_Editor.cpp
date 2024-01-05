@@ -10,7 +10,7 @@
 #include "QF_Time.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "QF_Profile.h"
-#include "../QwerkE_Framework/Source/Core/Network/Network.h"
+#include "QF_Network.h"
 
 #include "QE_EntityEditor.h"
 #include "QE_ResourceViewer.h"

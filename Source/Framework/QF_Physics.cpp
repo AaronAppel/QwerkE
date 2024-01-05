@@ -1,8 +1,8 @@
-#include "Physics.h"
+#include "QF_Physics.h"
 
 #include "QF_Resources.h"
 
-#include "../DataManager/ConfigHelper.h"
+#include "QF_ConfigHelper.h"
 #include "QF_Log.h"
 
 namespace QwerkE {

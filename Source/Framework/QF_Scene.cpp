@@ -9,8 +9,8 @@
 #include "QF_GameObject.h"
 #include "QF_Component.h"
 #include "QF_CameraComponent.h"
-#include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
-#include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
+#include "QF_ConfigHelper.h"
+#include "QF_DataManager.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 
 namespace QwerkE {

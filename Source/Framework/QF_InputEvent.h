@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Event.h"
+#include "QF_Event.h"
 
 namespace QwerkE {
 
@@ -8,10 +8,6 @@ namespace QwerkE {
     {
     public:
         InputEvent(int value);
-        ~InputEvent();
-
-    private:
-
     };
 
 }

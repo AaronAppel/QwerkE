@@ -1,4 +1,4 @@
-#include "../QwerkE_Framework/Source/Core/Network/Network.h"
+#include "QF_Network.h"
 
 // https://github.com/facebookarchive/RakNet/tree/master/Samples
 #include <stdio.h>

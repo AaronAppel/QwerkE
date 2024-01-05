@@ -1,16 +1,16 @@
-#include "PhysicsWorld.h"
+#include "QF_PhysicsWorld.h"
 
 // #pragma warning( disable : 26495 )
 // #pragma warning( disable : 4099 )
-#include "../../Libraries/Bullet3/BulletCollision/BroadphaseCollision/btAxisSweep3.h"
-#include "../../Libraries/Bullet3/BulletDynamics/Character/btCharacterControllerInterface.h"
-#include "../../Libraries/Bullet3/LinearMath/btAabbUtil2.h"
-#include "../../Libraries/Bullet3/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
-#include "../../Libraries/Bullet3/BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
-#include "../../Libraries/Bullet3/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
-#include "../../Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-#include "../../Libraries/Bullet3/BulletCollision/CollisionDispatch/btCollisionObject.h"
-#include "../../Libraries/Bullet3/BulletCollision/CollisionShapes/btCollisionShape.h"
+#include "Libraries/Bullet3/BulletCollision/BroadphaseCollision/btAxisSweep3.h"
+#include "Libraries/Bullet3/BulletDynamics/Character/btCharacterControllerInterface.h"
+#include "Libraries/Bullet3/LinearMath/btAabbUtil2.h"
+#include "Libraries/Bullet3/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
+#include "Libraries/Bullet3/BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
+#include "Libraries/Bullet3/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+#include "Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "Libraries/Bullet3/BulletCollision/CollisionDispatch/btCollisionObject.h"
+#include "Libraries/Bullet3/BulletCollision/CollisionShapes/btCollisionShape.h"
 // #pragma warning( enable : 26495 )
 // #pragma warning( enable : 4099 )
 

@@ -1,11 +1,11 @@
-#include "DataManager.h"
+#include "QF_DataManager.h"
 
 #include "../../Libraries/cJSON_Interface/cJSONInterface.h"
 
 #include "QF_QwerkE_Defines.h"
 
 #include "QF_Log.h"
-#include "../Factory/Factory.h"
+#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 #include "QF_GameObject.h"
 #include "QF_CameraComponent.h"
 #include "QF_FreeCameraComponent.h"
@@ -22,10 +22,10 @@
 
 // RenderComponent
 #include "QF_RenderComponent.h"
-#include "../Graphics/DataTypes/Renderable.h"
-#include "../Graphics/DataTypes/Material.h"
-#include "../Graphics/Shader/ShaderComponent.h"
-#include "../Graphics/Shader/ShaderProgram.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderComponent.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
 
 #define no_file "None" // #TODO Consider coupling to cJSON logic and moving out of here
 

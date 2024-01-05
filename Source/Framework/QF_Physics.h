@@ -1,19 +1,6 @@
 #pragma once
 
-#include "../../Libraries/Bullet3/LinearMath/btVector3.h"
-#include "../../Libraries/Bullet3/LinearMath/btAlignedObjectArray.h"
-
-#include "QF_QwerkE_Defines.h"
-
-#ifdef qw_BULLET3
-#elif qw_HAVOC
-#elif qw_PHYSX
-#else
-#pragma error "No physics library specified!"
-#endif
-
-// TODO: Find a better spot
-#define STATIC_MASS 0.0f
+#define STATIC_MASS 0.0f // TODO: Find a better spot or deprecate
 
 class btRigidBody;
 
