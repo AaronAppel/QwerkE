@@ -17,7 +17,7 @@
 #include "../../Graphics/Graphics_Header.h"
 #include "../../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../Shader/ShaderProgram.h"
-#include "../../Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../Renderer.h"
 
 // Copied from font rendering example : https://learnopengl.com/

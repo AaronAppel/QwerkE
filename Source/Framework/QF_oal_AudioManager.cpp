@@ -7,7 +7,7 @@
 #include "QF_oal_Helpers.h"
 #include "QF_Log.h"
 #include "QF_FileSystem.h"
-#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../QwerkE_Framework/Source/Core/Audio/AudioSource.h"
 
 namespace QwerkE {

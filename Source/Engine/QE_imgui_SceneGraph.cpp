@@ -11,7 +11,7 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
-#include "../QwerkE_Framework/Source/Core/Resources/GUID.h"
+#include "QF_GUID.h"
 
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"

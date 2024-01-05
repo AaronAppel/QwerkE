@@ -15,7 +15,7 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
-#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "QF_Resources.h"
 #include "QF_FileUtilities.h"
 #include "QF_QwerkE_Defines.h"
 

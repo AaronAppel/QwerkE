@@ -2,7 +2,7 @@
 
 #include "QC_Helpers.h"
 
-#include "../Resources/Resources.h"
+#include "QF_Resources.h"
 
 #include "../Scenes/Scene.h"
 #include "../Scenes/Entities/Components/LightComponent.h"

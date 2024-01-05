@@ -13,7 +13,7 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/ViewerScene.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
-#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 

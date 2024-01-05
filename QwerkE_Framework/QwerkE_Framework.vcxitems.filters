@@ -258,21 +258,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Physics\Physics.cpp">
       <Filter>Core\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Resources\MasterAssetList.cpp">
-      <Filter>Core\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Resources.cpp">
-      <Filter>Core\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Texture_Asset.cpp">
-      <Filter>Core\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Asset.cpp">
-      <Filter>Core\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Asset_Tag.cpp">
-      <Filter>Core\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scenes.cpp">
       <Filter>Core\Scenes</Filter>
     </ClCompile>
@@ -335,9 +320,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\FirstPersonCameraComponent.cpp">
       <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Time\Time.cpp">
-      <Filter>Core\Time</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp">
@@ -417,6 +399,15 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_AssignWin32Keys.cpp">
       <Filter>Extended\GLFW</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Time.cpp">
+      <Filter>Core\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Resources.cpp">
+      <Filter>Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MasterAssetList.cpp">
+      <Filter>Core\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -588,21 +579,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Physics\PhysicsWorld.h">
       <Filter>Core\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Resources\GUID.h">
-      <Filter>Core\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Resources.h">
-      <Filter>Core\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Texture_Asset.h">
-      <Filter>Core\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Asset.h">
-      <Filter>Core\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Resources\Asset_Tag.h">
-      <Filter>Core\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scenes.h">
       <Filter>Core\Scenes</Filter>
     </ClInclude>
@@ -668,12 +644,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\FirstPersonCameraComponent.h">
       <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Time\Time.h">
-      <Filter>Core\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Time\Timer.h">
-      <Filter>Core\Time</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
@@ -772,6 +742,24 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PCH_Includes.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Timer.h">
+      <Filter>Core\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Time.h">
+      <Filter>Core\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Resources.h">
+      <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Asset.h">
+      <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Asset_Tag.h">
+      <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GUID.h">
+      <Filter>Core\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "AssetLoadedEvent.h"
 
-#include "../Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../Graphics/GraphicsUtilities/OpenGL/OpenGLHelpers.h"
 
 namespace QwerkE {

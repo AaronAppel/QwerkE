@@ -1,5 +1,6 @@
 #include "Physics.h"
-#include "../Resources/Resources.h"
+
+#include "QF_Resources.h"
 
 #include "../DataManager/ConfigHelper.h"
 #include "QF_Log.h"

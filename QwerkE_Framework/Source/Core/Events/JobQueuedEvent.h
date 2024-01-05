@@ -9,7 +9,6 @@ namespace QwerkE {
     {
     public:
         JobQueuedEvent();
-        ~JobQueuedEvent();
 
         void Process();
     };

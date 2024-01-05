@@ -4,8 +4,8 @@
 
 #include "QF_QwerkE_Global_Constants.h"
 
-#include "Asset.h"
-#include "../Math/Vector.h"
+#include "QF_Asset.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 typedef unsigned int GLuint;
 
@@ -16,9 +16,6 @@ namespace QwerkE {
     class Asset_Tag
     {
     public:
-        Asset_Tag();
-        ~Asset_Tag();
-
         std::string GetName() { return m_Name; }
 
     private:

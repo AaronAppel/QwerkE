@@ -8,11 +8,11 @@
 #include "../../../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "../../../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
-#include "../../../QwerkE_Framework/Source/Core/Time/Time.h"
+#include "QF_Time.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderComponent.h"
-#include "../../../QwerkE_Framework/Source/Core//Resources/Resources.h"
+#include "QF_Resources.h"
 
 namespace QwerkE {
 

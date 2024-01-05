@@ -18,7 +18,7 @@
 #include "../Scenes/Entities/Routines/TransformRoutine.h"
 #include "../Scenes/Scene.h"
 
-#include "../Resources/Resources.h"
+#include "QF_Resources.h"
 
 // RenderComponent
 #include "../Scenes/Entities/Components/RenderComponent.h"

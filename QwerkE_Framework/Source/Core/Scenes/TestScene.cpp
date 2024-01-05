@@ -1,4 +1,5 @@
 #include "../Scenes/Scenes.h"
+
 #include "TestScene.h"
 #include "../DataManager/DataManager.h"
 #include "Entities/GameObject.h"
@@ -6,7 +7,7 @@
 #include "../Factory/Factory.h"
 #include "../Graphics/Mesh/Mesh.h"
 #include "../Graphics/Mesh/MeshFactory.h"
-#include "../Resources/Resources.h"
+#include "QF_Resources.h"
 
 namespace QwerkE {
 

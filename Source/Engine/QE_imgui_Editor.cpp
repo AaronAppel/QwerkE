@@ -7,7 +7,7 @@
 #include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
-#include "../QwerkE_Framework/Source/Core/Time/Time.h"
+#include "QF_Time.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "QF_Profile.h"
 #include "../QwerkE_Framework/Source/Core/Network/Network.h"

@@ -10,7 +10,7 @@
 #include "QF_FileUtilities.h"
 #include "OpenGL/OpenGLHelpers.h"
 #include "../../Scenes/Entities/Components/RenderComponent.h"
-#include "../../Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../DataTypes/Material.h"
 #include "../DataTypes/MaterialComponent.h"
 #include "../Shader/ShaderProgram.h"

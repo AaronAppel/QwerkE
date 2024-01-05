@@ -23,7 +23,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
 
 #include "QF_FileUtilities.h"

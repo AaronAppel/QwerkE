@@ -1,17 +1,17 @@
-#include "Resources.h"
+#include "QF_Resources.h"
 
 #include "../../Libraries/glew/GL/glew.h"
 
 #include "QC_StringHelpers.h"
 
-#include "../Graphics/DataTypes/Material.h"
-#include "../Graphics/Shader/ShaderProgram.h"
-#include "../Graphics/Shader/ShaderComponent.h"
-#include "../Graphics/ShaderFactory/ShaderFactory.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderComponent.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/ShaderFactory/ShaderFactory.h"
 #include "QF_FileSystem.h"
 #include "QF_QwerkE_Defines.h"
-#include "../Graphics/DataTypes/Texture.h"
-#include "../Jobs/Jobs.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "../QwerkE_Framework/Source/Core/Jobs/Jobs.h"
 #include "QF_Log.h"
 
 namespace QwerkE {

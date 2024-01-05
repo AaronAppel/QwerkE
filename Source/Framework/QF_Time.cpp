@@ -1,4 +1,4 @@
-#include "Time.h"
+#include "QF_Time.h"
 
 #ifdef _WIN32
 #include <profileapi.h>

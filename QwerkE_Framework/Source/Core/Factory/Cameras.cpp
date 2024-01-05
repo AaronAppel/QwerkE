@@ -9,7 +9,7 @@
 
 #include "QF_FileSystem.h"
 
-#include "../Resources/Resources.h"
+#include "QF_Resources.h"
 
 #include "../Scenes/Entities/Components/Camera/CameraComponent.h"
 #include "../Scenes/Entities/Components/Camera/FirstPersonCameraComponent.h"

@@ -1,6 +1,6 @@
 #include "RenderComponent.h"
 
-#include "../../../Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../../../Graphics/DataTypes/Material.h"
 #include "../../../Graphics/Shader/ShaderProgram.h"
 #include "../../../Graphics/GraphicsUtilities/GraphicsHelpers.h"

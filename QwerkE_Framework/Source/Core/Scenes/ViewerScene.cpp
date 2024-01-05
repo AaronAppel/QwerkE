@@ -1,6 +1,6 @@
 #include "ViewerScene.h"
 
-#include "../Resources/Resources.h"
+#include "QF_Resources.h"
 #include "../Factory/Factory.h"
 
 // #TODO Move this code and file out of the framework, and into the engine.

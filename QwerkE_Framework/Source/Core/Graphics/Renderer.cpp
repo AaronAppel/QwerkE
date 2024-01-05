@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "../Resources/Resources.h"
+#include "QF_Resources.h"
 
 #include "Renderer.h"
 #include "FontRendering/FontTest.h"

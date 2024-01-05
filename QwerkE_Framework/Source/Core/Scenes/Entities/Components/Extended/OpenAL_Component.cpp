@@ -1,6 +1,6 @@
 #include "OpenAL_Component.h"
 
-#include "../../../../Resources/Resources.h"
+#include "QF_Resources.h"
 #include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {
