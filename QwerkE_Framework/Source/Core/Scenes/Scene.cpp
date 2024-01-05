@@ -6,7 +6,7 @@
 
 #include "QF_Log.h"
 
-#include "Entities/GameObject.h"
+#include "QF_GameObject.h"
 #include "Entities/Components/Component.h"
 #include "Entities/Components/Camera/CameraComponent.h"
 #include "../DataManager/ConfigHelper.h"

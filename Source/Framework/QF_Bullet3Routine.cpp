@@ -1,4 +1,4 @@
-#include "Bullet3Routine.h"
+#include "QF_Bullet3Routine.h"
 
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
@@ -24,9 +24,9 @@
 #pragma warning( default : 26495 )
 #pragma warning( default : 4099 )
 
-#include "../../Components/Extended/Bullet3Component.h"
-#include "../../GameObject.h"
-#include "../../../../Math/Vector.h"
+#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Extended/Bullet3Component.h"
+#include "QF_GameObject.h"
+#include "../../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
 

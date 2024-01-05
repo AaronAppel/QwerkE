@@ -4,8 +4,8 @@
 
 #include "../../Libraries/glew/GL/glew.h"
 
-#include "Routine.h"
-#include "../../../Graphics/DataTypes/Renderable.h"
+#include "QF_Routine.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
 
 namespace QwerkE {
 

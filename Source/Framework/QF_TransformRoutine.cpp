@@ -1,6 +1,6 @@
-#include "TransformRoutine.h"
+#include "QF_TransformRoutine.h"
 
-#include "../GameObject.h"
+#include "QF_GameObject.h"
 
 namespace QwerkE {
 

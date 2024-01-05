@@ -2,7 +2,7 @@
 
 #include "QF_QwerkE_Enums.h"
 #include "../DataManager/DataManager.h"
-#include "../Scenes/Entities/GameObject.h"
+#include "QF_GameObject.h"
 #include "../Factory/Factory.h"
 #include "../Graphics/Mesh/Mesh.h"
 #include "../Graphics/Mesh/MeshFactory.h"

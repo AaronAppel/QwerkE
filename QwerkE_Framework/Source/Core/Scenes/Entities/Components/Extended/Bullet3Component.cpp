@@ -29,7 +29,7 @@
 #include "../../../Entities/Components/PhysicsComponent.h"
 #include "../../../Entities/Components/Component.h"
 #include "../../../../Math/Vector.h"
-#include "../../../Entities/GameObject.h"
+#include "QF_GameObject.h"
 
 namespace QwerkE {
 

@@ -9,7 +9,7 @@
 
 #include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
+#include "QF_GameObject.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 #include "QF_GUID.h"
 

@@ -16,9 +16,9 @@
 #include "../Scenes/Entities/Components/Camera/FreeCameraComponent.h"
 #include "../Scenes/Entities/Components/Camera/StaticCameraComponent.h"
 #include "../Scenes/Entities/Components/Camera/ThirdPersonCameraComponent.h"
-#include "../Scenes/Entities/Routines/RenderRoutine.h"
+#include "QF_RenderRoutine.h"
 #include "../Scenes/Entities/Components/RenderComponent.h"
-#include "../Scenes/Entities/GameObject.h"
+#include "QF_GameObject.h"
 #include "../Scenes/Scene.h"
 
 namespace QwerkE {

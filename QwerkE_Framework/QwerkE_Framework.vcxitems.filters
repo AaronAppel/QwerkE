@@ -162,9 +162,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Cameras.cpp">
       <Filter>Core\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Characters.cpp">
-      <Filter>Core\Factory</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Renderer.cpp">
       <Filter>Core\Graphics</Filter>
     </ClCompile>
@@ -263,24 +260,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.cpp">
       <Filter>Core\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\GameObject.cpp">
-      <Filter>Core\Scenes\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\Routine.cpp">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\TransformRoutine.cpp">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\RenderRoutine.cpp">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\RenderRoutineUtilities.cpp">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\Extended\Bullet3Routine.cpp">
-      <Filter>Core\Scenes\Entities\Routines\Extended</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\PhysicsComponent.cpp">
       <Filter>Core\Scenes\Entities\Components</Filter>
@@ -408,6 +387,21 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_AudioSource.cpp">
       <Filter>Core\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Bullet3Routine.cpp">
+      <Filter>Core\Scenes\Entities\Routines\Extended</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_RenderRoutineUtilities.cpp">
+      <Filter>Core\Scenes\Entities\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TransformRoutine.cpp">
+      <Filter>Core\Scenes\Entities\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_RenderRoutine.cpp">
+      <Filter>Core\Scenes\Entities\Routines</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GameObject.cpp">
+      <Filter>Core\Scenes\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -585,21 +579,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.h">
       <Filter>Core\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\GameObject.h">
-      <Filter>Core\Scenes\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\Routine.h">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\TransformRoutine.h">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\RenderRoutine.h">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Routines\Extended\Bullet3Routine.h">
-      <Filter>Core\Scenes\Entities\Routines\Extended</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\LightComponent.h">
       <Filter>Core\Scenes\Entities\Components</Filter>
     </ClInclude>
@@ -760,6 +739,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_AudioSource.h">
       <Filter>Core\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Bullet3Routine.h">
+      <Filter>Core\Scenes\Entities\Routines\Extended</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Routine.h">
+      <Filter>Core\Scenes\Entities\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TransformRoutine.h">
+      <Filter>Core\Scenes\Entities\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_RenderRoutine.h">
+      <Filter>Core\Scenes\Entities\Routines</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GameObject.h">
+      <Filter>Core\Scenes\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

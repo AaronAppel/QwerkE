@@ -1,8 +1,9 @@
-#include "GameObject.h"
-#include "../Scene.h"
-#include "Routines/Routine.h"
-#include "Components/Component.h"
-#include "Components/Extended/Bullet3Component.h"
+#include "QF_GameObject.h"
+
+#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "QF_Routine.h"
+#include "QwerkE_Framework/Source/Core/Scenes/Entities/Components/Component.h"
+#include "QwerkE_Framework/Source/Core/Scenes/Entities/Components/Extended/Bullet3Component.h"
 #include "QF_QwerkE_Enums.h"
 
 namespace QwerkE {

@@ -5,7 +5,7 @@
 
 #include "../../Components/Component.h"
 #include "../../Components/PhysicsComponent.h"
-#include "../../GameObject.h"
+#include "QF_GameObject.h"
 
 class btRigidBody;
 

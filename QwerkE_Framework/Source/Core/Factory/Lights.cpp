@@ -6,7 +6,7 @@
 
 #include "../Scenes/Scene.h"
 #include "../Scenes/Entities/Components/LightComponent.h"
-#include "../Scenes/Entities/Routines/RenderRoutine.h"
+#include "QF_RenderRoutine.h"
 #include "../Scenes/Entities/Components/RenderComponent.h"
 
 namespace QwerkE {

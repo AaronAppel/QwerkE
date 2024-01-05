@@ -1,4 +1,4 @@
-#include "RenderRoutine.h"
+#include "QF_RenderRoutine.h"
 
 #include "QC_StringHelpers.h"
 
@@ -6,17 +6,17 @@
 
 #include "QF_Log.h"
 
-#include "../../../Graphics/GraphicsUtilities/GraphicsHelpers.h"
-#include "../../../Graphics/Graphics_Header.h"
-#include "../GameObject.h"
-#include "../Routines/Routine.h"
-#include "../../../Graphics/DataTypes/Material.h"
-#include "../../../Graphics/DataTypes/Renderable.h"
-#include "../../../Graphics/Shader/ShaderProgram.h"
-#include "../../../Graphics/Mesh/Mesh.h"
-#include "../../../Graphics/DataTypes/Material.h"
-#include "../../Entities/Components/Camera/CameraComponent.h"
-#include "../../Entities/Components/RenderComponent.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
+#include "QF_GameObject.h"
+#include "QF_Routine.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Camera/CameraComponent.h"
+#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
 
 namespace QwerkE {
 

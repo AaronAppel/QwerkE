@@ -1,7 +1,7 @@
 #pragma once
 
 #include "QF_QwerkE_Enums.h"
-#include "../Scenes/Entities/GameObject.h"
+#include "QF_GameObject.h"
 
 namespace QwerkE {
 

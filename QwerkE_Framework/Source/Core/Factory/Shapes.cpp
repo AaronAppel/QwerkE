@@ -6,7 +6,7 @@
 #include "../Scenes/Scene.h"
 #include "QF_QwerkE_Enums.h"
 #include "../Scenes/Entities/Components/Component.h"
-#include "../Scenes/Entities/Routines/RenderRoutine.h"
+#include "QF_RenderRoutine.h"
 #include "../Graphics/Mesh/Mesh.h"
 #include "../Graphics/DataTypes/Material.h"
 

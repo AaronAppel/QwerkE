@@ -5,7 +5,7 @@
 #include "../../../Graphics/Shader/ShaderProgram.h"
 #include "../../../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../../Entities/GameObject.h"
-#include "../../Entities/Routines/RenderRoutine.h"
+#include "QF_RenderRoutine.h"
 
 #include "QF_QwerkE_Defines.h"
 

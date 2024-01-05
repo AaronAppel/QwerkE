@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Routine.h"
+#include "QF_Routine.h"
 
-#include "../../../Math/Vector.h"
+#include "../../../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
 

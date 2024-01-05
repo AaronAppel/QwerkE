@@ -3,7 +3,7 @@
 #include "../Component.h"
 #include "CameraComponent.h"
 #include "QF_QwerkE_Enums.h"
-#include "../../GameObject.h"
+#include "QF_GameObject.h"
 
 // https://msdn.microsoft.com/en-us/library/bb203907(v=xnagamestudio.10).aspx
 
@@ -11,10 +11,6 @@ namespace QwerkE {
 
     FreeCameraComponent::FreeCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
         CameraComponent(position, up, yaw, pitch)
-    {
-    }
-
-    FreeCameraComponent::~FreeCameraComponent()
     {
     }
 

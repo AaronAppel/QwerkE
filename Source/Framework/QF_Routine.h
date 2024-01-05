@@ -2,14 +2,14 @@
 
 #include "QF_QwerkE_Enums.h"
 
-#include "../GameObject.h"
+#include "QF_GameObject.h"
 
 namespace QwerkE {
 
-    class Routine // Abstract
+    class Routine
     {
     public:
-        virtual ~Routine();
+        virtual ~Routine() = default;
 
         virtual void Update(double a_Deltatime) {};
 
@@ -33,7 +33,8 @@ namespace QwerkE {
         void SetRoutineType(eRoutineTypes type) { m_Type = type; };
 
     protected:
-        Routine();
+        Routine() = default;
+
         int m_Priority = 0; // render order / update order
         GameObject* m_pParent = nullptr;
         eRoutineTypes m_Type = eRoutineTypes::Routine_NULL;
