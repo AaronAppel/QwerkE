@@ -6,7 +6,7 @@ rem xcopy s:\ z:\* /S /Y /D
 rem S will copy all subfolders and files within them Y prevents any overwrite prompts D essentially copies anything newer than what is already in the destination
 rem '*' at the end of the destination to surpress directory/file prompt
 
-set sourceDir=QwerkE_Framework\Libraries\
+set sourceDir=Libraries\
 set targetDir=
 
 xcopy "%sourceDir%assimp\Release\x86\assimp-vc140-mt.dll" "%targetDir%assimp-vc140-mt.dll*" /Y

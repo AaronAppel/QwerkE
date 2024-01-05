@@ -59,6 +59,18 @@
             }
           },
           {
+            "id": "c9c2d1b18e80882e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "QwerkE Standards/Including.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "829d56dec2e8397c",
             "type": "leaf",
             "state": {
@@ -71,7 +83,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -156,7 +168,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "QwerkE Standards/Language Versions.md",
+                "file": "QwerkE Standards/Including.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -173,7 +185,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "QwerkE Standards/Language Versions.md",
+                "file": "QwerkE Standards/Including.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -185,7 +197,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "QwerkE Standards/Language Versions.md"
+                "file": "QwerkE Standards/Including.md"
               }
             }
           }
@@ -206,10 +218,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "28d1e7ec096c5d42",
+  "active": "c9c2d1b18e80882e",
   "lastOpenFiles": [
-    "Known Issues and Gotchas.md",
+    "ShaderVariableDoc.txt.md",
     "QwerkE Standards/Language Versions.md",
+    "Known Issues and Gotchas.md",
     "Solution Configuration/Projects.md",
     "QwerkE Standards/Member Initialization.md",
     "Solution Configuration/Additional Includes.md",
@@ -235,7 +248,6 @@
     "QwerkE Standards/Empty Function Body.md",
     "Feature Development/Engine Styling and Appearance.md",
     "Variable Naming.md",
-    "Assets and Data/Null Asset Handling.md",
     "Assets and Data",
     "Z. Less Relevant",
     "Feature Development",
