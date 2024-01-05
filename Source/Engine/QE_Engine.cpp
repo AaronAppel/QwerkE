@@ -30,7 +30,7 @@
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "QF_Resources.h"
 #include "../QwerkE_Framework/Source/Core/Events/EventManager.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "QF_Scene.h"
 #include "QF_CallbackFunctions.h"
 #include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
 #include "QF_Audio.h"
@@ -43,7 +43,7 @@
 #include "QF_Time.h"
 #include "QF_Log.h"
 #include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "QF_Scenes.h"
 
 namespace QwerkE {
 

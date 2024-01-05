@@ -16,7 +16,7 @@
 #include "QF_Routine.h"
 #include "QF_RenderRoutine.h"
 #include "QF_TransformRoutine.h"
-#include "../Scenes/Scene.h"
+#include "QF_Scene.h"
 
 #include "QF_Resources.h"
 

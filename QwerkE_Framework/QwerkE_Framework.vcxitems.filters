@@ -246,21 +246,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Physics\Physics.cpp">
       <Filter>Core\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scenes.cpp">
-      <Filter>Core\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\TestScene.cpp">
-      <Filter>Core\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\ViewerScene.cpp">
-      <Filter>Core\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\PBR_Test1.cpp">
-      <Filter>Core\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.cpp">
-      <Filter>Core\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
@@ -402,6 +387,21 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LightComponent.cpp">
       <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scene.cpp">
+      <Filter>Core\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scenes.cpp">
+      <Filter>Core\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TestScene.cpp">
+      <Filter>Core\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ViewerScene.cpp">
+      <Filter>Core\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PBR_Test1.cpp">
+      <Filter>Core\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -563,21 +563,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Physics\PhysicsWorld.h">
       <Filter>Core\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scenes.h">
-      <Filter>Core\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\TestScene.h">
-      <Filter>Core\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\ViewerScene.h">
-      <Filter>Core\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\PBR_Test1.h">
-      <Filter>Core\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.h">
-      <Filter>Core\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
@@ -754,6 +739,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LightComponent.h">
       <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scene.h">
+      <Filter>Core\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scenes.h">
+      <Filter>Core\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TestScene.h">
+      <Filter>Core\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ViewerScene.h">
+      <Filter>Core\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PBR_Test1.h">
+      <Filter>Core\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

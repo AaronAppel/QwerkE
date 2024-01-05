@@ -49,6 +49,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_OpenAL_Component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PBR_Test1.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PhysicsComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PrintFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_AssimpLoading.cpp" />
@@ -57,10 +58,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_RenderRoutineUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Resources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_rkn_Main.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scenes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_StaticCameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TestScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ThirdPersonCameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Time.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TransformRoutine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ViewerScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Window.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\ConfigHelper.cpp" />
@@ -102,11 +107,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\VectorMathHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Physics\Physics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Physics\PhysicsWorld.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\PBR_Test1.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scenes.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\TestScene.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\ViewerScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Asset.h" />
@@ -147,6 +147,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_OpenAL_Component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PBR_Test1.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PCH_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PhysicsComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PrintFunctions.h" />
@@ -162,11 +163,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_RenderRoutine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Resources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Routine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scenes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_StaticCameraComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TestScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ThirdPersonCameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Time.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TransformRoutine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ViewerScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Windows.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\ConfigHelper.h" />
@@ -222,10 +227,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Network\Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Physics\Physics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Physics\PhysicsWorld.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\PBR_Test1.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scenes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\TestScene.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\ViewerScene.h" />
   </ItemGroup>
 </Project>

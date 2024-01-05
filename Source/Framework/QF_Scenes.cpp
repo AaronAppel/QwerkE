@@ -1,4 +1,4 @@
-#include "Scenes.h"
+#include "QF_Scenes.h"
 
 #include <map>
 
@@ -8,15 +8,15 @@
 
 #include "QF_Log.h"
 
-#include "../Scenes/Scene.h"
-#include "../Scenes/TestScene.h"
-#include "../Scenes/ViewerScene.h"
-#include "../Scenes/PBR_Test1.h"
+#include "QF_Scene.h"
+#include "QF_TestScene.h"
+#include "QF_ViewerScene.h"
+#include "QF_PBR_Test1.h"
 #include "QF_QwerkE_Enums.h"
 #include "QF_FileUtilities.h"
 #include "QF_Profile.h"
 
-#include "../Input/Input.h"
+#include "../QwerkE_Framework/Source/Core/Input/Input.h"
 
 namespace QwerkE {
 

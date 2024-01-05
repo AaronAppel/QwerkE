@@ -19,7 +19,7 @@
 #include "QF_RenderRoutine.h"
 #include "QF_RenderComponent.h"
 #include "QF_GameObject.h"
-#include "../Scenes/Scene.h"
+#include "QF_Scene.h"
 
 namespace QwerkE {
 

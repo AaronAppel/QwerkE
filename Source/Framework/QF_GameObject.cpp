@@ -1,6 +1,6 @@
 #include "QF_GameObject.h"
 
-#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "QF_Scene.h"
 #include "QF_Routine.h"
 #include "QF_Component.h"
 #include "QF_Bullet3Component.h"

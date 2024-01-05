@@ -1,12 +1,12 @@
-#include "PBR_Test1.h"
+#include "QF_PBR_Test1.h"
 
 #include "QF_QwerkE_Enums.h"
-#include "../DataManager/DataManager.h"
+#include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
 #include "QF_GameObject.h"
-#include "../Factory/Factory.h"
-#include "../Graphics/Mesh/Mesh.h"
-#include "../Graphics/Mesh/MeshFactory.h"
-#include "../Graphics/Shader/ShaderProgram.h"
+#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
 #include "QF_Resources.h"
 
 namespace QwerkE {

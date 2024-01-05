@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Scene.h"
+#include "QF_Scene.h"
 
 namespace QwerkE {
 

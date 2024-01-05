@@ -1,12 +1,12 @@
-#include "../Scenes/Scenes.h"
+#include "QF_Scenes.h"
 
-#include "TestScene.h"
-#include "../DataManager/DataManager.h"
+#include "QF_TestScene.h"
+#include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
 #include "QF_GameObject.h"
 #include "QF_QwerkE_Enums.h"
-#include "../Factory/Factory.h"
-#include "../Graphics/Mesh/Mesh.h"
-#include "../Graphics/Mesh/MeshFactory.h"
+#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
 #include "QF_Resources.h"
 
 namespace QwerkE {
@@ -15,10 +15,6 @@ namespace QwerkE {
 	{
 		m_ID = eSceneTypes::Scene_TestScene;
 		m_LevelFileName = "TestScene.qscene";
-	}
-
-	TestScene::~TestScene()
-	{
 	}
 
 	GameObject* obj; // #TODO Fix hack

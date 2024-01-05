@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scene.h"
+#include "QF_Scene.h"
 
 namespace QwerkE {
 
@@ -8,7 +8,6 @@ namespace QwerkE {
     {
     public:
         TestScene();
-        virtual ~TestScene();
 
         void Update(float deltaTime);
 

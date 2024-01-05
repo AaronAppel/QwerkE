@@ -4,7 +4,7 @@
 
 #include "QF_Resources.h"
 
-#include "../Scenes/Scene.h"
+#include "QF_Scene.h"
 #include "QF_LightComponent.h"
 #include "QF_RenderRoutine.h"
 #include "QF_RenderComponent.h"

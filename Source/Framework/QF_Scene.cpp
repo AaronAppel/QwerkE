@@ -1,4 +1,4 @@
-#include "Scene.h"
+#include "QF_Scene.h"
 
 #include <algorithm>
 
@@ -7,11 +7,11 @@
 #include "QF_Log.h"
 
 #include "QF_GameObject.h"
-#include "Entities/Components/Component.h"
-#include "Entities/Components/Camera/CameraComponent.h"
-#include "../DataManager/ConfigHelper.h"
-#include "../DataManager/DataManager.h"
-#include "../Input/Input.h"
+#include "QF_Component.h"
+#include "QF_CameraComponent.h"
+#include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
+#include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
+#include "../QwerkE_Framework/Source/Core/Input/Input.h"
 
 namespace QwerkE {
 

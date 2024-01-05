@@ -6,7 +6,7 @@
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "QF_Audio.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "QF_Scenes.h"
 #include "QF_Time.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "QF_Profile.h"

@@ -3,7 +3,7 @@
 #include "QC_Helpers.h"
 
 #include "QF_Resources.h"
-#include "../Scenes/Scene.h"
+#include "QF_Scene.h"
 #include "QF_QwerkE_Enums.h"
 #include "QF_Component.h"
 #include "QF_RenderRoutine.h"

@@ -7,7 +7,7 @@
 #include "QF_FileUtilities.h"
 #include "../../../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
-#include "../../../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "QF_Scenes.h"
 #include "QF_Time.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
