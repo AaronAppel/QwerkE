@@ -1,6 +1,6 @@
 #include "QE_ResourceViewer.h"
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Global_Constants.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../../Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Global_Constants.h"
 
 #include "Asset.h"
 #include "../Math/Vector.h"

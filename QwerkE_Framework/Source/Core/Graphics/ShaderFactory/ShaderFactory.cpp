@@ -2,11 +2,11 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../../../FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 #include "../../../Debug/Log/Log.h"
 
 #include "../Graphics_Header.h"
-#include "../../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 #include "../Shader/ShaderProgram.h"
 #include "../Shader/ShaderComponent.h"

@@ -2,7 +2,7 @@
 
 #include "glfw/GLFW/glfw3.h"
 
-#include "../../../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 
 #include "CameraComponent.h"
 #include "../../GameObject.h"

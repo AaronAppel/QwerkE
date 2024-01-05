@@ -3,8 +3,8 @@
 #include "glew/GL/glew.h"
 
 #include "../../../../Math/Math_Includes.h"
-#include "../../../../../Headers/QwerkE_Global_Constants.h"
-#include "../../../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Enums.h"
 
 #include "../../Components/Component.h"
 

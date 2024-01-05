@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Global_Constants.h"
 
 namespace QwerkE {
 

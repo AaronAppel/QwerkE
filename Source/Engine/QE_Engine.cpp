@@ -1,6 +1,6 @@
 #include "QE_Engine.h"
 
-#include "Framework.h"
+#include "QF_Framework.h"
 
 #include "glew/GL/glew.h"
 #include "glfw/GLFW/glfw3.h"
@@ -41,6 +41,9 @@
 #include "../QwerkE_Framework/Source/Core/Window/Windows.h"
 #include "../QwerkE_Framework/Source/Core/Window/glfw_Window.h"
 #include "../QwerkE_Framework/Source/Core/Time/Time.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
+#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 
 namespace QwerkE {
 

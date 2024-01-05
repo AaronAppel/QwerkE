@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 
 namespace QwerkE {
 

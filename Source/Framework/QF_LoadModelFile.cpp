@@ -1,4 +1,4 @@
-#include "FileSystem.h"
+#include "QF_FileSystem.h"
 
 #include <iostream>
 #include <vector>
@@ -15,7 +15,7 @@
 // define generic functions for model loading but
 // use library specific prototype and body defines
 #ifdef AI_CONFIG_H_INC // assimp
-#include "QwerkE_AssimpLoading.h"
+#include "QF_QwerkE_AssimpLoading.h"
 #define TextureDirOffset(a, b) StringAppend("../Models/", a, b)
 #else
 #pragma error "Define model loading library!"
@@ -23,13 +23,13 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../Core/Resources/Resources.h"
-#include "../Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
 
-#include "FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 
-#include "../Debug/Log/Log.h"
-#include "../Headers/QwerkE_Defines.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {
 

@@ -1,6 +1,6 @@
 #include "PBR_Test1.h"
 
-#include "../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 #include "../DataManager/DataManager.h"
 #include "../Scenes/Entities/GameObject.h"
 #include "../Factory/Factory.h"

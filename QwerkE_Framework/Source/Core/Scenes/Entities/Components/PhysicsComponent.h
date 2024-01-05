@@ -6,14 +6,10 @@ class btRigidBody;
 
 namespace QwerkE {
 
-    // TODO: Change/move to b3_PhysicsComponent
-    class PhysicsComponent : public Component
+    class PhysicsComponent : public Component // TODO: Change/move to b3_PhysicsComponent
     {
     public:
         PhysicsComponent();
-        ~PhysicsComponent();
-
-    protected:
     };
 
 }

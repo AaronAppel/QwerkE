@@ -1,11 +1,13 @@
-#include "FileUtilities.h"
+#include "QF_FileUtilities.h"
 
 #include <fstream>
 #include <iostream>
 
 #include "QC_StringHelpers.h"
 
-#include "../../Debug/Log/Log.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+
+#include "QF_QwerkE_Platform.h"
 
 bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 {
@@ -23,8 +25,6 @@ bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 		return false; // could not find file
 	}
 }
-
-#define _Win32 // TODO: Fix multi platform
 
 #ifdef _Win32
 #include <windows.h>
@@ -77,10 +77,10 @@ std::vector<std::string> ReadDir(const char* directoryPath)
 	return fileList;
 }
 #else
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <filesystem>
+// #include <fstream>
+// #include <iostream>
+// #include <string>
+// #include <filesystem> // C++ 17
 // TODO: Look at std::filesystem
 // http://www.modernescpp.com/index.php/c-17-more-details-about-the-library
 //http://www.martinbroadhurst.com/list-the-files-in-a-directory-in-c.html

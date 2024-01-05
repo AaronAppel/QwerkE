@@ -1,12 +1,12 @@
-#include "Libraries_Initialize.h"
+#include "QF_Libraries_Initialize.h"
 
-#include "Libraries_Include.h"
+#include "QF_Libraries_Include.h"
 
-#include "QwerkE_Defines.h"
-#include "QwerkE_Platform.h"
+#include "QF_QwerkE_Defines.h"
+#include "QF_QwerkE_Platform.h"
 
-#include "../Debug/Log/Log.h"
-#include "../Core/DataManager/ConfigHelper.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
 
 namespace QwerkE {
 

@@ -845,6 +845,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\stopwatch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\tweakme.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\version.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />

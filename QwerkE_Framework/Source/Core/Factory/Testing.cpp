@@ -12,7 +12,7 @@
 #include "../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../Graphics/Mesh/Mesh.h"
 #include "../../FileSystem/FileSystem.h"
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {
 

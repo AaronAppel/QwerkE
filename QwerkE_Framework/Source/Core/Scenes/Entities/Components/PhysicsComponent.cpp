@@ -1,6 +1,4 @@
-#include "../../../../Headers/QwerkE_Enums.h"
 #include "../../Entities/Components/PhysicsComponent.h"
-#include "../../Entities/Components/Component.h"
 
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
@@ -23,15 +21,14 @@
 #pragma warning( default : 26495 )
 #pragma warning( default : 4099 )
 
+#include "QF_QwerkE_Enums.h"
+#include "../../Entities/Components/Component.h"
+
 namespace QwerkE {
 
     PhysicsComponent::PhysicsComponent()
     {
         m_ComponentTag = Component_Physics;
-    }
-
-    PhysicsComponent::~PhysicsComponent()
-    {
     }
 
 }

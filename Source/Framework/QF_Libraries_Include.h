@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
+#include "QF_QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
 
 #pragma warning( disable : 26437 )
 #pragma warning( disable : 26451 )
@@ -80,19 +80,19 @@
 #include "glm/glm//gtc/type_ptr.hpp"
 #pragma warning( default : 26495 )
 
-#include "../Core/Math/Vector.h"
-#include "../Core/Math/MyQuaternion.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
+#include "../QwerkE_Framework/Source/Core/Math/MyQuaternion.h"
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #pragma warning( disable : 26495 )
-#include "../Core/Math/MyMatrix.h"
+#include "../QwerkE_Framework/Source/Core/Math/MyMatrix.h"
 #pragma warning( default : 4244 )
 #pragma warning( default : 4305 )
 #pragma warning( disable : 26495 )
 
 #pragma warning( disable : 4244 )
-#include "../Core/Math/Tween/Tween.h"
-#include "../Core/Math/Tween/TweenFuncs.h"
+#include "../QwerkE_Framework/Source/Core/Math/Tween/Tween.h"
+#include "../QwerkE_Framework/Source/Core/Math/Tween/TweenFuncs.h"
 #pragma warning( default : 4244 )
 
 #pragma warning( disable : 26495 )

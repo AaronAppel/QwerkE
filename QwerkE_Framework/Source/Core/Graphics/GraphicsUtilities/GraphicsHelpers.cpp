@@ -7,7 +7,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../../../FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 #include "OpenGL/OpenGLHelpers.h"
 #include "../../Scenes/Entities/Components/RenderComponent.h"
 #include "../../Resources/Resources.h"
@@ -17,8 +17,8 @@
 #include "../Shader/ShaderComponent.h"
 #include "../DataTypes/Renderable.h"
 #include "../DataTypes/Texture.h"
-#include "../../../Headers/QwerkE_Enums.h"
-#include "../../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Enums.h"
+#include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {
 

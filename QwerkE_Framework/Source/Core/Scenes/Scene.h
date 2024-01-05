@@ -4,8 +4,8 @@
 #include <vector>
 #include <string>
 
-#include "../../Headers/QwerkE_Enums.h"
-#include "../../Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Enums.h"
+#include "QF_QwerkE_Global_Constants.h"
 
 namespace QwerkE {
 

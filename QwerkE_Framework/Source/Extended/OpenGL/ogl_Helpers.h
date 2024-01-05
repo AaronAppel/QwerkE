@@ -2,7 +2,7 @@
 
 #include "../../../Libraries/glew/GL/glew.h"
 
-#include "../../FileSystem/FileSystem.h"
+#include "QF_FileSystem.h"
 
 namespace QwerkE {
 

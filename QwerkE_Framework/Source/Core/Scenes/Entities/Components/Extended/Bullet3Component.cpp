@@ -24,7 +24,8 @@
 #pragma warning( default : 26495 )
 #pragma warning( default : 4099 )
 
-#include "../../../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
+
 #include "../../../Entities/Components/PhysicsComponent.h"
 #include "../../../Entities/Components/Component.h"
 #include "../../../../Math/Vector.h"

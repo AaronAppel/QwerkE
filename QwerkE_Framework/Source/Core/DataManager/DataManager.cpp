@@ -2,7 +2,7 @@
 
 #include "../../Libraries/cJSON_Interface/cJSONInterface.h"
 
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 #include "../../Debug/Log/Log.h"
 #include "../Factory/Factory.h"

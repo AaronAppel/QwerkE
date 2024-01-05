@@ -8,7 +8,7 @@
 #include "../../../Libraries/freetype2/freetype/freetype.h" // #TODO create a font class?
 #include "../../../Libraries/OpenAL/include/al.h"
 
-#include "../../Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Global_Constants.h"
 
 // For instances where 1 asset may be shared between objects in
 // possibly many scenes, the Resources() may want to count

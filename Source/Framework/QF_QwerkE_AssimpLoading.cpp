@@ -1,23 +1,23 @@
-#include "QwerkE_AssimpLoading.h"
+#include "QF_QwerkE_AssimpLoading.h"
 
 #pragma warning( disable : 26495 )
-#include "../../Libraries/assimp/Importer.hpp"
-#include "../../Libraries/assimp/scene.h"
-#include "../../Libraries/assimp/postprocess.h"
-#include "../../Libraries/assimp/config.h"
-#include "../../Libraries/assimp/material.h"
+#include "Libraries/assimp/Importer.hpp"
+#include "Libraries/assimp/scene.h"
+#include "Libraries/assimp/postprocess.h"
+#include "Libraries/assimp/config.h"
+#include "Libraries/assimp/material.h"
 #pragma warning( default : 26495 )
 
 #include "QC_StringHelpers.h"
 
-#include "../Core/Graphics/Mesh/Mesh.h"
-#include "../Core/Graphics/Mesh/MeshData.h"
-#include "../Core/Graphics/DataTypes/Material.h"
-#include "../Core/Graphics/DataTypes/Texture.h"
-#include "../Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
-#include "../Core/Resources/Resources.h"
-#include "FileIO/FileUtilities.h"
-#include "../Headers/QwerkE_Defines.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshData.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "QF_FileUtilities.h"
+#include "QF_QwerkE_Defines.h"
 
 // TODO: Support triangle and quad rendering? Set a macro to define the number of verts per face?
 // TODO: Split functions into smaller pieces. Ex. LoadMeshFromAI() can call functions to GetVertsFromAIMesh, GetUVs, GetMats... etc

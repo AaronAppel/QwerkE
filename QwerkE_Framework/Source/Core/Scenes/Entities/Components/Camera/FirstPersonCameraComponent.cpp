@@ -1,7 +1,8 @@
 #include "../Component.h"
+
 #include "CameraComponent.h"
 #include "FirstPersonCameraComponent.h"
-#include "../../../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 #include "../../GameObject.h"
 #include "glew/GL/glew.h"
 

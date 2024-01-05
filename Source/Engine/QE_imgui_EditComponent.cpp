@@ -7,7 +7,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/RenderRoutine.h"

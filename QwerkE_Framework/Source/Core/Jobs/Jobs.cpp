@@ -1,9 +1,10 @@
 #include "Jobs.h"
+
 #include "../Events/EventManager.h"
 #include "../Events/JobQueuedEvent.h"
-#include "../../FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {
 

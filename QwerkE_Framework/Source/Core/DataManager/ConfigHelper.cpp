@@ -9,7 +9,7 @@
 #include "QC_ReflectionMacros.h"
 
 #include "../../Debug/Log/Log.h"
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {
 

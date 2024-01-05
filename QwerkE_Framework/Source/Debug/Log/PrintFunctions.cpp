@@ -1,7 +1,7 @@
 #include "PrintFunctions.h"
 
-#include "../../Headers/QwerkE_Defines.h"
-#include "../../Headers/QwerkE_Platform.h"
+#include "QF_QwerkE_Defines.h"
+#include "QF_QwerkE_Platform.h"
 
 // #include <cstdio> // vsnprintf_s
 #include <fstream> // vsnprintf_s

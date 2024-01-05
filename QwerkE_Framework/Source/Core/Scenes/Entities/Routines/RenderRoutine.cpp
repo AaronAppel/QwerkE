@@ -2,7 +2,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 
 #include "../../../../Debug/Log/Log.h"
 

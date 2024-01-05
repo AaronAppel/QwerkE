@@ -15,7 +15,15 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\Framework.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ImageHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Initialize.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadModelFile.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_AssimpLoading.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\ConfigHelper.cpp" />
@@ -105,18 +113,25 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_GLManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\RakNet\rkn_Main.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\FileUtilities.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\MyFileWriter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileSystem.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\ImageHelpers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadImageFile.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadModelFile.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\QwerkE_AssimpLoading.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Initialize.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\Framework.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QwerkE.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ImageHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Initialize.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Load.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PCH_Includes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_AssimpLoading.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Defines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Enums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Global_Constants.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Include.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Platform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\ConfigHelper.h" />
@@ -220,20 +235,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\OpenAL\oal_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_GLManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_Helpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\FileUtilities.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\MyFileWriter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileSystem.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\ImageHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadImageFile.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\QwerkE_AssimpLoading.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Include.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Initialize.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Load.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\PCH_Includes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Defines.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Enums.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Global_Constants.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Include.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Platform.h" />
   </ItemGroup>
 </Project>

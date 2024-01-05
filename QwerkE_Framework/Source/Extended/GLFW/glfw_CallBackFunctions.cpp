@@ -4,8 +4,8 @@
 #include "../../../Libraries/glfw/GLFW/glfw3.h"
 
 #include "../../Debug/Log/Log.h"
-#include "../../FileSystem/FileIO/FileUtilities.h"
-#include "../../FileSystem/FileSystem.h"
+#include "QF_FileUtilities.h"
+#include "QF_FileSystem.h"
 #include "../../Core/Resources/Resources.h"
 #include "../../Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../../Core/Graphics/DataTypes/Texture.h"

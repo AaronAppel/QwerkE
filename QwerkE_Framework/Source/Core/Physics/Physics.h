@@ -3,7 +3,7 @@
 #include "../../Libraries/Bullet3/LinearMath/btVector3.h"
 #include "../../Libraries/Bullet3/LinearMath/btAlignedObjectArray.h"
 
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 #ifdef qw_BULLET3
 #elif qw_HAVOC

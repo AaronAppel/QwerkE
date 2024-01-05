@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 template <class POOL_OBJECT_TYPE>
 
 class ObjectPool
@@ -31,13 +33,11 @@ ObjectPool<POOL_OBJECT_TYPE>::ObjectPool(std::vector<POOL_OBJECT_TYPE> objects)
 template <class POOL_OBJECT_TYPE>
 ObjectPool<POOL_OBJECT_TYPE>::ObjectPool()
 {
-
 }
 
 template <class POOL_OBJECT_TYPE>
 ObjectPool<POOL_OBJECT_TYPE>::~ObjectPool()
 {
-
 }
 
 template <class POOL_OBJECT_TYPE>

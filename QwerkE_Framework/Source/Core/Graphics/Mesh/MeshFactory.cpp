@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "../../Libraries/glm/glm/vec3.hpp"
-#include "../../Libraries/glm/glm/gtx/quaternion.inl"
+#include "Libraries/glm/glm/vec3.hpp"
+#include "Libraries/glm/glm/gtx/quaternion.inl"
 
-#include "../../../FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 #include "../Graphics_Header.h"
 #include "../Mesh/MeshData.h"
 

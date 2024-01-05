@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h" // eEngineMessage
+#include "QF_QwerkE_Enums.h" // eEngineMessage
 
 namespace QwerkE {
 
@@ -17,7 +17,7 @@ namespace QwerkE {
 
 		void NewFrame();
 		void PollInput();
-		void Update(double deltatime);
+		void Update(float deltatime);
 		void Draw();
 
 		bool StillRunning();

@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <vector>
 
-#include "../../../../Libraries/glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 #include "QC_StringHelpers.h"
 

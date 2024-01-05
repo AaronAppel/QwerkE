@@ -4,7 +4,7 @@
 
 #include "../Resources/Resources.h"
 #include "../Scenes/Scene.h"
-#include "../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 #include "../Scenes/Entities/Components/Component.h"
 #include "../Scenes/Entities/Routines/RenderRoutine.h"
 #include "../Graphics/Mesh/Mesh.h"

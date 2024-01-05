@@ -15,7 +15,7 @@
 #include "../../../Graphics/Shader/ShaderVariable_Defines.h"
 #include "../../../Graphics/DataTypes/Renderable.h"
 #include "../../../Scenes/Scene.h"
-#include "../../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 #include "../../../Math/Vector.h"
 
 namespace QwerkE {

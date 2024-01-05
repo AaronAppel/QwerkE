@@ -2,11 +2,11 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 #include "oal_Helpers.h"
 #include "../../Debug/Log/Log.h"
-#include "../../FileSystem/FileSystem.h"
+#include "QF_FileSystem.h"
 #include "../../Core/Resources/Resources.h"
 #include "../../Core/Audio/AudioSource.h"
 

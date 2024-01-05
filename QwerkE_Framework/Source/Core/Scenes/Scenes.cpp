@@ -4,7 +4,7 @@
 
 #include "../Libraries/cJSON_Interface/cJSONInterface.h"
 
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 #include "../../Debug/Log/Log.h"
 
@@ -12,8 +12,8 @@
 #include "../Scenes/TestScene.h"
 #include "../Scenes/ViewerScene.h"
 #include "../Scenes/PBR_Test1.h"
-#include "../../Headers/QwerkE_Enums.h"
-#include "../../FileSystem/FileIO/FileUtilities.h"
+#include "QF_QwerkE_Enums.h"
+#include "QF_FileUtilities.h"
 #include "../../Debug/Profiler/Profiler.h"
 
 #include "../Input/Input.h"

@@ -1,11 +1,11 @@
-#include "FileSystem.h"
+#include "QF_FileSystem.h"
 
 #include <string>
 #include <iostream>
 #include <vector>
 
 #pragma warning( disable : 26495 )
-#include "QwerkE_AssimpLoading.h"
+#include "QF_QwerkE_AssimpLoading.h"
 #include "../../Libraries/assimp/Importer.hpp"
 #include "../../Libraries/assimp/scene.h"
 #include "../../Libraries/assimp/postprocess.h"
@@ -15,20 +15,19 @@
 
 #include "QC_StringHelpers.h"
 
-#include "LoadImageFile.h"
-#include "FileIO/FileUtilities.h"
-#include "FileIO/FileUtilities.h"
-#include "../Core/Resources/Resources.h"
-#include "../Debug/Log/Log.h"
+#include "QF_LoadImageFile.h"
+#include "QF_FileUtilities.h"
+#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
 
 #define QwerkE_Image_Library_stb 1 // #TODO Move somewhere better
 #define QwerkE_Image_Library_lodepng 1
 #define QwerkE_Image_Library_soil 0
 
-#include "../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
-#include "../Core/Graphics/Mesh/Mesh.h"
-#include "../Core/Audio/OpenAL_Helpers.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Audio/OpenAL_Helpers.h"
 
 namespace QwerkE {
 

@@ -17,7 +17,7 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Source/Extended/Bullet3/b3_PhysicsFactory.h"
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 #include "QE_EditComponent.h"
 #include "QE_Editor.h"

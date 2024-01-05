@@ -12,7 +12,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 #include "../../Graphics/Graphics_Header.h"
 #include "../../Graphics/GraphicsUtilities/GraphicsHelpers.h"

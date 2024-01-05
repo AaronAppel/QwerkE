@@ -5,7 +5,7 @@
 #include "../../../Libraries/OpenAL/include/al.h"
 #include "../../../Libraries/OpenAL/include/alc.h"
 
-#include "../../FileSystem/FileSystem.h"
+#include "QF_FileSystem.h"
 
 namespace QwerkE {
 

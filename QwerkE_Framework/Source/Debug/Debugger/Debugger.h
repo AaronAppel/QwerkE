@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
 // #include <fstream> // vsnprintf_s
 // #include <cstdarg> // va_start, va_end

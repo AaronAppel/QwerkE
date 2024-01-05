@@ -7,7 +7,7 @@
 #include "imgui/imgui.h"
 #include "glew/GL/glew.h"
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Global_Constants.h"
 
 typedef unsigned int ALuint; // #TODO Hide OAL library type
 

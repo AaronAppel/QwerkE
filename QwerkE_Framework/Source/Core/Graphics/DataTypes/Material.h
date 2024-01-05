@@ -5,10 +5,10 @@
 
 #include "../Libraries/glew/GL/glew.h"
 
-#include "../../../Headers/QwerkE_Enums.h"
-#include "../../../Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Enums.h"
+#include "QF_QwerkE_Global_Constants.h"
 
-#include "../../../FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 #include "../GraphicsUtilities/GraphicsHelpers.h"
 #include "Texture.h"
 

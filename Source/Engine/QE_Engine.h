@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Include.h"
+#include "QF_QwerkE_Enums.h"
 
 #include "QC_StringHelpers.h"
 

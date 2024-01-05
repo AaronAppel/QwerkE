@@ -4,7 +4,7 @@
 #include "../../Libraries/imgui/imgui.h"
 #endif
 
-#include "../../Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Global_Constants.h"
 
 #include "../../Core/Input/Mouse.h"
 #include "../../Core/Input/Keyboard.h"

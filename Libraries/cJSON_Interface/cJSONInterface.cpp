@@ -6,7 +6,7 @@
 
 // #TODO This file should be a library and can't include engine code, or be moved to become engine code
 #include "../QwerkE_Framework/Source/Debug/Log/Log.h"
-#include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 
 cJSON* OpencJSONStream(const char* fileDirectory)
 {

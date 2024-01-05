@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
+#include "QF_QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
 
 #ifdef _DEBUG
 #define OpenGL

@@ -1,17 +1,17 @@
-#include "Framework.h"
+#include "QF_Framework.h"
 
-#include "Source/Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 
-#ifdef GLFW3 // #TODO Move library dependent logic into appropriate class, like Window
+// #ifdef GLFW3 // #TODO Move library dependent logic into appropriate class, like Window
 #include "glew/GL/glew.h"
 #include "glfw/GLFW/glfw3.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
-#endif
+// #endif
 
-#include "../QwerkE_Framework/Source/Headers/QwerkE_Enums.h"
-#include "../QwerkE_Framework/Source/Headers/Libraries_Initialize.h"
+#include "QF_QwerkE_Enums.h"
+#include "QF_Libraries_Initialize.h"
 
 #include "QC_Helpers.h"
 
@@ -38,7 +38,7 @@
 #include "../QwerkE_Framework/Source/Core/Window/CallbackFunctions.h"
 #include "../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
 #include "../QwerkE_Framework/Source/Debug/Log/Log.h"
-#include "../QwerkE_Framework/Source/FileSystem/FileSystem.h"
+#include "QF_FileSystem.h"
 
 namespace QwerkE {
 
@@ -144,7 +144,7 @@ namespace QwerkE {
 
 		void Framework::Run()
         {
-            assert(m_Window != nullptr); // Don't forget to call Framework::Startup() to initiailize the framework
+            assert(m_Window != nullptr); // Don't forget to call Framework::Startup() to initialize the framework
 
 			// #TODO check if(initialized) in case user defined simple API.
 			// Might want to create another function for the game loop and
@@ -161,26 +161,22 @@ namespace QwerkE {
 			{
                 /* Game Loop */
 
-				double deltaTime = Time::Delta();
+				float deltaTime = Time::Delta();
 
 				// if (deltaTime >= FPS_MAX_DELTA)
 				{
 					Time::NewFrame();
 
-					/* New Frame */
 					Framework::NewFrame();
 
-					/* Input */
 					Framework::PollInput();
 
-					/* Logic */
 					Framework::Update(deltaTime);
 
-					/* Render */
 					Framework::Draw();
 
 					// FPS
-					//framesSincePrint++; // Framerate tracking
+					//framesSincePrint++; // Frame rate tracking
 					//timeSinceLastFrame = 0.0; // FPS_Max
 				}
 				// #TODO Fix delta time issues
@@ -216,7 +212,7 @@ namespace QwerkE {
 			// #TODO Tell input manager it is a new frame and it should update key states
 		}
 
-		void Framework::Update(double deltatime)
+		void Framework::Update(float deltatime)
 		{
 			const ConfigData config = ConfigHelper::GetConfigData();
 			if (config.systems.PhysicsEnabled)

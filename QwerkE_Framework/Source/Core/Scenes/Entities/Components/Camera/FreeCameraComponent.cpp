@@ -1,7 +1,8 @@
-#include "../Component.h"
 #include "FreeCameraComponent.h"
+
+#include "../Component.h"
 #include "CameraComponent.h"
-#include "../../../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 #include "../../GameObject.h"
 
 // https://msdn.microsoft.com/en-us/library/bb203907(v=xnagamestudio.10).aspx

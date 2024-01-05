@@ -640,12 +640,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glew\glxew.h">
       <Filter>Libraries\glew</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3.h">
-      <Filter>Libraries\glfw</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3native.h">
-      <Filter>Libraries\glfw</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\common.hpp">
       <Filter>Libraries\glm</Filter>
     </ClInclude>
@@ -2565,6 +2559,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Bullet3\BulletCollision\CollisionDispatch\btBulletDynamicsCommon.h">
       <Filter>Libraries\Bullet3\BulletCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3native.h">
+      <Filter>Libraries\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3.h">
+      <Filter>Libraries\glfw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

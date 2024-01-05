@@ -10,7 +10,7 @@
 #include "../Graphics/Mesh/Mesh.h"
 #include "../Graphics/Shader/ShaderProgram.h"
 #include "../../FileSystem/FileSystem.h"
-#include "../../Headers/QwerkE_Defines.h"
+#include "QF_QwerkE_Defines.h"
 #include "../Jobs/Jobs.h"
 
 namespace QwerkE {

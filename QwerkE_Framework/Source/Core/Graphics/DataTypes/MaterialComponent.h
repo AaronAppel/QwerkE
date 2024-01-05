@@ -1,9 +1,10 @@
 #pragma once
 
-#include "../../Libraries/glew/GL/glew.h"
-#include "../../../Headers/QwerkE_Enums.h"
-
 #include <string>
+
+#include "../../Libraries/glew/GL/glew.h"
+
+#include "QF_QwerkE_Enums.h"
 
 namespace QwerkE {
 

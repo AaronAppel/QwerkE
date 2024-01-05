@@ -4,7 +4,7 @@
 
 #include "../../../../Libraries/glew/GL/glew.h"
 
-#include "../../../Headers/QwerkE_Global_Constants.h"
+#include "QF_QwerkE_Global_Constants.h"
 
 #include "MeshData.h"
 

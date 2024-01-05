@@ -1,6 +1,6 @@
 #include "ShaderComponent.h"
 
-#include "../../../FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 #include "../../../Debug/Log/Log.h"
 
 #include "../ShaderFactory/ShaderFactory.h"

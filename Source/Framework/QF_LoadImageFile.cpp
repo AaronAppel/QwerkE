@@ -1,6 +1,7 @@
-#include "LoadImageFile.h"
-#include "FileIO/FileUtilities.h"
-#include "../Debug/Log/Log.h"
+#include "QF_LoadImageFile.h"
+
+#include "QF_FileUtilities.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
 
 #pragma warning( disable : 28182 )
 #pragma warning( disable : 6001 )
@@ -12,7 +13,7 @@
 
 #include "../../Libraries/lodepng/lodepng.h"
 #include "../../Libraries/glew/GL/glew.h"
-#include "ImageHelpers.h"
+#include "QF_ImageHelpers.h"
 
 namespace QwerkE {
 

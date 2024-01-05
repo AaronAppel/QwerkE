@@ -7,7 +7,7 @@
 #include "QC_Helpers.h"
 #include "QC_StringHelpers.h"
 
-#include "../../FileSystem/FileSystem.h"
+#include "QF_FileSystem.h"
 
 #include "../Resources/Resources.h"
 

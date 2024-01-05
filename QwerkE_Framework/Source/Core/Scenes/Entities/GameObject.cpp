@@ -3,7 +3,7 @@
 #include "Routines/Routine.h"
 #include "Components/Component.h"
 #include "Components/Extended/Bullet3Component.h"
-#include "../../../Headers/QwerkE_Enums.h"
+#include "QF_QwerkE_Enums.h"
 
 namespace QwerkE {
 

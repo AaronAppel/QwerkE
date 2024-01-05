@@ -4,7 +4,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../QwerkE_Framework/Source/FileSystem/FileIO/FileUtilities.h"
+#include "QF_FileUtilities.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
@@ -19,6 +19,11 @@ namespace QwerkE {
     {
         m_FBO = new FrameBufferObject();
         m_FBO->Init();
+    }
+
+    SceneViewer::~SceneViewer()
+    {
+        delete m_FBO;
     }
 
     void SceneViewer::Draw()
