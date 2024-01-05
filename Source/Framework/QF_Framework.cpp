@@ -3,11 +3,11 @@
 #include "QF_QwerkE_Defines.h"
 
 // #ifdef GLFW3 // #TODO Move library dependent logic into appropriate class, like Window
-#include "glew/GL/glew.h"
-#include "glfw/GLFW/glfw3.h"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/imgui/imgui.h"
+#include "Libraries/imgui/imgui_impl_glfw.h"
+#include "Libraries/imgui/imgui_impl_opengl3.h"
 // #endif
 
 #include "QF_QwerkE_Enums.h"
@@ -20,10 +20,10 @@
 #include "QF_DataManager.h"
 #include "QF_EventManager.h"
 #include "QF_Factory.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/ShaderFactory/ShaderFactory.h"
+#include "QF_MeshFactory.h"
+#include "QF_Graphics_Header.h"
+#include "QF_Renderer.h"
+#include "QF_ShaderFactory.h"
 #include "QF_Input.h"
 #include "QF_Jobs.h"
 #include "QF_Network.h"

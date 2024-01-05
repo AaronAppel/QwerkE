@@ -2,15 +2,15 @@
 
 #include "QF_Framework.h"
 
-#include "glew/GL/glew.h"
-#include "glfw/GLFW/glfw3.h"
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
 
 #define IMGUI_EDITOR
 
 #ifdef IMGUI_EDITOR
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
+#include "Libraries/imgui/imgui.h"
+#include "Libraries/imgui/imgui_impl_glfw.h"
+#include "Libraries/imgui/imgui_impl_opengl3.h"
 
 #include "QE_imgui_Editor.h"
 #else

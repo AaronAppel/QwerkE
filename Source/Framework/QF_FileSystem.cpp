@@ -6,11 +6,11 @@
 
 #pragma warning( disable : 26495 )
 #include "QF_QwerkE_AssimpLoading.h"
-#include "../../Libraries/assimp/Importer.hpp"
-#include "../../Libraries/assimp/scene.h"
-#include "../../Libraries/assimp/postprocess.h"
-#include "../../Libraries/assimp/config.h"
-#include "../../Libraries/assimp/material.h"
+#include "Libraries/assimp/Importer.hpp"
+#include "Libraries/assimp/scene.h"
+#include "Libraries/assimp/postprocess.h"
+#include "Libraries/assimp/config.h"
+#include "Libraries/assimp/material.h"
 #pragma warning( default : 26495 )
 
 #include "QC_StringHelpers.h"

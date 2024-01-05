@@ -10,11 +10,11 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshData.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "QF_Mesh.h"
+#include "QF_MeshData.h"
+#include "QF_Material.h"
+#include "QF_Texture.h"
+#include "QF_GraphicsHelpers.h"
 #include "QF_Resources.h"
 #include "QF_FileUtilities.h"
 #include "QF_QwerkE_Defines.h"

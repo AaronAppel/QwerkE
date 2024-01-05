@@ -1,16 +1,16 @@
 #include "QF_Resources.h"
 
-#include "../../Libraries/glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 #include "QC_StringHelpers.h"
 
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderComponent.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/ShaderFactory/ShaderFactory.h"
+#include "QF_Material.h"
+#include "QF_ShaderProgram.h"
+#include "QF_ShaderComponent.h"
+#include "QF_ShaderFactory.h"
 #include "QF_FileSystem.h"
 #include "QF_QwerkE_Defines.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "QF_Texture.h"
 #include "QF_Jobs.h"
 #include "QF_Log.h"
 

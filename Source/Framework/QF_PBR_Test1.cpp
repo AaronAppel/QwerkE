@@ -4,9 +4,9 @@
 #include "QF_DataManager.h"
 #include "QF_GameObject.h"
 #include "QF_Factory.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
+#include "QF_Mesh.h"
+#include "QF_MeshFactory.h"
+#include "QF_ShaderProgram.h"
 #include "QF_Resources.h"
 
 namespace QwerkE {

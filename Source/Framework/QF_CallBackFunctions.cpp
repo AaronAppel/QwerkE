@@ -7,8 +7,8 @@
 #include "QF_FileUtilities.h"
 #include "QF_FileSystem.h"
 #include "QF_Resources.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "QF_GraphicsHelpers.h"
+#include "QF_Texture.h"
 
 namespace QwerkE {
 

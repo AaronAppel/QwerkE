@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../Libraries/Bullet3/LinearMath/btMotionState.h"
-#include "../../Libraries/Bullet3/LinearMath/btTransform.h"
+#include "Libraries/Bullet3/LinearMath/btMotionState.h"
+#include "Libraries/Bullet3/LinearMath/btTransform.h"
 
 #include "QF_Component.h"
 #include "QF_PhysicsComponent.h"

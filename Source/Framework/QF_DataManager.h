@@ -17,7 +17,7 @@
 	save/load functions some 7where in game specific code.
 */
 
-#include "QF_Vector.h"
+#include "QC_Vector.h"
 
 struct cJSON;
 

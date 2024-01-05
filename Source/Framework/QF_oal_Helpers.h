@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "../../../Libraries/OpenAL/include/al.h"
-#include "../../../Libraries/OpenAL/include/alc.h"
+#include "Libraries/OpenAL/include/al.h"
+#include "Libraries/OpenAL/include/alc.h"
 
 #include "QF_FileSystem.h"
 

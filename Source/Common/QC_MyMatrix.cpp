@@ -8,9 +8,9 @@
 // 3. This notice may not be removed or altered from any source distribution.
 
 #include "QF_MathHelpers.h"
-#include "QF_Vector.h"
-#include "QF_MyQuaternion.h"
-#include "QF_MyMatrix.h"
+#include "QC_Vector.h"
+#include "QC_MyQuaternion.h"
+#include "QC_MyMatrix.h"
 #include "QF_MathConstants.h"
 
 #include "Libraries/glew/GL/glew.h"

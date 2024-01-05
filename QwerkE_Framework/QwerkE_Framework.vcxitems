@@ -68,8 +68,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Mouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MouseExtApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyMatrix.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.cpp" />
@@ -173,8 +171,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MouseExtApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyLinkedList.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyMatrix.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.h" />
@@ -220,7 +216,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Tween.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TweenFuncs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ValueChecking.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_VectorMathHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ViewerScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Window.h" />

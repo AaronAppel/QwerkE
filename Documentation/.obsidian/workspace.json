@@ -64,7 +64,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ShaderVariableDoc.txt.md",
+                "file": "Work/To Complete/Review Deprecated Files.md",
                 "mode": "source",
                 "source": false
               }
@@ -168,7 +168,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ShaderVariableDoc.txt.md",
+                "file": "Work/To Complete/Review Deprecated Files.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,7 +185,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ShaderVariableDoc.txt.md",
+                "file": "Work/To Complete/Review Deprecated Files.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -197,7 +197,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ShaderVariableDoc.txt.md"
+                "file": "Work/To Complete/Review Deprecated Files.md"
               }
             }
           }
@@ -220,9 +220,12 @@
   },
   "active": "c9c2d1b18e80882e",
   "lastOpenFiles": [
+    "ShaderVariableDoc.txt.md",
+    "Work/To Complete/Review Deprecated Files.md",
+    "Work/To Complete",
+    "Work",
     "QwerkE Standards/Namespaces and Domains.md",
     "QwerkE Standards/Including.md",
-    "ShaderVariableDoc.txt.md",
     "QwerkE Standards/Language Versions.md",
     "Known Issues and Gotchas.md",
     "Solution Configuration/Projects.md",
@@ -231,7 +234,7 @@
     "Solution Configuration/Preprocessor Definitions.md",
     "Solution Configuration/Precompiled Headers.md",
     "QwerkE Standards/Coding Standards.md",
-    "Feature Development/Scenes.md",
+    "Work/Feature Development/Scenes.md",
     "Z. Less Relevant/Bit Flags.md",
     "Old Notes.md",
     "Framework Read Me.md",
@@ -246,16 +249,13 @@
     "QwerkE Standards/Conditional Statements.md",
     "References",
     "QwerkE Standards/Empty Function Body.md",
-    "Feature Development/Engine Styling and Appearance.md",
-    "Variable Naming.md",
+    "Work/Feature Development/Engine Styling and Appearance.md",
     "Assets and Data",
     "Z. Less Relevant",
-    "Feature Development",
+    "Work/Feature Development",
     "README.md.lnk",
     "README.md - Shortcut.lnk",
     "Solution Configuration",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/soft_oal.dll",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.user",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/RogueLike_Win32.vcxproj.filters"
+    "QwerkE_Games/RogueLike_1/RogueLike_Win32/soft_oal.dll"
   ]
 }

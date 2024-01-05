@@ -1,6 +1,6 @@
 #include "QF_Component.h"
 
-#include "glfw/GLFW/glfw3.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
 
 #include "QF_QwerkE_Enums.h"
 

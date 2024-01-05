@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 #include "QF_Math_Includes.h"
 #include "QF_QwerkE_Global_Constants.h"

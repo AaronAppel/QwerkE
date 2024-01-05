@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#include "../../../Libraries/cJSON_Interface/cJSONInterface.h"
+#include "Libraries/cJSON_Interface/cJSONInterface.h"
 
 #include "QC_ReflectionMacros.h"
 

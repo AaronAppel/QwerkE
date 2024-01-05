@@ -3,7 +3,7 @@
 #include <map>
 #include <memory>
 
-#include "../../Libraries/glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 #include "QF_Material.h"
 #include "QF_Texture.h"

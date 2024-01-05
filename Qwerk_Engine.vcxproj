@@ -82,7 +82,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH_Win32.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>PCH_Win32.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(Solutiondir);$(Solutiondir)Source/Framework/;$(Solutiondir)Source/Engine/;$(Solutiondir)Source/Common/;$(Solutiondir)Libraries/assimp/Release/x86;$(Solutiondir)Libraries/glm/glm/gtx;$(Solutiondir)Libraries/glm/glm;$(Solutiondir)Libraries/pThreads;$(Solutiondir)Libraries/glfw/GLFW;$(Solutiondir)Libraries/glew/GL;$(Solutiondir)Libraries/Bullet3;$(Solutiondir)Libraries/Bullet3/BulletCollision;$(Solutiondir)Libraries/Bullet3/BulletDynamics;$(Solutiondir)Libraries/Freetype2;$(Solutiondir)Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir);$(Solutiondir)Libraries/;$(Solutiondir)Source/Framework/;$(Solutiondir)Source/Engine/;$(Solutiondir)Source/Common/;$(Solutiondir)Libraries/assimp/Release/x86;$(Solutiondir)Libraries/glm/glm/gtx;$(Solutiondir)Libraries/glm/glm;$(Solutiondir)Libraries/pThreads;$(Solutiondir)Libraries/glfw/GLFW;$(Solutiondir)Libraries/glew/GL;$(Solutiondir)Libraries/Bullet3;$(Solutiondir)Libraries/Bullet3/BulletCollision;$(Solutiondir)Libraries/Bullet3/BulletDynamics;$(Solutiondir)Libraries/spdlog;$(Solutiondir)Libraries/Freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -5,10 +5,10 @@
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"
 #include "QF_Audio.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
+#include "QF_Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Time.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
+#include "QF_FrameBufferObject.h"
 #include "QF_Profile.h"
 #include "QF_Network.h"
 

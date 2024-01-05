@@ -8,8 +8,8 @@
 // 3. This notice may not be removed or altered from any source distribution.
 
 #include "QF_MathHelpers.h"
-#include "QF_Vector.h"
-#include "QF_MyQuaternion.h"
+#include "QC_Vector.h"
+#include "QC_MyQuaternion.h"
 
 // From gmtl - http://ggt.sourceforge.net/html/QuatOps_8h-source.html
 MyQuat MyQuat::Lerp(MyQuat start, MyQuat end, float perc)

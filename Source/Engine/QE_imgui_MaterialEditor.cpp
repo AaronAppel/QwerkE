@@ -2,13 +2,13 @@
 
 #include <map>
 
-#include "../Libraries/imgui/imgui.h"
+#include "Libraries/imgui/imgui.h"
 
 #include "QF_Log.h"
 
 #include "QF_QwerkE_Enums.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "QF_Material.h"
+#include "QF_Texture.h"
 #include "QF_Resources.h"
 
 namespace QwerkE {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Libraries/glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 namespace QwerkE {
 

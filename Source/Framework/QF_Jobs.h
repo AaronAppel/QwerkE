@@ -11,7 +11,7 @@
 #ifndef HAVE_STRUCT_TIMESPEC
 #define HAVE_STRUCT_TIMESPEC
 #endif
-#include "../../Libraries/pThreads/pthread.h"
+#include "Libraries/pThreads/pthread.h"
 
 #include "QC_StringHelpers.h"
 #include "QF_EventManager.h"

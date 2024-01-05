@@ -3,8 +3,8 @@
 #include "imgui/imgui.h"
 
 #include "QF_ConfigHelper.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "QF_Mesh.h"
+#include "QF_Renderable.h"
 
 #include "QF_Physics.h"
 #include "QF_Resources.h"

@@ -1,7 +1,7 @@
 #include "QF_Mesh.h"
 
-#include <string>
 #include <assert.h>
+#include <string>
 #include <vector>
 
 #include "Libraries/glew/GL/glew.h"

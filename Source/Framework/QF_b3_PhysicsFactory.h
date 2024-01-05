@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Libraries/Bullet3/LinearMath/btVector3.h"
+#include "Libraries/Bullet3/LinearMath/btVector3.h"
 
 class btRigidBody;
 class btCollisionShape;

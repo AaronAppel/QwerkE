@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include "../Libraries/cJSON_Interface/cJSONInterface.h"
+#include "Libraries/cJSON_Interface/cJSONInterface.h"
 
 #include "QF_QwerkE_Defines.h"
 

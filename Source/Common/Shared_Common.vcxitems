@@ -26,6 +26,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyMatrix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp" />
   </ItemGroup>
@@ -849,9 +851,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyMatrix.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl" />

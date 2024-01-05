@@ -3,10 +3,10 @@
 #include <string>
 #include <map>
 
-#include "../../../Libraries/glew/GL/glew.h"
-#include "../Libraries/freetype2/ft2build.h" // #TODO Temp build fix
-#include "../../../Libraries/freetype2/freetype/freetype.h" // #TODO create a font class?
-#include "../../../Libraries/OpenAL/include/al.h"
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/freetype2/ft2build.h" // #TODO Temp build fix
+#include "Libraries/freetype2/freetype/freetype.h"
+#include "Libraries/OpenAL/include/al.h"
 
 #include "QF_QwerkE_Global_Constants.h"
 

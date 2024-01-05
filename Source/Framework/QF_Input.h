@@ -7,8 +7,8 @@
 #include "QF_QwerkE_Defines.h"
 
 #ifdef GLFW3
-#include "../../Libraries/glew/GL/glew.h" // #TODO Review GLEW inclusion
-#include "../../Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/glew/GL/glew.h" // #TODO Review GLEW inclusion
+#include "Libraries/glfw/GLFW/glfw3.h"
 #else
 #error Define library!
 #endif
@@ -18,7 +18,7 @@
 #include "QF_QwerkE_Defines.h"
 #include "QF_QwerkE_Platform.h"
 #include "QF_Libraries_Include.h"
-#include "QF_Vector.h"
+#include "QC_Vector.h"
 
 namespace QwerkE {
 

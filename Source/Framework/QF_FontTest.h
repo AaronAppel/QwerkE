@@ -3,7 +3,7 @@
 #include <string>
 
 typedef float GLfloat;
-#include "../../Libraries/glm/glm/glm.hpp"
+#include "Libraries/glm/glm/glm.hpp"
 
 namespace QwerkE {
 

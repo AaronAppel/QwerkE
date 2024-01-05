@@ -5,7 +5,7 @@
 #include "QF_QwerkE_Global_Constants.h"
 
 #include "QF_Asset.h"
-#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
+#include "QC_Vector.h"
 
 typedef unsigned int GLuint;
 

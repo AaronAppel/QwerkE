@@ -6,13 +6,13 @@
 #pragma warning( disable : 28182 )
 #pragma warning( disable : 6001 )
 #pragma warning( disable : 6262 )
-#include "../../Libraries/stb_image.h"
+#include "Libraries/stb_image.h"
 #pragma warning( default : 28182 )
 #pragma warning( default : 6001 )
 #pragma warning( default : 6262 )
 
-#include "../../Libraries/lodepng/lodepng.h"
-#include "../../Libraries/glew/GL/glew.h"
+#include "Libraries/lodepng/lodepng.h"
+#include "Libraries/glew/GL/glew.h"
 #include "QF_ImageHelpers.h"
 
 namespace QwerkE {

@@ -16,7 +16,7 @@
 #include "QF_Renderable.h"
 #include "QF_Scene.h"
 #include "QF_QwerkE_Enums.h"
-#include "QF_Vector.h"
+#include "QC_Vector.h"
 
 namespace QwerkE {
 

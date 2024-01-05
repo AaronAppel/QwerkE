@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Libraries/Bullet3/LinearMath/btAlignedObjectArray.h"
+#include "Libraries/Bullet3/LinearMath/btAlignedObjectArray.h"
 
 class btDiscreteDynamicsWorld;
 class btCollisionShape;

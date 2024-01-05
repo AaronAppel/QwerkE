@@ -5,11 +5,11 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_FileUtilities.h"
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
+#include "QF_Input.h"
+#include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
+#include "QF_FrameBufferObject.h"
 #include "QF_Window.h"
 #include "QF_Windows.h"
 

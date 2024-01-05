@@ -1,6 +1,6 @@
 #include "QF_CameraComponent.h"
 
-#include "glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 #include "QF_QwerkE_Global_Constants.h"
 

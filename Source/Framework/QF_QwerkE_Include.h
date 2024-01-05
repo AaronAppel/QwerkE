@@ -11,42 +11,42 @@
 
 #include "QF_Framework.h"
 
-#include "../QwerkE_Framework/Source/Core/Input/QwerKE_eKeys.h"
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_QwerKE_eKeys.h"
+#include "QF_Input.h"
 
-#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "QF_Scene.h"
 
-#include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "QF_Audio.h"
 
-#include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
-#include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
+#include "QF_DataManager.h"
+#include "QF_ConfigHelper.h"
 
-#include "../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
+#include "QF_Debugger.h"
 
-#include "../QwerkE_Framework/Source/Core/Events/Event.h"
-#include "../QwerkE_Framework/Source/Core/Events/EventManager.h"
-#include "../QwerkE_Framework/Source/Core/Events/InputEvent.h"
+#include "QF_Event.h"
+#include "QF_EventManager.h"
+#include "QF_InputEvent.h"
 
-#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "QF_Factory.h"
 
-#include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
+#include "QF_Graphics_Header.h"
 
-#include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
+#include "QF_Renderer.h"
 
-#include "../QwerkE_Framework/Source/Core/Jobs/Jobs.h"
+#include "QF_Jobs.h"
 
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 
-#include "../QwerkE_Framework/Source/Core/Network/Network.h"
+#include "QF_Network.h"
 
-#include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
-#include "../QwerkE_Framework/Source/Core/Physics/PhysicsWorld.h"
+#include "QF_Physics.h"
+#include "QF_PhysicsWorld.h"
 
-#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "QF_Resources.h"
 
-#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "QF_Scenes.h"
 
-#include "../QwerkE_Framework/Source/Core/Window/Window.h"
-#include "../QwerkE_Framework/Source/Core/Window/Windows.h"
+#include "QF_Window.h"
+#include "QF_Windows.h"
 
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
+#include "QF_GameObject.h"

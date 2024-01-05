@@ -11,9 +11,6 @@
 #pragma error "Define graphics library!"
 #endif
 
-// #FEATURE Explorer usage of libusb
-// #pragma comment( lib, LibrariesDir "libusb/Debug/libusb-1.0.lib" )
-
 #pragma comment( lib, LibrariesDir "assimp/Release/x86/assimp-vc140-mt.lib" )
 
 #pragma comment( lib, LibrariesDir "freetype2/x86/freetype.lib" )
@@ -25,7 +22,6 @@
 
 #define GLFW3
 #ifdef GLFW3
-// #pragma comment( lib, LibrariesDir "glfw/glfw3.lib" )
 #pragma comment( lib, LibrariesDir "glfw/glfw3dll.lib" )
 #endif
 

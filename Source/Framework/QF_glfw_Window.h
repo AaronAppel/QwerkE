@@ -1,7 +1,8 @@
 #pragma once
 
+#include "Libraries/glfw/GLFW/glfw3.h"
+
 #include "QF_Window.h"
-#include "../../Libraries/glfw/GLFW/glfw3.h"
 
 // TODO: Extend window to handle more info such as in the link below
 // http://www.glfw.org/docs/latest/group__native.html

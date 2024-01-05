@@ -1,9 +1,8 @@
 #include "QF_Windows.h"
 
-#include "../../../Libraries/glew/GL/glew.h"
-#include "../../../Libraries/glfw/GLFW/glfw3.h"
-#include "../../../Libraries/imgui/imgui.h"
-// #include "../../../Libraries/imgui/"
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/imgui/imgui.h"
 
 #include "QF_Log.h"
 #include "QF_Window.h"

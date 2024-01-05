@@ -1,8 +1,8 @@
 #pragma once
 
 // #TODO Abstract from OpenAL
-#include "../../../Libraries/OpenAL/include/al.h"
-#include "QF_Vector.h"
+#include "Libraries/OpenAL/include/al.h"
+#include "QC_Vector.h"
 
 namespace QwerkE {
 
