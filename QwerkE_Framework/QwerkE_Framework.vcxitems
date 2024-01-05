@@ -15,6 +15,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\ConfigHelper.cpp" />
@@ -111,11 +112,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadImageFile.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadModelFile.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\QwerkE_AssimpLoading.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Initialize.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\Framework.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\ConfigHelper.h" />
@@ -225,7 +226,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\ImageHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadImageFile.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\QwerkE_AssimpLoading.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Initialize.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Load.h" />

@@ -54,18 +54,7 @@
     // is kept the same as how it is distributed from https://github.com/AaronAppel/QwerkE.
 	// Ensure you are using the proper libraries and other files when developing for x86 vs x64.
 
-// USAGE:
-    // #include "QwerkE_Include.h"
-    // WIP
-
-// EXAMPLES:
-    // WIP
-
 // DOCUMENTATION:
-    // WIP
+    // https://github.com/AaronAppel/Qwerk_Engine/tree/master/Documentation
 
-// API:
-    // WIP
-
-// START:
-#include "Source/Headers/QwerkE_Include.h"
+#include "../QwerkE_Framework/Source/Headers/QwerkE_Include.h"

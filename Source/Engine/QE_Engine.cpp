@@ -1,6 +1,6 @@
 #include "QE_Engine.h"
 
-#include "../QwerkE_Framework/Source/Framework.h"
+#include "Framework.h"
 
 #include "glew/GL/glew.h"
 #include "glfw/GLFW/glfw3.h"

@@ -9,7 +9,7 @@
 #include "QwerkE_Enums.h"
 #include "QwerkE_Global_Constants.h"
 
-#include "../Framework.h"
+#include "Framework.h"
 
 #include "../Core/Input/QwerKE_eKeys.h"
 #include "../Core/Input/Input.h"
