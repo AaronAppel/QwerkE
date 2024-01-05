@@ -1,10 +1,10 @@
 #include "QF_Scenes.h"
 
 #include "QF_TestScene.h"
-#include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
+#include "QF_DataManager.h"
 #include "QF_GameObject.h"
 #include "QF_QwerkE_Enums.h"
-#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "QF_Factory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
 #include "QF_Resources.h"

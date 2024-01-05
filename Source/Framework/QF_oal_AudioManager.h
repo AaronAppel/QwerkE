@@ -2,11 +2,11 @@
 
 #include <vector>
 
-#include "../../Libraries/OpenAL/include/al.h"
-#include "../../Libraries/OpenAL/include/alc.h"
+#include "Libraries/OpenAL/include/al.h"
+#include "Libraries/OpenAL/include/alc.h"
 
 #include "QF_Audio.h"
-#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
+#include "QF_Vector.h"
 
 namespace QwerkE {
 

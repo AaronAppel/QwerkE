@@ -19,12 +19,10 @@ namespace QwerkE {
     class Math
     {
     public:
-        Math();
-        ~Math();
-
-        int AddNums(int a, int b); // test func
+        int AddNums(int a, int b); // #TODO Deprecate or add to class
 
     private:
+        Math() = default;
     };
 
 }

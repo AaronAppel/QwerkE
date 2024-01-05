@@ -2,7 +2,7 @@
 
 #include "QF_Log.h"
 #include "QF_oal_AudioManager.h"
-#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
+#include "QF_Vector.h"
 
 namespace QwerkE {
 

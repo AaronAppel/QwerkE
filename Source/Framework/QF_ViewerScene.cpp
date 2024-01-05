@@ -1,7 +1,7 @@
 #include "QF_ViewerScene.h"
 
 #include "QF_Resources.h"
-#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "QF_Factory.h"
 
 // #TODO Move this code and file out of the framework, and into the engine.
 // Should probably be made into a data file and loaded by the engine

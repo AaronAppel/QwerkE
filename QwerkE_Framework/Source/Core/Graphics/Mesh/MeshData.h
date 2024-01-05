@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../../Math/Vector.h"
+#include "QF_Vector.h"
 
 namespace QwerkE {
 
@@ -48,20 +48,20 @@ namespace QwerkE {
         std::vector<vec3> bitangents;
 
         MeshData() {};
-        // pos, uv
+
         MeshData(std::vector<vec3> a_Positions, std::vector<vec2> a_UVs)
         {
             positions = a_Positions;
             UVs = a_UVs;
         }
-        // pos, uv, norm
+
         MeshData(std::vector<vec3> a_Positions, std::vector<vec2> a_UVs, std::vector<vec3> a_Normals)
         {
             positions = a_Positions;
             UVs = a_UVs;
             normals = a_Normals;
         }
-        // pos, uv, norm, tan, bitan
+
         MeshData(std::vector<vec3> a_Positions, std::vector<vec2> a_UVs, std::vector<vec3> a_Normals, std::vector<vec3> a_Tangents, std::vector<vec3> a_Bitangents)
         {
             positions = a_Positions;
@@ -70,7 +70,7 @@ namespace QwerkE {
             tangents = a_Tangents;
             bitangents = a_Bitangents;
         }
-        // All
+
         MeshData(std::vector<vec3> a_Positions, std::vector<vec4> a_Colors, std::vector<vec2> a_UVs, std::vector<vec3> a_Normals, std::vector<vec3> a_Tangents, std::vector<vec3> a_Bitangents)
         {
             positions = a_Positions;

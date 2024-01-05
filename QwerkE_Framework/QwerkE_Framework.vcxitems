@@ -26,10 +26,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Bullet3Routine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Cameras.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ConfigHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_DataManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Debugger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_EventManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Factory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FirstPersonCameraComponent.cpp" />
@@ -45,11 +47,16 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Jobs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Initialize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LightComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Lights.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadModelFile.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MasterAssetList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyMatrix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.cpp" />
@@ -68,19 +75,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_rkn_Main.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Scenes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Shapes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_StaticCameraComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Testing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TestScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ThirdPersonCameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Time.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TransformRoutine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TweenFuncs.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ValueChecking.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_VectorMathHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ViewerScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Window.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Windows.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Cameras.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Factory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Lights.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Shapes.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Testing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\FontRendering\FontTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\GraphicsUtilities\GraphicsHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\Mesh.cpp" />
@@ -100,13 +107,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\KeyboardExtApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\Mouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\MouseExtApi.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\Math.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyMatrix.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyQuaternion.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\Tween\TweenFuncs.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\ValueChecking.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\VectorMathHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Asset.h" />
@@ -127,6 +127,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Debugger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_EventManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FirstPersonCameraComponent.h" />
@@ -146,8 +147,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LightComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathConstants.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyLinkedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyMatrix.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.h" />
@@ -181,10 +189,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Time.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TransformRoutine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Tween.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TweenFuncs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ValueChecking.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Vector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_VectorMathHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ViewerScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Windows.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\CubeMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\FrameBufferObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\LightData.h" />
@@ -214,18 +226,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\Mouse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\MouseExtApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\QwerKE_eKeys.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Math.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathConstants.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Math_Includes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyMatrix.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyQuaternion.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Tween\Tween.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Tween\TweenFuncs.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\ValueChecking.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Vector.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\VectorMathHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Vector_deprecated.h" />
   </ItemGroup>
 </Project>

@@ -25,7 +25,7 @@
 #pragma warning( default : 26495 )
 #pragma warning( default : 4099 )
 
-#include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
+#include "QF_Physics.h"
 
 namespace QwerkE {
 

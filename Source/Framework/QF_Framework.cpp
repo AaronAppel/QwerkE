@@ -19,7 +19,7 @@
 #include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"
 #include "QF_EventManager.h"
-#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "QF_Factory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"

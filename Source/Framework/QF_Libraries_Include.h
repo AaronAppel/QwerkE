@@ -80,19 +80,19 @@
 #include "glm/glm//gtc/type_ptr.hpp"
 #pragma warning( default : 26495 )
 
-#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
-#include "../QwerkE_Framework/Source/Core/Math/MyQuaternion.h"
+#include "QF_Vector.h"
+#include "QF_MyQuaternion.h"
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #pragma warning( disable : 26495 )
-#include "../QwerkE_Framework/Source/Core/Math/MyMatrix.h"
+#include "QF_MyMatrix.h"
 #pragma warning( default : 4244 )
 #pragma warning( default : 4305 )
 #pragma warning( disable : 26495 )
 
 #pragma warning( disable : 4244 )
-#include "../QwerkE_Framework/Source/Core/Math/Tween/Tween.h"
-#include "../QwerkE_Framework/Source/Core/Math/Tween/TweenFuncs.h"
+#include "QF_Tween.h"
+#include "QF_TweenFuncs.h"
 #pragma warning( default : 4244 )
 
 #pragma warning( disable : 26495 )

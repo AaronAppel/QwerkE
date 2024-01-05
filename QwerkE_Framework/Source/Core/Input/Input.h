@@ -18,7 +18,7 @@
 #include "QF_QwerkE_Defines.h"
 #include "QF_QwerkE_Platform.h"
 #include "QF_Libraries_Include.h"
-#include "../Math/Vector.h"
+#include "QF_Vector.h"
 
 namespace QwerkE {
 

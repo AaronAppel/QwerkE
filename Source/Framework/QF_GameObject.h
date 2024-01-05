@@ -7,7 +7,7 @@
 #include "QF_QwerkE_Enums.h"
 #include "QF_QwerkE_Global_Constants.h"
 
-#include "../../QwerkE_Framework/Source/Core/Math/Vector.h"
+#include "QF_Vector.h"
 
 namespace QwerkE {
 

@@ -2,7 +2,7 @@
 
 #include "QF_QwerkE_Enums.h"
 
-#include "../Math/Vector.h"
+#include "QF_Vector.h"
 
 #include "InputDevice.h"
 

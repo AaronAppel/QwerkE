@@ -3,7 +3,7 @@
 #include "QF_QwerkE_Enums.h"
 #include "QF_DataManager.h"
 #include "QF_GameObject.h"
-#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "QF_Factory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"

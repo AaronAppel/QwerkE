@@ -7,10 +7,10 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
+#include "QF_Scene.h"
+#include "QF_Scenes.h"
 #include "QF_GameObject.h"
-#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "QF_Factory.h"
 #include "QF_GUID.h"
 
 #include "QE_Editor.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TweenFuncs.h"
+#include "QF_TweenFuncs.h"
 
 class Tween
 {

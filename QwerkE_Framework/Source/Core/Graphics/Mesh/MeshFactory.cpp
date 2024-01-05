@@ -9,7 +9,7 @@
 #include "../Graphics_Header.h"
 #include "../Mesh/MeshData.h"
 
-#include "../../Math/MathConstants.h"
+#include "QF_MathConstants.h"
 
 #include "QF_Log.h"
 

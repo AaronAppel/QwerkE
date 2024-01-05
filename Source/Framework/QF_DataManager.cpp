@@ -5,7 +5,7 @@
 #include "QF_QwerkE_Defines.h"
 
 #include "QF_Log.h"
-#include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
+#include "QF_Factory.h"
 #include "QF_GameObject.h"
 #include "QF_CameraComponent.h"
 #include "QF_FreeCameraComponent.h"

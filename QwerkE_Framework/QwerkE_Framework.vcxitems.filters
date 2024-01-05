@@ -129,21 +129,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Factory.cpp">
-      <Filter>Core\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Lights.cpp">
-      <Filter>Core\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Shapes.cpp">
-      <Filter>Core\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Testing.cpp">
-      <Filter>Core\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Cameras.cpp">
-      <Filter>Core\Factory</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Renderer.cpp">
       <Filter>Core\Graphics</Filter>
     </ClCompile>
@@ -200,27 +185,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\Input.cpp">
       <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyQuaternion.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\ValueChecking.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\VectorMathHelpers.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\Math.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathFunctions.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyMatrix.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\Tween\TweenFuncs.cpp">
-      <Filter>Core\Math\Tween</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp">
@@ -403,11 +367,44 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_DataManager.cpp">
       <Filter>Core\DataManager</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Testing.cpp">
+      <Filter>Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Cameras.cpp">
+      <Filter>Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Factory.cpp">
+      <Filter>Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Lights.cpp">
+      <Filter>Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Shapes.cpp">
+      <Filter>Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TweenFuncs.cpp">
+      <Filter>Core\Math\Tween</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyMatrix.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyQuaternion.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ValueChecking.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_VectorMathHelpers.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Factory\Factory.h">
-      <Filter>Core\Factory</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\GraphicsManager.h">
       <Filter>Core\Graphics</Filter>
     </ClInclude>
@@ -494,45 +491,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\QwerKE_eKeys.h">
       <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyMatrix.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyQuaternion.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\ValueChecking.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Vector.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Vector_deprecated.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\VectorMathHelpers.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Math.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Math_Includes.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathConstants.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathFunctions.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MathHelpers.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Tween\TweenFuncs.h">
-      <Filter>Core\Math\Tween</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\Tween\Tween.h">
-      <Filter>Core\Math\Tween</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
@@ -754,6 +712,45 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ConfigHelper.h">
       <Filter>Core\DataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Factory.h">
+      <Filter>Core\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Tween.h">
+      <Filter>Core\Math\Tween</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TweenFuncs.h">
+      <Filter>Core\Math\Tween</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math_Includes.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathConstants.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathHelpers.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyMatrix.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyQuaternion.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ValueChecking.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Vector.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_VectorMathHelpers.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.h">
+      <Filter>Core\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

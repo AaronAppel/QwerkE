@@ -1,4 +1,4 @@
-#include "Factory.h"
+#include "QF_Factory.h"
 
 // #TODO Rename file to something better and factory related
 

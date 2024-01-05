@@ -7,13 +7,13 @@
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#include "MathHelpers.h"
-#include "Vector.h"
-#include "MyQuaternion.h"
-#include "MyMatrix.h"
-#include "MathConstants.h"
+#include "QF_MathHelpers.h"
+#include "QF_Vector.h"
+#include "QF_MyQuaternion.h"
+#include "QF_MyMatrix.h"
+#include "QF_MathConstants.h"
 
-#include "../../Libraries/glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 void MyMatrix::SetIdentity()
 {

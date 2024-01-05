@@ -2,7 +2,7 @@
 
 #include "glew/GL/glew.h"
 
-#include "../QwerkE_Framework/Source/Core/Math/Math_Includes.h"
+#include "QF_Math_Includes.h"
 #include "QF_QwerkE_Global_Constants.h"
 #include "QF_QwerkE_Enums.h"
 

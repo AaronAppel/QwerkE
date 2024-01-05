@@ -1,16 +1,16 @@
-#include "Factory.h"
+#include "QF_Factory.h"
 
 #include "QC_StringHelpers.h"
 #include "QC_Helpers.h"
 
-#include "../Graphics/Mesh/MeshFactory.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
 #include "QF_Resources.h"
-#include "../Scenes/Scene.h"
+#include "QF_Scene.h"
 #include "QF_RenderRoutine.h"
 #include "QF_RenderComponent.h"
-#include "../Graphics/DataTypes/Material.h"
-#include "../Graphics/GraphicsUtilities/GraphicsHelpers.h"
-#include "../Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
 #include "QF_FileSystem.h"
 #include "QF_QwerkE_Defines.h"
 

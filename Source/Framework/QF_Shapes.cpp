@@ -1,4 +1,4 @@
-#include "Factory.h"
+#include "QF_Factory.h"
 
 #include "QC_Helpers.h"
 
@@ -7,8 +7,8 @@
 #include "QF_QwerkE_Enums.h"
 #include "QF_Component.h"
 #include "QF_RenderRoutine.h"
-#include "../Graphics/Mesh/Mesh.h"
-#include "../Graphics/DataTypes/Material.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
 
 namespace QwerkE {
 

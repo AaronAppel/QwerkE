@@ -5,18 +5,18 @@
 #include <map>
 
 #include "QF_GameObject.h"
-#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Component.h"
-#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Camera/CameraComponent.h"
-#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
-#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/LightComponent.h"
+#include "QF_Component.h"
+#include "QF_CameraComponent.h"
+#include "QF_RenderComponent.h"
+#include "QF_LightComponent.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderVariable_Defines.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
-#include "../../../QwerkE_Framework/Source/Core/Scenes/Scene.h"
+#include "QF_Scene.h"
 #include "QF_QwerkE_Enums.h"
-#include "../../../QwerkE_Framework/Source/Core/Math/Vector.h"
+#include "QF_Vector.h"
 
 namespace QwerkE {
 

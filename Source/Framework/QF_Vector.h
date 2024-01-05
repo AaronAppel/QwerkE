@@ -12,7 +12,7 @@
 // TODO: Look at operator== for float value comparison
 // TODO: inline?
 // TODO: fequal
-#include "../Math/MathHelpers.h"
+#include "QF_MathHelpers.h"
 
 #include <cmath> // sqrt
 

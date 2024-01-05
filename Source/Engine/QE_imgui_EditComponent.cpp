@@ -9,12 +9,12 @@
 
 #include "QF_QwerkE_Enums.h"
 
-#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/RenderRoutine.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/GameObject.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/LightComponent.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/PhysicsComponent.h"
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
+#include "QF_Resources.h"
+#include "QF_RenderRoutine.h"
+#include "QF_GameObject.h"
+#include "QF_LightComponent.h"
+#include "QF_PhysicsComponent.h"
+#include "QF_RenderComponent.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
@@ -22,7 +22,7 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
 
 // TESTING:
-#include "../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Extended/Bullet3Component.h"
+#include "QF_Bullet3Component.h"
 
 namespace QwerkE {
 
