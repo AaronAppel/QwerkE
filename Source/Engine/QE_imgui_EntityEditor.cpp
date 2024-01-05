@@ -15,7 +15,7 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/Entities/Routines/Extended/Bullet3Routine.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
-#include "../QwerkE_Framework/Source/Extended/Bullet3/b3_PhysicsFactory.h"
+#include "QF_b3_PhysicsFactory.h"
 
 #include "QF_QwerkE_Defines.h"
 

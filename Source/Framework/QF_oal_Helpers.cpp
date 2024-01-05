@@ -1,6 +1,6 @@
-#include "oal_Helpers.h"
+#include "QF_oal_Helpers.h"
 
-#include "../../Debug/Log/Log.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
 
 namespace QwerkE {
 

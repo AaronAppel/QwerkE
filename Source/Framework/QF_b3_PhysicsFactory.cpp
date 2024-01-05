@@ -1,4 +1,4 @@
-#include "b3_PhysicsFactory.h"
+#include "QF_b3_PhysicsFactory.h"
 
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
@@ -25,7 +25,7 @@
 #pragma warning( default : 26495 )
 #pragma warning( default : 4099 )
 
-#include "../../Core/Physics/Physics.h"
+#include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
 
 namespace QwerkE {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Core/Math/Vector.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
 
@@ -8,9 +8,6 @@ namespace QwerkE {
     class OpenGLManager
     {
     public:
-        OpenGLManager();
-        ~OpenGLManager();
-
         void Init();
         void ResetGLState();
         void ViewPortSize(int x, int y, int width, int height);

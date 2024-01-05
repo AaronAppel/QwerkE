@@ -1,14 +1,14 @@
-#include "glfw_CallbackFunctions.h"
+#include "QF_glfw_CallbackFunctions.h"
 
 #include "../../../Libraries/glew/GL/glew.h"
 #include "../../../Libraries/glfw/GLFW/glfw3.h"
 
-#include "../../Debug/Log/Log.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
 #include "QF_FileUtilities.h"
 #include "QF_FileSystem.h"
-#include "../../Core/Resources/Resources.h"
-#include "../../Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
-#include "../../Core/Graphics/DataTypes/Texture.h"
+#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
 
 namespace QwerkE {
 

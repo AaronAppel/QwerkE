@@ -1,14 +1,14 @@
-#include "oal_AudioManager.h"
+#include "QF_oal_AudioManager.h"
 
 #include "QC_StringHelpers.h"
 
 #include "QF_QwerkE_Defines.h"
 
-#include "oal_Helpers.h"
-#include "../../Debug/Log/Log.h"
+#include "QF_oal_Helpers.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
 #include "QF_FileSystem.h"
-#include "../../Core/Resources/Resources.h"
-#include "../../Core/Audio/AudioSource.h"
+#include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
+#include "../QwerkE_Framework/Source/Core/Audio/AudioSource.h"
 
 namespace QwerkE {
 

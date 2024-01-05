@@ -1,11 +1,11 @@
-#include "ogl_Helpers.h"
+#include "QF_ogl_Helpers.h"
 
 #include "../../../Libraries/lodepng/lodepng.h"
 
 #include "QC_StringHelpers.h"
 
-#include "../../Core/Graphics/Graphics_Header.h"
-#include "../../Debug/Log/Log.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
 #include "QF_FileUtilities.h"
 #include "QF_ImageHelpers.h"
 #include "QF_FileSystem.h"

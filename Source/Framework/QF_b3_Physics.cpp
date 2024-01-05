@@ -1,7 +1,7 @@
-#include "../../Core/Physics/Physics.h"
+#include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
 
 #ifdef qw_BULLET3
-#include "../../Debug/Profiler/Profiler.h"
+#include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
 
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
@@ -30,9 +30,9 @@
 // NOTE : Following example code copied from Ciro Santilli : https://stackoverflow.com/questions/11175694/bullet-physics-simplest-collision-example
 #define PRINTF_FLOAT "%7.3f"
 
-#include "../../Debug/Log/Log.h"
+#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
 
-#include "b3_PhysicsFactory.h"
+#include "QF_b3_PhysicsFactory.h"
 
 namespace QwerkE {
 

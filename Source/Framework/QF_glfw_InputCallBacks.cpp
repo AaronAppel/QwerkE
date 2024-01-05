@@ -1,4 +1,4 @@
-#include "../../Core/Input/Input.h"
+#include "../QwerkE_Framework/Source/Core/Input/Input.h"
 
 #ifdef dearimgui
 #include "../../Libraries/imgui/imgui.h"
@@ -6,9 +6,9 @@
 
 #include "QF_QwerkE_Global_Constants.h"
 
-#include "../../Core/Input/Mouse.h"
-#include "../../Core/Input/Keyboard.h"
-#include "../../Core/Graphics/Renderer.h"
+#include "../QwerkE_Framework/Source/Core/Input/Mouse.h"
+#include "../QwerkE_Framework/Source/Core/Input/Keyboard.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 
 namespace QwerkE {
 

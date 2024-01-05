@@ -17,8 +17,7 @@ namespace QwerkE {
         static void Shutdown();
 
     private:
-        Windows() {}
-        ~Windows() {}
+        Windows() = default;
 
         static std::vector<Window*> m_Windows;
         static unsigned char m_lastFocusedWindowIndex;

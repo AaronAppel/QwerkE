@@ -1,10 +1,11 @@
-#include "glfw_Window.h"
+#include "QF_glfw_Window.h"
 
 #include <assert.h>
 
-#include "glfw_CallbackFunctions.h"
+#include "QF_glfw_CallbackFunctions.h"
 #include "../../Libraries/imgui/imgui_impl_glfw.h"
-#include "../../Core/Window/Windows.h"
+#include "../QwerkE_Framework/Source/Core/Window/Window.h"
+#include "../QwerkE_Framework/Source/Core/Window/Windows.h"
 
 namespace QwerkE {
 

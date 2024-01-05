@@ -1,9 +1,9 @@
-#include "../../Core/Input/Mouse.h"
+#include "../QwerkE_Framework/Source/Core/Input/Mouse.h"
 
 #include "../../../Libraries/glfw/GLFW/glfw3.h"
 
-#include "../../Core/Input/Keyboard.h"
-#include "../../Core/Input/Input.h"
+#include "../QwerkE_Framework/Source/Core/Input/Keyboard.h"
+#include "../QwerkE_Framework/Source/Core/Input/Input.h"
 
 namespace QwerkE {
 

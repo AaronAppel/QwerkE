@@ -1,4 +1,5 @@
-#include "../../Core/Input/Input.h"
+#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+
 #include <Windows.h>
 
 namespace QwerkE {

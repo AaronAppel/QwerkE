@@ -5,8 +5,8 @@
 #include "../../Libraries/OpenAL/include/al.h"
 #include "../../Libraries/OpenAL/include/alc.h"
 
-#include "../../Core/Audio/Audio.h"
-#include "../../Core/Math/Vector.h"
+#include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
 
@@ -21,7 +21,6 @@ namespace QwerkE {
         void Shutdown();
 
         void PlaySound(const char* name);
-        // music, effect, dialogue
 
         void SetListenerOrientation(vec3 position, vec3 velocity);
 
@@ -32,7 +31,6 @@ namespace QwerkE {
 
         // ALboolean g_bEAX; // Why?
 
-        // buffer data
         ALboolean loop = AL_FALSE;
         AudioSource* m_Source = nullptr;
     };
