@@ -2,7 +2,7 @@
 
 // #TODO Abstract from OpenAL
 #include "../../../Libraries/OpenAL/include/al.h"
-#include "../Math/Vector.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
 

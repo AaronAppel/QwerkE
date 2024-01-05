@@ -4,7 +4,7 @@
 
 #include "QF_FileUtilities.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
-#include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "QF_Audio.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "QF_Time.h"

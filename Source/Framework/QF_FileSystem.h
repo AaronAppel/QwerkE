@@ -70,8 +70,7 @@ namespace QwerkE {
         // Material* GetMaterialFromMatFile(const char* path);
 
     private:
-        FileSystem();
-        ~FileSystem();
+        FileSystem() = default;
 
         static void LoadSoundFileData(const char* soundName, QSoundFile& soundFile);
     };

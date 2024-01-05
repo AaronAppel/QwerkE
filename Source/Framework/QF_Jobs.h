@@ -14,9 +14,9 @@
 #include "../../Libraries/pThreads/pthread.h"
 
 #include "QC_StringHelpers.h"
-#include "../Events/EventManager.h"
-#include "../Events/Event.h"
-#include "../Events/AssetLoadedEvent.h"
+#include "../QwerkE_Framework/Source/Core/Events/EventManager.h"
+#include "../QwerkE_Framework/Source/Core/Events/Event.h"
+#include "../QwerkE_Framework/Source/Core/Events/AssetLoadedEvent.h"
 
 namespace QwerkE {
 

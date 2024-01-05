@@ -2,7 +2,7 @@
 
 #include "QF_Resources.h"
 #include "QF_QwerkE_Enums.h"
-#include "../Jobs/Jobs.h"
+#include "QF_Jobs.h"
 
 namespace QwerkE {
 

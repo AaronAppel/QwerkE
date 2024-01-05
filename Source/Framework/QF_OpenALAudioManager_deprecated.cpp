@@ -1,12 +1,11 @@
-#include "OpenALAudioManager.h"
+#include "QF_OpenALAudioManager.h"
 
 #include "QF_Log.h"
-#include "../../FileSystem/FileSystem.h"
-#include "../../Headers/QwerkE_Directory_Defines.h"
-#include "../../Utilities/StringHelpers.h"
-#include "../Resources/Resources.h"
-#include "OpenAL_Helpers.h"
-#include "AudioSource.h"
+#include "QF_FileSystem.h"
+#include "QC_StringHelpers.h"
+#include "QF_Resources.h"
+#include "QF_OpenAL_Helpers.h"
+#include "QF_AudioSource.h"
 
 // OpenAL Reference: https://www.openal.org/documentation/OpenAL_Programmers_Guide.pdf
 

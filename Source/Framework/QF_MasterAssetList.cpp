@@ -11,7 +11,7 @@
 #include "QF_FileSystem.h"
 #include "QF_QwerkE_Defines.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
-#include "../QwerkE_Framework/Source/Core/Jobs/Jobs.h"
+#include "QF_Jobs.h"
 #include "QF_Log.h"
 
 namespace QwerkE {

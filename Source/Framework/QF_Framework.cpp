@@ -15,7 +15,7 @@
 
 #include "QC_Helpers.h"
 
-#include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "QF_Audio.h"
 #include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
 #include "../QwerkE_Framework/Source/Core/DataManager/DataManager.h"
 #include "../QwerkE_Framework/Source/Core/Events/EventManager.h"
@@ -25,7 +25,7 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/ShaderFactory/ShaderFactory.h"
 #include "../QwerkE_Framework/Source/Core/Input/Input.h"
-#include "../QwerkE_Framework/Source/Core/Jobs/Jobs.h"
+#include "QF_Jobs.h"
 #include "../QwerkE_Framework/Source/Core/Network/Network.h"
 #include "../QwerkE_Framework/Source/Core/Physics/Physics.h"
 #include "QF_Resources.h"

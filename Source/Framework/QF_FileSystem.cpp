@@ -27,17 +27,9 @@
 #include "QF_QwerkE_Defines.h"
 
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Audio/OpenAL_Helpers.h"
+#include "QF_oal_Helpers.h"
 
 namespace QwerkE {
-
-	FileSystem::FileSystem()
-	{
-	}
-
-	FileSystem::~FileSystem()
-	{
-	}
 
 	void FileSystem::LoadSoundFileData(const char* filePath, QSoundFile& soundFile)
 	{

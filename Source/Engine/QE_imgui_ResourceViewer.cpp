@@ -14,7 +14,7 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/ViewerScene.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "QF_Resources.h"
-#include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "QF_Audio.h"
 #include "../QwerkE_Framework/Source/Core/Factory/Factory.h"
 
 #include "QE_MaterialEditor.h"

@@ -11,7 +11,7 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
 #include "QF_FileSystem.h"
 #include "QF_QwerkE_Defines.h"
-#include "../QwerkE_Framework/Source/Core/Jobs/Jobs.h"
+#include "QF_Jobs.h"
 
 namespace QwerkE {
 

@@ -129,12 +129,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.cpp">
-      <Filter>Core\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.cpp">
-      <Filter>Core\Audio</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\ConfigHelper.cpp">
       <Filter>Core\DataManager</Filter>
     </ClCompile>
@@ -227,9 +221,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\Input.cpp">
       <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Jobs\Jobs.cpp">
-      <Filter>Core\Jobs</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyQuaternion.cpp">
       <Filter>Core\Math</Filter>
@@ -409,14 +400,17 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MasterAssetList.cpp">
       <Filter>Core\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Jobs.cpp">
+      <Filter>Core\Jobs</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Audio.cpp">
+      <Filter>Core\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_AudioSource.cpp">
+      <Filter>Core\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.h">
-      <Filter>Core\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.h">
-      <Filter>Core\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\DataManager\DataManager.h">
       <Filter>Core\DataManager</Filter>
     </ClInclude>
@@ -527,9 +521,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\QwerKE_eKeys.h">
       <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Jobs\Jobs.h">
-      <Filter>Core\Jobs</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Math\MyMatrix.h">
       <Filter>Core\Math</Filter>
@@ -760,6 +751,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GUID.h">
       <Filter>Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Jobs.h">
+      <Filter>Core\Jobs</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Audio.h">
+      <Filter>Core\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_AudioSource.h">
+      <Filter>Core\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

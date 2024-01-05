@@ -8,7 +8,7 @@
 #include "QF_Log.h"
 #include "QF_FileSystem.h"
 #include "QF_Resources.h"
-#include "../QwerkE_Framework/Source/Core/Audio/AudioSource.h"
+#include "QF_AudioSource.h"
 
 namespace QwerkE {
 

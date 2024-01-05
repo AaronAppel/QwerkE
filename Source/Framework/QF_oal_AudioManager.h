@@ -5,7 +5,7 @@
 #include "../../Libraries/OpenAL/include/al.h"
 #include "../../Libraries/OpenAL/include/alc.h"
 
-#include "../QwerkE_Framework/Source/Core/Audio/Audio.h"
+#include "QF_Audio.h"
 #include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
