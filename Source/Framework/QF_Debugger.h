@@ -18,9 +18,6 @@ namespace QwerkE {
     class Debugger
     {
     public:
-        Debugger();
-        ~Debugger();
-
         static void ToggleConsole() DEBUGGER_STRIP_RELEASE
         static void SetConsoleVisible(bool visibility) DEBUGGER_STRIP_RELEASE
 
@@ -28,6 +25,7 @@ namespace QwerkE {
         static void CheckAudioErrors() DEBUGGER_STRIP_RELEASE
 
     private:
+        Debugger() = default;
 #ifdef _QDebug
         static bool m_ConsoleIsOpen;
 #endif

@@ -7,8 +7,8 @@
 #include "QF_QwerkE_Enums.h"
 #include "QF_Component.h"
 #include "QF_RenderRoutine.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "QF_Mesh.h"
+#include "QF_Material.h"
 
 namespace QwerkE {
 

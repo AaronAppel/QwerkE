@@ -15,11 +15,11 @@
 #include "QF_LightComponent.h"
 #include "QF_PhysicsComponent.h"
 #include "QF_RenderComponent.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
+#include "QF_Texture.h"
+#include "QF_Renderable.h"
+#include "QF_ShaderProgram.h"
+#include "QF_Mesh.h"
+#include "QF_Material.h"
 
 // TESTING:
 #include "QF_Bullet3Component.h"

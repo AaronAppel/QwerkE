@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "../../Libraries/glew/GL/glew.h"
+#include "Libraries/glew/GL/glew.h"
 
 #include "QF_Routine.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "QF_Renderable.h"
 
 namespace QwerkE {
 

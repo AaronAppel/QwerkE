@@ -129,45 +129,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Renderer.cpp">
-      <Filter>Core\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\FontRendering\FontTest.cpp">
-      <Filter>Core\Graphics\FontRendering</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\GraphicsUtilities\GraphicsHelpers.cpp">
-      <Filter>Core\Graphics\GraphicsUtilities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\MeshUtilities.cpp">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\Mesh.cpp">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\MeshFactory.cpp">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Shader\ShaderComponent.cpp">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Shader\ShaderProgram.cpp">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Shader\ShaderUtilities.cpp">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\LitMaterial.cpp">
-      <Filter>Core\Graphics\ShaderFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\ShaderFactory.cpp">
-      <Filter>Core\Graphics\ShaderFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\Basic2DShader.cpp">
-      <Filter>Core\Graphics\ShaderFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\Basic3DShader.cpp">
-      <Filter>Core\Graphics\ShaderFactory</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
@@ -400,74 +361,47 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MouseExtApi.cpp">
       <Filter>Core\Input</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FontTest.cpp">
+      <Filter>Core\Graphics\FontRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshFactory.cpp">
+      <Filter>Core\Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshUtilities.cpp">
+      <Filter>Core\Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Mesh.cpp">
+      <Filter>Core\Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GraphicsHelpers.cpp">
+      <Filter>Core\Graphics\GraphicsUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Renderer.cpp">
+      <Filter>Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Basic2DShader.cpp">
+      <Filter>Core\Graphics\ShaderFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Basic3DShader.cpp">
+      <Filter>Core\Graphics\ShaderFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LitMaterial.cpp">
+      <Filter>Core\Graphics\ShaderFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderFactory.cpp">
+      <Filter>Core\Graphics\ShaderFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderProgram.cpp">
+      <Filter>Core\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderUtilities.cpp">
+      <Filter>Core\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderComponent.cpp">
+      <Filter>Core\Graphics\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\GraphicsManager.h">
-      <Filter>Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Renderer.h">
-      <Filter>Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Graphics_Header.h">
-      <Filter>Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\FrameBufferObject.h">
-      <Filter>Core\Graphics\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\LightData.h">
-      <Filter>Core\Graphics\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\Material.h">
-      <Filter>Core\Graphics\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\MaterialComponent.h">
-      <Filter>Core\Graphics\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\Renderable.h">
-      <Filter>Core\Graphics\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\Texture.h">
-      <Filter>Core\Graphics\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\DataTypes\CubeMap.h">
-      <Filter>Core\Graphics\DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\FontRendering\FontTest.h">
-      <Filter>Core\Graphics\FontRendering</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\GraphicsUtilities\GraphicsHelpers.h">
-      <Filter>Core\Graphics\GraphicsUtilities</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\MeshFactory.h">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\MeshUtilities.h">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\Mesh.h">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Mesh\MeshData.h">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Shader\ShaderUtilities.h">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Shader\ShaderVariable_Defines.h">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Shader\ShaderComponent.h">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\Shader\ShaderProgram.h">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\Dynamic_ShaderProgram.h">
-      <Filter>Core\Graphics\ShaderFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\ShaderFactory.h">
-      <Filter>Core\Graphics\ShaderFactory</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.h">
@@ -748,6 +682,72 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MouseExtApi.h">
       <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Texture.h">
+      <Filter>Core\Graphics\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CubeMap.h">
+      <Filter>Core\Graphics\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FrameBufferObject.h">
+      <Filter>Core\Graphics\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LightData.h">
+      <Filter>Core\Graphics\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Material.h">
+      <Filter>Core\Graphics\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MaterialComponent.h">
+      <Filter>Core\Graphics\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Renderable.h">
+      <Filter>Core\Graphics\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FontTest.h">
+      <Filter>Core\Graphics\FontRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshData.h">
+      <Filter>Core\Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshFactory.h">
+      <Filter>Core\Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshUtilities.h">
+      <Filter>Core\Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Mesh.h">
+      <Filter>Core\Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GraphicsHelpers.h">
+      <Filter>Core\Graphics\GraphicsUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Renderer.h">
+      <Filter>Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Graphics_Header.h">
+      <Filter>Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GraphicsManager.h">
+      <Filter>Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Dynamic_ShaderProgram.h">
+      <Filter>Core\Graphics\ShaderFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderFactory.h">
+      <Filter>Core\Graphics\ShaderFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderComponent.h">
+      <Filter>Core\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderProgram.h">
+      <Filter>Core\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderUtilities.h">
+      <Filter>Core\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ShaderVariable_Defines.h">
+      <Filter>Core\Graphics\Shader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

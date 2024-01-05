@@ -1,8 +1,8 @@
-#include "QF_ogl_Helpers.h"
 
 #include "Libraries/lodepng/lodepng.h"
+#include "Libraries/glew/GL/glew.h"
 
-// TODO: Find a better spot for stb_image init (Libraries_Initialize.cpp)
+// TODO: Find a better spot for stb_image init
 #pragma warning( disable : 28182 )
 #pragma warning( disable : 6001 )
 #pragma warning( disable : 6262 )
@@ -12,6 +12,8 @@
 #pragma warning( default : 6001 )
 #pragma warning( default : 6262 )
 
+// http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
+
 #include "QC_StringHelpers.h"
 
 #include "QF_Graphics_Header.h"
@@ -19,13 +21,11 @@
 #include "QF_FileUtilities.h"
 #include "QF_ImageHelpers.h"
 #include "QF_FileSystem.h"
-
-// http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
+#include "QF_Debugger.h"
 
 namespace QwerkE {
 
-// #ifdef _QDebug
-#ifdef _DEBUG
+#ifdef _QDebug
     void GLCheckforErrors()
     {
         GLenum error = glGetError();

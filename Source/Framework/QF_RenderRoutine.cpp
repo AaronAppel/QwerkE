@@ -3,18 +3,16 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_QwerkE_Enums.h"
-
 #include "QF_Log.h"
-
-#include "../../../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
+#include "QF_GraphicsHelpers.h"
+#include "QF_Graphics_Header.h"
+#include "QF_Material.h"
+#include "QF_Renderable.h"
+#include "QF_ShaderProgram.h"
+#include "QF_Mesh.h"
+#include "QF_Material.h"
 #include "QF_GameObject.h"
 #include "QF_Routine.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
 #include "QF_CameraComponent.h"
 #include "QF_RenderComponent.h"
 

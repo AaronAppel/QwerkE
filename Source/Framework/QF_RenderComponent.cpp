@@ -1,9 +1,9 @@
 #include "QF_RenderComponent.h"
 
 #include "QF_Resources.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "QF_Material.h"
+#include "QF_ShaderProgram.h"
+#include "QF_GraphicsHelpers.h"
 #include "QF_GameObject.h"
 #include "QF_RenderRoutine.h"
 

@@ -64,7 +64,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "QwerkE Standards/Namespaces and Domains.md",
+                "file": "ShaderVariableDoc.txt.md",
                 "mode": "source",
                 "source": false
               }
@@ -128,7 +128,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "domain",
+                "query": "shader",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -168,7 +168,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "QwerkE Standards/Namespaces and Domains.md",
+                "file": "ShaderVariableDoc.txt.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,7 +185,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "QwerkE Standards/Namespaces and Domains.md",
+                "file": "ShaderVariableDoc.txt.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -197,7 +197,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "QwerkE Standards/Namespaces and Domains.md"
+                "file": "ShaderVariableDoc.txt.md"
               }
             }
           }
@@ -220,6 +220,7 @@
   },
   "active": "c9c2d1b18e80882e",
   "lastOpenFiles": [
+    "QwerkE Standards/Namespaces and Domains.md",
     "QwerkE Standards/Including.md",
     "ShaderVariableDoc.txt.md",
     "QwerkE Standards/Language Versions.md",
@@ -229,7 +230,6 @@
     "Solution Configuration/Additional Includes.md",
     "Solution Configuration/Preprocessor Definitions.md",
     "Solution Configuration/Precompiled Headers.md",
-    "QwerkE Standards/Namespaces and Domains.md",
     "QwerkE Standards/Coding Standards.md",
     "Feature Development/Scenes.md",
     "Z. Less Relevant/Bit Flags.md",

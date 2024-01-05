@@ -5,10 +5,10 @@
 
 #include "../../Libraries/glew/GL/glew.h"
 
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
+#include "QF_Material.h"
+#include "QF_Texture.h"
+#include "QF_Mesh.h"
+#include "QF_ShaderProgram.h"
 #include "QF_FileSystem.h"
 #include "QF_QwerkE_Defines.h"
 #include "QF_Jobs.h"

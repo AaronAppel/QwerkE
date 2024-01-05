@@ -1,5 +1,4 @@
-#include "QF_ogl_GLManager.h"
-
+#include "QF_OpenGLManager.h"
 #include "QF_Graphics_Header.h"
 
 namespace QwerkE {
@@ -61,7 +60,14 @@ namespace QwerkE {
 
     void OpenGLManager::SetZBufferLock(bool lock)
     {
-        glDepthMask(lock ? GL_TRUE : GL_FALSE);
-    }
+        if (lock)
+        {
+            glDepthMask(GL_TRUE);
+        }
+        else
+        {
+            glDepthMask(GL_FALSE); // disable Z buffer writing
+        }
+    };
 
 }

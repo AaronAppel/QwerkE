@@ -1,7 +1,7 @@
 #pragma once
 
 #include "QF_Event.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
+#include "QF_Texture.h"
 
 namespace QwerkE {
 

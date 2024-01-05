@@ -5,8 +5,8 @@
 #include "QF_GameObject.h"
 #include "QF_QwerkE_Enums.h"
 #include "QF_Factory.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
+#include "QF_Mesh.h"
+#include "QF_MeshFactory.h"
 #include "QF_Resources.h"
 
 namespace QwerkE {

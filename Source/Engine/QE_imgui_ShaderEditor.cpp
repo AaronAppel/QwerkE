@@ -6,12 +6,12 @@
 
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
+#include "QF_Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Time.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
-#include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderComponent.h"
+#include "QF_FrameBufferObject.h"
+#include "QF_ShaderProgram.h"
+#include "QF_ShaderComponent.h"
 #include "QF_Resources.h"
 
 namespace QwerkE {

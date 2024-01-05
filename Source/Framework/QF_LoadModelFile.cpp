@@ -5,11 +5,11 @@
 #include <string>
 
 #pragma warning( disable : 26495 )
-#include "../../Libraries/assimp/Importer.hpp"
-#include "../../Libraries/assimp/scene.h"
-#include "../../Libraries/assimp/postprocess.h"
-#include "../../Libraries/assimp/config.h"
-#include "../../Libraries/assimp/material.h"
+#include "Libraries/assimp/Importer.hpp"
+#include "Libraries/assimp/scene.h"
+#include "Libraries/assimp/postprocess.h"
+#include "Libraries/assimp/config.h"
+#include "Libraries/assimp/material.h"
 #pragma warning( default : 26495 )
 
 // define generic functions for model loading but
@@ -24,7 +24,7 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_Resources.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
+#include "QF_Mesh.h"
 
 #include "QF_FileUtilities.h"
 

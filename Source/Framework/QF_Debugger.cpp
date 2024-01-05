@@ -3,19 +3,11 @@
 #ifdef _QDebug
 
 #include "QF_Log.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
+#include "QF_Graphics_Header.h"
 
 namespace QwerkE {
 
     bool Debugger::m_ConsoleIsOpen = false;
-
-    Debugger::Debugger()
-    {
-    }
-
-    Debugger::~Debugger()
-    {
-    }
 
     void Debugger::ToggleConsole()
     {
@@ -47,7 +39,7 @@ namespace QwerkE {
     //     Systems should manage themselves, but expose API for debugger to communicate/control debug behaviour.
     void Debugger::CheckGraphicsErrors()
     {
-        CheckAllGraphicsErrors();
+        // #TODO Check graphics errors
     }
 
     void Debugger::CheckAudioErrors()
@@ -56,4 +48,4 @@ namespace QwerkE {
     }
 
 }
-#endif // _QDebug
+#endif

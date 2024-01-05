@@ -9,7 +9,7 @@
 #include "QF_Resources.h"
 
 #include "QF_RenderComponent.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "QF_GraphicsHelpers.h"
 
 namespace QwerkE {
 

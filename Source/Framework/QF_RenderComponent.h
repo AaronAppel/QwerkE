@@ -4,7 +4,7 @@
 #include <string>
 
 #include "QF_Component.h"
-#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
+#include "QF_Renderable.h"
 
 namespace QwerkE {
 
