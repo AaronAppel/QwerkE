@@ -1,4 +1,4 @@
-#include "Windows.h"
+#include "QF_Windows.h"
 
 #include "../../../Libraries/glew/GL/glew.h"
 #include "../../../Libraries/glfw/GLFW/glfw3.h"
@@ -6,6 +6,7 @@
 // #include "../../../Libraries/imgui/"
 
 #include "QF_Log.h"
+#include "QF_Window.h"
 
 namespace QwerkE {
 

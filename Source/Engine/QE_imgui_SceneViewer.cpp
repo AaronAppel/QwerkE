@@ -10,8 +10,8 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/Scene.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
-#include "../QwerkE_Framework/Source/Core/Window/Window.h"
-#include "../QwerkE_Framework/Source/Core/Window/Windows.h"
+#include "QF_Window.h"
+#include "QF_Windows.h"
 
 namespace QwerkE {
 

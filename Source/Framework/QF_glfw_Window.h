@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../QwerkE_Framework/Source/Core/Window/Window.h"
+#include "QF_Window.h"
 #include "../../Libraries/glfw/GLFW/glfw3.h"
 
 // TODO: Extend window to handle more info such as in the link below

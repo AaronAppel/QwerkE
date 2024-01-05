@@ -1,3 +1,5 @@
+#include "../../../../Source/Framework/QF_CallBackFunctions.h"
+
 #include "Input.h"
 #include "Mouse.h"
 #include "Keyboard.h"
@@ -7,10 +9,11 @@
 // #include "../../Libraries/imgui/imgui_impl_glfw_gl3.h"
 #endif // dearimgui
 
+#include "../../../../Source/Framework/QF_QwerkE_Defines.h"
+
 namespace QwerkE {
 
 #ifdef GLFW3
-
     void Input::SetupCallbacks(GLFWwindow* window)
     {
         glfwSetKeyCallback(window, key_callback);

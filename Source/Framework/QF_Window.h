@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Math/Vector.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
 

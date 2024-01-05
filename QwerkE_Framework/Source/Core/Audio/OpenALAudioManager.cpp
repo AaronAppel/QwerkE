@@ -1,5 +1,6 @@
 #include "OpenALAudioManager.h"
-#include "../../Debug/Log/Log.h"
+
+#include "QF_Log.h"
 #include "../../FileSystem/FileSystem.h"
 #include "../../Headers/QwerkE_Directory_Defines.h"
 #include "../../Utilities/StringHelpers.h"

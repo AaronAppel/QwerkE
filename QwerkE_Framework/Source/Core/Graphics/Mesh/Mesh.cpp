@@ -116,16 +116,21 @@ namespace QwerkE {
         if (shader == nullptr)
             return;
 
-        // Set mesh draw function
-        if (m_BufferData.numIndices > 0) { m_DrawFunc = &Mesh::DrawElements; } // Draw using elements
-        else if (m_BufferData.numPositions > 0) { m_DrawFunc = &Mesh::DrawArrays; } // No IBO or indices
-        else { // Data not initialized/invalid
+        if (m_BufferData.numIndices > 0)
+        {
+            m_DrawFunc = &Mesh::DrawElements;
+        }
+        else if (m_BufferData.numPositions > 0)
+        {
+            m_DrawFunc = &Mesh::DrawArrays;
+        }
+        else
+        {
             LOG_WARN("Mesh assigned null draw method");
             m_DrawFunc = &Mesh::NullDraw;
         }
 
-        // Setup VAO
-        glBindVertexArray(m_VAO); // Bind
+        glBindVertexArray(m_VAO);
         glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 

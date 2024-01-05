@@ -1,7 +1,4 @@
-#include "QF_glfw_CallbackFunctions.h"
-
-#include "../../../Libraries/glew/GL/glew.h"
-#include "../../../Libraries/glfw/GLFW/glfw3.h"
+#include "QF_CallbackFunctions.h"
 
 #include "QF_Log.h"
 #include "QF_FileUtilities.h"
@@ -10,35 +7,24 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
 
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
+
 namespace QwerkE {
 
-    void window_moved_callback(GLFWwindow* window, int x, int y) { }
-    void window_resized_callback(GLFWwindow* window, int width, int height) { }
-    void window_closed_callback(GLFWwindow* window) { }
-    void window_refreshed_callback(GLFWwindow* window) { }
-    void window_focused_callback(GLFWwindow* window, int isFocused) { }
-    void window_iconified_callback(GLFWwindow* window, int isIconified) { }
-
-    void framebuffer_resized_callback(GLFWwindow* window, int x, int y) { }
+    void window_resize_callback(GLFWwindow* window, int width, int height) { } // #TODO Handle window resized callback
+    void window_close_callback(GLFWwindow* window) { } // #TODO Handle window closed callback
 
     void error_callback(int error, const char* description);
 
-    void file_dropped_callback(GLFWwindow* window, int count, const char** paths);
-
     void SetupCallbacks(GLFWwindow* window)
     {
-        glfwSetWindowPosCallback(window, window_moved_callback);
-        glfwSetWindowSizeCallback(window, window_resized_callback);
-        glfwSetWindowCloseCallback(window, window_closed_callback);
-        glfwSetWindowRefreshCallback(window, window_refreshed_callback);
-        glfwSetWindowFocusCallback(window, window_focused_callback);
-        glfwSetWindowIconifyCallback(window, window_iconified_callback);
-
-        glfwSetFramebufferSizeCallback(window, framebuffer_resized_callback);
+        glfwSetWindowSizeCallback(window, window_resize_callback);
+        glfwSetWindowCloseCallback(window, window_close_callback);
 
         glfwSetErrorCallback(error_callback);
 
-        glfwSetDropCallback(window, file_dropped_callback);
+        glfwSetDropCallback(window, file_drop_callback);
     }
 
     void error_callback(int error, const char* description)
@@ -46,9 +32,12 @@ namespace QwerkE {
         LOG_ERROR(description);
     }
 
-    void file_dropped_callback(GLFWwindow* window, int count, const char** paths)
+    void file_drop_callback(GLFWwindow* window, int count, const char** paths)
     {
-        const std::string dropFileExtensionStr = GetFileExtension(*paths).c_str();
+        // Path of file drag and dropped onto this window
+        // TODO: Handle file drop correctly. This is hacked in for testing purposes at the moment.
+
+        std::string dropFileExtensionStr = GetFileExtension(*paths).c_str(); // TODO: Avoid extra variable due to heap deallocation
         const char* dropFileExtension = dropFileExtensionStr.c_str();
 
         for (int i = 0; i < count; i++)

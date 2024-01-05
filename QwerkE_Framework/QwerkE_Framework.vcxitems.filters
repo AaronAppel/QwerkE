@@ -94,9 +94,6 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{4595f103-d97b-42c0-bca5-9a897021c060}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Debug\Profiler">
-      <UniqueIdentifier>{df120753-7eb9-4baf-ad52-058e90983132}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug\Log">
       <UniqueIdentifier>{6b432c16-e373-4c36-8e96-8b089e1fb9e2}</UniqueIdentifier>
     </Filter>
@@ -115,9 +112,6 @@
     <Filter Include="Extended\OpenGL">
       <UniqueIdentifier>{d2314b94-b5cc-46ce-a415-da8f418b0be3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Extended\glm">
-      <UniqueIdentifier>{d312abaa-a2ee-408b-852b-491469343246}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Extended\GLFW">
       <UniqueIdentifier>{e1fbf1c1-07cb-4a93-b4ea-9d2685388e51}</UniqueIdentifier>
     </Filter>
@@ -130,45 +124,11 @@
     <Filter Include="FileSystem\FileIO">
       <UniqueIdentifier>{de52c0de-79f1-40b8-b0b6-fce2a4e42fe2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug\Profile">
+      <UniqueIdentifier>{df120753-7eb9-4baf-ad52-058e90983132}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Framework.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Debugger\Debugger.cpp">
-      <Filter>Debug\Debugger</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Log\PrintFunctions.cpp">
-      <Filter>Debug\Log</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Log\Log.cpp">
-      <Filter>Debug\Log</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Profiler\Profiler.cpp">
-      <Filter>Debug\Profiler</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Initialize.cpp">
-      <Filter>Headers</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\MyFileWriter.cpp">
-      <Filter>FileSystem\FileIO</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\FileUtilities.cpp">
-      <Filter>FileSystem\FileIO</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\ImageHelpers.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadImageFile.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadModelFile.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\QwerkE_AssimpLoading.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileSystem.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.cpp">
       <Filter>Core\Audio</Filter>
     </ClCompile>
@@ -379,124 +339,87 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Time\Time.cpp">
       <Filter>Core\Time</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Window\Window.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Window\Windows.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Windows.cpp">
       <Filter>Core\Window</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\RakNet\rkn_Main.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Window.cpp">
+      <Filter>Core\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_Physics.cpp">
+      <Filter>Extended\Bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_PhysicsFactory.cpp">
+      <Filter>Extended\Bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_World.cpp">
+      <Filter>Extended\Bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.cpp">
+      <Filter>Debug\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PrintFunctions.cpp">
+      <Filter>Debug\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Debugger.cpp">
+      <Filter>Debug\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_rkn_Main.cpp">
       <Filter>Extended\RakNet</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\Bullet3\b3_Physics.cpp">
-      <Filter>Extended\Bullet3</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\Bullet3\b3_PhysicsFactory.cpp">
-      <Filter>Extended\Bullet3</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\Bullet3\b3_World.cpp">
-      <Filter>Extended\Bullet3</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\GLFW\glfw_AssignGLFWKeys.cpp">
-      <Filter>Extended\GLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\GLFW\glfw_CallBackFunctions.cpp">
-      <Filter>Extended\GLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\GLFW\glfw_InputCallBacks.cpp">
-      <Filter>Extended\GLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\GLFW\glfw_Window.cpp">
-      <Filter>Extended\GLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\GLFW\AssignWin32Keys.cpp">
-      <Filter>Extended\GLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\OpenAL\oal_AudioManager.cpp">
-      <Filter>Extended\OpenAL</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\OpenAL\oal_Helpers.cpp">
-      <Filter>Extended\OpenAL</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_GLManager.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.cpp">
       <Filter>Extended\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_Helpers.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_Helpers.cpp">
       <Filter>Extended\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.cpp">
+      <Filter>Extended\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.cpp">
+      <Filter>Extended\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_glfw_AssignGLFWKeys.cpp">
+      <Filter>Extended\GLFW</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_glfw_InputCallBacks.cpp">
+      <Filter>Extended\GLFW</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_glfw_Window.cpp">
+      <Filter>Extended\GLFW</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Initialize.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.cpp">
+      <Filter>FileSystem\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.cpp">
+      <Filter>FileSystem\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_AssimpLoading.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadModelFile.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ImageHelpers.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_AssignWin32Keys.cpp">
+      <Filter>Extended\GLFW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QwerkE.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Framework.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\DataTypes\MyLinkedList.h">
-      <Filter>DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\DataTypes\ObjectPool.h">
-      <Filter>DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\DataTypes\CPPList.h">
-      <Filter>DataTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Debugger\Debugger.h">
-      <Filter>Debug\Debugger</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Log\Log.h">
-      <Filter>Debug\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Log\PrintFunctions.h">
-      <Filter>Debug\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Profiler\Instrumentor.h">
-      <Filter>Debug\Profiler</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Profiler\Profiler.h">
-      <Filter>Debug\Profiler</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Defines.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Enums.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Global_Constants.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Include.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\QwerkE_Platform.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Include.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Initialize.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\Libraries_Load.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Headers\PCH_Includes.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\MyFileWriter.h">
-      <Filter>FileSystem\FileIO</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileIO\FileUtilities.h">
-      <Filter>FileSystem\FileIO</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\ImageHelpers.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\LoadImageFile.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\QwerkE_AssimpLoading.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\FileSystem\FileSystem.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Audio\AudioSource.h">
       <Filter>Core\Audio</Filter>
     </ClInclude>
@@ -752,35 +675,103 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Time\Timer.h">
       <Filter>Core\Time</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Window\Window.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.h">
       <Filter>Core\Window</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Window\Windows.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Window.h">
       <Filter>Core\Window</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\Bullet3\b3_PhysicsFactory.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Windows.h">
+      <Filter>Core\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_PhysicsFactory.h">
       <Filter>Extended\Bullet3</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\Bullet3\b3_World.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_World.h">
       <Filter>Extended\Bullet3</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\GLFW\glfw_CallbackFunctions.h">
-      <Filter>Extended\GLFW</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.h">
+      <Filter>Debug\Log</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\GLFW\glfw_Window.h">
-      <Filter>Extended\GLFW</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PrintFunctions.h">
+      <Filter>Debug\Log</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\OpenAL\oal_AudioManager.h">
-      <Filter>Extended\OpenAL</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Debugger.h">
+      <Filter>Debug\Debugger</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\OpenAL\oal_Helpers.h">
-      <Filter>Extended\OpenAL</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Platform.h">
+      <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_GLManager.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Defines.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Enums.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Global_Constants.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Include.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Instrumentor.h">
+      <Filter>Debug\Profile</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_Helpers.h">
       <Filter>Extended\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Extended\OpenGL\ogl_Helpers.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.h">
       <Filter>Extended\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.h">
+      <Filter>Extended\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.h">
+      <Filter>Extended\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Profile.h">
+      <Filter>Debug\Profile</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_glfw_Window.h">
+      <Filter>Extended\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ObjectPool.h">
+      <Filter>DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyLinkedList.h">
+      <Filter>DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Initialize.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Include.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Load.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.h">
+      <Filter>FileSystem\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.h">
+      <Filter>FileSystem\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_AssimpLoading.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ImageHelpers.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PCH_Includes.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
