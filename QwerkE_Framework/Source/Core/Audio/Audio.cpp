@@ -1,6 +1,6 @@
 #include "Audio.h"
 
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 #include "QF_oal_AudioManager.h"
 #include "../Math/Vector.h"
 

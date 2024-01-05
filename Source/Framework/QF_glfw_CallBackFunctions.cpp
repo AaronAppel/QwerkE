@@ -3,7 +3,7 @@
 #include "../../../Libraries/glew/GL/glew.h"
 #include "../../../Libraries/glfw/GLFW/glfw3.h"
 
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 #include "QF_FileUtilities.h"
 #include "QF_FileSystem.h"
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"

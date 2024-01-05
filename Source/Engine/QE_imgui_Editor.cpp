@@ -9,7 +9,7 @@
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 #include "../QwerkE_Framework/Source/Core/Time/Time.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
-#include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
+#include "QF_Profile.h"
 #include "../QwerkE_Framework/Source/Core/Network/Network.h"
 
 #include "QE_EntityEditor.h"

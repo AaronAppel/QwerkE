@@ -2,7 +2,7 @@
 #include "../Resources/Resources.h"
 
 #include "../DataManager/ConfigHelper.h"
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 namespace QwerkE {
 

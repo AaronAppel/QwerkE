@@ -1,4 +1,4 @@
-#include "Log.h"
+#include "QF_Log.h"
 
 #include <stdio.h> // fprintf
 #include <memory> // std::make_shared

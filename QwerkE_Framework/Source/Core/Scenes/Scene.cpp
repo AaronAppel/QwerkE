@@ -4,7 +4,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #include "Entities/GameObject.h"
 #include "Entities/Components/Component.h"

@@ -3,7 +3,7 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_FileUtilities.h"
-#include "../../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #include "../Graphics_Header.h"
 #include "QF_QwerkE_Defines.h"

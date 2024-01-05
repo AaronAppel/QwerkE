@@ -5,7 +5,7 @@
 #include "../../../Libraries/imgui/imgui.h"
 // #include "../../../Libraries/imgui/"
 
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 namespace QwerkE {
 

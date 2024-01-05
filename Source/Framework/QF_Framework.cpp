@@ -36,8 +36,8 @@
 #include "../QwerkE_Framework/Source/Core/Window/Windows.h"
 #include "../QwerkE_Framework/Source/Core/Window/glfw_Window.h"
 #include "../QwerkE_Framework/Source/Core/Window/CallbackFunctions.h"
-#include "../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Debugger.h"
+#include "QF_Log.h"
 #include "QF_FileSystem.h"
 
 namespace QwerkE {

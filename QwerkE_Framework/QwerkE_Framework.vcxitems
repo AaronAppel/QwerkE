@@ -19,6 +19,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_Physics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_PhysicsFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_World.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Debugger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
@@ -30,11 +31,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Initialize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadModelFile.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_Helpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PrintFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_AssimpLoading.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_rkn_Main.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Audio\Audio.cpp" />
@@ -109,30 +112,34 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Time\Time.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Window\Window.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Window\Windows.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Debugger\Debugger.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Log\Log.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Log\PrintFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Debug\Profiler\Profiler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Libraries\CPPList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_PhysicsFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_b3_World.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Debugger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FileUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_glfw_CallBackFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_glfw_Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ImageHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Instrumentor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Include.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Initialize.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Libraries_Load.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadImageFile.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyFileWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MyLinkedList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_AudioManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_oal_Helpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ObjectPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_GLManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ogl_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PCH_Includes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PrintFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Profile.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_AssimpLoading.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE_Defines.h" />
@@ -227,13 +234,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Time\Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Window\Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Window\Windows.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\DataTypes\CPPList.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\DataTypes\MyLinkedList.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\DataTypes\ObjectPool.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Debugger\Debugger.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Log\Log.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Log\PrintFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Profiler\Instrumentor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Debug\Profiler\Profiler.h" />
   </ItemGroup>
 </Project>

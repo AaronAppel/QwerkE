@@ -12,7 +12,7 @@
 #include "QF_QwerkE_Defines.h"
 #include "../Graphics/DataTypes/Texture.h"
 #include "../Jobs/Jobs.h"
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 namespace QwerkE {
 

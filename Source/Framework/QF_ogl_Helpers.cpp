@@ -5,7 +5,7 @@
 #include "QC_StringHelpers.h"
 
 #include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 #include "QF_FileUtilities.h"
 #include "QF_ImageHelpers.h"
 #include "QF_FileSystem.h"

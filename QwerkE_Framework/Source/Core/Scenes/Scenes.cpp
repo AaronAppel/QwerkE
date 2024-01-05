@@ -6,7 +6,7 @@
 
 #include "QF_QwerkE_Defines.h"
 
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #include "../Scenes/Scene.h"
 #include "../Scenes/TestScene.h"
@@ -14,7 +14,7 @@
 #include "../Scenes/PBR_Test1.h"
 #include "QF_QwerkE_Enums.h"
 #include "QF_FileUtilities.h"
-#include "../../Debug/Profiler/Profiler.h"
+#include "QF_Profile.h"
 
 #include "../Input/Input.h"
 

@@ -5,7 +5,7 @@
 #include "QF_QwerkE_Defines.h"
 
 #include "QF_oal_Helpers.h"
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 #include "QF_FileSystem.h"
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
 #include "../QwerkE_Framework/Source/Core/Audio/AudioSource.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Instrumentor.h"
+#include "QF_Instrumentor.h"
 
 #define QPROFILING 1
 

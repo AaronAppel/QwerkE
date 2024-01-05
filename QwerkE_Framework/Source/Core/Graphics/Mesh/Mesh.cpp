@@ -8,7 +8,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "../../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #include "../GraphicsUtilities/GraphicsHelpers.h"
 #include "../Shader/ShaderVariable_Defines.h"
@@ -113,7 +113,8 @@ namespace QwerkE {
 
         CheckGraphicsErrors(__FILE__, __LINE__);
 
-        if (shader == nullptr) { return; } // Null ShaderProgram*?
+        if (shader == nullptr)
+            return;
 
         // Set mesh draw function
         if (m_BufferData.numIndices > 0) { m_DrawFunc = &Mesh::DrawElements; } // Draw using elements

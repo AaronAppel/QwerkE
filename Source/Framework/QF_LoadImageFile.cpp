@@ -1,7 +1,7 @@
 #include "QF_LoadImageFile.h"
 
 #include "QF_FileUtilities.h"
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #pragma warning( disable : 28182 )
 #pragma warning( disable : 6001 )

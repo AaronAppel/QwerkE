@@ -18,7 +18,7 @@
 #include "QF_LoadImageFile.h"
 #include "QF_FileUtilities.h"
 #include "../QwerkE_Framework/Source/Core/Resources/Resources.h"
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #define QwerkE_Image_Library_stb 1 // #TODO Move somewhere better
 #define QwerkE_Image_Library_lodepng 1

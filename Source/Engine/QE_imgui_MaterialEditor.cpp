@@ -4,7 +4,7 @@
 
 #include "../Libraries/imgui/imgui.h"
 
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #include "QF_QwerkE_Enums.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"

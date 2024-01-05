@@ -28,7 +28,7 @@
 
 #include "QF_FileUtilities.h"
 
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 #include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {

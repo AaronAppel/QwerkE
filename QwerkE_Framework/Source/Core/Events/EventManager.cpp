@@ -5,7 +5,7 @@
 #include "QC_Helpers.h"
 
 #include "Event.h"
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 namespace QwerkE {
 

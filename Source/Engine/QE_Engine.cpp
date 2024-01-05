@@ -20,8 +20,8 @@
 #include "QC_Helpers.h"
 #include "QC_ProgramArgs.h"
 
-#include "../QwerkE_Framework/Source/Debug/Profiler/Profiler.h"
-#include "../QwerkE_Framework/Source/Debug/Debugger/Debugger.h"
+#include "QF_Profile.h"
+#include "QF_Debugger.h"
 
 #include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
@@ -41,7 +41,7 @@
 #include "../QwerkE_Framework/Source/Core/Window/Windows.h"
 #include "../QwerkE_Framework/Source/Core/Window/glfw_Window.h"
 #include "../QwerkE_Framework/Source/Core/Time/Time.h"
-#include "../QwerkE_Framework/Source/Debug/Log/Log.h"
+#include "QF_Log.h"
 #include "../QwerkE_Framework/Source/Core/DataManager/ConfigHelper.h"
 #include "../QwerkE_Framework/Source/Core/Scenes/Scenes.h"
 

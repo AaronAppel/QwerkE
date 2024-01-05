@@ -4,7 +4,7 @@
 
 #include "QF_QwerkE_Enums.h"
 
-#include "../../../../Debug/Log/Log.h"
+#include "QF_Log.h"
 
 #include "../../../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../../../Graphics/Graphics_Header.h"

@@ -1,9 +1,9 @@
-#include "Debugger.h"
+#include "QF_Debugger.h"
 
 #ifdef _QDebug
 
-#include "../Log/Log.h"
-#include "../../Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
+#include "QF_Log.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
 
 namespace QwerkE {
 

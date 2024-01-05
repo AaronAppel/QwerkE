@@ -4,7 +4,7 @@
 
 #include "QF_QwerkE_Defines.h"
 
-#include "../../Debug/Log/Log.h"
+#include "QF_Log.h"
 #include "../Factory/Factory.h"
 #include "../Scenes/Entities/GameObject.h"
 #include "../Scenes/Entities/Components/Camera/CameraComponent.h"
