@@ -1,4 +1,4 @@
-#include "../../Entities/Components/PhysicsComponent.h"
+#include "QF_PhysicsComponent.h"
 
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
@@ -22,7 +22,7 @@
 #pragma warning( default : 4099 )
 
 #include "QF_QwerkE_Enums.h"
-#include "../../Entities/Components/Component.h"
+#include "QF_Component.h"
 
 namespace QwerkE {
 

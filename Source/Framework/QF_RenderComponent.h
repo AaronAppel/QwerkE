@@ -3,8 +3,8 @@
 #include <vector>
 #include <string>
 
-#include "Component.h"
-#include "../../../Graphics/DataTypes/Renderable.h"
+#include "QF_Component.h"
+#include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Renderable.h"
 
 namespace QwerkE {
 
@@ -23,18 +23,14 @@ namespace QwerkE {
         void GenerateSchematic();
 
         void Setup(const char* shaderName, const char* materialName, const char* meshName);
-        // void Clear();
 
         void AppendEmptyRenderables(int count);
         void AddRenderable(Renderable renderable);
 
-        // Getters + Setters //
-        // Getters
         std::string GetSchematicName() const { return m_SchematicName; }
-        std::vector<Renderable>* GetRenderableList() { return &m_RenderableList; } // Change to SeeRenderablesList()
+        std::vector<Renderable>* GetRenderableList() { return &m_RenderableList; } // #TODO Change to SeeRenderablesList()
         const std::vector<Renderable>* SeeRenderableList() const { return &m_RenderableList; }
 
-        // Setters
         void SetSchematicName(std::string name) { m_SchematicName = name; }
         void SetNameAtIndex(unsigned int index, std::string name);
         void SetShaderAtIndex(unsigned int index, ShaderProgram* shader);

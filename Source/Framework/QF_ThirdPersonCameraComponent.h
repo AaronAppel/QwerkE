@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CameraComponent.h"
+#include "QF_CameraComponent.h"
 
 namespace QwerkE {
 

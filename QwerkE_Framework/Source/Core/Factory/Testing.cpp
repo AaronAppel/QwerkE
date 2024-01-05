@@ -7,7 +7,7 @@
 #include "QF_Resources.h"
 #include "../Scenes/Scene.h"
 #include "QF_RenderRoutine.h"
-#include "../Scenes/Entities/Components/RenderComponent.h"
+#include "QF_RenderComponent.h"
 #include "../Graphics/DataTypes/Material.h"
 #include "../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../Graphics/Mesh/Mesh.h"

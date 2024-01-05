@@ -4,8 +4,8 @@
 
 #include "QF_QwerkE_Global_Constants.h"
 
-#include "../Component.h"
-#include "CameraComponent.h"
+#include "QF_Component.h"
+#include "QF_CameraComponent.h"
 
 namespace QwerkE {
 

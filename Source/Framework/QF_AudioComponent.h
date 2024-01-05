@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "QF_Component.h"
 
 namespace QwerkE {
 

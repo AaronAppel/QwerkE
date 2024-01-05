@@ -1,4 +1,4 @@
-#include "Bullet3Component.h"
+#include "QF_Bullet3Component.h"
 
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
@@ -26,9 +26,9 @@
 
 #include "QF_QwerkE_Enums.h"
 
-#include "../../../Entities/Components/PhysicsComponent.h"
-#include "../../../Entities/Components/Component.h"
-#include "../../../../Math/Vector.h"
+#include "QF_PhysicsComponent.h"
+#include "QF_Component.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 #include "QF_GameObject.h"
 
 namespace QwerkE {

@@ -1,7 +1,7 @@
-#include "../../Entities/Components/LightComponent.h"
+#include "QF_LightComponent.h"
 
 #include "QF_QwerkE_Enums.h"
-#include "../../Entities/Components/Component.h"
+#include "QF_Component.h"
 
 namespace QwerkE {
 

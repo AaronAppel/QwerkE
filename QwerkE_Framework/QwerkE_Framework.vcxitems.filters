@@ -261,36 +261,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.cpp">
       <Filter>Core\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\PhysicsComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\RenderComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\LightComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Extended\OpenAL_Component.cpp">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Extended\Bullet3Component.cpp">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\FreeCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\StaticCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\ThirdPersonCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\CameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\FirstPersonCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
@@ -402,6 +372,36 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GameObject.cpp">
       <Filter>Core\Scenes\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Bullet3Component.cpp">
+      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_OpenAL_Component.cpp">
+      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FirstPersonCameraComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FreeCameraComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_StaticCameraComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ThirdPersonCameraComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CameraComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PhysicsComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_RenderComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LightComponent.cpp">
+      <Filter>Core\Scenes\Entities\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -579,42 +579,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Scene.h">
       <Filter>Core\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\LightComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\PhysicsComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\RenderComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\AudioComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Component.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Extended\Bullet3Component.h">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Extended\OpenAL_Component.h">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\FreeCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\StaticCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\ThirdPersonCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\CameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Scenes\Entities\Components\Camera\FirstPersonCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.h">
@@ -754,6 +718,42 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_GameObject.h">
       <Filter>Core\Scenes\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_OpenAL_Component.h">
+      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Bullet3Component.h">
+      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CameraComponent.h">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FirstPersonCameraComponent.h">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_FreeCameraComponent.h">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_StaticCameraComponent.h">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ThirdPersonCameraComponent.h">
+      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_PhysicsComponent.h">
+      <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_RenderComponent.h">
+      <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_AudioComponent.h">
+      <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Component.h">
+      <Filter>Core\Scenes\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LightComponent.h">
+      <Filter>Core\Scenes\Entities\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

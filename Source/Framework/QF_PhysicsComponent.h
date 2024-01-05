@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Entities/Components/Component.h"
+#include "QF_Component.h"
 
 class btRigidBody;
 

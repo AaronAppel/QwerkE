@@ -1,6 +1,9 @@
-#include "CameraComponent.h"
-#include "StaticCameraComponent.h"
+#include "QF_CameraComponent.h"
+
+#include "QF_StaticCameraComponent.h"
 #include "QF_QwerkE_Enums.h"
+
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 namespace QwerkE {
 

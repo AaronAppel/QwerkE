@@ -1,12 +1,12 @@
-#include "CameraComponent.h"
+#include "QF_CameraComponent.h"
 
 #include "glew/GL/glew.h"
 
 #include "QF_QwerkE_Global_Constants.h"
 
-#include "ThirdPersonCameraComponent.h"
-#include "../../GameObject.h"
-#include "../Component.h"
+#include "QF_ThirdPersonCameraComponent.h"
+#include "QF_GameObject.h"
+#include "QF_Component.h"
 
 namespace QwerkE {
 

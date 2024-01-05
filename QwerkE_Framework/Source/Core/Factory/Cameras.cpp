@@ -11,13 +11,13 @@
 
 #include "QF_Resources.h"
 
-#include "../Scenes/Entities/Components/Camera/CameraComponent.h"
-#include "../Scenes/Entities/Components/Camera/FirstPersonCameraComponent.h"
-#include "../Scenes/Entities/Components/Camera/FreeCameraComponent.h"
-#include "../Scenes/Entities/Components/Camera/StaticCameraComponent.h"
-#include "../Scenes/Entities/Components/Camera/ThirdPersonCameraComponent.h"
+#include "QF_CameraComponent.h"
+#include "QF_FirstPersonCameraComponent.h"
+#include "QF_FreeCameraComponent.h"
+#include "QF_StaticCameraComponent.h"
+#include "QF_ThirdPersonCameraComponent.h"
 #include "QF_RenderRoutine.h"
-#include "../Scenes/Entities/Components/RenderComponent.h"
+#include "QF_RenderComponent.h"
 #include "QF_GameObject.h"
 #include "../Scenes/Scene.h"
 

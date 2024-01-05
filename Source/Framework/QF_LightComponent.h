@@ -2,8 +2,8 @@
 
 #include "QF_QwerkE_Enums.h"
 
-#include "../../Entities/Components/Component.h"
-#include "../../../Math/Vector.h"
+#include "QF_Component.h"
+#include "../QwerkE_Framework/Source/Core/Math/Vector.h"
 
 #pragma warning( disable : 26495 ) // #TODO Review warning ignore
 class MyMatrix;
@@ -17,13 +17,10 @@ namespace QwerkE {
         LightComponent();
         ~LightComponent();
 
-        /* Getters + Setters */
-        // getters
         eLightType GetType() { return m_Type; }
         vec3 GetColour() { return m_Colour; };
         bool GetIsON() { return m_IsOn; };
 
-        // setters
         void SetType(eLightType type) { m_Type = type; }
         void SetColour(vec3 ambient) { m_Colour = ambient; };
         void SetIsOn(bool isOn) { m_IsOn = isOn; }

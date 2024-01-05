@@ -3,8 +3,8 @@
 #include "../../Libraries/Bullet3/LinearMath/btMotionState.h"
 #include "../../Libraries/Bullet3/LinearMath/btTransform.h"
 
-#include "../../Components/Component.h"
-#include "../../Components/PhysicsComponent.h"
+#include "QF_Component.h"
+#include "QF_PhysicsComponent.h"
 #include "QF_GameObject.h"
 
 class btRigidBody;
@@ -20,13 +20,10 @@ namespace QwerkE {
         void ApplyForce(vec3 force);
         void ApplyTorque(vec3 force);
 
-        /* Getters + Setters */
-        // getters
         void getWorldTransform(btTransform& worldTrans) const;
         vec3 GetBodyPosition();
         vec3 GetBodyRotation();
 
-        // setters
         void setWorldTransform(const btTransform& worldTrans);
 
     private:

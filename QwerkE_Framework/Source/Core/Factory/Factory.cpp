@@ -8,7 +8,7 @@
 
 #include "QF_Resources.h"
 
-#include "../Scenes/Entities/Components/RenderComponent.h"
+#include "QF_RenderComponent.h"
 #include "../Graphics/GraphicsUtilities/GraphicsHelpers.h"
 
 namespace QwerkE {

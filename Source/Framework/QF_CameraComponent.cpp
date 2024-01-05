@@ -1,14 +1,14 @@
-#include "../Component.h"
+#include "QF_Component.h"
 
 #include "glfw/GLFW/glfw3.h"
 
 #include "QF_QwerkE_Enums.h"
 
-#include "CameraComponent.h"
-#include "../../GameObject.h"
-#include "../../../../Window/Window.h"
-#include "../../../../Window/Windows.h"
-#include "../../../../Math/Vector.h"
+#include "QF_CameraComponent.h"
+#include "QF_GameObject.h"
+#include "QF_Window.h"
+#include "QF_Windows.h"
+#include "../QwerkE_Framework/Source/Core/Math/Math_Includes.h"
 
 namespace QwerkE {
 

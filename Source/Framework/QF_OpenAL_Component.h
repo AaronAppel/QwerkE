@@ -2,7 +2,7 @@
 
 #include "OpenAL/include/al.h"
 
-#include "../AudioComponent.h"
+#include "QF_AudioComponent.h"
 
 namespace QwerkE {
 
@@ -10,7 +10,6 @@ namespace QwerkE {
     {
     public:
         OpenAL_AudioComponent();
-        ~OpenAL_AudioComponent();
 
         int Play();
 

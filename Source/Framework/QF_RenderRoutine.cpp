@@ -15,8 +15,8 @@
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Shader/ShaderProgram.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Mesh/Mesh.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/DataTypes/Material.h"
-#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/Camera/CameraComponent.h"
-#include "../../QwerkE_Framework/Source/Core/Scenes/Entities/Components/RenderComponent.h"
+#include "QF_CameraComponent.h"
+#include "QF_RenderComponent.h"
 
 namespace QwerkE {
 

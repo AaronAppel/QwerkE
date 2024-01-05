@@ -1,7 +1,7 @@
-#include "FreeCameraComponent.h"
+#include "QF_FreeCameraComponent.h"
 
-#include "../Component.h"
-#include "CameraComponent.h"
+#include "QF_Component.h"
+#include "QF_CameraComponent.h"
 #include "QF_QwerkE_Enums.h"
 #include "QF_GameObject.h"
 

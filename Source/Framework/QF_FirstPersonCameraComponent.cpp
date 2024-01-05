@@ -1,9 +1,9 @@
-#include "../Component.h"
+#include "QF_Component.h"
 
-#include "CameraComponent.h"
-#include "FirstPersonCameraComponent.h"
+#include "QF_CameraComponent.h"
+#include "QF_FirstPersonCameraComponent.h"
 #include "QF_QwerkE_Enums.h"
-#include "../../GameObject.h"
+#include "QF_GameObject.h"
 #include "glew/GL/glew.h"
 
 namespace QwerkE {
