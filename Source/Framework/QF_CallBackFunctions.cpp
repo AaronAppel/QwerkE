@@ -1,5 +1,8 @@
 #include "QF_CallbackFunctions.h"
 
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glfw/GLFW/glfw3.h"
+
 #include "QF_Log.h"
 #include "QF_FileUtilities.h"
 #include "QF_FileSystem.h"
@@ -7,20 +10,17 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/GraphicsUtilities/GraphicsHelpers.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/Texture.h"
 
-#include "Libraries/glew/GL/glew.h"
-#include "Libraries/glfw/GLFW/glfw3.h"
-
 namespace QwerkE {
 
-    void window_resize_callback(GLFWwindow* window, int width, int height) { } // #TODO Handle window resized callback
-    void window_close_callback(GLFWwindow* window) { } // #TODO Handle window closed callback
+    void window_resized_callback(GLFWwindow* window, int width, int height) { } // #TODO Handle window resized callback
+    void window_closed_callback(GLFWwindow* window) { } // #TODO Handle window closed callback
 
     void error_callback(int error, const char* description);
 
     void SetupCallbacks(GLFWwindow* window)
     {
-        glfwSetWindowSizeCallback(window, window_resize_callback);
-        glfwSetWindowCloseCallback(window, window_close_callback);
+        glfwSetWindowSizeCallback(window, window_resized_callback);
+        glfwSetWindowCloseCallback(window, window_closed_callback);
 
         glfwSetErrorCallback(error_callback);
 

@@ -1,4 +1,6 @@
-#include "InputDevice.h"
+#include "QF_InputDevice.h"
+
+#include <cstring>
 
 namespace QwerkE {
 

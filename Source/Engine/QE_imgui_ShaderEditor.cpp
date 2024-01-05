@@ -5,7 +5,7 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_FileUtilities.h"
-#include "../../../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_Input.h"
 #include "../../../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Time.h"

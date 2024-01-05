@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Input/Input.h"
+#include "QF_Input.h"
 
 namespace QwerkE {
 

@@ -24,7 +24,7 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/Graphics_Header.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/ShaderFactory/ShaderFactory.h"
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_Input.h"
 #include "QF_Jobs.h"
 #include "QF_Network.h"
 #include "QF_Physics.h"

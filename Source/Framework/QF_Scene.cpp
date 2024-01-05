@@ -11,7 +11,7 @@
 #include "QF_CameraComponent.h"
 #include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_Input.h"
 
 namespace QwerkE {
 

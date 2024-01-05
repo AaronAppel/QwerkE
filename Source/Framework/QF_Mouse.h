@@ -4,7 +4,7 @@
 
 #include "QF_Vector.h"
 
-#include "InputDevice.h"
+#include "QF_InputDevice.h"
 
 namespace QwerkE {
 

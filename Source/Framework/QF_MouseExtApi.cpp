@@ -1,8 +1,8 @@
-#include "MouseExtApi.h"
+#include "QF_MouseExtApi.h"
 
-#include "Mouse.h"
+#include "QF_Mouse.h"
 
-#include "../Input/Input.h"
+#include "QF_Input.h"
 
 namespace QwerkE {
 

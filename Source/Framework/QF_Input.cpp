@@ -1,8 +1,8 @@
-#include "Input.h"
-#include "Mouse.h"
-#include "Keyboard.h"
-#include "MouseExtApi.h"
-#include "KeyboardExtApi.h"
+#include "QF_Input.h"
+#include "QF_Mouse.h"
+#include "QF_Keyboard.h"
+#include "QF_MouseExtApi.h"
+#include "QF_KeyboardExtApi.h"
 #include "QF_QwerkE_Enums.h"
 
 namespace QwerkE {

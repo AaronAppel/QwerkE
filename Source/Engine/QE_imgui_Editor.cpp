@@ -3,7 +3,7 @@
 #include "imgui/imgui.h"
 
 #include "QF_FileUtilities.h"
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_Input.h"
 #include "QF_Audio.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
 #include "QF_Scenes.h"

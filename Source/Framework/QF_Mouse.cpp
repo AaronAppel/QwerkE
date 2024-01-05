@@ -1,6 +1,8 @@
-#include "Mouse.h"
+#include "QF_Mouse.h"
 
-#include "../Input/Input.h"
+#include "QF_Input.h"
+
+#include <cstring>
 
 namespace QwerkE {
 

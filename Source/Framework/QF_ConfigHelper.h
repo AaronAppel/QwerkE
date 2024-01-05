@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "../QwerkE_Framework/Source/Core/Input/QwerKE_eKeys.h"
+#include "QF_QwerKE_eKeys.h"
 
 namespace QwerkE {
 

@@ -1,8 +1,8 @@
-#include "KeyboardExtApi.h"
+#include "QF_KeyboardExtApi.h"
 
-#include "Keyboard.h"
+#include "QF_Keyboard.h"
 
-#include "../Input/Input.h"
+#include "QF_Input.h"
 
 namespace QwerkE {
 

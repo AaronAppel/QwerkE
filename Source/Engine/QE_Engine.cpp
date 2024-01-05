@@ -27,7 +27,7 @@
 #include "../QwerkE_Framework/Source/Core/Graphics/DataTypes/FrameBufferObject.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Mesh/MeshFactory.h"
 #include "../QwerkE_Framework/Source/Core/Graphics/Renderer.h"
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_Input.h"
 #include "QF_Resources.h"
 #include "QF_EventManager.h"
 #include "QF_Scene.h"

@@ -16,7 +16,7 @@
 #include "QF_FileUtilities.h"
 #include "QF_Profile.h"
 
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_Input.h"
 
 namespace QwerkE {
 

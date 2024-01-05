@@ -1,4 +1,4 @@
-#include "../QwerkE_Framework/Source/Core/Input/Input.h"
+#include "QF_Input.h"
 
 #include <Windows.h>
 

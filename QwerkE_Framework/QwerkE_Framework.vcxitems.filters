@@ -168,24 +168,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\Basic3DShader.cpp">
       <Filter>Core\Graphics\ShaderFactory</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\InputDevice.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\Keyboard.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\KeyboardExtApi.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\Mouse.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\MouseExtApi.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Source\Core\Input\Input.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
@@ -403,6 +385,21 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.cpp">
       <Filter>Core\Math</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Input.cpp">
+      <Filter>Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_InputDevice.cpp">
+      <Filter>Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_KeyboardExtApi.cpp">
+      <Filter>Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Mouse.cpp">
+      <Filter>Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MouseExtApi.cpp">
+      <Filter>Core\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\GraphicsManager.h">
@@ -470,27 +467,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Graphics\ShaderFactory\ShaderFactory.h">
       <Filter>Core\Graphics\ShaderFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\Input.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\InputDevice.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\Keyboard.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\KeyboardExtApi.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\Mouse.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\MouseExtApi.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Source\Core\Input\QwerKE_eKeys.h">
-      <Filter>Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerkE.h" />
@@ -751,6 +727,27 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.h">
       <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerKE_eKeys.h">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Input.h">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_InputDevice.h">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Keyboard.h">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_KeyboardExtApi.h">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Mouse.h">
+      <Filter>Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MouseExtApi.h">
+      <Filter>Core\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
