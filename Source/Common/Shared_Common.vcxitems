@@ -328,6 +328,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Bullet3\LinearMath\btVector3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON_Interface\cJSON.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON_Interface\cJSONInterface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\CPPList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftconfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftheader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftmodule.h" />

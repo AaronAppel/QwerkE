@@ -2569,6 +2569,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3.h">
       <Filter>Libraries\glfw</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\CPPList.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">
