@@ -38,8 +38,6 @@
 #include "Libraries/freetype2/ft2build.h"
 #include "Libraries/freetype2/freetype/freetype.h"
 
-// #include "libusb/libusb.h"
-
 #include "Libraries/glew/GL/glew.h"
 
 #include "Libraries/glfw/GLFW/glfw3.h"

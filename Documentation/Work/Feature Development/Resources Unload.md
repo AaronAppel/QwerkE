@@ -1,0 +1,1 @@
+When reference counting is added to the Resources class, add a way to unload all assets not references outside of the Resources class, so all assets with 1 or 0 references can be delete using a public method request.

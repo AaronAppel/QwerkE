@@ -1,0 +1,2 @@
+Keep asserts as low level as possible, meaning inside of functions instead of reading return values, when possible.
+This allows for the call stack to remain in use, in the invalid state so breaking into the code will provide more information.

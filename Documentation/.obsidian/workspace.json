@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Work/Feature Development/Logging Improvements.md",
+                "file": "Z. Less Relevant/Markdown Syntax Reference.md",
                 "mode": "source",
                 "source": false
               }
@@ -64,7 +64,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "QwerkE Standards/Commenting.md",
+                "file": "Work/Other/Calculate Aspect Ratio.md",
                 "mode": "source",
                 "source": false
               }
@@ -82,7 +82,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -127,7 +128,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "alternative",
+                "query": "version",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -167,7 +168,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Work/Feature Development/Logging Improvements.md",
+                "file": "Work/Other/Calculate Aspect Ratio.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -184,7 +185,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Work/Feature Development/Logging Improvements.md",
+                "file": "Work/Other/Calculate Aspect Ratio.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -196,7 +197,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Work/Feature Development/Logging Improvements.md"
+                "file": "Work/Other/Calculate Aspect Ratio.md"
               }
             }
           }
@@ -217,44 +218,44 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "55628a392364c2db",
+  "active": "c9c2d1b18e80882e",
   "lastOpenFiles": [
-    "QwerkE Standards/Coding Standards.md",
+    "Work/Feature Development/ASSERT Expanded.md",
+    "Work/Other/Calculate Aspect Ratio.md",
+    "References/Constexpr.md",
+    "References/Variadic or Variable Arguments (__VA_ARGS__).md",
+    "QwerkE Standards/Asserts.md",
+    "Work/Feature Development/x64 Architecture Support.md",
     "Z. Less Relevant/Markdown Syntax Reference.md",
+    "Solution Configuration/Build Targets.md",
+    "Solution Configuration/Projects.md",
     "QwerkE Standards/Commenting.md",
-    "Work/Feature Development/Logging Improvements.md",
+    "QwerkE Standards/Include Flow Diagram.canvas",
     "Solution Configuration/Compilation Configuration.md",
+    "QwerkE Standards/Language Versions.md",
+    "Old Notes.md",
+    "Work/Feature Development/Scenes.md",
+    "Work/Other/String Library.md",
+    "References/Library References.md",
+    "Work/Other",
+    "QwerkE Standards/Pre And Post Incrementing.md",
+    "Work/Feature Development/Release Mode Support.md",
+    "Work/Feature Development/GUIDs.md",
+    "Work/Feature Development/Asset Manifest Loading.md",
+    "Work/Feature Development/Resources Unload.md",
+    "Work/Feature Development/Load Assets By Folder.md",
+    "Work/Feature Development/Logging Improvements.md",
+    "QwerkE Standards/Coding Standards.md",
     "README.md",
     "Work/To Complete/Review Deprecated Files.md",
-    "ShaderVariableDoc.txt.md",
     "Work/To Complete",
     "Work",
-    "QwerkE Standards/Namespaces and Domains.md",
-    "QwerkE Standards/Including.md",
-    "QwerkE Standards/Language Versions.md",
-    "Known Issues and Gotchas.md",
-    "Solution Configuration/Projects.md",
-    "QwerkE Standards/Member Initialization.md",
-    "Solution Configuration/Additional Includes.md",
-    "Solution Configuration/Preprocessor Definitions.md",
-    "Solution Configuration/Precompiled Headers.md",
-    "Work/Feature Development/Scenes.md",
-    "Z. Less Relevant/Bit Flags.md",
-    "Old Notes.md",
-    "Framework Read Me.md",
-    "Z. Less Relevant/Bit Manipulation.md",
-    "References/Library References.md",
-    "Git and GitHub/Git.md",
-    "Known Issues.md",
-    "Assets and Data/Supported File and Data Types.md",
-    "QwerkE Standards/Include Flow Diagram.canvas",
     "References",
     "Assets and Data",
     "Z. Less Relevant",
     "Work/Feature Development",
     "README.md.lnk",
     "README.md - Shortcut.lnk",
-    "Solution Configuration",
-    "QwerkE_Games/RogueLike_1/RogueLike_Win32/soft_oal.dll"
+    "Solution Configuration"
   ]
 }

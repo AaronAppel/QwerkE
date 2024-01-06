@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "QC_TypeDefs.h"
+
 namespace QwerkE {
 
     class Window;
@@ -10,7 +12,7 @@ namespace QwerkE {
     {
     public:
         static void AddWindow(Window* window);
-        static Window* GetWindow(int windowID);
+        static Window* GetWindow(uint windowID);
         static const Window* GetLastFocusedWindow();
 
         static void Initialize();

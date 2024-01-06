@@ -22,16 +22,8 @@ namespace QwerkE {
     class Resources;
     class ShaderComponent;
     class ShaderProgram;
-    struct Texture;
 
-    // #TODO Move to own file
-    struct AssetInfo
-    {
-        AssetInfo(std::string name, std::string directory) { m_ID = name, m_Directory = directory; }
-        std::string m_ID = gc_DefaultStringValue;
-        std::string m_Directory = gc_DefaultStringValue;
-        short m_References = 0; // When not 0, it is in RAM
-    };
+    struct Texture;
 
     class Resources final
     {
@@ -98,26 +90,25 @@ namespace QwerkE {
         Resources() = default;
         ~Resources();
 
-        // #TODO Consider using unordered maps
-        // resource storage
+        // #TODO Consider using unordered maps or linked lists. Review data structure choice
         static std::map<std::string, Mesh*> m_Meshes;
         static std::map<std::string, Texture*> m_Textures;
         static std::map<std::string, Material*> m_Materials;
-        static std::map<std::string, FT_Face> m_Fonts;
+        static std::map<std::string, FT_Face> m_Fonts; // #TODO Abstract freetype2
         static std::map<std::string, ALuint> m_Sounds; // #TODO Abstract OpenAL
         static std::map<std::string, ShaderProgram*> m_ShaderPrograms;
         static std::map<std::string, ShaderComponent*> m_ShaderComponents;
 
-        // Utilities
-        static bool isUnique(Mesh* mesh);
-        static bool isUnique(Texture* texturehandle);
-        static bool isUnique(Material* material);
-        static bool isUnique(FT_Face font);
-        static bool isSoundUnique(ALuint sound);
-        static bool isShaderProgramUnique(ShaderProgram* ShaderProgram);
-        static bool isShaderComponentsUnique(ShaderComponent* shaderComponents);
+        static bool IsUnique(Mesh* mesh);
+        static bool IsUnique(Texture* texturehandle);
+        static bool IsUnique(Material* material);
+        static bool IsUnique(FT_Face font);
+        static bool IsSoundUnique(ALuint sound);
+        static bool IsShaderProgramUnique(ShaderProgram* ShaderProgram);
+        static bool IsShaderComponentsUnique(ShaderComponent* shaderComponents);
 
-        // Allocations
+        static void InstantiateNullAssets();
+
         static Mesh* InstantiateMesh(const char* name);
         static Texture* InstantiateTexture(const char* name);
         static Material* InstantiateMaterial(const char* name);

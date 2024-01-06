@@ -121,7 +121,7 @@ double ElasticEaseIn(double t, double b, double c, double d, float elasticity)
 
     double postFix = a * pow( 10, elasticity*(t-=1) );
 
-    return -( postFix * (double)sin( ( t*d-s ) * ( 2. * PId )/p ) ) + b;
+    return -( postFix * (double)sin( (float)((t * d - s) * (2. * PId) / p) ) ) + b;
 }
 
 double ElasticEaseOut(double t, double b, double c, double d, float elasticity)
@@ -137,7 +137,7 @@ double ElasticEaseOut(double t, double b, double c, double d, float elasticity)
     double a = c;
     double s = p/4;
 
-    return ( a * pow( 10, (double)(- elasticity) * t) * (double)sin((t * d - s) * (2. * PId) / p) + c + b);
+    return ( a * pow( 10, (double)(- elasticity) * t) * (double)sin((float)((t * d - s) * (2. * PId) / p)) + c + b);
 }
 
 double ElasticEaseInOut(double t, double b, double c, double d, float elasticity)
@@ -156,9 +156,9 @@ double ElasticEaseInOut(double t, double b, double c, double d, float elasticity
     if( t < 1 )
     {
         double postFix = a * pow( 10, elasticity*( t-=1 ) );
-        return -0.5f * ( postFix * (double)sin( ( t*d-s ) * ( 2. * PId )/p ) ) + b;
+        return -0.5f * ( postFix * (double)sin( (float)((t * d - s) * (2. * PId) / p) ) ) + b;
     }
 
     double postFix = a * pow( 10, -elasticity*( t-=1 ) );
-    return postFix * (double)sin( ( t*d-s ) * ( 2. * PId )/p ) * 0.5f + c + b;
+    return postFix * (double)sin( (float)(( t*d-s ) * ( 2. * PId )/p) ) * 0.5f + c + b;
 }

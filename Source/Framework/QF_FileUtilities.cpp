@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <cstring>
 
 #include "QC_StringHelpers.h"
 
@@ -26,7 +27,7 @@ bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 	}
 }
 
-#ifdef _Win32
+#ifdef _Win32 // #TODO Move to a QC_DirectoryUtilities file, to keep this file smaller, and specific
 #include <windows.h>
 #include <handleapi.h> // INVALID_HANDLE_VALUE
 #include <vector>
@@ -361,9 +362,12 @@ std::string GetFileNameWithExt(const char* filePath)
 	return test;
 }
 
-std::string GetFileNameNoExt(const char* filePath)
+const char* FindFileName(const char* filePathOrName, bool includeExtension)
 {
-	std::string test = filePath;
+	if (!filePathOrName)
+		return nullptr;
+
+	std::string test = filePathOrName;
 
 	if (test.find_last_of('/') != test.npos)
 	{
@@ -378,5 +382,51 @@ std::string GetFileNameNoExt(const char* filePath)
 		test = test.substr(0, test.find_last_of('.') - 1);
 	}
 
-	return test;
+	return test.c_str();
+}
+
+const char* FindFileExtension(const char* filePathOrName)
+{
+	if (!filePathOrName)
+		return nullptr;
+
+#if _DEBUG
+	assert(strlen(filePathOrName) < sizeof(size_t));
+#endif
+
+	size_t lastCharOccurenceIndex = -1;
+	for (size_t i = strlen(filePathOrName) - 1; i >= 0; --i)
+	{
+		if (filePathOrName[i] == '.')
+		{
+			lastCharOccurenceIndex = i;
+			break;
+		}
+	}
+
+	if (lastCharOccurenceIndex > -1)
+	{
+		lastCharOccurenceIndex;
+	}
+	return nullptr;
+}
+
+std::string GetFileNameNoExt(const char* filePath)
+{
+	std::string returnString = filePath;
+
+	if (returnString.find_last_of('/') != returnString.npos)
+	{
+		returnString = returnString.substr(returnString.find_last_of('/') + 1, returnString.find_last_of('.') - 1 - returnString.find_last_of('/'));
+	}
+	else if (returnString.find_last_of('\\') != returnString.npos)
+	{
+		returnString = returnString.substr(returnString.find_last_of('\\') + 1, returnString.find_last_of('.') - 1 - returnString.find_last_of('\\'));
+	}
+	else
+	{
+		returnString = returnString.substr(0, returnString.find_last_of('.') - 1);
+	}
+
+	return returnString;
 }

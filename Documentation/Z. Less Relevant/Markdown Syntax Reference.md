@@ -17,3 +17,9 @@ __Bold Underscore__
 `[link text](https://example.com/my-link "link title")`
 Embedded image with on-click link [![Title](link to image)](VideoLink "Hover Text")
 ==Highlight==
+
+| [Reference](https://www.makeuseof.com/how-to-create-tables-obsidian/) | Header 2 | Header 3 |
+| :--: | :--: | :--: |
+| Type above table to see/edit markup | *Italic* | ~~Strikethrough~~ |
+| ![[imageaddress]] | **Bold** | `<div> code! </div>` |
+

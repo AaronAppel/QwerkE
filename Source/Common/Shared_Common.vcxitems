@@ -853,6 +853,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h" />
@@ -860,9 +861,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyMatrix.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h" />
   </ItemGroup>
   <ItemGroup>

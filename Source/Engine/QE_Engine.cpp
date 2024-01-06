@@ -96,8 +96,10 @@ namespace QwerkE {
 			m_IsRunning = true;
 			while (m_IsRunning)
 			{
-				timeUntilNextFrame -= Time::Now() - lastIterationTime;
+				const float delta = Time::Now() - lastIterationTime;
 				lastIterationTime = Time::Now();
+
+				timeUntilNextFrame -= delta; // #TODO Review deltatime calculation
 
 				if (timeUntilNextFrame <= 0.f)
 				{

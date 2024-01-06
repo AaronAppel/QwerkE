@@ -52,7 +52,7 @@ namespace QwerkE {
         const char* m_AssetName;
     };
 
-    class Jobs
+    class Jobs final
     {
     public:
         static void ScheduleTask(QJob* job);
@@ -60,8 +60,7 @@ namespace QwerkE {
         static void ProcessTasks();
 
     private:
-        Jobs() {}
-        ~Jobs() {}
+        Jobs() = default;
 
         static std::queue<QJob*> m_JobList;
         static void ProcessNextTask();

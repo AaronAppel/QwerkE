@@ -22,3 +22,5 @@ int StringToInt(const char* string);
 
 const char* ReverseString(std::string value);
 const char* ReverseString(const char* value);
+
+// #TODO FormatString(const char* string) // For formatting, inserting, or replacing, variable argument strings

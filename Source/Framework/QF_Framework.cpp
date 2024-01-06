@@ -5,9 +5,11 @@
 // #ifdef GLFW3 // #TODO Move library dependent logic into appropriate class, like Window
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/glfw/GLFW/glfw3.h"
+#pragma warning( disable : 4244 )
 #include "Libraries/imgui/imgui.h"
 #include "Libraries/imgui/imgui_impl_glfw.h"
 #include "Libraries/imgui/imgui_impl_opengl3.h"
+#pragma warning( default : 4244 )
 // #endif
 
 #include "QF_QwerkE_Enums.h"

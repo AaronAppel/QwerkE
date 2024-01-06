@@ -53,14 +53,14 @@ namespace QwerkE {
     // Returns new shader handle is successful, else 0
     ShaderComponent* ShaderFactory::CreateShaderComponent(GLenum shaderType, const char* shaderPath)
     {
-        const char* shaderString = LoadCompleteFile(shaderPath, 0);
-        ShaderComponent* result = GenerateShaderFromData(shaderType, shaderString);
-        if (result)
+        const char* shaderString = LoadCompleteFile(shaderPath, 0); // #TODO Allocation
+        if (ShaderComponent* result = GenerateShaderFromData(shaderType, shaderString))
         {
             result->SetType(DeepCopyString(GetFileExtension(shaderPath).c_str()));
             result->SetName(GetFileNameWithExt(shaderPath));
+            return result;
         }
-        return result;
+        return nullptr;
     }
 
     ShaderComponent* ShaderFactory::GenerateShaderFromData(GLenum shaderType, const char* shaderData)
@@ -108,10 +108,10 @@ namespace QwerkE {
 
     GLuint ShaderFactory::CreateShaderProgram(GLuint vert, GLuint frag, GLuint geo)
     {
-        if (vert == 0 && frag == 0 && geo == 0) // no valid shaders
+        if (vert == 0 && frag == 0 && geo == 0)
         {
             LOG_ERROR("No valid shader handles were given!");
-            return 0;
+            return 0; // #TODO Return a constant
         }
         return LinkShaders(vert, frag, geo);
     }

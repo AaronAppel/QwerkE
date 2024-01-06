@@ -11,7 +11,7 @@
 // Define debug vs release macro
 #ifdef _DEBUG
 #define _QDebug
-#elif defined(_RELEASE)
+#elif
 #define _QRelease
 #else
 #pragma warning "Define Debug or Release mode!"
@@ -31,13 +31,8 @@
 #define ProjectName "Qwerk"
 #endif
 
-#ifndef FrameworkDir
-#define FrameworkStandAlone // #TODO Review Framework assets needs
-#define FrameworkDir ""
-#endif
-
 #ifndef AssetsDir
-#define AssetsDir FrameworkDir "Assets/" // TODO: Remove common assets
+#define AssetsDir "Assets/"
 #endif
 
 #ifndef LibrariesDir
@@ -49,7 +44,7 @@
 //USER: Set the offset from your project working directory
 // You must #define AssetDir "Assets/" (path to assets)
 
-#define FrameworkNullAssetsDir FrameworkDir "Assets/NullAssets/" // Framework null objects to use if user assets fail to load
+#define FrameworkNullAssetsDir "Assets/NullAssets/" // Framework null objects to use if user assets fail to load
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.
@@ -64,16 +59,6 @@
 // manipulated at runtime so be careful since this is a good and bad thing.
 // #define MeshFolder AssetDir "Meshes/"
 
-#ifdef FrameworkStandAlone
-#define MeshesFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#define ShadersFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#define TexturesFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#define FontsFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#define SoundsFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#define ScenesFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#define ConfigsFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#define ObjectSchematicsFolderPath(fullFileName) StringAppend(AssetsDir, fullFileName)
-#else
 #define MeshesFolderPath(fullFileName) StringAppend(AssetsDir, "Meshes/", fullFileName)
 #define ShadersFolderPath(fullFileName) StringAppend(AssetsDir, "Shaders/", fullFileName)
 #define TexturesFolderPath(fullFileName) StringAppend(AssetsDir, "Textures/", fullFileName)
@@ -82,7 +67,6 @@
 #define ScenesFolderPath(fullFileName) StringAppend(AssetsDir, "Scenes/", fullFileName)
 #define ConfigsFolderPath(fullFileName) StringAppend(AssetsDir, "Configs/", fullFileName)
 #define ObjectSchematicsFolderPath(fullFileName) StringAppend(AssetsDir, "BluePrints_Prefabs_Schematic/", fullFileName)
-#endif
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.

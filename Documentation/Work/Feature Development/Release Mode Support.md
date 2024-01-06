@@ -1,0 +1,3 @@
+Currently, QwerkE only supports debug targetting for builds, so all debug symbols and libraries are used with extra checks enabled. It would be more efficient time wise to support release builds to improve development speed. Debug should always be a fallback option when needed, and thus should be maintained as well.
+
+Also consider another target like from work projects, or from The Cherno's engine series.

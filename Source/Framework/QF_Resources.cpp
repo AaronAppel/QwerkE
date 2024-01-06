@@ -186,8 +186,7 @@ namespace QwerkE {
 			m_Meshes[meshName] = result;
 			return result;
 		}
-		else
-			return m_Meshes[null_mesh];
+		return m_Meshes[null_mesh];
 	}
 
 	void Resources::UpdateTexture(const char* name, int handle)
@@ -226,6 +225,7 @@ namespace QwerkE {
 		/*/
 		return InstantiateTexture(TexturesFolderPath(name));
 		// */
+		return nullptr;
 	}
 
 	Texture* Resources::GetTextureFromPath(const char* filePath)
@@ -316,19 +316,18 @@ namespace QwerkE {
 		return InstantiateShaderComponent(filePath);
 	}
 
-	// Utilities
-	bool Resources::isUnique(Mesh* mesh)
+	bool Resources::IsUnique(Mesh* mesh)
 	{
 		std::map<std::string, Mesh*>::iterator it;
 		for (it = m_Meshes.begin(); it != m_Meshes.end(); it++)
 		{
-			if (it->second == mesh) // pointer comparison
+			if (it->second == mesh)
 				return false;
 		}
 		return true;
 	}
 
-	bool Resources::isUnique(Texture* texturehandle)
+	bool Resources::IsUnique(Texture* texturehandle)
 	{
 		std::map<std::string, Texture*>::iterator it;
 		for (it = m_Textures.begin(); it != m_Textures.end(); it++)
@@ -339,56 +338,56 @@ namespace QwerkE {
 		return true;
 	}
 
-	bool Resources::isUnique(Material* material)
+	bool Resources::IsUnique(Material* material)
 	{
 		std::map<std::string, Material*>::iterator it;
 		for (it = m_Materials.begin(); it != m_Materials.end(); it++)
 		{
-			if (it->second == material) // pointer comparison
+			if (it->second == material)
 				return false;
 		}
 		return true;
 	}
 
-	bool Resources::isUnique(FT_Face font)
+	bool Resources::IsUnique(FT_Face font)
 	{
 		std::map<std::string, FT_Face>::iterator it;
 		for (it = m_Fonts.begin(); it != m_Fonts.end(); it++)
 		{
-			if (it->second == font) // pointer comparison
+			if (it->second == font)
 				return false;
 		}
 		return true;
 	}
 
-	bool Resources::isSoundUnique(ALuint sound)
+	bool Resources::IsSoundUnique(ALuint sound)
 	{
 		std::map<std::string, ALuint>::iterator it;
 		for (it = m_Sounds.begin(); it != m_Sounds.end(); it++)
 		{
-			if (it->second == sound) // pointer comparison
+			if (it->second == sound)
 				return false;
 		}
 		return true;
 	}
 
-	bool Resources::isShaderProgramUnique(ShaderProgram* shaderProgram)
+	bool Resources::IsShaderProgramUnique(ShaderProgram* shaderProgram)
 	{
 		std::map<std::string, ShaderProgram*>::iterator it;
 		for (it = m_ShaderPrograms.begin(); it != m_ShaderPrograms.end(); it++)
 		{
-			if (it->second == shaderProgram) // pointer comparison
+			if (it->second == shaderProgram)
 				return false;
 		}
 		return true;
 	}
 
-	bool Resources::isShaderComponentsUnique(ShaderComponent* shaderComponent)
+	bool Resources::IsShaderComponentsUnique(ShaderComponent* shaderComponent)
 	{
 		std::map<std::string, ShaderComponent*>::iterator it;
 		for (it = m_ShaderComponents.begin(); it != m_ShaderComponents.end(); it++)
 		{
-			if (it->second == shaderComponent) // pointer comparison
+			if (it->second == shaderComponent)
 				return false;
 		}
 		return true;

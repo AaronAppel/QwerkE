@@ -1,7 +1,5 @@
 #include "QF_Resources.h"
 
-#include "Libraries/glew/GL/glew.h"
-
 #include "QC_StringHelpers.h"
 
 #include "QF_Material.h"
@@ -19,35 +17,30 @@ namespace QwerkE {
     std::map<std::string, Mesh*> Resources::m_Meshes;
     std::map<std::string, Texture*> Resources::m_Textures;
     std::map<std::string, Material*> Resources::m_Materials;
-    std::map<std::string, FT_Face> Resources::m_Fonts;
+    std::map<std::string, FT_Face> Resources::m_Fonts; // TODO: Abstract freetype2
     std::map<std::string, ALuint> Resources::m_Sounds; // TODO: Abstract OpenAL
     std::map<std::string, ShaderProgram*> Resources::m_ShaderPrograms;
     std::map<std::string, ShaderComponent*> Resources::m_ShaderComponents;
 
-	// TODO: Look at resource creation again. Should Resource Manager create assets or just store them?
-	// TODO: Load all files in folder. This avoids hard coded assets names and allows easy adding/removal of assets even at runtime.
-	// Objects may need to switch to assets ids. ids would act as unique identifiers in the asset list and would prevent crashing.
 	void Resources::Initialize()
 	{
-		// TODO: Handle, or consider preventing, multiple Init() calls to avoid duplicated/leaked data issues
-
-		InstantiateMesh(NullFolderPath(null_mesh_filename));
-		InstantiateTexture(NullFolderPath(null_texture)); // TODO: Create a Texture class
-		InstantiateMaterial(NullFolderPath(null_material_schematic));
-        InstantiateFont(NullFolderPath(null_font)); // TODO: Create a valid null font
-        InstantiateShaderComponent(NullFolderPath(null_vert_component)); // TODO: Remove null component references. Store components and reference them in shader programs
-        InstantiateShaderComponent(NullFolderPath(null_frag_component)); // TODO: Remove null component references. Store components and reference them in shader programs
-		// TODO: InstantiateShaderComponent(NullFolderPath(null_geo_component));  // TODO: Remove null component references. Store components and reference them in shader programs
-		InstantiateShaderProgram(NullFolderPath(null_shader_schematic));
-		InstantiateSound(NullFolderPath(null_sound));
-
-		if (m_Sounds.size() == 0)
-		{
-			LOG_ERROR("Error loading null sound {0}. Make sure the AudioManager has been initialized", null_sound);
-		}
+		InstantiateNullAssets();
 	}
 
-	// Instantiation Functions
+	void Resources::InstantiateNullAssets()
+	{
+		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh_filename)), "Error loading null mesh asset!");
+		ASSERT(Resources::InstantiateTexture(NullFolderPath(null_texture)), "Error loading null texture asset!");
+		ASSERT(Resources::InstantiateMaterial(NullFolderPath(null_material_schematic)), "Error loading null material asset!");
+		ASSERT(Resources::InstantiateFont(NullFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
+		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh_filename)), "Error loading null mesh asset!");
+		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_vert_component)), "Error loading null vertex component asset!"); // TODO: Remove null component references. Store components and reference them in shader programs
+		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_frag_component)), "Error loading null fragment component!"); // TODO: Remove null component references. Store components and reference them in shader programs
+		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_geo_component)), "Error loading null geometry component!"); // #TODO Shader components can be referenced in the shader itself, so just load a null shader schematic
+		ASSERT(Resources::InstantiateShaderProgram(NullFolderPath(null_shader_schematic)), "Error loading null shader program!");
+		ASSERT(Resources::InstantiateSound(NullFolderPath(null_sound)), "Error loading null sound asset!");
+	}
+
 	// TODO: Handle errors and deleting assets before returning nullptr
 	Mesh* Resources::InstantiateMesh(const char* meshFilePath)
 	{
@@ -228,70 +221,37 @@ namespace QwerkE {
 
 	ShaderComponent* Resources::InstantiateShaderComponent(const char* componentFilePath)
 	{
-		// TODO: Add assert for geometry shaders
-		if (FileExists(componentFilePath))
-		{
-			ShaderComponent* result = nullptr;
-			if (strcmp(GetFileExtension(componentFilePath).c_str(), vertex_shader_ext) == 0)
-			{
-				result = ShaderFactory::CreateShaderComponent(GL_VERTEX_SHADER, componentFilePath);
-
-				if (result)
-				{
-					m_ShaderComponents[componentFilePath] = result;
-					return result;
-				}
-				else
-				{
-					return m_ShaderComponents[null_vert_component];
-				}
-			}
-			else if (strcmp(GetFileExtension(componentFilePath).c_str(), fragment_shader_ext) == 0)
-			{
-				result = ShaderFactory::CreateShaderComponent(GL_FRAGMENT_SHADER, componentFilePath);
-
-				if (result)
-				{
-					m_ShaderComponents[componentFilePath] = result;
-					return result;
-				}
-				else
-                {
-                    return m_ShaderComponents[null_frag_component];
-				}
-			}
-			// TODO: Support geometry shaders
-			/*else if (strcmp(GetFileExtension(componentName).c_str(), geometry_shader_ext) == 0)
-			{
-				result = ((ShaderFactory*)QwerkE::Services::GetService(eEngineServices::Factory_Shader))->CreateShaderComponent(
-					GL_GEOMETRY_SHADER, componentName);
-
-				if (result)
-				{
-					m_ShaderComponents[componentName] = result;
-					return result;
-				}
-				else
-                {
-                    return m_ShaderComponents[null_geo_component];
-				}
-			}*/
-		}
-
-		// TODO: Find a nice way to return a valid value
+		ASSERT(componentFilePath && FileExists(componentFilePath), "Cannot return a valid shader component using an invalid file path!");
 
 		if (strcmp(GetFileExtension(componentFilePath).c_str(), vertex_shader_ext) == 0)
 		{
+			if (ShaderComponent* result = ShaderFactory::CreateShaderComponent(GL_VERTEX_SHADER, componentFilePath))
+			{
+				m_ShaderComponents[componentFilePath] = result;
+				return result;
+			}
 			return m_ShaderComponents[null_vert_component];
 		}
-		else if (strcmp(GetFileExtension(componentFilePath).c_str(), vertex_shader_ext) == 0)
+		else if (strcmp(GetFileExtension(componentFilePath).c_str(), fragment_shader_ext) == 0)
 		{
+			if (ShaderComponent* result = ShaderFactory::CreateShaderComponent(GL_FRAGMENT_SHADER, componentFilePath))
+			{
+				m_ShaderComponents[componentFilePath] = result;
+				return result;
+			}
 			return m_ShaderComponents[null_frag_component];
 		}
-		else
+		else if (strcmp(GetFileExtension(componentFilePath).c_str(), geometry_shader_ext) == 0)
 		{
-			LOG_CRITICAL("Could not find shader component type for file name {0}", componentFilePath);
+			LOG_TRACE("Geometry shaders are not yet supported");
+			if (ShaderComponent* result = ShaderFactory::CreateShaderComponent(GL_GEOMETRY_SHADER, componentFilePath))
+			{
+				m_ShaderComponents[componentFilePath] = result;
+				return result;
+			}
+			return m_ShaderComponents[null_geo_component];
 		}
+		ASSERT(false, "Invalid shader component type from file extension");
 		return nullptr;
 	}
 

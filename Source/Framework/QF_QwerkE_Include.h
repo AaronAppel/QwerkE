@@ -1,5 +1,7 @@
 #pragma once
 
+// #NOTE Only To be included by "QF_QwerkE.h"
+
 #include "QF_QwerkE_Defines.h"
 #include "QF_QwerkE_Platform.h"
 

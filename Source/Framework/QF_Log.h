@@ -19,7 +19,8 @@
 // #pragma warning( default : 4996 ) // #TODO Fix 4996 error "error C4996: 'fmt::v9::detail::arg_mapper<Context>::map': was declared deprecated" in ShaderFactory.cpp
 // Maybe move spdlog include and references into .cpp so it's only compiled once in there
 
-namespace QwerkE {
+namespace QwerkE
+{
 
     class Log final
     {
@@ -36,8 +37,6 @@ namespace QwerkE {
 
 }
 
-// #TODO Add asserting : https://www.youtube.com/watch?v=DQCkMnMNFBI&ab_channel=Progrematic
-
 // #ifdef _QDebug
 #if _DEBUG
 // #define LOG_TRACE(...)    ::QwerkE::LOG_TRACE(__VA_ARGS__) // TODO: Contain spdlog code inside Log.cpp only?
@@ -49,8 +48,10 @@ namespace QwerkE {
 #define LOG_ERROR(...)      QwerkE::Log::m_Logger->error(__VA_ARGS__);
 #define LOG_CRITICAL(...)   QwerkE::Log::m_Logger->critical(__VA_ARGS__);
 
+// #TODO Make these globally accessible at all times, even without logging
 #define BREAK __debugbreak();
 #define ASSERT(x, msg)   if ((x)) { } else { LOG_CRITICAL("Assert! {0}, {1}, in {2}() in {3}({4})", #x, msg, __FUNCTION__, __FILE__, __LINE__); BREAK }
+// #TODO Add asserting : https://www.youtube.com/watch?v=DQCkMnMNFBI&ab_channel=Progrematic
 
 #else
 #define LOG_TRACE(...)      (void)0

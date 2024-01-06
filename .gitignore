@@ -28,6 +28,7 @@ instrumentor_log.json
 // Local build files
 Debug/*
 Release/*
+x86/*
 x64/*
 
 // Development branches

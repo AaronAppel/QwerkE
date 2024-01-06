@@ -2,7 +2,10 @@
 
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/glfw/GLFW/glfw3.h"
+#pragma warning( disable : 4244 )
 #include "Libraries/imgui/imgui.h"
+#include "Libraries/imgui/imgui_impl_glfw.h"
+#pragma warning( default : 4244 )
 
 #include "QF_Log.h"
 #include "QF_Window.h"
@@ -110,7 +113,7 @@ namespace QwerkE {
             delete m_Windows.at(i);
         }*/
 
-        ImGui_ImplGlfw_Shutdown();
+        ImGui_ImplGlfw_Shutdown(); // #TODO Fix inconsistent compile error
         glfwTerminate();
     }
 
@@ -119,12 +122,13 @@ namespace QwerkE {
         m_Windows.push_back(window);
     }
 
-    Window* Windows::GetWindow(int windowID)
+    Window* Windows::GetWindow(uint windowID)
     {
         if (windowID >= 0 && windowID < m_Windows.size())
         {
             return m_Windows.at(windowID);
         }
+        return nullptr;
     }
 
     const Window* Windows::GetLastFocusedWindow()
