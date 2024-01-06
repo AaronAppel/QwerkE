@@ -67,6 +67,9 @@
     <Filter Include="Types">
       <UniqueIdentifier>{c234a921-a9b5-40e5-bb90-3461f83623a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{0a0da428-2d8a-423b-b0a6-7e25cb427d4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Helpers.cpp" />
@@ -114,6 +117,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.cpp">
       <Filter>Types</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Math.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2589,6 +2598,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h">
       <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathHelpers.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math_Includes.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,7 +22,6 @@
 
 #include "QF_Profile.h"
 #include "QF_Debugger.h"
-
 #include "QF_Graphics_Header.h"
 #include "QF_FrameBufferObject.h"
 #include "QF_MeshFactory.h"
@@ -37,13 +36,13 @@
 #include "QF_ShaderFactory.h"
 #include "QF_Jobs.h"
 #include "QF_Network.h"
-#include "QF_Window.h"
-#include "QF_Windows.h"
 #include "QF_glfw_Window.h"
 #include "QF_Time.h"
 #include "QF_Log.h"
 #include "QF_ConfigHelper.h"
 #include "QF_Scenes.h"
+#include "QF_Window.h"
+#include "QF_Windows.h"
 
 namespace QwerkE {
 
@@ -57,7 +56,7 @@ namespace QwerkE {
 			// #TODO Open or close console output window using config.systems.ConsoleOutputWindowEnabled
 
             Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
-			PROFILE_SCOPE("Run");
+			PROFILE_SCOPE("Run"); // #TODO Review. Shouldn't need to persist constantly. Measure startup time instead.
 
 			if (args.find(key_ProjectName) != args.end())
 			{
@@ -73,7 +72,8 @@ namespace QwerkE {
 
 			if (Framework::Startup(ConfigsFolderPath("preferences.qpref")) == eEngineMessage::_QFailure)
             {
-                Log::Safe("Qwerk Framework failed to load. Shutting down engine.");
+                LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
+				Instrumentor::Get().EndSession();
 				return eEngineMessage::_QFailure;
 			}
 
@@ -119,8 +119,8 @@ namespace QwerkE {
                 }
 			}
 
-            Instrumentor::Get().EndSession();
 			Framework::TearDown();
+			Instrumentor::Get().EndSession();
 
 			return QwerkE::eEngineMessage::_QSuccess;
 		}

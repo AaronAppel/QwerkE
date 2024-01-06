@@ -1,6 +1,6 @@
 #include "QE_imgui_Editor.h"
 
-#include "imgui/imgui.h"
+#include "Libraries/imgui/imgui.h"
 
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"
@@ -20,24 +20,6 @@
 #include "QE_EditComponent.h"
 
 namespace QwerkE {
-
-    imgui_Editor::imgui_Editor()
-    {
-        m_EntityEditor = new EntityEditor();
-        m_SceneGraph = new SceneGraph(m_EntityEditor);
-        m_ResourceViewer = new ResourceViewer();
-        m_ShaderEditor = new ShaderEditor();
-        m_SceneViewer = new SceneViewer();
-    }
-
-    imgui_Editor::~imgui_Editor()
-    {
-        delete m_EntityEditor;
-        delete m_SceneGraph;
-        delete m_ResourceViewer;
-        delete m_ShaderEditor;
-        delete m_SceneViewer;
-    }
 
     void imgui_Editor::Draw()
     {

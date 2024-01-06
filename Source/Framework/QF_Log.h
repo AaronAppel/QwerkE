@@ -27,8 +27,6 @@ namespace QwerkE {
         static void Initialize();
         static void Shutdown();
 
-        static void Safe(const char* message...);
-
         static std::shared_ptr<spdlog::logger> m_Logger; // #TODO Private
     private:
         Log() = default;

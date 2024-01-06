@@ -11,7 +11,7 @@
 // Define debug vs release macro
 #ifdef _DEBUG
 #define _QDebug
-#elif defined(RELEASE)
+#elif defined(_RELEASE)
 #define _QRelease
 #else
 #pragma warning "Define Debug or Release mode!"
@@ -49,7 +49,7 @@
 //USER: Set the offset from your project working directory
 // You must #define AssetDir "Assets/" (path to assets)
 
-#define FrameworkNullAssetsDir FrameworkDir "Assets/" // Framework null objects to use if user assets fail to load
+#define FrameworkNullAssetsDir FrameworkDir "Assets/NullAssets/" // Framework null objects to use if user assets fail to load
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.

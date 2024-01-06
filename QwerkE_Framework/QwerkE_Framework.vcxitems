@@ -60,8 +60,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_LoadModelFile.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MasterAssetList.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Mesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshUtilities.cpp" />
@@ -158,11 +156,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Log.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Material.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MaterialComponent.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathConstants.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MeshFactory.h" />

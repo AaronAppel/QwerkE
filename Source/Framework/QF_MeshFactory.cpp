@@ -5,12 +5,11 @@
 #include "Libraries/glm/glm/vec3.hpp"
 #include "Libraries/glm/glm/gtx/quaternion.inl"
 
+#include "QC_MathConstants.h"
+
 #include "QF_FileUtilities.h"
 #include "QF_Graphics_Header.h"
 #include "QF_MeshData.h"
-
-#include "QF_MathConstants.h"
-
 #include "QF_Log.h"
 
 namespace QwerkE {

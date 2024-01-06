@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "QwerkE Standards/Coding Standards.md",
+                "file": "Work/Feature Development/Logging Improvements.md",
                 "mode": "source",
                 "source": false
               }
@@ -64,7 +64,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Work/To Complete/Review Deprecated Files.md",
+                "file": "QwerkE Standards/Commenting.md",
                 "mode": "source",
                 "source": false
               }
@@ -82,8 +82,7 @@
               }
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -128,7 +127,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "shader",
+                "query": "alternative",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -168,7 +167,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Work/To Complete/Review Deprecated Files.md",
+                "file": "Work/Feature Development/Logging Improvements.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,7 +184,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Work/To Complete/Review Deprecated Files.md",
+                "file": "Work/Feature Development/Logging Improvements.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -197,7 +196,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Work/To Complete/Review Deprecated Files.md"
+                "file": "Work/Feature Development/Logging Improvements.md"
               }
             }
           }
@@ -218,10 +217,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c9c2d1b18e80882e",
+  "active": "55628a392364c2db",
   "lastOpenFiles": [
-    "ShaderVariableDoc.txt.md",
+    "QwerkE Standards/Coding Standards.md",
+    "Z. Less Relevant/Markdown Syntax Reference.md",
+    "QwerkE Standards/Commenting.md",
+    "Work/Feature Development/Logging Improvements.md",
+    "Solution Configuration/Compilation Configuration.md",
+    "README.md",
     "Work/To Complete/Review Deprecated Files.md",
+    "ShaderVariableDoc.txt.md",
     "Work/To Complete",
     "Work",
     "QwerkE Standards/Namespaces and Domains.md",
@@ -233,23 +238,17 @@
     "Solution Configuration/Additional Includes.md",
     "Solution Configuration/Preprocessor Definitions.md",
     "Solution Configuration/Precompiled Headers.md",
-    "QwerkE Standards/Coding Standards.md",
     "Work/Feature Development/Scenes.md",
     "Z. Less Relevant/Bit Flags.md",
     "Old Notes.md",
     "Framework Read Me.md",
-    "README.md",
     "Z. Less Relevant/Bit Manipulation.md",
     "References/Library References.md",
     "Git and GitHub/Git.md",
     "Known Issues.md",
     "Assets and Data/Supported File and Data Types.md",
     "QwerkE Standards/Include Flow Diagram.canvas",
-    "Z. Less Relevant/Markdown Syntax Reference.md",
-    "QwerkE Standards/Conditional Statements.md",
     "References",
-    "QwerkE Standards/Empty Function Body.md",
-    "Work/Feature Development/Engine Styling and Appearance.md",
     "Assets and Data",
     "Z. Less Relevant",
     "Work/Feature Development",

@@ -9,8 +9,9 @@
 #pragma warning( default : 4244 )
 typedef MyMatrix mat4;
 
-#include "QF_MathConstants.h"
-#include "QF_MathFunctions.h"
-#include "QF_MathHelpers.h"
+#include "QC_MathConstants.h"
+#include "QC_MathFunctions.h"
+#include "QC_MathHelpers.h"
+
 #include "QF_VectorMathHelpers.h"
 #include "QF_ValueChecking.h"

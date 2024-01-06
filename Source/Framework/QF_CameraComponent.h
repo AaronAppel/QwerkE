@@ -2,10 +2,10 @@
 
 #include "Libraries/glew/GL/glew.h"
 
-#include "QF_Math_Includes.h"
+#include "QC_Math_Includes.h"
+
 #include "QF_QwerkE_Global_Constants.h"
 #include "QF_QwerkE_Enums.h"
-
 #include "QF_Component.h"
 
 const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis and move to a better defines file

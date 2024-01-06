@@ -1,4 +1,4 @@
-#include "QF_MathFunctions.h"
+#include "QC_MathFunctions.h"
 
 #include <stdlib.h>
 

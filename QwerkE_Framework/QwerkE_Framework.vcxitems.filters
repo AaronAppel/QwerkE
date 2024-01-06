@@ -328,16 +328,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TweenFuncs.cpp">
       <Filter>Core\Math\Tween</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ValueChecking.cpp">
       <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_VectorMathHelpers.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.cpp">
       <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Input.cpp">
@@ -626,25 +620,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_TweenFuncs.h">
       <Filter>Core\Math\Tween</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math_Includes.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathConstants.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathFunctions.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_MathHelpers.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_ValueChecking.h">
       <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_VectorMathHelpers.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_Math.h">
       <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Source\Framework\QF_QwerKE_eKeys.h">

@@ -12,9 +12,10 @@
 // TODO: Look at operator== for float value comparison
 // TODO: inline?
 // TODO: fequal
-#include "QF_MathHelpers.h"
 
 #include <cmath> // sqrt
+
+#include "QC_MathHelpers.h"
 
 struct Vector2
 {

@@ -71,5 +71,8 @@
       <Filter>Editor\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_Engine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QE_Editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

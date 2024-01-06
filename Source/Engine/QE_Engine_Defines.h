@@ -9,6 +9,6 @@
 // Override framework defaults
 #define ProjectName "QwerkE"
 #define _QAdvancedApi
-#define FrameworkDir "QwerkE_Framework/"
+#define FrameworkDir ""
 #define AssetsDir "Assets/"
 #define ProjectsDir AssetsDir "Projects/"

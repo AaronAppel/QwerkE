@@ -2,13 +2,14 @@
 
 #include "Libraries/glfw/GLFW/glfw3.h"
 
+#include "QC_Math_Includes.h"
+
 #include "QF_QwerkE_Enums.h"
 
 #include "QF_CameraComponent.h"
 #include "QF_GameObject.h"
 #include "QF_Window.h"
 #include "QF_Windows.h"
-#include "QF_Math_Includes.h"
 
 namespace QwerkE {
 

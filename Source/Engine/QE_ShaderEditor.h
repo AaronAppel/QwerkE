@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 
+#include "Libraries/glew/GL/glew.h"
+
 namespace QwerkE {
 
     class ShaderProgram;
@@ -17,7 +19,11 @@ namespace QwerkE {
         void SetShader(ShaderProgram* shader) { m_Shader = shader; };
         const ShaderProgram* GetShader() { return m_Shader; };
 
+        void ToggleIsVisible() { m_IsVisible = !m_IsVisible; }
+
     private:
+        bool m_IsVisible = true;
+
         const std::map<std::string, ShaderProgram*>* m_ShaderList = nullptr;
         ShaderProgram* m_Shader = nullptr;
 

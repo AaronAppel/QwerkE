@@ -26,6 +26,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Math.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyMatrix.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.cpp" />
@@ -851,6 +853,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyMatrix.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />
