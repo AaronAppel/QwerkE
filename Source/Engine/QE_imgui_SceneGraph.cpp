@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-#include "imgui/imgui.h"
+#include "Libraries/imgui/imgui.h"
 
 #include "QC_StringHelpers.h"
 
@@ -11,7 +11,6 @@
 #include "QF_Scenes.h"
 #include "QF_GameObject.h"
 #include "QF_Factory.h"
-#include "QF_GUID.h"
 
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"
@@ -20,10 +19,6 @@ namespace QwerkE {
 
 	SceneGraph::SceneGraph(EntityEditor* entityEditor)
 		: m_EntityEditor(entityEditor)
-	{
-	}
-
-	SceneGraph::~SceneGraph()
 	{
 	}
 
@@ -40,18 +35,20 @@ namespace QwerkE {
 			{
 				m_CurrentList = 0;
 			}
+
 			ImGui::SameLine();
 			if (ImGui::Button("Cams"))
 			{
 				m_CurrentList = 1;
 			}
+
 			ImGui::SameLine();
 			if (ImGui::Button("Lights"))
 			{
 				m_CurrentList = 2;
 			}
-			ImGui::SameLine();
 
+			ImGui::SameLine();
 			// Object creation
 			if (ImGui::Button("Add+"))
 			{
@@ -87,52 +84,40 @@ namespace QwerkE {
 					}
 				ImGui::EndPopup();
 			}
-			/*if (ImGui::Begin("Create Object", &creator))
-			{
-				if (ImGui::Button("Create"))
-				{
-					GameObject* result = ((Factory*)QwerkE::Services::GetService(eEngineServices::Factory_Entity))->CreateEmptyGameObject(
-						m_Scenes->GetCurrentScene(), vec3(0,0,0));
-					result->SetName(StringAppend("Object", std::to_string(UniqueID()).c_str()));
-					m_Scenes->GetCurrentScene()->AddObjectToScene(result);
-					creator = false;
-				}
-				ImGui::End();
-			}*/
 
 			ImGui::Separator();
 
-			std::map<std::string, GameObject*> entities = currentScene->GetObjectList();
-			std::vector<GameObject*> cameras = currentScene->GetCameraList();
-			std::vector<GameObject*> lights = currentScene->GetLightList();
-			std::map<std::string, GameObject*>::iterator thing;
+			std::map<std::string, GameObject*> entities = currentScene->GetObjectList(); // #TODO Move down inside switch
+			std::map<std::string, GameObject*>::iterator it;
+
+			std::vector<GameObject*> cameras = currentScene->GetCameraList(); // #TODO Move down inside switch
+			std::vector<GameObject*> lights = currentScene->GetLightList(); // #TODO Move down inside switch
 
 			int itemWidth = 100;
 			int itemsPerRow = (int)ImGui::GetWindowWidth() / itemWidth + 1;
 
-			int counter = 0;
+			int counter = 0; // #TODO Remove
 			ImGui::PushItemWidth(50);
+
 			switch (m_CurrentList)
 			{
 			case 0: // Actors
-				for (thing = entities.begin(); thing != entities.end(); thing++)
+				for (it = entities.begin(); it != entities.end(); it++)
 				{
+					if (counter % itemsPerRow) ImGui::SameLine();
 
-					if (counter % itemsPerRow)
-						ImGui::SameLine();
-
-					if (ImGui::Button(thing->second->GetName().c_str()))
+					if (ImGui::Button(it->second->GetName().c_str()))
 					{
-						m_EntityEditor->SetCurrentEntity(thing->second);
+						m_EntityEditor->SetCurrentEntity(it->second);
 					}
 					counter++;
 				}
 				break;
+
 			case 1: // Cameras
 				for (unsigned int i = 0; i < cameras.size(); i++)
 				{
-					if (counter % itemsPerRow)
-						ImGui::SameLine();
+					if (counter % itemsPerRow) ImGui::SameLine();
 
 					if (ImGui::Button(cameras[i]->GetName().c_str()))
 					{

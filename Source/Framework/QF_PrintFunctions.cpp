@@ -1,5 +1,7 @@
 #include "QF_PrintFunctions.h"
 
+// #TODO Deprecate file. Maybe move methods to a QC_* file, or extend to a more fully featured logging utility file
+
 #include "QF_QwerkE_Defines.h"
 #include "QF_QwerkE_Platform.h"
 
@@ -17,7 +19,8 @@ void OutputPrint(const char* message, ...)
 	vsnprintf_s(buffer, sizeof(buffer), _TRUNCATE, message, arg);
 	va_end(arg);
 
-	buffer[MAX_MESSAGE - 1] = 0; // vsnprintf_s might do this, but docs are unclear
+	// vsnprintf_s might do this, but docs are unclear
+	buffer[MAX_MESSAGE - 1] = 0; // #TODO Should this be '\0'?
 	OutputDebugStringA(buffer);
 }
 

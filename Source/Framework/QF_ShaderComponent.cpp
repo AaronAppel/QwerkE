@@ -9,13 +9,11 @@ namespace QwerkE {
 
     ShaderComponent::ShaderComponent(const char* shaderPath)
     {
-        // read and compile file data
         if (FileExists(shaderPath))
         {
             m_Name = GetFileNameWithExt(shaderPath);
             m_Type = GetFileExtension(shaderPath);
 
-            // compile
             if (m_Type == "vert") // TODO: Make an enum for this type
             {
                 m_ShaderHandle = ShaderFactory::CreateVertexShader(shaderPath);
@@ -33,19 +31,17 @@ namespace QwerkE {
                 m_ShaderHandle = 0;
             }
         }
+
         if (!m_ShaderHandle)
         {
-            m_Name = "Error";
-            m_Type = "Error";
             LOG_ERROR("Error compiling Shader Component: {0}", shaderPath);
         }
     }
 
     ShaderComponent::~ShaderComponent()
     {
-        // delete shader and shader string data
-        glDeleteShader(m_ShaderHandle);
-        delete[] m_ShaderData;
+        glDeleteShader(m_ShaderHandle); // #TODO Verify if allocated
+        delete[] m_ShaderData; // #TODO Verify if allocated
     }
 
 }

@@ -8,7 +8,6 @@ namespace QwerkE {
     {
     public:
         SceneGraph(EntityEditor* entityEditor);
-        ~SceneGraph();
 
         void Draw();
 
