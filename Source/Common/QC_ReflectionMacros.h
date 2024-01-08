@@ -1,9 +1,12 @@
 #pragma once
 
+// #NOTE For enum.h library include
+#define ENUM_TO_STR(x) (+x)._to_string()
+
 // Reference : Timmy_A
 // https://stackoverflow.com/questions/3386861/converting-a-variable-name-to-a-string-in-c
 
-// TODO: #define VARIABLE_TO_STRING(Variable) #Variable // Lowest variable name. Ex: object.value = "value"
+// #define VARIABLE_TO_STRING(Variable) #Variable // #TODO Lowest variable name. Ex: object.value = "value"
 #define FULL_VARIABLE_TO_STRING(Variable) (void(Variable),#Variable) // Full variable name. Ex: object.value = "object.value"
 
 #define FUNCTION_TO_STRING(Function) (void(&Function),#Function)
@@ -12,5 +15,4 @@
 
 #define TYPE_TO_STRING(Type) (void(sizeof(Type)),#Type)
 
-// #TODO Look into stringify reflection logic for variables, functions, types, etc
-#define STRINGIFY_VARIABLE #
+// #define STRINGIFY_VARIABLE # // #TODO Look into stringify reflection logic for variables, functions, types, etc

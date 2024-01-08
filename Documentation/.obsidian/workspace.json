@@ -4,110 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "d1330226ba083c37",
+        "id": "af48d469ad2fb2cc",
         "type": "tabs",
         "children": [
           {
-            "id": "b03ed1acc52e3bf9",
+            "id": "53592c4d0abce2d7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Z. Less Relevant/Markdown Syntax Reference.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "14e63c6f58ac7507",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "QwerkE Standards/Include Flow Diagram.canvas",
-                "viewState": {
-                  "x": -631.5747740532589,
-                  "y": -319.9568228673621,
-                  "zoom": 0.4375
-                }
-              }
-            }
-          },
-          {
-            "id": "322106121cc11225",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Assets and Data/Supported File and Data Types.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "28d1e7ec096c5d42",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "QwerkE Standards/Language Versions.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c9c2d1b18e80882e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Sub Projects/QwerkE Games.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b75c3ae4c421c6b5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Helpers vs Utilities.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ceb40e7dddc0d6f3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "C++ Project Setup.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "829d56dec2e8397c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Z. Less Relevant/Markdown Syntax Reference.md",
+                "file": "Work/Other/Enum Decorator.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 6
+        ]
       }
     ],
     "direction": "vertical"
@@ -152,7 +64,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "version",
+                "query": "tag:#Feature",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -168,7 +80,7 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": false
               }
             }
           }
@@ -192,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "C++ Project Setup.md",
+                "file": "Work/Other/Enum Decorator.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -209,7 +121,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "C++ Project Setup.md",
+                "file": "Work/Other/Enum Decorator.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -221,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "C++ Project Setup.md"
+                "file": "Work/Other/Enum Decorator.md"
               }
             }
           }
@@ -242,14 +154,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ceb40e7dddc0d6f3",
+  "active": "53592c4d0abce2d7",
   "lastOpenFiles": [
+    "Solution Configuration/Preprocessor Definitions.md",
+    "Work/Other/Enum Decorator.md",
+    "Work/Feature Development/ASSERT Expanded.md",
     "Helpers vs Utilities.md",
+    "Work/Feature Development/Scenes.md",
+    "Known Issues and Gotchas.md",
+    "Work/To Complete/ShaderVariableDoc.txt.md",
+    "Obsidian Setup.md",
+    "References/Library References.md",
     "C++ Project Setup.md",
     "Sub Projects/QwerkE Games.md",
     "Solution Configuration/Compilation Configuration.md",
     "Work/Other/Calculate Aspect Ratio.md",
-    "Work/Feature Development/ASSERT Expanded.md",
     "References/Constexpr.md",
     "References/Variadic or Variable Arguments (__VA_ARGS__).md",
     "QwerkE Standards/Asserts.md",
@@ -261,17 +180,10 @@
     "QwerkE Standards/Include Flow Diagram.canvas",
     "QwerkE Standards/Language Versions.md",
     "Old Notes.md",
-    "Work/Feature Development/Scenes.md",
     "Work/Other/String Library.md",
-    "References/Library References.md",
     "Work/Other",
     "QwerkE Standards/Pre And Post Incrementing.md",
     "Work/Feature Development/Release Mode Support.md",
-    "Work/Feature Development/GUIDs.md",
-    "Work/Feature Development/Asset Manifest Loading.md",
-    "Work/Feature Development/Resources Unload.md",
-    "Work/Feature Development/Load Assets By Folder.md",
-    "Work/Feature Development/Logging Improvements.md",
     "Work/To Complete",
     "Work",
     "References",

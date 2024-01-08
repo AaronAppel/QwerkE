@@ -653,9 +653,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Time.h">
       <Filter>Core\Time</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Timer.h">
-      <Filter>Core\Time</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Windows.h">
       <Filter>Core\Window</Filter>
     </ClInclude>

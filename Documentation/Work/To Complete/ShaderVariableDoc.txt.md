@@ -1,4 +1,5 @@
 #TODO Review and improve shader documentation. Create a shader section/folder, inside of a graphics or rendering section
+// Create a rendering folder and start putting things in there.
 
 .vertex values
 // Transform
@@ -15,10 +16,10 @@ uniform vec3 u_LightPos // Location of the light in the world.
 
 .fragment values
 // Texture
-uniform sampler2D u_Texture0; // Each texture found is counted and images
-				// are added from the object's image list
+uniform sampler2D u_Texture0; // Each texture found is counted and images are added from the object's image list
 
 // Material
-uniform float u_Shine // Augments the shine for this object's material. From object's material.
+uniform float u_Shine // Modifies the shine for this object's material. From object's material.
 
 .geometry values
+// Currently unsupported

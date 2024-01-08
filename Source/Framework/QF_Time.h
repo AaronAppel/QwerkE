@@ -22,6 +22,8 @@ namespace QwerkE {
         // TODO: Make class static
         // TODO: Add methods: UpdateDeltaTime(), DeltaTime(), GetSystemTime(), GetFixedTimestep()
 
+        // #TODO Register timers for call backs, instead of polling everywhere. Can order callbacks to only poll 1 at a time.
+
     private:
         Time() {}
         ~Time() {}

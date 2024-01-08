@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 
+#include "Libraries/enum.h"
 #include "Libraries/imgui/imgui.h"
 
 #include "QC_StringHelpers.h"
@@ -14,6 +15,13 @@
 
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"
+
+#include "QC_ReflectionMacros.h"
+
+// #TODO Create a #define to wrap the name. Maybe something like SERIALIZE_ENUM would be better
+// #TODO Review enum declarations using enum.h library
+BETTER_ENUM(eSceneGraphFilter, int, Actors, Cams, Lights)
+BETTER_ENUM(eSceneGraphCreateTypes, int, Empty, Light, Camera)
 
 namespace QwerkE {
 
@@ -27,30 +35,21 @@ namespace QwerkE {
 		if (ImGui::Begin("SceneGraph"))
 		{
 			Scene* currentScene = Scenes::GetCurrentScene();
-
 			if (currentScene == nullptr)
 				return;
 
-			if (ImGui::Button("Actors"))
+			for (size_t i = 0; i < eSceneGraphFilter::_size_constant; i++)
 			{
-				m_CurrentList = 0;
+				if (i > 0) ImGui::SameLine();
+
+				if (ImGui::Button(ENUM_TO_STR(eSceneGraphFilter::_from_index(i))))
+				{
+					m_CurrentList = i;
+				}
 			}
 
 			ImGui::SameLine();
-			if (ImGui::Button("Cams"))
-			{
-				m_CurrentList = 1;
-			}
-
-			ImGui::SameLine();
-			if (ImGui::Button("Lights"))
-			{
-				m_CurrentList = 2;
-			}
-
-			ImGui::SameLine();
-			// Object creation
-			if (ImGui::Button("Add+"))
+			if (ImGui::Button("+"))
 			{
 				ImGui::OpenPopup("Create Object");
 			}
@@ -60,91 +59,86 @@ namespace QwerkE {
 				ImGui::Text("Object Types");
 				ImGui::Separator();
 
-				const char* names[] = { "Empty", "Light", "Camera", "Sphere" };
-				for (int i = 0; i < IM_ARRAYSIZE(names); i++)
-					if (ImGui::Selectable(names[i]))
+				for (int i = 0; i < eSceneGraphCreateTypes::_size_constant; i++)
+					if (ImGui::Selectable(ENUM_TO_STR(eSceneGraphCreateTypes::_from_index(i))))
 					{
 						switch (i)
 						{
-						case 0:
+						case eSceneGraphCreateTypes::Empty:
 							currentScene->AddObjectToScene(Factory::CreateEmptyGameObject(currentScene, vec3(0, 0, 0)));
 							break;
-						case 1:
+
+						case eSceneGraphCreateTypes::Light:
 							currentScene->AddLight(Factory::CreateLight(currentScene, vec3(0, 0, 0)));
 							break;
-						case 2:
+
+						case eSceneGraphCreateTypes::Camera:
 							currentScene->AddCamera(Factory::CreateFreeCamera(currentScene, vec3(0, 0, 0)));
-							break;
-						case 3:
-							currentScene->AddObjectToScene(Factory::CreateSphere(currentScene, vec3(0, 0, 0)));
-							break;
-						default:
 							break;
 						}
 					}
 				ImGui::EndPopup();
 			}
-
 			ImGui::Separator();
-
-			std::map<std::string, GameObject*> entities = currentScene->GetObjectList(); // #TODO Move down inside switch
-			std::map<std::string, GameObject*>::iterator it;
-
-			std::vector<GameObject*> cameras = currentScene->GetCameraList(); // #TODO Move down inside switch
-			std::vector<GameObject*> lights = currentScene->GetLightList(); // #TODO Move down inside switch
 
 			int itemWidth = 100;
 			int itemsPerRow = (int)ImGui::GetWindowWidth() / itemWidth + 1;
-
-			int counter = 0; // #TODO Remove
+			int sameLineCounter = 0;
 			ImGui::PushItemWidth(50);
 
 			switch (m_CurrentList)
 			{
-			case 0: // Actors
-				for (it = entities.begin(); it != entities.end(); it++)
+			case eSceneGraphFilter::Actors:
 				{
-					if (counter % itemsPerRow) ImGui::SameLine();
-
-					if (ImGui::Button(it->second->GetName().c_str()))
+					std::map<std::string, GameObject*> entities = currentScene->GetObjectList();
+					std::map<std::string, GameObject*>::iterator it;
+					for (it = entities.begin(); it != entities.end(); it++)
 					{
-						m_EntityEditor->SetCurrentEntity(it->second);
+						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
+
+						if (ImGui::Button(it->second->GetName().c_str()))
+						{
+							m_EntityEditor->SetCurrentEntity(it->second);
+						}
+						sameLineCounter++;
 					}
-					counter++;
 				}
 				break;
 
-			case 1: // Cameras
-				for (unsigned int i = 0; i < cameras.size(); i++)
+			case eSceneGraphFilter::Cams:
 				{
-					if (counter % itemsPerRow) ImGui::SameLine();
-
-					if (ImGui::Button(cameras[i]->GetName().c_str()))
+					std::vector<GameObject*> cameras = currentScene->GetCameraList();
+					for (unsigned int i = 0; i < cameras.size(); i++)
 					{
-						m_EntityEditor->SetCurrentEntity(cameras[i]);
+						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
+
+						if (ImGui::Button(cameras[i]->GetName().c_str()))
+						{
+							m_EntityEditor->SetCurrentEntity(cameras[i]);
+						}
+						sameLineCounter++;
 					}
-					counter++;
 				}
 				break;
-			case 2: // Lights
+
+			case eSceneGraphFilter::Lights:
+				std::vector<GameObject*> lights = currentScene->GetLightList();
 				for (unsigned int i = 0; i < lights.size(); i++)
 				{
-					if (counter % itemsPerRow)
+					if (sameLineCounter % itemsPerRow)
 						ImGui::SameLine();
 
 					if (ImGui::Button(lights[i]->GetName().c_str()))
 					{
 						m_EntityEditor->SetCurrentEntity(lights[i]);
 					}
-					counter++;
+					sameLineCounter++;
 				}
 				break;
 			}
 			ImGui::PopItemWidth();
-			ImGui::End();
 		}
-		else
-			ImGui::End();
+		ImGui::End();
 	}
 
 }

@@ -2,6 +2,8 @@
 
 #include "QF_QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
 
+#include "Libraries/enum.h"
+
 #pragma warning( disable : 26437 )
 #pragma warning( disable : 26451 )
 #pragma warning( disable : 26495 )

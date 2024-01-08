@@ -203,7 +203,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Texture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ThirdPersonCameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Time.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_TransformRoutine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Tween.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_TweenFuncs.h" />

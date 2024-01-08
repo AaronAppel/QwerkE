@@ -8,14 +8,11 @@
 // Use a CallBack* to notify listeners of timer expiry,
 // or trigger a function.
 
-#include <float.h>
+#define FLT_MAX 3.402823466e+38F
 
 class Timer
 {
 public:
-    Timer();
-    virtual ~Timer();
-
     void Reset(double a_TimeLength) // start
     {
         m_ElapsedTime = 0.0f;
@@ -48,6 +45,7 @@ private:
         else
             m_HasCompleted = false;
     }
+
     bool m_HasCompleted = false;
     float m_ElapsedTime = 0.0f;
     float m_TimeLength = FLT_MAX;
