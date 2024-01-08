@@ -84,7 +84,7 @@ namespace QwerkE {
 
 		if (m_Scenes.empty())
         {
-			Scene* emptyScene = new Scene();
+			Scene* emptyScene = new Scene(ScenesFolderPath(null_scene));
 			emptyScene->Initialize();
 			emptyScene->SetIsEnabled(true);
             m_CurrentScene = emptyScene;

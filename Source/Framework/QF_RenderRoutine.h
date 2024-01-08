@@ -9,7 +9,7 @@
 
 namespace QwerkE {
 
-    class CameraComponent;
+    class ComponentCamera;
     class GameObject;
     class Material;
     class Mesh;
@@ -21,7 +21,7 @@ namespace QwerkE {
     public:
         typedef void (RenderRoutine::* DrawFunc)(GameObject* a_Camera); // draw mesh or model
         // TODO: Look at improving arguments
-        typedef void (RenderRoutine::* SetupUniformFunction)(CameraComponent* a_Camera, Renderable* renderable); // Setup shader values function
+        typedef void (RenderRoutine::* SetupUniformFunction)(ComponentCamera* a_Camera, Renderable* renderable); // Setup shader values function
 
     public:
         RenderRoutine();
@@ -49,17 +49,17 @@ namespace QwerkE {
         void SetDrawFunctions();
 
         /* Vertex uniform value assignment */
-        void Setup3DTransform(CameraComponent* a_Camera, Renderable* renderable);
-        void Setup2DTransform(CameraComponent* a_Camera, Renderable* renderable);
+        void Setup3DTransform(ComponentCamera* a_Camera, Renderable* renderable);
+        void Setup2DTransform(ComponentCamera* a_Camera, Renderable* renderable);
 
         /* Fragment uniform value assignment */
-        void SetupColorUniforms(CameraComponent* a_Camera, Renderable* renderable);
-        void SetupMaterialUniforms(CameraComponent* a_Camera, Renderable* renderable);
+        void SetupColorUniforms(ComponentCamera* a_Camera, Renderable* renderable);
+        void SetupMaterialUniforms(ComponentCamera* a_Camera, Renderable* renderable);
 
         // Lighting
-        void SetupLightingUniforms(CameraComponent* a_Camera, Renderable* renderable);
+        void SetupLightingUniforms(ComponentCamera* a_Camera, Renderable* renderable);
         // Camera
-        void SetupCameraUniforms(CameraComponent* a_Camera, Renderable* renderable);
+        void SetupCameraUniforms(ComponentCamera* a_Camera, Renderable* renderable);
         /* Other */
         void SetupTextureUniforms(GLuint textures[], int size, ShaderProgram* shader);
     };

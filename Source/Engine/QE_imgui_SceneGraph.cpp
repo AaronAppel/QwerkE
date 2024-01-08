@@ -20,8 +20,9 @@
 
 // #TODO Create a #define to wrap the name. Maybe something like SERIALIZE_ENUM would be better
 // #TODO Review enum declarations using enum.h library
-BETTER_ENUM(eSceneGraphFilter, int, Actors, Cams, Lights)
-BETTER_ENUM(eSceneGraphCreateTypes, int, Empty, Light, Camera)
+#define ENUM(Enum, Underlying, ...) BETTER_ENUM(Enum, Underlying, __VA_ARGS__)
+ENUM(eSceneGraphFilter, int, Actors, Cams, Lights)
+ENUM(eSceneGraphCreateTypes, int, Empty, Light, Camera)
 
 namespace QwerkE {
 
@@ -81,8 +82,8 @@ namespace QwerkE {
 			}
 			ImGui::Separator();
 
-			int itemWidth = 100;
-			int itemsPerRow = (int)ImGui::GetWindowWidth() / itemWidth + 1;
+			const float itemWidth = 100;
+			const int itemsPerRow = (int)(ImGui::GetWindowWidth() / itemWidth + 1.f);
 			int sameLineCounter = 0;
 			ImGui::PushItemWidth(50);
 
@@ -99,6 +100,7 @@ namespace QwerkE {
 						if (ImGui::Button(it->second->GetName().c_str()))
 						{
 							m_EntityEditor->SetCurrentEntity(it->second);
+							break;
 						}
 						sameLineCounter++;
 					}
@@ -106,7 +108,7 @@ namespace QwerkE {
 				break;
 
 			case eSceneGraphFilter::Cams:
-				{
+				{	// #TODO Move logic to a re-usable function as it's the same logic as for lights below, with different input
 					std::vector<GameObject*> cameras = currentScene->GetCameraList();
 					for (unsigned int i = 0; i < cameras.size(); i++)
 					{
@@ -115,6 +117,7 @@ namespace QwerkE {
 						if (ImGui::Button(cameras[i]->GetName().c_str()))
 						{
 							m_EntityEditor->SetCurrentEntity(cameras[i]);
+							break;
 						}
 						sameLineCounter++;
 					}
@@ -131,6 +134,7 @@ namespace QwerkE {
 					if (ImGui::Button(lights[i]->GetName().c_str()))
 					{
 						m_EntityEditor->SetCurrentEntity(lights[i]);
+						break;
 					}
 					sameLineCounter++;
 				}

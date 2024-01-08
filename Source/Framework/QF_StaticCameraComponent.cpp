@@ -5,7 +5,7 @@
 namespace QwerkE {
 
     StaticCameraComponent::StaticCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
-        CameraComponent(position, up, yaw, pitch)
+        ComponentCamera(position, up, yaw, pitch)
     {
     }
 

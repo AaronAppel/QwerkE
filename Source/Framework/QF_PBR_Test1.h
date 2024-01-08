@@ -6,11 +6,12 @@
 
 namespace QwerkE {
 
+    // #TODO Deprecate PBR test scene
+    // #TODO Maybe a code file would be useful for generating a scene, or improve editor, but this class shouldn't exist
     class PBR_Test1 : public Scene
     {
     public:
         PBR_Test1();
-        ~PBR_Test1() = default;
 
         void Update(float deltatime) override;
 

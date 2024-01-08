@@ -2,8 +2,6 @@
 
 // #TODO Try to be specific with helpers. Delete this file but move functions to specifically named helper files
 
-double helpers_Time();
-
 // seed rand()
 //int RandomNumber() { return rand(); };
 
@@ -21,7 +19,6 @@ public:
     unsigned char a = 0;
 
     MyColor() = default;
-
     MyColor(unsigned char nr, unsigned char ng, unsigned char nb, unsigned char na)
     {
         r = nr;
@@ -31,13 +28,4 @@ public:
     }
 };
 
-void helpers_Toggle(bool* value);
-
 int CharToInt(char num);
-
-/* If Else helpers*/
-// void IfElse(comparisonValue, condition, trueValue, falseValue);
-// void ElseIf(comparisonValue, condition1, true1, false1, condition2, true2, false2...); // Variable arguments
-// void IfElseIf(comparisonValue, trioData[]);
-
-void* VoidCheck(void* check);

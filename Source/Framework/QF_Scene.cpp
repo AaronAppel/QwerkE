@@ -48,8 +48,8 @@ namespace QwerkE {
         // update camera view and projection matrices
         for (unsigned int i = 0; i < m_CameraList.size(); i++)
         {
-            // ((CameraComponent*)m_CameraList.At(i)->GetComponent(Component_Camera))->Setup();
-            ((CameraComponent*)m_CameraList.at(i)->GetComponent(Component_Camera))->SetViewportSize(vec2((float)width, (float)height));
+            // ((ComponentCamera*)m_CameraList.At(i)->GetComponent(Component_Camera))->Setup();
+            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->SetViewportSize(vec2((float)width, (float)height));
         }
     }
 
@@ -68,7 +68,7 @@ namespace QwerkE {
 
     void Scene::CameraInput(float deltatime)
     {
-        CameraComponent* t_activecamera = ((CameraComponent*)m_CameraList.at(m_CurrentCamera)->GetComponent(Component_Camera));
+        ComponentCamera* t_activecamera = ((ComponentCamera*)m_CameraList.at(m_CurrentCamera)->GetComponent(Component_Camera));
 
         const ConfigData& configHelper = ConfigHelper::GetConfigData();
 
@@ -146,8 +146,8 @@ namespace QwerkE {
     {
         for (unsigned int i = 0; i < m_CameraList.size(); i++)
         {
-            ((CameraComponent*)m_CameraList.at(i)->GetComponent(Component_Camera))->Setup();
-            ((CameraComponent*)m_CameraList.at(i)->GetComponent(Component_Camera))->SetTargetPosition(vec3(0, 0, 0));
+            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->Setup();
+            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->SetTargetPosition(vec3(0, 0, 0));
         }
     }
 

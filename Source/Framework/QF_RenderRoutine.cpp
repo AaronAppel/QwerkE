@@ -62,7 +62,7 @@ namespace QwerkE {
             return;
         }
 
-        CameraComponent* t_pCamera = (CameraComponent*)a_Camera->GetComponent(Component_Camera);
+        ComponentCamera* t_pCamera = (ComponentCamera*)a_Camera->GetComponent(Component_Camera);
 
         std::vector<Renderable> t_Renderables = *m_pRenderComp->LookAtRenderableList();
 

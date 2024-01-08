@@ -47,7 +47,7 @@ namespace QwerkE {
 
         m_ViewerScene->Initialize();
         m_ViewerScene->SetIsEnabled(true);
-        ((CameraComponent*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
+        ((ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
 
         Scenes::AddScene(m_ViewerScene);
 

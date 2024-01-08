@@ -14,20 +14,6 @@
           "b": 227
         },
         "luminance_offset": 0.15
-      },
-      {
-        "tag_name": "new-tag",
-        "color": {
-          "r": 3,
-          "g": 79,
-          "b": 12
-        },
-        "background_color": {
-          "r": 41,
-          "g": 219,
-          "b": 44
-        },
-        "luminance_offset": 0.15
       }
     ],
     "EnableMultipleTags": true,

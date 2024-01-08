@@ -866,6 +866,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h" />
   </ItemGroup>

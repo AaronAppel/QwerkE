@@ -10,7 +10,7 @@
 namespace QwerkE {
 
     FirstPersonCameraComponent::FirstPersonCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
-        CameraComponent(position, up, yaw, pitch)
+        ComponentCamera(position, up, yaw, pitch)
     {
     }
 
@@ -41,7 +41,7 @@ namespace QwerkE {
             m_Position += m_CamUp * velocity;
 
         FirstPersonCameraComponent::UpdateCameraVectors();
-        CameraComponent::UpdateParentPosition(m_Position);
+        ComponentCamera::UpdateParentPosition(m_Position);
     }
 
     void FirstPersonCameraComponent::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)

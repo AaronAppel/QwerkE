@@ -11,10 +11,9 @@
 
 namespace QwerkE {
 
-    PBR_Test1::PBR_Test1()
+    PBR_Test1::PBR_Test1() : Scene("PBR_Test1.qscene")
     {
         m_ID = (eSceneTypes::Scene_PBR_Test1);
-        m_LevelFileName = "PBR_Test1.qscene";
     }
 
     void PBR_Test1::Initialize()

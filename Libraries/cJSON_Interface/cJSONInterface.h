@@ -52,9 +52,9 @@ std::vector<cJSON*> GetItemsFromArrayByKey(cJSON* jObjectArray, char* key);
 std::vector<cJSON*> GetItemsFromArrayByString(cJSON* jObjectArray, char* value);
 std::vector<cJSON*> GetItemsFromArrayByIndexRange(cJSON* root, int min, int max);
 
-cJSON* GetItemFromArrayByKey(cJSON* jObjectArray, const char* targetObjectName);
-cJSON* GetItemFromArrayByString(cJSON* jObjectArray, const char* value);
-cJSON* GetItemFromArrayByIndex(cJSON* jObjectArray, int index);
+cJSON* GetItemFromArrayByKey(const cJSON* jObjectArray, const char* targetObjectName);
+cJSON* GetItemFromArrayByString(const cJSON* jObjectArray, const char* value);
+cJSON* GetItemFromArrayByIndex(const cJSON* jObjectArray, int index);
 
 //// Adding Items To File ////
 //*- Adding To Objects -*
@@ -129,7 +129,7 @@ void json_CreateNewFile(const char* filename);
 void CreateEmptycJSONFile(const char* filePath); // #TODO Consider returning an error status
 
 unsigned int GetObjectSize(cJSON* cJSONObject);
-unsigned int GetArraySize(cJSON* cJSONArray);
+unsigned int GetArraySize(const cJSON* cJSONArray);
 
 //cJSON* DuplicatecJSON(cJSON* cJSON) { return nullptr; }; // #TODO Implement
 

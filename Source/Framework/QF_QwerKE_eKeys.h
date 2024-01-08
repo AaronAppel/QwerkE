@@ -1,5 +1,7 @@
 #pragma once
 
+// #TODO Rename to "QF_eInputKeys" or more input related, instead of auth keys, or something like that
+
 namespace QwerkE {
 
     enum eKeyState

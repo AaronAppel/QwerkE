@@ -22,7 +22,7 @@ namespace QwerkE {
 
     // Private functions
     /* Vertex uniform value assignment */
-    void RenderRoutine::Setup3DTransform(CameraComponent* camera, Renderable* renderable)
+    void RenderRoutine::Setup3DTransform(ComponentCamera* camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         // world
@@ -34,7 +34,7 @@ namespace QwerkE {
         // projection
         t_pShader->SetUniformMat4(projectionMatrix, &camera->GetProjectionMatrix()->m11); // get from camera
     }
-    void RenderRoutine::Setup2DTransform(CameraComponent* camera, Renderable* renderable)
+    void RenderRoutine::Setup2DTransform(ComponentCamera* camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         mat4 worldMat;
@@ -44,7 +44,7 @@ namespace QwerkE {
         t_pShader->SetUniformMat4(transform2D, &worldMat.m11); // TODO: Review 2DTransform setup
     }
     /* Fragment uniform value assignment */
-    void RenderRoutine::SetupColorUniforms(CameraComponent* cameraObject, Renderable* renderable)
+    void RenderRoutine::SetupColorUniforms(ComponentCamera* cameraObject, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         vec4 t_Colour = vec4(0, 1, 0, 1); // m_pRenderComp->GetColour();
@@ -52,7 +52,7 @@ namespace QwerkE {
         t_pShader->SetUniformFloat4(objectColor, t_Colour.x, t_Colour.y, t_Colour.z, t_Colour.w);
     }
     // Materials
-    void RenderRoutine::SetupMaterialUniforms(CameraComponent* a_Camera, Renderable* renderable)
+    void RenderRoutine::SetupMaterialUniforms(ComponentCamera* a_Camera, Renderable* renderable)
     {
         Material* material = renderable->GetMaterialSchematic();
         const std::map<eMaterialMaps, Texture*>* materialList = material->SeeMaterials();
@@ -128,7 +128,7 @@ namespace QwerkE {
 
     }
     // Lighting
-    void RenderRoutine::SetupLightingUniforms(CameraComponent* a_Camera, Renderable* renderable)
+    void RenderRoutine::SetupLightingUniforms(ComponentCamera* a_Camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         // TODO: Get light data better
@@ -143,7 +143,7 @@ namespace QwerkE {
         t_pShader->SetUniformFloat3(lightColor, lightColour.x, lightColour.y, lightColour.z);
     }
     // Camera
-    void RenderRoutine::SetupCameraUniforms(CameraComponent* a_Camera, Renderable* renderable)
+    void RenderRoutine::SetupCameraUniforms(ComponentCamera* a_Camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
 

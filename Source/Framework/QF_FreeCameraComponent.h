@@ -9,7 +9,7 @@
 
 namespace QwerkE {
 
-    class FreeCameraComponent : public CameraComponent
+    class FreeCameraComponent : public ComponentCamera
     {
     public:
         FreeCameraComponent(vec3 position = vec3(0.0f, 0.0f, 0.0f), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);

@@ -1,2 +1,1 @@
 #TODO With the enum.h library, it is possible and simple to perform some reflection on enum types. It would be nice to be able to declare enums in the standard fashion, instead of using the BETTER_ENUM() \#define formatting, but still get the functionality of better-enums.
-#new-tag

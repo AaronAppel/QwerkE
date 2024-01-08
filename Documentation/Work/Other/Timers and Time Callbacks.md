@@ -1,0 +1,3 @@
+#TODO It might be a cool idea to add a callback feature to the global QF_Time class that tracks timer start requests and does the polling in 1 place, then calls back to the timer to tell it that enough time has passed and it can "expire". An advantage would be polling 1 timer at a time as all timer requests can be ordered by expiry time, and checked only after all sooner timers have expired.
+
+Maybe the syntax gets ugly, or the concept is too foreign or strange for others to use. Still an idea that I'd like to explore further some time.

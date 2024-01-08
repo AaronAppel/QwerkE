@@ -18,7 +18,7 @@
 						}],
 					"ObjectTag":	7,
 					"ComponentList":	[{
-							"4":	[{
+							"5":	[{
 									"ComponentName":	"Render",
 									"SchematicName":	"None",
 									"Renderables":	[{
@@ -33,7 +33,7 @@
 						}],
 					"RoutineList":	[{
 							"UpdateRoutines":	[{
-									"2":	[{
+									"4":	[{
 											"RoutineName":	"Transform",
 											"Speed":	0.500000,
 											"TransformValues":	[{
@@ -56,7 +56,7 @@
 										}]
 								}],
 							"DrawRoutines":	[{
-									"0":	[{
+									"1":	[{
 											"RoutineName":	"Render"
 										}]
 								}]
@@ -82,11 +82,11 @@
 						}],
 					"ObjectTag":	1,
 					"ComponentList":	[{
-							"0":	[{
+							"1":	[{
 									"ComponentName":	"Camera",
 									"CamType":	0
 								}],
-							"4":	[{
+							"5":	[{
 									"ComponentName":	"Render",
 									"SchematicName":	"None",
 									"Renderables":	[{
@@ -103,7 +103,7 @@
 							"UpdateRoutines":	[{
 							}],
 							"DrawRoutines":	[{
-									"0":	[{
+									"1":	[{
 											"RoutineName":	"Render"
 										}]
 								}]
@@ -129,10 +129,10 @@
 						}],
 					"ObjectTag":	2,
 					"ComponentList":	[{
-							"2":	[{
+							"3":	[{
 									"ComponentName":	"Light"
 								}],
-							"4":	[{
+							"5":	[{
 									"ComponentName":	"Render",
 									"SchematicName":	"None",
 									"Renderables":	[{
@@ -149,7 +149,7 @@
 							"UpdateRoutines":	[{
 							}],
 							"DrawRoutines":	[{
-									"0":	[{
+									"1":	[{
 											"RoutineName":	"Render"
 										}]
 								}]

@@ -11,7 +11,7 @@
 namespace QwerkE {
 
     ThirdPersonCameraComponent::ThirdPersonCameraComponent(vec3 position, vec3 up, float yaw, float pitch) :
-        CameraComponent(position, up, yaw, pitch)
+        ComponentCamera(position, up, yaw, pitch)
     {
     }
 
@@ -68,7 +68,7 @@ namespace QwerkE {
 
     void ThirdPersonCameraComponent::ProcessMouseScroll(float yoffset)
     {
-        CameraComponent::ProcessMouseScroll(yoffset);
+        ComponentCamera::ProcessMouseScroll(yoffset);
     }
 
 }

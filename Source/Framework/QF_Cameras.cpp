@@ -51,7 +51,7 @@ namespace QwerkE {
         t_pCamera->SetRenderOrder(-1);
         t_pCamera->SetName("Camera" + std::to_string(helpers_GetUniqueID()));
 
-        CameraComponent* t_pCamComp = nullptr;
+        ComponentCamera* t_pCamComp = nullptr;
 
         switch (camType)
         {

@@ -150,44 +150,22 @@ namespace QwerkE {
 
     cJSON* DataManager::ConvertGameObjectToJSON(GameObject* object)
     {
-        if (object == nullptr) { nullptr; }
+        if (object == nullptr) { return nullptr; }
 
         cJSON* t_ReturnJSON = CreateArray(object->GetName().c_str());
 
-        // Transform
-        AddPositionTocJSONItem(t_ReturnJSON, object); // Can put this in a SaveTransform() function
+        AddPositionTocJSONItem(t_ReturnJSON, object);
         AddRotationTocJSONItem(t_ReturnJSON, object);
         AddScaleTocJSONItem(t_ReturnJSON, object);
 
         AddItemToArray(t_ReturnJSON, CreateNumber((char*)"ObjectTag", (int)object->GetTag()));
-
-        // Components
         AddComponentsTocJSONItem(t_ReturnJSON, object);
-
-        // Routines
         AddRoutinesTocJSONItem(t_ReturnJSON, object);
 
-        // Handle special cases for certain components
+        // #TODO Handle special cases for certain components
         switch (object->GetTag())
         {
-        case GO_Tag_Player:
-            break;
-            // Cameras
-        case GO_Tag_Camera:
-            break;
-            // Lights
-        case GO_Tag_Light:
-            break;
-            // Shapes
-        case GO_Tag_Cube:
-            break;
-        case GO_Tag_Plane:
-            break;
-            // Scenery
-        case GO_Tag_SkyBox:
-            break;
-            // Test
-        case GO_Tag_TestModel:
+        default:
             break;
         }
 
@@ -295,19 +273,17 @@ namespace QwerkE {
         case Component_Camera:
         {
             AddItemToArray(t_Component, CreateString("ComponentName", "Camera"));
-            eCamType camType = ((CameraComponent*)component)->GetType();
+            eCamType camType = ((ComponentCamera*)component)->GetType();
             AddItemToArray(t_Component, CreateNumber("CamType", (int)camType));
         }
         break;
-        case Component_Physics:
-            // #TODO Implement physics component add
-            break;
+
         case Component_Light:
         {
             AddItemToArray(t_Component, CreateString("ComponentName", "Light"));
             switch (((LightComponent*)component)->GetType())
             {
-            case LightType_Point:
+            case LightType_Point: // #TODO Finish implementation
                 // AddItemToArray(t_Component, CreateNumber("LightType", (int)LightType_Point));
                 // AddVec3ToItem(t_Component, "LightColour",
                 //     "Red", ((LightComponent*)component)->GetColour().x,
@@ -323,9 +299,7 @@ namespace QwerkE {
             }
         }
         break;
-        case Component_Controller:
-            // #TODO Implement controller component add
-            break;
+
         case Component_Render:
         {
             AddItemToArray(t_Component, CreateString("ComponentName", "Render"));
@@ -356,11 +330,11 @@ namespace QwerkE {
             AddItemToArray(t_Component, t_Renderables);
         }
         break;
-        case Component_Print:
-            // #TODO Implement print/debug component add
-            break;
+
+        case Component_Physics:
+        case Component_Controller:
         case Component_SkyBox:
-            // #TODO Implement sjybox component add
+            // #TODO Implement component add
             break;
         }
         AddItemToArray(componentList, t_Component);
@@ -383,14 +357,14 @@ namespace QwerkE {
     {
         if (!item) { return; }
 
-        eComponentTags value = (eComponentTags)std::stoi(item->string); // eComponentTags::Component_Render; // GetItemFromArrayByKey(item, "");
+        const eComponentTags value = (eComponentTags)std::stoi(item->string); // eComponentTags::Component_Render; // GetItemFromArrayByKey(item, "");
         // Reference : https://www.techiedelight.com/convert-string-to-int-cpp/
 
         switch (value)
         {
         case Component_Camera:
         {
-            CameraComponent* t_pCamComp = nullptr;
+            ComponentCamera* t_pCamComp = nullptr;
             eCamType camType = eCamType::CamType_FreeCam; // #TODO Get dynamically
             switch (camType)
             {
@@ -411,9 +385,7 @@ namespace QwerkE {
             object->AddComponent(t_pCamComp);
         }
         break;
-        case Component_Physics:
-            // #TODO Implement physics component add
-            break;
+
         case Component_Light:
         {
             LightComponent* t_pLightComp = new LightComponent();
@@ -423,13 +395,11 @@ namespace QwerkE {
             object->AddComponent(t_pLightComp);
         }
         break;
-        case Component_Controller:
-            // #TODO Implement controller component add
-            break;
+
         case Component_Render:
         {
             RenderComponent* rComp = new RenderComponent();
-            cJSON* renderables = GetItemFromArrayByKey(item, "Renderables");
+            const cJSON* renderables = GetItemFromArrayByKey(item, "Renderables");
 
             for (size_t i = 0; i < GetArraySize(renderables); i++)
             {
@@ -459,20 +429,15 @@ namespace QwerkE {
         }
         break;
 
-        // #TODO Implement component adds
-        case Component_Print:
-            break;
+        case Component_Physics:
+        case Component_Controller:
         case Component_SkyBox:
-            break;
         case Component_SoundPlayer:
-            break;
         case Component_SoundListener:
-            break;
         case Component_Max:
-            break;
         case Component_Null:
-            break;
         default:
+            // #TODO Implement component adds
             break;
         }
     }

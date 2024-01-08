@@ -12,10 +12,10 @@ const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis and mov
 
 namespace QwerkE {
 
-    class CameraComponent : public Component
+    class ComponentCamera : public Component
     {
     public:
-        virtual ~CameraComponent();
+        virtual ~ComponentCamera();
 
         void Setup();
 
@@ -48,8 +48,8 @@ namespace QwerkE {
 
     protected:
         // private constructors
-        CameraComponent(vec3 position = vec3::Zero(), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
-        CameraComponent(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
+        ComponentCamera(vec3 position = vec3::Zero(), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
+        ComponentCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
         // Camera Attributes
         eCamType m_Type = CamType_NULL;

@@ -11,10 +11,9 @@
 
 namespace QwerkE {
 
-	TestScene::TestScene() : Scene()
+	TestScene::TestScene() : Scene("TestScene.qscene")
 	{
 		m_ID = eSceneTypes::Scene_TestScene;
-		m_LevelFileName = "TestScene.qscene";
 	}
 
 	GameObject* obj; // #TODO Fix hack

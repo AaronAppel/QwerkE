@@ -8,6 +8,7 @@ namespace QwerkE {
 
     enum class eInputDeviceTypes : std::uint8_t
     {
+        // #TODO Deprecate or move to input files domain. Maybe a new input file like eKeys but eInputDevices
         Keyboard_Min = 0,
         Keyboard_Device0,
         Keyboard_Device1,
@@ -106,110 +107,42 @@ namespace QwerkE {
 
     enum eComponentTags : std::uint8_t
     {
-        Component_Camera = 0,
+        Component_Null = 0,
+        Component_Camera,
         Component_Physics,
         Component_Light,
         Component_Controller,
         Component_Render,
-        Component_Print, // #TODO Rename to debug component or something better if applicable
         Component_SkyBox,
         Component_SoundPlayer,
         Component_SoundListener,
-        Component_Max,
-        Component_Null
+        Component_Max // #TODO Don't create values that shouldn't be serialized. Create a ENUM_SIZE() macro or something instead
     };
 
     enum eRoutineTypes : std::uint8_t
     {
-        Routine_Render = 0,
+        // #TODO Enforce null/default values being the 1st (0) value, in all enums. Document rule as well!
+        Routine_Null = 0,
+        Routine_Render,
         Routine_Physics,
         Routine_Print,
         Routine_Transform,
         Routine_Max,
-        Routine_NULL
-    };
-
-    enum eGameButtons : std::uint8_t
-    {
-        // Application functionality
-        Button_ModifierCntrl,
-
-        /* Mouse */
-        Button_MouseLeft,
-        Button_MouseRight,
-        Button_MouseMiddle,
-
-        /* Movement */
-        Button_MoveUp,
-        Button_MoveDown,
-        Button_MoveLeft,
-        Button_MoveRight,
-        Button_MoveForward,
-        Button_MoveBackward,
-
-        /* Navigation */
-        Button_MenuUp,
-        Button_MenuDown,
-        Button_MenuLeft,
-        Button_MenuRight,
-        Button_MenuOpen,
-        Button_MenuClose,
-
-        /* Abilities */
-        Button_Ability1,
-
-        /* Size */
-        Button_Max
     };
 
     /* Scenes */
-    // TODO: Remove
+    // #TODO Deprecate as scenes should exist in data and be referenced by file names
     enum eSceneTypes : std::uint8_t
     {
-        //// list in order of opening if possible
-        // fullscreen
-        Scene_TestScene = 0,
+        Scene_Null = 0,
         Scene_GameScene,
-        // overlays
-        // Scene_OverLays,
-        // *options
-        // **Sound
-        // **etc
+        Scene_TestScene,
 
-        Scene_Max,
-
-        // "special" scenes
         Scene_ViewerScene,
         Scene_PBR_Test1,
 
-        Scene_Null
+        Scene_Max,
     };
-
-    /* Menu Windows Types */
-    enum eMenuTypes : std::uint8_t // Example game windows
-    {
-        Menu_Landing = 0,
-        Menu_DropDown,
-        Menu_Campaign,
-        Menu_DungeonRaid,
-        Menu_Progression,
-        Menu_Profile,
-        Menu_Character,
-        Menu_Max,
-        Menu_NULL
-    };
-
-    /* Menu States */
-    enum eStates : std::uint8_t
-    {
-        State_Min = 0,
-        State_Disabled,
-        State_Enabled,
-        State_Persistent,
-        State_Max
-    };
-
-    /* Menu Item Types */
 
     // Camera Types
     enum eCamType : std::uint8_t // TODO: Hide from program?
@@ -222,6 +155,7 @@ namespace QwerkE {
         CamType_Max,
         CamType_NULL
     };
+
     // Light Types
     enum eLightType : std::uint8_t // TODO: Hide from program?
     {

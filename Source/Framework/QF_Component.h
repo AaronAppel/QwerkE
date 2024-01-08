@@ -22,7 +22,7 @@ namespace QwerkE {
         void SetComponentTag(eComponentTags a_Tag) { m_ComponentTag = a_Tag; };
 
     protected:
-        Component() { m_ComponentTag = Component_Print; };
+        Component() { m_ComponentTag = Component_Null; };
         GameObject* m_pParent = nullptr;
         eComponentTags m_ComponentTag = Component_Null;
     };

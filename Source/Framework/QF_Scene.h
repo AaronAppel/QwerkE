@@ -14,12 +14,11 @@ namespace QwerkE {
     class Scenes;
     class GameObject;
 
-    class Scene
+    class Scene // #TODO Move all scenes to files as data and declare Scene as final
     {
     public:
-        Scene() = default;
         Scene(const char* sceneFileName) { m_LevelFileName = sceneFileName; }
-        ~Scene();
+        virtual ~Scene();
 
         virtual void Initialize();
 
@@ -64,11 +63,10 @@ namespace QwerkE {
 
         bool m_IsEnabled = false;
         bool m_IsPaused = false;
-        std::string m_LevelFileName = gc_DefaultCharPtrValue;// "Uninitialized"; // TODO: Find out why I can't assign gc_DefaultCharPtrValue
-        MyMatrix* m_pViewMatrix = nullptr; // TODO:: create cameras with different view matrices
+        std::string m_LevelFileName = gc_DefaultCharPtrValue;
 
         std::map<std::string, GameObject*> m_pGameObjects;
-        eSceneTypes m_ID = eSceneTypes::Scene_Null;
+        eSceneTypes m_ID = eSceneTypes::Scene_Null; // #TODO Deprecate ids and use unique file names/paths instead
 
         int m_CurrentCamera = 0;
         std::vector<GameObject*> m_CameraList;

@@ -8,10 +8,9 @@
 
 namespace QwerkE {
 
-    ViewerScene::ViewerScene()
+    ViewerScene::ViewerScene() : Scene("ViewerScene.qscene")
     {
         m_ID = eSceneTypes::Scene_ViewerScene;
-        m_LevelFileName = "ViewerScene.qscene";
     }
 
     void ViewerScene::Initialize()

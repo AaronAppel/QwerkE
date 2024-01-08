@@ -37,7 +37,7 @@ namespace QwerkE {
 
         int m_Priority = 0; // render order / update order
         GameObject* m_pParent = nullptr;
-        eRoutineTypes m_Type = eRoutineTypes::Routine_NULL;
+        eRoutineTypes m_Type = eRoutineTypes::Routine_Null;
     };
 
 }

@@ -216,7 +216,7 @@ std::vector<cJSON*> GetItemsFromArrayByIndexRange(cJSON* cJSONObject, int min, i
 	return returnList;
 }
 
-cJSON* GetItemFromArrayByKey(cJSON* cJSONArray, const char* key) // TODO:: BROKEN // <-- deprecated
+cJSON* GetItemFromArrayByKey(const cJSON* cJSONArray, const char* key) // TODO:: BROKEN // <-- deprecated
 {
 	int arraySize = cJSON_GetArraySize(cJSONArray->child);
 
@@ -235,7 +235,7 @@ cJSON* GetItemFromArrayByKey(cJSON* cJSONArray, const char* key) // TODO:: BROKE
 	return nullptr;
 }
 
-cJSON* GetItemFromArrayByString(cJSON* cJSONArray, const char* value) // #TODO Deprecate
+cJSON* GetItemFromArrayByString(const cJSON* cJSONArray, const char* value) // #TODO Deprecate
 {
 	int arraySize = cJSON_GetArraySize(cJSONArray->child);
 
@@ -254,7 +254,7 @@ cJSON* GetItemFromArrayByString(cJSON* cJSONArray, const char* value) // #TODO D
 	return nullptr;
 }
 
-cJSON* GetItemFromArrayByIndex(cJSON* cJSONarray, int index)
+cJSON* GetItemFromArrayByIndex(const cJSON* cJSONarray, int index)
 {
 	cJSON* cJSONItem = cJSONarray->child->child;
 
@@ -525,7 +525,7 @@ unsigned int GetObjectSize(cJSON* cJSONObject)
 	return cJSON_GetArraySize(cJSONObject);
 }
 
-unsigned int GetArraySize(cJSON* cJSONArray)
+unsigned int GetArraySize(const cJSON* cJSONArray)
 {
 	return cJSON_GetArraySize(cJSONArray->child);
 }

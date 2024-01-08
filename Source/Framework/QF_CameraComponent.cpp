@@ -15,7 +15,7 @@ namespace QwerkE {
 
 	// public functions
 	// Constructor with vectors
-	CameraComponent::CameraComponent(vec3 position, vec3 up, float yaw, float pitch)
+	ComponentCamera::ComponentCamera(vec3 position, vec3 up, float yaw, float pitch)
 	{
 		m_Position = position;
 		m_CamUp = up;
@@ -35,7 +35,7 @@ namespace QwerkE {
 	}
 
 	// Constructor with scalar values
-	CameraComponent::CameraComponent(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
+	ComponentCamera::ComponentCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
 	{
 		m_Position = vec3(posX, posY, posZ);
 		m_CamUp = vec3(upX, upY, upZ);
@@ -49,13 +49,13 @@ namespace QwerkE {
 		UpdateCameraVectors();
 	}
 
-	CameraComponent::~CameraComponent()
+	ComponentCamera::~ComponentCamera()
 	{
 		delete m_ViewMatrix;
 		delete m_ProjMatrix;
 	}
 
-	void CameraComponent::Setup()
+	void ComponentCamera::Setup()
 	{
 		m_Position.x = m_pParent->GetPosition().x;
 		m_Position.y = m_pParent->GetPosition().y;
@@ -64,28 +64,28 @@ namespace QwerkE {
 		UpdateCameraVectors();
 	}
 
-	mat4* CameraComponent::GetViewMatrix()
+	mat4* ComponentCamera::GetViewMatrix()
 	{
 		return m_ViewMatrix;
 	}
-	mat4* CameraComponent::GetProjectionMatrix()
+	mat4* ComponentCamera::GetProjectionMatrix()
 	{
 		return m_ProjMatrix;
 	}
 
-	void CameraComponent::SetTargetPosition(vec3 position)
+	void ComponentCamera::SetTargetPosition(vec3 position)
 	{
 		m_TargetPosition.x = position.x;
 		m_TargetPosition.y = position.y;
 		m_TargetPosition.z = position.z;
 	}
 
-	void CameraComponent::UpdateParentPosition(vec3 m_Position)
+	void ComponentCamera::UpdateParentPosition(vec3 m_Position)
 	{
 		m_pParent->SetPosition(m_Position);
 	}
 
-	void CameraComponent::ProcessMouseScroll(float yoffset)
+	void ComponentCamera::ProcessMouseScroll(float yoffset)
 	{
 		if (m_Zoom >= 1.0f && m_Zoom <= 45.0f)
 			m_Zoom -= yoffset;
@@ -96,7 +96,7 @@ namespace QwerkE {
 	}
 
 	// private functions
-	void CameraComponent::UpdateCameraVectors()
+	void ComponentCamera::UpdateCameraVectors()
 	{
 		// Calculate the new m_Forward vector
 		/*vec3 front;

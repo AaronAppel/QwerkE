@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Work/Other/Enum Decorator.md",
+                "file": "Z. Less Relevant/Renaming Values in Multiple Files.md",
                 "mode": "source",
                 "source": false
               }
@@ -64,7 +64,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#Feature",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -104,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Work/Other/Enum Decorator.md",
+                "file": "Z. Less Relevant/Renaming Values in Multiple Files.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +121,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Work/Other/Enum Decorator.md",
+                "file": "Z. Less Relevant/Renaming Values in Multiple Files.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Work/Other/Enum Decorator.md"
+                "file": "Z. Less Relevant/Renaming Values in Multiple Files.md"
               }
             }
           }
@@ -156,8 +156,13 @@
   },
   "active": "53592c4d0abce2d7",
   "lastOpenFiles": [
-    "Solution Configuration/Preprocessor Definitions.md",
+    "QwerkE Standards/Inheritance Structure and Depth.md",
+    "Z. Less Relevant/Renaming Values in Multiple Files.md",
+    "QwerkE Standards/Variable Naming.md",
+    "Work/Other/Timers and Time Callbacks.md",
+    "Work/Other/Identified Naming Issues.md",
     "Work/Other/Enum Decorator.md",
+    "Solution Configuration/Preprocessor Definitions.md",
     "Work/Feature Development/ASSERT Expanded.md",
     "Helpers vs Utilities.md",
     "Work/Feature Development/Scenes.md",
@@ -178,12 +183,7 @@
     "Solution Configuration/Projects.md",
     "QwerkE Standards/Commenting.md",
     "QwerkE Standards/Include Flow Diagram.canvas",
-    "QwerkE Standards/Language Versions.md",
-    "Old Notes.md",
-    "Work/Other/String Library.md",
     "Work/Other",
-    "QwerkE Standards/Pre And Post Incrementing.md",
-    "Work/Feature Development/Release Mode Support.md",
     "Work/To Complete",
     "Work",
     "References",

@@ -2620,6 +2620,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum.h">
       <Filter>Libraries</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h">
+      <Filter>Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">
