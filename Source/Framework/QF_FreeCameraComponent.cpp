@@ -17,9 +17,9 @@ namespace QwerkE {
     void FreeCameraComponent::ProcessKeyboard(eCamera_Movement direction, float deltaTime)
     {
         // https://learnopengl.com/Getting-started/Camera
-        float velocity = m_MovementSpeed * deltaTime;
-        float forwardVel = m_MovementSpeed * deltaTime;
-        float angularVel = 0.35f * deltaTime;
+        const float velocity = m_MovementSpeed * deltaTime;
+        const float forwardVel = m_MovementSpeed * deltaTime;
+        const float angularVel = 0.35f * deltaTime;
 
         if (direction == eCamera_Movement::FORWARD)
         {

@@ -1,4 +1,4 @@
-#include "cJSONInterface.h"
+#include "QC_cJSON.h"
 
 #include <vector>
 
@@ -26,11 +26,11 @@ cJSON* OpencJSONStream(const char* fileDirectory)
 	return nullptr;
 }
 
-void ClosecJSONStream(cJSON* root)
+void ClosecJSONStream(const cJSON* root)
 {
 	if (root)
 	{
-		cJSON_Delete(root);
+		cJSON_Delete((cJSON*)root);
 	}
 }
 
@@ -98,13 +98,13 @@ std::vector<cJSON*> GetItemsFromObjectByIndexRange(cJSON* cJSONObject, int minim
 	return returnList;
 }
 
-cJSON* GetItemFromObjectByKey(cJSON* cJSONObject, const char* key)
+cJSON* GetItemFromObjectByKey(const cJSON* cJSONObject, const char* key)
 {
-	int arraySize = cJSON_GetArraySize(cJSONObject);
+	int arraySize = cJSON_GetArraySize((cJSON*)cJSONObject);
 
 	for (int i = 0; i < arraySize; i++)
 	{
-		cJSON* item = cJSON_GetArrayItem(cJSONObject, i);
+		cJSON* item = cJSON_GetArrayItem((cJSON*)cJSONObject, i);
 		if (strcmp(item->string, key) == 0)
 		{
 			return item;
@@ -113,13 +113,13 @@ cJSON* GetItemFromObjectByKey(cJSON* cJSONObject, const char* key)
 	return nullptr;
 }
 
-cJSON* GetItemFromObjectByString(cJSON* cJSONObject, const char* value)
+cJSON* GetItemFromObjectByString(const cJSON* cJSONObject, const char* value)
 {
-	int arraySize = cJSON_GetArraySize(cJSONObject);
+	int arraySize = cJSON_GetArraySize((cJSON*)cJSONObject);
 
 	for (int i = 0; i < arraySize; i++)
 	{
-		cJSON* item = cJSON_GetArrayItem(cJSONObject, i);
+		cJSON* item = cJSON_GetArrayItem((cJSON*)cJSONObject, i);
 		if (item->valuestring == nullptr)
 		{
 			continue;
@@ -132,12 +132,12 @@ cJSON* GetItemFromObjectByString(cJSON* cJSONObject, const char* value)
 	return nullptr;
 }
 
-cJSON* GetItemFromObjectByIndex(cJSON* cJSONObject, int index)
+cJSON* GetItemFromObjectByIndex(const cJSON* cJSONObject, int index)
 {
-	return cJSON_GetArrayItem(cJSONObject, index);
+	return cJSON_GetArrayItem((cJSON*)cJSONObject, index);
 }
 
-std::vector<cJSON*> GetAllItemsFromArray(cJSON* arrayObject) // return array of objects inside of an objectArray
+std::vector<cJSON*> GetAllItemsFromArray(const cJSON* arrayObject) // return array of objects inside of an objectArray
 {
 	std::vector<cJSON*> itemList;
 
@@ -155,7 +155,7 @@ std::vector<cJSON*> GetAllItemsFromArray(cJSON* arrayObject) // return array of 
 	return itemList;
 }
 
-std::vector<cJSON*> GetItemsFromArrayByKey(cJSON* jObjectArray, const char* key) // #TODO Test
+std::vector<cJSON*> GetItemsFromArrayByKey(const cJSON* jObjectArray, const char* key) // #TODO Test
 {
 	int t_ArraySize = cJSON_GetArraySize(jObjectArray->child);
 
@@ -173,7 +173,7 @@ std::vector<cJSON*> GetItemsFromArrayByKey(cJSON* jObjectArray, const char* key)
 	return itemList;
 }
 
-std::vector<cJSON*> GetItemsFromArrayByString(cJSON* cJSONArray, const char* value)
+std::vector<cJSON*> GetItemsFromArrayByString(const cJSON* cJSONArray, const char* value)
 {
 	int arraySize = cJSON_GetArraySize(cJSONArray->child);
 
@@ -194,7 +194,7 @@ std::vector<cJSON*> GetItemsFromArrayByString(cJSON* cJSONArray, const char* val
 	return returnList;
 }
 
-std::vector<cJSON*> GetItemsFromArrayByIndexRange(cJSON* cJSONObject, int min, int max)
+std::vector<cJSON*> GetItemsFromArrayByIndexRange(const cJSON* cJSONObject, int min, int max)
 {
 	std::vector<cJSON*> returnList;
 

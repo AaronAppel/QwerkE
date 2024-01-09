@@ -15,10 +15,6 @@ namespace QwerkE {
     {
     }
 
-    ThirdPersonCameraComponent::~ThirdPersonCameraComponent()
-    {
-    }
-
     void ThirdPersonCameraComponent::ProcessKeyboard(eCamera_Movement direction, float deltaTime)
     {
         float velocity = m_MovementSpeed * deltaTime;

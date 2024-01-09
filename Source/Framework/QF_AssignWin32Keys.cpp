@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 
+#include "QF_Libraries_Load.h"
+
 namespace QwerkE {
 
 #ifndef GLFW3

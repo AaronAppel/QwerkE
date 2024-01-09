@@ -13,7 +13,7 @@ namespace QwerkE {
         eKeyState_Max
     };
 
-    enum eKeys
+    enum eKeys // #TODO Review having values match an ASCII table. This makes config file key re-mapping easier to implement
     {
         eKeys_NULL_KEY = 0,
 
@@ -121,8 +121,20 @@ namespace QwerkE {
         eKeys_Pad_8,
         eKeys_Pad_9,
 
+        // Numbers
+        eKeys_0 = 30,
+        eKeys_1,
+        eKeys_2,
+        eKeys_3,
+        eKeys_4,
+        eKeys_5,
+        eKeys_6,
+        eKeys_7,
+        eKeys_8,
+        eKeys_9,
+
         // Alphabet
-        eKeys_A,
+        eKeys_A = 65,
         eKeys_B,
         eKeys_C,
         eKeys_D,
@@ -148,18 +160,6 @@ namespace QwerkE {
         eKeys_X,
         eKeys_Y,
         eKeys_Z,
-
-        // Numbers
-        eKeys_0,
-        eKeys_1,
-        eKeys_2,
-        eKeys_3,
-        eKeys_4,
-        eKeys_5,
-        eKeys_6,
-        eKeys_7,
-        eKeys_8,
-        eKeys_9,
 
         // Punctuation
         eKeys_Space,

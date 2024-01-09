@@ -72,27 +72,27 @@ namespace QwerkE {
 
         const ConfigData& configHelper = ConfigHelper::GetConfigData();
 
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_Forward)) // eKeys::eKeys_W
+        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveForward))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::FORWARD, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_Backward)) // eKeys::eKeys_S
+        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveBackward))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::BACKWARD, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(eKeys::eKeys_A))
+        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveLeft))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::LEFT, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(eKeys::eKeys_D))
+        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveRight))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::RIGHT, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(eKeys::eKeys_Q))
+        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveDown))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::DOWN, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(eKeys::eKeys_E))
+        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveUp))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::UP, (float)deltatime);
         }

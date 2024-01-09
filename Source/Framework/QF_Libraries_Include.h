@@ -2,7 +2,7 @@
 
 #include "QF_QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
 
-#include "Libraries/enum.h"
+#include "Libraries/Enum/QC_enum.h"
 
 #pragma warning( disable : 26437 )
 #pragma warning( disable : 26451 )
@@ -20,7 +20,7 @@
 
 #pragma warning( disable : 4267 )
 #pragma warning( disable : 4244 )
-#include "Libraries/cJSON_Interface/cJSONInterface.h"
+#include "Libraries/cJSON/QC_cJSON.h"
 #pragma warning( default : 4267)
 #pragma warning( default : 4244)
 

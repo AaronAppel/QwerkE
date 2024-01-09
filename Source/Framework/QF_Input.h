@@ -44,8 +44,8 @@ namespace QwerkE {
 #ifdef GLFW3
         static void Initialize(GLFWwindow* window);
 #else
-        static void Initialize();
-#endif // GLFW3
+#pragma warning "Define input library!"
+#endif
 
         static void NewFrame(); // Call before other libraries! Resets frame input buffer
 
@@ -65,8 +65,7 @@ namespace QwerkE {
         static eKeys GLFWToQwerkEKey(int key);
 
     private:
-        Input() {}
-        ~Input() {}
+        Input() = default;
 
 #ifdef GLFW3
         static void SetupCallbacks(GLFWwindow* window);

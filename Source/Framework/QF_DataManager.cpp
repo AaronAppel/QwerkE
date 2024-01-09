@@ -1,6 +1,6 @@
 #include "QF_DataManager.h"
 
-#include "Libraries/cJSON_Interface/cJSONInterface.h"
+#include "Libraries/cJSON/QC_cJSON.h"
 
 #include "QF_QwerkE_Defines.h"
 

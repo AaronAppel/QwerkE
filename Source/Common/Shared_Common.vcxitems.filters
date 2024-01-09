@@ -22,9 +22,6 @@
     <Filter Include="Libraries\Bullet3">
       <UniqueIdentifier>{f1841ef5-062b-47dd-8da5-53716e29a12f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libraries\cJSON_Interface">
-      <UniqueIdentifier>{edc2d593-ce8e-4027-8c5c-e8c8022b52bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libraries\freetype2">
       <UniqueIdentifier>{2af68161-766f-43a9-b4ea-0be58d4ea5e0}</UniqueIdentifier>
     </Filter>
@@ -70,6 +67,12 @@
     <Filter Include="Math">
       <UniqueIdentifier>{0a0da428-2d8a-423b-b0a6-7e25cb427d4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\cJSON">
+      <UniqueIdentifier>{edc2d593-ce8e-4027-8c5c-e8c8022b52bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\enum">
+      <UniqueIdentifier>{9b847343-6ce7-4ea5-8e98-6a9854637915}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Helpers.cpp" />
@@ -81,12 +84,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp">
       <Filter>Time</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON_Interface\cJSON.cpp">
-      <Filter>Libraries\cJSON_Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON_Interface\cJSONInterface.cpp">
-      <Filter>Libraries\cJSON_Interface</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm.cpp">
       <Filter>Libraries\glm</Filter>
@@ -123,6 +120,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.cpp">
+      <Filter>Libraries\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp">
+      <Filter>Libraries\cJSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -363,12 +366,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\XMLTools.h">
       <Filter>Libraries\assimp</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON_Interface\cJSON.h">
-      <Filter>Libraries\cJSON_Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON_Interface\cJSONInterface.h">
-      <Filter>Libraries\cJSON_Interface</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftconfig.h">
       <Filter>Libraries\freetype2</Filter>
@@ -2617,11 +2614,20 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum.h">
-      <Filter>Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h">
       <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.h">
+      <Filter>Libraries\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.h">
+      <Filter>Libraries\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\QC_enum.h">
+      <Filter>Libraries\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\enum.h">
+      <Filter>Libraries\enum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

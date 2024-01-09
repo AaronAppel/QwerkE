@@ -29,7 +29,7 @@
 //// File I/O ////
 //*- File Reading -*
 cJSON* OpencJSONStream(const char* fileDirectory);
-void ClosecJSONStream(cJSON* root); // clean up
+void ClosecJSONStream(const cJSON* root);
 
 //*- File Writing -*
 void AddItemToRootOfFile(cJSON* object, char* filename);
@@ -42,15 +42,15 @@ std::vector<cJSON*> GetItemsFromObjectByKey(cJSON* cJSONObject, const char* key)
 std::vector<cJSON*> GetItemsFromObjectByString(cJSON* cJSONObject, char* value);
 std::vector<cJSON*> GetItemsFromObjectByIndexRange(cJSON* cJSONObject, int min, int max);
 
-cJSON* GetItemFromObjectByKey(cJSON* cJSONObject, const char* key);
-cJSON* GetItemFromObjectByString(cJSON* cJSONObject, const char* value);
-cJSON* GetItemFromObjectByIndex(cJSON* cJSONObject, int index);
+cJSON* GetItemFromObjectByKey(const cJSON* cJSONObject, const char* key);
+cJSON* GetItemFromObjectByString(const cJSON* cJSONObject, const char* value);
+cJSON* GetItemFromObjectByIndex(const cJSON* cJSONObject, int index);
 
 //*- Getting From Arrays -*
-std::vector<cJSON*> GetAllItemsFromArray(cJSON* jItem);
-std::vector<cJSON*> GetItemsFromArrayByKey(cJSON* jObjectArray, char* key);
-std::vector<cJSON*> GetItemsFromArrayByString(cJSON* jObjectArray, char* value);
-std::vector<cJSON*> GetItemsFromArrayByIndexRange(cJSON* root, int min, int max);
+std::vector<cJSON*> GetAllItemsFromArray(const cJSON* jItem);
+std::vector<cJSON*> GetItemsFromArrayByKey(const cJSON* jObjectArray, char* key);
+std::vector<cJSON*> GetItemsFromArrayByString(const cJSON* jObjectArray, char* value);
+std::vector<cJSON*> GetItemsFromArrayByIndexRange(const cJSON* root, int min, int max);
 
 cJSON* GetItemFromArrayByKey(const cJSON* jObjectArray, const char* targetObjectName);
 cJSON* GetItemFromArrayByString(const cJSON* jObjectArray, const char* value);

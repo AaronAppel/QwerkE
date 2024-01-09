@@ -48,12 +48,14 @@ namespace QwerkE {
 
     struct Controls
     {
-        eKeys Camera_Forward = eKeys::eKeys_MAX;
-        eKeys Camera_Backward = eKeys::eKeys_MAX;
+        eKeys Camera_MoveForward = eKeys::eKeys_MAX;
+        eKeys Camera_MoveBackward = eKeys::eKeys_MAX;
         eKeys Camera_MoveLeft = eKeys::eKeys_MAX;
         eKeys Camera_MoveRight = eKeys::eKeys_MAX;
         eKeys Camera_MoveUp = eKeys::eKeys_MAX;
         eKeys Camera_MoveDown = eKeys::eKeys_MAX;
+        eKeys Camera_RotateLeft = eKeys::eKeys_MAX;
+        eKeys Camera_RotateRight = eKeys::eKeys_MAX;
     };
 
     // #TODO Hide the data for safety. Find a better API for ConfigData
@@ -68,13 +70,18 @@ namespace QwerkE {
         //     systems = sy;
         // }
 
+        // #TODO Look at auto reading and writing values. Get a json root object and search through members of this class by
+        // type name, and look and child types to assign data.
+        // for (ConfigData::Types)
+        //     for (Type::Values)
+        //         Value = file.Value;
+
         FrameworkData framework;
         Libraries libraries;
         ScenesData scenes;
         SceneSettings sceneSettings;
         Systems systems;
         EngineSettings engineSettings;
-
         Controls controls;
     };
 
@@ -90,10 +97,9 @@ namespace QwerkE {
         static void SetConfigData(ConfigData config) { m_ConfigData = config; }
 
     private:
-        static ConfigData m_ConfigData;
+        ConfigHelper() = default;
 
-        ConfigHelper() {}
-        ~ConfigHelper() {};
+        static ConfigData m_ConfigData;
     };
 
 }

@@ -1,8 +1,5 @@
 #pragma once
 
-// #NOTE For enum.h library include
-#define ENUM_TO_STR(x) (+x)._to_string()
-
 // Reference : Timmy_A
 // https://stackoverflow.com/questions/3386861/converting-a-variable-name-to-a-string-in-c
 

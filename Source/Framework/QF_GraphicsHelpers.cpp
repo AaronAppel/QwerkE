@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-#include "Libraries/cJSON_Interface/cJSONInterface.h"
+#include "Libraries/cJSON/QC_cJSON.h"
 
 #include "QC_StringHelpers.h"
 
