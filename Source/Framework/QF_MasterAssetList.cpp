@@ -27,6 +27,12 @@ namespace QwerkE {
 		InstantiateNullAssets();
 	}
 
+	static unsigned int g_UniqueID = 0;
+	int Resources::CreateGUID()
+	{
+		return g_UniqueID++;
+	}
+
 	void Resources::InstantiateNullAssets()
 	{
 		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh_filename)), "Error loading null mesh asset!");

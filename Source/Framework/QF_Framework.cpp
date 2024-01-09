@@ -15,8 +15,6 @@
 #include "QF_QwerkE_Enums.h"
 #include "QF_Libraries_Initialize.h"
 
-#include "QC_Helpers.h"
-
 #include "QF_Audio.h"
 #include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"
@@ -157,18 +155,16 @@ namespace QwerkE {
 			int FPS_MAX = 120; // Maximum number of frames that can be made per second
 			float FPS_MAX_DELTA = 1.0f / FPS_MAX;
 
-			Time::NewFrame();
+			Time::Initialize();
 
 			while (m_Window->IsClosing() == false)
 			{
                 /* Game Loop */
 
-				float deltaTime = Time::Delta();
+				float deltaTime = Time::FrameDelta();
 
 				// if (deltaTime >= FPS_MAX_DELTA)
 				{
-					Time::NewFrame();
-
 					Framework::NewFrame();
 
 					Framework::PollInput();
@@ -177,6 +173,7 @@ namespace QwerkE {
 
 					Framework::Draw();
 
+					Time::EndFrame();
 					// FPS
 					//framesSincePrint++; // Frame rate tracking
 					//timeSinceLastFrame = 0.0; // FPS_Max

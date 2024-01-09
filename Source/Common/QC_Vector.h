@@ -15,7 +15,7 @@
 
 #include <cmath> // sqrt
 
-#include "QC_MathHelpers.h"
+#include "Libraries/FlatheadGames/MathHelpers.h"
 
 struct Vector2
 {

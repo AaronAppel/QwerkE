@@ -1,5 +1,7 @@
 #include "QF_Time.h"
 
+#include "QF_Log.h"
+
 #ifdef _WIN32
 #include <profileapi.h>
 #include <winnt.h>
@@ -9,30 +11,33 @@
 
 namespace QwerkE {
 
-    float Time::m_StartTime = 0.0;
-    float Time::m_Delta = 0.0;
-    float Time::m_CurrentFrame = 0.0;
-    float Time::m_LastFrame = 0.0;
+    double Time::m_StartTime = 0.f;
+    double Time::m_FrameDelta = 0.f;
+    double Time::m_CurrentFrame = 0.f;
+    double Time::m_LastFrame = 0.f;
 
-    void Time::Initialize()
+    void Time::InitStartTime()
     {
+        ASSERT(!m_StartTime, "Start time has already been set!");
         m_StartTime = Now();
     }
 
-    void Time::NewFrame()
+    void Time::EndFrame()
     {
-        m_LastFrame = m_CurrentFrame; // #TODO Fix faulty logic for first frame when all values are 0
+        m_LastFrame = m_CurrentFrame;
         m_CurrentFrame = Now();
-        m_Delta = m_CurrentFrame - m_LastFrame;
+        m_FrameDelta = m_CurrentFrame - m_LastFrame;
     }
 
-    float Time::Now()
+    double Time::Now()
     {
-        unsigned __int64 freq;
+        unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
         unsigned __int64 time;
+
         QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
         QueryPerformanceCounter((LARGE_INTEGER*)&time);
-        return (float)time / freq;
+
+        return (double)time / freq;
     }
 
 }

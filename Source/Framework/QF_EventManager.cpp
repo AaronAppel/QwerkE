@@ -1,11 +1,11 @@
 #include "QF_EventManager.h"
 
 #include <pThreads/pthread.h> // #TODO Review referencing source files in project instead of what might be installed locally
-
-#include "QC_Helpers.h"
+// #include "Libraries/pThreads/pthread.h"
 
 #include "QF_Event.h"
 #include "QF_Log.h"
+#include "QF_Resources.h"
 
 namespace QwerkE {
 
@@ -41,7 +41,7 @@ namespace QwerkE {
         // #TODO Implement thread safe API for multi threaded event queuing
         if (m_EventQueue.size() < m_EventMax)
         {
-            _event->SetID(helpers_GetUniqueID());
+            _event->SetID(Resources::CreateGUID());
             m_EventQueue.push(_event);
             LOG_INFO("Event {0} Queued!", _event->GetID());
         }

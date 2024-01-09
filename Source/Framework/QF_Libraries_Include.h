@@ -81,11 +81,11 @@
 #pragma warning( default : 26495 )
 
 #include "QC_Vector.h"
-#include "QC_MyQuaternion.h"
+#include "Libraries/FlatheadGames/MyQuaternion.h"
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #pragma warning( disable : 26495 )
-#include "QC_MyMatrix.h"
+#include "Libraries/FlatheadGames/MyMatrix.h"
 #pragma warning( default : 4244 )
 #pragma warning( default : 4305 )
 #pragma warning( disable : 26495 )

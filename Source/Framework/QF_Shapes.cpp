@@ -1,7 +1,5 @@
 #include "QF_Factory.h"
 
-#include "QC_Helpers.h"
-
 #include "QF_Resources.h"
 #include "QF_Scene.h"
 #include "QF_QwerkE_Enums.h"
@@ -15,7 +13,7 @@ namespace QwerkE {
     GameObject* Factory::CreateCube(Scene* scene, vec3 position)
     {
         GameObject* t_Cube = new GameObject(scene, position);
-        t_Cube->SetName("Cube" + std::to_string(helpers_GetUniqueID()));
+        t_Cube->SetName("Cube" + std::to_string(Resources::CreateGUID()));
         t_Cube->SetTag(eGameObjectTags::GO_Tag_Cube);
         t_Cube->SetRenderOrder(50);
 
@@ -35,7 +33,7 @@ namespace QwerkE {
     GameObject* Factory::CreatePlane(Scene* scene, vec3 position)
     {
         GameObject* t_Plane = new GameObject(scene, position);
-        t_Plane->SetName("Plane" + std::to_string(helpers_GetUniqueID()));
+        t_Plane->SetName("Plane" + std::to_string(Resources::CreateGUID()));
         t_Plane->SetTag(eGameObjectTags::GO_Tag_Plane);
         t_Plane->SetRenderOrder(50);
 
@@ -56,7 +54,7 @@ namespace QwerkE {
     GameObject* Factory::CreateSphere(Scene* scene, vec3 position)
     {
         GameObject* t_Sphere = new GameObject(scene, position);
-        t_Sphere->SetName("Sphere" + std::to_string(helpers_GetUniqueID()));
+        t_Sphere->SetName("Sphere" + std::to_string(Resources::CreateGUID()));
         t_Sphere->SetTag(eGameObjectTags::GO_Tag_Sphere);
         t_Sphere->SetRenderOrder(50);
 

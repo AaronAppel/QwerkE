@@ -4,7 +4,6 @@
 
 #include <string>
 
-#include "QC_Helpers.h"
 #include "QC_StringHelpers.h"
 
 #include "QF_FileSystem.h"
@@ -49,7 +48,7 @@ namespace QwerkE {
         t_pCamera->SetTag(GO_Tag_Camera);
         t_pCamera->SetPosition(position);
         t_pCamera->SetRenderOrder(-1);
-        t_pCamera->SetName("Camera" + std::to_string(helpers_GetUniqueID()));
+        t_pCamera->SetName("Camera" + std::to_string(Resources::CreateGUID()));
 
         ComponentCamera* t_pCamComp = nullptr;
 

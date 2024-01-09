@@ -1,7 +1,6 @@
 #include "QF_Factory.h"
 
 #include "QC_StringHelpers.h"
-#include "QC_Helpers.h"
 
 #include "QF_MeshFactory.h"
 #include "QF_Resources.h"
@@ -26,7 +25,7 @@ namespace QwerkE {
         t_SkyBox->SetPosition(position);
         t_SkyBox->SetTag(GO_Tag_SkyBox);
         t_SkyBox->SetRenderOrder(-1);
-        t_SkyBox->SetName("SkyBox" + std::to_string(helpers_GetUniqueID()));
+        t_SkyBox->SetName("SkyBox" + std::to_string(Resources::CreateGUID()));
 
         // Rendering
         AddModelComponentFromSchematic(t_SkyBox, null_object_schematic);
@@ -52,7 +51,7 @@ namespace QwerkE {
 
         GameObject* t_Cube = new GameObject(scene, position);
         // info //
-        t_Cube->SetName("Object" + std::to_string(helpers_GetUniqueID()));
+        t_Cube->SetName("Object" + std::to_string(Resources::CreateGUID()));
         t_Cube->SetRenderOrder(50);
         t_Cube->SetTag(GO_Tag_TestModel);
 
@@ -94,7 +93,7 @@ namespace QwerkE {
         if (!scene) return nullptr;
 
         GameObject* t_Model = new GameObject(scene, position);
-        t_Model->SetName("Object" + std::to_string(helpers_GetUniqueID()));
+        t_Model->SetName("Object" + std::to_string(Resources::CreateGUID()));
         t_Model->SetRenderOrder(50);
         t_Model->SetTag(GO_Tag_TestModel);
 

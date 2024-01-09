@@ -16,6 +16,8 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_demo.cpp" />
@@ -24,12 +26,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_widgets.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Math.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyMatrix.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp" />
   </ItemGroup>
@@ -335,6 +334,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\CPPList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\enum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\QC_enum.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MathHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftconfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftheader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftmodule.h" />
@@ -853,16 +855,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\tweakme.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\version.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math_Includes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyMatrix.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h" />

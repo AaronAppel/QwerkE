@@ -6,14 +6,15 @@ namespace QwerkE {
     {
     public:
 
-        static void Initialize();
+        static void InitStartTime();
 
-        static void NewFrame();
+        static void EndFrame();
 
-        static inline float Delta() { return m_Delta; };
+        static inline float FrameDelta() { return (float)m_FrameDelta; };
+        static inline double FrameDeltaD() { return m_FrameDelta; };
 
-        static float Now();
-        static float StartTime() { return m_StartTime; }
+        static double Now();
+        static double StartTime() { return m_StartTime; }
 
 		// #TODO This should be in window or some other engine section
         // static void SetMaxFrameRate(float framesPerSecond);
@@ -25,13 +26,12 @@ namespace QwerkE {
         // #TODO Register timers for call backs, instead of polling everywhere. Can order callbacks to only poll 1 at a time.
 
     private:
-        Time() {}
-        ~Time() {}
+        Time() = default;
 
-        static float m_StartTime;
-        static float m_Delta;
-        static float m_CurrentFrame;
-        static float m_LastFrame;
+        static double m_StartTime;
+        static double m_FrameDelta;
+        static double m_CurrentFrame;
+        static double m_LastFrame;
     };
 
 }

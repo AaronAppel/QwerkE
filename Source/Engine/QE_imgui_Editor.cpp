@@ -153,7 +153,7 @@ namespace QwerkE {
             {
                 // #TODO Review deltatime calculation and text positioning to avoid "flickering" and frequent resizing
                 ImGui::PushItemWidth(200.f);
-                const float deltaTime = Time::Delta();
+                const float deltaTime = Time::FrameDelta();
                 if (deltaTime == 0.f)
                 {
                     ImGui::Text("%1.1f", 0.f);

@@ -1,9 +1,6 @@
 #include "QF_Factory.h"
 
-#include "QC_Helpers.h"
-
 #include "QF_Resources.h"
-
 #include "QF_Scene.h"
 #include "QF_LightComponent.h"
 #include "QF_RenderRoutine.h"
@@ -17,7 +14,7 @@ namespace QwerkE {
         t_pLight->SetTag(eGameObjectTags::GO_Tag_Light);
         t_pLight->SetPosition(position);
         t_pLight->SetRenderOrder(-1);
-        t_pLight->SetName("Light" + std::to_string(helpers_GetUniqueID()));
+        t_pLight->SetName("Light" + std::to_string(Resources::CreateGUID()));
 
         LightComponent* t_pLightComp = new LightComponent();
         t_pLightComp->SetColour(vec3(1.0f, 1.0f, 1.0f));

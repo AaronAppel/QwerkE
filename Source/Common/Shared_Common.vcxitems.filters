@@ -61,9 +61,6 @@
     <Filter Include="Libraries\Bullet3\LinearMath">
       <UniqueIdentifier>{b0615b5d-a7c4-465e-bf38-c187df9dd8aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Types">
-      <UniqueIdentifier>{c234a921-a9b5-40e5-bb90-3461f83623a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{0a0da428-2d8a-423b-b0a6-7e25cb427d4f}</UniqueIdentifier>
     </Filter>
@@ -73,9 +70,11 @@
     <Filter Include="Libraries\enum">
       <UniqueIdentifier>{9b847343-6ce7-4ea5-8e98-6a9854637915}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\FlatheadGames">
+      <UniqueIdentifier>{ec1481a5-8a58-4764-a150-d7f2158af9b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp">
       <Filter>Strings</Filter>
     </ClCompile>
@@ -109,12 +108,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp">
       <Filter>Libraries\lodepng</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyMatrix.cpp">
-      <Filter>Types</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.cpp">
-      <Filter>Types</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Math.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -127,9 +120,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp">
       <Filter>Libraries\cJSON</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.cpp">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.cpp">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h">
       <Filter>Strings</Filter>
     </ClInclude>
@@ -2587,18 +2585,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\CPPList.h">
       <Filter>Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyMatrix.h">
-      <Filter>Types</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MyQuaternion.h">
-      <Filter>Types</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h">
-      <Filter>Types</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathHelpers.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -2628,6 +2614,18 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\enum.h">
       <Filter>Libraries\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MathHelpers.h">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.h">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.h">
+      <Filter>Libraries\FlatheadGames</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

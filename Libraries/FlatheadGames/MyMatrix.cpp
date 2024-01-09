@@ -7,10 +7,11 @@
 // 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#include "QC_MathHelpers.h"
-#include "QC_Vector.h"
-#include "QC_MyQuaternion.h"
-#include "QC_MyMatrix.h"
+#include "Libraries/FlatheadGames/MathHelpers.h"
+
+#include "QC_Vector.h" // #TODO Remove vector dependency. Going to need to write my own math types, or use MyVector.h as well
+#include "MyQuaternion.h"
+#include "MyMatrix.h"
 #include "QC_MathConstants.h"
 
 #include "Libraries/glew/GL/glew.h"

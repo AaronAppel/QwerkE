@@ -1,7 +1,8 @@
 #include "QE_Engine.h"
 
-#include "QF_Framework.h"
+#include "QF_Framework.h" // #TODO Review include order
 
+#include "Libraries/FlatheadGames/MathHelpers.h"
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/glfw/GLFW/glfw3.h"
 
@@ -17,7 +18,7 @@
 #pragma warning "Define editor library!"
 #endif
 
-#include "QC_Helpers.h"
+
 #include "QC_ProgramArgs.h"
 
 #include "QF_Profile.h"
@@ -88,37 +89,38 @@ namespace QwerkE {
 
 			const EngineSettings engineSettings = ConfigHelper::GetConfigData().engineSettings;
 			const unsigned int FPS_MAX = (int)(engineSettings.LimitFramerate) * engineSettings.MaxFramesPerSecond;
-			const float FPS_MAX_DELTA = FPS_MAX ? 1.0f / FPS_MAX : 0;
+			const float FPS_MAX_DELTA = FPS_MAX ? 1.0f / FPS_MAX : 1.f / 120.f;
 
-			float lastIterationTime = Time::Now();
-			float timeUntilNextFrame = 0.f;
+			double lastFrameTime = Time::Now();
+			double timeUntilNextFrame = 0.0;
 
+			Time::InitStartTime();
 			m_IsRunning = true;
 			while (m_IsRunning)
 			{
-				const float delta = Time::Now() - lastIterationTime;
-				lastIterationTime = Time::Now();
-
-				timeUntilNextFrame -= delta; // #TODO Review deltatime calculation
-
-				if (timeUntilNextFrame <= 0.f)
+				if (timeUntilNextFrame >= FPS_MAX_DELTA)
 				{
-					Time::NewFrame();
-
 					Engine::NewFrame();
 
 					Engine::PollInput();
 
-					Engine::Update(Time::Delta());
+					Engine::Update(Time::FrameDelta());
 
-                    Engine::Draw();
+					Engine::Draw();
 
-					timeUntilNextFrame = FPS_MAX_DELTA;
+					Time::EndFrame();
+
+					timeUntilNextFrame = 0.0;
 				}
-                else
-                {
-                	YieldProcessor();
-                }
+				else
+				{
+					YieldProcessor();
+				}
+
+				const double now = Time::Now();
+				const double frameDelta = now - lastFrameTime;
+				timeUntilNextFrame += frameDelta;
+				lastFrameTime = now;
 			}
 
 			Framework::TearDown();

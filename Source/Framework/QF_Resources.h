@@ -30,6 +30,8 @@ namespace QwerkE {
     public:
         static void Initialize();
 
+        static int CreateGUID();
+
         static bool MeshExists(const char* name);
         static bool TextureExists(const char* name);
         static bool MaterialExists(const char* name);
