@@ -7,7 +7,8 @@
 		{"id":"5515e340fa8cb570","type":"text","text":"Utilities","x":-584,"y":-300,"width":250,"height":60},
 		{"id":"a8f5f1436e2652f1","type":"text","text":"Engine","x":-688,"y":-80,"width":113,"height":60,"color":"6"},
 		{"id":"9f17318d95f35c60","type":"text","text":"1 Way \\#include direction","x":-944,"y":-360,"width":240,"height":50,"color":"3"},
-		{"id":"6d66d803f4457551","type":"text","text":"Libraries","x":-694,"y":-620,"width":125,"height":60,"color":"2"}
+		{"id":"6d66d803f4457551","type":"text","text":"Libraries","x":-694,"y":-620,"width":125,"height":60,"color":"2"},
+		{"id":"b46cd0391a208a08","x":-817,"y":80,"width":371,"height":101,"type":"text","text":"*To reduce dependencies, plus control include direction and enforce proper file/project domains*"}
 	],
 	"edges":[
 		{"id":"7f730f9fd422c1c4","fromNode":"9ed3a1a81ae4d7d0","fromSide":"top","toNode":"6d66d803f4457551","toSide":"bottom"},

@@ -4,30 +4,28 @@
     "type": "split",
     "children": [
       {
-        "id": "af48d469ad2fb2cc",
+        "id": "41550a9fd71f7e8d",
         "type": "tabs",
         "children": [
           {
-            "id": "53592c4d0abce2d7",
+            "id": "609e7afc5c1705df",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Z. Less Relevant/Renaming Values in Multiple Files.md",
+                "file": "0. Getting Started/README.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "dea79478d12e527c",
+            "id": "92ed6fe90f883f5d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "mk-space",
               "state": {
-                "file": "Z. Less Relevant/Division By Multiplication.md",
-                "mode": "source",
-                "source": false
+                "path": "Spaces/Home"
               }
             }
           }
@@ -44,7 +42,7 @@
       {
         "id": "011961b88bbc11c7",
         "type": "tabs",
-        "dimension": 78.3125,
+        "dimension": 85.83162217659137,
         "children": [
           {
             "id": "55628a392364c2db",
@@ -63,13 +61,49 @@
               "type": "bookmarks",
               "state": {}
             }
+          },
+          {
+            "id": "dad04b4ed9f8f30a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "edefc86514e78499",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              }
+            }
+          },
+          {
+            "id": "e17a9190ad6a97bb",
+            "type": "leaf",
+            "state": {
+              "type": "mk-path-view",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
-        "id": "3c12f191d03bfeae",
+        "id": "6dc84078db07b920",
         "type": "tabs",
-        "dimension": 21.6875,
+        "dimension": 14.168377823408623,
         "children": [
           {
             "id": "6e6727655ad579b3",
@@ -77,7 +111,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "symlink",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -96,12 +130,21 @@
                 "useHierarchy": false
               }
             }
+          },
+          {
+            "id": "40ce8ad6dc7f90d8",
+            "type": "leaf",
+            "state": {
+              "type": "trash-explorer",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 446.5
+    "width": 374.5083198547363
   },
   "right": {
     "id": "5c784de895a99dca",
@@ -112,99 +155,69 @@
         "type": "tabs",
         "children": [
           {
-            "id": "edefc86514e78499",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "Z. Less Relevant/Division By Multiplication.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "dad04b4ed9f8f30a",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "Z. Less Relevant/Division By Multiplication.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
             "id": "7099b2a8eb1e34ad",
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Z. Less Relevant/Division By Multiplication.md"
-              }
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 369.5
   },
   "left-ribbon": {
     "hiddenItems": {
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "homepage:Open homepage": false,
+      "obsidian-trash-explorer:Open trash explorer": false,
+      "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "dea79478d12e527c",
+  "active": "edefc86514e78499",
   "lastOpenFiles": [
-    "QwerkE Standards/Virtual Methods.md",
-    "Z. Less Relevant/Division By Multiplication.md",
-    "Solution Configuration/Additional Includes.md",
-    "Z. Less Relevant/Progrematic Engine Series YouTube.md",
-    "Framework Read Me.md",
+    "Spaces/Home",
+    "Spaces",
+    "0. Getting Started/README.md",
+    "0. Getting Started/GettingStarted.md",
+    "0. Getting Started/Known Issues and Gotchas.md",
+    "Z. Obsidian/Documentation Assets/Symlinked_community-plugins.md",
+    "Z. Obsidian/Obsidian References.md",
+    "Z. Obsidian/Obsidian Setup.md",
     "Assets and Data/Null Asset Handling.md",
-    "Old Notes.md",
-    "Work/Other/Enum Decorator.md",
-    "Work/Feature Development/Asset Manifest Loading.md",
-    "Work/Feature Development/ASSERT Expanded.md",
-    "Visual Studio.md",
-    "Z. Less Relevant/Renaming Values in Multiple Files.md",
-    "QwerkE Standards/Inheritance Structure and Depth.md",
-    "QwerkE Standards/Variable Naming.md",
-    "Work/Other/Timers and Time Callbacks.md",
-    "Work/Other/Identified Naming Issues.md",
-    "Solution Configuration/Preprocessor Definitions.md",
-    "Helpers vs Utilities.md",
-    "Work/Feature Development/Scenes.md",
+    "Z. Less Relevant/Bit Manipulation.md",
+    "Z. Obsidian/Documentation Assets/Symlinked_core-plugins.md",
+    "Z. To Cleanup/Old Notes.md",
+    "Z. To Cleanup/Framework Read Me.md",
+    "Symlinked_community-plugins.md",
+    "Symlinked_core-plugins.md",
     "Known Issues and Gotchas.md",
-    "Work/To Complete/ShaderVariableDoc.txt.md",
-    "Obsidian Setup.md",
-    "References/Library References.md",
-    "C++ Project Setup.md",
-    "Sub Projects/QwerkE Games.md",
-    "Solution Configuration/Compilation Configuration.md",
-    "QwerkE Standards/Include Flow Diagram.canvas",
-    "Work/Other",
-    "Work/To Complete",
-    "Work",
-    "References",
-    "Assets and Data",
-    "Z. Less Relevant",
-    "Work/Feature Development",
-    "README.md.lnk",
-    "README.md - Shortcut.lnk",
-    "Solution Configuration"
+    "Sub Projects/QwerkE_Games/QwerkE Games.md",
+    "Sub Projects/Environments/Nteworking",
+    "Sub Projects/Environments/Physics",
+    "Sub Projects/Environments/Rendering",
+    "Sub Projects/Environments",
+    "Sub Projects/QwerkE_Games",
+    "READ_ME.txt",
+    "QwerkE Standards/Asserts.md",
+    "GettingStarted.md",
+    "0. Getting Started/READ_ME.txt",
+    "0. Getting Started",
+    "QwerkE Standards/Helpers vs Utilities.md",
+    "QwerkE Standards/Standards in Code",
+    "QwerkE Standards/Variable Naming 1.md",
+    "QwerkE Standards/Including.md",
+    "Z. To Cleanup/Old References.md",
+    "Solution Configuration/C++ Project Setup.md",
+    "Version Control/Git and GitHub.md",
+    "Test.md",
+    "Visual Studio - Copy.md",
+    "New Bitmap image.bmp",
+    "QwerkE Standards/Include Flow Diagram.canvas"
   ]
 }

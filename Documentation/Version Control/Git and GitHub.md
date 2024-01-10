@@ -5,4 +5,4 @@ Remove a submodule :
 4. commit changes
 
 ### Git corruption issues
-One solution is to delete the "pack" folder inside the .git/objects/ directory.
+One solution is to try deleting the "pack" folder inside the .git/objects/ directory.
