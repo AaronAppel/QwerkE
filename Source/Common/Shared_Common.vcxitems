@@ -27,7 +27,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_widgets.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Math.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp" />
@@ -857,10 +856,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math_Includes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h" />

@@ -209,4 +209,8 @@ public:
     }
 };
 
+// Aaron Appel Start ->
+typedef MyMatrix mat4;
+// Aaron Appel <- End
+
 #endif //__MyMatrix_H__

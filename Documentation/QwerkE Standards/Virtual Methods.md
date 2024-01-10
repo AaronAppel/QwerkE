@@ -1,0 +1,1 @@
+When declaring a parent class method as virtual, the virtual keyword mush be used, however the child class does not need to and should not have the virtual keyword but must use the override keyword instead.

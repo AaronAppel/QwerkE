@@ -1,6 +1,10 @@
 #pragma once
 
+#pragma warning( disable : 26495 )
+#pragma warning( disable : 4099 )
 #include "Libraries/Bullet3/LinearMath/btVector3.h"
+#pragma warning( default : 26495 )
+#pragma warning( default : 4099 )
 
 class btRigidBody;
 class btCollisionShape;

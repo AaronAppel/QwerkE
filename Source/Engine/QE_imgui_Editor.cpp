@@ -1,6 +1,8 @@
 #include "QE_imgui_Editor.h"
 
+#pragma warning( disable : 4244 )
 #include "Libraries/imgui/imgui.h"
+#pragma warning( default : 4244 )
 
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"

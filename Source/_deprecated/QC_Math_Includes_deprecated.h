@@ -7,7 +7,6 @@
 #include "Libraries/FlatheadGames/MyMatrix.h"
 #pragma warning( default : 26495 )
 #pragma warning( default : 4244 )
-typedef MyMatrix mat4;
 
 #include "Libraries/FlatheadGames/MathHelpers.h"
 

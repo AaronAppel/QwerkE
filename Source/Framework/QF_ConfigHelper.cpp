@@ -161,7 +161,7 @@ namespace QwerkE {
             AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_RotateRight), (char*)&m_ConfigData.controls.Camera_RotateRight));
         }
 
-        const const char* configFilePath = ConfigsFolderPath("preferences.qpref");
+        const char* configFilePath = ConfigsFolderPath("preferences.qpref");
         PrintRootObjectToFile(configFilePath, root); // #TODO Take in config file path as arg
     }
 

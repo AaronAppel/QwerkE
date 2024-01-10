@@ -1,4 +1,6 @@
-#include "QC_Math_Includes.h"
+#include "Libraries/FlatheadGames/MathHelpers.h"
+
+#include "QC_MathConstants.h"
 
 double BounceEaseIn(double t, double b, double c, double d);
 double BounceEaseOut(double t, double b, double c, double d);

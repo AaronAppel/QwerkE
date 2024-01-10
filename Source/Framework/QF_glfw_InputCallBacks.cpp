@@ -1,7 +1,9 @@
 #include "QF_Input.h"
 
 #ifdef dearimgui
+#pragma warning( disable : 4244 )
 #include "Libraries/imgui/imgui.h"
+#pragma warning( default : 4244 )
 #endif
 
 #include "QF_QwerkE_Global_Constants.h"

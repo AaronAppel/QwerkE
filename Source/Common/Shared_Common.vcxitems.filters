@@ -108,9 +108,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp">
       <Filter>Libraries\lodepng</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Math.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -2584,12 +2581,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\CPPList.h">
       <Filter>Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Math_Includes.h">
-      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h">
       <Filter>Math</Filter>

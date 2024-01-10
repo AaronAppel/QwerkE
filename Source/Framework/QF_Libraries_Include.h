@@ -95,7 +95,6 @@
 #include "QF_TweenFuncs.h"
 #pragma warning( default : 4244 )
 
-#pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
 #pragma warning( disable : 26495 )
 #include "Libraries/Bullet3/LinearMath/btAlignedObjectArray.h"
@@ -106,6 +105,5 @@
 #include "Libraries/Bullet3/BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
 #include "Libraries/Bullet3/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
 #include "Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-#pragma warning( default : 26495 )
 #pragma warning( default : 4099 )
 #pragma warning( default : 26495 )

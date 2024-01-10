@@ -163,11 +163,11 @@ namespace QwerkE {
         AddRoutinesTocJSONItem(t_ReturnJSON, object);
 
         // #TODO Handle special cases for certain components
-        switch (object->GetTag())
-        {
-        default:
-            break;
-        }
+        // switch (object->GetTag())
+        // {
+        // default:
+        //     break;
+        // }
 
         return t_ReturnJSON;
     }

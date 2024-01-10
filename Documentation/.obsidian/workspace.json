@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Visual Studio.md",
+                "file": "Z. Less Relevant/Division By Multiplication.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "symlink",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -117,7 +117,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Visual Studio.md",
+                "file": "Z. Less Relevant/Division By Multiplication.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,7 +134,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Visual Studio.md",
+                "file": "Z. Less Relevant/Division By Multiplication.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Visual Studio.md"
+                "file": "Z. Less Relevant/Division By Multiplication.md"
               }
             }
           }
@@ -169,15 +169,23 @@
   },
   "active": "dea79478d12e527c",
   "lastOpenFiles": [
-    "Z. Less Relevant/Renaming Values in Multiple Files.md",
+    "QwerkE Standards/Virtual Methods.md",
+    "Z. Less Relevant/Division By Multiplication.md",
+    "Solution Configuration/Additional Includes.md",
+    "Z. Less Relevant/Progrematic Engine Series YouTube.md",
+    "Framework Read Me.md",
+    "Assets and Data/Null Asset Handling.md",
+    "Old Notes.md",
+    "Work/Other/Enum Decorator.md",
+    "Work/Feature Development/Asset Manifest Loading.md",
+    "Work/Feature Development/ASSERT Expanded.md",
     "Visual Studio.md",
+    "Z. Less Relevant/Renaming Values in Multiple Files.md",
     "QwerkE Standards/Inheritance Structure and Depth.md",
     "QwerkE Standards/Variable Naming.md",
     "Work/Other/Timers and Time Callbacks.md",
     "Work/Other/Identified Naming Issues.md",
-    "Work/Other/Enum Decorator.md",
     "Solution Configuration/Preprocessor Definitions.md",
-    "Work/Feature Development/ASSERT Expanded.md",
     "Helpers vs Utilities.md",
     "Work/Feature Development/Scenes.md",
     "Known Issues and Gotchas.md",
@@ -187,14 +195,6 @@
     "C++ Project Setup.md",
     "Sub Projects/QwerkE Games.md",
     "Solution Configuration/Compilation Configuration.md",
-    "Work/Other/Calculate Aspect Ratio.md",
-    "References/Constexpr.md",
-    "References/Variadic or Variable Arguments (__VA_ARGS__).md",
-    "QwerkE Standards/Asserts.md",
-    "Work/Feature Development/x64 Architecture Support.md",
-    "Z. Less Relevant/Markdown Syntax Reference.md",
-    "Solution Configuration/Build Targets.md",
-    "Solution Configuration/Projects.md",
     "QwerkE Standards/Include Flow Diagram.canvas",
     "Work/Other",
     "Work/To Complete",

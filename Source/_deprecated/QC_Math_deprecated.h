@@ -1,7 +1,7 @@
 #pragma once
 
 // TODO: What is a good way of creating an interface for math
-// and other utilty functions? Non engine specific files should
+// and other utility functions? Non engine specific files should
 // be accessible but not altered to work with a global namespace.
 // I can create #defines or functions that just call other functions
 // but there should be a better solution. The indirection layer
