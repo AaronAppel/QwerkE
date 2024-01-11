@@ -22,7 +22,7 @@
         "name": "",
         "active": true,
         "type": "FILES",
-        "pattern": "0. Getting Started With QwerkE/README.md",
+        "pattern": "README.md",
         "patternType": "STRICT"
       }
     ]
