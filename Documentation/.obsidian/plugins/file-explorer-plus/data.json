@@ -1,5 +1,5 @@
 {
-  "hideStrictPathFilters": true,
+  "hideStrictPathFilters": false,
   "pinFilters": {
     "active": true,
     "tags": [
@@ -28,7 +28,7 @@
     ]
   },
   "hideFilters": {
-    "active": true,
+    "active": false,
     "tags": [
       {
         "name": "",
