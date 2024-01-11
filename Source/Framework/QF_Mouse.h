@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 
 #include "QC_Vector.h"
 

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "QF_QwerkE_Enums.h" // eEngineMessage
+#include "QF_Enums.h"
 
 namespace QwerkE {
 

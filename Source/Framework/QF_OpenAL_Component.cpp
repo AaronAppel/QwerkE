@@ -1,7 +1,7 @@
 #include "QF_OpenAL_Component.h"
 
+#include "QF_Defines.h"
 #include "QF_Resources.h"
-#include "QF_QwerkE_Defines.h"
 
 namespace QwerkE {
 

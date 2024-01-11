@@ -3,7 +3,7 @@
 #include "QF_Keyboard.h"
 #include "QF_MouseExtApi.h"
 #include "QF_KeyboardExtApi.h"
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 
 namespace QwerkE {
 

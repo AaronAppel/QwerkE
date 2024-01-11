@@ -2,7 +2,7 @@
 
 #include "QF_Component.h"
 #include "QF_CameraComponent.h"
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 #include "QF_GameObject.h"
 
 // https://msdn.microsoft.com/en-us/library/bb203907(v=xnagamestudio.10).aspx

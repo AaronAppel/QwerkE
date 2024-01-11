@@ -1,0 +1,1 @@
+As a practice, out argument references should be avoided, and only used when more appropriate than creating a struct or other multi-value return type. If out arguments are to be used, they should be marked as such with the matching prefix. Prefixes can be found here [[Variable Naming]], or [[Variable Naming 1]]

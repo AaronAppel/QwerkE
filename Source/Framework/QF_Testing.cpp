@@ -11,7 +11,7 @@
 #include "QF_GraphicsHelpers.h"
 #include "QF_Mesh.h"
 #include "QF_FileSystem.h"
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 namespace QwerkE {
 

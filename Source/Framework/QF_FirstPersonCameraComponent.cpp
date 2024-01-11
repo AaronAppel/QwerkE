@@ -4,7 +4,7 @@
 
 #include "QF_CameraComponent.h"
 #include "QF_FirstPersonCameraComponent.h"
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 #include "QF_GameObject.h"
 
 namespace QwerkE {

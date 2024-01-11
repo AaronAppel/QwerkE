@@ -1,4 +1,4 @@
-#include "QF_QwerkE_AssimpLoading.h"
+#include "QF_AssimpLoading.h"
 
 #pragma warning( disable : 26495 )
 #include "Libraries/assimp/Importer.hpp"
@@ -10,14 +10,14 @@
 
 #include "QC_StringHelpers.h"
 
+#include "QF_Defines.h"
+#include "QF_FileUtilities.h"
+#include "QF_GraphicsHelpers.h"
+#include "QF_Material.h"
 #include "QF_Mesh.h"
 #include "QF_MeshData.h"
-#include "QF_Material.h"
-#include "QF_Texture.h"
-#include "QF_GraphicsHelpers.h"
 #include "QF_Resources.h"
-#include "QF_FileUtilities.h"
-#include "QF_QwerkE_Defines.h"
+#include "QF_Texture.h"
 
 // TODO: Support triangle and quad rendering? Set a macro to define the number of verts per face?
 // TODO: Split functions into smaller pieces. Ex. LoadMeshFromAI() can call functions to GetVertsFromAIMesh, GetUVs, GetMats... etc
@@ -28,7 +28,7 @@ namespace QwerkE {
     Mesh* QwerkE_assimp_loadVertexData(aiMesh* mesh, const aiScene* scene, const char* modelFilePath);
     void QwerkE_assimp_loadMaterialTextures(aiMaterial* mat, const std::string& filePath, std::vector<std::string>& matNames);
 
-    void QwerkE_assimp_loadSceneNodeData(aiNode* node, const aiScene* scene, std::vector<Mesh*>& meshes, const std::string& filePath, std::vector<std::string>& matNames)
+    void _assimp_loadSceneNodeData(aiNode* node, const aiScene* scene, std::vector<Mesh*>& meshes, const std::string& filePath, std::vector<std::string>& matNames)
     {
         // process all the node's meshes (if any)
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -44,7 +44,7 @@ namespace QwerkE {
         // then do the same for each of its children
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
-            QwerkE_assimp_loadSceneNodeData(node->mChildren[i], scene, meshes, filePath, matNames);
+            _assimp_loadSceneNodeData(node->mChildren[i], scene, meshes, filePath, matNames);
         }
     }
 

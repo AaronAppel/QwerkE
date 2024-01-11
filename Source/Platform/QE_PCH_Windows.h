@@ -7,9 +7,9 @@
 
 // #NOTE Include order is Engine, then Framework, then Common
 
-#include "QE_Engine_Defines.h"
+#include "QE_Defines.h"
 
-#include "QF_QwerkE_Platform.h"
+#include "QF_Platform.h"
 #include "QF_Libraries_Include.h"
 #include "QF_Libraries_Load.h" // #TODO Review include ordering. This avoids library LNK2019 errors
 

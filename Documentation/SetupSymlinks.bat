@@ -1,5 +1,5 @@
-set gettingStartedDir=0. Getting Started\
-mklink /H "%gettingStartedDir%README.md" ..\README.md
+set readmeDir=
+mklink /H "%readmeDir%README.md" ..\README.md
 
 set assetsDir=Z. Obsidian\Documentation Assets\
 

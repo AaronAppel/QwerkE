@@ -1,6 +1,6 @@
 #include "QF_Physics.h"
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 #ifdef qw_BULLET3
 #elif qw_HAVOC

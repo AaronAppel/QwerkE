@@ -17,6 +17,7 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssetLoadedEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssignWin32Keys.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Audio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_b3_Physics.cpp" />
@@ -48,7 +49,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ImageHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Input.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_InputDevice.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_InputEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Jobs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_KeyboardExtApi.cpp" />
@@ -76,7 +76,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsWorld.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PrintFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_QwerkE_AssimpLoading.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderRoutine.cpp" />
@@ -107,6 +106,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AssetLoadedEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset_Tag.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Audio.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AudioComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AudioSource.h" />
@@ -118,10 +118,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ConfigHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Constants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CubeMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_DataManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debugger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Dynamic_ShaderProgram.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_EventManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Factory.h" />
@@ -140,7 +143,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ImageHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_InputDevice.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_InputEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Instrumentor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Jobs.h" />
@@ -175,16 +177,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Physics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PhysicsComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PhysicsWorld.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Platform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PrintFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Profile.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_AssimpLoading.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerKE_eKeys.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Enums.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Global_Constants.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Include.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Platform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Renderable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_RenderComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Renderer.h" />

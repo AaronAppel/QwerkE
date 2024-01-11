@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Constants.h"
 
 typedef unsigned int GLuint;
 

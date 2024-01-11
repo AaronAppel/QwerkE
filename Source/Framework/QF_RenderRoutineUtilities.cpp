@@ -4,18 +4,18 @@
 #include <vector>
 #include <map>
 
-#include "QF_GameObject.h"
-#include "QF_Component.h"
 #include "QF_CameraComponent.h"
-#include "QF_RenderComponent.h"
+#include "QF_Component.h"
+#include "QF_Enums.h"
+#include "QF_GameObject.h"
 #include "QF_LightComponent.h"
-#include "QF_ShaderProgram.h"
 #include "QF_Material.h"
-#include "QF_Texture.h"
-#include "QF_ShaderVariable_Defines.h"
 #include "QF_Renderable.h"
+#include "QF_RenderComponent.h"
 #include "QF_Scene.h"
-#include "QF_QwerkE_Enums.h"
+#include "QF_ShaderProgram.h"
+#include "QF_ShaderVariable_Defines.h"
+#include "QF_Texture.h"
 #include "QC_Vector.h"
 
 namespace QwerkE {

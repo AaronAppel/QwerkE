@@ -2,7 +2,7 @@
 
 #include <memory> // std::shared_ptr
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 #pragma warning( disable : 26437 )
 #pragma warning( disable : 26451 )

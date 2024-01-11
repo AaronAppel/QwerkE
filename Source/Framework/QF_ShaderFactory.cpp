@@ -6,7 +6,7 @@
 #include "QF_Log.h"
 
 #include "QF_Graphics_Header.h"
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 #include "QF_ShaderProgram.h"
 #include "QF_ShaderComponent.h"

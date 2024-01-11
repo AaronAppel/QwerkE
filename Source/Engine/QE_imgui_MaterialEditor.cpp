@@ -8,7 +8,7 @@
 
 #include "QF_Log.h"
 
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 #include "QF_Material.h"
 #include "QF_Texture.h"
 #include "QF_Resources.h"

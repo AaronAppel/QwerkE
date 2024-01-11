@@ -1,8 +1,5 @@
 #include "QF_Framework.h"
 
-#include "QF_QwerkE_Defines.h"
-
-// #ifdef GLFW3 // #TODO Move library dependent logic into appropriate class, like Window
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/glfw/GLFW/glfw3.h"
 #pragma warning( disable : 4244 )
@@ -10,11 +7,9 @@
 #include "Libraries/imgui/imgui_impl_glfw.h"
 #include "Libraries/imgui/imgui_impl_opengl3.h"
 #pragma warning( default : 4244 )
-// #endif
 
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 #include "QF_Libraries_Initialize.h"
-
 #include "QF_Audio.h"
 #include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"

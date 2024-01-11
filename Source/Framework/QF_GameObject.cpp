@@ -4,7 +4,7 @@
 #include "QF_Routine.h"
 #include "QF_Component.h"
 #include "QF_Bullet3Component.h"
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 
 namespace QwerkE {
 

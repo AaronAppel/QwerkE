@@ -5,8 +5,8 @@
 
 #include "Libraries/glew/GL/glew.h"
 
-#include "QF_QwerkE_Enums.h"
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Enums.h"
+#include "QF_Constants.h"
 
 #include "QF_FileUtilities.h"
 #include "QF_GraphicsHelpers.h"

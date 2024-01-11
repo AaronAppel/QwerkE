@@ -2,7 +2,7 @@
 
 #include "Libraries/glew/GL/glew.h"
 
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Constants.h"
 
 #include "QF_Component.h"
 #include "QF_CameraComponent.h"

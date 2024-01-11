@@ -1,6 +1,6 @@
 When declaring a function body as empty :
 - Declare the body in a header to reduce .cpp code
-- Include a space between the argument parenthesis and the opening { brace
+- Include a space between the argument parenthesis and the opening { brace like "Func() {"
 - Include 1 empty space within the { } braces
 
 Example :

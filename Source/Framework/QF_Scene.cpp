@@ -17,25 +17,7 @@ namespace QwerkE {
 
     Scene::~Scene()
     {
-        int size = m_LightList.size();
-        for (int i = size - 1; i > -1; i--)
-        {
-            delete m_LightList.at(i);
-        }
-        m_LightList.clear();
-
-        size = m_CameraList.size();
-        for (int i = size - 1; i > -1; i--)
-        {
-            delete m_CameraList.at(i);
-        }
-        m_CameraList.clear();
-
-        for (auto object : m_pGameObjects)
-        {
-            delete object.second;
-        }
-        m_pGameObjects.clear();
+        UnloadScene();
     }
 
     void Scene::Initialize()
@@ -234,6 +216,11 @@ namespace QwerkE {
         DataManager::SaveScene(this, ScenesFolderPath(m_LevelFileName.c_str()));
     }
 
+    void Scene::LoadScene()
+    {
+        LoadScene(m_LevelFileName.c_str());
+    }
+
     void Scene::LoadScene(const char* sceneFileName)
     {
         if (sceneFileName == gc_DefaultCharPtrValue)
@@ -243,14 +230,48 @@ namespace QwerkE {
         }
         m_LevelFileName = sceneFileName;
 
-        DataManager::LoadScene(this, ScenesFolderPath(m_LevelFileName.c_str()));
+        eEngineMessage result = DataManager::LoadScene(this, ScenesFolderPath(m_LevelFileName.c_str()));
+        if (result == eEngineMessage::_QSuccess)
+        {
+            LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_LevelFileName.c_str());
+        }
+        else
+        {
+            LOG_TRACE("{0} error loading \"{1}\"", __FUNCTION__, m_LevelFileName.c_str());
+        }
         SetupCameras();
+    }
+
+    void Scene::UnloadScene()
+    {
+        int size = m_LightList.size();
+        for (int i = size - 1; i > -1; i--)
+        {
+            delete m_LightList.at(i);
+        }
+        m_LightList.clear();
+
+        size = m_CameraList.size();
+        for (int i = size - 1; i > -1; i--)
+        {
+            delete m_CameraList.at(i);
+        }
+        m_CameraList.clear();
+
+        for (auto object : m_pGameObjects)
+        {
+            delete object.second;
+        }
+        m_pGameObjects.clear();
+
+        LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_LevelFileName.c_str());
     }
 
     void Scene::ReloadScene()
     {
-        // TODO: Add additional reload functionality
-        DataManager::LoadScene(this, ScenesFolderPath(m_LevelFileName.c_str()));
+        UnloadScene();
+        LoadScene();
+        LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_LevelFileName.c_str());
     }
 
     GameObject* Scene::GetGameObject(const char* name)

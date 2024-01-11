@@ -4,7 +4,7 @@
 
 #include "Libraries/glew/GL/glew.h"
 
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 
 namespace QwerkE {
 

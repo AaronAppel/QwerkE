@@ -2,8 +2,8 @@
 
 // #TODO Deprecate file. Maybe move methods to a QC_* file, or extend to a more fully featured logging utility file
 
-#include "QF_QwerkE_Defines.h"
-#include "QF_QwerkE_Platform.h"
+#include "QF_Defines.h"
+#include "QF_Platform.h"
 
 // #include <cstdio> // vsnprintf_s
 #include <fstream> // vsnprintf_s

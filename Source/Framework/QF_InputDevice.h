@@ -1,7 +1,7 @@
 #pragma once
 
-#include "QF_QwerKE_eKeys.h"
-#include "QF_QwerkE_Enums.h"
+#include "QF_eKeys.h"
+#include "QF_Enums.h"
 
 namespace QwerkE {
 

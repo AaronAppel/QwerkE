@@ -4,18 +4,15 @@
 
 #include "Libraries/cJSON/QC_cJSON.h"
 
-#include "QF_QwerkE_Defines.h"
-
+#include "QF_Defines.h"
 #include "QF_Log.h"
-
 #include "QF_Scene.h"
 #include "QF_TestScene.h"
 #include "QF_ViewerScene.h"
 #include "QF_PBR_Test1.h"
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 #include "QF_FileUtilities.h"
 #include "QF_Profile.h"
-
 #include "QF_Input.h"
 
 namespace QwerkE {

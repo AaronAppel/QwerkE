@@ -7,8 +7,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_QwerkE_Global_Constants.h"
-
+#include "QF_Constants.h"
 #include "QF_GraphicsHelpers.h"
 
 namespace QwerkE {

@@ -150,9 +150,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.cpp">
       <Filter>Core\Events</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_InputEvent.cpp">
-      <Filter>Core\Events</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Factory.cpp">
       <Filter>Core\Factory</Filter>
     </ClCompile>
@@ -364,9 +361,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_QwerkE_AssimpLoading.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Libraries_Initialize.cpp">
       <Filter>Headers</Filter>
     </ClCompile>
@@ -387,6 +381,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileUtilities.cpp">
       <Filter>FileSystem\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.cpp">
+      <Filter>FileSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,9 +412,6 @@
       <Filter>Core\Events</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_EventManager.h">
-      <Filter>Core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_InputEvent.h">
       <Filter>Core\Events</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.h">
@@ -662,24 +656,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.h">
       <Filter>Core\Window</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_AssimpLoading.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Include.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Platform.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Enums.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Global_Constants.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE_Defines.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PCH_Includes.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -706,6 +682,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FileUtilities.h">
       <Filter>FileSystem\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Defines.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Constants.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Enums.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Platform.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.h">
+      <Filter>FileSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

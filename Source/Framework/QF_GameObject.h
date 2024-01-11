@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "QF_QwerkE_Enums.h"
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Enums.h"
+#include "QF_Constants.h"
 
 #include "QC_Vector.h"
 

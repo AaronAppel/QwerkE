@@ -7,7 +7,7 @@
 #include "QF_GameObject.h"
 #include "QF_RenderRoutine.h"
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 namespace QwerkE {
 

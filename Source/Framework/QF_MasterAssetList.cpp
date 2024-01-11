@@ -7,7 +7,7 @@
 #include "QF_ShaderComponent.h"
 #include "QF_ShaderFactory.h"
 #include "QF_FileSystem.h"
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 #include "QF_Texture.h"
 #include "QF_Jobs.h"
 #include "QF_Log.h"
@@ -249,7 +249,7 @@ namespace QwerkE {
 		}
 		else if (strcmp(GetFileExtension(componentFilePath).c_str(), geometry_shader_ext) == 0)
 		{
-			LOG_TRACE("Geometry shaders are not yet supported");
+			LOG_WARN("Geometry shaders are not yet supported");
 			if (ShaderComponent* result = ShaderFactory::CreateShaderComponent(GL_GEOMETRY_SHADER, componentFilePath))
 			{
 				m_ShaderComponents[componentFilePath] = result;

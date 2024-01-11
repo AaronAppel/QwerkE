@@ -6,7 +6,7 @@
 #pragma warning( default : 4244 )
 #endif
 
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Constants.h"
 
 #include "QF_Mouse.h"
 #include "QF_Keyboard.h"

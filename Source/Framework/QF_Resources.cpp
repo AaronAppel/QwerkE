@@ -5,13 +5,13 @@
 
 #include "Libraries/glew/GL/glew.h"
 
+#include "QF_Defines.h"
+#include "QF_FileSystem.h"
+#include "QF_Jobs.h"
 #include "QF_Material.h"
-#include "QF_Texture.h"
 #include "QF_Mesh.h"
 #include "QF_ShaderProgram.h"
-#include "QF_FileSystem.h"
-#include "QF_QwerkE_Defines.h"
-#include "QF_Jobs.h"
+#include "QF_Texture.h"
 
 namespace QwerkE {
 

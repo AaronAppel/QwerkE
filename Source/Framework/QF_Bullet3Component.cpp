@@ -24,7 +24,7 @@
 #pragma warning( default : 26495 )
 #pragma warning( default : 4099 )
 
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 
 #include "QF_PhysicsComponent.h"
 #include "QF_Component.h"

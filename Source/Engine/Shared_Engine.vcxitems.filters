@@ -8,7 +8,6 @@
       <Filter>Editor\imgui_Editor</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Engine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QE_Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EditComponent.h">
       <Filter>Editor</Filter>
     </ClInclude>
@@ -33,6 +32,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_MaterialEditor.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QE_Defines.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">

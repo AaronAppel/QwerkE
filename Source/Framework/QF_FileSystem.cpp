@@ -5,7 +5,7 @@
 #include <vector>
 
 #pragma warning( disable : 26495 )
-#include "QF_QwerkE_AssimpLoading.h"
+#include "QF_AssimpLoading.h"
 #include "Libraries/assimp/Importer.hpp"
 #include "Libraries/assimp/scene.h"
 #include "Libraries/assimp/postprocess.h"
@@ -24,7 +24,7 @@
 #define QwerkE_Image_Library_lodepng 1
 #define QwerkE_Image_Library_soil 0
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 #include "QF_Mesh.h"
 #include "QF_oal_Helpers.h"
@@ -228,7 +228,7 @@ namespace QwerkE {
 		}
 
 		// NOTE: aiScene is an object hierarchy so it might almost require GameObject creation here.
-		QwerkE_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, path, matNames);
+		_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, path, matNames);
 
 		// TODO: De-allocate RAM created by assimp
 #else

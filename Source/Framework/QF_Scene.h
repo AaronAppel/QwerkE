@@ -4,8 +4,8 @@
 #include <vector>
 #include <string>
 
-#include "QF_QwerkE_Enums.h"
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Enums.h"
+#include "QF_Constants.h"
 
 namespace QwerkE {
 
@@ -40,7 +40,10 @@ namespace QwerkE {
         void RemoveAllObjectsFromScene();
 
         void SaveScene();
+        void LoadScene();
+        // #TODO Don't re-use scene objects to load other scenes. Create a new scene. Each scene is tied to it's file after creation
         void LoadScene(const char* sceneFileName);
+        void UnloadScene();
         void ReloadScene();
 
         GameObject* GetGameObject(const char* name);

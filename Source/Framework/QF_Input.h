@@ -4,7 +4,7 @@
 
 #include <map>
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 #ifdef GLFW3
 #include "Libraries/glew/GL/glew.h" // #TODO Review GLEW inclusion
@@ -13,10 +13,10 @@
 #error Define library!
 #endif
 
-#include "QF_QwerkE_Enums.h"
-#include "QF_QwerKE_eKeys.h"
-#include "QF_QwerkE_Defines.h"
-#include "QF_QwerkE_Platform.h"
+#include "QF_Enums.h"
+#include "QF_eKeys.h"
+#include "QF_Defines.h"
+#include "QF_Platform.h"
 #include "QF_Libraries_Include.h"
 #include "QC_Vector.h"
 

@@ -15,7 +15,7 @@
 // define generic functions for model loading but
 // use library specific prototype and body defines
 #ifdef AI_CONFIG_H_INC // assimp
-#include "QF_QwerkE_AssimpLoading.h"
+#include "QF_AssimpLoading.h"
 #define TextureDirOffset(a, b) StringAppend("../Models/", a, b)
 #else
 #pragma error "Define model loading library!"
@@ -25,11 +25,9 @@
 
 #include "QF_Resources.h"
 #include "QF_Mesh.h"
-
 #include "QF_FileUtilities.h"
-
 #include "QF_Log.h"
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 namespace QwerkE {
 
@@ -93,7 +91,7 @@ namespace QwerkE {
 			}
 
 			// NOTE: aiScene is an object hierarchy so it might almost require GameObject creation here.
-			QwerkE_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, path, matNames);
+			_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, path, matNames);
 
 			// TODO: De-allocate RAM created by assimp
 #else

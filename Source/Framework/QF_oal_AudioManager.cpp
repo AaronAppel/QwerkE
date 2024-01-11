@@ -2,8 +2,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_QwerkE_Defines.h"
-
+#include "QF_Defines.h"
 #include "QF_oal_Helpers.h"
 #include "QF_Log.h"
 #include "QF_FileSystem.h"

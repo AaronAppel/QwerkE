@@ -5,7 +5,7 @@
 // defines, structs, typedefs for graphics
 #define Wind_CCW 0
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 #ifdef OpenGL
 // GLuint gc_NullHandleValue;

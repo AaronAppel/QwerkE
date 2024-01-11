@@ -6,7 +6,7 @@
 
 #include "QC_ProgramArgs.h"
 
-#include "QE_Engine_Defines.h"
+#include "QE_Defines.h"
 #include "QE_Engine.h"
 
 int main(unsigned int argc, char **argv)

@@ -2,7 +2,7 @@
 
 #include "Libraries/cJSON/QC_cJSON.h"
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 
 #include "QF_Log.h"
 #include "QF_Factory.h"
@@ -17,7 +17,6 @@
 #include "QF_RenderRoutine.h"
 #include "QF_TransformRoutine.h"
 #include "QF_Scene.h"
-
 #include "QF_Resources.h"
 
 // RenderComponent
@@ -31,7 +30,7 @@
 
 namespace QwerkE {
 
-    void DataManager::SaveScene(Scene* scene, const char* fileDir)
+    eEngineMessage DataManager::SaveScene(Scene* scene, const char* fileDir)
     {
         // #TODO Error checking
         cJSON* root = CreateObject();
@@ -69,22 +68,24 @@ namespace QwerkE {
         PrintRootObjectToFile(fileDir, root);
         LOG_INFO("DataManager: Scene file {0} saved", fileDir);
         ClosecJSONStream(root);
+        return eEngineMessage::_QSuccess;
     }
 
-    void DataManager::LoadScene(Scene* scene, const char* fileDir)
+    eEngineMessage DataManager::LoadScene(Scene* scene, const char* fileDir)
     {
-        if (scene == nullptr) { return; } // #TODO Load a null scene
+        if (scene == nullptr) { return eEngineMessage::_QFailure; } // #TODO Load a null scene
+
         if (FileExists(fileDir) == false)
         {
             LOG_ERROR("DataManager: LoadScene() could not open file for reading.");
-            return;
+            return eEngineMessage::_QFailure;
         }
 
         cJSON* root = OpencJSONStream(fileDir);
         if (root == nullptr)
         {
             LOG_ERROR("DataManager: LoadScene() null root object.");
-            return;
+            return eEngineMessage::_QFailure;
         }
 
         scene->RemoveAllObjectsFromScene();
@@ -134,6 +135,7 @@ namespace QwerkE {
 
         ClosecJSONStream(root);
         LOG_INFO("DataManager: Scene file {0} loaded", fileDir);
+        return eEngineMessage::_QSuccess;
     }
 
     // Utility

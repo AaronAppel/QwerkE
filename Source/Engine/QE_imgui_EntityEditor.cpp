@@ -6,6 +6,7 @@
 #include "QF_Mesh.h"
 #include "QF_Renderable.h"
 
+#include "QF_Defines.h"
 #include "QF_Physics.h"
 #include "QF_Resources.h"
 #include "QF_GameObject.h"
@@ -16,8 +17,6 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_b3_PhysicsFactory.h"
-
-#include "QF_QwerkE_Defines.h"
 
 #include "QE_EditComponent.h"
 #include "QE_Editor.h"

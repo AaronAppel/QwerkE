@@ -2,6 +2,10 @@
 
 // #TODO Rename to "QF_eInputKeys" or more input related, instead of auth keys, or something like that
 
+// #TODO Maybe deprecate the current implementation. Create keys that represent actions like:
+// Camera_Move, Editor_KeyPressW, Scene_Save, and any other action that can be abstracted from the keyboard key value (ascii or otherwise).
+// Maybe eQwerkEKeyAction or something
+
 namespace QwerkE {
 
     enum eKeyState

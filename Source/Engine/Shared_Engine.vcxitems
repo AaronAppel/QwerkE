@@ -15,10 +15,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_ConfigEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QE_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EditComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Engine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QE_Engine_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EntityEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_imgui_Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_MaterialEditor.h" />

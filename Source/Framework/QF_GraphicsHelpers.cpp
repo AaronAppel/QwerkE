@@ -17,8 +17,8 @@
 #include "QF_ShaderComponent.h"
 #include "QF_Renderable.h"
 #include "QF_Texture.h"
-#include "QF_QwerkE_Enums.h"
-#include "QF_QwerkE_Defines.h"
+#include "QF_Enums.h"
+#include "QF_Defines.h"
 
 namespace QwerkE {
 

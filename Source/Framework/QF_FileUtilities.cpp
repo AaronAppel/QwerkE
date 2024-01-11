@@ -7,8 +7,7 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_Log.h"
-
-#include "QF_QwerkE_Platform.h"
+#include "QF_Platform.h"
 
 bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 {

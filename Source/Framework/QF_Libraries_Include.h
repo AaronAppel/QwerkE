@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QF_QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
+#include "QF_Defines.h" // #TODO Determine which libraries to load using #defines
 
 #include "Libraries/Enum/QC_enum.h"
 

@@ -2,7 +2,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 #include "QF_Log.h"
 #include "QF_GraphicsHelpers.h"
 #include "QF_Graphics_Header.h"

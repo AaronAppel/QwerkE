@@ -45,7 +45,7 @@ namespace QwerkE {
 
             FindAttributesAndUniforms();
 
-            LOG_INFO("Recompiled shader %s");
+            LOG_INFO("Recompiled shader {0}", m_VertShader->GetName());
         }
     }
 

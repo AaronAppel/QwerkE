@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QF_QwerkE_Defines.h" // #TODO Determine which libraries to load using #defines
+#include "QF_Defines.h" // #TODO Determine which libraries to load using #defines
 
 #ifdef _DEBUG
 #define OpenGL // #TODO Move to a *Defines.h file so this is not the include for knowing what libraries to use

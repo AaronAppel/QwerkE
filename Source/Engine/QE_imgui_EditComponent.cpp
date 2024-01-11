@@ -7,7 +7,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_QwerkE_Enums.h"
+#include "QF_Enums.h"
 
 #include "QF_Resources.h"
 #include "QF_RenderRoutine.h"

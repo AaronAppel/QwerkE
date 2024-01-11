@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "609e7afc5c1705df",
+            "id": "202851dd49919e99",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Z. Obsidian/Obsidian Setup.md",
+                "file": "QwerkE Standards/Asserts.md",
                 "mode": "source",
                 "source": false
               }
@@ -31,7 +31,7 @@
       {
         "id": "011961b88bbc11c7",
         "type": "tabs",
-        "dimension": 85.83162217659137,
+        "dimension": 59.4798083504449,
         "children": [
           {
             "id": "55628a392364c2db",
@@ -57,7 +57,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Z. Obsidian/Obsidian Setup.md",
+                "file": "QwerkE Standards/Asserts.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Z. Obsidian/Obsidian Setup.md",
+                "file": "QwerkE Standards/Asserts.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +93,7 @@
       {
         "id": "6dc84078db07b920",
         "type": "tabs",
-        "dimension": 14.168377823408626,
+        "dimension": 40.5201916495551,
         "children": [
           {
             "id": "6e6727655ad579b3",
@@ -129,8 +129,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -150,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Z. Obsidian/Obsidian Setup.md"
+                "file": "QwerkE Standards/Asserts.md"
               }
             }
           }
@@ -171,14 +170,23 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "55628a392364c2db",
+  "active": "202851dd49919e99",
   "lastOpenFiles": [
-    "Z. Less Relevant/Markdown Syntax Reference.md",
+    "QwerkE Standards/Helpers vs Utilities.md",
+    "QwerkE Standards/Enums.md",
+    "QwerkE Standards/Empty Function Body.md",
+    "QwerkE Standards/Out Function Arguments.md",
+    "QwerkE Standards/Variable Naming.md",
+    "QwerkE Standards/Variable Naming 1.md",
+    "References/Library References.md",
+    "QwerkE Standards/Pre And Post Incrementing.md",
+    "README.md",
+    "README.md",
     "Z. Obsidian/Obsidian Setup.md",
+    "Z. Less Relevant/Markdown Syntax Reference.md",
     "Z. Obsidian/Documentation Assets/Symlinked_core-plugins.md",
     "Z. Obsidian/Obsidian References.md",
     "0. Getting Started With QwerkE/Getting Started With QwerkE.md",
-    "README.md",
     "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
     "Z. To Cleanup/Old Notes.md",
     "Work/Feature Development/Memory Allocation Tracking.md",
@@ -192,23 +200,14 @@
     "Symlinked_community-plugins.md",
     "Symlinked_core-plugins.md",
     "Known Issues and Gotchas.md",
-    "Sub Projects/QwerkE_Games/QwerkE Games.md",
-    "Sub Projects/Environments/Nteworking",
+    "Sub Projects/Environments/Networking",
     "Sub Projects/Environments/Physics",
     "Sub Projects/Environments/Rendering",
     "Sub Projects/Environments",
     "Sub Projects/QwerkE_Games",
     "READ_ME.txt",
-    "QwerkE Standards/Asserts.md",
-    "GettingStarted.md",
     "0. Getting Started/READ_ME.txt",
     "0. Getting Started With QwerkE",
-    "QwerkE Standards/Helpers vs Utilities.md",
-    "QwerkE Standards/Variable Naming 1.md",
-    "QwerkE Standards/Including.md",
-    "Z. To Cleanup/Old References.md",
-    "Solution Configuration/C++ Project Setup.md",
-    "Version Control/Git and GitHub.md",
     "New Bitmap image.bmp",
     "QwerkE Standards/Include Flow Diagram.canvas"
   ]

@@ -2,8 +2,8 @@
 
 #include "QF_Libraries_Include.h"
 
-#include "QF_QwerkE_Defines.h"
-#include "QF_QwerkE_Platform.h"
+#include "QF_Defines.h"
+#include "QF_Platform.h"
 
 #include "QF_Log.h"
 #include "QF_ConfigHelper.h"

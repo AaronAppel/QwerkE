@@ -8,7 +8,7 @@
 
 #include "QC_ReflectionMacros.h"
 
-#include "QF_QwerkE_Defines.h"
+#include "QF_Defines.h"
 #include "QF_Log.h"
 #include "QF_Input.h"
 
