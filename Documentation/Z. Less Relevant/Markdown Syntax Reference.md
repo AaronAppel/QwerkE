@@ -11,7 +11,8 @@ _Italics_
 __Bold Underscore__
 ``` Code Block ```
 [Text Link](url)
-
+- [ ] Checkbox unchecked 
+- [x] Checkbox checked
 #### Image Links
 `![image alt text](https://example.com/link-to-image)`
 `[link text](https://example.com/my-link "link title")`

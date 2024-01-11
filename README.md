@@ -4,15 +4,14 @@ I use this project to learn and develop a game engine for hobby.
 Ideally the engine can be useful for making my own games, or those who might brave the challenge of using it as well.
 
 The name QwerkE is simply endearing to me as it's a play on the "QWER" keyboard layout, with the later 'E' meaning editor or engine.
-
-\**This project is continually in development and should be considered unstable, until proven otherwise.*
-
+ff
+\**This project is continually in development and should be considered unstable, until proven otherwise!*
 ## Getting Started
-https://github.com/AaronAppel/Qwerk_Engine/tree/master/Documentation/GettingStarted.md
-[[GettingStarted]] #TODO Review alternative file reference
+GitHub : https://github.com/AaronAppel/Qwerk_Engine/tree/master/Documentation/GettingStarted.md
+Local Repo Obsidian : [[Getting Started With QwerkE]]
 
 ## Examples  
-#TODO Simple example usage of QwerkEngine, or "How To Use" section
+#TODO Simple example usage of QwerkE, or a "How To Use" section.
 Use game projects for examples to reference :
 ~~~cpp
 int main()

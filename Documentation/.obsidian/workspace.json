@@ -13,24 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "0. Getting Started/README.md",
+                "file": "Z. Obsidian/Obsidian Setup.md",
                 "mode": "source",
                 "source": false
               }
             }
-          },
-          {
-            "id": "92ed6fe90f883f5d",
-            "type": "leaf",
-            "state": {
-              "type": "mk-space",
-              "state": {
-                "path": "Spaces/Home"
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -68,6 +57,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Z. Obsidian/Obsidian Setup.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -79,6 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Z. Obsidian/Obsidian Setup.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,13 +88,12 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "6dc84078db07b920",
         "type": "tabs",
-        "dimension": 14.168377823408623,
+        "dimension": 14.168377823408626,
         "children": [
           {
             "id": "6e6727655ad579b3",
@@ -159,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Z. Obsidian/Obsidian Setup.md"
+              }
             }
           }
         ]
@@ -179,20 +171,23 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "edefc86514e78499",
+  "active": "55628a392364c2db",
   "lastOpenFiles": [
+    "Z. Less Relevant/Markdown Syntax Reference.md",
+    "Z. Obsidian/Obsidian Setup.md",
+    "Z. Obsidian/Documentation Assets/Symlinked_core-plugins.md",
+    "Z. Obsidian/Obsidian References.md",
+    "0. Getting Started With QwerkE/Getting Started With QwerkE.md",
+    "README.md",
+    "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
+    "Z. To Cleanup/Old Notes.md",
+    "Work/Feature Development/Memory Allocation Tracking.md",
+    "Solution Configuration/Compilation Configuration.md",
     "Spaces/Home",
     "Spaces",
-    "0. Getting Started/README.md",
-    "0. Getting Started/GettingStarted.md",
-    "0. Getting Started/Known Issues and Gotchas.md",
     "Z. Obsidian/Documentation Assets/Symlinked_community-plugins.md",
-    "Z. Obsidian/Obsidian References.md",
-    "Z. Obsidian/Obsidian Setup.md",
     "Assets and Data/Null Asset Handling.md",
     "Z. Less Relevant/Bit Manipulation.md",
-    "Z. Obsidian/Documentation Assets/Symlinked_core-plugins.md",
-    "Z. To Cleanup/Old Notes.md",
     "Z. To Cleanup/Framework Read Me.md",
     "Symlinked_community-plugins.md",
     "Symlinked_core-plugins.md",
@@ -207,16 +202,13 @@
     "QwerkE Standards/Asserts.md",
     "GettingStarted.md",
     "0. Getting Started/READ_ME.txt",
-    "0. Getting Started",
+    "0. Getting Started With QwerkE",
     "QwerkE Standards/Helpers vs Utilities.md",
-    "QwerkE Standards/Standards in Code",
     "QwerkE Standards/Variable Naming 1.md",
     "QwerkE Standards/Including.md",
     "Z. To Cleanup/Old References.md",
     "Solution Configuration/C++ Project Setup.md",
     "Version Control/Git and GitHub.md",
-    "Test.md",
-    "Visual Studio - Copy.md",
     "New Bitmap image.bmp",
     "QwerkE Standards/Include Flow Diagram.canvas"
   ]

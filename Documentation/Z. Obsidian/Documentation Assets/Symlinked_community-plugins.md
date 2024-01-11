@@ -6,5 +6,6 @@
   "url-into-selection",
   "obsidian-file-color",
   "file-explorer-note-count",
-  "obsidian-trash-explorer"
+  "obsidian-trash-explorer",
+  "file-explorer-plus"
 ]
