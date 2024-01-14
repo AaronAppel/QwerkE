@@ -1,6 +1,6 @@
 #include "QF_Time.h"
 
-#include "QF_Log.h"
+#include "QF_Platform.h"
 
 #ifdef _WIN32
 #include <profileapi.h>
@@ -8,6 +8,9 @@
 #else
 #error "Support non windows platform!"
 #endif
+
+#include "QF_Log.h"
+#include "QF_Debug.h"
 
 namespace QwerkE {
 

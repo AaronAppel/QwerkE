@@ -23,4 +23,10 @@ Embedded image with on-click link [![Title](link to image)](VideoLink "Hover Tex
 | :--: | :--: | :--: |
 | Type above table to see/edit markup | *Italic* | ~~Strikethrough~~ |
 | ![[imageaddress]] | **Bold** | `<div> code! </div>` |
-
+Code sections :
+```cpp
+int main()
+{
+	std::cout << "Hello world" << std::endl;
+}
+```

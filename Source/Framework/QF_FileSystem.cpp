@@ -146,7 +146,6 @@ namespace QwerkE {
 				LOG_WARN("ERROR::ASSIMP::{0}", importer.GetErrorString());
 				return nullptr; // failure
 			}
-			QwerkE_assimp_loadModelAs1Mesh(scene->mRootNode, scene, mesh, modelFilePath);
 #else
 			// separate model loading library
 #pragma error "Define model loading library!"
@@ -177,48 +176,39 @@ namespace QwerkE {
 		if (false == Resources::MeshExists(meshName))
 		{
 			Mesh* mesh = nullptr;
-#ifdef AI_CONFIG_H_INC // assimp
+#ifdef AI_CONFIG_H_INC
 			Assimp::Importer importer;
 			const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 			if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 			{
 				LOG_WARN("ERROR::ASSIMP::{0}", importer.GetErrorString());
-				return nullptr; // failure
+				return nullptr;
 			}
-			QwerkE_assimp_loadMeshByName(scene->mRootNode, scene, mesh, modelFilePath, meshName);
+			_assimp_loadMeshByName(scene->mRootNode, scene, mesh, modelFilePath, meshName);
 #else
-			// separate model loading library
 #pragma error "Define model loading library!"
-#endif // AI_CONFIG_H_INC
+#endif
 			Resources::AddMesh(meshName, mesh);
-			return Resources::GetMesh(meshName);
 		}
-		else
-		{
-			return Resources::GetMesh(meshName);
-		}
+		return Resources::GetMesh(meshName);
 	}
 
 	bool FileSystem::LoadModelFileToMeshes(const char* path)
 	{
-		// TODO: Check if a model with the same name already exists
+		if (Resources::MeshExists(FindFileName(path, true)))
+			return false;
 
-		// TODO: Prevent the same model from being loaded
-
-		// Create temporary mesh and material buffers to load.
-		// External library only cares about copying the data, not initializing it.
+		// #NOTE External library only cares about copying the data for us, not initializing it automatically
 		std::vector<Mesh*> meshes;
 		std::vector<std::string> matNames;
 
-#ifdef AI_CONFIG_H_INC // assimp
-
+#ifdef AI_CONFIG_H_INC
 		Assimp::Importer importer;
-		/*
-		aiProcess_GenNormals: actually creates normals for each vertex if the model didn't contain normal vectors.
-		aiProcess_SplitLargeMeshes : splits large meshes into smaller sub - meshes which is useful if your rendering has a maximum number of vertices allowed and can only process smaller meshes.
-		aiProcess_OptimizeMeshes : actually does the reverse by trying to join several meshes into one larger mesh, reducing drawing calls for optimization.
-		*/
+		// aiProcess_GenNormals: actually creates normals for each vertex if the model didn't contain normal vectors.
+		// aiProcess_SplitLargeMeshes : splits large meshes into smaller sub - meshes which is useful if your rendering has a maximum number of vertices allowed and can only process smaller meshes.
+		// aiProcess_OptimizeMeshes : actually does the reverse by trying to join several meshes into one larger mesh, reducing drawing calls for optimization.
+
 		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -232,22 +222,16 @@ namespace QwerkE {
 
 		// TODO: De-allocate RAM created by assimp
 #else
-		// separate model loading library
 #pragma error "Define model loading library!"
-#endif // AI_CONFIG_H_INC
+#endif
 
-	// take copied data from external library and init it for QwerkE systems use.
+		// Take copied data from external library and init it for QwerkE systems use.
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
 			Resources::AddMesh(meshes[i]->GetName().c_str(), meshes[i]);
 		}
-		for (size_t i = 0; i < matNames.size(); i++)
-		{
-			// TODO: Do something with the .mtl file loaded material names?
-			// resMan->GetTexture(DispStrCombine(directory.c_str(), matNames[i].c_str()).c_str());
-		}
 
-		return true; // success
+		return true;
 	}
 
 }

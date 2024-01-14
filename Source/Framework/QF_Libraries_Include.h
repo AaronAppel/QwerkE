@@ -57,11 +57,7 @@
 // #include "alut.h"
 // alutinit?
 
-#pragma warning( disable : 4244 )
-#include "Libraries/imgui/imgui.h"
-#include "Libraries/imgui/imgui_impl_glfw.h"
-#include "Libraries/imgui/imgui_impl_opengl3.h"
-#pragma warning( default : 4244 )
+#include "Libraries/imgui/QC_imgui.h"
 
 // pthreads
 // TODO: Check for architecture and debug/release

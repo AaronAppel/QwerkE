@@ -48,7 +48,7 @@ namespace QwerkE {
 					LOG_ERROR("ERROR::ASSIMP::{0}", importer.GetErrorString());
 					return nullptr; // failure
 				}
-				QwerkE_assimp_loadMeshByName(scene->mRootNode, scene, mesh, modelFilePath, meshName);
+				_assimp_loadMeshByName(scene->mRootNode, scene, mesh, modelFilePath, meshName);
 #else
 				// separate model loading library
 #pragma error "Define model loading library!"
@@ -129,7 +129,6 @@ namespace QwerkE {
 					LOG_ERROR("ERROR::ASSIMP::{0}", importer.GetErrorString());
 					return nullptr; // failure
 				}
-				QwerkE_assimp_loadModelAs1Mesh(scene->mRootNode, scene, mesh, modelFilePath);
 #else
 				// separate model loading library
 #pragma error "Define model loading library!"

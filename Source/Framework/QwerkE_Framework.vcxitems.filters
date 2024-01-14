@@ -385,6 +385,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.cpp">
       <Filter>FileSystem</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h">
@@ -697,6 +700,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.h">
       <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debug.h">
+      <Filter>Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

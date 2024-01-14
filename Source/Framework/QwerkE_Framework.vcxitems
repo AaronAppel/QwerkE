@@ -32,6 +32,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Cameras.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ConfigHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_DataManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debugger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_EventManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Factory.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Constants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CubeMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_DataManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debug.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debugger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Dynamic_ShaderProgram.h" />

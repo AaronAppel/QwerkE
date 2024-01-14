@@ -2,6 +2,7 @@
 
 #include "QC_StringHelpers.h"
 
+#include "QF_Debug.h"
 #include "QF_Material.h"
 #include "QF_ShaderProgram.h"
 #include "QF_ShaderComponent.h"
@@ -50,6 +51,9 @@ namespace QwerkE {
 	// TODO: Handle errors and deleting assets before returning nullptr
 	Mesh* Resources::InstantiateMesh(const char* meshFilePath)
 	{
+		if (!meshFilePath)
+			return m_Meshes[null_mesh];
+
 		Mesh* mesh = nullptr;
 
 		if (FileExists(meshFilePath))

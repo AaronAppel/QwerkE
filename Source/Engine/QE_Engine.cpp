@@ -20,7 +20,6 @@
 #pragma warning "Define editor library!"
 #endif
 
-
 #include "QC_ProgramArgs.h"
 
 #include "QF_Profile.h"

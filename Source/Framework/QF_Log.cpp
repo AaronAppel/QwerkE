@@ -6,6 +6,8 @@
 
 #include "Libraries/spdlog/sinks/stdout_color_sinks.h"
 
+#include "QF_Debug.h"
+
 namespace QwerkE {
 
     bool Log::m_initialized = false;

@@ -19,7 +19,7 @@ std::vector<std::string> ReadDir(const char* directoryPath); // #TODO Review nam
 
 bool CreateUniqueFile(const char* filename);
 
-const char* FindFileName(const char* filePath, bool includeExtension);
+const char* FindFileName(const char* filePath, bool includeExtension=true);
 const char* FindFileExtension(const char* filePath);
 
 std::string GetFileExtension(const char* filePath);

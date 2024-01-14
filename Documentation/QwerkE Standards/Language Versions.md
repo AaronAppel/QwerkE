@@ -1,7 +1,6 @@
 
 ## C++
-QwerkE is currently using C++ version 199711, unless stated otherwise.
-That being said, C++17 features like declaring variable inside of if statements will be used throughout the project, so C++17 is considered to be the version used for QwerkE.
+QwerkE is currently using **ISO C++14 Standard (/std:c++14)** as selected in the Qwerk_Engine project settings.
 
 The current version of C++ being used by the project exists in the \_\_cplusplus macro, and can be printed using this statement :
 ```

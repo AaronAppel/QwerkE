@@ -5,6 +5,7 @@
 
 #include "Libraries/glew/GL/glew.h"
 
+#include "QF_Debug.h"
 #include "QF_Defines.h"
 #include "QF_FileSystem.h"
 #include "QF_Jobs.h"
@@ -76,10 +77,10 @@ namespace QwerkE {
 
 	bool Resources::AddMesh(const char* name, Mesh* mesh)
 	{
-		if (MeshExists(name))
+		if (mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
 			return false;
 
-		if (mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
+		if (MeshExists(name))
 			return false;
 
 		m_Meshes[name] = mesh;
@@ -103,13 +104,12 @@ namespace QwerkE {
 
 	bool Resources::AddMaterial(const char* name, Material* material)
 	{
-		if (!material)
+		// EarlyReturnIfNull(2, name, material);
+
+		if (!material || MaterialExists(name))
 			return false;
 
-		if (MaterialExists(name))
-			return false;
-
-		if (material == nullptr || material->GetMaterialName() == gc_DefaultStringValue)
+		if (material->GetMaterialName() == gc_DefaultStringValue)
 			return false;
 
 		m_Materials[name] = material;
@@ -118,7 +118,7 @@ namespace QwerkE {
 
 	bool Resources::AddFont(const char* name, FT_Face font)
 	{
-		if (FontExists(name))
+		if (!name || !font || FontExists(name))
 			return false;
 
 		// TODO: How to check for null font? Also need cross library font classes
@@ -131,10 +131,10 @@ namespace QwerkE {
 
 	bool Resources::AddSound(const char* name, ALuint sound)
 	{
-		if (SoundExists(name))
+		if (!name || sound == 0)
 			return false;
 
-		if (sound == 0)
+		if (SoundExists(name))
 			return false;
 
 		m_Sounds[name] = sound;
@@ -143,10 +143,10 @@ namespace QwerkE {
 
 	bool Resources::AddShaderProgram(const char* name, ShaderProgram* ShaderProgram)
 	{
-		if (ShaderProgramExists(name))
+		if (!name || ShaderProgram == nullptr)
 			return false;
 
-		if (ShaderProgram == nullptr)
+		if (ShaderProgramExists(name))
 			return false;
 
 		m_ShaderPrograms[name] = ShaderProgram;
@@ -155,17 +155,16 @@ namespace QwerkE {
 
 	bool Resources::AddShaderComponent(const char* name, ShaderComponent* shaderComponent)
 	{
-		if (ShaderComponentExists(name))
+		if (!name || shaderComponent == nullptr)
 			return false;
 
-		if (shaderComponent == nullptr)
+		if (ShaderComponentExists(name))
 			return false;
 
 		m_ShaderComponents[name] = shaderComponent;
 		return true;
 	}
-	// getters
-	// TODO: Return null objects
+
 	Mesh* Resources::GetMesh(const char* meshName)
 	{
 		if (m_Meshes.find(meshName) != m_Meshes.end())

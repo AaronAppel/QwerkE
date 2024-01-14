@@ -586,6 +586,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_rectpack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_textedit.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_truetype.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\al.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\alc.h" />

@@ -24,9 +24,8 @@
 
 namespace QwerkE {
 
-    // private functions
-    Mesh* QwerkE_assimp_loadVertexData(aiMesh* mesh, const aiScene* scene, const char* modelFilePath);
-    void QwerkE_assimp_loadMaterialTextures(aiMaterial* mat, const std::string& filePath, std::vector<std::string>& matNames);
+    Mesh* _assimp_loadVertexData(aiMesh* mesh, const aiScene* scene, const char* modelFilePath);
+    void _assimp_loadMaterialTextures(aiMaterial* mat, const std::string& filePath, std::vector<std::string>& matNames);
 
     void _assimp_loadSceneNodeData(aiNode* node, const aiScene* scene, std::vector<Mesh*>& meshes, const std::string& filePath, std::vector<std::string>& matNames)
     {
@@ -35,11 +34,11 @@ namespace QwerkE {
         {
             // load VertexData
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes.push_back(QwerkE_assimp_loadVertexData(mesh, scene, filePath.c_str()));
+            meshes.push_back(_assimp_loadVertexData(mesh, scene, filePath.c_str()));
 
             // load Textures + materials
             if (mesh->mMaterialIndex >= 0) // has material?
-                QwerkE_assimp_loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], filePath, matNames);
+                _assimp_loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], filePath, matNames);
         }
         // then do the same for each of its children
         for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -48,7 +47,7 @@ namespace QwerkE {
         }
     }
 
-    Mesh* QwerkE_assimp_loadVertexData(aiMesh* mesh, const aiScene* scene, const char* modelFilePath)
+    Mesh* _assimp_loadVertexData(aiMesh* mesh, const aiScene* scene, const char* modelFilePath)
     {
         if (Resources::MeshExists(GetFileNameWithExt(modelFilePath).c_str()))
         {
@@ -126,7 +125,7 @@ namespace QwerkE {
         return rMesh;
     }
 
-    void QwerkE_assimp_loadMaterialTextures(aiMaterial* mat, const std::string& filePath, std::vector<std::string>& matNames)
+    void _assimp_loadMaterialTextures(aiMaterial* mat, const std::string& filePath, std::vector<std::string>& matNames)
     {
         // check if material is already loaded
         aiString name;
@@ -138,7 +137,6 @@ namespace QwerkE {
         }
         else
         {
-            //create new material
             Material* material = new Material(); // TODO: delete if null
             material->SetMaterialName(name.C_Str());
             // load each map/texture into a new material
@@ -146,6 +144,7 @@ namespace QwerkE {
             // iterate through all known texture types, then load the textures
             // into the Resources and assign handles to the return material.
             // mat->GetTextureCount(); // optimization
+
             int num = aiTextureType_UNKNOWN - 1;
             for (int i = aiTextureType_NONE + 1; i < num; i++)
             {
@@ -159,7 +158,6 @@ namespace QwerkE {
                     texture = Resources::GetTexture(str.C_Str());
                 }
 
-                // handle = 1;
                 switch (i)
                 {
                 case aiTextureType_DIFFUSE:
@@ -198,37 +196,28 @@ namespace QwerkE {
                 }
             }
 
-            // TODO: Support external material loading
-            // resMan->AddMaterial(data->s_FileName.c_str(), data); // add initialized material
+            Resources::AddMaterial(name.C_Str(), material);
         }
 
-        matNames.push_back(name.C_Str()); // get name for mat loading later
+        matNames.push_back(name.C_Str()); // #NOTE Material loader will use this name later
     }
 
-    void QwerkE_assimp_loadMeshByName(aiNode* node, const aiScene* scene, Mesh*& mesh, const char* modeFilePath, const char* meshName)
+    void _assimp_loadMeshByName(aiNode* node, const aiScene* scene, Mesh*& mesh, const char* modeFilePath, const char* meshName)
     {
-        // process all the node's meshes (if any)
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
-            // load VertexData
             aiMesh* aimesh = scene->mMeshes[node->mMeshes[i]];
             if (strcmp(aimesh->mName.C_Str(), meshName) == 0)
             {
-                mesh = QwerkE_assimp_loadVertexData(aimesh, scene, modeFilePath);
+                mesh = _assimp_loadVertexData(aimesh, scene, modeFilePath);
                 return;
             }
         }
-        // then do the same for each of its children
+
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
-            QwerkE_assimp_loadMeshByName(node->mChildren[i], scene, mesh, modeFilePath, meshName);
+            _assimp_loadMeshByName(node->mChildren[i], scene, mesh, modeFilePath, meshName);
         }
-    }
-
-    void QwerkE_assimp_loadModelAs1Mesh(aiNode* node, const aiScene* scene, Mesh*& mesh, const char* modelFilePath)
-    {
-        // TODO: write function. probably a good idea to cleanup above functions and split them up to use here.
-        mesh = nullptr;
     }
 
 }
