@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-#include "Libraries/imgui/imgui_impl_glfw.h"
+#include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_CallbackFunctions.h"
 #include "QF_Window.h"

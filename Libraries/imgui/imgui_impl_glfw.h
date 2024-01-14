@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Libraries/imgui/imgui.h"
+#include "imgui.h"
 
 struct GLFWwindow; // #TODO Review source change and if this can be removed
 

@@ -4,10 +4,8 @@
 #include <map>
 #include <vector>
 
-#pragma warning( disable : 4244 )
-#include "Libraries/imgui/imgui.h"
-#pragma warning( default : 4244 )
 #include "Libraries/glew/GL/glew.h"
+#include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_Constants.h"
 

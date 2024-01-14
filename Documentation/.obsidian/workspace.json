@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "QwerkE Standards/Avoided Practices.md",
+                "file": "References/Library References.md",
                 "mode": "source",
                 "source": false
               }
@@ -57,7 +57,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "QwerkE Standards/Avoided Practices.md",
+                "file": "References/Library References.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "QwerkE Standards/Avoided Practices.md",
+                "file": "References/Library References.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "QwerkE Standards/Avoided Practices.md"
+                "file": "References/Library References.md"
               }
             }
           }
@@ -173,9 +173,9 @@
   },
   "active": "202851dd49919e99",
   "lastOpenFiles": [
+    "QwerkE Standards/Avoided Practices.md",
     "SupressLinterWarnings.jpg",
     "Solution Configuration/Library Configuration.md",
-    "QwerkE Standards/Avoided Practices.md",
     "References/Library References.md",
     "Z. Obsidian/Obsidian Setup.md",
     "Z. Less Relevant/Markdown Syntax Reference.md",

@@ -9,12 +9,7 @@
 #define IMGUI_EDITOR
 
 #ifdef IMGUI_EDITOR
-#pragma warning( disable : 4244 )
-#include "Libraries/imgui/imgui.h"
-#include "Libraries/imgui/imgui_impl_glfw.h"
-#include "Libraries/imgui/imgui_impl_opengl3.h"
-#pragma warning( default : 4244 )
-
+#include "Libraries/imgui/QC_imgui.h"
 #include "QE_imgui_Editor.h"
 #else
 #pragma warning "Define editor library!"
