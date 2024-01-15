@@ -18,7 +18,7 @@ namespace QwerkE {
 
     void ConfigHelper::LoadConfigData()
     {
-        const char* configFilePath = ConfigsFolderPath("preferences.qpref"); // #TODO How to handle file names?
+        const char* configFilePath = ConfigsFolderPath(null_config); // #TODO How to handle file names?
         LoadConfigData(configFilePath);
     }
 
@@ -73,6 +73,18 @@ namespace QwerkE {
         {
             m_ConfigData.engineSettings.LimitFramerate = (bool)GetItemFromArrayByKey(engineSettings, "LimitFramerate")->valueint;
             m_ConfigData.engineSettings.MaxFramesPerSecond = GetItemFromArrayByKey(engineSettings, "MaxFramesPerSecond")->valueint;
+        }
+
+        ClosecJSONStream(root);
+    }
+
+    void ConfigHelper::LoadUserData(std::string preferencesFilePath)
+    {
+        const cJSON* root = OpencJSONStream(preferencesFilePath.c_str());
+        if (root == nullptr)
+        {
+            LOG_ERROR("Unable to load json for file {0}", preferencesFilePath);
+            return;
         }
 
         if (const cJSON* controls = GetItemFromRootByKey(root, "Controls"))
@@ -147,7 +159,16 @@ namespace QwerkE {
         {
             AddItemToArray(engineSettings, CreateBool("LimitFramerate", m_ConfigData.engineSettings.LimitFramerate));
             AddItemToArray(engineSettings, CreateNumber("MaxFramesPerSecond", (int)m_ConfigData.engineSettings.MaxFramesPerSecond));
+            AddItemToRoot(root, engineSettings);
         }
+
+        const char* configFilePath = ConfigsFolderPath(null_config);
+        PrintRootObjectToFile(configFilePath, root); // #TODO Take in config file path as arg
+    }
+
+    void ConfigHelper::SaveUsersData()
+    {
+        cJSON* root = CreateObject();
 
         if (cJSON* controls = CreateArray("Controls"))
         {
@@ -159,10 +180,11 @@ namespace QwerkE {
             AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveDown), (char*)&m_ConfigData.controls.Camera_MoveDown));
             AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_RotateLeft), (char*)&m_ConfigData.controls.Camera_RotateLeft));
             AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_RotateRight), (char*)&m_ConfigData.controls.Camera_RotateRight));
+            AddItemToRoot(root, controls);
         }
 
-        const char* configFilePath = ConfigsFolderPath("preferences.qpref");
-        PrintRootObjectToFile(configFilePath, root); // #TODO Take in config file path as arg
+        const char* preferencesFilePath = PreferencesFolderPath(null_preferences);
+        PrintRootObjectToFile(preferencesFilePath, root); // #TODO Take in config file path as arg
     }
 
 }

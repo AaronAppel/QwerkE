@@ -42,7 +42,7 @@ namespace QwerkE {
 	{
 		eEngineMessage Framework::Startup()
 		{
-			return Startup(ConfigsFolderPath("preferences.qpref"));
+			return Startup(ConfigsFolderPath(null_config));
 		}
 
 		eEngineMessage Framework::Startup(const std::string configFilePath)

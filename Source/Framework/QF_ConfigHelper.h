@@ -92,6 +92,8 @@ namespace QwerkE {
         static void LoadConfigData(std::string configFilePath); // #TODO Write and chain with above overloaded method
         static void SaveConfigData();
         static void SaveConfigData(ConfigData config);
+        static void LoadUserData(std::string preferencesFilePath);
+        static void SaveUsersData();
 
         static const ConfigData& GetConfigData() { return m_ConfigData; }
         static void SetConfigData(ConfigData config) { m_ConfigData = config; }

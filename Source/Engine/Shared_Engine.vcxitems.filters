@@ -33,6 +33,9 @@
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Defines.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.h">
+      <Filter>ProgramArguments</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Editor">
@@ -40,6 +43,9 @@
     </Filter>
     <Filter Include="Editor\imgui_Editor">
       <UniqueIdentifier>{8d50ac33-b895-4b9c-a419-64b18ffdfdcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProgramArguments">
+      <UniqueIdentifier>{0df42337-3bda-4571-a886-cb4e39fe6585}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +79,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_Editor.cpp">
       <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.cpp">
+      <Filter>ProgramArguments</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

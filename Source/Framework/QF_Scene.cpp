@@ -20,11 +20,6 @@ namespace QwerkE {
         UnloadScene();
     }
 
-    void Scene::Initialize()
-    {
-        //m_pViewMatrix->CreateLookAtViewLeftHanded(vec3(0, 0, 0), vec3(0, 0, 1), vec3(0, 0, 0));
-    }
-
     void Scene::OnWindowResize(unsigned int width, unsigned int height)
     {
         // update camera view and projection matrices
@@ -182,7 +177,6 @@ namespace QwerkE {
         // Check object tag
         if (m_pGameObjects.find(object->GetName().c_str()) != m_pGameObjects.end())
         {
-            // exists?
             if (object->GetTag() == eGameObjectTags::GO_Tag_Player)
             {
                 // Player specific
@@ -207,18 +201,18 @@ namespace QwerkE {
 
     void Scene::SaveScene()
     {
-        if (m_LevelFileName == gc_DefaultCharPtrValue)
+        if (m_SceneFileName == gc_DefaultCharPtrValue)
         {
             LOG_ERROR("Unable to Save scene! m_LevelFileName is \"{0}\"", gc_DefaultCharPtrValue);
             return;
         }
 
-        DataManager::SaveScene(this, ScenesFolderPath(m_LevelFileName.c_str()));
+        DataManager::SaveScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
     }
 
     void Scene::LoadScene()
     {
-        LoadScene(m_LevelFileName.c_str());
+        LoadScene(m_SceneFileName.c_str());
     }
 
     void Scene::LoadScene(const char* sceneFileName)
@@ -228,16 +222,16 @@ namespace QwerkE {
             LOG_ERROR("Unable to Load scene! sceneFileName is \"{0}\"", gc_DefaultCharPtrValue);
             return;
         }
-        m_LevelFileName = sceneFileName;
+        m_SceneFileName = sceneFileName;
 
-        eEngineMessage result = DataManager::LoadScene(this, ScenesFolderPath(m_LevelFileName.c_str()));
+        eEngineMessage result = DataManager::LoadScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
         if (result == eEngineMessage::_QSuccess)
         {
-            LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_LevelFileName.c_str());
+            LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
         }
         else
         {
-            LOG_TRACE("{0} error loading \"{1}\"", __FUNCTION__, m_LevelFileName.c_str());
+            LOG_TRACE("{0} error loading \"{1}\"", __FUNCTION__, m_SceneFileName.c_str());
         }
         SetupCameras();
     }
@@ -264,14 +258,15 @@ namespace QwerkE {
         }
         m_pGameObjects.clear();
 
-        LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_LevelFileName.c_str());
+        LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
     void Scene::ReloadScene()
     {
         UnloadScene();
+        Initialize();
         LoadScene();
-        LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_LevelFileName.c_str());
+        LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
     GameObject* Scene::GetGameObject(const char* name)

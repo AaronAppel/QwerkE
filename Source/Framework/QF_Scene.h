@@ -17,10 +17,10 @@ namespace QwerkE {
     class Scene // #TODO Move all scenes to files as data and declare Scene as final
     {
     public:
-        Scene(const char* sceneFileName) { m_LevelFileName = sceneFileName; }
+        Scene(const char* sceneFileName) { m_SceneFileName = sceneFileName; }
         virtual ~Scene();
 
-        virtual void Initialize();
+        virtual void Initialize() {} // #TODO Deprecate and use Load*() methods to init
 
         void OnWindowResize(unsigned int width, unsigned int height);
 
@@ -66,7 +66,7 @@ namespace QwerkE {
 
         bool m_IsEnabled = false;
         bool m_IsPaused = false;
-        std::string m_LevelFileName = gc_DefaultCharPtrValue;
+        std::string m_SceneFileName = gc_DefaultCharPtrValue;
 
         std::map<std::string, GameObject*> m_pGameObjects;
         eSceneTypes m_ID = eSceneTypes::Scene_Null; // #TODO Deprecate ids and use unique file names/paths instead

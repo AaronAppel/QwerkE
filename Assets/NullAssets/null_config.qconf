@@ -1,0 +1,29 @@
+{
+	"Framework": [{
+		"QuickLoad":	1,
+		"MaxConcurrentThreadCount":	10
+	}],
+	"Libraries":	[{
+			"Audio":	"OpenAL",
+			"Networking":	"RakNet",
+			"Physics":	"Bullet3D",
+			"Rendering":	"OpenGL",
+			"Window":	"GLFW3"
+		}],
+	"Scenes":	[{
+			"0":	"Test.qscene"
+		}],
+	"SceneSettings":	[{
+			"MaxEnabledScenes":	1
+		}],
+	"Systems":	[{
+			"AudioEnabled":	1,
+			"NetworkingEnabled":	0,
+			"PhysicsEnabled":	0,
+			"ConsoleOutputWindowEnabled": 0
+		}],
+	"EngineSettings":	[{
+			"LimitFramerate": 1,
+			"MaxFramesPerSecond": 120
+	}]
+}

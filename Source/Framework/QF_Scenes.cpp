@@ -44,8 +44,8 @@ namespace QwerkE {
 		//      Create empty scene
 		// }
 
-		const char* prefPath = ConfigsFolderPath("preferences.qpref");
-		// TODO: does this free memory correctly? std::string pref = ConfigsFolderPath("preferences.qpref");
+		const char* prefPath = ConfigsFolderPath(null_preferences);
+		// TODO: does this free memory correctly? std::string pref = ConfigsFolderPath(null_config);
 
 		if (FileExists(prefPath))
 		{
@@ -66,8 +66,7 @@ namespace QwerkE {
 				}
 
 				Scene* newScene = new Scene(sceneFileName); // TODO: Improve how scene file names are assigned
-
-				newScene->LoadScene(sceneFileName);
+				newScene->LoadScene();
 
 				if (i == 0)
 					m_CurrentScene = newScene; // TODO: Improve default starting scene selection/specification
@@ -81,8 +80,9 @@ namespace QwerkE {
 
 		if (m_Scenes.empty())
         {
-			Scene* emptyScene = new Scene(ScenesFolderPath(null_scene));
+			Scene* emptyScene = new Scene(null_scene);
 			emptyScene->Initialize();
+			emptyScene->LoadScene();
 			emptyScene->SetIsEnabled(true);
             m_CurrentScene = emptyScene;
             LOG_WARN("Null scene loaded because no valid scene was found in: {0}", prefPath);

@@ -13,6 +13,7 @@ const char* StringAppend(const char* a, const char* b)
 
 const char* StringAppend(const char* a, const char* b, const char* c)
 {
+	// #TODO Refactor string append methods to properly manage string allocations
 	const size_t size = strlen(a) + strlen(b) + strlen(c);
 
 	const char* newString = new char[size]; // #TODO Delete memory. Maybe use a smart pointer.

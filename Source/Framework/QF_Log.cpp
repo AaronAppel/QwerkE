@@ -1,6 +1,5 @@
 #include "QF_Log.h"
 
-#include <stdio.h> // fprintf
 #include <memory> // std::make_shared
 #include <corecrt_wstdio.h> // stderr
 
@@ -33,5 +32,30 @@ namespace QwerkE {
         ASSERT(m_initialized, "Cannot shutdown if uninitialized!");
         spdlog::shutdown();
         m_initialized = false;
+    }
+
+    void Log::Print(const char* message)
+    {
+        printf(message);
+    }
+
+    void Log::Print(const char* message, const char* arg1)
+    {
+        printf(message, arg1);
+    }
+
+    void Log::Print(const char* message, double arg1)
+    {
+        printf(message, arg1);
+    }
+
+    void Log::Print(const char* message, const char* arg1, const char* arg2)
+    {
+        printf(message, arg1, arg2);
+    }
+
+    void Log::Print(const char* message, double arg1, const char* arg2)
+    {
+        printf(message, arg1, arg2);
     }
 }

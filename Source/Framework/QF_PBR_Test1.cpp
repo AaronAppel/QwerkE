@@ -16,7 +16,7 @@ namespace QwerkE {
         m_ID = (eSceneTypes::Scene_PBR_Test1);
     }
 
-    void PBR_Test1::Initialize()
+    void PBR_Test1::Initialize() // #TODO Move to a data file
     {
         // Load assets into Resources
         Resources::GetShaderProgram("PBR1.ssch");

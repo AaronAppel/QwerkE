@@ -25,16 +25,5 @@
 	"EngineSettings":	[{
 			"LimitFramerate": 1,
 			"MaxFramesPerSecond": 120
-	}],
-	"Controls": [{
-		"m_ConfigData.controls.Camera_MoveForward": "W",
-		"m_ConfigData.controls.Camera_MoveBackward": "S",
-		"m_ConfigData.controls.Camera_MoveLeft": "A",
-		"m_ConfigData.controls.Camera_MoveRight": "D",
-		"m_ConfigData.controls.Camera_MoveUp": "E",
-		"m_ConfigData.controls.Camera_MoveDown": "Q",
-		
-		"m_ConfigData.controls.Camera_RotateLeft": "R",
-		"m_ConfigData.controls.Camera_RotateRight": "T"
 	}]
 }

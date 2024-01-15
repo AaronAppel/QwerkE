@@ -22,6 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EntityEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_imgui_Editor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_MaterialEditor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_ResourceViewer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_SceneGraph.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_SceneViewer.h" />
@@ -39,5 +40,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_SceneGraph.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_SceneViewer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_ShaderEditor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.cpp" />
   </ItemGroup>
 </Project>

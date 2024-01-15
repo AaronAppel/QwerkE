@@ -44,7 +44,7 @@
 //USER: Set the offset from your project working directory
 // You must #define AssetDir "Assets/" (path to assets)
 
-#define FrameworkNullAssetsDir "Assets/NullAssets/" // Framework null objects to use if user assets fail to load
+#define FrameworkNullAssetsDir StringAppend(AssetsDir, "NullAssets/") // Framework null objects to use if user assets fail to load
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.
@@ -66,35 +66,39 @@
 #define SoundsFolderPath(fullFileName) StringAppend(AssetsDir, "Sounds/", fullFileName)
 #define ScenesFolderPath(fullFileName) StringAppend(AssetsDir, "Scenes/", fullFileName)
 #define ConfigsFolderPath(fullFileName) StringAppend(AssetsDir, "Configs/", fullFileName)
+#define PreferencesFolderPath(fullFileName) StringAppend(AssetsDir, "Configs/", fullFileName)
 #define ObjectSchematicsFolderPath(fullFileName) StringAppend(AssetsDir, "BluePrints_Prefabs_Schematic/", fullFileName)
+
+// Standardized file extensions
+#define vertex_shader_ext "vert" // #TODO Should extensions be implied to own the '.' period?
+#define fragment_shader_ext "frag"
+#define geometry_shader_ext "geo"
+#define object_schematic_ext "osch"
+#define material_schematic_ext "msch"
+#define shader_schematic_ext "ssch"
+#define scene_ext "qscene"
+#define configs_ext "qconf"
+#define preferences_ext "qpref"
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.
 // TODO: should macros express the file extension? Need to if the loader is looking for that file
 // TODO: Use file extension as name consistently. Either everywhere, or no where (probably use them everywhere)
-#define null_mesh_filename "null_mesh.obj"
-#define null_mesh "null_mesh"
-#define null_shader "null_shader"
-#define null_texture "null_texture.png"
-#define null_material "null_material.msch"
+#define null_config StringAppend("null_config.", configs_ext)
 #define null_font "null_font.ttf"
+#define null_material StringAppend("null_material.", material_schematic_ext)
+#define null_mesh "null_mesh"
+#define null_mesh_filename "null_mesh.obj" // #TODO Look to deprecate
+#define null_preferences StringAppend("null_preferences.", preferences_ext)
+#define null_scene StringAppend("null_scene.", scene_ext)
+#define null_shader "null_shader"
 #define null_sound "null_sound.wav"
-#define null_scene "null_scene.qscene"
+#define null_texture "null_texture.png"
 
 // Null schematics
-#define null_object_schematic "null_object.osch"
-#define null_material_schematic "null_material.msch"
-#define null_shader_schematic "null_shader.ssch" // TODO: Maybe use an enum for shader types
-#define null_vert_component "null_shader.vert"
-#define null_frag_component "null_shader.frag"
-#define null_geo_component "null_shader.geo"
-
-// Standardized file extensions
-#define vertex_shader_ext "vert"
-#define fragment_shader_ext "frag"
-#define geometry_shader_ext "geo"
-#define object_schematic_ext ".osch"
-#define material_schematic_ext "msch"
-#define shader_schematic_ext "ssch"
-#define scene_ext "qscene"
-#define configs_ext "qpref"
+#define null_material_schematic StringAppend("null_material.", material_schematic_ext)
+#define null_object_schematic StringAppend("null_object.", object_schematic_ext)
+#define null_shader_schematic StringAppend("null_shader.", shader_schematic_ext)
+#define null_vert_component StringAppend("null_shader.", vertex_shader_ext)
+#define null_frag_component StringAppend("null_shader.", fragment_shader_ext)
+#define null_geo_component StringAppend("null_shader.", geometry_shader_ext)

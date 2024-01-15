@@ -1,77 +1,62 @@
 {
 	"ObjectList":	[{
-			"Nanosuit":	[{
+			"Object1":	[{
 					"Position":	[{
 							"PositionX":	0,
-							"PositionY":	-2,
-							"PositionZ":	30
+							"PositionY":	0,
+							"PositionZ":	0
 						}],
 					"Rotation":	[{
-							"RotationX":	0,
-							"RotationY":	180,
+							"RotationX":	333,
+							"RotationY":	333,
 							"RotationZ":	0
 						}],
 					"Scale":	[{
-							"ScaleX":	1,
-							"ScaleY":	1,
-							"ScaleZ":	1
+							"ScaleX":	7.500000,
+							"ScaleY":	7.500000,
+							"ScaleZ":	7.500000
 						}],
-					"ObjectTag":	9,
+					"ObjectTag":	7,
 					"ComponentList":	[{
-							"4":	[{
+							"5":	[{
 									"ComponentName":	"Render",
 									"SchematicName":	"None",
 									"Renderables":	[{
-											"Visor":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"nanosuit_glass.msch",
-													"MeshFile":	"nanosuit.obj",
-													"MeshName":	"Visor"
-												}],
-											"Legs":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"nanosuit_leg.msch",
-													"MeshFile":	"nanosuit.obj",
-													"MeshName":	"Legs"
-												}],
-											"Hands":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"nanosuit_hand.msch",
-													"MeshFile":	"nanosuit.obj",
-													"MeshName":	"Hands"
-												}],
-											"Lights":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"nanosuit_glass.msch",
-													"MeshFile":	"nanosuit.obj",
-													"MeshName":	"Lights"
-												}],
-											"Arms":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"nanosuit_arm.msch",
-													"MeshFile":	"nanosuit.obj",
-													"MeshName":	"Arms"
-												}],
-											"Helmet":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"nanosuit_helmet.msch",
-													"MeshFile":	"nanosuit.obj",
-													"MeshName":	"Helmet"
-												}],
-											"Body":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"nanosuit_body.msch",
-													"MeshFile":	"nanosuit.obj",
-													"MeshName":	"Body"
+											"Uninitialized":	[{
+													"Shader":	"LitMaterialNormal.ssch",
+													"Material":	"brickwall.msch",
+													"MeshFile":	"None",
+													"MeshName":	"Test_Plane"
 												}]
 										}]
 								}]
 						}],
 					"RoutineList":	[{
 							"UpdateRoutines":	[{
-							}],
+									"4":	[{
+											"RoutineName":	"Transform",
+											"Speed":	0.500000,
+											"TransformValues":	[{
+													"Position":	[{
+															"PositionX":	0,
+															"PositionY":	0,
+															"PositionZ":	0
+														}],
+													"Rotation":	[{
+															"RotationX":	0.250000,
+															"RotationY":	0.250000,
+															"RotationZ":	0
+														}],
+													"Scale":	[{
+															"ScaleX":	0,
+															"ScaleY":	0,
+															"ScaleZ":	0
+														}]
+												}]
+										}]
+								}],
 							"DrawRoutines":	[{
-									"0":	[{
+									"1":	[{
 											"RoutineName":	"Render"
 										}]
 								}]
@@ -81,9 +66,9 @@
 	"CameraList":	[{
 			"Camera0":	[{
 					"Position":	[{
-							"PositionX":	0.501858,
-							"PositionY":	0.401084,
-							"PositionZ":	5.958960
+							"PositionX":	0.35,
+							"PositionY":	0.65,
+							"PositionZ":	-78.0
 						}],
 					"Rotation":	[{
 							"RotationX":	0,
@@ -97,7 +82,7 @@
 						}],
 					"ObjectTag":	1,
 					"ComponentList":	[{
-							"0":	[{
+							"1":	[{
 									"ComponentName":	"Camera",
 									"CamType":	0
 								}]
@@ -129,10 +114,10 @@
 						}],
 					"ObjectTag":	2,
 					"ComponentList":	[{
-							"2":	[{
+							"3":	[{
 									"ComponentName":	"Light"
 								}],
-							"4":	[{
+							"5":	[{
 									"ComponentName":	"Render",
 									"SchematicName":	"None",
 									"Renderables":	[{
@@ -149,7 +134,7 @@
 							"UpdateRoutines":	[{
 							}],
 							"DrawRoutines":	[{
-									"0":	[{
+									"1":	[{
 											"RoutineName":	"Render"
 										}]
 								}]

@@ -19,10 +19,11 @@ cJSON* OpencJSONStream(const char* fileDirectory)
 
 		if (root == nullptr)
 		{
-			LOG_ERROR("OpencJSONStream(): Could not open cJSON stream. Possible compile error. Check {0} file for typos!", fileDirectory);
+			LOG_ERROR("{0}(): Could not open cJSON stream. Possible compile error. Check {1} file for typos!", __FUNCTION__, fileDirectory);
 		}
 		return root;
 	}
+	LOG_ERROR("{0}(): Could not find JSON file {1}!", __FUNCTION__, fileDirectory);
 	return nullptr;
 }
 

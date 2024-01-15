@@ -7,9 +7,6 @@
     <Filter Include="Reflection">
       <UniqueIdentifier>{e500603f-ffcc-4dbf-b3f2-f7b903248045}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ProgramArgs">
-      <UniqueIdentifier>{f9072bb6-d338-4ece-904f-151e49c05373}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Time">
       <UniqueIdentifier>{6af886e0-a4b4-4c70-bc86-cea022f9fafe}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp">
       <Filter>Strings</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.cpp">
-      <Filter>ProgramArgs</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp">
       <Filter>Time</Filter>
     </ClCompile>
@@ -130,9 +124,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h">
       <Filter>Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_ProgramArgs.h">
-      <Filter>ProgramArgs</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h">
       <Filter>Time</Filter>

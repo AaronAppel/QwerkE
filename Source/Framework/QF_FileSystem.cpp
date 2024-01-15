@@ -41,7 +41,7 @@ namespace QwerkE {
 		// read file data
 		if (strcmp(soundFile.s_Extension.c_str(), "wav") == 0)
 		{
-			soundFile.s_Data = (char*)LoadWaveFileData(filePath, soundFile.s_Size, soundFile.s_Channels, soundFile.s_Frequency, soundFile.s_BitsPerSample);
+			soundFile.s_Data = (char*)LoadWavFileData(filePath, soundFile.s_Size, soundFile.s_Channels, soundFile.s_Frequency, soundFile.s_BitsPerSample);
 		}
 		else if (strcmp(soundFile.s_Extension.c_str(), "mp3") == 0)
 		{

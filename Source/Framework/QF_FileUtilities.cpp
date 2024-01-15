@@ -213,7 +213,7 @@ char* LoadCompleteFile(const char* filename, long* length = nullptr)
 // https://stackoverflow.com/questions/13660777/c-reading-the-data-part-of-a-wav-file/13661263
 // https://stackoverflow.com/questions/38022123/openal-not-playing-sound/50429578#50429578
 // http://soundfile.sapp.org/doc/WaveFormat/
-unsigned char* LoadWaveFileData(const char* filePath, unsigned long& bufferSize, unsigned short& channels, unsigned int& frequency, unsigned short& bitsPerSample)
+unsigned char* LoadWavFileData(const char* filePath, unsigned long& bufferSize, unsigned short& channels, unsigned int& frequency, unsigned short& bitsPerSample)
 {
 	// TODO: Cleaner error handling
 	// NOTE: I explicitly hard coded the fread() values to work cross platform
@@ -361,30 +361,47 @@ std::string GetFileNameWithExt(const char* filePath)
 	return test;
 }
 
-const char* FindFileName(const char* filePathOrName, bool includeExtension)
+char* FindFileName(const char* filePathOrName, bool includeExtension)
 {
-	if (!filePathOrName)
-		return nullptr;
+	char* fileName = nullptr;
+	int newStrSize = 0;
+	const char* newStrStart = nullptr;
 
-	std::string test = filePathOrName;
-
-	if (test.find_last_of('/') != test.npos)
+	if (const char* foundChar = strrchr(filePathOrName, '/'))
 	{
-		test = test.substr(test.find_last_of('/') + 1, test.find_last_of('.') - 1 - test.find_last_of('/'));
+		newStrSize = strlen(foundChar) - 1;
+		newStrStart = foundChar + 1;
 	}
-	else if (test.find_last_of('\\') != test.npos)
+	else if (const char* foundChar = strrchr(filePathOrName, '\\'))
 	{
-		test = test.substr(test.find_last_of('\\') + 1, test.find_last_of('.') - 1 - test.find_last_of('\\'));
+		newStrSize = strlen(foundChar) - 1;
+		newStrStart = foundChar + 1;
 	}
 	else
 	{
-		test = test.substr(0, test.find_last_of('.') - 1);
+		newStrSize = strlen(filePathOrName);
+		newStrStart = filePathOrName;
 	}
 
-	return test.c_str();
+	if (!includeExtension)
+	{
+		if (const char* foundChar = strrchr(filePathOrName, '.'))
+		{
+			newStrSize -= strlen(foundChar);
+		}
+	}
+
+	if (newStrSize > 0)
+	{
+		fileName = new char[newStrSize + 1];
+		strncpy(fileName, newStrStart, newStrSize);
+		fileName[newStrSize] = '\0';
+	}
+
+	return fileName;
 }
 
-const char* FindFileExtension(const char* filePathOrName)
+char* FindFileExtension(const char* filePathOrName)
 {
 	if (!filePathOrName)
 		return nullptr;
@@ -407,6 +424,9 @@ const char* FindFileExtension(const char* filePathOrName)
 	{
 		lastCharOccurenceIndex;
 	}
+
+	// #TODO Allocate and return file extension string
+	assert(false);
 	return nullptr;
 }
 

@@ -21,6 +21,8 @@ namespace QwerkE {
 
         virtual void ToggleEditorUi() = 0;
 
+        EntityEditor* GetEntityEditor() { return m_EntityEditor; }
+
     protected:
         Editor();
         virtual ~Editor();

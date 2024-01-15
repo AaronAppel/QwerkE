@@ -159,6 +159,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Log.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Material.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MaterialComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshFactory.h" />

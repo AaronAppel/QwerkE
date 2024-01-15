@@ -13,6 +13,10 @@
 #include "QF_Window.h"
 #include "QF_Windows.h"
 
+#include "QE_Engine.h"
+#include "QE_Editor.h"
+#include "QE_EntityEditor.h"
+
 namespace QwerkE {
 
     SceneViewer::SceneViewer()
@@ -40,9 +44,9 @@ namespace QwerkE {
             Scene* currentScene = Scenes::GetCurrentScene();
 
             m_currentEngineStateIndex = (char)currentScene->GetIsPaused();
-            const char* states[] = { "Running", "Paused" };
 
             ImGui::PushItemWidth(150);
+            const char* states[] = { "Running", "Paused" };
             if (ImGui::Combo("Scene State", &m_currentEngineStateIndex, states, sizeof(states)))
             {
                 currentScene->SetIsPaused((bool)m_currentEngineStateIndex);
@@ -53,7 +57,11 @@ namespace QwerkE {
             if (ImGui::Button("Save")) currentScene->SaveScene();
 
             ImGui::SameLine();
-            if (ImGui::Button("Reload")) currentScene->ReloadScene();
+            if (ImGui::Button("Reload"))
+            {
+                Engine::GetEditor()->GetEntityEditor()->SetCurrentEntity(nullptr);
+                currentScene->ReloadScene();
+            }
 
             m_FBO->Bind();
 

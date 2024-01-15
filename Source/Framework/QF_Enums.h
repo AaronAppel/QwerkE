@@ -2,9 +2,8 @@
 
 #include <cstdint>
 
-// QwerkE enums for things like GameObject tagging, Components, etc
-
-namespace QwerkE {
+namespace QwerkE
+{
 
     enum class eInputDeviceTypes : std::uint8_t
     {
@@ -64,9 +63,7 @@ namespace QwerkE {
     enum class eEngineMessage : std::uint8_t
     {
         _QSuccess = 0,
-        _QFailure,
-
-        _QMax
+        _QFailure
     };
 
     enum class eEngineServices : std::uint16_t // TODO: Rename engine to framework

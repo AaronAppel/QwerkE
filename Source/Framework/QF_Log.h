@@ -29,6 +29,13 @@ namespace QwerkE
         static void Shutdown();
 
         static std::shared_ptr<spdlog::logger> m_Logger; // #TODO Private
+
+        static void Print(const char* message);
+        static void Print(const char* message, const char* arg1);
+        static void Print(const char* message, double arg1);
+        static void Print(const char* message, const char* arg1, const char* arg2);
+        static void Print(const char* message, double arg1, const char* arg2);
+
     private:
         Log() = default;
 
@@ -42,6 +49,7 @@ namespace QwerkE
 // #define LOG_TRACE(...)    ::QwerkE::LOG_TRACE(__VA_ARGS__) // TODO: Contain spdlog code inside Log.cpp only?
 
 // #TODO Add more info to log calls like __FUNCTION__, __LINE__, __FILE__, and more
+#define LOG_SAFE(msg, arg1) QwerkE::Log::Print(msg, arg1);
 #define LOG_TRACE(...)      QwerkE::Log::m_Logger->trace(__VA_ARGS__);
 #define LOG_INFO(...)       QwerkE::Log::m_Logger->info(__VA_ARGS__);
 #define LOG_WARN(...)       QwerkE::Log::m_Logger->warn(__VA_ARGS__);

@@ -704,5 +704,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debug.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

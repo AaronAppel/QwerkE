@@ -15,8 +15,6 @@
 #pragma warning "Define editor library!"
 #endif
 
-#include "QC_ProgramArgs.h"
-
 #include "QF_Profile.h"
 #include "QF_Debugger.h"
 #include "QF_Graphics_Header.h"
@@ -41,6 +39,9 @@
 #include "QF_Window.h"
 #include "QF_Windows.h"
 
+#include "QE_Defines.h"
+#include "QE_ProgramArgs.h"
+
 namespace QwerkE {
 
 	namespace Engine
@@ -48,16 +49,20 @@ namespace QwerkE {
         static bool m_IsRunning = false;
         static Editor* m_Editor = nullptr;
 
-		QwerkE::eEngineMessage Engine::Run(std::map<const char*, const char*> &args)
+		QwerkE::eEngineMessage Engine::Run(const std::map<const char*, const char*>& programArgPairs)
         {
+			Log::Print("-- Qwerk Engine %f %s", QWERKE_VERSION, "--\n");
+
 			// #TODO Open or close console output window using config.systems.ConsoleOutputWindowEnabled
 
             Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
 			PROFILE_SCOPE("Run"); // #TODO Review. Shouldn't need to persist constantly. Measure startup time instead.
 
-			if (args.find(key_ProjectName) != args.end())
+			if (programArgPairs.find(key_ProjectName) != programArgPairs.end())
 			{
-				// Load project (reusable method)
+				// auto projectName = programArgPairs.find(key_ProjectName)->second;
+
+				// #TODO Load project folder
 				// Could find and save preferences file path for recent project(s)
 				// Show options to choose from with a list of recent projects, ordered by date.
 				// Add an option to auto-load most recently opened project
@@ -67,11 +72,21 @@ namespace QwerkE {
 			// Might want to create another function for the game loop and
 			// leave Run() smaller and abstracted from the functionality.
 
-			if (Framework::Startup(ConfigsFolderPath("preferences.qpref")) == eEngineMessage::_QFailure)
+			if (Framework::Startup(ConfigsFolderPath(null_config)) == eEngineMessage::_QFailure)
             {
                 LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
 				Instrumentor::Get().EndSession();
 				return eEngineMessage::_QFailure;
+			}
+
+			if (programArgPairs.find(key_UserName) != programArgPairs.end())
+			{
+				const std::string userName = programArgPairs.find(key_UserName)->second;
+				std::string userConfigFilePath = StringAppend(PreferencesFolderPath(userName.c_str()), "/");
+				userConfigFilePath += userName;
+				userConfigFilePath += ".";
+				userConfigFilePath += preferences_ext;
+				ConfigHelper::LoadUserData(userConfigFilePath); // Init user data
 			}
 
 			Scenes::GetCurrentScene()->SetIsEnabled(true);
@@ -169,6 +184,11 @@ namespace QwerkE {
 			m_Editor->Draw();
 
 			Framework::Draw();
+		}
+
+		Editor* GetEditor()
+		{
+			return m_Editor;
 		}
 	}
 }

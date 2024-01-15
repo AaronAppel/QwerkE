@@ -3,6 +3,8 @@
 // A file to extend imgui behaviour without modifying source code.
 // Can also be the main #include throughout the engine to control #include flow.
 
+#define IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+
 #pragma warning( disable : 4244 )
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
