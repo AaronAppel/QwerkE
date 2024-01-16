@@ -6,7 +6,7 @@
 
 #include "Libraries/cJSON/QC_cJSON.h"
 
-#include "QC_ReflectionMacros.h"
+#include "QC_Reflection.h"
 
 #include "QF_Defines.h"
 #include "QF_Log.h"

@@ -25,8 +25,10 @@ namespace QwerkE {
         // Getters
         std::string GetRenderableName() const { return m_RenderableName; }
         ShaderProgram* GetShaderSchematic() { return m_Shader; }
+        const ShaderProgram* SeeShaderSchematic() const { return m_Shader; }
         Material* GetMaterialSchematic() { return m_Material; }
         Mesh* GetMesh() { return m_Mesh; }
+        const Mesh* SeeMesh() const { return m_Mesh; }
 
         // Setters
         void SetRenderableName(std::string name) { m_RenderableName = name; }

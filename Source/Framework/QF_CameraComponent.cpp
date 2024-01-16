@@ -63,15 +63,6 @@ namespace QwerkE {
 		UpdateCameraVectors();
 	}
 
-	mat4* ComponentCamera::GetViewMatrix()
-	{
-		return m_ViewMatrix;
-	}
-	mat4* ComponentCamera::GetProjectionMatrix()
-	{
-		return m_ProjMatrix;
-	}
-
 	void ComponentCamera::SetTargetPosition(vec3 position)
 	{
 		m_TargetPosition.x = position.x;

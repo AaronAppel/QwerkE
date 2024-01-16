@@ -15,7 +15,7 @@ namespace QwerkE {
     struct MeshData;
     struct VertexData;
 
-    typedef void (QwerkE::Mesh::* MeshFunction)();// #TODO Replace null draw with valid null data to draw nothing instead of using function pointers
+    typedef void (QwerkE::Mesh::* MeshFunction)() const;// #TODO Replace null draw with valid null data to draw nothing instead of using function pointers
 
     // #TODO Use macro functions to replace OpenGL specific functions.
     // The idea is to abstract library functionality without losing performance.
@@ -28,7 +28,7 @@ namespace QwerkE {
         void BufferMeshData(MeshData* data);
         void SetupShaderAttributes(ShaderProgram* shader);
 
-        void Draw() { (this->*m_DrawFunc)(); };
+        void Draw() const { (this->*m_DrawFunc)(); };
 
         std::string GetName() const { return m_Name; };
         std::string GetFileName() const { return m_FileName; };
@@ -52,9 +52,9 @@ namespace QwerkE {
         MeshBufferInfo m_BufferData;
         char* PackModelData(MeshData* data);
 
-        void DrawElements(); // Use IBO
-        void DrawArrays(); // Draw raw vertex data
-        void NullDraw(); // For invalid or uninitialized data
+        void DrawElements() const; // Use IBO
+        void DrawArrays() const; // Draw raw vertex data
+        void NullDraw() const; // For invalid or uninitialized data
 
         MeshFunction m_DrawFunc = &Mesh::NullDraw;
     };

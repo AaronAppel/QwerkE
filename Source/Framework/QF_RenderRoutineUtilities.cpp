@@ -20,21 +20,20 @@
 
 namespace QwerkE {
 
-    // Private functions
-    /* Vertex uniform value assignment */
-    void RenderRoutine::Setup3DTransform(ComponentCamera* camera, Renderable* renderable)
+    void RenderRoutine::Setup3DTransform(const ComponentCamera* camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
-        // world
+
         mat4 worldMat;
         worldMat.CreateSRT(m_pParent->GetScale(), m_pParent->GetRotation(), m_pParent->GetPosition());
         t_pShader->SetUniformMat4(worldMatrix, &worldMat.m11);
-        // view
+
         t_pShader->SetUniformMat4(viewMatrix, &camera->GetViewMatrix()->m11); // get from camera
-        // projection
+
         t_pShader->SetUniformMat4(projectionMatrix, &camera->GetProjectionMatrix()->m11); // get from camera
     }
-    void RenderRoutine::Setup2DTransform(ComponentCamera* camera, Renderable* renderable)
+
+    void RenderRoutine::Setup2DTransform(const ComponentCamera* camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         mat4 worldMat;
@@ -43,16 +42,16 @@ namespace QwerkE {
 
         t_pShader->SetUniformMat4(transform2D, &worldMat.m11); // TODO: Review 2DTransform setup
     }
-    /* Fragment uniform value assignment */
-    void RenderRoutine::SetupColorUniforms(ComponentCamera* cameraObject, Renderable* renderable)
+
+    void RenderRoutine::SetupColorUniforms(const ComponentCamera* cameraObject, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         vec4 t_Colour = vec4(0, 1, 0, 1); // m_pRenderComp->GetColour();
 
         t_pShader->SetUniformFloat4(objectColor, t_Colour.x, t_Colour.y, t_Colour.z, t_Colour.w);
     }
-    // Materials
-    void RenderRoutine::SetupMaterialUniforms(ComponentCamera* a_Camera, Renderable* renderable)
+
+    void RenderRoutine::SetupMaterialUniforms(const ComponentCamera* a_Camera, Renderable* renderable)
     {
         Material* material = renderable->GetMaterialSchematic();
         const std::map<eMaterialMaps, Texture*>* materialList = material->SeeMaterials();
@@ -127,8 +126,8 @@ namespace QwerkE {
         shader->SetUniformFloat1("Shine", 0.5f); // TODO: Improve
 
     }
-    // Lighting
-    void RenderRoutine::SetupLightingUniforms(ComponentCamera* a_Camera, Renderable* renderable)
+
+    void RenderRoutine::SetupLightingUniforms(const ComponentCamera* a_Camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         // TODO: Get light data better
@@ -142,19 +141,18 @@ namespace QwerkE {
 
         t_pShader->SetUniformFloat3(lightColor, lightColour.x, lightColour.y, lightColour.z);
     }
-    // Camera
-    void RenderRoutine::SetupCameraUniforms(ComponentCamera* a_Camera, Renderable* renderable)
+
+    void RenderRoutine::SetupCameraUniforms(const ComponentCamera* a_Camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
 
-        vec3 t_CamPos = a_Camera->GetParent()->GetPosition();
+        vec3 t_CamPos = a_Camera->SeeParent()->GetPosition();
         t_pShader->SetUniformFloat3(cameraPosition, t_CamPos.x, t_CamPos.y, t_CamPos.z);
     }
-    // Textures
-    void RenderRoutine::SetupTextureUniforms(GLuint textures[], int size, ShaderProgram* shader)
+
+    void RenderRoutine::SetupTextureUniforms(GLuint textures[], int numTextures, ShaderProgram* shader)
     {
-        // Handle multiple textures
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < numTextures; i++)
         {
             std::string id = TexturePrefix;
             glActiveTexture(GL_TEXTURE0 + i);

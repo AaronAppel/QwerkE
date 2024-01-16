@@ -16,6 +16,7 @@ namespace QwerkE {
         virtual void Deactivate() {};
 
         GameObject* GetParent() { return m_pParent; };
+        const GameObject* SeeParent() const { return m_pParent; };
         eComponentTags GetTag() const { return m_ComponentTag; };
 
         void SetParent(GameObject* a_Parent) { m_pParent = a_Parent; };

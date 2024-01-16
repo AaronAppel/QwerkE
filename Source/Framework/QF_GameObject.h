@@ -64,21 +64,18 @@ namespace QwerkE {
         const std::vector<Routine*>* SeeUpdateRoutines() { return &m_UpdateList; }
         const std::vector<Routine*>* SeeDrawRoutines() { return &m_DrawList; }
 
-        /* Getters + Setters */
-        // getters
         std::string GetName() { return m_Name; };
-        // Transform* GetTransform() const { return &m_Transform; }
-        vec3 GetPosition() const { return m_Transform.s_Position; }; // #TODO const &
+        vec3 GetPosition() const { return m_Transform.s_Position; }; // #TODO const & reference instead
         vec3 GetRotation() const { return m_Transform.s_Rotation; };
         vec3 GetScale() const { return m_Transform.s_Scale; };
         Component* GetComponent(eComponentTags tag);
+        const Component* SeeComponent(eComponentTags tag);
         Routine* GetFirstDrawRoutineOfType(eRoutineTypes type);
         Routine* GetFirstUpdateRoutineOfType(eRoutineTypes type);
         int GetRenderOrder() { return m_RenderOrder; };
         Scene* GetScene() { return m_pScene; };
         eGameObjectTags GetTag() { return m_Tag; }
 
-        // setters
         // TODO: overload functions to take object like float[x]s
         void UpdatePosition(vec3 position) { m_Transform.s_Position = position; }; // box 2d
         void UpdateRotation(vec3 rotation) { m_Transform.s_Rotation = rotation; }; // box 2d

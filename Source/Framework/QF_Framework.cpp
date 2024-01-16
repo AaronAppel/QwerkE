@@ -204,7 +204,7 @@ namespace QwerkE {
 
 		void Framework::Update(float deltatime)
 		{
-			const ConfigData config = ConfigHelper::GetConfigData();
+			const ConfigData& config = ConfigHelper::GetConfigData();
 			if (config.systems.PhysicsEnabled)
 			{
 				Physics::Tick();

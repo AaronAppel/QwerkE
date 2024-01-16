@@ -19,8 +19,8 @@ namespace QwerkE {
         void Setup();
 
         // Returns the view matrix calculated using Eular Angles and the LookAt Matrix
-        virtual mat4* GetViewMatrix();
-        virtual mat4* GetProjectionMatrix();
+        const mat4* GetViewMatrix() const { return m_ViewMatrix; }
+        const mat4* GetProjectionMatrix() const { return m_ProjMatrix; }
 
         // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
         virtual void ProcessKeyboard(eCamera_Movement direction, float deltaTime) = 0;

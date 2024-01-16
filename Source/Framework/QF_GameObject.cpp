@@ -167,6 +167,15 @@ namespace QwerkE {
         return nullptr;
     }
 
+    const Component* GameObject::SeeComponent(eComponentTags tag)
+    {
+        if (m_Components.find(tag) != m_Components.end())
+        {
+            return m_Components[tag];
+        }
+        return nullptr;
+    }
+
     void GameObject::Reset()
     {
         for (auto l_LoopVar : m_Components)

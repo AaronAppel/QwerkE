@@ -16,7 +16,7 @@ __Bold Underscore__
 #### Image Links
 `![image alt text](https://example.com/link-to-image)`
 `[link text](https://example.com/my-link "link title")`
-Embedded image with on-click link [![Title](link to image)](VideoLink "Hover Text")
+Embedded image with on-click link[![Title](link to image)](VideoLink "Hover Text")
 ==Highlight==
 
 | [Reference](https://www.makeuseof.com/how-to-create-tables-obsidian/) | Header 2 | Header 3 |

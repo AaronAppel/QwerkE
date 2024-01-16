@@ -19,9 +19,9 @@ namespace QwerkE {
     class RenderRoutine : Routine
     {
     public:
-        typedef void (RenderRoutine::* DrawFunc)(GameObject* a_Camera); // draw mesh or model
+        typedef void (RenderRoutine::* DrawFunc)(const GameObject* a_Camera); // draw mesh or model
         // TODO: Look at improving arguments
-        typedef void (RenderRoutine::* SetupUniformFunction)(ComponentCamera* a_Camera, Renderable* renderable); // Setup shader values function
+        typedef void (RenderRoutine::* SetupUniformFunction)(const ComponentCamera* a_Camera, Renderable* renderable); // Setup shader values function
 
     public:
         RenderRoutine();
@@ -42,26 +42,26 @@ namespace QwerkE {
         bool m_3D = true; // 2D/3D optimization TODO: Remove?
 
         ////* Private functions *////
-        void DrawMeshData(GameObject* a_Camera);
-        void NullDraw(GameObject* a_Camera); // not setup
+        void DrawMeshData(const GameObject* a_Camera);
+        void NullDraw(const GameObject* a_Camera); // not setup
 
         //// Uniform value assignment ////
         void SetDrawFunctions();
 
         /* Vertex uniform value assignment */
-        void Setup3DTransform(ComponentCamera* a_Camera, Renderable* renderable);
-        void Setup2DTransform(ComponentCamera* a_Camera, Renderable* renderable);
+        void Setup3DTransform(const ComponentCamera* a_Camera, Renderable* renderable);
+        void Setup2DTransform(const ComponentCamera* a_Camera, Renderable* renderable);
 
         /* Fragment uniform value assignment */
-        void SetupColorUniforms(ComponentCamera* a_Camera, Renderable* renderable);
-        void SetupMaterialUniforms(ComponentCamera* a_Camera, Renderable* renderable);
+        void SetupColorUniforms(const ComponentCamera* a_Camera, Renderable* renderable);
+        void SetupMaterialUniforms(const ComponentCamera* a_Camera, Renderable* renderable);
 
         // Lighting
-        void SetupLightingUniforms(ComponentCamera* a_Camera, Renderable* renderable);
+        void SetupLightingUniforms(const ComponentCamera* a_Camera, Renderable* renderable);
         // Camera
-        void SetupCameraUniforms(ComponentCamera* a_Camera, Renderable* renderable);
+        void SetupCameraUniforms(const ComponentCamera* a_Camera, Renderable* renderable);
         /* Other */
-        void SetupTextureUniforms(GLuint textures[], int size, ShaderProgram* shader);
+        void SetupTextureUniforms(GLuint textures[], int numTextures, ShaderProgram* shader);
     };
 
 }

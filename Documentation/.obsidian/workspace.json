@@ -4,35 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "41550a9fd71f7e8d",
+        "id": "f51213eed07447b5",
         "type": "tabs",
         "children": [
           {
-            "id": "202851dd49919e99",
+            "id": "5da9235b1ea7275c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "References/Library References.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f2229849f172ae3a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "To Watch.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -44,7 +27,7 @@
       {
         "id": "011961b88bbc11c7",
         "type": "tabs",
-        "dimension": 59.4798083504449,
+        "dimension": 79.12388774811772,
         "children": [
           {
             "id": "55628a392364c2db",
@@ -65,35 +48,6 @@
             }
           },
           {
-            "id": "dad04b4ed9f8f30a",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "To Watch.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "edefc86514e78499",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "To Watch.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": false
-              }
-            }
-          },
-          {
             "id": "e17a9190ad6a97bb",
             "type": "leaf",
             "state": {
@@ -106,7 +60,7 @@
       {
         "id": "6dc84078db07b920",
         "type": "tabs",
-        "dimension": 40.5201916495551,
+        "dimension": 20.876112251882272,
         "children": [
           {
             "id": "6e6727655ad579b3",
@@ -114,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "plusplus",
+                "query": "aesth",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -141,8 +95,36 @@
               "type": "trash-explorer",
               "state": {}
             }
+          },
+          {
+            "id": "dad04b4ed9f8f30a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "edefc86514e78499",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -161,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "To Watch.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -184,45 +164,46 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "f2229849f172ae3a",
+  "active": "5da9235b1ea7275c",
   "lastOpenFiles": [
+    "ZZ Shared Vault Files ❗/Constexpr.md",
+    "References/Constexpr.md",
     "References/Library References.md",
-    "To Watch.md",
-    "QwerkE Standards/Avoided Practices.md",
-    "SupressLinterWarnings.jpg",
-    "Solution Configuration/Library Configuration.md",
-    "Z. Obsidian/Obsidian Setup.md",
-    "Z. Less Relevant/Markdown Syntax Reference.md",
-    "README.md",
-    "QwerkE Standards/Language Versions.md",
-    "Z. Less Relevant/Division By Multiplication.md",
-    "QwerkE Standards/Commenting.md",
-    "QwerkE Standards/Asserts.md",
-    "QwerkE Standards/Helpers vs Utilities.md",
-    "QwerkE Standards/Enums.md",
-    "QwerkE Standards/Empty Function Body.md",
-    "QwerkE Standards/Out Function Arguments.md",
+    "ZZ Shared Vault Files ❗/Videos To Watch.md",
+    "Game Engine Series YouTube.md",
+    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
+    "ZZ Shared Vault Files ❗/Cleanup.bat",
+    "ZZ Shared Vault Files ❗/New Project Chceklist.md",
+    "ZZ Shared Vault Files ❗/Obsidian Scripting Example.md",
+    "ZZ Shared Vault Files ❗/template.gitignore",
+    "ZZ Shared Vault Files ❗/New Project.md",
+    "ZZ Shared Vault Files ❗/To Read.md",
+    "ZZ Shared Vault Files ❗/TO Watch.md",
+    "ZZ Shared Vault Files ❗/To Watch2.md",
+    "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
+    "ZZ Shared Vault Files ❗/Obsidian/Vault Setup.md",
+    "ZZ Shared Vault Files ❗/MarkdownExample.md",
+    "ZZ Shared Vault Files ❗/Symlinks Example.md",
+    "QwerkE Standards/Getters and Setters.md",
     "QwerkE Standards/Variable Naming.md",
     "QwerkE Standards/Variable Naming 1.md",
-    "QwerkE Standards/Pre And Post Incrementing.md",
-    "Z. Obsidian/Documentation Assets/Symlinked_core-plugins.md",
-    "Z. Obsidian/Obsidian References.md",
-    "0. Getting Started With QwerkE/Getting Started With QwerkE.md",
+    "Work/Feature Development/Logging Improvements.md",
+    "Solution Configuration/C++ Project Setup.md",
+    "Solution Configuration/Visual Studio.md",
+    "Solution Configuration/Projects.md",
     "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
-    "Z. To Cleanup/Old Notes.md",
-    "Work/Feature Development/Memory Allocation Tracking.md",
-    "Solution Configuration/Compilation Configuration.md",
+    "0. Getting Started With QwerkE/Getting Started With QwerkE.md",
+    "Assets and Data/Supported File and Data Types.md",
+    "Assets and Data/Null Asset Handling.md",
+    "ZZ Shared Vault Files ❗/Obsidian",
+    "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
+    "ZZ Shared Vault Files ❗/SymlinkSharedFiles.bat",
+    "ZZ Shared Vault Files ❗",
+    "Shared Vault Files ❗/SymlinkSharedFiles.bat",
+    "Shared Vault Files ❗",
     "Spaces/Home",
     "Spaces",
-    "Z. Obsidian/Documentation Assets/Symlinked_community-plugins.md",
     "Sub Projects/Environments/Networking",
-    "Sub Projects/Environments/Physics",
-    "Sub Projects/Environments/Rendering",
-    "Sub Projects/Environments",
-    "Sub Projects/QwerkE_Games",
-    "READ_ME.txt",
-    "0. Getting Started/READ_ME.txt",
-    "0. Getting Started With QwerkE",
     "New Bitmap image.bmp",
     "QwerkE Standards/Include Flow Diagram.canvas"
   ]

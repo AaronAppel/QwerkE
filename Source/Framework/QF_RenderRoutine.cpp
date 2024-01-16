@@ -2,6 +2,7 @@
 
 #include "QC_StringHelpers.h"
 
+#include "QC_Reflection.h"
 #include "QF_Enums.h"
 #include "QF_Log.h"
 #include "QF_GraphicsHelpers.h"
@@ -53,7 +54,7 @@ namespace QwerkE {
         }
     }
     //// Private functions
-    void RenderRoutine::DrawMeshData(GameObject* a_Camera)
+    void RenderRoutine::DrawMeshData(const GameObject* a_Camera)
     {
         if (!m_pRenderComp)
         {
@@ -62,24 +63,35 @@ namespace QwerkE {
             return;
         }
 
-        ComponentCamera* t_pCamera = (ComponentCamera*)a_Camera->GetComponent(Component_Camera);
-
-        std::vector<Renderable> t_Renderables = *m_pRenderComp->LookAtRenderableList();
-
-        for (size_t i = 0; i < t_Renderables.size(); i++)
+        auto a = a_Camera->SeeComponents();
+        const ComponentCamera* t_pCamera = nullptr;
+        if (a->find(Component_Camera) != a->end())
         {
-            t_Renderables[i].GetShaderSchematic()->Use();
+            t_pCamera = (ComponentCamera*)a->find(Component_Camera)->second;
+        }
+
+        if (!t_pCamera)
+        {
+            LOG_ERROR("{0} Camera component* {1} is null!", __FUNCTION__, VARNAME_TO_STR(t_pCamera));
+            return;
+        }
+
+        std::vector<Renderable>* t_Renderables = m_pRenderComp->GetRenderableList();
+
+        for (size_t i = 0; i < t_Renderables->size(); i++)
+        {
+            t_Renderables->at(i).GetShaderSchematic()->Use();
 
             for (unsigned int j = 0; j < m_UniformSetupList[i].size(); j++)
             {
-                (this->*m_UniformSetupList[i][j])(t_pCamera, &t_Renderables[i]);
+                (this->*m_UniformSetupList[i][j])(t_pCamera, &t_Renderables->at(i));
             }
 
-            t_Renderables[i].GetMesh()->Draw();
+            t_Renderables->at(i).GetMesh()->Draw();
         }
     }
 
-    void RenderRoutine::NullDraw(GameObject* a_Camera)
+    void RenderRoutine::NullDraw(const GameObject* a_Camera)
     {
         // Look for valid models/materials
         if (m_pRenderComp)
@@ -115,8 +127,8 @@ namespace QwerkE {
 
         for (unsigned int i = 0; i < t_Renderables->size(); i++) // for each renderable
         {
-            if (t_Renderables->at(i).GetShaderSchematic()->SeeUniforms()->size() == 0) t_Renderables->at(i).GetShaderSchematic()->FindAttributesAndUniforms();
-            const std::vector<std::string>* t_Uniforms = t_Renderables->at(i).GetShaderSchematic()->SeeUniforms(); // get shader
+            if (t_Renderables->at(i).SeeShaderSchematic()->SeeUniforms()->size() == 0) t_Renderables->at(i).GetShaderSchematic()->FindAttributesAndUniforms();
+            const std::vector<std::string>* t_Uniforms = t_Renderables->at(i).SeeShaderSchematic()->SeeUniforms();
             Material* t_Material = t_Renderables->at(i).GetMaterialSchematic();
 
             /* Add functions to setup shader uniforms */

@@ -1,4 +1,5 @@
-## Open Code Search dialogue / Open File Visual Studio
+## VS Quick Open File Methods
+Open Code Search dialogue / Open File Visual Studio
 - ctrl + shift + T
 - ctrl + , (comma or <)
 - ctrl + Q

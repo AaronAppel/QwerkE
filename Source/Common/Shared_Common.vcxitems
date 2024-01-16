@@ -28,6 +28,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Memory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -858,8 +859,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_ReflectionMacros.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Reflection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />

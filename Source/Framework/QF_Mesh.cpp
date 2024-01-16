@@ -177,7 +177,7 @@ namespace QwerkE {
         CheckGraphicsErrors(__FILE__, __LINE__);
     }
 
-    void Mesh::DrawElements()
+    void Mesh::DrawElements() const
     {
         glBindVertexArray(m_VAO);
         // #NOTE If there is a read access violation, it is because SetupAttributes was not called
@@ -185,14 +185,14 @@ namespace QwerkE {
         glBindVertexArray(0);
     }
 
-    void Mesh::DrawArrays()
+    void Mesh::DrawArrays() const
     {
         glBindVertexArray(m_VAO);
         glDrawArrays(m_PrimitiveType, 0, m_BufferData.numPositions); // (drawMode, firstIndex, numVerts)
         glBindVertexArray(0);
     }
 
-    void Mesh::NullDraw()
+    void Mesh::NullDraw() const
     {
         // #TODO Review possible re-attempt at setup or removal of method body
         // SetupShaderAttributes();

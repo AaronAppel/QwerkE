@@ -54,6 +54,7 @@ namespace QwerkE
 #define LOG_INFO(...)       QwerkE::Log::m_Logger->info(__VA_ARGS__);
 #define LOG_WARN(...)       QwerkE::Log::m_Logger->warn(__VA_ARGS__);
 #define LOG_ERROR(...)      QwerkE::Log::m_Logger->error(__VA_ARGS__);
+// #define LOG_ERROR_EXT(__FUNCTION__, ...)      QwerkE::Log::m_Logger->error(__VA_ARGS__);
 #define LOG_CRITICAL(...)   QwerkE::Log::m_Logger->critical(__VA_ARGS__);
 
 #else
