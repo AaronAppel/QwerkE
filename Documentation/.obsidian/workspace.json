@@ -11,8 +11,12 @@
             "id": "5da9235b1ea7275c",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "QwerkE Standards/Coding Standards Notes.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -68,7 +72,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "aesth",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -102,6 +106,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "QwerkE Standards/Coding Standards Notes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -113,6 +118,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "QwerkE Standards/Coding Standards Notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,8 +129,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -143,7 +148,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "QwerkE Standards/Coding Standards Notes.md"
+              }
             }
           }
         ]
@@ -166,44 +173,44 @@
   },
   "active": "5da9235b1ea7275c",
   "lastOpenFiles": [
+    "ZZ Shared Vault Files ❗/New Project Checklist.md",
+    "QwerkE Standards/Coding Standards Notes.md",
+    "ZZ Shared Vault Files ❗/New Project Chceklist.md",
+    "Game Engine Series YouTube.md",
+    "QwerkE Standards/Coding Standards.md",
+    "QwerkE Standards/Enums.md",
+    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
+    "QwerkE Standards/Avoided Practices.md",
+    "Systems/Saving and Loading/Type Reflection.md",
+    "Systems/Resource Management/Resources.md",
+    "Systems/Resource Management",
+    "Systems/Saving and Loading",
+    "Untitled.md",
+    "Systems",
+    "Research/Game Engine Series YouTube.md",
+    "Research",
+    "ZZ Shared Vault Files ❗/Videos To Watch.md",
+    "ZZ Shared Vault Files ❗/TO Watch.md",
+    "Z. To Cleanup/Old Notes.md",
     "ZZ Shared Vault Files ❗/Constexpr.md",
     "References/Constexpr.md",
     "References/Library References.md",
-    "ZZ Shared Vault Files ❗/Videos To Watch.md",
-    "Game Engine Series YouTube.md",
-    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
     "ZZ Shared Vault Files ❗/Cleanup.bat",
-    "ZZ Shared Vault Files ❗/New Project Chceklist.md",
     "ZZ Shared Vault Files ❗/Obsidian Scripting Example.md",
     "ZZ Shared Vault Files ❗/template.gitignore",
     "ZZ Shared Vault Files ❗/New Project.md",
     "ZZ Shared Vault Files ❗/To Read.md",
-    "ZZ Shared Vault Files ❗/TO Watch.md",
     "ZZ Shared Vault Files ❗/To Watch2.md",
     "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
     "ZZ Shared Vault Files ❗/Obsidian/Vault Setup.md",
     "ZZ Shared Vault Files ❗/MarkdownExample.md",
     "ZZ Shared Vault Files ❗/Symlinks Example.md",
     "QwerkE Standards/Getters and Setters.md",
-    "QwerkE Standards/Variable Naming.md",
-    "QwerkE Standards/Variable Naming 1.md",
-    "Work/Feature Development/Logging Improvements.md",
-    "Solution Configuration/C++ Project Setup.md",
-    "Solution Configuration/Visual Studio.md",
-    "Solution Configuration/Projects.md",
-    "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
-    "0. Getting Started With QwerkE/Getting Started With QwerkE.md",
-    "Assets and Data/Supported File and Data Types.md",
-    "Assets and Data/Null Asset Handling.md",
     "ZZ Shared Vault Files ❗/Obsidian",
     "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
     "ZZ Shared Vault Files ❗/SymlinkSharedFiles.bat",
     "ZZ Shared Vault Files ❗",
     "Shared Vault Files ❗/SymlinkSharedFiles.bat",
-    "Shared Vault Files ❗",
-    "Spaces/Home",
-    "Spaces",
-    "Sub Projects/Environments/Networking",
     "New Bitmap image.bmp",
     "QwerkE Standards/Include Flow Diagram.canvas"
   ]
