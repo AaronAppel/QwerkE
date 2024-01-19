@@ -47,29 +47,29 @@ namespace QwerkE {
     {
         ComponentCamera* t_activecamera = ((ComponentCamera*)m_CameraList.at(m_CurrentCamera)->GetComponent(Component_Camera));
 
-        const ConfigData& configHelper = ConfigHelper::GetConfigData();
+        const UserData& userData = ConfigHelper::GetUserData();
 
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveForward))
+        if (Input::GetIsKeyDown(userData.controls.Camera_MoveForward))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::FORWARD, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveBackward))
+        if (Input::GetIsKeyDown(userData.controls.Camera_MoveBackward))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::BACKWARD, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveLeft))
+        if (Input::GetIsKeyDown(userData.controls.Camera_MoveLeft))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::LEFT, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveRight))
+        if (Input::GetIsKeyDown(userData.controls.Camera_MoveRight))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::RIGHT, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveDown))
+        if (Input::GetIsKeyDown(userData.controls.Camera_MoveDown))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::DOWN, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(configHelper.controls.Camera_MoveUp))
+        if (Input::GetIsKeyDown(userData.controls.Camera_MoveUp))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::UP, (float)deltatime);
         }

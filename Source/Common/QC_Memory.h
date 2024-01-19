@@ -8,11 +8,14 @@ void operator delete (void* memoryLocation);
 namespace QwerkE
 {
 	template<typename T>
-	using sRef = std::unique_ptr<T>;
+	using sRef = std::shared_ptr<T>;
 
 	template<typename T>
-	using uRef = std::shared_ptr<T>;
+	using uRef = std::unique_ptr<T>;
 
 	template<typename T>
 	using wRef = std::weak_ptr<T>;
+
+	// template<typename T>
+	// using makeURef = std::make_unique<T>();
 }

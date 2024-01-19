@@ -18,8 +18,33 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "8f15356df4ec8624",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Pointer Manipulation.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "83291eb45790dacc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "QwerkE Standards/Indentation.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -72,7 +97,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "clean code",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -106,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "QwerkE Standards/Coding Standards Notes.md",
+                "file": "QwerkE Standards/Indentation.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +143,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "QwerkE Standards/Coding Standards Notes.md",
+                "file": "QwerkE Standards/Indentation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "QwerkE Standards/Coding Standards Notes.md"
+                "file": "QwerkE Standards/Indentation.md"
               }
             }
           }
@@ -166,47 +191,45 @@
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "command-palette:Open command palette": false,
-      "homepage:Open homepage": false,
-      "obsidian-trash-explorer:Open trash explorer": false,
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "5da9235b1ea7275c",
+  "active": "83291eb45790dacc",
   "lastOpenFiles": [
-    "ZZ Shared Vault Files ❗/New Project Checklist.md",
+    "QwerkE Standards/Including.md",
+    "QwerkE Standards/Indentation.md",
+    "Systems/Saving and Loading/Reflection Setup.md",
+    "ZZ Shared Vault Files ❗/To Watch.md",
+    "Systems/Saving and Loading/Type Reflection.md",
+    "Pointer Manipulation.md",
     "QwerkE Standards/Coding Standards Notes.md",
+    "ZZ Shared Vault Files ❗/New Project Checklist.md",
+    "ZZ Shared Vault Files ❗/GitHub Testing File.md",
+    "ZZ Shared Vault Files ❗/template.gitignore",
+    "ZZ Shared Vault Files ❗/Videos To Watch.md",
+    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
+    "ZZ Shared Vault Files ❗/Obsidian",
+    "ZZ Shared Vault Files ❗/TO Watch.md",
+    "Systems/Resource Management/Resources.md",
+    "Systems/Saving and Loading",
+    "Systems/Resource Management",
+    "Systems",
+    "Research/Game Engine Series YouTube.md",
+    "Research",
     "ZZ Shared Vault Files ❗/New Project Chceklist.md",
     "Game Engine Series YouTube.md",
     "QwerkE Standards/Coding Standards.md",
     "QwerkE Standards/Enums.md",
-    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
     "QwerkE Standards/Avoided Practices.md",
-    "Systems/Saving and Loading/Type Reflection.md",
-    "Systems/Resource Management/Resources.md",
-    "Systems/Resource Management",
-    "Systems/Saving and Loading",
-    "Untitled.md",
-    "Systems",
-    "Research/Game Engine Series YouTube.md",
-    "Research",
-    "ZZ Shared Vault Files ❗/Videos To Watch.md",
-    "ZZ Shared Vault Files ❗/TO Watch.md",
     "Z. To Cleanup/Old Notes.md",
     "ZZ Shared Vault Files ❗/Constexpr.md",
     "References/Constexpr.md",
     "References/Library References.md",
     "ZZ Shared Vault Files ❗/Cleanup.bat",
     "ZZ Shared Vault Files ❗/Obsidian Scripting Example.md",
-    "ZZ Shared Vault Files ❗/template.gitignore",
     "ZZ Shared Vault Files ❗/New Project.md",
     "ZZ Shared Vault Files ❗/To Read.md",
-    "ZZ Shared Vault Files ❗/To Watch2.md",
     "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
-    "ZZ Shared Vault Files ❗/Obsidian/Vault Setup.md",
-    "ZZ Shared Vault Files ❗/MarkdownExample.md",
-    "ZZ Shared Vault Files ❗/Symlinks Example.md",
-    "QwerkE Standards/Getters and Setters.md",
-    "ZZ Shared Vault Files ❗/Obsidian",
     "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
     "ZZ Shared Vault Files ❗/SymlinkSharedFiles.bat",
     "ZZ Shared Vault Files ❗",

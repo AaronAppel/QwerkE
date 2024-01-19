@@ -2,6 +2,7 @@
 
 #include "QC_StringHelpers.h"
 
+#include "QF_ConfigHelper.h"
 #include "QF_Debug.h"
 #include "QF_Material.h"
 #include "QF_ShaderProgram.h"
@@ -45,7 +46,14 @@ namespace QwerkE {
 		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_frag_component)), "Error loading null fragment component!"); // TODO: Remove null component references. Store components and reference them in shader programs
 		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_geo_component)), "Error loading null geometry component!"); // #TODO Shader components can be referenced in the shader itself, so just load a null shader schematic
 		ASSERT(Resources::InstantiateShaderProgram(NullFolderPath(null_shader_schematic)), "Error loading null shader program!");
-		ASSERT(Resources::InstantiateSound(NullFolderPath(null_sound)), "Error loading null sound asset!");
+
+		const ConfigData& config = ConfigHelper::GetConfigData();
+		if (config.systems.AudioEnabled)
+		{
+			// #TODO Handle loading null sound asset when audio system is disabled.
+			// Currently, there is no null asset to fall back on, but audio is no implemented so no references break yet.
+			ASSERT(Resources::InstantiateSound(NullFolderPath(null_sound)), "Error loading null sound asset!");
+		}
 	}
 
 	// TODO: Handle errors and deleting assets before returning nullptr

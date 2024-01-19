@@ -1,5 +1,5 @@
 {
-	"Framework": [{
+	"FrameworkData": [{
 		"QuickLoad":	1,
 		"MaxConcurrentThreadCount":	10
 	}],
@@ -10,7 +10,7 @@
 			"Rendering":	"OpenGL",
 			"Window":	"GLFW3"
 		}],
-	"Scenes":	[{
+	"ScenesData":	[{
 			"0":	"Test.qscene"
 		}],
 	"SceneSettings":	[{

@@ -3,7 +3,6 @@
 ### Virtual Methods
 Parent declarations should use "virtual" before the return type, while child implementations should use "override" after the declaration.
 
-
 # Numbers
 ### Floating Point Numbers
 When assigning values, omit any decimal places with the value of 0, so an assignment of 1.0f can simply be written as 1.f instead.

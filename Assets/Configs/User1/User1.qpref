@@ -1,13 +1,13 @@
 {
 	"Controls": [{
-		"m_ConfigData.controls.Camera_MoveForward": "W",
-		"m_ConfigData.controls.Camera_MoveBackward": "S",
-		"m_ConfigData.controls.Camera_MoveLeft": "A",
-		"m_ConfigData.controls.Camera_MoveRight": "D",
-		"m_ConfigData.controls.Camera_MoveUp": "E",
-		"m_ConfigData.controls.Camera_MoveDown": "Q",
+		"Camera_MoveForward": "W",
+		"Camera_MoveBackward": "S",
+		"Camera_MoveLeft": "A",
+		"Camera_MoveRight": "D",
+		"Camera_MoveUp": "E",
+		"Camera_MoveDown": "Q",
 		
-		"m_ConfigData.controls.Camera_RotateLeft": "R",
-		"m_ConfigData.controls.Camera_RotateRight": "T"
+		"Camera_RotateLeft": "R",
+		"Camera_RotateRight": "T"
 	}]
 }

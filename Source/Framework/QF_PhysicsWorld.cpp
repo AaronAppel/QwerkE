@@ -14,7 +14,7 @@
 // #pragma warning( enable : 26495 )
 // #pragma warning( enable : 4099 )
 
-#include <assert.h>
+#include "QF_Debug.h"
 
 // https://www.raywenderlich.com/53077/bullet-physics-tutorial-getting-started
 // http://bulletphysics.org/Bullet/BulletFull/classbtMotionState.html
@@ -39,7 +39,7 @@ namespace QwerkE {
 
 	void PhysicsWorld::CreateWorld()
 	{
-		assert(m_pDynamicsWorld == 0);
+		ASSERT(m_pDynamicsWorld == 0, "Dynamics world already created!");
 
 		// btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
 		m_pBroadphase = new btDbvtBroadphase();

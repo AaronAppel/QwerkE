@@ -58,6 +58,6 @@ bool AnArgumentWasNull(int n_args, ...); // #TODO Implement an early return with
 // #TODO Add asserting : https://www.youtube.com/watch?v=DQCkMnMNFBI&ab_channel=Progrematic
 
 #else
-#define BREAK __debugbreak();
-#define ASSERT(x, msg)   if ((x)) { } else { LOG_CRITICAL("Assert! {0}, {1}, in {2}() in {3}({4})", #x, msg, __FUNCTION__, __FILE__, __LINE__); BREAK }
+#define BREAK			(void)0
+#define ASSERT(x, msg)	(void)0
 #endif

@@ -31,6 +31,8 @@ Release/*
 x86/*
 x64/*
 
+*❗*
+
 // Development branches
 // rem Try to make a subdirectory delete for all Debug/* sub directories
 Development/RenderingEnv/.vs/

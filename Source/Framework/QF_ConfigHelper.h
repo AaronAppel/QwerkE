@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "QC_Reflection.h"
 #include "QF_eKeys.h"
 
 namespace QwerkE {
@@ -59,6 +60,7 @@ namespace QwerkE {
     };
 
     // #TODO Hide the data for safety. Find a better API for ConfigData
+
     struct ConfigData
     {
         // ConfigData() {};
@@ -78,10 +80,14 @@ namespace QwerkE {
 
         FrameworkData framework;
         Libraries libraries;
-        ScenesData scenes;
+        ScenesData scenesData;
         SceneSettings sceneSettings;
         Systems systems;
         EngineSettings engineSettings;
+    };
+
+    struct UserData
+    {
         Controls controls;
     };
 
@@ -93,15 +99,17 @@ namespace QwerkE {
         static void SaveConfigData();
         static void SaveConfigData(ConfigData config);
         static void LoadUserData(std::string preferencesFilePath);
-        static void SaveUsersData();
+        static void SaveUserData();
 
         static const ConfigData& GetConfigData() { return m_ConfigData; }
+        static const UserData& GetUserData() { return m_UserData; }
         static void SetConfigData(ConfigData config) { m_ConfigData = config; }
 
     private:
         ConfigHelper() = default;
 
         static ConfigData m_ConfigData;
+        static UserData m_UserData;
     };
 
 }

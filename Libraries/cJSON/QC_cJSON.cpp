@@ -101,6 +101,9 @@ std::vector<cJSON*> GetItemsFromObjectByIndexRange(cJSON* cJSONObject, int minim
 
 cJSON* GetItemFromObjectByKey(const cJSON* cJSONObject, const char* key)
 {
+	if (!cJSONObject)
+		return nullptr;
+
 	int arraySize = cJSON_GetArraySize((cJSON*)cJSONObject);
 
 	for (int i = 0; i < arraySize; i++)
@@ -144,10 +147,11 @@ std::vector<cJSON*> GetAllItemsFromArray(const cJSON* arrayObject) // return arr
 
 	if (arrayObject->child == nullptr)
 	{
-		return itemList; // not an array
+		return itemList; // Not an array
 	}
 
-	int t_ArraySize = cJSON_GetArraySize(arrayObject->child);
+	const int t_ArraySize = cJSON_GetArraySize(arrayObject->child);
+	itemList.reserve(t_ArraySize);
 	for (int i = 0; i < t_ArraySize; i++)
 	{
 		itemList.push_back(cJSON_GetArrayItem(arrayObject->child, i));
@@ -158,9 +162,10 @@ std::vector<cJSON*> GetAllItemsFromArray(const cJSON* arrayObject) // return arr
 
 std::vector<cJSON*> GetItemsFromArrayByKey(const cJSON* jObjectArray, const char* key) // #TODO Test
 {
-	int t_ArraySize = cJSON_GetArraySize(jObjectArray->child);
+	const int t_ArraySize = cJSON_GetArraySize(jObjectArray->child);
 
 	std::vector<cJSON*> itemList;
+	itemList.reserve(t_ArraySize);
 
 	for (int i = 0; i < t_ArraySize; i++)
 	{
@@ -505,12 +510,12 @@ cJSON* CreateTestModel()
 	return cJSON_CreateObject();
 }
 
-void AddStringToObject()
+void AddStringToObject()  // #TODO Deprecate
 {
 
 }
 
-void AddNumberToArray()
+void AddNumberToArray() // #TODO Deprecate
 {
 
 }

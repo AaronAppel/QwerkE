@@ -8,6 +8,7 @@
 
 #include "QC_Reflection.h"
 
+#include "QC_Memory.h"
 #include "QF_Defines.h"
 #include "QF_Log.h"
 #include "QF_Input.h"
@@ -15,6 +16,201 @@
 namespace QwerkE {
 
     ConfigData ConfigHelper::m_ConfigData = ConfigData();
+    UserData ConfigHelper::m_UserData = UserData();
+
+    namespace Serialization
+    {
+#if _WIN32
+        typedef INT32 PlatformPointer; // #TODO Handle pointer size on different systems better
+#elif _WIN64
+        typedef INT64 PlatformPointer;
+#pragma warning "Implement 64 bit support!"
+#endif
+
+        void DeserializeObject(const cJSON* objJSON, const Reflection::ClassInfo* objClassInfo, void* obj);
+
+        template <class T>
+        void DeserializeObject(const cJSON* objJSON, T& obj)
+        {
+            DeserializeObject(objJSON, Reflection::GetClass<T>(), (void*)&obj);
+        }
+
+        template <class T>
+        static void DeserializeObjectByTypeKey(const cJSON* jsonObj, T& obj)
+        {
+            auto typeInfo = Reflection::GetTypeInfo<T>();
+            DeserializeObject<T>(GetItemFromRootByKey(jsonObj, typeInfo->stringName.c_str()), obj);
+        }
+
+        void DeserializeObject(const cJSON* objJSON, const Reflection::ClassInfo* objClassInfo, void* obj)
+        {
+            if (!objJSON)
+            {
+                LOG_ERROR("{0} {1} is null!", __FUNCTION__, VARNAME_TO_STR(objJSON));
+                return;
+            }
+
+            if (!objClassInfo)
+            {
+                LOG_ERROR("{0} Class info serialization error!", __FUNCTION__);
+                return;
+            }
+
+            if (!obj)
+            {
+                LOG_ERROR("{0} object reference {1} is null!", __FUNCTION__, VARNAME_TO_STR(obj));
+                return;
+            }
+
+            // #TODO O(n^2) complexity is high. Iterate to improve performance
+            // #TODO Also consider iterating over the class fields as priority vs cJSON data, as some old data/extra may still exist.
+            const std::vector<cJSON*> arr = GetAllItemsFromArray(objJSON);
+            for (size_t i = 0; i < arr.size(); i++)
+            {
+                const cJSON* arrItem = arr[i];
+
+                for (size_t i = 0; i < objClassInfo->fields.size(); i++)
+                {
+                    const Reflection::Field& field = objClassInfo->fields[i];
+
+                    if (!field.type)
+                        break; // #TODO Review #NOTE Break early if fields become null (and future values are null) to save iterations
+
+                    if (strcmp(field.name.c_str(), arrItem->string) != 0)
+                        continue;
+
+                    switch (arrItem->type)
+                    {
+                    case cJSON_String:
+                        {
+                            // #TODO Worry about the null terminating character '\0'
+                            // #TODO Handle case where target/strPointerAddress is null or empty
+
+                            if (!arrItem->valuestring)
+                            {
+                                LOG_ERROR("{0} Null cJSON string!", __FUNCTION__);
+                                continue;
+                            }
+
+                            switch (field.type->enumType) // What kind of string for field
+                            {
+                                case TypeName::String:
+                                {
+                                    size_t smallerSize = strlen(arrItem->valuestring);
+
+                                    std::string* fieldAddress = reinterpret_cast<std::string*>((char*)obj + field.offset); // #TODO Review string* increment size/stride
+                                    if (smallerSize > fieldAddress->size())
+                                    {
+                                        smallerSize = field.type->size;
+                                    }
+
+                                    if (smallerSize > 0)
+                                    {
+                                        const void* sourceAddr = (const void*)arrItem->valuestring;
+                                        memcpy((void*)fieldAddress->data(), sourceAddr, smallerSize);
+                                    }
+                                }
+                                break;
+
+                            case TypeName::Char:
+                                {
+                                    arrItem->valuestring;
+                                    void* fieldAddress = (char*)obj + field.offset;
+                                    memcpy(fieldAddress, arrItem->valuestring, sizeof(void*));
+                                }
+                                break;
+
+                            case TypeName::CharPtr:
+                            case TypeName::ConstCharPtr:
+                                {
+                                    // #TODO Validate field.type->size
+                                    PlatformPointer* writeAddress = (PlatformPointer*)((char*)obj + field.offset);
+
+                                    // if (writeAddress) // #TODO How to know if casted memory address is valid?
+                                    {
+                                        // #TODO How to know allocation function new vs new [] vs malloc?
+                                        // delete[] writeAddress;
+                                    }
+
+                                    *writeAddress = (PlatformPointer)DeepCopyString(arrItem->valuestring);
+                                }
+                                break;
+
+                            case TypeName::eKeys: // #TODO Consider using a number value instead of a string
+                                {
+                                    const char result = arrItem->valuestring[0];
+                                    if (field.type->size >= sizeof(const char))
+                                    {
+                                        void* fieldAddress = (char*)obj + field.offset;
+                                        memcpy(fieldAddress, &result, sizeof(const char));
+                                    }
+                                    else
+                                    {
+                                        LOG_WARN("{0} Unable to deserialize value for cJSON value {1} and field type {2}", __FUNCTION__, arrItem->string, field.type->stringName);
+                                    }
+                                }
+                                break;
+
+                            default:
+                                LOG_ERROR("{0} Unsupported field type {1}({2}) for deserialization!", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                                break;
+                            }
+                        }
+                        break;
+
+                    case cJSON_True:
+                    case cJSON_False:
+                    case cJSON_NULL:
+                    case cJSON_Number:
+                    case cJSON_Array:
+                    case cJSON_Object:
+                        {
+                            switch (field.type->enumType)
+                            {
+                            case TypeName::int8_t:
+                            case TypeName::int16_t:
+                            case TypeName::int32_t:
+                            case TypeName::uint8_t:
+                            case TypeName::uint16_t:
+                            case TypeName::uint32_t:
+                            case TypeName::uint:
+                            case TypeName::Int:
+                            case TypeName::Bool:
+                            case TypeName::Float:
+                            case TypeName::Double:
+                                // case TypeName::eKeys:
+                            {
+                                size_t smallerSize = sizeof(arrItem->valueint); // #TODO If source is smaller, should the strPointerAddress be offset further?
+                                if (smallerSize > field.type->size)
+                                {
+                                    smallerSize = field.type->size;
+                                }
+
+                                if (smallerSize > 0)
+                                {
+                                    void* fieldAddress = (char*)obj + field.offset;
+                                    const void* sourceAddr = (const void*)&arrItem->valueint;
+                                    memcpy(fieldAddress, sourceAddr, smallerSize);
+                                }
+                            }
+                            break;
+
+                            default:
+                                LOG_ERROR("{0} Unsupported field type {1}({2}) for deserialization!", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                                break;
+                            }
+                        }
+                        break;
+
+                    default:
+                        LOG_ERROR("{0} Unsupported cJSON type {1} for deserialization!", __FUNCTION__, arrItem->type);
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
 
     void ConfigHelper::LoadConfigData()
     {
@@ -32,47 +228,60 @@ namespace QwerkE {
             return;
         }
 
-        if (const cJSON* framework = GetItemFromRootByKey(root, "Framework"))
-        {
-            m_ConfigData.framework.QuickLoad = (bool)GetItemFromArrayByKey(framework, "QuickLoad")->valueint;
-            m_ConfigData.framework.MaxConcurrentThreadCount = GetItemFromArrayByKey(framework, "MaxConcurrentThreadCount")->valueint;
-        }
+        // 3 Ways to deserialize
+        // Serialization::DeserializeObject<FrameworkData>(GetItemFromRootByKey(root, TYPENAME_TO_STR(FrameworkData)), m_ConfigData.framework);
+        // Serialization::DeserializeObject(root->child, Reflection::GetClass<FrameworkData>(), (void*)&m_ConfigData.framework);
+        // Serialization::DeserializeObjectByTypeKey<FrameworkData>(root, m_ConfigData.framework);
 
-        if (const cJSON* libraries = GetItemFromRootByKey(root, "Libraries"))
+        const Reflection::ClassInfo* configDataClassInfo = Reflection::GetClass<ConfigData>();
+        for (size_t i = 0; i < configDataClassInfo->fields.size(); i++)
         {
-            m_ConfigData.libraries.Audio = GetItemFromArrayByKey(libraries, "Audio")->valuestring;
-            m_ConfigData.libraries.Networking = GetItemFromArrayByKey(libraries, "Networking")->valuestring;
-            m_ConfigData.libraries.Physics = GetItemFromArrayByKey(libraries, "Physics")->valuestring;
-            m_ConfigData.libraries.Rendering = GetItemFromArrayByKey(libraries, "Rendering")->valuestring;
-            m_ConfigData.libraries.Window = GetItemFromArrayByKey(libraries, "Window")->valuestring;
-        }
+            Reflection::Field configDataField = configDataClassInfo->fields.at(i);
+            if (!configDataField.type)
+                break;
 
-        if (const cJSON* scenes = GetItemFromRootByKey(root, "Scenes"))
-        {
-            const std::vector<cJSON*> sceneList = GetAllItemsFromArray(scenes);
-            for (unsigned int i = 0; i < sceneList.size(); i++)
+            switch (configDataField.type->enumType)
             {
-                m_ConfigData.scenes.fileNames.push_back(sceneList.at(i)->valuestring);
+            case TypeName::FrameworkData:
+                Serialization::DeserializeObject<FrameworkData>(GetItemFromRootByKey(root, TYPENAME_TO_STR(FrameworkData)), m_ConfigData.framework);
+                // Serialization::DeserializeObjectByTypeKey<FrameworkData>(root, m_ConfigData.framework);
+                // Serialization::DeserializeObject(root->child, Reflection::GetClass<FrameworkData>(), (void*)&m_ConfigData.framework);
+                break;
+
+            case TypeName::Libraries:
+                Serialization::DeserializeObjectByTypeKey<Libraries>(root, m_ConfigData.libraries);
+                // Serialization::DeserializeObject(root->child, Reflection::GetClass<Libraries>(), (void*)&m_ConfigData.libraries);
+                break;
+
+            case TypeName::ScenesData:
+                Serialization::DeserializeObjectByTypeKey<ScenesData>(root, m_ConfigData.scenesData);
+                // Serialization::DeserializeObject(root->child, Reflection::GetClass<ScenesData>(), (void*)&m_ConfigData.scenes);
+                break;
+
+            case TypeName::SceneSettings:
+                Serialization::DeserializeObjectByTypeKey<SceneSettings>(root, m_ConfigData.sceneSettings);
+                // Serialization::DeserializeObject(root->child, Reflection::GetClass<SceneSettings>(), (void*)&m_ConfigData.sceneSettings);
+                break;
+
+            case TypeName::Systems:
+                Serialization::DeserializeObjectByTypeKey<Systems>(root, m_ConfigData.systems);
+                // Serialization::DeserializeObject(root->child, Reflection::GetClass<Systems>(), (void*)&m_ConfigData.systems);
+                break;
+
+            case TypeName::EngineSettings:
+                Serialization::DeserializeObjectByTypeKey<EngineSettings>(root, m_ConfigData.engineSettings);
+                // Serialization::DeserializeObject(root->child, Reflection::GetClass<EngineSettings>(), (void*)&m_ConfigData.engineSettings);
+                break;
+
+            // case TypeName::Controls: // #TODO Move out of config data, to user data
+            //     Serialization::DeserializeObjectByTypeKey<Controls>(root, m_ConfigData.controls);
+            //     // Serialization::DeserializeObject(root->child, Reflection::GetClass<Controls>(), (void*)&m_ConfigData.controls);
+            //     break;
+
+            default:
+                LOG_ERROR("{0} Unhandled field type {1}(2) for serialization!", __FUNCTION__, configDataField.type->stringName, (int)configDataField.type->enumType);
+                break;
             }
-        }
-
-        if (const cJSON* sceneSettings = GetItemFromRootByKey(root, "SceneSettings"))
-        {
-            m_ConfigData.sceneSettings.MaxEnabledScenes = GetItemFromArrayByKey(sceneSettings, "MaxEnabledScenes")->valueint;
-        }
-
-        if (const cJSON* systems = GetItemFromRootByKey(root, "Systems"))
-        {
-            m_ConfigData.systems.AudioEnabled = (bool)GetItemFromArrayByKey(systems, "AudioEnabled")->valueint;
-            m_ConfigData.systems.NetworkingEnabled = (bool)GetItemFromArrayByKey(systems, "NetworkingEnabled")->valueint;
-            m_ConfigData.systems.PhysicsEnabled = (bool)GetItemFromArrayByKey(systems, "PhysicsEnabled")->valueint;
-            m_ConfigData.systems.ConsoleOutputWindowEnabled = (bool)GetItemFromArrayByKey(systems, "ConsoleOutputWindowEnabled")->valueint;
-        }
-
-        if (const cJSON* engineSettings = GetItemFromRootByKey(root, "EngineSettings"))
-        {
-            m_ConfigData.engineSettings.LimitFramerate = (bool)GetItemFromArrayByKey(engineSettings, "LimitFramerate")->valueint;
-            m_ConfigData.engineSettings.MaxFramesPerSecond = GetItemFromArrayByKey(engineSettings, "MaxFramesPerSecond")->valueint;
         }
 
         ClosecJSONStream(root);
@@ -87,18 +296,23 @@ namespace QwerkE {
             return;
         }
 
-        if (const cJSON* controls = GetItemFromRootByKey(root, "Controls"))
+        const Reflection::ClassInfo* userDataClassInfo = Reflection::GetClass<UserData>();
+        for (size_t i = 0; i < userDataClassInfo->fields.size(); i++)
         {
-            // #TODO Avoid string to char to eKeys casting
-            // #TODO Remember case insensitivity as well with input keys
-            m_ConfigData.controls.Camera_MoveForward = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveForward))->valuestring[0];
-            m_ConfigData.controls.Camera_MoveBackward = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveBackward))->valuestring[0];
-            m_ConfigData.controls.Camera_MoveLeft = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveLeft))->valuestring[0];
-            m_ConfigData.controls.Camera_MoveRight = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveRight))->valuestring[0];
-            m_ConfigData.controls.Camera_MoveUp = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveUp))->valuestring[0];
-            m_ConfigData.controls.Camera_MoveDown = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveDown))->valuestring[0];
-            m_ConfigData.controls.Camera_RotateLeft = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_RotateLeft))->valuestring[0];
-            m_ConfigData.controls.Camera_RotateRight = (eKeys)GetItemFromArrayByKey(controls, FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_RotateRight))->valuestring[0];
+            Reflection::Field userDataField = userDataClassInfo->fields.at(i);
+            if (!userDataField.type)
+                break;
+
+            switch (userDataField.type->enumType)
+            {
+            case TypeName::Controls:
+                Serialization::DeserializeObjectByTypeKey<Controls>(root, m_UserData.controls);
+                break;
+
+            default:
+                LOG_ERROR("{0} Unhandled field type {1}(2) for serialization!", __FUNCTION__, userDataField.type->stringName, (int)userDataField.type->enumType);
+                break;
+            }
         }
 
         ClosecJSONStream(root);
@@ -114,7 +328,7 @@ namespace QwerkE {
     {
         cJSON* root = CreateObject();
 
-        if (cJSON* framework = CreateArray("Framework"))
+        if (cJSON* framework = CreateArray("FrameworkData"))
         {
             AddItemToArray(framework, CreateNumber("QuickLoad", (int)m_ConfigData.framework.QuickLoad));
             AddItemToArray(framework, CreateNumber("MaxConcurrentThreadCount", m_ConfigData.framework.MaxConcurrentThreadCount));
@@ -131,11 +345,11 @@ namespace QwerkE {
             AddItemToRoot(root, libraries);
         }
 
-        if (cJSON* scenes = CreateArray("Scenes"))
+        if (cJSON* scenes = CreateArray("SceneData"))
         {
-            for (unsigned int i = 0; i < m_ConfigData.scenes.fileNames.size(); i++)
+            for (unsigned int i = 0; i < m_ConfigData.scenesData.fileNames.size(); i++)
             {
-                AddItemToArray(scenes, CreateString(std::to_string(i).c_str(), m_ConfigData.scenes.fileNames[i].c_str()));
+                AddItemToArray(scenes, CreateString(std::to_string(i).c_str(), m_ConfigData.scenesData.fileNames[i].c_str()));
             }
             AddItemToRoot(root, scenes);
         }
@@ -166,20 +380,23 @@ namespace QwerkE {
         PrintRootObjectToFile(configFilePath, root); // #TODO Take in config file path as arg
     }
 
-    void ConfigHelper::SaveUsersData()
+    void ConfigHelper::SaveUserData()
     {
         cJSON* root = CreateObject();
 
+        // #TODO Controls data format changed and the below code will throw an exception until updated
+        return;
+
         if (cJSON* controls = CreateArray("Controls"))
         {
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveForward), (char*)&m_ConfigData.controls.Camera_MoveForward));
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveBackward), (char*)&m_ConfigData.controls.Camera_MoveBackward));
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveLeft), (char*)&m_ConfigData.controls.Camera_MoveLeft));
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveRight), (char*)&m_ConfigData.controls.Camera_MoveRight));
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveUp), (char*)&m_ConfigData.controls.Camera_MoveUp));
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_MoveDown), (char*)&m_ConfigData.controls.Camera_MoveDown));
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_RotateLeft), (char*)&m_ConfigData.controls.Camera_RotateLeft));
-            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_ConfigData.controls.Camera_RotateRight), (char*)&m_ConfigData.controls.Camera_RotateRight));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_MoveForward), (char*)&m_UserData.controls.Camera_MoveForward));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_MoveBackward), (char*)&m_UserData.controls.Camera_MoveBackward));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_MoveLeft), (char*)&m_UserData.controls.Camera_MoveLeft));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_MoveRight), (char*)&m_UserData.controls.Camera_MoveRight));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_MoveUp), (char*)&m_UserData.controls.Camera_MoveUp));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_MoveDown), (char*)&m_UserData.controls.Camera_MoveDown));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_RotateLeft), (char*)&m_UserData.controls.Camera_RotateLeft));
+            AddItemToArray(controls, CreateString(FULL_VARIABLE_TO_STRING(m_UserData.controls.Camera_RotateRight), (char*)&m_UserData.controls.Camera_RotateRight));
             AddItemToRoot(root, controls);
         }
 

@@ -117,8 +117,8 @@ cJSON* CreateArray(const char* key);
 cJSON* CreateTestModel();
 
 // TODO:: Creation functions that also add
-void AddStringToObject();
-void AddNumberToArray();
+void AddStringToObject();  // #TODO Deprecate
+void AddNumberToArray(); // #TODO Deprecate
 
 //// Copy Root ////
 cJSON* CopyRootObject(cJSON* root);

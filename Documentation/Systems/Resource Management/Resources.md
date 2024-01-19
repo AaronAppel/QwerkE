@@ -1,0 +1,1 @@
+The main resource manager. Static class for global, public access
