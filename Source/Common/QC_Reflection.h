@@ -37,7 +37,7 @@ namespace QwerkE
 		// Also consider placing code in this file in a Reflection:: Namespace
 		struct TypeInfo {
 			std::string stringName;
-			TypeName enumType;
+			ReflectionType enumType;
 			size_t size;
 		};
 
@@ -65,7 +65,7 @@ const TypeInfo* GetTypeInfo<TYPE>() { \
 	static TypeInfo type; \
 	type.stringName = #TYPE; \
 	type.size = sizeof(TYPE); \
-	type.enumType = TypeName::TYPE; \
+	type.enumType = ReflectionType::TYPE; \
 	return &type; \
 }\
 

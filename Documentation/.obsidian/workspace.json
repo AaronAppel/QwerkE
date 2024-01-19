@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "QwerkE Standards/Indentation.md",
+                "file": "ZZ Shared Vault Files ❗/To Read.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "clean code",
+                "query": "files and links",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -131,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "QwerkE Standards/Indentation.md",
+                "file": "ZZ Shared Vault Files ❗/To Read.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +143,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "QwerkE Standards/Indentation.md",
+                "file": "ZZ Shared Vault Files ❗/To Read.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "QwerkE Standards/Indentation.md"
+                "file": "ZZ Shared Vault Files ❗/To Read.md"
               }
             }
           }
@@ -196,17 +196,23 @@
   },
   "active": "83291eb45790dacc",
   "lastOpenFiles": [
-    "QwerkE Standards/Including.md",
-    "QwerkE Standards/Indentation.md",
-    "Systems/Saving and Loading/Reflection Setup.md",
+    "Z. Obsidian/Documentation Assets/Symlinked_core-plugins.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
+    "Z. Obsidian/Documentation Assets/Symlinked_community-plugins.md",
+    "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
+    "ZZ Shared Vault Files ❗/Videos To Watch.md",
+    "ZZ Shared Vault Files ❗/Symlink To Google Drive.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
+    "ZZ Shared Vault Files ❗/To Read.md",
+    "QwerkE Standards/Indentation.md",
+    "QwerkE Standards/Including.md",
+    "Systems/Saving and Loading/Reflection Setup.md",
     "Systems/Saving and Loading/Type Reflection.md",
     "Pointer Manipulation.md",
     "QwerkE Standards/Coding Standards Notes.md",
     "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "ZZ Shared Vault Files ❗/GitHub Testing File.md",
     "ZZ Shared Vault Files ❗/template.gitignore",
-    "ZZ Shared Vault Files ❗/Videos To Watch.md",
     "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
     "ZZ Shared Vault Files ❗/Obsidian",
     "ZZ Shared Vault Files ❗/TO Watch.md",
@@ -223,14 +229,8 @@
     "QwerkE Standards/Avoided Practices.md",
     "Z. To Cleanup/Old Notes.md",
     "ZZ Shared Vault Files ❗/Constexpr.md",
-    "References/Constexpr.md",
-    "References/Library References.md",
     "ZZ Shared Vault Files ❗/Cleanup.bat",
-    "ZZ Shared Vault Files ❗/Obsidian Scripting Example.md",
-    "ZZ Shared Vault Files ❗/New Project.md",
-    "ZZ Shared Vault Files ❗/To Read.md",
     "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
-    "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
     "ZZ Shared Vault Files ❗/SymlinkSharedFiles.bat",
     "ZZ Shared Vault Files ❗",
     "Shared Vault Files ❗/SymlinkSharedFiles.bat",

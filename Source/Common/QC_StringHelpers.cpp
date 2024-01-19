@@ -90,7 +90,7 @@ bool SearchForString(std::string line, std::string word)
 
 int StringToInt(const char* string)
 {
-	return std::stoi(string, nullptr, 10);
+	return std::stoi(string, nullptr, 10); // #TODO Test
 }
 
 const char* ReverseString(std::string value)

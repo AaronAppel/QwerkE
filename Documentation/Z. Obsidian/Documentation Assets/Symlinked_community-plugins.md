@@ -1,12 +1,3 @@
-#Symlinked 
 [
-  "colored-tags-wrangler",
-  "tag-wrangler",
-  "highlightr-plugin",
-  "homepage",
-  "url-into-selection",
-  "obsidian-file-color",
-  "file-explorer-note-count",
-  "obsidian-trash-explorer",
   "codeblock-customizer"
 ]

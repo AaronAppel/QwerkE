@@ -2,6 +2,8 @@
 
 #include "QF_ConfigHelper.h"
 
+#include <string>
+
 // #TODO Look at reducing rigidity, and improving readability.
 // Would it be cleaner to move defines under the class definition?
 // Probably won't work in a header, unless inside the class.
@@ -11,29 +13,39 @@ namespace QwerkE
 {
     namespace Reflection // Type defines
     {
-        typedef bool Bool; // For allowing basic type support in the TypeName enum
-        typedef char Char;
-        typedef int  Int;
-        typedef char* CharPtr;
+        typedef int8_t r_int8_t;
+        typedef int16_t r_int16_t;
+        typedef int32_t r_int32_t;
+        typedef int64_t r_int64_t;
+        typedef uint8_t r_uint8_t;
+        typedef uint16_t r_uint16_t;
+        typedef uint32_t r_uint32_t;
+        typedef uint64_t r_uint64_t;
 
-        typedef std::string String;
-        typedef const char* ConstCharPtr;
+        DEFINE_TYPE(r_int8_t)
+        DEFINE_TYPE(r_int16_t)
+        DEFINE_TYPE(r_int32_t)
+        DEFINE_TYPE(r_int64_t)
+        DEFINE_TYPE(r_uint8_t)
+        DEFINE_TYPE(r_uint16_t)
+        DEFINE_TYPE(r_uint32_t)
+        DEFINE_TYPE(r_uint64_t)
 
-        DEFINE_TYPE(int8_t)
-        DEFINE_TYPE(int16_t)
-        DEFINE_TYPE(int32_t)
-        DEFINE_TYPE(uint8_t)
-        DEFINE_TYPE(uint16_t)
-        DEFINE_TYPE(uint32_t)
+        typedef bool r_bool; // For allowing basic type support in the ReflectionType enum
+        typedef char r_char;
+        typedef char* r_charPtr;
 
-        DEFINE_TYPE(String)
-        DEFINE_TYPE(ConstCharPtr)
+        DEFINE_TYPE(r_bool) // #TODO May require using special union types for serialization needs
+        DEFINE_TYPE(r_char)
+        DEFINE_TYPE(r_charPtr)
 
-        // DEFINE_TYPE(uint) // #TODO Fix "already defined" C2766, or maybe already supported by types above
-        DEFINE_TYPE(Bool) // #TODO May require using special union types for serialization needs
-        DEFINE_TYPE(Char)
-        DEFINE_TYPE(CharPtr)
+        typedef std::string r_string;
+        typedef const char* r_constCharPtr;
 
+        DEFINE_TYPE(r_string)
+        DEFINE_TYPE(r_constCharPtr)
+
+        typedef QwerkE::eKeys eKeys;
         DEFINE_TYPE(eKeys)
 
         DEFINE_TYPE(Controls)

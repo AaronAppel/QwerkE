@@ -195,6 +195,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Routine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scenes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ShaderComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ShaderFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ShaderProgram.h" />

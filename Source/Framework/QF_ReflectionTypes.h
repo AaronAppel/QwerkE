@@ -1,40 +1,40 @@
 #pragma once
 
 // Add type names here to support reflection/serialization (case sensitive)
-enum class TypeName {
 
-	int8_t,
-	int16_t,
-	int32_t,
+enum class ReflectionType { // #TODO It would be nice to wrap in a namespace
 
-	uint8_t,
-	uint16_t,
-	uint32_t,
+    // #NOTE Maintain order in-dependence by avoiding writing enum values to data, or relying on their static values in code
 
+    // User defined types
+    ConfigData,
+    Controls,
+    eKeys,
+    EngineSettings,
     FrameworkData,
     Libraries,
     ScenesData,
     SceneSettings,
     Systems,
-    EngineSettings,
-    Controls,
-
     UserData,
-    ConfigData,
 
-    uint,
+    // Primitive types. #NOTE A prefix is used to avoid naming collisions with standard type keywords
+    r_int8_t,
+    r_int16_t,
+    r_int32_t,
+    r_int64_t,
 
-    Int, // Primitives need upper casing, and a matching typedef to work
-    Bool,
-    Char,
-    CharPtr,
-    Float,
-    Double,
-    String,
-    ConstCharPtr,
+    r_uint8_t,
+    r_uint16_t,
+    r_uint32_t,
+    r_uint64_t,
 
-    eKeys
-    // std::string,
-
-    // long
+    r_int,
+    r_bool,
+    r_char,
+    r_charPtr,
+    r_float,
+    r_double,
+    r_string,
+    r_constCharPtr
 };

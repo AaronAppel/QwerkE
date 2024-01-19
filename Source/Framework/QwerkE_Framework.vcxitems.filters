@@ -713,5 +713,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ReflectionTypes.h">
       <Filter>DataTypes</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,3 @@
-#Symlinked 
 [
   "file-explorer",
   "global-search",
