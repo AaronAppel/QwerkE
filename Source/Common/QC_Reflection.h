@@ -26,6 +26,11 @@
 
 // Original reflection helpers source : https://github.com/danbar0/StaticJsonReflection/tree/master
 // Modified to work with QwerkE
+
+// #TODO Find a way to get a nice typeof() method.
+// This one relies on the type being known at compile time, which won't work in all use cases (indirect serialization for example).
+#define typeof(T) Reflection::GetClass<T>()
+
 namespace QwerkE
 {
 	namespace Reflection
@@ -76,11 +81,11 @@ const ClassInfo* GetClass<CLASS>() { \
 	static ClassInfo localClass; \
 	enum { BASE = __COUNTER__ }; \
 
-#define DEFINE_MEMBER(NAME)  \
-	enum { NAME##Index = __COUNTER__ - BASE - 1}; \
-	localClass.fields[NAME##Index].type = GetTypeInfo<decltype(ClassType::NAME)>();\
-	localClass.fields[NAME##Index].name = { #NAME };  \
-	localClass.fields[NAME##Index].offset = offsetof(ClassType, NAME);\
+#define DEFINE_MEMBER(MEMBER_NAME)  \
+	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1}; \
+	localClass.fields[MEMBER_NAME##Index].type = GetTypeInfo<decltype(ClassType::MEMBER_NAME)>();\
+	localClass.fields[MEMBER_NAME##Index].name = { #MEMBER_NAME };  \
+	localClass.fields[MEMBER_NAME##Index].offset = offsetof(ClassType, MEMBER_NAME);\
 
 #define END_ATTRIBUTES \
 return &localClass; \

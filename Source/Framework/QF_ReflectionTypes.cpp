@@ -69,6 +69,10 @@ namespace QwerkE
 
         BEGIN_ATTRIBUTES_FOR(Libraries)
         DEFINE_MEMBER(Rendering)
+        DEFINE_MEMBER(Audio)
+        DEFINE_MEMBER(Physics)
+        DEFINE_MEMBER(Networking)
+        DEFINE_MEMBER(Window)
         END_ATTRIBUTES
 
         BEGIN_ATTRIBUTES_FOR(ScenesData)
@@ -106,7 +110,7 @@ namespace QwerkE
         END_ATTRIBUTES
 
         BEGIN_ATTRIBUTES_FOR(ConfigData)
-        DEFINE_MEMBER(framework);
+        DEFINE_MEMBER(frameworkData);
         DEFINE_MEMBER(libraries);
         DEFINE_MEMBER(scenesData);
         DEFINE_MEMBER(sceneSettings);

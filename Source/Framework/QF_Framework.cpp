@@ -50,6 +50,9 @@ namespace QwerkE {
             Log::Initialize();
 
             ConfigHelper::LoadConfigData(configFilePath); // Init config data
+			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences)); // #TODO Remove test
+			ConfigHelper::SaveConfigData(); // #TODO Remove test
+			// ConfigHelper::SaveUserData(); // #TODO Remove test
             const ConfigData& config = ConfigHelper::GetConfigData();
 
             // #TODO Load libraries dynamically. Need functions to load .dlls

@@ -114,11 +114,10 @@ cJSON* CreateNumber(const char* key, double value);
 cJSON* CreateString(const char* key, const char* value);
 cJSON* CreateObject();
 cJSON* CreateArray(const char* key);
-cJSON* CreateTestModel();
 
 // TODO:: Creation functions that also add
-void AddStringToObject();  // #TODO Deprecate
-void AddNumberToArray(); // #TODO Deprecate
+void AddNewStringToObject();  // #TODO Deprecate
+void AddNewNumberToArray(); // #TODO Deprecate
 
 //// Copy Root ////
 cJSON* CopyRootObject(cJSON* root);

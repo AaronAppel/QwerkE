@@ -1,29 +1,28 @@
 {
-	"FrameworkData": [{
-		"QuickLoad":	1,
-		"MaxConcurrentThreadCount":	10
-	}],
+	"FrameworkData":	[{
+			"QuickLoad":	true,
+			"MaxConcurrentThreadCount":	10
+		}],
 	"Libraries":	[{
-			"Audio":	"OpenAL",
-			"Networking":	"RakNet",
-			"Physics":	"Bullet3D",
 			"Rendering":	"OpenGL",
+			"Audio":	"OpenAL",
+			"Physics":	"Bullet3D",
+			"Networking":	"RakNet",
 			"Window":	"GLFW3"
 		}],
 	"ScenesData":	[{
-			"0":	"Test.qscene"
-		}],
+	}],
 	"SceneSettings":	[{
 			"MaxEnabledScenes":	1
 		}],
 	"Systems":	[{
-			"AudioEnabled":	1,
-			"NetworkingEnabled":	0,
-			"PhysicsEnabled":	0,
-			"ConsoleOutputWindowEnabled": 0
+			"AudioEnabled":	true,
+			"PhysicsEnabled":	true,
+			"NetworkingEnabled":	true,
+			"ConsoleOutputWindowEnabled":	true
 		}],
 	"EngineSettings":	[{
-			"LimitFramerate": 1,
-			"MaxFramesPerSecond": 120
-	}]
+			"LimitFramerate":	true,
+			"MaxFramesPerSecond":	120
+		}]
 }

@@ -1,0 +1,3 @@
+Old data may live through a change in names or other refactoring, but upon saving new data, the old will be overwritten. It would nice to have more control over how data is saved, to avoid deleting unique values or only writing what is different. This is more of a luxury, and implies a lot of effort to build and maintain such a system.
+
+For now, reading a file reads the entirety, and writing to a file clobbers all existing/previous data with the new data.

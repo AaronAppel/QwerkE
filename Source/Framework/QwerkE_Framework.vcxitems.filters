@@ -391,6 +391,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ReflectionTypes.cpp">
       <Filter>DataTypes</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h">

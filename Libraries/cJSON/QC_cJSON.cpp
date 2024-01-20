@@ -505,17 +505,12 @@ cJSON* CreateArray(const char* key)
 	return returnArray;
 }
 
-cJSON* CreateTestModel()
-{
-	return cJSON_CreateObject();
-}
-
-void AddStringToObject()  // #TODO Deprecate
+void AddNewStringToObject()  // #TODO Deprecate
 {
 
 }
 
-void AddNumberToArray() // #TODO Deprecate
+void AddNewNumberToArray() // #TODO Deprecate
 {
 
 }
