@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 
-#include "QF_Libraries_Load.h"
+#include "QF_LibrariesLoad.h"
 
 namespace QwerkE {
 

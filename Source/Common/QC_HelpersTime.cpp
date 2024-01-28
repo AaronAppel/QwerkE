@@ -1,6 +1,8 @@
 #include "QC_HelpersTime.h"
 
-#ifdef _WIN32
+#include "QF_Platform.h"
+
+#ifdef _QWindows
 #include <profileapi.h>
 #include <winnt.h>
 double QC_HelpersTime()

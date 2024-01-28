@@ -6,15 +6,18 @@
 #include "Libraries/freetype2/ft2build.h"
 #include "Libraries/freetype2/freetype/freetype.h"
 #include "Libraries/glew/GL/glew.h"
+#pragma warning( disable : 26495 )
 #include "Libraries/glm/glm/common.hpp"
 #include "Libraries/glm/glm/gtc/type_ptr.hpp"
 #include "Libraries/glm/glm/gtc/matrix_transform.hpp"
+#pragma warning( default : 26495 )
 
 #include "QC_StringHelpers.h"
 
 #include "QF_Defines.h"
 #include "QF_Graphics_Header.h"
 #include "QF_GraphicsHelpers.h"
+#include "QF_Log.h"
 #include "QF_Renderer.h"
 #include "QF_Resources.h"
 #include "QF_ShaderProgram.h"
@@ -44,7 +47,10 @@ namespace QwerkE {
         FT_Face face;
         // #TODO Change freetype font loading to use Resources().
         if (FT_New_Face(ft, NullFolderPath(null_font), 0, &face))
-            std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+        {
+            LOG_ERROR("{0} Freetype failed to load font {1}!", __FUNCTION__, NullFolderPath(null_font));
+            return;
+        }
 
         // Set size to load glyphs as
         FT_Set_Pixel_Sizes(face, 0, 48);
@@ -53,12 +59,12 @@ namespace QwerkE {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         // Load first 128 characters of ASCII set
-        for (GLubyte c = 0; c < 128; c++)
+        for (GLubyte charGlyph = 0; charGlyph < 128; charGlyph++)
         {
             // Load character glyph
-            if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+            if (FT_Load_Char(face, charGlyph, FT_LOAD_RENDER))
             {
-                std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+                LOG_ERROR("{0} Freetype failed to load character glyph {1}!", __FUNCTION__, charGlyph);
                 continue;
             }
             // Generate texture
@@ -76,11 +82,13 @@ namespace QwerkE {
                 GL_UNSIGNED_BYTE,
                 face->glyph->bitmap.buffer
             );
+
             // Set texture options
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
             // Now store character for later use
             Character character = {
                 texture,
@@ -88,10 +96,12 @@ namespace QwerkE {
                 glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
                 (GLuint)face->glyph->advance.x
             };
-            Characters.insert(std::pair<GLchar, Character>(c, character));
+
+            Characters.insert(std::pair<GLchar, Character>(charGlyph, character));
         }
-        glBindTexture(GL_TEXTURE_2D, 0);
+
         // Destroy FreeType once we're finished	FT_Done_Face(face);
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         // Configure VAO/VBO for texture quads
         glGenVertexArrays(1, &VAO);

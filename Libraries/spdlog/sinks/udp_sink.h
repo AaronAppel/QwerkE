@@ -3,10 +3,12 @@
 
 #pragma once
 
+#include "QF_Platform.h"
+
 #include <spdlog/common.h>
 #include <spdlog/sinks/base_sink.h>
 #include <spdlog/details/null_mutex.h>
-#ifdef _WIN32
+#ifdef _QWindows
 #    include <spdlog/details/udp_client-windows.h>
 #else
 #    include <spdlog/details/udp_client.h>

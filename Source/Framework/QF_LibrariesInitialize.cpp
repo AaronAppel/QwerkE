@@ -1,6 +1,6 @@
-#include "QF_Libraries_Initialize.h"
+#include "QF_LibrariesInitialize.h"
 
-#include "QF_Libraries_Include.h"
+#include "QF_LibrariesInclude.h"
 
 #include "QF_Debug.h"
 #include "QF_Defines.h"

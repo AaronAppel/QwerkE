@@ -1,6 +1,6 @@
 #include "QF_Window.h"
 
-#include "QF_Libraries_Include.h"
+#include "QF_LibrariesInclude.h"
 
 namespace QwerkE {
 

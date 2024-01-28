@@ -6,16 +6,16 @@
 #define OpenGL
 #define OpenAL
 #define dearimgui
-#define qw_BULLET3
+#define BULLET3
+#define RAKNET
 
-// Define debug vs release macro
+// MSVC pre-preocessor defines : https://learn.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=msvc-170
+
 #ifdef _DEBUG
 #define _QDebug
-#elif
-#define _QRelease
 #else
-#pragma warning "Define Debug or Release mode!"
-#endif // DEBUG
+#define _QRelease
+#endif
 
 // Define API level for various functionality
 // Currently not being used.

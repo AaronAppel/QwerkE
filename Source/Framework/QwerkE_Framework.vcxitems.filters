@@ -361,9 +361,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Libraries_Initialize.cpp">
-      <Filter>Headers</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ImageHelpers.cpp">
       <Filter>FileSystem</Filter>
     </ClCompile>
@@ -390,6 +387,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_LibrariesInitialize.cpp">
+      <Filter>Headers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -665,15 +665,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PCH_Includes.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Libraries_Load.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Libraries_Include.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Libraries_Initialize.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LoadImageFile.h">
       <Filter>FileSystem</Filter>
     </ClInclude>
@@ -712,6 +703,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesInitialize.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesLoad.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesInclude.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

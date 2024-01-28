@@ -5,7 +5,7 @@
 #include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_Enums.h"
-#include "QF_Libraries_Initialize.h"
+#include "QF_LibrariesInitialize.h"
 #include "QF_Audio.h"
 #include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"

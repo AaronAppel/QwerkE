@@ -14,10 +14,10 @@ namespace QwerkE {
 
     namespace Serialization
     {
-#if _WIN32
+#ifdef _Q32Bit
         // *PINT32 basetsd.h
         typedef INT32 PlatformPointer; // #TODO Handle pointer size on different systems better
-#elif _WIN64
+#elif defined(_Q64Bit)
         typedef INT64 PlatformPointer;
 #pragma warning "Implement 64 bit support!"
 #endif
@@ -146,24 +146,10 @@ namespace QwerkE {
 
         void DeserializeJsonObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
         {
+            if (!objJson || !objClassInfo || !obj)
             {
-                if (!objJson)
-                {
-                    LOG_ERROR("{0} {1} is null!", __FUNCTION__, VARNAME_TO_STR(objJson));
-                    return;
-                }
-
-                if (!objClassInfo)
-                {
-                    LOG_ERROR("{0} Class info serialization error!", __FUNCTION__);
-                    return;
-                }
-
-                if (!obj)
-                {
-                    LOG_ERROR("{0} object reference {1} is null!", __FUNCTION__, VARNAME_TO_STR(obj));
-                    return;
-                }
+                LOG_ERROR("{0} null argument!", __FUNCTION__);
+                return;
             }
 
             // #TODO O(n^2) complexity is high. Iterate to improve performance

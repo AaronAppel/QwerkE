@@ -53,7 +53,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Jobs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_KeyboardExtApi.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Libraries_Initialize.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_LibrariesInitialize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LightComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Lights.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LitMaterial.cpp" />
@@ -152,9 +152,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Jobs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Keyboard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_KeyboardExtApi.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Libraries_Include.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Libraries_Initialize.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Libraries_Load.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesInclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesInitialize.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesLoad.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LightComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LightData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LoadImageFile.h" />

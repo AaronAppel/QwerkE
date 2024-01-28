@@ -26,7 +26,7 @@ bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 	}
 }
 
-#ifdef _Win32 // #TODO Move to a QC_DirectoryUtilities file, to keep this file smaller, and specific
+#ifdef _QWindows // #TODO Move to a QC_DirectoryUtilities file, to keep this file smaller, and specific
 #include <windows.h>
 #include <handleapi.h> // INVALID_HANDLE_VALUE
 #include <vector>
@@ -103,7 +103,7 @@ std::vector<std::string> ReadDir(const char* directoryPath)
 // MAC
 // Linux
 // Android
-#endif // _Win32
+#endif
 
 bool CreateUniqueFile(const char* filePath)
 {

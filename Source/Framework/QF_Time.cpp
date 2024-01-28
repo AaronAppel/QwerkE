@@ -2,7 +2,7 @@
 
 #include "QF_Platform.h"
 
-#ifdef _WIN32
+#ifdef _QWindows
 #include <profileapi.h>
 #include <winnt.h>
 #else

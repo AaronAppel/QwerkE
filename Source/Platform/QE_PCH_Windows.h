@@ -10,8 +10,8 @@
 #include "QE_Defines.h"
 
 #include "QF_Platform.h"
-#include "QF_Libraries_Include.h"
-#include "QF_Libraries_Load.h" // #TODO Review include ordering. This avoids library LNK2019 errors
+#include "QF_LibrariesInclude.h"
+#include "QF_LibrariesLoad.h" // #TODO Review include ordering. This avoids library LNK2019 errors
 
 // NOTE: Add additional .h files below, if they rarely change
 

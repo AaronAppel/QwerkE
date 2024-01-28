@@ -2,14 +2,14 @@
 
 #include "QF_Defines.h"
 
-#ifdef qw_BULLET3
+#ifdef BULLET3
 #elif qw_HAVOC
 #elif qw_PHYSX
 #else
 #pragma error "No physics library specified!"
 #endif
 
-#ifdef qw_BULLET3
+#ifdef BULLET3
 #include "QF_Profile.h"
 
 #pragma warning( disable : 26495 )
@@ -240,4 +240,4 @@ namespace QwerkE {
     }
 
 }
-#endif // qw_BULLET3
+#endif
