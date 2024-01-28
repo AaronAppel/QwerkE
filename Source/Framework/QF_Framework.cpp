@@ -49,11 +49,11 @@ namespace QwerkE {
 		{
             Log::Initialize();
 
-            ConfigHelper::LoadConfigData(configFilePath); // Init config data
-			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences)); // #TODO Remove test
-			ConfigHelper::SaveConfigData(); // #TODO Remove test
-			// ConfigHelper::SaveUserData(); // #TODO Remove test
-            const ConfigData& config = ConfigHelper::GetConfigData();
+            ConfigHelper::LoadConfigData(configFilePath);
+			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences));
+
+            const ConfigData& configData = ConfigHelper::GetConfigData();
+			const UserData& userData = ConfigHelper::GetUserData();
 
             // #TODO Load libraries dynamically. Need functions to load .dlls
 
@@ -77,7 +77,7 @@ namespace QwerkE {
 			//	Each system has a name string (JSON parent object name) and enabled boolean.
 			//	If false, skip, true loads and on error/success print system name string.
 
-			if (config.libraries.Window == "GLFW3") // #TODO Improve platform handling
+			if (configData.libraries.Window == "GLFW3") // #TODO Improve platform handling
 			{
 #ifdef GLFW3
 				m_Window = new glfw_Window(Renderer::g_WindowWidth, Renderer::g_WindowHeight, g_WindowTitle);
@@ -94,7 +94,7 @@ namespace QwerkE {
 
             Input::Initialize((GLFWwindow*)Windows::GetWindow(0)->GetContext()); // #TODO Remove glfw code
 
-            if (config.systems.AudioEnabled && Audio::Initialize())
+            if (configData.systems.AudioEnabled && Audio::Initialize())
             {
                 LOG_TRACE("Audio system initialized with OpenAL.");
             }
@@ -109,9 +109,9 @@ namespace QwerkE {
 			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.0f);
 			m_Window->SwapBuffers();
 
-			EventManager::Initialize(); // #TODO Set max thread count with config.framework.MaxConcurrentThreadCount;
+			EventManager::Initialize(); // #TODO Set max thread count with configData.framework.MaxConcurrentThreadCount;
 
-			if (config.systems.NetworkingEnabled)
+			if (configData.systems.NetworkingEnabled)
 			{
 				Network::Initialize();
 				LOG_TRACE("Networking system initialized");
@@ -124,7 +124,14 @@ namespace QwerkE {
 			// #TODO load scene later, like in Run() as it's more than just initializing
 			Scenes::Initialize(); // #TODO Investigate other system dependencies as there are likely several
 
-			Physics::Initialize();
+			if (configData.systems.PhysicsEnabled)
+			{
+				Physics::Initialize();
+			}
+			else
+			{
+				LOG_WARN("No physics system loaded.");
+			}
 
 			return eEngineMessage::_QSuccess;
 		}

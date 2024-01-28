@@ -63,8 +63,8 @@ namespace QwerkE {
         for (auto p : *materialList)
         {
             // TODO: Do not assign values the material does not use
-            // if (p.second == nullptr)
-            // 	continue;
+            if (p.second == nullptr)
+                continue;
 
             glActiveTexture(GL_TEXTURE0 + counter);
             glBindTexture(GL_TEXTURE_2D, p.second->s_Handle);
@@ -124,7 +124,6 @@ namespace QwerkE {
 
         /* Assign other values */
         shader->SetUniformFloat1("Shine", 0.5f); // TODO: Improve
-
     }
 
     void RenderRoutine::SetupLightingUniforms(const ComponentCamera* a_Camera, Renderable* renderable)

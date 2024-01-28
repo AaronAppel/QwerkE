@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "f51213eed07447b5",
+        "id": "9df650fe7e77a3bf",
         "type": "tabs",
         "children": [
           {
-            "id": "91de55fa07cf685c",
+            "id": "4c3749c9271c261a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Serialization (JSON).md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "mode": "source",
                 "source": false
               }
@@ -31,7 +31,6 @@
       {
         "id": "011961b88bbc11c7",
         "type": "tabs",
-        "dimension": 77.41273100616016,
         "children": [
           {
             "id": "55628a392364c2db",
@@ -60,11 +59,36 @@
             }
           }
         ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 374.5083198547363
+  },
+  "right": {
+    "id": "5c784de895a99dca",
+    "type": "split",
+    "children": [
+      {
+        "id": "46519dbc7b373804",
+        "type": "tabs",
+        "dimension": 52.94520547945205,
+        "children": [
+          {
+            "id": "7099b2a8eb1e34ad",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "ZZ Shared Vault Files ❗/Watched.md"
+              }
+            }
+          }
+        ]
       },
       {
-        "id": "6dc84078db07b920",
+        "id": "d7c9b4b6c9222e72",
         "type": "tabs",
-        "dimension": 22.587268993839835,
+        "dimension": 47.05479452054795,
         "children": [
           {
             "id": "6e6727655ad579b3",
@@ -72,7 +96,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "serializa",
+                "query": "```",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,20 +117,12 @@
             }
           },
           {
-            "id": "40ce8ad6dc7f90d8",
-            "type": "leaf",
-            "state": {
-              "type": "trash-explorer",
-              "state": {}
-            }
-          },
-          {
             "id": "dad04b4ed9f8f30a",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Serialization (JSON).md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Serialization (JSON).md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,32 +149,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 374.5083198547363
-  },
-  "right": {
-    "id": "5c784de895a99dca",
-    "type": "split",
-    "children": [
-      {
-        "id": "46519dbc7b373804",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "7099b2a8eb1e34ad",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "Serialization (JSON).md"
-              }
-            }
-          }
-        ]
-      }
-    ],
-    "direction": "horizontal",
-    "width": 369.5,
-    "collapsed": true
+    "width": 369.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -169,46 +160,49 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "91de55fa07cf685c",
+  "active": "4c3749c9271c261a",
   "lastOpenFiles": [
-    "Saving and Loading.md",
-    "Serialization (JSON).md",
-    "cJSON.md",
-    "JSON.md",
-    "Pointer Manipulation.md",
-    "QwerkE Standards/Coding Standards Notes.md",
-    "Systems/Saving and Loading/Reflection Setup.md",
-    "ZZ Shared Vault Files ❗/To Read.md",
-    "Z. Obsidian/Documentation Assets/Symlinked_core-plugins.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
-    "Z. Obsidian/Documentation Assets/Symlinked_community-plugins.md",
-    "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
-    "ZZ Shared Vault Files ❗/Videos To Watch.md",
-    "ZZ Shared Vault Files ❗/Symlink To Google Drive.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
-    "QwerkE Standards/Indentation.md",
-    "QwerkE Standards/Including.md",
-    "Systems/Saving and Loading/Type Reflection.md",
+    "ZZ Shared Vault Files ❗/To Read.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
     "ZZ Shared Vault Files ❗/New Project Checklist.md",
-    "ZZ Shared Vault Files ❗/GitHub Testing File.md",
+    "Systems/Building.md",
+    "QwerkE Goals.md",
+    "README.md",
+    "Z. To Cleanup/Framework Read Me.md",
+    "0. Getting Started With QwerkE/Getting Started With QwerkE.md",
+    "CPPList.h",
+    "QwerkE Structure Diagram.canvas",
+    "Z. To Cleanup/Old References.md",
+    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
+    "Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png",
+    "Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png.crdownload",
+    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png.crdownload",
+    "Z. To Cleanup/Untitled.md",
+    "Z. To Cleanup/Old Notes.md",
+    "Pointer Manipulation.md",
+    "Systems/Saving and Loading/Reflection Setup.md",
+    "Development/Features/F0001.md",
+    "QwerkE Standards/Enums.md",
+    "Development/Features/0. Features Kanban.md",
+    "QwerkE Standards/Empty Function Body.md",
+    "Systems/Saving and Loading/Type Reflection.md",
+    "JSON.md",
+    "QwerkE Versioning.md",
+    "Pretend Blog Post.md",
+    "Development/Features/Data File Editor Window.md",
+    "QwerkE Standards/Task Naming.md",
+    "Systems/System Identification Ids.md",
+    "QwerkE Standards/Getters and Setters.md",
+    "Development/Features/Resource Management",
+    "Systems/Untitled",
+    "Systems/Window",
+    "Systems/Input",
+    "Systems/Rendering",
+    "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
     "ZZ Shared Vault Files ❗/template.gitignore",
-    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
     "ZZ Shared Vault Files ❗/Obsidian",
-    "ZZ Shared Vault Files ❗/TO Watch.md",
-    "Systems/Resource Management/Resources.md",
-    "Systems/Saving and Loading",
-    "Systems/Resource Management",
-    "Systems",
-    "Research/Game Engine Series YouTube.md",
-    "Research",
-    "ZZ Shared Vault Files ❗/New Project Chceklist.md",
-    "Game Engine Series YouTube.md",
-    "QwerkE Standards/Coding Standards.md",
-    "ZZ Shared Vault Files ❗/Cleanup.bat",
     "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
-    "ZZ Shared Vault Files ❗/SymlinkSharedFiles.bat",
-    "ZZ Shared Vault Files ❗",
-    "Shared Vault Files ❗/SymlinkSharedFiles.bat",
     "New Bitmap image.bmp",
     "QwerkE Standards/Include Flow Diagram.canvas"
   ]

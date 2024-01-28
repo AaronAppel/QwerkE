@@ -26,6 +26,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_widgets.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Framework\QF_Mirror.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Memory.cpp" />
@@ -588,6 +590,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_truetype.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\MirrorTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\al.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\alc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\efx-creative.h" />

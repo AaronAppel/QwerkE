@@ -1,0 +1,2 @@
+Currently, the only way to build and run is by using the Visual Studio 2022 solution file in the repo root.
+In the future it would be nice to have something like premake or build scripts to generate solutions.

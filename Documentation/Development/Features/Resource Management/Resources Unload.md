@@ -1,1 +1,3 @@
+The Resources (Resource Manager) class gives out raw pointers and doesn't guarantee proper disposal of resources on shutdown. At least implement smart pointer references to cleanup memory at shutdown time.
+
 When reference counting is added to the Resources class, add a way to unload all assets not references outside of the Resources class, so all assets with 1 or 0 references can be delete using a public method request.

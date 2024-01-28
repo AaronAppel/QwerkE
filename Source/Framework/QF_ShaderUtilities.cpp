@@ -47,6 +47,7 @@ namespace QwerkE {
                     std::string t_Variable;
                     sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
                     strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
+                    // #TODO Fix C6031 warning "Return value ignored: 'strtok_s'."
 
                     std::string loopString;
                     int counter = 2; // remove 'u_' from beginning
@@ -109,6 +110,7 @@ namespace QwerkE {
                     std::string t_Variable;
                     sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
                     strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
+                    // #TODO Fix C6031 warning "Return value ignored: 'strtok_s'."
 
                     std::string loopString;
                     int counter = 2; // remove 'u_' from beginning
@@ -131,6 +133,7 @@ namespace QwerkE {
                     std::string t_Variable;
                     sscanf_s((char*)loopString.c_str(), "%*s %*s %s", (char*)t_Variable.c_str(), size);
                     strtok_s((char*)t_Variable.c_str(), ";", &next_token); // remove ';' from end
+                    // #TODO Fix C6031 warning "Return value ignored: 'strtok_s'."
 
                     std::string loopString;
                     int counter = 2; // remove 'u_' from beginning

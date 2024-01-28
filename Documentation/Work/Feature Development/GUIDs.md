@@ -1,1 +1,0 @@
-**G**lobally **U**nique **I**dentifiers are an approach to referencing things like assets across all domains of data and code. A GUID number can offer better performance compared to string lookups as well.

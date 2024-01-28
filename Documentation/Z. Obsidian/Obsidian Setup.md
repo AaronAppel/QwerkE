@@ -1,4 +1,3 @@
-#Symlinked
 Hotkeys Guide : https://keycombiner.com/collections/obsidian/
 
 For the most part I try to keep markdown files standard, and avoid special Obsidian specific changes. This is to let others conveniently view QwerkE documentation files in their preferred application. That being said, if you'd like to see markdown files similar to me, you can find the lists of **enabled** Obsidian plugins I use below.

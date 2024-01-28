@@ -1,0 +1,13 @@
+{
+	"nodes":[
+		{"id":"6a58765fc82f3943","type":"file","file":"Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png","x":-980,"y":-240,"width":321,"height":400},
+		{"id":"de5e7eaf0d3b06ed","type":"text","text":"3rd Party :\nGLEW, imgui, GLFW, OpenAL, cJSON, etc","x":-453,"y":-150,"width":733,"height":90},
+		{"id":"f2c25ccd7a8b278f","type":"text","text":"Low Level :\nOS, Drivers, Hardware, Input Devices","x":-453,"y":-40,"width":733,"height":90},
+		{"id":"d637524dd5773ad8","type":"text","text":"Core :\n","x":-453,"y":-260,"width":733,"height":90},
+		{"id":"a46579606883b6a8","type":"file","file":"Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png","x":-1300,"y":-240,"width":303,"height":400},
+		{"id":"b570fab11004c936","type":"text","text":"#TODO Make a diagram for QwerkE similar to these ones, for fun. Could help conceptualize QwerkE development.","x":-1145,"y":-420,"width":331,"height":140},
+		{"id":"d0642d7c343ad5b9","type":"text","text":"Debugging :\n","x":300,"y":-350,"width":180,"height":80},
+		{"id":"d53e444d9ca89bde","type":"text","text":"Core :\n","x":-453,"y":-370,"width":733,"height":90}
+	],
+	"edges":[]
+}

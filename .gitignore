@@ -17,7 +17,7 @@
 !QwerkE_Framework/Libraries/**/*.dll
 
 // Symlink of root README.md file
-// Documentation/README.md
+Documentation/README.md
 
 // Profiler log file
 instrumentor_log.json

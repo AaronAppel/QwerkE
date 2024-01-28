@@ -26,17 +26,7 @@ const char* StringAppend(const char* a, const char* b, const char* c)
 
 char* DeepCopyString(const char* string)
 {
-	if (string == 0) return nullptr;
-
-	// #TODO Is the +1 necessary?
-	char* returnString = new char[strlen(string) + 1]; // #TODO Delete memory. Maybe use a smart pointer.
-
-	// #TODO Is the +1 necessary?
-	memcpy(returnString, string, strlen(string) +1);
-
-	// #TODO Review strdup
-	// return _strdup(string); // Careful of malloc, free()
-	return returnString;
+	return _strdup(string);
 }
 
 const char* CombineStrings(const char* a, const char* b) // #TODO Review const return value

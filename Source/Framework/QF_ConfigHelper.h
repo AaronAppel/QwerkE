@@ -5,35 +5,7 @@
 
 #include "QF_eKeys.h"
 
-#define ALLOW_SERILIZATION_OF_PRIVATE_MEMBERS friend class MyClass;
-
 namespace QwerkE {
-
-    // #TESTING - Start
-
-    // #TODO Look at inheritance structure and how to handle parent values.
-    // Will need to know what type I have, and if that type has a parent.
-    // May need to add a parent type reference to the reflection type info of child classes.
-    // Also, look at a way to mark child or parent values so they are only considered depending
-    // on the type we are currently working with.
-
-    class PrivateData
-    {
-        ALLOW_SERILIZATION_OF_PRIVATE_MEMBERS
-    private:
-        bool QuickLoad = true;
-        int MaxConcurrentThreadCount = 10;
-    };
-
-    class MyClass
-    {
-    private:
-        void ProcessData(PrivateData& pvtData)
-        {
-            pvtData.MaxConcurrentThreadCount += 1;
-        }
-    };
-    // #TESTING - End
 
     struct FrameworkData
     {
@@ -62,9 +34,9 @@ namespace QwerkE {
 
     struct Systems
     {
-        bool AudioEnabled = true;
-        bool PhysicsEnabled = true;
-        bool NetworkingEnabled = true;
+        bool AudioEnabled = false;
+        bool PhysicsEnabled = false;
+        bool NetworkingEnabled = false;
         bool ConsoleOutputWindowEnabled = true;
     };
 
@@ -90,21 +62,6 @@ namespace QwerkE {
 
     struct ConfigData
     {
-        // ConfigData() {};
-        // ConfigData(Libraries l, Scenes sc, SceneSettings ss, Systems sy)
-        // {
-        //     libraries = l;
-        //     scenes = sc;
-        //     sceneSettings = ss;
-        //     systems = sy;
-        // }
-
-        // #TODO Look at auto reading and writing values. Get a json root object and search through members of this class by
-        // type name, and look and child types to assign data.
-        // for (ConfigData::Types)
-        //     for (Type::Values)
-        //         Value = file.Value;
-
         FrameworkData frameworkData;
         Libraries libraries;
         ScenesData scenesData;

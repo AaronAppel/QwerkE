@@ -23,10 +23,6 @@
 
 #include "QE_MaterialEditor.h"
 
-
-#define RTL_NUMBER_OF_V1(A) (sizeof(A)/sizeof((A)[0]))
-#define sizeofchar(A) sizeof(A)-1
-
 namespace QwerkE {
 
     ResourceViewer::ResourceViewer()
@@ -262,7 +258,6 @@ namespace QwerkE {
             //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetModel(p.second);
             //((RenderComponent*)m_AssetTagPlane->GetComponent(Component_Render))->SetColour(vec4(128, 128, 128, 255)); // #TODO use model asset tag color
 
-            // draw scene
             m_ViewerScene->Draw();
 
             // GLuint tempTexture;
@@ -270,7 +265,6 @@ namespace QwerkE {
             // glBindTexture(GL_TEXTURE_2D, tempTexture);
             // glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1280, 720, 0, 0, 1);
             // glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, 1280, 720);
-
 
             m_FBO->UnBind();
 

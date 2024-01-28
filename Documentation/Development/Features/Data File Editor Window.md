@@ -1,0 +1,3 @@
+Give users an in-editor window to edit text. This could be extended with syntax highlighting, buttons etc. The idea is that users shouldn't need to go and find settings/config files in file explorer, navigate to a JSON value, and *then* change a boolean from true to false. Settings should be modifiable in editor.
+
+Scene data is tough to handle and for now will just be modified by editing objects in a scene graph and then saving the graph to a scene file.

@@ -16,9 +16,9 @@
 			"MaxEnabledScenes":	1
 		}],
 	"Systems":	[{
-			"AudioEnabled":	true,
-			"PhysicsEnabled":	true,
-			"NetworkingEnabled":	true,
+			"AudioEnabled":	false,
+			"PhysicsEnabled":	false,
+			"NetworkingEnabled":	false,
 			"ConsoleOutputWindowEnabled":	true
 		}],
 	"EngineSettings":	[{

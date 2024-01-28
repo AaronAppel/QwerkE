@@ -1,9 +1,0 @@
-### #TODO Review old file
-
-http://hightalestudios.com/wordpress/wp-content/uploads/2017/03/jaKUP.png
-http://www.hpquest.com/DOSP/Architecture.png
-http://www.groebelsloot.com/wp-content/uploads/2015/11/gameengine.png
-http://www.gameenginebook.com/img/fig-runtime-arch.jpg
-
-Git submodules
-https://stackoverflow.com/questions/18770545/why-is-my-git-submodule-head-detached-from-master

@@ -1,4 +1,7 @@
 {
+	"Scenes":	[{
+			"0":	"Test.qscene"
+		}],
 	"Controls": [{
 		"Camera_MoveForward": "W",
 		"Camera_MoveBackward": "S",

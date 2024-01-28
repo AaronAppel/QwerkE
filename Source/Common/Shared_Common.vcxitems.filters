@@ -67,6 +67,9 @@
     <Filter Include="Libraries\FlatheadGames">
       <UniqueIdentifier>{ec1481a5-8a58-4764-a150-d7f2158af9b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\Mirror">
+      <UniqueIdentifier>{35a8dc74-6409-4ff1-802c-6fc610802586}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp">
@@ -115,6 +118,12 @@
       <Filter>Libraries\FlatheadGames</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_Memory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.cpp">
+      <Filter>Libraries\Mirror</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Framework\QF_Mirror.cpp">
+      <Filter>Libraries\Mirror</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h">
@@ -2607,8 +2616,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.h">
       <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Reflection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\MirrorTypes.h">
+      <Filter>Libraries\Mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.h">
+      <Filter>Libraries\Mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Reflection.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">

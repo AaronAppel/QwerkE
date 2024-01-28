@@ -77,7 +77,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsWorld.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PrintFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_ReflectionTypes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderRoutine.cpp" />
@@ -187,7 +186,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Profile.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerKE_eKeys.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ReflectionTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Renderable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_RenderComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Renderer.h" />

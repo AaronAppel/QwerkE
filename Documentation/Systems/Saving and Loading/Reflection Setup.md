@@ -44,5 +44,8 @@ namespace QwerkE
 ```
 
 #TODO Note the need for "typedef bool Bool;", and what issue solves as a work around. Also note the types are defined in a .cpp to avoid injecting using/typedefs into other files through a header.
+
+#TODO Support private members for serialization. Could use friend class approach :
+https://www.geeksforgeeks.org/friend-class-function-cpp/
 ## Limitations
 The macros for generating the serialization type code cannot see protected or private level fields (currently). This means only public fields, i.e. structs are supported for serialization, as of now.

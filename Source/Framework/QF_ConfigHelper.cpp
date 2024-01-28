@@ -1,8 +1,7 @@
 #include "QF_ConfigHelper.h"
 
 #include "Libraries/cJSON/QC_cJSON.h"
-
-#include "QC_Reflection.h"
+#include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Defines.h"
 #include "QF_Input.h"
@@ -29,36 +28,36 @@ namespace QwerkE {
             return;
         }
 
-        const Reflection::ClassInfo* configDataClassInfo = Reflection::GetClass<ConfigData>();
+        const Mirror::ClassInfo* configDataClassInfo = Mirror::InfoForClass<ConfigData>();
         for (size_t i = 0; i < configDataClassInfo->fields.size(); i++)
         {
-            Reflection::Field configDataField = configDataClassInfo->fields.at(i);
+            Mirror::Field configDataField = configDataClassInfo->fields.at(i);
             if (!configDataField.type)
                 break; // #NOTE Future fields will also have null types
 
             switch (configDataField.type->enumType)
             {
-            case ReflectionType::FrameworkData:
-                Serialization::DeserializeJsonObject<FrameworkData>(GetItemFromRootByKey(root, TYPENAME_TO_STR(FrameworkData)), m_ConfigData.frameworkData);
+            case MirrorTypes::FrameworkData:
+                Serialization::DeserializeJsonObject<FrameworkData>(GetItemFromRootByKey(root, MIRROR_TO_STR(FrameworkData)), m_ConfigData.frameworkData);
                 break;
 
-            case ReflectionType::Libraries:
+            case MirrorTypes::Libraries:
                 Serialization::DeserializeObjectByTypeKey<Libraries>(root, m_ConfigData.libraries);
                 break;
 
-            case ReflectionType::ScenesData:
+            case MirrorTypes::ScenesData:
                 Serialization::DeserializeObjectByTypeKey<ScenesData>(root, m_ConfigData.scenesData);
                 break;
 
-            case ReflectionType::SceneSettings:
+            case MirrorTypes::SceneSettings:
                 Serialization::DeserializeObjectByTypeKey<SceneSettings>(root, m_ConfigData.sceneSettings);
                 break;
 
-            case ReflectionType::Systems:
+            case MirrorTypes::Systems:
                 Serialization::DeserializeObjectByTypeKey<Systems>(root, m_ConfigData.systems);
                 break;
 
-            case ReflectionType::EngineSettings:
+            case MirrorTypes::EngineSettings:
                 Serialization::DeserializeObjectByTypeKey<EngineSettings>(root, m_ConfigData.engineSettings);
                 break;
 
@@ -80,16 +79,16 @@ namespace QwerkE {
             return;
         }
 
-        const Reflection::ClassInfo* userDataClassInfo = Reflection::GetClass<UserData>();
+        const Mirror::ClassInfo* userDataClassInfo = Mirror::InfoForClass<UserData>();
         for (size_t i = 0; i < userDataClassInfo->fields.size(); i++)
         {
-            Reflection::Field userDataField = userDataClassInfo->fields.at(i);
+            Mirror::Field userDataField = userDataClassInfo->fields.at(i);
             if (!userDataField.type)
                 break;
 
             switch (userDataField.type->enumType)
             {
-            case ReflectionType::Controls:
+            case MirrorTypes::Controls:
                 Serialization::DeserializeObjectByTypeKey<Controls>(root, m_UserData.controls);
                 break;
 
@@ -112,36 +111,36 @@ namespace QwerkE {
     {
         cJSON* jsonRoot = CreateObject();
 
-        const Reflection::ClassInfo* configDataClassInfo = Reflection::GetClass<ConfigData>();
+        const Mirror::ClassInfo* configDataClassInfo = Mirror::InfoForClass<ConfigData>();
         for (size_t i = 0; i < configDataClassInfo->fields.size(); i++)
         {
-            Reflection::Field userDataField = configDataClassInfo->fields.at(i);
+            Mirror::Field userDataField = configDataClassInfo->fields.at(i);
             if (!userDataField.type)
                 break;
 
             switch (userDataField.type->enumType)
             {
-            case ReflectionType::FrameworkData:
+            case MirrorTypes::FrameworkData:
                 Serialization::SerializeObject<FrameworkData>(jsonRoot, m_ConfigData.frameworkData);
                 break;
 
-            case ReflectionType::Libraries:
+            case MirrorTypes::Libraries:
                 Serialization::SerializeObject<Libraries>(jsonRoot, m_ConfigData.libraries);
                 break;
 
-            case ReflectionType::ScenesData:
+            case MirrorTypes::ScenesData:
                 Serialization::SerializeObject<ScenesData>(jsonRoot, m_ConfigData.scenesData);
                 break;
 
-            case ReflectionType::SceneSettings:
+            case MirrorTypes::SceneSettings:
                 Serialization::SerializeObject<SceneSettings>(jsonRoot, m_ConfigData.sceneSettings);
                 break;
 
-            case ReflectionType::Systems:
+            case MirrorTypes::Systems:
                 Serialization::SerializeObject<Systems>(jsonRoot, m_ConfigData.systems);
                 break;
 
-            case ReflectionType::EngineSettings:
+            case MirrorTypes::EngineSettings:
                 Serialization::SerializeObject<EngineSettings>(jsonRoot, m_ConfigData.engineSettings);
                 break;
 
@@ -159,16 +158,16 @@ namespace QwerkE {
     {
         cJSON* jsonRoot = CreateObject();
 
-        const Reflection::ClassInfo* userDataClassInfo = Reflection::GetClass<UserData>();
+        const Mirror::ClassInfo* userDataClassInfo = Mirror::InfoForClass<UserData>();
         for (size_t i = 0; i < userDataClassInfo->fields.size(); i++)
         {
-            Reflection::Field userDataField = userDataClassInfo->fields.at(i);
+            Mirror::Field userDataField = userDataClassInfo->fields.at(i);
             if (!userDataField.type)
                 break;
 
             switch (userDataField.type->enumType)
             {
-            case ReflectionType::Controls:
+            case MirrorTypes::Controls:
                 Serialization::SerializeObject<Controls>(jsonRoot, m_UserData.controls);
                 break;
 

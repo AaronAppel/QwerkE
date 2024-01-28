@@ -1,3 +1,4 @@
+#include "QF_Serialization.h"
 
 #include "Libraries/cJSON/QC_cJSON.h"
 
@@ -13,14 +14,15 @@ namespace QwerkE {
 
     namespace Serialization
     {
-
 #if _WIN32
+        // *PINT32 basetsd.h
         typedef INT32 PlatformPointer; // #TODO Handle pointer size on different systems better
 #elif _WIN64
         typedef INT64 PlatformPointer;
 #pragma warning "Implement 64 bit support!"
 #endif
-        void DeserializeJsonString(const cJSON* jsonObj, const Reflection::Field& field, void* obj)
+
+        void DeserializeJsonString(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
         {
             // #TODO Worry about the null terminating character '\0'
             // #TODO Handle case where target/strPointerAddress is null or empty
@@ -33,7 +35,7 @@ namespace QwerkE {
 
             switch (field.type->enumType)
             {
-            case ReflectionType::r_string:
+            case MirrorTypes::m_string:
             {
                 size_t smallerSize = strlen(jsonObj->valuestring);
 
@@ -51,7 +53,7 @@ namespace QwerkE {
             }
             break;
 
-            case ReflectionType::r_char:
+            case MirrorTypes::m_char:
             {
                 jsonObj->valuestring;
                 void* fieldAddress = (char*)obj + field.offset;
@@ -59,8 +61,8 @@ namespace QwerkE {
             }
             break;
 
-            case ReflectionType::r_charPtr:
-            case ReflectionType::r_constCharPtr:
+            case MirrorTypes::m_charPtr:
+            case MirrorTypes::m_constCharPtr:
             {
                 // #TODO Validate field.type->size
                 PlatformPointer* writeAddress = (PlatformPointer*)((char*)obj + field.offset);
@@ -75,7 +77,7 @@ namespace QwerkE {
             }
             break;
 
-            case ReflectionType::eKeys: // #TODO Consider using a number value instead of a string
+            case MirrorTypes::eKeys: // #TODO Consider using a number value instead of a string
             {
                 const char result = jsonObj->valuestring[0];
                 if (field.type->size >= sizeof(const char))
@@ -96,7 +98,7 @@ namespace QwerkE {
             }
         }
 
-        void DeserializeJsonNumber(const cJSON* jsonObj, const Reflection::Field& field, void* obj)
+        void DeserializeJsonNumber(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
         {
             if (!jsonObj || (jsonObj->type == cJSON_String) || (jsonObj->type == cJSON_NULL) || !obj)
             {
@@ -106,19 +108,19 @@ namespace QwerkE {
 
             switch (field.type->enumType)
             {
-            case ReflectionType::r_int8_t:
-            case ReflectionType::r_int16_t:
-            case ReflectionType::r_int32_t:
-            case ReflectionType::r_int64_t:
-            case ReflectionType::r_uint8_t:
-            case ReflectionType::r_uint16_t:
-            case ReflectionType::r_uint32_t:
-            case ReflectionType::r_uint64_t:
-            case ReflectionType::r_int:
-            case ReflectionType::r_bool:
-            case ReflectionType::r_float:
-            case ReflectionType::r_double:
-            // case ReflectionType::eKeys: // #TODO Transition to use a number instead of a string
+            case MirrorTypes::m_int8_t:
+            case MirrorTypes::m_int16_t:
+            case MirrorTypes::m_int32_t:
+            case MirrorTypes::m_int64_t:
+            case MirrorTypes::m_uint8_t:
+            case MirrorTypes::m_uint16_t:
+            case MirrorTypes::m_uint32_t:
+            case MirrorTypes::m_uint64_t:
+            case MirrorTypes::m_int:
+            case MirrorTypes::m_bool:
+            case MirrorTypes::m_float:
+            case MirrorTypes::m_double:
+            // case MirrorTypes::eKeys: // #TODO Transition to use a number instead of a string
                 {
                     // #TODO Review writing too much memory, and alignment (right vs left, big vs little endian)
                     size_t smallerSize = sizeof(jsonObj->valueint); // #TODO If source is smaller, should the strPointerAddress be offset further?
@@ -142,24 +144,26 @@ namespace QwerkE {
             }
         }
 
-        void DeserializeJsonObject(const cJSON* objJson, const Reflection::ClassInfo* objClassInfo, void* obj)
+        void DeserializeJsonObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
         {
-            if (!objJson)
             {
-                LOG_ERROR("{0} {1} is null!", __FUNCTION__, VARNAME_TO_STR(objJson));
-                return;
-            }
+                if (!objJson)
+                {
+                    LOG_ERROR("{0} {1} is null!", __FUNCTION__, VARNAME_TO_STR(objJson));
+                    return;
+                }
 
-            if (!objClassInfo)
-            {
-                LOG_ERROR("{0} Class info serialization error!", __FUNCTION__);
-                return;
-            }
+                if (!objClassInfo)
+                {
+                    LOG_ERROR("{0} Class info serialization error!", __FUNCTION__);
+                    return;
+                }
 
-            if (!obj)
-            {
-                LOG_ERROR("{0} object reference {1} is null!", __FUNCTION__, VARNAME_TO_STR(obj));
-                return;
+                if (!obj)
+                {
+                    LOG_ERROR("{0} object reference {1} is null!", __FUNCTION__, VARNAME_TO_STR(obj));
+                    return;
+                }
             }
 
             // #TODO O(n^2) complexity is high. Iterate to improve performance
@@ -171,7 +175,7 @@ namespace QwerkE {
 
                 for (size_t i = 0; i < objClassInfo->fields.size(); i++)
                 {
-                    const Reflection::Field& field = objClassInfo->fields[i];
+                    const Mirror::Field& field = objClassInfo->fields[i];
 
                     if (!field.type)
                         break; // #TODO Review #NOTE Break early if fields become null (and future values are null) to save iterations
@@ -202,7 +206,7 @@ namespace QwerkE {
             }
         }
 
-        void SerializeJsonObject(cJSON* objJson, const Reflection::ClassInfo* objClassInfo, void* obj)
+        void SerializeJsonObject(cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
         {
             if (!objJson || !objClassInfo || !obj)
             {
@@ -212,30 +216,30 @@ namespace QwerkE {
 
             for (size_t i = 0; i < objClassInfo->fields.size(); i++)
             {
-                const Reflection::Field& field = objClassInfo->fields[i];
+                const Mirror::Field& field = objClassInfo->fields[i];
 
                 if (!field.type)
                     break; // #TODO Review #NOTE Break early if fields become null (and future values are null) to save iterations
 
                 switch (field.type->enumType)
                 {
-                case ReflectionType::r_string:
+                case MirrorTypes::m_string:
                     {
                         const std::string* fieldAddress = (const std::string*)((char*)obj + field.offset);
                         AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress->c_str())); // #TODO cJSON_AddItemToArray
                     }
                     break;
 
-                case ReflectionType::r_charPtr:
-                case ReflectionType::r_constCharPtr:
+                case MirrorTypes::m_charPtr:
+                case MirrorTypes::m_constCharPtr:
                     {
                         const char* fieldAddress = *(const char**)((char*)obj + field.offset);
                         AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress)); // #TODO cJSON_AddItemToArray
                     }
                     break;
 
-                case ReflectionType::r_char:
-                case ReflectionType::eKeys: // #TODO Consider using a number value instead of a string
+                case MirrorTypes::m_char:
+                case MirrorTypes::eKeys: // #TODO Consider using a number value instead of a string
                     // SerializeToJsonString(objJson, field, obj);
                     {
                         char* stringAddress = (char*)obj + field.offset;
@@ -243,25 +247,25 @@ namespace QwerkE {
                     }
                     break;
 
-                case ReflectionType::r_bool:
+                case MirrorTypes::m_bool:
                     {
-                        int* boolAddress = (int*)((char*)obj + field.offset);
+                        bool* boolAddress = (bool*)((char*)obj + field.offset);
                         AddItemToArray(objJson, CreateBool(field.name.c_str(), *boolAddress));
                     }
                     break;
 
-                case ReflectionType::r_int8_t:
-                case ReflectionType::r_int16_t:
-                case ReflectionType::r_int32_t:
-                case ReflectionType::r_int64_t:
-                case ReflectionType::r_uint8_t:
-                case ReflectionType::r_uint16_t:
-                case ReflectionType::r_uint32_t:
-                case ReflectionType::r_uint64_t:
-                case ReflectionType::r_int:
-                case ReflectionType::r_float:
-                case ReflectionType::r_double:
-                    // case ReflectionType::eKeys: // #TODO Transition to use a number instead of a string
+                case MirrorTypes::m_int8_t:
+                case MirrorTypes::m_int16_t:
+                case MirrorTypes::m_int32_t:
+                case MirrorTypes::m_int64_t:
+                case MirrorTypes::m_uint8_t:
+                case MirrorTypes::m_uint16_t:
+                case MirrorTypes::m_uint32_t:
+                case MirrorTypes::m_uint64_t:
+                case MirrorTypes::m_int:
+                case MirrorTypes::m_float:
+                case MirrorTypes::m_double:
+                    // case MirrorTypes::eKeys: // #TODO Transition to use a number instead of a string
                     // SerializeToJsonNumber(objJson, field, obj);
                     {
                         int* numberAddress = (int*)((char*)obj + field.offset); // #TODO Support more type sizes

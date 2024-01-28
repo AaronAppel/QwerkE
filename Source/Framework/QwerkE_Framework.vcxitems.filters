@@ -388,9 +388,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_ReflectionTypes.cpp">
-      <Filter>DataTypes</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -712,9 +709,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ForcedIncludes.h">
       <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ReflectionTypes.h">
-      <Filter>DataTypes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
       <Filter>Core</Filter>

@@ -4,7 +4,7 @@
 
 #include "Libraries/Enum/QC_enum.h"
 
-#pragma warning( disable : 26437 )
+#pragma warning( disable : 26437 ) // #TODO Switch to use push and pop
 #pragma warning( disable : 26451 )
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 26498 )
@@ -103,3 +103,6 @@
 #include "Libraries/Bullet3/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #pragma warning( default : 4099 )
 #pragma warning( default : 26495 )
+
+#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MirrorTypes.h"
