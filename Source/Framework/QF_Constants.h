@@ -5,9 +5,6 @@
 // const char* gc_DefaultCharPtrValue = "Uninitialized";
 #define gc_DefaultCharPtrValue "Uninitialized" // TODO: Move to a better place
 
-// Window settings
-const int gc_DefaultWindowWidth = 1280, gc_DefaultWindowHeight = 720;
-
 // Default global camera values
 const float gc_YAW = -90.0f; // #TODO Include the word "Default" in variable names
 const float gc_PITCH = 0.0f;

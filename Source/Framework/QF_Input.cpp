@@ -5,7 +5,6 @@
 #include "QF_KeyboardExtApi.h"
 #include "QF_Enums.h"
 #include "QF_Window.h"
-#include "QF_Windows.h"
 
 namespace QwerkE {
 
@@ -29,8 +28,8 @@ namespace QwerkE {
         memset(m_KeyCodex, 0, GLFW_KEY_LAST); // set values to 0
 
         SetupGLFWKeyCodex();
-        SetupCallbacks((GLFWwindow*)Windows::GetWindow(0)->GetContext());
-#endif // GLFW3
+        SetupCallbacks((GLFWwindow*)Window::GetContext());
+#endif
 
         Keyboard* keyboard = new Keyboard(eInputDeviceTypes::Keyboard_Device0);
         Mouse* mouse = new Mouse(eInputDeviceTypes::Mouse_Device0);

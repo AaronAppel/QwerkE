@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "mode": "source",
                 "source": false
               }
@@ -79,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md"
+                "file": "ZZ Shared Vault Files ❗/Watched.md"
               }
             }
           }
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -162,8 +162,12 @@
   },
   "active": "4c3749c9271c261a",
   "lastOpenFiles": [
-    "Development/Feature Tickets/F0005 - Null GameObject Data.md",
+    "ZZ Shared Vault Files ❗/To Watch.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
+    "ZZ Shared Vault Files ❗/0 Overhead principle.md",
+    "0 Overhead principle.md",
     "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
+    "Development/Feature Tickets/F0005 - Null GameObject Data.md",
     "Development/Bug Tickets",
     "Development/Feature Tickets/F0004 - GUIDs.md",
     "Development/Feature Tickets/F0001 - Reflection.md",
@@ -174,9 +178,7 @@
     "Development/Feature Tickets",
     "Development/Features/Scenes.md",
     "ZZ Shared Vault Files ❗/New Project Checklist.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
-    "ZZ Shared Vault Files ❗/To Watch.md",
     "Solution Configuration/Library Configuration.md",
     "ZZ Shared Vault Files ❗/To Read.md",
     "Systems/Building.md",
@@ -195,8 +197,6 @@
     "Z. To Cleanup/Old Notes.md",
     "Pointer Manipulation.md",
     "Systems/Saving and Loading/Reflection Setup.md",
-    "QwerkE Standards/Enums.md",
-    "Development/Features/0. Features Kanban.md",
     "Development/Features/Resource Management",
     "Systems/Untitled",
     "Systems/Window",

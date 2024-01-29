@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "QC_Vector.h"
 
 namespace QwerkE {
@@ -7,32 +9,26 @@ namespace QwerkE {
     class Window
     {
     public:
-        Window(int windowWidth, int windowHeight, const char* windowTitle);
-        virtual ~Window() = default;
+        static void Initialize();
+        static void Shutdown();
 
-        void SetResolution(vec2 resolution);
-        const vec2& GetResolution() const { return m_Resolution; }
-        const vec2& GetAspectRatio() const { return m_AspectRatio; }
+        static void Render();
+        static void SwapBuffers(); // #TODO Only for loading font currently, so try to remove
 
-        virtual void* GetContext() = 0;
+        static void NewFrame();
 
-        virtual void Render() = 0;
+        static void RequestClose();
+        static bool CloseRequested();
 
-        virtual void SwapBuffers() = 0;
+        static vec2 GetResolution();
+        static vec2 GetAspectRatio();
 
-        virtual void NewFrame() = 0;
+        static void* GetContext();
 
-        void SetClosing(bool closing) { m_IsClosing = closing; };
-        bool IsClosing() { return m_IsClosing; };
+    private:
+        Window() = default;
 
-    protected:
-        vec2 m_Resolution = vec2(1600.f, 900.f);
-        vec2 m_AspectRatio = vec2(16.f, 9.f);
-
-        bool m_IsFocused = false;
-        bool m_IsClosing = false;
-
-        const char* m_WindowTitle = "null";
+        static unsigned char m_lastFocusedWindowIndex;
     };
 
 }

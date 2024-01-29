@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/FlatheadGames/MyMatrix.h"
 
@@ -10,6 +12,18 @@
 const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis and move to a better defines file
 
 namespace QwerkE {
+
+    enum eCamera_Movement : std::uint8_t
+    {
+        FORWARD = 0,
+        BACKWARD,
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        RROTATE,
+        LROTATE
+    };
 
     class ComponentCamera : public Component
     {
@@ -46,11 +60,11 @@ namespace QwerkE {
         void SetViewportSize(vec2 size) { m_ViewportSize = size; UpdateCameraVectors(); };
 
     protected:
-        // private constructors
         ComponentCamera(vec3 position = vec3::Zero(), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
         ComponentCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
-        // Camera Attributes
+        void UpdateParentPosition(vec3 m_Position);
+
         eCamType m_Type = CamType_NULL;
 
         vec3 m_Position = vec3(0, 0, 0);
@@ -58,30 +72,22 @@ namespace QwerkE {
         vec3 m_CamUp = g_WORLDUP;
         vec3 m_Right = vec3(1, 0, 0);
 
-        float m_CAMNEAR = 0.01f; // Near and far frustum values
+        float m_CAMNEAR = 0.01f;
         float m_CAMFAR = 1000.0f;
 
-        // Eular Angles
         float m_Yaw = gc_YAW;
         float m_Pitch = gc_PITCH;
-        // Camera options
-        float m_ForwardSpeed = gc_SPEED;
+
         float m_MovementSpeed = gc_SPEED;
         float m_MouseSensitivity = gc_SENSITIVTY;
         float m_Zoom = gc_ZOOM;
 
         vec3 m_TargetPosition = m_Position + m_Forward * 1.5f;
 
-        // Camera Control Behaviour
-        bool m_LookAt = false;
-
         vec2 m_ViewportSize = vec2(1280, 720);
 
-        // matrices
         mat4* m_ViewMatrix = new mat4();
         mat4* m_ProjMatrix = new mat4();
-
-        void UpdateParentPosition(vec3 m_Position);
     };
 
 }

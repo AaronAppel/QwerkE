@@ -8,9 +8,9 @@ namespace QwerkE {
 
 	namespace Framework
 	{
-		eEngineMessage Startup();
-		eEngineMessage Startup(const std::string configFilePath);
-		eEngineMessage TearDown();
+		eOperationResult Startup();
+		eOperationResult Startup(const std::string configFilePath);
+		eOperationResult TearDown();
 
 		void Run();
 		void Stop();

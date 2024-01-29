@@ -48,7 +48,7 @@ _61,_62,_63,N,...) N
 
 // const char* name = nullptr;
 // const char* material = nullptr;
-// EarlyReturnIfNull(eEngineMessage::_QFailure, name, material);
+// EarlyReturnIfNull(eOperationResult::Failure, name, material);
 
 bool AnArgumentWasNull(int n_args, ...); // #TODO Implement an early return with logging null check helper
 

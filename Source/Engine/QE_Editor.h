@@ -4,7 +4,7 @@ namespace QwerkE {
 
     class EntityEditor;
 
-    // #FEATURE F0002 obsidian://open?vault=Documentation&file=Development%2FFeatures%2FFeature%20Tickets%2FF0002
+    // #FEATURE F0002
 
     class Editor
     {

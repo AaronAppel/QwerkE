@@ -30,13 +30,11 @@
 #include "QF_ShaderFactory.h"
 #include "QF_Jobs.h"
 #include "QF_Network.h"
-#include "QF_glfw_Window.h"
 #include "QF_Time.h"
 #include "QF_Log.h"
 #include "QF_ConfigHelper.h"
 #include "QF_Scenes.h"
 #include "QF_Window.h"
-#include "QF_Windows.h"
 
 #include "QE_Defines.h"
 #include "QE_Editor.h"
@@ -46,9 +44,8 @@ namespace QwerkE {
 
 	namespace Engine
     {
-        static bool s_IsRunning = false;
 
-		QwerkE::eEngineMessage Engine::Run(const std::map<const char*, const char*>& programArgPairs)
+		QwerkE::eOperationResult Engine::Run(const std::map<const char*, const char*>& programArgPairs)
         {
 			Log::Print("-- Qwerk Engine %f %s", QWERKE_VERSION, "--\n");
 
@@ -71,11 +68,11 @@ namespace QwerkE {
 				// Might want to create another function for the game loop and
 				// leave Run() smaller and abstracted from the functionality.
 
-				if (Framework::Startup(ConfigsFolderPath(null_config)) == eEngineMessage::_QFailure)
+				if (Framework::Startup(ConfigsFolderPath(null_config)) == eOperationResult::Failure)
 				{
 					LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
 					Instrumentor::Get().EndSession();
-					return eEngineMessage::_QFailure;
+					return eOperationResult::Failure;
 				}
 
 				if (programArgPairs.find(key_UserName) != programArgPairs.end())
@@ -101,9 +98,8 @@ namespace QwerkE {
 			double timeUntilNextFrame = 0.0;
 
 			Time::InitStartTime();
-			s_IsRunning = true;
 
-			while (s_IsRunning)
+			while (Window::CloseRequested() == false)
 			{
 				if (timeUntilNextFrame >= FPS_MAX_DELTA)
 				{
@@ -131,19 +127,20 @@ namespace QwerkE {
 			Framework::TearDown();
 			Instrumentor::Get().EndSession();
 
-			return QwerkE::eEngineMessage::_QSuccess;
+			return QwerkE::eOperationResult::Success;
 		}
 
 		void Engine::Stop()
 		{
 			Framework::Stop();
-			s_IsRunning = false;
 		}
 
 		void Engine::NewFrame()
 		{
 			PROFILE_SCOPE("Engine NewFrame");
+
 			Framework::NewFrame();
+
 			Editor::NewFrame();
 		}
 

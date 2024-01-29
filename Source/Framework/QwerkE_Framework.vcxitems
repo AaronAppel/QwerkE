@@ -45,7 +45,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_GameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_glfw_AssignGLFWKeys.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_glfw_InputCallBacks.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_glfw_Window.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_GraphicsHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Input.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_InputDevice.cpp" />
@@ -97,7 +96,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_VectorMathHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ViewerScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Window.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Windows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h" />
@@ -135,7 +133,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FreeCameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_GameObject.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_glfw_Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_GraphicsHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_GraphicsManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Graphics_Header.h" />
@@ -203,6 +200,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_VectorMathHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ViewerScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Window.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Windows.h" />
   </ItemGroup>
 </Project>

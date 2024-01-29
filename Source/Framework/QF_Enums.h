@@ -22,18 +22,7 @@ namespace QwerkE
         Mouse_Device3,
         Mouse_Max,
 
-        GamePad_Min,
-        GamePad_Device0,
-        GamePad_Device1,
-        GamePad_Device2,
-        GamePad_Device3,
-        GamePad_Device4,
-        GamePad_Device5,
-        GamePad_Device6,
-        GamePad_Device7,
-        GamePad_Max,
-
-        Max_Device
+        InputDeviceTypes_Max
     };
 
     enum class eMaterialMaps : std::uint8_t
@@ -59,47 +48,11 @@ namespace QwerkE
         MatMap_Null
     };
 
-    // #TODO Move engine enums to their own engine specific file
-    enum class eEngineMessage : std::uint8_t
+    enum eOperationResult : std::uint8_t
     {
-        _QSuccess = 0,
-        _QFailure
-    };
-
-    enum class eEngineServices : std::uint16_t // TODO: Rename engine to framework
-    {
-        // Resource_Manager = 0,
-        // Input_Manager,
-        // Audio_Manager,
-        // Data_Manager,
-        // Graphics (OpenGLManager)
-        // Event_System,
-        // Scene_Manager,
-        // Factory_Entity,
-        // Factory_Mesh,
-        // Factory_Shader,
-        // Physics,
-        // MessageManager,
-        // Renderer,
-        // Jobs,
-        // Windows,
-        // Network,
-        // FileSystem,
-
-        Service_Max
-    };
-
-    // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
-    enum eCamera_Movement : std::uint8_t
-    {
-        FORWARD = 0,
-        BACKWARD,
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN,
-        RROTATE,
-        LROTATE
+        Undefined = 0,
+        Success,
+        Failure
     };
 
     enum eComponentTags : std::uint8_t

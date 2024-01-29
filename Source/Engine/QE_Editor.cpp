@@ -1,5 +1,7 @@
 #include "QE_Editor.h"
 
+#include "Libraries/imgui/QC_imgui.h"
+
 #include "QF_Defines.h"
 #include "QF_Profile.h"
 #include "QF_Network.h"

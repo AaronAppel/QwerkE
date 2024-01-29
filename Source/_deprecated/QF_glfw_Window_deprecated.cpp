@@ -5,6 +5,7 @@
 #include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_CallbackFunctions.h"
+#include "QF_Debug.h"
 #include "QF_Window.h"
 #include "QF_Windows.h"
 
@@ -18,21 +19,11 @@ namespace QwerkE {
 
     glfw_Window::glfw_Window(int windowWidth, int windowHeight, const char* windowTitle) : Window(windowWidth, windowHeight, windowTitle)
     {
-        // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    // #ifdef __APPLE__
-        // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
-    // #endif
-
         m_Window = glfwCreateWindow(windowWidth, windowHeight, windowTitle, NULL, NULL);
-        assert(m_Window);
+        ASSERT(m_Window, "Error creating window!");
         glfwSwapInterval(0); // TODO: Add VSynch control and toggling
-        glfwMakeContextCurrent(m_Window);
         glfwFocusWindow(m_Window);
-        m_IsFocused = true;
-        SetupCallbacks(m_Window); // TODO: Window won't respond to clicking corner 'x'... sometimes?
+        SetupCallbacks(m_Window); // TODO: Window won't respond to clicking corner 'X'... sometimes?
         glfwSetWindowCloseCallback(m_Window, priv_close_callback);
 
         ImGui_ImplGlfw_InitForOpenGL(m_Window, false);
@@ -40,7 +31,7 @@ namespace QwerkE {
 
     glfw_Window::~glfw_Window()
     {
-        glfwWindowShouldClose(m_Window); // May have issues waiting so long to close s_Window. Try to call Close() when it is requested
+        glfwWindowShouldClose(m_Window);
         glfwDestroyWindow(m_Window);
     }
 

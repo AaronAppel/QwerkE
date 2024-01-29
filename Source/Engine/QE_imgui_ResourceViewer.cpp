@@ -20,6 +20,7 @@
 #include "QF_Resources.h"
 #include "QF_Audio.h"
 #include "QF_Factory.h"
+#include "QF_Window.h"
 
 #include "QE_MaterialEditor.h"
 
@@ -46,7 +47,8 @@ namespace QwerkE {
 
         m_ViewerScene->Initialize();
         m_ViewerScene->SetIsEnabled(true);
-        ((ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
+        ComponentCamera* camera = (ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera);
+        camera->SetViewportSize(Window::GetResolution());
 
         Scenes::AddScene(m_ViewerScene);
 

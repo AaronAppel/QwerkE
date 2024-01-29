@@ -292,9 +292,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_glfw_InputCallBacks.cpp">
       <Filter>Extended\GLFW</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_glfw_Window.cpp">
-      <Filter>Extended\GLFW</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssignWin32Keys.cpp">
       <Filter>Extended\GLFW</Filter>
     </ClCompile>
@@ -349,12 +346,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Time.cpp">
       <Filter>Core\Time</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Windows.cpp">
-      <Filter>Core\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Window.cpp">
-      <Filter>Core\Window</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
     </ClCompile>
@@ -375,6 +366,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Window.cpp">
+      <Filter>Core\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -572,9 +566,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.h">
       <Filter>Extended\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_glfw_Window.h">
-      <Filter>Extended\GLFW</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_b3_World.h">
       <Filter>Extended\Bullet3</Filter>
     </ClInclude>
@@ -635,12 +626,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Time.h">
       <Filter>Core\Time</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Windows.h">
-      <Filter>Core\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Window.h">
-      <Filter>Core\Window</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.h">
       <Filter>Core\Window</Filter>
     </ClInclude>
@@ -685,6 +670,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesInclude.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Window.h">
+      <Filter>Core\Window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

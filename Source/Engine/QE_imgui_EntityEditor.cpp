@@ -139,8 +139,8 @@ namespace QwerkE {
                             renderable.SetMaterial(Resources::GetMaterial(null_material));
                             renderable.SetShader(Resources::GetShaderProgram(null_shader));
                             renderable.SetMesh(Resources::GetMesh(null_mesh));
-                            static int uniqueId = 0; // #FEATURE F0004 obsidian://open?vault=Documentation&file=Development%2FFeatures%2FFeature%20Tickets%2FF0004
-                            // #FEATURE F0003 obsidian://open?vault=Documentation&file=Development%2FFeatures%2FFeature%20Tickets%2FF0003
+                            static int uniqueId = 0; // #FEATURE F0004
+                            // #FEATURE F0003
                             renderable.SetRenderableName(std::to_string(uniqueId++));
 
                             RenderComponent* rComp = (RenderComponent*)m_CurrentEntity->GetComponent(Component_Render);

@@ -8,9 +8,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EditComponent.h">
       <Filter>Editors</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QE_Editor.h">
-      <Filter>Editors</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EntityEditor.h">
       <Filter>Editors</Filter>
     </ClInclude>
@@ -33,6 +30,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.h">
       <Filter>ProgramArguments</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QE_Editor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ProgramArguments">
@@ -71,11 +69,9 @@
       <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_Engine.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QE_Editor.cpp">
-      <Filter>Editors</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.cpp">
       <Filter>ProgramArguments</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QE_Editor.cpp" />
   </ItemGroup>
 </Project>

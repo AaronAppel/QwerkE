@@ -10,7 +10,6 @@
 #include "QF_Scenes.h"
 #include "QF_FrameBufferObject.h"
 #include "QF_Window.h"
-#include "QF_Windows.h"
 
 #include "QE_Engine.h"
 #include "QE_Editor.h"
@@ -72,7 +71,7 @@ namespace QwerkE {
             ImVec2 imageSize = winSize;
             const float scalar = 7.63f;
             imageSize.x += winSize.x * scalar;
-            const vec2& aspectRatio = Windows::GetWindow(0)->GetAspectRatio();
+            const vec2& aspectRatio = Window::GetAspectRatio();
             imageSize = ImVec2(imageSize.x / aspectRatio.y, imageSize.x / aspectRatio.x);
 
             const float offset = 60.f;

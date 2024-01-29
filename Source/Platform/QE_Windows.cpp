@@ -19,8 +19,8 @@ int main(unsigned int argc, char **argv)
 
 	if (true) { OutputProgramPairsInfo_Windows(pairs); }
 
-	const QwerkE::eEngineMessage result = QwerkE::Engine::Run(pairs);
-	if (result != QwerkE::eEngineMessage::_QSuccess)
+	const QwerkE::eOperationResult result = QwerkE::Engine::Run(pairs);
+	if (result != QwerkE::eOperationResult::Success)
 	{
 		system("pause");
 	}

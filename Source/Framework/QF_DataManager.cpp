@@ -30,7 +30,7 @@
 
 namespace QwerkE {
 
-    eEngineMessage DataManager::SaveScene(Scene* scene, const char* fileDir)
+    eOperationResult DataManager::SaveScene(Scene* scene, const char* fileDir)
     {
         // #TODO Error checking
         cJSON* root = CreateObject();
@@ -68,24 +68,24 @@ namespace QwerkE {
         PrintRootObjectToFile(fileDir, root);
         LOG_INFO("DataManager: Scene file {0} saved", fileDir);
         ClosecJSONStream(root);
-        return eEngineMessage::_QSuccess;
+        return eOperationResult::Success;
     }
 
-    eEngineMessage DataManager::LoadScene(Scene* scenePath, const char* fileDir)
+    eOperationResult DataManager::LoadScene(Scene* scenePath, const char* fileDir)
     {
-        if (scenePath == nullptr) { return eEngineMessage::_QFailure; } // #TODO Load a null scenePath
+        if (scenePath == nullptr) { return eOperationResult::Failure; } // #TODO Load a null scenePath
 
         if (FileExists(fileDir) == false)
         {
             LOG_ERROR("DataManager: LoadScene() could not open file for reading.");
-            return eEngineMessage::_QFailure;
+            return eOperationResult::Failure;
         }
 
         cJSON* root = OpencJSONStream(fileDir);
         if (root == nullptr)
         {
             LOG_ERROR("DataManager: LoadScene() null root object.");
-            return eEngineMessage::_QFailure;
+            return eOperationResult::Failure;
         }
 
         scenePath->RemoveAllObjectsFromScene();
@@ -135,7 +135,7 @@ namespace QwerkE {
 
         ClosecJSONStream(root);
         LOG_INFO("DataManager: Scene file {0} loaded", fileDir);
-        return eEngineMessage::_QSuccess;
+        return eOperationResult::Success;
     }
 
     // Utility

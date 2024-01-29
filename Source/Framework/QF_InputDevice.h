@@ -29,7 +29,7 @@ namespace QwerkE {
 
         InputDevice(eInputDeviceTypes type) { m_DeviceType = type; }
 
-        eInputDeviceTypes m_DeviceType = eInputDeviceTypes::Max_Device;
+        eInputDeviceTypes m_DeviceType = eInputDeviceTypes::InputDeviceTypes_Max;
     };
 
 }

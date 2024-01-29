@@ -202,8 +202,8 @@ namespace QwerkE {
             return;
         }
 
-        eEngineMessage result = DataManager::LoadScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
-        if (result == eEngineMessage::_QSuccess)
+        eOperationResult result = DataManager::LoadScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
+        if (result == eOperationResult::Success)
         {
             LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
         }

@@ -6,7 +6,7 @@ namespace QwerkE {
 
     namespace Serialization
     {
-        // #FEATURE F0001 obsidian://open?vault=Documentation&file=Development%2FFeatures%2FFeature%20Tickets%2FF0001
+        // #FEATURE F0001
 
         void DeserializeJsonObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
 

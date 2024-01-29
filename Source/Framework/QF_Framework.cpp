@@ -12,7 +12,6 @@
 #include "QF_EventManager.h"
 #include "QF_Factory.h"
 #include "QF_FileSystem.h"
-#include "QF_glfw_Window.h"
 #include "QF_Graphics_Header.h"
 #include "QF_Input.h"
 #include "QF_Jobs.h"
@@ -27,21 +26,17 @@
 #include "QF_ShaderFactory.h"
 #include "QF_Time.h"
 #include "QF_Window.h"
-#include "QF_Windows.h"
 
 namespace QwerkE {
 
-    static Window* s_Window = nullptr;
-    static bool s_IsRunning = false;
-
 	namespace Framework
 	{
-		eEngineMessage Framework::Startup()
+		eOperationResult Framework::Startup()
 		{
 			return Startup(ConfigsFolderPath(null_config));
 		}
 
-		eEngineMessage Framework::Startup(const std::string configFilePath)
+		eOperationResult Framework::Startup(const std::string configFilePath)
 		{
 			// #TODO Load libraries dynamically. Need functions to load .dlls
 			// #TODO Try to reduce or avoid order dependency in system creation
@@ -54,8 +49,7 @@ namespace QwerkE {
 			const ConfigData& configData = ConfigHelper::GetConfigData();
 			const UserData& userData = ConfigHelper::GetUserData();
 
-			Windows::Initialize();
-			s_Window = Windows::GetWindow(0);
+			Window::Initialize();
 
             Input::Initialize();
 
@@ -72,9 +66,18 @@ namespace QwerkE {
 
 			Renderer::Initialize();
 			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.0f);
-			s_Window->SwapBuffers();
+			Window::SwapBuffers();
 
 			EventManager::Initialize();
+
+			if (configData.systems.PhysicsEnabled)
+			{
+				Physics::Initialize();
+			}
+			else
+			{
+				LOG_WARN("No physics system loaded.");
+			}
 
 			if (configData.systems.NetworkingEnabled)
 			{
@@ -89,44 +92,26 @@ namespace QwerkE {
 			// #TODO load scene later, like in Run() as it's more than just initializing
 			Scenes::Initialize(); // #TODO Investigate other system dependencies as there are likely several
 
-			if (configData.systems.PhysicsEnabled)
-			{
-				Physics::Initialize();
-			}
-			else
-			{
-				LOG_WARN("No physics system loaded.");
-			}
-
-			return eEngineMessage::_QSuccess;
+			return eOperationResult::Success;
 		}
 
-		eEngineMessage Framework::TearDown()
+		eOperationResult Framework::TearDown()
         {
             EventManager::Shutdown();
-			Windows::Shutdown();
+			Window::Shutdown();
 			Log::Shutdown();
-			return eEngineMessage::_QSuccess;
+			return eOperationResult::Success;
 		}
 
 		void Framework::Run()
         {
-            ASSERT(s_Window != nullptr, "Window not created! Check that Startup was called and returned successfully");
-
-			// #TODO check if(initialized) in case user defined simple API.
-			// Might want to create another function for the game loop and
-			// leave Run() smaller and abstracted from the functionality.
-			s_IsRunning = true;
-
-			int FPS_MAX = 120; // Maximum number of frames that can be made per second
+			int FPS_MAX = 120;
 			float FPS_MAX_DELTA = 1.0f / FPS_MAX;
 
 			Time::InitStartTime();
 
-			while (s_Window->IsClosing() == false)
+			while (Window::CloseRequested() == false)
 			{
-                /* Game Loop */
-
 				float deltaTime = Time::FrameDelta();
 
 				// if (deltaTime >= FPS_MAX_DELTA)
@@ -147,8 +132,7 @@ namespace QwerkE {
 
 		void Framework::Stop()
 		{
-			s_IsRunning = false;
-			s_Window->SetClosing(true);
+			Window::RequestClose();
 		}
 
 		void Framework::NewFrame()
@@ -156,7 +140,7 @@ namespace QwerkE {
 			Input::NewFrame();
 			EventManager::ProcessEvents(); // #TODO Review ordering
 			Renderer::NewFrame();
-			s_Window->NewFrame();
+			Window::NewFrame();
 		}
 
 		void Framework::Update(float deltatime)
@@ -174,12 +158,12 @@ namespace QwerkE {
 		void Framework::Draw()
 		{
 			Scenes::DrawCurrentScene();
-			Windows::Render();
+			Window::Render();
 		}
 
 		bool Framework::StillRunning()
 		{
-			return s_IsRunning;
+			return Window::CloseRequested() == false;
 		}
 	}
 }

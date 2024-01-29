@@ -17,7 +17,7 @@ namespace QwerkE {
     {
         eInputDeviceTypes deviceType = device->GetType();
 
-        if (deviceType > eInputDeviceTypes::Keyboard_Min&&
+        if (deviceType > eInputDeviceTypes::Keyboard_Min &&
             deviceType < eInputDeviceTypes::Keyboard_Max)
         {
             // Keyboard
@@ -186,13 +186,6 @@ namespace QwerkE {
             mouse->s_KeyCodex[GLFW_MOUSE_BUTTON_6] = eKeys_MouseButton6;
             mouse->s_KeyCodex[GLFW_MOUSE_BUTTON_7] = eKeys_MouseButton7;
             mouse->s_KeyCodex[GLFW_MOUSE_BUTTON_8] = eKeys_MouseButton8;
-        }
-        else if (deviceType > eInputDeviceTypes::GamePad_Min&&
-            deviceType < eInputDeviceTypes::GamePad_Max)
-        {
-            // GamePad
-            // GamePad* gamePad = (GamePad*)device;
-            // TODO:
         }
     }
 

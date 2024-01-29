@@ -8,7 +8,6 @@
 #include "QF_CameraComponent.h"
 #include "QF_GameObject.h"
 #include "QF_Window.h"
-#include "QF_Windows.h"
 
 namespace QwerkE {
 
@@ -27,7 +26,7 @@ namespace QwerkE {
 		UpdateCameraVectors();
 		m_ComponentTag = Component_Camera;
 
-        m_ViewportSize = Windows::GetWindow(0)->GetResolution();
+        m_ViewportSize = Window::GetResolution();
 
 		SetTargetPosition(m_Position + m_Forward);
 		UpdateCameraVectors();
@@ -42,7 +41,7 @@ namespace QwerkE {
 		m_Pitch = pitch;
 		UpdateCameraVectors();
 
-        m_ViewportSize = Windows::GetWindow(0)->GetResolution();
+        m_ViewportSize = Window::GetResolution();
 
 		SetTargetPosition(m_Position + m_Forward);
 		UpdateCameraVectors();

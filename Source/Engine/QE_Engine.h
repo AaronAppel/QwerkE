@@ -14,7 +14,7 @@ namespace QwerkE {
 	namespace Engine
 	{
 
-		QwerkE::eEngineMessage Run(const std::map<const char*, const char*>& programArgPairs);
+		QwerkE::eOperationResult Run(const std::map<const char*, const char*>& programArgPairs);
 		void Stop();
 
 		void NewFrame();
