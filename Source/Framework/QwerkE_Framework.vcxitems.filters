@@ -379,9 +379,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_LibrariesInitialize.cpp">
-      <Filter>Headers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h">
@@ -688,9 +685,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesInitialize.h">
-      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesLoad.h">
       <Filter>Headers</Filter>

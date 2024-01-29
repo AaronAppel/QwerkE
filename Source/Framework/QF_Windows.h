@@ -12,7 +12,6 @@ namespace QwerkE {
     {
     public:
         static Window* GetWindow(uint windowID);
-        static const Window* GetLastFocusedWindow();
 
         static void Initialize();
         static void Shutdown();

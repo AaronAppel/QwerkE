@@ -1,11 +1,12 @@
 #include "QF_Renderer.h"
 
-#include "QF_Resources.h"
-
-#include "QF_Renderer.h"
+#include "QF_Debug.h"
 #include "QF_FontTest.h"
-#include "QF_ShaderProgram.h"
 #include "QF_Graphics_Header.h"
+#include "QF_Log.h"
+#include "QF_Renderer.h"
+#include "QF_Resources.h"
+#include "QF_ShaderProgram.h"
 
 namespace QwerkE {
 
@@ -15,6 +16,17 @@ namespace QwerkE {
     // TODO: Move OpenGL code to proper files
     void Renderer::Initialize()
     {
+        FT_Library freeType;
+        if (FT_Init_FreeType(&freeType))
+        {
+            ASSERT(false, "Error loading freetype2!");
+        }
+        else
+        {
+            LOG_TRACE("Freetype Loaded,");
+            FT_Done_FreeType(freeType);
+        }
+
         LoadFonts();
 
         // TODO: GL state init should be in a Window() or OpenGLManager()

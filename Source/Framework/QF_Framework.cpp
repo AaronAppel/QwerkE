@@ -3,7 +3,6 @@
 #include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_Enums.h"
-#include "QF_LibrariesInitialize.h"
 #include "QF_Audio.h"
 #include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"
@@ -22,6 +21,7 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Time.h"
+#include "QF_Window.h"
 #include "QF_Windows.h"
 #include "QF_glfw_Window.h"
 #include "QF_CallbackFunctions.h"
@@ -43,29 +43,16 @@ namespace QwerkE {
 
 		eEngineMessage Framework::Startup(const std::string configFilePath)
 		{
-            Log::Initialize();
-
-            ConfigHelper::LoadConfigData(configFilePath);
-			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences));
-
-            const ConfigData& configData = ConfigHelper::GetConfigData();
-			const UserData& userData = ConfigHelper::GetUserData();
-
-            // #TODO Load libraries dynamically. Need functions to load .dlls
-
-			if (Libs_Setup() != eEngineMessage::_QSuccess)
-			{
-				LOG_CRITICAL("{0} Error loading libraries!", __FUNCTION__);
-				return eEngineMessage::_QFailure;
-            }
-
-            // #TODO Cleanup switch or if/else if statements below. Find a nice way to detect which library objects to load
-
+			// #TODO Load libraries dynamically. Need functions to load .dlls
 			// #TODO Try to reduce or avoid order dependency in system creation
 
-			// #TODO Could change to data and iterate over systems in a loop.
-			//	Each system has a name string (JSON parent object name) and enabled boolean.
-			//	If false, skip, true loads and on error/success print system name string.
+            Log::Initialize();
+
+			ConfigHelper::LoadConfigData(configFilePath);
+			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences));
+
+			const ConfigData& configData = ConfigHelper::GetConfigData();
+			const UserData& userData = ConfigHelper::GetUserData();
 
 			Windows::Initialize();
 			s_Window = Windows::GetWindow(0);
@@ -117,7 +104,8 @@ namespace QwerkE {
 		eEngineMessage Framework::TearDown()
         {
             EventManager::Shutdown();
-			Libs_TearDown();
+			Windows::Shutdown();
+			Log::Shutdown();
 			return eEngineMessage::_QSuccess;
 		}
 

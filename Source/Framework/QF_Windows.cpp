@@ -104,7 +104,40 @@ namespace QwerkE {
         {
             LOG_ERROR("Error loading GLFW step 1!");
         }
-        // imgui GLFW
+
+        ImGuiContext* context = ImGui::CreateContext();
+        if (context == nullptr)
+        {
+            LOG_CRITICAL("Error loading imgui!");
+        }
+        else
+        {
+            ImGui::SetCurrentContext(context);
+
+            LOG_TRACE("imgui Loaded,");
+            ImGuiIO& io = ImGui::GetIO();
+
+            io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+            //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+            io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+            io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+            //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
+            //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
+
+            //ImGui::CaptureMouseFromApp(true);
+            //ImGui::CaptureKeyboardFromApp(true);
+
+            ImGui::StyleColorsDark();
+
+            ImGuiStyle& style = ImGui::GetStyle();
+            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+            {
+                style.WindowRounding = 0.0f;
+                style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+            }
+
+            ImGui_ImplOpenGL3_Init("#version 410");
+        }
 
         glfw_Window* newWindow = new glfw_Window(Renderer::g_WindowWidth, Renderer::g_WindowHeight, g_WindowTitle);
         m_Windows.push_back(newWindow);
@@ -112,12 +145,12 @@ namespace QwerkE {
 
     void Windows::Shutdown()
     {
-       /* int size = m_Windows.size();
-        for (int i = 0; i < size; i++)
+        for (size_t i = 0; i < m_Windows.size(); i++)
         {
             delete m_Windows.at(i);
-        }*/
+        }
 
+        ImGui::DestroyContext();
         ImGui_ImplGlfw_Shutdown(); // #TODO Fix inconsistent compile error
         glfwTerminate();
     }
@@ -135,15 +168,6 @@ namespace QwerkE {
         if (windowID >= 0 && windowID < m_Windows.size())
         {
             return m_Windows.at(windowID);
-        }
-        return nullptr;
-    }
-
-    const Window* Windows::GetLastFocusedWindow()
-    {
-        if (m_lastFocusedWindowIndex < m_Windows.size())
-        {
-            return m_Windows.at(m_lastFocusedWindowIndex);
         }
         return nullptr;
     }
