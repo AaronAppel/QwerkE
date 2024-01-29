@@ -158,7 +158,7 @@ namespace QwerkE {
         }
     }
 
-    Component* GameObject::GetComponent(eComponentTags tag)
+    const Component* GameObject::GetComponent(eComponentTags tag)
     {
         if (m_Components.find(tag) != m_Components.end())
         {

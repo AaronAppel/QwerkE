@@ -128,7 +128,7 @@ namespace QwerkE
     };
 
     /* Scenes */
-    // #TODO Deprecate as scenes should exist in data and be referenced by file names
+    // #TODO Deprecate as scenes should exist in data and be referenced by file names or GUIDs
     enum eSceneTypes : std::uint8_t
     {
         Scene_Null = 0,

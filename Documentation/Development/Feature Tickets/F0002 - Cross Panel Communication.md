@@ -1,0 +1,2 @@
+QE_Editor.h
+Add cross window panel communication to support features such as drag and drop assets, trigger callbacks, input, etc. Or just stop using editor subclasses and switch to base functions only.

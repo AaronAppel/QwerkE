@@ -130,7 +130,7 @@ namespace QwerkE {
     {
         ShaderProgram* t_pShader = renderable->GetShaderSchematic();
         // TODO: Get light data better
-        GameObject* t_Light = m_pRenderComp->GetParent()->GetScene()->GetLightList().at(0); // TODO: Stop hard coding index. Handle multiple lights
+        GameObject* t_Light = m_pRenderComp->GetParent()->GetScene()->GetLightList().at(0); // TODO: Stop hard coding index, plus handle multiple lights
         LightComponent* t_LightComp = (LightComponent*)t_Light->GetComponent(Component_Light);
 
         vec3 lightColour = t_LightComp->GetColour();

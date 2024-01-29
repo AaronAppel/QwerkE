@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/New Project Checklist.md",
+                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
                 "mode": "source",
                 "source": false
               }
@@ -79,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/New Project Checklist.md"
+                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md"
               }
             }
           }
@@ -96,7 +96,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "```",
+                "query": "guid",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/New Project Checklist.md",
+                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/New Project Checklist.md",
+                "file": "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -162,12 +162,23 @@
   },
   "active": "4c3749c9271c261a",
   "lastOpenFiles": [
+    "Development/Feature Tickets/F0005 - Null GameObject Data.md",
+    "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
+    "Development/Bug Tickets",
+    "Development/Feature Tickets/F0004 - GUIDs.md",
+    "Development/Feature Tickets/F0001 - Reflection.md",
+    "Development/Features/GUIDs.md",
+    "Development/Feature Tickets/F0002 - Cross Panel Communication.md",
+    "Development/Feature Tickets/F0003 - Select Same Named Entities.md",
+    "QwerkE Standards/Coding Standards Notes.md",
+    "Development/Feature Tickets",
+    "Development/Features/Scenes.md",
+    "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "ZZ Shared Vault Files ❗/Watched.md",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
     "ZZ Shared Vault Files ❗/To Watch.md",
     "Solution Configuration/Library Configuration.md",
     "ZZ Shared Vault Files ❗/To Read.md",
-    "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "Systems/Building.md",
     "QwerkE Goals.md",
     "README.md",
@@ -184,24 +195,14 @@
     "Z. To Cleanup/Old Notes.md",
     "Pointer Manipulation.md",
     "Systems/Saving and Loading/Reflection Setup.md",
-    "Development/Features/F0001.md",
     "QwerkE Standards/Enums.md",
     "Development/Features/0. Features Kanban.md",
-    "QwerkE Standards/Empty Function Body.md",
-    "Systems/Saving and Loading/Type Reflection.md",
-    "JSON.md",
-    "QwerkE Versioning.md",
-    "Pretend Blog Post.md",
-    "Development/Features/Data File Editor Window.md",
-    "QwerkE Standards/Task Naming.md",
     "Development/Features/Resource Management",
     "Systems/Untitled",
     "Systems/Window",
     "Systems/Input",
     "Systems/Rendering",
     "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
-    "ZZ Shared Vault Files ❗/template.gitignore",
-    "ZZ Shared Vault Files ❗/Obsidian",
     "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
     "New Bitmap image.bmp",
     "QwerkE Standards/Include Flow Diagram.canvas"

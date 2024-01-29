@@ -21,10 +21,9 @@ namespace QwerkE {
 
     void Scene::OnWindowResize(unsigned int width, unsigned int height)
     {
-        // update camera view and projection matrices
         for (unsigned int i = 0; i < m_CameraList.size(); i++)
         {
-            // ((ComponentCamera*)m_CameraList.At(i)->GetComponent(Component_Camera))->Setup();
+            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->Setup();
             ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->SetViewportSize(vec2((float)width, (float)height));
         }
     }
@@ -140,14 +139,13 @@ namespace QwerkE {
     {
         if (m_LightList.size() < 2)
         {
-            // #TODO Reduce minimum light instance dependency
-            LOG_ERROR("Unable to remove light as 1 must remain");
+            LOG_ERROR("Unable to remove light as 1 must remain"); // #BUG B0001 obsidian://open?vault=Documentation&file=Development%2FBug%20Tickets%2FB0001%20-%20Allow%200%20Lights
             return;
         }
 
         for (unsigned int i = 0; i < m_LightList.size(); i++)
         {
-            if (m_LightList.at(i) == light) // Pointer comparison
+            if (m_LightList.at(i) == light)
             {
                 m_LightList.erase(m_LightList.begin() + i);
                 m_SceneDrawList.erase(m_SceneDrawList.begin() + i); // Lights are drawn
@@ -159,35 +157,22 @@ namespace QwerkE {
 
     bool Scene::AddObjectToScene(GameObject* object)
     {
-        if (object)
-            if (m_pGameObjects.find(object->GetName()) == m_pGameObjects.end())
-            {
-                m_pGameObjects[object->GetName()] = object;
-                // TODO: Sort by draw order
-                m_SceneDrawList.push_back(object);
-                return true; // Success
-            }
-        return false; // Failure
+        if (object && m_pGameObjects.find(object->GetName()) == m_pGameObjects.end())
+        {
+            m_pGameObjects[object->GetName()] = object;
+            AddObjectToSceneDrawList(object);
+            return true;
+        }
+        return false;
     }
 
     void Scene::RemoveObjectFromScene(GameObject* object)
     {
-        // TODO: Fix implementation
-        // Check object tag
         if (m_pGameObjects.find(object->GetName().c_str()) != m_pGameObjects.end())
         {
-            if (object->GetTag() == eGameObjectTags::GO_Tag_Player)
-            {
-                // Player specific
-            }
-
-            std::vector<GameObject*>::iterator it = m_SceneDrawList.begin();
-            m_SceneDrawList.erase(std::remove(m_SceneDrawList.begin(), m_SceneDrawList.end(), object), m_SceneDrawList.end());
-
+            RemoveObjectFromSceneDrawList(object);
             m_pGameObjects.erase(object->GetName());
-            // TODO: Push object into a pool to be deleted at an appropriate time.
-            // Object may be owned externally and should not always be deleted by the scene.
-            delete object; // TODO:: Should deletion be handled differently?
+            delete object;
         }
     }
 
@@ -202,7 +187,7 @@ namespace QwerkE {
     {
         if (m_SceneFileName == gc_DefaultCharPtrValue)
         {
-            LOG_ERROR("Unable to Save scene! m_LevelFileName is \"{0}\"", gc_DefaultCharPtrValue);
+            LOG_ERROR("{0} Unable to save null scene file name!", __FUNCTION__);
             return;
         }
 
@@ -211,17 +196,11 @@ namespace QwerkE {
 
     void Scene::LoadScene()
     {
-        LoadScene(m_SceneFileName.c_str());
-    }
-
-    void Scene::LoadScene(const char* sceneFileName)
-    {
-        if (sceneFileName == gc_DefaultCharPtrValue)
+        if (m_SceneFileName.c_str() == gc_DefaultCharPtrValue)
         {
             LOG_ERROR("Unable to Load scene! sceneFileName is \"{0}\"", gc_DefaultCharPtrValue);
             return;
         }
-        m_SceneFileName = sceneFileName;
 
         eEngineMessage result = DataManager::LoadScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
         if (result == eEngineMessage::_QSuccess)
@@ -268,7 +247,7 @@ namespace QwerkE {
         LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
-    GameObject* Scene::GetGameObject(const char* name)
+    const GameObject* Scene::GetGameObject(const char* name)
     {
         if (m_pGameObjects.find(name) != m_pGameObjects.end())
             return m_pGameObjects[name];
@@ -276,4 +255,23 @@ namespace QwerkE {
         return nullptr;
     }
 
+    bool Scene::AddObjectToSceneDrawList(GameObject* object)
+    {
+        // #TODO Sort by draw order
+        m_SceneDrawList.push_back(object);
+        return true;
+    }
+
+    bool Scene::RemoveObjectFromSceneDrawList(const GameObject* object)
+    {
+        for (auto it = m_SceneDrawList.begin(); it != m_SceneDrawList.end(); it++)
+        {
+            if (*it == object)
+            {
+                m_SceneDrawList.erase(it);
+                return true;
+            }
+        }
+        return false;
+    }
 }

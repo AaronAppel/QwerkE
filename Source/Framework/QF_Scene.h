@@ -41,19 +41,18 @@ namespace QwerkE {
 
         void SaveScene();
         void LoadScene();
-        // #TODO Don't re-use scene objects to load other scenes. Create a new scene. Each scene is tied to it's file after creation
-        void LoadScene(const char* sceneFileName);
         void UnloadScene();
         void ReloadScene();
 
-        GameObject* GetGameObject(const char* name);
+        const GameObject* GetGameObject(const char* name);
         bool GetIsEnabled() { return m_IsEnabled; };
         bool GetIsPaused() { return m_IsPaused; };
         std::vector<GameObject*> GetCameraList() { return m_CameraList; };
         std::map<std::string, GameObject*> GetObjectList() { return m_pGameObjects; };
         int GetCurrentCamera() { return m_CurrentCamera; };
-        std::vector<GameObject*> GetLightList() { return m_LightList; };
+        const std::vector<GameObject*>& GetLightList() const { return m_LightList; };
         eSceneTypes GetSceneID() { return m_ID; }
+        const std::string& GetSceneFileName() { return m_SceneFileName; }
 
         void SetIsEnabled(bool isEnabled) { m_IsEnabled = isEnabled; };
         void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; };
@@ -63,6 +62,9 @@ namespace QwerkE {
 
     protected:
         void CameraInput(float deltatime);
+
+        bool AddObjectToSceneDrawList(GameObject* object);
+        bool RemoveObjectFromSceneDrawList(const GameObject* object);
 
         bool m_IsEnabled = false;
         bool m_IsPaused = false;

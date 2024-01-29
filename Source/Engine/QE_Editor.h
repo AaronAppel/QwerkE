@@ -4,10 +4,7 @@ namespace QwerkE {
 
     class EntityEditor;
 
-    // #TODO Create Obsidian feature ticket/note
-    // FEATURE: Add cross window panel communication to support features such as
-    // drag and drop assets, trigger callbacks, input, etc.
-    // Or just stop using editor subclasses and switch to base functions only.
+    // #FEATURE F0002 obsidian://open?vault=Documentation&file=Development%2FFeatures%2FFeature%20Tickets%2FF0002
 
     class Editor
     {

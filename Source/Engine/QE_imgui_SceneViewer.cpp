@@ -6,7 +6,6 @@
 
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"
-#include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_FrameBufferObject.h"
@@ -47,7 +46,7 @@ namespace QwerkE {
 
             ImGui::PushItemWidth(150);
             const char* states[] = { "Running", "Paused" };
-            if (ImGui::Combo("Scene State", &m_currentEngineStateIndex, states, sizeof(states)))
+            if (ImGui::Combo("Scene State", &m_currentEngineStateIndex, states, sizeof(states)/sizeof(const char*)))
             {
                 currentScene->SetIsPaused((bool)m_currentEngineStateIndex);
             }
@@ -64,7 +63,6 @@ namespace QwerkE {
             }
 
             m_FBO->Bind();
-
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             Scenes::DrawCurrentScene();
             m_FBO->UnBind();
@@ -72,8 +70,10 @@ namespace QwerkE {
             const ImVec2 winSize = ImGui::GetWindowSize();
 
             ImVec2 imageSize = winSize;
-            imageSize.x += winSize.x * 7.63f; // scale the width larger for upcoming divisions so window fits
-            imageSize = ImVec2(imageSize.x / 9, imageSize.x / 16); // 16 x 9 resolution
+            const float scalar = 7.63f;
+            imageSize.x += winSize.x * scalar;
+            const vec2& aspectRatio = Windows::GetWindow(0)->GetAspectRatio();
+            imageSize = ImVec2(imageSize.x / aspectRatio.y, imageSize.x / aspectRatio.x);
 
             const float offset = 60.f;
             ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + offset));
@@ -81,7 +81,7 @@ namespace QwerkE {
             ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
         }
 
-        ImGui::End(); // #TODO Review if End() should be called when Begin() returns false
+        ImGui::End();
     }
 
     void SceneViewer::DrawSceneList()
@@ -100,7 +100,8 @@ namespace QwerkE {
                     ImGui::SameLine();
                 }
 
-                if (ImGui::Button(DispStrCombine(std::to_string(counter).c_str(), std::to_string(p.second->GetSceneID()).c_str()).c_str()) || Input::FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
+                if (ImGui::Button(p.second->GetSceneFileName().c_str()) ||
+                    Input::FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
                 {
                     Scenes::SetCurrentScene(p.second->GetSceneID());
                 }

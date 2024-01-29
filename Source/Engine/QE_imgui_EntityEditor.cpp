@@ -139,8 +139,8 @@ namespace QwerkE {
                             renderable.SetMaterial(Resources::GetMaterial(null_material));
                             renderable.SetShader(Resources::GetShaderProgram(null_shader));
                             renderable.SetMesh(Resources::GetMesh(null_mesh));
-                            static int uniqueId = 0; // #FEATURE Implement GUIDs
-                            // #NOTE Currently if 2 or more renderables have the same name, you will not be able to select any one except the first in editor
+                            static int uniqueId = 0; // #FEATURE F0004 obsidian://open?vault=Documentation&file=Development%2FFeatures%2FFeature%20Tickets%2FF0004
+                            // #FEATURE F0003 obsidian://open?vault=Documentation&file=Development%2FFeatures%2FFeature%20Tickets%2FF0003
                             renderable.SetRenderableName(std::to_string(uniqueId++));
 
                             RenderComponent* rComp = (RenderComponent*)m_CurrentEntity->GetComponent(Component_Render);
@@ -200,11 +200,10 @@ namespace QwerkE {
                 }
             }
 
-            // Draw properties for object components like render, character, etc
             m_EditComponent->Draw(m_CurrentEntity);
         }
 
-        ImGui::End(); // #TODO Review if End() call is needed
+        ImGui::End();
 	}
 
 }

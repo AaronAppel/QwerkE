@@ -37,7 +37,7 @@ namespace QwerkE {
         // TODO: Use quaternions to avoid gimbal lock
     };
 
-    class GameObject
+    class GameObject final
     {
     public:
         GameObject(Scene* scene);
@@ -65,15 +65,15 @@ namespace QwerkE {
         const std::vector<Routine*>* SeeDrawRoutines() { return &m_DrawList; }
 
         std::string GetName() { return m_Name; };
-        vec3 GetPosition() const { return m_Transform.s_Position; }; // #TODO const & reference instead
-        vec3 GetRotation() const { return m_Transform.s_Rotation; };
-        vec3 GetScale() const { return m_Transform.s_Scale; };
-        Component* GetComponent(eComponentTags tag);
+        const vec3& GetPosition() const { return m_Transform.s_Position; };
+        const vec3& GetRotation() const { return m_Transform.s_Rotation; };
+        const vec3& GetScale() const { return m_Transform.s_Scale; };
+        const Component* GetComponent(eComponentTags tag);
         const Component* SeeComponent(eComponentTags tag);
         Routine* GetFirstDrawRoutineOfType(eRoutineTypes type);
         Routine* GetFirstUpdateRoutineOfType(eRoutineTypes type);
         int GetRenderOrder() { return m_RenderOrder; };
-        Scene* GetScene() { return m_pScene; };
+        const Scene* GetScene() { return m_pScene; };
         eGameObjectTags GetTag() { return m_Tag; }
 
         // TODO: overload functions to take object like float[x]s

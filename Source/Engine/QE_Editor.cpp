@@ -24,8 +24,8 @@ namespace QwerkE {
     void priv_DrawMainMenuBar();
     void priv_RenderDockingContext();
 
-    bool m_ShowingExampleWindow = false;
-    bool m_ShowingShaderEditor = false;
+    bool s_ShowingExampleWindow = false;
+    bool s_ShowingShaderEditor = false;
 #endif
 
     void Editor::Initialize()
@@ -54,14 +54,14 @@ namespace QwerkE {
         priv_DrawMainMenuBar();
         priv_RenderDockingContext();
 
-        if (m_ShowingExampleWindow)
+        if (s_ShowingExampleWindow)
         {
             ImGui::ShowDemoWindow();
         }
 
-        if (m_ShowingShaderEditor)
+        if (s_ShowingShaderEditor)
         {
-            s_ShaderEditor->Draw(&m_ShowingShaderEditor);
+            s_ShaderEditor->Draw(&s_ShowingShaderEditor);
         }
 
         s_ResourceViewer->Draw();
@@ -93,7 +93,7 @@ namespace QwerkE {
                 const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
                 if (ImGui::ListBox("", &index, d, size, 3))
                 {
-                    if (index == 0) m_ShowingExampleWindow = !m_ShowingExampleWindow;
+                    if (index == 0) s_ShowingExampleWindow = !s_ShowingExampleWindow;
                 }
                 ImGui::EndMenu();
             }
@@ -102,13 +102,13 @@ namespace QwerkE {
             {
                 const int size = 1;
                 static const char* toolsList[size] = { "Shader Editor" };
-                static bool* toolsStates[size] = { &m_ShowingShaderEditor };
+                static bool* toolsStates[size] = { &s_ShowingShaderEditor };
 
                 for (int i = 0; i < size; i++)
                 {
                     if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
                     {
-                        m_ShowingShaderEditor = *toolsStates[i];
+                        s_ShowingShaderEditor = *toolsStates[i];
                     }
                 }
                 ImGui::EndMenu();
