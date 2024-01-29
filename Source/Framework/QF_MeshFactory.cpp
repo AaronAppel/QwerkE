@@ -14,10 +14,8 @@
 
 namespace QwerkE {
 
-	/* OBJ loading */
 	Mesh* MeshFactory::ImportOBJMesh(const char* fileDirectory, vec3 objScale, vec2 UVScale, bool invertFaces)
 	{
-		// find file
 		long length = 0;
 		char* buffer = LoadCompleteFile(fileDirectory, &length);
 		if (buffer == 0 || length == 0)
@@ -26,7 +24,6 @@ namespace QwerkE {
 			return 0;
 		}
 
-		// read and store file text
 		char* next_token = 0;
 		char* line = strtok_s(buffer, "\n", &next_token);
 
@@ -38,7 +35,7 @@ namespace QwerkE {
 			stringList.push_back(line);
 			line = strtok_s(0, "\n", &next_token);
 		}
-		// parse file for data
+
 		// std::vector<VertexData> verts; // VertexData data
 		// std::vector<unsigned int> indices; // IBO data
 
@@ -87,65 +84,43 @@ namespace QwerkE {
 			}
 			else if (loopString.at(0) == 'f')
 			{
-				// read faces, create IBO
 				int tempVariable[] = { 0,0,0 };
 				sscanf_s(loopString.data(), "%*s %i %*s %i %*s %i", &tempVariable[0], &tempVariable[1], &tempVariable[2]);
 
-				data.indices.push_back(tempVariable[0] - 1);
+				data.indices.push_back(tempVariable[0] - 1); // #NOTE OBJ exporter is index 1 based
 				data.indices.push_back(tempVariable[1] - 1);
 				data.indices.push_back(tempVariable[2] - 1);
-
-				//indices.push_back(tempVariable[0] - 1); // OBJ exporter thinks first index is 1
-				//indices.push_back(tempVariable[1] - 1);
-				//indices.push_back(tempVariable[2] - 1);
 			}
 		}
 
-		// generate mesh
 		Mesh* t_pNewMesh = new Mesh();
 
-		// scale vertices
 		if (objScale != vec3(1.0f, 1.0f, 1.0f))
 		{
 			ScaleVertices(data.positions, objScale);
 		}
 
-		// generate UVCOORDS
-		CalculateUVCoords(data.UVs); // default scale 1,1
+		CalculateUVCoords(data.UVs);
 
-		// scale UVCOORDS
 		if (UVScale != vec2(1.0f, 1.0f))
 		{
 			ScaleUVCOORDS(data.UVs, UVScale);
 		}
 
-		// invert faces
 		if (invertFaces)
 		{
 			InvertFaces(data.indices.data(), data.indices.size()); // #TODO Compiler warning: warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
 		}
 
-		// initialize mesh
 		// t_pNewMesh->BufferMeshData(verts.size(), verts.data(), indices.size(), indices.data()); // GL_STATIC_DRAW
 		t_pNewMesh->BufferMeshData(&data); // GL_STATIC_DRAW
 		t_pNewMesh->SetPrimitiveType(GL_TRIANGLES);
 
-		// cleanup
 		delete[] buffer;
 
 		return t_pNewMesh;
-
-		/*
-		char* sentence = "Rudolph is 12 years old";
-		char str[20];
-		int i;
-
-		sscanf_s(sentence, "%s %*s %d", str, 20, &i);
-		OutputMessage("%s\n", str);
-		*/
 	}
 
-	/* Mesh creation */
 	Mesh* MeshFactory::CreateTestModel()
 	{
 		// DEBUG: Remove from final build
