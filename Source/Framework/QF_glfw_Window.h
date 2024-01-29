@@ -24,6 +24,8 @@ namespace QwerkE {
 
         void SwapBuffers() { glfwSwapBuffers(m_Window); };
 
+        void Render();
+
     private:
         // TODO: glfwSetClipboardString();
         // TODO: glfwSetGamma()

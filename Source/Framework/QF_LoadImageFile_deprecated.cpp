@@ -13,9 +13,10 @@
 
 #include "Libraries/lodepng/lodepng.h"
 #include "Libraries/glew/GL/glew.h"
-#include "QF_ImageHelpers.h"
+#include "Libraries/FlatheadGames/ImageHelpers.h"
 
-namespace QwerkE {
+namespace QwerkE
+{
 
     unsigned char* QwerkE_stb_image_loadImage(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
     {
@@ -47,20 +48,22 @@ namespace QwerkE {
 
     unsigned char* QwerkE_lodepng_loadImage(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
     {
-        unsigned char* pngbuffer = 0;
         long filesize;
+        unsigned char* pngbuffer = 0;
         unsigned int result = -1;
-        unsigned char* filebuffer = (unsigned char*)LoadCompleteFile(path, &filesize);
-        if (filebuffer != NULL) // decode file data
+
+        const unsigned char* filebuffer = (unsigned char*)LoadCompleteFile(path, &filesize);
+
+        if (filebuffer != nullptr)
         {
             result = lodepng_decode32(&pngbuffer, imageWidth, imageHeight, filebuffer, filesize);
         }
 
-        if (result != 0) // error decoding image data
+        if (result != 0)
         {
             free(pngbuffer);
             delete[] filebuffer;
-            return nullptr; // exit
+            return nullptr;
         }
 
         channels = GL_RGBA;
@@ -68,10 +71,5 @@ namespace QwerkE {
         delete[] filebuffer;
         return pngbuffer;
     }
-
-    //char* QwerkE_soil_loadImage()
-    //{
-    //	// TODO:
-    //}
 
 }

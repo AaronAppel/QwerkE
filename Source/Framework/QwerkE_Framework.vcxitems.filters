@@ -361,15 +361,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.cpp">
       <Filter>Core\Window</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_ImageHelpers.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_LoadImageFile.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_LoadModelFile.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileSystem.cpp">
       <Filter>FileSystem</Filter>
     </ClCompile>
@@ -664,12 +655,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PCH_Includes.h">
       <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_LoadImageFile.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ImageHelpers.h">
-      <Filter>FileSystem</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FileSystem.h">
       <Filter>FileSystem</Filter>

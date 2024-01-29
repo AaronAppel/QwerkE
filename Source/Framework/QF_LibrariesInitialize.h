@@ -2,12 +2,12 @@
 
 // TODO: Use _QFail and other error messages instead of a simple bool return?
 
-#include <stdint.h>
+#include "QF_Enums.h"
 
 namespace QwerkE {
 
-    bool Libs_Setup();
+    eEngineMessage Libs_Setup();
 
-    void Libs_TearDown();
+    eEngineMessage Libs_TearDown();
 
 }

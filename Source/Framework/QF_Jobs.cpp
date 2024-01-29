@@ -46,7 +46,7 @@ namespace QwerkE {
 
         if (FileExists(TexturesFolderPath(fileData->s_FileName.c_str())))
         {
-            fileData->s_Data = (char*)FileSystem::LoadImageFileData(TexturesFolderPath(fileData->s_FileName.c_str()), &fileData->s_Width, &fileData->s_Height, (GLenum&)fileData->s_Channels, false);
+            fileData->s_Data = (char*)File::LoadImageFileData(TexturesFolderPath(fileData->s_FileName.c_str()), &fileData->s_Width, &fileData->s_Height, (GLenum&)fileData->s_Channels, false);
         }
 
         if (fileData->s_Data != nullptr)

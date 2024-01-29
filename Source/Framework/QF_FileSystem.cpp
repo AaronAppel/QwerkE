@@ -5,7 +5,6 @@
 #include <vector>
 
 #pragma warning( disable : 26495 )
-#include "QF_AssimpLoading.h"
 #include "Libraries/assimp/Importer.hpp"
 #include "Libraries/assimp/scene.h"
 #include "Libraries/assimp/postprocess.h"
@@ -13,25 +12,91 @@
 #include "Libraries/assimp/material.h"
 #pragma warning( default : 26495 )
 
+#pragma warning( disable : 28182 )
+#pragma warning( disable : 6001 )
+#pragma warning( disable : 6262 )
+#include "Libraries/stb_image.h"
+#pragma warning( default : 28182 )
+#pragma warning( default : 6001 )
+#pragma warning( default : 6262 )
+
+#include "Libraries/lodepng/lodepng.h"
+#include "Libraries/glew/GL/glew.h"
+#include "Libraries/FlatheadGames/ImageHelpers.h"
+
+
 #include "QC_StringHelpers.h"
 
-#include "QF_LoadImageFile.h"
+#include "QF_AssimpLoading.h"
+
+#include "QF_FileSystem.h"
 #include "QF_FileUtilities.h"
 #include "QF_Resources.h"
 #include "QF_Log.h"
-
-#define QwerkE_Image_Library_stb 1 // #TODO Move somewhere better
-#define QwerkE_Image_Library_lodepng 1
-#define QwerkE_Image_Library_soil 0
 
 #include "QF_Defines.h"
 
 #include "QF_Mesh.h"
 #include "QF_oal_Helpers.h"
 
-namespace QwerkE {
+namespace QwerkE
+{
 
-	void FileSystem::LoadSoundFileData(const char* filePath, QSoundFile& soundFile)
+	unsigned char* priv_QwerkE_stb_image_loadImage(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
+	{
+		unsigned char* pngbuffer = 0;
+		int nrChannels = 0;
+
+		// Note: must cast values to signed ints. Could lead to errors.
+		// buffer file data
+		stbi_set_flip_vertically_on_load(flipVertically);
+		pngbuffer = stbi_load(path, (int*)&imageWidth, (int*)&imageHeight, &nrChannels, channels); // can set 0 to desired comp (rgba == 4)
+		// if (pngbuffer == nullptr || strcmp((const char*)pngbuffer, "") == 0)
+		if (!pngbuffer)
+		{
+			stbi_image_free(pngbuffer);
+			return nullptr; // null handle
+		}
+
+		if (nrChannels == 3)
+			channels = GL_RGB;
+		else if (nrChannels == 4)
+			channels = GL_RGBA;
+
+		// cleanup
+		//unsigned char* r = new unsigned char[sizeof(pngbuffer)];
+		//memcpy_s(r, sizeof(r), pngbuffer, sizeof(pngbuffer));
+		//stbi_image_free(pngbuffer);
+		return pngbuffer;
+	}
+
+	unsigned char* priv_QwerkE_lodepng_loadImage(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
+	{
+		long filesize;
+		unsigned char* pngbuffer = 0;
+		unsigned int result = -1;
+
+		const unsigned char* filebuffer = (unsigned char*)LoadCompleteFile(path, &filesize);
+
+		if (filebuffer != nullptr)
+		{
+			result = lodepng_decode32(&pngbuffer, imageWidth, imageHeight, filebuffer, filesize);
+		}
+
+		if (result != 0)
+		{
+			free(pngbuffer);
+			delete[] filebuffer;
+			return nullptr;
+		}
+
+		channels = GL_RGBA;
+
+		delete[] filebuffer;
+		return pngbuffer;
+	}
+
+	void priv_LoadSoundFileData(const char* filePath, QSoundFile& soundFile)
 	{
 		// this function is meant to abstract file type from external code
 
@@ -55,40 +120,23 @@ namespace QwerkE {
 		}
 	}
 
-
 	// determine image type and use proper library
 	// lodepng, stb_image, SOIL, etc
-	unsigned char* FileSystem::LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
+	unsigned char* File::LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
 	{
 		unsigned char* returnBuffer = nullptr;
-
-		// TODO: Determine which tool/library to use depending on image type and format
-		// png, jpg, 8bit vs 32bit, etc
 
 		std::string extention = GetFileExtension(path);
 
 		if (strcmp(extention.c_str(), "jpg") == 0)
 		{
-            // returnBuffer = QwerkE_stb_image_loadImage(path, imageWidth, imageHeight, channels, flipVertically);
-            LOG_ERROR("LoadImageFile(): .jpg image not loaded. No working jpg load function currently: {0}", path);
+			LOG_ERROR("LoadImageFile(): .jpg image not loaded. No working jpg load function currently: {0}", path);
 		}
 		else if (strcmp(extention.c_str(), "png") == 0)
 		{
-#if QwerkE_Image_Library_stb == 1 // stb
-			// stb has shown to be faster than lodepng, however it is not reliable for loading all image formats.
-			// use both for now... // TODO: Fix stb_image
-			// returnBuffer = QwerkE_stb_image_loadImage(path, imageWidth, imageHeight, channels, flipVertically);
-#endif
-#if QwerkE_Image_Library_lodepng == 1 // lodepng
-		// if (returnBuffer == nullptr || strcmp((const char*)returnBuffer, "") == 0)
-			if (!returnBuffer)
-				returnBuffer = QwerkE_lodepng_loadImage(path, imageWidth, imageHeight, channels, flipVertically);
-#endif
-#if QwerkE_Image_Library_soil == 1 // SOIL
-			returnBuffer = QwerkE_soil_loadImage(path); // TODO:
-#endif
-
-#if !QwerkE_Image_Library_stb && !QwerkE_Image_Library_lodepng && !QwerkE_Image_Library_soil
+#ifdef LODEPNG
+			returnBuffer = priv_QwerkE_lodepng_loadImage(path, imageWidth, imageHeight, channels, flipVertically);
+#else
 #pragma error "Define image loading library!"
 #endif
 		}
@@ -97,81 +145,33 @@ namespace QwerkE {
 			LOG_WARN("LoadImageFile(): Image type unsupported for file: {0}", path);
 		}
 
-		if (!returnBuffer)// (returnBuffer == nullptr || strcmp((const char*)returnBuffer, "") == 0)
+		if (!returnBuffer)
 		{
 			LOG_ERROR("LoadImageFile(): Failed to load image: {0}", path);
-			return nullptr; // failed
+			return nullptr;
 		}
 
 		LOG_INFO("LoadImageFile(): Loaded: {0}", path);
 		return returnBuffer;
 	}
 
-	SoundHandle FileSystem::LoadSound(const char* soundPath)
+	SoundHandle File::LoadSound(const char* soundPath)
 	{
-		// this function is meant to abstract audio libraries from external code
-
-		// TODO: Load sounds from libraries dynamically using preference.qpref. No #defines
-
-		SoundHandle retValue = 0;
-
-		// Load sound file
+		SoundHandle soundHandle = 0;
 		QSoundFile soundFile;
-		LoadSoundFileData(soundPath, soundFile);
+		priv_LoadSoundFileData(soundPath, soundFile);
 
-		// Create sound library data
 #ifdef OpenAL
-		retValue = OpenAL_LoadSound(soundFile);
+		soundHandle = OpenAL_LoadSound(soundFile);
 #elif defined(XAudio)
 		retValue = 0;
 #else
 #pragma error "Define audio library!"
-#endif // AudioLibrary
-
-		return retValue;
+#endif
+		return soundHandle;
 	}
 
-	Mesh* FileSystem::LoadModelFileTo1Mesh(const char* modelFilePath)
-	{
-		if (false == Resources::MeshExists(GetFileNameNoExt(modelFilePath).c_str()))
-		{
-			Mesh* mesh = nullptr;
-
-#ifdef AI_CONFIG_H_INC // assimp
-			Assimp::Importer importer;
-			const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
-
-			if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-			{
-				LOG_WARN("ERROR::ASSIMP::{0}", importer.GetErrorString());
-				return nullptr; // failure
-			}
-#else
-			// separate model loading library
-#pragma error "Define model loading library!"
-#endif // AI_CONFIG_H_INC
-
-			if (mesh)
-			{
-				Resources::AddMesh(GetFileNameNoExt(modelFilePath).c_str(), mesh);
-				return Resources::GetMesh(GetFileNameNoExt(modelFilePath).c_str());
-			}
-			else
-			{
-				return Resources::GetMesh(null_mesh);
-			}
-		}
-		else
-		{
-			return Resources::GetMesh(GetFileNameNoExt(modelFilePath).c_str());
-		}
-	}
-
-	//Material* GetMaterialFromMatFile(const char* path)
-	//{
-	//	// TODO:
-	//}
-	Mesh* FileSystem::LoadMeshInModelByName(const char* modelFilePath, const char* meshName)
+	Mesh* File::LoadMeshInModelByName(const char* modelFilePath, const char* meshName)
 	{
 		if (false == Resources::MeshExists(meshName))
 		{
@@ -194,38 +194,30 @@ namespace QwerkE {
 		return Resources::GetMesh(meshName);
 	}
 
-	bool FileSystem::LoadModelFileToMeshes(const char* path)
+	bool File::LoadModelFileToMeshes(const char* path)
 	{
 		if (Resources::MeshExists(FindFileName(path, true)))
 			return false;
 
-		// #NOTE External library only cares about copying the data for us, not initializing it automatically
 		std::vector<Mesh*> meshes;
 		std::vector<std::string> matNames;
 
 #ifdef AI_CONFIG_H_INC
 		Assimp::Importer importer;
-		// aiProcess_GenNormals: actually creates normals for each vertex if the model didn't contain normal vectors.
-		// aiProcess_SplitLargeMeshes : splits large meshes into smaller sub - meshes which is useful if your rendering has a maximum number of vertices allowed and can only process smaller meshes.
-		// aiProcess_OptimizeMeshes : actually does the reverse by trying to join several meshes into one larger mesh, reducing drawing calls for optimization.
 
 		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			LOG_ERROR("ERROR::ASSIMP::{0}", importer.GetErrorString());
-			return false; // failure
+			return false;
 		}
-
-		// NOTE: aiScene is an object hierarchy so it might almost require GameObject creation here.
 		_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, path, matNames);
-
 		// TODO: De-allocate RAM created by assimp
 #else
 #pragma error "Define model loading library!"
 #endif
 
-		// Take copied data from external library and init it for QwerkE systems use.
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
 			Resources::AddMesh(meshes[i]->GetName().c_str(), meshes[i]);

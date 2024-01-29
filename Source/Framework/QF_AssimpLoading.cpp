@@ -29,16 +29,15 @@ namespace QwerkE {
 
     void _assimp_loadSceneNodeData(aiNode* node, const aiScene* scene, std::vector<Mesh*>& meshes, const std::string& filePath, std::vector<std::string>& matNames)
     {
-        // process all the node's meshes (if any)
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
-            // load VertexData
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
             meshes.push_back(_assimp_loadVertexData(mesh, scene, filePath.c_str()));
 
-            // load Textures + materials
-            if (mesh->mMaterialIndex >= 0) // has material?
+            if (mesh->mMaterialIndex >= 0)
+            {
                 _assimp_loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], filePath, matNames);
+            }
         }
         // then do the same for each of its children
         for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -53,74 +52,69 @@ namespace QwerkE {
         {
             return Resources::GetMesh(GetFileNameWithExt(modelFilePath).c_str());
         }
-        // process vertex positions, normals and texture coordinates
-        // std::vector<VertexData> vertices(totalVerts); // TODO: Swap to array? // PERF: really good use of a 1 frame stack allocation
-        // VertexData vertex; // create outside? not a major improvement but still...
-        MeshData data;
-        data.positions.resize(mesh->mNumVertices);
-        data.UVs.resize(mesh->mNumVertices);
-        data.normals.resize(mesh->mNumVertices);
-        data.tangents.resize(mesh->mNumVertices);
-        data.bitangents.resize(mesh->mNumVertices);
+
+        MeshData meshData;
+        meshData.positions.resize(mesh->mNumVertices);
+        meshData.UVs.resize(mesh->mNumVertices);
+        meshData.normals.resize(mesh->mNumVertices);
+        meshData.tangents.resize(mesh->mNumVertices);
+        meshData.bitangents.resize(mesh->mNumVertices);
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
-            // vertex positions
-            vec3 pos;
-            pos.x = mesh->mVertices[i].x;
-            pos.y = mesh->mVertices[i].y;
-            pos.z = mesh->mVertices[i].z;
+            vec3 position;
+            position.x = mesh->mVertices[i].x;
+            position.y = mesh->mVertices[i].y;
+            position.z = mesh->mVertices[i].z;
 
-            data.positions[i] = pos;
+            meshData.positions[i] = position;
 
             // color
             // TODO: mesh->HasVertexColors()
             // vertex.color = vec4(mesh->mColors[i]->r, mesh->mColors[i]->g, mesh->mColors[i]->b, mesh->mColors[i]->a);
 
-            // UVs
-            // TODO: if (mesh->HasTextureCoords(?)) // does the mesh contain texture coordinates?
-            data.UVs[i] = vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
+            meshData.UVs[i] = vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
 
-            // normals
-            if (mesh->HasNormals()) // TODO: Separate loop to handle no normals and avoid if check
+            if (mesh->HasNormals())
             {
-                data.normals[i] = vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+                meshData.normals[i] = vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
             }
 
-            // Tangents and Bitangents
-            if (mesh->HasTangentsAndBitangents()) // Separate loop
+            if (mesh->HasTangentsAndBitangents())
             {
-                data.tangents[i] = vec3(mesh->mTangents->x, mesh->mTangents->y, mesh->mTangents->z);
-                data.bitangents[i] = vec3(mesh->mBitangents->x, mesh->mBitangents->y, mesh->mBitangents->z);
+                meshData.tangents[i] = vec3(mesh->mTangents->x, mesh->mTangents->y, mesh->mTangents->z);
+                meshData.bitangents[i] = vec3(mesh->mBitangents->x, mesh->mBitangents->y, mesh->mBitangents->z);
             }
         }
 
-        // process indices
         std::vector<unsigned int> indices(mesh->mNumFaces * 3); // TODO: Swap to array? // PERF: really good use of a 1 frame stack allocation
         aiFace face;
         int counter = 0;
+
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
         {
             face = mesh->mFaces[i];
             for (unsigned int j = 0; j < face.mNumIndices; j++)
+            {
                 indices[counter++] = face.mIndices[j]; // For each vertex in face
+            }
         }
 
-        data.indices = indices;
+        meshData.indices = indices;
         Mesh* rMesh = nullptr;
 
-        // TODO: More error checking + handling
-        if (data.positions.size() > 0)
+        if (meshData.positions.size() > 0)
         {
-            // init mesh and return it
             rMesh = new Mesh();
-            rMesh->BufferMeshData(&data);
+            rMesh->BufferMeshData(&meshData);
             rMesh->SetName(mesh->mName.C_Str());
             rMesh->SetFileName(GetFileNameWithExt(modelFilePath));
             Resources::AddMesh(rMesh->GetName().c_str(), rMesh);
         }
         else
+        {
             rMesh = Resources::GetMesh(null_mesh);
+        }
 
         return rMesh;
     }

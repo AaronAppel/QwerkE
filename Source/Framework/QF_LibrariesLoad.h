@@ -1,7 +1,6 @@
 #pragma once
 
-#include "QF_Defines.h" // #TODO Determine which libraries to load using #defines
-
+#include "QF_Defines.h"
 
 //////////////   32 bit Debug    //////////////
 #if defined(_Q32Bit) && defined(_QDebug)

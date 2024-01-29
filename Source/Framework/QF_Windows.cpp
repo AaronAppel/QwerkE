@@ -4,8 +4,13 @@
 #include "Libraries/glfw/GLFW/glfw3.h"
 #include "Libraries/imgui/QC_imgui.h"
 
+#include "QF_glfw_Window.h"
+
 #include "QF_Log.h"
+#include "QF_Renderer.h"
 #include "QF_Window.h"
+
+const char* g_WindowTitle = "QwerkEngine";
 
 namespace QwerkE {
 
@@ -100,6 +105,9 @@ namespace QwerkE {
             LOG_ERROR("Error loading GLFW step 1!");
         }
         // imgui GLFW
+
+        glfw_Window* newWindow = new glfw_Window(Renderer::g_WindowWidth, Renderer::g_WindowHeight, g_WindowTitle);
+        m_Windows.push_back(newWindow);
     }
 
     void Windows::Shutdown()
@@ -114,9 +122,12 @@ namespace QwerkE {
         glfwTerminate();
     }
 
-    void Windows::AddWindow(Window* window)
+    void Windows::Render()
     {
-        m_Windows.push_back(window);
+        for (size_t i = 0; i < m_Windows.size(); i++)
+        {
+            m_Windows[i]->Render();
+        }
     }
 
     Window* Windows::GetWindow(uint windowID)

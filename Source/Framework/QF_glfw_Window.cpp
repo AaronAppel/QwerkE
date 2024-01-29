@@ -10,7 +10,11 @@
 
 namespace QwerkE {
 
-    void close_callback(GLFWwindow* window);
+    void priv_close_callback(GLFWwindow* window)
+    {
+        glfw_Window* glfw_window = (glfw_Window*)Windows::GetWindow(0);
+        glfw_window->SetClosing(true);
+    }
 
     glfw_Window::glfw_Window(int windowWidth, int windowHeight, const char* windowTitle) : Window(windowWidth, windowHeight, windowTitle)
     {
@@ -29,21 +33,32 @@ namespace QwerkE {
         glfwFocusWindow(m_Window);
         m_IsFocused = true;
         SetupCallbacks(m_Window); // TODO: Window won't respond to clicking corner 'x'... sometimes?
-        glfwSetWindowCloseCallback(m_Window, close_callback);
+        glfwSetWindowCloseCallback(m_Window, priv_close_callback);
 
         ImGui_ImplGlfw_InitForOpenGL(m_Window, false);
     }
 
     glfw_Window::~glfw_Window()
     {
-        glfwWindowShouldClose(m_Window); // May have issues waiting so long to close m_Window. Try to call Close() when it is requested
+        glfwWindowShouldClose(m_Window); // May have issues waiting so long to close s_Window. Try to call Close() when it is requested
         glfwDestroyWindow(m_Window);
     }
 
-    void close_callback(GLFWwindow* window)
+    void glfw_Window::Render()
     {
-        glfw_Window* glfw_window = (glfw_Window*)Windows::GetWindow(0);
-        glfw_window->SetClosing(true);
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        ImGuiIO io = ImGui::GetIO();
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
+
+        SwapBuffers();
     }
 
 }

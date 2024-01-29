@@ -8,6 +8,7 @@
 #define dearimgui
 #define BULLET3
 #define RAKNET
+#define LODEPNG
 
 // MSVC pre-preocessor defines : https://learn.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=msvc-170
 

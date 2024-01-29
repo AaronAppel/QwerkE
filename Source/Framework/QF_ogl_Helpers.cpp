@@ -17,7 +17,7 @@
 #include "QF_Graphics_Header.h"
 #include "QF_Log.h"
 #include "QF_FileUtilities.h"
-#include "QF_ImageHelpers.h"
+#include "Libraries/FlatheadGames/ImageHelpers.h"
 #include "QF_FileSystem.h"
 
 // http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
@@ -91,7 +91,7 @@ namespace QwerkE {
 
         GLenum channels = 4;
         unsigned int width = 0, height = 0;
-        unsigned char* imageData = FileSystem::LoadImageFileData(filePath, &width, &height, channels, flipVertically);
+        unsigned char* imageData = File::LoadImageFileData(filePath, &width, &height, channels, flipVertically);
 
         if (!imageData)
         {

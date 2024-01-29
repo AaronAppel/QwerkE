@@ -2,11 +2,14 @@
 
 #include <string>
 
+#include "QC_StringHelpers.h"
+
 #include "QF_Constants.h"
 
 typedef unsigned int GLenum;
 
-namespace QwerkE {
+namespace QwerkE
+{
 
     class Mesh;
 
@@ -19,12 +22,7 @@ namespace QwerkE {
         std::string s_Extension = gc_DefaultStringValue;
         char* s_Data = nullptr;
 
-        std::string Extension() {} // TODO:
-
-        QFile() {}
-        virtual ~QFile() {}; // TODO: { delete s_Data; }
-
-        // TODO: Meta data
+        virtual ~QFile() { if (s_Data) { delete s_Data; } }
     };
 
     struct QImageFile : public QFile
@@ -32,9 +30,6 @@ namespace QwerkE {
         unsigned int s_Width = 0;
         unsigned int s_Height = 0;
         unsigned short s_Channels = 0;
-
-        QImageFile() {}
-        ~QImageFile() {}
     };
 
     struct QSoundFile : public QFile
@@ -45,34 +40,27 @@ namespace QwerkE {
 
         SoundHandle s_Handle = 0;
 
-        QSoundFile() {}
-        ~QSoundFile() {} // TODO: alDeleteBuffers(1, &s_Handle)
+        // TODO: ~QSoundFile() alDeleteBuffers(1, &s_Handle)
     };
 
-    class FileSystem
+    struct File
     {
-    public:
         // TODO: Allow flags for loading images a certain way
-        // TODO: Remove GLenum and any implementation specific variables or styles
+        // TODO: Remove GLenum and any implementation specific variables, types, or styles
         // TODO: LoadHDRImage // https://learnopengl.com/PBR/IBL/Diffuse-irradiance
-        static unsigned char* LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically = 0); // LoadImage is a macro somewhere
+        // LoadImage is a macro somewhere
+        static unsigned char* LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically = 0);
 
         static SoundHandle LoadSound(const char* soundName);
 
         static Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName);
         static bool LoadModelFileToMeshes(const char* path);
-        static Mesh* LoadModelFileTo1Mesh(const char* path); // TODO:
 
         // TODO: Load scene from software like 3DS Max, Blender, etc
         // load things like lights, cameras and everything from 1 file
         // look at creating a conversion helper for QwerkE.scene to unity, blender, etc
 
         // Material* GetMaterialFromMatFile(const char* path);
-
-    private:
-        FileSystem() = default;
-
-        static void LoadSoundFileData(const char* soundName, QSoundFile& soundFile);
     };
 
 }

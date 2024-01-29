@@ -66,7 +66,7 @@ namespace QwerkE {
 
 		if (FileExists(meshFilePath))
 		{
-			FileSystem::LoadModelFileToMeshes(meshFilePath);
+			File::LoadModelFileToMeshes(meshFilePath);
 			if (MeshExists(GetFileNameNoExt(meshFilePath).c_str())) // TODO: Better way to handle file paths and resource names
 				return m_Meshes[GetFileNameNoExt(meshFilePath).c_str()];
 			else
@@ -202,7 +202,7 @@ namespace QwerkE {
 	ALuint Resources::InstantiateSound(const char* soundPath)
 	{
 		ALuint handle = 0;
-		handle = FileSystem::LoadSound(soundPath);
+		handle = File::LoadSound(soundPath);
 
 		if (handle != 0)
 		{
@@ -222,9 +222,9 @@ namespace QwerkE {
 			ShaderProgram* result = LoadShaderSchematic(schematicFile); // TODO: Free memory on error
 			if (result)
 			{
-				result->SetVertShader(GetShaderComponent(result->GetVertName().c_str()));
-				result->SetFragShader(GetShaderComponent(result->GetFragName().c_str()));
-				// result->s_geoShader = GetShaderComponentData(result->s_geoName.c_str());
+				result->SetVertShader(GetShaderComponent(result->GetVertName().c_str(), eShaderComponentTypes::Vertex));
+				result->SetFragShader(GetShaderComponent(result->GetFragName().c_str(), eShaderComponentTypes::Fragment));
+				// result->s_geoShader = GetShaderComponentData(result->s_geoName.c_str(), eShaderComponentTypes::Geometry);
 
 				if (ShaderFactory::LinkCreatedShaderProgram(result))
 				{

@@ -1,17 +1,10 @@
 #include "QF_Physics.h"
 
 #include "QF_Defines.h"
-
-#ifdef BULLET3
-#elif qw_HAVOC
-#elif qw_PHYSX
-#else
-#pragma error "No physics library specified!"
-#endif
-
-#ifdef BULLET3
 #include "QF_Profile.h"
+#include "QF_Log.h"
 
+#ifdef BULLET3
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 4099 )
 #include "Libraries/Bullet3/BulletCollision/BroadphaseCollision/btAxisSweep3.h"
@@ -39,8 +32,6 @@
 // NOTE : Following example code copied from Ciro Santilli : https://stackoverflow.com/questions/11175694/bullet-physics-simplest-collision-example
 #define PRINTF_FLOAT "%7.3f"
 
-#include "QF_Log.h"
-
 #include "QF_b3_PhysicsFactory.h"
 
 namespace QwerkE {
@@ -50,6 +41,8 @@ namespace QwerkE {
     void Loop();
 
     std::vector<btVector3> g_Collisions;
+
+    bool g_initialized = false;
 
     const float g_Gravity = -10.0f;
     const float g_InitialY = 10.0f;
@@ -88,6 +81,8 @@ namespace QwerkE {
 
         // RegisterObject(CreateRigidSphere(btVector3(0, g_InitialY, 0), 1.0f, STATIC_MASS));
 
+        g_initialized = true;
+
         LOG_INFO("Physics system initialized successfully");
     }
 
@@ -121,16 +116,24 @@ namespace QwerkE {
         delete g_OverlappingPairCache;
         delete g_DynamicsWorld;
         g_CollisionShapes.clear();
+
+        g_initialized = false;
     }
 
     void Physics::Tick()
     {
+        if (!g_initialized)
+            return;
+
         PROFILE_SCOPE("Physics Step");
         g_DynamicsWorld->stepSimulation(g_TimeStep);
     }
 
     void Physics::RegisterObject(btRigidBody* rigidBody)
     {
+        if (!g_initialized)
+            return;
+
         // TODO: Error handling
         g_CollisionShapes.push_back(rigidBody->getCollisionShape());
         g_DynamicsWorld->addRigidBody(rigidBody);
@@ -138,6 +141,9 @@ namespace QwerkE {
 
     void Physics::UnregisterObject(btRigidBody* rigidBody)
     {
+        if (!g_initialized)
+            return;
+
         // TODO: Error handling
         g_CollisionShapes.remove(rigidBody->getCollisionShape());
         g_DynamicsWorld->removeRigidBody(rigidBody);
@@ -155,6 +161,9 @@ namespace QwerkE {
 
     void TickCallback(btDynamicsWorld* dynamicsWorld, btScalar timeStep)
     {
+        if (!g_initialized)
+            return;
+
         g_Collisions.clear();
 
         int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
@@ -186,12 +195,14 @@ namespace QwerkE {
 
     bool CollisionCallBack(btManifoldPoint& cp, const btCollisionObject* obj1, int id1, int index1, const btCollisionObject* obj2, int id2, int index2)
     {
-
         return false;
     }
 
     void Loop()
     {
+        if (!g_initialized)
+            return;
+
         // Main loop.
         std::printf("step body x y z collision a b normal\n");
 
@@ -240,4 +251,8 @@ namespace QwerkE {
     }
 
 }
+#elif qw_HAVOC
+#elif qw_PHYSX
+#else
+#pragma error "No physics library specified!"
 #endif

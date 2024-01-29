@@ -16,6 +16,8 @@ namespace QwerkE {
 
         virtual void* GetContext() = 0;
 
+        virtual void Render() = 0;
+
         virtual void SwapBuffers() = 0;
 
         void SetClosing(bool closing) { m_IsClosing = closing; };

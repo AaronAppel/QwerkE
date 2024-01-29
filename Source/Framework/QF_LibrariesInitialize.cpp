@@ -12,7 +12,7 @@ namespace QwerkE {
 
     static bool s_IsInitialized = false;
 
-    bool Libs_Setup()
+    eEngineMessage Libs_Setup()
     {
         // #TODO This logic tests to see if libraries can load, and then unloads them.
         // This logic should exist in other systems.
@@ -24,14 +24,14 @@ namespace QwerkE {
         ConfigData configData = ConfigHelper::GetConfigData();
         // if (configData.systems.AudioEnabled) {}
 
-        bool errorFree = true;
+        eEngineMessage returnMessage = eEngineMessage::_QSuccess;
         LOG_TRACE("{0}: Initializing libraries...", __FUNCTION__);
 
         FT_Library freeType;
         if (FT_Init_FreeType(&freeType))
         {
             LOG_ERROR("Error loading freetype2!");
-            errorFree = false;
+            returnMessage = eEngineMessage::_QFailure;
         }
         else
         {
@@ -42,7 +42,7 @@ namespace QwerkE {
         if (!glfwInit())
         {
             LOG_ERROR("Error loading GLFW step 1!");
-            errorFree = false;
+            returnMessage = eEngineMessage::_QFailure;
         }
         else
         {
@@ -68,7 +68,7 @@ namespace QwerkE {
             if (!testWindow)
             {
                 LOG_ERROR("Error loading GLFW step 2!");
-                errorFree = false;
+                returnMessage = eEngineMessage::_QFailure;
 
                 /*int code = glfwGetError(NULL);
 
@@ -115,7 +115,7 @@ namespace QwerkE {
                 if (glewInit() != GLEW_OK)
                 {
                     LOG_ERROR("Error loading GLEW!");
-                    errorFree = false;
+                    returnMessage = eEngineMessage::_QFailure;
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace QwerkE {
         if (context == nullptr)
         {
             LOG_ERROR("Error loading imgui!");
-            errorFree = false;
+            returnMessage = eEngineMessage::_QFailure;
         }
         else
         {
@@ -161,7 +161,8 @@ namespace QwerkE {
             ImGui_ImplOpenGL3_Init("#version 410");
         }
 
-        if (errorFree)
+        s_IsInitialized = returnMessage == eEngineMessage::_QSuccess;
+        if (s_IsInitialized)
         {
             LOG_TRACE("{0}: Libraries initialized successfully", __FUNCTION__);
         }
@@ -170,11 +171,10 @@ namespace QwerkE {
             LOG_CRITICAL("{0}: Error loading libraries!", __FUNCTION__);
         }
 
-        s_IsInitialized = errorFree;
-        return errorFree;
+        return returnMessage;
     }
 
-    void Libs_TearDown()
+    eEngineMessage Libs_TearDown()
     {
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
@@ -182,6 +182,8 @@ namespace QwerkE {
         Log::Shutdown();
 
         s_IsInitialized = false;
+
+        return eEngineMessage::_QSuccess;
     }
 
 }

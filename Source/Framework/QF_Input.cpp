@@ -4,6 +4,8 @@
 #include "QF_MouseExtApi.h"
 #include "QF_KeyboardExtApi.h"
 #include "QF_Enums.h"
+#include "QF_Window.h"
+#include "QF_Windows.h"
 
 namespace QwerkE {
 
@@ -20,18 +22,16 @@ namespace QwerkE {
     // TEMP: Conversion function for GLFW to QwerkE
     unsigned short* Input::m_KeyCodex = nullptr;
 
-#ifdef GLFW3
-    void Input::Initialize(GLFWwindow* window)
-    {
-        Initialize();
-        SetupGLFWKeyCodex(); // TODO: Change
-        SetupCallbacks(window);
-    }
-#endif // GLFW3
-
     void Input::Initialize()
     {
-        // Create input devices
+#ifdef GLFW3
+        m_KeyCodex = new unsigned short[GLFW_KEY_LAST];
+        memset(m_KeyCodex, 0, GLFW_KEY_LAST); // set values to 0
+
+        SetupGLFWKeyCodex();
+        SetupCallbacks((GLFWwindow*)Windows::GetWindow(0)->GetContext());
+#endif // GLFW3
+
         Keyboard* keyboard = new Keyboard(eInputDeviceTypes::Keyboard_Device0);
         Mouse* mouse = new Mouse(eInputDeviceTypes::Mouse_Device0);
         AddDevice(keyboard);
@@ -39,9 +39,6 @@ namespace QwerkE {
 
         AssignSystemKeys(keyboard);
         AssignSystemKeys(mouse);
-
-        m_KeyCodex = new unsigned short[GLFW_KEY_LAST];
-        memset(m_KeyCodex, 0, GLFW_KEY_LAST); // set values to 0
 
         NewFrame(); // Init buffers
         m_KeyboardAPI = new KeyboardExtAPI(keyboard);

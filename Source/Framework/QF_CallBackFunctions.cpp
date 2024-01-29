@@ -56,7 +56,7 @@ namespace QwerkE {
             }
             else if (strcmp(dropFileExtension, "fbx") == 0 || strcmp(GetFileExtension(*paths).c_str(), "obj") == 0)
             {
-                FileSystem::LoadModelFileToMeshes(*paths);
+                File::LoadModelFileToMeshes(*paths);
             }
             else
             {

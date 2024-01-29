@@ -22,8 +22,7 @@ namespace QwerkE {
         static float GetSphereRestitution();
 
     protected:
-        Physics() {}
-        ~Physics() {}
+        Physics() = default;
 
         static void LibraryInitialize();
     };

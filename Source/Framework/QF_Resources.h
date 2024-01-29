@@ -9,6 +9,7 @@
 #include "Libraries/OpenAL/include/al.h"
 
 #include "QF_Constants.h"
+#include "QF_Graphics_Header.h"
 
 // For instances where 1 asset may be shared between objects in
 // possibly many scenes, the Resources() may want to count
@@ -64,10 +65,10 @@ namespace QwerkE {
         static FT_Face GetFontFromPath(const char* filePath);
         static ALuint GetSound(const char* name); // specify .ext
         static ALuint GetSoundFromPath(const char* filePath);
-        static ShaderProgram* GetShaderProgram(const char* name); // specify .ext
+        static ShaderProgram* GetShaderProgram(const char* name); // #TODO specify .ext
         static ShaderProgram* GetShaderProgramFromPath(const char* filePath);
-        static ShaderComponent* GetShaderComponent(const char* name); // specify .ext
-        static ShaderComponent* GetShaderComponentFromPath(const char* filePath);
+        static ShaderComponent* GetShaderComponent(const char* name, eShaderComponentTypes componentType);
+        static ShaderComponent* GetShaderComponentFromPath(const char* filePath, eShaderComponentTypes componentType);
 
         static const std::map<std::string, Mesh*>* SeeMeshes() { return &m_Meshes; };
         static const std::map<std::string, Texture*>* SeeTextures() { return &m_Textures; };

@@ -64,7 +64,7 @@ namespace QwerkE {
 
 		bool LoadModelFileToMeshes(const char* path)
 		{
-			// TODO: heck if a model with the same name already exists
+			// TODO: Check if a model with the same name already exists
 
 			// TODO: Prevent the same model from being loaded
 

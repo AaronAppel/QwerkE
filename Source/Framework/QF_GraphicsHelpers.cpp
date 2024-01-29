@@ -8,6 +8,7 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_FileUtilities.h"
+#include "QF_Graphics_Header.h"
 #include "QF_ogl_Helpers.h"
 #include "QF_RenderComponent.h"
 #include "QF_Resources.h"
@@ -339,12 +340,12 @@ namespace QwerkE {
         }
 
         // #TODO Test
-        shader->SetVertShader(Resources::GetShaderComponent(shader->GetVertName().c_str()));
-        shader->SetFragShader(Resources::GetShaderComponent(shader->GetFragName().c_str()));
+        shader->SetVertShader(Resources::GetShaderComponent(shader->GetVertName().c_str(), eShaderComponentTypes::Vertex));
+        shader->SetFragShader(Resources::GetShaderComponent(shader->GetFragName().c_str(), eShaderComponentTypes::Fragment));
 
         if (!shader->GetGeoName().empty() && shader->GetGeoName() != gc_DefaultStringValue)
         {
-            shader->SetGeoShader(Resources::GetShaderComponent(shader->GetGeoName().c_str()));
+            shader->SetGeoShader(Resources::GetShaderComponent(shader->GetGeoName().c_str(), eShaderComponentTypes::Geometry));
         }
 
         return shader;

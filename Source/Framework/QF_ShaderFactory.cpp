@@ -23,34 +23,34 @@ namespace QwerkE {
         if (LinkCreatedShaderProgram(shader))
         {
             shader->FindAttributesAndUniforms();
-            return shader;
         }
         else
         {
             delete shader;
-            return nullptr;
+            shader = nullptr;
         }
+        return shader;
     }
 
     ShaderProgram* ShaderFactory::CreateShader(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir)
     {
-        ShaderProgram* shader = new ShaderProgram();
         if (vertFileDir) CreateShaderComponent(GL_VERTEX_SHADER, vertFileDir);
         if (fragFileDir) CreateShaderComponent(GL_VERTEX_SHADER, fragFileDir);
         if (geoFileDir) CreateShaderComponent(GL_VERTEX_SHADER, geoFileDir);
 
+        ShaderProgram* shader = new ShaderProgram();
         if (LinkCreatedShaderProgram(shader))
         {
             shader->FindAttributesAndUniforms();
-            return shader;
         }
         else
         {
             delete shader;
-            return nullptr;
+            shader = nullptr;
         }
+        return shader;
     }
-    // Returns new shader handle is successful, else 0
+
     ShaderComponent* ShaderFactory::CreateShaderComponent(GLenum shaderType, const char* shaderPath)
     {
         const char* shaderString = LoadCompleteFile(shaderPath, 0); // #TODO Allocation
@@ -65,16 +65,16 @@ namespace QwerkE {
 
     ShaderComponent* ShaderFactory::GenerateShaderFromData(GLenum shaderType, const char* shaderData)
     {
-        GLuint shaderHandle = glCreateShader(shaderType); // fails if context is not current for GLFW
+        GLuint shaderHandle = glCreateShader(shaderType);
 
         glShaderSource(shaderHandle, 1, &shaderData, NULL);
         glCompileShader(shaderHandle);
 
         GLint success = 0;
         glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &success);
+
         if (!success)
         {
-            // Error compiling shader
             GLchar infoLog[512];
             glGetShaderInfoLog(shaderHandle, 512, NULL, infoLog);
 
@@ -88,11 +88,10 @@ namespace QwerkE {
 
             char* next_token = 0;
             char* ShaderName = strtok_s((char*)shaderData, "\n", &next_token);
-            // TODO: error reads as garbage characters.
-            LOG_ERROR("%s: ShaderFactory: CreateShader(Glenum, const char*) {0} compile error-> ", ShaderName, shaderTypeString);
-            LOG_ERROR(infoLog); // OpenGL message
 
-            // cleanup
+            LOG_ERROR("%s: ShaderFactory: CreateShader(Glenum, const char*) {0} compile error-> ", ShaderName, shaderTypeString);
+            LOG_ERROR(infoLog);
+
             glDeleteShader(shaderHandle);
             shaderHandle = 0;
             return nullptr;
@@ -111,39 +110,37 @@ namespace QwerkE {
         if (vert == 0 && frag == 0 && geo == 0)
         {
             LOG_ERROR("No valid shader handles were given!");
-            return 0; // #TODO Return a constant
+            return 0;
         }
         return LinkShaders(vert, frag, geo);
     }
 
     bool ShaderFactory::LinkCreatedShaderProgram(ShaderProgram* shader)
     {
-        if (shader)
+        if (!shader)
         {
-            if (shader->GetVertShader() || shader->GetFragShader() || shader->GetGeoShader())
-            {
-                // TODO: Add in geometry shader support
-                // GLuint result = LinkShaders(shader->GetVertShader()->GetHandle(), shader->GetFragShader()->GetHandle(), shader->GetGeoShader()->GetHandle());
-                GLuint result = LinkShaders(shader->GetVertShader(), shader->GetFragShader(), shader->GetGeoShader());
-                if (result != 0)
-                {
-                    shader->SetProgram(result);
-                    return true;
-                }
-                else
-                    LOG_ERROR("Shader link failed for shader program: {0}", shader->GetName());
+            LOG_ERROR("Shader link failed because of null ShaderProgram!");
+            return false;
+        }
 
-                return false;
+        if (shader->GetVertShader() || shader->GetFragShader() || shader->GetGeoShader())
+        {
+            // TODO: Add in geometry shader support
+            // GLuint result = LinkShaders(shader->GetVertShader()->GetHandle(), shader->GetFragShader()->GetHandle(), shader->GetGeoShader()->GetHandle());
+            GLuint result = LinkShaders(shader->GetVertShader(), shader->GetFragShader(), shader->GetGeoShader());
+            if (result != 0)
+            {
+                shader->SetProgram(result);
+                return true;
             }
             else
-            {
-                LOG_ERROR("Shader link failed because of null ShaderComponent(s) for shader: {0}", shader->GetName());
-                return false;
-            }
+                LOG_ERROR("Shader link failed for shader program: {0}", shader->GetName());
+
+            return false;
         }
         else
         {
-            LOG_ERROR("Shader link failed because of null ShaderProgram!");
+            LOG_ERROR("Shader link failed because of null ShaderComponent(s) for shader: {0}", shader->GetName());
             return false;
         }
         return true;
@@ -151,30 +148,26 @@ namespace QwerkE {
 
     GLuint ShaderFactory::CreateVertexShader(const char* vertPath)
     {
-        GLuint shaderHandle = glCreateShader(GL_VERTEX_SHADER); // fails if context is not current for GLFW
-
-        const char* data = LoadCompleteFile(vertPath, 0);
-        if (data)
+        if (const char* data = LoadCompleteFile(vertPath, 0))
         {
+            GLuint shaderHandle = glCreateShader(GL_VERTEX_SHADER);
             glShaderSource(shaderHandle, 1, &data, NULL);
             glCompileShader(shaderHandle);
 
             GLint success = 0;
             glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &success);
+
             if (!success)
             {
-                // Error compiling shader
                 GLchar infoLog[512];
                 glGetShaderInfoLog(shaderHandle, 512, NULL, infoLog);
 
                 char* next_token = 0;
                 char* ShaderName = strtok_s((char*)data, "\n", &next_token);
-                // TODO: error reads as garbage characters.
 
                 LOG_ERROR("{0}: ShaderFactory: CreateShader(Glenum, const char*) {1} compile error-> ", ShaderName, "GL_VERTEX_SHADER");
-                LOG_ERROR(infoLog); // OpenGL message
+                LOG_ERROR(infoLog);
 
-                // cleanup
                 glDeleteShader(shaderHandle);
                 delete[] data;
                 return 0;

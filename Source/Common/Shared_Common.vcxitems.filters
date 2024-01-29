@@ -124,6 +124,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Framework\QF_Mirror.cpp">
       <Filter>Libraries\Mirror</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.cpp">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h">
@@ -2624,6 +2627,9 @@
       <Filter>Libraries\Mirror</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Reflection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">

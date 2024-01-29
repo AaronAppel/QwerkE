@@ -11,12 +11,13 @@ namespace QwerkE {
     class Windows
     {
     public:
-        static void AddWindow(Window* window);
         static Window* GetWindow(uint windowID);
         static const Window* GetLastFocusedWindow();
 
         static void Initialize();
         static void Shutdown();
+
+        static void Render();
 
     private:
         Windows() = default;

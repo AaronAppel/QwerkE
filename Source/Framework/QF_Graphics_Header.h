@@ -20,10 +20,19 @@ namespace QwerkE {
 
     enum eShaderTypes
     {
-        eShader_Basic2D = 0,
+        eShader_Basic2D = 0, // #TODO Add none? Might mess up data
         eShader_Basic3D,
-        eShader_LitMaterial
-        // TODO: Add max and null values?
+        eShader_LitMaterial,
+        eShaderTypes_Max
+    };
+
+    enum eShaderComponentTypes
+    {
+        None = 0,
+        Vertex,
+        Fragment,
+        Geometry,
+        eShaderComponentTypes_Max
     };
 
 }

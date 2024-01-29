@@ -32,12 +32,10 @@ namespace QwerkE {
 		for (auto object : m_Materials)
 			delete object.second;
 
-		// TODO: delete fonts
-
-		m_Meshes.clear(); // Empty std::maps
+		m_Meshes.clear();
 		m_Textures.clear();
 		m_Materials.clear();
-		// m_Fonts.clear();
+		// m_Fonts.clear(); // #TODO Delete fonts
 	}
 
 	bool Resources::MeshExists(const char* name)
@@ -89,13 +87,13 @@ namespace QwerkE {
 
 	bool Resources::AddTexture(const char* name, Texture* texture)
 	{
-		if (!texture)
+		if (!name || !texture)
 			return false;
 
 		if (TextureExists(name))
 			return false;
 
-		if (texture->s_Handle == 0) // || texture->name == g_DefaultStringValue)
+		if (texture->s_Handle == 0)
 			return false;
 
 		m_Textures[name] = texture;
@@ -106,7 +104,7 @@ namespace QwerkE {
 	{
 		// EarlyReturnIfNull(2, name, material);
 
-		if (!material || MaterialExists(name))
+		if (!name || !material || MaterialExists(name))
 			return false;
 
 		if (material->GetMaterialName() == gc_DefaultStringValue)
@@ -167,6 +165,9 @@ namespace QwerkE {
 
 	Mesh* Resources::GetMesh(const char* meshName)
 	{
+		if (!meshName)
+			return m_Meshes[null_mesh];
+
 		if (m_Meshes.find(meshName) != m_Meshes.end())
 		{
 			return m_Meshes[meshName];
@@ -176,10 +177,15 @@ namespace QwerkE {
 
 	Mesh* Resources::GetMeshFromFile(const char* fileName, const char* meshName)
 	{
-        if (MeshExists(meshName))
-            return m_Meshes[meshName];
+		if (!meshName)
+			return m_Meshes[null_mesh];
 
-		Mesh* result = FileSystem::LoadMeshInModelByName(MeshesFolderPath(fileName), meshName);
+		if (MeshExists(meshName))
+		{
+			return m_Meshes[meshName];
+		}
+
+		Mesh* result = File::LoadMeshInModelByName(MeshesFolderPath(fileName), meshName);
 		if (result)
 		{
 			m_Meshes[meshName] = result;
@@ -190,11 +196,17 @@ namespace QwerkE {
 
 	void Resources::UpdateTexture(const char* name, int handle)
 	{
-		m_Textures[name]->s_Handle = (GLuint)handle;
+		if (name)
+		{
+			m_Textures[name]->s_Handle = (GLuint)handle;
+		}
 	}
 
 	Texture* Resources::GetTexture(const char* name)
 	{
+		if (!name)
+			return m_Textures[null_texture];
+
 		if (m_Textures.find(name) != m_Textures.end())
 			return m_Textures[name];
 
@@ -229,6 +241,9 @@ namespace QwerkE {
 
 	Texture* Resources::GetTextureFromPath(const char* filePath)
 	{
+		if (!filePath)
+			return m_Textures[null_texture];
+
 		if (TextureExists(GetFileNameWithExt(filePath).c_str()))
 			return m_Textures[GetFileNameWithExt(filePath).c_str()];
 
@@ -237,6 +252,9 @@ namespace QwerkE {
 
 	Material* Resources::GetMaterial(const char* name)
 	{
+		if (!name)
+			return m_Materials[null_material];
+
 		if (m_Materials.find(name) != m_Materials.end())
 			return m_Materials[name];
 
@@ -245,6 +263,9 @@ namespace QwerkE {
 
 	Material* Resources::GetMaterialFromPath(const char* filePath)
 	{
+		if (!filePath)
+			return m_Materials[null_material];
+
 		if (m_Materials.find(GetFileNameWithExt(filePath).c_str()) != m_Materials.end())
 			return m_Materials[GetFileNameWithExt(filePath).c_str()];
 
@@ -253,6 +274,9 @@ namespace QwerkE {
 
 	FT_Face Resources::GetFont(const char* name)
 	{
+		if (!name)
+			return m_Fonts[null_font];
+
 		if (m_Fonts.find(name) != m_Fonts.end())
 			return m_Fonts[name];
 
@@ -261,6 +285,9 @@ namespace QwerkE {
 
 	FT_Face Resources::GetFontFromPath(const char* filePath)
 	{
+		if (!filePath)
+			return m_Fonts[null_font];
+
 		if (m_Fonts.find(GetFileNameWithExt(filePath).c_str()) != m_Fonts.end())
 			return m_Fonts[GetFileNameWithExt(filePath).c_str()];
 
@@ -269,6 +296,9 @@ namespace QwerkE {
 
 	ALuint Resources::GetSound(const char* name)
 	{
+		if (!name)
+			return m_Sounds[null_sound];
+
 		if (SoundExists(name))
 			return m_Sounds[name];
 
@@ -277,6 +307,9 @@ namespace QwerkE {
 
 	ALuint Resources::GetSoundFromPath(const char* filePath)
 	{
+		if (!filePath)
+			return m_Sounds[null_sound];
+
 		if (SoundExists(GetFileNameWithExt(filePath).c_str()))
 			return m_Sounds[GetFileNameWithExt(filePath).c_str()];
 
@@ -285,6 +318,9 @@ namespace QwerkE {
 
 	ShaderProgram* Resources::GetShaderProgram(const char* name)
 	{
+		if (!name)
+			return m_ShaderPrograms[null_shader];
+
 		if (ShaderProgramExists(name))
 			return m_ShaderPrograms[name];
 
@@ -293,22 +329,69 @@ namespace QwerkE {
 
 	ShaderProgram* Resources::GetShaderProgramFromPath(const char* filePath)
 	{
+		if (!filePath)
+			return m_ShaderPrograms[null_shader];
+
 		if (ShaderProgramExists(GetFileNameWithExt(filePath).c_str()))
 			return m_ShaderPrograms[GetFileNameWithExt(filePath).c_str()];
 
 		return InstantiateShaderProgram(filePath);
 	}
 
-	ShaderComponent* Resources::GetShaderComponent(const char* name)
+	ShaderComponent* Resources::GetShaderComponent(const char* name, eShaderComponentTypes componentType)
 	{
+		if (!name)
+		{
+			switch (componentType)
+			{
+			case QwerkE::Vertex:
+				return m_ShaderComponents[StringAppend(null_shader, vertex_shader_ext)];
+				break;
+
+			case QwerkE::Fragment:
+				return m_ShaderComponents[StringAppend(null_shader, fragment_shader_ext)];
+				break;
+
+			case QwerkE::Geometry:
+				return m_ShaderComponents[StringAppend(null_shader, geometry_shader_ext)];
+				break;
+
+			default:
+				ASSERT(false, "Cannot determine return shader component for null filePath!");
+				break;
+			}
+		}
+
 		if (ShaderComponentExists(name))
 			return m_ShaderComponents[name];
 
 		return InstantiateShaderComponent(ShadersFolderPath(name));
 	}
 
-	ShaderComponent* Resources::GetShaderComponentFromPath(const char* filePath)
+	ShaderComponent* Resources::GetShaderComponentFromPath(const char* filePath, eShaderComponentTypes componentType)
 	{
+		if (!filePath)
+		{
+			switch (componentType)
+			{
+			case QwerkE::Vertex:
+				return m_ShaderComponents[StringAppend(null_shader, vertex_shader_ext)];
+				break;
+
+			case QwerkE::Fragment:
+				return m_ShaderComponents[StringAppend(null_shader, fragment_shader_ext)];
+				break;
+
+			case QwerkE::Geometry:
+				return m_ShaderComponents[StringAppend(null_shader, geometry_shader_ext)];
+				break;
+
+			default:
+				ASSERT(false, "Cannot determine return shader component for null filePath!");
+				break;
+			}
+		}
+
 		if (ShaderComponentExists(GetFileNameWithExt(filePath).c_str()))
 			return m_ShaderComponents[GetFileNameWithExt(filePath).c_str()];
 
@@ -317,6 +400,9 @@ namespace QwerkE {
 
 	bool Resources::IsUnique(Mesh* mesh)
 	{
+		if (!mesh)
+			return false;
+
 		std::map<std::string, Mesh*>::iterator it;
 		for (it = m_Meshes.begin(); it != m_Meshes.end(); it++)
 		{
@@ -328,6 +414,9 @@ namespace QwerkE {
 
 	bool Resources::IsUnique(Texture* texturehandle)
 	{
+		if (!texturehandle)
+			return false;
+
 		std::map<std::string, Texture*>::iterator it;
 		for (it = m_Textures.begin(); it != m_Textures.end(); it++)
 		{
@@ -339,6 +428,9 @@ namespace QwerkE {
 
 	bool Resources::IsUnique(Material* material)
 	{
+		if (!material)
+			return false;
+
 		std::map<std::string, Material*>::iterator it;
 		for (it = m_Materials.begin(); it != m_Materials.end(); it++)
 		{
@@ -372,6 +464,9 @@ namespace QwerkE {
 
 	bool Resources::IsShaderProgramUnique(ShaderProgram* shaderProgram)
 	{
+		if (!shaderProgram)
+			return false;
+
 		std::map<std::string, ShaderProgram*>::iterator it;
 		for (it = m_ShaderPrograms.begin(); it != m_ShaderPrograms.end(); it++)
 		{
@@ -383,6 +478,9 @@ namespace QwerkE {
 
 	bool Resources::IsShaderComponentsUnique(ShaderComponent* shaderComponent)
 	{
+		if (!shaderComponent)
+			return false;
+
 		std::map<std::string, ShaderComponent*>::iterator it;
 		for (it = m_ShaderComponents.begin(); it != m_ShaderComponents.end(); it++)
 		{
