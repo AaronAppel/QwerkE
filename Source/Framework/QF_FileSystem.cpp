@@ -24,6 +24,12 @@
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/FlatheadGames/ImageHelpers.h"
 
+#include "QF_Defines.h"
+
+#ifdef OpenAL
+#include "Libraries/OpenAL/include/al.h"
+#include "Libraries/OpenAL/include/alc.h"
+#endif
 
 #include "QC_StringHelpers.h"
 
@@ -34,13 +40,15 @@
 #include "QF_Resources.h"
 #include "QF_Log.h"
 
-#include "QF_Defines.h"
-
 #include "QF_Mesh.h"
-#include "QF_oal_Helpers.h"
 
 namespace QwerkE
 {
+
+#ifdef OpenAL
+	void CheckForOpenALErrors(const char* file, int line);
+	ALuint OpenAL_LoadSound(const QSoundFile& soundFile);
+#endif
 
 	unsigned char* priv_QwerkE_stb_image_loadImage(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
 	{
@@ -225,5 +233,77 @@ namespace QwerkE
 
 		return true;
 	}
+
+#ifdef OpenAL
+	void CheckForOpenALErrors(const char* file, int line)
+	{
+		const ALenum alErrorCode = alGetError();
+		switch (alErrorCode)
+		{
+		case AL_NO_ERROR:
+			break;
+		case AL_INVALID_NAME: // Same as ALC_INVALID_DEVICE
+			LOG_ERROR("AL_INVALID_NAME");
+			break;
+		case AL_INVALID_ENUM: // Same as ALC_INVALID_CONTEXT
+			LOG_ERROR("AL_INVALID_ENUM");
+			break;
+		case AL_INVALID_VALUE:
+			LOG_ERROR("AL_INVALID_VALUE");
+			break;
+		case AL_OUT_OF_MEMORY:
+			LOG_ERROR("AL_OUT_OF_MEMORY");
+			break;
+		default:
+			LOG_ERROR("alGetError: Unknown error caught in file {0}({1})", file, line);
+			break;
+		}
+	}
+
+	ALuint OpenAL_LoadSound(const QSoundFile& soundFile)
+	{
+		if (soundFile.s_Data == nullptr)
+			return 0;
+
+		ALuint retValue = 0;
+		GLenum format = 0;
+
+		if (soundFile.s_Channels == 1)
+		{
+			if (soundFile.s_BitsPerSample == 16)
+				format = AL_FORMAT_MONO16;
+			else if (soundFile.s_BitsPerSample == 8)
+				format = AL_FORMAT_MONO8;
+			else
+			{
+				LOG_ERROR("OpenAL_LoadSound(): Invalid bits per sample in file {0}", soundFile.s_FileName);
+				return 0;
+			}
+		}
+		else if (soundFile.s_Channels == 2)
+		{
+			if (soundFile.s_BitsPerSample == 16)
+				format = AL_FORMAT_STEREO16;
+			else if (soundFile.s_BitsPerSample == 8)
+				format = AL_FORMAT_STEREO8;
+			else
+			{
+				LOG_ERROR("OpenAL_LoadSound(): Invalid bits per sample in file {0}", soundFile.s_FileName);
+				return 0;
+			}
+		}
+		else
+		{
+			LOG_ERROR("OpenAL_LoadSound(): Unsupported number of channels in file {0}", soundFile.s_FileName);
+			return 0;
+		}
+
+		alGenBuffers(1, &retValue);
+		alBufferData(retValue, format, soundFile.s_Data, soundFile.s_Size, soundFile.s_Frequency);
+
+		CheckForOpenALErrors(__FILE__, __LINE__);
+		return retValue;
+	}
+#endif
 
 }

@@ -49,7 +49,7 @@ namespace QwerkE {
 
         FrameBufferObject* m_FBO;
         std::vector<GLuint> m_ModelImageHandles;
-        void DrawModelThumbnails();
+        void RenderModelThumbnails();
 
         GameObject* m_ModelToDraw = nullptr;
         GameObject* m_AssetTagPlane = nullptr;

@@ -39,22 +39,18 @@ namespace QwerkE {
 
         m_ViewerScene = new ViewerScene();
 
-        // m_Subject = ((Factory*)QwerkE::Services::GetService(eEngineServices::Factory_Entity))->CreateTestModel(m_ViewerScene, vec3(0, -3.5, 15));
-        // m_Subject->SetRotation(vec3(0,180,0));
-
         m_AssetTagPlane = Factory::CreatePlane(m_ViewerScene, vec3(2, -2, 10));
         m_AssetTagPlane->SetRotation(vec3(90, 0, 0));
         m_AssetTagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));
-
-        // m_ViewerScene->AddObjectToScene(m_Subject);
         m_ViewerScene->AddObjectToScene(m_AssetTagPlane);
+
         m_ViewerScene->Initialize();
         m_ViewerScene->SetIsEnabled(true);
         ((ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera))->SetViewportSize(vec2(1, 1));
 
         Scenes::AddScene(m_ViewerScene);
 
-        DrawModelThumbnails();
+        RenderModelThumbnails();
     }
 
     ResourceViewer::~ResourceViewer()
@@ -85,7 +81,7 @@ namespace QwerkE {
         ImGui::SameLine(ImGui::GetWindowWidth() - (strlen(s_refreshButtonText) * 9.f));
         if (ImGui::Button(s_refreshButtonText))
         {
-            DrawModelThumbnails();
+            RenderModelThumbnails();
         }
 
         ImGui::Separator();
@@ -240,7 +236,7 @@ namespace QwerkE {
         ImGui::End();
     }
 
-    void ResourceViewer::DrawModelThumbnails()
+    void ResourceViewer::RenderModelThumbnails()
     {
         // Dump old values. maybe calculate what changed in the future
         m_ModelImageHandles.clear();

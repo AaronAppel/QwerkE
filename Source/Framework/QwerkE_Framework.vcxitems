@@ -64,7 +64,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MouseExtApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MyFileWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_oal_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_OpenAL_Component.cpp" />
@@ -164,7 +163,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MyLinkedList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ObjectPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.h" />

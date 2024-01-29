@@ -35,7 +35,7 @@ namespace QwerkE {
 		m_Meshes.clear();
 		m_Textures.clear();
 		m_Materials.clear();
-		// m_Fonts.clear(); // #TODO Delete fonts
+		m_Fonts.clear();
 	}
 
 	bool Resources::MeshExists(const char* name)
@@ -210,33 +210,10 @@ namespace QwerkE {
 		if (m_Textures.find(name) != m_Textures.end())
 			return m_Textures[name];
 
-		// TODO: After a texture has been requested, create an entry in the map with null data.
-		// When the data is loaded, replace the null data.
-		// This is too avoid multiple loading of the same assets.
+		if (TextureExists(name))
+			return m_Textures[GetFileNameWithExt(name).c_str()];
 
-		//* <-- toggle double slash
-		else
-		{
-			// NOTE: Auto loading should be avoided. Callers expecting to load a file should check if it exists already.
-			if (FileExists(TexturesFolderPath(name)))
-			{
-				Texture* tex = new Texture();
-				tex->s_Handle = m_Textures[null_texture]->s_Handle;
-				tex->s_FileName = GetFileNameWithExt(name);
-				m_Textures[tex->s_FileName] = tex;
-
-				Jobs::ScheduleTask(new QLoadAsset(name));
-				return m_Textures[tex->s_FileName];
-			}
-			else
-			{
-				return m_Textures[null_texture];
-			}
-		}
-		/*/
 		return InstantiateTexture(TexturesFolderPath(name));
-		// */
-		return nullptr;
 	}
 
 	Texture* Resources::GetTextureFromPath(const char* filePath)

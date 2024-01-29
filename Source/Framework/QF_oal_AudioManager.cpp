@@ -3,13 +3,22 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_Defines.h"
-#include "QF_oal_Helpers.h"
+
+#ifdef OpenAL
+#include "Libraries/OpenAL/include/al.h"
+#include "Libraries/OpenAL/include/alc.h"
+#endif
+
 #include "QF_Log.h"
 #include "QF_FileSystem.h"
 #include "QF_Resources.h"
 #include "QF_AudioSource.h"
 
 namespace QwerkE {
+
+#ifdef OpenAL
+	std::string list_audio_devices(const ALCchar* devices);
+#endif
 
 	bool OpenALAudioManager::Initialize()
 	{
@@ -72,5 +81,28 @@ namespace QwerkE {
 		ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
 		alListenerfv(AL_ORIENTATION, listenerOri);
 	}
+
+#ifdef OpenAL
+	// #TODO Look at rewriting rewrite sourced code
+	// Source : https://ffainelli.github.io/openal-example/
+	std::string list_audio_devices(const ALCchar* devices)
+	{
+		// TODO: Improve device detection and assignment
+		const ALCchar* device = devices, * next = devices + 1;
+		std::string retValue = device;
+		size_t len = 0;
+
+		LOG_TRACE("OpenAL devices list:");
+		LOG_TRACE("----------");
+		while (device && *device != '\0' && next && *next != '\0') {
+			LOG_TRACE("{0}", (char*)device);
+			len = strlen(device);
+			device += (len + 1);
+			next += (len + 2);
+		}
+		LOG_TRACE("----------");
+		return retValue;
+	}
+#endif
 
 }

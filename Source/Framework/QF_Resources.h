@@ -73,7 +73,6 @@ namespace QwerkE {
         static const std::map<std::string, Mesh*>* SeeMeshes() { return &m_Meshes; };
         static const std::map<std::string, Texture*>* SeeTextures() { return &m_Textures; };
         static const std::map<std::string, Material*>* SeeMaterials() { return &m_Materials; };
-        // static const std::map<std::string, >* LookAtFonts() { return &; };
         static const std::map<std::string, ALuint>* SeeSounds() { return &m_Sounds; };
         static const std::map<std::string, ShaderProgram*>* SeeShaderPrograms() { return &m_ShaderPrograms; };
         static const std::map<std::string, ShaderComponent*>* SeeShaderComponents() { return &m_ShaderComponents; };
@@ -84,7 +83,7 @@ namespace QwerkE {
         // Sound* GetSound(const char* name); // specify .ext
 
         // Load directory
-        // void LoadDirectory(const char* folder); // #TODO Move outside and into a FileLoader object
+        // void LoadDirectory(const char* folder); // #TODO Move outside and into a File class method
 
         // Cleanup
         static void DeleteAllResources();

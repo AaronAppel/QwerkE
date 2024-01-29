@@ -280,9 +280,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.cpp">
       <Filter>Extended\OpenAL</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_oal_Helpers.cpp">
-      <Filter>Extended\OpenAL</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.cpp">
       <Filter>Extended\OpenGL</Filter>
     </ClCompile>
@@ -567,9 +564,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Framework.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.h">
-      <Filter>Extended\OpenAL</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_Helpers.h">
       <Filter>Extended\OpenAL</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.h">

@@ -42,7 +42,7 @@ namespace QwerkE {
 			// Factory::CreateCube(this, vec3(-2, 1, 40));
 
 			// TEST:
-			// obj = Factory::CreateTestModel(this, vec3(0, -2, 30));
+			// obj = Factory::CreateNanosuit(this, vec3(0, -2, 30));
 			// obj->SetRotation(vec3(0, 0, 0));
 
 			for (int i = 0; i < 10; i++)

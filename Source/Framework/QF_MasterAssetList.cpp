@@ -131,17 +131,13 @@ namespace QwerkE {
 				m_Textures[texture->s_FileName] = texture;
 				return texture;
 			}
-			else
-			{
-				delete texture;
-				return m_Textures[null_texture];
-			}
+
+			delete texture;
+			return m_Textures[null_texture];
 		}
-		else
-		{
-			LOG_WARN("InstantiateTexture(): Texture not found: {0}", textureName);
-            return m_Textures[null_texture];
-		}
+
+		LOG_WARN("InstantiateTexture(): Texture not found: {0}", textureName);
+		return m_Textures[null_texture];
 	}
 
 	Material* Resources::InstantiateMaterial(const char* matName)
@@ -153,9 +149,13 @@ namespace QwerkE {
 		{
 			// TODO: Handle null or corrupt data
 			if (FileExists(matName))
+			{
 				material = LoadMaterialSchematic(matName);
+			}
 			else
+			{
 				material = LoadMaterialSchematic(TexturesFolderPath(matName));
+			}
 		}
 		else
         {
@@ -167,11 +167,9 @@ namespace QwerkE {
             LOG_WARN("InstantiateMaterial(): Material not found: {0}", matName);
 			return m_Materials[null_material]; // Do not add another material
 		}
-		else
-        {
-            m_Materials[GetFileNameWithExt(matName).c_str()] = material;
-            return material;
-		}
+
+		m_Materials[GetFileNameWithExt(matName).c_str()] = material;
+		return material;
 	}
 
 	FT_Face Resources::InstantiateFont(const char* fontName)

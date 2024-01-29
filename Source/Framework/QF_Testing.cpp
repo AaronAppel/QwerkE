@@ -88,7 +88,7 @@ namespace QwerkE {
         return nullptr;
     }
 
-    GameObject* Factory::CreateTestModel(Scene* scene, vec3 position)
+    GameObject* Factory::CreateNanosuit(Scene* scene, vec3 position)
     {
         if (!scene) return nullptr;
 
