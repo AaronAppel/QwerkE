@@ -2,40 +2,28 @@
 
 namespace QwerkE {
 
-    class SceneGraph;
     class EntityEditor;
-    class ResourceViewer;
-    class SceneViewer;
-    class ShaderEditor;
 
-    // FEATURE: Add cross panel communication to support features such as
+    // #TODO Create Obsidian feature ticket/note
+    // FEATURE: Add cross window panel communication to support features such as
     // drag and drop assets, trigger callbacks, input, etc.
     // Or just stop using editor subclasses and switch to base functions only.
 
     class Editor
     {
     public:
-        virtual void NewFrame() {}
-        virtual void Update() {}
-        virtual void Draw() = 0;
+        static void Initialize();
+        static void Shutdown();
 
-        virtual void ToggleEditorUi() = 0;
+        static void NewFrame() {}
+        static void Update() {}
+        static void Draw();
 
-        EntityEditor* GetEntityEditor() { return m_EntityEditor; }
+        static void ToggleEditorUi();
+
+        static EntityEditor* GetEntityEditor();
 
     protected:
-        Editor();
-        virtual ~Editor();
-
-        EntityEditor* m_EntityEditor = nullptr;
-        SceneGraph* m_SceneGraph = nullptr;
-        ShaderEditor* m_ShaderEditor = nullptr;
-        ResourceViewer* m_ResourceViewer = nullptr;
-        SceneViewer* m_SceneViewer = nullptr;
-
-        void* m_ActionWindow = nullptr; // FEATURE: Game and Scene windows. Multi scene views
-        void* m_MenuBar = nullptr;
-        void* m_ResourcePanel = nullptr;
     };
 
 }

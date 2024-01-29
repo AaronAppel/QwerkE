@@ -2,35 +2,32 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_ConfigEditor.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QE_imgui_Editor.h">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EditComponent.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Editor.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EntityEditor.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_ResourceViewer.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_SceneGraph.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_SceneViewer.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_ShaderEditor.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_MaterialEditor.h">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.h">
@@ -38,47 +35,44 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Editor">
-      <UniqueIdentifier>{9cd9d01e-0c42-48db-a17a-94a6969674b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\imgui_Editor">
-      <UniqueIdentifier>{8d50ac33-b895-4b9c-a419-64b18ffdfdcc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ProgramArguments">
       <UniqueIdentifier>{0df42337-3bda-4571-a886-cb4e39fe6585}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editors">
+      <UniqueIdentifier>{9cd9d01e-0c42-48db-a17a-94a6969674b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editors\imgui_Editor">
+      <UniqueIdentifier>{8d50ac33-b895-4b9c-a419-64b18ffdfdcc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_ConfigEditor.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_EditComponent.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_Editor.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_EntityEditor.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_MaterialEditor.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_ResourceViewer.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_SceneGraph.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_SceneViewer.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_ShaderEditor.cpp">
-      <Filter>Editor\imgui_Editor</Filter>
+      <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_Editor.cpp">
-      <Filter>Editor</Filter>
+      <Filter>Editors</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_ProgramArgs.cpp">
       <Filter>ProgramArguments</Filter>

@@ -67,12 +67,7 @@ namespace QwerkE {
 
 				Scene* newScene = new Scene(sceneFileName); // TODO: Improve how scene file names are assigned
 				newScene->LoadScene();
-
-				if (i == 0)
-					m_CurrentScene = newScene; // TODO: Improve default starting scene selection/specification
-
-				// TODO: m_Scenes[sceneFileName] = temp;
-				m_Scenes[(eSceneTypes)i] = newScene; // TODO: Deprecate enum type
+				AddScene(newScene, i == 0); // #TODO Improve default starting scene selection/specification
 			}
 
 			ClosecJSONStream(root);
@@ -84,7 +79,7 @@ namespace QwerkE {
 			emptyScene->Initialize();
 			emptyScene->LoadScene();
 			emptyScene->SetIsEnabled(true);
-            m_CurrentScene = emptyScene;
+			AddScene(emptyScene, true);
             LOG_WARN("Null scene loaded because no valid scene was found in: {0}", prefPath);
 		}
 		// TODO: Delete or manage prefPath memory
@@ -121,11 +116,16 @@ namespace QwerkE {
 		}
 	}
 
-	void Scenes::AddScene(Scene* scene)
+	void Scenes::AddScene(Scene* scene, bool setAsCurrentScene)
 	{
 		if (m_Scenes.find(scene->GetSceneID()) == m_Scenes.end())
 		{
 			m_Scenes[scene->GetSceneID()] = scene;
+
+			if (setAsCurrentScene)
+			{
+				m_CurrentScene = scene;
+			}
 		}
 	}
 

@@ -10,7 +10,6 @@
 
 #ifdef IMGUI_EDITOR
 #include "Libraries/imgui/QC_imgui.h"
-#include "QE_imgui_Editor.h"
 #else
 #pragma warning "Define editor library!"
 #endif
@@ -40,65 +39,61 @@
 #include "QF_Windows.h"
 
 #include "QE_Defines.h"
+#include "QE_Editor.h"
 #include "QE_ProgramArgs.h"
 
 namespace QwerkE {
 
 	namespace Engine
     {
-        static bool m_IsRunning = false;
-        static Editor* m_Editor = nullptr;
+        static bool s_IsRunning = false;
 
 		QwerkE::eEngineMessage Engine::Run(const std::map<const char*, const char*>& programArgPairs)
         {
 			Log::Print("-- Qwerk Engine %f %s", QWERKE_VERSION, "--\n");
 
-			// #TODO Open or close console output window using config.systems.ConsoleOutputWindowEnabled
-
             Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
-			PROFILE_SCOPE("Run"); // #TODO Review. Shouldn't need to persist constantly. Measure startup time instead.
 
-			if (programArgPairs.find(key_ProjectName) != programArgPairs.end())
 			{
-				// auto projectName = programArgPairs.find(key_ProjectName)->second;
+				PROFILE_SCOPE("Run");
 
-				// #TODO Load project folder
-				// Could find and save preferences file path for recent project(s)
-				// Show options to choose from with a list of recent projects, ordered by date.
-				// Add an option to auto-load most recently opened project
+				if (programArgPairs.find(key_ProjectName) != programArgPairs.end())
+				{
+					// auto projectName = programArgPairs.find(key_ProjectName)->second;
+
+					// #TODO Load project folder
+					// Could find and save preferences file path for recent project(s)
+					// Show options to choose from with a list of recent projects, ordered by date.
+					// Add an option to auto-load most recently opened project
+				}
+
+				// #TODO check if(initialized) in case user defined simple API.
+				// Might want to create another function for the game loop and
+				// leave Run() smaller and abstracted from the functionality.
+
+				if (Framework::Startup(ConfigsFolderPath(null_config)) == eEngineMessage::_QFailure)
+				{
+					LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
+					Instrumentor::Get().EndSession();
+					return eEngineMessage::_QFailure;
+				}
+
+				if (programArgPairs.find(key_UserName) != programArgPairs.end())
+				{
+					const std::string userName = programArgPairs.find(key_UserName)->second;
+					std::string userConfigFilePath = StringAppend(PreferencesFolderPath(userName.c_str()), "/");
+					userConfigFilePath += userName;
+					userConfigFilePath += ".";
+					userConfigFilePath += preferences_ext;
+					ConfigHelper::LoadUserData(userConfigFilePath); // #TODO Framework also loads user data
+				}
+
+				Scenes::GetCurrentScene()->SetIsEnabled(true);
+
+				Editor::Initialize();
 			}
 
-			// #TODO check if(initialized) in case user defined simple API.
-			// Might want to create another function for the game loop and
-			// leave Run() smaller and abstracted from the functionality.
-
-			if (Framework::Startup(ConfigsFolderPath(null_config)) == eEngineMessage::_QFailure)
-            {
-                LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
-				Instrumentor::Get().EndSession();
-				return eEngineMessage::_QFailure;
-			}
-
-			if (programArgPairs.find(key_UserName) != programArgPairs.end())
-			{
-				const std::string userName = programArgPairs.find(key_UserName)->second;
-				std::string userConfigFilePath = StringAppend(PreferencesFolderPath(userName.c_str()), "/");
-				userConfigFilePath += userName;
-				userConfigFilePath += ".";
-				userConfigFilePath += preferences_ext;
-				ConfigHelper::LoadUserData(userConfigFilePath); // Init user data
-			}
-
-			Scenes::GetCurrentScene()->SetIsEnabled(true);
-
-			// #TODO Move to editor class
-#ifdef dearimgui
-			m_Editor = (Editor*)new imgui_Editor();
-#else
-			m_Editor = (Editor*)new ????_Editor();
-#endif
-
-			const EngineSettings engineSettings = ConfigHelper::GetConfigData().engineSettings;
+			const EngineSettings& engineSettings = ConfigHelper::GetConfigData().engineSettings;
 			const unsigned int FPS_MAX = (int)(engineSettings.LimitFramerate) * engineSettings.MaxFramesPerSecond;
 			const float FPS_MAX_DELTA = FPS_MAX ? 1.0f / FPS_MAX : 1.f / 120.f;
 
@@ -106,14 +101,13 @@ namespace QwerkE {
 			double timeUntilNextFrame = 0.0;
 
 			Time::InitStartTime();
-			m_IsRunning = true;
-			while (m_IsRunning)
+			s_IsRunning = true;
+
+			while (s_IsRunning)
 			{
 				if (timeUntilNextFrame >= FPS_MAX_DELTA)
 				{
 					Engine::NewFrame();
-
-					Engine::PollInput();
 
 					Engine::Update(Time::FrameDelta());
 
@@ -143,19 +137,14 @@ namespace QwerkE {
 		void Engine::Stop()
 		{
 			Framework::Stop();
-			m_IsRunning = false;
+			s_IsRunning = false;
 		}
 
 		void Engine::NewFrame()
 		{
+			PROFILE_SCOPE("Engine NewFrame");
 			Framework::NewFrame();
-            m_Editor->NewFrame();
-		}
-
-		void Engine::PollInput()
-        {
-            PROFILE_SCOPE("Engine Input");
-			Framework::PollInput();
+			Editor::NewFrame();
 		}
 
 		void Engine::Update(float deltaTime)
@@ -164,16 +153,11 @@ namespace QwerkE {
 
 			Framework::Update(deltaTime);
 
-			m_Editor->Update();
+			Editor::Update();
 
 			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
 				Stop();
-			}
-
-			if (Input::FrameKeyAction(eKeys::eKeys_F, eKeyState::eKeyState_Press))
-			{
-				m_Editor->ToggleEditorUi();
 			}
 		}
 
@@ -181,14 +165,10 @@ namespace QwerkE {
         {
 			PROFILE_SCOPE("Engine Render");
 
-			m_Editor->Draw();
+			Editor::Draw();
 
 			Framework::Draw();
 		}
 
-		Editor* GetEditor()
-		{
-			return m_Editor;
-		}
 	}
 }

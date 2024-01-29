@@ -37,7 +37,7 @@ namespace QwerkE {
         bool AudioEnabled = false;
         bool PhysicsEnabled = false;
         bool NetworkingEnabled = false;
-        bool ConsoleOutputWindowEnabled = true;
+        bool ConsoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
     };
 
     struct EngineSettings

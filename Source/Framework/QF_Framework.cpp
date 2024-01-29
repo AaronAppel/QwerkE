@@ -2,32 +2,32 @@
 
 #include "Libraries/imgui/QC_imgui.h"
 
-#include "QF_Enums.h"
 #include "QF_Audio.h"
+#include "QF_CallbackFunctions.h"
 #include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"
 #include "QF_Debug.h"
+#include "QF_Debugger.h"
+#include "QF_Enums.h"
 #include "QF_EventManager.h"
 #include "QF_Factory.h"
-#include "QF_MeshFactory.h"
+#include "QF_FileSystem.h"
+#include "QF_glfw_Window.h"
 #include "QF_Graphics_Header.h"
-#include "QF_Renderer.h"
-#include "QF_ShaderFactory.h"
 #include "QF_Input.h"
 #include "QF_Jobs.h"
+#include "QF_Log.h"
+#include "QF_MeshFactory.h"
 #include "QF_Network.h"
 #include "QF_Physics.h"
+#include "QF_Renderer.h"
 #include "QF_Resources.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
+#include "QF_ShaderFactory.h"
 #include "QF_Time.h"
 #include "QF_Window.h"
 #include "QF_Windows.h"
-#include "QF_glfw_Window.h"
-#include "QF_CallbackFunctions.h"
-#include "QF_Debugger.h"
-#include "QF_Log.h"
-#include "QF_FileSystem.h"
 
 namespace QwerkE {
 
@@ -118,7 +118,6 @@ namespace QwerkE {
 			// leave Run() smaller and abstracted from the functionality.
 			s_IsRunning = true;
 
-			/* Application Loop */
 			int FPS_MAX = 120; // Maximum number of frames that can be made per second
 			float FPS_MAX_DELTA = 1.0f / FPS_MAX;
 
@@ -134,8 +133,6 @@ namespace QwerkE {
 				{
 					Framework::NewFrame();
 
-					Framework::PollInput();
-
 					Framework::Update(deltaTime);
 
 					Framework::Draw();
@@ -145,11 +142,6 @@ namespace QwerkE {
 					//framesSincePrint++; // Frame rate tracking
 					//timeSinceLastFrame = 0.0; // FPS_Max
 				}
-				// #TODO Fix delta time issues
-				// else
-				// {
-				// 	Yield();
-				// }
 			}
 		}
 
@@ -162,20 +154,9 @@ namespace QwerkE {
 		void Framework::NewFrame()
 		{
 			Input::NewFrame();
-			EventManager::ProcessEvents();
+			EventManager::ProcessEvents(); // #TODO Review ordering
 			Renderer::NewFrame();
-
-			// NOTE: ImGUI::NewFrame() is in PollInput()!
-		}
-
-		void Framework::PollInput()
-		{
-			// #TODO Abstract libraries
-            glfwPollEvents(); // #TODO Better GLFW interface?
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame(); // after Input gets reset, and after glfw input polling is done
-            ImGui::NewFrame();
-			// #TODO Tell input manager it is a new frame and it should update key states
+			s_Window->NewFrame();
 		}
 
 		void Framework::Update(float deltatime)

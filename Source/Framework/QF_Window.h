@@ -20,6 +20,8 @@ namespace QwerkE {
 
         virtual void SwapBuffers() = 0;
 
+        virtual void NewFrame() = 0;
+
         void SetClosing(bool closing) { m_IsClosing = closing; };
         bool IsClosing() { return m_IsClosing; };
 

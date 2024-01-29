@@ -59,7 +59,7 @@ namespace QwerkE {
             ImGui::SameLine();
             if (ImGui::Button("Reload"))
             {
-                Engine::GetEditor()->GetEntityEditor()->SetCurrentEntity(nullptr);
+                Editor::GetEntityEditor()->SetCurrentEntity(nullptr);
                 currentScene->ReloadScene();
             }
 

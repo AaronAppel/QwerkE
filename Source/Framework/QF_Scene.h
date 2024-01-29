@@ -20,7 +20,7 @@ namespace QwerkE {
         Scene(const char* sceneFileName) { m_SceneFileName = sceneFileName; }
         virtual ~Scene();
 
-        virtual void Initialize() {} // #TODO Deprecate and use Load*() methods to init
+        virtual void Initialize() {} // #TODO Deprecate/combine with Load*() methods
 
         void OnWindowResize(unsigned int width, unsigned int height);
 

@@ -21,7 +21,7 @@ namespace QwerkE {
         static void DisableScene(eSceneTypes type);
         static void DisableAll();
 
-        static void AddScene(Scene* scene);
+        static void AddScene(Scene* scene, bool setAsCurrentScene = false);
         static Scene* RemoveScene(Scene* scene);
 
         static void Update(float deltatime);

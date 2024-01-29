@@ -13,15 +13,14 @@ namespace QwerkE {
 
 	namespace Engine
 	{
+
 		QwerkE::eEngineMessage Run(const std::map<const char*, const char*>& programArgPairs);
 		void Stop();
 
 		void NewFrame();
-		void PollInput();
 		void Update(float deltatime);
 		void Draw();
 
-		Editor* GetEditor();
 	}
 
 }
