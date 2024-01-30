@@ -19,10 +19,10 @@ namespace QwerkE {
 
         if (shader->GetVertShader())
         {
-            // store string in temp buffer
-            char* buffer = (char*)DeepCopyString(shader->GetVertShader()->GetStringData()); // Delete buffer when done
+            // store string in temp vertexBuffer
+            char* buffer = (char*)DeepCopyString(shader->GetVertShader()->GetStringData()); // Delete vertexBuffer when done
 
-                                                                                         // store lines in std::vector
+            // Store lines in std::vector
             char* next_token = 0;
             char* line = strtok_s(buffer, "\n", &next_token);
 
@@ -34,7 +34,7 @@ namespace QwerkE {
                 vertStringList.push_back(line);
                 line = strtok_s(0, "\n", &next_token);
             }
-            delete[] buffer; // cleanup
+            free(buffer); // cleanup
 
             /* Populate .vert attributes */
             // vert
@@ -65,14 +65,13 @@ namespace QwerkE {
 
         if (shader->GetFragShader())
         {
-
             // vert
-            // store string in temp buffer
-            char* buffer = (char*)DeepCopyString(shader->GetVertShader()->GetStringData());
+            // store string in temp vertexBuffer
+            char* vertexBuffer = (char*)DeepCopyString(shader->GetVertShader()->GetStringData());
 
             // store lines in std::vector
             char* next_token = 0;
-            char* line = strtok_s(buffer, "\n", &next_token);
+            char* line = strtok_s(vertexBuffer, "\n", &next_token);
 
             std::vector<std::string> vertStringList;
             std::vector<std::string> fragStringList;
@@ -84,11 +83,11 @@ namespace QwerkE {
                 vertStringList.push_back(line);
                 line = strtok_s(0, "\n", &next_token);
             }
-            delete[] buffer; // cleanup
+            free(vertexBuffer);
 
-                             // frag
-            buffer = (char*)DeepCopyString(shader->GetFragShader()->GetStringData());
-            line = strtok_s(buffer, "\n", &next_token);
+            // frag
+            char* fragmentBuffer = (char*)DeepCopyString(shader->GetFragShader()->GetStringData());
+            line = strtok_s(fragmentBuffer, "\n", &next_token);
 
             while (line)
             {
@@ -96,9 +95,7 @@ namespace QwerkE {
                 fragStringList.push_back(line);
                 line = strtok_s(0, "\n", &next_token);
             }
-            delete[] buffer; // cleanup
-
-            // TODO: Support geo shader
+            free(fragmentBuffer);
 
             /* Populate .vert uniforms */
             for (unsigned int i = 0; i < vertStringList.size(); i++) // stringList.size() = number of lines in file

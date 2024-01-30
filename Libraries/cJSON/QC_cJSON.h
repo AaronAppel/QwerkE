@@ -112,7 +112,6 @@ bool TypeIsObject(cJSON* item);
 cJSON* CreateBool(const char* key, bool value);
 cJSON* CreateNumber(const char* key, double value);
 cJSON* CreateString(const char* key, const char* value);
-cJSON* CreateObject();
 cJSON* CreateArray(const char* key);
 
 // TODO:: Creation functions that also add

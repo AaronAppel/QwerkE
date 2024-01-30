@@ -59,5 +59,20 @@
 	"ConfiguredGameKeys":	[{
 			"Action1": "k"
 			"ResetScene": "ctrl+r"
+		}],
+		
+	"Assets":	[{
+		"Images":	[{
+			"Image1": "folder/Image1.png",
+		}],
+		"Models":	[{
+			"Model1": "folder/Model1.obj",
+		}],
+		"Sounds":	[{
+			"Sound1": "folder/Sound1.wav",
+		}],
+		"Fonts":	[{
+			"Font1": "folder/Font1.fnt",
 		}]
+	}]
 }		

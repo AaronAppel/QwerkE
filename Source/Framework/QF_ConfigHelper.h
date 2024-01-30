@@ -59,7 +59,6 @@ namespace QwerkE {
     };
 
     // #TODO Hide the data for safety. Find a better API for ConfigData
-
     struct ConfigData
     {
         FrameworkData frameworkData;
@@ -70,20 +69,60 @@ namespace QwerkE {
         EngineSettings engineSettings;
     };
 
+    struct ConfiguredGameKeys
+    {
+        unsigned char action1 = 'k';
+        const char* resetScene = "ctrl+r";
+    };
+
+    // TODO Engine data shouldn't be in the framework
+    struct SceneViewerData
+    {
+        int maxEnabledScenes = 1;
+        int maxDisplayedScenes = 4;
+        int viewDistance = 100;
+    };
+
     struct UserData
     {
         Controls controls;
     };
 
-    class ConfigHelper
+    struct MenuBarData
+    {
+        bool showFps = true;
+    };
+
+    struct UiData
+    {
+        MenuBarData menuBarData;
+    };
+
+    struct ProjectData
+    {
+        const char* projectName = "Project1";
+        const char* assetsRoot = "Assets";
+        FrameworkData frameworkData;
+        UiData uiData;
+        ScenesData scenes;
+        SceneViewerData sceneViewerData;
+        Systems systems;
+        ConfiguredGameKeys configuredGameKeys;
+    };
+
+    class ConfigHelper // The config helper is really an engine domain, so maybe move to engine and find another place for level loading logic
     {
     public:
         static void LoadConfigData(); // #TODO Load from file path. Do not rely on default paths, but instead generate the default path
         static void LoadConfigData(std::string configFilePath); // #TODO Write and chain with above overloaded method
         static void SaveConfigData();
         static void SaveConfigData(ConfigData config);
+
         static void LoadUserData(std::string preferencesFilePath);
         static void SaveUserData();
+
+        static void LoadProjectData(std::string preferencesFilePath);
+        static void SaveProjectData();
 
         static const ConfigData& GetConfigData() { return m_ConfigData; }
         static const UserData& GetUserData() { return m_UserData; }
@@ -94,6 +133,7 @@ namespace QwerkE {
 
         static ConfigData m_ConfigData;
         static UserData m_UserData;
+        static ProjectData m_ProjectData;
     };
 
 }

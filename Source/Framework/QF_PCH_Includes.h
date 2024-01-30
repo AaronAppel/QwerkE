@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "QF_Libraries_Include.h"
+#include "Libraries/FlatheadGames/MyMemory.h"
+
+#include "QF_LibrariesInclude.h"
 
 // NOTE: Add additional .h files below, if they rarely change

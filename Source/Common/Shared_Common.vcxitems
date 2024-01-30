@@ -18,6 +18,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.cpp" />
@@ -339,6 +340,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MathHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftconfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftheader.h" />

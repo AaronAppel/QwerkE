@@ -71,7 +71,7 @@
       {
         "id": "46519dbc7b373804",
         "type": "tabs",
-        "dimension": 52.94520547945205,
+        "dimension": 74.55268389662028,
         "children": [
           {
             "id": "7099b2a8eb1e34ad",
@@ -88,7 +88,7 @@
       {
         "id": "d7c9b4b6c9222e72",
         "type": "tabs",
-        "dimension": 47.05479452054795,
+        "dimension": 25.44731610337972,
         "children": [
           {
             "id": "6e6727655ad579b3",
@@ -164,6 +164,7 @@
   "lastOpenFiles": [
     "ZZ Shared Vault Files ❗/To Watch.md",
     "ZZ Shared Vault Files ❗/Watched.md",
+    "ZZ Shared Vault Files ❗/To Watch SimonDev.md",
     "ZZ Shared Vault Files ❗/0 Overhead principle.md",
     "0 Overhead principle.md",
     "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
@@ -196,7 +197,6 @@
     "Z. To Cleanup/Untitled.md",
     "Z. To Cleanup/Old Notes.md",
     "Pointer Manipulation.md",
-    "Systems/Saving and Loading/Reflection Setup.md",
     "Development/Features/Resource Management",
     "Systems/Untitled",
     "Systems/Window",

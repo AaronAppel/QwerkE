@@ -33,7 +33,7 @@ namespace QwerkE {
     eOperationResult DataManager::SaveScene(Scene* scene, const char* fileDir)
     {
         // #TODO Error checking
-        cJSON* root = CreateObject();
+        cJSON* root = cJSON_CreateObject();
 
         cJSON* t_Settings = CreateArray("Settings");
         AddItemToArray(t_Settings, CreateBool("Paused", (int)scene->GetIsPaused()));
@@ -141,7 +141,7 @@ namespace QwerkE {
     // Utility
     void DataManager::AddVec3ToItem(cJSON* item, const char* arrayName, const char* name1, float value1, const char* name2, float value2, const char* name3, float value3)
     {
-        cJSON* vec3Array = CreateObject();
+        cJSON* vec3Array = cJSON_CreateObject();
         vec3Array->string = DeepCopyString(arrayName);
         AddItemToArray(vec3Array, CreateNumber(name1, value1));
         AddItemToArray(vec3Array, CreateNumber(name2, value2));

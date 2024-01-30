@@ -126,7 +126,7 @@ namespace QwerkE {
             CheckGraphicsErrors(__FILE__, __LINE__);
 
             // TODO: need to free() allocations from lodepng
-            delete[] imageData; // clean up
+            free(imageData); // clean up
 
             return texhandle;
         }

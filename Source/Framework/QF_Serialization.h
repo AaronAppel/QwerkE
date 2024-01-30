@@ -27,14 +27,14 @@ namespace QwerkE {
 
         // #TODO Swap argument order to make deserialize and serialize a little more visually different to work with
         void SerializeJsonObject(cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
+        void SerializeJsonField(cJSON* objJson, const Mirror::Field& field, void* obj);
 
         template <class T>
         void SerializeObject(cJSON* objJson, const T& obj)
         {
-            const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-            cJSON* arr = CreateArray(typeInfo->stringName.c_str());
+            cJSON* arr = CreateArray(Mirror::InfoForType<T>()->stringName.c_str());
             SerializeJsonObject(arr, Mirror::InfoForClass<T>(), (void*)&obj);
-            AddItemToRoot(objJson, arr);
+            AddItemToObject(objJson, arr);
         }
 
     }

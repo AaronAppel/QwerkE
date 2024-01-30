@@ -4,6 +4,8 @@
 #include <map>
 #include <memory>
 
+#include "Libraries/FlatheadGames/MyMemory.h"
+
 #include "QE_ProgramArgs.h"
 
 #include "QE_Defines.h"
@@ -24,6 +26,10 @@ int main(unsigned int argc, char **argv)
 	{
 		system("pause");
 	}
+
+#if QWERKE_TRACKING_ALLOCATIONS
+	MyMemory_ValidateAllocations(false);
+#endif
 
 	return (int)result;
 }

@@ -12,6 +12,7 @@ namespace QwerkE {
 
     ConfigData ConfigHelper::m_ConfigData = ConfigData();
     UserData ConfigHelper::m_UserData = UserData();
+    ProjectData ConfigHelper::m_ProjectData = ProjectData();
 
     void ConfigHelper::LoadConfigData()
     {
@@ -109,7 +110,7 @@ namespace QwerkE {
 
     void ConfigHelper::SaveConfigData()
     {
-        cJSON* jsonRoot = CreateObject();
+        cJSON* jsonRootObject = cJSON_CreateObject();
 
         const Mirror::ClassInfo* configDataClassInfo = Mirror::InfoForClass<ConfigData>();
         for (size_t i = 0; i < configDataClassInfo->fields.size(); i++)
@@ -121,27 +122,27 @@ namespace QwerkE {
             switch (userDataField.type->enumType)
             {
             case MirrorTypes::FrameworkData:
-                Serialization::SerializeObject<FrameworkData>(jsonRoot, m_ConfigData.frameworkData);
+                Serialization::SerializeObject<FrameworkData>(jsonRootObject, m_ConfigData.frameworkData);
                 break;
 
             case MirrorTypes::Libraries:
-                Serialization::SerializeObject<Libraries>(jsonRoot, m_ConfigData.libraries);
+                Serialization::SerializeObject<Libraries>(jsonRootObject, m_ConfigData.libraries);
                 break;
 
             case MirrorTypes::ScenesData:
-                Serialization::SerializeObject<ScenesData>(jsonRoot, m_ConfigData.scenesData);
+                Serialization::SerializeObject<ScenesData>(jsonRootObject, m_ConfigData.scenesData);
                 break;
 
             case MirrorTypes::SceneSettings:
-                Serialization::SerializeObject<SceneSettings>(jsonRoot, m_ConfigData.sceneSettings);
+                Serialization::SerializeObject<SceneSettings>(jsonRootObject, m_ConfigData.sceneSettings);
                 break;
 
             case MirrorTypes::Systems:
-                Serialization::SerializeObject<Systems>(jsonRoot, m_ConfigData.systems);
+                Serialization::SerializeObject<Systems>(jsonRootObject, m_ConfigData.systems);
                 break;
 
             case MirrorTypes::EngineSettings:
-                Serialization::SerializeObject<EngineSettings>(jsonRoot, m_ConfigData.engineSettings);
+                Serialization::SerializeObject<EngineSettings>(jsonRootObject, m_ConfigData.engineSettings);
                 break;
 
             default:
@@ -151,12 +152,12 @@ namespace QwerkE {
         }
 
         const char* configFilePath = ConfigsFolderPath(null_config);
-        PrintRootObjectToFile(configFilePath, jsonRoot); // #TODO Take in config file path as arg
+        PrintRootObjectToFile(configFilePath, jsonRootObject); // #TODO Take in config file path as arg
     }
 
     void ConfigHelper::SaveUserData()
     {
-        cJSON* jsonRoot = CreateObject();
+        cJSON* jsonRoot = cJSON_CreateObject();
 
         const Mirror::ClassInfo* userDataClassInfo = Mirror::InfoForClass<UserData>();
         for (size_t i = 0; i < userDataClassInfo->fields.size(); i++)
@@ -179,6 +180,76 @@ namespace QwerkE {
 
         const char* preferencesFilePath = PreferencesFolderPath(null_preferences);
         PrintRootObjectToFile(preferencesFilePath, jsonRoot); // #TODO Take in config file path as arg
+    }
+
+    void ConfigHelper::LoadProjectData(std::string preferencesFilePath)
+    {
+        m_ProjectData;
+    }
+
+    void ConfigHelper::SaveProjectData()
+    {
+        cJSON* jsonRootObject = cJSON_CreateObject();
+
+        if (true)
+        {
+            Serialization::SerializeObject<ProjectData>(jsonRootObject, m_ProjectData);
+        }
+        else
+        {
+            const Mirror::ClassInfo* projectDataClassInfo = Mirror::InfoForClass<ProjectData>();
+            for (size_t i = 0; i < projectDataClassInfo->fields.size(); i++)
+            {
+                Mirror::Field projectDataField = projectDataClassInfo->fields.at(i);
+                if (!projectDataField.type)
+                    break;
+
+                switch (projectDataField.type->enumType)
+                {
+                case MirrorTypes::m_constCharPtr:
+                   /* if (strcmp(projectDataField.name.c_str(), "projectName") == 0)
+                    {
+                        Serialization::SerializeJsonField(jsonRootObject, projectDataField, (void*)m_ProjectData.projectName);
+                    }
+                    else if (strcmp(projectDataField.name.c_str(), "assetsRoot") == 0)
+                    {
+                        Serialization::SerializeJsonField(jsonRootObject, projectDataField, (void*)m_ProjectData.assetsRoot);
+                   }*/
+                    break;
+
+                case MirrorTypes::FrameworkData:
+                    Serialization::SerializeObject<FrameworkData>(jsonRootObject, m_ProjectData.frameworkData);
+                    break;
+
+                case MirrorTypes::UiData:
+                    Serialization::SerializeObject<UiData>(jsonRootObject, m_ProjectData.uiData);
+                    break;
+
+                case MirrorTypes::ScenesData:
+                    Serialization::SerializeObject<ScenesData>(jsonRootObject, m_ProjectData.scenes);
+                    break;
+
+                case MirrorTypes::SceneViewerData:
+                    Serialization::SerializeObject<SceneViewerData>(jsonRootObject, m_ProjectData.sceneViewerData);
+                    break;
+
+                case MirrorTypes::Systems:
+                    Serialization::SerializeObject<Systems>(jsonRootObject, m_ProjectData.systems);
+                    break;
+
+                case MirrorTypes::ConfiguredGameKeys:
+                    Serialization::SerializeObject<ConfiguredGameKeys>(jsonRootObject, m_ProjectData.configuredGameKeys);
+                    break;
+
+                default:
+                    LOG_ERROR("{0} Unhandled field type {1}(2) for serialization!", __FUNCTION__, projectDataField.type->stringName, (int)projectDataField.type->enumType);
+                    break;
+                }
+            }
+        }
+
+        const char* preferencesFilePath = ProjectsFolderPath(null_project);
+        PrintRootObjectToFile(preferencesFilePath, jsonRootObject); // #TODO Take in config file path as arg
     }
 
 }

@@ -14,7 +14,9 @@
 
 #ifdef _DEBUG
 #define _QDebug
+#define QWERKE_TRACKING_ALLOCATIONS 1
 #else
+#define QWERKE_TRACKING_ALLOCATIONS 0
 #define _QRelease
 #endif
 
@@ -69,6 +71,7 @@
 #define ConfigsFolderPath(fullFileName) StringAppend(AssetsDir, "Configs/", fullFileName)
 #define PreferencesFolderPath(fullFileName) StringAppend(AssetsDir, "Configs/", fullFileName)
 #define ObjectSchematicsFolderPath(fullFileName) StringAppend(AssetsDir, "BluePrints_Prefabs_Schematic/", fullFileName)
+#define ProjectsFolderPath(fullFileName) StringAppend(AssetsDir, "Projects/", fullFileName)
 
 // Standardized file extensions
 #define vertex_shader_ext "vert" // #TODO Should extensions be implied to own the '.' period?
@@ -80,6 +83,7 @@
 #define scene_ext "qscene"
 #define configs_ext "qconf"
 #define preferences_ext "qpref"
+#define projects_ext "qproj"
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.
@@ -95,6 +99,7 @@
 #define null_shader "null_shader"
 #define null_sound "null_sound.wav"
 #define null_texture "null_texture.png"
+#define null_project StringAppend("null_project.", projects_ext)
 
 // Null schematics
 #define null_material_schematic StringAppend("null_material.", material_schematic_ext)

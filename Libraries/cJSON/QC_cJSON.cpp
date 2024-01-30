@@ -296,7 +296,7 @@ void AddItemToArray(cJSON* cJSONArray, cJSON* item)
 	}
 	else
 	{
-		cJSONArray->child = CreateObject();
+		cJSONArray->child = cJSON_CreateObject();
 	}
 
 	if (arraySize > 0)
@@ -491,16 +491,10 @@ cJSON* CreateString(const char* key, const char* value)
 	return returnString;
 }
 
-cJSON* CreateObject()
-{
-	cJSON* returnObject = cJSON_CreateObject();
-	return returnObject;
-}
-
 cJSON* CreateArray(const char* key)
 {
 	cJSON* returnArray = cJSON_CreateArray();
-	returnArray->child = CreateObject();
+	returnArray->child = cJSON_CreateObject();
 	returnArray->string = _strdup(key);
 	return returnArray;
 }

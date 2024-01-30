@@ -52,27 +52,25 @@ namespace QwerkE {
             Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
 
 			{
-				PROFILE_SCOPE("Run");
-
-				if (programArgPairs.find(key_ProjectName) != programArgPairs.end())
-				{
-					// auto projectName = programArgPairs.find(key_ProjectName)->second;
-
-					// #TODO Load project folder
-					// Could find and save preferences file path for recent project(s)
-					// Show options to choose from with a list of recent projects, ordered by date.
-					// Add an option to auto-load most recently opened project
-				}
-
-				// #TODO check if(initialized) in case user defined simple API.
-				// Might want to create another function for the game loop and
-				// leave Run() smaller and abstracted from the functionality.
+				PROFILE_SCOPE("Run Setup");
 
 				if (Framework::Startup(ConfigsFolderPath(null_config)) == eOperationResult::Failure)
 				{
 					LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
 					Instrumentor::Get().EndSession();
 					return eOperationResult::Failure;
+				}
+
+				if (programArgPairs.find(key_ProjectName) != programArgPairs.end())
+				{
+					const char* projectName = programArgPairs.find(key_ProjectName)->second;
+					ConfigHelper::LoadProjectData(ProjectName);
+					ConfigHelper::SaveProjectData();
+
+					// #TODO Load project folder
+					// Could find and save preferences file path for recent project(s)
+					// Show options to choose from with a list of recent projects, ordered by date.
+					// Add an option to auto-load most recently opened project
 				}
 
 				if (programArgPairs.find(key_UserName) != programArgPairs.end())

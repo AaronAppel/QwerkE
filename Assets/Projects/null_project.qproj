@@ -1,0 +1,25 @@
+{
+	"ProjectData":	[{
+			"projectName":	"Project1",
+			"assetsRoot":	"Assets"
+		}, [{
+				"QuickLoad":	true,
+				"MaxConcurrentThreadCount":	23560468
+			}], [{
+		}, [{
+					"showFps":	true
+				}]], [{
+		}], [{
+				"maxEnabledScenes":	23560456,
+				"maxDisplayedScenes":	23560468,
+				"viewDistance":	1
+			}], [{
+				"AudioEnabled":	true,
+				"PhysicsEnabled":	true,
+				"NetworkingEnabled":	true,
+				"ConsoleOutputWindowEnabled":	true
+			}], [{
+				"action1":	23560456,
+				"resetScene":	"Assets"
+			}]]
+}

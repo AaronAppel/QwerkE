@@ -127,6 +127,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.cpp">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h">
@@ -2628,6 +2631,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Reflection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClInclude>
   </ItemGroup>

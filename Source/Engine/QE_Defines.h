@@ -3,7 +3,7 @@
 #define QWERKE_VERSION 0.1
 
 // Override framework defaults
-#define ProjectName "QwerkE"
+#define ProjectName "QwerkE" // #TODO Rename to avoid name collision
 #define AssetsDir "Assets/"
 #define ProjectsDir AssetsDir "Projects/"
 
