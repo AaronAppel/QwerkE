@@ -5,8 +5,9 @@
 // simple num++ would work
 
 #include "QF_Platform.h"
+#include "QF_Defines.h"
 
-#ifdef _Q32Bit
+#if defined(_Q32Bit) && QWERKE_TRACKING_ALLOCATIONS
 
 void MyMemory_ValidateAllocations(bool AssertOnAnyAllocation);
 

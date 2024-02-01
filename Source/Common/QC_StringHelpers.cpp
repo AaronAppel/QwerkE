@@ -11,6 +11,7 @@ const char* StringAppend(const char* a, const char* b)
 	return newString;
 }
 
+// #TODO String append using variable number of arguments
 const char* StringAppend(const char* a, const char* b, const char* c)
 {
 	// #TODO Refactor string append methods to properly manage string allocations

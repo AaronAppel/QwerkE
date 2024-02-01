@@ -14,7 +14,7 @@
 
 #ifdef _DEBUG
 #define _QDebug
-#define QWERKE_TRACKING_ALLOCATIONS 1
+#define QWERKE_TRACKING_ALLOCATIONS 0
 #else
 #define QWERKE_TRACKING_ALLOCATIONS 0
 #define _QRelease
@@ -30,7 +30,7 @@
 #define _QSimpleApi // Limited API for simpler usability off the start
 #endif
 
-#ifndef ProjectName
+#ifndef EngineName
 #define ProjectName "Qwerk"
 #endif
 

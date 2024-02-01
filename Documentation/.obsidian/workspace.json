@@ -145,7 +145,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -163,22 +164,24 @@
   "active": "4c3749c9271c261a",
   "lastOpenFiles": [
     "ZZ Shared Vault Files ❗/To Watch.md",
+    "Development/Feature Tickets/F0001 - Reflection.md",
+    "cJSON.md",
+    "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "ZZ Shared Vault Files ❗/Watched.md",
     "ZZ Shared Vault Files ❗/To Watch SimonDev.md",
+    "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
     "ZZ Shared Vault Files ❗/0 Overhead principle.md",
     "0 Overhead principle.md",
     "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
     "Development/Feature Tickets/F0005 - Null GameObject Data.md",
     "Development/Bug Tickets",
     "Development/Feature Tickets/F0004 - GUIDs.md",
-    "Development/Feature Tickets/F0001 - Reflection.md",
     "Development/Features/GUIDs.md",
     "Development/Feature Tickets/F0002 - Cross Panel Communication.md",
     "Development/Feature Tickets/F0003 - Select Same Named Entities.md",
     "QwerkE Standards/Coding Standards Notes.md",
     "Development/Feature Tickets",
     "Development/Features/Scenes.md",
-    "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
     "Solution Configuration/Library Configuration.md",
     "ZZ Shared Vault Files ❗/To Read.md",
@@ -195,8 +198,6 @@
     "Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png.crdownload",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png.crdownload",
     "Z. To Cleanup/Untitled.md",
-    "Z. To Cleanup/Old Notes.md",
-    "Pointer Manipulation.md",
     "Development/Features/Resource Management",
     "Systems/Untitled",
     "Systems/Window",

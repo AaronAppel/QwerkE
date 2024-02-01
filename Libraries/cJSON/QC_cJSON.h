@@ -37,7 +37,7 @@ void PrintRootObjectToFile(const char* filename, cJSON* root);
 
 //// Getting Items From File ////
 //*- Getting From Objects -*
-std::vector<cJSON*> GetAllItemsFromObject(cJSON* cJSONObject);
+std::vector<cJSON*> GetAllItemsFromObject(const cJSON* cJSONObject);
 std::vector<cJSON*> GetItemsFromObjectByKey(cJSON* cJSONObject, const char* key);
 std::vector<cJSON*> GetItemsFromObjectByString(cJSON* cJSONObject, char* value);
 std::vector<cJSON*> GetItemsFromObjectByIndexRange(cJSON* cJSONObject, int min, int max);
@@ -126,7 +126,7 @@ bool json_FileExists(const char* filename);
 void json_CreateNewFile(const char* filename);
 void CreateEmptycJSONFile(const char* filePath); // #TODO Consider returning an error status
 
-unsigned int GetObjectSize(cJSON* cJSONObject);
+unsigned int GetObjectSize(const cJSON* cJSONObject);
 unsigned int GetArraySize(const cJSON* cJSONArray);
 
 //cJSON* DuplicatecJSON(cJSON* cJSON) { return nullptr; }; // #TODO Implement

@@ -1,16 +1,14 @@
 {
-	"Scenes":	[{
-			"0":	"Test.qscene"
-		}],
-	"Controls": [{
-		"Camera_MoveForward": "W",
-		"Camera_MoveBackward": "S",
-		"Camera_MoveLeft": "A",
-		"Camera_MoveRight": "D",
-		"Camera_MoveUp": "E",
-		"Camera_MoveDown": "Q",
-		
-		"Camera_RotateLeft": "R",
-		"Camera_RotateRight": "T"
-	}]
+	"UserData":	[{
+			"Controls":	[{
+					"Camera_MoveForward":	"W",
+					"Camera_MoveBackward":	"S",
+					"Camera_MoveLeft":	"A",
+					"Camera_MoveRight":	"D",
+					"Camera_MoveUp":	"E",
+					"Camera_MoveDown":	"Q",
+					"Camera_RotateLeft":	"R",
+					"Camera_RotateRight":	"T"
+				}]
+		}]
 }

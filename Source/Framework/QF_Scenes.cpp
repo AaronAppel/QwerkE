@@ -44,13 +44,13 @@ namespace QwerkE {
 		//      Create empty scene
 		// }
 
-		const char* prefPath = ConfigsFolderPath(null_preferences);
+		const char* prefPath = ProjectsFolderPath(null_project);
 		// TODO: does this free memory correctly? std::string pref = ConfigsFolderPath(null_config);
 
 		if (FileExists(prefPath))
 		{
 			cJSON* root = OpencJSONStream(prefPath);
-			cJSON* scenesArray = GetItemFromRootByKey(root, "Scenes");
+			cJSON* scenesArray = GetItemFromArrayByKey(root->child, "ScenesList");
 
 			unsigned int numScenes = GetArraySize(scenesArray);
 			for (unsigned int i = 0; i < numScenes; i++)

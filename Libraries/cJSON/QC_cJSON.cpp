@@ -15,12 +15,12 @@ cJSON* OpencJSONStream(const char* fileDirectory)
 		char* str = LoadFile(fileDirectory);
 		cJSON* root = cJSON_Parse(str);
 
-		delete[] str;
-
 		if (root == nullptr)
 		{
 			LOG_ERROR("{0}(): Could not open cJSON stream. Possible compile error. Check {1} file for typos!", __FUNCTION__, fileDirectory);
 		}
+
+		delete[] str;
 		return root;
 	}
 	LOG_ERROR("{0}(): Could not find JSON file {1}!", __FUNCTION__, fileDirectory);
@@ -35,7 +35,7 @@ void ClosecJSONStream(const cJSON* root)
 	}
 }
 
-std::vector<cJSON*> GetAllItemsFromObject(cJSON* cJSONObject)
+std::vector<cJSON*> GetAllItemsFromObject(const cJSON* cJSONObject)
 {
 	int arraySize = GetObjectSize(cJSONObject);
 
@@ -43,7 +43,7 @@ std::vector<cJSON*> GetAllItemsFromObject(cJSON* cJSONObject)
 
 	for (int i = 0; i < arraySize; i++)
 	{
-		returnList.push_back(cJSON_GetArrayItem(cJSONObject, i));
+		returnList.push_back(cJSON_GetArrayItem((cJSON*)cJSONObject, i));
 	}
 	return returnList;
 }
@@ -515,9 +515,9 @@ cJSON* CopyRootObject(cJSON* root)
 	return cJSON_Parse(newRoot);
 }
 
-unsigned int GetObjectSize(cJSON* cJSONObject)
+unsigned int GetObjectSize(const cJSON* cJSONObject)
 {
-	return cJSON_GetArraySize(cJSONObject);
+	return cJSON_GetArraySize((cJSON*)cJSONObject);
 }
 
 unsigned int GetArraySize(const cJSON* cJSONArray)

@@ -61,11 +61,12 @@ namespace QwerkE {
 					return eOperationResult::Failure;
 				}
 
-				if (programArgPairs.find(key_ProjectName) != programArgPairs.end())
+				if (programArgPairs.find(key_ProjectFileName) != programArgPairs.end())
 				{
-					const char* projectName = programArgPairs.find(key_ProjectName)->second;
-					ConfigHelper::LoadProjectData(ProjectName);
-					ConfigHelper::SaveProjectData();
+					const char* projectName = programArgPairs.find(key_ProjectFileName)->second;
+					const char* projectFileName = StringAppend(projectName, ".", projects_ext);
+					projectFileName = StringAppend(projectName, "/", projectFileName);
+					// ConfigHelper::LoadProjectData(ProjectsFolderPath(projectFileName));
 
 					// #TODO Load project folder
 					// Could find and save preferences file path for recent project(s)
@@ -80,7 +81,7 @@ namespace QwerkE {
 					userConfigFilePath += userName;
 					userConfigFilePath += ".";
 					userConfigFilePath += preferences_ext;
-					ConfigHelper::LoadUserData(userConfigFilePath); // #TODO Framework also loads user data
+					// ConfigHelper::LoadUserData(userConfigFilePath); // #TODO Framework also loads user data
 				}
 
 				Scenes::GetCurrentScene()->SetIsEnabled(true);

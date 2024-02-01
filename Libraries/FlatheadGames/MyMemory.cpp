@@ -5,7 +5,7 @@
 
 #include "QF_Log.h"
 
-#if 1 // _Q32Bit
+#if defined(_Q32Bit) && QWERKE_TRACKING_ALLOCATIONS
 
 #include "CPPList.h"
 

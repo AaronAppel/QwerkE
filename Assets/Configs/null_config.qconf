@@ -1,28 +1,28 @@
 {
-	"FrameworkData":	[{
-			"QuickLoad":	true,
-			"MaxConcurrentThreadCount":	10
-		}],
-	"Libraries":	[{
-			"Rendering":	"OpenGL",
-			"Audio":	"OpenAL",
-			"Physics":	"Bullet3D",
-			"Networking":	"RakNet",
-			"Window":	"GLFW3"
-		}],
-	"ScenesData":	[{
-	}],
-	"SceneSettings":	[{
-			"MaxEnabledScenes":	1
-		}],
-	"Systems":	[{
-			"AudioEnabled":	false,
-			"PhysicsEnabled":	false,
-			"NetworkingEnabled":	false,
-			"ConsoleOutputWindowEnabled":	true
-		}],
-	"EngineSettings":	[{
-			"LimitFramerate":	true,
-			"MaxFramesPerSecond":	120
+	"ConfigData":	[{
+			"FrameworkData":	[{
+					"QuickLoad":	true,
+					"MaxConcurrentThreadCount":	10
+				}],
+			"Libraries":	[{
+					"Rendering":	"OpenGL",
+					"Audio":	"OpenAL",
+					"Physics":	"Bullet3D",
+					"Networking":	"RakNet",
+					"Window":	"GLFW3"
+				}],
+			"SceneSettings":	[{
+					"MaxEnabledScenes":	1
+				}],
+			"Systems":	[{
+					"AudioEnabled":	false,
+					"PhysicsEnabled":	false,
+					"NetworkingEnabled":	false,
+					"ConsoleOutputWindowEnabled":	true
+				}],
+			"EngineSettings":	[{
+					"LimitFramerate":	true,
+					"MaxFramesPerSecond":	120
+				}]
 		}]
 }

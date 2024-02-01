@@ -23,7 +23,7 @@ namespace QwerkE
 	MIRROR_CLASS_MEMBER(Window)
 	MIRROR_CLASS_END
 
-	MIRROR_CLASS_START(ScenesData)
+	MIRROR_CLASS_START(ScenesList)
 	// MIRROR_CLASS_MEMBER(fileNames) // #TODO Support std::vector<std::string>
 	MIRROR_CLASS_END
 
@@ -61,7 +61,6 @@ namespace QwerkE
 	MIRROR_CLASS_START(ConfigData)
 	MIRROR_CLASS_MEMBER(frameworkData);
 	MIRROR_CLASS_MEMBER(libraries);
-	MIRROR_CLASS_MEMBER(scenesData);
 	MIRROR_CLASS_MEMBER(sceneSettings);
 	MIRROR_CLASS_MEMBER(systems);
 	MIRROR_CLASS_MEMBER(engineSettings)
@@ -86,6 +85,10 @@ namespace QwerkE
 	MIRROR_CLASS_MEMBER(viewDistance)
 	MIRROR_CLASS_END
 
+	MIRROR_CLASS_START(RepeatedStruct)
+	MIRROR_CLASS_MEMBER(value)
+	MIRROR_CLASS_END
+
 	MIRROR_CLASS_START(ProjectData)
 	MIRROR_CLASS_MEMBER(projectName)
 	MIRROR_CLASS_MEMBER(assetsRoot)
@@ -95,5 +98,8 @@ namespace QwerkE
 	MIRROR_CLASS_MEMBER(sceneViewerData)
 	MIRROR_CLASS_MEMBER(systems)
 	MIRROR_CLASS_MEMBER(configuredGameKeys)
+	MIRROR_CLASS_MEMBER(a)
+	MIRROR_CLASS_MEMBER(b)
+	MIRROR_CLASS_MEMBER(c)
 	MIRROR_CLASS_END
 }

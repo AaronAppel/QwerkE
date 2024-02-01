@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "QF_Constants.h"
 #include "QF_eKeys.h"
 
 namespace QwerkE {
@@ -15,16 +16,16 @@ namespace QwerkE {
 
     struct Libraries
     {
-        std::string Rendering = "OpenGL";
-        std::string Audio = "OpenAL";
-        std::string Physics = "Bullet3D";
-        std::string Networking = "RakNet";
-        std::string Window = "GLFW3";
+        std::string Rendering = gc_DefaultStringValue;
+        std::string Audio = gc_DefaultStringValue;
+        std::string Physics = gc_DefaultStringValue;
+        std::string Networking = gc_DefaultStringValue;
+        std::string Window = gc_DefaultStringValue;
     };
 
-    struct ScenesData
+    struct ScenesList
     {
-        std::vector<std::string> fileNames;
+        std::vector<std::string> fileNames; // #TODO Mirror support for vectors
     };
 
     struct SceneSettings
@@ -48,14 +49,14 @@ namespace QwerkE {
 
     struct Controls
     {
-        eKeys Camera_MoveForward = eKeys::eKeys_MAX;
-        eKeys Camera_MoveBackward = eKeys::eKeys_MAX;
-        eKeys Camera_MoveLeft = eKeys::eKeys_MAX;
-        eKeys Camera_MoveRight = eKeys::eKeys_MAX;
-        eKeys Camera_MoveUp = eKeys::eKeys_MAX;
-        eKeys Camera_MoveDown = eKeys::eKeys_MAX;
-        eKeys Camera_RotateLeft = eKeys::eKeys_MAX;
-        eKeys Camera_RotateRight = eKeys::eKeys_MAX;
+        eKeys Camera_MoveForward = eKeys::eKeys_W;
+        eKeys Camera_MoveBackward = eKeys::eKeys_S;
+        eKeys Camera_MoveLeft = eKeys::eKeys_A;
+        eKeys Camera_MoveRight = eKeys::eKeys_D;
+        eKeys Camera_MoveUp = eKeys::eKeys_E;
+        eKeys Camera_MoveDown = eKeys::eKeys_Q;
+        eKeys Camera_RotateLeft = eKeys::eKeys_R;
+        eKeys Camera_RotateRight = eKeys::eKeys_T;
     };
 
     // #TODO Hide the data for safety. Find a better API for ConfigData
@@ -63,7 +64,6 @@ namespace QwerkE {
     {
         FrameworkData frameworkData;
         Libraries libraries;
-        ScenesData scenesData;
         SceneSettings sceneSettings;
         Systems systems;
         EngineSettings engineSettings;
@@ -71,8 +71,8 @@ namespace QwerkE {
 
     struct ConfiguredGameKeys
     {
-        unsigned char action1 = 'k';
-        const char* resetScene = "ctrl+r";
+        eKeys action1 = eKeys::eKeys_MAX; // eKeys::eKeys_K;
+        const char* resetScene = gc_DefaultStringValue;
     };
 
     // TODO Engine data shouldn't be in the framework
@@ -98,16 +98,29 @@ namespace QwerkE {
         MenuBarData menuBarData;
     };
 
+    struct RepeatedStruct // #TODO Remove after testing
+    {
+        RepeatedStruct(int argValue)
+        {
+            value = argValue;
+        }
+        int value = 1;
+    };
+
     struct ProjectData
     {
-        const char* projectName = "Project1";
-        const char* assetsRoot = "Assets";
+        const char* projectName = gc_DefaultStringValue;
+        const char* assetsRoot = gc_DefaultStringValue;
         FrameworkData frameworkData;
         UiData uiData;
-        ScenesData scenes;
+        ScenesList scenes;
         SceneViewerData sceneViewerData;
         Systems systems;
         ConfiguredGameKeys configuredGameKeys;
+
+        RepeatedStruct a = 1; // #TODO Remove after testing
+        RepeatedStruct b = 2; // Testing multiple instances of an object.
+        RepeatedStruct c = 3; // This will fail to de/serialize using type names instead of unique names
     };
 
     class ConfigHelper // The config helper is really an engine domain, so maybe move to engine and find another place for level loading logic
@@ -126,6 +139,7 @@ namespace QwerkE {
 
         static const ConfigData& GetConfigData() { return m_ConfigData; }
         static const UserData& GetUserData() { return m_UserData; }
+        static const ProjectData& GetProjectData() { return m_ProjectData; }
         static void SetConfigData(ConfigData config) { m_ConfigData = config; }
 
     private:

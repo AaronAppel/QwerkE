@@ -27,10 +27,12 @@
 #include "QF_Time.h"
 #include "QF_Window.h"
 
-namespace QwerkE {
+namespace QwerkE
+{
 
 	namespace Framework
 	{
+
 		eOperationResult Framework::Startup()
 		{
 			return Startup(ConfigsFolderPath(null_config));
@@ -43,11 +45,17 @@ namespace QwerkE {
 
             Log::Initialize();
 
-			ConfigHelper::LoadConfigData(configFilePath);
-			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences));
-
 			const ConfigData& configData = ConfigHelper::GetConfigData();
 			const UserData& userData = ConfigHelper::GetUserData();
+			const ProjectData& projectData = ConfigHelper::GetProjectData();
+
+			ConfigHelper::LoadConfigData(configFilePath);
+			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences));
+			ConfigHelper::LoadProjectData(ProjectsFolderPath(null_project));
+
+			ConfigHelper::SaveConfigData(); // #TODO Remove when testing finished
+			ConfigHelper::SaveUserData();
+			ConfigHelper::SaveProjectData();
 
 			Window::Initialize();
 
@@ -165,5 +173,7 @@ namespace QwerkE {
 		{
 			return Window::CloseRequested() == false;
 		}
+
 	}
+
 }
