@@ -4,7 +4,6 @@
 
 #include "QF_Audio.h"
 #include "QF_CallbackFunctions.h"
-#include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"
 #include "QF_Debug.h"
 #include "QF_Debugger.h"
@@ -23,6 +22,7 @@
 #include "QF_Resources.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
+#include "QF_Settings.h"
 #include "QF_ShaderFactory.h"
 #include "QF_Time.h"
 #include "QF_Window.h"
@@ -35,33 +35,31 @@ namespace QwerkE
 
 		eOperationResult Framework::Startup()
 		{
-			return Startup(ConfigsFolderPath(null_config));
+			return Startup(SettingsFolderPath(null_config));
 		}
 
-		eOperationResult Framework::Startup(const std::string configFilePath)
+		eOperationResult Framework::Startup(const std::string engineSettingsPath)
 		{
 			// #TODO Load libraries dynamically. Need functions to load .dlls
 			// #TODO Try to reduce or avoid order dependency in system creation
 
             Log::Initialize();
 
-			const ConfigData& configData = ConfigHelper::GetConfigData();
-			const UserData& userData = ConfigHelper::GetUserData();
-			const ProjectData& projectData = ConfigHelper::GetProjectData();
+			Settings::LoadEngineSettings(engineSettingsPath);
+			Settings::LoadProjectSettings(ProjectsFolderPath(null_project));
+			Settings::LoadUserSettings(SettingsFolderPath(null_preferences));
 
-			ConfigHelper::LoadConfigData(configFilePath);
-			ConfigHelper::LoadUserData(ConfigsFolderPath(null_preferences));
-			ConfigHelper::LoadProjectData(ProjectsFolderPath(null_project));
+			const EngineSettings& engineSettings = Settings::GetEngineSettings();
+			const ProjectSettings& projectSettings = Settings::GetProjectSettings();
+			const UserSettings& userSettings = Settings::GetUserSettings();
 
-			ConfigHelper::SaveConfigData(); // #TODO Remove when testing finished
-			ConfigHelper::SaveUserData();
-			ConfigHelper::SaveProjectData();
+			Settings::SaveProjectSettings();
 
 			Window::Initialize();
 
             Input::Initialize();
 
-            if (configData.systems.AudioEnabled && Audio::Initialize())
+            if (engineSettings.audioEnabled && Audio::Initialize())
             {
                 LOG_TRACE("Audio system initialized with OpenAL.");
             }
@@ -78,7 +76,7 @@ namespace QwerkE
 
 			EventManager::Initialize();
 
-			if (configData.systems.PhysicsEnabled)
+			if (engineSettings.physicsEnabled)
 			{
 				Physics::Initialize();
 			}
@@ -87,7 +85,7 @@ namespace QwerkE
 				LOG_WARN("No physics system loaded.");
 			}
 
-			if (configData.systems.NetworkingEnabled)
+			if (engineSettings.networkingEnabled)
 			{
 				Network::Initialize();
 				LOG_TRACE("Networking system initialized");
@@ -111,7 +109,7 @@ namespace QwerkE
 			return eOperationResult::Success;
 		}
 
-		void Framework::Run()
+		void Framework::Run() // #TODO Review framework Run() loop
         {
 			int FPS_MAX = 120;
 			float FPS_MAX_DELTA = 1.0f / FPS_MAX;
@@ -122,7 +120,6 @@ namespace QwerkE
 			{
 				float deltaTime = Time::FrameDelta();
 
-				// if (deltaTime >= FPS_MAX_DELTA)
 				{
 					Framework::NewFrame();
 
@@ -131,9 +128,6 @@ namespace QwerkE
 					Framework::Draw();
 
 					Time::EndFrame();
-					// FPS
-					//framesSincePrint++; // Frame rate tracking
-					//timeSinceLastFrame = 0.0; // FPS_Max
 				}
 			}
 		}

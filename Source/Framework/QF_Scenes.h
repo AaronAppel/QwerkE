@@ -11,7 +11,7 @@ namespace QwerkE {
     class Scenes
     {
     public:
-        Scenes();
+        Scenes() = default;
         ~Scenes();
 
         static void Initialize();

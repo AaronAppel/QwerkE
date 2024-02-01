@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
+                "file": "ZZ Shared Vault Files ❗/To Watch.md",
                 "mode": "source",
                 "source": false
               }
@@ -79,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md"
+                "file": "ZZ Shared Vault Files ❗/To Watch.md"
               }
             }
           }
@@ -96,7 +96,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "guid",
+                "query": "ai discovers",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
+                "file": "ZZ Shared Vault Files ❗/To Watch.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
+                "file": "ZZ Shared Vault Files ❗/To Watch.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -145,8 +145,7 @@
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -163,11 +162,11 @@
   },
   "active": "4c3749c9271c261a",
   "lastOpenFiles": [
+    "ZZ Shared Vault Files ❗/Watched.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
     "Development/Feature Tickets/F0001 - Reflection.md",
     "cJSON.md",
     "ZZ Shared Vault Files ❗/New Project Checklist.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
     "ZZ Shared Vault Files ❗/To Watch SimonDev.md",
     "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
     "ZZ Shared Vault Files ❗/0 Overhead principle.md",

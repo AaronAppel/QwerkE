@@ -1,0 +1,15 @@
+{
+	"EngineSettings":	[{
+			"windowWidthPixels":	1600,
+			"windowHeightPixels":	900,
+			"showFps":	true,
+			"limitFramerate":	true,
+			"maxFramesPerSecond":	120,
+			"maxEnabledScenes":	1,
+			"maxConcurrentThreadCount":	1,
+			"audioEnabled":	false,
+			"physicsEnabled":	false,
+			"networkingEnabled":	false,
+			"consoleOutputWindowEnabled":	true
+		}]
+}

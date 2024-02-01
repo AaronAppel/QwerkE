@@ -2,16 +2,16 @@
 
 #include "QF_Resources.h"
 
-#include "QF_ConfigHelper.h"
 #include "QF_Log.h"
+#include "QF_Settings.h"
 
 namespace QwerkE {
 
     void Physics::Initialize()
     {
-        const ConfigData config = ConfigHelper::GetConfigData();
+        const EngineSettings& engineSettings = Settings::GetEngineSettings();
 
-        if (config.systems.PhysicsEnabled)
+        if (engineSettings.physicsEnabled)
         {
             LibraryInitialize();
 

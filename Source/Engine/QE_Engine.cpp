@@ -32,8 +32,8 @@
 #include "QF_Network.h"
 #include "QF_Time.h"
 #include "QF_Log.h"
-#include "QF_ConfigHelper.h"
 #include "QF_Scenes.h"
+#include "QF_Settings.h"
 #include "QF_Window.h"
 
 #include "QE_Defines.h"
@@ -54,7 +54,7 @@ namespace QwerkE {
 			{
 				PROFILE_SCOPE("Run Setup");
 
-				if (Framework::Startup(ConfigsFolderPath(null_config)) == eOperationResult::Failure)
+				if (Framework::Startup(SettingsFolderPath(null_config)) == eOperationResult::Failure)
 				{
 					LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
 					Instrumentor::Get().EndSession();
@@ -66,7 +66,7 @@ namespace QwerkE {
 					const char* projectName = programArgPairs.find(key_ProjectFileName)->second;
 					const char* projectFileName = StringAppend(projectName, ".", projects_ext);
 					projectFileName = StringAppend(projectName, "/", projectFileName);
-					// ConfigHelper::LoadProjectData(ProjectsFolderPath(projectFileName));
+					// Settings::LoadProjectData(ProjectsFolderPath(projectFileName));
 
 					// #TODO Load project folder
 					// Could find and save preferences file path for recent project(s)
@@ -77,11 +77,9 @@ namespace QwerkE {
 				if (programArgPairs.find(key_UserName) != programArgPairs.end())
 				{
 					const std::string userName = programArgPairs.find(key_UserName)->second;
-					std::string userConfigFilePath = StringAppend(PreferencesFolderPath(userName.c_str()), "/");
-					userConfigFilePath += userName;
-					userConfigFilePath += ".";
+					std::string userConfigFilePath = userName + ".";
 					userConfigFilePath += preferences_ext;
-					// ConfigHelper::LoadUserData(userConfigFilePath); // #TODO Framework also loads user data
+					// Settings::LoadUserSettings(SettingsFolderPath(userConfigFilePath.c_str())); // #TODO Framework also loads user data
 				}
 
 				Scenes::GetCurrentScene()->SetIsEnabled(true);
@@ -89,8 +87,8 @@ namespace QwerkE {
 				Editor::Initialize();
 			}
 
-			const EngineSettings& engineSettings = ConfigHelper::GetConfigData().engineSettings;
-			const unsigned int FPS_MAX = (int)(engineSettings.LimitFramerate) * engineSettings.MaxFramesPerSecond;
+			const EngineSettings& engineSettings = Settings::GetEngineSettings();
+			const unsigned int FPS_MAX = (int)(engineSettings.limitFramerate) * engineSettings.maxFramesPerSecond;
 			const float FPS_MAX_DELTA = FPS_MAX ? 1.0f / FPS_MAX : 1.f / 120.f;
 
 			double lastFrameTime = Time::Now();
@@ -154,6 +152,11 @@ namespace QwerkE {
 			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{
 				Stop();
+			}
+
+			if (Input::FrameKeyAction(eKeys::eKeys_M, eKeyState::eKeyState_Press))
+			{
+				Window::ToggleMaximized();
 			}
 		}
 

@@ -2,8 +2,8 @@
 #include "Libraries/cJSON/QC_cJSON.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
-#include "QF_ConfigHelper.h" // #TODO Remove
 #include "QF_Log.h" // #TODO Remove
+#include "QF_Settings.h" // #TODO Remove
 
 namespace QwerkE {
 

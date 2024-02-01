@@ -2,7 +2,6 @@
 
 #include "imgui/imgui.h"
 
-#include "QF_ConfigHelper.h"
 #include "QF_Mesh.h"
 #include "QF_Renderable.h"
 
@@ -16,6 +15,7 @@
 #include "QF_Bullet3Routine.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
+#include "QF_Settings.h"
 #include "QF_b3_PhysicsFactory.h"
 
 #include "QE_EditComponent.h"
@@ -27,14 +27,14 @@ namespace QwerkE {
 	{
         m_EditComponent = new EditComponent();
 
-        if (ConfigHelper::GetConfigData().systems.AudioEnabled)
+        if (Settings::GetEngineSettings().audioEnabled)
         {
             m_ListboxItemStrings.push_back("Sound Listener");
             m_ListboxItemStrings.push_back("Sound Player");
             m_ListboxItemTypes.push_back(eComponentTags::Component_SoundListener);
             m_ListboxItemTypes.push_back(eComponentTags::Component_SoundPlayer);
         }
-        if (ConfigHelper::GetConfigData().systems.PhysicsEnabled)
+        if (Settings::GetEngineSettings().physicsEnabled)
         {
             m_ListboxItemStrings.push_back("Physics");
             m_ListboxItemTypes.push_back(eComponentTags::Component_Physics);
@@ -123,12 +123,12 @@ namespace QwerkE {
                     switch ((int)m_ListboxItemTypes.at(listbox_item_current))
                     {
                     case eComponentTags::Component_SoundListener:
-                        if (!ConfigHelper::GetConfigData().systems.AudioEnabled)
+                        if (!Settings::GetEngineSettings().audioEnabled)
                             break;
                         break;
 
                     case eComponentTags::Component_SoundPlayer:
-                        if (!ConfigHelper::GetConfigData().systems.AudioEnabled)
+                        if (!Settings::GetEngineSettings().audioEnabled)
                             break;
                         break;
 
@@ -164,7 +164,7 @@ namespace QwerkE {
                     case eComponentTags::Component_Physics:
                         if (m_CurrentEntity->GetComponent(Component_Physics) == nullptr)
                         {
-                            if (!ConfigHelper::GetConfigData().systems.PhysicsEnabled)
+                            if (!Settings::GetEngineSettings().physicsEnabled)
                                 break;
 
                             vec3 position = m_CurrentEntity->GetPosition();

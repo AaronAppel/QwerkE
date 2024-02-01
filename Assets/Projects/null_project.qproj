@@ -1,41 +1,9 @@
 {
-	"ProjectData":	[{
+	"ProjectSettings":	[{
 			"projectName":	"Project1",
-			"assetsRoot":	"Assets",
-			"FrameworkData":	[{
-					"QuickLoad":	true,
-					"MaxConcurrentThreadCount":	100
-				}],
-			"UiData":	[{
-					"MenuBarData":	[{
-							"showFps":	true
-						}]
-				}],
-			"ScenesList":	[{
-			}],
-			"SceneViewerData":	[{
-					"maxEnabledScenes":	1,
-					"maxDisplayedScenes":	4,
-					"viewDistance":	100
-				}],
-			"Systems":	[{
-					"AudioEnabled":	false,
-					"PhysicsEnabled":	false,
-					"NetworkingEnabled":	false,
-					"ConsoleOutputWindowEnabled":	true
-				}],
-			"ConfiguredGameKeys":	[{
-					"action1":	"…",
-					"resetScene":	"CTRL+R"
-				}],
-			"RepeatedStruct":	[{
-					"value":	6
-				}],
-			"RepeatedStruct":	[{
-					"value":	6
-				}],
-			"RepeatedStruct":	[{
-					"value":	6
+			"assetsDirPath":	"Assets",
+			"m_vector_string":	[{
+					"0":	"null_scene.qscene"
 				}]
 		}]
 }

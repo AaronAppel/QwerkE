@@ -6,11 +6,11 @@
 
 #include "QF_CameraComponent.h"
 #include "QF_Component.h"
-#include "QF_ConfigHelper.h"
 #include "QF_DataManager.h"
 #include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Settings.h"
 
 namespace QwerkE {
 
@@ -45,37 +45,37 @@ namespace QwerkE {
     {
         ComponentCamera* t_activecamera = ((ComponentCamera*)m_CameraList.at(m_CurrentCamera)->GetComponent(Component_Camera));
 
-        const UserData& userData = ConfigHelper::GetUserData();
+        const UserSettings& userSettings = Settings::GetUserSettings();
 
-        if (Input::GetIsKeyDown(userData.controls.Camera_MoveForward))
+        if (Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::FORWARD, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(userData.controls.Camera_MoveBackward))
+        if (Input::GetIsKeyDown(userSettings.key_camera_MoveBackward))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::BACKWARD, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(userData.controls.Camera_MoveLeft))
+        if (Input::GetIsKeyDown(userSettings.key_camera_MoveLeft))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::LEFT, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(userData.controls.Camera_MoveRight))
+        if (Input::GetIsKeyDown(userSettings.key_camera_MoveRight))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::RIGHT, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(userData.controls.Camera_MoveDown))
+        if (Input::GetIsKeyDown(userSettings.key_camera_MoveDown))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::DOWN, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(userData.controls.Camera_MoveUp))
+        if (Input::GetIsKeyDown(userSettings.key_camera_MoveUp))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::UP, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(eKeys::eKeys_T))
+        if (Input::GetIsKeyDown(userSettings.key_camera_RotateRight))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::RROTATE, (float)deltatime);
         }
-        if (Input::GetIsKeyDown(eKeys::eKeys_R))
+        if (Input::GetIsKeyDown(userSettings.key_camera_RotateLeft))
         {
             t_activecamera->ProcessKeyboard(eCamera_Movement::LROTATE, (float)deltatime);
         }

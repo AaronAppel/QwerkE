@@ -5,72 +5,50 @@
 #include "Libraries/cJSON/QC_cJSON.h"
 
 #include "QF_Defines.h"
-#include "QF_Log.h"
-#include "QF_Scene.h"
-#include "QF_TestScene.h"
-#include "QF_ViewerScene.h"
-#include "QF_PBR_Test1.h"
 #include "QF_Enums.h"
 #include "QF_FileUtilities.h"
-#include "QF_Profile.h"
 #include "QF_Input.h"
+#include "QF_Log.h"
+#include "QF_PBR_Test1.h"
+#include "QF_Profile.h"
+#include "QF_Scene.h"
+#include "QF_Settings.h"
+#include "QF_TestScene.h"
+#include "QF_ViewerScene.h"
 
 namespace QwerkE {
 
     bool Scenes::m_IsRunning = true;
     Scene* Scenes::m_CurrentScene = nullptr;
-    std::map<eSceneTypes, Scene*> Scenes::m_Scenes;
-
-	Scenes::Scenes()
-	{
-		//m_pController = new PlayerController();
-	}
+    std::map<eSceneTypes, Scene*> Scenes::m_Scenes; // #TODO Review using a vector instead. Lookup can't be that costly
 
 	Scenes::~Scenes()
 	{
-		for (unsigned int i = 0; i < m_Scenes.size(); i++)
+		for (auto it = m_Scenes.begin(); it != m_Scenes.end(); it++)
 		{
-			delete m_Scenes[(eSceneTypes)i];
+			delete it->second;
 		}
 	}
 
 	void Scenes::Initialize()
 	{
-        // TODO: Scenes should be added somewhere else
-        // TODO: Load scenes from the Resources/Scenes/... folder to use persistent data
-	 	// auto scenes = Resources::SeeScenes();
-		// if (scenes.empty())
-		// {
-		//      Create empty scene
-		// }
+		const ProjectSettings& projectSettings = Settings::GetProjectSettings();
 
-		const char* prefPath = ProjectsFolderPath(null_project);
-		// TODO: does this free memory correctly? std::string pref = ConfigsFolderPath(null_config);
+		// #TODO How should the file names be given to the scene?
+		const std::vector<std::string>& sceneFileNames = projectSettings.sceneFileNames;
 
-		if (FileExists(prefPath))
+		for (size_t i = 0; i < sceneFileNames.size(); i++)
 		{
-			cJSON* root = OpencJSONStream(prefPath);
-			cJSON* scenesArray = GetItemFromArrayByKey(root->child, "ScenesList");
-
-			unsigned int numScenes = GetArraySize(scenesArray);
-			for (unsigned int i = 0; i < numScenes; i++)
+			const char* sceneFileName = sceneFileNames[0].c_str();
+			if (FileExists(ScenesFolderPath(sceneFileName)) == false)
 			{
-				cJSON* scene = GetItemFromArrayByIndex(scenesArray, i);
-
-				const char* sceneFileName = scene->valuestring;
-
-				if (FileExists(ScenesFolderPath(sceneFileName)) == false)
-                {
-                    LOG_WARN("Scenes::Initialize(): File not found: {0}", sceneFileName);
-					continue;
-				}
-
-				Scene* newScene = new Scene(sceneFileName); // TODO: Improve how scene file names are assigned
-				newScene->LoadScene();
-				AddScene(newScene, i == 0); // #TODO Improve default starting scene selection/specification
+				LOG_WARN("Scenes::Initialize(): File not found: {0}", sceneFileName);
+				continue;
 			}
 
-			ClosecJSONStream(root);
+			Scene* newScene = new Scene(sceneFileName);
+			newScene->LoadScene();
+			AddScene(newScene, i == 0); // #TODO Improve default starting scene selection/specification
 		}
 
 		if (m_Scenes.empty())
@@ -80,14 +58,16 @@ namespace QwerkE {
 			emptyScene->LoadScene();
 			emptyScene->SetIsEnabled(true);
 			AddScene(emptyScene, true);
-            LOG_WARN("Null scene loaded because no valid scene was found in: {0}", prefPath);
+			LOG_WARN("Null scene loaded as no scene files found for project: {0}", projectSettings.projectName);
 		}
-		// TODO: Delete or manage prefPath memory
 	}
 
 	void Scenes::EnableScene(eSceneTypes type)
 	{
-		m_Scenes[type]->SetIsEnabled(true);
+		if (m_Scenes.find(type) != m_Scenes.end())
+		{
+			m_Scenes[type]->SetIsEnabled(true);
+		}
 	}
 
 	void Scenes::SetCurrentScene(eSceneTypes type)
@@ -104,15 +84,17 @@ namespace QwerkE {
 
 	void Scenes::DisableScene(eSceneTypes type)
 	{
-		m_Scenes[type]->SetIsEnabled(false);
+		if (m_Scenes.find(type) != m_Scenes.end())
+		{
+			m_Scenes[type]->SetIsEnabled(false);
+		}
 	}
 
 	void Scenes::DisableAll()
 	{
-		for (unsigned int i = 0; i < m_Scenes.size(); i++)
+		for (auto it = m_Scenes.begin(); it != m_Scenes.end(); it++)
 		{
-			Scene* temp = m_Scenes[(eSceneTypes)i];
-			temp->SetIsEnabled(false);
+			it->second->SetIsEnabled(false);
 		}
 	}
 
@@ -137,8 +119,7 @@ namespace QwerkE {
 			Scene* returnScene = m_Scenes[scene->GetSceneID()];
 			return returnScene;
 		}
-		else
-			return nullptr;
+		return nullptr;
 	}
 
 	void Scenes::Update(float deltatime)
@@ -150,12 +131,9 @@ namespace QwerkE {
 			GetCurrentScene()->ToggleIsPaused();
 		}
 
-		if (m_CurrentScene && m_IsRunning)
+		if (m_CurrentScene && m_IsRunning && m_CurrentScene->GetIsEnabled())
 		{
-			if (m_CurrentScene->GetIsEnabled())
-			{
-				m_CurrentScene->Update(deltatime);
-			}
+			m_CurrentScene->Update(deltatime);
 		}
 	}
 
@@ -170,7 +148,10 @@ namespace QwerkE {
 
 	void Scenes::DrawScene(eSceneTypes scene)
 	{
-		m_Scenes[scene]->Draw();
+		if (m_Scenes.find(scene) != m_Scenes.end())
+		{
+			m_Scenes[scene]->Draw();
+		}
 	}
 
 }

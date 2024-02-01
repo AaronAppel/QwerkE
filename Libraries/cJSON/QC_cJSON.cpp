@@ -271,19 +271,9 @@ cJSON* GetItemFromArrayByIndex(const cJSON* cJSONarray, int index)
 	return cJSONItem;
 }
 
-void AddItemsToObject(cJSON* cJSONObject, std::vector<cJSON*> cJSONItems)
-{
-	// #TODO Implement
-}
-
 void AddItemToObject(cJSON* cJSONObject, cJSON* item)
 {
 	cJSON_AddItemToArray(cJSONObject, item);
-}
-
-void AddItemsToArray(cJSON* cJSONArray, std::vector<cJSON*> cJSONItems)
-{
-	// #TODO:: Implement
 }
 
 void AddItemToArray(cJSON* cJSONArray, cJSON* item)
@@ -312,155 +302,6 @@ void AddItemToArray(cJSON* cJSONArray, cJSON* item)
 			cJSONArray->child->child = item; // First element
 		}
 	}
-}
-//// Replacing Items In File ////
-//*- Replacing Object Items -*
-void ReplaceItemInObject(cJSON* cJSONObject, cJSON* oldItem, cJSON* newItem)
-{
-	int size = GetObjectSize(cJSONObject);
-
-	for (int i = 0; i < size; i++)
-	{
-		cJSON* temp = GetItemFromObjectByIndex(cJSONObject, i);
-
-		if (*temp->string == *oldItem->string)
-		{
-			cJSON_ReplaceItemInArray(cJSONObject, i, newItem); // #TODO Test
-		}
-	}
-}
-
-//*- Replacing Array Items -*
-void ReplaceItemInArray(cJSON* cJSONArray, cJSON* oldItem, cJSON* newItem)
-{
-	ReplaceItemInObject(cJSONArray->child, oldItem, newItem); // #TODO Test
-}
-//// Updating Items In File //// <- updating vs flat replacement
-// Updating items in objects
-void UpdateItemInObject(cJSON* cJSONObject)
-{
-	// #TODO Implement
-}
-// Updating items in arrays // TODO::
-void UpdateItemInArray(cJSON* cJSONObject)
-{
-	// #TODO Implement
-}
-
-//// Removing Items From File ////
-//*- Removing From Object -*
-void RemoveItemFromObject(cJSON* cJSONObject, cJSON* item)
-{
-	RemoveItemFromObjectByKey(cJSONObject, item->string);
-}
-
-void RemoveItemFromObjectByKey(cJSON* cJSONObject, const char* key)
-{
-	cJSON_DetachItemFromObject(cJSONObject, key);
-}
-
-void RemoveItemFromObjectByString(cJSON* cJSONObject, const char* value)
-{
-	int size = GetObjectSize(cJSONObject);
-
-	for (int i = 0; i < size; i++)
-	{
-		cJSON* temp = GetItemFromObjectByIndex(cJSONObject, i);
-		if (TypeIsString(temp))
-		{
-			if (*temp->valuestring == *value)
-			{
-				cJSON_DeleteItemFromArray(cJSONObject, i);
-				return;
-			}
-		}
-	}
-}
-//*- Removing From Array -*
-void RemoveItemsFromArray()
-{
-	// #TODO Implement
-}
-
-void RemoveItemFromArray(cJSON* cJSONArray, cJSON* item)
-{
-	RemoveItemFromArrayByKey(cJSONArray, item->string);
-}
-
-void RemoveItemFromArrayByKey(cJSON* cJSONArray, const char* key)
-{
-	cJSON_DetachItemFromObject(cJSONArray->child, key);
-}
-
-void RemoveItemFromArrayByString(cJSON* cJSONArray, const char* value)
-{
-	int size = GetArraySize(cJSONArray);
-
-	for (int i = 0; i < size; i++)
-	{
-		cJSON* temp = GetItemFromArrayByIndex(cJSONArray, i);
-		if (TypeIsString(temp))
-		{
-			if (*temp->valuestring == *value)
-			{
-				cJSON_DeleteItemFromArray(cJSONArray->child, i);
-				return;
-			}
-		}
-	}
-}
-
-void RemoveItemFromArrayByIndex(cJSON* cJSONArray, int index)
-{
-	cJSON_DeleteItemFromArray(cJSONArray->child, index);
-}
-
-bool TypeIsBool(cJSON* item)
-{
-	if (item->type == cJSON_False || item->type == cJSON_True)
-		return true;
-	else
-		return false;
-}
-
-bool TypeIsNull(cJSON* item)
-{
-	if (item->type == cJSON_NULL)
-		return true;
-	else
-		return false;
-}
-
-bool TypeIsNumber(cJSON* item)
-{
-	if (item->type == cJSON_Number)
-		return true;
-	else
-		return false;
-}
-
-bool TypeIsString(cJSON* item)
-{
-	if (item->type == cJSON_String)
-		return true;
-	else
-		return false;
-}
-
-bool TypeIsArray(cJSON* item)
-{
-	if (item->type == cJSON_Array)
-		return true;
-	else
-		return false;
-}
-
-bool TypeIsObject(cJSON* item)
-{
-	if (item->type == cJSON_Object)
-		return true;
-	else
-		return false;
 }
 
 cJSON* CreateBool(const char* key, bool value)
@@ -497,16 +338,6 @@ cJSON* CreateArray(const char* key)
 	returnArray->child = cJSON_CreateObject();
 	returnArray->string = _strdup(key);
 	return returnArray;
-}
-
-void AddNewStringToObject()  // #TODO Deprecate
-{
-
-}
-
-void AddNewNumberToArray() // #TODO Deprecate
-{
-
 }
 
 cJSON* CopyRootObject(cJSON* root)

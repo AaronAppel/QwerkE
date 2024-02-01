@@ -17,6 +17,8 @@ namespace QwerkE {
 
         static void NewFrame();
 
+        static void ToggleMaximized();
+
         static void RequestClose();
         static bool CloseRequested();
 

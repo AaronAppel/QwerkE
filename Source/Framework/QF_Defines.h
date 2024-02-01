@@ -68,8 +68,7 @@
 #define FontsFolderPath(fullFileName) StringAppend(AssetsDir, "Fonts/", fullFileName)
 #define SoundsFolderPath(fullFileName) StringAppend(AssetsDir, "Sounds/", fullFileName)
 #define ScenesFolderPath(fullFileName) StringAppend(AssetsDir, "Scenes/", fullFileName)
-#define ConfigsFolderPath(fullFileName) StringAppend(AssetsDir, "Configs/", fullFileName)
-#define PreferencesFolderPath(fullFileName) StringAppend(AssetsDir, "Configs/", fullFileName)
+#define SettingsFolderPath(fullFileName) StringAppend(AssetsDir, "Settings/", fullFileName)
 #define ObjectSchematicsFolderPath(fullFileName) StringAppend(AssetsDir, "BluePrints_Prefabs_Schematic/", fullFileName)
 #define ProjectsFolderPath(fullFileName) StringAppend(AssetsDir, "Projects/", fullFileName)
 

@@ -14,6 +14,7 @@ const char* g_WindowTitle = "QwerkEngine";
 
 namespace QwerkE
 {
+    bool s_windowIsMaximized = false;
     bool s_closeRequested = false;
     vec2 s_resolution = vec2(1600.f, 900.f);
     vec2 s_aspectRatio = vec2(16.f, 9.f);
@@ -48,6 +49,8 @@ namespace QwerkE
         glfwWindowHint(GLFW_ALPHA_BITS, 8);
         glfwWindowHint(GLFW_DEPTH_BITS, 0);
         glfwWindowHint(GLFW_STENCIL_BITS, 8);
+
+        GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor();
 
         s_window = glfwCreateWindow((int)s_resolution.x, (int)s_resolution.y, g_WindowTitle, NULL, NULL);
         if (!s_window)
@@ -147,6 +150,25 @@ namespace QwerkE
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+    }
+
+    void Window::ToggleMaximized()
+    {
+        // #TODO Add more functionality with :
+        // glfwShowWindow
+        // glfwHideWindow
+        // glfwFocusWindow
+        // glfwSetInputMode for handling "Sticky Keys"
+
+        if (s_windowIsMaximized)
+        {
+            glfwRestoreWindow(s_window);
+        }
+        else
+        {
+            glfwMaximizeWindow(s_window);
+        }
+        s_windowIsMaximized = !s_windowIsMaximized;
     }
 
     void Window::RequestClose()
