@@ -6,33 +6,25 @@
 #include "QF_Bullet3Component.h"
 #include "QF_Enums.h"
 
-namespace QwerkE {
+namespace QwerkE
+{
 
     GameObject::GameObject(Scene* scene)
     {
         m_pScene = scene;
-        for (int i = 0; i < m_BaseUpdateListSize; i++)
-        {
-            m_UpdateList.push_back(nullptr); // fill for runtime
-        }
-        for (int i = 0; i < m_BaseDrawListSize; i++)
-        {
-            m_DrawList.push_back(nullptr); // fill for runtime
-        }
+        Initialize();
     }
 
     GameObject::GameObject(Scene* scene, vec3 position)
     {
         m_Transform.s_Position = position;
         m_pScene = scene; // TODO: Remove scene reference in GameObject
-        for (int i = 0; i < m_BaseUpdateListSize; i++)
-        {
-            m_UpdateList.push_back(nullptr); // fill for runtime
-        }
-        for (int i = 0; i < m_BaseDrawListSize; i++)
-        {
-            m_DrawList.push_back(nullptr); // fill for runtime
-        }
+        Initialize();
+    }
+
+    GameObject::GameObject()
+    {
+        Initialize();
     }
 
     GameObject::~GameObject()
@@ -63,6 +55,22 @@ namespace QwerkE {
         m_DrawList.clear();
     }
 
+    void GameObject::Initialize()
+    {
+        // m_UpdateList.reserve(m_BaseUpdateListSize);
+        // m_DrawList.reserve(m_BaseUpdateListSize);
+
+        // #TODO Swap to pushing back later, but having a reserved size already instead
+        for (int i = 0; i < m_BaseUpdateListSize; i++)
+        {
+            m_UpdateList.push_back(nullptr); // fill for runtime
+        }
+        for (int i = 0; i < m_BaseDrawListSize; i++)
+        {
+            m_DrawList.push_back(nullptr); // fill for runtime
+        }
+    }
+
     void GameObject::Update(double deltatime)
     {
         for (unsigned int i = 0; i < m_UpdateList.size(); i++)
@@ -72,7 +80,6 @@ namespace QwerkE {
                 m_UpdateList.at(i)->Update(deltatime);
             }
         }
-        Component* tempComp = nullptr;
     }
 
     void GameObject::Draw(GameObject* camera)

@@ -10,6 +10,7 @@
 #include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Serialization.h"
 #include "QF_Settings.h"
 
 namespace QwerkE {
@@ -139,7 +140,7 @@ namespace QwerkE {
     {
         if (m_LightList.size() < 2)
         {
-            LOG_ERROR("Unable to remove light as 1 must remain"); // #BUG B0001 obsidian://open?vault=Documentation&file=Development%2FBug%20Tickets%2FB0001%20-%20Allow%200%20Lights
+            LOG_ERROR("Unable to remove light as 1 must remain"); // #BUG B0001
             return;
         }
 
@@ -191,7 +192,15 @@ namespace QwerkE {
             return;
         }
 
-        DataManager::SaveScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
+        // DataManager::SaveScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
+
+        // #TODO Error checking
+        cJSON* root = cJSON_CreateObject();
+        const Scene& sc = *this;
+        Serialization::SerializeObject(root, sc);
+        PrintRootObjectToFile(ScenesFolderPath(m_SceneFileName.c_str()), root);
+        LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
+        ClosecJSONStream(root);
     }
 
     void Scene::LoadScene()
@@ -202,21 +211,30 @@ namespace QwerkE {
             return;
         }
 
-        eOperationResult result = DataManager::LoadScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
-        if (result == eOperationResult::Success)
-        {
-            LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
-        }
-        else
-        {
-            LOG_TRACE("{0} error loading \"{1}\"", __FUNCTION__, m_SceneFileName.c_str());
-        }
+        // #TODO Error checking
+        cJSON* root = OpencJSONStream(ScenesFolderPath(m_SceneFileName.c_str()));
+        Scene& sc = *this;
+        Serialization::DeserializeObjectFromJsonFile(root, sc);
+        LOG_INFO("{0} Scene file {1} loaded", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
+        ClosecJSONStream(root);
+
+        OnLoaded();
+
+        // eOperationResult result = DataManager::LoadScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
+
         SetupCameras();
     }
 
     void Scene::UnloadScene()
     {
-        int size = m_LightList.size();
+        int size = m_SceneDrawList.size();
+        for (int i = size - 1; i > -1; i--)
+        {
+            delete m_SceneDrawList.at(i);
+        }
+        m_SceneDrawList.clear();
+
+        size = m_LightList.size();
         for (int i = size - 1; i > -1; i--)
         {
             delete m_LightList.at(i);
@@ -232,7 +250,7 @@ namespace QwerkE {
 
         for (auto object : m_pGameObjects)
         {
-            delete object.second;
+            // delete object.second;
         }
         m_pGameObjects.clear();
 
@@ -245,6 +263,33 @@ namespace QwerkE {
         Initialize();
         LoadScene();
         LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_SceneFileName.c_str());
+    }
+
+    void Scene::OnLoaded()
+    {
+        for (size_t i = 0; i < m_SceneDrawList.size(); i++)
+        {
+            m_SceneDrawList[i]->SetScene(this);
+        }
+        for (size_t i = 0; i < m_CameraList.size(); i++)
+        {
+            m_CameraList[i]->SetScene(this);
+        }
+        for (size_t i = 0; i < m_LightList.size(); i++)
+        {
+            m_LightList[i]->SetScene(this);
+        }
+
+        for (size_t i = 0; i < m_SceneDrawList.size(); i++)
+        {
+            if (m_pGameObjects.find(m_SceneDrawList[i]->GetName()) == m_pGameObjects.end())
+            {
+                if (m_SceneDrawList[i]->GetTag() != eGameObjectTags::GO_Tag_Light)
+                {
+                    m_pGameObjects[m_SceneDrawList[i]->GetName()] = m_SceneDrawList[i];
+                }
+            }
+        }
     }
 
     const GameObject* Scene::GetGameObject(const char* name)

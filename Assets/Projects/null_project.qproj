@@ -1,8 +1,8 @@
 {
-	"ProjectSettings":	[{
+	"m_projectSettings":	[{
 			"projectName":	"Project1",
 			"assetsDirPath":	"Assets",
-			"m_vector_string":	[{
+			"sceneFileNames":	[{
 					"0":	"null_scene.qscene"
 				}]
 		}]

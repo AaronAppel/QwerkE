@@ -53,8 +53,6 @@ namespace QwerkE
 			const ProjectSettings& projectSettings = Settings::GetProjectSettings();
 			const UserSettings& userSettings = Settings::GetUserSettings();
 
-			Settings::SaveProjectSettings();
-
 			Window::Initialize();
 
             Input::Initialize();

@@ -6,13 +6,21 @@
 #include "Libraries/Mirror/Source/MirrorTypes.h"
 
 #include "QF_eKeys.h"
+#include "QF_Enums.h"
+#include "QF_GameObject.h"
+#include "QF_Scene.h"
 #include "QF_Settings.h"
 
 namespace QwerkE
 {
+	typedef eSceneTypes m_eSceneTypes;
+	MIRROR_TYPE(m_eSceneTypes)
 
 	typedef std::vector<std::string> m_vector_string;
 	MIRROR_TYPE(m_vector_string)
+
+	typedef std::vector<GameObject*> m_vector_gameobjectptr;
+	MIRROR_TYPE(m_vector_gameobjectptr)
 
 	typedef QwerkE::eKeys eKeys;
 	MIRROR_TYPE(eKeys)
@@ -54,4 +62,14 @@ namespace QwerkE
 	MIRROR_CLASS_MEMBER(viewDistance)
 	MIRROR_CLASS_END
 
+	MIRROR_CLASS_START(Scene)
+	MIRROR_CLASS_MEMBER(m_IsEnabled)
+	MIRROR_CLASS_MEMBER(m_IsPaused)
+	MIRROR_CLASS_MEMBER(m_SceneFileName)
+	MIRROR_CLASS_MEMBER(m_ID)
+	MIRROR_CLASS_MEMBER(m_CurrentCamera)
+	MIRROR_CLASS_MEMBER(m_CameraList)
+	MIRROR_CLASS_MEMBER(m_LightList)
+	MIRROR_CLASS_MEMBER(m_SceneDrawList)
+	MIRROR_CLASS_END
 }

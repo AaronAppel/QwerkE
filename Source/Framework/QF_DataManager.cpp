@@ -4,20 +4,21 @@
 
 #include "QF_Defines.h"
 
-#include "QF_Log.h"
-#include "QF_Factory.h"
-#include "QF_GameObject.h"
 #include "QF_CameraComponent.h"
-#include "QF_FreeCameraComponent.h"
+#include "QF_Factory.h"
 #include "QF_FirstPersonCameraComponent.h"
+#include "QF_FreeCameraComponent.h"
+#include "QF_GameObject.h"
+#include "QF_LightComponent.h"
+#include "QF_Log.h"
+#include "QF_RenderRoutine.h"
+#include "QF_Resources.h"
+#include "QF_Routine.h"
+#include "QF_Scene.h"
+#include "QF_Serialization.h"
 #include "QF_StaticCameraComponent.h"
 #include "QF_ThirdPersonCameraComponent.h"
-#include "QF_LightComponent.h"
-#include "QF_Routine.h"
-#include "QF_RenderRoutine.h"
 #include "QF_TransformRoutine.h"
-#include "QF_Scene.h"
-#include "QF_Resources.h"
 
 // RenderComponent
 #include "QF_RenderComponent.h"
@@ -34,6 +35,13 @@ namespace QwerkE {
     {
         // #TODO Error checking
         cJSON* root = cJSON_CreateObject();
+        const Scene& sc = *scene;
+        Serialization::SerializeObject(root, sc);
+        PrintRootObjectToFile(fileDir, root);
+        LOG_INFO("DataManager: Scene file {0} saved", fileDir);
+        ClosecJSONStream(root);
+
+        return eOperationResult::Success;
 
         cJSON* t_Settings = CreateArray("Settings");
         AddItemToArray(t_Settings, CreateBool("Paused", (int)scene->GetIsPaused()));
@@ -71,9 +79,9 @@ namespace QwerkE {
         return eOperationResult::Success;
     }
 
-    eOperationResult DataManager::LoadScene(Scene* scenePath, const char* fileDir)
+    eOperationResult DataManager::LoadScene(Scene* scene, const char* fileDir)
     {
-        if (scenePath == nullptr) { return eOperationResult::Failure; } // #TODO Load a null scenePath
+        if (scene == nullptr) { return eOperationResult::Failure; } // #TODO Load a null scene
 
         if (FileExists(fileDir) == false)
         {
@@ -88,7 +96,14 @@ namespace QwerkE {
             return eOperationResult::Failure;
         }
 
-        scenePath->RemoveAllObjectsFromScene();
+        scene->RemoveAllObjectsFromScene();
+
+        Scene& sc = *scene;
+        Serialization::DeserializeObjectFromJsonFile(root, sc);
+        scene->OnLoaded();
+        ClosecJSONStream(root);
+        LOG_INFO("DataManager: Scene file {0} loaded", fileDir);
+        return eOperationResult::Success;
 
         // #TODO Improve below loops. A lot of copied code
 
@@ -96,8 +111,8 @@ namespace QwerkE {
 
         if (t_Settings != nullptr)
         {
-            scenePath->SetIsPaused((bool)GetItemFromArrayByKey(t_Settings, "Paused")->valueint);
-            scenePath->SetIsEnabled((bool)GetItemFromArrayByKey(t_Settings, "Enabled")->valueint);
+            scene->SetIsPaused((bool)GetItemFromArrayByKey(t_Settings, "Paused")->valueint);
+            scene->SetIsEnabled((bool)GetItemFromArrayByKey(t_Settings, "Enabled")->valueint);
         }
 
         {   // Objects
@@ -106,8 +121,8 @@ namespace QwerkE {
 
             for (unsigned int i = 0; i < t_GameObjects.size(); i++)
             {
-                GameObject* t_TempObject = ConvertJSONToGameObject(t_GameObjects.at(i), scenePath);
-                scenePath->AddObjectToScene(t_TempObject);
+                GameObject* t_TempObject = ConvertJSONToGameObject(t_GameObjects.at(i), scene);
+                scene->AddObjectToScene(t_TempObject);
             }
         }
 
@@ -117,8 +132,8 @@ namespace QwerkE {
 
             for (unsigned int i = 0; i < t_CameraObjects.size(); i++)
             {
-                GameObject* t_TempObject = ConvertJSONToGameObject(t_CameraObjects.at(i), scenePath);
-                scenePath->AddCamera(t_TempObject);
+                GameObject* t_TempObject = ConvertJSONToGameObject(t_CameraObjects.at(i), scene);
+                scene->AddCamera(t_TempObject);
             }
         }
 
@@ -128,8 +143,8 @@ namespace QwerkE {
 
             for (unsigned int i = 0; i < t_LightObjects.size(); i++)
             {
-                GameObject* t_TempObject = ConvertJSONToGameObject(t_LightObjects.at(i), scenePath);
-                scenePath->AddLight(t_TempObject);
+                GameObject* t_TempObject = ConvertJSONToGameObject(t_LightObjects.at(i), scene);
+                scene->AddLight(t_TempObject);
             }
         }
 
@@ -172,6 +187,29 @@ namespace QwerkE {
         // }
 
         return t_ReturnJSON;
+    }
+
+    GameObject* DataManager::ConvertJSONToGameObject(cJSON* item)
+    {
+        GameObject* object = new GameObject();
+
+        object->SetName(item->string);
+        object->SetTag((eGameObjectTags)GetItemFromArrayByKey(item, "ObjectTag")->valueint);
+
+        cJSON* tempObject = GetItemFromArrayByKey(item, "Position");
+        vec3 position = GetPositionFromcJSONItem(tempObject);
+        object->SetPosition(position);
+        tempObject = GetItemFromArrayByKey(item, "Rotation");
+        vec3 rotation = GetRotationFromcJSONItem(tempObject);
+        object->SetRotation(rotation);
+        tempObject = GetItemFromArrayByKey(item, "Scale");
+        vec3 scale = GetScaleFromcJSONItem(tempObject);
+        object->SetScale(scale);
+
+        AddComponentsToGameObject(object, item);
+        AddRoutinesToGameObject(object, item);
+
+        return object;
     }
 
     GameObject* DataManager::ConvertJSONToGameObject(cJSON* item, Scene* scene)

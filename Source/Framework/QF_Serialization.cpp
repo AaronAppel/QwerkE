@@ -3,6 +3,8 @@
 #include "Libraries/cJSON/QC_cJSON.h"
 
 #include "QF_eKeys.h"
+#include "QF_DataManager.h"
+#include "QF_GameObject.h"
 #include "QF_Log.h"
 
 // #TODO Look at removing from QwerkE namespace, or have a #using QwerkE just in this .cpp.
@@ -43,7 +45,7 @@ case MirrorTypes::ClassType: \
                 {
                     if (jsonStructArr[j]->type == cJSON_Array)
                     {
-                        if (strcmp(field.type->stringName.c_str(), jsonStructArr[j]->string) == 0)
+                        if (strcmp(field.name.c_str(), jsonStructArr[j]->string) == 0)
                         {
                             if (field.type->enumType > MirrorTypes::m_PRIMITIVE_TYPES)
                             {
@@ -65,10 +67,9 @@ case MirrorTypes::ClassType: \
                                 {
                                     std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
                                     const std::vector<cJSON*> jsonStrings = GetAllItemsFromArray(jsonStructArr[j]);
-                                    strings->reserve(jsonStrings.size());
-
                                     if (strings)
                                     {
+                                        strings->reserve(jsonStrings.size());
                                         for (size_t i = 0; i < jsonStrings.size(); i++)
                                         {
                                             std::string str = jsonStrings[i]->valuestring;
@@ -77,13 +78,32 @@ case MirrorTypes::ClassType: \
                                     }
                                     else
                                     {
-                                        LOG_WARN("{0} Unable to deserialize type of {1}({2})", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                                        LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                                    }
+                                }
+                                break;
+
+                            case MirrorTypes::m_vector_gameobjectptr:
+                                {
+                                    std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
+                                    const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonStructArr[j]);
+                                    if (gameObjects)
+                                    {
+                                        gameObjects->reserve(jsonGameObjects.size());
+                                        for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                                        {
+                                            GameObject* gameObject = DataManager::ConvertJSONToGameObject(jsonGameObjects[i]);
+                                            if (gameObject)
+                                            {
+                                                gameObjects->push_back(gameObject);
+                                            }
+                                        }
                                     }
                                 }
                                 break;
 
                             default:
-                                LOG_WARN("{0} User defined type {1}({2}) not supported here!", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                                LOG_WARN("{0} User defined type {1} {2}({3}) not supported here!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
                                 break;
                             }
                         }
@@ -172,7 +192,7 @@ case MirrorTypes::ClassType: \
                 break;
 
             default:
-                LOG_ERROR("{0} Unsupported field type {1}({2}) for cJSON deserialization!", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                LOG_ERROR("{0} Unsupported field type {1} {2}({3}) for cJSON deserialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
                 break;
             }
         }
@@ -201,7 +221,7 @@ case MirrorTypes::ClassType: \
 
                 if (field.type->enumType < MirrorTypes::m_PRIMITIVE_TYPES)
                 {
-                    cJSON* arr = CreateArray(field.type->stringName.c_str());
+                    cJSON* arr = CreateArray(field.name.c_str());
                     cJSON_AddItemToArray(objJson->child, arr);
 
                     switch (field.type->enumType)
@@ -216,10 +236,7 @@ case MirrorTypes::ClassType: \
 
                     case MirrorTypes::m_vector_string:
                         {
-                            const ProjectSettings* projectSettings = (ProjectSettings*)obj;
-
                             std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
-
                             if (strings)
                             {
                                 for (size_t i = 0; i < strings->size(); i++)
@@ -230,13 +247,26 @@ case MirrorTypes::ClassType: \
                             }
                             else
                             {
-                                LOG_WARN("{0} Unable to deserialize type of {1}({2})", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                                LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                            }
+                        }
+                        break;
+
+                    case MirrorTypes::m_vector_gameobjectptr:
+                        {
+                            std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
+                            if (gameObjects)
+                            {
+                                for (size_t i = 0; i < gameObjects->size(); i++)
+                                {
+                                    AddItemToArray(arr, DataManager::ConvertGameObjectToJSON(gameObjects->at(i)));
+                                }
                             }
                         }
                         break;
 
                     default:
-                        LOG_WARN("{0} Unsupported user defined field type {1}({2}) for serialization!", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                        LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
                         break;
                     }
                 }
@@ -304,6 +334,7 @@ case MirrorTypes::ClassType: \
             case MirrorTypes::m_int:
             case MirrorTypes::m_float:
             case MirrorTypes::m_double:
+            case MirrorTypes::m_eSceneTypes:
                 {
                     int* numberAddress = (int*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
@@ -311,7 +342,7 @@ case MirrorTypes::ClassType: \
                 break;
 
             default:
-                LOG_ERROR("{0} Unsupported field type {1}({2}) for serialization!", __FUNCTION__, field.type->stringName, (int)field.type->enumType);
+                LOG_ERROR("{0} Unsupported field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
                 break;
             }
         }

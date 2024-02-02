@@ -42,6 +42,7 @@ namespace QwerkE {
     public:
         GameObject(Scene* scene);
         GameObject(Scene* scene, vec3 position);
+        GameObject();
         ~GameObject();
 
         void Update(double deltatime);
@@ -84,9 +85,12 @@ namespace QwerkE {
         void SetRotation(vec3 rotation);
         void SetScale(vec3 scale) { m_Transform.s_Scale = scale; };
         void SetRenderOrder(int order) { m_RenderOrder = order; };
+        void SetScene(Scene* scene) { m_pScene = scene; };
         void SetTag(eGameObjectTags tag) { m_Tag = tag; }
 
     private:
+        void Initialize();
+
         Scene* m_pScene = nullptr; // TODO: Remove scene reference in GameObject
         std::string m_Name = gc_DefaultStringValue;
         eGameObjectTags m_Tag = GO_Tag_Null;

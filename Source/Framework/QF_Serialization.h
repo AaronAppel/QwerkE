@@ -30,7 +30,7 @@ namespace QwerkE {
         void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
 
         template <class T>
-        void DeserializeObjectFromJsonFile(const cJSON* fileRootJson, T& obj)
+        void DeserializeObjectFromJsonFile(const cJSON* fileRootJson, T& obj, bool verifyRoot = false)
         {
             if (!fileRootJson)
             {
@@ -45,9 +45,9 @@ namespace QwerkE {
             }
 
             const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-            if (strcmp(fileRootJson->child->string, typeInfo->stringName.c_str()) != 0)
+            if (verifyRoot && strcmp(fileRootJson->child->string, typeInfo->stringName.c_str()) != 0)
             {
-                // Verify that the file (only) contains a data instance of the object type
+                // #TODO Verify that the file (only) contains a data instance of the object type
                 LOG_ERROR("{0} fileRootJson 1st level object name {1} doesn't match given type of {2}!", __FUNCTION__, fileRootJson->child->string, typeInfo->stringName.c_str());
                 return;
             }

@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "Libraries/Mirror/Source/Mirror.h"
+
 #include "QF_Enums.h"
 #include "QF_Constants.h"
 
@@ -44,6 +46,8 @@ namespace QwerkE {
         void UnloadScene();
         void ReloadScene();
 
+        void OnLoaded();
+
         const GameObject* GetGameObject(const char* name);
         bool GetIsEnabled() { return m_IsEnabled; };
         bool GetIsPaused() { return m_IsPaused; };
@@ -66,6 +70,8 @@ namespace QwerkE {
         bool AddObjectToSceneDrawList(GameObject* object);
         bool RemoveObjectFromSceneDrawList(const GameObject* object);
 
+        MIRROR_PRIVATE_MEMBERS
+
         bool m_IsEnabled = false;
         bool m_IsPaused = false;
         std::string m_SceneFileName = gc_DefaultCharPtrValue;
@@ -74,10 +80,9 @@ namespace QwerkE {
         eSceneTypes m_ID = eSceneTypes::Scene_Null; // #TODO Deprecate ids and use unique file names/paths instead
 
         int m_CurrentCamera = 0;
+
         std::vector<GameObject*> m_CameraList;
-
         std::vector<GameObject*> m_LightList;
-
         std::vector<GameObject*> m_SceneDrawList;
     };
 
