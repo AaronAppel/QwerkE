@@ -7,12 +7,19 @@
 #include "QF_GameObject.h"
 #include "QF_Log.h"
 
+// #TODO Review how arrays are handled. Are they left empty when they have no instances, and
+// more specifically, are their child arrays left empty? May as well skip empty child arrays
+// to reduce extra file data and parsing, unless a need arises for searching through countless
+// empty arrays in a cJSON file tree structure.
+
 // #TODO Look at removing from QwerkE namespace, or have a #using QwerkE just in this .cpp.
 // Helps with porting to a stand alone library, and encourages type indifference/independence
 namespace QwerkE {
 
-    namespace Serialization
-    {
+    namespace Serialization {
+
+        // #TODO Create private (hidden from user) methods to handle individual reads and writes of types.
+        // These methods can help reduce the indentation, and improve readability + debug-ability.
 
         void DeserializeJsonString(const cJSON* jsonObj, const Mirror::Field& field, void* obj);
 
@@ -37,10 +44,23 @@ case MirrorTypes::ClassType: \
 
             const std::vector<cJSON*>& jsonStructArr = GetAllItemsFromArray(objJson);
 
+            if (jsonStructArr.size() != objClassInfo->fields.size())
+            {
+                int bp = 0;
+                // LOG_WARN("{0} Mismatched array sizes for class {1} ", __FUNCTION__, Mirror::InfoForType(objClassInfo)->stringName.c_str());
+                // LOG_WARN("{0} Mismatched array sizes for class {1} ", __FUNCTION__, objClassInfo->type->stringName.c_str());
+            }
+
+            if (strcmp(objJson->string, "m_CameraList") == 0)
+            {
+                int bp = 0;
+            }
+
             for (size_t i = 0; i < objClassInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objClassInfo->fields[i];
 
+                bool matchedField = false;
                 for (size_t j = 0; j < jsonStructArr.size(); j++)
                 {
                     if (jsonStructArr[j]->type == cJSON_Array)
@@ -61,7 +81,9 @@ case MirrorTypes::ClassType: \
 
                                 DESERIALIZE_CASE_FOR_CLASS(ProjectSettings)
                                 DESERIALIZE_CASE_FOR_CLASS(SceneViewerData)
+                                DESERIALIZE_CASE_FOR_CLASS(Transform)
                                 DESERIALIZE_CASE_FOR_CLASS(UserSettings)
+                                DESERIALIZE_CASE_FOR_CLASS(Vector3)
 
                             case MirrorTypes::m_vector_string:
                                 {
@@ -87,15 +109,55 @@ case MirrorTypes::ClassType: \
                                 {
                                     std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
                                     const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonStructArr[j]);
-                                    if (gameObjects)
+                                    if (gameObjects) // #TODO Validate null pointer value
                                     {
                                         gameObjects->reserve(jsonGameObjects.size());
                                         for (size_t i = 0; i < jsonGameObjects.size(); i++)
                                         {
-                                            GameObject* gameObject = DataManager::ConvertJSONToGameObject(jsonGameObjects[i]);
+                                            // DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::ClassInfo<Gameobj>(), obj);
+                                            GameObject* gameObject = ConvertJSONToGameObject(jsonGameObjects[i]);
                                             if (gameObject)
                                             {
                                                 gameObjects->push_back(gameObject);
+                                            }
+                                        }
+                                        // gameObjects->resize(jsonGameObjects.size());
+                                    }
+                                }
+                                break;
+
+                            case MirrorTypes::m_vector_routineptr:
+                                {
+                                    std::vector<Routine*>* routines = (std::vector<Routine*>*)((char*)obj + field.offset);
+                                    const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonStructArr[j]);
+                                    if (routines) // #TODO Validate null pointer value
+                                    {
+                                        routines->reserve(jsonGameObjects.size());
+                                        for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                                        {
+                                            Routine* routine = AddRoutineToGameObject(jsonGameObjects[i]);
+                                            if (routine)
+                                            {
+                                                routines->push_back(routine);
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+
+                            case MirrorTypes::m_map_eComponentTags_componentptr:
+                                {
+                                    std::map<eComponentTags, Component*>* componentsMap = (std::map<eComponentTags, Component*>*)((char*)obj + field.offset);
+                                    const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonStructArr[j]);
+                                    if (componentsMap)
+                                    {
+                                        for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                                        {
+                                            Component* component = AddComponentToGameObject(jsonGameObjects[i]);;
+                                            if (component)
+                                            {
+                                                eComponentTags componentTag = (eComponentTags)std::stoi(jsonGameObjects[i]->string);
+                                                componentsMap->insert({ componentTag, component });
                                             }
                                         }
                                     }
@@ -134,14 +196,33 @@ case MirrorTypes::ClassType: \
 
                             case cJSON_Number:
                                 {
+                                    void* fieldAddress = ((char*)obj + field.offset);
+                                    void* sourceAddress = &jsonStructArr[j]->valueint;
                                     size_t bytesToWrite = sizeof(jsonStructArr[j]->valueint);
-                                    if (field.type->size < bytesToWrite)
+
+                                    switch (field.type->enumType)
                                     {
-                                        bytesToWrite = field.type->size;
+                                    case MirrorTypes::m_float:
+                                    {
+                                        float* a = (float*)fieldAddress;
+                                        *a = (float)jsonStructArr[j]->valuedouble;
+                                        break;
                                     }
 
-                                    void* fieldAddress = ((char*)obj + field.offset);
-                                    memcpy(fieldAddress, &jsonStructArr[j]->valueint, bytesToWrite);
+                                    case MirrorTypes::m_double:
+                                        sourceAddress = &jsonStructArr[j]->valuedouble;
+                                        if (field.type->size < bytesToWrite)
+                                        {
+                                            bytesToWrite = field.type->size;
+                                        }
+                                        // Fall through to default case
+                                    default:
+                                        int a = *(int*)sourceAddress;
+                                        float b = *(float*)sourceAddress;
+                                        double c = *(double*)sourceAddress;
+                                        memcpy(fieldAddress, sourceAddress, bytesToWrite);
+                                        break;
+                                    }
                                 }
                                 break;
 
@@ -154,6 +235,11 @@ case MirrorTypes::ClassType: \
                             }
                         }
                     }
+                }
+
+                if (!matchedField)
+                {
+                    // LOG_WARN("Unhandled field");
                 }
             }
         }
@@ -232,7 +318,9 @@ case MirrorTypes::ClassType: \
 
                         SERIALIZE_CASE_FOR_CLASS(ProjectSettings)
                         SERIALIZE_CASE_FOR_CLASS(SceneViewerData)
+                        SERIALIZE_CASE_FOR_CLASS(Transform)
                         SERIALIZE_CASE_FOR_CLASS(UserSettings)
+                        SERIALIZE_CASE_FOR_CLASS(Vector3)
 
                     case MirrorTypes::m_vector_string:
                         {
@@ -259,7 +347,8 @@ case MirrorTypes::ClassType: \
                             {
                                 for (size_t i = 0; i < gameObjects->size(); i++)
                                 {
-                                    AddItemToArray(arr, DataManager::ConvertGameObjectToJSON(gameObjects->at(i)));
+                                    // AddItemToArray(arr, DataManager::ConvertGameObjectToJSON(gameObjects->at(i)));
+                                    AddItemToArray(arr, ConvertGameObjectToJSON(gameObjects->at(i)));
                                 }
                             }
                         }

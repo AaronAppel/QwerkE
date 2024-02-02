@@ -31,8 +31,8 @@
 
 namespace QwerkE {
 
-	namespace FileLoader
-	{
+	namespace FileLoader {
+
 		Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName)
 		{
 			if (false == Resources::MeshExists(meshName))

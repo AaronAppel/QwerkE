@@ -5,8 +5,8 @@ void operator delete (void* memoryLocation);
 
 #include <memory>
 
-namespace QwerkE
-{
+namespace QwerkE {
+
 	template<typename T>
 	using sRef = std::shared_ptr<T>;
 

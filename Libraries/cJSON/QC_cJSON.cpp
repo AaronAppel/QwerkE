@@ -144,11 +144,8 @@ cJSON* GetItemFromObjectByIndex(const cJSON* cJSONObject, int index)
 std::vector<cJSON*> GetAllItemsFromArray(const cJSON* arrayObject) // return array of objects inside of an objectArray
 {
 	std::vector<cJSON*> itemList;
-
-	if (arrayObject->child == nullptr)
-	{
-		return itemList; // Not an array
-	}
+	if (!arrayObject || !arrayObject->child)
+		return itemList;
 
 	const int t_ArraySize = cJSON_GetArraySize(arrayObject->child);
 	itemList.reserve(t_ArraySize);

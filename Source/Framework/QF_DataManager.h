@@ -31,12 +31,8 @@ namespace QwerkE {
     class Component;
     class Routine;
 
-    namespace DataManager
-    {
-        eOperationResult SaveScene(Scene* scene, const char* fileDir);
-        eOperationResult LoadScene(Scene* scene, const char* fileDir);
+    namespace DataManager {
 
-        void AddVec3ToItem(cJSON* item, const char* arrayName, const char* name1, float value1, const char* name2, float value2, const char* name3, float value3);
         cJSON* ConvertGameObjectToJSON(GameObject* item);
         void UpdateJSONArrayInFile(cJSON* array, const char* fileDir);
         GameObject* ConvertJSONToGameObject(cJSON* item);

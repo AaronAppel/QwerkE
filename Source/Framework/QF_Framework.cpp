@@ -27,11 +27,9 @@
 #include "QF_Time.h"
 #include "QF_Window.h"
 
-namespace QwerkE
-{
+namespace QwerkE {
 
-	namespace Framework
-	{
+	namespace Framework {
 
 		eOperationResult Framework::Startup()
 		{

@@ -11,6 +11,7 @@
 
 const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis and move to a better defines file
 
+// #TODO Change file name from QF_CameraComponent -> QF_ComponentCamera
 namespace QwerkE {
 
     enum eCamera_Movement : std::uint8_t
@@ -67,7 +68,7 @@ namespace QwerkE {
 
         eCamType m_Type = CamType_NULL;
 
-        vec3 m_Position = vec3(0, 0, 0);
+        vec3 m_Position = vec3(0, 0, 0); // #TODO Deprecate position and use parent GameObject transform position
         vec3 m_Forward = vec3(0.0f, 0.0f, 1.0f);
         vec3 m_CamUp = g_WORLDUP;
         vec3 m_Right = vec3(1, 0, 0);

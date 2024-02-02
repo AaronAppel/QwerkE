@@ -8,8 +8,7 @@
 
 typedef unsigned int GLenum;
 
-namespace QwerkE
-{
+namespace QwerkE {
 
     class Mesh;
 

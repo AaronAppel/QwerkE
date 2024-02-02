@@ -265,19 +265,19 @@ namespace QwerkE {
         LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
-    void Scene::OnLoaded()
+    void Scene::OnLoaded() // #TODO Improve load logic. These callbacks are to resolve serialization effects
     {
         for (size_t i = 0; i < m_SceneDrawList.size(); i++)
         {
-            m_SceneDrawList[i]->SetScene(this);
+            m_SceneDrawList[i]->OnSceneLoaded(this);
         }
         for (size_t i = 0; i < m_CameraList.size(); i++)
         {
-            m_CameraList[i]->SetScene(this);
+            m_CameraList[i]->OnSceneLoaded(this);
         }
         for (size_t i = 0; i < m_LightList.size(); i++)
         {
-            m_LightList[i]->SetScene(this);
+            m_LightList[i]->OnSceneLoaded(this);
         }
 
         for (size_t i = 0; i < m_SceneDrawList.size(); i++)

@@ -6,8 +6,8 @@
 
 namespace QwerkE {
 
-	namespace Framework
-	{
+	namespace Framework {
+
 		eOperationResult Startup();
 		eOperationResult Startup(const std::string configFilePath);
 		eOperationResult TearDown();

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "Libraries/Mirror/Source/Mirror.h"
+
 #include "QF_Enums.h"
 #include "QF_Constants.h"
 
@@ -76,6 +78,7 @@ namespace QwerkE {
         int GetRenderOrder() { return m_RenderOrder; };
         const Scene* GetScene() { return m_pScene; };
         eGameObjectTags GetTag() { return m_Tag; }
+        const Transform& GetTransform() const { return m_Transform; };
 
         // TODO: overload functions to take object like float[x]s
         void UpdatePosition(vec3 position) { m_Transform.s_Position = position; }; // box 2d
@@ -85,10 +88,14 @@ namespace QwerkE {
         void SetRotation(vec3 rotation);
         void SetScale(vec3 scale) { m_Transform.s_Scale = scale; };
         void SetRenderOrder(int order) { m_RenderOrder = order; };
-        void SetScene(Scene* scene) { m_pScene = scene; };
         void SetTag(eGameObjectTags tag) { m_Tag = tag; }
+        void SetTransform(Transform transform) { m_Transform = transform; };
+
+        void OnSceneLoaded(Scene* scene);
 
     private:
+        MIRROR_PRIVATE_MEMBERS
+
         void Initialize();
 
         Scene* m_pScene = nullptr; // TODO: Remove scene reference in GameObject

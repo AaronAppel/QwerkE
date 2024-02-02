@@ -16,7 +16,7 @@ namespace QwerkE {
     class RenderComponent;
     class ShaderProgram;
 
-    class RenderRoutine : Routine
+    class RenderRoutine : public Routine
     {
     public:
         typedef void (RenderRoutine::* DrawFunc)(const GameObject* a_Camera); // draw mesh or model

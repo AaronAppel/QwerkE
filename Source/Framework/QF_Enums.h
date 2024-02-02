@@ -2,8 +2,7 @@
 
 #include <cstdint>
 
-namespace QwerkE
-{
+namespace QwerkE {
 
     enum class eInputDeviceTypes : std::uint8_t
     {

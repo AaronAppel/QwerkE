@@ -42,8 +42,7 @@
 
 namespace QwerkE {
 
-	namespace Engine
-    {
+	namespace Engine {
 
 		QwerkE::eOperationResult Engine::Run(const std::map<const char*, const char*>& programArgPairs)
         {

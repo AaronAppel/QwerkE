@@ -42,8 +42,7 @@
 
 #include "QF_Mesh.h"
 
-namespace QwerkE
-{
+namespace QwerkE {
 
 #ifdef OpenAL
 	void CheckForOpenALErrors(const char* file, int line);

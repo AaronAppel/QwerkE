@@ -6,7 +6,7 @@
 
 namespace QwerkE {
 
-    class TransformRoutine : Routine
+    class TransformRoutine : public Routine
     {
     public:
         TransformRoutine() {};

@@ -6,8 +6,7 @@
 #include "QF_Log.h"
 #include "QF_Resources.h"
 
-namespace QwerkE
-{
+namespace QwerkE {
 
     // #TODO Review QueueEvent() thread safety
     static pthread_mutex_t* s_mutex = nullptr;

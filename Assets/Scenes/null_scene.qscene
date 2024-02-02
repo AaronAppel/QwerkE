@@ -6,43 +6,46 @@
 			"m_ID":	0,
 			"m_CurrentCamera":	0,
 			"m_CameraList":	[{
-					"Camera0":	[{
-							"Position":	[{
-									"PositionX":	0.101473,
-									"PositionY":	1.899758,
-									"PositionZ":	-44.493271
+					"GameObject":	[{
+							"m_Name":	"Camera0",
+							"m_Transform":	[{
+								"s_Position":	[{
+										"x":	0.0,
+										"y":	0.0,
+										"z":	-10.0
+									}],
+								"s_Rotation":	[{
+										"x":	0,
+										"y":	0,
+										"z":	0
+									}],
+								"s_Scale":	[{
+										"x":	1,
+										"y":	1,
+										"z":	1
+									}]
 								}],
-							"Rotation":	[{
-									"RotationX":	0,
-									"RotationY":	0,
-									"RotationZ":	0
-								}],
-							"Scale":	[{
-									"ScaleX":	1,
-									"ScaleY":	1,
-									"ScaleZ":	1
-								}],
-							"ObjectTag":	1,
-							"ComponentList":	[{
+							"m_Tag":	1,
+							"m_Components":	[{
 									"1":	[{
 											"ComponentName":	"Camera",
-											"CamType":	0
+											"m_Type":	0
 										}]
 								}],
-							"RoutineList":	[{
-									"UpdateRoutines":	[{
-									}],
-									"DrawRoutines":	[{
-									}]
-								}]
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+							}],
+							"m_RenderOrder":	100
 						}]
-				}],
+					}],
 			"m_LightList":	[{
-					"Light13":	[{
+					"GameObject":	[{
+							"m_Name":	"Light13",
 							"Position":	[{
 									"PositionX":	0,
-									"PositionY":	5,
-									"PositionZ":	-10
+									"PositionY":	0,
+									"PositionZ":	-5
 								}],
 							"Rotation":	[{
 									"RotationX":	0,
@@ -54,8 +57,8 @@
 									"ScaleY":	1,
 									"ScaleZ":	1
 								}],
-							"ObjectTag":	2,
-							"ComponentList":	[{
+							"m_Tag":	2,
+							"m_Components":	[{
 									"3":	[{
 											"ComponentName":	"Light"
 										}],
@@ -72,27 +75,27 @@
 												}]
 										}]
 								}],
-							"RoutineList":	[{
-									"UpdateRoutines":	[{
-									}],
-									"DrawRoutines":	[{
-											"1":	[{
-													"RoutineName":	"Render"
-												}]
+							"m_UpdateList":	[{
+								}],
+							"m_DrawList":	[{
+									"1":	[{
+											"RoutineName":	"Render"
 										}]
-								}]
+								}],
+							"m_RenderOrder":	100
 						}]
-				}],
+					}],
 			"m_SceneDrawList":	[{
-					"Object1":	[{
+					"GameObject":	[{
+							"m_Name":	"Object1",
 							"Position":	[{
 									"PositionX":	0,
 									"PositionY":	0,
 									"PositionZ":	0
 								}],
 							"Rotation":	[{
-									"RotationX":	7561,
-									"RotationY":	7561,
+									"RotationX":	0.750000,
+									"RotationY":	0.750000,
 									"RotationZ":	0
 								}],
 							"Scale":	[{
@@ -100,8 +103,8 @@
 									"ScaleY":	7.500000,
 									"ScaleZ":	7.500000
 								}],
-							"ObjectTag":	7,
-							"ComponentList":	[{
+							"m_Tag":	7,
+							"m_Components":	[{
 									"5":	[{
 											"ComponentName":	"Render",
 											"SchematicName":	"None",
@@ -115,38 +118,38 @@
 												}]
 										}]
 								}],
-							"RoutineList":	[{
-									"UpdateRoutines":	[{
-											"4":	[{
-													"RoutineName":	"Transform",
-													"Speed":	0.500000,
-													"TransformValues":	[{
-															"Position":	[{
-																	"PositionX":	0,
-																	"PositionY":	0,
-																	"PositionZ":	0
-																}],
-															"Rotation":	[{
-																	"RotationX":	0.250000,
-																	"RotationY":	0.250000,
-																	"RotationZ":	0
-																}],
-															"Scale":	[{
-																	"ScaleX":	0,
-																	"ScaleY":	0,
-																	"ScaleZ":	0
-																}]
+							"m_UpdateList":	[{
+									"4":	[{
+											"RoutineName":	"Transform",
+											"Speed":	0.500000,
+											"TransformValues":	[{
+													"Position":	[{
+															"PositionX":	0,
+															"PositionY":	0,
+															"PositionZ":	0
+														}],
+													"Rotation":	[{
+															"RotationX":	0.250000,
+															"RotationY":	0.250000,
+															"RotationZ":	0
+														}],
+													"Scale":	[{
+															"ScaleX":	0,
+															"ScaleY":	0,
+															"ScaleZ":	0
 														}]
 												}]
-										}],
-									"DrawRoutines":	[{
-											"1":	[{
-													"RoutineName":	"Render"
-												}]
 										}]
-								}]
-						}],
-					"Light13":	[{
+								}],
+							"m_DrawList":	[{
+									"1":	[{
+											"RoutineName":	"Render"
+										}]
+								}],
+							"m_RenderOrder":	100
+							}],
+					"GameObject":	[{
+							"m_Name":	"Light13",
 							"Position":	[{
 									"PositionX":	0,
 									"PositionY":	5,
@@ -162,8 +165,8 @@
 									"ScaleY":	1,
 									"ScaleZ":	1
 								}],
-							"ObjectTag":	2,
-							"ComponentList":	[{
+							"m_Tag":	2,
+							"m_Components":	[{
 									"3":	[{
 											"ComponentName":	"Light"
 										}],
@@ -180,16 +183,15 @@
 												}]
 										}]
 								}],
-							"RoutineList":	[{
-									"UpdateRoutines":	[{
-									}],
-									"DrawRoutines":	[{
-											"1":	[{
-													"RoutineName":	"Render"
-												}]
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"RoutineName":	"Render"
 										}]
-								}]
-						}]
+								}],
+							"m_RenderOrder":	100
+							}]
+					}]
 				}]
-		}]
 }

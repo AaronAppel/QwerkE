@@ -7,25 +7,21 @@
 
 namespace QwerkE {
 
-    namespace Serialization
-    {
-        // #FEATURE F0001
+    // class cJSON;
+    class Component;
+    class GameObject;
+    class Routine;
 
-        // #TODO Deprecate
-        void DeserializeJsonObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
+    // #FEATURE F0001
+    // #TODO Consider splitting out to a new library. Maybe call it Serializer, or something cool.
+    // Have it stand on it's own, but also be extensible to new types, libraries, and formats.
+    // Probably needs to depend on Mirror, but keep them otherwise separate.
+    namespace Serialization {
 
-        template <class T>
-        void DeserializeJsonObject(const cJSON* objJson, T& obj)
-        {
-            DeserializeJsonObject(objJson, Mirror::InfoForClass<T>(), (void*)&obj);
-        }
-
-        template <class T>
-        void DeserializeObjectByTypeKey(const cJSON* jsonObj, T& obj)
-        {
-            // #TODO Is the item guaranteed to be the root?
-            DeserializeJsonObject<T>(GetItemFromArrayByKey(jsonObj, Mirror::InfoForType<T>()->stringName.c_str()), obj);
-        }
+        GameObject* ConvertJSONToGameObject(cJSON* item);
+        cJSON* ConvertGameObjectToJSON(void* obj);
+        Component* AddComponentToGameObject(cJSON* item);
+        Routine* AddRoutineToGameObject(cJSON* item);
 
         void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
 

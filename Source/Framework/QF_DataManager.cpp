@@ -31,140 +31,7 @@
 
 namespace QwerkE {
 
-    eOperationResult DataManager::SaveScene(Scene* scene, const char* fileDir)
-    {
-        // #TODO Error checking
-        cJSON* root = cJSON_CreateObject();
-        const Scene& sc = *scene;
-        Serialization::SerializeObject(root, sc);
-        PrintRootObjectToFile(fileDir, root);
-        LOG_INFO("DataManager: Scene file {0} saved", fileDir);
-        ClosecJSONStream(root);
-
-        return eOperationResult::Success;
-
-        cJSON* t_Settings = CreateArray("Settings");
-        AddItemToArray(t_Settings, CreateBool("Paused", (int)scene->GetIsPaused()));
-        AddItemToArray(t_Settings, CreateBool("Enabled", scene->GetIsEnabled()));
-
-        std::map<std::string, GameObject*> t_GameObjectList = scene->GetObjectList(); // GameObjects, Lights (Not cameras)
-
-        cJSON* t_ObjectList = CreateArray("ObjectList");
-        AddItemToRoot(root, t_ObjectList);
-        std::map<std::string, GameObject*>::iterator it;
-        for (it = t_GameObjectList.begin(); it != t_GameObjectList.end(); it++)
-        {
-            AddItemToArray(t_ObjectList, ConvertGameObjectToJSON(it->second));
-        }
-
-        std::vector<GameObject*> t_CameraObjectList = scene->GetCameraList();
-        cJSON* t_CameraList = CreateArray("CameraList");
-        AddItemToObject(root, t_CameraList);
-        for (unsigned int i = 0; i < t_CameraObjectList.size(); i++)
-        {
-            AddItemToArray(t_CameraList, ConvertGameObjectToJSON(t_CameraObjectList.at(i)));
-        }
-
-        std::vector<GameObject*> t_LightObjectList = scene->GetLightList();
-        cJSON* t_LightList = CreateArray("LightList");
-        AddItemToObject(root, t_LightList);
-        for (unsigned int i = 0; i < t_LightObjectList.size(); i++)
-        {
-            AddItemToArray(t_LightList, ConvertGameObjectToJSON(t_LightObjectList.at(i)));
-        }
-
-        PrintRootObjectToFile(fileDir, root);
-        LOG_INFO("DataManager: Scene file {0} saved", fileDir);
-        ClosecJSONStream(root);
-        return eOperationResult::Success;
-    }
-
-    eOperationResult DataManager::LoadScene(Scene* scene, const char* fileDir)
-    {
-        if (scene == nullptr) { return eOperationResult::Failure; } // #TODO Load a null scene
-
-        if (FileExists(fileDir) == false)
-        {
-            LOG_ERROR("DataManager: LoadScene() could not open file for reading.");
-            return eOperationResult::Failure;
-        }
-
-        cJSON* root = OpencJSONStream(fileDir);
-        if (root == nullptr)
-        {
-            LOG_ERROR("DataManager: LoadScene() null root object.");
-            return eOperationResult::Failure;
-        }
-
-        scene->RemoveAllObjectsFromScene();
-
-        Scene& sc = *scene;
-        Serialization::DeserializeObjectFromJsonFile(root, sc);
-        scene->OnLoaded();
-        ClosecJSONStream(root);
-        LOG_INFO("DataManager: Scene file {0} loaded", fileDir);
-        return eOperationResult::Success;
-
-        // #TODO Improve below loops. A lot of copied code
-
-        cJSON* t_Settings = GetItemFromRootByKey(root, "Settings");
-
-        if (t_Settings != nullptr)
-        {
-            scene->SetIsPaused((bool)GetItemFromArrayByKey(t_Settings, "Paused")->valueint);
-            scene->SetIsEnabled((bool)GetItemFromArrayByKey(t_Settings, "Enabled")->valueint);
-        }
-
-        {   // Objects
-            cJSON* t_JSONObjectList = GetItemFromObjectByKey(root, "ObjectList");
-            std::vector<cJSON*> t_GameObjects = GetAllItemsFromArray(t_JSONObjectList);
-
-            for (unsigned int i = 0; i < t_GameObjects.size(); i++)
-            {
-                GameObject* t_TempObject = ConvertJSONToGameObject(t_GameObjects.at(i), scene);
-                scene->AddObjectToScene(t_TempObject);
-            }
-        }
-
-        {   // Cameras
-            cJSON* t_JSONCameraList = GetItemFromObjectByKey(root, "CameraList");
-            std::vector<cJSON*> t_CameraObjects = GetAllItemsFromArray(t_JSONCameraList);
-
-            for (unsigned int i = 0; i < t_CameraObjects.size(); i++)
-            {
-                GameObject* t_TempObject = ConvertJSONToGameObject(t_CameraObjects.at(i), scene);
-                scene->AddCamera(t_TempObject);
-            }
-        }
-
-        {   // Lights
-            cJSON* t_JSONLightList = GetItemFromObjectByKey(root, "LightList");
-            std::vector<cJSON*> t_LightObjects = GetAllItemsFromArray(t_JSONLightList);
-
-            for (unsigned int i = 0; i < t_LightObjects.size(); i++)
-            {
-                GameObject* t_TempObject = ConvertJSONToGameObject(t_LightObjects.at(i), scene);
-                scene->AddLight(t_TempObject);
-            }
-        }
-
-        ClosecJSONStream(root);
-        LOG_INFO("DataManager: Scene file {0} loaded", fileDir);
-        return eOperationResult::Success;
-    }
-
     // Utility
-    void DataManager::AddVec3ToItem(cJSON* item, const char* arrayName, const char* name1, float value1, const char* name2, float value2, const char* name3, float value3)
-    {
-        cJSON* vec3Array = cJSON_CreateObject();
-        vec3Array->string = DeepCopyString(arrayName);
-        AddItemToArray(vec3Array, CreateNumber(name1, value1));
-        AddItemToArray(vec3Array, CreateNumber(name2, value2));
-        AddItemToArray(vec3Array, CreateNumber(name3, value3));
-
-        AddItemToArray(item, vec3Array);
-    }
-
     cJSON* DataManager::ConvertGameObjectToJSON(GameObject* object)
     {
         if (object == nullptr) { return nullptr; }
@@ -249,7 +116,7 @@ namespace QwerkE {
         vec3 Position;
 
         // #TODO Find a way to re-use name for read and write logic to avoid typos
-        Position.x = (float)GetItemFromArrayByKey(item, "PositionX")->valuedouble;
+        Position.x = (float)GetItemFromArrayByKey(item, "x")->valuedouble;
         Position.y = (float)GetItemFromArrayByKey(item, "PositionY")->valuedouble;
         Position.z = (float)GetItemFromArrayByKey(item, "PositionZ")->valuedouble;
         return Position;
@@ -325,7 +192,6 @@ namespace QwerkE {
             {
             case LightType_Point: // #TODO Finish implementation
                 // AddItemToArray(t_Component, CreateNumber("LightType", (int)LightType_Point));
-                // AddVec3ToItem(t_Component, "LightColour",
                 //     "Red", ((LightComponent*)component)->GetColour().x,
                 //     "Green", ((LightComponent*)component)->GetColour().y,
                 // 	   "Blue", ((LightComponent*)component)->GetColour().z);
@@ -397,10 +263,7 @@ namespace QwerkE {
     {
         if (!item) { return; }
 
-        const eComponentTags value = (eComponentTags)std::stoi(item->string); // eComponentTags::Component_Render; // GetItemFromArrayByKey(item, "");
-        // Reference : https://www.techiedelight.com/convert-string-to-int-cpp/
-
-        switch (value)
+        switch ((eComponentTags)std::stoi(item->string))
         {
         case Component_Camera:
         {

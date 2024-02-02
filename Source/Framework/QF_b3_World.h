@@ -10,6 +10,7 @@ class btCollisionDispatcher;
 class btSequentialImpulseConstraintSolver;
 
 namespace QwerkE {
+
 	// TODO: Should I make an abstract class that can be swapped when using Box2D/Bulet/PhysX depending on platform?
 	class b3_World
 	{

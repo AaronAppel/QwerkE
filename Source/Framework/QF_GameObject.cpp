@@ -6,8 +6,7 @@
 #include "QF_Bullet3Component.h"
 #include "QF_Enums.h"
 
-namespace QwerkE
-{
+namespace QwerkE {
 
     GameObject::GameObject(Scene* scene)
     {
@@ -53,6 +52,18 @@ namespace QwerkE
             delete m_DrawList.at(i);
         }
         m_DrawList.clear();
+    }
+
+    void GameObject::OnSceneLoaded(Scene* scene)
+    {
+        if (!scene)
+            return;
+
+        m_pScene = scene;
+        for (auto l_LoopVar : m_Components)
+        {
+            l_LoopVar.second->SetParent(this);
+        }
     }
 
     void GameObject::Initialize()

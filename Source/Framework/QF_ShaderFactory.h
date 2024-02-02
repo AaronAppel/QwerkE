@@ -11,8 +11,8 @@ namespace QwerkE {
     class ShaderComponent;
 
     // TODO: Think of separating generated shader code somehow
-    namespace ShaderFactory
-    {
+    namespace ShaderFactory {
+
         ShaderProgram* CreateShader(eShaderTypes type);
         ShaderProgram* CreateShader(const char* vertFileDir, const char* fragFileDir, const char* geoFileDir);
         ShaderComponent* CreateShaderComponent(GLenum type, const char* filePath);

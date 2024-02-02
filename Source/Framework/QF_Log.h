@@ -19,8 +19,7 @@
 // #pragma warning( default : 4996 ) // #TODO Fix 4996 error "error C4996: 'fmt::v9::detail::arg_mapper<Context>::map': was declared deprecated" in ShaderFactory.cpp
 // Maybe move spdlog include and references into .cpp so it's only compiled once in there
 
-namespace QwerkE
-{
+namespace QwerkE {
 
     class Log final
     {

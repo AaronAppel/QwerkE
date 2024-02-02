@@ -11,8 +11,7 @@ namespace QwerkE {
 
 	class Editor;
 
-	namespace Engine
-	{
+	namespace Engine {
 
 		QwerkE::eOperationResult Run(const std::map<const char*, const char*>& programArgPairs);
 		void Stop();

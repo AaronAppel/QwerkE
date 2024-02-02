@@ -15,8 +15,7 @@
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/FlatheadGames/ImageHelpers.h"
 
-namespace QwerkE
-{
+namespace QwerkE {
 
     unsigned char* QwerkE_stb_image_loadImage(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
     {

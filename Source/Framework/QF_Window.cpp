@@ -12,8 +12,8 @@
 
 const char* g_WindowTitle = "QwerkEngine";
 
-namespace QwerkE
-{
+namespace QwerkE {
+
     bool s_windowIsMaximized = false;
     bool s_closeRequested = false;
     vec2 s_resolution = vec2(1600.f, 900.f);
