@@ -28,7 +28,7 @@ namespace QwerkE {
         GameObject* GetParent() { return m_pParent; };
 
         void SetPriority(int priority) { m_Priority = priority; };
-        void SetParent(GameObject* a_Parent) { m_pParent = a_Parent; };
+        virtual void SetParent(GameObject* a_Parent) { m_pParent = a_Parent; };
         void SetRoutineType(eRoutineTypes type) { m_Type = type; };
 
     protected:

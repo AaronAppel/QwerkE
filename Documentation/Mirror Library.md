@@ -77,3 +77,5 @@ I created Mirror to solve an old problem I had when first working on my game eng
 
 ## Ongoing :
 Support for collections and info on them like field.type->collectionType to know **if** the field or type is a collection, and what type the collection is holding. Great for iterating over collections without needing to know they type of the collection, or what type the collection holds.
+
+Problems once I started \#including the serialization header in other files. Can't have the power of templated functions being used everywhere. Either only file can \#include the templated method, or I need to use switch statements to handle explicitly calling a private method with the proper static known or compiled type.

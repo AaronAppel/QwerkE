@@ -2629,7 +2629,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.h">
       <Filter>Libraries\Mirror</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Reflection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClInclude>

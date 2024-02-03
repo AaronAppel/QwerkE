@@ -21,11 +21,9 @@ namespace QwerkE {
         // #TODO Create private (hidden from user) methods to handle individual reads and writes of types.
         // These methods can help reduce the indentation, and improve readability + debug-ability.
 
-        void DeserializeJsonString(const cJSON* jsonObj, const Mirror::Field& field, void* obj);
-
 #define DESERIALIZE_CASE_FOR_CLASS(ClassType) \
 case MirrorTypes::ClassType: \
-    DeserializeJsonArrayToObject(jsonStructArr[j], Mirror::InfoForClass<ClassType>(), ((char*)obj + field.offset)); \
+    DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<ClassType>(), ((char*)obj + field.offset)); \
     break; \
 
         void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
@@ -38,7 +36,7 @@ case MirrorTypes::ClassType: \
 
             if (objJson->type != cJSON_Array)
             {
-                LOG_ERROR("{0} Only takes JSON objects! Type was {1}", __FUNCTION__, (int)objJson->type);
+                LOG_ERROR("{0} Only takes a JSON array! Type was {1}", __FUNCTION__, (int)objJson->type);
                 return;
             }
 
@@ -46,205 +44,270 @@ case MirrorTypes::ClassType: \
 
             if (jsonStructArr.size() != objClassInfo->fields.size())
             {
-                int bp = 0;
+                int breakPoint = 0;
                 // LOG_WARN("{0} Mismatched array sizes for class {1} ", __FUNCTION__, Mirror::InfoForType(objClassInfo)->stringName.c_str());
                 // LOG_WARN("{0} Mismatched array sizes for class {1} ", __FUNCTION__, objClassInfo->type->stringName.c_str());
-            }
-
-            if (strcmp(objJson->string, "m_CameraList") == 0)
-            {
-                int bp = 0;
             }
 
             for (size_t i = 0; i < objClassInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objClassInfo->fields[i];
 
-                bool matchedField = false;
+                // #TODO Consider starting j at i or index something higher than 0.
+                // Could rely on serialization order and use i, but not the safest option.
                 for (size_t j = 0; j < jsonStructArr.size(); j++)
                 {
-                    if (jsonStructArr[j]->type == cJSON_Array)
+                    // #TODO Add breaks and/or continues to reduce extra iterations
+
+                    if (strcmp(field.name.c_str(), jsonStructArr[j]->string) != 0)
+                        continue;
+
+                    bool shouldBreakForLoop = false;
+                    switch (jsonStructArr[j]->type)
                     {
-                        if (strcmp(field.name.c_str(), jsonStructArr[j]->string) == 0)
-                        {
-                            if (field.type->enumType > MirrorTypes::m_PRIMITIVE_TYPES)
-                            {
-                                LOG_ERROR("{0} Primitive type!", __FUNCTION__);
-                                continue;
-                            }
+                    case cJSON_String:
+                        DeserializeJsonString(jsonStructArr[j], field.type->enumType, (char*)obj + field.offset);
+                        shouldBreakForLoop = true;
+                        break;
 
-                            switch (field.type->enumType)
-                            {
-                            case MirrorTypes::EngineSettings: // DESERIALIZE_CASE_FOR_CLASS(EngineSettings)
-                                DeserializeJsonArrayToObject(jsonStructArr[j], Mirror::InfoForClass<EngineSettings>(), ((char*)obj + field.offset));
-                                break;
+                    case cJSON_True:
+                    case cJSON_False:
+                    case cJSON_Number:
+                        DeserializeJsonNumber(jsonStructArr[j], field.type->enumType, field.type->size, (char*)obj + field.offset);
+                        shouldBreakForLoop = true;
+                        break;
 
-                                DESERIALIZE_CASE_FOR_CLASS(ProjectSettings)
-                                DESERIALIZE_CASE_FOR_CLASS(SceneViewerData)
-                                DESERIALIZE_CASE_FOR_CLASS(Transform)
-                                DESERIALIZE_CASE_FOR_CLASS(UserSettings)
-                                DESERIALIZE_CASE_FOR_CLASS(Vector3)
+                    case cJSON_Array:
+                        DeserializeJsonArray(jsonStructArr[j], field, (char*)obj + field.offset);
+                        shouldBreakForLoop = true;
+                        break;
 
-                            case MirrorTypes::m_vector_string:
-                                {
-                                    std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
-                                    const std::vector<cJSON*> jsonStrings = GetAllItemsFromArray(jsonStructArr[j]);
-                                    if (strings)
-                                    {
-                                        strings->reserve(jsonStrings.size());
-                                        for (size_t i = 0; i < jsonStrings.size(); i++)
-                                        {
-                                            std::string str = jsonStrings[i]->valuestring;
-                                            strings->push_back(str);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
-                                    }
-                                }
-                                break;
-
-                            case MirrorTypes::m_vector_gameobjectptr:
-                                {
-                                    std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
-                                    const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonStructArr[j]);
-                                    if (gameObjects) // #TODO Validate null pointer value
-                                    {
-                                        gameObjects->reserve(jsonGameObjects.size());
-                                        for (size_t i = 0; i < jsonGameObjects.size(); i++)
-                                        {
-                                            // DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::ClassInfo<Gameobj>(), obj);
-                                            GameObject* gameObject = ConvertJSONToGameObject(jsonGameObjects[i]);
-                                            if (gameObject)
-                                            {
-                                                gameObjects->push_back(gameObject);
-                                            }
-                                        }
-                                        // gameObjects->resize(jsonGameObjects.size());
-                                    }
-                                }
-                                break;
-
-                            case MirrorTypes::m_vector_routineptr:
-                                {
-                                    std::vector<Routine*>* routines = (std::vector<Routine*>*)((char*)obj + field.offset);
-                                    const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonStructArr[j]);
-                                    if (routines) // #TODO Validate null pointer value
-                                    {
-                                        routines->reserve(jsonGameObjects.size());
-                                        for (size_t i = 0; i < jsonGameObjects.size(); i++)
-                                        {
-                                            Routine* routine = AddRoutineToGameObject(jsonGameObjects[i]);
-                                            if (routine)
-                                            {
-                                                routines->push_back(routine);
-                                            }
-                                        }
-                                    }
-                                }
-                                break;
-
-                            case MirrorTypes::m_map_eComponentTags_componentptr:
-                                {
-                                    std::map<eComponentTags, Component*>* componentsMap = (std::map<eComponentTags, Component*>*)((char*)obj + field.offset);
-                                    const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonStructArr[j]);
-                                    if (componentsMap)
-                                    {
-                                        for (size_t i = 0; i < jsonGameObjects.size(); i++)
-                                        {
-                                            Component* component = AddComponentToGameObject(jsonGameObjects[i]);;
-                                            if (component)
-                                            {
-                                                eComponentTags componentTag = (eComponentTags)std::stoi(jsonGameObjects[i]->string);
-                                                componentsMap->insert({ componentTag, component });
-                                            }
-                                        }
-                                    }
-                                }
-                                break;
-
-                            default:
-                                LOG_WARN("{0} User defined type {1} {2}({3}) not supported here!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
-                                break;
-                            }
-                        }
+                    case cJSON_Object:
+                    case cJSON_NULL:
+                    default:
+                        LOG_WARN("{0} JSON type {1} not supported here!", __FUNCTION__, (int)jsonStructArr[j]->type);
+                        break;
                     }
-                    else // Lowest level (primitives)
-                    {
-                        if (strcmp(field.name.c_str(), jsonStructArr[j]->string) == 0)
-                        {
-                            if (field.type->enumType < MirrorTypes::m_PRIMITIVE_TYPES)
-                            {
-                                LOG_ERROR("{0} Not a primitive type!", __FUNCTION__);
-                                continue;
-                            }
 
-                            switch (jsonStructArr[j]->type)
-                            {
-                            case cJSON_String:
-                                DeserializeJsonString(jsonStructArr[j], field, obj);
-                                break;
-
-                            case cJSON_True:
-                            case cJSON_False:
-                                {
-                                    bool* fieldAddress = ((bool*)obj + field.offset);
-                                    *fieldAddress = jsonStructArr[j]->type == cJSON_True;
-                                }
-                                break;
-
-                            case cJSON_Number:
-                                {
-                                    void* fieldAddress = ((char*)obj + field.offset);
-                                    void* sourceAddress = &jsonStructArr[j]->valueint;
-                                    size_t bytesToWrite = sizeof(jsonStructArr[j]->valueint);
-
-                                    switch (field.type->enumType)
-                                    {
-                                    case MirrorTypes::m_float:
-                                    {
-                                        float* a = (float*)fieldAddress;
-                                        *a = (float)jsonStructArr[j]->valuedouble;
-                                        break;
-                                    }
-
-                                    case MirrorTypes::m_double:
-                                        sourceAddress = &jsonStructArr[j]->valuedouble;
-                                        if (field.type->size < bytesToWrite)
-                                        {
-                                            bytesToWrite = field.type->size;
-                                        }
-                                        // Fall through to default case
-                                    default:
-                                        int a = *(int*)sourceAddress;
-                                        float b = *(float*)sourceAddress;
-                                        double c = *(double*)sourceAddress;
-                                        memcpy(fieldAddress, sourceAddress, bytesToWrite);
-                                        break;
-                                    }
-                                }
-                                break;
-
-                            case cJSON_Array:
-                            case cJSON_Object:
-                            case cJSON_NULL:
-                            default:
-                                LOG_WARN("{0} JSON type {1} not supported here!", __FUNCTION__, (int)jsonStructArr[j]->type);
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!matchedField)
-                {
-                    // LOG_WARN("Unhandled field");
+                    if (shouldBreakForLoop)
+                        break;
                 }
             }
         }
 
-        void DeserializeJsonString(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
+        void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
+        {
+            if (!jsonObj || !jsonObj->type || jsonObj->type != cJSON_Array || !obj)
+            {
+                LOG_ERROR("{0} Null/invalid argument passed!", __FUNCTION__);
+                return;
+            }
+
+            // This method calls DeserializeJsonArrayToObject but with the type explicitly expressed
+            switch (field.type->enumType)
+            {
+            case MirrorTypes::EngineSettings: // DESERIALIZE_CASE_FOR_CLASS(EngineSettings)
+                DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<EngineSettings>(), obj);
+                break;
+
+                DESERIALIZE_CASE_FOR_CLASS(ProjectSettings)
+                DESERIALIZE_CASE_FOR_CLASS(SceneViewerData)
+                DESERIALIZE_CASE_FOR_CLASS(Transform)
+                DESERIALIZE_CASE_FOR_CLASS(UserSettings)
+                DESERIALIZE_CASE_FOR_CLASS(Vector3)
+
+            case MirrorTypes::m_vector_string:
+                {
+                    std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj);
+                    const std::vector<cJSON*> jsonStrings = GetAllItemsFromArray(jsonObj);
+                    if (strings)
+                    {
+                        strings->reserve(jsonStrings.size());
+                        for (size_t i = 0; i < jsonStrings.size(); i++)
+                        {
+                            std::string str = jsonStrings[i]->valuestring;
+                            strings->push_back(str);
+                        }
+                    }
+                    else
+                    {
+                        LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                    }
+                }
+                break;
+
+            case MirrorTypes::m_vector_gameobjectptr:
+            {
+                std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)obj;
+                const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
+                if (gameObjects) // #TODO Validate null pointer value
+                {
+                    gameObjects->reserve(jsonGameObjects.size());
+                    gameObjects->resize(0);
+                    for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                    {
+                        // DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<GameObject>(), obj);
+                        GameObject* gameObject = ConvertJSONToGameObject(jsonGameObjects[i]);
+                        if (gameObject)
+                        {
+                            gameObjects->push_back(gameObject);
+                        }
+                    }
+                }
+            }
+            break;
+
+            case MirrorTypes::m_vector_routineptr:
+            {
+                std::vector<Routine*>* routines = (std::vector<Routine*>*)obj;
+                const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
+                if (routines) // #TODO Validate null pointer value
+                {
+                    routines->reserve(jsonGameObjects.size());
+                    routines->resize(0);
+                    for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                    {
+                        Routine* routine = AddRoutineToGameObject(jsonGameObjects[i]);
+                        if (routine)
+                        {
+                            routines->push_back(routine);
+                        }
+                    }
+                }
+            }
+            break;
+
+            case MirrorTypes::m_map_eComponentTags_componentptr:
+            {
+                std::map<eComponentTags, Component*>* componentsMap = (std::map<eComponentTags, Component*>*)obj;
+                const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
+                if (componentsMap)
+                {
+                    for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                    {
+                        Component* component = AddComponentToGameObject(jsonGameObjects[i]);;
+                        if (component)
+                        {
+                            eComponentTags componentTag = (eComponentTags)std::stoi(jsonGameObjects[i]->string);
+                            componentsMap->insert({ componentTag, component });
+                        }
+                    }
+                }
+            }
+            break;
+
+            default:
+                LOG_WARN("{0} User defined type {1} {2}({3}) not supported here!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                break;
+            }
+        }
+
+        void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int typeSize, void* obj)
+        {
+            if (!jsonObj || !obj)
+            {
+                LOG_ERROR("{0} Null/invalid argument passed!", __FUNCTION__);
+                return;
+            }
+
+            if (jsonObj->type == cJSON_False && jsonObj->type == cJSON_True && jsonObj->type == cJSON_Number)
+            {
+                LOG_ERROR("{0} JSON object type is not a number or boolean!", __FUNCTION__);
+                return;
+            }
+
+            switch (jsonObj->type)
+            {
+            case cJSON_True:
+            case cJSON_False:
+                {
+                    bool* fieldAddress = ((bool*)obj);
+                    *fieldAddress = jsonObj->type == cJSON_True;
+                }
+                break;
+
+            case cJSON_Number:
+                {
+                    void* fieldAddress = ((char*)obj);
+                    void* sourceAddress = (void*)&jsonObj->valueint;
+                    size_t bytesToWrite = sizeof(jsonObj->valueint);
+
+                    switch (type)
+                    {
+                    case MirrorTypes::m_float:
+                    {
+                        float* a = (float*)fieldAddress;
+                        *a = (float)jsonObj->valuedouble;
+                        break;
+                    }
+
+                    case MirrorTypes::m_double:
+                        sourceAddress = (void*)&jsonObj->valuedouble;
+                        bytesToWrite = sizeof(double);
+                        // Fall through to default case
+                    default:
+                        memcpy(fieldAddress, sourceAddress, bytesToWrite);
+                        break;
+                    }
+                }
+                break;
+
+            case cJSON_Array:
+            case cJSON_Object:
+            case cJSON_NULL:
+            default:
+                // LOG_WARN("{0} JSON type {1} not supported here!", __FUNCTION__, (int)jsonStructArr[j]->type);
+                LOG_WARN("Erorr in {0}", __FUNCTION__);
+                break;
+            }
+        }
+
+        // #Unused
+        template <class T>
+        void DeserializeJsonToCollection(const cJSON* jsonObj, const MirrorTypes type, void* obj)
+        {
+            // Handle collection specific logic like iterating over the JSON list, calling
+            // creation method recursively.
+
+            std::vector<T>* objectVectorPtr = (std::vector<T>*)((char*)obj);
+            const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
+            if (objectVectorPtr) // #TODO Validate null pointer value
+            {
+                objectVectorPtr->reserve(jsonObjectVector.size());
+                for (size_t i = 0; i < jsonObjectVector.size(); i++)
+                {
+                    // T routine = AddRoutineToGameObject(jsonObjectVector[i]);
+                    // if (routine)
+                    // {
+                    //     objectVectorPtr->push_back(routine);
+                    // }
+                }
+            }
+        }
+
+        // #Unused
+        void DeserializeJsonToPointer(const cJSON* jsonObj, const MirrorTypes type, void* obj)
+        {
+            // #TODO Define the proper way to handle memory deallocation
+            // #TODO Look at templating the type to be type-agnostic
+
+            // #NOTE This method instantiates the type as a new object
+            switch (type)
+            {
+            case MirrorTypes::m_charPtr:
+            case MirrorTypes::m_constCharPtr:
+                {
+                    char** fieldAddress = (char**)((char*)obj);
+                    *fieldAddress = (char*)_strdup(jsonObj->valuestring);
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+
+        void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj)
         {
             if (!jsonObj || !jsonObj->valuestring || (jsonObj->type != cJSON_String) || !obj)
             {
@@ -252,11 +315,11 @@ case MirrorTypes::ClassType: \
                 return;
             }
 
-            switch (field.type->enumType)
+            switch (type)
             {
             case MirrorTypes::m_string:
                 {
-                    std::string* fieldAddress = (std::string*)((char*)obj + field.offset);
+                    std::string* fieldAddress = (std::string*)((char*)obj);
                     *fieldAddress = jsonObj->valuestring;
                 }
                 break;
@@ -264,7 +327,7 @@ case MirrorTypes::ClassType: \
             case MirrorTypes::eKeys:
             case MirrorTypes::m_char:
                 {
-                    char* fieldAddress = (char*)obj + field.offset;
+                    char* fieldAddress = (char*)obj;
                     *fieldAddress = jsonObj->valuestring[0];
                 }
                 break;
@@ -272,13 +335,14 @@ case MirrorTypes::ClassType: \
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
                 {
-                    char** fieldAddress = (char**)((char*)obj + field.offset);
+                    char** fieldAddress = (char**)((char*)obj);
                     *fieldAddress = (char*)_strdup(jsonObj->valuestring); // #TODO Handle malloc with matching free
                 }
                 break;
 
             default:
-                LOG_ERROR("{0} Unsupported field type {1} {2}({3}) for cJSON deserialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                // LOG_ERROR("{0} Unsupported field type {1} {2}({3}) for cJSON deserialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                LOG_ERROR("Erorr in {0}", __FUNCTION__);
                 break;
             }
         }
@@ -305,7 +369,7 @@ case MirrorTypes::ClassType: \
                 if (!field.type)
                     break;
 
-                if (field.type->enumType < MirrorTypes::m_PRIMITIVE_TYPES)
+                if (field.type->enumType < MirrorTypes::m_PRIMITIVES_START)
                 {
                     cJSON* arr = CreateArray(field.name.c_str());
                     cJSON_AddItemToArray(objJson->child, arr);
@@ -361,7 +425,7 @@ case MirrorTypes::ClassType: \
                 }
                 else
                 {
-                    SerializeField(objJson, field, obj);
+                    SerializeField(objJson, field, obj); // #TODO Replace with field agnostic function
                 }
             }
         }
@@ -374,7 +438,7 @@ case MirrorTypes::ClassType: \
                 return;
             }
 
-            if (!field.type || field.type->enumType < MirrorTypes::m_PRIMITIVE_TYPES)
+            if (!field.type || field.type->enumType < MirrorTypes::m_PRIMITIVES_START)
             {
                 LOG_ERROR("{0} Invalid field passed!", __FUNCTION__);
                 return;

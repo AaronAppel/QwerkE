@@ -36,20 +36,21 @@ namespace QwerkE {
 
         for (unsigned int i = 0; i < m_UpdateList.size(); i++)
         {
-            if (m_UpdateList.at(i) != nullptr)
+            if (m_UpdateList.at(i))
             {
                 m_UpdateList.at(i)->CleanUp();
+                delete m_UpdateList.at(i);
             }
-        }
-        for (unsigned int i = 0; i < m_UpdateList.size(); i++)
-        {
-            delete m_UpdateList.at(i);
         }
         m_UpdateList.clear();
 
         for (unsigned int i = 0; i < m_DrawList.size(); i++)
         {
-            delete m_DrawList.at(i);
+            if (m_DrawList.at(i))
+            {
+                m_DrawList.at(i)->CleanUp();
+                delete m_DrawList.at(i);
+            }
         }
         m_DrawList.clear();
     }
@@ -64,12 +65,23 @@ namespace QwerkE {
         {
             l_LoopVar.second->SetParent(this);
         }
+
+        for (auto l_LoopVar : m_DrawList)
+        {
+            l_LoopVar->SetParent(this);
+        }
+
+        for (auto l_LoopVar : m_UpdateList)
+        {
+            l_LoopVar->SetParent(this);
+        }
     }
 
     void GameObject::Initialize()
     {
-        // m_UpdateList.reserve(m_BaseUpdateListSize);
-        // m_DrawList.reserve(m_BaseUpdateListSize);
+        m_UpdateList.reserve(m_BaseUpdateListSize);
+        m_DrawList.reserve(m_BaseUpdateListSize);
+        return;
 
         // #TODO Swap to pushing back later, but having a reserved size already instead
         for (int i = 0; i < m_BaseUpdateListSize; i++)
@@ -131,9 +143,8 @@ namespace QwerkE {
 
         for (unsigned int i = 0; i < m_UpdateList.size(); i++)
         {
-            if (m_UpdateList.at(i) == nullptr)
+            if (m_UpdateList.at(i) == routine)
             {
-                m_UpdateList.at(i) = routine;
                 return false;
             }
         }
@@ -149,9 +160,8 @@ namespace QwerkE {
 
         for (unsigned int i = 0; i < m_DrawList.size(); i++)
         {
-            if (m_DrawList.at(i) == nullptr)
+            if (m_DrawList.at(i) == routine)
             {
-                m_DrawList.at(i) = routine;
                 return;
             }
         }

@@ -2,18 +2,18 @@
 
 // #NOTE Only To be included by "QF_QwerkE.h"
 
-#include "QF_QwerkE_Defines.h"
-#include "QF_QwerkE_Platform.h"
+#include "QF_Defines.h"
+#include "QF_Platform.h"
 
-#include "QF_Libraries_Include.h"
-#include "QF_Libraries_Load.h"
+#include "QF_LibrariesInclude.h"
+#include "QF_LibrariesLoad.h"
 
-#include "QF_QwerkE_Enums.h"
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Enums.h"
+#include "QF_Constants.h"
 
 #include "QF_Framework.h"
 
-#include "QF_QwerKE_eKeys.h"
+#include "QF_eKeys.h"
 #include "QF_Input.h"
 
 #include "QF_Scene.h"
@@ -21,7 +21,7 @@
 #include "QF_Audio.h"
 
 #include "QF_DataManager.h"
-#include "QF_ConfigHelper.h"
+#include "QF_Settings.h"
 
 #include "QF_Debugger.h"
 
@@ -48,6 +48,5 @@
 #include "QF_Scenes.h"
 
 #include "QF_Window.h"
-#include "QF_Windows.h"
 
 #include "QF_GameObject.h"

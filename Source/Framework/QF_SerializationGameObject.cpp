@@ -7,12 +7,15 @@
 #include "QF_Log.h"
 #include "QF_Renderable.h"
 #include "QF_Resources.h"
+#include "QF_ShaderComponent.h"
 
 #include "QF_CameraComponent.h" // Components
 #include "QF_Component.h"
+#include "QF_FileUtilities.h"
 #include "QF_FirstPersonCameraComponent.h"
 #include "QF_FreeCameraComponent.h"
 #include "QF_LightComponent.h"
+#include "QF_Material.h"
 #include "QF_RenderComponent.h"
 #include "QF_StaticCameraComponent.h"
 #include "QF_ThirdPersonCameraComponent.h"

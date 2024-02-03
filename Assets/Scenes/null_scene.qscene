@@ -8,6 +8,7 @@
 			"m_CameraList":	[{
 					"GameObject":	[{
 							"m_Name":	"Camera0",
+							"m_Tag":	1,
 							"m_Transform":	[{
 								"s_Position":	[{
 										"x":	0.0,
@@ -25,7 +26,6 @@
 										"z":	1
 									}]
 								}],
-							"m_Tag":	1,
 							"m_Components":	[{
 									"1":	[{
 											"ComponentName":	"Camera",
@@ -42,6 +42,7 @@
 			"m_LightList":	[{
 					"GameObject":	[{
 							"m_Name":	"Light13",
+							"m_Tag":	2,
 							"Position":	[{
 									"PositionX":	0,
 									"PositionY":	0,
@@ -57,7 +58,6 @@
 									"ScaleY":	1,
 									"ScaleZ":	1
 								}],
-							"m_Tag":	2,
 							"m_Components":	[{
 									"3":	[{
 											"ComponentName":	"Light"
@@ -88,6 +88,7 @@
 			"m_SceneDrawList":	[{
 					"GameObject":	[{
 							"m_Name":	"Object1",
+							"m_Tag":	7,
 							"Position":	[{
 									"PositionX":	0,
 									"PositionY":	0,
@@ -103,7 +104,6 @@
 									"ScaleY":	7.500000,
 									"ScaleZ":	7.500000
 								}],
-							"m_Tag":	7,
 							"m_Components":	[{
 									"5":	[{
 											"ComponentName":	"Render",

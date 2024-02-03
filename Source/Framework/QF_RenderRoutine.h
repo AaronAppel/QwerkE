@@ -25,7 +25,8 @@ namespace QwerkE {
 
     public:
         RenderRoutine();
-        ~RenderRoutine() {};
+
+        void SetParent(GameObject* a_Parent) override;
 
         void Initialize();
 

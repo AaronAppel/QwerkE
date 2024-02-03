@@ -127,6 +127,9 @@
     <Filter Include="Core\Graphics\GraphicsHelpers">
       <UniqueIdentifier>{b5502b63-74f0-4c93-8ed8-a7e013d3868c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Serialization">
+      <UniqueIdentifier>{ca99b5ba-ac0e-48c2-aeef-9f3b745bb605}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Audio.cpp">
@@ -361,17 +364,17 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Window.cpp">
       <Filter>Core\Window</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Settings.cpp">
       <Filter>Core\DataManager</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
+      <Filter>Core\Serialization</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_SerializationGameObject.cpp">
-      <Filter>Core</Filter>
+      <Filter>Core\Serialization</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -662,9 +665,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ForcedIncludes.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesLoad.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -676,6 +676,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Settings.h">
       <Filter>Core\DataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
+      <Filter>Core\Serialization</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

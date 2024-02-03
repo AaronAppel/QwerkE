@@ -1,8 +1,9 @@
 #include "QF_RenderRoutine.h"
 
+#include "Libraries/Mirror/Source/Mirror.h"
+
 #include "QC_StringHelpers.h"
 
-#include "QC_Reflection.h"
 #include "QF_Enums.h"
 #include "QF_Log.h"
 #include "QF_GraphicsHelpers.h"
@@ -24,6 +25,15 @@ namespace QwerkE {
         m_Type = eRoutineTypes::Routine_Render;
     }
 
+    void RenderRoutine::SetParent(GameObject* a_Parent)
+    {
+        if (m_pParent)
+            return;
+
+        m_pParent = a_Parent;
+        Initialize();
+    }
+
     void RenderRoutine::Initialize()
     {
         m_pParent->AddDrawRoutine(this);
@@ -33,7 +43,6 @@ namespace QwerkE {
 
         if (m_pRenderComp)
         {
-            // Setup mesh, shader, material render time values for each renderable
             std::vector<Renderable>* renderables = m_pRenderComp->GetRenderableList();
 
             for (unsigned int i = 0; i < renderables->size(); i++)
@@ -46,14 +55,17 @@ namespace QwerkE {
             }
 
             if (m_pParent)
-                ((RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))->ResetUniformList();
+            {
+                RenderRoutine* renderRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render);
+                renderRoutine->ResetUniformList();
+            }
         }
         else
         {
             LOG_WARN("m_pRenderComp is nullptr for object {0}!", m_pParent->GetName().c_str());
         }
     }
-    //// Private functions
+
     void RenderRoutine::DrawMeshData(const GameObject* a_Camera)
     {
         if (!m_pRenderComp)
@@ -72,7 +84,7 @@ namespace QwerkE {
 
         if (!t_pCamera)
         {
-            LOG_ERROR("{0} Camera component* {1} is null!", __FUNCTION__, VARNAME_TO_STR(t_pCamera));
+            LOG_ERROR("{0} Camera component* {1} is null!", __FUNCTION__, MIRROR_TO_STR(t_pCamera));
             return;
         }
 
@@ -93,14 +105,13 @@ namespace QwerkE {
 
     void RenderRoutine::NullDraw(const GameObject* a_Camera)
     {
-        // Look for valid models/materials
         if (m_pRenderComp)
         {
             // TODO: Do I need to check that other data is valid?
             m_DrawFunc = &RenderRoutine::DrawMeshData;
             SetDrawFunctions();
             if (m_DrawFunc == &RenderRoutine::DrawMeshData)
-                DrawMeshData(a_Camera); // Draw current frame
+                DrawMeshData(a_Camera);
         }
     }
 

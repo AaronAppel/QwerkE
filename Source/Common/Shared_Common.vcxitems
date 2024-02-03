@@ -869,7 +869,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Reflection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />

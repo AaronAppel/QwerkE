@@ -1,10 +1,8 @@
 #include "QF_Settings.h"
 
-#include "Libraries/cJSON/QC_cJSON.h"
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/cJSON/QC_cJSON.h" // #TODO Deprecate reference to library
 
 #include "QF_Defines.h"
-#include "QF_Input.h"
 #include "QF_Log.h"
 #include "QF_Serialization.h"
 
@@ -22,16 +20,12 @@ namespace QwerkE {
 
     void Settings::LoadEngineSettings(std::string configFilePath)
     {
-        const cJSON* root = OpencJSONStream(configFilePath.c_str());
-        if (root)
-        {
-            Serialization::DeserializeObjectFromJsonFile(root, m_engineSettings);
-            ClosecJSONStream(root);
-        }
+        Serialization::DeserializeObjectFromFile(configFilePath.c_str(), m_engineSettings);
     }
 
     void Settings::SaveEngineSettings(/* #TODO Take in file path */)
     {
+        // Serialization::SerializeObjectFromFile(configFilePath.c_str(), m_engineSettings);
         cJSON* jsonRootObject = cJSON_CreateObject();
         if (jsonRootObject)
         {
@@ -49,12 +43,7 @@ namespace QwerkE {
 
     void Settings::LoadProjectSettings(std::string projectSettingsFilePath)
     {
-        const cJSON* root = OpencJSONStream(projectSettingsFilePath.c_str());
-        if (root)
-        {
-            Serialization::DeserializeObjectFromJsonFile(root, m_projectSettings);
-            ClosecJSONStream(root);
-        }
+        Serialization::DeserializeObjectFromFile(projectSettingsFilePath.c_str(), m_projectSettings);
     }
 
     void Settings::SaveProjectSettings()
@@ -70,12 +59,7 @@ namespace QwerkE {
 
     void Settings::LoadUserSettings(std::string userSettingsFilePath)
     {
-        const cJSON* root = OpencJSONStream(userSettingsFilePath.c_str());
-        if (root)
-        {
-            Serialization::DeserializeObjectFromJsonFile(root, m_userSettings);
-            ClosecJSONStream(root);
-        }
+        Serialization::DeserializeObjectFromFile(userSettingsFilePath.c_str(), m_userSettings);
     }
 
     void Settings::SaveUserSettings()

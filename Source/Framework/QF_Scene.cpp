@@ -207,20 +207,13 @@ namespace QwerkE {
     {
         if (m_SceneFileName.c_str() == gc_DefaultCharPtrValue)
         {
-            LOG_ERROR("Unable to Load scene! sceneFileName is \"{0}\"", gc_DefaultCharPtrValue);
+            LOG_ERROR("Unable to load null scene! sceneFileName value is \"{0}\"", gc_DefaultCharPtrValue);
             return;
         }
 
-        // #TODO Error checking
-        cJSON* root = OpencJSONStream(ScenesFolderPath(m_SceneFileName.c_str()));
-        Scene& sc = *this;
-        Serialization::DeserializeObjectFromJsonFile(root, sc);
-        LOG_INFO("{0} Scene file {1} loaded", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
-        ClosecJSONStream(root);
+        Serialization::DeserializeObjectFromFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
 
         OnLoaded();
-
-        // eOperationResult result = DataManager::LoadScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
 
         SetupCameras();
     }

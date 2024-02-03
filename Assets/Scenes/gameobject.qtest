@@ -1,0 +1,64 @@
+{
+	"GameObject":	[{
+		"m_Name":	"Object1",
+		"Position":	[{
+			"PositionX":	0,
+			"PositionY":	0,
+			"PositionZ":	0
+			}],
+		"Rotation":	[{
+			"RotationX":	0.750000,
+			"RotationY":	0.750000,
+			"RotationZ":	0
+			}],
+		"Scale":	[{
+			"ScaleX":	7.500000,
+			"ScaleY":	7.500000,
+			"ScaleZ":	7.500000
+			}],
+		"m_Tag":	7,
+		"m_Components":	[{
+			"5":	[{
+				"ComponentName":	"Render",
+				"SchematicName":	"None",
+				"Renderables":	[{
+					"Uninitialized":	[{
+						"Shader":	"LitMaterial.ssch",
+						"Material":	"brickwall.msch",
+						"MeshFile":	"null_mesh.obj",
+						"MeshName":	"null_mesh"
+					}]
+				}]
+			}]
+		}],
+		"m_UpdateList":	[{
+				"4":	[{
+						"RoutineName":	"Transform",
+						"Speed":	0.500000,
+						"TransformValues":	[{
+								"Position":	[{
+										"PositionX":	0,
+										"PositionY":	0,
+										"PositionZ":	0
+									}],
+								"Rotation":	[{
+										"RotationX":	0.250000,
+										"RotationY":	0.250000,
+										"RotationZ":	0
+									}],
+								"Scale":	[{
+										"ScaleX":	0,
+										"ScaleY":	0,
+										"ScaleZ":	0
+									}]
+							}]
+					}]
+			}],
+		"m_DrawList":	[{
+				"1":	[{
+						"RoutineName":	"Render"
+					}]
+			}],
+		"m_RenderOrder":	100
+		}]
+}
