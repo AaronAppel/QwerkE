@@ -91,7 +91,7 @@ namespace QwerkE {
         void SetTag(eGameObjectTags tag) { m_Tag = tag; }
         void SetTransform(Transform transform) { m_Transform = transform; };
 
-        void OnSceneLoaded(Scene* scene);
+        void OnSceneLoaded(Scene* scene); // #TODO Rename Initialize()
 
     private:
         MIRROR_PRIVATE_MEMBERS

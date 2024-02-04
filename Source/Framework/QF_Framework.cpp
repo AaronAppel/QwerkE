@@ -27,6 +27,8 @@
 #include "QF_Time.h"
 #include "QF_Window.h"
 
+#include "QF_Serialization.h" // #TODO Remove after testing
+
 namespace QwerkE {
 
 	namespace Framework {
@@ -42,6 +44,9 @@ namespace QwerkE {
 			// #TODO Try to reduce or avoid order dependency in system creation
 
             Log::Initialize();
+
+			//GameObject a;
+			//Serialization::DeserializeObjectFromFile("A:/GitHub/QwerkE/Assets/Scenes/gameobject.qtest", a);
 
 			Settings::LoadEngineSettings(engineSettingsPath);
 			Settings::LoadProjectSettings(ProjectsFolderPath(null_project));

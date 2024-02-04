@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+#include "Libraries/Mirror/Source/Mirror.h"
+
 #include "QF_Component.h"
 #include "QF_Renderable.h"
 
@@ -18,10 +20,10 @@ namespace QwerkE {
         RenderComponent();
         RenderComponent(const char* objectRecipe);
         RenderComponent(const char* shaderName, const char* materialName, const char* meshName);
-        ~RenderComponent();
 
         void GenerateSchematic();
 
+        void Activate() override;
         void Setup(const char* shaderName, const char* materialName, const char* meshName);
 
         void AppendEmptyRenderables(int count);
@@ -40,6 +42,8 @@ namespace QwerkE {
         const std::vector<Renderable>* LookAtRenderableList() { return &m_RenderableList; }
 
     private:
+        MIRROR_PRIVATE_MEMBERS
+
         std::string m_SchematicName = "None";
         std::vector<Renderable> m_RenderableList;
     };

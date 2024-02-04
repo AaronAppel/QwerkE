@@ -7,23 +7,36 @@
 
 #include "QC_Vector.h"
 
-#include "QF_CameraComponent.h"
-#include "QF_Component.h"
 #include "QF_eKeys.h"
 #include "QF_Enums.h"
 #include "QF_GameObject.h"
-#include "QF_FirstPersonCameraComponent.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
 
+#include "QF_Component.h"
+#include "QF_CameraComponent.h"
+#include "QF_RenderComponent.h"
+
+#include "QF_FirstPersonCameraComponent.h"
+#include "QF_FreeCameraComponent.h"
+#include "QF_LightComponent.h"
+#include "QF_StaticCameraComponent.h"
+#include "QF_ThirdPersonCameraComponent.h"
+
+#include "QF_TransformRoutine.h"
+#include "QF_RenderRoutine.h"
+
 namespace QwerkE {
 
-	// Primitives and enums
+	// Enums
 	typedef eSceneTypes m_eSceneTypes;
 	MIRROR_TYPE(m_eSceneTypes)
 
 	typedef eGameObjectTags m_eGameObjectTags;
 	MIRROR_TYPE(m_eGameObjectTags)
+
+	typedef eComponentTags m_eComponentTags;
+	MIRROR_TYPE(m_eComponentTags)
 
 	typedef QwerkE::eKeys eKeys;
 	MIRROR_TYPE(eKeys)
@@ -32,15 +45,25 @@ namespace QwerkE {
 	typedef std::vector<std::string> m_vector_string;
 	MIRROR_TYPE(m_vector_string)
 
-	typedef std::vector<GameObject*> m_vector_gameobjectptr;
-	MIRROR_TYPE(m_vector_gameobjectptr)
+	typedef std::vector<GameObject*> m_vector_gameobjectPtr;
+	MIRROR_TYPE(m_vector_gameobjectPtr)
 
-	typedef std::vector<Routine*> m_vector_routineptr;
-	MIRROR_TYPE(m_vector_routineptr)
+	typedef std::vector<Routine*> m_vector_routinePtr;
+	MIRROR_TYPE(m_vector_routinePtr)
+
+	typedef std::vector<Renderable> m_vector_renderable;
+	MIRROR_TYPE(m_vector_renderable)
 
 	// Maps
-	typedef std::map<eComponentTags, Component*> m_map_eComponentTags_componentptr;
-	MIRROR_TYPE(m_map_eComponentTags_componentptr)
+	typedef std::map<eComponentTags, Component*> m_map_eComponentTags_componentPtr;
+	MIRROR_TYPE(m_map_eComponentTags_componentPtr)
+
+	// Pointers
+	typedef RenderRoutine* m_renderRoutinePtr;
+	MIRROR_TYPE(m_renderRoutinePtr)
+
+	typedef TransformRoutine* m_transformRoutinePtr; // #TODO Needed?
+	MIRROR_TYPE(m_transformRoutinePtr)
 
 	// Structs
 	MIRROR_CLASS_START(Vector3)
@@ -95,7 +118,54 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(viewDistance)
 	MIRROR_CLASS_END
 
-	// Classes and complex structs
+	// GameObject components
+	MIRROR_CLASS_START(Component)
+	MIRROR_CLASS_MEMBER(m_ComponentTag)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(ComponentCamera)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(FirstPersonCameraComponent)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(FreeCameraComponent)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(LightComponent)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(StaticCameraComponent)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(ThirdPersonCameraComponent)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(RenderComponent)
+	MIRROR_CLASS_MEMBER(m_SchematicName)
+	MIRROR_CLASS_MEMBER(m_RenderableList)
+	MIRROR_CLASS_END
+
+	// GameObject routines
+	MIRROR_CLASS_START(RenderRoutine)
+	MIRROR_CLASS_END
+
+	MIRROR_CLASS_START(TransformRoutine)
+	MIRROR_CLASS_MEMBER(m_Speed)
+	MIRROR_CLASS_MEMBER(m_PositionOffset)
+	MIRROR_CLASS_MEMBER(m_RotationOffset)
+	MIRROR_CLASS_MEMBER(m_ScaleOffset)
+	MIRROR_CLASS_END
+
+	// More classes and complex structs
+	MIRROR_CLASS_START(Renderable)
+	MIRROR_CLASS_MEMBER(m_RenderableName)
+	MIRROR_CLASS_MEMBER(m_ShaderName)
+	MIRROR_CLASS_MEMBER(m_MaterialName)
+	MIRROR_CLASS_MEMBER(m_MeshName)
+	MIRROR_CLASS_MEMBER(m_MeshFileName)
+	MIRROR_CLASS_END
+
 	MIRROR_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_IsEnabled)
 	MIRROR_CLASS_MEMBER(m_IsPaused)
@@ -105,15 +175,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_CameraList)
 	MIRROR_CLASS_MEMBER(m_LightList)
 	MIRROR_CLASS_MEMBER(m_SceneDrawList)
-	MIRROR_CLASS_END
-
-	MIRROR_CLASS_START(Component)
-	MIRROR_CLASS_END
-
-	MIRROR_CLASS_START(ComponentCamera)
-	MIRROR_CLASS_END
-
-	MIRROR_CLASS_START(FirstPersonCameraComponent)
 	MIRROR_CLASS_END
 
 	MIRROR_CLASS_START(GameObject)

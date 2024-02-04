@@ -120,8 +120,8 @@ namespace QwerkE {
             // #TODO Set the renderable names
             cJSON* renderable = CreateArray(StringAppend("R", std::to_string(i).c_str()));
 
-            AddItemToArray(renderable, CreateString("Shader", renderablesList->at(i).GetShaderSchematic()->GetName().c_str()));
-            AddItemToArray(renderable, CreateString("Material", renderablesList->at(i).GetMaterialSchematic()->GetMaterialName().c_str()));
+            AddItemToArray(renderable, CreateString("Shader", renderablesList->at(i).GetShader()->GetName().c_str()));
+            AddItemToArray(renderable, CreateString("Material", renderablesList->at(i).GetMaterial()->GetMaterialName().c_str()));
             AddItemToArray(renderable, CreateString("MeshFile", renderablesList->at(i).GetMesh()->GetFileName().c_str()));
             AddItemToArray(renderable, CreateString("MeshName", renderablesList->at(i).GetMesh()->GetName().c_str()));
 
@@ -169,7 +169,7 @@ namespace QwerkE {
                 std::vector<Renderable>* renderables = renderComponent->GetRenderableList();
                 for (unsigned int i = 0; i < renderables->size(); i++)
                 {
-                    renderables->at(i).GetMesh()->SetupShaderAttributes(renderables->at(i).GetShaderSchematic());
+                    renderables->at(i).GetMesh()->SetupShaderAttributes(renderables->at(i).GetShader());
                 }
             }
         }

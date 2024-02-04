@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Libraries/Mirror/Source/Mirror.h"
+
 #include "QF_Routine.h"
 
 #include "QC_Vector.h"
@@ -9,9 +11,6 @@ namespace QwerkE {
     class TransformRoutine : public Routine
     {
     public:
-        TransformRoutine() {};
-        ~TransformRoutine() {};
-
         void Initialize();
 
         void Update(double a_Deltatime);
@@ -27,6 +26,8 @@ namespace QwerkE {
         void SetScaleOff(vec3 scale) { m_ScaleOffset = scale; }
 
     private:
+        MIRROR_PRIVATE_MEMBERS
+
         float m_Speed = 1.0f;
 
         vec3 m_PositionOffset = vec3(0, 0, 0);

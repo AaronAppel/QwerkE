@@ -220,8 +220,8 @@ namespace QwerkE {
                 // #TODO Set the renderable names
                 cJSON* renderable = CreateArray(renderablesList->at(i).GetRenderableName().c_str());
 
-                AddItemToArray(renderable, CreateString("Shader", renderablesList->at(i).GetShaderSchematic()->GetName().c_str()));
-                AddItemToArray(renderable, CreateString("Material", renderablesList->at(i).GetMaterialSchematic()->GetMaterialName().c_str()));
+                AddItemToArray(renderable, CreateString("Shader", renderablesList->at(i).GetShader()->GetName().c_str()));
+                AddItemToArray(renderable, CreateString("Material", renderablesList->at(i).GetMaterial()->GetMaterialName().c_str()));
 
                 if (strcmp(renderablesList->at(i).GetMesh()->GetFileName().c_str(), gc_DefaultCharPtrValue) != 0)
                     AddItemToArray(renderable, CreateString("MeshFile", renderablesList->at(i).GetMesh()->GetFileName().c_str()));

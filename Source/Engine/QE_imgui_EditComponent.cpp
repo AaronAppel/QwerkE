@@ -222,7 +222,7 @@ namespace QwerkE {
                 ImGui::NextColumn();
 
                 // Shader
-                if (ImGui::Selectable(renderables->at(i).GetShaderSchematic()->GetName().c_str()))
+                if (ImGui::Selectable(renderables->at(i).GetShader()->GetName().c_str()))
                 {
                     m_ShowShaderList = true;
                     m_RenderableIndex = i;
@@ -231,7 +231,7 @@ namespace QwerkE {
 
                 // Material
                 // if (i == m_Materialindex) ImGui::PushStyleColor(ImGuiCol(1), ImVec4(1,1,1,1));
-                if (ImGui::Selectable(renderables->at(i).GetMaterialSchematic()->GetMaterialName().c_str()))
+                if (ImGui::Selectable(renderables->at(i).GetMaterial()->GetMaterialName().c_str()))
                 {
                     m_ShowMaterialList = true;
                     m_RenderableIndex = i;
@@ -253,7 +253,15 @@ namespace QwerkE {
             if (m_ShowMeshList) ShowMeshMenu(renderComponent);
 
             // Shader uniforms and attributes
-            const std::vector<std::string>* attributes = renderComponent->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeAttributes(); // TODO: Fix out of bounds when m_RenderableIndex is too high
+
+            std::vector<Renderable>* renderablesList = renderComponent->GetRenderableList();
+
+            if (renderablesList->size() <= m_RenderableIndex)
+                return;
+
+            Renderable& renderable = renderablesList->at(m_RenderableIndex);
+
+            const std::vector<std::string>* attributes = renderable.GetShader()->SeeAttributes();
             ImGui::Button("Attr");
             if (ImGui::IsItemHovered())
             {
@@ -265,7 +273,7 @@ namespace QwerkE {
                 ImGui::EndTooltip();
             }
             ImGui::SameLine();
-            const std::vector<std::string>* uniforms = renderComponent->GetRenderableList()->at(m_RenderableIndex).GetShaderSchematic()->SeeUniforms();
+            const std::vector<std::string>* uniforms = renderable.GetShader()->SeeUniforms();
             ImGui::Button("Unif");
             if (ImGui::IsItemHovered())
             {
@@ -287,22 +295,22 @@ namespace QwerkE {
                 switch (selection)
                 {
                 case 0:
-                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLES);
+                    renderable.GetMesh()->SetPrimitiveType(GL_TRIANGLES);
                     break;
                 case 1:
-                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_STRIP);
+                    renderable.GetMesh()->SetPrimitiveType(GL_TRIANGLE_STRIP);
                     break;
                 case 2:
-                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_TRIANGLE_FAN);
+                    renderable.GetMesh()->SetPrimitiveType(GL_TRIANGLE_FAN);
                     break;
                 case 3:
-                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_POINTS);
+                    renderable.GetMesh()->SetPrimitiveType(GL_POINTS);
                     break;
                 case 4:
-                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINES);
+                    renderable.GetMesh()->SetPrimitiveType(GL_LINES);
                     break;
                 case 5:
-                    renderComponent->GetRenderableList()->at(m_RenderableIndex).GetMesh()->SetPrimitiveType(GL_LINE_STRIP);
+                    renderable.GetMesh()->SetPrimitiveType(GL_LINE_STRIP);
                     break;
                 }
             }

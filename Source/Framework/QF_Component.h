@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Libraries/Mirror/Source/Mirror.h"
+
 #include "QF_Enums.h"
 
 namespace QwerkE {
@@ -24,6 +26,9 @@ namespace QwerkE {
 
     protected:
         Component() { m_ComponentTag = Component_Null; };
+
+        MIRROR_PRIVATE_MEMBERS
+
         GameObject* m_pParent = nullptr;
         eComponentTags m_ComponentTag = Component_Null;
     };

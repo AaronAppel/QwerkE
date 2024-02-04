@@ -64,16 +64,19 @@ namespace QwerkE {
         for (auto l_LoopVar : m_Components)
         {
             l_LoopVar.second->SetParent(this);
+            l_LoopVar.second->Activate();
         }
 
         for (auto l_LoopVar : m_DrawList)
         {
             l_LoopVar->SetParent(this);
+            l_LoopVar->Initialize(); // #TODO May want to remove
         }
 
         for (auto l_LoopVar : m_UpdateList)
         {
             l_LoopVar->SetParent(this);
+            l_LoopVar->Initialize(); // #TODO May want to remove
         }
     }
 

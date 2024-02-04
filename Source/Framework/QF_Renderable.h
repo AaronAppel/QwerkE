@@ -1,8 +1,12 @@
 #pragma once
 
+#include <string>
+
 #include "Libraries/glew/GL/glew.h"
+#include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Mesh.h"
+#include "QF_Resources.h"
 
 namespace QwerkE {
 
@@ -21,16 +25,21 @@ namespace QwerkE {
             m_Mesh = mesh;
         }
 
-        // Getters + Setters
-        // Getters
-        std::string GetRenderableName() const { return m_RenderableName; }
-        ShaderProgram* GetShaderSchematic() { return m_Shader; }
-        const ShaderProgram* SeeShaderSchematic() const { return m_Shader; }
-        Material* GetMaterialSchematic() { return m_Material; }
+        void Initialize()
+        {
+            m_Shader = Resources::GetShaderProgram(m_ShaderName.c_str());
+            m_Material = Resources::GetMaterial(m_MaterialName.c_str());
+            m_Mesh = Resources::GetMesh(m_MeshName.c_str());
+            // m_Mesh = Resources::GetMeshFromFile(m_MeshFileName.c_str());
+        }
+
+        const std::string& GetRenderableName() const { return m_RenderableName; }
+        ShaderProgram* GetShader() { return m_Shader; }
+        const ShaderProgram* SeeShader() const { return m_Shader; }
+        Material* GetMaterial() { return m_Material; }
         Mesh* GetMesh() { return m_Mesh; }
         const Mesh* SeeMesh() const { return m_Mesh; }
 
-        // Setters
         void SetRenderableName(std::string name) { m_RenderableName = name; }
         void SetShader(ShaderProgram* shader)
         {
@@ -38,7 +47,9 @@ namespace QwerkE {
             {
                 m_Shader = shader;
                 if (m_Mesh)
+                {
                     m_Mesh->SetupShaderAttributes(m_Shader);
+                }
             }
         }
 
@@ -61,10 +72,16 @@ namespace QwerkE {
         }
 
     private:
+        MIRROR_PRIVATE_MEMBERS
+
         std::string m_RenderableName = gc_DefaultStringValue;
         ShaderProgram* m_Shader = nullptr;
         Material* m_Material = nullptr;
         Mesh* m_Mesh = nullptr;
+        std::string m_ShaderName = gc_DefaultStringValue;
+        std::string m_MaterialName = gc_DefaultStringValue;
+        std::string m_MeshName = gc_DefaultStringValue;
+        std::string m_MeshFileName = gc_DefaultStringValue;
     };
 
 }

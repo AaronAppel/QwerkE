@@ -72,6 +72,8 @@ Mirror used to be limited by multiple instances of a classes, meaning you couldn
 
 In order to separate types and instances, each type must have a unique ID/key/identifier, but that is already enforced by language in the form of variable names, so since Mirror takes in the unique variable names, Mirror can support most use cases.
 
+Serialized types must have an empty constructor to let the serialization code instantiate the object in place with all available state. An initialize() will will need to be made for additional state setup.
+
 ## More info:
 I created Mirror to solve an old problem I had when first working on my game engine [QwerkE](https://github.com/AaronAppel/QwerkE) in college. I was interested in simplifying the process of serialization and deserializing code objects to data structures using the [cJSON](https://github.com/DaveGamble/cJSON) library. I thought there had to be a better way to tell an object to serialize itself without having to type out each parameter each time I added a new one. Some effort into searching was made, and as I didn't care to import the Boost library, or implement some more convoluted solutions, I gave up trying. Fast forward 4 years later, and I resumed work on my game engine, only to pick up the old problem that I had left behind. This go around, with more experience and internet information accumulation time, I searched and searched until I found something that resembled what I wanted. At first, it didn't work, but it did! And with more massaging I was able to extend the supported types, add templated methods with macros, then recursion for traversing complex and larger scale data trees/code objects.
 
@@ -79,3 +81,18 @@ I created Mirror to solve an old problem I had when first working on my game eng
 Support for collections and info on them like field.type->collectionType to know **if** the field or type is a collection, and what type the collection is holding. Great for iterating over collections without needing to know they type of the collection, or what type the collection holds.
 
 Problems once I started \#including the serialization header in other files. Can't have the power of templated functions being used everywhere. Either only file can \#include the templated method, or I need to use switch statements to handle explicitly calling a private method with the proper static known or compiled type.
+
+Handling collections dynamically.
+
+It would be so nice to have a .CastToType(obj) method.
+
+Handling pointer types, requiring instantiating objects.
+Handling sub classes and casting pointers. Need to return a pointer, to the base type but instantiate the correct sub class type underneath. Mirror could use some extension if helpers can be mad for sub class type handling.
+
+
+Simple Example : Show the bare minimum struct with an int example, with serialization.
+Complex Example : Show nested structs, with collections and pointer types.
+
+
+Potential issues :
+- By instantiating objects and resolving them immediately, it is possible to create infinite loops if class A pointer is instantiated, then the class A object has a pointer to class B which is then instantiated, and in class B there is a pointer to class A, so the cycle repeats, infinitely. This only happens if the pointers are marked serializable, and serializing pointers is enabled.

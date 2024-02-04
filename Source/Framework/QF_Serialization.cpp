@@ -6,6 +6,20 @@
 #include "QF_DataManager.h"
 #include "QF_GameObject.h"
 #include "QF_Log.h"
+#include "QF_Resources.h"
+
+#include "QF_RenderRoutine.h"
+#include "QF_Routine.h"
+#include "QF_TransformRoutine.h"
+
+#include "QF_LightComponent.h"
+#include "QF_CameraComponent.h"
+#include "QF_FirstPersonCameraComponent.h"
+#include "QF_FreeCameraComponent.h"
+#include "QF_StaticCameraComponent.h"
+#include "QF_ThirdPersonCameraComponent.h"
+
+#define no_file "None" // #TODO Consider coupling to cJSON logic and moving out of here
 
 // #TODO Review how arrays are handled. Are they left empty when they have no instances, and
 // more specifically, are their child arrays left empty? May as well skip empty child arrays
@@ -18,12 +32,14 @@ namespace QwerkE {
 
     namespace Serialization {
 
+        typedef TransformRoutine* m_transformRoutinePtr;
+
         // #TODO Create private (hidden from user) methods to handle individual reads and writes of types.
         // These methods can help reduce the indentation, and improve readability + debug-ability.
 
 #define DESERIALIZE_CASE_FOR_CLASS(ClassType) \
 case MirrorTypes::ClassType: \
-    DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<ClassType>(), ((char*)obj + field.offset)); \
+    DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<ClassType>(), obj); \
     break; \
 
         void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
@@ -95,6 +111,45 @@ case MirrorTypes::ClassType: \
             }
         }
 
+        template <class T>
+        void DeserializeVectorPointer(const cJSON* jsonObj, std::vector<T>** obj) // #TODO Handle vector of primitives (no class type info)
+        {
+            std::vector<T*>* vectorPtrPtr = (std::vector<T*>*)obj;
+            const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
+            if (vectorPtrPtr) // #TODO Validate null pointer value
+            {
+                vectorPtrPtr->reserve(jsonObjectVector.size());
+                vectorPtrPtr->resize(0);
+                for (size_t i = 0; i < jsonObjectVector.size(); i++)
+                {
+                    // #TODO Swap to new method
+                    // DeserializeJsonToPointer(jsonObjectVector[i], (T**)obj);
+
+                    T* gameObject = new T();
+                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), gameObject);
+                    vectorPtrPtr->push_back(gameObject);
+                }
+            }
+        }
+
+        template <class T>
+        void DeserializeVectorNonPointer(const cJSON* jsonObj, std::vector<T>* obj)
+        {
+            std::vector<T>* vectorPtr = (std::vector<T>*)obj;
+            const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
+            if (vectorPtr) // #TODO Validate null pointer value
+            {
+                vectorPtr->reserve(jsonObjectVector.size());
+                vectorPtr->resize(0);
+                for (size_t i = 0; i < jsonObjectVector.size(); i++)
+                {
+                    T renderable;
+                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), &renderable);
+                    vectorPtr->push_back(renderable);
+                }
+            }
+        }
+
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
         {
             if (!jsonObj || !jsonObj->type || jsonObj->type != cJSON_Array || !obj)
@@ -125,8 +180,11 @@ case MirrorTypes::ClassType: \
                         strings->reserve(jsonStrings.size());
                         for (size_t i = 0; i < jsonStrings.size(); i++)
                         {
-                            std::string str = jsonStrings[i]->valuestring;
-                            strings->push_back(str);
+                            // #TODO Handle more types agnosticly, so this logic would also support ints and other primitives/base values
+                            // #TODO This could be templated using the MirrorTypes enum if the function handles more than strings
+                            // DeserializeJsonString(jsonObj, MirrorTypes::m_string, obj);
+
+                            strings->push_back(jsonStrings[i]->valuestring);
                         }
                     }
                     else
@@ -136,28 +194,15 @@ case MirrorTypes::ClassType: \
                 }
                 break;
 
-            case MirrorTypes::m_vector_gameobjectptr:
-            {
-                std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)obj;
-                const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
-                if (gameObjects) // #TODO Validate null pointer value
-                {
-                    gameObjects->reserve(jsonGameObjects.size());
-                    gameObjects->resize(0);
-                    for (size_t i = 0; i < jsonGameObjects.size(); i++)
-                    {
-                        // DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<GameObject>(), obj);
-                        GameObject* gameObject = ConvertJSONToGameObject(jsonGameObjects[i]);
-                        if (gameObject)
-                        {
-                            gameObjects->push_back(gameObject);
-                        }
-                    }
-                }
-            }
-            break;
+            case MirrorTypes::m_vector_gameobjectPtr:
+                DeserializeVectorPointer(jsonObj, (std::vector<GameObject>**)obj);
+                break;
 
-            case MirrorTypes::m_vector_routineptr:
+            case MirrorTypes::m_vector_renderable:
+                DeserializeVectorNonPointer(jsonObj, (std::vector<Renderable>*)obj);
+                break;
+
+            case MirrorTypes::m_vector_routinePtr:
             {
                 std::vector<Routine*>* routines = (std::vector<Routine*>*)obj;
                 const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
@@ -167,7 +212,23 @@ case MirrorTypes::ClassType: \
                     routines->resize(0);
                     for (size_t i = 0; i < jsonGameObjects.size(); i++)
                     {
-                        Routine* routine = AddRoutineToGameObject(jsonGameObjects[i]);
+                        // #TODO Handle sub class instantiation
+
+                        eRoutineTypes type = (eRoutineTypes)std::stoi(jsonGameObjects[i]->string);
+
+                        switch (type)
+                        {
+                        case eRoutineTypes::Routine_Render:
+                            DeserializeJsonToPointer(jsonGameObjects[i], (RenderRoutine**)obj);
+                        case eRoutineTypes::Routine_Print:
+                            // DeserializeJsonToPointer(jsonGameObjects[i], (PrintRoutine**)obj);
+                            break;
+                        case eRoutineTypes::Routine_Transform:
+                            DeserializeJsonToPointer(jsonGameObjects[i], (TransformRoutine**)obj);
+                            break;
+                        }
+
+                        Routine* routine = *(Routine**)obj;
                         if (routine)
                         {
                             routines->push_back(routine);
@@ -177,19 +238,105 @@ case MirrorTypes::ClassType: \
             }
             break;
 
-            case MirrorTypes::m_map_eComponentTags_componentptr:
+            case MirrorTypes::m_map_eComponentTags_componentPtr:
             {
                 std::map<eComponentTags, Component*>* componentsMap = (std::map<eComponentTags, Component*>*)obj;
                 const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
                 if (componentsMap)
                 {
+                    componentsMap->clear();
                     for (size_t i = 0; i < jsonGameObjects.size(); i++)
                     {
-                        Component* component = AddComponentToGameObject(jsonGameObjects[i]);;
+                        // Component* component = AddComponentToGameObject(jsonGameObjects[i]);
+
+                        switch ((eComponentTags)std::stoi(jsonGameObjects[i]->string))
+                        {
+                        case Component_Camera:
+                            {
+                                eCamType camType = eCamType::CamType_FreeCam; // #TODO Get dynamically
+                                switch (camType)
+                                {
+                                case CamType_FreeCam:
+                                    DeserializeJsonToPointer(jsonGameObjects[i], (FreeCameraComponent**)obj);
+                                    break;
+
+                                case CamType_FirstPerson:
+                                    DeserializeJsonToPointer(jsonGameObjects[i], (FirstPersonCameraComponent**)obj);
+                                    break;
+
+                                case CamType_ThirdPerson:
+                                    DeserializeJsonToPointer(jsonGameObjects[i], (ThirdPersonCameraComponent**)obj);
+                                    break;
+
+                                case CamType_Static:
+                                    DeserializeJsonToPointer(jsonGameObjects[i], (StaticCameraComponent**)obj);
+                                    break;
+
+                                default:
+                                    LOG_WARN("{0} TODO", __FUNCTION__);
+                                    break;
+                                }
+                                ComponentCamera* t_pCamComp = *(ComponentCamera**)obj;
+                                t_pCamComp->SetType(camType); // #TODO Set in component constructor.
+                            }
+                            break;
+
+                        case Component_Light:
+                            DeserializeJsonToPointer(jsonGameObjects[i], (LightComponent**)obj);
+                            (*(LightComponent**)obj)->SetColour(vec3(1.0f, 1.0f, 1.0f));
+                            break;
+
+                        case Component_Render:
+                            DeserializeJsonToPointer(jsonGameObjects[i], (RenderComponent**)obj);
+                            {
+                                int bp = 0;
+                                // const cJSON* renderables = GetItemFromArrayByKey(jsonGameObjects[i], "m_RenderableList");
+                                //
+                                // for (size_t i = 0; i < GetArraySize(renderables); i++)
+                                // {
+                                //     cJSON* renderableArray = GetItemFromArrayByIndex(renderables, i); // renderables->child->child;
+                                //
+                                //     Renderable renderable;
+                                //     renderable.SetRenderableName(renderableArray->string);
+                                //
+                                //     cJSON* shader = GetItemFromArrayByKey(renderableArray, "Shader");
+                                //     cJSON* material = GetItemFromArrayByKey(renderableArray, "Material");
+                                //     cJSON* meshFile = GetItemFromArrayByKey(renderableArray, "MeshFile");
+                                //     cJSON* meshName = GetItemFromArrayByKey(renderableArray, "MeshName");
+                                //
+                                //     renderable.SetShader(Resources::GetShaderProgram(shader->valuestring));
+                                //     renderable.SetMaterial(Resources::GetMaterial(material->valuestring));
+                                //
+                                //     // Load Mesh
+                                //     if (strcmp(meshFile->valuestring, no_file) == 0)
+                                //         renderable.SetMesh(Resources::GetMesh(meshName->valuestring));
+                                //     else
+                                //         renderable.SetMesh(Resources::GetMeshFromFile(meshFile->valuestring, meshName->valuestring));
+                                //
+                                //     RenderComponent* renderComponent = *(RenderComponent**)obj;
+                                //     renderComponent->AddRenderable(renderable);
+                                // }
+                            }
+                            break;
+
+                        case Component_Physics:
+                        case Component_Controller:
+                        case Component_SkyBox:
+                        case Component_SoundPlayer:
+                        case Component_SoundListener:
+                        case Component_Max:
+                        case Component_Null:
+                        default:
+                            LOG_WARN("{0} TODO", __FUNCTION__);
+                            break;
+                        }
+
+                        Component* component = *(Component**)obj;
                         if (component)
                         {
                             eComponentTags componentTag = (eComponentTags)std::stoi(jsonGameObjects[i]->string);
-                            componentsMap->insert({ componentTag, component });
+                            std::map<eComponentTags, Component*>& componentMapRef = *componentsMap;
+                            componentMapRef[componentTag] = component;
                         }
                     }
                 }
@@ -286,7 +433,7 @@ case MirrorTypes::ClassType: \
         }
 
         // #Unused
-        void DeserializeJsonToPointer(const cJSON* jsonObj, const MirrorTypes type, void* obj)
+        void _DeserializeJsonToPointer(const cJSON* jsonObj, const MirrorTypes type, void* obj)
         {
             // #TODO Define the proper way to handle memory deallocation
             // #TODO Look at templating the type to be type-agnostic
@@ -404,7 +551,7 @@ case MirrorTypes::ClassType: \
                         }
                         break;
 
-                    case MirrorTypes::m_vector_gameobjectptr:
+                    case MirrorTypes::m_vector_gameobjectPtr:
                         {
                             std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
                             if (gameObjects)

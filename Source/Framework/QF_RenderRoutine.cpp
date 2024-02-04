@@ -47,10 +47,10 @@ namespace QwerkE {
 
             for (unsigned int i = 0; i < renderables->size(); i++)
             {
-                if (renderables->at(i).GetShaderSchematic())
+                if (renderables->at(i).GetShader())
                 {
                     // TODO: Handle null mesh, material, shader
-                    renderables->at(i).GetMesh()->SetupShaderAttributes(renderables->at(i).GetShaderSchematic());
+                    renderables->at(i).GetMesh()->SetupShaderAttributes(renderables->at(i).GetShader());
                 }
             }
 
@@ -92,7 +92,7 @@ namespace QwerkE {
 
         for (size_t i = 0; i < t_Renderables->size(); i++)
         {
-            t_Renderables->at(i).GetShaderSchematic()->Use();
+            t_Renderables->at(i).GetShader()->Use();
 
             for (unsigned int j = 0; j < m_UniformSetupList[i].size(); j++)
             {
@@ -138,9 +138,12 @@ namespace QwerkE {
 
         for (unsigned int i = 0; i < t_Renderables->size(); i++) // for each renderable
         {
-            if (t_Renderables->at(i).SeeShaderSchematic()->SeeUniforms()->size() == 0) t_Renderables->at(i).GetShaderSchematic()->FindAttributesAndUniforms();
-            const std::vector<std::string>* t_Uniforms = t_Renderables->at(i).SeeShaderSchematic()->SeeUniforms();
-            Material* t_Material = t_Renderables->at(i).GetMaterialSchematic();
+            if (t_Renderables->at(i).SeeShader()->SeeUniforms()->size() == 0)
+            {
+                t_Renderables->at(i).GetShader()->FindAttributesAndUniforms();
+            }
+            const std::vector<std::string>* t_Uniforms = t_Renderables->at(i).SeeShader()->SeeUniforms();
+            Material* t_Material = t_Renderables->at(i).GetMaterial();
 
             /* Add functions to setup shader uniforms */
             for (size_t j = 0; j < t_Uniforms->size(); j++) // Setup uniforms

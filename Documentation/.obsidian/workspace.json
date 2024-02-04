@@ -121,7 +121,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "namespa",
+                "query": "sooner",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -185,14 +185,14 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "bb509d665d0ed27c",
+  "active": "6e6727655ad579b3",
   "lastOpenFiles": [
+    "ZZ Shared Vault Files ❗/To Watch.md",
     "Mirror Library.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
     "Serializer.md",
     "QwerkE Standards/Namespaces and Domains.md",
     "QwerkE Standards/Indentation.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
-    "ZZ Shared Vault Files ❗/To Watch.md",
     "Pretend Blog Post.md",
     "Development/Feature Tickets/F0001 - Reflection.md",
     "cJSON.md",

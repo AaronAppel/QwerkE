@@ -5,6 +5,15 @@
 #include "QF_Log.h" // #TODO Remove
 #include "QF_Settings.h" // #TODO Remove
 
+#include "QF_TransformRoutine.h"
+#include "QF_RenderComponent.h"
+
+#include "QF_FirstPersonCameraComponent.h"
+#include "QF_FreeCameraComponent.h"
+#include "QF_LightComponent.h"
+#include "QF_StaticCameraComponent.h"
+#include "QF_ThirdPersonCameraComponent.h"
+
 // #TODO Make a note of key/value naming. Variable names should be used when possible.
 // This is safer when using string matching. For primitives and complex types, variable
 // names should be available. For array elements, the type name will do fine.
@@ -25,12 +34,22 @@ namespace QwerkE {
     // Probably needs to depend on Mirror, but keep them otherwise separate.
     namespace Serialization {
 
+        void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
+
+        template <class T>
+        void DeserializeJsonToPointer(const cJSON* const jsonObj, T** addressOfPointer)
+        {
+            // #NOTE Assuming pointer '*' is dropped by caller using enum, so T is not the original pointer (1 level dereferenced)
+
+            *addressOfPointer = new T();
+            DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<T>(), *addressOfPointer);
+        }
+
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj);
         void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
         void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
 
-        void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
-
+        // #Unused
         template <class T>
         void DeserializeObject(const cJSON* fileRootJson, T& objectReference)
         {
@@ -59,23 +78,16 @@ namespace QwerkE {
                 break;
 
                 case cJSON_Object:
+                    DeserializeJsonArrayToObject(fileRootJson->child, Mirror::InfoForClass<T>(), (void*)&objectReference);
+                    break;
+
+                case cJSON_Array:
+                    DeserializeJsonArrayToObject(fileRootJson, Mirror::InfoForClass<T>(), (void*)&objectReference);
                     break;
 
                 default:
                     break;
             }
-
-            if (!fileRootJson->child)
-            {
-                // Check if it is a primitive type
-            }
-
-            if (fileRootJson->type = cJSON_Object)
-            {
-                fileRootJson = fileRootJson->child; // #TODO Improve logic
-            }
-
-            DeserializeJsonArrayToObject(fileRootJson, Mirror::InfoForClass<T>(), (void*)&objectReference);
         }
 
         template <class T>
@@ -125,10 +137,14 @@ namespace QwerkE {
             AddItemToObject(objJson, arr);
         }
 
-        GameObject* ConvertJSONToGameObject(cJSON* item);
+        template <class T>
+        void SerializeObjectToFile(const char* fileName, const T& objectReference)
+        {
+            // #TODO Implement
+        }
+
         cJSON* ConvertGameObjectToJSON(void* obj);
         Component* AddComponentToGameObject(cJSON* item);
-        Routine* AddRoutineToGameObject(cJSON* item);
 
     }
 

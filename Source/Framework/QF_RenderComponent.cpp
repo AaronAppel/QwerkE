@@ -22,9 +22,10 @@ namespace QwerkE {
 
         if (m_pParent)
         {
-            RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render);
-            if (rRoutine)
+            if (RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))
+            {
                 rRoutine->ResetUniformList();
+            }
         }
     }
 
@@ -37,20 +38,17 @@ namespace QwerkE {
         t_Renderable.SetMesh(Resources::GetMesh(meshName));
         t_Renderable.SetShader(Resources::GetShaderProgram(shaderName));
 
-        t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShaderSchematic());
+        t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShader());
 
         m_RenderableList.push_back(t_Renderable);
 
         if (m_pParent)
         {
-            RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render);
-            if (rRoutine)
+            if (RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))
+            {
                 rRoutine->ResetUniformList();
+            }
         }
-    }
-
-    RenderComponent::~RenderComponent()
-    {
     }
 
     void RenderComponent::GenerateSchematic()
@@ -62,20 +60,35 @@ namespace QwerkE {
         SaveObjectSchematic(this);
     }
 
+    void RenderComponent::Activate()
+    {
+        for (size_t i = 0; i < m_RenderableList.size(); i++)
+        {
+            Renderable& renderable = m_RenderableList[i];
+            renderable.Initialize();
+        }
+    }
+
     void RenderComponent::Setup(const char* shaderName, const char* materialName, const char* meshName)
     {
+        // #TODO Should there be a check to see if a renderable alrady exists?
         Renderable t_Renderable;
 
         t_Renderable.SetMaterial(Resources::GetMaterial(materialName));
         t_Renderable.SetMesh(Resources::GetMesh(meshName));
         t_Renderable.SetShader(Resources::GetShaderProgram(shaderName));
 
-        t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShaderSchematic());
+        t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShader());
 
         m_RenderableList.push_back(t_Renderable);
 
         if (m_pParent)
-            ((RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))->ResetUniformList();
+        {
+            if (RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))
+            {
+                rRoutine->ResetUniformList();
+            }
+        }
     }
 
     void RenderComponent::AppendEmptyRenderables(int count)
@@ -118,7 +131,12 @@ namespace QwerkE {
                 m_RenderableList[index].GetMesh()->SetupShaderAttributes(shader);
 
                 if (m_pParent)
-                    ((RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))->ResetUniformList();
+                {
+                    if (RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))
+                    {
+                        rRoutine->ResetUniformList();
+                    }
+                }
             }
         }
     }
@@ -127,7 +145,9 @@ namespace QwerkE {
     {
         // TODO: More error handling
         if (index < m_RenderableList.size() && material != nullptr)
+        {
             m_RenderableList[index].SetMaterial(material);
+        }
         // TODO: Changing material will need to reset render routine in the future
     }
 
@@ -138,12 +158,17 @@ namespace QwerkE {
         {
             m_RenderableList[index].SetMesh(mesh);
 
-            if (m_RenderableList[index].GetShaderSchematic())
+            if (m_RenderableList[index].GetShader())
             {
-                m_RenderableList[index].GetMesh()->SetupShaderAttributes(m_RenderableList[index].GetShaderSchematic());
+                m_RenderableList[index].GetMesh()->SetupShaderAttributes(m_RenderableList[index].GetShader());
 
                 if (m_pParent)
-                    ((RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))->ResetUniformList();
+                {
+                    if (RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))
+                    {
+                        rRoutine->ResetUniformList();
+                    }
+                }
             }
         }
     }

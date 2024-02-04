@@ -14,9 +14,38 @@ namespace QwerkE {
     {
         if (!m_pParent) return;
 
+        const vec3& rotation = m_pParent->GetRotation();
+
         m_pParent->SetPosition(m_pParent->GetPosition() + (m_PositionOffset * m_Speed));
-        m_pParent->SetRotation(m_pParent->GetRotation() + (m_RotationOffset * m_Speed));
+        m_pParent->SetRotation(rotation + (m_RotationOffset * m_Speed));
         m_pParent->SetScale(m_pParent->GetScale() + (m_ScaleOffset * m_Speed));
+
+        if (rotation.x >= 360.f)
+        {
+            m_pParent->SetRotation(vec3(rotation.x - 360.f, rotation.y, rotation.z));
+        }
+        else if (rotation.x < 0.f)
+        {
+            m_pParent->SetRotation(vec3(rotation.x + 360.f, rotation.y, rotation.z));
+        }
+
+        if (rotation.y >= 360.f)
+        {
+            m_pParent->SetRotation(vec3(rotation.x, rotation.y - 360.f, rotation.z));
+        }
+        else if (rotation.y < 0.f)
+        {
+            m_pParent->SetRotation(vec3(rotation.x, rotation.y + 360.f, rotation.z));
+        }
+
+        if (rotation.z >= 360.f)
+        {
+            m_pParent->SetRotation(vec3(rotation.x, rotation.y, rotation.z - 360.f));
+        }
+        else if (rotation.z < 0.f)
+        {
+            m_pParent->SetRotation(vec3(rotation.x, rotation.y, rotation.z + 360.f));
+        }
     }
 
 }

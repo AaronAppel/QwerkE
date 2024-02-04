@@ -22,7 +22,7 @@ namespace QwerkE {
 
     void RenderRoutine::Setup3DTransform(const ComponentCamera* camera, Renderable* renderable)
     {
-        ShaderProgram* t_pShader = renderable->GetShaderSchematic();
+        ShaderProgram* t_pShader = renderable->GetShader();
 
         mat4 worldMat;
         worldMat.CreateSRT(m_pParent->GetScale(), m_pParent->GetRotation(), m_pParent->GetPosition());
@@ -35,7 +35,7 @@ namespace QwerkE {
 
     void RenderRoutine::Setup2DTransform(const ComponentCamera* camera, Renderable* renderable)
     {
-        ShaderProgram* t_pShader = renderable->GetShaderSchematic();
+        ShaderProgram* t_pShader = renderable->GetShader();
         mat4 worldMat;
 
         worldMat.CreateSRT(m_pParent->GetScale(), m_pParent->GetRotation(), m_pParent->GetPosition());
@@ -45,7 +45,7 @@ namespace QwerkE {
 
     void RenderRoutine::SetupColorUniforms(const ComponentCamera* cameraObject, Renderable* renderable)
     {
-        ShaderProgram* t_pShader = renderable->GetShaderSchematic();
+        ShaderProgram* t_pShader = renderable->GetShader();
         vec4 t_Colour = vec4(0, 1, 0, 1); // m_pRenderComp->GetColour();
 
         t_pShader->SetUniformFloat4(objectColor, t_Colour.x, t_Colour.y, t_Colour.z, t_Colour.w);
@@ -53,9 +53,9 @@ namespace QwerkE {
 
     void RenderRoutine::SetupMaterialUniforms(const ComponentCamera* a_Camera, Renderable* renderable)
     {
-        Material* material = renderable->GetMaterialSchematic();
+        Material* material = renderable->GetMaterial();
         const std::map<eMaterialMaps, Texture*>* materialList = material->SeeMaterials();
-        ShaderProgram* shader = renderable->GetShaderSchematic();
+        ShaderProgram* shader = renderable->GetShader();
         // TODO: Check uniforms from : const std::vector<std::string>* uniforms = shader->SeeUniforms();
 
         /* Assign material texture values */
@@ -128,7 +128,7 @@ namespace QwerkE {
 
     void RenderRoutine::SetupLightingUniforms(const ComponentCamera* a_Camera, Renderable* renderable)
     {
-        ShaderProgram* t_pShader = renderable->GetShaderSchematic();
+        ShaderProgram* t_pShader = renderable->GetShader();
         // TODO: Get light data better
         GameObject* t_Light = m_pRenderComp->GetParent()->GetScene()->GetLightList().at(0); // TODO: Stop hard coding index, plus handle multiple lights
         LightComponent* t_LightComp = (LightComponent*)t_Light->GetComponent(Component_Light);
@@ -143,7 +143,7 @@ namespace QwerkE {
 
     void RenderRoutine::SetupCameraUniforms(const ComponentCamera* a_Camera, Renderable* renderable)
     {
-        ShaderProgram* t_pShader = renderable->GetShaderSchematic();
+        ShaderProgram* t_pShader = renderable->GetShader();
 
         vec3 t_CamPos = a_Camera->SeeParent()->GetPosition();
         t_pShader->SetUniformFloat3(cameraPosition, t_CamPos.x, t_CamPos.y, t_CamPos.z);

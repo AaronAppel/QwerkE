@@ -103,7 +103,7 @@ namespace QwerkE {
         return buffer;
     }
 
-    void Mesh::SetupShaderAttributes(ShaderProgram* shader)
+    void Mesh::SetupShaderAttributes(ShaderProgram* shader) // #TODO Review const shader*
     {
         // Tell the shader where to look for the mesh data.
         // This needs to be called on shader changes but does not

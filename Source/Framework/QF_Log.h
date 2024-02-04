@@ -47,6 +47,7 @@ namespace QwerkE {
 #if _DEBUG
 // #define LOG_TRACE(...)    ::QwerkE::LOG_TRACE(__VA_ARGS__) // TODO: Contain spdlog code inside Log.cpp only?
 
+// #TODO Could add logic to check if the log system isn't initialized yet, and use a printf call instead
 // #TODO Add more info to log calls like __FUNCTION__, __LINE__, __FILE__, and more
 #define LOG_SAFE(msg, arg1) QwerkE::Log::Print(msg, arg1);
 #define LOG_TRACE(...)      QwerkE::Log::m_Logger->trace(__VA_ARGS__);
