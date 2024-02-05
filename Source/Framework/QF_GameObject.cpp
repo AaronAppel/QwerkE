@@ -28,30 +28,46 @@ namespace QwerkE {
 
     GameObject::~GameObject()
     {
-        for (auto l_LoopVar : m_Components)
-        {
-            delete l_LoopVar.second;
-        }
+        // #TODO Properly deallocate components. Can't use iterator currently
+        // for (auto it = m_Components.begin(); it != m_Components.end(); it++)
+        // {
+        //     delete it->second;
+        // }
         m_Components.clear();
 
-        for (unsigned int i = 0; i < m_UpdateList.size(); i++)
-        {
-            if (m_UpdateList.at(i))
-            {
-                m_UpdateList.at(i)->CleanUp();
-                delete m_UpdateList.at(i);
-            }
-        }
+        // for (auto l_LoopVar : m_Components)
+        // {
+        //     if (l_LoopVar.second)
+        //     {
+        //         delete l_LoopVar.second;
+        //         l_LoopVar.second = nullptr;
+        //         m_Components.erase(l_LoopVar.first);
+        //     }
+        // }
+        // m_Components.clear();
+
+        // #TODO Properly deallocate components. Can't use delete currently
+        // for (unsigned int i = 0; i < m_UpdateList.size(); i++)
+        // {
+        //     if (m_UpdateList.at(i))
+        //     {
+        //         m_UpdateList.at(i)->CleanUp();
+        //         delete m_UpdateList.at(i);
+        //         m_UpdateList.at(i) = nullptr;
+        //     }
+        // }
         m_UpdateList.clear();
 
-        for (unsigned int i = 0; i < m_DrawList.size(); i++)
-        {
-            if (m_DrawList.at(i))
-            {
-                m_DrawList.at(i)->CleanUp();
-                delete m_DrawList.at(i);
-            }
-        }
+        // #TODO Properly deallocate components. Can't use delete currently
+        // for (unsigned int i = 0; i < m_DrawList.size(); i++)
+        // {
+        //     if (m_DrawList.at(i))
+        //     {
+        //         m_DrawList.at(i)->CleanUp();
+        //         delete m_DrawList.at(i);
+        //         m_DrawList.at(i) = nullptr;
+        //     }
+        // }
         m_DrawList.clear();
     }
 

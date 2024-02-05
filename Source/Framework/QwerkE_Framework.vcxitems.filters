@@ -138,9 +138,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AudioSource.cpp">
       <Filter>Core\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_DataManager.cpp">
-      <Filter>Core\DataManager</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssetLoadedEvent.cpp">
       <Filter>Core\Events</Filter>
     </ClCompile>
@@ -373,9 +370,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
       <Filter>Core\Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_SerializationGameObject.cpp">
-      <Filter>Core\Serialization</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h">
@@ -389,9 +383,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AudioSource.h">
       <Filter>Core\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_DataManager.h">
-      <Filter>Core\DataManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AssetLoadedEvent.h">
       <Filter>Core\Events</Filter>

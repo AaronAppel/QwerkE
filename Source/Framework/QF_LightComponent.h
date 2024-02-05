@@ -15,7 +15,6 @@ namespace QwerkE {
     {
     public:
         LightComponent();
-        ~LightComponent();
 
         eLightType GetType() { return m_Type; }
         vec3 GetColour() { return m_Colour; };

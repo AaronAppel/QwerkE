@@ -147,6 +147,9 @@ namespace QwerkE {
 	MIRROR_CLASS_END
 
 	// GameObject routines
+	MIRROR_CLASS_START(Routine)
+	MIRROR_CLASS_END
+
 	MIRROR_CLASS_START(RenderRoutine)
 	MIRROR_CLASS_END
 
@@ -167,9 +170,9 @@ namespace QwerkE {
 	MIRROR_CLASS_END
 
 	MIRROR_CLASS_START(Scene)
+	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_MEMBER(m_IsEnabled)
 	MIRROR_CLASS_MEMBER(m_IsPaused)
-	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_MEMBER(m_ID)
 	MIRROR_CLASS_MEMBER(m_CurrentCamera)
 	MIRROR_CLASS_MEMBER(m_CameraList)
@@ -186,8 +189,8 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_UpdateList)
 	// MIRROR_CLASS_MEMBER(m_BaseDrawListSize)
 	MIRROR_CLASS_MEMBER(m_DrawList)
-	MIRROR_CLASS_MEMBER(m_RenderOrder)
 	MIRROR_CLASS_MEMBER(m_Components)
+	MIRROR_CLASS_MEMBER(m_RenderOrder)
 	MIRROR_CLASS_END
 
 }

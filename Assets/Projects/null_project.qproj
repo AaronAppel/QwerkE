@@ -1,9 +1,8 @@
 {
-	"m_projectSettings":	[{
-			"projectName":	"Project1",
-			"assetsDirPath":	"Assets",
+	"ProjectSettings":	[{
+			"projectName":	"null",
+			"assetsDirPath":	"null",
 			"sceneFileNames":	[{
-					"0":	"null_scene.qscene"
-				}]
+			}]
 		}]
 }

@@ -6,7 +6,6 @@
 
 #include "QF_CameraComponent.h"
 #include "QF_Component.h"
-#include "QF_DataManager.h"
 #include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
@@ -192,15 +191,8 @@ namespace QwerkE {
             return;
         }
 
-        // DataManager::SaveScene(this, ScenesFolderPath(m_SceneFileName.c_str()));
-
-        // #TODO Error checking
-        cJSON* root = cJSON_CreateObject();
-        const Scene& sc = *this;
-        Serialization::SerializeObject(root, sc);
-        PrintRootObjectToFile(ScenesFolderPath(m_SceneFileName.c_str()), root);
+        Serialization::SerializeObjectToFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
-        ClosecJSONStream(root);
     }
 
     void Scene::LoadScene()

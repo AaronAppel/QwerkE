@@ -1,5 +1,5 @@
 {
-	"m_engineSettings":	[{
+	"EngineSettings":	[{
 			"windowWidthPixels":	1600,
 			"windowHeightPixels":	900,
 			"showFps":	true,

@@ -36,15 +36,6 @@ namespace QwerkE {
 
         void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
 
-        template <class T>
-        void DeserializeJsonToPointer(const cJSON* const jsonObj, T** addressOfPointer)
-        {
-            // #NOTE Assuming pointer '*' is dropped by caller using enum, so T is not the original pointer (1 level dereferenced)
-
-            *addressOfPointer = new T();
-            DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<T>(), *addressOfPointer);
-        }
-
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj);
         void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
         void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
@@ -138,13 +129,31 @@ namespace QwerkE {
         }
 
         template <class T>
-        void SerializeObjectToFile(const char* fileName, const T& objectReference)
+        void SerializeObjectToFile(const char* filePath, const T& objectReference)
         {
-            // #TODO Implement
+            if (!filePath)
+            {
+                LOG_ERROR("{0} Null file path given!", __FUNCTION__);
+                return;
+            }
+
+            cJSON* jsonRootObject = cJSON_CreateObject();
+            if (jsonRootObject)
+            {
+                cJSON* rootArray = CreateArray(Mirror::InfoForType<T>()->stringName.c_str());
+                // Serialization::SerializeObject(jsonRootObject, objectReference);
+                SerializeJsonObject(rootArray, Mirror::InfoForClass<T>(), (const void*)&objectReference);
+                AddItemToObject(jsonRootObject, rootArray);
+                PrintRootObjectToFile(filePath, jsonRootObject);
+                cJSON_Delete(jsonRootObject);
+            }
+            else
+            {
+                LOG_ERROR("{0} Unable to serialize object for path {1}!", __FUNCTION__, filePath);
+            }
         }
 
         cJSON* ConvertGameObjectToJSON(void* obj);
-        Component* AddComponentToGameObject(cJSON* item);
 
     }
 

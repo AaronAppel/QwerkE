@@ -134,15 +134,16 @@ namespace QwerkE {
         ClosecJSONStream(root);
     }
 
-    RenderComponent* LoadRenderComponentFromSchematic(const char* schematicPath) // load from file
+    RenderComponent* LoadRenderComponentFromSchematic(const char* schematicPath)
     {
         RenderComponent* rComp = new RenderComponent();
         LoadRenderComponentFromSchematic(schematicPath, rComp);
         return rComp;
     }
 
-    void LoadRenderComponentFromSchematic(const char* schematicPath, RenderComponent* renderComponent) // load from file
+    void LoadRenderComponentFromSchematic(const char* schematicPath, RenderComponent* renderComponent)
     {
+        // #TODO Use new Serialization methods
         cJSON* root = OpencJSONStream(schematicPath);
 
         if (root)

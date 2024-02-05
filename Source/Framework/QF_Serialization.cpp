@@ -1,11 +1,12 @@
 #include "QF_Serialization.h"
 
 #include "Libraries/cJSON/QC_cJSON.h"
+#include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_eKeys.h"
-#include "QF_DataManager.h"
 #include "QF_GameObject.h"
 #include "QF_Log.h"
+#include "QF_Material.h"
 #include "QF_Resources.h"
 
 #include "QF_RenderRoutine.h"
@@ -56,7 +57,8 @@ case MirrorTypes::ClassType: \
                 return;
             }
 
-            const std::vector<cJSON*>& jsonStructArr = GetAllItemsFromArray(objJson);
+            // #TODO To handle objects, we also need to GetAllItemsFromObject() in case there are siblings
+            const std::vector<cJSON*>& jsonStructArr = GetAllItemsFromArray(objJson); // #TODO Walk the linked list instead of creating a new, temp vector?
 
             if (jsonStructArr.size() != objClassInfo->fields.size())
             {
@@ -78,37 +80,43 @@ case MirrorTypes::ClassType: \
                     if (strcmp(field.name.c_str(), jsonStructArr[j]->string) != 0)
                         continue;
 
-                    bool shouldBreakForLoop = false;
                     switch (jsonStructArr[j]->type)
                     {
                     case cJSON_String:
                         DeserializeJsonString(jsonStructArr[j], field.type->enumType, (char*)obj + field.offset);
-                        shouldBreakForLoop = true;
                         break;
 
                     case cJSON_True:
                     case cJSON_False:
                     case cJSON_Number:
                         DeserializeJsonNumber(jsonStructArr[j], field.type->enumType, field.type->size, (char*)obj + field.offset);
-                        shouldBreakForLoop = true;
                         break;
 
                     case cJSON_Array:
                         DeserializeJsonArray(jsonStructArr[j], field, (char*)obj + field.offset);
-                        shouldBreakForLoop = true;
                         break;
 
                     case cJSON_Object:
+                        // #TODO Handle object logic?
+
                     case cJSON_NULL:
                     default:
                         LOG_WARN("{0} JSON type {1} not supported here!", __FUNCTION__, (int)jsonStructArr[j]->type);
                         break;
                     }
 
-                    if (shouldBreakForLoop)
-                        break;
+                    break; // Next field
                 }
             }
+        }
+
+        template <class T>
+        void DeserializeJsonToPointer(const cJSON* const jsonObj, T** addressOfPointer)
+        {
+            // #NOTE Assuming pointer '*' is dropped by caller using enum, so T is not the original pointer (1 level dereferenced)
+
+            *addressOfPointer = new T();
+            DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<T>(), *addressOfPointer);
         }
 
         template <class T>
@@ -135,6 +143,16 @@ case MirrorTypes::ClassType: \
         template <class T>
         void DeserializeVectorNonPointer(const cJSON* jsonObj, std::vector<T>* obj)
         {
+            // const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+            // if (typeInfo->IsPointer())
+            // {
+            //     // auto a = ;
+            // }
+            // else
+            // {
+            //     // auto a = ;
+            // }
+
             std::vector<T>* vectorPtr = (std::vector<T>*)obj;
             const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
             if (vectorPtr) // #TODO Validate null pointer value
@@ -143,9 +161,9 @@ case MirrorTypes::ClassType: \
                 vectorPtr->resize(0);
                 for (size_t i = 0; i < jsonObjectVector.size(); i++)
                 {
-                    T renderable;
-                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), &renderable);
-                    vectorPtr->push_back(renderable);
+                    T nonPointer;
+                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), &nonPointer);
+                    vectorPtr->push_back(nonPointer);
                 }
             }
         }
@@ -288,35 +306,6 @@ case MirrorTypes::ClassType: \
 
                         case Component_Render:
                             DeserializeJsonToPointer(jsonGameObjects[i], (RenderComponent**)obj);
-                            {
-                                int bp = 0;
-                                // const cJSON* renderables = GetItemFromArrayByKey(jsonGameObjects[i], "m_RenderableList");
-                                //
-                                // for (size_t i = 0; i < GetArraySize(renderables); i++)
-                                // {
-                                //     cJSON* renderableArray = GetItemFromArrayByIndex(renderables, i); // renderables->child->child;
-                                //
-                                //     Renderable renderable;
-                                //     renderable.SetRenderableName(renderableArray->string);
-                                //
-                                //     cJSON* shader = GetItemFromArrayByKey(renderableArray, "Shader");
-                                //     cJSON* material = GetItemFromArrayByKey(renderableArray, "Material");
-                                //     cJSON* meshFile = GetItemFromArrayByKey(renderableArray, "MeshFile");
-                                //     cJSON* meshName = GetItemFromArrayByKey(renderableArray, "MeshName");
-                                //
-                                //     renderable.SetShader(Resources::GetShaderProgram(shader->valuestring));
-                                //     renderable.SetMaterial(Resources::GetMaterial(material->valuestring));
-                                //
-                                //     // Load Mesh
-                                //     if (strcmp(meshFile->valuestring, no_file) == 0)
-                                //         renderable.SetMesh(Resources::GetMesh(meshName->valuestring));
-                                //     else
-                                //         renderable.SetMesh(Resources::GetMeshFromFile(meshFile->valuestring, meshName->valuestring));
-                                //
-                                //     RenderComponent* renderComponent = *(RenderComponent**)obj;
-                                //     renderComponent->AddRenderable(renderable);
-                                // }
-                            }
                             break;
 
                         case Component_Physics:
@@ -335,7 +324,7 @@ case MirrorTypes::ClassType: \
                         if (component)
                         {
                             eComponentTags componentTag = (eComponentTags)std::stoi(jsonGameObjects[i]->string);
-                            std::map<eComponentTags, Component*>& componentMapRef = *componentsMap;
+                            std::map<eComponentTags, Component*>& componentMapRef = *componentsMap; // #TODO BUG Look why map->insert({}) wasn't working with initializer list
                             componentMapRef[componentTag] = component;
                         }
                     }
@@ -532,10 +521,12 @@ case MirrorTypes::ClassType: \
                         SERIALIZE_CASE_FOR_CLASS(Transform)
                         SERIALIZE_CASE_FOR_CLASS(UserSettings)
                         SERIALIZE_CASE_FOR_CLASS(Vector3)
+                        SERIALIZE_CASE_FOR_CLASS(RenderRoutine)
+                        SERIALIZE_CASE_FOR_CLASS(TransformRoutine)
 
                     case MirrorTypes::m_vector_string:
                         {
-                            std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
+                            const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
                             if (strings)
                             {
                                 for (size_t i = 0; i < strings->size(); i++)
@@ -551,16 +542,143 @@ case MirrorTypes::ClassType: \
                         }
                         break;
 
+                    case MirrorTypes::m_vector_routinePtr:
+                        {
+                            const std::vector<Routine*>* routines = (std::vector<Routine*>*)((char*)obj + field.offset);
+                            if (routines)
+                            {
+                                for (size_t i = 0; i < routines->size(); i++)
+                                {
+                                    Routine* routine = routines->at(i);
+                                    cJSON* routineJson = CreateArray(std::to_string((int)routine->GetRoutineType()).c_str());
+
+                                    switch (routine->GetRoutineType())
+                                    {
+                                    case eRoutineTypes::Routine_Render:
+                                        Serialization::SerializeJsonObject(routineJson, Mirror::InfoForClass<RenderRoutine>(), routine);
+                                        break;
+
+                                    case eRoutineTypes::Routine_Print:
+                                        // Serialization::SerializeJsonObject(routineJson, Mirror::InfoForClass<PrintRoutine>(), routine);
+                                        break;
+
+                                    case eRoutineTypes::Routine_Transform:
+                                        Serialization::SerializeJsonObject(routineJson, Mirror::InfoForClass<TransformRoutine>(), routine);
+                                        break;
+
+                                    default:
+                                        LOG_WARN("{0} Unsupported routine type {1}!", __FUNCTION__, routine->GetRoutineType());
+                                        break;
+                                    }
+                                    AddItemToArray(arr, routineJson);
+                                }
+                            }
+                        }
+                        break;
+
                     case MirrorTypes::m_vector_gameobjectPtr:
                         {
-                            std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
+                            const std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
                             if (gameObjects)
                             {
                                 for (size_t i = 0; i < gameObjects->size(); i++)
                                 {
-                                    // AddItemToArray(arr, DataManager::ConvertGameObjectToJSON(gameObjects->at(i)));
-                                    AddItemToArray(arr, ConvertGameObjectToJSON(gameObjects->at(i)));
+                                    if (!gameObjects->at(i))
+                                        continue;
+
+                                    cJSON* t_ReturnJSON = CreateArray(gameObjects->at(i)->GetName().c_str());
+
+                                    SerializeJsonObject(t_ReturnJSON, Mirror::InfoForClass<GameObject>(), gameObjects->at(i));
+                                    AddItemToArray(arr, t_ReturnJSON);
                                 }
+                            }
+                        }
+                        break;
+
+                    case MirrorTypes::m_map_eComponentTags_componentPtr:
+                        {
+                            const std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)((char*)obj + field.offset);
+                            // #TODO Verify address is a valid map
+                            // #NOTE Using a reference as pointer caused exceptions when if checking the pointer
+
+                            for (auto var : components)
+                            {
+                                Component* component = var.second;
+
+                                if (!component) continue;
+
+                                cJSON* t_Component = CreateArray(std::to_string(component->GetTag()).c_str());
+
+                                switch (component->GetTag())
+                                {
+                                case Component_Camera:
+                                {
+                                    AddItemToArray(t_Component, CreateString("ComponentName", "Camera"));
+                                    eCamType camType = ((ComponentCamera*)component)->GetType();
+                                    AddItemToArray(t_Component, CreateNumber("m_Type", (int)camType));
+                                }
+                                break;
+
+                                case Component_Light:
+                                {
+                                    AddItemToArray(t_Component, CreateString("ComponentName", "Light"));
+                                    switch (((LightComponent*)component)->GetType())
+                                    {
+                                    case LightType_Point: // #TODO Finish implementation
+                                        // AddItemToArray(t_Component, CreateNumber("LightType", (int)LightType_Point));
+                                        //     "Red", ((LightComponent*)component)->GetColour().x,
+                                        //     "Green", ((LightComponent*)component)->GetColour().y,
+                                        // 	   "Blue", ((LightComponent*)component)->GetColour().z);
+                                        break;
+
+                                        // #TODO Implement other light types.
+                                    case LightType_Area:
+                                        break;
+                                    case LightType_Spot:
+                                        break;
+                                    }
+                                }
+                                break;
+
+                                case Component_Render:
+                                {
+                                    AddItemToArray(t_Component, CreateString("ComponentName", "Render"));
+                                    AddItemToArray(t_Component, CreateString("SchematicName", ((RenderComponent*)component)->GetSchematicName().c_str()));
+
+                                    cJSON* t_Renderables = CreateArray("m_RenderableList");
+
+                                    std::vector<Renderable>* renderablesList = (std::vector<Renderable>*) ((RenderComponent*)component)->LookAtRenderableList();
+
+                                    for (size_t i = 0; i < renderablesList->size(); i++)
+                                    {
+                                        // #TODO Set the renderable names
+                                        cJSON* renderable = CreateArray(renderablesList->at(i).GetRenderableName().c_str());
+
+                                        AddItemToArray(renderable, CreateString("m_RenderableName", renderablesList->at(i).GetRenderableName().c_str()));
+                                        AddItemToArray(renderable, CreateString("m_ShaderName", renderablesList->at(i).GetShader()->GetName().c_str()));
+                                        AddItemToArray(renderable, CreateString("m_MaterialName", renderablesList->at(i).GetMaterial()->GetMaterialName().c_str()));
+
+                                        if (strcmp(renderablesList->at(i).GetMesh()->GetFileName().c_str(), gc_DefaultCharPtrValue) != 0)
+                                            AddItemToArray(renderable, CreateString("m_MeshFileName", renderablesList->at(i).GetMesh()->GetFileName().c_str()));
+                                        else
+                                            AddItemToArray(renderable, CreateString("m_MeshFileName", no_file));
+
+                                        AddItemToArray(renderable, CreateString("m_MeshName", renderablesList->at(i).GetMesh()->GetName().c_str()));
+
+                                        AddItemToArray(t_Renderables, renderable);
+                                    }
+
+                                    AddItemToArray(t_Component, t_Renderables);
+                                }
+                                break;
+
+                                case Component_Physics:
+                                case Component_Controller:
+                                case Component_SkyBox:
+                                    // #TODO Implement component add
+                                    break;
+                                }
+                                AddItemToArray(arr, t_Component);
                             }
                         }
                         break;
@@ -623,20 +741,39 @@ case MirrorTypes::ClassType: \
                 }
                 break;
 
+            case MirrorTypes::m_float:
+                {
+                    float* numberAddress = (float*)((char*)obj + field.offset);
+                    AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                }
+                break;
+
             case MirrorTypes::m_int8_t:
             case MirrorTypes::m_int16_t:
             case MirrorTypes::m_int32_t:
-            case MirrorTypes::m_int64_t:
             case MirrorTypes::m_uint8_t:
             case MirrorTypes::m_uint16_t:
             case MirrorTypes::m_uint32_t:
-            case MirrorTypes::m_uint64_t:
             case MirrorTypes::m_int:
-            case MirrorTypes::m_float:
-            case MirrorTypes::m_double:
             case MirrorTypes::m_eSceneTypes:
+            case MirrorTypes::m_eGameObjectTags:
                 {
                     int* numberAddress = (int*)((char*)obj + field.offset);
+                    AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                }
+                break;
+
+            case MirrorTypes::m_int64_t:
+            case MirrorTypes::m_uint64_t:
+                {
+                    long long* numberAddress = (long long*)((char*)obj + field.offset);
+                    AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                }
+                break;
+
+            case MirrorTypes::m_double:
+                {
+                    double* numberAddress = (double*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                 }
                 break;

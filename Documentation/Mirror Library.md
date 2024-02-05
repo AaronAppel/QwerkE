@@ -93,6 +93,8 @@ Handling sub classes and casting pointers. Need to return a pointer, to the base
 Simple Example : Show the bare minimum struct with an int example, with serialization.
 Complex Example : Show nested structs, with collections and pointer types.
 
+Coolness :
+The order that fields are serialized in is defined when mirroring types, which means that the order can differ from code and be specific as the user chooses. Downside is that code re-ordering won't auto update (feature?), but that's only important if ordering matters to humans looking in data files. The code doesn't care about field ordering.
 
 Potential issues :
 - By instantiating objects and resolving them immediately, it is possible to create infinite loops if class A pointer is instantiated, then the class A object has a pointer to class B which is then instantiated, and in class B there is a pointer to class A, so the cycle repeats, infinitely. This only happens if the pointers are marked serializable, and serializing pointers is enabled.
