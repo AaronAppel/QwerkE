@@ -35,11 +35,43 @@ void ClosecJSONStream(const cJSON* root)
 	}
 }
 
+std::vector<cJSON*> GetAllSiblingsWithObject(const cJSON* cJSONObject)
+{
+	std::vector<cJSON*> returnList;
+	if (!cJSONObject)
+		return returnList;
+
+	cJSON* c = cJSONObject->next;
+	int size = 1;
+
+	while (c)
+	{
+		c = c->next;
+		size++;
+	}
+
+	returnList.reserve(size);
+
+	int it = 0;
+	returnList.push_back((cJSON*)cJSONObject);
+
+	c = cJSONObject->next;
+	while (c && it < size)
+	{
+		returnList.push_back(c);
+		c = c->next;
+		it;
+	}
+
+	return returnList;
+}
+
 std::vector<cJSON*> GetAllItemsFromObject(const cJSON* cJSONObject)
 {
 	int arraySize = GetObjectSize(cJSONObject);
 
 	std::vector<cJSON*> returnList;
+	returnList.reserve(arraySize);
 
 	for (int i = 0; i < arraySize; i++)
 	{

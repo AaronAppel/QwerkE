@@ -1,11 +1,12 @@
 {
-	"Name":	"sphere.osch",
-	"Renderables":	[{
+	"m_SchematicName":	"sphere.osch",
+	"m_Renderables":	[{
 		"Sphere": [{
-			"Shader":	"LitMaterial.ssch",
-			"Material":	"null_material.msch",
-			"MeshFile":	"Sphere.obj",
-			"MeshName": "Sphere"
+			"m_RenderableName": "null",
+			"m_Shader":	"LitMaterial.ssch",
+			"m_Material":	"null_material.msch",
+			"m_MeshFileName":	"Sphere.obj",
+			"m_MeshName": "Sphere.obj"
 			}]
 		}]
 }

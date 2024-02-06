@@ -1,11 +1,12 @@
 {
-	"Name":	"Cube.osch",
-	"Renderables":	[{
+	"m_SchematicName":	"Cube.osch",
+	"m_Renderables":	[{
 		"Cube": [{
-			"Shader":	"LitMaterial",
-			"Material":	"null_material.msch",
-			"MeshFile":	"Cube.obj",
-			"MeshName": "Cube"
+			"m_RenderableName": "null",
+			"m_Shader":	"LitMaterial",
+			"m_Material":	"null_material.msch",
+			"m_MeshFileName":	"Cube.obj",
+			"m_MeshName": "Cube.obj"
 			}]
 		}]
 }

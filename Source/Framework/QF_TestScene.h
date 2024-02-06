@@ -9,8 +9,6 @@ namespace QwerkE {
     public:
         TestScene();
 
-        void Update(float deltaTime);
-
         void Initialize();
     };
 

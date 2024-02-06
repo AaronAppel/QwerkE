@@ -6,6 +6,7 @@
 #include "QF_GraphicsHelpers.h"
 #include "QF_GameObject.h"
 #include "QF_RenderRoutine.h"
+#include "QF_Serialization_Schematics.h"
 
 #include "QF_Defines.h"
 
@@ -40,7 +41,7 @@ namespace QwerkE {
 
         t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShader());
 
-        m_RenderableList.push_back(t_Renderable);
+        m_Renderables.push_back(t_Renderable);
 
         if (m_pParent)
         {
@@ -54,17 +55,18 @@ namespace QwerkE {
     void RenderComponent::GenerateSchematic()
     {
         // TODO: Test
-        if (strcmp(m_SchematicName.c_str(), "None") == 0)
-            if (m_pParent)
-                m_SchematicName = m_pParent->GetName();
-        SaveObjectSchematic(this);
+        if (m_pParent && strcmp(m_SchematicName.c_str(), "None") == 0)
+        {
+            m_SchematicName = m_pParent->GetName();
+        }
+        Serialization::SaveObjectSchematic(this);
     }
 
     void RenderComponent::Activate()
     {
-        for (size_t i = 0; i < m_RenderableList.size(); i++)
+        for (size_t i = 0; i < m_Renderables.size(); i++)
         {
-            Renderable& renderable = m_RenderableList[i];
+            Renderable& renderable = m_Renderables[i];
             renderable.Initialize();
         }
     }
@@ -80,7 +82,7 @@ namespace QwerkE {
 
         t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShader());
 
-        m_RenderableList.push_back(t_Renderable);
+        m_Renderables.push_back(t_Renderable);
 
         if (m_pParent)
         {
@@ -101,34 +103,34 @@ namespace QwerkE {
             t_Renderable.SetMaterial(Resources::GetMaterial(null_material));
             t_Renderable.SetMesh(Resources::GetMesh(null_mesh));
 
-            m_RenderableList.push_back(t_Renderable);
+            m_Renderables.push_back(t_Renderable);
         }
     }
 
     void RenderComponent::AddRenderable(Renderable renderable)
     {
-        m_RenderableList.push_back(renderable);
+        m_Renderables.push_back(renderable);
     }
 
     void RenderComponent::SetNameAtIndex(unsigned int index, std::string name)
     {
         // TODO: More error handling
-        if (index < m_RenderableList.size())
+        if (index < m_Renderables.size())
         {
-            m_RenderableList[index].SetRenderableName(name);
+            m_Renderables[index].SetRenderableName(name);
         }
     }
 
     void RenderComponent::SetShaderAtIndex(unsigned int index, ShaderProgram* shader)
     {
         // TODO: More error handling
-        if (index < m_RenderableList.size() && shader != nullptr)
+        if (index < m_Renderables.size() && shader != nullptr)
         {
-            m_RenderableList[index].SetShader(shader);
+            m_Renderables[index].SetShader(shader);
 
-            if (m_RenderableList[index].GetMesh())
+            if (m_Renderables[index].GetMesh())
             {
-                m_RenderableList[index].GetMesh()->SetupShaderAttributes(shader);
+                m_Renderables[index].GetMesh()->SetupShaderAttributes(shader);
 
                 if (m_pParent)
                 {
@@ -144,9 +146,9 @@ namespace QwerkE {
     void RenderComponent::SetMaterialAtIndex(unsigned int index, Material* material)
     {
         // TODO: More error handling
-        if (index < m_RenderableList.size() && material != nullptr)
+        if (index < m_Renderables.size() && material != nullptr)
         {
-            m_RenderableList[index].SetMaterial(material);
+            m_Renderables[index].SetMaterial(material);
         }
         // TODO: Changing material will need to reset render routine in the future
     }
@@ -154,13 +156,13 @@ namespace QwerkE {
     void RenderComponent::SetMeshAtIndex(unsigned int index, Mesh* mesh)
     {
         // TODO: More error handling
-        if (index < m_RenderableList.size() && mesh != nullptr)
+        if (index < m_Renderables.size() && mesh != nullptr)
         {
-            m_RenderableList[index].SetMesh(mesh);
+            m_Renderables[index].SetMesh(mesh);
 
-            if (m_RenderableList[index].GetShader())
+            if (m_Renderables[index].GetShader())
             {
-                m_RenderableList[index].GetMesh()->SetupShaderAttributes(m_RenderableList[index].GetShader());
+                m_Renderables[index].GetMesh()->SetupShaderAttributes(m_Renderables[index].GetShader());
 
                 if (m_pParent)
                 {

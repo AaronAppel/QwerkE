@@ -68,12 +68,9 @@ namespace QwerkE {
                 break;
 
             default:
-
-                // LOG_ERROR("Unknown component type found!");
-
                 if (ImGui::CollapsingHeader("OtherComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
                 {
-                    ImGui::Text("#TODO Unhandled component type!");
+                    ImGui::Text("Unhandled component type");
                 }
                 break;
             }
@@ -130,6 +127,7 @@ namespace QwerkE {
                 {
                     rComp->SetMaterialAtIndex(m_RenderableIndex, Resources::GetMaterial(m_MatStrings[i]));
                 }
+
                 if (ImGui::IsItemClicked(1))
                 {
                     static bool materialEditor = true; // #TODO:
@@ -157,7 +155,7 @@ namespace QwerkE {
 
     void EditComponent::ShowRenderComponent(RenderComponent* renderComponent)
     {
-        if (ImGui::CollapsingHeader("RenderComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+        if (renderComponent && ImGui::CollapsingHeader("RenderComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
         {
             if (renderComponent->GetSchematicName().c_str())
             {
@@ -254,13 +252,20 @@ namespace QwerkE {
 
             // Shader uniforms and attributes
 
-            std::vector<Renderable>* renderablesList = renderComponent->GetRenderableList();
+            if (renderables->empty() && renderComponent->GetParent() && ImGui::Button("+Renderable"))
+            {
+                Renderable renderable;
+                static int uniqueId = 0; // #FEATURE F0004, F0003
+                renderable.SetRenderableName(std::to_string(uniqueId++));
+                renderComponent->AddRenderable(renderable);
+                renderComponent->Setup(null_shader, null_material, null_mesh);
+                // renderComponent->Activate();
+            }
 
-            if (renderablesList->size() <= m_RenderableIndex)
+            if (renderables->size() <= m_RenderableIndex)
                 return;
 
-            Renderable& renderable = renderablesList->at(m_RenderableIndex);
-
+            Renderable& renderable = renderables->at(m_RenderableIndex);
             const std::vector<std::string>* attributes = renderable.GetShader()->SeeAttributes();
             ImGui::Button("Attr");
             if (ImGui::IsItemHovered())

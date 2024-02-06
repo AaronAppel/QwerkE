@@ -21,7 +21,7 @@ namespace QwerkE {
         if (!scene)
             return nullptr;
 
-        GameObject* t_SkyBox = CreateGameObject(scene);
+        GameObject* t_SkyBox = new GameObject(scene);
         t_SkyBox->SetPosition(position);
         t_SkyBox->SetTag(GO_Tag_SkyBox);
         t_SkyBox->SetRenderOrder(-1);
@@ -58,8 +58,6 @@ namespace QwerkE {
         // Rendering //
         // AddModelComponentFromSchematic(t_Cube, "nanosuit.osch");
 
-        RenderComponent* rComp = new RenderComponent();
-
         Renderable renderable;
         renderable.SetMaterial(Resources::GetMaterial("brickwall.msch"));
         renderable.SetShader(Resources::GetShaderProgram("LitMaterialNormal.ssch"));
@@ -71,6 +69,7 @@ namespace QwerkE {
         Resources::AddMesh("Cube", mesh);
         renderable.SetMesh(mesh);
 
+        RenderComponent* rComp = new RenderComponent();
         rComp->AddRenderable(renderable);
 
         t_Cube->AddComponent(rComp);

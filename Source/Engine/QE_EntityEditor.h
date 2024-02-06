@@ -26,7 +26,7 @@ namespace QwerkE {
         GameObject* m_CurrentEntity = nullptr;
         EditComponent* m_EditComponent = nullptr;
 
-        std::vector<const char*> m_ListboxItemStrings = { "Renderable" };
+        std::vector<const char*> m_ListboxItemStrings = { "Render" };
         std::vector<eComponentTags> m_ListboxItemTypes = { eComponentTags::Component_Render };
     };
 

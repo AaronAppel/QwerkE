@@ -15,24 +15,6 @@ namespace QwerkE {
     // GLuint Duplicate2DTexture(GLuint handle, int w, int h, int x, int y); // #TODO Implement
     GLuint CopyFBOToTexture(FrameBufferObject& handle, int w, int h, int x = 0, int y = 0);
 
-    class RenderComponent;
-    void SaveObjectSchematic(RenderComponent* rComp);
-    RenderComponent* LoadRenderComponentFromSchematic(const char* schematicPath);
-    void LoadRenderComponentFromSchematic(const char* schematicPath, RenderComponent* renderComponent);
-
-    class Material;
-    void SaveMaterialSchematic(Material* material);
-    void LoadMaterialSchematic(const char* schematicPath, Material* material);
-    Material* LoadMaterialSchematic(const char* schematicPath);
-
-    class Model;
-    void SaveMaterialSchematic(Material* material);
-    Material* LoadMaterialSchematic(const char* schematicPath);
-
-    class ShaderProgram;
-    void SaveShaderSchematic(ShaderProgram* shader);
-    ShaderProgram* LoadShaderSchematic(const char* schematicPath);
-
     // #TODO Move to a better place
     // #TODO Pick a standard (input OR attribute)
     // Shader variable prefixes

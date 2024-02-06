@@ -5,8 +5,9 @@
 #include "QF_Factory.h"
 #include "QF_Mesh.h"
 #include "QF_MeshFactory.h"
-#include "QF_ShaderProgram.h"
 #include "QF_Resources.h"
+#include "QF_Serialization.h"
+#include "QF_ShaderProgram.h"
 
 namespace QwerkE {
 
@@ -17,28 +18,58 @@ namespace QwerkE {
 
     void PBR_Test1::Initialize() // #TODO Move to a data file
     {
-        // Load assets into Resources
         Resources::GetShaderProgram("PBR1.ssch");
         // Resources::GetShaderProgram("test_normal.ssch");
 
-        Factory::CreateFreeCamera(this, vec3(2, 0, -15))->SetRotation(vec3(0, 45, 0));
+        GameObject* newCamera = new GameObject(this);
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Camera.osch"), *newCamera);
+        newCamera->SetPosition(vec3(2, 0, -15));
+        newCamera->SetRotation(vec3(0, 45, 0));
+        newCamera->OnSceneLoaded(this);
+        this->AddCamera(newCamera);
         Scene::SetupCameras();
 
         for (int i = 0; i < 10; i++)
         {
-            Factory::CreateCube(this, vec3(i - 5, i - 5, i));
-            Factory::CreateSphere(this, vec3(i - 5, i - 5, i));
+            GameObject* newCube = new GameObject();
+            Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Cube_UVd.osch"), *newCube);
+            newCube->SetPosition(vec3(i - 5, i - 5, i));
+            this->AddObjectToScene(newCube);
+
+            GameObject* newSphere = new GameObject();
+            Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Sphere.osch"), *newSphere);
+            newSphere->SetPosition(vec3(i - 5, i - 5, i));
         }
 
-        GameObject* plane = Factory::CreatePlane(this, vec3(0, 0, 20));
+        GameObject* newGameObject = new GameObject();
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Plane.osch"), *newGameObject);
+        this->AddObjectToScene(newGameObject);
+
+        GameObject* plane = new GameObject();
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Plane.osch"), *plane);
+        plane->SetPosition(vec3(0, 0, 20));
         plane->SetScale(vec3(10, 10, 10));
         plane->SetRotation(vec3(90, 0, 0));
+        this->AddObjectToScene(plane);
 
-        m_Subjects.push_back(Factory::CreateCube(this, vec3(0, 0, -5)));
-        Factory::CreatePlane(this, vec3(2, 0, -5))->SetRotation(vec3(90, 0, 0));
-        m_Subjects.push_back(Factory::CreateSphere(this, vec3(-2, 0, -5)));
+        GameObject* plane2 = new GameObject();
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Plane.osch"), *plane2);
+        plane->SetPosition(vec3(2, 0, -5));
+        plane->SetRotation(vec3(90, 0, 0));
 
-        Factory::CreateLight(this, vec3(10, 5, -10));
+        GameObject* newLight = new GameObject(this);
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Light.osch"), *newLight);
+        newLight->SetPosition(vec3(2, 0, -5));
+        newLight->OnSceneLoaded(this);
+        this->AddLight(newLight);
+
+        GameObject* newCube = new GameObject();
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Cube_UVd.osch"), *newCube);
+        newCube->SetPosition(vec3(0, 0, -5));
+
+        GameObject* newSphere = new GameObject();
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Sphere.osch"), *newSphere);
+        newSphere->SetPosition(vec3(-2, 0, -5));
     }
 
     void PBR_Test1::Update(float deltatime)
@@ -54,7 +85,6 @@ namespace QwerkE {
                 const vec3 rotation2 = vec3(vec3(m_Subjects[i]->GetRotation().x, m_Subjects[i]->GetRotation().y - 360.0f, m_Subjects[i]->GetRotation().z));
                 m_Subjects[i]->SetRotation(rotation2);
             }
-
         }
     }
 

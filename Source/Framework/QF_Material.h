@@ -11,6 +11,7 @@
 #include "QF_FileUtilities.h"
 #include "QF_GraphicsHelpers.h"
 #include "QF_Texture.h"
+#include "QF_Serialization_Schematics.h"
 
 namespace QwerkE {
 
@@ -21,7 +22,7 @@ namespace QwerkE {
 
         Material(const char* materialSchematicPath)
         {
-            LoadMaterialSchematic(materialSchematicPath, this);
+            Serialization::LoadMaterialSchematic(materialSchematicPath, this);
         }
 
         Material(const std::map<eMaterialMaps, Texture*>& textures)

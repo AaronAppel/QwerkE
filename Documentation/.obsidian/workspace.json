@@ -37,14 +37,50 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e22470c293c77321",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Template.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1416d47c625950d9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "C2995 - Templating Error.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "126758e85eb5ca5e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -104,7 +140,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "ZZ Shared Vault Files ❗/Watched.md"
               }
             }
           }
@@ -147,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -159,7 +195,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,21 +221,25 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "bb509d665d0ed27c",
+  "active": "126758e85eb5ca5e",
   "lastOpenFiles": [
-    "Mirror Library.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
+    "QwerkE Standards/Always Return Constant Values.md",
+    "C2995 - Templating Error.md",
+    "Template.md",
+    "ZZ Shared Vault Files ❗/New Project Checklist.md",
+    "ZZ Shared Vault Files ❗/0 Overhead principle.md",
+    "README.md",
+    "Mirror Library.md",
     "Serializer.md",
     "QwerkE Standards/Namespaces and Domains.md",
     "QwerkE Standards/Indentation.md",
     "Pretend Blog Post.md",
     "Development/Feature Tickets/F0001 - Reflection.md",
     "cJSON.md",
-    "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "ZZ Shared Vault Files ❗/To Watch SimonDev.md",
     "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
-    "ZZ Shared Vault Files ❗/0 Overhead principle.md",
     "0 Overhead principle.md",
     "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
     "Development/Feature Tickets/F0005 - Null GameObject Data.md",
@@ -212,10 +252,6 @@
     "Development/Feature Tickets",
     "Development/Features/Scenes.md",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
-    "Solution Configuration/Library Configuration.md",
-    "ZZ Shared Vault Files ❗/To Read.md",
-    "Systems/Building.md",
-    "QwerkE Goals.md",
     "CPPList.h",
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",

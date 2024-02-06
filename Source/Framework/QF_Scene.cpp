@@ -161,6 +161,7 @@ namespace QwerkE {
         {
             m_pGameObjects[object->GetName()] = object;
             AddObjectToSceneDrawList(object);
+            object->OnSceneLoaded(this);
             return true;
         }
         return false;
@@ -203,7 +204,7 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::DeserializeObjectFromFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
+        Serialization::DeserializeJsonFromFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
 
         OnLoaded();
 

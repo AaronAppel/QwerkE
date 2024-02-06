@@ -24,6 +24,7 @@ namespace QwerkE {
     class Component;
     class GameObject;
     class Material;
+    class Model;
     class RenderComponent;
     class Routine;
     class ShaderProgram;
@@ -35,54 +36,23 @@ namespace QwerkE {
     namespace Serialization {
 
         void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
-
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj);
         void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
         void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
 
-        // #Unused
-        template <class T>
-        void DeserializeObject(const cJSON* fileRootJson, T& objectReference)
-        {
-            // Take a JSON object that may exist within a structure,
-            // write it's contents to the given objectReference.
-
-            if (!fileRootJson || fileRootJson->type == cJSON_NULL)
-            {
-                LOG_ERROR("{0} null JSON object passed!", __FUNCTION__);
-                return;
-            }
-
-            switch (fileRootJson->type)
-            {
-            case cJSON_False:
-            case cJSON_True:
-            case cJSON_Number:
-
-                break;
-
-            case cJSON_String:
-                {
-                    const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-                    DeserializeJsonString(fileRootJson, typeInfo->enumType, (char*)objectReference);
-                }
-                break;
-
-                case cJSON_Object:
-                    DeserializeJsonArrayToObject(fileRootJson->child, Mirror::InfoForClass<T>(), (void*)&objectReference);
-                    break;
-
-                case cJSON_Array:
-                    DeserializeJsonArrayToObject(fileRootJson, Mirror::InfoForClass<T>(), (void*)&objectReference);
-                    break;
-
-                default:
-                    break;
-            }
-        }
+        // template <class T>
+        // void DeserializeClassFromFile(const char* fileName, T& objectReference)
+        // {
+        //     const Mirror::ClassInfo* classInfo = Mirror::InfoForClass<T>();
+        //
+        //     for (size_t i = 0; i < classInfo->fields.size(); i++)
+        //     {
+        //         classInfo->fields.at(i);
+        //     }
+        // }
 
         template <class T>
-        void DeserializeObjectFromFile(const char* fileName, T& objectReference)
+        void DeserializeJsonFromFile(const char* fileName, T& objectReference)
         {
             if (!fileName)
             {

@@ -8,7 +8,7 @@ namespace QwerkE {
     class Model;
     struct VertexData;
 
-    namespace MeshFactory {
+    namespace MeshFactory { // #TODO Deprecate hard coded mesh data for mesh data in files
 
         /* OBJ loading */
         Mesh* ImportOBJMesh(const char* fileDirectory, vec3 objScale, vec2 UVScale, bool invertFaces);

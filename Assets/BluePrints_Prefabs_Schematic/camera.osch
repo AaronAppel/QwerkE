@@ -1,11 +1,34 @@
 {
-	"Name":	"camera.osch",
-	"Renderables":	[{
-		"Camera": [{
-			"Shader":	"LitMaterial.ssch",
-			"Material":	"null_material.msch",
-			"MeshFile":	"Camera.obj",
-			"MeshName":	"Camera"
+	"GameObject":	[{
+			"m_Name":	"Camera0",
+			"m_Tag":	1,
+			"m_Transform":	[{
+					"s_Position":	[{
+							"x":	0,
+							"y":	0,
+							"z":	-10
+						}],
+					"s_Rotation":	[{
+							"x":	0,
+							"y":	0,
+							"z":	0
+						}],
+					"s_Scale":	[{
+							"x":	1,
+							"y":	1,
+							"z":	1
+						}]
+				}],
+			"m_UpdateList":	[{
+			}],
+			"m_DrawList":	[{
+			}],
+			"m_Components":	[{
+					"1":	[{
+							"ComponentName":	"Camera",
+							"m_Type":	0
+						}]
+				}],
+			"m_RenderOrder":	50
 		}]
-	}]
 }

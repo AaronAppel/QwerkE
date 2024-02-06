@@ -8,6 +8,11 @@
 
 namespace QwerkE {
 
+    GameObject::GameObject()
+    {
+        Initialize();
+    }
+
     GameObject::GameObject(Scene* scene)
     {
         m_pScene = scene;
@@ -18,11 +23,6 @@ namespace QwerkE {
     {
         m_Transform.s_Position = position;
         m_pScene = scene; // TODO: Remove scene reference in GameObject
-        Initialize();
-    }
-
-    GameObject::GameObject()
-    {
         Initialize();
     }
 
@@ -278,11 +278,13 @@ namespace QwerkE {
     {
         m_Transform.s_Position = position;
         // TODO: Update direction vectors
+        int bp = 0;
         if (m_Components.find(Component_Physics) != m_Components.end())
         {
             // TODO: Update children or components. Could use listeners or callbacks.
             //((PhysicsComponent*)m_Components[Component_Physics])->SetTransform(vec2(m_Position.x, m_Position.z), m_Rotation.y);
         }
+        bp = 1;
     }
 
     void GameObject::SetRotation(vec3 rotation)

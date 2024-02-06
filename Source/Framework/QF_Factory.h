@@ -12,22 +12,9 @@ namespace QwerkE {
     class Scene;
     class RenderComponent;
 
-    class Factory
+    class Factory // #TODO Look to deprecate
     {
     public:
-
-        static GameObject* CreateCube(Scene* scene, vec3 position);
-        static GameObject* CreatePlane(Scene* scene, vec3 position);
-        static GameObject* CreateSphere(Scene* scene, vec3 position);
-        static GameObject* CreateObjectFromSchematic(const char* schematicName, Scene* scene, vec3 position);
-
-        static GameObject* CreateFreeCamera(Scene* scene, vec3 position);
-        static GameObject* CreateFirstPersonCamera(Scene* scene, vec3 position);
-        static GameObject* CreateThirdPersonCamera(Scene* scene, vec3 position);
-        static GameObject* CreateStaticCamera(Scene* scene, vec3 position);
-
-        static GameObject* CreateLight(Scene* scene, vec3 position);
-
         static GameObject* CreateSkyBox(Scene* scene, vec3 position);
 
         static GameObject* CreateNanosuit(Scene* scene, vec3 position);
@@ -36,11 +23,6 @@ namespace QwerkE {
 
     private:
         Factory() = default;
-        ~Factory() = default;
-
-        static GameObject* CreateGameObject(Scene* scene);
-        static GameObject* CreateGameObject(Scene* scene, vec3 position);
-        static GameObject* InternalCreateCamera(Scene* scene, vec3 position, eCamType camType);
 
         static RenderComponent* AddModelComponentFromSchematic(GameObject* entity, const char* objectRecipeName);
 

@@ -15,6 +15,7 @@
 #include "QF_RenderComponent.h"
 #include "QF_CameraComponent.h"
 #include "QF_Scene.h"
+#include "QF_Serialization.h"
 #include "QF_ViewerScene.h"
 #include "QF_Scenes.h"
 #include "QF_Resources.h"
@@ -40,9 +41,8 @@ namespace QwerkE {
 
         m_ViewerScene = new ViewerScene();
 
-        m_AssetTagPlane = Factory::CreatePlane(m_ViewerScene, vec3(2, -2, 10));
-        m_AssetTagPlane->SetRotation(vec3(90, 0, 0));
-        m_AssetTagPlane->SetScale(vec3(0.3f, 0.3f, 0.3f));
+        m_AssetTagPlane = new GameObject();
+        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Plane.osch"), *m_AssetTagPlane);
         m_ViewerScene->AddObjectToScene(m_AssetTagPlane);
 
         m_ViewerScene->Initialize();

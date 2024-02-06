@@ -8,10 +8,11 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_Scene.h"
-#include "QF_Scenes.h"
 #include "QF_GameObject.h"
 #include "QF_Factory.h"
+#include "QF_Scene.h"
+#include "QF_Scenes.h"
+#include "QF_Serialization.h"
 
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"
@@ -65,11 +66,22 @@ namespace QwerkE {
 							break;
 
 						case eSceneGraphCreateTypes::Light:
-							currentScene->AddLight(Factory::CreateLight(currentScene, vec3(0, 0, 0)));
+							{
+								GameObject* newLight = new GameObject(currentScene);
+								Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Light.osch"), *newLight);
+								newLight->OnSceneLoaded(currentScene);
+								currentScene->AddLight(newLight);
+							}
 							break;
 
 						case eSceneGraphCreateTypes::Camera:
-							currentScene->AddCamera(Factory::CreateFreeCamera(currentScene, vec3(0, 0, 0)));
+							{
+								GameObject* newCamera = new GameObject(currentScene);
+								Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Camera.osch"), *newCamera);
+								newCamera->SetPosition(vec3(0, 0, 0));
+								newCamera->OnSceneLoaded(currentScene);
+								currentScene->AddCamera(newCamera);
+							}
 							break;
 						}
 					}

@@ -71,9 +71,14 @@
 											"ComponentName":	"Light"
 										}],
 									"5":	[{
-											"ComponentName":	"Render",
-											"SchematicName":	"None",
-											"m_RenderableList":	[{
+											"m_Renderables":	[{
+													"null":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshFileName":	"null_mesh.obj",
+															"m_MeshName":	"null_mesh"
+														}]
 											}]
 										}]
 								}],
@@ -91,8 +96,8 @@
 											"z":	0
 										}],
 									"s_Rotation":	[{
-											"x":	1.125000,
-											"y":	1.125000,
+											"x":	85.125000,
+											"y":	85.125000,
 											"z":	0
 										}],
 									"s_Scale":	[{
@@ -127,9 +132,7 @@
 								}],
 							"m_Components":	[{
 									"5":	[{
-											"ComponentName":	"Render",
-											"SchematicName":	"None",
-											"m_RenderableList":	[{
+											"m_Renderables":	[{
 													"null":	[{
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",

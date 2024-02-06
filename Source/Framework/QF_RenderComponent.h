@@ -30,8 +30,8 @@ namespace QwerkE {
         void AddRenderable(Renderable renderable);
 
         std::string GetSchematicName() const { return m_SchematicName; }
-        std::vector<Renderable>* GetRenderableList() { return &m_RenderableList; } // #TODO Change to SeeRenderablesList()
-        const std::vector<Renderable>* SeeRenderableList() const { return &m_RenderableList; }
+        std::vector<Renderable>* GetRenderableList() { return &m_Renderables; } // #TODO Change to SeeRenderablesList()
+        const std::vector<Renderable>* SeeRenderableList() const { return &m_Renderables; }
 
         void SetSchematicName(std::string name) { m_SchematicName = name; }
         void SetNameAtIndex(unsigned int index, std::string name);
@@ -39,13 +39,13 @@ namespace QwerkE {
         void SetMaterialAtIndex(unsigned int index, Material* material);
         void SetMeshAtIndex(unsigned int index, Mesh* mesh);
 
-        const std::vector<Renderable>* LookAtRenderableList() { return &m_RenderableList; }
+        const std::vector<Renderable>* LookAtRenderableList() { return &m_Renderables; }
 
     private:
         MIRROR_PRIVATE_MEMBERS
 
         std::string m_SchematicName = "None";
-        std::vector<Renderable> m_RenderableList;
+        std::vector<Renderable> m_Renderables;
     };
 
 }

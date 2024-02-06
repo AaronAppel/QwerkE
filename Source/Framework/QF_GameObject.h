@@ -42,9 +42,9 @@ namespace QwerkE {
     class GameObject final
     {
     public:
+        GameObject();
         GameObject(Scene* scene);
         GameObject(Scene* scene, vec3 position);
-        GameObject();
         ~GameObject();
 
         void Update(double deltatime);

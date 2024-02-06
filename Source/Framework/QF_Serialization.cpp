@@ -33,7 +33,8 @@ namespace QwerkE {
 
     namespace Serialization {
 
-        typedef TransformRoutine* m_transformRoutinePtr;
+        // #TODO Could also remove logging and extra logic
+#define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
 
         // #TODO Create private (hidden from user) methods to handle individual reads and writes of types.
         // These methods can help reduce the indentation, and improve readability + debug-ability.
@@ -51,14 +52,11 @@ case MirrorTypes::ClassType: \
                 return;
             }
 
-            if (objJson->type != cJSON_Array)
+            std::vector<cJSON*> jsonStructArr = GetAllItemsFromArray(objJson); // #TODO Walk the linked list instead of creating a new, temp vector?
+            if (jsonStructArr.empty() && objJson->type != cJSON_Array)
             {
-                LOG_ERROR("{0} Only takes a JSON array! Type was {1}", __FUNCTION__, (int)objJson->type);
-                return;
+                jsonStructArr = GetAllSiblingsWithObject(objJson);
             }
-
-            // #TODO To handle objects, we also need to GetAllItemsFromObject() in case there are siblings
-            const std::vector<cJSON*>& jsonStructArr = GetAllItemsFromArray(objJson); // #TODO Walk the linked list instead of creating a new, temp vector?
 
             if (jsonStructArr.size() != objClassInfo->fields.size())
             {
@@ -73,13 +71,18 @@ case MirrorTypes::ClassType: \
 
                 // #TODO Consider starting j at i or index something higher than 0.
                 // Could rely on serialization order and use i, but not the safest option.
+                // #TODO Add/review breaks and/or continues to reduce extra iterations
+#if SERIALIZER_OPTIMIZATION_LEVEL > 0
+                for (size_t j = i; j < jsonStructArr.size(); j++)
+                {
+#else
                 for (size_t j = 0; j < jsonStructArr.size(); j++)
                 {
-                    // #TODO Add breaks and/or continues to reduce extra iterations
-
+#endif
+#if SERIALIZER_OPTIMIZATION_LEVEL < 2
                     if (strcmp(field.name.c_str(), jsonStructArr[j]->string) != 0)
                         continue;
-
+#endif
                     switch (jsonStructArr[j]->type)
                     {
                     case cJSON_String:
@@ -135,7 +138,7 @@ case MirrorTypes::ClassType: \
 
                     T* gameObject = new T();
                     DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), gameObject);
-                    vectorPtrPtr->push_back(gameObject);
+                    vectorPtrPtr->emplace_back(gameObject);
                 }
             }
         }
@@ -163,7 +166,7 @@ case MirrorTypes::ClassType: \
                 {
                     T nonPointer;
                     DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), &nonPointer);
-                    vectorPtr->push_back(nonPointer);
+                    vectorPtr->emplace_back(nonPointer);
                 }
             }
         }
@@ -184,6 +187,7 @@ case MirrorTypes::ClassType: \
                 break;
 
                 DESERIALIZE_CASE_FOR_CLASS(ProjectSettings)
+                DESERIALIZE_CASE_FOR_CLASS(RenderComponent)
                 DESERIALIZE_CASE_FOR_CLASS(SceneViewerData)
                 DESERIALIZE_CASE_FOR_CLASS(Transform)
                 DESERIALIZE_CASE_FOR_CLASS(UserSettings)
@@ -202,7 +206,7 @@ case MirrorTypes::ClassType: \
                             // #TODO This could be templated using the MirrorTypes enum if the function handles more than strings
                             // DeserializeJsonString(jsonObj, MirrorTypes::m_string, obj);
 
-                            strings->push_back(jsonStrings[i]->valuestring);
+                            strings->emplace_back(jsonStrings[i]->valuestring);
                         }
                     }
                     else
@@ -238,6 +242,8 @@ case MirrorTypes::ClassType: \
                         {
                         case eRoutineTypes::Routine_Render:
                             DeserializeJsonToPointer(jsonGameObjects[i], (RenderRoutine**)obj);
+                            break;
+
                         case eRoutineTypes::Routine_Print:
                             // DeserializeJsonToPointer(jsonGameObjects[i], (PrintRoutine**)obj);
                             break;
@@ -642,8 +648,8 @@ case MirrorTypes::ClassType: \
 
                                 case Component_Render:
                                 {
-                                    AddItemToArray(t_Component, CreateString("ComponentName", "Render"));
-                                    AddItemToArray(t_Component, CreateString("SchematicName", ((RenderComponent*)component)->GetSchematicName().c_str()));
+                                    // AddItemToArray(t_Component, CreateString("ComponentName", "Render"));
+                                    // AddItemToArray(t_Component, CreateString("SchematicName", ((RenderComponent*)component)->GetSchematicName().c_str()));
 
                                     cJSON* t_Renderables = CreateArray("m_RenderableList");
 
@@ -766,7 +772,7 @@ case MirrorTypes::ClassType: \
             case MirrorTypes::m_int64_t:
             case MirrorTypes::m_uint64_t:
                 {
-                    long long* numberAddress = (long long*)((char*)obj + field.offset);
+                    double* numberAddress = (double*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                 }
                 break;

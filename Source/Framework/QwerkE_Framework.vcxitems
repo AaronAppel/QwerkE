@@ -29,7 +29,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CameraComponent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Cameras.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debugger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_EventManager.cpp" />
@@ -50,7 +49,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Jobs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_KeyboardExtApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LightComponent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Lights.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LitMaterial.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Log.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MasterAssetList.cpp" />
@@ -78,12 +76,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scenes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Settings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderProgram.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderUtilities.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Shapes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_StaticCameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Testing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_TestScene.cpp" />
@@ -180,6 +178,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scenes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Settings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ShaderComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ShaderFactory.h" />

@@ -143,7 +143,7 @@ namespace QwerkE {
 
 	MIRROR_CLASS_START(RenderComponent)
 	MIRROR_CLASS_MEMBER(m_SchematicName)
-	MIRROR_CLASS_MEMBER(m_RenderableList)
+	MIRROR_CLASS_MEMBER(m_Renderables)
 	MIRROR_CLASS_END
 
 	// GameObject routines

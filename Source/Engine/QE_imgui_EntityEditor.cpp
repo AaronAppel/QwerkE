@@ -34,6 +34,7 @@ namespace QwerkE {
             m_ListboxItemTypes.push_back(eComponentTags::Component_SoundListener);
             m_ListboxItemTypes.push_back(eComponentTags::Component_SoundPlayer);
         }
+
         if (Settings::GetEngineSettings().physicsEnabled)
         {
             m_ListboxItemStrings.push_back("Physics");
@@ -139,8 +140,7 @@ namespace QwerkE {
                             renderable.SetMaterial(Resources::GetMaterial(null_material));
                             renderable.SetShader(Resources::GetShaderProgram(null_shader));
                             renderable.SetMesh(Resources::GetMesh(null_mesh));
-                            static int uniqueId = 0; // #FEATURE F0004
-                            // #FEATURE F0003
+                            static int uniqueId = 0; // #FEATURE F0004, F0003
                             renderable.SetRenderableName(std::to_string(uniqueId++));
 
                             RenderComponent* rComp = (RenderComponent*)m_CurrentEntity->GetComponent(Component_Render);
@@ -162,7 +162,7 @@ namespace QwerkE {
                         break;
 
                     case eComponentTags::Component_Physics:
-                        if (m_CurrentEntity->GetComponent(Component_Physics) == nullptr)
+                        if (Settings::GetEngineSettings().physicsEnabled && m_CurrentEntity->GetComponent(Component_Physics) == nullptr)
                         {
                             if (!Settings::GetEngineSettings().physicsEnabled)
                                 break;

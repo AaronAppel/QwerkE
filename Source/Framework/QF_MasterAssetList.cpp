@@ -150,11 +150,11 @@ namespace QwerkE {
 			// TODO: Handle null or corrupt data
 			if (FileExists(matName))
 			{
-				material = LoadMaterialSchematic(matName);
+				material = Serialization::LoadMaterialSchematic(matName);
 			}
 			else
 			{
-				material = LoadMaterialSchematic(TexturesFolderPath(matName));
+				material = Serialization::LoadMaterialSchematic(TexturesFolderPath(matName));
 			}
 		}
 		else
@@ -217,7 +217,7 @@ namespace QwerkE {
 	{
 		if (FileExists(schematicFile))
 		{
-			ShaderProgram* result = LoadShaderSchematic(schematicFile); // TODO: Free memory on error
+			ShaderProgram* result = Serialization::LoadShaderSchematic(schematicFile); // TODO: Free memory on error
 			if (result)
 			{
 				result->SetVertShader(GetShaderComponent(result->GetVertName().c_str(), eShaderComponentTypes::Vertex));

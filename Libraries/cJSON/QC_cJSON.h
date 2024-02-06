@@ -20,6 +20,7 @@ void ClosecJSONStream(const cJSON* root);
 void AddItemToRootOfFile(cJSON* object, char* filename);
 void PrintRootObjectToFile(const char* filename, cJSON* root);
 
+std::vector<cJSON*> GetAllSiblingsWithObject(const cJSON* cJSONObject);
 std::vector<cJSON*> GetAllItemsFromObject(const cJSON* cJSONObject);
 std::vector<cJSON*> GetItemsFromObjectByKey(cJSON* cJSONObject, const char* key);
 std::vector<cJSON*> GetItemsFromObjectByString(cJSON* cJSONObject, char* value);
