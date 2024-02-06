@@ -15,10 +15,6 @@
 
 #include "QF_LightComponent.h"
 #include "QF_CameraComponent.h"
-#include "QF_FirstPersonCameraComponent.h"
-#include "QF_FreeCameraComponent.h"
-#include "QF_StaticCameraComponent.h"
-#include "QF_ThirdPersonCameraComponent.h"
 
 #define no_file "None" // #TODO Consider coupling to cJSON logic and moving out of here
 
@@ -276,33 +272,7 @@ case MirrorTypes::ClassType: \
                         switch ((eComponentTags)std::stoi(jsonGameObjects[i]->string))
                         {
                         case Component_Camera:
-                            {
-                                eCamType camType = eCamType::CamType_FreeCam; // #TODO Get dynamically
-                                switch (camType)
-                                {
-                                case CamType_FreeCam:
-                                    DeserializeJsonToPointer(jsonGameObjects[i], (FreeCameraComponent**)obj);
-                                    break;
-
-                                case CamType_FirstPerson:
-                                    DeserializeJsonToPointer(jsonGameObjects[i], (FirstPersonCameraComponent**)obj);
-                                    break;
-
-                                case CamType_ThirdPerson:
-                                    DeserializeJsonToPointer(jsonGameObjects[i], (ThirdPersonCameraComponent**)obj);
-                                    break;
-
-                                case CamType_Static:
-                                    DeserializeJsonToPointer(jsonGameObjects[i], (StaticCameraComponent**)obj);
-                                    break;
-
-                                default:
-                                    LOG_WARN("{0} TODO", __FUNCTION__);
-                                    break;
-                                }
-                                ComponentCamera* t_pCamComp = *(ComponentCamera**)obj;
-                                t_pCamComp->SetType(camType); // #TODO Set in component constructor.
-                            }
+                            DeserializeJsonToPointer(jsonGameObjects[i], (ComponentCamera**)obj);
                             break;
 
                         case Component_Light:
@@ -618,65 +588,61 @@ case MirrorTypes::ClassType: \
                                 switch (component->GetTag())
                                 {
                                 case Component_Camera:
-                                {
                                     AddItemToArray(t_Component, CreateString("ComponentName", "Camera"));
-                                    eCamType camType = ((ComponentCamera*)component)->GetType();
-                                    AddItemToArray(t_Component, CreateNumber("m_Type", (int)camType));
-                                }
-                                break;
+                                    break;
 
                                 case Component_Light:
-                                {
-                                    AddItemToArray(t_Component, CreateString("ComponentName", "Light"));
-                                    switch (((LightComponent*)component)->GetType())
                                     {
-                                    case LightType_Point: // #TODO Finish implementation
-                                        // AddItemToArray(t_Component, CreateNumber("LightType", (int)LightType_Point));
-                                        //     "Red", ((LightComponent*)component)->GetColour().x,
-                                        //     "Green", ((LightComponent*)component)->GetColour().y,
-                                        // 	   "Blue", ((LightComponent*)component)->GetColour().z);
-                                        break;
+                                        AddItemToArray(t_Component, CreateString("ComponentName", "Light"));
+                                        switch (((LightComponent*)component)->GetType())
+                                        {
+                                        case LightType_Point: // #TODO Finish implementation
+                                            // AddItemToArray(t_Component, CreateNumber("LightType", (int)LightType_Point));
+                                            //     "Red", ((LightComponent*)component)->GetColour().x,
+                                            //     "Green", ((LightComponent*)component)->GetColour().y,
+                                            // 	   "Blue", ((LightComponent*)component)->GetColour().z);
+                                            break;
 
-                                        // #TODO Implement other light types.
-                                    case LightType_Area:
-                                        break;
-                                    case LightType_Spot:
-                                        break;
+                                            // #TODO Implement other light types.
+                                        case LightType_Area:
+                                            break;
+                                        case LightType_Spot:
+                                            break;
+                                        }
                                     }
-                                }
-                                break;
+                                    break;
 
                                 case Component_Render:
-                                {
-                                    // AddItemToArray(t_Component, CreateString("ComponentName", "Render"));
-                                    // AddItemToArray(t_Component, CreateString("SchematicName", ((RenderComponent*)component)->GetSchematicName().c_str()));
-
-                                    cJSON* t_Renderables = CreateArray("m_RenderableList");
-
-                                    std::vector<Renderable>* renderablesList = (std::vector<Renderable>*) ((RenderComponent*)component)->LookAtRenderableList();
-
-                                    for (size_t i = 0; i < renderablesList->size(); i++)
                                     {
-                                        // #TODO Set the renderable names
-                                        cJSON* renderable = CreateArray(renderablesList->at(i).GetRenderableName().c_str());
+                                        // AddItemToArray(t_Component, CreateString("ComponentName", "Render"));
+                                        // AddItemToArray(t_Component, CreateString("SchematicName", ((RenderComponent*)component)->GetSchematicName().c_str()));
 
-                                        AddItemToArray(renderable, CreateString("m_RenderableName", renderablesList->at(i).GetRenderableName().c_str()));
-                                        AddItemToArray(renderable, CreateString("m_ShaderName", renderablesList->at(i).GetShader()->GetName().c_str()));
-                                        AddItemToArray(renderable, CreateString("m_MaterialName", renderablesList->at(i).GetMaterial()->GetMaterialName().c_str()));
+                                        cJSON* t_Renderables = CreateArray("m_RenderableList");
 
-                                        if (strcmp(renderablesList->at(i).GetMesh()->GetFileName().c_str(), gc_DefaultCharPtrValue) != 0)
-                                            AddItemToArray(renderable, CreateString("m_MeshFileName", renderablesList->at(i).GetMesh()->GetFileName().c_str()));
-                                        else
-                                            AddItemToArray(renderable, CreateString("m_MeshFileName", no_file));
+                                        std::vector<Renderable>* renderablesList = (std::vector<Renderable>*) ((RenderComponent*)component)->LookAtRenderableList();
 
-                                        AddItemToArray(renderable, CreateString("m_MeshName", renderablesList->at(i).GetMesh()->GetName().c_str()));
+                                        for (size_t i = 0; i < renderablesList->size(); i++)
+                                        {
+                                            // #TODO Set the renderable names
+                                            cJSON* renderable = CreateArray(renderablesList->at(i).GetRenderableName().c_str());
 
-                                        AddItemToArray(t_Renderables, renderable);
+                                            AddItemToArray(renderable, CreateString("m_RenderableName", renderablesList->at(i).GetRenderableName().c_str()));
+                                            AddItemToArray(renderable, CreateString("m_ShaderName", renderablesList->at(i).GetShader()->GetName().c_str()));
+                                            AddItemToArray(renderable, CreateString("m_MaterialName", renderablesList->at(i).GetMaterial()->GetMaterialName().c_str()));
+
+                                            if (strcmp(renderablesList->at(i).GetMesh()->GetFileName().c_str(), gc_DefaultCharPtrValue) != 0)
+                                                AddItemToArray(renderable, CreateString("m_MeshFileName", renderablesList->at(i).GetMesh()->GetFileName().c_str()));
+                                            else
+                                                AddItemToArray(renderable, CreateString("m_MeshFileName", no_file));
+
+                                            AddItemToArray(renderable, CreateString("m_MeshName", renderablesList->at(i).GetMesh()->GetName().c_str()));
+
+                                            AddItemToArray(t_Renderables, renderable);
+                                        }
+
+                                        AddItemToArray(t_Component, t_Renderables);
                                     }
-
-                                    AddItemToArray(t_Component, t_Renderables);
-                                }
-                                break;
+                                    break;
 
                                 case Component_Physics:
                                 case Component_Controller:

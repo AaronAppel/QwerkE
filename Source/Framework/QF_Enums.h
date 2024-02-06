@@ -93,18 +93,6 @@ namespace QwerkE {
         Scene_Max,
     };
 
-    // Camera Types
-    enum eCamType : std::uint8_t // TODO: Hide from program?
-    {
-        CamType_FreeCam = 0,
-        CamType_FirstPerson,
-        CamType_ThirdPerson,
-        CamType_Static,
-
-        CamType_Max,
-        CamType_NULL
-    };
-
     // Light Types
     enum eLightType : std::uint8_t // TODO: Hide from program?
     {

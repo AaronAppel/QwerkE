@@ -61,24 +61,6 @@
     <Filter Include="Core\Scenes">
       <UniqueIdentifier>{028097ec-6c16-41bf-b118-4e0f7054955a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Scenes\Entities">
-      <UniqueIdentifier>{f6451e8c-49e0-40a2-ace9-3fca15ba58f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Scenes\Entities\Components">
-      <UniqueIdentifier>{8e8a1b82-1b50-4dea-8f11-4454e534cc4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Scenes\Entities\Components\Extended">
-      <UniqueIdentifier>{3ad3a386-4f22-474a-9215-bd156c4366ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Scenes\Entities\Components\Camera">
-      <UniqueIdentifier>{73282a44-7d91-42a5-b346-ef5565c16bcb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Scenes\Entities\Routines">
-      <UniqueIdentifier>{644a03a8-4cdf-424f-8e37-f0bd3de31253}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Scenes\Entities\Routines\Extended">
-      <UniqueIdentifier>{82b859d8-e8f9-41c0-becc-3a49e857dcc0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Time">
       <UniqueIdentifier>{5c478f77-d3f9-44cb-841e-110272dc0f83}</UniqueIdentifier>
     </Filter>
@@ -129,6 +111,24 @@
     </Filter>
     <Filter Include="Core\Serialization">
       <UniqueIdentifier>{ca99b5ba-ac0e-48c2-aeef-9f3b745bb605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities">
+      <UniqueIdentifier>{f6451e8c-49e0-40a2-ace9-3fca15ba58f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Components">
+      <UniqueIdentifier>{8e8a1b82-1b50-4dea-8f11-4454e534cc4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Components\Extended">
+      <UniqueIdentifier>{3ad3a386-4f22-474a-9215-bd156c4366ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Components\Camera">
+      <UniqueIdentifier>{73282a44-7d91-42a5-b346-ef5565c16bcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Routines">
+      <UniqueIdentifier>{644a03a8-4cdf-424f-8e37-f0bd3de31253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Entities\Routines\Extended">
+      <UniqueIdentifier>{82b859d8-e8f9-41c0-becc-3a49e857dcc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +213,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_TweenFuncs.cpp">
       <Filter>Core\Math\Tween</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_ValueChecking.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_VectorMathHelpers.cpp">
       <Filter>Core\Math</Filter>
     </ClCompile>
@@ -232,34 +229,22 @@
       <Filter>Core\Resources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_FreeCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_StaticCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_FirstPersonCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_ThirdPersonCameraComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+      <Filter>Core\Entities\Components\Camera</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LightComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderComponent.cpp">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_OpenAL_Component.cpp">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+      <Filter>Core\Entities\Components\Extended</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Component.cpp">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+      <Filter>Core\Entities\Components\Extended</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Framework.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_rkn_Main.cpp">
@@ -302,33 +287,24 @@
       <Filter>Debug\Debugger</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.cpp">
-      <Filter>Core\Scenes\Entities\Routines\Extended</Filter>
+      <Filter>Core\Entities\Routines\Extended</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_TransformRoutine.cpp">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
+      <Filter>Core\Entities\Routines</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderRoutineUtilities.cpp">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
+      <Filter>Core\Entities\Routines</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderRoutine.cpp">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
+      <Filter>Core\Entities\Routines</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_GameObject.cpp">
-      <Filter>Core\Scenes\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_TestScene.cpp">
-      <Filter>Core\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_ViewerScene.cpp">
-      <Filter>Core\Scenes</Filter>
+      <Filter>Core\Entities</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scene.cpp">
       <Filter>Core\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scenes.cpp">
-      <Filter>Core\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_PBR_Test1.cpp">
       <Filter>Core\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Time.cpp">
@@ -489,9 +465,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_TweenFuncs.h">
       <Filter>Core\Math\Tween</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ValueChecking.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_VectorMathHelpers.h">
       <Filter>Core\Math</Filter>
     </ClInclude>
@@ -508,40 +481,28 @@
       <Filter>Core\Resources</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_FreeCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_StaticCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ThirdPersonCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_FirstPersonCameraComponent.h">
-      <Filter>Core\Scenes\Entities\Components\Camera</Filter>
+      <Filter>Core\Entities\Components\Camera</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Component.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AudioComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LightComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PhysicsComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_RenderComponent.h">
-      <Filter>Core\Scenes\Entities\Components</Filter>
+      <Filter>Core\Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_OpenAL_Component.h">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+      <Filter>Core\Entities\Components\Extended</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Bullet3Component.h">
-      <Filter>Core\Scenes\Entities\Components\Extended</Filter>
+      <Filter>Core\Entities\Components\Extended</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerkE.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Framework.h" />
@@ -582,33 +543,24 @@
       <Filter>DataTypes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Routine.h">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
+      <Filter>Core\Entities\Routines</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.h">
-      <Filter>Core\Scenes\Entities\Routines\Extended</Filter>
+      <Filter>Core\Entities\Routines\Extended</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_TransformRoutine.h">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
+      <Filter>Core\Entities\Routines</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_RenderRoutine.h">
-      <Filter>Core\Scenes\Entities\Routines</Filter>
+      <Filter>Core\Entities\Routines</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_GameObject.h">
-      <Filter>Core\Scenes\Entities</Filter>
+      <Filter>Core\Entities</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scenes.h">
       <Filter>Core\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_TestScene.h">
-      <Filter>Core\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ViewerScene.h">
-      <Filter>Core\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scene.h">
-      <Filter>Core\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_PBR_Test1.h">
       <Filter>Core\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Time.h">
@@ -667,6 +619,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.h">
       <Filter>Core\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Math.h">
+      <Filter>Core\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

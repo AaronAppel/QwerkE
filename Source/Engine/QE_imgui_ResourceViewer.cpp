@@ -16,7 +16,6 @@
 #include "QF_CameraComponent.h"
 #include "QF_Scene.h"
 #include "QF_Serialization.h"
-#include "QF_ViewerScene.h"
 #include "QF_Scenes.h"
 #include "QF_Resources.h"
 #include "QF_Audio.h"
@@ -39,7 +38,8 @@ namespace QwerkE {
         m_FBO = new FrameBufferObject();
         m_FBO->Init();
 
-        m_ViewerScene = new ViewerScene();
+        m_ViewerScene = new Scene("TODO");
+        m_ViewerScene->SetSceneID(eSceneTypes::Scene_ViewerScene);
 
         m_AssetTagPlane = new GameObject();
         Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Plane.osch"), *m_AssetTagPlane);

@@ -16,13 +16,13 @@ namespace QwerkE {
     class Scenes;
     class GameObject;
 
-    class Scene // #TODO Move all scenes to files as data and declare Scene as final
+    class Scene final
     {
     public:
         Scene(const char* sceneFileName) { m_SceneFileName = sceneFileName; }
         virtual ~Scene();
 
-        virtual void Initialize() {} // #TODO Deprecate/combine with Load*() methods
+        virtual void Initialize(); // #TODO Deprecate/combine with Load*() methods
 
         void OnWindowResize(unsigned int width, unsigned int height);
 
@@ -61,6 +61,7 @@ namespace QwerkE {
         void SetIsEnabled(bool isEnabled) { m_IsEnabled = isEnabled; };
         void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; };
         void SetCurrentCamera(int camera) { m_CurrentCamera = camera; };
+        void SetSceneID(eSceneTypes sceneType) { m_ID = sceneType; }
 
         void ToggleIsPaused() { m_IsPaused = !m_IsPaused; };
 

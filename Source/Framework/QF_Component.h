@@ -13,9 +13,9 @@ namespace QwerkE {
     public:
         virtual ~Component() = default;
 
-        virtual void Reset() {};
-        virtual void Activate() {};
-        virtual void Deactivate() {};
+        virtual void Reset() { }
+        virtual void Activate() { }
+        virtual void Deactivate() { }
 
         GameObject* GetParent() { return m_pParent; };
         const GameObject* SeeParent() const { return m_pParent; };
@@ -25,7 +25,7 @@ namespace QwerkE {
         void SetComponentTag(eComponentTags a_Tag) { m_ComponentTag = a_Tag; };
 
     protected:
-        Component() { m_ComponentTag = Component_Null; };
+        Component() = default;
 
         MIRROR_PRIVATE_MEMBERS
 

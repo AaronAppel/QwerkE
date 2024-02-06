@@ -15,13 +15,8 @@
 
 #include "QF_Component.h"
 #include "QF_CameraComponent.h"
-#include "QF_RenderComponent.h"
-
-#include "QF_FirstPersonCameraComponent.h"
-#include "QF_FreeCameraComponent.h"
 #include "QF_LightComponent.h"
-#include "QF_StaticCameraComponent.h"
-#include "QF_ThirdPersonCameraComponent.h"
+#include "QF_RenderComponent.h"
 
 #include "QF_TransformRoutine.h"
 #include "QF_RenderRoutine.h"
@@ -126,19 +121,7 @@ namespace QwerkE {
 	MIRROR_CLASS_START(ComponentCamera)
 	MIRROR_CLASS_END
 
-	MIRROR_CLASS_START(FirstPersonCameraComponent)
-	MIRROR_CLASS_END
-
-	MIRROR_CLASS_START(FreeCameraComponent)
-	MIRROR_CLASS_END
-
 	MIRROR_CLASS_START(LightComponent)
-	MIRROR_CLASS_END
-
-	MIRROR_CLASS_START(StaticCameraComponent)
-	MIRROR_CLASS_END
-
-	MIRROR_CLASS_START(ThirdPersonCameraComponent)
 	MIRROR_CLASS_END
 
 	MIRROR_CLASS_START(RenderComponent)

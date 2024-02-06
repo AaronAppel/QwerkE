@@ -8,6 +8,7 @@
 #include "QF_Constants.h"
 #include "QF_Enums.h"
 #include "QF_Component.h"
+#include "QC_Vector.h"
 
 const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis and move to a better defines file
 
@@ -29,44 +30,31 @@ namespace QwerkE {
     class ComponentCamera : public Component
     {
     public:
-        virtual ~ComponentCamera();
+        ComponentCamera(vec3 position = vec3::Zero(), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
+        ~ComponentCamera();
 
         void Setup();
 
-        // Returns the view matrix calculated using Eular Angles and the LookAt Matrix
         const mat4* GetViewMatrix() const { return m_ViewMatrix; }
         const mat4* GetProjectionMatrix() const { return m_ProjMatrix; }
 
-        // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
-        virtual void ProcessKeyboard(eCamera_Movement direction, float deltaTime) = 0;
+        void ProcessKeyboard(eCamera_Movement direction, float deltaTime);
 
-        // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
-        virtual void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true) = 0;
-        void Rotate() {};
+        void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
+        void Rotate() {}; // #TODO Deprecate
 
-        // Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
-        virtual void ProcessMouseScroll(float yoffset);
+        void ProcessMouseScroll(float yoffset);
         void ZoomCamera(float yOffset) { ProcessMouseScroll(yOffset); };
 
-        // Calculates the front vector from the Camera's (updated) Eular Angles
-        virtual void UpdateCameraVectors(); // TODO: Think of making this pure virtual to create an abstract class
+        void UpdateCameraVectors();
 
-        /* Getters + Setters*/
-        // Getters
-        eCamType GetType() { return m_Type; };
-
-        // Setters
-        void SetType(eCamType type) { m_Type = type; };
         void SetTargetPosition(vec3 position);
         void SetViewportSize(vec2 size) { m_ViewportSize = size; UpdateCameraVectors(); };
 
     protected:
-        ComponentCamera(vec3 position = vec3::Zero(), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
         ComponentCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
         void UpdateParentPosition(vec3 m_Position);
-
-        eCamType m_Type = CamType_NULL;
 
         vec3 m_Position = vec3(0, 0, 0); // #TODO Deprecate position and use parent GameObject transform position
         vec3 m_Forward = vec3(0.0f, 0.0f, 1.0f);

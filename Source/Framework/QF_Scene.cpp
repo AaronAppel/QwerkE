@@ -6,6 +6,7 @@
 
 #include "QF_CameraComponent.h"
 #include "QF_Component.h"
+#include "QF_Factory.h"
 #include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
@@ -17,6 +18,61 @@ namespace QwerkE {
     Scene::~Scene()
     {
         UnloadScene();
+    }
+
+    void Scene::Initialize()
+    {
+        switch (m_ID)
+        {
+        case QwerkE::Scene_TestScene:
+            {
+                GameObject* newCamera = new GameObject(this);
+                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Camera.osch"), *newCamera);
+                newCamera->SetPosition(vec3(0, 0, 5));
+                newCamera->OnSceneLoaded(this);
+                this->AddCamera(newCamera);
+                Scene::SetupCameras();
+
+                GameObject* newGameObject = new GameObject(this);
+                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Nanosuit.osch"), *newGameObject);
+                newGameObject->SetPosition(vec3(0, -2, 30));
+                newGameObject->OnSceneLoaded(this);
+                this->AddCamera(newGameObject);
+
+                Factory::CreateTestCube(this, vec3(0, 0, 50));
+
+                GameObject* newLight = new GameObject(this);
+                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Light.osch"), *newLight);
+                newLight->SetPosition(vec3(0, 5, -10));
+                newLight->OnSceneLoaded(this);
+                this->AddLight(newLight);
+            }
+            break;
+
+        case QwerkE::Scene_ViewerScene:
+            {
+                GameObject* newCamera = new GameObject(this);
+                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Camera.osch"), *newCamera);
+                newCamera->SetPosition(vec3(0, 0, 5));
+                newCamera->OnSceneLoaded(this);
+                this->AddCamera(newCamera);
+                Scene::SetupCameras();
+
+                GameObject* newLight = new GameObject(this);
+                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Light.osch"), *newLight);
+                newLight->SetPosition(vec3(0, 0, -10));
+                newLight->OnSceneLoaded(this);
+                this->AddLight(newLight);
+            }
+            break;
+
+        case QwerkE::Scene_Max:
+        case QwerkE::Scene_Null:
+        case QwerkE::Scene_GameScene:
+        default:
+            LOG_WARN("{0} Scene type unsupported", __FUNCTION__);
+            break;
+        }
     }
 
     void Scene::OnWindowResize(unsigned int width, unsigned int height)

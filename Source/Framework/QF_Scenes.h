@@ -8,10 +8,9 @@ namespace QwerkE {
 
     class Scene;
 
-    class Scenes
+    class Scenes final
     {
     public:
-        Scenes() = default;
         ~Scenes();
 
         static void Initialize();
@@ -34,6 +33,8 @@ namespace QwerkE {
         static const std::map<eSceneTypes, Scene*>* LookAtScenes() { return &m_Scenes; };
 
     private:
+        Scenes() = default;
+
         static bool m_IsRunning;
         static Scene* m_CurrentScene;
         static std::map<eSceneTypes, Scene*> m_Scenes;

@@ -7,12 +7,9 @@
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
-#include "QF_PBR_Test1.h"
 #include "QF_Profile.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
-#include "QF_TestScene.h"
-#include "QF_ViewerScene.h"
 
 namespace QwerkE {
 

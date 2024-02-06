@@ -8,11 +8,7 @@
 #include "QF_TransformRoutine.h"
 #include "QF_RenderComponent.h"
 
-#include "QF_FirstPersonCameraComponent.h"
-#include "QF_FreeCameraComponent.h"
 #include "QF_LightComponent.h"
-#include "QF_StaticCameraComponent.h"
-#include "QF_ThirdPersonCameraComponent.h"
 
 // #TODO Make a note of key/value naming. Variable names should be used when possible.
 // This is safer when using string matching. For primitives and complex types, variable
