@@ -2635,6 +2635,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Framework\EnumInclude.h">
+      <Filter>Libraries\Mirror</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">

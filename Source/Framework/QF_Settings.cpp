@@ -23,7 +23,7 @@ namespace QwerkE {
 
     void Settings::SaveEngineSettings(/* #TODO Take in file path */)
     {
-        Serialization::SerializeObjectToFile(SettingsFolderPath(null_config), m_engineSettings);
+        Serialization::SerializeObjectToFile(m_engineSettings, SettingsFolderPath(null_config));
     }
 
     void Settings::SaveEngineSettings(const EngineSettings& engineSettings)
@@ -39,7 +39,7 @@ namespace QwerkE {
 
     void Settings::SaveProjectSettings()
     {
-        Serialization::SerializeObjectToFile(ProjectsFolderPath(null_project), m_projectSettings);
+        Serialization::SerializeObjectToFile(m_projectSettings, ProjectsFolderPath(null_project));
     }
 
     void Settings::LoadUserSettings(std::string userSettingsFilePath)
@@ -49,7 +49,7 @@ namespace QwerkE {
 
     void Settings::SaveUserSettings()
     {
-        Serialization::SerializeObjectToFile(SettingsFolderPath(null_preferences), m_userSettings);
+        Serialization::SerializeObjectToFile(m_userSettings, SettingsFolderPath(null_preferences));
     }
 
 }

@@ -1,10 +1,10 @@
 #include "QF_GameObject.h"
 
-#include "QF_Scene.h"
-#include "QF_Routine.h"
-#include "QF_Component.h"
 #include "QF_Bullet3Component.h"
+#include "QF_Component.h"
 #include "QF_Enums.h"
+#include "QF_Routine.h"
+#include "QF_Scene.h"
 
 namespace QwerkE {
 
@@ -28,46 +28,36 @@ namespace QwerkE {
 
     GameObject::~GameObject()
     {
-        // #TODO Properly deallocate components. Can't use iterator currently
-        // for (auto it = m_Components.begin(); it != m_Components.end(); it++)
-        // {
-        //     delete it->second;
-        // }
+        for (auto l_LoopVar : m_Components)
+        {
+            if (l_LoopVar.second)
+            {
+                delete l_LoopVar.second;
+                l_LoopVar.second = nullptr;
+            }
+        }
         m_Components.clear();
 
-        // for (auto l_LoopVar : m_Components)
-        // {
-        //     if (l_LoopVar.second)
-        //     {
-        //         delete l_LoopVar.second;
-        //         l_LoopVar.second = nullptr;
-        //         m_Components.erase(l_LoopVar.first);
-        //     }
-        // }
-        // m_Components.clear();
-
-        // #TODO Properly deallocate components. Can't use delete currently
-        // for (unsigned int i = 0; i < m_UpdateList.size(); i++)
-        // {
-        //     if (m_UpdateList.at(i))
-        //     {
-        //         m_UpdateList.at(i)->CleanUp();
-        //         delete m_UpdateList.at(i);
-        //         m_UpdateList.at(i) = nullptr;
-        //     }
-        // }
+        for (unsigned int i = 0; i < m_UpdateList.size(); i++)
+        {
+            if (m_UpdateList.at(i))
+            {
+                m_UpdateList.at(i)->CleanUp();
+                delete m_UpdateList.at(i);
+                m_UpdateList.at(i) = nullptr;
+            }
+        }
         m_UpdateList.clear();
 
-        // #TODO Properly deallocate components. Can't use delete currently
-        // for (unsigned int i = 0; i < m_DrawList.size(); i++)
-        // {
-        //     if (m_DrawList.at(i))
-        //     {
-        //         m_DrawList.at(i)->CleanUp();
-        //         delete m_DrawList.at(i);
-        //         m_DrawList.at(i) = nullptr;
-        //     }
-        // }
+        for (unsigned int i = 0; i < m_DrawList.size(); i++)
+        {
+            if (m_DrawList.at(i))
+            {
+                m_DrawList.at(i)->CleanUp();
+                delete m_DrawList.at(i);
+                m_DrawList.at(i) = nullptr;
+            }
+        }
         m_DrawList.clear();
     }
 
@@ -93,23 +83,6 @@ namespace QwerkE {
         {
             l_LoopVar->SetParent(this);
             l_LoopVar->Initialize(); // #TODO May want to remove
-        }
-    }
-
-    void GameObject::Initialize()
-    {
-        m_UpdateList.reserve(m_BaseUpdateListSize);
-        m_DrawList.reserve(m_BaseUpdateListSize);
-        return;
-
-        // #TODO Swap to pushing back later, but having a reserved size already instead
-        for (int i = 0; i < m_BaseUpdateListSize; i++)
-        {
-            m_UpdateList.push_back(nullptr); // fill for runtime
-        }
-        for (int i = 0; i < m_BaseDrawListSize; i++)
-        {
-            m_DrawList.push_back(nullptr); // fill for runtime
         }
     }
 
@@ -291,6 +264,12 @@ namespace QwerkE {
     {
         m_Transform.s_Rotation = rotation; // TODO: Cap rotation degrees to 360
         // TODO: Update direction vectors
+    }
+
+    void GameObject::Initialize()
+    {
+        m_UpdateList.reserve(m_BaseUpdateListSize);
+        m_DrawList.reserve(m_BaseUpdateListSize);
     }
 
 }

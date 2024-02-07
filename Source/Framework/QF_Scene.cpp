@@ -248,7 +248,7 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::SerializeObjectToFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
+        Serialization::SerializeObjectToFile(*this, ScenesFolderPath(m_SceneFileName.c_str()));
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
     }
 

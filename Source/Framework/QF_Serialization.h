@@ -2,13 +2,7 @@
 #include "Libraries/cJSON/QC_cJSON.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
-#include "QF_Log.h" // #TODO Remove
-#include "QF_Settings.h" // #TODO Remove
-
-#include "QF_TransformRoutine.h"
-#include "QF_RenderComponent.h"
-
-#include "QF_LightComponent.h"
+#include "QF_Log.h"
 
 // #TODO Make a note of key/value naming. Variable names should be used when possible.
 // This is safer when using string matching. For primitives and complex types, variable
@@ -16,36 +10,19 @@
 
 namespace QwerkE {
 
-    // class cJSON;
-    class Component;
-    class GameObject;
-    class Material;
-    class Model;
-    class RenderComponent;
-    class Routine;
-    class ShaderProgram;
-
     // #FEATURE F0001
     // #TODO Consider splitting out to a new library. Maybe call it Serializer, or something cool.
     // Have it stand on it's own, but also be extensible to new types, libraries, and formats.
     // Probably needs to depend on Mirror, but keep them otherwise separate.
+
+     // #TODO Mirror support for vectors, maps, and other collections
+
     namespace Serialization {
 
         void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj);
         void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
         void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
-
-        // template <class T>
-        // void DeserializeClassFromFile(const char* fileName, T& objectReference)
-        // {
-        //     const Mirror::ClassInfo* classInfo = Mirror::InfoForClass<T>();
-        //
-        //     for (size_t i = 0; i < classInfo->fields.size(); i++)
-        //     {
-        //         classInfo->fields.at(i);
-        //     }
-        // }
 
         template <class T>
         void DeserializeJsonFromFile(const char* fileName, T& objectReference)
@@ -56,9 +33,7 @@ namespace QwerkE {
                 return;
             }
 
-            // #TODO Handle different file extensions?
-            cJSON* rootJsonObject = OpencJSONStream(fileName);
-            if (rootJsonObject)
+            if (cJSON* rootJsonObject = OpencJSONStream(fileName)) // #TODO Handle different file extensions?
             {
                 const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
                 if (!rootJsonObject->child)
@@ -83,11 +58,10 @@ namespace QwerkE {
             }
         }
 
-        // #TODO Swap argument order to make deserialize and serialize a little more visually different to work with
-        void SerializeJsonObject(cJSON* objJson, const Mirror::ClassInfo* objClassInfo, const void* obj);
+        void SerializeJsonObject(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson);
 
         template <class T>
-        void SerializeObject(cJSON* objJson, const T& obj)
+        void SerializeObject(const T& obj, cJSON* objJson)
         {
             cJSON* arr = CreateArray(Mirror::InfoForType<T>()->stringName.c_str());
             SerializeJsonObject(arr, Mirror::InfoForClass<T>(), (const void*)&obj);
@@ -95,7 +69,7 @@ namespace QwerkE {
         }
 
         template <class T>
-        void SerializeObjectToFile(const char* filePath, const T& objectReference)
+        void SerializeObjectToFile(const T& objectReference, const char* filePath)
         {
             if (!filePath)
             {
@@ -103,12 +77,10 @@ namespace QwerkE {
                 return;
             }
 
-            cJSON* jsonRootObject = cJSON_CreateObject();
-            if (jsonRootObject)
+            if (cJSON* jsonRootObject = cJSON_CreateObject())
             {
                 cJSON* rootArray = CreateArray(Mirror::InfoForType<T>()->stringName.c_str());
-                // Serialization::SerializeObject(jsonRootObject, objectReference);
-                SerializeJsonObject(rootArray, Mirror::InfoForClass<T>(), (const void*)&objectReference);
+                SerializeJsonObject((const void*)&objectReference, Mirror::InfoForClass<T>(), rootArray);
                 AddItemToObject(jsonRootObject, rootArray);
                 PrintRootObjectToFile(filePath, jsonRootObject);
                 cJSON_Delete(jsonRootObject);
@@ -118,8 +90,6 @@ namespace QwerkE {
                 LOG_ERROR("{0} Unable to serialize object for path {1}!", __FUNCTION__, filePath);
             }
         }
-
-        cJSON* ConvertGameObjectToJSON(void* obj);
 
     }
 

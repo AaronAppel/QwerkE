@@ -1,6 +1,8 @@
 
-#include <vector>
+#include <stdint.h>
 #include <string>
+#include <map>
+#include <vector>
 
 #include "Libraries/Mirror/Source/Mirror.h"
 #include "Libraries/Mirror/Source/MirrorTypes.h"
@@ -18,6 +20,7 @@
 #include "QF_LightComponent.h"
 #include "QF_RenderComponent.h"
 
+#include "QF_Routine.h"
 #include "QF_TransformRoutine.h"
 #include "QF_RenderRoutine.h"
 
@@ -36,6 +39,16 @@ namespace QwerkE {
 	typedef QwerkE::eKeys eKeys;
 	MIRROR_TYPE(eKeys)
 
+	// Pointers
+	typedef Routine* m_routinePtr;
+	MIRROR_TYPE(m_routinePtr)
+
+	typedef RenderRoutine* m_renderRoutinePtr;
+	MIRROR_TYPE(m_renderRoutinePtr)
+
+	typedef TransformRoutine* m_transformRoutinePtr; // #TODO Needed?
+	MIRROR_TYPE(m_transformRoutinePtr)
+
 	// Vectors
 	typedef std::vector<std::string> m_vector_string;
 	MIRROR_TYPE(m_vector_string)
@@ -52,13 +65,6 @@ namespace QwerkE {
 	// Maps
 	typedef std::map<eComponentTags, Component*> m_map_eComponentTags_componentPtr;
 	MIRROR_TYPE(m_map_eComponentTags_componentPtr)
-
-	// Pointers
-	typedef RenderRoutine* m_renderRoutinePtr;
-	MIRROR_TYPE(m_renderRoutinePtr)
-
-	typedef TransformRoutine* m_transformRoutinePtr; // #TODO Needed?
-	MIRROR_TYPE(m_transformRoutinePtr)
 
 	// Structs
 	MIRROR_CLASS_START(Vector3)

@@ -8,13 +8,15 @@
 #include "QF_Log.h"
 #include "QF_Material.h"
 #include "QF_Resources.h"
+#include "QF_Settings.h"
 
 #include "QF_RenderRoutine.h"
 #include "QF_Routine.h"
 #include "QF_TransformRoutine.h"
 
-#include "QF_LightComponent.h"
 #include "QF_CameraComponent.h"
+#include "QF_LightComponent.h"
+#include "QF_RenderComponent.h"
 
 #define no_file "None" // #TODO Consider coupling to cJSON logic and moving out of here
 
@@ -31,6 +33,7 @@ namespace QwerkE {
 
         // #TODO Could also remove logging and extra logic
 #define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
+        // #TODO Could also set a flag to new objects in zero'd memory so memory window is clearer to read
 
         // #TODO Create private (hidden from user) methods to handle individual reads and writes of types.
         // These methods can help reduce the indentation, and improve readability + debug-ability.
@@ -110,59 +113,74 @@ case MirrorTypes::ClassType: \
         }
 
         template <class T>
-        void DeserializeJsonToPointer(const cJSON* const jsonObj, T** addressOfPointer)
+        T* DeserializeSubclassPointer(const cJSON* jsonObj)
         {
-            // #NOTE Assuming pointer '*' is dropped by caller using enum, so T is not the original pointer (1 level dereferenced)
+            T* indexPtrAddress = nullptr;
 
-            *addressOfPointer = new T();
-            DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<T>(), *addressOfPointer);
+            switch (Mirror::InfoForType<T>()->enumType)
+            {
+            case MirrorTypes::Routine:
+                switch ((eRoutineTypes)std::stoi(jsonObj->string))
+                {
+                case eRoutineTypes::Routine_Render:
+                    {
+                        indexPtrAddress = new RenderRoutine();
+                        DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<RenderRoutine>(), indexPtrAddress);
+                    }
+                    break;
+
+                case eRoutineTypes::Routine_Print:
+                    // indexPtrAddress = new PrintRoutine();
+                    // DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<PrintRoutine>(), indexPtrAddress);
+                    break;
+                case eRoutineTypes::Routine_Transform:
+                    {
+                        indexPtrAddress = new TransformRoutine();
+                        DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<TransformRoutine>(), indexPtrAddress);
+                    }
+                    break;
+                }
+                break;
+
+            default:
+                break;
+            }
+
+            return indexPtrAddress;
         }
 
         template <class T>
-        void DeserializeVectorPointer(const cJSON* jsonObj, std::vector<T>** obj) // #TODO Handle vector of primitives (no class type info)
+        void DeserializeVector(const cJSON* jsonObj, void* obj)
         {
-            std::vector<T*>* vectorPtrPtr = (std::vector<T*>*)obj;
+            typedef std::remove_pointer_t<T> AbsoluteTypeT;
+
             const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
-            if (vectorPtrPtr) // #TODO Validate null pointer value
+
+            if (std::is_pointer_v<T>)
             {
+                std::vector<AbsoluteTypeT*>* vectorPtrPtr = (std::vector<AbsoluteTypeT*>*)obj; // #TODO Review if possible to validate pointer value
                 vectorPtrPtr->reserve(jsonObjectVector.size());
                 vectorPtrPtr->resize(0);
+
                 for (size_t i = 0; i < jsonObjectVector.size(); i++)
                 {
-                    // #TODO Swap to new method
-                    // DeserializeJsonToPointer(jsonObjectVector[i], (T**)obj);
+                    AbsoluteTypeT* objectPtr = new AbsoluteTypeT();
 
-                    T* gameObject = new T();
-                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), gameObject);
-                    vectorPtrPtr->emplace_back(gameObject);
+                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), objectPtr);
+                    vectorPtrPtr->push_back(objectPtr);
                 }
             }
-        }
-
-        template <class T>
-        void DeserializeVectorNonPointer(const cJSON* jsonObj, std::vector<T>* obj)
-        {
-            // const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-            // if (typeInfo->IsPointer())
-            // {
-            //     // auto a = ;
-            // }
-            // else
-            // {
-            //     // auto a = ;
-            // }
-
-            std::vector<T>* vectorPtr = (std::vector<T>*)obj;
-            const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
-            if (vectorPtr) // #TODO Validate null pointer value
+            else
             {
-                vectorPtr->reserve(jsonObjectVector.size());
-                vectorPtr->resize(0);
+                std::vector<AbsoluteTypeT>* vectorPtrPtr = (std::vector<AbsoluteTypeT>*)obj; // #TODO Review if possible to validate pointer value
+                vectorPtrPtr->reserve(jsonObjectVector.size());
+                vectorPtrPtr->resize(0);
+
                 for (size_t i = 0; i < jsonObjectVector.size(); i++)
                 {
-                    T nonPointer;
-                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<T>(), &nonPointer);
-                    vectorPtr->emplace_back(nonPointer);
+                    AbsoluteTypeT objectInstance;
+                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), &objectInstance);
+                    vectorPtrPtr->push_back(objectInstance);
                 }
             }
         }
@@ -191,6 +209,9 @@ case MirrorTypes::ClassType: \
 
             case MirrorTypes::m_vector_string:
                 {
+                    // DeserializeVector<std::string>(jsonObj, obj); // #TODO Find out why std::string type is not supported
+                    // return;
+
                     std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj);
                     const std::vector<cJSON*> jsonStrings = GetAllItemsFromArray(jsonObj);
                     if (strings)
@@ -212,46 +233,34 @@ case MirrorTypes::ClassType: \
                 }
                 break;
 
-            case MirrorTypes::m_vector_gameobjectPtr:
-                DeserializeVectorPointer(jsonObj, (std::vector<GameObject>**)obj);
+            case MirrorTypes::m_vector_renderable:
+                DeserializeVector<Renderable>(jsonObj, obj);
                 break;
 
-            case MirrorTypes::m_vector_renderable:
-                DeserializeVectorNonPointer(jsonObj, (std::vector<Renderable>*)obj);
+            case MirrorTypes::m_vector_gameobjectPtr:
+                DeserializeVector<GameObject*>(jsonObj, obj);
                 break;
 
             case MirrorTypes::m_vector_routinePtr:
             {
+                // DeserializeVector<Routine*>(jsonObj, obj); // #TODO Handle sub class type construction
+                // return;
+
                 std::vector<Routine*>* routines = (std::vector<Routine*>*)obj;
                 const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
                 if (routines) // #TODO Validate null pointer value
                 {
                     routines->reserve(jsonGameObjects.size());
                     routines->resize(0);
+
                     for (size_t i = 0; i < jsonGameObjects.size(); i++)
                     {
-                        // #TODO Handle sub class instantiation
+                        Routine* indexPtrAddress = (Routine*)routines->data() + i;
+                        indexPtrAddress = DeserializeSubclassPointer<Routine>(jsonGameObjects[i]);
 
-                        eRoutineTypes type = (eRoutineTypes)std::stoi(jsonGameObjects[i]->string);
-
-                        switch (type)
+                        if (indexPtrAddress)
                         {
-                        case eRoutineTypes::Routine_Render:
-                            DeserializeJsonToPointer(jsonGameObjects[i], (RenderRoutine**)obj);
-                            break;
-
-                        case eRoutineTypes::Routine_Print:
-                            // DeserializeJsonToPointer(jsonGameObjects[i], (PrintRoutine**)obj);
-                            break;
-                        case eRoutineTypes::Routine_Transform:
-                            DeserializeJsonToPointer(jsonGameObjects[i], (TransformRoutine**)obj);
-                            break;
-                        }
-
-                        Routine* routine = *(Routine**)obj;
-                        if (routine)
-                        {
-                            routines->push_back(routine);
+                            routines->push_back(indexPtrAddress);
                         }
                     }
                 }
@@ -265,23 +274,33 @@ case MirrorTypes::ClassType: \
                 if (componentsMap)
                 {
                     componentsMap->clear();
+
+                    Component* component = nullptr;
                     for (size_t i = 0; i < jsonGameObjects.size(); i++)
                     {
-                        // Component* component = AddComponentToGameObject(jsonGameObjects[i]);
+                        eComponentTags componentTag = (eComponentTags)std::stoi(jsonGameObjects[i]->string);
+                        if (componentsMap->find(componentTag) != componentsMap->end())
+                        {
+                            LOG_ERROR("{0} Found duplicated key {1} in map!", __FUNCTION__, (int)componentTag);
+                            continue;
+                        }
 
                         switch ((eComponentTags)std::stoi(jsonGameObjects[i]->string))
                         {
                         case Component_Camera:
-                            DeserializeJsonToPointer(jsonGameObjects[i], (ComponentCamera**)obj);
+                            component = new ComponentCamera();
+                            DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<ComponentCamera>(), component);
                             break;
 
                         case Component_Light:
-                            DeserializeJsonToPointer(jsonGameObjects[i], (LightComponent**)obj);
-                            (*(LightComponent**)obj)->SetColour(vec3(1.0f, 1.0f, 1.0f));
+                            component = new LightComponent();
+                            DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<LightComponent>(), component);
+                            ((LightComponent*)component)->SetColour(vec3(1.0f, 1.0f, 1.0f));
                             break;
 
                         case Component_Render:
-                            DeserializeJsonToPointer(jsonGameObjects[i], (RenderComponent**)obj);
+                            component = new RenderComponent();
+                            DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<RenderComponent>(), component);
                             break;
 
                         case Component_Physics:
@@ -296,10 +315,8 @@ case MirrorTypes::ClassType: \
                             break;
                         }
 
-                        Component* component = *(Component**)obj;
                         if (component)
                         {
-                            eComponentTags componentTag = (eComponentTags)std::stoi(jsonGameObjects[i]->string);
                             std::map<eComponentTags, Component*>& componentMapRef = *componentsMap; // #TODO BUG Look why map->insert({}) wasn't working with initializer list
                             componentMapRef[componentTag] = component;
                         }
@@ -374,51 +391,6 @@ case MirrorTypes::ClassType: \
             }
         }
 
-        // #Unused
-        template <class T>
-        void DeserializeJsonToCollection(const cJSON* jsonObj, const MirrorTypes type, void* obj)
-        {
-            // Handle collection specific logic like iterating over the JSON list, calling
-            // creation method recursively.
-
-            std::vector<T>* objectVectorPtr = (std::vector<T>*)((char*)obj);
-            const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
-            if (objectVectorPtr) // #TODO Validate null pointer value
-            {
-                objectVectorPtr->reserve(jsonObjectVector.size());
-                for (size_t i = 0; i < jsonObjectVector.size(); i++)
-                {
-                    // T routine = AddRoutineToGameObject(jsonObjectVector[i]);
-                    // if (routine)
-                    // {
-                    //     objectVectorPtr->push_back(routine);
-                    // }
-                }
-            }
-        }
-
-        // #Unused
-        void _DeserializeJsonToPointer(const cJSON* jsonObj, const MirrorTypes type, void* obj)
-        {
-            // #TODO Define the proper way to handle memory deallocation
-            // #TODO Look at templating the type to be type-agnostic
-
-            // #NOTE This method instantiates the type as a new object
-            switch (type)
-            {
-            case MirrorTypes::m_charPtr:
-            case MirrorTypes::m_constCharPtr:
-                {
-                    char** fieldAddress = (char**)((char*)obj);
-                    *fieldAddress = (char*)_strdup(jsonObj->valuestring);
-                }
-                break;
-
-            default:
-                break;
-            }
-        }
-
         void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj)
         {
             if (!jsonObj || !jsonObj->valuestring || (jsonObj->type != cJSON_String) || !obj)
@@ -459,14 +431,38 @@ case MirrorTypes::ClassType: \
             }
         }
 
-        void SerializeField(cJSON* objJson, const Mirror::Field& field, const void* obj);
+        void SerializeField(const void* obj, const Mirror::Field& field, cJSON* objJson);
+
+        template <class T>
+        void SerializeVector(void* obj, cJSON* objJson)
+        {
+            typedef std::remove_pointer_t<T> AbsoluteTypeT;
+
+            if (std::is_pointer_v<T>)
+            {
+                const std::vector<AbsoluteTypeT*>* vectorPtrPtr = (std::vector<AbsoluteTypeT*>*)obj; // #TODO Review if possible to validate pointer value
+
+                for (size_t i = 0; i < vectorPtrPtr->size(); i++)
+                {
+                    if (!vectorPtrPtr->at(i))
+                        continue;
+
+                    cJSON* newJsonObjectArray = CreateArray(vectorPtrPtr->at(i)->GetName().c_str());
+                    SerializeJsonObject(vectorPtrPtr->at(i), Mirror::InfoForClass<AbsoluteTypeT>(), newJsonObjectArray);
+                    AddItemToArray(objJson, newJsonObjectArray);
+                }
+            }
+            else
+            {
+            }
+        }
 
 #define SERIALIZE_CASE_FOR_CLASS(ClassType) \
 case MirrorTypes::ClassType: \
-    SerializeJsonObject(arr, Mirror::InfoForClass<ClassType>(), (char*)obj + field.offset); \
+    SerializeJsonObject((char*)obj + field.offset, Mirror::InfoForClass<ClassType>(), arr); \
     break; \
 
-        void SerializeJsonObject(cJSON* objJson, const Mirror::ClassInfo* objClassInfo, const void* obj)
+        void SerializeJsonObject(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson)
         {
             if (!objJson || !objClassInfo || !obj)
             {
@@ -489,7 +485,7 @@ case MirrorTypes::ClassType: \
                     switch (field.type->enumType)
                     {
                     case MirrorTypes::EngineSettings: // SERIALIZE_CASE_FOR_CLASS(EngineSettings)
-                        SerializeJsonObject(arr, Mirror::InfoForClass<EngineSettings>(), (char*)obj + field.offset);
+                        SerializeJsonObject((char*)obj + field.offset, Mirror::InfoForClass<EngineSettings>(), arr);
                         break;
 
                         SERIALIZE_CASE_FOR_CLASS(ProjectSettings)
@@ -531,15 +527,15 @@ case MirrorTypes::ClassType: \
                                     switch (routine->GetRoutineType())
                                     {
                                     case eRoutineTypes::Routine_Render:
-                                        Serialization::SerializeJsonObject(routineJson, Mirror::InfoForClass<RenderRoutine>(), routine);
+                                        Serialization::SerializeJsonObject(routine, Mirror::InfoForClass<RenderRoutine>(), routineJson);
                                         break;
 
                                     case eRoutineTypes::Routine_Print:
-                                        // Serialization::SerializeJsonObject(routineJson, Mirror::InfoForClass<PrintRoutine>(), routine);
+                                        // Serialization::SerializeJsonObject(routine, Mirror::InfoForClass<PrintRoutine>(), routineJson);
                                         break;
 
                                     case eRoutineTypes::Routine_Transform:
-                                        Serialization::SerializeJsonObject(routineJson, Mirror::InfoForClass<TransformRoutine>(), routine);
+                                        Serialization::SerializeJsonObject(routine, Mirror::InfoForClass<TransformRoutine>(), routineJson);
                                         break;
 
                                     default:
@@ -553,6 +549,8 @@ case MirrorTypes::ClassType: \
                         break;
 
                     case MirrorTypes::m_vector_gameobjectPtr:
+                        // SerializeVector<GameObject*>((void*)((char*)obj + field.offset), arr); // #TODO Test
+                        // return;
                         {
                             const std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
                             if (gameObjects)
@@ -562,10 +560,9 @@ case MirrorTypes::ClassType: \
                                     if (!gameObjects->at(i))
                                         continue;
 
-                                    cJSON* t_ReturnJSON = CreateArray(gameObjects->at(i)->GetName().c_str());
-
-                                    SerializeJsonObject(t_ReturnJSON, Mirror::InfoForClass<GameObject>(), gameObjects->at(i));
-                                    AddItemToArray(arr, t_ReturnJSON);
+                                    cJSON* gameObjectArray = CreateArray(gameObjects->at(i)->GetName().c_str());
+                                    SerializeJsonObject(gameObjects->at(i), Mirror::InfoForClass<GameObject>(), gameObjectArray);
+                                    AddItemToArray(arr, gameObjectArray);
                                 }
                             }
                         }
@@ -662,12 +659,12 @@ case MirrorTypes::ClassType: \
                 }
                 else
                 {
-                    SerializeField(objJson, field, obj); // #TODO Replace with field agnostic function
+                    SerializeField(obj, field, objJson); // #TODO Replace with field agnostic function
                 }
             }
         }
 
-        void SerializeField(cJSON* objJson, const Mirror::Field& field, const void* obj)
+        void SerializeField(const void* obj, const Mirror::Field& field, cJSON* objJson)
         {
             if (!objJson || !obj)
             {

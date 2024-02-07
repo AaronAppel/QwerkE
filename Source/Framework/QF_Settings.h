@@ -14,7 +14,7 @@ namespace QwerkE {
         const char* assetsDirPath = gc_DefaultStringValue;
 
         // Referenced Scenes
-        std::vector<std::string> sceneFileNames; // #TODO Mirror support for vectors
+        std::vector<std::string> sceneFileNames;
 
         // struct ConfiguredGameKeys
         // {

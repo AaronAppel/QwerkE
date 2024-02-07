@@ -10,9 +10,6 @@
     <Filter Include="Core\Audio">
       <UniqueIdentifier>{bce20d9a-af1a-4367-b71a-f146b4e187ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\DataManager">
-      <UniqueIdentifier>{ada24758-a855-4b40-a452-b35c683db07e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Events">
       <UniqueIdentifier>{1b82044a-1a00-42dd-aa5d-7799b6ea7b91}</UniqueIdentifier>
     </Filter>
@@ -130,6 +127,9 @@
     <Filter Include="Core\Entities\Routines\Extended">
       <UniqueIdentifier>{82b859d8-e8f9-41c0-becc-3a49e857dcc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Settings">
+      <UniqueIdentifier>{ada24758-a855-4b40-a452-b35c683db07e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Audio.cpp">
@@ -212,9 +212,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_TweenFuncs.cpp">
       <Filter>Core\Math\Tween</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_VectorMathHelpers.cpp">
-      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsWorld.cpp">
       <Filter>Core\Physics</Filter>
@@ -332,7 +329,7 @@
       <Filter>Core\Window</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Settings.cpp">
-      <Filter>Core\DataManager</Filter>
+      <Filter>Core\Settings</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
       <Filter>Core\Serialization</Filter>
@@ -464,9 +461,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_TweenFuncs.h">
       <Filter>Core\Math\Tween</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_VectorMathHelpers.h">
-      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Network.h">
       <Filter>Core\Network</Filter>
@@ -612,7 +606,7 @@
       <Filter>Core\Window</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Settings.h">
-      <Filter>Core\DataManager</Filter>
+      <Filter>Core\Settings</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
       <Filter>Core\Serialization</Filter>

@@ -19,6 +19,22 @@ namespace QwerkE {
 			return value;
 		}
 
+		template <typename T>
+		inline T ClampRollover(T min, T value, T max)
+		{
+			auto range = max - min;
+
+			if (value < min)
+			{
+				return value + range;
+			}
+			else if (value > max)
+			{
+				return value - range;
+			}
+			return value;
+		}
+
 	}
 
 }
