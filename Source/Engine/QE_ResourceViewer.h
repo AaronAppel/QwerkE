@@ -52,7 +52,6 @@ namespace QwerkE {
         void RenderModelThumbnails();
 
         GameObject* m_ModelToDraw = nullptr;
-        GameObject* m_AssetTagPlane = nullptr;
         Scene* m_ViewerScene = nullptr;
     };
 

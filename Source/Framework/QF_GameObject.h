@@ -42,7 +42,7 @@ namespace QwerkE {
     class GameObject final
     {
     public:
-        GameObject();
+        GameObject() = default;
         GameObject(Scene* scene);
         GameObject(Scene* scene, vec3 position);
         ~GameObject();
@@ -59,7 +59,6 @@ namespace QwerkE {
         bool AddUpdateRoutine(Routine* routine);
         void AddDrawRoutine(Routine* routine);
 
-        void Reset();
         void Activate();
         void Deactivate();
 
@@ -104,9 +103,7 @@ namespace QwerkE {
 
         Transform m_Transform;
 
-        int m_BaseUpdateListSize = 0; // TODO: make use of these of delete
         std::vector<Routine*> m_UpdateList;
-        int m_BaseDrawListSize = 0;
         std::vector<Routine*> m_DrawList;
         int m_RenderOrder = 100;
 

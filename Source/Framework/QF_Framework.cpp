@@ -48,7 +48,7 @@ namespace QwerkE {
 			//Serialization::DeserializeObjectFromFile("A:/GitHub/QwerkE/Assets/Scenes/gameobject.qtest", a);
 
 			Settings::LoadEngineSettings(engineSettingsPath);
-			Settings::LoadProjectSettings(ProjectsFolderPath(null_project));
+			Settings::LoadProjectSettings(ProjectsFolderPath("Project1.qproj"));
 			Settings::LoadUserSettings(SettingsFolderPath(null_preferences));
 
 			const EngineSettings& engineSettings = Settings::GetEngineSettings();
@@ -103,6 +103,7 @@ namespace QwerkE {
 
 		eOperationResult Framework::TearDown()
         {
+			Scenes::Shutdown();
             EventManager::Shutdown();
 			Window::Shutdown();
 			Log::Shutdown();

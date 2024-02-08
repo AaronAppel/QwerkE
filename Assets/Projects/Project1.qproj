@@ -1,63 +1,10 @@
 {
-	"ProjectName":	"Project1",
-	"AssetsRoot":	"Assets",
-	
-	"Framework": [{
-		"QuickLoad":	1,
-		"MaxConcurrentThreadCount":	10
-	}],
-	
-	"Plugins":	[{
-			"pluginID":	"PluginName"
-		}],
-		
-	"UI":	[{	
-	
-			"MenuBar": [{
-					"ShowFPS": 1,
-				}],
-			
-			"Layout": [{
-				"SceneViewer": [{
-					"Position": [{
-						"LeftX": 0,
-						"BottomY": 0
-					}],
-					"Fullscreen": 0
-				}]				
+	"ProjectSettings":	[{
+			"projectName":	"Project1",
+			"assetsDirPath":	"null",
+			"sceneFileNames":	[{
+				"0": "null_scene.qscene",
+				"1": "Test.qscene"
 			}]
 		}]
-		
-	"Scenes":	[{
-			"Empty":	[{
-				"SceneFileName":	"Empty.qscene",
-				"Enabled":	1,
-				"Order": 0
-			}],
-			"Test":	[{
-				"SceneFileName":	"TestScene.qscene",
-				"Enabled":	0,
-				"Order": 0
-			}]
-		}],
-		
-	"SceneViewer":	[{
-			"MaxEnabledScenes":	1,
-			"MaxDisplayedScenes":	4,
-			"ViewDistance": 100
-		}],
-		
-	"SystemStates":	[{
-			"AudioEnabled":	0,
-			"DebuggingEnabled":	1,
-			"JobManagerMultiThreadedEnabled":	1,
-			"LoggingEnabled":	1,
-			"NetworkingEnabled":	0,
-			"PhysicsEnabled":	0
-		}],
-		
-	"ConfiguredGameKeys":	[{
-			"Action1": "k"
-			"ResetScene": "ctrl+r"
-		}]
-}		
+}

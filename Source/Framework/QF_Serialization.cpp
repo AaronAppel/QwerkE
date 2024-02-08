@@ -20,10 +20,7 @@
 
 #define no_file "None" // #TODO Consider coupling to cJSON logic and moving out of here
 
-// #TODO Review how arrays are handled. Are they left empty when they have no instances, and
-// more specifically, are their child arrays left empty? May as well skip empty child arrays
-// to reduce extra file data and parsing, unless a need arises for searching through countless
-// empty arrays in a cJSON file tree structure.
+#define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
 
 // #TODO Look at removing from QwerkE namespace, or have a #using QwerkE just in this .cpp.
 // Helps with porting to a stand alone library, and encourages type indifference/independence
@@ -31,19 +28,13 @@ namespace QwerkE {
 
     namespace Serialization {
 
-        // #TODO Could also remove logging and extra logic
-#define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
-        // #TODO Could also set a flag to new objects in zero'd memory so memory window is clearer to read
+        void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj);
+        void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
+        void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
 
-        // #TODO Create private (hidden from user) methods to handle individual reads and writes of types.
-        // These methods can help reduce the indentation, and improve readability + debug-ability.
+        void SerializeField(const void* obj, const Mirror::Field& field, cJSON* objJson);
 
-#define DESERIALIZE_CASE_FOR_CLASS(ClassType) \
-case MirrorTypes::ClassType: \
-    DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<ClassType>(), obj); \
-    break; \
-
-        void DeserializeJsonArrayToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
+        void DeserializeJsonToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
         {
             if (!objJson || !objClassInfo || !obj)
             {
@@ -59,18 +50,13 @@ case MirrorTypes::ClassType: \
 
             if (jsonStructArr.size() != objClassInfo->fields.size())
             {
-                int breakPoint = 0;
-                // LOG_WARN("{0} Mismatched array sizes for class {1} ", __FUNCTION__, Mirror::InfoForType(objClassInfo)->stringName.c_str());
-                // LOG_WARN("{0} Mismatched array sizes for class {1} ", __FUNCTION__, objClassInfo->type->stringName.c_str());
+                LOG_WARN("{0} Mismatched array sizes for json object {1} ", __FUNCTION__, objJson->string);
             }
 
             for (size_t i = 0; i < objClassInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objClassInfo->fields[i];
 
-                // #TODO Consider starting j at i or index something higher than 0.
-                // Could rely on serialization order and use i, but not the safest option.
-                // #TODO Add/review breaks and/or continues to reduce extra iterations
 #if SERIALIZER_OPTIMIZATION_LEVEL > 0
                 for (size_t j = i; j < jsonStructArr.size(); j++)
                 {
@@ -99,8 +85,6 @@ case MirrorTypes::ClassType: \
                         break;
 
                     case cJSON_Object:
-                        // #TODO Handle object logic?
-
                     case cJSON_NULL:
                     default:
                         LOG_WARN("{0} JSON type {1} not supported here!", __FUNCTION__, (int)jsonStructArr[j]->type);
@@ -113,7 +97,7 @@ case MirrorTypes::ClassType: \
         }
 
         template <class T>
-        T* DeserializeSubclassPointer(const cJSON* jsonObj)
+        T* DeserializeSubclassPointer(const cJSON* jsonObj) // #TODO Look to handle sub classes more elegantly
         {
             T* indexPtrAddress = nullptr;
 
@@ -125,18 +109,18 @@ case MirrorTypes::ClassType: \
                 case eRoutineTypes::Routine_Render:
                     {
                         indexPtrAddress = new RenderRoutine();
-                        DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<RenderRoutine>(), indexPtrAddress);
+                        DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<RenderRoutine>(), indexPtrAddress);
                     }
                     break;
 
                 case eRoutineTypes::Routine_Print:
                     // indexPtrAddress = new PrintRoutine();
-                    // DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<PrintRoutine>(), indexPtrAddress);
+                    // DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<PrintRoutine>(), indexPtrAddress);
                     break;
                 case eRoutineTypes::Routine_Transform:
                     {
                         indexPtrAddress = new TransformRoutine();
-                        DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<TransformRoutine>(), indexPtrAddress);
+                        DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<TransformRoutine>(), indexPtrAddress);
                     }
                     break;
                 }
@@ -166,7 +150,7 @@ case MirrorTypes::ClassType: \
                 {
                     AbsoluteTypeT* objectPtr = new AbsoluteTypeT();
 
-                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), objectPtr);
+                    DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), objectPtr);
                     vectorPtrPtr->push_back(objectPtr);
                 }
             }
@@ -179,11 +163,16 @@ case MirrorTypes::ClassType: \
                 for (size_t i = 0; i < jsonObjectVector.size(); i++)
                 {
                     AbsoluteTypeT objectInstance;
-                    DeserializeJsonArrayToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), &objectInstance);
+                    DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), &objectInstance);
                     vectorPtrPtr->push_back(objectInstance);
                 }
             }
         }
+
+#define DESERIALIZE_CASE_FOR_CLASS(ClassType) \
+case MirrorTypes::ClassType: \
+    DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<ClassType>(), obj); \
+    break; \
 
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
         {
@@ -193,11 +182,10 @@ case MirrorTypes::ClassType: \
                 return;
             }
 
-            // This method calls DeserializeJsonArrayToObject but with the type explicitly expressed
             switch (field.type->enumType)
             {
             case MirrorTypes::EngineSettings: // DESERIALIZE_CASE_FOR_CLASS(EngineSettings)
-                DeserializeJsonArrayToObject(jsonObj, Mirror::InfoForClass<EngineSettings>(), obj);
+                DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<EngineSettings>(), obj);
                 break;
 
                 DESERIALIZE_CASE_FOR_CLASS(ProjectSettings)
@@ -285,22 +273,28 @@ case MirrorTypes::ClassType: \
                             continue;
                         }
 
+                        cJSON* child = jsonGameObjects[i]->child;
+                        if (!child || !child->child)
+                        {
+
+                        }
+
                         switch ((eComponentTags)std::stoi(jsonGameObjects[i]->string))
                         {
                         case Component_Camera:
                             component = new ComponentCamera();
-                            DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<ComponentCamera>(), component);
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<ComponentCamera>(), component);
                             break;
 
                         case Component_Light:
                             component = new LightComponent();
-                            DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<LightComponent>(), component);
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<LightComponent>(), component);
                             ((LightComponent*)component)->SetColour(vec3(1.0f, 1.0f, 1.0f));
                             break;
 
                         case Component_Render:
                             component = new RenderComponent();
-                            DeserializeJsonArrayToObject(jsonGameObjects[i], Mirror::InfoForClass<RenderComponent>(), component);
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<RenderComponent>(), component);
                             break;
 
                         case Component_Physics:
@@ -431,12 +425,12 @@ case MirrorTypes::ClassType: \
             }
         }
 
-        void SerializeField(const void* obj, const Mirror::Field& field, cJSON* objJson);
-
         template <class T>
         void SerializeVector(void* obj, cJSON* objJson)
         {
             typedef std::remove_pointer_t<T> AbsoluteTypeT;
+
+            const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<AbsoluteTypeT>();
 
             if (std::is_pointer_v<T>)
             {
@@ -447,22 +441,30 @@ case MirrorTypes::ClassType: \
                     if (!vectorPtrPtr->at(i))
                         continue;
 
-                    cJSON* newJsonObjectArray = CreateArray(vectorPtrPtr->at(i)->GetName().c_str());
-                    SerializeJsonObject(vectorPtrPtr->at(i), Mirror::InfoForClass<AbsoluteTypeT>(), newJsonObjectArray);
+                    cJSON* newJsonObjectArray = CreateArray(typeInfo->stringName.c_str());
+                    SerializeObjectToJson(vectorPtrPtr->at(i), Mirror::InfoForClass<AbsoluteTypeT>(), newJsonObjectArray);
                     AddItemToArray(objJson, newJsonObjectArray);
                 }
             }
             else
             {
+                const std::vector<AbsoluteTypeT>* vectorPtr = (std::vector<AbsoluteTypeT>*)obj; // #TODO Review if possible to validate pointer value
+
+                for (size_t i = 0; i < vectorPtr->size(); i++)
+                {
+                    cJSON* newJsonObjectArray = CreateArray(typeInfo->stringName.c_str());
+                    SerializeObjectToJson(&vectorPtr->at(i), Mirror::InfoForClass<AbsoluteTypeT>(), newJsonObjectArray);
+                    AddItemToArray(objJson, newJsonObjectArray);
+                }
             }
         }
 
 #define SERIALIZE_CASE_FOR_CLASS(ClassType) \
 case MirrorTypes::ClassType: \
-    SerializeJsonObject((char*)obj + field.offset, Mirror::InfoForClass<ClassType>(), arr); \
+    SerializeObjectToJson((char*)obj + field.offset, Mirror::InfoForClass<ClassType>(), arr); \
     break; \
 
-        void SerializeJsonObject(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson)
+        void SerializeObjectToJson(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson)
         {
             if (!objJson || !objClassInfo || !obj)
             {
@@ -474,192 +476,127 @@ case MirrorTypes::ClassType: \
             {
                 const Mirror::Field& field = objClassInfo->fields[i];
 
-                if (!field.type)
-                    break;
-
-                if (field.type->enumType < MirrorTypes::m_PRIMITIVES_START)
-                {
-                    cJSON* arr = CreateArray(field.name.c_str());
-                    cJSON_AddItemToArray(objJson->child, arr);
-
-                    switch (field.type->enumType)
-                    {
-                    case MirrorTypes::EngineSettings: // SERIALIZE_CASE_FOR_CLASS(EngineSettings)
-                        SerializeJsonObject((char*)obj + field.offset, Mirror::InfoForClass<EngineSettings>(), arr);
-                        break;
-
-                        SERIALIZE_CASE_FOR_CLASS(ProjectSettings)
-                        SERIALIZE_CASE_FOR_CLASS(SceneViewerData)
-                        SERIALIZE_CASE_FOR_CLASS(Transform)
-                        SERIALIZE_CASE_FOR_CLASS(UserSettings)
-                        SERIALIZE_CASE_FOR_CLASS(Vector3)
-                        SERIALIZE_CASE_FOR_CLASS(RenderRoutine)
-                        SERIALIZE_CASE_FOR_CLASS(TransformRoutine)
-
-                    case MirrorTypes::m_vector_string:
-                        {
-                            const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
-                            if (strings)
-                            {
-                                for (size_t i = 0; i < strings->size(); i++)
-                                {
-                                    std::string str = strings->at(i);
-                                    AddItemToArray(arr, CreateString(std::to_string(i).c_str(), str.c_str()));
-                                }
-                            }
-                            else
-                            {
-                                LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
-                            }
-                        }
-                        break;
-
-                    case MirrorTypes::m_vector_routinePtr:
-                        {
-                            const std::vector<Routine*>* routines = (std::vector<Routine*>*)((char*)obj + field.offset);
-                            if (routines)
-                            {
-                                for (size_t i = 0; i < routines->size(); i++)
-                                {
-                                    Routine* routine = routines->at(i);
-                                    cJSON* routineJson = CreateArray(std::to_string((int)routine->GetRoutineType()).c_str());
-
-                                    switch (routine->GetRoutineType())
-                                    {
-                                    case eRoutineTypes::Routine_Render:
-                                        Serialization::SerializeJsonObject(routine, Mirror::InfoForClass<RenderRoutine>(), routineJson);
-                                        break;
-
-                                    case eRoutineTypes::Routine_Print:
-                                        // Serialization::SerializeJsonObject(routine, Mirror::InfoForClass<PrintRoutine>(), routineJson);
-                                        break;
-
-                                    case eRoutineTypes::Routine_Transform:
-                                        Serialization::SerializeJsonObject(routine, Mirror::InfoForClass<TransformRoutine>(), routineJson);
-                                        break;
-
-                                    default:
-                                        LOG_WARN("{0} Unsupported routine type {1}!", __FUNCTION__, routine->GetRoutineType());
-                                        break;
-                                    }
-                                    AddItemToArray(arr, routineJson);
-                                }
-                            }
-                        }
-                        break;
-
-                    case MirrorTypes::m_vector_gameobjectPtr:
-                        // SerializeVector<GameObject*>((void*)((char*)obj + field.offset), arr); // #TODO Test
-                        // return;
-                        {
-                            const std::vector<GameObject*>* gameObjects = (std::vector<GameObject*>*)((char*)obj + field.offset);
-                            if (gameObjects)
-                            {
-                                for (size_t i = 0; i < gameObjects->size(); i++)
-                                {
-                                    if (!gameObjects->at(i))
-                                        continue;
-
-                                    cJSON* gameObjectArray = CreateArray(gameObjects->at(i)->GetName().c_str());
-                                    SerializeJsonObject(gameObjects->at(i), Mirror::InfoForClass<GameObject>(), gameObjectArray);
-                                    AddItemToArray(arr, gameObjectArray);
-                                }
-                            }
-                        }
-                        break;
-
-                    case MirrorTypes::m_map_eComponentTags_componentPtr:
-                        {
-                            const std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)((char*)obj + field.offset);
-                            // #TODO Verify address is a valid map
-                            // #NOTE Using a reference as pointer caused exceptions when if checking the pointer
-
-                            for (auto var : components)
-                            {
-                                Component* component = var.second;
-
-                                if (!component) continue;
-
-                                cJSON* t_Component = CreateArray(std::to_string(component->GetTag()).c_str());
-
-                                switch (component->GetTag())
-                                {
-                                case Component_Camera:
-                                    AddItemToArray(t_Component, CreateString("ComponentName", "Camera"));
-                                    break;
-
-                                case Component_Light:
-                                    {
-                                        AddItemToArray(t_Component, CreateString("ComponentName", "Light"));
-                                        switch (((LightComponent*)component)->GetType())
-                                        {
-                                        case LightType_Point: // #TODO Finish implementation
-                                            // AddItemToArray(t_Component, CreateNumber("LightType", (int)LightType_Point));
-                                            //     "Red", ((LightComponent*)component)->GetColour().x,
-                                            //     "Green", ((LightComponent*)component)->GetColour().y,
-                                            // 	   "Blue", ((LightComponent*)component)->GetColour().z);
-                                            break;
-
-                                            // #TODO Implement other light types.
-                                        case LightType_Area:
-                                            break;
-                                        case LightType_Spot:
-                                            break;
-                                        }
-                                    }
-                                    break;
-
-                                case Component_Render:
-                                    {
-                                        // AddItemToArray(t_Component, CreateString("ComponentName", "Render"));
-                                        // AddItemToArray(t_Component, CreateString("SchematicName", ((RenderComponent*)component)->GetSchematicName().c_str()));
-
-                                        cJSON* t_Renderables = CreateArray("m_RenderableList");
-
-                                        std::vector<Renderable>* renderablesList = (std::vector<Renderable>*) ((RenderComponent*)component)->LookAtRenderableList();
-
-                                        for (size_t i = 0; i < renderablesList->size(); i++)
-                                        {
-                                            // #TODO Set the renderable names
-                                            cJSON* renderable = CreateArray(renderablesList->at(i).GetRenderableName().c_str());
-
-                                            AddItemToArray(renderable, CreateString("m_RenderableName", renderablesList->at(i).GetRenderableName().c_str()));
-                                            AddItemToArray(renderable, CreateString("m_ShaderName", renderablesList->at(i).GetShader()->GetName().c_str()));
-                                            AddItemToArray(renderable, CreateString("m_MaterialName", renderablesList->at(i).GetMaterial()->GetMaterialName().c_str()));
-
-                                            if (strcmp(renderablesList->at(i).GetMesh()->GetFileName().c_str(), gc_DefaultCharPtrValue) != 0)
-                                                AddItemToArray(renderable, CreateString("m_MeshFileName", renderablesList->at(i).GetMesh()->GetFileName().c_str()));
-                                            else
-                                                AddItemToArray(renderable, CreateString("m_MeshFileName", no_file));
-
-                                            AddItemToArray(renderable, CreateString("m_MeshName", renderablesList->at(i).GetMesh()->GetName().c_str()));
-
-                                            AddItemToArray(t_Renderables, renderable);
-                                        }
-
-                                        AddItemToArray(t_Component, t_Renderables);
-                                    }
-                                    break;
-
-                                case Component_Physics:
-                                case Component_Controller:
-                                case Component_SkyBox:
-                                    // #TODO Implement component add
-                                    break;
-                                }
-                                AddItemToArray(arr, t_Component);
-                            }
-                        }
-                        break;
-
-                    default:
-                        LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
-                        break;
-                    }
-                }
-                else
+                if (field.type->enumType > MirrorTypes::m_PRIMITIVES_START)
                 {
                     SerializeField(obj, field, objJson); // #TODO Replace with field agnostic function
+                    continue;
+                }
+
+                cJSON* arr = CreateArray(field.name.c_str());
+                cJSON_AddItemToArray(objJson->child, arr);
+
+                switch (field.type->enumType)
+                {
+                case MirrorTypes::EngineSettings: // SERIALIZE_CASE_FOR_CLASS(EngineSettings)
+                    SerializeObjectToJson((char*)obj + field.offset, Mirror::InfoForClass<EngineSettings>(), arr);
+                    break;
+
+                    SERIALIZE_CASE_FOR_CLASS(ProjectSettings)
+                    SERIALIZE_CASE_FOR_CLASS(SceneViewerData)
+                    SERIALIZE_CASE_FOR_CLASS(Transform)
+                    SERIALIZE_CASE_FOR_CLASS(UserSettings)
+                    SERIALIZE_CASE_FOR_CLASS(Vector3)
+                    SERIALIZE_CASE_FOR_CLASS(RenderRoutine)
+                    SERIALIZE_CASE_FOR_CLASS(TransformRoutine)
+
+                case MirrorTypes::m_vector_string:
+                    {
+                        const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
+                        if (strings)
+                        {
+                            for (size_t i = 0; i < strings->size(); i++)
+                            {
+                                std::string str = strings->at(i);
+                                AddItemToArray(arr, CreateString(std::to_string(i).c_str(), str.c_str()));
+                            }
+                        }
+                        else
+                        {
+                            LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                        }
+                    }
+                    break;
+
+                case MirrorTypes::m_vector_routinePtr:
+                {
+                    const std::vector<Routine*>* routines = (std::vector<Routine*>*)((char*)obj + field.offset);
+                    if (routines)
+                    {
+                        for (size_t i = 0; i < routines->size(); i++)
+                        {
+                            Routine* routine = routines->at(i);
+                            cJSON* routineJson = CreateArray(std::to_string((int)routine->GetRoutineType()).c_str());
+
+                            switch (routine->GetRoutineType())
+                            {
+                            case eRoutineTypes::Routine_Render:
+                                SerializeObjectToJson(routine, Mirror::InfoForClass<RenderRoutine>(), routineJson);
+                                break;
+
+                            case eRoutineTypes::Routine_Print:
+                                // SerializeObjectToJson(routine, Mirror::InfoForClass<PrintRoutine>(), routineJson);
+                                break;
+
+                            case eRoutineTypes::Routine_Transform:
+                                SerializeObjectToJson(routine, Mirror::InfoForClass<TransformRoutine>(), routineJson);
+                                break;
+
+                            default:
+                                LOG_WARN("{0} Unsupported routine type {1}!", __FUNCTION__, routine->GetRoutineType());
+                                break;
+                            }
+                            AddItemToArray(arr, routineJson);
+                        }
+                    }
+                }
+                break;
+
+                case MirrorTypes::m_vector_renderable:
+                    // cJSON* renderableArray = CreateArray(gameObjects->at(i)->GetName().c_str());
+                    SerializeVector<Renderable>((void*)((char*)obj + field.offset), arr);
+                    // SerializeObjectToJson(gameObjects->at(i), Mirror::InfoForClass<GameObject>(), renderableArray);
+                    // AddItemToArray(arr, renderableArray);
+                    break;
+
+                case MirrorTypes::m_vector_gameobjectPtr:
+                    SerializeVector<GameObject*>((void*)((char*)obj + field.offset), arr);
+                    break;
+
+                case MirrorTypes::m_map_eComponentTags_componentPtr:
+                {
+                    const std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)((char*)obj + field.offset);
+
+                    for (auto var : components)
+                    {
+                        Component* component = var.second;
+
+                        if (!component)
+                            continue;
+
+                        cJSON* t_Component = CreateArray(std::to_string(component->GetTag()).c_str());
+
+                        switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
+                        {
+                        case Component_Render:
+                            SerializeObjectToJson(component, Mirror::InfoForClass<RenderComponent>(), t_Component);
+                            break;
+
+                        case Component_Camera:
+                        case Component_Light:
+                        case Component_Physics:
+                        case Component_Controller:
+                        case Component_SkyBox:
+                            // #TODO Implement component add
+                            break;
+                        }
+                        AddItemToArray(arr, t_Component);
+                    }
+                }
+                break;
+
+                default:
+                    LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                    break;
                 }
             }
         }

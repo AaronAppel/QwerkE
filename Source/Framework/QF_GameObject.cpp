@@ -8,22 +8,15 @@
 
 namespace QwerkE {
 
-    GameObject::GameObject()
-    {
-        Initialize();
-    }
-
     GameObject::GameObject(Scene* scene)
     {
         m_pScene = scene;
-        Initialize();
     }
 
     GameObject::GameObject(Scene* scene, vec3 position)
     {
         m_Transform.s_Position = position;
         m_pScene = scene; // TODO: Remove scene reference in GameObject
-        Initialize();
     }
 
     GameObject::~GameObject()
@@ -88,7 +81,7 @@ namespace QwerkE {
 
     void GameObject::Update(double deltatime)
     {
-        for (unsigned int i = 0; i < m_UpdateList.size(); i++)
+        for (size_t i = 0; i < m_UpdateList.size(); i++)
         {
             if (m_UpdateList.at(i) != nullptr)
             {
@@ -99,7 +92,7 @@ namespace QwerkE {
 
     void GameObject::Draw(GameObject* camera)
     {
-        for (unsigned int i = 0; i < m_DrawList.size(); i++)
+        for (size_t i = 0; i < m_DrawList.size(); i++)
         {
             if (m_DrawList.at(i) != nullptr)
             {
@@ -133,7 +126,7 @@ namespace QwerkE {
 
         routine->SetParent(this);
 
-        for (unsigned int i = 0; i < m_UpdateList.size(); i++)
+        for (size_t i = 0; i < m_UpdateList.size(); i++)
         {
             if (m_UpdateList.at(i) == routine)
             {
@@ -150,7 +143,7 @@ namespace QwerkE {
 
         routine->SetParent(this);
 
-        for (unsigned int i = 0; i < m_DrawList.size(); i++)
+        for (size_t i = 0; i < m_DrawList.size(); i++)
         {
             if (m_DrawList.at(i) == routine)
             {
@@ -162,14 +155,14 @@ namespace QwerkE {
 
     void GameObject::RemoveRoutine(Routine* routine) // TODO:: handle removing routines
     {
-        for (unsigned int i = 0; i < m_UpdateList.size(); i++)
+        for (size_t i = 0; i < m_UpdateList.size(); i++)
         {
             if (m_UpdateList.at(i) == routine) // pointer comparison
             {
                 m_UpdateList.at(i) = nullptr; // routine needs to be delete by creator
             }
         }
-        for (unsigned int i = 0; i < m_DrawList.size(); i++)
+        for (size_t i = 0; i < m_DrawList.size(); i++)
         {
             if (m_DrawList.at(i) == routine) // pointer comparison
             {
@@ -194,14 +187,6 @@ namespace QwerkE {
             return m_Components[tag];
         }
         return nullptr;
-    }
-
-    void GameObject::Reset()
-    {
-        for (auto l_LoopVar : m_Components)
-        {
-            l_LoopVar.second->Reset();
-        }
     }
 
     void GameObject::Activate()
@@ -264,12 +249,6 @@ namespace QwerkE {
     {
         m_Transform.s_Rotation = rotation; // TODO: Cap rotation degrees to 360
         // TODO: Update direction vectors
-    }
-
-    void GameObject::Initialize()
-    {
-        m_UpdateList.reserve(m_BaseUpdateListSize);
-        m_DrawList.reserve(m_BaseUpdateListSize);
     }
 
 }

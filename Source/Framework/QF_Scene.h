@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include <vector>
 #include <string>
 
@@ -13,16 +12,13 @@ namespace QwerkE {
 
     class GameCore;
     class MyMatrix;
-    class Scenes;
     class GameObject;
 
     class Scene final
     {
     public:
-        Scene(const char* sceneFileName) { m_SceneFileName = sceneFileName; }
+        Scene(const char* sceneFileName);
         virtual ~Scene();
-
-        virtual void Initialize(); // #TODO Deprecate/combine with Load*() methods
 
         void OnWindowResize(unsigned int width, unsigned int height);
 
@@ -39,8 +35,6 @@ namespace QwerkE {
         bool AddObjectToScene(GameObject* object);
         void RemoveObjectFromScene(GameObject* object);
 
-        void RemoveAllObjectsFromScene();
-
         void SaveScene();
         void LoadScene();
         void UnloadScene();
@@ -55,13 +49,11 @@ namespace QwerkE {
         std::map<std::string, GameObject*> GetObjectList() { return m_pGameObjects; };
         int GetCurrentCamera() { return m_CurrentCamera; };
         const std::vector<GameObject*>& GetLightList() const { return m_LightList; };
-        eSceneTypes GetSceneID() { return m_ID; }
-        const std::string& GetSceneFileName() { return m_SceneFileName; }
+        const std::string& GetSceneName() { return m_SceneFileName; }
 
         void SetIsEnabled(bool isEnabled) { m_IsEnabled = isEnabled; };
         void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; };
         void SetCurrentCamera(int camera) { m_CurrentCamera = camera; };
-        void SetSceneID(eSceneTypes sceneType) { m_ID = sceneType; }
 
         void ToggleIsPaused() { m_IsPaused = !m_IsPaused; };
 
@@ -78,7 +70,6 @@ namespace QwerkE {
         std::string m_SceneFileName = gc_DefaultCharPtrValue;
 
         std::map<std::string, GameObject*> m_pGameObjects;
-        eSceneTypes m_ID = eSceneTypes::Scene_Null; // #TODO Deprecate ids and use unique file names/paths instead
 
         int m_CurrentCamera = 0;
 

@@ -92,17 +92,18 @@ namespace QwerkE {
             const int m_ItemsPerRow = 1 + (int)(ImGui::GetWindowSize().x / (imageSize.x * scalar));
 
             int counter = 1;
-            for (const auto& p : *Scenes::LookAtScenes())
+            auto scenes = Scenes::LookAtScenes();
+            for (size_t i = 0; i < scenes.size(); i++)
             {
                 if (counter % m_ItemsPerRow)
                 {
                     ImGui::SameLine();
                 }
 
-                if (ImGui::Button(p.second->GetSceneFileName().c_str()) ||
+                if (ImGui::Button(scenes[i]->GetSceneName().c_str()) ||
                     Input::FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
                 {
-                    Scenes::SetCurrentScene(p.second->GetSceneID());
+                    Scenes::SetCurrentScene(scenes[i]->GetSceneName());
                 }
                 counter++;
             }

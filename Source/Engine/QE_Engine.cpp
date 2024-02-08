@@ -81,8 +81,6 @@ namespace QwerkE {
 					// Settings::LoadUserSettings(SettingsFolderPath(userConfigFilePath.c_str())); // #TODO Framework also loads user data
 				}
 
-				Scenes::GetCurrentScene()->SetIsEnabled(true);
-
 				Editor::Initialize();
 			}
 

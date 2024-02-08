@@ -1,9 +1,9 @@
 {
 	"Scene":	[{
-			"m_SceneFileName":	"null_scene.qscene",
+			"m_SceneFileName":	"ThumbNail.qscene",
 			"m_IsEnabled":	true,
 			"m_IsPaused":	false,
-			"m_ID":	0,
+			"m_ID":	3,
 			"m_CurrentCamera":	0,
 			"m_CameraList":	[{
 					"GameObject":	[{

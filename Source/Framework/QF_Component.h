@@ -13,7 +13,6 @@ namespace QwerkE {
     public:
         virtual ~Component() = default;
 
-        virtual void Reset() { }
         virtual void Activate() { }
         virtual void Deactivate() { }
 

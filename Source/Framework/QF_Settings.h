@@ -69,10 +69,10 @@ namespace QwerkE {
         static void LoadEngineSettings(); // #TODO Load from file path. Do not rely on default paths, but instead generate the default path
         static void LoadEngineSettings(std::string engineSettingsFilePath); // #TODO Write and chain with above overloaded method
         static void SaveEngineSettings();
-        static void SaveEngineSettings(const EngineSettings& engineSettings);
 
         static void LoadProjectSettings(std::string projectSettingsFilePath);
         static void SaveProjectSettings();
+        static void SaveProjectSettings(std::string projectSettingsFilePath);
 
         static void LoadUserSettings(std::string userSettingsFilePath);
         static void SaveUserSettings();

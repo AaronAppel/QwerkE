@@ -79,20 +79,6 @@ namespace QwerkE {
         Routine_Max,
     };
 
-    /* Scenes */
-    // #TODO Deprecate as scenes should exist in data and be referenced by file names or GUIDs
-    enum eSceneTypes : std::uint8_t
-    {
-        Scene_Null = 0,
-        Scene_GameScene,
-        Scene_TestScene,
-
-        Scene_ViewerScene,
-        Scene_PBR_Test1,
-
-        Scene_Max,
-    };
-
     // Light Types
     enum eLightType : std::uint8_t // TODO: Hide from program?
     {

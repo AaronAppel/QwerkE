@@ -10,69 +10,21 @@
 #include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Scenes.h"
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
 
 namespace QwerkE {
 
+    Scene::Scene(const char* sceneFileName)
+    {
+        m_SceneFileName = sceneFileName;
+        Scenes::AddScene(this);
+    }
+
     Scene::~Scene()
     {
         UnloadScene();
-    }
-
-    void Scene::Initialize()
-    {
-        switch (m_ID)
-        {
-        case QwerkE::Scene_TestScene:
-            {
-                GameObject* newCamera = new GameObject(this);
-                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Camera.osch"), *newCamera);
-                newCamera->SetPosition(vec3(0, 0, 5));
-                newCamera->OnSceneLoaded(this);
-                this->AddCamera(newCamera);
-                Scene::SetupCameras();
-
-                GameObject* newGameObject = new GameObject(this);
-                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Nanosuit.osch"), *newGameObject);
-                newGameObject->SetPosition(vec3(0, -2, 30));
-                newGameObject->OnSceneLoaded(this);
-                this->AddCamera(newGameObject);
-
-                Factory::CreateTestCube(this, vec3(0, 0, 50));
-
-                GameObject* newLight = new GameObject(this);
-                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Light.osch"), *newLight);
-                newLight->SetPosition(vec3(0, 5, -10));
-                newLight->OnSceneLoaded(this);
-                this->AddLight(newLight);
-            }
-            break;
-
-        case QwerkE::Scene_ViewerScene:
-            {
-                GameObject* newCamera = new GameObject(this);
-                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Camera.osch"), *newCamera);
-                newCamera->SetPosition(vec3(0, 0, 5));
-                newCamera->OnSceneLoaded(this);
-                this->AddCamera(newCamera);
-                Scene::SetupCameras();
-
-                GameObject* newLight = new GameObject(this);
-                Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Light.osch"), *newLight);
-                newLight->SetPosition(vec3(0, 0, -10));
-                newLight->OnSceneLoaded(this);
-                this->AddLight(newLight);
-            }
-            break;
-
-        case QwerkE::Scene_Max:
-        case QwerkE::Scene_Null:
-        case QwerkE::Scene_GameScene:
-        default:
-            LOG_WARN("{0} Scene type unsupported", __FUNCTION__);
-            break;
-        }
     }
 
     void Scene::OnWindowResize(unsigned int width, unsigned int height)
@@ -99,6 +51,7 @@ namespace QwerkE {
 
     void Scene::CameraInput(float deltatime)
     {
+        // #TODO Put logic in camera component
         ComponentCamera* t_activecamera = ((ComponentCamera*)m_CameraList.at(m_CurrentCamera)->GetComponent(Component_Camera));
 
         const UserSettings& userSettings = Settings::GetUserSettings();
@@ -233,13 +186,6 @@ namespace QwerkE {
         }
     }
 
-    void Scene::RemoveAllObjectsFromScene()
-    {
-        m_LightList.clear();
-        m_CameraList.clear();
-        m_pGameObjects.clear();
-    }
-
     void Scene::SaveScene()
     {
         if (m_SceneFileName == gc_DefaultCharPtrValue)
@@ -265,6 +211,7 @@ namespace QwerkE {
         OnLoaded();
 
         SetupCameras();
+        LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
     void Scene::UnloadScene()
@@ -302,7 +249,6 @@ namespace QwerkE {
     void Scene::ReloadScene()
     {
         UnloadScene();
-        Initialize();
         LoadScene();
         LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
@@ -361,4 +307,5 @@ namespace QwerkE {
         }
         return false;
     }
+
 }

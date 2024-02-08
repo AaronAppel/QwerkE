@@ -1,6 +1,6 @@
 #include "QF_Scenes.h"
 
-#include <map>
+#include <vector>
 
 #include "QF_Defines.h"
 #include "QF_Enums.h"
@@ -15,15 +15,7 @@ namespace QwerkE {
 
     bool Scenes::m_IsRunning = true;
     Scene* Scenes::m_CurrentScene = nullptr;
-    std::map<eSceneTypes, Scene*> Scenes::m_Scenes; // #TODO Review using a vector instead. Lookup can't be that costly
-
-	Scenes::~Scenes()
-	{
-		for (auto it = m_Scenes.begin(); it != m_Scenes.end(); it++)
-		{
-			delete it->second;
-		}
-	}
+    std::vector<Scene*> Scenes::m_Scenes;
 
 	void Scenes::Initialize()
 	{
@@ -34,7 +26,7 @@ namespace QwerkE {
 
 		for (size_t i = 0; i < sceneFileNames.size(); i++)
 		{
-			const char* sceneFileName = sceneFileNames[0].c_str();
+			const char* sceneFileName = sceneFileNames[i].c_str();
 			if (FileExists(ScenesFolderPath(sceneFileName)) == false)
 			{
 				LOG_WARN("Scenes::Initialize(): File not found: {0}", sceneFileName);
@@ -49,7 +41,6 @@ namespace QwerkE {
 		if (m_Scenes.empty())
         {
 			Scene* emptyScene = new Scene(null_scene);
-			emptyScene->Initialize();
 			emptyScene->LoadScene();
 			emptyScene->SetIsEnabled(true);
 			AddScene(emptyScene, true);
@@ -57,64 +48,75 @@ namespace QwerkE {
 		}
 	}
 
-	void Scenes::EnableScene(eSceneTypes type)
+	void Scenes::Shutdown()
 	{
-		if (m_Scenes.find(type) != m_Scenes.end())
+		for (size_t i = 0; i < m_Scenes.size(); i++)
 		{
-			m_Scenes[type]->SetIsEnabled(true);
+			if (m_Scenes[i])
+			{
+				delete m_Scenes[i];
+			}
 		}
 	}
 
-	void Scenes::SetCurrentScene(eSceneTypes type)
+	void Scenes::EnableScene(std::string sceneName)
 	{
-		if (m_Scenes.find(type) != m_Scenes.end())
+		if (Scene* scene = GetScene(sceneName))
 		{
-			m_CurrentScene = m_Scenes[type];
-		}
-		else
-		{
-			LOG_ERROR("Scene not in scenes list!");
+			scene->SetIsEnabled(true);
 		}
 	}
 
-	void Scenes::DisableScene(eSceneTypes type)
+	void Scenes::SetCurrentScene(std::string sceneName)
 	{
-		if (m_Scenes.find(type) != m_Scenes.end())
+		if (Scene* scene = GetScene(sceneName))
 		{
-			m_Scenes[type]->SetIsEnabled(false);
+			m_CurrentScene = scene;
 		}
 	}
 
-	void Scenes::DisableAll()
+	void Scenes::DisableScene(std::string sceneName)
 	{
-		for (auto it = m_Scenes.begin(); it != m_Scenes.end(); it++)
+		if (Scene* scene = GetScene(sceneName))
 		{
-			it->second->SetIsEnabled(false);
+			scene->SetIsEnabled(false);
 		}
 	}
 
 	void Scenes::AddScene(Scene* scene, bool setAsCurrentScene)
 	{
-		if (m_Scenes.find(scene->GetSceneID()) == m_Scenes.end())
-		{
-			m_Scenes[scene->GetSceneID()] = scene;
+		if (!scene)
+			return;
 
-			if (setAsCurrentScene)
+		for (size_t i = 0; i < m_Scenes.size(); i++)
+		{
+			if (m_Scenes[i] == scene)
 			{
-				m_CurrentScene = scene;
+				// delete scene;
+				LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__);
+				return;
 			}
+		}
+
+		m_Scenes.push_back(scene);
+		if (m_CurrentScene == nullptr)
+		{
+			m_CurrentScene = scene;
+			scene->SetIsEnabled(true);
 		}
 	}
 
 	Scene* Scenes::RemoveScene(Scene* scene)
 	{
-		if (m_Scenes.find(scene->GetSceneID()) != m_Scenes.end())
+		for (size_t i = 0; i < m_Scenes.size(); i++)
 		{
-			m_Scenes.erase(scene->GetSceneID());
-			Scene* returnScene = m_Scenes[scene->GetSceneID()];
-			return returnScene;
+			if (m_Scenes[i] == scene)
+			{
+				Scene* returnScene = m_Scenes[i];
+				m_Scenes.erase(m_Scenes.begin() + i);
+				return returnScene;
+			}
 		}
-		return nullptr;
 	}
 
 	void Scenes::Update(float deltatime)
@@ -141,12 +143,24 @@ namespace QwerkE {
 		}
 	}
 
-	void Scenes::DrawScene(eSceneTypes scene)
+	void Scenes::DrawScene(std:: string sceneName)
 	{
-		if (m_Scenes.find(scene) != m_Scenes.end())
+		if (Scene* scene = GetScene(sceneName))
 		{
-			m_Scenes[scene]->Draw();
+			scene->Draw();
 		}
+	}
+
+	Scene* Scenes::GetScene(std::string sceneName)
+	{
+		for (size_t i = 0; i < m_Scenes.size(); i++)
+		{
+			if (strcmp(m_Scenes[i]->GetSceneName().c_str(), sceneName.c_str()) == 0)
+			{
+				return m_Scenes[i];
+			}
+		}
+		return nullptr;
 	}
 
 }

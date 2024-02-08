@@ -26,12 +26,6 @@ namespace QwerkE {
         Serialization::SerializeObjectToFile(m_engineSettings, SettingsFolderPath(null_config));
     }
 
-    void Settings::SaveEngineSettings(const EngineSettings& engineSettings)
-    {
-        m_engineSettings = engineSettings;
-        SaveEngineSettings();
-    }
-
     void Settings::LoadProjectSettings(std::string projectSettingsFilePath)
     {
         Serialization::DeserializeJsonFromFile(projectSettingsFilePath.c_str(), m_projectSettings);
@@ -39,7 +33,12 @@ namespace QwerkE {
 
     void Settings::SaveProjectSettings()
     {
-        Serialization::SerializeObjectToFile(m_projectSettings, ProjectsFolderPath(null_project));
+        SaveProjectSettings(ProjectsFolderPath(null_project));
+    }
+
+    void Settings::SaveProjectSettings(std::string projectSettingsFilePath)
+    {
+        Serialization::SerializeObjectToFile(m_projectSettings, projectSettingsFilePath.c_str());
     }
 
     void Settings::LoadUserSettings(std::string userSettingsFilePath)

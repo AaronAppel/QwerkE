@@ -27,9 +27,6 @@
 namespace QwerkE {
 
 	// Enums
-	typedef eSceneTypes m_eSceneTypes;
-	MIRROR_TYPE(m_eSceneTypes)
-
 	typedef eGameObjectTags m_eGameObjectTags;
 	MIRROR_TYPE(m_eGameObjectTags)
 
@@ -120,10 +117,6 @@ namespace QwerkE {
 	MIRROR_CLASS_END
 
 	// GameObject components
-	MIRROR_CLASS_START(Component)
-	MIRROR_CLASS_MEMBER(m_ComponentTag)
-	MIRROR_CLASS_END
-
 	MIRROR_CLASS_START(ComponentCamera)
 	MIRROR_CLASS_END
 
@@ -162,7 +155,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_MEMBER(m_IsEnabled)
 	MIRROR_CLASS_MEMBER(m_IsPaused)
-	MIRROR_CLASS_MEMBER(m_ID)
 	MIRROR_CLASS_MEMBER(m_CurrentCamera)
 	MIRROR_CLASS_MEMBER(m_CameraList)
 	MIRROR_CLASS_MEMBER(m_LightList)
@@ -174,9 +166,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_Name)
 	MIRROR_CLASS_MEMBER(m_Tag)
 	MIRROR_CLASS_MEMBER(m_Transform)
-	// MIRROR_CLASS_MEMBER(m_BaseUpdateListSize)
 	MIRROR_CLASS_MEMBER(m_UpdateList)
-	// MIRROR_CLASS_MEMBER(m_BaseDrawListSize)
 	MIRROR_CLASS_MEMBER(m_DrawList)
 	MIRROR_CLASS_MEMBER(m_Components)
 	MIRROR_CLASS_MEMBER(m_RenderOrder)

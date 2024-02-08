@@ -38,14 +38,8 @@ namespace QwerkE {
         m_FBO = new FrameBufferObject();
         m_FBO->Init();
 
-        m_ViewerScene = new Scene("TODO");
-        m_ViewerScene->SetSceneID(eSceneTypes::Scene_ViewerScene);
-
-        m_AssetTagPlane = new GameObject();
-        Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Plane.osch"), *m_AssetTagPlane);
-        m_ViewerScene->AddObjectToScene(m_AssetTagPlane);
-
-        m_ViewerScene->Initialize();
+        m_ViewerScene = new Scene("ThumbNail.qscene");
+        m_ViewerScene->LoadScene();
         m_ViewerScene->SetIsEnabled(true);
         ComponentCamera* camera = (ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera);
         camera->SetViewportSize(Window::GetResolution());

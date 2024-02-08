@@ -1,158 +1,148 @@
 {
-	"ObjectList":	[{
-			"Object1":	[{
-					"Position":	[{
-							"PositionX":	0,
-							"PositionY":	0,
-							"PositionZ":	0
-						}],
-					"Rotation":	[{
-							"RotationX":	333,
-							"RotationY":	333,
-							"RotationZ":	0
-						}],
-					"Scale":	[{
-							"ScaleX":	7.500000,
-							"ScaleY":	7.500000,
-							"ScaleZ":	7.500000
-						}],
-					"ObjectTag":	7,
-					"ComponentList":	[{
-							"5":	[{
-									"ComponentName":	"Render",
-									"SchematicName":	"None",
-									"Renderables":	[{
-											"Uninitialized":	[{
-													"Shader":	"LitMaterialNormal.ssch",
-													"Material":	"brickwall.msch",
-													"MeshFile":	"None",
-													"MeshName":	"Test_Plane"
-												}]
+	"Scene":	[{
+			"m_SceneFileName":	"Test.qscene",
+			"m_IsEnabled":	true,
+			"m_IsPaused":	false,
+			"m_ID":	1,
+			"m_CurrentCamera":	0,
+			"m_CameraList":	[{
+					"GameObject":	[{
+							"m_Name":	"Camera0",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0.416059,
+											"z":	-9.157461
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
 										}]
-								}]
-						}],
-					"RoutineList":	[{
-							"UpdateRoutines":	[{
-									"4":	[{
-											"RoutineName":	"Transform",
-											"Speed":	0.500000,
-											"TransformValues":	[{
-													"Position":	[{
-															"PositionX":	0,
-															"PositionY":	0,
-															"PositionZ":	0
-														}],
-													"Rotation":	[{
-															"RotationX":	0.250000,
-															"RotationY":	0.250000,
-															"RotationZ":	0
-														}],
-													"Scale":	[{
-															"ScaleX":	0,
-															"ScaleY":	0,
-															"ScaleZ":	0
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+							}],
+							"m_Components":	[{
+									"1":	[{
+									}]
+								}],
+							"m_RenderOrder":	100
+						}]
+				}],
+			"m_LightList":	[{
+					"GameObject":	[{
+							"m_Name":	"Light13",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+									}]
+								}],
+							"m_Components":	[{
+									"3":	[{
+									}],
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"null_mesh",
+															"m_MeshFileName":	"null_mesh.obj"
 														}]
 												}]
 										}]
 								}],
-							"DrawRoutines":	[{
-									"1":	[{
-											"RoutineName":	"Render"
-										}]
-								}]
+							"m_RenderOrder":	100
 						}]
-				}]
-		}],
-	"CameraList":	[{
-			"Camera0":	[{
-					"Position":	[{
-							"PositionX":	0.601731,
-							"PositionY":	3.901664,
-							"PositionZ":	-60.358925
-						}],
-					"Rotation":	[{
-							"RotationX":	0,
-							"RotationY":	0,
-							"RotationZ":	0
-						}],
-					"Scale":	[{
-							"ScaleX":	1,
-							"ScaleY":	1,
-							"ScaleZ":	1
-						}],
-					"ObjectTag":	1,
-					"ComponentList":	[{
-							"1":	[{
-									"ComponentName":	"Camera",
-									"CamType":	0
+				}],
+			"m_SceneDrawList":	[{
+					"GameObject":	[{
+							"m_Name":	"Object1",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Rotation":	[{
+											"x":	268.875000,
+											"y":	268.875000,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
 								}],
-							"5":	[{
-									"ComponentName":	"Render",
-									"SchematicName":	"None",
-									"Renderables":	[{
-											"Camera":	[{
-													"Shader":	"LitMaterial.ssch",
-													"Material":	"null_material.msch",
-													"MeshFile":	"null_mesh.obj",
-													"MeshName":	"null_mesh"
+							"m_UpdateList":	[{
+									"4":	[{
+											"m_Speed":	0.500000,
+											"m_PositionOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
+												}],
+											"m_RotationOffset":	[{
+													"x":	0.750000,
+													"y":	0.750000,
+													"z":	0
+												}],
+											"m_ScaleOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
 												}]
 										}]
-								}]
-						}],
-					"RoutineList":	[{
-							"UpdateRoutines":	[{
-							}],
-							"DrawRoutines":	[{
-									"1":	[{
-											"RoutineName":	"Render"
-										}]
-								}]
-						}]
-				}]
-		}],
-	"LightList":	[{
-			"Light2":	[{
-					"Position":	[{
-							"PositionX":	0,
-							"PositionY":	8,
-							"PositionZ":	-3
-						}],
-					"Rotation":	[{
-							"RotationX":	0,
-							"RotationY":	0,
-							"RotationZ":	0
-						}],
-					"Scale":	[{
-							"ScaleX":	1,
-							"ScaleY":	1,
-							"ScaleZ":	1
-						}],
-					"ObjectTag":	2,
-					"ComponentList":	[{
-							"3":	[{
-									"ComponentName":	"Light"
 								}],
-							"5":	[{
-									"ComponentName":	"Render",
-									"SchematicName":	"None",
-									"Renderables":	[{
-											"Light":	[{
-													"Shader":	"null_shader.ssch",
-													"Material":	"null_material.msch",
-													"MeshFile":	"null_mesh.obj",
-													"MeshName":	"null_mesh"
+							"m_DrawList":	[{
+									"1":	[{
+									}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"null_mesh",
+															"m_MeshFileName":	"null_mesh.obj"
+														}]
 												}]
 										}]
-								}]
-						}],
-					"RoutineList":	[{
-							"UpdateRoutines":	[{
-							}],
-							"DrawRoutines":	[{
-									"1":	[{
-											"RoutineName":	"Render"
-										}]
-								}]
+								}],
+							"m_RenderOrder":	100
 						}]
 				}]
 		}]
