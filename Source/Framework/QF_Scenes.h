@@ -8,8 +8,8 @@ namespace QwerkE {
 
     class Scene;
 
-    namespace Scenes
-    {
+    namespace Scenes {
+
         void Initialize();
         void Shutdown();
 

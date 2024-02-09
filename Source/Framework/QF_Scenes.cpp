@@ -111,15 +111,17 @@ namespace QwerkE {
 
 		Scene* RemoveScene(Scene* scene)
 		{
+			Scene* returnScene = nullptr;
 			for (size_t i = 0; i < s_Scenes.size(); i++)
 			{
 				if (s_Scenes[i] == scene)
 				{
-					Scene* returnScene = s_Scenes[i];
+					returnScene = s_Scenes[i];
 					s_Scenes.erase(s_Scenes.begin() + i);
-					return returnScene;
+					break;
 				}
 			}
+			return returnScene;
 		}
 
 		void Update(float deltatime)

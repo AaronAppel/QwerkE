@@ -5,7 +5,7 @@
 
 // Usage: include this header file somewhere in your code (eg. precompiled header), and then use like:
 //
-// Instrumentor::Get().BeginSession("Session Name");        // Begin session 
+// Instrumentor::Get().BeginSession("Session Name");        // Begin session
 // {
 //     InstrumentationTimer timer("Profiled Scope Name");   // Place code like this in scopes you'd like to include in profiling
 //     // Code
@@ -37,10 +37,6 @@ struct InstrumentationSession
 
 class Instrumentor
 {
-private:
-    InstrumentationSession* m_CurrentSession;
-    std::ofstream m_OutputStream;
-    int m_ProfileCount;
 public:
     Instrumentor()
         : m_CurrentSession(nullptr), m_ProfileCount(0)
@@ -84,6 +80,13 @@ public:
         m_OutputStream.flush();
     }
 
+    static Instrumentor& Get()
+    {
+        static Instrumentor instance;
+        return instance;
+    }
+
+private:
     void WriteHeader()
     {
         m_OutputStream << "{\"otherData\": {},\"traceEvents\":[";
@@ -96,11 +99,9 @@ public:
         m_OutputStream.flush();
     }
 
-    static Instrumentor& Get()
-    {
-        static Instrumentor instance;
-        return instance;
-    }
+    InstrumentationSession* m_CurrentSession;
+    std::ofstream m_OutputStream;
+    int m_ProfileCount;
 };
 
 class InstrumentationTimer
@@ -130,6 +131,7 @@ public:
 
         m_Stopped = true;
     }
+
 private:
     const char* m_Name;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;

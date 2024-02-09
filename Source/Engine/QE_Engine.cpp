@@ -50,12 +50,11 @@ namespace QwerkE {
 
             Instrumentor::Get().BeginSession("Instrumentor", "instrumentor_log.json");
 
-			{
-				PROFILE_SCOPE("Run Setup");
+			{	PROFILE_SCOPE("Run Startup");
 
 				if (Framework::Startup(SettingsFolderPath(null_config)) == eOperationResult::Failure)
 				{
-					LOG_CRITICAL("Qwerk Framework failed to load! Shutting down engine..."); // #TODO Shutdown properly
+					LOG_CRITICAL("Error while loading! Shutting down QwerkE...");
 					Instrumentor::Get().EndSession();
 					return eOperationResult::Failure;
 				}

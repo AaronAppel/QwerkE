@@ -14,33 +14,52 @@
 
 namespace QwerkE {
 
-    double Time::m_StartTime = 0.f;
-    double Time::m_FrameDelta = 0.f;
-    double Time::m_CurrentFrame = 0.f;
-    double Time::m_LastFrame = 0.f;
+    double s_StartTime = 0.;
+    double s_FrameDelta = 0.;
+    double s_CurrentFrame = 0.;
+    double s_LastFrame = 0.;
 
-    void Time::InitStartTime()
-    {
-        ASSERT(!m_StartTime, "Start time has already been set!");
-        m_StartTime = Now();
-    }
+    namespace Time {
 
-    void Time::EndFrame()
-    {
-        m_LastFrame = m_CurrentFrame;
-        m_CurrentFrame = Now();
-        m_FrameDelta = m_CurrentFrame - m_LastFrame;
-    }
+        void InitStartTime()
+        {
+            ASSERT(!s_StartTime, "Start time has already been set!");
+            s_StartTime = Now();
+        }
 
-    double Time::Now()
-    {
-        unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
-        unsigned __int64 time;
+        void EndFrame()
+        {
+            s_LastFrame = s_CurrentFrame;
+            s_CurrentFrame = Now();
+            s_FrameDelta = s_CurrentFrame - s_LastFrame;
+        }
 
-        QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
-        QueryPerformanceCounter((LARGE_INTEGER*)&time);
+        double Now()
+        {
+            unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
+            unsigned __int64 time;
 
-        return (double)time / freq;
+            QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
+            QueryPerformanceCounter((LARGE_INTEGER*)&time);
+
+            return (double)time / freq;
+        }
+
+        double StartTime()
+        {
+            return s_StartTime;
+        }
+
+        float FrameDelta()
+        {
+            return (float)s_FrameDelta;
+        };
+
+        double FrameDeltaDouble()
+        {
+            return s_FrameDelta;
+        };
+
     }
 
 }

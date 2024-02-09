@@ -121,15 +121,13 @@ namespace QwerkE {
 			{
 				float deltaTime = Time::FrameDelta();
 
-				{
-					Framework::NewFrame();
+				Framework::NewFrame();
 
-					Framework::Update(deltaTime);
+				Framework::Update(deltaTime);
 
-					Framework::Draw();
+				Framework::Draw();
 
-					Time::EndFrame();
-				}
+				Time::EndFrame();
 			}
 		}
 
