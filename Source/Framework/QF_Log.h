@@ -56,6 +56,7 @@ namespace QwerkE {
 #define LOG_ERROR(...)      QwerkE::Log::m_Logger->error(__VA_ARGS__);
 // #define LOG_ERROR_EXT(__FUNCTION__, ...)      QwerkE::Log::m_Logger->error(__VA_ARGS__);
 #define LOG_CRITICAL(...)   QwerkE::Log::m_Logger->critical(__VA_ARGS__);
+// #TODO Handle repeated (every frame) logs with some "no spam" function or argument like a bool with a default/optional argument
 
 #else
 #define LOG_TRACE(...)      (void)0

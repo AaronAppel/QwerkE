@@ -13,7 +13,6 @@
 
 namespace QwerkE {
 
-    bool s_IsRunning = true;
     Scene* s_CurrentScene = nullptr;
     std::vector<Scene*> s_Scenes;
 
@@ -45,7 +44,6 @@ namespace QwerkE {
 			{
 				Scene* emptyScene = new Scene(null_scene);
 				emptyScene->LoadScene();
-				emptyScene->SetIsEnabled(true);
 				AddScene(emptyScene, true);
 				LOG_WARN("Null scene loaded as no scene files found for project: {0}", projectSettings.projectName);
 			}
@@ -62,11 +60,35 @@ namespace QwerkE {
 			}
 		}
 
-		void EnableScene(std::string sceneName)
+		void ActivateScene(std::string sceneName)
 		{
 			if (Scene* scene = GetScene(sceneName))
 			{
-				scene->SetIsEnabled(true);
+				scene->SetIsActive(true);
+			}
+		}
+
+		void DeactivateScene(std::string sceneName)
+		{
+			if (Scene* scene = GetScene(sceneName))
+			{
+				scene->SetIsActive(false);
+			}
+		}
+
+		void PauseScene(std::string sceneName)
+		{
+			if (Scene* scene = GetScene(sceneName))
+			{
+				scene->SetIsPaused(true);
+			}
+		}
+
+		void UnpauseScene(std::string sceneName)
+		{
+			if (Scene* scene = GetScene(sceneName))
+			{
+				scene->SetIsPaused(false);
 			}
 		}
 
@@ -75,14 +97,6 @@ namespace QwerkE {
 			if (Scene* scene = GetScene(sceneName))
 			{
 				s_CurrentScene = scene;
-			}
-		}
-
-		void DisableScene(std::string sceneName)
-		{
-			if (Scene* scene = GetScene(sceneName))
-			{
-				scene->SetIsEnabled(false);
 			}
 		}
 
@@ -105,7 +119,7 @@ namespace QwerkE {
 			if (s_CurrentScene == nullptr)
 			{
 				s_CurrentScene = scene;
-				scene->SetIsEnabled(true);
+				scene->SetIsActive(true);
 			}
 		}
 
@@ -133,7 +147,7 @@ namespace QwerkE {
 				GetCurrentScene()->ToggleIsPaused();
 			}
 
-			if (s_CurrentScene && s_IsRunning && s_CurrentScene->GetIsEnabled())
+			if (s_CurrentScene && s_CurrentScene->GetIsActive())
 			{
 				s_CurrentScene->Update(deltatime);
 			}
@@ -142,7 +156,7 @@ namespace QwerkE {
 		void DrawCurrentScene()
 		{
 			PROFILE_SCOPE("Scene Manager Render");
-			if (s_CurrentScene && s_CurrentScene->GetIsEnabled())
+			if (s_CurrentScene && s_CurrentScene->GetIsActive())
 			{
 				s_CurrentScene->Draw();
 			}

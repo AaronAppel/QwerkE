@@ -9,14 +9,21 @@
 #include "QF_Defines.h"
 #include "QF_Log.h"
 #include "QF_Renderer.h"
+#include "QF_Settings.h"
 
 const char* g_WindowTitle = "QwerkEngine";
+
+// From https://stackoverflow.com/questions/11335301/glfw-get-screen-height-width
+// void Window::CenterTheWindow(){
+// GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+// const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+// glfwSetWindowPos(m_Window, (mode->width - m_Width) / 2, (mode->height - m_Height) / 2);
+// }
 
 namespace QwerkE {
 
     bool s_windowIsMaximized = false;
     bool s_closeRequested = false;
-    vec2 s_resolution = vec2(1600.f, 900.f);
     vec2 s_aspectRatio = vec2(16.f, 9.f);
 
 #ifdef GLFW3
@@ -52,7 +59,8 @@ namespace QwerkE {
 
         GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor();
 
-        s_window = glfwCreateWindow((int)s_resolution.x, (int)s_resolution.y, g_WindowTitle, NULL, NULL);
+        vec2 resolution = vec2(Settings::GetEngineSettings().windowWidthPixels, Settings::GetEngineSettings().windowHeightPixels);
+        s_window = glfwCreateWindow((int)resolution.x, (int)resolution.y, g_WindowTitle, NULL, NULL);
         if (!s_window)
         {
             priv_CheckGlfwErrors();
@@ -183,7 +191,9 @@ namespace QwerkE {
 
     vec2 Window::GetResolution()
     {
-        return s_resolution;
+        int width, height;
+        glfwGetWindowSize(s_window, &width, &height);
+        return vec2(width, height);
     }
 
     vec2 Window::GetAspectRatio()

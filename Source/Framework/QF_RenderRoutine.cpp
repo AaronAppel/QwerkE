@@ -68,6 +68,9 @@ namespace QwerkE {
 
     void RenderRoutine::DrawMeshData(const GameObject* a_Camera)
     {
+        if (!m_Enabled)
+            return;
+
         if (!m_pRenderComp)
         {
             LOG_WARN("m_pRenderComp is nullptr for object {0}!", m_pParent->GetName().c_str());
@@ -105,7 +108,7 @@ namespace QwerkE {
 
     void RenderRoutine::NullDraw(const GameObject* a_Camera)
     {
-        if (m_pRenderComp)
+        if (m_Enabled && m_pRenderComp)
         {
             // TODO: Do I need to check that other data is valid?
             m_DrawFunc = &RenderRoutine::DrawMeshData;
@@ -136,6 +139,7 @@ namespace QwerkE {
             m_UniformSetupList.push_back(temp);
         }
 
+        CheckGraphicsErrors(__FILE__, __LINE__); // DEBUG:
         for (unsigned int i = 0; i < t_Renderables->size(); i++) // for each renderable
         {
             if (t_Renderables->at(i).SeeShader()->SeeUniforms()->size() == 0)

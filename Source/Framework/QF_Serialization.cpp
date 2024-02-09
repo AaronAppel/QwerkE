@@ -193,6 +193,7 @@ case MirrorTypes::ClassType: \
                 DESERIALIZE_CASE_FOR_CLASS(SceneViewerData)
                 DESERIALIZE_CASE_FOR_CLASS(Transform)
                 DESERIALIZE_CASE_FOR_CLASS(UserSettings)
+                DESERIALIZE_CASE_FOR_CLASS(Vector2)
                 DESERIALIZE_CASE_FOR_CLASS(Vector3)
 
             case MirrorTypes::m_vector_string:
@@ -352,24 +353,26 @@ case MirrorTypes::ClassType: \
             case cJSON_Number:
                 {
                     void* fieldAddress = ((char*)obj);
-                    void* sourceAddress = (void*)&jsonObj->valueint;
-                    size_t bytesToWrite = sizeof(jsonObj->valueint);
 
                     switch (type)
                     {
                     case MirrorTypes::m_float:
-                    {
-                        float* a = (float*)fieldAddress;
-                        *a = (float)jsonObj->valuedouble;
+                        {
+                            float* floatValuePtr = (float*)fieldAddress;
+                            *floatValuePtr = (float)jsonObj->valuedouble;
+                        }
                         break;
-                    }
 
                     case MirrorTypes::m_double:
-                        sourceAddress = (void*)&jsonObj->valuedouble;
-                        bytesToWrite = sizeof(double);
-                        // Fall through to default case
+                        {
+                            double* doubleValuePtr = (double*)fieldAddress;
+                            *doubleValuePtr = (double)jsonObj->valuedouble;
+                        }
+                        break;
+
                     default:
-                        memcpy(fieldAddress, sourceAddress, bytesToWrite);
+                        void* sourceAddress = (void*)&jsonObj->valueint;
+                        memcpy(fieldAddress, sourceAddress, sizeof(jsonObj->valueint));
                         break;
                     }
                 }
@@ -495,6 +498,7 @@ case MirrorTypes::ClassType: \
                     SERIALIZE_CASE_FOR_CLASS(SceneViewerData)
                     SERIALIZE_CASE_FOR_CLASS(Transform)
                     SERIALIZE_CASE_FOR_CLASS(UserSettings)
+                    SERIALIZE_CASE_FOR_CLASS(Vector2)
                     SERIALIZE_CASE_FOR_CLASS(Vector3)
                     SERIALIZE_CASE_FOR_CLASS(RenderRoutine)
                     SERIALIZE_CASE_FOR_CLASS(TransformRoutine)
@@ -582,6 +586,9 @@ case MirrorTypes::ClassType: \
                             break;
 
                         case Component_Camera:
+                            SerializeObjectToJson(component, Mirror::InfoForClass<ComponentCamera>(), t_Component);
+                            break;
+
                         case Component_Light:
                         case Component_Physics:
                         case Component_Controller:

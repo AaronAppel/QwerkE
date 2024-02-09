@@ -13,9 +13,10 @@ namespace QwerkE {
         void Initialize();
         void Shutdown();
 
-        void EnableScene(std::string sceneName);
+        void ActivateScene(std::string sceneName);
         void SetCurrentScene(std::string sceneName);
-        void DisableScene(std::string sceneName);
+        void PauseScene(std::string sceneName);
+        void UnpauseScene(std::string sceneName);
 
         void AddScene(Scene* scene, bool setAsCurrentScene = false);
         Scene* RemoveScene(Scene* scene);

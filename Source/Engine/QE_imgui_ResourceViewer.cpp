@@ -40,7 +40,6 @@ namespace QwerkE {
 
         m_ViewerScene = new Scene("ThumbNail.qscene");
         m_ViewerScene->LoadScene();
-        m_ViewerScene->SetIsEnabled(true);
         ComponentCamera* camera = (ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera);
         camera->SetViewportSize(Window::GetResolution());
 
@@ -66,7 +65,7 @@ namespace QwerkE {
 
         for (size_t i = 0; i < eResourceViewerDrawTypes::_size_constant; i++)
         {
-            if (i > 0) ImGui::SameLine();
+            if (i % buttonsPerRow != 0) ImGui::SameLine();
 
             if (ImGui::Button(ENUM_TO_STR(eResourceViewerDrawTypes::_from_index(i))))
             {
@@ -236,6 +235,34 @@ namespace QwerkE {
     {
         // Dump old values. maybe calculate what changed in the future
         m_ModelImageHandles.clear();
+
+        const std::map<std::string, GameObject*>& sceneObjects = m_ViewerScene->GetObjectList();
+        sceneObjects;
+
+        for (auto p : sceneObjects)
+        {
+            p.second->Deactivate();
+        }
+
+        GameObject* currentCamera = m_ViewerScene->GetCurrentCamera();
+        ComponentCamera* camComponent = (ComponentCamera*)currentCamera->GetComponent(eComponentTags::Component_Camera);
+        camComponent->SetViewportSize(vec2(128, 128)); // #TODO Add an aspect ratio or some value to each individual camera
+
+        for (auto p : sceneObjects)
+        {
+            p.second->Activate();
+
+            m_FBO->Bind();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            m_ViewerScene->Draw();
+
+            m_FBO->UnBind();
+
+            p.second->Deactivate();
+        }
+        m_ModelImageHandles.push_back(m_FBO->GetTextureID());
+        return;
 
         for (const auto& p : *m_Meshes)
         {

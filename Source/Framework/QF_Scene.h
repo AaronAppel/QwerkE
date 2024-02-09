@@ -43,17 +43,17 @@ namespace QwerkE {
         void OnLoaded();
 
         const GameObject* GetGameObject(const char* name);
-        bool GetIsEnabled() { return m_IsEnabled; };
+        bool GetIsActive() { return m_SceneIsActive; };
         bool GetIsPaused() { return m_IsPaused; };
         std::vector<GameObject*> GetCameraList() { return m_CameraList; };
-        std::map<std::string, GameObject*> GetObjectList() { return m_pGameObjects; };
-        int GetCurrentCamera() { return m_CurrentCamera; };
+        GameObject* GetCurrentCamera() { return m_CameraList[m_CurrentCameraIndex]; }
+        const std::map<std::string, GameObject*>& GetObjectList() { return m_pGameObjects; };
         const std::vector<GameObject*>& GetLightList() const { return m_LightList; };
         const std::string& GetSceneName() { return m_SceneFileName; }
 
-        void SetIsEnabled(bool isEnabled) { m_IsEnabled = isEnabled; };
+        void SetIsActive(bool isActive) { m_SceneIsActive = isActive; };
         void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; };
-        void SetCurrentCamera(int camera) { m_CurrentCamera = camera; };
+        void SetCurrentCamera(int newCameraIndex) { m_CurrentCameraIndex = newCameraIndex; };
 
         void ToggleIsPaused() { m_IsPaused = !m_IsPaused; };
 
@@ -65,13 +65,13 @@ namespace QwerkE {
 
         MIRROR_PRIVATE_MEMBERS
 
-        bool m_IsEnabled = false;
         bool m_IsPaused = false;
+        bool m_SceneIsActive = false;
         std::string m_SceneFileName = gc_DefaultCharPtrValue;
 
         std::map<std::string, GameObject*> m_pGameObjects;
 
-        int m_CurrentCamera = 0;
+        int m_CurrentCameraIndex = 0;
 
         std::vector<GameObject*> m_CameraList;
         std::vector<GameObject*> m_LightList;

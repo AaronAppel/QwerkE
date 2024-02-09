@@ -12,7 +12,7 @@ namespace QwerkE {
 
     void TransformRoutine::Update(double a_Deltatime)
     {
-        if (!m_pParent) return;
+        if (!m_pParent || !m_Enabled) return;
 
         const vec3& rotation = m_pParent->GetRotation();
 

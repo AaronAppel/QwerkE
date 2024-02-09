@@ -4,6 +4,7 @@
 
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/FlatheadGames/MyMatrix.h"
+#include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Constants.h"
 #include "QF_Enums.h"
@@ -52,6 +53,8 @@ namespace QwerkE {
         void SetViewportSize(vec2 size) { m_ViewportSize = size; UpdateCameraVectors(); };
 
     protected:
+        MIRROR_PRIVATE_MEMBERS
+
         ComponentCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
         void UpdateParentPosition(vec3 m_Position);

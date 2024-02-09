@@ -10,7 +10,7 @@ namespace QwerkE {
     class GameObject;
     class EditComponent;
 
-    class EntityEditor
+    class EntityEditor final // #TODO Review if multiple instances is wanted
     {
     public:
         EntityEditor();
@@ -22,6 +22,7 @@ namespace QwerkE {
 
     private:
         void DrawEntityEditor();
+        void DrawEntityEditorInspect();
 
         GameObject* m_CurrentEntity = nullptr;
         EditComponent* m_EditComponent = nullptr;

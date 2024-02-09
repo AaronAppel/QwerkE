@@ -41,13 +41,13 @@ namespace QwerkE {
         {
             Scene* currentScene = Scenes::GetCurrentScene();
 
-            m_currentEngineStateIndex = (char)currentScene->GetIsPaused();
+            m_currentSceneStateIndex = (char)currentScene->GetIsPaused();
 
             ImGui::PushItemWidth(150);
             const char* states[] = { "Running", "Paused" };
-            if (ImGui::Combo("Scene State", &m_currentEngineStateIndex, states, sizeof(states)/sizeof(const char*)))
+            if (ImGui::Combo("Scene State", &m_currentSceneStateIndex, states, sizeof(states)/sizeof(const char*)))
             {
-                currentScene->SetIsPaused((bool)m_currentEngineStateIndex);
+                currentScene->SetIsPaused((bool)m_currentSceneStateIndex);
             }
             ImGui::PopItemWidth();
 
@@ -101,7 +101,7 @@ namespace QwerkE {
                 }
 
                 if (ImGui::Button(scenes[i]->GetSceneName().c_str()) ||
-                    Input::FrameKeyAction((eKeys)(eKeys::eKeys_0 + counter), eKeyState::eKeyState_Press))
+                    Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + counter - 1), eKeyState::eKeyState_Press))
                 {
                     Scenes::SetCurrentScene(scenes[i]->GetSceneName());
                 }

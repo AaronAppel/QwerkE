@@ -38,10 +38,10 @@ namespace QwerkE {
 
     void Scene::Update(float deltatime)
     {
+        CameraInput(deltatime);
+
         if (m_IsPaused)
             return;
-
-        CameraInput(deltatime);
 
         for (auto object : m_pGameObjects)
         {
@@ -52,7 +52,7 @@ namespace QwerkE {
     void Scene::CameraInput(float deltatime)
     {
         // #TODO Put logic in camera component
-        ComponentCamera* t_activecamera = ((ComponentCamera*)m_CameraList.at(m_CurrentCamera)->GetComponent(Component_Camera));
+        ComponentCamera* t_activecamera = ((ComponentCamera*)m_CameraList.at(m_CurrentCameraIndex)->GetComponent(Component_Camera));
 
         const UserSettings& userSettings = Settings::GetUserSettings();
 
@@ -94,7 +94,7 @@ namespace QwerkE {
     {
         // #TODO Define draw behaviour (Highest first vs lowest first?)
 
-        GameObject* camera = m_CameraList.at(m_CurrentCamera);
+        GameObject* camera = m_CameraList.at(m_CurrentCameraIndex);
         for (int i = m_SceneDrawList.size() - 1; i >= 0; i--)
         {
             m_SceneDrawList.at(i)->Draw(camera);

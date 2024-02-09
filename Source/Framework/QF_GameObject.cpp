@@ -191,17 +191,41 @@ namespace QwerkE {
 
     void GameObject::Activate()
     {
+        m_Enabled = true;
+
         for (auto l_LoopVar : m_Components)
         {
             l_LoopVar.second->Activate();
+        }
+
+        for (auto l_LoopVar : m_UpdateList)
+        {
+            l_LoopVar->Activate();
+        }
+
+        for (auto l_LoopVar : m_DrawList)
+        {
+            l_LoopVar->Activate();
         }
     }
 
     void GameObject::Deactivate()
     {
+        m_Enabled = false;
+
         for (auto l_LoopVar : m_Components)
         {
             l_LoopVar.second->Deactivate();
+        }
+
+        for (auto l_LoopVar : m_UpdateList)
+        {
+            l_LoopVar->Deactivate();
+        }
+
+        for (auto l_LoopVar : m_DrawList)
+        {
+            l_LoopVar->Deactivate();
         }
     }
 

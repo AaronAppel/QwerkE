@@ -3,8 +3,7 @@
 			"m_SceneFileName":	"null_scene.qscene",
 			"m_IsEnabled":	true,
 			"m_IsPaused":	false,
-			"m_ID":	0,
-			"m_CurrentCamera":	0,
+			"m_CurrentCameraIndex":	0,
 			"m_CameraList":	[{
 					"GameObject":	[{
 							"m_Name":	"Camera0",
@@ -32,7 +31,11 @@
 							}],
 							"m_Components":	[{
 									"1":	[{
-									}]
+											"m_ViewportSize":	[{
+													"x":	1600,
+													"y":	900
+												}]
+										}]
 								}],
 							"m_RenderOrder":	100
 						}]
@@ -94,8 +97,8 @@
 											"z":	0
 										}],
 									"s_Rotation":	[{
-											"x":	268.875000,
-											"y":	268.875000,
+											"x":	152.625000,
+											"y":	152.625000,
 											"z":	0
 										}],
 									"s_Scale":	[{

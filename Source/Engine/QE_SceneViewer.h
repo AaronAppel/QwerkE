@@ -4,7 +4,7 @@ namespace QwerkE {
 
     class FrameBufferObject;
 
-    class SceneViewer
+    class SceneViewer // #TODO Look at simplifying and deprecating class. Move to another editor class
     {
     public:
         SceneViewer();
@@ -17,7 +17,7 @@ namespace QwerkE {
         void DrawSceneList();
 
         FrameBufferObject* m_FBO = nullptr;
-        int m_currentEngineStateIndex = 0;
+        int m_currentSceneStateIndex = 0;
     };
 
 }

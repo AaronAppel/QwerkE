@@ -61,6 +61,7 @@ namespace QwerkE {
 
         void Activate();
         void Deactivate();
+        bool Enabled() { return m_Enabled; }
 
         const std::map<eComponentTags, Component*>* SeeComponents() const { return &m_Components; }
         const std::vector<Routine*>* SeeUpdateRoutines() { return &m_UpdateList; }
@@ -95,8 +96,7 @@ namespace QwerkE {
     private:
         MIRROR_PRIVATE_MEMBERS
 
-        void Initialize();
-
+        bool m_Enabled = true;
         Scene* m_pScene = nullptr; // TODO: Remove scene reference in GameObject
         std::string m_Name = gc_DefaultStringValue;
         eGameObjectTags m_Tag = GO_Tag_Null;
