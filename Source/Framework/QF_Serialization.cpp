@@ -169,10 +169,13 @@ namespace QwerkE {
             }
         }
 
+    // #TODO test with all classes (doesn't load camera position consistently)
+    // DeserializeJsonToObject(jsonObj, field.classInfo, obj);
+    // DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<ClassType>(), obj);
 #define DESERIALIZE_CASE_FOR_CLASS(ClassType) \
 case MirrorTypes::ClassType: \
     DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<ClassType>(), obj); \
-    break; \
+    break;
 
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
         {
@@ -186,12 +189,26 @@ case MirrorTypes::ClassType: \
             {
             case MirrorTypes::EngineSettings: // DESERIALIZE_CASE_FOR_CLASS(EngineSettings)
                 DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<EngineSettings>(), obj);
+                // DeserializeJsonToObject(jsonObj, field.classInfo, obj);
                 break;
 
                 DESERIALIZE_CASE_FOR_CLASS(ProjectSettings)
                 DESERIALIZE_CASE_FOR_CLASS(RenderComponent)
                 DESERIALIZE_CASE_FOR_CLASS(SceneViewerData)
-                DESERIALIZE_CASE_FOR_CLASS(Transform)
+                // DESERIALIZE_CASE_FOR_CLASS(Transform)
+
+            case MirrorTypes::Transform: // DESERIALIZE_CASE_FOR_CLASS(EngineSettings)
+                DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<Transform>(), obj);
+                // if (field.classInfo)
+                // {
+                //     DeserializeJsonToObject(jsonObj, field.classInfo, obj);
+                // }
+                // else
+                // {
+                //     DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<Transform>(), obj);
+                // }
+                break;
+
                 DESERIALIZE_CASE_FOR_CLASS(UserSettings)
                 DESERIALIZE_CASE_FOR_CLASS(Vector2)
                 DESERIALIZE_CASE_FOR_CLASS(Vector3)

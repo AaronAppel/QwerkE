@@ -1,18 +1,19 @@
 {
 	"Scene":	[{
 			"m_SceneFileName":	"null_scene.qscene",
-			"m_IsEnabled":	true,
 			"m_IsPaused":	false,
+			"m_SceneIsActive":	true,
 			"m_CurrentCameraIndex":	0,
 			"m_CameraList":	[{
 					"GameObject":	[{
+							"m_Enabled":	true,
 							"m_Name":	"Camera0",
 							"m_Tag":	9,
 							"m_Transform":	[{
 									"s_Position":	[{
 											"x":	0,
-											"y":	0.416059,
-											"z":	-9.157461
+											"y":	0,
+											"z":	-1.412574
 										}],
 									"s_Rotation":	[{
 											"x":	0,
@@ -32,8 +33,8 @@
 							"m_Components":	[{
 									"1":	[{
 											"m_ViewportSize":	[{
-													"x":	1600,
-													"y":	900
+													"x":	2048,
+													"y":	1152
 												}]
 										}]
 								}],
@@ -42,6 +43,7 @@
 				}],
 			"m_LightList":	[{
 					"GameObject":	[{
+							"m_Enabled":	true,
 							"m_Name":	"Light13",
 							"m_Tag":	9,
 							"m_Transform":	[{
@@ -88,6 +90,7 @@
 				}],
 			"m_SceneDrawList":	[{
 					"GameObject":	[{
+							"m_Enabled":	true,
 							"m_Name":	"Object1",
 							"m_Tag":	9,
 							"m_Transform":	[{
@@ -97,8 +100,8 @@
 											"z":	0
 										}],
 									"s_Rotation":	[{
-											"x":	152.625000,
-											"y":	152.625000,
+											"x":	0,
+											"y":	0,
 											"z":	0
 										}],
 									"s_Scale":	[{
@@ -116,8 +119,8 @@
 													"z":	0
 												}],
 											"m_RotationOffset":	[{
-													"x":	0.750000,
-													"y":	0.750000,
+													"x":	0,
+													"y":	0,
 													"z":	0
 												}],
 											"m_ScaleOffset":	[{

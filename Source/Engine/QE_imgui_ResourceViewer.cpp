@@ -63,6 +63,7 @@ namespace QwerkE {
     {
         if (!ImGui::Begin(s_resourceViewerWindowTitle)) { return; }
 
+        const int buttonsPerRow = 3;
         for (size_t i = 0; i < eResourceViewerDrawTypes::_size_constant; i++)
         {
             if (i % buttonsPerRow != 0) ImGui::SameLine();
@@ -84,7 +85,7 @@ namespace QwerkE {
         ImVec2 winSize = ImGui::GetWindowSize();
         m_ModelsPerRow = (unsigned char)(winSize.x / (m_ModelThumbnailPixelSize.x * 1.5f) + 1.0f); // (* up the image size for feel), + avoid dividing by 0
 
-        const ImVec2 tooltipOnClickSize = ImVec2(256, 256);
+        const ImVec2 tooltipOnClickSize = ImVec2(256, 256); // #TODO Consider moving to an editor settings file
         const ImVec2 imageUv0 = ImVec2(0.0f, 1.0f);
         const ImVec2 imageUv1 = ImVec2(1.0f, 0.0f);
         const int imageFramePadding = 1;

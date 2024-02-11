@@ -119,7 +119,10 @@ namespace QwerkE {
 	MIRROR_CLASS_END
 
 	// GameObject components
-	MIRROR_CLASS_START(ComponentCamera)
+	MIRROR_CLASS_START(Component)
+	MIRROR_CLASS_END
+
+	MIRROR_SUB_CLASS_START(ComponentCamera, Component)
 	MIRROR_CLASS_MEMBER(m_ViewportSize)
 	MIRROR_CLASS_END
 
