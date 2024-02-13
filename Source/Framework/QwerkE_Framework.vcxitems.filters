@@ -150,9 +150,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Factory.cpp">
       <Filter>Core\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Testing.cpp">
-      <Filter>Core\Factory</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FontTest.cpp">
       <Filter>Core\Graphics\FontRendering</Filter>
     </ClCompile>
@@ -336,6 +333,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.cpp">
       <Filter>Core\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Texture.cpp">
+      <Filter>Core\Graphics\DataTypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

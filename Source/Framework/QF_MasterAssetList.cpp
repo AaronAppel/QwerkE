@@ -5,6 +5,7 @@
 #include "QF_Debug.h"
 #include "QF_Material.h"
 #include "QF_Settings.h"
+#include "QF_Serialization.h"
 #include "QF_ShaderProgram.h"
 #include "QF_ShaderComponent.h"
 #include "QF_ShaderFactory.h"
@@ -135,8 +136,7 @@ namespace QwerkE {
 	{
 		if (FileExists(textureName))
 		{
-			Texture* texture = nullptr;
-			texture = new Texture();
+			Texture* texture = new Texture();
 			texture->s_Handle = Load2DTexture(textureName);
 			texture->s_FileName = GetFileNameWithExt(textureName);
 
@@ -158,17 +158,21 @@ namespace QwerkE {
 	{
 		Material* material = nullptr;
 
-		// TODO: Set null data for handles and names like "Empty"
 		if (strcmp(GetFileExtension(matName).c_str(), material_schematic_ext) == 0)
 		{
-			// TODO: Handle null or corrupt data
 			if (FileExists(matName))
 			{
-				material = Serialization::LoadMaterialSchematic(matName);
+				material = new Material();
+				Serialization::DeserializeJsonFromFile(matName, *material);
+			}
+			else if (FileExists(TexturesFolderPath(matName)))
+			{
+				material = new Material();
+				Serialization::DeserializeJsonFromFile(TexturesFolderPath(matName), *material);
 			}
 			else
 			{
-				material = Serialization::LoadMaterialSchematic(TexturesFolderPath(matName));
+				LOG_ERROR("{0} Could not find .msch file named: {1}!", __FUNCTION__, matName);
 			}
 		}
 		else
@@ -179,7 +183,7 @@ namespace QwerkE {
 		if (!material)
         {
             LOG_WARN("{0} Material not found: {1}", __FUNCTION__, matName);
-			return m_Materials[null_material]; // Do not add another material
+			return m_Materials[null_material];
 		}
 
 		m_Materials[GetFileNameWithExt(matName).c_str()] = material;
@@ -231,27 +235,30 @@ namespace QwerkE {
 	{
 		if (FileExists(schematicFile))
 		{
-			ShaderProgram* result = Serialization::LoadShaderSchematic(schematicFile); // TODO: Free memory on error
-			if (result)
-			{
-				result->SetVertShader(GetShaderComponent(result->GetVertName().c_str(), eShaderComponentTypes::Vertex));
-				result->SetFragShader(GetShaderComponent(result->GetFragName().c_str(), eShaderComponentTypes::Fragment));
-				// result->s_geoShader = GetShaderComponentData(result->s_geoName.c_str(), eShaderComponentTypes::Geometry);
+			ShaderProgram* newShaderProgram = new ShaderProgram();
+			Serialization::DeserializeJsonFromFile(schematicFile, *newShaderProgram);
 
-				if (ShaderFactory::LinkCreatedShaderProgram(result))
+			if (newShaderProgram)
+			{
+				newShaderProgram->SetVertShader(GetShaderComponent(newShaderProgram->GetVertName().c_str(), eShaderComponentTypes::Vertex));
+				newShaderProgram->SetFragShader(GetShaderComponent(newShaderProgram->GetFragName().c_str(), eShaderComponentTypes::Fragment));
+				// newShaderProgram->s_geoShader = GetShaderComponentData(newShaderProgram->s_geoName.c_str(), eShaderComponentTypes::Geometry);
+
+				if (ShaderFactory::LinkCreatedShaderProgram(newShaderProgram))
 				{
-					m_ShaderPrograms[GetFileNameWithExt(schematicFile)] = result;
-					result->FindAttributesAndUniforms();
-					return result;
+					m_ShaderPrograms[GetFileNameWithExt(schematicFile)] = newShaderProgram;
+					newShaderProgram->FindAttributesAndUniforms();
+					return newShaderProgram;
 				}
 			}
+			delete newShaderProgram;
         }
         return m_ShaderPrograms[null_shader_schematic];
 	}
 
 	ShaderComponent* Resources::InstantiateShaderComponent(const char* componentFilePath)
 	{
-		ASSERT(componentFilePath && FileExists(componentFilePath), "Cannot return a valid shader component using an invalid file path!");
+		// ASSERT(componentFilePath && FileExists(componentFilePath), "Cannot return a valid shader component using an invalid file path!");
 
 		if (strcmp(GetFileExtension(componentFilePath).c_str(), vertex_shader_ext) == 0)
 		{

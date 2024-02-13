@@ -51,15 +51,10 @@ namespace QwerkE {
 			ClosecJSONStream(root);
 		}
 
-		void DeserializeRenderComponentFromSchematic(const char* schematicPath, RenderComponent* renderComponent)
-		{
-			Serialization::DeserializeJsonFromFile(schematicPath, *renderComponent);
-		}
-
 		RenderComponent* LoadRenderComponentFromSchematic(const char* schematicPath)
 		{
 			RenderComponent* rComp = new RenderComponent();
-			DeserializeRenderComponentFromSchematic(schematicPath, rComp);
+			Serialization::DeserializeJsonFromFile(schematicPath, *rComp);
 			rComp->Activate();
 			return rComp;
 		}
@@ -79,7 +74,7 @@ namespace QwerkE {
 			cJSON* root = OpencJSONStream(filePath);
 			if (!root) { return; }
 
-			AddItemToRoot(root, CreateString("Name", "MaterialSchematic1.msch"));
+			AddItemToRoot(root, CreateString("m_Name", "MaterialSchematic1.msch"));
 
 			//cJSON* OtherData = CreateArray("OtherData");
 			//AddItemToArray(OtherData, CreateNumber("Shine", mat->s_Shine));
@@ -116,11 +111,14 @@ namespace QwerkE {
 
 		void LoadMaterialSchematic(const char* schematicPath, Material* material)
 		{
+			Serialization::DeserializeJsonFromFile(schematicPath, *material);
+			return;
+
 			cJSON* root = OpencJSONStream(schematicPath);
 			if (root)
 			{
 				// load mat data from file
-				material->SetMaterialName(GetItemFromRootByKey(root, "Name")->valuestring);
+				material->SetMaterialName(GetItemFromRootByKey(root, "m_Name")->valuestring);
 
 				// load "other" data
 				//cJSON* otherData = GetItemFromRootByKey(root, "OtherData");
@@ -171,13 +169,6 @@ namespace QwerkE {
 			// material->s_ReflectionHandle = Resources::GetTexture(mat->s_ReflectionName.c_str());
 		}
 
-		Material* LoadMaterialSchematic(const char* schematicPath)
-		{
-			Material* mat = new Material();
-			LoadMaterialSchematic(schematicPath, mat);
-			return mat;
-		}
-
 		void SaveShaderSchematic(ShaderProgram* shader)
 		{
 			const char* filePath = StringAppend(AssetsDir, "Shaders/LitMaterial", shader_schematic_ext);
@@ -205,28 +196,7 @@ namespace QwerkE {
 		{
 			ShaderProgram* shader = new ShaderProgram();
 
-			cJSON* root = OpencJSONStream(schematicPath);
-
-			if (root)
-			{
-				shader->SetName(GetItemFromRootByKey(root, "Name")->valuestring);
-
-				shader->SetVertName(GetItemFromRootByKey(root, "vert")->valuestring);
-				shader->SetFragName(GetItemFromRootByKey(root, "frag")->valuestring);
-				shader->SetGeoName(GetItemFromRootByKey(root, "geo")->valuestring);
-
-				ClosecJSONStream(root);
-			}
-
-			// #TODO Test
-			shader->SetVertShader(Resources::GetShaderComponent(shader->GetVertName().c_str(), eShaderComponentTypes::Vertex));
-			shader->SetFragShader(Resources::GetShaderComponent(shader->GetFragName().c_str(), eShaderComponentTypes::Fragment));
-
-			if (!shader->GetGeoName().empty() && shader->GetGeoName() != gc_DefaultStringValue)
-			{
-				shader->SetGeoShader(Resources::GetShaderComponent(shader->GetGeoName().c_str(), eShaderComponentTypes::Geometry));
-			}
-
+			Serialization::DeserializeJsonFromFile(schematicPath, *shader);
 			return shader;
 		}
 

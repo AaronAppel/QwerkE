@@ -1,6 +1,8 @@
 {
-	"Name":	"Basic3D.ssch",
-	"vert":	"Basic3D.vert",
-	"frag":	"Basic3D.frag",
-	"geo":	"null"
+	"ShaderProgram":	[{
+		"m_Name":	"Basic3D.ssch",
+		"m_VertName":	"Basic3D.vert",
+		"m_FragName":	"Basic3D.frag",
+		"m_GeoName":	"null"
+	}]
 }

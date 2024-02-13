@@ -1,11 +1,16 @@
 {
-	"Name":	"container.msch",
-	"OtherData":	[{
-			"Shine":	0.500000
-		}],
-	"TextureNames":	[{
-			"0":	"container.png",
-			"1":	"container.png",
-			"2":	"container_specular.png"
-		}]
+	"Material":	[{
+		"m_Name":	"container.msch",
+		"m_Components":	[{
+			"0":	[{
+					"s_FileName": "container.png"
+				}],
+			"1":	[{
+					"s_FileName": "container.png"
+				}],
+			"2":	[{
+					"s_FileName": "container_specular.png"
+				}]
+			}]
+	}]
 }

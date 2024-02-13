@@ -13,11 +13,4 @@ namespace QwerkE {
 
     int Factory::m_CreatedCount = 0;
 
-    RenderComponent* Factory::AddModelComponentFromSchematic(GameObject* entity, const char* objectRecipeName)
-    {
-        RenderComponent* mComp = Serialization::LoadRenderComponentFromSchematic(ObjectSchematicsFolderPath(objectRecipeName));
-        entity->AddComponent((Component*)mComp);
-        return mComp;
-    }
-
 }

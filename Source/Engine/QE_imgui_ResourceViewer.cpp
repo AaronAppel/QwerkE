@@ -230,7 +230,8 @@ namespace QwerkE {
 
     void ResourceViewer::RenderModelThumbnails()
     {
-        ASSERT(m_ModelImageHandles.empty(), "Thumbnails have already been generated!");
+        // ASSERT(m_ModelImageHandles.empty(), "Thumbnails have already been generated!");
+        m_ModelImageHandles.clear();
 
         const std::map<std::string, GameObject*>& sceneObjects = m_ViewerScene->GetObjectList();
 

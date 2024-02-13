@@ -1,6 +1,8 @@
 {
-	"Name":	"test_normal.ssch",
-	"vert":	"test_normal.vert",
-	"frag":	"test_normal.frag",
-	"geo":	"null"
+	"ShaderProgram":	[{
+		"m_Name":	"test_normal.ssch",
+		"m_VertName":	"test_normal.vert",
+		"m_FragName":	"test_normal.frag",
+		"m_GeoName":	"null"
+	}]
 }

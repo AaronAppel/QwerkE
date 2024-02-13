@@ -1,6 +1,8 @@
 {
-	"Name":	"vec3_material.ssch",
-	"vert":	"vec3Material.vert",
-	"frag":	"vec3Material.frag",
-	"geo":	"null"
+	"ShaderProgram":	[{
+		"m_Name":	"vec3_material.ssch",
+		"m_VertName":	"vec3Material.vert",
+		"m_FragName":	"vec3Material.frag",
+		"m_GeoName":	"null"
+	}]
 }

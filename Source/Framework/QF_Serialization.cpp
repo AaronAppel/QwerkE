@@ -262,7 +262,7 @@ namespace QwerkE {
                             continue;
                         }
 
-                        switch ((eComponentTags)std::stoi(jsonGameObjects[i]->string))
+                        switch (componentTag)
                         {
                         case Component_Camera:
                             component = new ComponentCamera();
@@ -301,6 +301,35 @@ namespace QwerkE {
                 }
             }
             break;
+
+            case MirrorTypes::m_map_eMaterialMaps_texturePtr: // #TODO Textures should be created and requested by Resources
+                {
+                    std::map<eMaterialMaps, Texture*>* texturesMap = (std::map<eMaterialMaps, Texture*>*)obj;
+                    const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
+                    if (texturesMap)
+                    {
+                        texturesMap->clear();
+
+                        for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                        {
+                            eMaterialMaps componentTag = (eMaterialMaps)std::stoi(jsonGameObjects[i]->string);
+                            if (texturesMap->find(componentTag) != texturesMap->end())
+                            {
+                                LOG_ERROR("{0} Found duplicated key {1} in map!", __FUNCTION__, (int)componentTag);
+                                continue;
+                            }
+
+                            Texture texture;
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<Texture>(), &texture);
+                            Texture* result = Resources::GetTexture(texture.s_FileName.c_str());
+
+                            std::map<eMaterialMaps, Texture*>& componentMapRef = *texturesMap; // #TODO BUG Look why map->insert({}) wasn't working with initializer list
+                            componentMapRef[componentTag] = result;
+                            continue;
+                        }
+                    }
+                }
+                break;
 
             default:
                 DeserializeJsonToObject(jsonObj, field.classInfo, obj);

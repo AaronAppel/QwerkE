@@ -10,17 +10,16 @@ namespace QwerkE {
 
     struct Texture
     {
-    public:
-
-        Texture() {}
-        ~Texture() {}
+        Texture() = default;
 
 #ifdef OpenGL
         Texture(GLuint handle) : s_Handle(handle) {}
         GLuint s_Handle = 0;
 #else
-        unsigned int s_Handle = 0;
+#pragma warning "Define graphics library!"
 #endif
+
+        void Initialize();
 
         std::string s_FileName = gc_DefaultStringValue;
     };

@@ -45,7 +45,10 @@ namespace QwerkE {
 
         m_LastEntity = entity;
 
-        if (ImGui::Button("Refresh")) { m_RefreshAssetStrings = true; } // #TODO Bug review
+        if (ImGui::Button("Refresh"))
+        {
+            m_RefreshAssetStrings = true;
+        } // #TODO Bug review
 
         for (auto it = entity->SeeComponents()->begin(); it != entity->SeeComponents()->end(); ++it)
         {

@@ -95,9 +95,14 @@ namespace QwerkE {
         // #TODO Define draw behaviour (Highest first vs lowest first?)
 
         GameObject* camera = m_CameraList.at(m_CurrentCameraIndex);
-        for (int i = m_SceneDrawList.size() - 1; i >= 0; i--)
+        for (size_t i = 0; i < m_SceneDrawList.size(); i++)
         {
             m_SceneDrawList.at(i)->Draw(camera);
+        }
+
+        for (size_t i = 0; i < m_LightList.size(); i++)
+        {
+            m_LightList.at(i)->Draw(camera);
         }
     }
 
@@ -157,8 +162,8 @@ namespace QwerkE {
             if (m_LightList.at(i) == light)
             {
                 m_LightList.erase(m_LightList.begin() + i);
-                m_SceneDrawList.erase(m_SceneDrawList.begin() + i); // Lights are drawn
-                // TODO: Deallocate memory
+                auto it = m_SceneDrawList.erase(m_SceneDrawList.begin() + i);
+                // #TODO Delete object
                 return;
             }
         }
@@ -216,22 +221,7 @@ namespace QwerkE {
 
     void Scene::UnloadScene()
     {
-        int size = m_SceneDrawList.size();
-        for (int i = size - 1; i > -1; i--)
-        {
-            delete m_SceneDrawList.at(i);
-        }
-        m_SceneDrawList.clear();
-
-        size = m_LightList.size();
-        for (int i = size - 1; i > -1; i--)
-        {
-            delete m_LightList.at(i);
-        }
-        m_LightList.clear();
-
-        size = m_CameraList.size();
-        for (int i = size - 1; i > -1; i--)
+        for (size_t i = 0; i < m_CameraList.size(); i++)
         {
             delete m_CameraList.at(i);
         }
@@ -239,7 +229,7 @@ namespace QwerkE {
 
         for (auto object : m_pGameObjects)
         {
-            // delete object.second;
+            delete object.second;
         }
         m_pGameObjects.clear();
 

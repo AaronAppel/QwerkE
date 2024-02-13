@@ -5,6 +5,7 @@
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
+#include "QF_Material.h"
 #include "QF_Mesh.h"
 #include "QF_Resources.h"
 
@@ -12,7 +13,6 @@ namespace QwerkE {
 
     class Mesh;
     class ShaderProgram;
-    class Material;
 
     class Renderable
     {
@@ -45,6 +45,7 @@ namespace QwerkE {
             if (shader)
             {
                 m_Shader = shader;
+                m_ShaderName = shader->GetName();
                 if (m_Mesh)
                 {
                     m_Mesh->SetupShaderAttributes(m_Shader);
@@ -57,6 +58,7 @@ namespace QwerkE {
             if (material)
             {
                 m_Material = material;
+                m_MaterialName = material->GetMaterialName();
             }
         }
 
@@ -68,6 +70,7 @@ namespace QwerkE {
                 if (m_Shader)
                 {
                     m_Mesh->SetupShaderAttributes(m_Shader);
+                    m_MeshFileName = mesh->GetFileName();
                 }
             }
         }

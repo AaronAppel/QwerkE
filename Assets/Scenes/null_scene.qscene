@@ -11,9 +11,9 @@
 							"m_Tag":	9,
 							"m_Transform":	[{
 									"s_Position":	[{
-											"x":	0,
-											"y":	0,
-											"z":	-4.000000
+											"x":	0.691827,
+											"y":	0.498096,
+											"z":	-11.126328
 										}],
 									"s_Rotation":	[{
 											"x":	0,
@@ -49,7 +49,7 @@
 							"m_Transform":	[{
 									"s_Position":	[{
 											"x":	0,
-											"y":	0,
+											"y":	1,
 											"z":	0
 										}],
 									"s_Rotation":	[{
@@ -80,7 +80,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
-															"m_MeshFileName":	"null_mesh.obj"
+															"m_MeshFileName":	"LightBulb.obj"
 														}]
 												}]
 										}]
@@ -112,6 +112,7 @@
 								}],
 							"m_UpdateList":	[{
 									"4":	[{
+											"m_Enabled":	true,
 											"m_Speed":	0.500000,
 											"m_PositionOffset":	[{
 													"x":	0,
@@ -127,8 +128,7 @@
 													"x":	0,
 													"y":	0,
 													"z":	0
-												}],
-											"m_Enabled":	true
+												}]
 										}]
 								}],
 							"m_DrawList":	[{
@@ -144,7 +144,50 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
-															"m_MeshFileName":	"null_mesh.obj"
+															"m_MeshFileName":	"Pyramid.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Object0",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	1,
+											"y":	0,
+											"z":	1
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"0",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshFileName":	"Cube_UVd.obj"
 														}]
 												}]
 										}]

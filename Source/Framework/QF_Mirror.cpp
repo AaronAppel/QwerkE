@@ -12,8 +12,11 @@
 #include "QF_eKeys.h"
 #include "QF_Enums.h"
 #include "QF_GameObject.h"
+#include "QF_Material.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
+#include "QF_ShaderProgram.h"
+#include "QF_Texture.h"
 
 #include "QF_Component.h"
 #include "QF_CameraComponent.h"
@@ -63,6 +66,9 @@ namespace QwerkE {
 	typedef std::map<eComponentTags, Component*> m_map_eComponentTags_componentPtr;
 	MIRROR_TYPE(m_map_eComponentTags_componentPtr)
 
+	typedef std::map<eMaterialMaps, Texture*> m_map_eMaterialMaps_texturePtr;
+	MIRROR_TYPE(m_map_eMaterialMaps_texturePtr)
+
 	// Structs
 	MIRROR_CLASS_START(Vector3)
 	MIRROR_CLASS_MEMBER(x)
@@ -80,6 +86,22 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(s_Rotation)
 	MIRROR_CLASS_MEMBER(s_Scale)
 	MIRROR_CLASS_END(Transform)
+
+	MIRROR_CLASS_START(ShaderProgram)
+	MIRROR_CLASS_MEMBER(m_Name)
+	MIRROR_CLASS_MEMBER(m_VertName)
+	MIRROR_CLASS_MEMBER(m_FragName)
+	MIRROR_CLASS_MEMBER(m_GeoName)
+	MIRROR_CLASS_END(ShaderProgram)
+
+	MIRROR_CLASS_START(Material)
+	MIRROR_CLASS_MEMBER(m_Name)
+	MIRROR_CLASS_MEMBER(m_Components)
+	MIRROR_CLASS_END(Material)
+
+	MIRROR_CLASS_START(Texture)
+	MIRROR_CLASS_MEMBER(s_FileName)
+	MIRROR_CLASS_END(Texture)
 
 	MIRROR_CLASS_START(EngineSettings)
 	MIRROR_CLASS_MEMBER(windowWidthPixels)

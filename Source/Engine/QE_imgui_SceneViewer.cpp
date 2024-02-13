@@ -6,6 +6,7 @@
 
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"
+#include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_FrameBufferObject.h"
@@ -31,7 +32,6 @@ namespace QwerkE {
     void SceneViewer::Draw()
     {
         DrawSceneView();
-        DrawSceneList();
     }
 
     void SceneViewer::DrawSceneView()
@@ -70,8 +70,10 @@ namespace QwerkE {
                 currentScene->ReloadScene();
             }
 
+            DrawSceneList();
+
             m_FBO->Bind();
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            Renderer::ClearScreen();
             Scenes::DrawCurrentScene();
             m_FBO->UnBind();
 
@@ -92,33 +94,29 @@ namespace QwerkE {
         ImGui::End();
     }
 
+    const char* s_ScenesComboText = "Scene ";
+    const int s_CharacterPixelSize = 10;
     void SceneViewer::DrawSceneList()
     {
-        if (ImGui::Begin("Scene List"))
+        const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
+        std::vector<const char*> sceneNames;
+        sceneNames.reserve(3);
+
+        for (size_t i = 0; i < scenes.size(); i++)
         {
-            const ImVec2 imageSize = ImVec2(100.0f, 100.0f);
-            const float scalar = 1.5f;
-            const int m_ItemsPerRow = 1 + (int)(ImGui::GetWindowSize().x / (imageSize.x * scalar));
-
-            int counter = 1;
-            auto scenes = Scenes::LookAtScenes();
-            for (size_t i = 0; i < scenes.size(); i++)
-            {
-                if (counter % m_ItemsPerRow)
-                {
-                    ImGui::SameLine();
-                }
-
-                if (ImGui::Button(scenes[i]->GetSceneName().c_str()) ||
-                    Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + counter - 1), eKeyState::eKeyState_Press))
-                {
-                    Scenes::SetCurrentScene(scenes[i]->GetSceneName());
-                }
-                counter++;
-            }
+            sceneNames.push_back(scenes[i]->GetSceneName().c_str());
         }
+        int index = Scenes::GetCurrentSceneIndex();
 
-        ImGui::End();
+        const int sceneFileNameWidth = strlen(sceneNames[index]) * s_CharacterPixelSize;
+        ImGui::PushItemWidth(sceneFileNameWidth);
+
+        ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesComboText) * s_CharacterPixelSize));
+        if (ImGui::Combo(s_ScenesComboText, &index, sceneNames.data(), scenes.size()))
+        {
+            Scenes::SetCurrentScene(index);
+        }
+        ImGui::PopItemWidth();
     }
 
 }

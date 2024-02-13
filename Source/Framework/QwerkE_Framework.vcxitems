@@ -79,7 +79,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderProgram.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderUtilities.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Testing.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Texture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Time.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_TransformRoutine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_TweenFuncs.cpp" />

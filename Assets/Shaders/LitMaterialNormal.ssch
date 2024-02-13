@@ -1,6 +1,8 @@
 {
-	"Name":	"LitMaterialNormal.ssch",
-	"vert":	"LitMaterialNormal.vert",
-	"frag":	"LitMaterialNormal.frag",
-	"geo":	"null"
+	"ShaderProgram":	[{
+		"m_Name":	"LitMaterialNormal.ssch",
+		"m_VertName":	"LitMaterialNormal.vert",
+		"m_FragName":	"LitMaterialNormal.frag",
+		"m_GeoName":	"null"
+	}]
 }

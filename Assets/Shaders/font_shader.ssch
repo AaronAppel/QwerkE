@@ -1,6 +1,8 @@
 {
-	"Name":	"font_shader.ssch",
-	"vert":	"text.vert",
-	"frag":	"text.frag",
-	"geo":	"null"
+	"ShaderProgram":	[{
+		"m_Name":	"font_shader.ssch",
+		"m_VertName":	"text.vert",
+		"m_FragName":	"text.frag",
+		"m_GeoName":	"null"
+	}]
 }

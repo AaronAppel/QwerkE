@@ -10,9 +10,13 @@
 
 #include "QF_GameObject.h"
 #include "QF_Factory.h"
+#include "QF_RenderComponent.h"
+#include "QF_RenderRoutine.h"
+#include "QF_Resources.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
+#include "QF_Serialization_Schematics.h"
 
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"
@@ -25,6 +29,91 @@ namespace QwerkE {
 	SceneGraph::SceneGraph(EntityEditor* entityEditor)
 		: m_EntityEditor(entityEditor)
 	{
+	}
+
+	RenderComponent* AddModelComponentFromSchematic(GameObject* entity, const char* objectRecipeName)
+	{
+		RenderComponent* mComp = Serialization::LoadRenderComponentFromSchematic(ObjectSchematicsFolderPath(objectRecipeName));
+		entity->AddComponent((Component*)mComp);
+		return mComp;
+	}
+
+	GameObject* CreateSkyBox(Scene* scene, vec3 position)
+	{
+		if (!scene)
+			return nullptr;
+
+		GameObject* t_SkyBox = new GameObject(scene);
+		t_SkyBox->SetPosition(position);
+		t_SkyBox->SetTag(GO_Tag_SkyBox);
+		t_SkyBox->SetRenderOrder(-1);
+		t_SkyBox->SetName("SkyBox" + std::to_string(Resources::CreateGUID()));
+
+		AddModelComponentFromSchematic(t_SkyBox, null_object_schematic);
+
+		RenderRoutine* renderRoutine = new RenderRoutine();
+		t_SkyBox->AddRoutine((Routine*)renderRoutine);
+
+		if (scene->AddObjectToScene(t_SkyBox))
+			return t_SkyBox;
+
+		delete t_SkyBox;
+		return nullptr;
+	}
+
+	GameObject* CreateTestCube(Scene* scene, vec3 position)
+	{
+		if (!scene)
+			return nullptr;
+
+		GameObject* t_Cube = new GameObject(scene, position);
+		t_Cube->SetName("Object" + std::to_string(Resources::CreateGUID()));
+		t_Cube->SetRenderOrder(50);
+		t_Cube->SetTag(GO_Tag_TestModel);
+
+		Renderable renderable;
+		renderable.SetMaterial(Resources::GetMaterial("brickwall.msch"));
+		renderable.SetShader(Resources::GetShaderProgram("LitMaterialNormal.ssch"));
+
+		Mesh* mesh = new Mesh();
+		mesh = MeshFactory::CreateCube(vec3(10, 10, 10), vec2(1, 1), false);
+		mesh->SetName("Cube");
+		mesh->SetFileName("None");
+		Resources::AddMesh("Cube", mesh);
+		renderable.SetMesh(mesh);
+
+		RenderComponent* rComp = new RenderComponent();
+		rComp->AddRenderable(renderable);
+
+		t_Cube->AddComponent(rComp);
+
+		// render routine
+		t_Cube->AddRoutine((Routine*)new RenderRoutine());
+
+		if (scene->AddObjectToScene(t_Cube))
+			return t_Cube;
+
+		delete t_Cube;
+		return nullptr;
+	}
+
+	GameObject* CreateEmptyGameObject(Scene* scene, vec3 position)
+	{
+		if (scene == nullptr) return nullptr;
+
+		GameObject* t_Object = new GameObject(scene, position);
+
+		if (scene)
+		{
+			if (scene->AddObjectToScene(t_Object))
+			{
+				t_Object->SetName(std::string("abc") + std::to_string(0)); // #TODO Improve string concatenation
+				return t_Object;
+			}
+		}
+
+		delete t_Object;
+		return nullptr;
 	}
 
 	void SceneGraph::Draw()
@@ -51,7 +140,7 @@ namespace QwerkE {
 				ImGui::OpenPopup("Create Object");
 			}
 
-			if (ImGui::BeginPopup("Create Object"))
+			if (ImGui::BeginPopup("Create Object")) // #TODO Support file and prefab instantiation
 			{
 				ImGui::Text("Object Types");
 				ImGui::Separator();
@@ -62,7 +151,12 @@ namespace QwerkE {
 						switch (i)
 						{
 						case eSceneGraphCreateTypes::Empty:
-							currentScene->AddObjectToScene(Factory::CreateEmptyGameObject(currentScene, vec3(0, 0, 0)));
+							{
+								GameObject* newGameObject = new GameObject(currentScene);
+								Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("GameObject.osch"), *newGameObject); // #TODO Replace hard coded strings
+								newGameObject->OnSceneLoaded(currentScene);
+								currentScene->AddObjectToScene(newGameObject);
+							}
 							break;
 
 						case eSceneGraphCreateTypes::Light:

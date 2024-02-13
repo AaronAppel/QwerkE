@@ -144,7 +144,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
-															"m_MeshFileName":	"null_mesh.obj"
+															"m_MeshFileName":	"Teapot.obj"
 														}]
 												}]
 										}]

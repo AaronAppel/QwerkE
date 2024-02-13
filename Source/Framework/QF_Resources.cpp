@@ -45,37 +45,43 @@ namespace QwerkE {
 
 	bool Resources::TextureExists(const char* name)
 	{
+		if (!name) return false;
 		return m_Textures.find(name) != m_Textures.end();
 	}
 
 	bool Resources::MaterialExists(const char* name)
 	{
+		if (!name) return false;
 		return m_Materials.find(name) != m_Materials.end();
 	}
 
 	bool Resources::FontExists(const char* name)
 	{
+		if (!name) return false;
 		return m_Fonts.find(name) != m_Fonts.end();
 	}
 
 	bool Resources::SoundExists(const char* name)
 	{
+		if (!name) return false;
 		return m_Sounds.find(name) != m_Sounds.end();
 	}
 
 	bool Resources::ShaderProgramExists(const char* name)
 	{
+		if (!name) return false;
 		return m_ShaderPrograms.find(name) != m_ShaderPrograms.end();
 	}
 
 	bool Resources::ShaderComponentExists(const char* name)
 	{
+		if (!name) return false;
 		return m_ShaderComponents.find(name) != m_ShaderComponents.end();
 	}
 
 	bool Resources::AddMesh(const char* filePath, Mesh* mesh)
 	{
-		if (mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
+		if (!filePath || mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
 			return false;
 
 		char* fullFileName = File::FullFileName(filePath);
@@ -93,13 +99,10 @@ namespace QwerkE {
 
 	bool Resources::AddTexture(const char* name, Texture* texture)
 	{
-		if (!name || !texture)
+		if (!name || !texture || texture->s_Handle == 0)
 			return false;
 
 		if (TextureExists(name))
-			return false;
-
-		if (texture->s_Handle == 0)
 			return false;
 
 		m_Textures[name] = texture;
@@ -110,10 +113,10 @@ namespace QwerkE {
 	{
 		// EarlyReturnIfNull(2, name, material);
 
-		if (!name || !material || MaterialExists(name))
+		if (!name || !material || material->GetMaterialName() == gc_DefaultStringValue)
 			return false;
 
-		if (material->GetMaterialName() == gc_DefaultStringValue)
+		if (MaterialExists(name))
 			return false;
 
 		m_Materials[name] = material;

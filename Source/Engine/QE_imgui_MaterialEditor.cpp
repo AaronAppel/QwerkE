@@ -39,32 +39,32 @@ namespace QwerkE {
                 ImGui::SameLine();
                 ImGui::Text(std::to_string((int)p.first).c_str());
 
-                ImGui::SameLine();
-                if (m_CurrentMap == p.first)
+                if (p.second)
                 {
-                    ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(70, 70), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
-                }
-                else
-                {
-                    ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(64, 64), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
-                }
+                    ImGui::SameLine();
+                    ImVec2 buttonSize = ImVec2(64, 64);
+                    if (m_CurrentMap == p.first)
+                    {
+                        buttonSize = ImVec2(70, 70);
+                    }
+                    ImGui::ImageButton((ImTextureID)p.second->s_Handle, buttonSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
 
-                // #TODO Add the ability to add or remove textures from a material.
+                    // #TODO Add the ability to add or remove textures from a material.
 
-                if (ImGui::IsItemHovered())
-                {
-                    ImGui::BeginTooltip();
-                    ImGui::Text(p.second->s_FileName.c_str());
-                    ImGui::Text(std::to_string(p.second->s_Handle).c_str());
-                    //ImGui::Text("TagName");
-                    ImGui::EndTooltip();
+                    if (ImGui::IsItemHovered())
+                    {
+                        ImGui::BeginTooltip();
+                        ImGui::Text(p.second->s_FileName.c_str());
+                        ImGui::Text(std::to_string(p.second->s_Handle).c_str());
+                        //ImGui::Text("TagName");
+                        ImGui::EndTooltip();
+                    }
+
+                    if (ImGui::IsItemClicked())
+                    {
+                        m_CurrentMap = p.first;
+                    }
                 }
-
-                if (ImGui::IsItemClicked())
-                {
-                    m_CurrentMap = p.first;
-                }
-
                 counter++;
             }
 

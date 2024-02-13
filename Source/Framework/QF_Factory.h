@@ -17,7 +17,6 @@ namespace QwerkE {
     public:
         static GameObject* CreateSkyBox(Scene* scene, vec3 position);
 
-        static GameObject* CreateNanosuit(Scene* scene, vec3 position);
         static GameObject* CreateTestCube(Scene* scene, vec3 position);
         static GameObject* CreateEmptyGameObject(Scene* scene, vec3 position);
 

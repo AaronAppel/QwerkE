@@ -14,10 +14,22 @@
 namespace QwerkE {
 
     Scene* s_CurrentScene = nullptr;
+	int s_CurrentSceneIndex = 0;
     std::vector<Scene*> s_Scenes;
 
 	namespace Scenes
 	{
+
+		void priv_UpdateCurrentSceneIndex()
+		{
+			for (size_t i = 0; i < s_Scenes.size(); i++)
+			{
+				if (s_Scenes[i] == s_CurrentScene)
+				{
+					s_CurrentSceneIndex = i;
+				}
+			}
+		}
 
 		void Initialize()
 		{
@@ -95,6 +107,16 @@ namespace QwerkE {
 			if (Scene* scene = GetScene(sceneName))
 			{
 				s_CurrentScene = scene;
+				priv_UpdateCurrentSceneIndex();
+			}
+		}
+
+		void SetCurrentScene(int index)
+		{
+			if (index >= 0 && index < s_Scenes.size())
+			{
+				s_CurrentScene = s_Scenes[index];
+				priv_UpdateCurrentSceneIndex();
 			}
 		}
 
@@ -117,6 +139,7 @@ namespace QwerkE {
 			if (s_CurrentScene == nullptr)
 			{
 				s_CurrentScene = scene;
+				priv_UpdateCurrentSceneIndex();
 				scene->SetIsActive(true);
 			}
 		}
@@ -143,6 +166,15 @@ namespace QwerkE {
 			if (Input::FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press))
 			{
 				GetCurrentScene()->ToggleIsPaused();
+			}
+
+			for (size_t i = 0; i < 10; i++)
+			{
+				if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))
+				{
+					SetCurrentScene(i);
+					break;
+				}
 			}
 
 			if (s_CurrentScene)
@@ -183,6 +215,11 @@ namespace QwerkE {
 		Scene* GetCurrentScene()
 		{
 			return s_CurrentScene;
+		}
+
+		int GetCurrentSceneIndex()
+		{
+			return s_CurrentSceneIndex;
 		}
 
 		int SceneCount()

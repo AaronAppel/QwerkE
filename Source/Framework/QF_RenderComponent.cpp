@@ -55,7 +55,7 @@ namespace QwerkE {
     void RenderComponent::GenerateSchematic()
     {
         // TODO: Test
-        if (m_pParent && strcmp(m_SchematicName.c_str(), "None") == 0)
+        if (m_pParent && strcmp(m_SchematicName.c_str(), "None") == 0) // #TODO Replace string
         {
             m_SchematicName = m_pParent->GetName();
         }

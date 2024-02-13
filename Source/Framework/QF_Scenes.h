@@ -15,6 +15,7 @@ namespace QwerkE {
 
         void ActivateScene(std::string sceneName);
         void SetCurrentScene(std::string sceneName);
+        void SetCurrentScene(int index);
         void PauseScene(std::string sceneName);
         void UnpauseScene(std::string sceneName);
 
@@ -26,6 +27,7 @@ namespace QwerkE {
         void DrawScene(std::string sceneName);
 
         Scene* GetCurrentScene();
+        int GetCurrentSceneIndex();
         int SceneCount();
         Scene* GetScene(std::string sceneName);
         const std::vector<Scene*>& LookAtScenes();

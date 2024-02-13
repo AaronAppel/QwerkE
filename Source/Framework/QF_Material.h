@@ -4,6 +4,7 @@
 #include <map>
 
 #include "Libraries/glew/GL/glew.h"
+#include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Enums.h"
 #include "QF_Constants.h"
@@ -41,8 +42,6 @@ namespace QwerkE {
 
         const std::map<eMaterialMaps, Texture*>* SeeMaterials() const { return &m_Components; }
 
-        std::string GetMaterialName() { return m_Name; }
-
         Texture* GetMaterialByType(eMaterialMaps type)
         {
             if (m_Components.find(type) != m_Components.end())
@@ -68,9 +67,12 @@ namespace QwerkE {
             }
         }
 
+        const std::string& GetMaterialName() { return m_Name; }
         void SetMaterialName(std::string name) { m_Name = name; }
 
     private:
+        MIRROR_PRIVATE_MEMBERS
+
         std::string m_Name = gc_DefaultStringValue;
         std::map<eMaterialMaps, Texture*> m_Components;
 
