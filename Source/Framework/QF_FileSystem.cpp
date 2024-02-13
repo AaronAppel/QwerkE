@@ -127,6 +127,11 @@ namespace QwerkE {
 		}
 	}
 
+	char* File::FullFileName(const char* filePath)
+	{
+		return FindFileName(filePath, true);
+	}
+
 	// determine image type and use proper library
 	// lodepng, stb_image, SOIL, etc
 	unsigned char* File::LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically)
@@ -201,10 +206,17 @@ namespace QwerkE {
 		return Resources::GetMesh(meshName);
 	}
 
-	bool File::LoadModelFileToMeshes(const char* path)
+	bool File::LoadModelFileToMeshes(const char* absoluteModelFilePath)
 	{
-		if (Resources::MeshExists(FindFileName(path, true)))
+		char* modelFullFileName = FullFileName(absoluteModelFilePath);
+		if (!modelFullFileName)
 			return false;
+
+		if (Resources::MeshExists(modelFullFileName))
+		{
+			free(modelFullFileName);
+			return false;
+		}
 
 		std::vector<Mesh*> meshes;
 		std::vector<std::string> matNames;
@@ -212,14 +224,14 @@ namespace QwerkE {
 #ifdef AI_CONFIG_H_INC
 		Assimp::Importer importer;
 
-		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+		const aiScene* scene = importer.ReadFile(absoluteModelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			LOG_ERROR("ERROR::ASSIMP::{0}", importer.GetErrorString());
 			return false;
 		}
-		_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, path, matNames);
+		_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, absoluteModelFilePath, matNames);
 		// TODO: De-allocate RAM created by assimp
 #else
 #pragma error "Define model loading library!"
@@ -227,9 +239,10 @@ namespace QwerkE {
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			Resources::AddMesh(meshes[i]->GetName().c_str(), meshes[i]);
+			Resources::AddMesh(meshes[i]->GetFileName().c_str(), meshes[i]);
 		}
 
+		free(modelFullFileName);
 		return true;
 	}
 

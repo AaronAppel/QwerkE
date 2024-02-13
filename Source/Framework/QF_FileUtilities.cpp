@@ -363,6 +363,9 @@ std::string GetFileNameWithExt(const char* filePath)
 
 char* FindFileName(const char* filePathOrName, bool includeExtension)
 {
+	if (!filePathOrName)
+		return nullptr;
+
 	char* fileName = nullptr;
 	int newStrSize = 0;
 	const char* newStrStart = nullptr;

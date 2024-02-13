@@ -20,13 +20,12 @@ namespace QwerkE {
 
     class Material;
     class Mesh;
-    class Resources;
     class ShaderComponent;
     class ShaderProgram;
 
     struct Texture;
 
-    class Resources final
+    class Resources final // #TODO Consider for static namespace
     {
     public:
         static void Initialize();
@@ -41,7 +40,7 @@ namespace QwerkE {
         static bool ShaderProgramExists(const char* name);
         static bool ShaderComponentExists(const char* name);
 
-        static bool AddMesh(const char* name, Mesh* mesh);
+        static bool AddMesh(const char* filePath, Mesh* mesh);
         static bool AddTexture(const char* name, Texture* texture);
         static bool AddMaterial(const char* name, Material* material);
         static bool AddFont(const char* name, FT_Face font);
@@ -119,7 +118,6 @@ namespace QwerkE {
         static ShaderProgram* InstantiateShaderProgram(const char* schematicName);
         static ShaderComponent* InstantiateShaderComponent(const char* componentName);
 
-        // Deletions
         // #TODO void* return? Actually write functions.
         // Remember that smart pointers may be necessary for references.
         static bool DeleteMesh(const char* name) {}

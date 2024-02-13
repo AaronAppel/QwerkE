@@ -48,6 +48,9 @@ namespace QwerkE {
         // TODO: Remove GLenum and any implementation specific variables, types, or styles
         // TODO: LoadHDRImage // https://learnopengl.com/PBR/IBL/Diffuse-irradiance
         // LoadImage is a macro somewhere
+
+        static char* FullFileName(const char* filePath);
+
         static unsigned char* LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically = 0);
 
         static SoundHandle LoadSound(const char* soundName);

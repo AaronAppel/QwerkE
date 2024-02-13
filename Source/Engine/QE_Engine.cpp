@@ -62,7 +62,7 @@ namespace QwerkE {
 				if (programArgPairs.find(key_ProjectFileName) != programArgPairs.end())
 				{
 					const char* projectName = programArgPairs.find(key_ProjectFileName)->second;
-					const char* projectFileName = StringAppend(projectName, ".", projects_ext);
+					const char* projectFileName = StringAppend(projectName, ".", projects_file_ext);
 					projectFileName = StringAppend(projectName, "/", projectFileName);
 					// Settings::LoadProjectData(ProjectsFolderPath(projectFileName));
 

@@ -37,11 +37,10 @@ namespace QwerkE {
 
 	void Resources::InstantiateNullAssets()
 	{
-		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh_filename)), "Error loading null mesh asset!");
+		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh)), "Error loading null mesh asset!");
 		ASSERT(Resources::InstantiateTexture(NullFolderPath(null_texture)), "Error loading null texture asset!");
 		ASSERT(Resources::InstantiateMaterial(NullFolderPath(null_material_schematic)), "Error loading null material asset!");
 		ASSERT(Resources::InstantiateFont(NullFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
-		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh_filename)), "Error loading null mesh asset!");
 		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_vert_component)), "Error loading null vertex component asset!"); // TODO: Remove null component references. Store components and reference them in shader programs
 		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_frag_component)), "Error loading null fragment component!"); // TODO: Remove null component references. Store components and reference them in shader programs
 		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_geo_component)), "Error loading null geometry component!"); // #TODO Shader components can be referenced in the shader itself, so just load a null shader schematic
@@ -71,10 +70,21 @@ namespace QwerkE {
 				LOG_TRACE("{0} Mesh loaded {1}", __FUNCTION__, meshFilePath);
 			}
 
-			if (MeshExists(GetFileNameNoExt(meshFilePath).c_str())) // TODO: Better way to handle file paths and resource names
-				return m_Meshes[GetFileNameNoExt(meshFilePath).c_str()];
-			else
+			char* meshFullFileName = File::FullFileName(meshFilePath);
+			if (!meshFullFileName)
 				return m_Meshes[null_mesh];
+
+			return GetMesh(meshFullFileName);
+			if (MeshExists(meshFullFileName))
+			{
+				mesh = m_Meshes[meshFullFileName];
+			}
+			else
+			{
+				mesh = m_Meshes[null_mesh];
+			}
+			free(meshFullFileName);
+			return mesh;
 		}
 		else
         {

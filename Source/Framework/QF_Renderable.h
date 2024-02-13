@@ -55,7 +55,9 @@ namespace QwerkE {
         void SetMaterial(Material* material)
         {
             if (material)
+            {
                 m_Material = material;
+            }
         }
 
         void SetMesh(Mesh* mesh)

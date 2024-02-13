@@ -43,20 +43,16 @@ namespace QwerkE {
         delete t_SkyBox;
         return nullptr;
     }
-    // Testing
+
     GameObject* Factory::CreateTestCube(Scene* scene, vec3 position)
     {
         if (!scene)
             return nullptr;
 
         GameObject* t_Cube = new GameObject(scene, position);
-        // info //
         t_Cube->SetName("Object" + std::to_string(Resources::CreateGUID()));
         t_Cube->SetRenderOrder(50);
         t_Cube->SetTag(GO_Tag_TestModel);
-
-        // Rendering //
-        // AddModelComponentFromSchematic(t_Cube, "nanosuit.osch");
 
         Renderable renderable;
         renderable.SetMaterial(Resources::GetMaterial("brickwall.msch"));

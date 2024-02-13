@@ -11,6 +11,7 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_Defines.h"
+#include "QF_FileSystem.h"
 #include "QF_FileUtilities.h"
 #include "QF_GraphicsHelpers.h"
 #include "QF_Material.h"
@@ -48,9 +49,13 @@ namespace QwerkE {
 
     Mesh* _assimp_loadVertexData(aiMesh* mesh, const aiScene* scene, const char* modelFilePath)
     {
-        if (Resources::MeshExists(GetFileNameWithExt(modelFilePath).c_str()))
+        char* modelFullFileName = File::FullFileName(modelFilePath);
+        if (!modelFullFileName)
+            return nullptr;
+
+        if (Resources::MeshExists(modelFullFileName))
         {
-            return Resources::GetMesh(GetFileNameWithExt(modelFilePath).c_str());
+            return Resources::GetMesh(modelFullFileName);
         }
 
         MeshData meshData;
@@ -108,14 +113,15 @@ namespace QwerkE {
             rMesh = new Mesh();
             rMesh->BufferMeshData(&meshData);
             rMesh->SetName(mesh->mName.C_Str());
-            rMesh->SetFileName(GetFileNameWithExt(modelFilePath));
-            Resources::AddMesh(rMesh->GetName().c_str(), rMesh);
+            rMesh->SetFileName(modelFullFileName);
+            Resources::AddMesh(modelFullFileName, rMesh);
         }
         else
         {
             rMesh = Resources::GetMesh(null_mesh);
         }
 
+        free(modelFullFileName);
         return rMesh;
     }
 

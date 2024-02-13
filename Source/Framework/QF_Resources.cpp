@@ -73,15 +73,21 @@ namespace QwerkE {
 		return m_ShaderComponents.find(name) != m_ShaderComponents.end();
 	}
 
-	bool Resources::AddMesh(const char* name, Mesh* mesh)
+	bool Resources::AddMesh(const char* filePath, Mesh* mesh)
 	{
 		if (mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
 			return false;
 
-		if (MeshExists(name))
+		char* fullFileName = File::FullFileName(filePath);
+		if (MeshExists(fullFileName))
 			return false;
 
-		m_Meshes[name] = mesh;
+		m_Meshes[fullFileName] = mesh;
+
+		if (fullFileName)
+		{
+			free(fullFileName);
+		}
 		return true;
 	}
 

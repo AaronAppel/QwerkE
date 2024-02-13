@@ -12,7 +12,7 @@ namespace QwerkE {
     class Scene;
     class RenderComponent;
 
-    class Factory // #TODO Look to deprecate
+    class Factory // #TODO Look to deprecate, or make editor only as it's really just for convenience
     {
     public:
         static GameObject* CreateSkyBox(Scene* scene, vec3 position);

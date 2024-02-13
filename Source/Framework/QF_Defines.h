@@ -82,23 +82,26 @@
 #define scene_ext "qscene"
 #define configs_ext "qconf"
 #define preferences_ext "qpref"
-#define projects_ext "qproj"
+#define projects_file_ext "qproj"
+#define mesh_file_ext "obj"
+#define font_file_ext "ttf"
+#define sound_file_ext "wav"
+#define texture_file_ext "png"
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.
 // TODO: should macros express the file extension? Need to if the loader is looking for that file
 // TODO: Use file extension as name consistently. Either everywhere, or no where (probably use them everywhere)
-#define null_config StringAppend("null_config.", configs_ext)
-#define null_font "null_font.ttf"
+#define null_config StringAppend("null_config.", configs_ext) // #TODO Make/find a constexpr string builder
+#define null_font StringAppend("null_font.", font_file_ext)
 #define null_material StringAppend("null_material.", material_schematic_ext)
-#define null_mesh "null_mesh"
-#define null_mesh_filename "null_mesh.obj" // #TODO Look to deprecate
+#define null_mesh StringAppend("null_mesh.", mesh_file_ext)
 #define null_preferences StringAppend("null_preferences.", preferences_ext)
 #define null_scene StringAppend("null_scene.", scene_ext)
 #define null_shader "null_shader"
-#define null_sound "null_sound.wav"
-#define null_texture "null_texture.png"
-#define null_project StringAppend("null_project.", projects_ext)
+#define null_sound StringAppend("null_sound.", sound_file_ext)
+#define null_texture StringAppend("null_texture.", texture_file_ext)
+#define null_project StringAppend("null_project.", projects_file_ext)
 
 // Null schematics
 #define null_material_schematic StringAppend("null_material.", material_schematic_ext)

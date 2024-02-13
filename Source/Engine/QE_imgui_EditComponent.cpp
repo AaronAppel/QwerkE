@@ -184,7 +184,7 @@ namespace QwerkE {
                 }
                 for (const auto& p : *m_Meshes)
                 {
-                    m_MeshStrings.push_back(DeepCopyString(p.second->GetName().c_str()));
+                    m_MeshStrings.push_back(DeepCopyString(p.second->GetFileName().c_str()));
                 }
 
                 // #TODO Also show Textures + Meshes

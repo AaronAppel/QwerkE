@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+// #TODO Move/deprecate file utils to File:: namespace/struct
 char* LoadFile(const char* filename);
 char* LoadCompleteFile(const char* filename, long* length);
 char* ReadRawBytesFromFile(const char* filename);
