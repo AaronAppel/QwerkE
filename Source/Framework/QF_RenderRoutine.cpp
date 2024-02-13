@@ -110,11 +110,13 @@ namespace QwerkE {
     {
         if (m_Enabled && m_pRenderComp)
         {
-            // TODO: Do I need to check that other data is valid?
-            m_DrawFunc = &RenderRoutine::DrawMeshData;
+            m_DrawFunc = &RenderRoutine::DrawMeshData; // TODO: Do I need to check that other data is valid?
             SetDrawFunctions();
+
             if (m_DrawFunc == &RenderRoutine::DrawMeshData)
+            {
                 DrawMeshData(a_Camera);
+            }
         }
     }
 
@@ -139,8 +141,8 @@ namespace QwerkE {
             m_UniformSetupList.push_back(temp);
         }
 
-        CheckGraphicsErrors(__FILE__, __LINE__); // DEBUG:
-        for (unsigned int i = 0; i < t_Renderables->size(); i++) // for each renderable
+        CheckGraphicsErrors(__FILE__, __LINE__);
+        for (unsigned int i = 0; i < t_Renderables->size(); i++)
         {
             if (t_Renderables->at(i).SeeShader()->SeeUniforms()->size() == 0)
             {
@@ -149,10 +151,8 @@ namespace QwerkE {
             const std::vector<std::string>* t_Uniforms = t_Renderables->at(i).SeeShader()->SeeUniforms();
             Material* t_Material = t_Renderables->at(i).GetMaterial();
 
-            /* Add functions to setup shader uniforms */
-            for (size_t j = 0; j < t_Uniforms->size(); j++) // Setup uniforms
+            for (size_t j = 0; j < t_Uniforms->size(); j++)
             {
-                // Color
                 if (t_Uniforms->at(j) == "ObjectColor")
                 {
                     m_UniformSetupList[i].push_back(&RenderRoutine::SetupColorUniforms);
@@ -166,20 +166,19 @@ namespace QwerkE {
                     m_UniformSetupList[i].push_back(&RenderRoutine::Setup2DTransform);
                 }
             }
-            /* More complex uniforms */
-            // Material
+
             if (t_Material)
             {
                 m_UniformSetupList[i].push_back(&RenderRoutine::SetupMaterialUniforms);
             }
-            // Lighting
-            if (t_Material) // TODO: Improve logic
+
+            if (t_Material)
             {
                 m_UniformSetupList[i].push_back(&RenderRoutine::SetupLightingUniforms);
             }
         }
 
-        CheckGraphicsErrors(__FILE__, __LINE__); // DEBUG:
+        CheckGraphicsErrors(__FILE__, __LINE__);
     }
 
 }

@@ -37,14 +37,12 @@ namespace QwerkE {
 
 				Scene* newScene = new Scene(sceneFileName);
 				newScene->LoadScene();
-				AddScene(newScene, i == 0); // #TODO Improve default starting scene selection/specification
 			}
 
 			if (s_Scenes.empty())
 			{
 				Scene* emptyScene = new Scene(null_scene);
 				emptyScene->LoadScene();
-				AddScene(emptyScene, true);
 				LOG_WARN("Null scene loaded as no scene files found for project: {0}", projectSettings.projectName);
 			}
 		}
@@ -110,7 +108,7 @@ namespace QwerkE {
 				if (s_Scenes[i] == scene)
 				{
 					// delete scene;
-					LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__);
+					LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__, scene->GetSceneName().c_str());
 					return;
 				}
 			}
@@ -147,7 +145,7 @@ namespace QwerkE {
 				GetCurrentScene()->ToggleIsPaused();
 			}
 
-			if (s_CurrentScene && s_CurrentScene->GetIsActive())
+			if (s_CurrentScene)
 			{
 				s_CurrentScene->Update(deltatime);
 			}
@@ -156,7 +154,7 @@ namespace QwerkE {
 		void DrawCurrentScene()
 		{
 			PROFILE_SCOPE("Scene Manager Render");
-			if (s_CurrentScene && s_CurrentScene->GetIsActive())
+			if (s_CurrentScene)
 			{
 				s_CurrentScene->Draw();
 			}

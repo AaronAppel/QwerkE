@@ -29,8 +29,7 @@ namespace QwerkE {
         {
             m_Shader = Resources::GetShaderProgram(m_ShaderName.c_str());
             m_Material = Resources::GetMaterial(m_MaterialName.c_str());
-            m_Mesh = Resources::GetMesh(m_MeshName.c_str());
-            // m_Mesh = Resources::GetMeshFromFile(m_MeshFileName.c_str());
+            m_Mesh = Resources::GetMesh(m_MeshFileName.c_str());
         }
 
         const std::string& GetRenderableName() const { return m_RenderableName; }
@@ -80,7 +79,6 @@ namespace QwerkE {
         Mesh* m_Mesh = nullptr;
         std::string m_ShaderName = gc_DefaultStringValue;
         std::string m_MaterialName = gc_DefaultStringValue;
-        std::string m_MeshName = gc_DefaultStringValue;
         std::string m_MeshFileName = gc_DefaultStringValue;
     };
 

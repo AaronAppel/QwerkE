@@ -32,8 +32,6 @@ namespace QwerkE {
         void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
         void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
 
-        void SerializeField(const void* obj, const Mirror::Field& field, cJSON* objJson);
-
         void DeserializeJsonToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
         {
             if (!objJson || !objClassInfo || !obj)
@@ -71,13 +69,13 @@ namespace QwerkE {
                     switch (jsonStructArr[j]->type)
                     {
                     case cJSON_String:
-                        DeserializeJsonString(jsonStructArr[j], field.type->enumType, (char*)obj + field.offset);
+                        DeserializeJsonString(jsonStructArr[j], field.typeInfo->enumType, (char*)obj + field.offset);
                         break;
 
                     case cJSON_True:
                     case cJSON_False:
                     case cJSON_Number:
-                        DeserializeJsonNumber(jsonStructArr[j], field.type->enumType, field.type->size, (char*)obj + field.offset);
+                        DeserializeJsonNumber(jsonStructArr[j], field.typeInfo->enumType, field.typeInfo->size, (char*)obj + field.offset);
                         break;
 
                     case cJSON_Array:
@@ -117,6 +115,7 @@ namespace QwerkE {
                     // indexPtrAddress = new PrintRoutine();
                     // DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<PrintRoutine>(), indexPtrAddress);
                     break;
+
                 case eRoutineTypes::Routine_Transform:
                     {
                         indexPtrAddress = new TransformRoutine();
@@ -129,6 +128,10 @@ namespace QwerkE {
             default:
                 break;
             }
+
+            // Deserialize parent/derived values
+            // Mirror::GetParentClassInfo<Routine>()
+            DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<Routine>(), indexPtrAddress);
 
             return indexPtrAddress;
         }
@@ -169,14 +172,6 @@ namespace QwerkE {
             }
         }
 
-    // #TODO test with all classes (doesn't load camera position consistently)
-    // DeserializeJsonToObject(jsonObj, field.classInfo, obj);
-    // DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<ClassType>(), obj);
-#define DESERIALIZE_CASE_FOR_CLASS(ClassType) \
-case MirrorTypes::ClassType: \
-    DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<ClassType>(), obj); \
-    break;
-
         void DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
         {
             if (!jsonObj || !jsonObj->type || jsonObj->type != cJSON_Array || !obj)
@@ -185,34 +180,8 @@ case MirrorTypes::ClassType: \
                 return;
             }
 
-            switch (field.type->enumType)
+            switch (field.typeInfo->enumType)
             {
-            case MirrorTypes::EngineSettings: // DESERIALIZE_CASE_FOR_CLASS(EngineSettings)
-                DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<EngineSettings>(), obj);
-                // DeserializeJsonToObject(jsonObj, field.classInfo, obj);
-                break;
-
-                DESERIALIZE_CASE_FOR_CLASS(ProjectSettings)
-                DESERIALIZE_CASE_FOR_CLASS(RenderComponent)
-                DESERIALIZE_CASE_FOR_CLASS(SceneViewerData)
-                // DESERIALIZE_CASE_FOR_CLASS(Transform)
-
-            case MirrorTypes::Transform: // DESERIALIZE_CASE_FOR_CLASS(EngineSettings)
-                DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<Transform>(), obj);
-                // if (field.classInfo)
-                // {
-                //     DeserializeJsonToObject(jsonObj, field.classInfo, obj);
-                // }
-                // else
-                // {
-                //     DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<Transform>(), obj);
-                // }
-                break;
-
-                DESERIALIZE_CASE_FOR_CLASS(UserSettings)
-                DESERIALIZE_CASE_FOR_CLASS(Vector2)
-                DESERIALIZE_CASE_FOR_CLASS(Vector3)
-
             case MirrorTypes::m_vector_string:
                 {
                     // DeserializeVector<std::string>(jsonObj, obj); // #TODO Find out why std::string type is not supported
@@ -223,6 +192,8 @@ case MirrorTypes::ClassType: \
                     if (strings)
                     {
                         strings->reserve(jsonStrings.size());
+                        strings->resize(0);
+
                         for (size_t i = 0; i < jsonStrings.size(); i++)
                         {
                             // #TODO Handle more types agnosticly, so this logic would also support ints and other primitives/base values
@@ -234,13 +205,13 @@ case MirrorTypes::ClassType: \
                     }
                     else
                     {
-                        LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                        LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
                     }
                 }
                 break;
 
             case MirrorTypes::m_vector_renderable:
-                DeserializeVector<Renderable>(jsonObj, obj);
+                DeserializeVector<Renderable>(jsonObj, obj); // #TODO field.collectionType
                 break;
 
             case MirrorTypes::m_vector_gameobjectPtr:
@@ -273,7 +244,7 @@ case MirrorTypes::ClassType: \
             }
             break;
 
-            case MirrorTypes::m_map_eComponentTags_componentPtr:
+            case MirrorTypes::m_map_eComponentTags_componentPtr: // #TODO Add parent and sub class serialization/reflection support
             {
                 std::map<eComponentTags, Component*>* componentsMap = (std::map<eComponentTags, Component*>*)obj;
                 const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
@@ -289,12 +260,6 @@ case MirrorTypes::ClassType: \
                         {
                             LOG_ERROR("{0} Found duplicated key {1} in map!", __FUNCTION__, (int)componentTag);
                             continue;
-                        }
-
-                        cJSON* child = jsonGameObjects[i]->child;
-                        if (!child || !child->child)
-                        {
-
                         }
 
                         switch ((eComponentTags)std::stoi(jsonGameObjects[i]->string))
@@ -338,7 +303,7 @@ case MirrorTypes::ClassType: \
             break;
 
             default:
-                LOG_WARN("{0} User defined type {1} {2}({3}) not supported here!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                DeserializeJsonToObject(jsonObj, field.classInfo, obj);
                 break;
             }
         }
@@ -479,11 +444,6 @@ case MirrorTypes::ClassType: \
             }
         }
 
-#define SERIALIZE_CASE_FOR_CLASS(ClassType) \
-case MirrorTypes::ClassType: \
-    SerializeObjectToJson((char*)obj + field.offset, Mirror::InfoForClass<ClassType>(), arr); \
-    break; \
-
         void SerializeObjectToJson(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson)
         {
             if (!objJson || !objClassInfo || !obj)
@@ -496,30 +456,21 @@ case MirrorTypes::ClassType: \
             {
                 const Mirror::Field& field = objClassInfo->fields[i];
 
-                if (field.type->enumType > MirrorTypes::m_PRIMITIVES_START)
+                cJSON* arr = nullptr;
+                if (!field.typeInfo->IsPrimitive())
                 {
-                    SerializeField(obj, field, objJson); // #TODO Replace with field agnostic function
+                    arr = CreateArray(field.name.c_str());
+                    cJSON_AddItemToArray(objJson->child, arr);
+                }
+
+                if (field.classInfo)
+                {
+                    SerializeObjectToJson((char*)obj + field.offset, field.classInfo, arr);
                     continue;
                 }
 
-                cJSON* arr = CreateArray(field.name.c_str());
-                cJSON_AddItemToArray(objJson->child, arr);
-
-                switch (field.type->enumType)
+                switch (field.typeInfo->enumType)
                 {
-                case MirrorTypes::EngineSettings: // SERIALIZE_CASE_FOR_CLASS(EngineSettings)
-                    SerializeObjectToJson((char*)obj + field.offset, Mirror::InfoForClass<EngineSettings>(), arr);
-                    break;
-
-                    SERIALIZE_CASE_FOR_CLASS(ProjectSettings)
-                    SERIALIZE_CASE_FOR_CLASS(SceneViewerData)
-                    SERIALIZE_CASE_FOR_CLASS(Transform)
-                    SERIALIZE_CASE_FOR_CLASS(UserSettings)
-                    SERIALIZE_CASE_FOR_CLASS(Vector2)
-                    SERIALIZE_CASE_FOR_CLASS(Vector3)
-                    SERIALIZE_CASE_FOR_CLASS(RenderRoutine)
-                    SERIALIZE_CASE_FOR_CLASS(TransformRoutine)
-
                 case MirrorTypes::m_vector_string:
                     {
                         const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
@@ -533,7 +484,7 @@ case MirrorTypes::ClassType: \
                         }
                         else
                         {
-                            LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                            LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
                         }
                     }
                     break;
@@ -548,10 +499,14 @@ case MirrorTypes::ClassType: \
                             Routine* routine = routines->at(i);
                             cJSON* routineJson = CreateArray(std::to_string((int)routine->GetRoutineType()).c_str());
 
+                            // Serialize parent class values
+                            SerializeObjectToJson(routine, Mirror::InfoForClass<Routine>(), routineJson);
+
                             switch (routine->GetRoutineType())
                             {
                             case eRoutineTypes::Routine_Render:
                                 SerializeObjectToJson(routine, Mirror::InfoForClass<RenderRoutine>(), routineJson);
+                                // SerializeObjectToJson(routine, Mirror::GetParentClassInfo<RenderRoutine>(), routineJson);
                                 break;
 
                             case eRoutineTypes::Routine_Print:
@@ -572,11 +527,8 @@ case MirrorTypes::ClassType: \
                 }
                 break;
 
-                case MirrorTypes::m_vector_renderable:
-                    // cJSON* renderableArray = CreateArray(gameObjects->at(i)->GetName().c_str());
+                case MirrorTypes::m_vector_renderable: // #TODO Needs T* CastToType() method for indirection
                     SerializeVector<Renderable>((void*)((char*)obj + field.offset), arr);
-                    // SerializeObjectToJson(gameObjects->at(i), Mirror::InfoForClass<GameObject>(), renderableArray);
-                    // AddItemToArray(arr, renderableArray);
                     break;
 
                 case MirrorTypes::m_vector_gameobjectPtr:
@@ -618,99 +570,77 @@ case MirrorTypes::ClassType: \
                 }
                 break;
 
-                default:
-                    LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
-                    break;
-                }
-            }
-        }
-
-        void SerializeField(const void* obj, const Mirror::Field& field, cJSON* objJson)
-        {
-            if (!objJson || !obj)
-            {
-                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
-                return;
-            }
-
-            if (!field.type || field.type->enumType < MirrorTypes::m_PRIMITIVES_START)
-            {
-                LOG_ERROR("{0} Invalid field passed!", __FUNCTION__);
-                return;
-            }
-
-            switch (field.type->enumType)
-            {
-            case MirrorTypes::m_string:
+                case MirrorTypes::m_string:
                 {
                     const std::string* fieldAddress = (const std::string*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress->data()));
                 }
                 break;
 
-            case MirrorTypes::m_charPtr:
-            case MirrorTypes::m_constCharPtr:
+                case MirrorTypes::m_charPtr:
+                case MirrorTypes::m_constCharPtr:
                 {
                     const char* fieldAddress = *(const char**)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress));
                 }
                 break;
 
-            case MirrorTypes::m_char:
-            case MirrorTypes::eKeys:
+                case MirrorTypes::m_char:
+                case MirrorTypes::eKeys:
                 {
                     char* stringAddress = (char*)obj + field.offset;
                     AddItemToArray(objJson, CreateString(field.name.c_str(), stringAddress));
                 }
                 break;
 
-            case MirrorTypes::m_bool:
+                case MirrorTypes::m_bool:
                 {
                     bool* boolAddress = (bool*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateBool(field.name.c_str(), *boolAddress));
                 }
                 break;
 
-            case MirrorTypes::m_float:
+                case MirrorTypes::m_float:
                 {
                     float* numberAddress = (float*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                 }
                 break;
 
-            case MirrorTypes::m_int8_t:
-            case MirrorTypes::m_int16_t:
-            case MirrorTypes::m_int32_t:
-            case MirrorTypes::m_uint8_t:
-            case MirrorTypes::m_uint16_t:
-            case MirrorTypes::m_uint32_t:
-            case MirrorTypes::m_int:
-            case MirrorTypes::m_eSceneTypes:
-            case MirrorTypes::m_eGameObjectTags:
+                case MirrorTypes::m_int8_t:
+                case MirrorTypes::m_int16_t:
+                case MirrorTypes::m_int32_t:
+                case MirrorTypes::m_uint8_t:
+                case MirrorTypes::m_uint16_t:
+                case MirrorTypes::m_uint32_t:
+                case MirrorTypes::m_int:
+                case MirrorTypes::m_eSceneTypes:
+                case MirrorTypes::m_eGameObjectTags:
                 {
                     int* numberAddress = (int*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                 }
                 break;
 
-            case MirrorTypes::m_int64_t:
-            case MirrorTypes::m_uint64_t:
+                case MirrorTypes::m_int64_t:
+                case MirrorTypes::m_uint64_t:
                 {
                     double* numberAddress = (double*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                 }
                 break;
 
-            case MirrorTypes::m_double:
+                case MirrorTypes::m_double:
                 {
                     double* numberAddress = (double*)((char*)obj + field.offset);
                     AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                 }
                 break;
 
-            default:
-                LOG_ERROR("{0} Unsupported field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
-                break;
+                default:
+                    LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
+                    break;
+                }
             }
         }
 

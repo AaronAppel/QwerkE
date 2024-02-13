@@ -4,6 +4,7 @@
 #include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_Constants.h"
+#include "QF_Debug.h"
 #include "QF_Defines.h"
 #include "QF_FrameBufferObject.h"
 #include "QF_GraphicsHelpers.h"
@@ -35,23 +36,18 @@ namespace QwerkE {
         m_Meshes = Resources::SeeMeshes();
         m_Sounds = Resources::SeeSounds();
 
-        m_FBO = new FrameBufferObject();
-        m_FBO->Init();
-
         m_ViewerScene = new Scene("ThumbNail.qscene");
         m_ViewerScene->LoadScene();
         ComponentCamera* camera = (ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera);
         camera->SetViewportSize(Window::GetResolution());
-
-        Scenes::AddScene(m_ViewerScene);
 
         RenderModelThumbnails();
     }
 
     ResourceViewer::~ResourceViewer()
     {
+        m_ModelImageHandles.clear();
         delete m_MaterialEditor;
-        delete m_FBO;
     }
 
     QC_ENUM(eResourceViewerDrawTypes, int, Textures, Materials, Shaders, Font, Models, Sounds);
@@ -195,7 +191,7 @@ namespace QwerkE {
                         ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), tooltipOnClickSize, imageUv0, imageUv1, imageFramePadding);
                     }
 
-                    ImGui::Text(std::to_string(m_ModelImageHandles[0]).c_str());
+                    ImGui::Text(std::to_string(m_ModelImageHandles[i]).c_str());
                     ImGui::EndTooltip();
                 }
                 counter++;
@@ -234,11 +230,9 @@ namespace QwerkE {
 
     void ResourceViewer::RenderModelThumbnails()
     {
-        // Dump old values. maybe calculate what changed in the future
-        m_ModelImageHandles.clear();
+        ASSERT(m_ModelImageHandles.empty(), "Thumbnails have already been generated!");
 
         const std::map<std::string, GameObject*>& sceneObjects = m_ViewerScene->GetObjectList();
-        sceneObjects;
 
         for (auto p : sceneObjects)
         {
@@ -253,44 +247,20 @@ namespace QwerkE {
         {
             p.second->Activate();
 
-            m_FBO->Bind();
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            FrameBufferObject fbo;
+            fbo.Init();
+            fbo.Bind();
+
+            Renderer::ClearScreen();
 
             m_ViewerScene->Draw();
 
-            m_FBO->UnBind();
+            m_ModelImageHandles.push_back(fbo.GetTextureID());
+
+            fbo.UnBind();
 
             p.second->Deactivate();
         }
-        m_ModelImageHandles.push_back(m_FBO->GetTextureID());
-        return;
-
-        for (const auto& p : *m_Meshes)
-        {
-            m_FBO->Bind();
-
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            // #TODO Loop through renderables to setup
-            //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetMeshAtIndex(0, m_Resources->GetMesh(null_mesh));
-
-            // #TODO RenderRoutine needs to update its uniform functions properly
-            //((RenderComponent*)m_Subject->GetComponent(Component_Render))->SetModel(p.second);
-            //((RenderComponent*)m_AssetTagPlane->GetComponent(Component_Render))->SetColour(vec4(128, 128, 128, 255)); // #TODO use model asset tag color
-
-            m_ViewerScene->Draw();
-
-            // GLuint tempTexture;
-            // glGenTextures(1, &tempTexture);
-            // glBindTexture(GL_TEXTURE_2D, tempTexture);
-            // glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1280, 720, 0, 0, 1);
-            // glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, 1280, 720);
-
-            m_FBO->UnBind();
-
-            // m_ModelImageHandles.push_back(tempTexture);
-        }
-        m_ModelImageHandles.push_back(m_FBO->GetTextureID());
     }
 
 }

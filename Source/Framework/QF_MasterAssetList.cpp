@@ -66,7 +66,11 @@ namespace QwerkE {
 
 		if (FileExists(meshFilePath))
 		{
-			File::LoadModelFileToMeshes(meshFilePath);
+			if (File::LoadModelFileToMeshes(meshFilePath))
+			{
+				LOG_TRACE("{0} Mesh loaded {1}", __FUNCTION__, meshFilePath);
+			}
+
 			if (MeshExists(GetFileNameNoExt(meshFilePath).c_str())) // TODO: Better way to handle file paths and resource names
 				return m_Meshes[GetFileNameNoExt(meshFilePath).c_str()];
 			else
@@ -136,7 +140,7 @@ namespace QwerkE {
 			return m_Textures[null_texture];
 		}
 
-		LOG_WARN("InstantiateTexture(): Texture not found: {0}", textureName);
+		LOG_WARN("{0} Texture not found: {1}", __FUNCTION__, textureName);
 		return m_Textures[null_texture];
 	}
 
@@ -159,12 +163,12 @@ namespace QwerkE {
 		}
 		else
         {
-			LOG_WARN("InstantiateMaterial(): Not a .msch file: {0}", matName);
+			LOG_WARN("{0} Not a .msch file: {1}", __FUNCTION__, matName);
 		}
 
 		if (!material)
         {
-            LOG_WARN("InstantiateMaterial(): Material not found: {0}", matName);
+            LOG_WARN("{0} Material not found: {1}", __FUNCTION__, matName);
 			return m_Materials[null_material]; // Do not add another material
 		}
 

@@ -16,14 +16,13 @@ namespace QwerkE {
     class ShaderProgram;
     class Scene;
     class GameObject;
-    class FrameBufferObject;
     class Mesh;
     class Material;
     class MaterialEditor;
 
     struct Texture;
 
-    class ResourceViewer // #TODO Rename class to imgui_ResourceViewer
+    class ResourceViewer // #TODO Consider for static namespace or singleton
     {
     public:
         ResourceViewer();
@@ -32,7 +31,9 @@ namespace QwerkE {
         void Draw();
 
     private:
-        int m_CurrentResource = 0; // #TODO Consider keeping an index for all windows for back tracking
+        void RenderModelThumbnails();
+
+        int m_CurrentResource = 0;
 
         MaterialEditor* m_MaterialEditor = nullptr;
         bool m_ShowMatEditor = false;
@@ -47,9 +48,7 @@ namespace QwerkE {
         unsigned char m_ModelsPerRow = 4;
         ImVec2 m_ModelThumbnailPixelSize = ImVec2(64, 64);
 
-        FrameBufferObject* m_FBO;
         std::vector<GLuint> m_ModelImageHandles;
-        void RenderModelThumbnails();
 
         GameObject* m_ModelToDraw = nullptr;
         Scene* m_ViewerScene = nullptr;

@@ -68,18 +68,18 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(x)
 	MIRROR_CLASS_MEMBER(y)
 	MIRROR_CLASS_MEMBER(z)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(Vector3)
 
 	MIRROR_CLASS_START(Vector2)
 	MIRROR_CLASS_MEMBER(x)
 	MIRROR_CLASS_MEMBER(y)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(Vector2)
 
 	MIRROR_CLASS_START(Transform)
 	MIRROR_CLASS_MEMBER(s_Position)
 	MIRROR_CLASS_MEMBER(s_Rotation)
 	MIRROR_CLASS_MEMBER(s_Scale)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(Transform)
 
 	MIRROR_CLASS_START(EngineSettings)
 	MIRROR_CLASS_MEMBER(windowWidthPixels)
@@ -93,7 +93,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(physicsEnabled)
 	MIRROR_CLASS_MEMBER(networkingEnabled)
 	MIRROR_CLASS_MEMBER(consoleOutputWindowEnabled)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(EngineSettings)
 
 	MIRROR_CLASS_START(UserSettings)
 	MIRROR_CLASS_MEMBER(key_camera_MoveForward)
@@ -104,59 +104,58 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(key_camera_MoveDown)
 	MIRROR_CLASS_MEMBER(key_camera_RotateLeft)
 	MIRROR_CLASS_MEMBER(key_camera_RotateRight)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(UserSettings)
 
 	MIRROR_CLASS_START(ProjectSettings)
 	MIRROR_CLASS_MEMBER(projectName)
 	MIRROR_CLASS_MEMBER(assetsDirPath)
 	MIRROR_CLASS_MEMBER(sceneFileNames)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(ProjectSettings)
 
 	MIRROR_CLASS_START(SceneViewerData)
 	MIRROR_CLASS_MEMBER(maxEnabledScenes)
 	MIRROR_CLASS_MEMBER(maxDisplayedScenes)
 	MIRROR_CLASS_MEMBER(viewDistance)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(SceneViewerData)
 
 	// GameObject components
 	MIRROR_CLASS_START(Component)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(Component)
 
 	MIRROR_SUB_CLASS_START(ComponentCamera, Component)
 	MIRROR_CLASS_MEMBER(m_ViewportSize)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(ComponentCamera)
 
 	MIRROR_CLASS_START(LightComponent)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(LightComponent)
 
 	MIRROR_CLASS_START(RenderComponent)
 	MIRROR_CLASS_MEMBER(m_SchematicName)
 	MIRROR_CLASS_MEMBER(m_Renderables)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(RenderComponent)
 
 	// GameObject routines
 	MIRROR_CLASS_START(Routine)
 	MIRROR_CLASS_MEMBER(m_Enabled)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(Routine)
 
 	MIRROR_CLASS_START(RenderRoutine)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(RenderRoutine)
 
 	MIRROR_CLASS_START(TransformRoutine)
 	MIRROR_CLASS_MEMBER(m_Speed)
 	MIRROR_CLASS_MEMBER(m_PositionOffset)
 	MIRROR_CLASS_MEMBER(m_RotationOffset)
 	MIRROR_CLASS_MEMBER(m_ScaleOffset)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(TransformRoutine)
 
 	// More classes and complex structs
 	MIRROR_CLASS_START(Renderable)
 	MIRROR_CLASS_MEMBER(m_RenderableName)
 	MIRROR_CLASS_MEMBER(m_ShaderName)
 	MIRROR_CLASS_MEMBER(m_MaterialName)
-	MIRROR_CLASS_MEMBER(m_MeshName)
 	MIRROR_CLASS_MEMBER(m_MeshFileName)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(Renderable)
 
 	MIRROR_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
@@ -166,7 +165,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_CameraList)
 	MIRROR_CLASS_MEMBER(m_LightList)
 	MIRROR_CLASS_MEMBER(m_SceneDrawList)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(Scene)
 
 	MIRROR_CLASS_START(GameObject)
 	// m_pScene not serializable
@@ -178,6 +177,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_DrawList)
 	MIRROR_CLASS_MEMBER(m_Components)
 	MIRROR_CLASS_MEMBER(m_RenderOrder)
-	MIRROR_CLASS_END
+	MIRROR_CLASS_END(GameObject)
 
 }

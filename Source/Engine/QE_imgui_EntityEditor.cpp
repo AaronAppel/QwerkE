@@ -222,13 +222,6 @@ namespace QwerkE {
         ImGui::End();
 	}
 
-#define CASE_FOR_INSPECTION(TYPENAME) \
-    case MirrorTypes::TYPENAME: \
-        parentName += field.name + " "; \
-        InspectFieldRecursive(Mirror::InfoForClass<TYPENAME>(), (char*)obj + field.offset, parentName); \
-        parentName.clear(); \
-        break;
-
     static bool hasWarned = false;
     void InspectFieldRecursive(const Mirror::ClassInfo* classInfo, void* obj, std::string parentName)
     {
@@ -240,7 +233,7 @@ namespace QwerkE {
 
             const void* fieldAddress = (void*)((char*)obj + field.offset);
 
-            switch (field.type->enumType)
+            switch (field.typeInfo->enumType)
             {
             case MirrorTypes::m_vector_renderable:
             {
@@ -310,69 +303,67 @@ namespace QwerkE {
                 }
                 break;
 
-            CASE_FOR_INSPECTION(Transform)
-
             case MirrorTypes::Vector2:
-            {
-                float* vector2Address = (float*)fieldAddress;
-                std::string fieldName = parentName + field.name;
-                ImGui::DragFloat2(fieldName.c_str(), vector2Address, .1f);
-            }
-            break;
+                {
+                    float* vector2Address = (float*)fieldAddress;
+                    std::string fieldName = parentName + field.name;
+                    ImGui::DragFloat2(fieldName.c_str(), vector2Address, .1f);
+                }
+                break;
 
             case MirrorTypes::Vector3:
-            {
-                float* vector3Address = (float*)fieldAddress;
-                std::string fieldName = parentName + field.name;
-                ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f);
-            }
-            break;
+                {
+                    float* vector3Address = (float*)fieldAddress;
+                    std::string fieldName = parentName + field.name;
+                    ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f);
+                }
+                break;
 
             case MirrorTypes::m_string:
-            {
-                const std::string* stringAddress = (const std::string*)fieldAddress;
-                std::string fieldName = parentName + field.name;
-                ImGui::LabelText(fieldName.c_str(), stringAddress->data());
-            }
-            break;
+                {
+                    const std::string* stringAddress = (const std::string*)fieldAddress;
+                    std::string fieldName = parentName + field.name;
+                    ImGui::LabelText(fieldName.c_str(), stringAddress->data());
+                }
+                break;
 
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
-            {
-                const char* constCharPtrAddress = *(const char**)fieldAddress;
-                std::string fieldName = parentName + field.name;
-                ImGui::LabelText(fieldName.c_str(), constCharPtrAddress);
-            }
-            break;
+                {
+                    const char* constCharPtrAddress = *(const char**)fieldAddress;
+                    std::string fieldName = parentName + field.name;
+                    ImGui::LabelText(fieldName.c_str(), constCharPtrAddress);
+                }
+                break;
 
             case MirrorTypes::m_char:
             case MirrorTypes::eKeys:
-            {
-                char* charPtrAddress = (char*)fieldAddress;
-                std::string fieldName = parentName + field.name;
-                // ImGui::LabelText(fieldName.c_str(), charPtrAddress);
-            }
-            break;
+                {
+                    char* charPtrAddress = (char*)fieldAddress;
+                    std::string fieldName = parentName + field.name;
+                    // ImGui::LabelText(fieldName.c_str(), charPtrAddress);
+                }
+                break;
 
             case MirrorTypes::m_bool:
-            {
-                bool* boolAddress = (bool*)fieldAddress;
-                int intValue = *boolAddress;
-                std::string fieldName = parentName + field.name;
-                if (ImGui::InputInt(fieldName.c_str(), &intValue))
                 {
-                    *boolAddress = (bool)intValue;
+                    bool* boolAddress = (bool*)fieldAddress;
+                    int intValue = *boolAddress;
+                    std::string fieldName = parentName + field.name;
+                    if (ImGui::InputInt(fieldName.c_str(), &intValue))
+                    {
+                        *boolAddress = (bool)intValue;
+                    }
                 }
-            }
-            break;
+                break;
 
             case MirrorTypes::m_float:
-            {
-                float* numberAddress = (float*)fieldAddress;
-                std::string fieldName = parentName + field.name;
-                ImGui::DragFloat(fieldName.c_str(), numberAddress, .1f);
-            }
-            break;
+                {
+                    float* numberAddress = (float*)fieldAddress;
+                    std::string fieldName = parentName + field.name;
+                    ImGui::DragFloat(fieldName.c_str(), numberAddress, .1f);
+                }
+                break;
 
             case MirrorTypes::m_int8_t:
             case MirrorTypes::m_int16_t:
@@ -383,12 +374,12 @@ namespace QwerkE {
             case MirrorTypes::m_int:
             case MirrorTypes::m_eSceneTypes:
             case MirrorTypes::m_eGameObjectTags:
-            {
-                int* numberAddress = (int*)fieldAddress;
-                std::string fieldName = parentName + field.name;
-                ImGui::DragInt(fieldName.c_str(), numberAddress);
-            }
-            break;
+                {
+                    int* numberAddress = (int*)fieldAddress;
+                    std::string fieldName = parentName + field.name;
+                    ImGui::DragInt(fieldName.c_str(), numberAddress);
+                }
+                break;
 
             case MirrorTypes::m_int64_t:
             case MirrorTypes::m_uint64_t:
@@ -398,15 +389,21 @@ namespace QwerkE {
             break;
 
             case MirrorTypes::m_double:
-            {
-                double* numberAddress = (double*)fieldAddress;
-            }
-            break;
+                {
+                    double* numberAddress = (double*)fieldAddress;
+                }
+                break;
 
             default:
-                if (!hasWarned)
+                if (field.classInfo)
                 {
-                    LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, field.name, field.type->stringName, (int)field.type->enumType);
+                    parentName += field.name + " ";
+                    InspectFieldRecursive(field.classInfo, (char*)obj + field.offset, parentName);
+                    parentName.clear();
+                }
+                else if (!hasWarned)
+                {
+                    LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
                     hasWarned = true;
                 }
                 break;

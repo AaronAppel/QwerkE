@@ -29,7 +29,7 @@ namespace QwerkE {
 
     #ifdef OpenGL
     #include "QF_ogl_Helpers.h"
-    void CheckGraphicsErrors()
+    void CheckGraphicsErrors() // #TODO Strip from release builds
     {
         GLCheckforErrors();
     }
@@ -64,18 +64,16 @@ namespace QwerkE {
         fbo.Bind();
         glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, w, h, 0);
 
-        // Create return texture
         GLuint result;
         glGenTextures(1, &result);
         glBindTexture(GL_TEXTURE_2D, result);
 
-        // Copy data
         glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, w, h, 1);
         CheckGraphicsErrors(__FILE__, __LINE__);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // , , GL_CLAMP
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         fbo.UnBind();

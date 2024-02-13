@@ -14,6 +14,8 @@ namespace QwerkE {
 
         static void NewFrame();
 
+        static void ClearScreen();
+
         static void DrawFont(const char* text, float x = 100.f, float y = 100.f, float scale = 1.0f);
 
     private:

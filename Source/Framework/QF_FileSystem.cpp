@@ -137,7 +137,7 @@ namespace QwerkE {
 
 		if (strcmp(extention.c_str(), "jpg") == 0)
 		{
-			LOG_ERROR("{0} .jpg image not loaded. No working jpg load function currently: {1}", path);
+			LOG_ERROR("{0} .jpg image not loaded. No working jpg load function currently: {1}", __FUNCTION__, path);
 		}
 		else if (strcmp(extention.c_str(), "png") == 0)
 		{
@@ -149,12 +149,12 @@ namespace QwerkE {
 		}
 		else
 		{
-			LOG_WARN("{0} Image type unsupported for file: {1}", path);
+			LOG_WARN("{0} Image type unsupported for file: {1}", __FUNCTION__, path);
 		}
 
 		if (!returnBuffer)
 		{
-			LOG_ERROR("{0} Failed to load image: {1}", path);
+			LOG_ERROR("{0} Failed to load image: {1}", __FUNCTION__, path);
 			return nullptr;
 		}
 

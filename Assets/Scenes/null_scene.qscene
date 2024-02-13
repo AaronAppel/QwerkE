@@ -67,7 +67,8 @@
 							}],
 							"m_DrawList":	[{
 									"1":	[{
-									}]
+											"m_Enabled":	true
+										}]
 								}],
 							"m_Components":	[{
 									"3":	[{
@@ -79,7 +80,6 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
-															"m_MeshName":	"null_mesh",
 															"m_MeshFileName":	"null_mesh.obj"
 														}]
 												}]
@@ -127,12 +127,14 @@
 													"x":	0,
 													"y":	0,
 													"z":	0
-												}]
+												}],
+											"m_Enabled":	true
 										}]
 								}],
 							"m_DrawList":	[{
 									"1":	[{
-									}]
+											"m_Enabled":	true
+										}]
 								}],
 							"m_Components":	[{
 									"5":	[{
@@ -142,7 +144,6 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
-															"m_MeshName":	"null_mesh",
 															"m_MeshFileName":	"null_mesh.obj"
 														}]
 												}]
