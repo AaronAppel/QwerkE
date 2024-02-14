@@ -599,6 +599,12 @@ namespace QwerkE {
                 }
                 break;
 
+                case MirrorTypes::m_map_eMaterialMaps_texturePtr: // #TODO Textures should be created and requested by Resources
+                    {
+                        int bp = 0;
+                    }
+                    break;
+
                 case MirrorTypes::m_string:
                 {
                     const std::string* fieldAddress = (const std::string*)((char*)obj + field.offset);

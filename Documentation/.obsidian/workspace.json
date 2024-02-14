@@ -32,6 +32,18 @@
             }
           },
           {
+            "id": "fc5c74e0d0fd77b1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Development/Feature Tickets/F0004 - GUIDs.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "66b8fc04c675782f",
             "type": "leaf",
             "state": {
@@ -68,7 +80,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -128,7 +140,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Assets Wishlist.md"
+                "file": "Development/Feature Tickets/F0004 - GUIDs.md"
               }
             }
           }
@@ -171,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Assets Wishlist.md",
+                "file": "Development/Feature Tickets/F0004 - GUIDs.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -183,7 +195,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Assets Wishlist.md",
+                "file": "Development/Feature Tickets/F0004 - GUIDs.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -198,8 +210,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5,
-    "collapsed": true
+    "width": 331.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -210,37 +221,38 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "55628a392364c2db",
+  "active": "fc5c74e0d0fd77b1",
   "lastOpenFiles": [
-    "Asset Wishlist.md",
+    "ZZ Shared Vault Files ❗/To Watch.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
+    "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
+    "Development/Features/GUIDs.md",
+    "Development/Resolved/F0005 - Null GameObject Data.md",
+    "Development/Resolved/F0001 - Reflection.md",
+    "Development/Feature Tickets/F0004 - GUIDs.md",
+    "Development/Feature Tickets/F0003 - Select Same Named Entities.md",
+    "Development/Feature Tickets/F0002 - Cross Panel Communication.md",
+    "Development/TODO/Review Deprecated Files.md",
+    "Development/Resolved",
+    "Development/TODO/Timers and Time Callbacks.md",
+    "Mirror Library.md",
+    "Untitled.md",
+    "Pretend Blog Post.md",
     "ZZ Shared Vault Files ❗/Assets Wishlist.md",
+    "Asset Wishlist.md",
     "link.md",
     "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
-    "ZZ Shared Vault Files ❗/To Watch.md",
     "ZZ Shared Vault Files ❗/To Watch SimonDev.md",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "Template.md",
     "C2995 - Templating Error.md",
-    "Development/Feature Tickets/F0001 - Reflection.md",
-    "Mirror Library.md",
     "Serializer.md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "QwerkE Standards/Always Return Constant Values.md",
     "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "ZZ Shared Vault Files ❗/0 Overhead principle.md",
     "README.md",
-    "QwerkE Standards/Namespaces and Domains.md",
-    "QwerkE Standards/Indentation.md",
-    "Pretend Blog Post.md",
-    "cJSON.md",
-    "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
-    "0 Overhead principle.md",
-    "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
-    "Development/Feature Tickets/F0005 - Null GameObject Data.md",
     "Development/Bug Tickets",
-    "Development/Feature Tickets/F0004 - GUIDs.md",
-    "Development/Features/GUIDs.md",
     "Development/Feature Tickets",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
     "CPPList.h",
@@ -253,7 +265,6 @@
     "Systems/Untitled",
     "Systems/Window",
     "Systems/Input",
-    "Systems/Rendering",
     "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
     "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
     "New Bitmap image.bmp",

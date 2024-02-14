@@ -117,7 +117,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.cpp">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Memory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.cpp">
       <Filter>Libraries\Mirror</Filter>
     </ClCompile>
@@ -130,6 +129,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Memory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h">
@@ -2622,7 +2622,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.h">
       <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\MirrorTypes.h">
       <Filter>Libraries\Mirror</Filter>
     </ClInclude>
@@ -2638,6 +2637,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\MirrorEnumPrimitives.h">
       <Filter>Libraries\Mirror</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">

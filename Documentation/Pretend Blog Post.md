@@ -1,5 +1,6 @@
 
 #TODO Overview the process of adding new QwerkE serialization system.
+More notes in : [[Mirror Library]]
 
 Commits :
 - https://github.com/AaronAppel/Qwerk_Engine/commit/3d685712ae7740c830954dc6cec105c93b2e5a5d

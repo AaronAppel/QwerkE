@@ -2,6 +2,7 @@
 
 #include "QC_StringHelpers.h"
 
+#include "QF_FileSystem.h"
 #include "QF_FileUtilities.h"
 #include "QF_Log.h"
 
@@ -51,13 +52,17 @@ namespace QwerkE {
         return shader;
     }
 
-    ShaderComponent* ShaderFactory::CreateShaderComponent(GLenum shaderType, const char* shaderPath)
+    ShaderComponent* ShaderFactory::CreateShaderComponent(GLenum shaderType, const char* shaderFilePath)
     {
-        const char* shaderString = LoadCompleteFile(shaderPath, 0); // #TODO Allocation
+        const char* shaderString = LoadCompleteFile(shaderFilePath, 0); // #TODO Allocation
         if (ShaderComponent* result = GenerateShaderFromData(shaderType, shaderString))
         {
-            result->SetType(DeepCopyString(GetFileExtension(shaderPath).c_str()));
-            result->SetName(GetFileNameWithExt(shaderPath));
+            result->SetType(DeepCopyString(GetFileExtension(shaderFilePath).c_str()));
+            if (char* fullFileName = File::FullFileName(shaderFilePath))
+            {
+                result->SetName(fullFileName);
+                free(fullFileName);
+            }
             return result;
         }
         return nullptr;

@@ -21,8 +21,6 @@ namespace QwerkE {
         RenderComponent(const char* objectRecipe);
         RenderComponent(const char* shaderName, const char* materialName, const char* meshName);
 
-        void GenerateSchematic();
-
         void Activate() override;
         void Setup(const char* shaderName, const char* materialName, const char* meshName);
 

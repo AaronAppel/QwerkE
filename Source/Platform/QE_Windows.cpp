@@ -6,6 +6,7 @@
 
 #include "Libraries/FlatheadGames/MyMemory.h"
 
+#include "QF_Debug.h"
 #include "QE_ProgramArgs.h"
 
 #include "QE_Defines.h"
@@ -23,14 +24,11 @@ int main(unsigned int argc, char **argv)
 	if (true) { OutputProgramPairsInfo_Windows(pairs); }
 
 	const QwerkE::eOperationResult result = QwerkE::Engine::Run(pairs);
-	if (result != QwerkE::eOperationResult::Success)
-	{
-		system("pause");
-	}
+	ASSERT(result == QwerkE::eOperationResult::Success, "Engine exited with error!");
 
 #if QWERKE_TRACKING_ALLOCATIONS
 	MyMemory_ValidateAllocations(false);
 #endif
 
-	return (int)result;
+	return (int)(result != QwerkE::eOperationResult::Success);
 }

@@ -13,9 +13,6 @@
     <Filter Include="Core\Events">
       <UniqueIdentifier>{1b82044a-1a00-42dd-aa5d-7799b6ea7b91}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Factory">
-      <UniqueIdentifier>{a0ebc639-3ca8-4dbe-99f0-89ec04f5d8d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Graphics">
       <UniqueIdentifier>{619acd61-2824-406e-823f-1d8505e05f83}</UniqueIdentifier>
     </Filter>
@@ -146,9 +143,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.cpp">
       <Filter>Core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Factory.cpp">
-      <Filter>Core\Factory</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FontTest.cpp">
       <Filter>Core\Graphics\FontRendering</Filter>
@@ -331,9 +325,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp">
       <Filter>Core\Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.cpp">
-      <Filter>Core\Serialization</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Texture.cpp">
       <Filter>Core\Graphics\DataTypes</Filter>
     </ClCompile>
@@ -362,9 +353,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.h">
       <Filter>Core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Factory.h">
-      <Filter>Core\Factory</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FontTest.h">
       <Filter>Core\Graphics\FontRendering</Filter>
@@ -609,9 +597,6 @@
       <Filter>Core\Settings</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h">
-      <Filter>Core\Serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Math.h">

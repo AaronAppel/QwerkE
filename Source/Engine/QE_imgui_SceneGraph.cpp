@@ -9,14 +9,12 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_GameObject.h"
-#include "QF_Factory.h"
 #include "QF_RenderComponent.h"
 #include "QF_RenderRoutine.h"
 #include "QF_Resources.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
-#include "QF_Serialization_Schematics.h"
 
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"
@@ -33,9 +31,10 @@ namespace QwerkE {
 
 	RenderComponent* AddModelComponentFromSchematic(GameObject* entity, const char* objectRecipeName)
 	{
-		RenderComponent* mComp = Serialization::LoadRenderComponentFromSchematic(ObjectSchematicsFolderPath(objectRecipeName));
-		entity->AddComponent((Component*)mComp);
-		return mComp;
+		RenderComponent* rComp = new RenderComponent();
+		Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath(objectRecipeName), *rComp);
+		rComp->Activate();
+		return rComp;
 	}
 
 	GameObject* CreateSkyBox(Scene* scene, vec3 position)

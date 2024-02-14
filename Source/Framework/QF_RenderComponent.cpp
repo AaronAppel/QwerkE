@@ -1,14 +1,12 @@
 #include "QF_RenderComponent.h"
 
-#include "QF_Resources.h"
-#include "QF_Material.h"
-#include "QF_ShaderProgram.h"
-#include "QF_GraphicsHelpers.h"
-#include "QF_GameObject.h"
-#include "QF_RenderRoutine.h"
-#include "QF_Serialization_Schematics.h"
-
 #include "QF_Defines.h"
+#include "QF_GameObject.h"
+#include "QF_GraphicsHelpers.h"
+#include "QF_Material.h"
+#include "QF_RenderRoutine.h"
+#include "QF_Resources.h"
+#include "QF_ShaderProgram.h"
 
 namespace QwerkE {
 
@@ -50,16 +48,6 @@ namespace QwerkE {
                 rRoutine->ResetUniformList();
             }
         }
-    }
-
-    void RenderComponent::GenerateSchematic()
-    {
-        // TODO: Test
-        if (m_pParent && strcmp(m_SchematicName.c_str(), "None") == 0) // #TODO Replace string
-        {
-            m_SchematicName = m_pParent->GetName();
-        }
-        Serialization::SaveObjectSchematic(this);
     }
 
     void RenderComponent::Activate()
@@ -128,16 +116,11 @@ namespace QwerkE {
         {
             m_Renderables[index].SetShader(shader);
 
-            if (m_Renderables[index].GetMesh())
+            if (m_pParent)
             {
-                m_Renderables[index].GetMesh()->SetupShaderAttributes(shader);
-
-                if (m_pParent)
+                if (RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))
                 {
-                    if (RenderRoutine* rRoutine = (RenderRoutine*)m_pParent->GetFirstDrawRoutineOfType(eRoutineTypes::Routine_Render))
-                    {
-                        rRoutine->ResetUniformList();
-                    }
+                    rRoutine->ResetUniformList();
                 }
             }
         }

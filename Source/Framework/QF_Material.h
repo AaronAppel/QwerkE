@@ -12,19 +12,13 @@
 #include "QF_FileUtilities.h"
 #include "QF_GraphicsHelpers.h"
 #include "QF_Texture.h"
-#include "QF_Serialization_Schematics.h"
 
 namespace QwerkE {
 
     class Material
     {
     public:
-        Material() {};
-
-        Material(const char* materialSchematicPath)
-        {
-            Serialization::LoadMaterialSchematic(materialSchematicPath, this);
-        }
+        Material() = default;
 
         Material(const std::map<eMaterialMaps, Texture*>& textures)
         {

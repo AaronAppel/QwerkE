@@ -11,7 +11,7 @@ namespace QwerkE {
         void DeserializeJsonToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
 
         template <class T>
-        void DeserializeJsonFromFile(const char* fileName, T& objectReference)
+        void DeserializeJsonFromFile(const char* fileName, T& objectReference) // #TODO Handle pointers as well, to avoid need to always dereference (unsafe)
         {
             if (!fileName)
             {

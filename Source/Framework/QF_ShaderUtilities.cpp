@@ -63,7 +63,7 @@ namespace QwerkE {
             }
         }
 
-        if (shader->GetFragShader())
+        if (shader->GetFragShader() && shader->GetVertShader()) // #TODO Review logic for why vertex data is used here
         {
             // vert
             // store string in temp vertexBuffer

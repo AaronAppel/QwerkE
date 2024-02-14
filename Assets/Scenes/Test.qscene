@@ -49,7 +49,7 @@
 							"m_Transform":	[{
 									"s_Position":	[{
 											"x":	0,
-											"y":	0,
+											"y":	1,
 											"z":	0
 										}],
 									"s_Rotation":	[{
@@ -80,7 +80,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
-															"m_MeshFileName":	"null_mesh.obj"
+															"m_MeshFileName":	"LightBulb.obj"
 														}]
 												}]
 										}]
@@ -100,8 +100,8 @@
 											"z":	0
 										}],
 									"s_Rotation":	[{
-											"x":	268.875000,
-											"y":	268.875000,
+											"x":	192,
+											"y":	192,
 											"z":	0
 										}],
 									"s_Scale":	[{

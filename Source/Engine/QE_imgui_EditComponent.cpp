@@ -31,11 +31,6 @@ namespace QwerkE {
     {
     }
 
-    EditComponent::~EditComponent()
-    {
-        CleanUpAssetStrings();
-    }
-
     void EditComponent::Draw(GameObject* entity)
     {
         if (m_LastEntity != entity)
@@ -44,11 +39,6 @@ namespace QwerkE {
         }
 
         m_LastEntity = entity;
-
-        if (ImGui::Button("Refresh"))
-        {
-            m_RefreshAssetStrings = true;
-        } // #TODO Bug review
 
         for (auto it = entity->SeeComponents()->begin(); it != entity->SeeComponents()->end(); ++it)
         {
@@ -80,41 +70,21 @@ namespace QwerkE {
         }
     }
 
-    void EditComponent::CleanUpAssetStrings()
-    {
-        for (size_t i = 0; i < m_MatStrings.size(); i++)
-        {
-            delete m_MatStrings[i];
-        }
-        for (size_t i = 0; i < m_ShaderStrings.size(); i++)
-        {
-            delete m_ShaderStrings[i];
-        }
-        for (size_t i = 0; i < m_MeshStrings.size(); i++)
-        {
-            delete m_MeshStrings[i];
-        }
-
-        m_MatStrings.clear();
-        m_ShaderStrings.clear();
-        m_MeshStrings.clear();
-    }
-
     void EditComponent::ShowShaderMenu(RenderComponent* rComp)
     {
         if (ImGui::Begin("Shader Selector", &m_ShowShaderList))
         {
-            for (size_t i = 0; i < m_ShaderStrings.size(); i++)
+            for (auto it : *m_Shaders)
             {
-                if (ImGui::Selectable(m_ShaderStrings[i]))
+                if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetShaderAtIndex(m_RenderableIndex, Resources::GetShaderProgram(m_ShaderStrings[i]));
+                    rComp->SetShaderAtIndex(m_RenderableIndex, Resources::GetShaderProgram(it.first.c_str()));
                 }
-            }
 
-            if (ImGui::IsItemClicked(1))
-            {
-                static bool shaderEditor = true;
+                if (ImGui::IsItemClicked(1))
+                {
+                    static bool shaderEditor = true; // #TODO:
+                }
             }
         }
         ImGui::End();
@@ -124,11 +94,11 @@ namespace QwerkE {
     {
         if (ImGui::Begin("Material Selector", &m_ShowMaterialList))
         {
-            for (size_t i = 0; i < m_MatStrings.size(); i++)
+            for (auto it : *m_Materials)
             {
-                if (ImGui::Selectable(m_MatStrings[i]))
+                if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetMaterialAtIndex(m_RenderableIndex, Resources::GetMaterial(m_MatStrings[i]));
+                    rComp->SetMaterialAtIndex(m_RenderableIndex, Resources::GetMaterial(it.first.c_str()));
                 }
 
                 if (ImGui::IsItemClicked(1))
@@ -145,11 +115,11 @@ namespace QwerkE {
     {
         if (ImGui::Begin("Mesh Selector", &m_ShowMeshList))
         {
-            for (size_t i = 0; i < m_MeshStrings.size(); i++)
+            for (auto it : *m_Meshes)
             {
-                if (ImGui::Selectable(m_MeshStrings[i]))
+                if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetMeshAtIndex(m_RenderableIndex, Resources::GetMesh(m_MeshStrings[i]));
+                    rComp->SetMeshAtIndex(m_RenderableIndex, Resources::GetMesh(it.first.c_str()));
                 }
             }
         }
@@ -170,28 +140,6 @@ namespace QwerkE {
 
             std::vector<Renderable>* renderables = (std::vector<Renderable>*)renderComponent->LookAtRenderableList();
             if (m_RenderableIndex > renderables->size()) m_RenderableIndex = 0;
-
-            if (m_RefreshAssetStrings)
-            {
-                m_RefreshAssetStrings = false;
-
-                CleanUpAssetStrings();
-
-                for (const auto& p : *m_Materials)
-                {
-                    m_MatStrings.push_back(DeepCopyString(p.second->GetMaterialName().c_str()));
-                }
-                for (const auto& p : *m_Shaders)
-                {
-                    m_ShaderStrings.push_back(DeepCopyString(p.second->GetName().c_str()));
-                }
-                for (const auto& p : *m_Meshes)
-                {
-                    m_MeshStrings.push_back(DeepCopyString(p.second->GetFileName().c_str()));
-                }
-
-                // #TODO Also show Textures + Meshes
-            }
 
             ImGui::Columns(4, "RenderablesHeader", false);
             {

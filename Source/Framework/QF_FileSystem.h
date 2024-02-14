@@ -21,7 +21,7 @@ namespace QwerkE {
         std::string s_Extension = gc_DefaultStringValue;
         char* s_Data = nullptr;
 
-        virtual ~QFile() { if (s_Data) { delete s_Data; } }
+        virtual ~QFile() { if (s_Data) { delete s_Data; } } // #TODO Sometimes need free(s_Data)
     };
 
     struct QImageFile : public QFile
@@ -42,27 +42,28 @@ namespace QwerkE {
         // TODO: ~QSoundFile() alDeleteBuffers(1, &s_Handle)
     };
 
-    struct File
-    {
+    namespace File {
+
         // TODO: Allow flags for loading images a certain way
         // TODO: Remove GLenum and any implementation specific variables, types, or styles
         // TODO: LoadHDRImage // https://learnopengl.com/PBR/IBL/Diffuse-irradiance
         // LoadImage is a macro somewhere
 
-        static char* FullFileName(const char* filePath);
+        char* FullFileName(const char* filePath); // #TODO Use smart pointer to de-allocate
 
-        static unsigned char* LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically = 0);
+        unsigned char* LoadImageFileData(const char* path, unsigned int* imageWidth, unsigned int* imageHeight, GLenum& channels, bool flipVertically = 0);
 
-        static SoundHandle LoadSound(const char* soundName);
+        SoundHandle LoadSound(const char* soundName);
 
-        static Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName);
-        static bool LoadModelFileToMeshes(const char* path);
+        Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName);
+        bool LoadModelFileToMeshes(const char* path);
 
         // TODO: Load scene from software like 3DS Max, Blender, etc
         // load things like lights, cameras and everything from 1 file
         // look at creating a conversion helper for QwerkE.scene to unity, blender, etc
 
         // Material* GetMaterialFromMatFile(const char* path);
-    };
+
+    }
 
 }

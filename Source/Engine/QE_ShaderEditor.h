@@ -9,7 +9,7 @@ namespace QwerkE {
 
     class ShaderProgram;
 
-    class ShaderEditor
+    class ShaderEditor final // #TODO Change for editing any file type as raw text
     {
     public:
         ShaderEditor();

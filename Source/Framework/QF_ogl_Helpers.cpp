@@ -137,26 +137,26 @@ namespace QwerkE {
         unsigned char* pngbuffer = 0;
         unsigned int width, height;
         long filesize;
-        unsigned int result = -1;
+        unsigned int decodeResult = -1;
 
         // buffer file data
         unsigned char* filebuffer = (unsigned char*)LoadCompleteFile(filename, &filesize);
 
         if (filebuffer != NULL) // decode file data
         {
-            result = lodepng_decode32(&pngbuffer, &width, &height, filebuffer, filesize);
+            decodeResult = lodepng_decode32(&pngbuffer, &width, &height, filebuffer, filesize);
         }
         if (0) // TODO: Evaluate when to flip image vertically
         {
             Flip32BitImageVertically(pngbuffer, width, height);
         }
 
-        if (result != 0) // error decoding image data
+        if (decodeResult != 0)
         {
             LOG_ERROR("LoadTexture(): Error loading image: {0}", filename);
             free(pngbuffer);
             delete[] filebuffer;
-            return 0; // exit
+            return 0;
         }
 
         GLuint texhandle = 0;
@@ -171,7 +171,6 @@ namespace QwerkE {
 
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        // cleanup
         free(pngbuffer);
         delete[] filebuffer;
         return texhandle;

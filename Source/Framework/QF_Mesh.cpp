@@ -170,7 +170,9 @@ namespace QwerkE {
                 glEnableVertexAttribArray(attributeLoc);
             }
             else
+            {
                 LOG_WARN("Attribute name not found/supported: {0}", attributes->at(i).c_str());
+            }
         }
         // #TODO Check if vertex arrays should to be disabled after drawing
         glBindVertexArray(0);

@@ -20,7 +20,6 @@
 #include "QF_Scenes.h"
 #include "QF_Resources.h"
 #include "QF_Audio.h"
-#include "QF_Factory.h"
 #include "QF_Window.h"
 
 #include "QE_MaterialEditor.h"

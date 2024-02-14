@@ -6,7 +6,6 @@
 
 #include "QF_CameraComponent.h"
 #include "QF_Component.h"
-#include "QF_Factory.h"
 #include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"

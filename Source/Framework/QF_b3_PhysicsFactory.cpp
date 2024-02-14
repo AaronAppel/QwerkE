@@ -27,55 +27,61 @@
 
 #include "QF_Physics.h"
 
+#define STATIC_MASS 0.0f
+
 namespace QwerkE {
 
-    btRigidBody* PhysicsFactory::CreateRigidSphere(btVector3 origin, float radius, float mass)
-    {
-        btCollisionShape* shape = new btSphereShape(btScalar(radius));
-        return CreateRigidBody(origin, shape, mass);
-    }
+    namespace Physics {
 
-    btRigidBody* PhysicsFactory::CreateRigidPlane(btVector3 origin, float width, float length, float mass)
-    {
-        // TODO: Where is the plane width/height set?
-        btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 1, 0), 0); // TODO: Hard coded default value
-        return CreateRigidBody(origin, shape, mass);
-    }
+        btRigidBody* CreateRigidBody(btVector3 origin, btCollisionShape* shape, float mass)
+        {
+            btTransform startTransform;
+            startTransform.setIdentity();
+            startTransform.setOrigin(origin);
 
-    btRigidBody* PhysicsFactory::CreateRigidCube(btVector3 origin, float width, float height, float depth, float mass)
-    {
-        btCollisionShape* shape = new btBoxShape(btVector3(width / 2.0f, height / 2.0f, depth / 2.0f));
-        return CreateRigidBody(origin, shape, mass);
-    }
+            btVector3 localInertia(0, 0, 0); // TODO: Currently a hard coded default value
+            btScalar massScalar(mass);
 
-    btRigidBody* PhysicsFactory::CreateRigidCylinder(btVector3 origin, float radius, float height, float mass)
-    {
-        btCollisionShape* shape = new btCylinderShape(btVector3(radius / 2.0f, height / 2.0f, radius / 2.0f));
-        return CreateRigidBody(origin, shape, mass);
-    }
+            btDefaultMotionState* motionState = new btDefaultMotionState(startTransform); // TODO: Use btMotionState?
+            if (massScalar != STATIC_MASS)
+                shape->calculateLocalInertia(massScalar, localInertia);
 
-    btRigidBody* PhysicsFactory::PhysicsFactory::CreateRigidCone(btVector3 origin, float radius, float height, float mass)
-    {
-        btCollisionShape* shape = new btConeShape(radius, height);
-        return CreateRigidBody(origin, shape, mass);
-    }
+            btRigidBody::btRigidBodyConstructionInfo info = btRigidBody::btRigidBodyConstructionInfo(massScalar, motionState, shape, localInertia);
 
-    btRigidBody* PhysicsFactory::CreateRigidBody(btVector3 origin, btCollisionShape* shape, float mass)
-    {
-        btTransform startTransform;
-        startTransform.setIdentity();
-        startTransform.setOrigin(origin);
+            return new btRigidBody(info);
+        }
 
-        btVector3 localInertia(0, 0, 0); // TODO: Currently a hard coded default value
-        btScalar massScalar(mass);
+        btRigidBody* CreateRigidSphere(btVector3 origin, float radius, float mass)
+        {
+            btCollisionShape* shape = new btSphereShape(btScalar(radius));
+            return CreateRigidBody(origin, shape, mass);
+        }
 
-        btDefaultMotionState* motionState = new btDefaultMotionState(startTransform); // TODO: Use btMotionState?
-        if (massScalar != STATIC_MASS)
-            shape->calculateLocalInertia(massScalar, localInertia);
+        btRigidBody* CreateRigidPlane(btVector3 origin, float width, float length, float mass)
+        {
+            // TODO: Where is the plane width/height set?
+            btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 1, 0), 0); // TODO: Hard coded default value
+            return CreateRigidBody(origin, shape, mass);
+        }
 
-        btRigidBody::btRigidBodyConstructionInfo info = btRigidBody::btRigidBodyConstructionInfo(massScalar, motionState, shape, localInertia);
+        btRigidBody* CreateRigidCube(btVector3 origin, float width, float height, float depth, float mass)
+        {
+            btCollisionShape* shape = new btBoxShape(btVector3(width / 2.0f, height / 2.0f, depth / 2.0f));
+            return CreateRigidBody(origin, shape, mass);
+        }
 
-        return new btRigidBody(info);
+        btRigidBody* CreateRigidCylinder(btVector3 origin, float radius, float height, float mass)
+        {
+            btCollisionShape* shape = new btCylinderShape(btVector3(radius / 2.0f, height / 2.0f, radius / 2.0f));
+            return CreateRigidBody(origin, shape, mass);
+        }
+
+        btRigidBody* CreateRigidCone(btVector3 origin, float radius, float height, float mass)
+        {
+            btCollisionShape* shape = new btConeShape(radius, height);
+            return CreateRigidBody(origin, shape, mass);
+        }
+
     }
 
 }

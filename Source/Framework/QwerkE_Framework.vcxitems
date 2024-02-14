@@ -32,7 +32,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debugger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_EventManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Factory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FontTest.cpp" />
@@ -73,7 +72,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scenes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Settings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderFactory.cpp" />
@@ -109,7 +107,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_EventManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FileSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FileUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FontTest.h" />
@@ -167,7 +164,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scenes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Serialization_Schematics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Settings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ShaderComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ShaderFactory.h" />

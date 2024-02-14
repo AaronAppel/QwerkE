@@ -4,9 +4,9 @@
 #include <vector>
 
 // #TODO Move/deprecate file utils to File:: namespace/struct
-char* LoadFile(const char* filename);
-char* LoadCompleteFile(const char* filename, long* length);
-char* ReadRawBytesFromFile(const char* filename);
+char* LoadFile(const char* fileName);
+char* LoadCompleteFile(const char* fileName, long* length);
+char* ReadRawBytesFromFile(const char* const fileName);
 
 unsigned char* LoadWavFileData(const char* filePath, unsigned long& bufferSize, unsigned short& channels, unsigned int& frequency, unsigned short& bitsPerSample);
 
@@ -14,13 +14,11 @@ void WriteRawBytesToFile(const char* filename, const char* data, int numBytes);
 void WriteStringToFile(const char* filename, const char* string);
 
 bool FileExists(const char* filePath);
-std::vector<std::string> ReadDir(const char* directoryPath); // #TODO Review name. Could involve "list" like ListDirFiles(path)
+std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath); // #TODO Review name. Could involve "list" like ListDirFiles(path)
 
-bool CreateUniqueFile(const char* filename);
-
-char* FindFileName(const char* filePath, bool includeExtension=true);
-char* FindFileExtension(const char* filePath);
+std::unique_ptr<char> SmartFileName(const char* filePathOrName, bool includeExtension);
+char* FileName(const char* filePath, bool includeExtension);
+std::unique_ptr<char> SmartFileExtension(const char* filePathOrName);
+char* FileExtension(const char* filePath);
 
 std::string GetFileExtension(const char* filePath);
-std::string GetFileNameWithExt(const char* filePath);
-std::string GetFileNameNoExt(const char* filePath);

@@ -1,30 +1,23 @@
 #pragma once
 
-#define STATIC_MASS 0.0f // TODO: Find a better spot or deprecate
-
 class btRigidBody;
 
 namespace QwerkE {
 
-    // TODO: Abstract from Bullet3 library
-    class Physics
-    {
-    public:
-        static void Initialize();
-        static void TearDown();
+    namespace Physics { // #TODO: Abstract from Bullet3 library
 
-        static void Tick();
+        void Initialize();
+        void LibraryInitialize();
+        void TearDown();
 
-        static void RegisterObject(btRigidBody* rigidBody);
-        static void UnregisterObject(btRigidBody* rigidBody);
+        void Tick();
 
-        static float GetDefaultRestitution();
-        static float GetSphereRestitution();
+        void RegisterObject(btRigidBody* rigidBody);
+        void UnregisterObject(btRigidBody* rigidBody);
 
-    protected:
-        Physics() = default;
+        float GetDefaultRestitution();
+        float GetSphereRestitution();
 
-        static void LibraryInitialize();
-    };
+    }
 
 }

@@ -148,9 +148,17 @@ namespace QwerkE {
 		return true;
 	}
 
+	bool Resources::AddShaderProgram(ShaderProgram* shaderProgram)
+	{
+		if (!shaderProgram || !shaderProgram->GetName().c_str())
+			return false;
+
+		AddShaderProgram(shaderProgram->GetName().c_str(), shaderProgram);
+	}
+
 	bool Resources::AddShaderProgram(const char* name, ShaderProgram* ShaderProgram)
 	{
-		if (!name || ShaderProgram == nullptr)
+		if (!name || !ShaderProgram)
 			return false;
 
 		if (ShaderProgramExists(name))
@@ -190,12 +198,9 @@ namespace QwerkE {
 			return m_Meshes[null_mesh];
 
 		if (MeshExists(meshName))
-		{
 			return m_Meshes[meshName];
-		}
 
-		Mesh* result = File::LoadMeshInModelByName(MeshesFolderPath(fileName), meshName);
-		if (result)
+		if (Mesh* result = File::LoadMeshInModelByName(MeshesFolderPath(fileName), meshName))
 		{
 			m_Meshes[meshName] = result;
 			return result;
@@ -205,24 +210,31 @@ namespace QwerkE {
 
 	void Resources::UpdateTexture(const char* name, int handle)
 	{
-		if (name)
+		if (name) // #TODO Verify handle value?  && handle != 0
 		{
 			m_Textures[name]->s_Handle = (GLuint)handle;
 		}
 	}
 
-	Texture* Resources::GetTexture(const char* name)
+	Texture* Resources::GetTexture(const char* textureName)
 	{
-		if (!name)
+		if (!textureName)
 			return m_Textures[null_texture];
 
-		if (m_Textures.find(name) != m_Textures.end())
-			return m_Textures[name];
+		if (TextureExists(textureName))
+			return m_Textures[textureName];
 
-		if (TextureExists(name))
-			return m_Textures[GetFileNameWithExt(name).c_str()];
+		if (char* fullFileName = File::FullFileName(textureName))
+		{
+			if (TextureExists(fullFileName))
+			{
+				free(fullFileName);
+				return m_Textures[fullFileName];
+			}
+			free(fullFileName);
+		}
 
-		return InstantiateTexture(TexturesFolderPath(name));
+		return InstantiateTexture(TexturesFolderPath(textureName));
 	}
 
 	Texture* Resources::GetTextureFromPath(const char* filePath)
@@ -230,8 +242,15 @@ namespace QwerkE {
 		if (!filePath)
 			return m_Textures[null_texture];
 
-		if (TextureExists(GetFileNameWithExt(filePath).c_str()))
-			return m_Textures[GetFileNameWithExt(filePath).c_str()];
+		if (char* fullFileName = File::FullFileName(filePath))
+		{
+			if (TextureExists(fullFileName))
+			{
+				free(fullFileName);
+				return m_Textures[fullFileName];
+			}
+			free(fullFileName);
+		}
 
 		return InstantiateTexture(filePath);
 	}
@@ -252,8 +271,15 @@ namespace QwerkE {
 		if (!filePath)
 			return m_Materials[null_material];
 
-		if (m_Materials.find(GetFileNameWithExt(filePath).c_str()) != m_Materials.end())
-			return m_Materials[GetFileNameWithExt(filePath).c_str()];
+		if (char* fullFileName = File::FullFileName(filePath))
+		{
+			if (MaterialExists(fullFileName))
+			{
+				// free(fullFileName);
+				return m_Materials[fullFileName]; // #TODO Can't free fullFileName
+			}
+			free(fullFileName);
+		}
 
 		return InstantiateMaterial(filePath);
 	}
@@ -274,9 +300,17 @@ namespace QwerkE {
 		if (!filePath)
 			return m_Fonts[null_font];
 
-		if (m_Fonts.find(GetFileNameWithExt(filePath).c_str()) != m_Fonts.end())
-			return m_Fonts[GetFileNameWithExt(filePath).c_str()];
+		char* fullFileName = File::FullFileName(filePath);
+		if (!fullFileName)
+			return m_Fonts[null_font];
 
+		if (m_Fonts.find(fullFileName) != m_Fonts.end())
+		{
+			free(fullFileName);
+			return m_Fonts[fullFileName];
+		}
+
+		free(fullFileName);
 		return InstantiateFont(filePath);
 	}
 
@@ -296,9 +330,16 @@ namespace QwerkE {
 		if (!filePath)
 			return m_Sounds[null_sound];
 
-		if (SoundExists(GetFileNameWithExt(filePath).c_str()))
-			return m_Sounds[GetFileNameWithExt(filePath).c_str()];
+		char* fullFileName = File::FullFileName(filePath);
+		if (!fullFileName)
+			return m_Sounds[null_sound];
 
+		if (SoundExists(fullFileName))
+		{
+			free(fullFileName);
+			return m_Sounds[fullFileName];
+		}
+		free(fullFileName);
 		return InstantiateSound(filePath);
 	}
 
@@ -318,10 +359,19 @@ namespace QwerkE {
 		if (!filePath)
 			return m_ShaderPrograms[null_shader];
 
-		if (ShaderProgramExists(GetFileNameWithExt(filePath).c_str()))
-			return m_ShaderPrograms[GetFileNameWithExt(filePath).c_str()];
-
-		return InstantiateShaderProgram(filePath);
+		if (char* fullFileName = File::FullFileName(filePath))
+		{
+			if (ShaderProgramExists(fullFileName))
+			{
+				return m_ShaderPrograms[fullFileName];
+			}
+			else
+			{
+				return InstantiateShaderProgram(filePath);
+			}
+			free(fullFileName);
+		}
+		return m_ShaderPrograms[null_shader];
 	}
 
 	ShaderComponent* Resources::GetShaderComponent(const char* name, eShaderComponentTypes componentType)
@@ -378,8 +428,15 @@ namespace QwerkE {
 			}
 		}
 
-		if (ShaderComponentExists(GetFileNameWithExt(filePath).c_str()))
-			return m_ShaderComponents[GetFileNameWithExt(filePath).c_str()];
+		if (char* fullFileName = File::FullFileName(filePath))
+		{
+			if (ShaderComponentExists(filePath))
+			{
+				// free(fullFileName);
+				return m_ShaderComponents[fullFileName];
+			}
+			free(fullFileName);
+		}
 
 		return InstantiateShaderComponent(filePath);
 	}

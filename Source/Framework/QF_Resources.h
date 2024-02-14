@@ -2,6 +2,7 @@
 
 #include <string>
 #include <map>
+#include <memory>
 
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/freetype2/ft2build.h" // #TODO Temp build fix
@@ -40,13 +41,14 @@ namespace QwerkE {
         static bool ShaderProgramExists(const char* name);
         static bool ShaderComponentExists(const char* name);
 
-        static bool AddMesh(const char* filePath, Mesh* mesh);
-        static bool AddTexture(const char* name, Texture* texture);
-        static bool AddMaterial(const char* name, Material* material);
+        static bool AddMesh(const char* filePath, Mesh* mesh); // #TODO Change to get name from object itself
+        static bool AddTexture(const char* name, Texture* texture); // #TODO Change to use file name of texture itself
+        static bool AddMaterial(const char* name, Material* material); // #TODO Change to get name from object itself
         static bool AddFont(const char* name, FT_Face font);
         static bool AddSound(const char* name, ALuint sound);
-        static bool AddShaderProgram(const char* name, ShaderProgram* ShaderProgram);
-        static bool AddShaderComponent(const char* name, ShaderComponent* shaderComponent);
+        static bool AddShaderProgram(ShaderProgram* shaderProgram);
+        static bool AddShaderProgram(const char* name, ShaderProgram* ShaderProgram); // #TODO Change to get name from object itself
+        static bool AddShaderComponent(const char* name, ShaderComponent* shaderComponent); // #TODO Change to get name from object itself
         // #TODO Other add functions
 
         // getters
@@ -91,6 +93,8 @@ namespace QwerkE {
         Resources() = default;
         ~Resources();
 
+        static std::map<std::string, std::shared_ptr<Mesh*>> m_MeshesSmartPointers; // #TODO Try using smart pointers
+
         // #TODO Consider using unordered maps or linked lists. Review data structure choice
         static std::map<std::string, Mesh*> m_Meshes;
         static std::map<std::string, Texture*> m_Textures;
@@ -107,8 +111,6 @@ namespace QwerkE {
         static bool IsSoundUnique(ALuint sound);
         static bool IsShaderProgramUnique(ShaderProgram* ShaderProgram);
         static bool IsShaderComponentsUnique(ShaderComponent* shaderComponents);
-
-        static void InstantiateNullAssets();
 
         static Mesh* InstantiateMesh(const char* name);
         static Texture* InstantiateTexture(const char* name);

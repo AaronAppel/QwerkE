@@ -32,8 +32,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Framework\QF_Mirror.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QC_Memory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Memory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\ai_assert.h" />
@@ -868,12 +868,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl" />

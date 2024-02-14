@@ -10,14 +10,11 @@ namespace QwerkE {
 
     namespace MeshFactory { // #TODO Deprecate hard coded mesh data for mesh data in files
 
-        /* OBJ loading */
         Mesh* ImportOBJMesh(const char* fileDirectory, vec3 objScale, vec2 UVScale, bool invertFaces);
 
         // #TODO Implement or deprecate
         // Model* ImportOBJModel(const char* fileDirectory, vec3 objScale = vec3(1,1,1), vec2 UVScale = vec2(1,1), bool invertFaces = false) { return new Model(); };
 
-        /* Mesh creation */
-        // defined in MeshShapes.cpp
         Mesh* CreateTestModel();
         Mesh* CreateTestPlane();
         Mesh* CreateQuad(vec2 size);

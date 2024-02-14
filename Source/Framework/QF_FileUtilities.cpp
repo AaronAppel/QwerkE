@@ -1,8 +1,9 @@
 #include "QF_FileUtilities.h"
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
-#include <cstring>
+#include <memory>
 
 #include "QC_StringHelpers.h"
 
@@ -34,25 +35,21 @@ bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 // https://msdn.microsoft.com/en-us/library/windows/desktop/aa365740(v=vs.85).aspx
 // https://stackoverflow.com/questions/26475540/c-having-problems-with-a-simple-example-of-findfirstfile
 // https://docs.microsoft.com/en-us/cpp/standard-library/filesystem-functions
-std::vector<std::string> ReadDir(const char* directoryPath)
+std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath)
 {
-	// variables
-	std::vector<std::string> fileList; // list of file names with extensions
-	WIN32_FIND_DATA ffd; // file data object
+	std::unique_ptr<std::vector<std::string>> dirFileNames = std::make_unique<std::vector<std::string>>();
+	dirFileNames.get()->reserve(10);
+
+	WIN32_FIND_DATA ffd;
 	HANDLE hand = INVALID_HANDLE_VALUE; // file handle
 	std::string dir = directoryPath; // used for easy appending
 
 	dir.append("*.*"); // append "search for all" instruction
 	hand = FindFirstFile(dir.c_str(), &ffd); // get the first file in directory
 
-	// valid directory?
 	if (INVALID_HANDLE_VALUE == hand)
-	{
-		int bp = 1; // error
-		return fileList;
-	}
+		return dirFileNames;
 
-	// read directory
 	do
 	{
 		if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
@@ -62,19 +59,18 @@ std::vector<std::string> ReadDir(const char* directoryPath)
 		else
 		{
 			std::cout << ffd.cFileName << std::endl;
-			fileList.push_back(ffd.cFileName);
+			dirFileNames.get()->push_back(ffd.cFileName);
 		}
 	} while (FindNextFile(hand, &ffd) != 0);
 
 	DWORD dwError = GetLastError();
 	if (dwError != ERROR_NO_MORE_FILES)
 	{
-		//DisplayErrorBox(TEXT("FindFirstFile"));
-		int bp = 1;
+		// DisplayErrorBox(TEXT("FindFirstFile"));
 	}
 
 	FindClose(hand);
-	return fileList;
+	return dirFileNames;
 }
 #else
 // #include <fstream>
@@ -105,62 +101,54 @@ std::vector<std::string> ReadDir(const char* directoryPath)
 // Android
 #endif
 
-bool CreateUniqueFile(const char* filePath)
+void WriteRawBytesToFile(const char* fileName, const char* dataToWrite, int numBytes)
 {
-	FILE* filehandle;
+	if (!fileName || !dataToWrite)
+		return;
 
-	if (!FileExists(filePath))
-	{
-		errno_t error = fopen_s(&filehandle, filePath, "w+");
-		fclose(filehandle);
-	}
-	// OutputPrint("\n%s(): %s already exists\n\n", __FUNCTION__, filePath);
-	return false;
-}
-
-void WriteRawBytesToFile(const char* filename, const char* data, int numBytes)
-{
 	std::ofstream oStream;
-	oStream.open(filename, std::ios_base::binary);
+	oStream.open(fileName, std::ios_base::binary);
 	if (oStream.is_open())
 	{
-		oStream.write((char*)data, numBytes);
+		oStream.write((char*)dataToWrite, numBytes);
 		oStream.close();
 	}
 }
 
-char* ReadRawBytesFromFile(const char* filename)
+char* ReadRawBytesFromFile(const char* const fileName)
 {
-	std::ifstream iStream;
-	iStream.open(filename, std::ios_base::binary);
+	if (!fileName)
+		return nullptr;
 
-	char* data = nullptr;
+	std::ifstream iStream;
+	iStream.open(fileName, std::ios_base::binary);
+
 	if (iStream.is_open())
 	{
 		int size = 0;
 		iStream.seekg(0, std::ios::end);
 		size = (int)iStream.tellg();
 
-		data = new char[size];
+		char* data = new char[size];
 		iStream.read(data, size);
 		iStream.close();
 		return data;
 	}
 
-	return nullptr; // pass bytes back
+	return nullptr;
 }
-// FileUtilities.cpp
-char* LoadFile(const char* filename)
+
+char* LoadFile(const char* fileName)
 {
 	FILE* filehandle;
-	errno_t error = fopen_s(&filehandle, filename, "rb");
+	errno_t error = fopen_s(&filehandle, fileName, "rb");
 	if (filehandle)
 	{
 		// find the length of the file
 		fseek(filehandle, 0, SEEK_END); // go to the end
 		long size = ftell(filehandle); // read the position in bytes
 		rewind(filehandle); // go back to the beginning
-							// before we can read, we need to allocate a buffer of the right size
+							// before we can read, we need to allocate a buffer of the right filePathLength
 		char* buffer = new char[size];
 		fread(buffer, size, 1, filehandle);
 		fclose(filehandle);
@@ -210,7 +198,7 @@ char* LoadCompleteFile(const char* filename, long* length = nullptr)
 
 // wav loading: https://blog.csdn.net/u011417605/article/details/49662535
 // https://ffainelli.github.io/openal-example/
-// https://stackoverflow.com/questions/13660777/c-reading-the-data-part-of-a-wav-file/13661263
+// https://stackoverflow.com/questions/13660777/c-reading-the-dataToWrite-part-of-a-wav-file/13661263
 // https://stackoverflow.com/questions/38022123/openal-not-playing-sound/50429578#50429578
 // http://soundfile.sapp.org/doc/WaveFormat/
 unsigned char* LoadWavFileData(const char* filePath, unsigned long& bufferSize, unsigned short& channels, unsigned int& frequency, unsigned short& bitsPerSample)
@@ -276,7 +264,7 @@ unsigned char* LoadWavFileData(const char* filePath, unsigned long& bufferSize, 
 
 	frequency = sampleRate;
 
-	// read "data" chunk
+	// read "dataToWrite" chunk
 	fread(type, 4, 1, f);
 	if (!strcmp(type, "data"))
 	{
@@ -326,9 +314,9 @@ void WriteStringToFile(const char* filename, const char* string)
 	Opens an empty file for writing. If the file exists, its contents are destroyed.
 	"w+" = Opens an empty file for both reading and writing. If the file exists, its contents are destroyed.
 
-	"a" = Opens for writing at the end of the file (appending) without removing the EOF marker before writing new data to the file. Creates the file if it doesn't exist.
+	"a" = Opens for writing at the end of the file (appending) without removing the EOF marker before writing new dataToWrite to the file. Creates the file if it doesn't exist.
 	"a+" = Opens for reading and appending. The appending operation includes the removal of the EOF marker before
-	new data is written to the file and the EOF marker is restored after writing is complete.
+	new dataToWrite is written to the file and the EOF marker is restored after writing is complete.
 	Creates the file if it doesn't exist.
 
 	"T" = Specifies a file as temporary. If possible, it is not flushed to disk.
@@ -345,23 +333,12 @@ std::string GetFileExtension(const char* filePath)
 	return test;
 }
 
-std::string GetFileNameWithExt(const char* filePath)
+std::unique_ptr<char> SmartFileName(const char* filePathOrName, bool includeExtension)
 {
-	std::string test = filePath;
-
-	if (test.find_last_of('/') != test.npos)
-	{
-		test = test.substr(test.find_last_of('/') + 1, test.size() - test.find_last_of('/') + 1);
-	}
-	else if (test.find_last_of('\\') != test.npos)
-	{
-		test = test.substr(test.find_last_of('\\') + 1, test.size() - test.find_last_of('\\') + 1);
-	}
-
-	return test;
+	return std::unique_ptr<char>(FileName(filePathOrName, includeExtension));
 }
 
-char* FindFileName(const char* filePathOrName, bool includeExtension)
+char* FileName(const char* filePathOrName, bool includeExtension)
 {
 	if (!filePathOrName)
 		return nullptr;
@@ -404,51 +381,34 @@ char* FindFileName(const char* filePathOrName, bool includeExtension)
 	return fileName;
 }
 
-char* FindFileExtension(const char* filePathOrName)
+std::unique_ptr<char> SmartFileExtension(const char* filePathOrName)
+{
+	return std::unique_ptr<char>(FileExtension(filePathOrName));
+}
+
+char* FileExtension(const char* filePathOrName)
 {
 	if (!filePathOrName)
 		return nullptr;
 
-#if _DEBUG
-	assert(strlen(filePathOrName) < sizeof(size_t));
-#endif
-
-	size_t lastCharOccurenceIndex = -1;
-	for (size_t i = strlen(filePathOrName) - 1; i >= 0; --i)
+	signed short extensionStartingIndex = -1;
+	const unsigned char filePathLength = strlen(filePathOrName);
+	for (size_t i = filePathLength - 1; i >= 0; --i)
 	{
 		if (filePathOrName[i] == '.')
 		{
-			lastCharOccurenceIndex = i;
+			extensionStartingIndex = i + 1;
 			break;
 		}
 	}
 
-	if (lastCharOccurenceIndex > -1)
+	if (extensionStartingIndex > -1)
 	{
-		lastCharOccurenceIndex;
+		const char bufferSize = filePathLength - extensionStartingIndex + 1;
+		char* newSubString = new char[bufferSize];
+		strcpy_s(newSubString, bufferSize, filePathOrName + extensionStartingIndex);
+		return newSubString;
 	}
 
-	// #TODO Allocate and return file extension string
-	assert(false);
 	return nullptr;
-}
-
-std::string GetFileNameNoExt(const char* filePath)
-{
-	std::string returnString = filePath;
-
-	if (returnString.find_last_of('/') != returnString.npos)
-	{
-		returnString = returnString.substr(returnString.find_last_of('/') + 1, returnString.find_last_of('.') - 1 - returnString.find_last_of('/'));
-	}
-	else if (returnString.find_last_of('\\') != returnString.npos)
-	{
-		returnString = returnString.substr(returnString.find_last_of('\\') + 1, returnString.find_last_of('.') - 1 - returnString.find_last_of('\\'));
-	}
-	else
-	{
-		returnString = returnString.substr(0, returnString.find_last_of('.') - 1);
-	}
-
-	return returnString;
 }

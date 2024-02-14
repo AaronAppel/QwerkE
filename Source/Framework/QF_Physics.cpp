@@ -7,21 +7,26 @@
 
 namespace QwerkE {
 
-    void Physics::Initialize()
-    {
-        const EngineSettings& engineSettings = Settings::GetEngineSettings();
+    namespace Physics {
 
-        if (engineSettings.physicsEnabled)
+        void Initialize()
         {
-            LibraryInitialize();
+            const EngineSettings& engineSettings = Settings::GetEngineSettings();
 
-            // #TODO Review GetMesh() call
-            // Request shapes from Resources
-            // Resources::GetMesh("Cube_UVd.obj");
+            if (engineSettings.physicsEnabled)
+            {
+                LibraryInitialize();
+
+                // #TODO Review GetMesh() call
+                // Request shapes from Resources
+                // Resources::GetMesh("Cube_UVd.obj");
+            }
+            else
+            {
+                LOG_TRACE("Physics is currently disabled.");
+            }
         }
-        else
-        {
-            LOG_WARN("Physics is currently disabled.");
-        }
+
     }
+
 }

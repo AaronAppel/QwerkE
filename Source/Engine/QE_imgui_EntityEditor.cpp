@@ -185,7 +185,7 @@ namespace QwerkE {
 
                             vec3 position = m_CurrentEntity->GetPosition();
                             vec3 scale = m_CurrentEntity->GetScale();
-                            btRigidBody* rigidBody = PhysicsFactory::CreateRigidCube(btVector3(position.x, position.y, position.z), scale.x, scale.y, scale.z, 1.0f);
+                            btRigidBody* rigidBody = Physics::CreateRigidCube(btVector3(position.x, position.y, position.z), scale.x, scale.y, scale.z, 1.0f);
                             PhysicsComponent* component = new Bullet3Component(rigidBody);
 
                             if (m_CurrentEntity->AddComponent(component))

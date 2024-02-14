@@ -8,7 +8,7 @@
 void ProgramArgsToPairs_Windows(unsigned int numArgs, char** argArr, std::map<const char*, const char*>& argumentPairs)
 {
 	argumentPairs.insert(std::pair<const char*, const char*>(key_StartupDir, argArr[0]));
-	argumentPairs.insert(std::pair<const char*, const char*>(key_ApplicationFileName, FindFileName(argArr[0])));
+	argumentPairs.insert(std::pair<const char*, const char*>(key_ApplicationFileName, FileName(argArr[0], true)));
 
 	for (size_t i = 1; i < numArgs; ++i)
 	{

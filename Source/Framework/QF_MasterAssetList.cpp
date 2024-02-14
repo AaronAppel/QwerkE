@@ -27,17 +27,12 @@ namespace QwerkE {
 
 	void Resources::Initialize()
 	{
-		InstantiateNullAssets();
-	}
+		ASSERT(m_Meshes.empty() && m_Textures.empty() &&
+				m_Materials.empty() && m_Fonts.empty() &&
+				m_Sounds.empty() && m_ShaderPrograms.empty() &&
+				m_ShaderComponents.empty(),
+				"Resources already initialized!");
 
-	static unsigned int g_UniqueID = 0;
-	int Resources::CreateGUID()
-	{
-		return g_UniqueID++;
-	}
-
-	void Resources::InstantiateNullAssets()
-	{
 		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh)), "Error loading null mesh asset!");
 		ASSERT(Resources::InstantiateTexture(NullFolderPath(null_texture)), "Error loading null texture asset!");
 		ASSERT(Resources::InstantiateMaterial(NullFolderPath(null_material_schematic)), "Error loading null material asset!");
@@ -56,13 +51,17 @@ namespace QwerkE {
 		}
 	}
 
+	static unsigned int g_UniqueID = 0;
+	int Resources::CreateGUID() // #FEATURE F0004 - GUIDs
+	{
+		return g_UniqueID++;
+	}
+
 	// TODO: Handle errors and deleting assets before returning nullptr
 	Mesh* Resources::InstantiateMesh(const char* meshFilePath)
 	{
 		if (!meshFilePath)
 			return m_Meshes[null_mesh];
-
-		Mesh* mesh = nullptr;
 
 		if (FileExists(meshFilePath))
 		{
@@ -71,24 +70,21 @@ namespace QwerkE {
 				LOG_TRACE("{0} Mesh loaded {1}", __FUNCTION__, meshFilePath);
 			}
 
-			char* meshFullFileName = File::FullFileName(meshFilePath);
-			if (!meshFullFileName)
-				return m_Meshes[null_mesh];
-
-			return GetMesh(meshFullFileName);
-			if (MeshExists(meshFullFileName))
+			// #TODO Mesh files can contain any number of meshes, with any names.
+			// Need to handle this more elegantly.
+			if (uPtr<char> meshFullFileName = SmartFileName(meshFilePath, true))
 			{
-				mesh = m_Meshes[meshFullFileName];
+				if (MeshExists(meshFullFileName.get()))
+				{
+					return m_Meshes[meshFullFileName.get()];
+				}
 			}
-			else
-			{
-				mesh = m_Meshes[null_mesh];
-			}
-			free(meshFullFileName);
-			return mesh;
+			return m_Meshes[null_mesh];
 		}
 		else
         {
+			Mesh* mesh = nullptr;
+
             if (strcmp(meshFilePath, null_mesh) == 0)
             {
 				mesh = MeshFactory::ImportOBJMesh(null_mesh, vec3(0.5f, 0.5f, 0.5f), vec2(1, 1), false);
@@ -126,8 +122,13 @@ namespace QwerkE {
 				return m_Meshes[null_mesh];
 			}
 
-			m_Meshes[GetFileNameWithExt(meshFilePath).c_str()] = mesh; // Add to active list
-			mesh->SetName(GetFileNameWithExt(meshFilePath).c_str());
+			if (char* fullFileName = File::FullFileName(meshFilePath))
+			{
+				m_Meshes[fullFileName] = mesh;
+				mesh->SetName(fullFileName);
+				free(fullFileName);
+			}
+			LOG_CRITICAL("{0} Unable to instantiate mesh file {1}", __FUNCTION__, meshFilePath);
 			return mesh;
 		}
 	}
@@ -138,7 +139,11 @@ namespace QwerkE {
 		{
 			Texture* texture = new Texture();
 			texture->s_Handle = Load2DTexture(textureName);
-			texture->s_FileName = GetFileNameWithExt(textureName);
+			if (char* fullFileName = File::FullFileName(textureName))
+			{
+				texture->s_FileName = fullFileName;
+				free(fullFileName);
+			}
 
 			if (texture->s_Handle != 0)
 			{
@@ -147,10 +152,13 @@ namespace QwerkE {
 			}
 
 			delete texture;
-			return m_Textures[null_texture];
+			LOG_WARN("{0} Invalid texture handle: {1}", __FUNCTION__, textureName);
+		}
+		else
+		{
+			LOG_WARN("{0} Texture not found: {1}", __FUNCTION__, textureName);
 		}
 
-		LOG_WARN("{0} Texture not found: {1}", __FUNCTION__, textureName);
 		return m_Textures[null_texture];
 	}
 
@@ -158,7 +166,7 @@ namespace QwerkE {
 	{
 		Material* material = nullptr;
 
-		if (strcmp(GetFileExtension(matName).c_str(), material_schematic_ext) == 0)
+		if (strcmp(SmartFileExtension(matName).get(), material_schematic_ext) == 0)
 		{
 			if (FileExists(matName))
 			{
@@ -186,7 +194,11 @@ namespace QwerkE {
 			return m_Materials[null_material];
 		}
 
-		m_Materials[GetFileNameWithExt(matName).c_str()] = material;
+		if (char* fullFileName = File::FullFileName(matName))
+		{
+			m_Materials[fullFileName] = material;
+			free(fullFileName);
+		}
 		return material;
 	}
 
@@ -222,7 +234,11 @@ namespace QwerkE {
 
 		if (handle != 0)
 		{
-            m_Sounds[GetFileNameWithExt(soundPath)] = handle;
+			if (char* fullFileName = File::FullFileName(soundPath))
+			{
+				m_Sounds[fullFileName] = handle;
+				free(fullFileName);
+			}
 			return handle;
 		}
 		else
@@ -238,18 +254,19 @@ namespace QwerkE {
 			ShaderProgram* newShaderProgram = new ShaderProgram();
 			Serialization::DeserializeJsonFromFile(schematicFile, *newShaderProgram);
 
-			if (newShaderProgram)
-			{
-				newShaderProgram->SetVertShader(GetShaderComponent(newShaderProgram->GetVertName().c_str(), eShaderComponentTypes::Vertex));
-				newShaderProgram->SetFragShader(GetShaderComponent(newShaderProgram->GetFragName().c_str(), eShaderComponentTypes::Fragment));
-				// newShaderProgram->s_geoShader = GetShaderComponentData(newShaderProgram->s_geoName.c_str(), eShaderComponentTypes::Geometry);
+			newShaderProgram->SetVertShader(GetShaderComponent(newShaderProgram->GetVertName().c_str(), eShaderComponentTypes::Vertex));
+			newShaderProgram->SetFragShader(GetShaderComponent(newShaderProgram->GetFragName().c_str(), eShaderComponentTypes::Fragment));
+			// newShaderProgram->s_geoShader = GetShaderComponentData(newShaderProgram->s_geoName.c_str(), eShaderComponentTypes::Geometry);
 
-				if (ShaderFactory::LinkCreatedShaderProgram(newShaderProgram))
+			if (ShaderFactory::LinkCreatedShaderProgram(newShaderProgram))
+			{
+				if (char* fullFileName = File::FullFileName(schematicFile))
 				{
-					m_ShaderPrograms[GetFileNameWithExt(schematicFile)] = newShaderProgram;
-					newShaderProgram->FindAttributesAndUniforms();
-					return newShaderProgram;
+					m_ShaderPrograms[fullFileName] = newShaderProgram;
+					free(fullFileName);
 				}
+				newShaderProgram->FindAttributesAndUniforms();
+				return newShaderProgram;
 			}
 			delete newShaderProgram;
         }

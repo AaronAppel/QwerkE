@@ -3,11 +3,12 @@
 #include "Libraries/glew/GL/glew.h"
 #include "Libraries/glfw/GLFW/glfw3.h"
 
-#include "QF_Log.h"
-#include "QF_FileUtilities.h"
 #include "QF_FileSystem.h"
-#include "QF_Resources.h"
+#include "QF_FileUtilities.h"
 #include "QF_GraphicsHelpers.h"
+#include "QF_Log.h"
+#include "QF_Resources.h"
+#include "QF_Serialization.h"
 #include "QF_Texture.h"
 
 namespace QwerkE {
@@ -36,7 +37,8 @@ namespace QwerkE {
     {
         // Path of file drag and dropped onto this window
         // TODO: Handle file drop correctly. This is hacked in for testing purposes at the moment.
-
+        // #TODO Use File:: utils
+        char* fullFileName = File::FullFileName(*paths);
         std::string dropFileExtensionStr = GetFileExtension(*paths).c_str(); // TODO: Avoid extra variable due to heap deallocation
         const char* dropFileExtension = dropFileExtensionStr.c_str();
 
@@ -44,24 +46,43 @@ namespace QwerkE {
         {
             if (strcmp(dropFileExtension, "png") == 0 || strcmp(GetFileExtension(*paths).c_str(), "jpg") == 0)
             {
-                // TODO: Ask Resources or another file to load the asset
-                GLuint result = Load2DTexture(*paths, 0);
-                if (result != 0)
+                if (!Resources::TextureExists(fullFileName))
                 {
-                    Texture* texture = new Texture();
-                    texture->s_Handle = result;
-                    texture->s_FileName = GetFileNameWithExt(*paths);
-                    Resources::AddTexture(GetFileNameNoExt(*paths).c_str(), texture);
+                    Resources::GetTextureFromPath(*paths);
+                    // TODO: Ask Resources or another file to load the asset
+                    // GLuint result = Load2DTexture(*paths, 0);
+                    // if (result != 0)
+                    // {
+                    //     Texture* texture = new Texture();
+                    //     texture->s_Handle = result;
+                    //     texture->s_FileName = GetFileNameWithExt(*paths);
+                    //     Resources::AddTexture(GetFileNameNoExt(*paths).c_str(), texture);
+                    // }
                 }
             }
             else if (strcmp(dropFileExtension, "fbx") == 0 || strcmp(GetFileExtension(*paths).c_str(), "obj") == 0)
             {
-                File::LoadModelFileToMeshes(*paths);
+                if (!Resources::MeshExists(fullFileName))
+                {
+                    File::LoadModelFileToMeshes(*paths);
+                }
+            }
+            else if (strcmp(dropFileExtension, "ssch") == 0)
+            {
+                if (!Resources::ShaderProgramExists(fullFileName))
+                {
+                    Resources::GetShaderProgramFromPath(*paths);
+                }
             }
             else
             {
                 LOG_WARN("Drag file type unsupported: {0}", dropFileExtension);
             }
+        }
+
+        if (fullFileName)
+        {
+            free(fullFileName);
         }
     }
 
