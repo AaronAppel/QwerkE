@@ -30,10 +30,6 @@
 #define _QSimpleApi // Limited API for simpler usability off the start
 #endif
 
-#ifndef EngineName
-#define ProjectName "Qwerk"
-#endif
-
 #ifndef AssetsDir
 #define AssetsDir "Assets/"
 #endif

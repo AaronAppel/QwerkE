@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "QF_Enums.h"
 
@@ -19,7 +20,7 @@ namespace QwerkE {
         void PauseScene(std::string sceneName);
         void UnpauseScene(std::string sceneName);
 
-        void AddScene(Scene* scene, bool setAsCurrentScene = false);
+        void AddScene(Scene* scene, bool setAsCurrentScene = false); // #TODO Consider restricting scene creation to only Scenes
         Scene* RemoveScene(Scene* scene);
 
         void Update(float deltatime);

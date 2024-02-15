@@ -202,8 +202,40 @@ namespace QwerkE {
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
     }
 
+    void Scene::LoadSceneFromFile(const char* otherSceneFileName)
+    {
+        if (m_IsLoaded)
+        {
+            LOG_ERROR("{0} Scene already loaded!", __FUNCTION__);
+            return;
+        }
+
+        if (!otherSceneFileName || otherSceneFileName == gc_DefaultCharPtrValue)
+        {
+            LOG_ERROR("{0} Could not load scene data from null scene file path!", __FUNCTION__);
+            return;
+        }
+
+        std::string oldName = m_SceneFileName; // #TODO Improve scene file name overwrite logic
+        Serialization::DeserializeJsonFromFile(ScenesFolderPath(otherSceneFileName), *this);
+        m_SceneFileName = oldName;
+
+        OnLoaded();
+
+        SetupCameras();
+        LOG_TRACE("{0} \"{1}\" loaded from file", __FUNCTION__, otherSceneFileName);
+
+        m_IsLoaded = true;
+    }
+
     void Scene::LoadScene()
     {
+        if (m_IsLoaded)
+        {
+            LOG_ERROR("{0} Scene already loaded!", __FUNCTION__);
+            return;
+        }
+
         if (m_SceneFileName.c_str() == gc_DefaultCharPtrValue)
         {
             LOG_ERROR("Unable to load null scene! sceneFileName value is \"{0}\"", gc_DefaultCharPtrValue);
@@ -216,10 +248,18 @@ namespace QwerkE {
 
         SetupCameras();
         LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
+
+        m_IsLoaded = true;
     }
 
     void Scene::UnloadScene()
     {
+        if (!m_IsLoaded)
+        {
+            LOG_ERROR("{0} Scene is not loaded!", __FUNCTION__);
+            return;
+        }
+
         for (size_t i = 0; i < m_CameraList.size(); i++)
         {
             delete m_CameraList.at(i);

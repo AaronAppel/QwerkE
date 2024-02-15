@@ -12,7 +12,7 @@ namespace QwerkE {
         if (FileExists(shaderPath))
         {
             m_Name = FileName(shaderPath, true);
-            m_Type = GetFileExtension(shaderPath);
+            m_Type = SmartFileExtension(shaderPath).get();
 
             if (m_Type == "vert") // TODO: Make an enum for this type
             {

@@ -3,8 +3,9 @@
 			"projectName":	"Project1",
 			"assetsDirPath":	"null",
 			"sceneFileNames":	[{
-				"0": "null_scene.qscene",
-				"1": "Test.qscene"
-			}]
+					"0":	"null_scene.qscene",
+					"1":	"Test.qscene",
+					"2":	"NewScene.qscene"
+				}]
 		}]
 }

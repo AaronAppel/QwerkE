@@ -113,7 +113,7 @@ namespace QwerkE {
 
 		void SetCurrentScene(int index)
 		{
-			if (index >= 0 && index < s_Scenes.size())
+			if (index >= 0 && index < (int)s_Scenes.size())
 			{
 				s_CurrentScene = s_Scenes[index];
 				priv_UpdateCurrentSceneIndex();
@@ -122,7 +122,7 @@ namespace QwerkE {
 
 		void AddScene(Scene* scene, bool setAsCurrentScene)
 		{
-			if (!scene)
+			if (!scene || strcmp(scene->GetSceneName().c_str(), "ThumbNail.qscene") == 0)
 				return;
 
 			for (size_t i = 0; i < s_Scenes.size(); i++)
@@ -136,6 +136,26 @@ namespace QwerkE {
 			}
 
 			s_Scenes.push_back(scene);
+
+			// #TODO Better fix infinite loop with Initialize()
+			std::vector<std::string>& sceneNames = Settings::GetProjectSettings().sceneFileNames;
+			bool addToProjectSettings = true;
+
+			const char* const newSceneFileName = scene->GetSceneName().c_str();
+			for (size_t i = 0; i < sceneNames.size(); i++)
+			{
+				if (strcmp(sceneNames[i].c_str(), newSceneFileName) == 0)
+				{
+					addToProjectSettings = false;
+					break;
+				}
+			}
+
+			if (addToProjectSettings)
+			{
+				sceneNames.push_back(scene->GetSceneName());
+			}
+
 			if (s_CurrentScene == nullptr)
 			{
 				s_CurrentScene = scene;
@@ -153,6 +173,15 @@ namespace QwerkE {
 				{
 					returnScene = s_Scenes[i];
 					s_Scenes.erase(s_Scenes.begin() + i);
+					auto projectSettings = Settings::GetProjectSettings();
+					for (size_t i = 0; i < projectSettings.sceneFileNames.size(); i++)
+					{
+						if (strcmp(projectSettings.sceneFileNames[i].c_str(), scene->GetSceneName().c_str()) == 0)
+						{
+							projectSettings.sceneFileNames.erase(projectSettings.sceneFileNames.begin() + i);
+							break;
+						}
+					}
 					break;
 				}
 			}
@@ -168,7 +197,8 @@ namespace QwerkE {
 				GetCurrentScene()->ToggleIsPaused();
 			}
 
-			for (size_t i = 0; i < 10; i++)
+			constexpr size_t numberOfHotkeyedScenes = 10;
+			for (size_t i = 0; i < numberOfHotkeyedScenes; i++)
 			{
 				if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))
 				{

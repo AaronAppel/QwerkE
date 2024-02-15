@@ -1,30 +1,49 @@
 #include "QF_FileUtilities.h"
 
+#include <comdef.h>
 #include <cstring>
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <fileapi.h>
+#include <winnt.h>
 
 #include "QC_StringHelpers.h"
 
 #include "QF_Log.h"
 #include "QF_Platform.h"
 
+// #TODO Review and improve. Could create multiple helpers here to :
+// - Combining and sub stringing strings
+// - Increment the number at the end of a file name
+// - Could create string helpers in a namespace like String:: for organization
+char* UniqueFileNameNumberAppend(const char* fileDirectory, const char* fileName, const char* extension)
+{
+	if (!fileDirectory || !FileName || !extension)
+		return nullptr;
+
+	std::string uniqueFileName = fileName;
+	int counter = 0;
+
+	while (FileExists((fileDirectory + uniqueFileName + "." + extension).c_str()))
+	{
+		uniqueFileName.append(std::to_string(counter));
+		++counter;
+	}
+	return strdup((fileDirectory + uniqueFileName + "." + extension).c_str()); // #TODO Smart pointer de-allocate
+}
+
 bool FileExists(const char* filePath) // TODO:: Move to helpers.h/.cpp
 {
 	FILE* filehandle;
-	fopen_s(&filehandle, filePath, "r"); // returns error if no file to read
-	//errno_t error = fopen_s(&filehandle, filePath, "r");
-	if (filehandle)
+	errno_t error = fopen_s(&filehandle, filePath, "r"); // returns error if no file to read
+	if (filehandle) // #TODO Read error value
 	{
-		fclose(filehandle); // close file stream
-		return true; // file exists already
+		fclose(filehandle);
+		return true;
 	}
-	else
-	{
-		// OutputPrint("\nFileExists(): Could not find file. Ensure %s exists!\n\n", filePath);
-		return false; // could not find file
-	}
+	// OutputPrint("\nFileExists(): Could not find file. Ensure %s exists!\n\n", filePath);
+	return false;
 }
 
 #ifdef _QWindows // #TODO Move to a QC_DirectoryUtilities file, to keep this file smaller, and specific
@@ -44,8 +63,11 @@ std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath)
 	HANDLE hand = INVALID_HANDLE_VALUE; // file handle
 	std::string dir = directoryPath; // used for easy appending
 
+	LPCWSTR;
+	TCHAR;
+
 	dir.append("*.*"); // append "search for all" instruction
-	hand = FindFirstFile(dir.c_str(), &ffd); // get the first file in directory
+	hand = FindFirstFile(_bstr_t(dir.c_str()), &ffd); // get the first file in directory
 
 	if (INVALID_HANDLE_VALUE == hand)
 		return dirFileNames;
@@ -59,7 +81,7 @@ std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath)
 		else
 		{
 			std::cout << ffd.cFileName << std::endl;
-			dirFileNames.get()->push_back(ffd.cFileName);
+			dirFileNames.get()->push_back(std::string(_bstr_t(ffd.cFileName)));
 		}
 	} while (FindNextFile(hand, &ffd) != 0);
 
@@ -325,14 +347,6 @@ void WriteStringToFile(const char* filename, const char* string)
 	*/
 }
 
-std::string GetFileExtension(const char* filePath)
-{
-	std::string test = filePath;
-	int extLength = test.size() - test.find_last_of('.') + 1;
-	test = test.substr(test.find_last_of('.') + 1, extLength);
-	return test;
-}
-
 std::unique_ptr<char> SmartFileName(const char* filePathOrName, bool includeExtension)
 {
 	return std::unique_ptr<char>(FileName(filePathOrName, includeExtension));
@@ -392,8 +406,8 @@ char* FileExtension(const char* filePathOrName)
 		return nullptr;
 
 	signed short extensionStartingIndex = -1;
-	const unsigned char filePathLength = strlen(filePathOrName);
-	for (size_t i = filePathLength - 1; i >= 0; --i)
+	const unsigned char filePathLength = (unsigned char)strlen(filePathOrName);
+	for (unsigned char i = filePathLength - 1; i >= 0; --i)
 	{
 		if (filePathOrName[i] == '.')
 		{

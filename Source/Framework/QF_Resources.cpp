@@ -153,7 +153,7 @@ namespace QwerkE {
 		if (!shaderProgram || !shaderProgram->GetName().c_str())
 			return false;
 
-		AddShaderProgram(shaderProgram->GetName().c_str(), shaderProgram);
+		return AddShaderProgram(shaderProgram->GetName().c_str(), shaderProgram);
 	}
 
 	bool Resources::AddShaderProgram(const char* name, ShaderProgram* ShaderProgram)

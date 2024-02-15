@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Framework", "..\..\Source\Framework\QwerkE_Framework.vcxitems", "{B16D0585-C919-45A1-ABC8-E743E68A8F72}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Editor", "..\..\Source\Engine\Shared_Engine.vcxitems", "{64B82DE4-2768-4AD2-B95D-B3615FCC482E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared_Common", "..\..\Source\Common\Shared_Common.vcxitems", "{487AB803-F826-45B7-AA8A-E9CF20B86BFF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game1", "Game1.vcxproj", "{F21163C8-3771-4895-B1A4-B85D218099CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Debug|x64.ActiveCfg = Debug|x64
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Debug|x64.Build.0 = Debug|x64
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Debug|x86.ActiveCfg = Debug|Win32
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Debug|x86.Build.0 = Debug|Win32
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Release|x64.ActiveCfg = Release|x64
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Release|x64.Build.0 = Release|x64
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Release|x86.ActiveCfg = Release|Win32
+		{F21163C8-3771-4895-B1A4-B85D218099CB}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {226D500F-9DC5-471B-92E4-19A548B7E13A}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\Source\Common\Shared_Common.vcxitems*{487ab803-f826-45b7-aa8a-e9cf20b86bff}*SharedItemsImports = 9
+		..\..\Source\Engine\Shared_Engine.vcxitems*{64b82de4-2768-4ad2-b95d-b3615fcc482e}*SharedItemsImports = 9
+		..\..\Source\Framework\QwerkE_Framework.vcxitems*{b16d0585-c919-45a1-abc8-e743e68a8f72}*SharedItemsImports = 9
+		..\..\Source\Common\Shared_Common.vcxitems*{f21163c8-3771-4895-b1a4-b85d218099cb}*SharedItemsImports = 4
+		..\..\Source\Engine\Shared_Engine.vcxitems*{f21163c8-3771-4895-b1a4-b85d218099cb}*SharedItemsImports = 4
+		..\..\Source\Framework\QwerkE_Framework.vcxitems*{f21163c8-3771-4895-b1a4-b85d218099cb}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal

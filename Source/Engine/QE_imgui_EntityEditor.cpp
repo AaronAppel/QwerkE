@@ -2,6 +2,7 @@
 
 #include "Libraries/imgui/QC_imgui.h"
 #include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Bullet3/BulletDynamics/Dynamics/btRigidBody.h"
 
 #include "QF_b3_PhysicsFactory.h" // #TODO Remove Bullet3 dependency from here
 #include "QF_Bullet3Component.h"
@@ -195,7 +196,7 @@ namespace QwerkE {
                             else
                             {
                                 delete component;
-                                delete rigidBody;
+                                delete rigidBody; // #TODO Add include file for type
                                 break;
                             }
 
@@ -418,7 +419,10 @@ namespace QwerkE {
 
         std::string buffer = "";
         buffer.reserve(200);
+
+        ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f); // #TODO Scale nicer
         InspectFieldRecursive(Mirror::InfoForClass<GameObject>(), m_CurrentEntity, buffer);
+        ImGui::PopItemWidth();
 
         ImGui::End();
     }

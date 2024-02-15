@@ -1,4 +1,4 @@
-#pragma warning(disable:4996)
+#pragma warning(disable:4996) // #TODO No default or pop used
 // dear imgui: Renderer for modern OpenGL with shaders / programmatic pipeline
 // - Desktop GL: 3.x 4.x
 // - Embedded GL: ES 2.0 (WebGL 1.0), ES 3.0 (WebGL 2.0)

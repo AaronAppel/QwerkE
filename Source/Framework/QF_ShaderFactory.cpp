@@ -57,7 +57,7 @@ namespace QwerkE {
         const char* shaderString = LoadCompleteFile(shaderFilePath, 0); // #TODO Allocation
         if (ShaderComponent* result = GenerateShaderFromData(shaderType, shaderString))
         {
-            result->SetType(DeepCopyString(GetFileExtension(shaderFilePath).c_str()));
+            result->SetType(DeepCopyString(SmartFileExtension(shaderFilePath).get()));
             if (char* fullFileName = File::FullFileName(shaderFilePath))
             {
                 result->SetName(fullFileName);

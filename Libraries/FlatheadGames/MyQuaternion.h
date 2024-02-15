@@ -10,6 +10,8 @@
 #ifndef __MyQuaternion_H__
 #define __MyQuaternion_H__
 
+#include "MathHelpers.h"
+
 class MyQuat
 {
 public:

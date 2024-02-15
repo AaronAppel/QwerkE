@@ -17,6 +17,8 @@
 
 #include "Libraries/FlatheadGames/MathHelpers.h"
 
+#include "QF_Math.h"
+
 struct Vector2
 {
 	float x = 0.f;

@@ -4,8 +4,6 @@
 
 // Override framework defaults
 #define EngineName "QwerkE" // #TODO Rename to avoid name collision
-#define AssetsDir "Assets/"
-#define ProjectsDir AssetsDir "Projects/"
 
 /* Define program arguments */
 #define key_StartupDir			"-startupDir"

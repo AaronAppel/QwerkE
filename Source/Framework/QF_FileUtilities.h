@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <vector>
 
 // #TODO Move/deprecate file utils to File:: namespace/struct
@@ -13,6 +14,7 @@ unsigned char* LoadWavFileData(const char* filePath, unsigned long& bufferSize, 
 void WriteRawBytesToFile(const char* filename, const char* data, int numBytes);
 void WriteStringToFile(const char* filename, const char* string);
 
+char* UniqueFileNameNumberAppend(const char* fileDirectory, const char* fileName, const char* extension);
 bool FileExists(const char* filePath);
 std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath); // #TODO Review name. Could involve "list" like ListDirFiles(path)
 
@@ -20,5 +22,3 @@ std::unique_ptr<char> SmartFileName(const char* filePathOrName, bool includeExte
 char* FileName(const char* filePath, bool includeExtension);
 std::unique_ptr<char> SmartFileExtension(const char* filePathOrName);
 char* FileExtension(const char* filePath);
-
-std::string GetFileExtension(const char* filePath);

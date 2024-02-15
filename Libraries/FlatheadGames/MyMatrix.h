@@ -10,6 +10,9 @@
 #ifndef __MyMatrix_H__
 #define __MyMatrix_H__
 
+#include "MyQuaternion.h"
+#include "QC_Vector.h"
+
 // Values are stored column major.
 // m11 m21 m31 m41       Sx  0  0 Tx
 // m12 m22 m32 m42  --\   0 Sy  0 Ty

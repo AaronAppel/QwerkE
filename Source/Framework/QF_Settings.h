@@ -78,7 +78,7 @@ namespace QwerkE {
         static void SaveUserSettings();
 
         static const EngineSettings& GetEngineSettings() { return m_engineSettings; }
-        static const ProjectSettings& GetProjectSettings() { return m_projectSettings; }
+        static ProjectSettings& GetProjectSettings() { return m_projectSettings; }
         static const UserSettings& GetUserSettings() { return m_userSettings; }
 
     private:

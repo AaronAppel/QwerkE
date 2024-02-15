@@ -1,7 +1,8 @@
 #pragma once
 
-#include <vector>
+#include <map>
 #include <string>
+#include <vector>
 
 #include "Libraries/Mirror/Source/Mirror.h"
 
@@ -36,6 +37,7 @@ namespace QwerkE {
         void RemoveObjectFromScene(GameObject* object);
 
         void SaveScene();
+        void LoadSceneFromFile(const char* otherSceneFileName);
         void LoadScene();
         void UnloadScene();
         void ReloadScene();
@@ -76,6 +78,8 @@ namespace QwerkE {
         std::vector<GameObject*> m_CameraList;
         std::vector<GameObject*> m_LightList;
         std::vector<GameObject*> m_SceneDrawList;
+
+        bool m_IsLoaded = false;
     };
 
 }

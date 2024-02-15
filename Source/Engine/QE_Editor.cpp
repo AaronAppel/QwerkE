@@ -6,6 +6,7 @@
 #include "QF_Profile.h"
 #include "QF_Network.h"
 #include "QF_Time.h"
+#include "QF_Settings.h"
 
 #include "QE_EntityEditor.h"
 #include "QE_ResourceViewer.h"
@@ -90,6 +91,11 @@ namespace QwerkE {
         {
             if (ImGui::BeginMenu("Menu"))
             {
+                if (ImGui::Button("Save Project"))
+                {
+                    Settings::SaveProjectSettings(ProjectsFolderPath("Project1.qproj"));
+                }
+
                 static int index = 0;
                 static const int size = 5;
                 const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };

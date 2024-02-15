@@ -277,7 +277,9 @@ namespace QwerkE {
 	{
 		// ASSERT(componentFilePath && FileExists(componentFilePath), "Cannot return a valid shader component using an invalid file path!");
 
-		if (strcmp(GetFileExtension(componentFilePath).c_str(), vertex_shader_ext) == 0)
+		uPtr<char> fileExtension = SmartFileExtension(componentFilePath);
+
+		if (strcmp(fileExtension.get(), vertex_shader_ext) == 0)
 		{
 			if (ShaderComponent* result = ShaderFactory::CreateShaderComponent(GL_VERTEX_SHADER, componentFilePath))
 			{
@@ -286,7 +288,7 @@ namespace QwerkE {
 			}
 			return m_ShaderComponents[null_vert_component];
 		}
-		else if (strcmp(GetFileExtension(componentFilePath).c_str(), fragment_shader_ext) == 0)
+		else if (strcmp(fileExtension.get(), fragment_shader_ext) == 0)
 		{
 			if (ShaderComponent* result = ShaderFactory::CreateShaderComponent(GL_FRAGMENT_SHADER, componentFilePath))
 			{
@@ -295,7 +297,7 @@ namespace QwerkE {
 			}
 			return m_ShaderComponents[null_frag_component];
 		}
-		else if (strcmp(GetFileExtension(componentFilePath).c_str(), geometry_shader_ext) == 0)
+		else if (strcmp(fileExtension.get(), geometry_shader_ext) == 0)
 		{
 			LOG_WARN("Geometry shaders are not yet supported");
 			if (ShaderComponent* result = ShaderFactory::CreateShaderComponent(GL_GEOMETRY_SHADER, componentFilePath))

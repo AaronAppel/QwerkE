@@ -107,12 +107,9 @@ namespace QwerkE {
 
 		void priv_LoadSoundFileData(const char* filePath, QSoundFile& soundFile)
 		{
-			// this function is meant to abstract file type from external code
-
 			soundFile.s_FileName = FileName(filePath, true);
-			soundFile.s_Extension = GetFileExtension(filePath);
+			soundFile.s_Extension = SmartFileExtension(filePath).get();
 
-			// read file data
 			if (strcmp(soundFile.s_Extension.c_str(), "wav") == 0)
 			{
 				soundFile.s_Data = (char*)LoadWavFileData(filePath, soundFile.s_Size, soundFile.s_Channels, soundFile.s_Frequency, soundFile.s_BitsPerSample);
@@ -140,7 +137,7 @@ namespace QwerkE {
 		{
 			unsigned char* returnBuffer = nullptr;
 
-			std::string extention = GetFileExtension(path);
+			std::string extention = SmartFileExtension(path).get();
 
 			if (strcmp(extention.c_str(), "jpg") == 0)
 			{
