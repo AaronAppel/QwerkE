@@ -122,7 +122,7 @@ namespace QwerkE {
 
 		void AddScene(Scene* scene, bool setAsCurrentScene)
 		{
-			if (!scene || strcmp(scene->GetSceneName().c_str(), "ThumbNail.qscene") == 0)
+			if (!scene)
 				return;
 
 			for (size_t i = 0; i < s_Scenes.size(); i++)
@@ -137,23 +137,26 @@ namespace QwerkE {
 
 			s_Scenes.push_back(scene);
 
-			// #TODO Better fix infinite loop with Initialize()
-			std::vector<std::string>& sceneNames = Settings::GetProjectSettings().sceneFileNames;
-			bool addToProjectSettings = true;
-
-			const char* const newSceneFileName = scene->GetSceneName().c_str();
-			for (size_t i = 0; i < sceneNames.size(); i++)
+			if (strcmp(scene->GetSceneName().c_str(), "ThumbNail.qscene") != 0)
 			{
-				if (strcmp(sceneNames[i].c_str(), newSceneFileName) == 0)
+				// #TODO Better fix infinite loop with Initialize()
+				std::vector<std::string>& sceneNames = Settings::GetProjectSettings().sceneFileNames;
+				bool addToProjectSettings = true;
+
+				const char* const newSceneFileName = scene->GetSceneName().c_str();
+				for (size_t i = 0; i < sceneNames.size(); i++)
 				{
-					addToProjectSettings = false;
-					break;
+					if (strcmp(sceneNames[i].c_str(), newSceneFileName) == 0)
+					{
+						addToProjectSettings = false;
+						break;
+					}
 				}
-			}
 
-			if (addToProjectSettings)
-			{
-				sceneNames.push_back(scene->GetSceneName());
+				if (addToProjectSettings)
+				{
+					sceneNames.push_back(scene->GetSceneName());
+				}
 			}
 
 			if (s_CurrentScene == nullptr)
