@@ -83,4 +83,11 @@ namespace QwerkE {
         pthread_mutex_unlock(s_mutex);
     }
 
+    // #FEATURE F0005
+    // template <typename T>
+    // void DelayedDeletion(sPtr<T> objectToDeleteLater, float timeUntilDeletion) // #EXPERIMENTAL
+    // {
+    //     // #TODO Add timed event system
+    //     objectToDeleteLater.reset();
+    // }
 }

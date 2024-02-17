@@ -69,21 +69,8 @@ namespace QwerkE {
             }
             else if (strcmp(dropFileExtensionStr.get(), "qscene") == 0)
             {
-                const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
-                bool addScene = true;
-                for (size_t i = 0; i < scenes.size(); i++)
+                if (Scene* newScene = Scenes::CreateScene(fullFileName.get()))
                 {
-                    if (strcmp(fullFileName.get(), scenes[i]->GetSceneName().c_str()) == 0)
-                    {
-                        LOG_WARN("Scene already exists: {0}", fullFileName.get());
-                        addScene = false;
-                        break;
-                    }
-                }
-
-                if (addScene)
-                {
-                    Scene* newScene = new Scene(fullFileName.get()); // #TODO Add to project file (save project option)
                     newScene->LoadScene();
                     newScene->OnLoaded();
                     Scenes::SetCurrentScene(newScene->GetSceneName());

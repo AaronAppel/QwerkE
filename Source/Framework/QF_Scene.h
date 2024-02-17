@@ -11,15 +11,13 @@
 
 namespace QwerkE {
 
-    class GameCore;
-    class MyMatrix;
     class GameObject;
 
     class Scene final
     {
     public:
-        Scene(const char* sceneFileName);
-        virtual ~Scene();
+        Scene(const std::string& sceneFileName);
+        ~Scene();
 
         void OnWindowResize(unsigned int width, unsigned int height);
 
@@ -59,7 +57,7 @@ namespace QwerkE {
 
         void ToggleIsPaused() { m_IsPaused = !m_IsPaused; };
 
-    protected:
+    private:
         void CameraInput(float deltatime);
 
         bool AddObjectToSceneDrawList(GameObject* object);
@@ -71,7 +69,7 @@ namespace QwerkE {
         bool m_SceneIsActive = false;
         std::string m_SceneFileName = gc_DefaultCharPtrValue;
 
-        std::map<std::string, GameObject*> m_pGameObjects;
+        std::map<std::string, GameObject*> m_pGameObjects; // #TODO Deprecate
 
         int m_CurrentCameraIndex = 0;
 

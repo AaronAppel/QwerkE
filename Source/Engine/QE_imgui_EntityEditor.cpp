@@ -51,17 +51,22 @@ namespace QwerkE {
 
 	void EntityEditor::Draw()
 	{
-		if (m_CurrentEntity == nullptr)
-		{
-            const std::map<std::string, GameObject*>& list = Scenes::GetCurrentScene()->GetObjectList();
+        GameObject* currentEntity = nullptr;
+        if (m_CurrentEntity)
+        {
+            currentEntity = m_CurrentEntity;
+        }
+        else if (Scene* currentScene = Scenes::GetCurrentScene())
+        {
+            const std::map<std::string, GameObject*>& list = currentScene->GetObjectList();
             auto begin = list.begin(); // #TODO Review logic
             if (begin != list.end())
             {
                 m_CurrentEntity = begin->second;
-			}
-		}
+            }
+        }
 
-		if (m_CurrentEntity != nullptr)
+		if (currentEntity != nullptr)
         {
             DrawEntityEditor();
             DrawEntityEditorInspect();
@@ -70,6 +75,10 @@ namespace QwerkE {
 
 	void EntityEditor::DrawEntityEditor()
 	{
+        Scene* currentScene = Scenes::GetCurrentScene();
+        if (!currentScene)
+            return;
+
         if (ImGui::Begin("Entity Editor"))
         {
             //// Begin drawing entity data...

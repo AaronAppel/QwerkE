@@ -15,10 +15,9 @@
 
 namespace QwerkE {
 
-    Scene::Scene(const char* sceneFileName)
+    Scene::Scene(const std::string& sceneFileName) :
+        m_SceneFileName(sceneFileName)
     {
-        m_SceneFileName = sceneFileName;
-        Scenes::AddScene(this);
     }
 
     Scene::~Scene()

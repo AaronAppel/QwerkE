@@ -35,10 +35,13 @@ namespace QwerkE {
         m_Meshes = Resources::SeeMeshes();
         m_Sounds = Resources::SeeSounds();
 
-        m_ViewerScene = new Scene("ThumbNail.qscene");
-        m_ViewerScene->LoadScene();
-        ComponentCamera* camera = (ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera);
-        camera->SetViewportSize(Window::GetResolution());
+        m_ViewerScene = Scenes::CreateScene("ThumbNail.qscene", false);
+        if (m_ViewerScene)
+        {
+            m_ViewerScene->LoadScene();
+            ComponentCamera* camera = (ComponentCamera*)m_ViewerScene->GetCameraList().at(0)->GetComponent(Component_Camera);
+            camera->SetViewportSize(Window::GetResolution());
+        }
 
         RenderModelThumbnails();
     }
@@ -229,6 +232,12 @@ namespace QwerkE {
 
     void ResourceViewer::RenderModelThumbnails()
     {
+        if (!m_ViewerScene)
+        {
+            LOG_ERROR("{0} Could not render thumbnails for null scene!", __FUNCTION__);
+            return;
+        }
+
         // ASSERT(m_ModelImageHandles.empty(), "Thumbnails have already been generated!");
         m_ModelImageHandles.clear();
 

@@ -13,9 +13,10 @@
 
 namespace QwerkE {
 
-    Scene* s_CurrentScene = nullptr;
+	Scene* s_CurrentScene = nullptr;
 	int s_CurrentSceneIndex = 0;
-    std::vector<Scene*> s_Scenes;
+	std::vector<Scene*> s_Scenes;
+	std::vector<sPtr<Scene>> s_ScenesSmart; // #TODO Use smart pointers. Deprecate Shutdown
 
 	namespace Scenes
 	{
@@ -31,7 +32,7 @@ namespace QwerkE {
 			}
 		}
 
-		void Initialize()
+		void Initialize() // Change to ScenesLoadFromProjectSettings or something more explicit. Should run with 0 scenes
 		{
 			const ProjectSettings& projectSettings = Settings::GetProjectSettings();
 
@@ -47,14 +48,16 @@ namespace QwerkE {
 					continue;
 				}
 
-				Scene* newScene = new Scene(sceneFileName);
-				newScene->LoadScene();
+				if (Scene* newScene = CreateScene(sceneFileName, false))
+				{
+					newScene->LoadScene(); // #TODO Should the scene load itself/contents right away?
+				}
 			}
 
 			if (s_Scenes.empty())
 			{
-				Scene* emptyScene = new Scene(null_scene);
-				emptyScene->LoadScene();
+				Scene* newScene = Scenes::CreateScene(null_scene);
+				newScene->LoadScene();
 				LOG_WARN("Null scene loaded as no scene files found for project: {0}", projectSettings.projectName);
 			}
 		}
@@ -120,51 +123,30 @@ namespace QwerkE {
 			}
 		}
 
-		void AddScene(Scene* scene, bool setAsCurrentScene)
+		Scene* CreateScene(const std::string& sceneName, bool addToProjectsSceneFiles)
 		{
-			if (!scene)
-				return;
-
-			for (size_t i = 0; i < s_Scenes.size(); i++)
+			if (Scene* existingScene = GetScene(sceneName))
 			{
-				if (s_Scenes[i] == scene)
-				{
-					// delete scene;
-					LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__, scene->GetSceneName().c_str());
-					return;
-				}
+				LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__, existingScene->GetSceneName().c_str());
+				return nullptr;
 			}
 
-			s_Scenes.push_back(scene);
-
-			if (strcmp(scene->GetSceneName().c_str(), "ThumbNail.qscene") != 0)
-			{
-				// #TODO Better fix infinite loop with Initialize()
-				std::vector<std::string>& sceneNames = Settings::GetProjectSettings().sceneFileNames;
-				bool addToProjectSettings = true;
-
-				const char* const newSceneFileName = scene->GetSceneName().c_str();
-				for (size_t i = 0; i < sceneNames.size(); i++)
-				{
-					if (strcmp(sceneNames[i].c_str(), newSceneFileName) == 0)
-					{
-						addToProjectSettings = false;
-						break;
-					}
-				}
-
-				if (addToProjectSettings)
-				{
-					sceneNames.push_back(scene->GetSceneName());
-				}
-			}
+			Scene* newScene = new Scene(sceneName);
+			s_Scenes.push_back(newScene);
 
 			if (s_CurrentScene == nullptr)
 			{
-				s_CurrentScene = scene;
+				s_CurrentScene = newScene;
 				priv_UpdateCurrentSceneIndex();
-				scene->SetIsActive(true);
+				newScene->SetIsActive(true);
 			}
+
+			if (addToProjectsSceneFiles)
+			{
+				Settings::GetProjectSettings().sceneFileNames.push_back(newScene->GetSceneName().c_str());
+			}
+
+			return newScene;
 		}
 
 		Scene* RemoveScene(Scene* scene)

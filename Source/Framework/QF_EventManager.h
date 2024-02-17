@@ -16,6 +16,9 @@ namespace QwerkE {
 
         static void ProcessEvents();
 
+        // template <typename T>
+        // static void DelayedDeletion(sPtr<T> objectToDeleteLater, float timeUntilDeletion);// #EXPERIMENTAL
+
     private:
         EventManager() = default;
         ~EventManager() = default;

@@ -20,7 +20,8 @@ namespace QwerkE {
         void PauseScene(std::string sceneName);
         void UnpauseScene(std::string sceneName);
 
-        void AddScene(Scene* scene, bool setAsCurrentScene = false); // #TODO Consider restricting scene creation to only Scenes
+        Scene* CreateScene(const std::string& sceneName, bool addToProjectsSceneFiles = true);
+
         Scene* RemoveScene(Scene* scene);
 
         void Update(float deltatime);

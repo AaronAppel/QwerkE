@@ -37,10 +37,13 @@ namespace QwerkE {
     void SceneViewer::DrawSceneView()
     {
         static bool isOpen = true;
+
+        Scene* currentScene = Scenes::GetCurrentScene();
+        if (!currentScene)
+            return;
+
         if (ImGui::Begin("Scene Viewer", &isOpen, ImGuiWindowFlags_NoScrollbar))
         {
-            Scene* currentScene = Scenes::GetCurrentScene();
-
             ImGui::PushItemWidth(100);
             const char* runningStates[] = { "Running", "Paused" };
             m_currentSceneStateIndex = (char)currentScene->GetIsPaused();
@@ -83,7 +86,7 @@ namespace QwerkE {
                 uPtr<char> newFileName = SmartFileName(newFilePath, true);
                 free(newFilePath);
 
-                Scene* newScene = new Scene(newFileName.get()); // #TODO Add to project file (save project option)
+                Scene* newScene = Scenes::CreateScene(newFileName.get());
                 newScene->LoadSceneFromFile(emptyScenePrefabFileName);
                 newScene->OnLoaded();
                 Scenes::SetCurrentScene(newFileName.get());
