@@ -83,7 +83,7 @@ namespace QwerkE {
             GLchar infoLog[512];
             glGetShaderInfoLog(shaderHandle, 512, NULL, infoLog);
 
-            const char* shaderTypeString = nullptr;
+            const char* shaderTypeString = "";
             if (shaderType == GL_VERTEX_SHADER)
                 shaderTypeString = "GL_VERTEX_SHADER";
             else if (shaderType == GL_FRAGMENT_SHADER)
@@ -94,7 +94,7 @@ namespace QwerkE {
             char* next_token = 0;
             char* ShaderName = strtok_s((char*)shaderData, "\n", &next_token);
 
-            LOG_ERROR("%s: ShaderFactory: CreateShader(Glenum, const char*) {0} compile error-> ", ShaderName, shaderTypeString);
+            LOG_ERROR("{0} ShaderFactory: CreateShader(Glenum, const char*) {1} {2} compile error-> ", __FUNCTION__, ShaderName, shaderTypeString);
             LOG_ERROR(infoLog);
 
             glDeleteShader(shaderHandle);
@@ -106,6 +106,7 @@ namespace QwerkE {
             ShaderComponent* comp = new ShaderComponent();
             comp->SetStringData(shaderData);
             comp->SetHandle(shaderHandle);
+            comp->SetGLShaderType(shaderType);
             return comp;
         }
     }

@@ -6,7 +6,6 @@
 
 #include "Libraries/Mirror/Source/Mirror.h"
 
-#include "QF_Enums.h"
 #include "QF_Constants.h"
 
 namespace QwerkE {
@@ -21,7 +20,7 @@ namespace QwerkE {
 
         void OnWindowResize(unsigned int width, unsigned int height);
 
-        virtual void Update(float deltatime);
+        void Update(float deltatime);
         void Draw();
 
         bool AddCamera(GameObject* camera);

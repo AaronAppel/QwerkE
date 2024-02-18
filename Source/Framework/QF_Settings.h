@@ -55,38 +55,22 @@ namespace QwerkE {
         // Interface: Window open, UI scaling, etc
     };
 
-    // TODO Engine data shouldn't be in the framework
-    struct SceneViewerData
+    namespace Settings
     {
-        int maxEnabledScenes = 1;
-        int maxDisplayedScenes = 4;
-        int viewDistance = 100;
-    };
+        void LoadEngineSettings(); // #TODO Load from file path. Do not rely on default paths, but instead generate the default path
+        void LoadEngineSettings(std::string engineSettingsFilePath); // #TODO Write and chain with above overloaded method
+        void SaveEngineSettings();
 
-    class Settings // The config helper is really an engine domain, so maybe move to engine and find another place for level loading logic
-    {
-    public:
-        static void LoadEngineSettings(); // #TODO Load from file path. Do not rely on default paths, but instead generate the default path
-        static void LoadEngineSettings(std::string engineSettingsFilePath); // #TODO Write and chain with above overloaded method
-        static void SaveEngineSettings();
+        void LoadProjectSettings(std::string projectSettingsFilePath);
+        void SaveProjectSettings();
+        void SaveProjectSettings(std::string projectSettingsFilePath);
 
-        static void LoadProjectSettings(std::string projectSettingsFilePath);
-        static void SaveProjectSettings();
-        static void SaveProjectSettings(std::string projectSettingsFilePath);
+        void LoadUserSettings(std::string userSettingsFilePath);
+        void SaveUserSettings();
 
-        static void LoadUserSettings(std::string userSettingsFilePath);
-        static void SaveUserSettings();
-
-        static const EngineSettings& GetEngineSettings() { return m_engineSettings; }
-        static ProjectSettings& GetProjectSettings() { return m_projectSettings; }
-        static const UserSettings& GetUserSettings() { return m_userSettings; }
-
-    private:
-        Settings() = default;
-
-        static EngineSettings m_engineSettings;
-        static ProjectSettings m_projectSettings;
-        static UserSettings m_userSettings;
-    };
+        const EngineSettings& GetEngineSettings();
+        ProjectSettings& GetProjectSettings();
+        const UserSettings& GetUserSettings();
+    }
 
 }

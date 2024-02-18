@@ -2,7 +2,7 @@
 
 #include "Libraries/imgui/QC_imgui.h"
 #include "Libraries/Mirror/Source/Mirror.h"
-#include "Libraries/Bullet3/BulletDynamics/Dynamics/btRigidBody.h"
+#include "Libraries/Bullet3/BulletDynamics/Dynamics/btRigidBody.h" // #TODO Remove Bullet3 dependency from here
 
 #include "QF_b3_PhysicsFactory.h" // #TODO Remove Bullet3 dependency from here
 #include "QF_Bullet3Component.h"
@@ -20,14 +20,13 @@
 #include "QF_Renderable.h"
 #include "QF_RenderRoutine.h"
 
-#include "QE_EditComponent.h"
 #include "QE_Editor.h"
 
 namespace QwerkE {
 
 	EntityEditor::EntityEditor()
 	{
-        m_EditComponent = new EditComponent();
+        m_EditComponent = std::make_unique<EditComponent>();
 
         if (Settings::GetEngineSettings().audioEnabled)
         {
@@ -42,11 +41,6 @@ namespace QwerkE {
             m_ListboxItemStrings.push_back("Physics");
             m_ListboxItemTypes.push_back(eComponentTags::Component_Physics);
         }
-	}
-
-	EntityEditor::~EntityEditor()
-	{
-        delete m_EditComponent;
 	}
 
 	void EntityEditor::Draw()

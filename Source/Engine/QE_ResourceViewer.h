@@ -9,6 +9,8 @@
 
 #include "QF_Constants.h"
 
+#include "QE_MaterialEditor.h"
+
 typedef unsigned int ALuint; // #TODO Hide OAL library type
 
 namespace QwerkE {
@@ -18,11 +20,10 @@ namespace QwerkE {
     class GameObject;
     class Mesh;
     class Material;
-    class MaterialEditor;
 
     struct Texture;
 
-    class ResourceViewer // #TODO Consider for static namespace or singleton
+    class ResourceViewer
     {
     public:
         ResourceViewer();
@@ -35,15 +36,9 @@ namespace QwerkE {
 
         int m_CurrentResource = 0;
 
-        MaterialEditor* m_MaterialEditor = nullptr;
+        uPtr<MaterialEditor> m_MaterialEditor;
         bool m_ShowMatEditor = false;
         std::string m_MatName = gc_DefaultStringValue;
-
-        const std::map<std::string, ShaderProgram*>* m_Shaders = nullptr;
-        const std::map<std::string, Material*>* m_Materials = nullptr;
-        const std::map<std::string, Texture*>* m_Textures = nullptr;
-        const std::map<std::string, Mesh*>* m_Meshes = nullptr;
-        const std::map<std::string, ALuint>* m_Sounds = nullptr;
 
         unsigned char m_ModelsPerRow = 4;
         ImVec2 m_ModelThumbnailPixelSize = ImVec2(64, 64);

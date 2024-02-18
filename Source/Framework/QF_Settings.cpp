@@ -6,49 +6,68 @@
 
 namespace QwerkE {
 
-    EngineSettings Settings::m_engineSettings = EngineSettings();
-    ProjectSettings Settings::m_projectSettings = ProjectSettings();
-    UserSettings Settings::m_userSettings = UserSettings();
+	namespace Settings {
 
-    void Settings::LoadEngineSettings(/* #TODO Take in file path */)
-    {
-        const char* configFilePath = SettingsFolderPath(null_config);
-        LoadEngineSettings(configFilePath);
-    }
+		EngineSettings s_engineSettings;
+		ProjectSettings s_projectSettings;
+		UserSettings s_userSettings;
 
-    void Settings::LoadEngineSettings(std::string configFilePath)
-    {
-        Serialization::DeserializeJsonFromFile(configFilePath.c_str(), m_engineSettings);
-    }
+		void LoadEngineSettings(/* #TODO Take in file path */)
+		{
+			const char* configFilePath = SettingsFolderPath(null_config);
+			LoadEngineSettings(configFilePath);
+		}
 
-    void Settings::SaveEngineSettings(/* #TODO Take in file path */)
-    {
-        Serialization::SerializeObjectToFile(m_engineSettings, SettingsFolderPath(null_config));
-    }
+		void LoadEngineSettings(std::string configFilePath)
+		{
+			Serialization::DeserializeJsonFromFile(configFilePath.c_str(), s_engineSettings);
+		}
 
-    void Settings::LoadProjectSettings(std::string projectSettingsFilePath)
-    {
-        Serialization::DeserializeJsonFromFile(projectSettingsFilePath.c_str(), m_projectSettings);
-    }
+		void SaveEngineSettings(/* #TODO Take in file path */)
+		{
+			Serialization::SerializeObjectToFile(s_engineSettings, SettingsFolderPath(null_config));
+		}
 
-    void Settings::SaveProjectSettings()
-    {
-        SaveProjectSettings(ProjectsFolderPath(null_project));
-    }
+		void LoadProjectSettings(std::string projectSettingsFilePath)
+		{
+			Serialization::DeserializeJsonFromFile(projectSettingsFilePath.c_str(), s_projectSettings);
+		}
 
-    void Settings::SaveProjectSettings(std::string projectSettingsFilePath)
-    {
-        Serialization::SerializeObjectToFile(m_projectSettings, projectSettingsFilePath.c_str());
-    }
+		void SaveProjectSettings()
+		{
+			SaveProjectSettings(ProjectsFolderPath(null_project));
+		}
 
-    void Settings::LoadUserSettings(std::string userSettingsFilePath)
-    {
-        Serialization::DeserializeJsonFromFile(userSettingsFilePath.c_str(), m_userSettings);
-    }
+		void SaveProjectSettings(std::string projectSettingsFilePath)
+		{
+			Serialization::SerializeObjectToFile(s_projectSettings, projectSettingsFilePath.c_str());
+		}
 
-    void Settings::SaveUserSettings()
-    {
-        Serialization::SerializeObjectToFile(m_userSettings, SettingsFolderPath(null_preferences));
-    }
+		void LoadUserSettings(std::string userSettingsFilePath)
+		{
+			Serialization::DeserializeJsonFromFile(userSettingsFilePath.c_str(), s_userSettings);
+		}
+
+		void SaveUserSettings()
+		{
+			Serialization::SerializeObjectToFile(s_userSettings, SettingsFolderPath(null_preferences));
+		}
+
+		const EngineSettings& GetEngineSettings()
+		{
+			return s_engineSettings;
+		}
+
+		ProjectSettings& GetProjectSettings()
+		{
+			return s_projectSettings;
+		}
+
+		const UserSettings& GetUserSettings()
+		{
+			return s_userSettings;
+		}
+
+	}
 
 }

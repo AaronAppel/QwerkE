@@ -71,12 +71,12 @@ namespace QwerkE {
         static ShaderComponent* GetShaderComponent(const char* name, eShaderComponentTypes componentType);
         static ShaderComponent* GetShaderComponentFromPath(const char* filePath, eShaderComponentTypes componentType);
 
-        static const std::map<std::string, Mesh*>* SeeMeshes() { return &m_Meshes; };
-        static const std::map<std::string, Texture*>* SeeTextures() { return &m_Textures; };
-        static const std::map<std::string, Material*>* SeeMaterials() { return &m_Materials; };
-        static const std::map<std::string, ALuint>* SeeSounds() { return &m_Sounds; };
-        static const std::map<std::string, ShaderProgram*>* SeeShaderPrograms() { return &m_ShaderPrograms; };
-        static const std::map<std::string, ShaderComponent*>* SeeShaderComponents() { return &m_ShaderComponents; };
+        static const std::map<std::string, Mesh*>& SeeMeshes() { return m_Meshes; };
+        static const std::map<std::string, Texture*>& SeeTextures() { return m_Textures; };
+        static const std::map<std::string, Material*>& SeeMaterials() { return m_Materials; };
+        static const std::map<std::string, ALuint>& SeeSounds() { return m_Sounds; };
+        static const std::map<std::string, ShaderProgram*>& SeeShaderPrograms() { return m_ShaderPrograms; };
+        static const std::map<std::string, ShaderComponent*>& SeeShaderComponents() { return m_ShaderComponents; };
 
         // #TODO Handle loading additional resources
         // CubeMap* GetCubeMap(const char* name); // specify .ext

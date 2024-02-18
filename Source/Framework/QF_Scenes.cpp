@@ -36,7 +36,6 @@ namespace QwerkE {
 		{
 			const ProjectSettings& projectSettings = Settings::GetProjectSettings();
 
-			// #TODO How should the file names be given to the scene?
 			const std::vector<std::string>& sceneFileNames = projectSettings.sceneFileNames;
 
 			for (size_t i = 0; i < sceneFileNames.size(); i++)

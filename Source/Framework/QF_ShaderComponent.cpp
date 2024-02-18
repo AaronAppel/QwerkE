@@ -17,14 +17,17 @@ namespace QwerkE {
             if (m_Type == "vert") // TODO: Make an enum for this type
             {
                 m_ShaderHandle = ShaderFactory::CreateVertexShader(shaderPath);
+                m_GLShaderType = GL_VERTEX_SHADER;
             }
             else if (m_Type == "frag")
             {
                 m_ShaderHandle = ShaderFactory::CreateFragmentShader(shaderPath);
+                m_GLShaderType = GL_FRAGMENT_SHADER;
             }
             else if (m_Type == "geo")
             {
                 m_ShaderHandle = ShaderFactory::CreateGeometryShader(shaderPath);
+                m_GLShaderType = GL_GEOMETRY_SHADER;
             }
             else
             {

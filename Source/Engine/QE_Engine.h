@@ -1,17 +1,12 @@
 #pragma once
 
 #include <map>
-#include <memory>
-
-#include "QC_StringHelpers.h"
 
 #include "QF_Enums.h"
 
 namespace QwerkE {
 
-	class Editor;
-
-	namespace Engine {
+	namespace Engine { // #TODO Deprecate engine for editor
 
 		QwerkE::eOperationResult Run(const std::map<const char*, const char*>& programArgPairs);
 		void Stop();

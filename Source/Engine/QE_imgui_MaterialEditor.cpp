@@ -15,7 +15,7 @@ namespace QwerkE {
 
     MaterialEditor::MaterialEditor()
     {
-        m_TextureList = Resources::SeeTextures();
+        m_TextureList = &Resources::SeeTextures();
     }
 
     void MaterialEditor::Draw(Material* material, bool* isOpen)

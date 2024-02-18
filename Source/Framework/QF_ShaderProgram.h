@@ -32,7 +32,7 @@ namespace QwerkE {
         const std::vector<std::string>* SeeAttributes() const { return &m_Attributes; }
         const std::vector<std::string>* SeeUniforms() const { return &m_Uniforms; }
 
-        std::string GetName() const { return m_Name; }
+        const std::string& GetName() const { return m_Name; }
         std::string GetVertName() const { return m_VertName; }
         std::string GetFragName() const { return m_FragName; }
         std::string GetGeoName() const { return m_GeoName; }

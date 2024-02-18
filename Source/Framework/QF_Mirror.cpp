@@ -134,12 +134,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(sceneFileNames)
 	MIRROR_CLASS_END(ProjectSettings)
 
-	MIRROR_CLASS_START(SceneViewerData)
-	MIRROR_CLASS_MEMBER(maxEnabledScenes)
-	MIRROR_CLASS_MEMBER(maxDisplayedScenes)
-	MIRROR_CLASS_MEMBER(viewDistance)
-	MIRROR_CLASS_END(SceneViewerData)
-
 	// GameObject components
 	MIRROR_CLASS_START(Component)
 	MIRROR_CLASS_END(Component)

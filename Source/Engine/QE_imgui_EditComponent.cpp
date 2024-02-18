@@ -21,21 +21,15 @@
 #include "QF_Mesh.h"
 #include "QF_Material.h"
 
-// TESTING:
-#include "QF_Bullet3Component.h"
+#include "QF_Bullet3Component.h" // TESTING:
 
 namespace QwerkE {
-
-    EditComponent::EditComponent()
-        : m_Materials(Resources::SeeMaterials()), m_Shaders(Resources::SeeShaderPrograms()), m_Meshes(Resources::SeeMeshes())
-    {
-    }
 
     void EditComponent::Draw(GameObject* entity)
     {
         if (m_LastEntity != entity)
         {
-            m_RenderableIndex = 0;
+            m_SelectedRenderableIndex = 0;
         }
 
         m_LastEntity = entity;
@@ -70,15 +64,16 @@ namespace QwerkE {
         }
     }
 
-    void EditComponent::ShowShaderMenu(RenderComponent* rComp)
+    void EditComponent::ShowShaderList(RenderComponent* rComp)
     {
         if (ImGui::Begin("Shader Selector", &m_ShowShaderList))
         {
-            for (auto it : *m_Shaders)
+            auto shaders = Resources::SeeShaderPrograms();
+            for (auto it : shaders)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetShaderAtIndex(m_RenderableIndex, Resources::GetShaderProgram(it.first.c_str()));
+                    rComp->SetShaderAtIndex(m_SelectedRenderableIndex, Resources::GetShaderProgram(it.first.c_str()));
                 }
 
                 if (ImGui::IsItemClicked(1))
@@ -90,15 +85,16 @@ namespace QwerkE {
         ImGui::End();
     }
 
-    void EditComponent::ShowMaterialMenu(RenderComponent* rComp)
+    void EditComponent::ShowMaterialList(RenderComponent* rComp)
     {
         if (ImGui::Begin("Material Selector", &m_ShowMaterialList))
         {
-            for (auto it : *m_Materials)
+            auto materials = Resources::SeeMaterials();
+            for (auto it : materials)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetMaterialAtIndex(m_RenderableIndex, Resources::GetMaterial(it.first.c_str()));
+                    rComp->SetMaterialAtIndex(m_SelectedRenderableIndex, Resources::GetMaterial(it.first.c_str()));
                 }
 
                 if (ImGui::IsItemClicked(1))
@@ -111,15 +107,16 @@ namespace QwerkE {
         ImGui::End();
     }
 
-    void EditComponent::ShowMeshMenu(RenderComponent* rComp)
+    void EditComponent::ShowMeshList(RenderComponent* rComp)
     {
         if (ImGui::Begin("Mesh Selector", &m_ShowMeshList))
         {
-            for (auto it : *m_Meshes)
+            auto meshes = Resources::SeeMeshes();
+            for (auto it : meshes)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetMeshAtIndex(m_RenderableIndex, Resources::GetMesh(it.first.c_str()));
+                    rComp->SetMeshAtIndex(m_SelectedRenderableIndex, Resources::GetMesh(it.first.c_str()));
                 }
             }
         }
@@ -139,7 +136,7 @@ namespace QwerkE {
             // ImGui::PushStyleVar(); ImGui::PushStyleColor(idx, col);
 
             std::vector<Renderable>* renderables = (std::vector<Renderable>*)renderComponent->LookAtRenderableList();
-            if (m_RenderableIndex > renderables->size()) m_RenderableIndex = 0;
+            if (m_SelectedRenderableIndex > renderables->size()) m_SelectedRenderableIndex = 0;
 
             ImGui::Columns(4, "RenderablesHeader", false);
             {
@@ -164,9 +161,9 @@ namespace QwerkE {
                     ImGui::NextColumn();
 
                 // Renderable
-                if (ImGui::Selectable(renderables->at(i).GetRenderableName().c_str(), m_RenderableIndex == i, ImGuiSelectableFlags_SpanAllColumns))
+                if (ImGui::Selectable(renderables->at(i).GetRenderableName().c_str(), m_SelectedRenderableIndex == i, ImGuiSelectableFlags_SpanAllColumns))
                 {
-                    m_RenderableIndex = i;
+                    m_SelectedRenderableIndex = i;
                 }
                 ImGui::NextColumn();
 
@@ -174,7 +171,7 @@ namespace QwerkE {
                 if (ImGui::Selectable(renderables->at(i).GetShader()->GetName().c_str()))
                 {
                     m_ShowShaderList = true;
-                    m_RenderableIndex = i;
+                    m_SelectedRenderableIndex = i;
                 }
                 ImGui::NextColumn();
 
@@ -183,7 +180,7 @@ namespace QwerkE {
                 if (ImGui::Selectable(renderables->at(i).GetMaterial()->GetMaterialName().c_str()))
                 {
                     m_ShowMaterialList = true;
-                    m_RenderableIndex = i;
+                    m_SelectedRenderableIndex = i;
                 }
                 ImGui::NextColumn();
 
@@ -191,15 +188,15 @@ namespace QwerkE {
                 if (ImGui::Selectable(renderables->at(i).GetMesh()->GetName().c_str()))
                 {
                     m_ShowMeshList = true;
-                    m_RenderableIndex = i;
+                    m_SelectedRenderableIndex = i;
                 }
             }
             ImGui::Columns(1);
             ImGui::Separator();
 
-            if (m_ShowShaderList) ShowShaderMenu(renderComponent);
-            if (m_ShowMaterialList) ShowMaterialMenu(renderComponent);
-            if (m_ShowMeshList) ShowMeshMenu(renderComponent);
+            if (m_ShowShaderList) ShowShaderList(renderComponent);
+            if (m_ShowMaterialList) ShowMaterialList(renderComponent);
+            if (m_ShowMeshList) ShowMeshList(renderComponent);
 
             // Shader uniforms and attributes
 
@@ -213,10 +210,10 @@ namespace QwerkE {
                 // renderComponent->Activate();
             }
 
-            if (renderables->size() <= m_RenderableIndex)
+            if (renderables->size() <= m_SelectedRenderableIndex)
                 return;
 
-            Renderable& renderable = renderables->at(m_RenderableIndex);
+            Renderable& renderable = renderables->at(m_SelectedRenderableIndex);
             const std::vector<std::string>* attributes = renderable.GetShader()->SeeAttributes();
             ImGui::Button("Attr");
             if (ImGui::IsItemHovered())

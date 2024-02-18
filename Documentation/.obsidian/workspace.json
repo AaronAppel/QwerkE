@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Development/Feature Tickets/F0005 - Time Specific Events.md",
+                "file": "Solution Configuration/New QwerkE Project Setup.md",
                 "mode": "source",
                 "source": false
               }
@@ -164,7 +164,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Development/Feature Tickets/F0005 - Time Specific Events.md"
+                "file": "Solution Configuration/New QwerkE Project Setup.md"
               }
             }
           }
@@ -207,7 +207,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Development/Feature Tickets/F0005 - Time Specific Events.md",
+                "file": "Solution Configuration/New QwerkE Project Setup.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -219,7 +219,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Development/Feature Tickets/F0005 - Time Specific Events.md",
+                "file": "Solution Configuration/New QwerkE Project Setup.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -247,13 +247,14 @@
   },
   "active": "341ee7ec46b0829b",
   "lastOpenFiles": [
-    "Event System.md",
+    "ZZ Shared Vault Files ❗/To Watch.md",
+    "Solution Configuration/New QwerkE Project Setup.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
     "Development/Feature Tickets/F0005 - Time Specific Events.md",
+    "Event System.md",
     "Research/Game Engine Series YouTube.md",
     "References/Visual Studio.md",
     "Development/Feature Tickets/F0004 - GUIDs.md",
-    "ZZ Shared Vault Files ❗/To Watch.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
     "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
     "Development/Features/GUIDs.md",
     "Development/Resolved/F0005 - Null GameObject Data.md",
@@ -275,7 +276,6 @@
     "C2995 - Templating Error.md",
     "Serializer.md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
-    "QwerkE Standards/Always Return Constant Values.md",
     "Development/Bug Tickets",
     "Development/Feature Tickets",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",

@@ -22,18 +22,11 @@
 #include "QF_Audio.h"
 #include "QF_Window.h"
 
-#include "QE_MaterialEditor.h"
-
 namespace QwerkE {
 
     ResourceViewer::ResourceViewer()
     {
-        m_MaterialEditor = new MaterialEditor();
-        m_Materials = Resources::SeeMaterials();
-        m_Textures = Resources::SeeTextures();
-        m_Shaders = Resources::SeeShaderPrograms();
-        m_Meshes = Resources::SeeMeshes();
-        m_Sounds = Resources::SeeSounds();
+        m_MaterialEditor = std::make_unique<MaterialEditor>();
 
         m_ViewerScene = Scenes::CreateScene("ThumbNail.qscene", false);
         if (m_ViewerScene)
@@ -49,7 +42,6 @@ namespace QwerkE {
     ResourceViewer::~ResourceViewer()
     {
         m_ModelImageHandles.clear();
-        delete m_MaterialEditor;
     }
 
     QC_ENUM(eResourceViewerDrawTypes, int, Textures, Materials, Shaders, Font, Models, Sounds);
@@ -92,86 +84,95 @@ namespace QwerkE {
         switch (m_CurrentResource) // #TODO Looks like there's only 2 cases needed if the arguments change. Maybe use textureId function or if statements
         {
         case eResourceViewerDrawTypes::Textures:
-            for (const auto& p : *m_Textures)
             {
-                if (counter % m_ModelsPerRow) ImGui::SameLine();
-
-                ImGui::ImageButton((ImTextureID)p.second->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
-
-                if (ImGui::IsItemHovered())
+                auto textures = Resources::SeeTextures();
+                for (const auto& p : textures)
                 {
-                    ImGui::BeginTooltip();
+                    if (counter % m_ModelsPerRow) ImGui::SameLine();
 
-                    if (ImGui::IsMouseDown(0))
+                    ImGui::ImageButton((ImTextureID)p.second->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
+
+                    if (ImGui::IsItemHovered())
                     {
-                        ImGui::ImageButton((ImTextureID)p.second->s_Handle, tooltipOnClickSize, imageUv0, imageUv1, imageFramePadding);
-                    }
+                        ImGui::BeginTooltip();
 
-                    ImGui::Text(p.second->s_FileName.c_str());
-                    ImGui::Text(std::to_string(p.second->s_Handle).c_str());
-                    ImGui::EndTooltip();
+                        if (ImGui::IsMouseDown(0))
+                        {
+                            ImGui::ImageButton((ImTextureID)p.second->s_Handle, tooltipOnClickSize, imageUv0, imageUv1, imageFramePadding);
+                        }
+
+                        ImGui::Text(p.second->s_FileName.c_str());
+                        ImGui::Text(std::to_string(p.second->s_Handle).c_str());
+                        ImGui::EndTooltip();
+                    }
+                    counter++;
                 }
-                counter++;
             }
             break;
 
         case eResourceViewerDrawTypes::Materials:
-            for (const auto& p : *m_Materials)
             {
-                if (counter % m_ModelsPerRow) ImGui::SameLine();
+                auto materials = Resources::SeeMaterials();
+                for (const auto& p : materials)
+                {
+                    if (counter % m_ModelsPerRow) ImGui::SameLine();
 
-                if (Texture* diffuseTexture = p.second->GetMaterialByType(eMaterialMaps::MatMap_Diffuse))
-                {
-                    ImTextureID textureId = (ImTextureID)diffuseTexture->s_Handle;
-                    ImGui::ImageButton(textureId, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
-                    if (ImGui::IsItemHovered())
+                    if (Texture* diffuseTexture = p.second->GetMaterialByType(eMaterialMaps::MatMap_Diffuse))
                     {
-                        ImGui::BeginTooltip();
-                        // #TODO Image name or something might be better. use newly create asset tags
-                        ImGui::Text(p.second->GetMaterialName().c_str());
-                        ImGui::Text(std::to_string(diffuseTexture->s_Handle).c_str());
-                        ImGui::EndTooltip();
+                        ImTextureID textureId = (ImTextureID)diffuseTexture->s_Handle;
+                        ImGui::ImageButton(textureId, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::BeginTooltip();
+                            // #TODO Image name or something might be better. use newly create asset tags
+                            ImGui::Text(p.second->GetMaterialName().c_str());
+                            ImGui::Text(std::to_string(diffuseTexture->s_Handle).c_str());
+                            ImGui::EndTooltip();
+                        }
+                        if (ImGui::IsItemClicked())
+                        {
+                            m_ShowMatEditor = true;
+                            m_MatName = p.second->GetMaterialName();
+                        }
                     }
-                    if (ImGui::IsItemClicked())
+                    else
                     {
-                        m_ShowMatEditor = true;
-                        m_MatName = p.second->GetMaterialName();
+                        Texture* nullTexture = Resources::GetTexture(null_texture);
+                        ImGui::ImageButton((ImTextureID)nullTexture->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::BeginTooltip();
+                            // #TODO Image name or something might be better. use newly create asset tags
+                            ImGui::Text(nullTexture->s_FileName.c_str());
+                            ImGui::Text(std::to_string(nullTexture->s_Handle).c_str());
+                            ImGui::EndTooltip();
+                        }
                     }
+                    counter++; // #TODO Review
                 }
-                else
-                {
-                    Texture* nullTexture = Resources::GetTexture(null_texture);
-                    ImGui::ImageButton((ImTextureID)nullTexture->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
-                    if (ImGui::IsItemHovered())
-                    {
-                        ImGui::BeginTooltip();
-                        // #TODO Image name or something might be better. use newly create asset tags
-                        ImGui::Text(nullTexture->s_FileName.c_str());
-                        ImGui::Text(std::to_string(nullTexture->s_Handle).c_str());
-                        ImGui::EndTooltip();
-                    }
-                }
-                counter++; // #TODO Review
             }
             break;
 
         case eResourceViewerDrawTypes::Shaders:
-            for (auto p : *m_Shaders)
             {
-                if (counter % m_ModelsPerRow) ImGui::SameLine();
-
-                if (ImGui::Button(p.first.c_str()))
+                auto shaders = Resources::SeeShaderPrograms();
+                for (auto p : shaders)
                 {
-                    // #TODO Open shader editor with selected shader open for editing
-                }
+                    if (counter % m_ModelsPerRow) ImGui::SameLine();
 
-                if (ImGui::IsItemHovered())
-                {
-                    ImGui::BeginTooltip();
-                    ImGui::Text(std::to_string(p.second->GetProgram()).c_str());
-                    ImGui::EndTooltip();
+                    if (ImGui::Button(p.first.c_str()))
+                    {
+                        // #TODO Open shader editor with selected shader open for editing
+                    }
+
+                    if (ImGui::IsItemHovered())
+                    {
+                        ImGui::BeginTooltip();
+                        ImGui::Text(std::to_string(p.second->GetProgram()).c_str());
+                        ImGui::EndTooltip();
+                    }
+                    counter++;
                 }
-                counter++;
             }
             break;
 
@@ -201,7 +202,9 @@ namespace QwerkE {
             break;
 
         case eResourceViewerDrawTypes::Sounds:
-            for (auto p : *m_Sounds)
+        {
+            auto sounds = Resources::SeeSounds();
+            for (auto p :sounds)
             {
                 if (counter % m_ModelsPerRow)
                     ImGui::SameLine();
@@ -219,6 +222,7 @@ namespace QwerkE {
                 }
                 counter++;
             }
+        }
             break;
         }
 

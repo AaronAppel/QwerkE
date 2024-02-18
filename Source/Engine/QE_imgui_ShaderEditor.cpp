@@ -16,111 +16,131 @@
 
 namespace QwerkE {
 
-    ShaderEditor::ShaderEditor()
-    {
-        m_Shader = Resources::GetShaderProgram(null_shader);
-        m_ShaderList = Resources::SeeShaderPrograms();
-    }
+    const char* s_ShadersComboText = "Shader Schematic";
+    const int s_CharacterPixelSize = 10;
 
     void ShaderEditor::Draw(bool* isOpen)
     {
-        if (m_Shader == nullptr)
+        if (m_CurrentShader == nullptr)
         {
-            m_Shader = Resources::GetShaderProgram(null_shader);
+            m_CurrentShader = Resources::GetShaderProgram(null_shader);
+            if (m_CurrentShader)
+            {
+                m_CurrentShaderComponent = m_CurrentShader->GetVertShader();
+                UpdateTextBuffer();
+            }
         }
 
         ImGui::Begin("Shader Editor", isOpen);
-        ImGui::Checkbox("ShaderList", &m_ShowShaderList);
 
-        if (m_ShowShaderList)
+        auto shaders = Resources::SeeShaderPrograms();
+        std::vector<const char*> shaderNames;
+        shaderNames.reserve(3);
+
+        static int currentShaderIndex = 0;
+        int sceneFileNameWidth = 0;
+        int counter = 0;
+        for (auto it : shaders)
         {
-            for (auto p : *m_ShaderList)
+            const char* shaderName = it.second->GetName().c_str();
+            if (currentShaderIndex == counter)
             {
-                if (ImGui::Button(p.second->GetName().c_str()))
+                sceneFileNameWidth = strlen(shaderName) * s_CharacterPixelSize;
+            }
+            shaderNames.push_back(shaderName);
+            counter++;
+        }
+
+        ImGui::PushItemWidth((float)sceneFileNameWidth);
+        // ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ShadersComboText) * s_CharacterPixelSize));
+        if (ImGui::Combo(s_ShadersComboText, &currentShaderIndex, shaderNames.data(), shaders.size()))
+        {
+            m_CurrentShader = Resources::GetShaderProgram(shaderNames[currentShaderIndex]);
+            if (m_CurrentShader)
+            {
+                m_CurrentShaderComponent = m_CurrentShader->GetVertShader();
+                UpdateTextBuffer();
+            }
+        }
+        ImGui::PopItemWidth();
+
+        if (!m_CurrentShader)
+            return;
+
+        const char* shaderTypes[] = { "Vertex", "Fragment", "Geometry"};
+        const int size = sizeof(shaderTypes) / sizeof(char*);
+        for (size_t i = 0; i < size; i++)
+        {
+            if (i > 0) ImGui::SameLine();
+
+            bool popStyleColor = false;
+            if (i == m_CurrentShaderTypeIndex)
+            {
+                popStyleColor = true;
+
+                if (strcmp("", m_TextBuffer) == 0)
                 {
-                    m_Shader = p.second;
+                    ImGui::PushStyleColor(ImGuiCol_Button,          (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered,   (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                    ImGui::PushStyleColor(ImGuiCol_ButtonActive,    (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                }
+                else
+                {
+                    ImGui::PushStyleColor(ImGuiCol_Button,          (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered,   (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+                    ImGui::PushStyleColor(ImGuiCol_ButtonActive,    (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
                 }
             }
-        }
 
-        if (m_CurrentShaderProgram != (int)m_Shader->GetProgram())
-        {
-            // strcpy_s(buffer, (char*)shader->GetVertString());
-            m_CurrentShaderProgram = (int)m_Shader->GetProgram();
-            // #TODO Handle null shader strings
-            strcpy_s(m_VertBuffer, m_BufferSize, m_Shader->GetVertShader()->GetStringData());
-            strcpy_s(m_FragBuffer, m_BufferSize, m_Shader->GetFragShader()->GetStringData());
-            // strcpy_s(m_GeoBuffer, bufferSize, (const char*)shader->GetGeoString());
-        }
-
-        const float windowHeight = 400.0f; // #TODO Get window height dynamically or use a ratio of the current Window width
-        const float magicNumber = 20.0f; // #TODO Is this value a width offset?
-
-        if (ImGui::CollapsingHeader("Vertex"))
-        {
-            if (ImGui::InputTextMultiline("", m_VertBuffer, m_BufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
+            if (ImGui::Button(shaderTypes[i]))
             {
-                // #TODO On buffer changed
+                switch (i)
+                {
+                case 0:
+                    m_CurrentShaderComponent = m_CurrentShader->GetVertShader();
+                    break;
+
+                case 1:
+                    m_CurrentShaderComponent = m_CurrentShader->GetFragShader();
+                    break;
+
+                case 2:
+                    m_CurrentShaderComponent = m_CurrentShader->GetGeoShader();
+                    break;
+                }
+                UpdateTextBuffer();
+                m_CurrentShaderTypeIndex = i;
+            }
+
+            if (popStyleColor)
+            {
+                ImGui::PopStyleColor(3);
             }
         }
-        if (ImGui::CollapsingHeader("Fragment"))
-        {
-            if (ImGui::InputTextMultiline("", m_FragBuffer, m_BufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
-            {
-                // #TODO On buffer changed
-            }
-        }
-        if (ImGui::CollapsingHeader("Geometry"))
-        {
-            if (ImGui::InputTextMultiline("", m_GeoBuffer, m_BufferSize, ImVec2(ImGui::GetWindowWidth() - magicNumber, windowHeight)))
-            {
-                // #TODO On buffer changed
-            }
-        }
-        // #TODO Add recompile functionality back in. Although this should only be for certain shaders
-        // like "modifiable" tagged ones. Or something...
-        if (ImGui::Button("Recompile Vertex"))
-        {
-            // Good enough for now, but should remove allocation calls
-            m_Shader->RecompileShaderType(GL_VERTEX_SHADER, DeepCopyString(m_VertBuffer));
-        }
 
-        // like "modifiable" tagged ones. Or something...
-        if (ImGui::Button("Recompile Fragment"))
-        {
-            // Good enough for now, but should remove allocation calls
-            m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, DeepCopyString(m_FragBuffer));
-        }
+        ImVec2 textWindowSize = ImVec2(ImGui::GetWindowWidth(), 300.0f);
+        static ImGuiInputTextFlags flags = ImGuiInputTextFlags_AllowTabInput;
 
-        if (ImGui::Button("Recompile Geometry"))
-        {
-            // #TODO Handle geometry shader editing.
-            // m_Shader->RecompileShaderType(GL_GEOMETRY_SHADER, DeepCopyString(m_GeoBuffer));
-        }
+        ImGui::InputTextMultiline("", m_TextBuffer, m_TextBufferSize, textWindowSize, flags);
 
-        // Reload from file
-        if (ImGui::Button("Reload Vertex"))
+        if (m_CurrentShader && ImGui::Button("Recompile"))
         {
-            if (FileExists(ShadersFolderPath(m_Shader->GetVertShader()->GetName().c_str())))
-            {
-                // #TODO Use smart pointers to allocated object
-                m_Shader->RecompileShaderType(GL_VERTEX_SHADER, LoadCompleteFile(ShadersFolderPath(m_Shader->GetVertShader()->GetName().c_str()), nullptr)); // RAM passed to shader
-            }
-        }
-        if (ImGui::Button("Reload Fragment"))
-        {
-            if (FileExists(ShadersFolderPath(m_Shader->GetFragShader()->GetName().c_str())))
-            {
-                // #TODO Use smart pointers to allocated object
-                m_Shader->RecompileShaderType(GL_FRAGMENT_SHADER, LoadCompleteFile(ShadersFolderPath(m_Shader->GetFragShader()->GetName().c_str()), nullptr));
-            }
-        }
-        if (ImGui::Button("Reload Geometry"))
-        {
-            // #TODO Handle geometry shader editing.
+            m_CurrentShader->RecompileShaderType(m_CurrentShaderComponent->GetGLShaderType(), DeepCopyString(m_TextBuffer)); // #TODO Review deep copy
         }
 
         ImGui::End();
+    }
+
+    void ShaderEditor::UpdateTextBuffer()
+    {
+        if (m_CurrentShaderComponent)
+        {
+            strcpy_s(m_TextBuffer, m_TextBufferSize, m_CurrentShaderComponent->GetStringData());
+        }
+        else
+        {
+            strcpy_s(m_TextBuffer, m_TextBufferSize, "");
+        }
     }
 
 }

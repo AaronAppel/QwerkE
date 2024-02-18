@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "QE_EditComponent.h"
 #include "QF_Enums.h"
 
 namespace QwerkE {
@@ -10,11 +11,10 @@ namespace QwerkE {
     class GameObject;
     class EditComponent;
 
-    class EntityEditor final // #TODO Review if multiple instances is wanted
+    class EntityEditor final
     {
     public:
         EntityEditor();
-        ~EntityEditor();
 
         virtual void Draw();
 
@@ -25,7 +25,7 @@ namespace QwerkE {
         void DrawEntityEditorInspect();
 
         GameObject* m_CurrentEntity = nullptr;
-        EditComponent* m_EditComponent = nullptr;
+        uPtr<EditComponent> m_EditComponent = nullptr;
 
         std::vector<const char*> m_ListboxItemStrings = { "Render" };
         std::vector<eComponentTags> m_ListboxItemTypes = { eComponentTags::Component_Render };

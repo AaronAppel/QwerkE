@@ -22,12 +22,4 @@ namespace QwerkE {
 	// template<typename T>
 	// using makeURef = std::make_unique<T>();
 
-	class qPtr
-	{
-	public:
-
-	private:
-
-	};
-
 }
