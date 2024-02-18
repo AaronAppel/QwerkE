@@ -133,8 +133,6 @@ namespace QwerkE {
 			PROFILE_SCOPE("Engine NewFrame");
 
 			Framework::NewFrame();
-
-			Editor::NewFrame();
 		}
 
 		void Engine::Update(float deltaTime)
@@ -142,8 +140,6 @@ namespace QwerkE {
             PROFILE_SCOPE("Engine Update");
 
 			Framework::Update(deltaTime);
-
-			Editor::Update();
 
 			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 			{

@@ -6,21 +6,17 @@ namespace QwerkE {
 
     // #FEATURE F0002
 
-    class Editor
-    {
-    public:
-        static void Initialize();
-        static void Shutdown();
+	namespace Editor {
 
-        static void NewFrame() {}
-        static void Update() {}
-        static void Draw();
+        void Initialize();
+        void Shutdown();
 
-        static void ToggleEditorUi();
+        void Draw();
 
-        static EntityEditor* GetEntityEditor();
+        void ToggleEditorUi();
 
-    protected:
-    };
+        EntityEditor* GetEntityEditor();
+
+	}
 
 }

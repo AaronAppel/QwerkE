@@ -31,6 +31,9 @@
       <Filter>ProgramArguments</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Editor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QE_EditorInspector.h">
+      <Filter>Editors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ProgramArguments">
@@ -73,5 +76,8 @@
       <Filter>ProgramArguments</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_Editor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QE_EditorInspector.cpp">
+      <Filter>Editors</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
