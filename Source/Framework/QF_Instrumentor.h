@@ -38,8 +38,8 @@ struct InstrumentationSession
 class Instrumentor
 {
 public:
-    Instrumentor()
-        : m_CurrentSession(nullptr), m_ProfileCount(0)
+    Instrumentor() :
+        m_CurrentSession(nullptr), m_ProfileCount(0)
     {
     }
 
@@ -107,16 +107,18 @@ private:
 class InstrumentationTimer
 {
 public:
-    InstrumentationTimer(const char* name)
-        : m_Name(name), m_Stopped(false)
+    InstrumentationTimer(const char* name) :
+        m_Name(name),
+        m_StartTimepoint(std::chrono::high_resolution_clock::now())
     {
-        m_StartTimepoint = std::chrono::high_resolution_clock::now();
     }
 
     ~InstrumentationTimer()
     {
         if (!m_Stopped)
+        {
             Stop();
+        }
     }
 
     void Stop()
@@ -133,7 +135,7 @@ public:
     }
 
 private:
-    const char* m_Name;
+    const char* m_Name = nullptr;
     std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;
-    bool m_Stopped;
+    bool m_Stopped = true;
 };

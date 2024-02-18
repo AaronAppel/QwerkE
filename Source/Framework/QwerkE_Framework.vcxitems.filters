@@ -521,9 +521,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ObjectPool.h">
       <Filter>DataTypes</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_MyLinkedList.h">
-      <Filter>DataTypes</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Routine.h">
       <Filter>Core\Entities\Routines</Filter>
     </ClInclude>

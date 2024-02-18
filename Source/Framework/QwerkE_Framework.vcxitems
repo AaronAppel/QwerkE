@@ -139,7 +139,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mouse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MouseExtApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MyFileWriter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_MyLinkedList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ObjectPool.h" />

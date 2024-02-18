@@ -19,9 +19,10 @@
 // - Could create string helpers in a namespace like String:: for organization
 char* UniqueFileNameNumberAppend(const char* fileDirectory, const char* fileName, const char* extension)
 {
-	if (!fileDirectory || !FileName || !extension)
+	if (!fileDirectory || !fileName || !extension)
 		return nullptr;
 
+	// #TODO Use NumberAppendOrIncrement()
 	std::string uniqueFileName = fileName;
 	int counter = 0;
 
@@ -62,9 +63,6 @@ std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath)
 	WIN32_FIND_DATA ffd;
 	HANDLE hand = INVALID_HANDLE_VALUE; // file handle
 	std::string dir = directoryPath; // used for easy appending
-
-	LPCWSTR;
-	TCHAR;
 
 	dir.append("*.*"); // append "search for all" instruction
 	hand = FindFirstFile(_bstr_t(dir.c_str()), &ffd); // get the first file in directory

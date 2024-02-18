@@ -169,12 +169,23 @@ namespace QwerkE {
 
     bool Scene::AddObjectToScene(GameObject* object)
     {
-        if (object && m_pGameObjects.find(object->GetName()) == m_pGameObjects.end())
+        if (object)
         {
-            m_pGameObjects[object->GetName()] = object;
-            AddObjectToSceneDrawList(object);
-            object->OnSceneLoaded(this);
-            return true;
+            if (m_pGameObjects.find(object->GetName()) == m_pGameObjects.end())
+            {
+                m_pGameObjects[object->GetName()] = object;
+                AddObjectToSceneDrawList(object);
+                object->OnSceneLoaded(this);
+                return true;
+            }
+            else if (false)
+            {
+                LOG_WARN("{0} Object with name \"{1}\" already exists in scene{2}", __FUNCTION__, object->GetName().c_str(), this->GetSceneName().c_str());
+            }
+        }
+        else
+        {
+            LOG_ERROR("{0} Object was null!", __FUNCTION__);
         }
         return false;
     }

@@ -29,6 +29,8 @@ namespace QwerkE {
 
         static std::shared_ptr<spdlog::logger> m_Logger; // #TODO Private
 
+        static void Console(const char* message);
+
         static void Print(const char* message);
         static void Print(const char* message, const char* arg1);
         static void Print(const char* message, double arg1);

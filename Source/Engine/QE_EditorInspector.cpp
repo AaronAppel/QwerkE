@@ -7,6 +7,7 @@
 #include "QF_Enums.h"
 #include "QF_Log.h"
 #include "QF_RenderComponent.h"
+#include "QF_Routine.h"
 
 namespace QwerkE {
 
@@ -74,6 +75,14 @@ namespace QwerkE {
                     break;
 
                 case MirrorTypes::m_vector_routinePtr:
+                    {
+                        std::vector<Routine*>* routines = (std::vector<Routine*>*)fieldAddress;
+                        for (size_t i = 0; i < routines->size(); i++)
+                        {
+                            // #TODO Handle derived types
+                        }
+                        break;
+                    }
                     break;
 
                 case MirrorTypes::m_map_eComponentTags_componentPtr:

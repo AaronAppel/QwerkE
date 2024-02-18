@@ -2,6 +2,7 @@
 
 #include <memory> // std::make_shared
 #include <corecrt_wstdio.h> // stderr
+#include <debugapi.h> // OuputDebugStringA(buffer)
 
 #include "Libraries/spdlog/sinks/stdout_color_sinks.h"
 
@@ -37,6 +38,13 @@ namespace QwerkE {
     void Log::Print(const char* message)
     {
         printf(message);
+    }
+
+    void Log::Console(const char* message)
+    {
+#if _DEBUG
+        OutputDebugStringA(message);
+#endif
     }
 
     void Log::Print(const char* message, const char* arg1)

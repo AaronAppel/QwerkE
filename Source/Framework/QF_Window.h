@@ -1,36 +1,29 @@
 #pragma once
 
-#include <vector>
-
 #include "QC_Vector.h"
 
 namespace QwerkE {
 
-    class Window
-    {
-    public:
-        static void Initialize();
-        static void Shutdown();
+    namespace Window {
 
-        static void Render();
-        static void SwapBuffers(); // #TODO Only for loading font currently, so try to remove
+        void Initialize();
+        void Shutdown();
 
-        static void NewFrame();
+        void Render();
+        void SwapBuffers(); // #TODO Only for loading font currently, so try to remove
 
-        static void ToggleMaximized();
+        void NewFrame();
 
-        static void RequestClose();
-        static bool CloseRequested();
+        void ToggleMaximized();
 
-        static vec2 GetResolution();
-        static vec2 GetAspectRatio();
+        void RequestClose();
+        bool CloseRequested();
 
-        static void* GetContext();
+        vec2 GetResolution();
+        vec2 GetAspectRatio();
 
-    private:
-        Window() = default;
+        void* GetContext();
 
-        static unsigned char m_lastFocusedWindowIndex;
-    };
+    }
 
 }

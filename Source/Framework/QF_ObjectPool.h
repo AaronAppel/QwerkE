@@ -8,8 +8,7 @@ class ObjectPool
 {
 public:
 	ObjectPool(std::vector<POOL_OBJECT_TYPE> objects);
-	ObjectPool();
-	~ObjectPool();
+	ObjectPool() = default;
 
 	std::vector<POOL_OBJECT_TYPE> m_Objects;
 
@@ -28,16 +27,6 @@ ObjectPool<POOL_OBJECT_TYPE>::ObjectPool(std::vector<POOL_OBJECT_TYPE> objects)
 	{
 		m_Objects.push_back(objects.at(i));
 	}
-}
-
-template <class POOL_OBJECT_TYPE>
-ObjectPool<POOL_OBJECT_TYPE>::ObjectPool()
-{
-}
-
-template <class POOL_OBJECT_TYPE>
-ObjectPool<POOL_OBJECT_TYPE>::~ObjectPool()
-{
 }
 
 template <class POOL_OBJECT_TYPE>

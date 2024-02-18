@@ -41,9 +41,6 @@ template <class LIST_OBJECT_TYPE>
 class Linear2LinkedList
 {
 public:
-	Linear2LinkedList();
-	~Linear2LinkedList();
-
 	LIST_OBJECT_TYPE Front();
 	LIST_OBJECT_TYPE Back();
 
@@ -82,14 +79,9 @@ private:
 	void _PrintValues();
 };
 
-template <class LIST_OBJECT_TYPE>
-Linear2LinkedList<LIST_OBJECT_TYPE>::Linear2LinkedList()
-{
-}
-
-template <class LIST_OBJECT_TYPE>
-Linear2LinkedList<LIST_OBJECT_TYPE>::~Linear2LinkedList()
-{
+// template <class LIST_OBJECT_TYPE>
+// Linear2LinkedList<LIST_OBJECT_TYPE>::~Linear2LinkedList()
+// {
 	// Do not delete objects in Destructor.
 	// Stack variables will try to delete their values when
 	// you may not want them to. Example...
@@ -97,7 +89,7 @@ Linear2LinkedList<LIST_OBJECT_TYPE>::~Linear2LinkedList()
 	// t_List will try to delete the Scene's list values when
 	// it goes out of scope.
 	// Better to manually call Clear() in the Scene's Destructor.
-}
+// }
 
 template <class LIST_OBJECT_TYPE>
 LIST_OBJECT_TYPE Linear2LinkedList<LIST_OBJECT_TYPE>::Front()

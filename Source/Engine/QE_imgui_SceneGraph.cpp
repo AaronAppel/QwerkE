@@ -154,7 +154,21 @@ namespace QwerkE {
 								GameObject* newGameObject = new GameObject(currentScene);
 								Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("GameObject.osch"), *newGameObject); // #TODO Replace hard coded strings
 								newGameObject->OnSceneLoaded(currentScene);
-								currentScene->AddObjectToScene(newGameObject);
+								while (!currentScene->AddObjectToScene(newGameObject))
+								{
+									char* newName = NumberAppendOrIncrement(newGameObject->GetName().c_str());
+									if (newName)
+									{
+										newGameObject->SetName(newName); // #TODO Handle memory allocations
+										delete[] newName;
+									}
+									else
+									{
+										LOG_ERROR("{0} Unable to name new game object!", __FUNCTION__);
+										delete newGameObject;
+										break;
+									}
+								}
 							}
 							break;
 

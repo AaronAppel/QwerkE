@@ -35,6 +35,29 @@ namespace QwerkE {
 			return value;
 		}
 
+		inline unsigned char Digits(unsigned long long value)
+		{
+			unsigned char digits = 1; // #TODO Test
+			while (value /= 10)
+			{
+				++digits;
+			}
+			return digits;
+		}
+
+		inline unsigned long long Pow(int base, const signed int exponent)
+		{
+			if (exponent == 0) // #TODO Test with (loops a lot with exponent of -2)
+				return 1;
+
+			unsigned long long result = base;
+			for (signed int i = 0; i < exponent - 1; i++)
+			{
+				result *= base;
+			}
+			return result;
+		}
+
 	}
 
 }

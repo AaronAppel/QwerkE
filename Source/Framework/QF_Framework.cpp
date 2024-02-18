@@ -41,6 +41,37 @@ namespace QwerkE {
 			// #TODO Load libraries dynamically. Need functions to load .dlls
 			// #TODO Try to reduce or avoid order dependency in system creation
 
+			// const char* newName = new char[5] { 'N','a','m', 'e', '\0' };
+			// unsigned  long long counter = UINT64_MAX - 1;
+			// const unsigned long long max = UINT64_MAX - 1;
+			// // const char* newName = new char[12] { 'N', '2', '1', '4', '7', '4', '8', '3', '6', '4', '7', '\0' };
+			// const char* newName = new char[22] { 'N', '1', '8', '4', '4', '6', '7', '4', '4', '0', '7', '3', '7', '0', '9',
+			// 	'5', '5', '1', '6', '1', '4', '\0' };
+			//
+			// while (true)
+			// {
+			// 	const char* oldName = newName;
+			// 	newName = NumberAppendOrIncrement(newName);
+			// 	delete[] oldName;
+			//
+			// 	Log::Console(newName);
+			// 	Log::Console("\n");
+			//
+			// 	std::string value("N");
+			// 	value.append(std::to_string(counter + 1));
+			// 	if (value != newName)
+			// 	{
+			// 		int bp = 0;
+			// 	}
+			//
+			// 	if (counter % 100 == 0)
+			// 	{
+			// 		int bp = 0;
+			// 	}
+			// 	++counter;
+			// }
+			// delete[] newName;
+
             Log::Initialize();
 
 			//GameObject a;

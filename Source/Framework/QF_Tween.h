@@ -5,14 +5,14 @@
 class Tween
 {
 public:
-    Tween() {}
+    Tween() = default;
 
     Tween(float min, float range, float timeSpan) :
         m_StartingValue(min),
         m_Range(range),
-        m_EndTime(timeSpan) {}
-
-    ~Tween() {}
+        m_EndTime(timeSpan)
+    {
+    }
 
     void SetTween(TweenFunc function) { m_pTweenFunction = function; }
 
