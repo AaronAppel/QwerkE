@@ -32,11 +32,11 @@ namespace QwerkE {
         btCollisionShape* GetShape(int index) { if (index <= m_CollisionShapes.size()) return 0; return m_CollisionShapes[index]; }
 
     protected:
-        btBroadphaseInterface* m_pBroadphase;
-        btDefaultCollisionConfiguration* m_pCollisionConfiguration;
-        btCollisionDispatcher* m_pDispatcher;
-        btSequentialImpulseConstraintSolver* m_pSolver;
-        btDiscreteDynamicsWorld* m_pDynamicsWorld;
+        btBroadphaseInterface* m_pBroadphase = nullptr;
+        btDefaultCollisionConfiguration* m_pCollisionConfiguration = nullptr;
+        btCollisionDispatcher* m_pDispatcher = nullptr;
+        btSequentialImpulseConstraintSolver* m_pSolver = nullptr;
+        btDiscreteDynamicsWorld* m_pDynamicsWorld = nullptr;
 
         // Keep track of the shapes, we release memory at exit.
         // Make sure to re-use collision shapes among rigid bodies whenever possible!

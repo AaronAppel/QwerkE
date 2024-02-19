@@ -28,7 +28,7 @@ namespace QwerkE {
         void SetHandle(GLuint handle) { m_ShaderHandle = handle; }
         void SetStringData(const char* shaderData) { m_ShaderData = shaderData; }
 
-        void DestroyShaderData() { delete m_ShaderData; }
+        void DestroyShaderData();
 
     private:
         std::string m_Name = gc_DefaultStringValue;

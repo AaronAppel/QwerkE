@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "QF_QwerkE_Global_Constants.h"
+#include "QF_Constants.h"
 
 namespace QwerkE {
 
@@ -17,7 +17,7 @@ namespace QwerkE {
         Asset() = default;
 
         std::string m_Name = gc_DefaultStringValue;
-        Asset_Tag* m_Tag;
+        Asset_Tag* m_Tag = nullptr;
     };
 
 }

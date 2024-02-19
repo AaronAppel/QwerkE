@@ -28,12 +28,6 @@ namespace QwerkE {
         virtual void Process() = 0;
     };
 
-    class QPathfind : QJob
-    {
-    public:
-        void Process() {};
-    };
-
     class QLoadAsset : public QJob
     {
     public:
@@ -52,7 +46,7 @@ namespace QwerkE {
         const char* m_AssetName;
     };
 
-    class Jobs final
+    class Jobs final // #TODO Consider for static namespace
     {
     public:
         static void ScheduleTask(QJob* job);

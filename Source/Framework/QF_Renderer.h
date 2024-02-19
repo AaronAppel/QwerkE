@@ -4,23 +4,18 @@
 
 namespace QwerkE {
 
-    class Renderer final
-    {
-    public:
-        static int g_WindowWidth, g_WindowHeight; // #TODO No globals
+    namespace Renderer {
 
-        // TODO: Expose API for changing clear color, culling, etc
-        static void Initialize(); // #TODO Review any missing shutdown logic
+        void Initialize(); // #TODO Review any missing shutdown logic
 
-        static void NewFrame();
+        void NewFrame();
 
-        static void ClearScreen();
+        void ClearScreen();
 
-        static void DrawFont(const char* text, float x = 100.f, float y = 100.f, float scale = 1.0f);
+        void DrawFont(const char* text, float x = 100.f, float y = 100.f, float scale = 1.0f);
 
-    private:
-        Renderer() = default;
-    };
+        const vec2& WindowSize();
+    }
 
 }
 

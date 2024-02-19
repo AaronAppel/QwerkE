@@ -120,7 +120,8 @@ namespace QwerkE {
     void RenderText(ShaderProgram* shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
     {
         // https://learnopengl.com/In-Practice/Text-Rendering
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(Renderer::g_WindowWidth), 0.0f, static_cast<GLfloat>(Renderer::g_WindowHeight));
+        const vec2& windowSize = Renderer::WindowSize();
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(windowSize.x), 0.0f, static_cast<GLfloat>(windowSize.y));
 
         shader->Use();
         // glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));

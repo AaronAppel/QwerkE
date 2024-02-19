@@ -8,10 +8,26 @@
 #include "QF_Log.h"
 #include "QF_RenderComponent.h"
 #include "QF_Routine.h"
+#include "QF_Settings.h"
 
 namespace QwerkE {
 
     namespace Inspector {
+
+        void InspectProjectSettings()
+        {
+            if (!ImGui::Begin("Inspect Project Settings"))
+                return;
+
+            std::string buffer = "";
+            buffer.reserve(200);
+
+            ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
+            Inspector::InspectFieldRecursive(Mirror::InfoForClass<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
+            ImGui::PopItemWidth();
+
+            ImGui::End();
+        }
 
         static bool hasWarned = false;
         void InspectFieldRecursive(const Mirror::ClassInfo* classInfo, void* obj, std::string parentName)

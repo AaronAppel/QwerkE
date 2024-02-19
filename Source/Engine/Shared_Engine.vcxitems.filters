@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QE_ConfigEditor.h">
-      <Filter>Editors</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QE_EditComponent.h">
       <Filter>Editors</Filter>
@@ -47,9 +44,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_ConfigEditor.cpp">
-      <Filter>Editors\imgui_Editor</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QE_imgui_EditComponent.cpp">
       <Filter>Editors\imgui_Editor</Filter>
     </ClCompile>

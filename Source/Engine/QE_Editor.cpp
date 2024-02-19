@@ -73,17 +73,7 @@ namespace QwerkE {
 
             if (s_projectSettingsEditor)
             {
-                if (!ImGui::Begin("Inspect Project Settings"))
-                    return;
-
-                std::string buffer = "";
-                buffer.reserve(200);
-
-                ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
-                Inspector::InspectFieldRecursive(Mirror::InfoForClass<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
-                ImGui::PopItemWidth();
-
-                ImGui::End();
+                Inspector::InspectProjectSettings();
             }
 
             s_ResourceViewer->Draw();

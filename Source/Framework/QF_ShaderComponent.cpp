@@ -44,7 +44,15 @@ namespace QwerkE {
     ShaderComponent::~ShaderComponent()
     {
         glDeleteShader(m_ShaderHandle); // #TODO Verify if allocated
-        delete[] m_ShaderData; // #TODO Verify if allocated
+        DestroyShaderData();
+    }
+
+    void ShaderComponent::DestroyShaderData()
+    {
+        if (m_ShaderData)
+        {
+            delete[] m_ShaderData; // #TODO Verify if allocated
+        }
     }
 
 }
