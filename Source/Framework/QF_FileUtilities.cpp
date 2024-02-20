@@ -78,7 +78,7 @@ std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath)
 		}
 		else
 		{
-			std::cout << ffd.cFileName << std::endl;
+			// std::cout << ffd.cFileName << std::endl;
 			dirFileNames.get()->push_back(std::string(_bstr_t(ffd.cFileName)));
 		}
 	} while (FindNextFile(hand, &ffd) != 0);

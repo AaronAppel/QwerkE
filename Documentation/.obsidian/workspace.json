@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Assets and Data/Null Asset Handling.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "mode": "source",
                 "source": false
               }
@@ -164,7 +164,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Assets and Data/Null Asset Handling.md"
+                "file": "ZZ Shared Vault Files ❗/Watched.md"
               }
             }
           }
@@ -207,7 +207,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Assets and Data/Null Asset Handling.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -219,7 +219,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Assets and Data/Null Asset Handling.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -247,6 +247,7 @@
   },
   "active": "341ee7ec46b0829b",
   "lastOpenFiles": [
+    "Assets and Data/Null Asset Handling.md",
     "Solution Configuration/New QwerkE Project Setup.md",
     "Untitled.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
@@ -274,7 +275,6 @@
     "ZZ Shared Vault Files ❗/To Watch SimonDev.md",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "Template.md",
-    "C2995 - Templating Error.md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "Development/Bug Tickets",
     "Development/Feature Tickets",

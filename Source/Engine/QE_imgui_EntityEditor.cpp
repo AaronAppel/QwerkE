@@ -64,7 +64,10 @@ namespace QwerkE {
 		if (currentEntity != nullptr)
         {
             DrawEntityEditor();
-            DrawEntityEditorInspect();
+            if (m_CurrentEntity)
+            {
+                Inspector::InspectObject(*m_CurrentEntity, "Inspect Scene Object");
+            }
 		}
 	}
 
@@ -226,20 +229,5 @@ namespace QwerkE {
 
         ImGui::End();
 	}
-
-    void EntityEditor::DrawEntityEditorInspect()
-    {
-        if (!m_CurrentEntity || !ImGui::Begin("Inspect GameObject"))
-            return;
-
-        std::string buffer = "";
-        buffer.reserve(200);
-
-        ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f); // #TODO Scale nicer
-        Inspector::InspectFieldRecursive(Mirror::InfoForClass<GameObject>(), m_CurrentEntity, buffer);
-        ImGui::PopItemWidth();
-
-        ImGui::End();
-    }
 
 }

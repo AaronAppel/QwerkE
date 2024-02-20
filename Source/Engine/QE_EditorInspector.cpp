@@ -2,62 +2,21 @@
 
 #include "Libraries/imgui/QC_imgui.h"
 
-#include "QF_CameraComponent.h"
-#include "QF_Component.h"
 #include "QF_Enums.h"
 #include "QF_Log.h"
-#include "QF_RenderComponent.h"
-#include "QF_Routine.h"
 #include "QF_Settings.h"
+
+#include "QF_Component.h"
+#include "QF_CameraComponent.h"
+#include "QF_RenderComponent.h"
+
+#include "QF_Routine.h"
+#include "QF_RenderRoutine.h"
+#include "QF_TransformRoutine.h"
 
 namespace QwerkE {
 
     namespace Inspector {
-
-        void InspectEngineSettings()
-        {
-            if (!ImGui::Begin("Inspect Engine Settings"))
-                return;
-
-            std::string buffer = "";
-            buffer.reserve(200);
-
-            ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
-            Inspector::InspectFieldRecursive(Mirror::InfoForClass<EngineSettings>(), &Settings::GetEngineSettings(), buffer);
-            ImGui::PopItemWidth();
-
-            ImGui::End();
-        }
-
-        void InspectProjectSettings()
-        {
-            if (!ImGui::Begin("Inspect Project Settings"))
-                return;
-
-            std::string buffer = "";
-            buffer.reserve(200);
-
-            ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
-            Inspector::InspectFieldRecursive(Mirror::InfoForClass<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
-            ImGui::PopItemWidth();
-
-            ImGui::End();
-        }
-
-        void InspectUserSettings()
-        {
-            if (!ImGui::Begin("Inspect User Settings"))
-                return;
-
-            std::string buffer = "";
-            buffer.reserve(200);
-
-            ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
-            Inspector::InspectFieldRecursive(Mirror::InfoForClass<UserSettings>(), &Settings::GetUserSettings(), buffer);
-            ImGui::PopItemWidth();
-
-            ImGui::End();
-        }
 
         static bool hasWarned = false;
         void InspectFieldRecursive(const Mirror::ClassInfo* classInfo, void* obj, std::string parentName)
@@ -126,6 +85,24 @@ namespace QwerkE {
                         for (size_t i = 0; i < routines->size(); i++)
                         {
                             // #TODO Handle derived types
+                            switch (routines->at(i)->GetRoutineType())
+                            {
+                            case QwerkE::Routine_Render:
+                                InspectFieldRecursive(Mirror::InfoForClass<RenderRoutine>(), routines->at(i), parentName);
+                                break;
+
+                            case QwerkE::Routine_Transform:
+                                InspectFieldRecursive(Mirror::InfoForClass<TransformRoutine>(), routines->at(i), parentName);
+                                break;
+
+                            case QwerkE::Routine_Physics:
+                            case QwerkE::Routine_Print:
+                            case QwerkE::Routine_Null:
+                            case QwerkE::Routine_Max:
+                            default:
+                                LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
+                                break;
+                            }
                         }
                         break;
                     }

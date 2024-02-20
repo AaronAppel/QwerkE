@@ -4,6 +4,8 @@
 #include "Libraries/enum/QC_enum.h"
 
 #include "QF_Defines.h"
+#include "QF_FileSystem.h"
+#include "QF_FileUtilities.h"
 #include "QF_Profile.h"
 #include "QF_Network.h"
 #include "QF_Time.h"
@@ -25,11 +27,12 @@ namespace QwerkE {
         ShaderEditor* s_ShaderEditor = nullptr;
         ResourceViewer* s_ResourceViewer = nullptr;
         SceneViewer* s_SceneViewer = nullptr;
-        bool s_ShowingEditorGUI = true;
 
         bool s_ShowingSettingsEditor = false;
         QC_ENUM(eSettingsOptions, int, Null, Engine, Project, User);
         eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
+
+        bool s_ShowingSchematicsEditor = false;
 
 #ifdef dearimgui
         void priv_DrawMainMenuBar();
@@ -114,16 +117,25 @@ namespace QwerkE {
                 ImGui::End();
             }
 
+            if (s_ShowingSchematicsEditor && ImGui::Begin("Schematics Inspector"))
+            {
+                // #TODO Cache result to avoid constant directory info fetching
+                auto dirFileNamesUPtr = ReadDir(SchematicsFolderPath(""));
+                auto fileNames = dirFileNamesUPtr.get();
+
+                for (size_t i = 0; i < fileNames->size(); i++)
+                {
+                    ImGui::Button(fileNames->at(i).c_str());
+                }
+
+                ImGui::End();
+            }
+
             s_ResourceViewer->Draw();
             s_SceneViewer->Draw();
             s_SceneGraph->Draw();
             s_EntityEditor->Draw();
 #endif
-        }
-
-        void Editor::ToggleEditorUi()
-        {
-            s_ShowingEditorGUI = !s_ShowingEditorGUI;
         }
 
         EntityEditor* Editor::GetEntityEditor()
@@ -141,6 +153,11 @@ namespace QwerkE {
                     if (ImGui::Button("Settings Inspector"))
                     {
                         s_ShowingSettingsEditor = !s_ShowingSettingsEditor;
+                    }
+
+                    if (ImGui::Button("Schematics Inspector"))
+                    {
+                        s_ShowingSchematicsEditor = !s_ShowingSchematicsEditor;
                     }
 
                     static int index = 0;
@@ -168,8 +185,6 @@ namespace QwerkE {
                     }
                     ImGui::EndMenu();
                 }
-
-                if (ImGui::Checkbox("GUI", &s_ShowingEditorGUI)) {}
 
                 static bool showFPS = true;
                 if (ImGui::Button("FPS"))

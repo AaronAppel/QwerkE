@@ -13,8 +13,6 @@ namespace QwerkE {
 
         void Draw();
 
-        void ToggleEditorUi();
-
         EntityEditor* GetEntityEditor();
 
 	}

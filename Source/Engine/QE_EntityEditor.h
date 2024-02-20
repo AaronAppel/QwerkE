@@ -22,7 +22,6 @@ namespace QwerkE {
 
     private:
         void DrawEntityEditor();
-        void DrawEntityEditorInspect();
 
         GameObject* m_CurrentEntity = nullptr;
         uPtr<EditComponent> m_EditComponent = nullptr;
