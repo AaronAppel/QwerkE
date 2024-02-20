@@ -79,58 +79,8 @@ namespace QwerkE {
 					return m_Meshes[meshFullFileName.get()];
 				}
 			}
-			return m_Meshes[null_mesh];
 		}
-		else
-        {
-			Mesh* mesh = nullptr;
-
-            if (strcmp(meshFilePath, null_mesh) == 0)
-            {
-				mesh = MeshFactory::ImportOBJMesh(null_mesh, vec3(0.5f, 0.5f, 0.5f), vec2(1, 1), false);
-            }
-			else if (strcmp(meshFilePath, MeshesFolderPath("Create_Quad")) == 0)
-			{
-				mesh = MeshFactory::CreateQuad(vec2(10, 10));
-			}
-			else if (strcmp(meshFilePath, MeshesFolderPath("Create_Circle")) == 0)
-			{
-				mesh = MeshFactory::CreateCircle(1.0f, 20, vec2(1, 1));
-			}
-			else if (strcmp(meshFilePath, MeshesFolderPath("Create_Cube")) == 0)
-			{
-				mesh = MeshFactory::CreateCube(vec3(1, 1, 1), vec2(1, 1), true);
-			}
-			else if (strcmp(meshFilePath, MeshesFolderPath("Tutorial_Cube")) == 0)
-			{
-				mesh = MeshFactory::TutorialCube(vec3(1, 1, 1));
-			}
-			else if (strcmp(meshFilePath, MeshesFolderPath("Test_Plane")) == 0)
-			{
-				mesh = MeshFactory::CreateTestPlane();
-			}
-			// update to use new model loading capabilities
-			/*
-			else if (meshName == "Teapot.obj")
-			{
-				mesh = MeshFactory::ImportOBJMesh(MeshPath("Teapot.obj"), vec3(0.5f,0.5f,0.5f), vec2(1,1), false);
-			}
-			*/
-			else
-			{
-				LOG_ERROR("InstantiateMesh(): Mesh not found! {0}", meshFilePath);
-				return m_Meshes[null_mesh];
-			}
-
-			if (char* fullFileName = File::FullFileName(meshFilePath))
-			{
-				m_Meshes[fullFileName] = mesh;
-				mesh->SetName(fullFileName);
-				free(fullFileName);
-			}
-			LOG_CRITICAL("{0} Unable to instantiate mesh file {1}", __FUNCTION__, meshFilePath);
-			return mesh;
-		}
+		return m_Meshes[null_mesh];
 	}
 
 	Texture* Resources::InstantiateTexture(const char* textureName)

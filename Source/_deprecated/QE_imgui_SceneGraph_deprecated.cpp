@@ -37,6 +37,84 @@ namespace QwerkE {
 		return rComp;
 	}
 
+	GameObject* CreateSkyBox(Scene* scene, vec3 position)
+	{
+		if (!scene)
+			return nullptr;
+
+		GameObject* t_SkyBox = new GameObject(scene);
+		t_SkyBox->SetPosition(position);
+		t_SkyBox->SetTag(GO_Tag_SkyBox);
+		t_SkyBox->SetRenderOrder(-1);
+		t_SkyBox->SetName("SkyBox" + std::to_string(Resources::CreateGUID()));
+
+		AddModelComponentFromSchematic(t_SkyBox, null_object_schematic);
+
+		RenderRoutine* renderRoutine = new RenderRoutine();
+		t_SkyBox->AddRoutine((Routine*)renderRoutine);
+
+		if (scene->AddObjectToScene(t_SkyBox))
+			return t_SkyBox;
+
+		delete t_SkyBox;
+		return nullptr;
+	}
+
+	GameObject* CreateTestCube(Scene* scene, vec3 position)
+	{
+		if (!scene)
+			return nullptr;
+
+		GameObject* t_Cube = new GameObject(scene, position);
+		t_Cube->SetName("Object" + std::to_string(Resources::CreateGUID()));
+		t_Cube->SetRenderOrder(50);
+		t_Cube->SetTag(GO_Tag_TestModel);
+
+		Renderable renderable;
+		renderable.SetMaterial(Resources::GetMaterial("brickwall.msch"));
+		renderable.SetShader(Resources::GetShaderProgram("LitMaterialNormal.ssch"));
+
+		Mesh* mesh = new Mesh();
+		mesh = MeshFactory::CreateCube(vec3(10, 10, 10), vec2(1, 1), false);
+		mesh->SetName("Cube");
+		mesh->SetFileName("None");
+		Resources::AddMesh("Cube", mesh);
+		renderable.SetMesh(mesh);
+
+		RenderComponent* rComp = new RenderComponent();
+		rComp->AddRenderable(renderable);
+
+		t_Cube->AddComponent(rComp);
+
+		// render routine
+		t_Cube->AddRoutine((Routine*)new RenderRoutine());
+
+		if (scene->AddObjectToScene(t_Cube))
+			return t_Cube;
+
+		delete t_Cube;
+		return nullptr;
+	}
+
+	GameObject* CreateEmptyGameObject(Scene* scene, vec3 position)
+	{
+		if (scene == nullptr) return nullptr;
+
+		GameObject* t_Object = new GameObject(scene, position);
+
+		if (scene)
+		{
+			if (scene->AddObjectToScene(t_Object))
+			{
+				t_Object->SetName(std::string("abc") + std::to_string(0)); // #TODO Improve string concatenation
+				return t_Object;
+			}
+		}
+
+		delete t_Object;
+		return nullptr;
+	}
+
 	void SceneGraph::Draw()
 	{
 		if (ImGui::Begin("SceneGraph"))

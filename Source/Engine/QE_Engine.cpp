@@ -18,7 +18,6 @@
 #include "QF_Debugger.h"
 #include "QF_Graphics_Header.h"
 #include "QF_FrameBufferObject.h"
-#include "QF_MeshFactory.h"
 #include "QF_Renderer.h"
 #include "QF_Input.h"
 #include "QF_Resources.h"

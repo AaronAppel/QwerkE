@@ -91,6 +91,7 @@ namespace QwerkE {
         void SetTag(eGameObjectTags tag) { m_Tag = tag; }
         void SetTransform(Transform transform) { m_Transform = transform; };
 
+        // #TODO Remove scene dependency
         void OnSceneLoaded(Scene* scene); // #TODO Rename Initialize()
 
     private:

@@ -167,20 +167,28 @@ namespace QwerkE {
         }
     }
 
+    bool Scene::ObjectWithNameExists(GameObject* object)
+    {
+        if (!object)
+            return true;
+
+        return m_pGameObjects.find(object->GetName()) != m_pGameObjects.end();
+    }
+
     bool Scene::AddObjectToScene(GameObject* object)
     {
         if (object)
         {
-            if (m_pGameObjects.find(object->GetName()) == m_pGameObjects.end())
+            if (ObjectWithNameExists(object))
+            {
+                LOG_WARN("{0} Object with name \"{1}\" already exists in scene{2}", __FUNCTION__, object->GetName().c_str(), this->GetSceneName().c_str());
+            }
+            else
             {
                 m_pGameObjects[object->GetName()] = object;
                 AddObjectToSceneDrawList(object);
                 object->OnSceneLoaded(this);
                 return true;
-            }
-            else if (false)
-            {
-                LOG_WARN("{0} Object with name \"{1}\" already exists in scene{2}", __FUNCTION__, object->GetName().c_str(), this->GetSceneName().c_str());
             }
         }
         else
@@ -198,6 +206,40 @@ namespace QwerkE {
             m_pGameObjects.erase(object->GetName());
             delete object;
         }
+    }
+
+    GameObject* Scene::CreateNewObject()
+    {
+        GameObject* newObject = new GameObject(this);
+
+        return newObject;
+    }
+
+    GameObject* Scene::CreateNewObjectFromSchematic(const char* const schematicFileName)
+    {
+        GameObject* newGameObject = new GameObject(this);
+        Serialization::DeserializeJsonFromFile(SchematicsFolderPath(schematicFileName), *newGameObject);
+
+        while (ObjectWithNameExists(newGameObject))
+        {
+            char* newName = NumberAppendOrIncrement(newGameObject->GetName().c_str());
+            if (newName)
+            {
+                newGameObject->SetName(newName); // #TODO Handle memory allocations
+                delete[] newName;
+            }
+            else
+            {
+                LOG_ERROR("{0} Unable to name new game object!", __FUNCTION__);
+                delete newGameObject;
+                break;
+            }
+        }
+
+        newGameObject->SetPosition(vec3(0, 0, 0));
+        newGameObject->OnSceneLoaded(this);
+        AddObjectToScene(newGameObject);
+        return newGameObject;
     }
 
     void Scene::SaveScene()

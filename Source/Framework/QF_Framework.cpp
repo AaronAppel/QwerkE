@@ -13,7 +13,6 @@
 #include "QF_Input.h"
 #include "QF_Jobs.h"
 #include "QF_Log.h"
-#include "QF_MeshFactory.h"
 #include "QF_Network.h"
 #include "QF_Physics.h"
 #include "QF_Renderer.h"

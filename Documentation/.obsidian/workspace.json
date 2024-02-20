@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Solution Configuration/New QwerkE Project Setup.md",
+                "file": "Assets and Data/Null Asset Handling.md",
                 "mode": "source",
                 "source": false
               }
@@ -164,7 +164,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Solution Configuration/New QwerkE Project Setup.md"
+                "file": "Assets and Data/Null Asset Handling.md"
               }
             }
           }
@@ -207,7 +207,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Solution Configuration/New QwerkE Project Setup.md",
+                "file": "Assets and Data/Null Asset Handling.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -219,7 +219,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Solution Configuration/New QwerkE Project Setup.md",
+                "file": "Assets and Data/Null Asset Handling.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -247,8 +247,8 @@
   },
   "active": "341ee7ec46b0829b",
   "lastOpenFiles": [
-    "Untitled.md",
     "Solution Configuration/New QwerkE Project Setup.md",
+    "Untitled.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
     "ZZ Shared Vault Files ❗/Watched.md",
     "Development/Feature Tickets/F0005 - Time Specific Events.md",

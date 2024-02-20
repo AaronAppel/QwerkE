@@ -156,9 +156,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.cpp">
       <Filter>Core\Graphics\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_MeshFactory.cpp">
-      <Filter>Core\Graphics\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderFactory.cpp">
       <Filter>Core\Graphics\ShaderFactory</Filter>
     </ClCompile>
@@ -359,9 +356,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_GraphicsHelpers.h">
       <Filter>Core\Graphics\GraphicsHelpers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshFactory.h">
-      <Filter>Core\Graphics\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshData.h">
       <Filter>Core\Graphics\Mesh</Filter>

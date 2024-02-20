@@ -50,7 +50,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Log.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MasterAssetList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mesh.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_MeshFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MouseExtApi.cpp" />
@@ -134,7 +133,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Math.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshData.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mouse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MouseExtApi.h" />

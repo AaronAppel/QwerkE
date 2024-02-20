@@ -5,3 +5,5 @@ One strategy to handle null data is to rely on "default" or "fallback" objects. 
 Using these "fallback" objects allows the engine and framework to safely assume that at least one asset of every supported type is valid at all times. This comes in handy when loading or requesting an invalid asset as a reference to the "fallback" of that asset type can be returned and used while an error message communicates why the originally requested object could not be returned successfully.
 
 It is important to remember that bad data should be caught as soon as possible, and future usage of the null object should be avoided. Yes, swapping the user asset reference to point to a valid framework asset can allow the code to flow safely, and nicely along, but operations done on framework assets are likely a waste of time. This use of null object patter is strictly for convenience and debugging purposes, so please use sparingly, and with caution.
+
+Null assets are mixed into the Assets folder, so a user can swap out the null asset that the engine uses.

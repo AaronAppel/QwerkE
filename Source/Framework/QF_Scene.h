@@ -30,8 +30,12 @@ namespace QwerkE {
         bool AddLight(GameObject* light);
         void RemoveLight(GameObject* light);
 
+        bool ObjectWithNameExists(GameObject* object);
         bool AddObjectToScene(GameObject* object);
         void RemoveObjectFromScene(GameObject* object);
+
+        GameObject* CreateNewObject();
+        GameObject* CreateNewObjectFromSchematic(const char* const schematicFileName);
 
         void SaveScene();
         void LoadSceneFromFile(const char* otherSceneFileName);

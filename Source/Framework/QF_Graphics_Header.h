@@ -43,7 +43,6 @@ namespace QwerkE {
 
 #include "QF_MeshData.h"
 #include "QF_Mesh.h"
-#include "QF_MeshFactory.h"
 #include "QF_MeshUtilities.h"
 
 #include "QF_CubeMap.h"
