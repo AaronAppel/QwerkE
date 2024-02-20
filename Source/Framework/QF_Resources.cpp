@@ -351,7 +351,7 @@ namespace QwerkE {
 		if (ShaderProgramExists(name))
 			return m_ShaderPrograms[name];
 
-		return InstantiateShaderProgram(ShadersFolderPath(name));
+		return InstantiateShaderProgram(SchematicsFolderPath(name));
 	}
 
 	ShaderProgram* Resources::GetShaderProgramFromPath(const char* filePath)

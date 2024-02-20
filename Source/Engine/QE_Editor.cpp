@@ -1,6 +1,7 @@
 #include "QE_Editor.h"
 
 #include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/enum/QC_enum.h"
 
 #include "QF_Defines.h"
 #include "QF_Profile.h"
@@ -25,7 +26,10 @@ namespace QwerkE {
         ResourceViewer* s_ResourceViewer = nullptr;
         SceneViewer* s_SceneViewer = nullptr;
         bool s_ShowingEditorGUI = true;
-        bool s_projectSettingsEditor = false;
+
+        bool s_ShowingSettingsEditor = false;
+        QC_ENUM(eSettingsOptions, int, Null, Engine, Project, User);
+        eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
 
 #ifdef dearimgui
         void priv_DrawMainMenuBar();
@@ -71,9 +75,43 @@ namespace QwerkE {
                 s_ShaderEditor->Draw(&s_ShowingShaderEditor);
             }
 
-            if (s_projectSettingsEditor)
+            if (s_ShowingSettingsEditor && ImGui::Begin("Settings Inspector"))
             {
-                Inspector::InspectProjectSettings();
+                for (size_t i = 1; i < eSettingsOptions::_size_constant; i++)
+                {
+                    if (i > 1) ImGui::SameLine();
+
+                    if (ImGui::Button(ENUM_TO_STR(eSettingsOptions::_from_index(i))))
+                    {
+                        s_SettingsEditorOption = eSettingsOptions::_from_index(i);
+                    }
+                }
+
+                if (s_SettingsEditorOption != (eSettingsOptions)eSettingsOptions::Null)
+                {
+                    std::string buffer = "";
+                    buffer.reserve(200);
+                    ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.3f);
+
+                    switch (s_SettingsEditorOption)
+                    {
+                    case eSettingsOptions::Engine:
+                        Inspector::InspectFieldRecursive(Mirror::InfoForClass<EngineSettings>(), &Settings::GetEngineSettings(), buffer);
+                        break;
+
+                    case eSettingsOptions::Project:
+                        Inspector::InspectFieldRecursive(Mirror::InfoForClass<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
+                        break;
+
+                    case eSettingsOptions::User:
+                        Inspector::InspectFieldRecursive(Mirror::InfoForClass<UserSettings>(), &Settings::GetUserSettings(), buffer);
+                        break;
+                    }
+
+                    ImGui::PopItemWidth();
+                }
+
+                ImGui::End();
             }
 
             s_ResourceViewer->Draw();
@@ -100,14 +138,9 @@ namespace QwerkE {
             {
                 if (ImGui::BeginMenu("Menu"))
                 {
-                    if (ImGui::Button("Save Project Settings"))
+                    if (ImGui::Button("Settings Inspector"))
                     {
-                        Settings::SaveProjectSettings(ProjectsFolderPath("Project1.qproj"));
-                    }
-
-                    if (ImGui::Button("Edit Project Settings"))
-                    {
-                        s_projectSettingsEditor = true;
+                        s_ShowingSettingsEditor = !s_ShowingSettingsEditor;
                     }
 
                     static int index = 0;

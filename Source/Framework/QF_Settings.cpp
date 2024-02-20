@@ -53,7 +53,7 @@ namespace QwerkE {
 			Serialization::SerializeObjectToFile(s_userSettings, SettingsFolderPath(null_preferences));
 		}
 
-		const EngineSettings& GetEngineSettings()
+		EngineSettings& GetEngineSettings()
 		{
 			return s_engineSettings;
 		}
@@ -63,7 +63,7 @@ namespace QwerkE {
 			return s_projectSettings;
 		}
 
-		const UserSettings& GetUserSettings()
+		UserSettings& GetUserSettings()
 		{
 			return s_userSettings;
 		}

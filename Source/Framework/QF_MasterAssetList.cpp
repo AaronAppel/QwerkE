@@ -33,21 +33,21 @@ namespace QwerkE {
 				m_ShaderComponents.empty(),
 				"Resources already initialized!");
 
-		ASSERT(Resources::InstantiateMesh(NullFolderPath(null_mesh)), "Error loading null mesh asset!");
-		ASSERT(Resources::InstantiateTexture(NullFolderPath(null_texture)), "Error loading null texture asset!");
-		ASSERT(Resources::InstantiateMaterial(NullFolderPath(null_material_schematic)), "Error loading null material asset!");
-		ASSERT(Resources::InstantiateFont(NullFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
-		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_vert_component)), "Error loading null vertex component asset!"); // TODO: Remove null component references. Store components and reference them in shader programs
-		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_frag_component)), "Error loading null fragment component!"); // TODO: Remove null component references. Store components and reference them in shader programs
-		ASSERT(Resources::InstantiateShaderComponent(NullFolderPath(null_geo_component)), "Error loading null geometry component!"); // #TODO Shader components can be referenced in the shader itself, so just load a null shader schematic
-		ASSERT(Resources::InstantiateShaderProgram(NullFolderPath(null_shader_schematic)), "Error loading null shader program!");
+		ASSERT(Resources::InstantiateMesh(MeshesFolderPath(null_mesh)), "Error loading null mesh asset!");
+		ASSERT(Resources::InstantiateTexture(TexturesFolderPath(null_texture)), "Error loading null texture asset!");
+		ASSERT(Resources::InstantiateMaterial(SchematicsFolderPath(null_material_schematic)), "Error loading null material asset!");
+		ASSERT(Resources::InstantiateFont(FontsFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
+		ASSERT(Resources::InstantiateShaderComponent(ShadersFolderPath(null_vert_component)), "Error loading null vertex component asset!"); // TODO: Remove null component references. Store components and reference them in shader programs
+		ASSERT(Resources::InstantiateShaderComponent(ShadersFolderPath(null_frag_component)), "Error loading null fragment component!"); // TODO: Remove null component references. Store components and reference them in shader programs
+		ASSERT(Resources::InstantiateShaderComponent(ShadersFolderPath(null_geo_component)), "Error loading null geometry component!"); // #TODO Shader components can be referenced in the shader itself, so just load a null shader schematic
+		ASSERT(Resources::InstantiateShaderProgram(SchematicsFolderPath(null_shader_schematic)), "Error loading null shader program schematic!");
 
 		const EngineSettings& engineSettings = Settings::GetEngineSettings();
 		if (engineSettings.audioEnabled)
 		{
 			// #TODO Handle loading null sound asset when audio system is disabled.
 			// Currently, there is no null asset to fall back on, but audio is no implemented so no references break yet.
-			ASSERT(Resources::InstantiateSound(NullFolderPath(null_sound)), "Error loading null sound asset!");
+			ASSERT(Resources::InstantiateSound(SoundsFolderPath(null_sound)), "Error loading null sound asset!");
 		}
 	}
 

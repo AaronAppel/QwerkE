@@ -14,6 +14,21 @@ namespace QwerkE {
 
     namespace Inspector {
 
+        void InspectEngineSettings()
+        {
+            if (!ImGui::Begin("Inspect Engine Settings"))
+                return;
+
+            std::string buffer = "";
+            buffer.reserve(200);
+
+            ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
+            Inspector::InspectFieldRecursive(Mirror::InfoForClass<EngineSettings>(), &Settings::GetEngineSettings(), buffer);
+            ImGui::PopItemWidth();
+
+            ImGui::End();
+        }
+
         void InspectProjectSettings()
         {
             if (!ImGui::Begin("Inspect Project Settings"))
@@ -24,6 +39,21 @@ namespace QwerkE {
 
             ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
             Inspector::InspectFieldRecursive(Mirror::InfoForClass<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
+            ImGui::PopItemWidth();
+
+            ImGui::End();
+        }
+
+        void InspectUserSettings()
+        {
+            if (!ImGui::Begin("Inspect User Settings"))
+                return;
+
+            std::string buffer = "";
+            buffer.reserve(200);
+
+            ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
+            Inspector::InspectFieldRecursive(Mirror::InfoForClass<UserSettings>(), &Settings::GetUserSettings(), buffer);
             ImGui::PopItemWidth();
 
             ImGui::End();
@@ -168,8 +198,9 @@ namespace QwerkE {
                 case MirrorTypes::eKeys:
                 {
                     char* charPtrAddress = (char*)fieldAddress;
+                    char charEscaped[2] = { *charPtrAddress, '\0' };
                     std::string fieldName = parentName + field.name;
-                    // ImGui::LabelText(fieldName.c_str(), charPtrAddress);
+                    ImGui::LabelText(fieldName.c_str(), charEscaped);
                 }
                 break;
 

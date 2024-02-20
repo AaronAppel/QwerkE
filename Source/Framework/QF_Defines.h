@@ -51,7 +51,7 @@
 // TODO: should macros express the file extension? Need to if the loader is looking for that file
 // TODO: Procedurally generate null object to guarantee instantiation
 // TODO: Use file extension as name consistently. Either everywhere, or no where
-#define NullFolderPath(fullFileName) StringAppend(FrameworkNullAssetsDir, fullFileName) // TODO: What is this for?
+// #define NullFolderPath(fullFileName) StringAppend(FrameworkNullAssetsDir, fullFileName) // TODO: What is this for?
 
 // Define paths to resource folders that can change easily from project
 // to project using a preprocessor define. Paths can also change or be
@@ -65,8 +65,9 @@
 #define SoundsFolderPath(fullFileName) StringAppend(AssetsDir, "Sounds/", fullFileName)
 #define ScenesFolderPath(fullFileName) StringAppend(AssetsDir, "Scenes/", fullFileName)
 #define SettingsFolderPath(fullFileName) StringAppend(AssetsDir, "Settings/", fullFileName)
-#define ObjectSchematicsFolderPath(fullFileName) StringAppend(AssetsDir, "BluePrints_Prefabs_Schematic/", fullFileName)
 #define ProjectsFolderPath(fullFileName) StringAppend(AssetsDir, "Projects/", fullFileName)
+
+#define SchematicsFolderPath(fullFileName) StringAppend(AssetsDir, "Schematics/", fullFileName)
 
 // Standardized file extensions
 #define vertex_shader_ext "vert" // #TODO Should extensions be implied to own the '.' period?
@@ -99,10 +100,10 @@
 #define null_texture StringAppend("null_texture.", texture_file_ext)
 #define null_project StringAppend("null_project.", projects_file_ext)
 
-// Null schematics
 #define null_material_schematic StringAppend("null_material.", material_schematic_ext)
 #define null_object_schematic StringAppend("null_object.", object_schematic_ext)
 #define null_shader_schematic StringAppend("null_shader.", shader_schematic_ext)
+
 #define null_vert_component StringAppend("null_shader.", vertex_shader_ext)
 #define null_frag_component StringAppend("null_shader.", fragment_shader_ext)
 #define null_geo_component StringAppend("null_shader.", geometry_shader_ext)

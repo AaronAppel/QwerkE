@@ -46,9 +46,9 @@ namespace QwerkE {
         // Load font as face
         FT_Face face;
         // #TODO Change freetype font loading to use Resources().
-        if (FT_New_Face(ft, NullFolderPath(null_font), 0, &face))
+        if (FT_New_Face(ft, FontsFolderPath(null_font), 0, &face))
         {
-            LOG_ERROR("{0} Freetype failed to load font {1}!", __FUNCTION__, NullFolderPath(null_font));
+            LOG_ERROR("{0} Freetype failed to load font {1}!", __FUNCTION__, FontsFolderPath(null_font));
             return;
         }
 

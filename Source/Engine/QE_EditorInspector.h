@@ -10,7 +10,9 @@ namespace QwerkE {
 
     namespace Inspector {
 
+        void InspectEngineSettings();
         void InspectProjectSettings();
+        void InspectUserSettings();
 
         void InspectFieldRecursive(const Mirror::ClassInfo* classInfo, void* obj, std::string parentName);
     }

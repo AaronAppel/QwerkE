@@ -68,9 +68,9 @@ namespace QwerkE {
         void LoadUserSettings(std::string userSettingsFilePath);
         void SaveUserSettings();
 
-        const EngineSettings& GetEngineSettings();
+        EngineSettings& GetEngineSettings();
         ProjectSettings& GetProjectSettings();
-        const UserSettings& GetUserSettings();
+        UserSettings& GetUserSettings();
     }
 
 }

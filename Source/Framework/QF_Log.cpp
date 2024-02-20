@@ -19,12 +19,12 @@ namespace QwerkE {
         if (!m_initialized)
         {
             spdlog::set_pattern("%^[%T] %n: %v%$");
-            const char* loggerName = "QwerkE";
+            const char* loggerName = "Logger1";
             m_Logger = spdlog::stdout_color_mt(loggerName);
             m_Logger->set_level(spdlog::level::trace);
 
             m_initialized = true;
-            LOG_TRACE("Logger \"{0}\" initialized", loggerName);
+            LOG_TRACE("{0} Logger \"{1}\" initialized", __FUNCTION__, loggerName);
         }
     }
 

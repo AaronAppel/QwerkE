@@ -32,7 +32,7 @@ namespace QwerkE {
 	RenderComponent* AddModelComponentFromSchematic(GameObject* entity, const char* objectRecipeName)
 	{
 		RenderComponent* rComp = new RenderComponent();
-		Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath(objectRecipeName), *rComp);
+		Serialization::DeserializeJsonFromFile(SchematicsFolderPath(objectRecipeName), *rComp);
 		rComp->Activate();
 		return rComp;
 	}
@@ -152,7 +152,7 @@ namespace QwerkE {
 						case eSceneGraphCreateTypes::Empty:
 							{
 								GameObject* newGameObject = new GameObject(currentScene);
-								Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("GameObject.osch"), *newGameObject); // #TODO Replace hard coded strings
+								Serialization::DeserializeJsonFromFile(SchematicsFolderPath("GameObject.osch"), *newGameObject); // #TODO Replace hard coded strings
 								newGameObject->OnSceneLoaded(currentScene);
 								while (!currentScene->AddObjectToScene(newGameObject))
 								{
@@ -175,7 +175,7 @@ namespace QwerkE {
 						case eSceneGraphCreateTypes::Light:
 							{
 								GameObject* newLight = new GameObject(currentScene);
-								Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Light.osch"), *newLight);
+								Serialization::DeserializeJsonFromFile(SchematicsFolderPath("Light.osch"), *newLight);
 								newLight->OnSceneLoaded(currentScene);
 								currentScene->AddLight(newLight);
 							}
@@ -184,7 +184,7 @@ namespace QwerkE {
 						case eSceneGraphCreateTypes::Camera:
 							{
 								GameObject* newCamera = new GameObject(currentScene);
-								Serialization::DeserializeJsonFromFile(ObjectSchematicsFolderPath("Camera.osch"), *newCamera);
+								Serialization::DeserializeJsonFromFile(SchematicsFolderPath("Camera.osch"), *newCamera);
 								newCamera->SetPosition(vec3(0, 0, 0));
 								newCamera->OnSceneLoaded(currentScene);
 								currentScene->AddCamera(newCamera);
