@@ -40,7 +40,7 @@ namespace QwerkE {
         static int currentShaderIndex = 0;
         int sceneFileNameWidth = 0;
         int counter = 0;
-        for (auto it : shaders)
+        for (auto& it : shaders)
         {
             const char* shaderName = it.second->GetName().c_str();
             if (currentShaderIndex == counter)

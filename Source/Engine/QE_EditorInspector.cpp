@@ -111,7 +111,7 @@ namespace QwerkE {
                 case MirrorTypes::m_map_eComponentTags_componentPtr:
                 {
                     std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)fieldAddress;
-                    for (auto it : components)
+                    for (auto& it : components)
                     {
                         Component* component = it.second;
 

@@ -69,7 +69,7 @@ namespace QwerkE {
         if (ImGui::Begin("Shader Selector", &m_ShowShaderList))
         {
             auto shaders = Resources::SeeShaderPrograms();
-            for (auto it : shaders)
+            for (auto& it : shaders)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
@@ -90,7 +90,7 @@ namespace QwerkE {
         if (ImGui::Begin("Material Selector", &m_ShowMaterialList))
         {
             auto materials = Resources::SeeMaterials();
-            for (auto it : materials)
+            for (auto& it : materials)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
@@ -112,7 +112,7 @@ namespace QwerkE {
         if (ImGui::Begin("Mesh Selector", &m_ShowMeshList))
         {
             auto meshes = Resources::SeeMeshes();
-            for (auto it : meshes)
+            for (auto& it : meshes)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
