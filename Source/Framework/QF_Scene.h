@@ -46,7 +46,6 @@ namespace QwerkE {
         void OnLoaded();
 
         const GameObject* GetGameObject(const char* name);
-        bool GetIsActive() { return m_SceneIsActive; };
         bool GetIsPaused() { return m_IsPaused; };
         std::vector<GameObject*> GetCameraList() { return m_CameraList; };
         GameObject* GetCurrentCamera() { return m_CameraList[m_CurrentCameraIndex]; }
@@ -54,7 +53,6 @@ namespace QwerkE {
         const std::vector<GameObject*>& GetLightList() const { return m_LightList; };
         const std::string& GetSceneName() { return m_SceneFileName; }
 
-        void SetIsActive(bool isActive) { m_SceneIsActive = isActive; };
         void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; };
         void SetCurrentCamera(int newCameraIndex) { m_CurrentCameraIndex = newCameraIndex; };
 
@@ -69,7 +67,6 @@ namespace QwerkE {
         MIRROR_PRIVATE_MEMBERS
 
         bool m_IsPaused = false;
-        bool m_SceneIsActive = false;
         std::string m_SceneFileName = gc_DefaultCharPtrValue;
 
         std::map<std::string, GameObject*> m_pGameObjects; // #TODO Deprecate

@@ -176,7 +176,6 @@ namespace QwerkE {
 	MIRROR_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_MEMBER(m_IsPaused)
-	MIRROR_CLASS_MEMBER(m_SceneIsActive)
 	MIRROR_CLASS_MEMBER(m_CurrentCameraIndex)
 	MIRROR_CLASS_MEMBER(m_CameraList)
 	MIRROR_CLASS_MEMBER(m_LightList)

@@ -72,22 +72,6 @@ namespace QwerkE {
 			}
 		}
 
-		void ActivateScene(std::string sceneName)
-		{
-			if (Scene* scene = GetScene(sceneName))
-			{
-				scene->SetIsActive(true);
-			}
-		}
-
-		void DeactivateScene(std::string sceneName)
-		{
-			if (Scene* scene = GetScene(sceneName))
-			{
-				scene->SetIsActive(false);
-			}
-		}
-
 		void PauseScene(std::string sceneName)
 		{
 			if (Scene* scene = GetScene(sceneName))
@@ -137,7 +121,6 @@ namespace QwerkE {
 			{
 				s_CurrentScene = newScene;
 				priv_UpdateCurrentSceneIndex();
-				newScene->SetIsActive(true);
 			}
 
 			if (addToProjectsSceneFiles)

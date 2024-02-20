@@ -1,4 +1,4 @@
-#include "QE_SceneViewer.h"
+﻿#include "QE_SceneViewer.h"
 
 #include "imgui/imgui.h"
 
@@ -44,26 +44,16 @@ namespace QwerkE {
 
         if (ImGui::Begin("Scene Viewer", &isOpen, ImGuiWindowFlags_NoScrollbar))
         {
-            ImGui::PushItemWidth(100);
-            const char* runningStates[] = { "Running", "Paused" };
-            m_currentSceneStateIndex = (char)currentScene->GetIsPaused();
-            if (ImGui::Combo("Running", &m_currentSceneStateIndex, runningStates, sizeof(runningStates)/sizeof(const char*)))
-            {
-                currentScene->SetIsPaused((bool)m_currentSceneStateIndex);
-            }
-            ImGui::PopItemWidth();
+            // ImGui::PushItemWidth(100);
+            // const char* runningStates[] = { "Running", "Paused" };
+            // m_currentSceneStateIndex = (char)currentScene->GetIsPaused();
+            // if (ImGui::Combo("", &m_currentSceneStateIndex, runningStates, sizeof(runningStates)/sizeof(const char*)))
+            // {
+            //     currentScene->SetIsPaused((bool)m_currentSceneStateIndex);
+            // }
+            // ImGui::PopItemWidth();
+            // ImGui::SameLine();
 
-            ImGui::SameLine();
-            ImGui::PushItemWidth(100);
-            const char* activeStates[] = { "Inactive", "Active" };
-            int sceneIsActive = (char)currentScene->GetIsActive();
-            if (ImGui::Combo("Active", &sceneIsActive, activeStates, sizeof(activeStates) / sizeof(const char*)))
-            {
-                currentScene->SetIsActive((bool)sceneIsActive);
-            }
-            ImGui::PopItemWidth();
-
-            ImGui::SameLine();
             if (ImGui::Button("Save")) currentScene->SaveScene();
 
             ImGui::SameLine();
@@ -92,6 +82,13 @@ namespace QwerkE {
                 Scenes::SetCurrentScene(newFileName.get());
             }
 
+            ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f - 20.f);
+            const char* buttonText = currentScene->GetIsPaused() ? ">" : "||";
+            if (ImGui::Button(buttonText))
+            {
+                currentScene->SetIsPaused(!currentScene->GetIsPaused());
+            }
+
             DrawSceneList();
 
             m_FBO->Bind();
@@ -101,7 +98,7 @@ namespace QwerkE {
 
             const ImVec2 winSize = ImGui::GetWindowSize();
 
-            ImVec2 imageSize = winSize;
+            ImVec2 imageSize = winSize; // #TODO The scene view can be different from the window (4:3, or other, and custom ratios)
             const float scalar = 7.63f;
             imageSize.x += winSize.x * scalar;
             const vec2& aspectRatio = Window::GetAspectRatio();
