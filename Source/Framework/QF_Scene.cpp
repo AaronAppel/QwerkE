@@ -324,6 +324,7 @@ namespace QwerkE {
         }
         m_pGameObjects.clear();
 
+        m_IsLoaded = false;
         LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 

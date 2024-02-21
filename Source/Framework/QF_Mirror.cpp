@@ -57,10 +57,37 @@ namespace QwerkE {
 	MIRROR_TYPE(m_vector_gameobjectPtr)
 
 	typedef std::vector<Routine*> m_vector_routinePtr;
-	MIRROR_TYPE(m_vector_routinePtr)
+	template<> const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<m_vector_routinePtr>() {
+		static TypeInfo localStaticTypeInfo; localStaticTypeInfo.stringName = "m_vector_routinePtr"; localStaticTypeInfo.size = sizeof(m_vector_routinePtr); localStaticTypeInfo.enumType = MirrorTypes::m_vector_routinePtr; localStaticTypeInfo.classInfo = nullptr; return &localStaticTypeInfo;
+	} template<> const QwerkE::Mirror::ClassInfo* QwerkE::Mirror::InfoForClass<m_vector_routinePtr>() {
+		return nullptr;
+	}
+
+	MIRROR_CLASS_START(Renderable)
+	MIRROR_CLASS_MEMBER(m_RenderableName)
+	MIRROR_CLASS_MEMBER(m_ShaderName)
+	MIRROR_CLASS_MEMBER(m_MaterialName)
+	MIRROR_CLASS_MEMBER(m_MeshFileName)
+	MIRROR_CLASS_END(Renderable)
 
 	typedef std::vector<Renderable> m_vector_renderable;
-	MIRROR_TYPE(m_vector_renderable)
+	// MIRROR_COLLECTION(m_vector_renderable, Renderable);
+
+	template<> const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<m_vector_renderable>() {
+		static TypeInfo localStaticTypeInfo; localStaticTypeInfo.stringName = "m_vector_renderable";
+		localStaticTypeInfo.size = sizeof(m_vector_renderable);
+		localStaticTypeInfo.enumType = MirrorTypes::m_vector_renderable;
+		localStaticTypeInfo.classInfo = nullptr;
+		localStaticTypeInfo.collectionTypeInfo = QwerkE::Mirror::InfoForType<Renderable>();
+		// localStaticTypeInfo.collectionClassInfo = QwerkE::Mirror::InfoForClass<Renderable>();
+		return &localStaticTypeInfo;
+	}
+
+	// QwerkE::Mirror::InfoForClass<Renderable>();
+
+	template<> const QwerkE::Mirror::ClassInfo* QwerkE::Mirror::InfoForClass<m_vector_renderable>() {
+		return nullptr;
+	}
 
 	// Maps
 	typedef std::map<eComponentTags, Component*> m_map_eComponentTags_componentPtr;
@@ -166,12 +193,6 @@ namespace QwerkE {
 	MIRROR_CLASS_END(TransformRoutine)
 
 	// More classes and complex structs
-	MIRROR_CLASS_START(Renderable)
-	MIRROR_CLASS_MEMBER(m_RenderableName)
-	MIRROR_CLASS_MEMBER(m_ShaderName)
-	MIRROR_CLASS_MEMBER(m_MaterialName)
-	MIRROR_CLASS_MEMBER(m_MeshFileName)
-	MIRROR_CLASS_END(Renderable)
 
 	MIRROR_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)

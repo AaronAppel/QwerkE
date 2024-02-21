@@ -73,8 +73,6 @@ namespace QwerkE {
 
             Log::Initialize();
 
-			ShaderFactory::CreatePrimitiveAttribute<int>("name");
-
 			Settings::LoadEngineSettings(engineSettingsPath);
 			Settings::LoadProjectSettings(ProjectsFolderPath("Project1.qproj"));
 			Settings::LoadUserSettings(SettingsFolderPath(null_preferences));

@@ -145,7 +145,8 @@ namespace QwerkE {
 				Stop();
 			}
 
-			if (Input::FrameKeyAction(eKeys::eKeys_M, eKeyState::eKeyState_Press))
+			if (Input::GetIsKeyDown(eKeys::eKeys_CTRL) &&
+				Input::FrameKeyAction(eKeys::eKeys_M, eKeyState::eKeyState_Press))
 			{
 				Window::ToggleMaximized();
 			}

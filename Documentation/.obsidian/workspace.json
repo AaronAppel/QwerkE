@@ -73,9 +73,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Shader Building.md",
+                "file": "Serialization (JSON).md",
                 "mode": "source",
                 "source": false
+              }
+            }
+          },
+          {
+            "id": "6694405be56e5dc0",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "QwerkE Structure Diagram.canvas",
+                "viewState": {
+                  "x": -100.659070644661,
+                  "y": -399.76303350666973,
+                  "zoom": 0.5625
+                }
               }
             }
           },
@@ -116,7 +131,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -176,7 +191,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Shader Building.md"
+                "file": "QwerkE Structure Diagram.canvas"
               }
             }
           }
@@ -193,7 +208,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "reflection",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -219,7 +234,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Shader Building.md",
+                "file": "QwerkE Structure Diagram.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -231,7 +246,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Shader Building.md",
+                "file": "QwerkE Structure Diagram.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -257,10 +272,20 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "4aca466780678a6b",
+  "active": "6694405be56e5dc0",
   "lastOpenFiles": [
-    "ZZ Shared Vault Files ❗/Watched.md",
+    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
+    "QwerkE Structure Diagram.canvas",
+    "Mirror Library.md",
+    "Pointer Manipulation.md",
+    "Systems/Saving and Loading/Type Reflection.md",
+    "Serializer.md",
+    "Systems/Saving and Loading/Reflection Setup.md",
+    "Serialization (JSON).md",
+    "Pretend Blog Post.md",
+    "QwerkE Standards/Enums.md",
     "Shader Building.md",
+    "ZZ Shared Vault Files ❗/Watched.md",
     "Assets and Data/Null Asset Handling.md",
     "Solution Configuration/New QwerkE Project Setup.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
@@ -277,23 +302,12 @@
     "Development/Feature Tickets/F0002 - Cross Panel Communication.md",
     "Development/TODO/Review Deprecated Files.md",
     "Development/Resolved",
-    "Development/TODO/Timers and Time Callbacks.md",
-    "Mirror Library.md",
-    "Pretend Blog Post.md",
-    "ZZ Shared Vault Files ❗/Assets Wishlist.md",
-    "Asset Wishlist.md",
-    "link.md",
-    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
-    "ZZ Shared Vault Files ❗/To Watch SimonDev.md",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
-    "Template.md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "Development/Bug Tickets",
     "Development/Feature Tickets",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
     "CPPList.h",
-    "QwerkE Structure Diagram.canvas",
-    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
     "Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png",
     "Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png.crdownload",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png.crdownload",

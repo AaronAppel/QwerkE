@@ -1,5 +1,5 @@
 
-Mirror originally sprouted from the work of :
+Mirror originally sprouted from the work of : https://github.com/danbar0/StaticJsonReflection
 More info at the bottom of this page...
 
 ## What is Mirror? A reflection library/helper

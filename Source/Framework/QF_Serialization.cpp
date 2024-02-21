@@ -211,7 +211,28 @@ namespace QwerkE {
                 break;
 
             case MirrorTypes::m_vector_renderable:
-                DeserializeVector<Renderable>(jsonObj, obj); // #TODO field.collectionType
+
+                if (const Mirror::TypeInfo* collectionTypeInfo = field.typeInfo->collectionTypeInfo)
+                {
+                    if (collectionTypeInfo->classInfo)
+                    {
+                        std::vector<Renderable>* vectorPtrPtr = (std::vector<Renderable>*)obj; // #TODO Review if possible to validate pointer value
+                        const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
+                        vectorPtrPtr->reserve(jsonObjectVector.size());
+                        vectorPtrPtr->resize(0);
+
+                        for (size_t i = 0; i < jsonObjectVector.size(); i++)
+                        {
+                            Renderable objectInstance;
+                            // #TODO Try to emplace new the renderable
+                            DeserializeJsonToObject(jsonObjectVector[i], collectionTypeInfo->classInfo, &objectInstance);
+                            vectorPtrPtr->push_back(objectInstance);
+                        }
+                    }
+
+                }
+
+                // DeserializeVector<Renderable>(jsonObj, obj); // #TODO field.collectionType
                 break;
 
             case MirrorTypes::m_vector_gameobjectPtr:

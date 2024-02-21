@@ -16,10 +16,39 @@ namespace QwerkE {
 
         vec2 s_WindowSize = vec2(1600, 900);
 
+        // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glDebugMessageCallback.xhtml
+        void APIENTRY OpenGLLogMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
+        {
+            switch (severity)
+            {
+            case GL_DEBUG_SEVERITY_HIGH:
+                LOG_ERROR("{0} High severity error caught in OpenGL!", __FUNCTION__);
+                ASSERT(false, "GL_DEBUG_SEVERITY_HIGH");
+                break;
+
+            case GL_DEBUG_SEVERITY_MEDIUM:
+                LOG_WARN("{0} Medium severity error caught in OpenGL!", __FUNCTION__);
+                break;
+
+            case GL_DEBUG_SEVERITY_LOW:
+                LOG_INFO("{0} Low severity error caught in OpenGL!", __FUNCTION__);
+                break;
+
+            case GL_DEBUG_SEVERITY_NOTIFICATION:
+            default:
+                LOG_TRACE("{0} Low severity error caught in OpenGL!", __FUNCTION__);
+                break;
+            }
+        }
+
         // TODO: Move OpenGL code to proper files
         void Initialize()
         {
-            FT_Library freeType;
+            glDebugMessageCallback(OpenGLLogMessage, nullptr);
+            glEnable(GL_DEBUG_OUTPUT);
+            glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+
+            FT_Library freeType; // #TODO
             if (FT_Init_FreeType(&freeType))
             {
                 ASSERT(false, "Error loading freetype2!");
@@ -54,7 +83,7 @@ namespace QwerkE {
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-            glViewport(0, 0, s_WindowSize.x, s_WindowSize.y);
+            glViewport(0, 0, (GLsizei)s_WindowSize.x, (GLsizei)s_WindowSize.y);
         }
 
         void NewFrame()

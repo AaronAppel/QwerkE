@@ -32,17 +32,24 @@ namespace QwerkE {
                 switch (field.typeInfo->enumType)
                 {
                 case MirrorTypes::m_vector_renderable:
-                {
-                    std::vector<Renderable>* renderables = (std::vector<Renderable>*)fieldAddress;
-                    for (size_t i = 0; i < renderables->size(); i++)
                     {
-                        parentName += field.name + " ";
-                        InspectFieldRecursive(Mirror::InfoForClass<Renderable>(), (Renderable*)renderables->data() + i, parentName);
-                        parentName.clear();
+                        std::vector<Renderable>* renderables = (std::vector<Renderable>*)fieldAddress;
+
+                        if (const Mirror::TypeInfo* collectionTypeInfo = field.typeInfo->collectionTypeInfo)
+                        {
+                            if (collectionTypeInfo->classInfo)
+                            {
+                                for (size_t i = 0; i < renderables->size(); i++)
+                                {
+                                    parentName += field.name + " ";
+                                    InspectFieldRecursive(collectionTypeInfo->classInfo, (void*)(renderables->data() + i), parentName);
+                                    // InspectFieldRecursive(Mirror::InfoForClass<Renderable>(), (Renderable*)renderables->data() + i, parentName);
+                                    parentName.clear();
+                                }
+                            }
+                        }
                     }
                     break;
-                }
-                break;
 
                 // case MirrorTypes::Component:
                 //     {
@@ -82,6 +89,7 @@ namespace QwerkE {
                 case MirrorTypes::m_vector_routinePtr:
                     {
                         std::vector<Routine*>* routines = (std::vector<Routine*>*)fieldAddress;
+
                         for (size_t i = 0; i < routines->size(); i++)
                         {
                             // #TODO Handle derived types
