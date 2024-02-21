@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdio.h>
 #include <string>
 
 #include "QF_Graphics_Header.h"
@@ -40,7 +41,7 @@ namespace QwerkE {
         void OpenMain(std::string& shaderString);
         void CloseMain(std::string& shaderString);
 
-        const char* GetAttributePrefix();
+        const char* GetAttributeNamePrefix();
         const char* GetUniformPrefix();
         const char* GetTransferPrefix();
 
@@ -124,6 +125,27 @@ namespace QwerkE {
         void AddOutputMat2(const char* name, std::string& string);
         void AddOutputMat3(const char* name, std::string& string);
         void AddOutputMat4(const char* name, std::string& string);
+
+        // #TODO void AddComplexAttribute(const char* name, std::string& string);
+
+        template <typename T>
+        char* CreatePrimitiveAttribute(const char* name) // Could replace AddAttributeInt() and similar functions
+        {
+            if (!name)
+                return nullptr;
+
+            // Ex. "\nin int a_name;"
+            const char* formatString = "\n%s %s %s%s;";
+
+            auto tpyeInfo = Mirror::InfoForType<T>();
+            const char* typeName = tpyeInfo->stringName.c_str();
+            const unsigned int bufferSize = 1 + strlen(InputKeyword) + 1 + strlen(typeName) + 1 + strlen(AttributeNamePrefix) + strlen(name) + 1 + 1;
+
+            char* buffer = new char[bufferSize];
+            buffer[bufferSize - 1] = '\0';
+            snprintf(buffer, bufferSize, formatString, InputKeyword, Mirror::InfoForType<T>()->stringName.c_str(), AttributeNamePrefix, name);
+            return buffer;
+        }
     }
 
 }

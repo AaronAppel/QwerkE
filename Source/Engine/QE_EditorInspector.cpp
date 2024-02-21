@@ -158,7 +158,9 @@ namespace QwerkE {
                 {
                     const std::string* stringAddress = (const std::string*)fieldAddress;
                     std::string fieldName = parentName + field.name;
-                    ImGui::LabelText(fieldName.c_str(), stringAddress->data());
+                    // ImGui::LabelText(fieldName.c_str(), stringAddress->data());
+                    // #TODO Handle buffering for string re-assignment properly
+                    ImGui::InputText(fieldName.c_str(), (char*)stringAddress->data(), stringAddress->capacity());
                 }
                 break;
 

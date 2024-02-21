@@ -61,13 +61,12 @@ namespace QwerkE {
         // Load first 128 characters of ASCII set
         for (GLubyte charGlyph = 0; charGlyph < 128; charGlyph++)
         {
-            // Load character glyph
             if (FT_Load_Char(face, charGlyph, FT_LOAD_RENDER))
             {
                 LOG_ERROR("{0} Freetype failed to load character glyph {1}!", __FUNCTION__, charGlyph);
                 continue;
             }
-            // Generate texture
+
             GLuint texture;
             glGenTextures(1, &texture);
             glBindTexture(GL_TEXTURE_2D, texture);
@@ -83,13 +82,11 @@ namespace QwerkE {
                 face->glyph->bitmap.buffer
             );
 
-            // Set texture options
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-            // Now store character for later use
             Character character = {
                 texture,
                 glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),

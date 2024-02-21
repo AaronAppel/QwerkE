@@ -20,7 +20,7 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Settings.h"
-#include "QF_ShaderFactory.h"
+#include "QF_ShaderFactory.h" // #TODO Remove
 #include "QF_Time.h"
 #include "QF_Window.h"
 
@@ -73,8 +73,7 @@ namespace QwerkE {
 
             Log::Initialize();
 
-			//GameObject a;
-			//Serialization::DeserializeObjectFromFile("A:/GitHub/QwerkE/Assets/Scenes/gameobject.qtest", a);
+			ShaderFactory::CreatePrimitiveAttribute<int>("name");
 
 			Settings::LoadEngineSettings(engineSettingsPath);
 			Settings::LoadProjectSettings(ProjectsFolderPath("Project1.qproj"));

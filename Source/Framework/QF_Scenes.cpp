@@ -41,7 +41,7 @@ namespace QwerkE {
 			for (size_t i = 0; i < sceneFileNames.size(); i++)
 			{
 				const char* sceneFileName = sceneFileNames[i].c_str();
-				if (FileExists(ScenesFolderPath(sceneFileName)) == false)
+				if (!FileExists(ScenesFolderPath(sceneFileName)))
 				{
 					LOG_WARN("Initialize(): File not found: {0}", sceneFileName);
 					continue;

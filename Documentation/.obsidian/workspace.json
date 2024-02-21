@@ -68,6 +68,18 @@
             }
           },
           {
+            "id": "4aca466780678a6b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Shader Building.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "66b8fc04c675782f",
             "type": "leaf",
             "state": {
@@ -104,7 +116,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -164,7 +176,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md"
+                "file": "Shader Building.md"
               }
             }
           }
@@ -207,7 +219,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
+                "file": "Shader Building.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -219,7 +231,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
+                "file": "Shader Building.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -245,13 +257,13 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "341ee7ec46b0829b",
+  "active": "4aca466780678a6b",
   "lastOpenFiles": [
+    "ZZ Shared Vault Files ❗/Watched.md",
+    "Shader Building.md",
     "Assets and Data/Null Asset Handling.md",
     "Solution Configuration/New QwerkE Project Setup.md",
-    "Untitled.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
     "Development/Feature Tickets/F0005 - Time Specific Events.md",
     "Event System.md",
     "Research/Game Engine Series YouTube.md",

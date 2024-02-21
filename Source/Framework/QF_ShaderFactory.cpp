@@ -1,5 +1,7 @@
 #include "QF_ShaderFactory.h"
 
+#include "Libraries/Mirror/Source/Mirror.h"
+
 #include "QC_StringHelpers.h"
 
 #include "QF_FileSystem.h"
@@ -395,7 +397,7 @@ namespace QwerkE {
         shaderString.append("\n}");
     }
 
-    const char* ShaderFactory::GetAttributePrefix() { return AttributePrefix; };
+    const char* ShaderFactory::GetAttributeNamePrefix() { return AttributeNamePrefix; };
     const char* ShaderFactory::GetUniformPrefix() { return UniformPrefix; };
     const char* ShaderFactory::GetTransferPrefix() { return TransferPrefix; };
 
@@ -405,7 +407,7 @@ namespace QwerkE {
     //    if (!attr || !unif || !trans)
     //        LOG_ERROR("Null value was passed");
 
-    //    m_AttributePrefix = attr ? DeepCopyString(attr) : m_AttributePrefix;
+    //    m_AttributeNamePrefix = attr ? DeepCopyString(attr) : m_AttributeNamePrefix;
     //    UniformPrefix = unif ? DeepCopyString(unif) : UniformPrefix;
     //    TransferPrefix = trans ? DeepCopyString(trans) : TransferPrefix;
     //}
@@ -471,6 +473,7 @@ namespace QwerkE {
     }
     /* Utility */
     // Structs
+
     void ShaderFactory::AddMaterialStruct(std::string& string)
     {
         // TODO: Update material struct
@@ -493,11 +496,12 @@ namespace QwerkE {
         string.append(light_struct);
     }
     // attributes
+    // #TODO Setup similar to serialization and inspector using Mirror reflection
     void ShaderFactory::AddAttributeInt(const char* name, std::string& string)
     {
         const char* line = "\nin int ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }
@@ -506,7 +510,7 @@ namespace QwerkE {
     {
         const char* line = "\nin float ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }
@@ -515,7 +519,7 @@ namespace QwerkE {
     {
         const char* line = "\nin vec2 ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }
@@ -524,7 +528,7 @@ namespace QwerkE {
     {
         const char* line = "\nin vec3 ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }
@@ -533,7 +537,7 @@ namespace QwerkE {
     {
         const char* line = "\nin vec4 ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }
@@ -542,7 +546,7 @@ namespace QwerkE {
     {
         const char* line = "\nin mat2 ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }
@@ -551,7 +555,7 @@ namespace QwerkE {
     {
         const char* line = "\nin mat3 ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }
@@ -560,7 +564,7 @@ namespace QwerkE {
     {
         const char* line = "\nin mat4 ";
         string.append(line);
-        string.append(AttributePrefix);
+        string.append(AttributeNamePrefix);
         string.append(name);
         string.append(";");
     }

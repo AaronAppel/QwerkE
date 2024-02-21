@@ -19,7 +19,11 @@ namespace QwerkE {
     // #TODO Pick a standard (input OR attribute)
     // Shader variable prefixes
 
-    constexpr const char* AttributePrefix = "a_";
+    constexpr const char* InputKeyword = "in";
+    constexpr const char* OutputKeyword = "out";
+    constexpr const char* UniformKeyword = "uniform";
+
+    constexpr const char* AttributeNamePrefix = "a_";
     constexpr const char* InputPrefix = "i_";
     constexpr const char* UniformPrefix = "u_";
     constexpr const char* TransferPrefix = "t_";

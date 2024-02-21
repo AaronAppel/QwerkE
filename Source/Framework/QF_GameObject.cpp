@@ -21,12 +21,12 @@ namespace QwerkE {
 
     GameObject::~GameObject()
     {
-        for (auto l_LoopVar : m_Components)
+        for (auto& pair : m_Components)
         {
-            if (l_LoopVar.second)
+            if (pair.second)
             {
-                delete l_LoopVar.second;
-                l_LoopVar.second = nullptr;
+                delete pair.second;
+                pair.second = nullptr;
             }
         }
         m_Components.clear();
@@ -60,22 +60,22 @@ namespace QwerkE {
             return;
 
         m_pScene = scene;
-        for (auto l_LoopVar : m_Components)
+        for (auto& pair : m_Components)
         {
-            l_LoopVar.second->SetParent(this);
-            l_LoopVar.second->Activate();
+            pair.second->SetParent(this);
+            pair.second->Activate();
         }
 
-        for (auto l_LoopVar : m_DrawList)
+        for (auto& routine : m_DrawList)
         {
-            l_LoopVar->SetParent(this);
-            l_LoopVar->Initialize(); // #TODO May want to remove
+            routine->SetParent(this);
+            routine->Initialize(); // #TODO May want to remove
         }
 
-        for (auto l_LoopVar : m_UpdateList)
+        for (auto& routine : m_UpdateList)
         {
-            l_LoopVar->SetParent(this);
-            l_LoopVar->Initialize(); // #TODO May want to remove
+            routine->SetParent(this);
+            routine->Initialize(); // #TODO May want to remove
         }
     }
 
@@ -162,6 +162,7 @@ namespace QwerkE {
                 m_UpdateList.at(i) = nullptr; // routine needs to be delete by creator
             }
         }
+
         for (size_t i = 0; i < m_DrawList.size(); i++)
         {
             if (m_DrawList.at(i) == routine) // pointer comparison
@@ -193,19 +194,19 @@ namespace QwerkE {
     {
         m_Enabled = true;
 
-        for (auto l_LoopVar : m_Components)
+        for (auto& pair : m_Components)
         {
-            l_LoopVar.second->Activate();
+            pair.second->Activate();
         }
 
-        for (auto l_LoopVar : m_UpdateList)
+        for (auto& routine : m_UpdateList)
         {
-            l_LoopVar->Activate();
+            routine->Activate();
         }
 
-        for (auto l_LoopVar : m_DrawList)
+        for (auto& routine : m_DrawList)
         {
-            l_LoopVar->Activate();
+            routine->Activate();
         }
     }
 
@@ -213,19 +214,19 @@ namespace QwerkE {
     {
         m_Enabled = false;
 
-        for (auto l_LoopVar : m_Components)
+        for (auto pair : m_Components)
         {
-            l_LoopVar.second->Deactivate();
+            pair.second->Deactivate();
         }
 
-        for (auto l_LoopVar : m_UpdateList)
+        for (auto routine : m_UpdateList)
         {
-            l_LoopVar->Deactivate();
+            routine->Deactivate();
         }
 
-        for (auto l_LoopVar : m_DrawList)
+        for (auto routine : m_DrawList)
         {
-            l_LoopVar->Deactivate();
+            routine->Deactivate();
         }
     }
 
@@ -260,13 +261,11 @@ namespace QwerkE {
     {
         m_Transform.s_Position = position;
         // TODO: Update direction vectors
-        int bp = 0;
         if (m_Components.find(Component_Physics) != m_Components.end())
         {
             // TODO: Update children or components. Could use listeners or callbacks.
             //((PhysicsComponent*)m_Components[Component_Physics])->SetTransform(vec2(m_Position.x, m_Position.z), m_Rotation.y);
         }
-        bp = 1;
     }
 
     void GameObject::SetRotation(vec3 rotation)
