@@ -335,6 +335,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\CPPList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\entt\entt.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\enum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\QC_enum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h" />

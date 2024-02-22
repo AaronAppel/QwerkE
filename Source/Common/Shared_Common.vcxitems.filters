@@ -70,6 +70,9 @@
     <Filter Include="Libraries\Mirror">
       <UniqueIdentifier>{35a8dc74-6409-4ff1-802c-6fc610802586}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\entt">
+      <UniqueIdentifier>{3a4010d8-dfbf-4a9f-a661-ac417b57945b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp">
@@ -2638,6 +2641,9 @@
       <Filter>Libraries\Mirror</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\entt\entt.hpp">
+      <Filter>Libraries\entt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">

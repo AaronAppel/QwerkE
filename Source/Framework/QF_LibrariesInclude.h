@@ -4,6 +4,9 @@
 
 #include "Libraries/Enum/QC_enum.h"
 
+// #TODO entt requires C++ 17
+// #include "Libraries/entt/entt.hpp"
+
 #pragma warning( disable : 26437 ) // #TODO Switch to use push and pop
 #pragma warning( disable : 26451 )
 #pragma warning( disable : 26495 )
