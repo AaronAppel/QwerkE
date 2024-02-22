@@ -111,7 +111,7 @@ namespace QwerkE {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
-        Assets::AddFont(null_font, face);
+        Assets::FontLoaded(null_font, face);
     }
 
     void RenderText(ShaderProgram* shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)

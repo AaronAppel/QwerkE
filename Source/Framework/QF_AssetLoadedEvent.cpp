@@ -25,7 +25,7 @@ namespace QwerkE {
             if (handle > 0) // if (texture->s_Handle > 0)
             {
                 // Update texture data in resource manager
-                Assets::UpdateTexture(m_Asset->s_FileName.c_str(), handle);
+                Assets::TextureLoaded(m_Asset->s_FileName.c_str(), handle);
             }
             else
             {

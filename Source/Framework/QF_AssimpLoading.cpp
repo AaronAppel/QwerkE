@@ -114,7 +114,7 @@ namespace QwerkE {
             rMesh->BufferMeshData(&meshData);
             rMesh->SetName(mesh->mName.C_Str());
             rMesh->SetFileName(modelFullFileName);
-            Assets::AddMesh(modelFullFileName, rMesh);
+            Assets::MeshLoaded(modelFullFileName, rMesh);
         }
         else
         {
@@ -196,7 +196,7 @@ namespace QwerkE {
                 }
             }
 
-            Assets::AddMaterial(name.C_Str(), material);
+            Assets::MaterialLoaded(name.C_Str(), material);
         }
 
         matNames.push_back(name.C_Str()); // #NOTE Material loader will use this name later

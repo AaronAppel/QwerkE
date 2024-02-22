@@ -123,108 +123,6 @@ namespace QwerkE {
 			return g_UniqueID++;
 		}
 
-		// #TODO Deprecate and own asset creation inside of Assets
-		bool AddMesh(const char* filePath, Mesh* mesh)
-		{
-			if (!filePath || mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
-				return false;
-
-			char* fullFileName = File::FullFileName(filePath);
-			if (MeshExists(fullFileName))
-				return false;
-
-			s_Meshes[fullFileName] = mesh;
-
-			if (fullFileName)
-			{
-				free(fullFileName);
-			}
-			return true;
-		}
-
-		bool AddTexture(const char* name, Texture* texture)
-		{
-			if (!name || !texture || texture->s_Handle == 0)
-				return false;
-
-			if (TextureExists(name))
-				return false;
-
-			s_Textures[name] = texture;
-			return true;
-		}
-
-		bool AddMaterial(const char* name, Material* material)
-		{
-			// EarlyReturnIfNull(2, name, material);
-
-			if (!name || !material || material->GetMaterialName() == gc_DefaultStringValue)
-				return false;
-
-			if (MaterialExists(name))
-				return false;
-
-			s_Materials[name] = material;
-			return true;
-		}
-
-		bool AddFont(const char* name, FT_Face font)
-		{
-			if (!name || !font || FontExists(name))
-				return false;
-
-			// TODO: How to check for null font? Also need cross library font classes
-			// if (font == nullptr || material->name == gc_DefaultStringValue)
-				// return false;
-
-			s_Fonts[name] = font;
-			return true;
-		}
-
-		bool AddSound(const char* name, ALuint sound)
-		{
-			if (!name || sound == 0)
-				return false;
-
-			if (SoundExists(name))
-				return false;
-
-			s_Sounds[name] = sound;
-			return true;
-		}
-
-		bool AddShaderProgram(ShaderProgram* shaderProgram)
-		{
-			if (!shaderProgram || !shaderProgram->GetName().c_str())
-				return false;
-
-			return AddShaderProgram(shaderProgram->GetName().c_str(), shaderProgram);
-		}
-
-		bool AddShaderProgram(const char* name, ShaderProgram* ShaderProgram)
-		{
-			if (!name || !ShaderProgram)
-				return false;
-
-			if (ShaderProgramExists(name))
-				return false;
-
-			s_ShaderPrograms[name] = ShaderProgram;
-			return true;
-		}
-
-		bool AddShaderComponent(const char* name, ShaderComponent* shaderComponent)
-		{
-			if (!name || shaderComponent == nullptr)
-				return false;
-
-			if (ShaderComponentExists(name))
-				return false;
-
-			s_ShaderComponents[name] = shaderComponent;
-			return true;
-		}
-
 		// TODO: Handle errors and deleting assets before returning nullptr
 		Mesh* InstantiateMesh(const char* meshFilePath)
 		{
@@ -689,12 +587,113 @@ namespace QwerkE {
 		const std::map<std::string, ShaderProgram*>& SeeShaderPrograms() { return s_ShaderPrograms; };
 		const std::map<std::string, ShaderComponent*>& SeeShaderComponents() { return s_ShaderComponents; };
 
-		void UpdateTexture(const char* name, int handle)
+		void TextureLoaded(const char* name, int handle)
 		{
 			if (name) // #TODO Verify handle value?  && handle != 0
 			{
 				s_Textures[name]->s_Handle = (GLuint)handle;
 			}
+		}
+
+		bool TextureLoaded(const char* name, Texture* texture)
+		{
+			if (!name || !texture || texture->s_Handle == 0)
+				return false;
+
+			if (TextureExists(name))
+				return false;
+
+			s_Textures[name] = texture;
+			return true;
+		}
+
+		bool MeshLoaded(const char* filePath, Mesh* mesh)
+		{
+			if (!filePath || mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
+				return false;
+
+			char* fullFileName = File::FullFileName(filePath);
+			if (MeshExists(fullFileName))
+				return false;
+
+			s_Meshes[fullFileName] = mesh;
+
+			if (fullFileName)
+			{
+				free(fullFileName);
+			}
+			return true;
+		}
+
+		bool MaterialLoaded(const char* name, Material* material)
+		{
+			// EarlyReturnIfNull(2, name, material);
+
+			if (!name || !material || material->GetMaterialName() == gc_DefaultStringValue)
+				return false;
+
+			if (MaterialExists(name))
+				return false;
+
+			s_Materials[name] = material;
+			return true;
+		}
+
+		bool FontLoaded(const char* name, FT_Face font)
+		{
+			if (!name || !font || FontExists(name))
+				return false;
+
+			// TODO: How to check for null font? Also need cross library font classes
+			// if (font == nullptr || material->name == gc_DefaultStringValue)
+				// return false;
+
+			s_Fonts[name] = font;
+			return true;
+		}
+
+		bool SoundLoaded(const char* name, ALuint sound)
+		{
+			if (!name || sound == 0)
+				return false;
+
+			if (SoundExists(name))
+				return false;
+
+			s_Sounds[name] = sound;
+			return true;
+		}
+
+		bool ShaderProgramLoaded(ShaderProgram* shaderProgram)
+		{
+			if (!shaderProgram || !shaderProgram->GetName().c_str())
+				return false;
+
+			return ShaderProgramLoaded(shaderProgram->GetName().c_str(), shaderProgram);
+		}
+
+		bool ShaderProgramLoaded(const char* name, ShaderProgram* ShaderProgram)
+		{
+			if (!name || !ShaderProgram)
+				return false;
+
+			if (ShaderProgramExists(name))
+				return false;
+
+			s_ShaderPrograms[name] = ShaderProgram;
+			return true;
+		}
+
+		bool ShaderComponentLoaded(const char* name, ShaderComponent* shaderComponent)
+		{
+			if (!name || shaderComponent == nullptr)
+				return false;
+
+			if (ShaderComponentExists(name))
+				return false;
+
+			s_ShaderComponents[name] = shaderComponent;
+			return true;
 		}
 
 	}

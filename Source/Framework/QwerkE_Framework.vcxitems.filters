@@ -49,9 +49,6 @@
     <Filter Include="Core\Physics">
       <UniqueIdentifier>{137c4d41-947e-4d21-bf1b-b9f5baa11168}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Resources">
-      <UniqueIdentifier>{965fa5cc-f2d9-498c-af93-4642193a3214}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Scenes">
       <UniqueIdentifier>{028097ec-6c16-41bf-b118-4e0f7054955a}</UniqueIdentifier>
     </Filter>
@@ -327,12 +324,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h">
-      <Filter>Core\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset_Tag.h">
-      <Filter>Core\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Audio.h">
       <Filter>Core\Audio</Filter>
     </ClInclude>
@@ -591,6 +582,12 @@
       <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Assets.h">
+      <Filter>Core\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h">
+      <Filter>Core\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset_Tag.h">
       <Filter>Core\Assets</Filter>
     </ClInclude>
   </ItemGroup>

@@ -42,16 +42,6 @@ namespace QwerkE {
         // #TODO Deprecate and own asset creation inside of Assets
         int GetGUID();
 
-		// #TODO Deprecate and own asset creation inside of Assets
-        bool AddMesh(const char* filePath, Mesh* mesh);
-        bool AddTexture(const char* name, Texture* texture);
-        bool AddMaterial(const char* name, Material* material);
-		bool AddFont(const char* name, FT_Face font);
-		bool AddSound(const char* name, ALuint sound);
-		bool AddShaderProgram(ShaderProgram* shaderProgram);
-		bool AddShaderProgram(const char* name, ShaderProgram* ShaderProgram);
-		bool AddShaderComponent(const char* name, ShaderComponent* shaderComponent);
-
         Mesh* GetMesh(const char* name); // specify .ext
         Mesh* GetMeshFromFile(const char* filePath, const char* meshName); // specify .ext
         Texture* GetTexture(const char* name); // specify .ext
@@ -74,7 +64,16 @@ namespace QwerkE {
         const std::map<std::string, ShaderProgram*>& SeeShaderPrograms();
         const std::map<std::string, ShaderComponent*>& SeeShaderComponents();
 
-        void UpdateTexture(const char* name, int handle);
+        // #TODO Deprecate if possible and own asset creation inside of Assets
+        void TextureLoaded(const char* name, int handle);
+        bool TextureLoaded(const char* name, Texture* texture);
+        bool MeshLoaded(const char* filePath, Mesh* mesh);
+        bool MaterialLoaded(const char* name, Material* material);
+        bool FontLoaded(const char* name, FT_Face font);
+        bool SoundLoaded(const char* name, ALuint sound);
+        bool ShaderProgramLoaded(ShaderProgram* shaderProgram);
+        bool ShaderProgramLoaded(const char* name, ShaderProgram* ShaderProgram);
+        bool ShaderComponentLoaded(const char* name, ShaderComponent* shaderComponent);
     }
 
 }

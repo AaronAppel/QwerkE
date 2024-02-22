@@ -200,7 +200,7 @@ namespace QwerkE {
 #else
 #pragma error "Define model loading library!"
 #endif
-				Assets::AddMesh(meshName, mesh);
+				Assets::MeshLoaded(meshName, mesh);
 			}
 			return Assets::GetMesh(meshName);
 		}
@@ -238,7 +238,7 @@ namespace QwerkE {
 
 			for (size_t i = 0; i < meshes.size(); i++)
 			{
-				Assets::AddMesh(meshes[i]->GetFileName().c_str(), meshes[i]);
+				Assets::MeshLoaded(meshes[i]->GetFileName().c_str(), meshes[i]);
 			}
 
 			free(modelFullFileName);

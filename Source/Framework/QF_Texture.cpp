@@ -14,7 +14,7 @@ namespace QwerkE {
 #else
 #pragma warning "Define graphics library!"
 #endif
-        Assets::AddTexture(s_FileName.c_str(), this);
+        Assets::TextureLoaded(s_FileName.c_str(), this);
     }
 
 }
