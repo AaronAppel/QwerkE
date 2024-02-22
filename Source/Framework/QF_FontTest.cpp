@@ -19,7 +19,7 @@
 #include "QF_GraphicsHelpers.h"
 #include "QF_Log.h"
 #include "QF_Renderer.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_ShaderProgram.h"
 
 // Copied from font rendering example : https://learnopengl.com/
@@ -111,7 +111,7 @@ namespace QwerkE {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
-        Resources::AddFont(null_font, face);
+        Assets::AddFont(null_font, face);
     }
 
     void RenderText(ShaderProgram* shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)

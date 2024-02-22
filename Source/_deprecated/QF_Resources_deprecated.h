@@ -1,4 +1,4 @@
-#pragma once
+                                                                                                               #pragma once
 
 #include <string>
 #include <map>
@@ -31,7 +31,7 @@ namespace QwerkE {
     public:
         static void Initialize();
 
-        static int CreateGUID();
+        static int CreateGUID(); // #TODO Rename GetGUID or something
 
         static bool MeshExists(const char* name);
         static bool TextureExists(const char* name);
@@ -81,7 +81,6 @@ namespace QwerkE {
         // #TODO Handle loading additional resources
         // CubeMap* GetCubeMap(const char* name); // specify .ext
         // FBO* GetFBO(const char* name); // specify .ext
-        // Sound* GetSound(const char* name); // specify .ext
 
         // Load directory
         // void LoadDirectory(const char* folder); // #TODO Move outside and into a File class method
@@ -119,16 +118,6 @@ namespace QwerkE {
         static ALuint InstantiateSound(const char* soundName);
         static ShaderProgram* InstantiateShaderProgram(const char* schematicName);
         static ShaderComponent* InstantiateShaderComponent(const char* componentName);
-
-        // #TODO void* return? Actually write functions.
-        // Remember that smart pointers may be necessary for references.
-        static bool DeleteMesh(const char* name) {}
-        static bool DeleteTexture(const char* name) {}
-        static bool DeleteMaterial(const char* name) {}
-        static bool DeleteFont(const char* name) {}
-        static bool DeleteSound(const char* name) {}
-        static bool DeleteShaderProgram(const char* name) {}
-        static bool DeleteShaderComponent(const char* name) {}
     };
 
 }

@@ -1,6 +1,6 @@
 #include "QF_AssetLoadedEvent.h"
 
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_ogl_Helpers.h"
 
 namespace QwerkE {
@@ -25,7 +25,7 @@ namespace QwerkE {
             if (handle > 0) // if (texture->s_Handle > 0)
             {
                 // Update texture data in resource manager
-                Resources::UpdateTexture(m_Asset->s_FileName.c_str(), handle);
+                Assets::UpdateTexture(m_Asset->s_FileName.c_str(), handle);
             }
             else
             {

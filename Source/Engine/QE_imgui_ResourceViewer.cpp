@@ -18,7 +18,7 @@
 #include "QF_Scene.h"
 #include "QF_Serialization.h"
 #include "QF_Scenes.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Audio.h"
 #include "QF_Window.h"
 
@@ -85,7 +85,7 @@ namespace QwerkE {
         {
         case eResourceViewerDrawTypes::Textures:
             {
-                auto textures = Resources::SeeTextures();
+                auto textures = Assets::SeeTextures();
                 for (const auto& p : textures)
                 {
                     if (counter % m_ModelsPerRow) ImGui::SameLine();
@@ -112,7 +112,7 @@ namespace QwerkE {
 
         case eResourceViewerDrawTypes::Materials:
             {
-                auto materials = Resources::SeeMaterials();
+                auto materials = Assets::SeeMaterials();
                 for (const auto& p : materials)
                 {
                     if (counter % m_ModelsPerRow) ImGui::SameLine();
@@ -137,7 +137,7 @@ namespace QwerkE {
                     }
                     else
                     {
-                        Texture* nullTexture = Resources::GetTexture(null_texture);
+                        Texture* nullTexture = Assets::GetTexture(null_texture);
                         ImGui::ImageButton((ImTextureID)nullTexture->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
                         if (ImGui::IsItemHovered())
                         {
@@ -155,7 +155,7 @@ namespace QwerkE {
 
         case eResourceViewerDrawTypes::Shaders:
             {
-                auto shaders = Resources::SeeShaderPrograms();
+                auto shaders = Assets::SeeShaderPrograms();
                 for (auto p : shaders)
                 {
                     if (counter % m_ModelsPerRow) ImGui::SameLine();
@@ -203,7 +203,7 @@ namespace QwerkE {
 
         case eResourceViewerDrawTypes::Sounds:
         {
-            auto sounds = Resources::SeeSounds();
+            auto sounds = Assets::SeeSounds();
             for (auto p :sounds)
             {
                 if (counter % m_ModelsPerRow)
@@ -228,7 +228,7 @@ namespace QwerkE {
 
         if (m_ShowMatEditor)
         {
-            m_MaterialEditor->Draw(Resources::GetMaterial(m_MatName.c_str()), &m_ShowMatEditor);
+            m_MaterialEditor->Draw(Assets::GetMaterial(m_MatName.c_str()), &m_ShowMatEditor);
         }
 
         ImGui::End();

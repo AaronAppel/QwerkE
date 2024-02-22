@@ -1,6 +1,6 @@
 #include "QF_JobQueuedEvent.h"
 
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Enums.h"
 #include "QF_Jobs.h"
 

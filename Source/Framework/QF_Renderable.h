@@ -7,7 +7,7 @@
 
 #include "QF_Material.h"
 #include "QF_Mesh.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 namespace QwerkE {
 
@@ -27,9 +27,9 @@ namespace QwerkE {
 
         void Initialize()
         {
-            m_Shader = Resources::GetShaderProgram(m_ShaderName.c_str());
-            m_Material = Resources::GetMaterial(m_MaterialName.c_str());
-            m_Mesh = Resources::GetMesh(m_MeshFileName.c_str());
+            m_Shader = Assets::GetShaderProgram(m_ShaderName.c_str());
+            m_Material = Assets::GetMaterial(m_MaterialName.c_str());
+            m_Mesh = Assets::GetMesh(m_MeshFileName.c_str());
         }
 
         const std::string& GetRenderableName() const { return m_RenderableName; }

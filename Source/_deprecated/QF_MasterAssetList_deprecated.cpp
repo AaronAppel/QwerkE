@@ -1,4 +1,4 @@
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 #include "QC_StringHelpers.h"
 
@@ -17,15 +17,15 @@
 
 namespace QwerkE {
 
-    std::map<std::string, Mesh*> Resources::m_Meshes;
-    std::map<std::string, Texture*> Resources::m_Textures;
-    std::map<std::string, Material*> Resources::m_Materials;
-    std::map<std::string, FT_Face> Resources::m_Fonts; // TODO: Abstract freetype2
-    std::map<std::string, ALuint> Resources::m_Sounds; // TODO: Abstract OpenAL
-    std::map<std::string, ShaderProgram*> Resources::m_ShaderPrograms;
-    std::map<std::string, ShaderComponent*> Resources::m_ShaderComponents;
+    std::map<std::string, Mesh*> Assets::m_Meshes;
+    std::map<std::string, Texture*> Assets::m_Textures;
+    std::map<std::string, Material*> Assets::m_Materials;
+    std::map<std::string, FT_Face> Assets::m_Fonts; // TODO: Abstract freetype2
+    std::map<std::string, ALuint> Assets::m_Sounds; // TODO: Abstract OpenAL
+    std::map<std::string, ShaderProgram*> Assets::m_ShaderPrograms;
+    std::map<std::string, ShaderComponent*> Assets::m_ShaderComponents;
 
-	void Resources::Initialize()
+	void Assets::Initialize()
 	{
 		ASSERT(m_Meshes.empty() && m_Textures.empty() &&
 				m_Materials.empty() && m_Fonts.empty() &&
@@ -33,32 +33,32 @@ namespace QwerkE {
 				m_ShaderComponents.empty(),
 				"Resources already initialized!");
 
-		ASSERT(Resources::InstantiateMesh(MeshesFolderPath(null_mesh)), "Error loading null mesh asset!");
-		ASSERT(Resources::InstantiateTexture(TexturesFolderPath(null_texture)), "Error loading null texture asset!");
-		ASSERT(Resources::InstantiateMaterial(SchematicsFolderPath(null_material_schematic)), "Error loading null material asset!");
-		ASSERT(Resources::InstantiateFont(FontsFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
-		ASSERT(Resources::InstantiateShaderComponent(ShadersFolderPath(null_vert_component)), "Error loading null vertex component asset!"); // TODO: Remove null component references. Store components and reference them in shader programs
-		ASSERT(Resources::InstantiateShaderComponent(ShadersFolderPath(null_frag_component)), "Error loading null fragment component!"); // TODO: Remove null component references. Store components and reference them in shader programs
-		ASSERT(Resources::InstantiateShaderComponent(ShadersFolderPath(null_geo_component)), "Error loading null geometry component!"); // #TODO Shader components can be referenced in the shader itself, so just load a null shader schematic
-		ASSERT(Resources::InstantiateShaderProgram(SchematicsFolderPath(null_shader_schematic)), "Error loading null shader program schematic!");
+		ASSERT(Assets::InstantiateMesh(MeshesFolderPath(null_mesh)), "Error loading null mesh asset!");
+		ASSERT(Assets::InstantiateTexture(TexturesFolderPath(null_texture)), "Error loading null texture asset!");
+		ASSERT(Assets::InstantiateMaterial(SchematicsFolderPath(null_material_schematic)), "Error loading null material asset!");
+		ASSERT(Assets::InstantiateFont(FontsFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
+		ASSERT(Assets::InstantiateShaderComponent(ShadersFolderPath(null_vert_component)), "Error loading null vertex component asset!"); // TODO: Remove null component references. Store components and reference them in shader programs
+		ASSERT(Assets::InstantiateShaderComponent(ShadersFolderPath(null_frag_component)), "Error loading null fragment component!"); // TODO: Remove null component references. Store components and reference them in shader programs
+		ASSERT(Assets::InstantiateShaderComponent(ShadersFolderPath(null_geo_component)), "Error loading null geometry component!"); // #TODO Shader components can be referenced in the shader itself, so just load a null shader schematic
+		ASSERT(Assets::InstantiateShaderProgram(SchematicsFolderPath(null_shader_schematic)), "Error loading null shader program schematic!");
 
 		const EngineSettings& engineSettings = Settings::GetEngineSettings();
 		if (engineSettings.audioEnabled)
 		{
 			// #TODO Handle loading null sound asset when audio system is disabled.
 			// Currently, there is no null asset to fall back on, but audio is no implemented so no references break yet.
-			ASSERT(Resources::InstantiateSound(SoundsFolderPath(null_sound)), "Error loading null sound asset!");
+			ASSERT(Assets::InstantiateSound(SoundsFolderPath(null_sound)), "Error loading null sound asset!");
 		}
 	}
 
 	static unsigned int g_UniqueID = 0;
-	int Resources::CreateGUID() // #FEATURE F0004 - GUIDs
+	int Assets::CreateGUID() // #FEATURE F0004 - GUIDs
 	{
 		return g_UniqueID++;
 	}
 
 	// TODO: Handle errors and deleting assets before returning nullptr
-	Mesh* Resources::InstantiateMesh(const char* meshFilePath)
+	Mesh* Assets::InstantiateMesh(const char* meshFilePath)
 	{
 		if (!meshFilePath)
 			return m_Meshes[null_mesh];
@@ -83,7 +83,7 @@ namespace QwerkE {
 		return m_Meshes[null_mesh];
 	}
 
-	Texture* Resources::InstantiateTexture(const char* textureName)
+	Texture* Assets::InstantiateTexture(const char* textureName)
 	{
 		if (FileExists(textureName))
 		{
@@ -112,7 +112,7 @@ namespace QwerkE {
 		return m_Textures[null_texture];
 	}
 
-	Material* Resources::InstantiateMaterial(const char* matName)
+	Material* Assets::InstantiateMaterial(const char* matName)
 	{
 		Material* material = nullptr;
 
@@ -152,7 +152,7 @@ namespace QwerkE {
 		return material;
 	}
 
-	FT_Face Resources::InstantiateFont(const char* fontName)
+	FT_Face Assets::InstantiateFont(const char* fontName)
 	{
 		FT_Face font;
 		FT_Library ft = NULL; // TODO: No need to reload ft library
@@ -177,7 +177,7 @@ namespace QwerkE {
 		return font;
 	}
 
-	ALuint Resources::InstantiateSound(const char* soundPath)
+	ALuint Assets::InstantiateSound(const char* soundPath)
 	{
 		ALuint handle = 0;
 		handle = File::LoadSound(soundPath);
@@ -197,7 +197,7 @@ namespace QwerkE {
 		}
 	}
 
-	ShaderProgram* Resources::InstantiateShaderProgram(const char* schematicFile)
+	ShaderProgram* Assets::InstantiateShaderProgram(const char* schematicFile)
 	{
 		if (FileExists(schematicFile))
 		{
@@ -223,7 +223,7 @@ namespace QwerkE {
         return m_ShaderPrograms[null_shader_schematic];
 	}
 
-	ShaderComponent* Resources::InstantiateShaderComponent(const char* componentFilePath)
+	ShaderComponent* Assets::InstantiateShaderComponent(const char* componentFilePath)
 	{
 		// ASSERT(componentFilePath && FileExists(componentFilePath), "Cannot return a valid shader component using an invalid file path!");
 

@@ -37,7 +37,7 @@
 
 #include "QF_FileSystem.h"
 #include "QF_FileUtilities.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Log.h"
 
 #include "QF_Mesh.h"
@@ -184,7 +184,7 @@ namespace QwerkE {
 
 		Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName)
 		{
-			if (false == Resources::MeshExists(meshName))
+			if (false == Assets::MeshExists(meshName))
 			{
 				Mesh* mesh = nullptr;
 #ifdef AI_CONFIG_H_INC
@@ -200,9 +200,9 @@ namespace QwerkE {
 #else
 #pragma error "Define model loading library!"
 #endif
-				Resources::AddMesh(meshName, mesh);
+				Assets::AddMesh(meshName, mesh);
 			}
-			return Resources::GetMesh(meshName);
+			return Assets::GetMesh(meshName);
 		}
 
 		bool LoadModelFileToMeshes(const char* absoluteModelFilePath)
@@ -211,7 +211,7 @@ namespace QwerkE {
 			if (!modelFullFileName)
 				return false;
 
-			if (Resources::MeshExists(modelFullFileName))
+			if (Assets::MeshExists(modelFullFileName))
 			{
 				free(modelFullFileName);
 				return false;
@@ -238,7 +238,7 @@ namespace QwerkE {
 
 			for (size_t i = 0; i < meshes.size(); i++)
 			{
-				Resources::AddMesh(meshes[i]->GetFileName().c_str(), meshes[i]);
+				Assets::AddMesh(meshes[i]->GetFileName().c_str(), meshes[i]);
 			}
 
 			free(modelFullFileName);

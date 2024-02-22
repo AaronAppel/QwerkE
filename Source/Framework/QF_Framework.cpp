@@ -16,7 +16,7 @@
 #include "QF_Network.h"
 #include "QF_Physics.h"
 #include "QF_Renderer.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Settings.h"
@@ -94,7 +94,7 @@ namespace QwerkE {
 				LOG_WARN("No audio system loaded.");
             }
 
-            Resources::Initialize(); // #Dependencies Audio, OpenGL, Window?
+            Assets::Initialize(); // #Dependencies Audio, OpenGL, Window?
 
 			Renderer::Initialize();
 			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.0f);

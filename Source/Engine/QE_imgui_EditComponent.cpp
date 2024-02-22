@@ -9,7 +9,7 @@
 
 #include "QF_Enums.h"
 
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_RenderRoutine.h"
 #include "QF_GameObject.h"
 #include "QF_LightComponent.h"
@@ -68,12 +68,12 @@ namespace QwerkE {
     {
         if (ImGui::Begin("Shader Selector", &m_ShowShaderList))
         {
-            auto shaders = Resources::SeeShaderPrograms();
+            auto shaders = Assets::SeeShaderPrograms();
             for (auto& it : shaders)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetShaderAtIndex(m_SelectedRenderableIndex, Resources::GetShaderProgram(it.first.c_str()));
+                    rComp->SetShaderAtIndex(m_SelectedRenderableIndex, Assets::GetShaderProgram(it.first.c_str()));
                 }
 
                 if (ImGui::IsItemClicked(1))
@@ -89,12 +89,12 @@ namespace QwerkE {
     {
         if (ImGui::Begin("Material Selector", &m_ShowMaterialList))
         {
-            auto materials = Resources::SeeMaterials();
+            auto materials = Assets::SeeMaterials();
             for (auto& it : materials)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetMaterialAtIndex(m_SelectedRenderableIndex, Resources::GetMaterial(it.first.c_str()));
+                    rComp->SetMaterialAtIndex(m_SelectedRenderableIndex, Assets::GetMaterial(it.first.c_str()));
                 }
 
                 if (ImGui::IsItemClicked(1))
@@ -111,12 +111,12 @@ namespace QwerkE {
     {
         if (ImGui::Begin("Mesh Selector", &m_ShowMeshList))
         {
-            auto meshes = Resources::SeeMeshes();
+            auto meshes = Assets::SeeMeshes();
             for (auto& it : meshes)
             {
                 if (ImGui::Selectable(it.first.c_str()))
                 {
-                    rComp->SetMeshAtIndex(m_SelectedRenderableIndex, Resources::GetMesh(it.first.c_str()));
+                    rComp->SetMeshAtIndex(m_SelectedRenderableIndex, Assets::GetMesh(it.first.c_str()));
                 }
             }
         }

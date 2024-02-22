@@ -8,7 +8,7 @@
 #include "QF_Graphics_Header.h"
 #include "QF_ogl_Helpers.h"
 #include "QF_RenderComponent.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Material.h"
 #include "QF_MaterialComponent.h"
 #include "QF_ShaderProgram.h"

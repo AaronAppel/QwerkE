@@ -9,13 +9,13 @@
 #include "QF_Enums.h"
 #include "QF_Material.h"
 #include "QF_Texture.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 namespace QwerkE {
 
     MaterialEditor::MaterialEditor()
     {
-        m_TextureList = &Resources::SeeTextures();
+        m_TextureList = &Assets::SeeTextures();
     }
 
     void MaterialEditor::Draw(Material* material, bool* isOpen)

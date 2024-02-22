@@ -1,12 +1,12 @@
 #include "QF_OpenAL_Component.h"
 
 #include "QF_Defines.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 namespace QwerkE {
 
     OpenAL_AudioComponent::OpenAL_AudioComponent()
-        : m_Buffer(Resources::GetSound(null_sound))
+        : m_Buffer(Assets::GetSound(null_sound))
     {
     }
 

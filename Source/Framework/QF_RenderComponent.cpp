@@ -5,7 +5,7 @@
 #include "QF_GraphicsHelpers.h"
 #include "QF_Material.h"
 #include "QF_RenderRoutine.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_ShaderProgram.h"
 
 namespace QwerkE {
@@ -33,9 +33,9 @@ namespace QwerkE {
         m_ComponentTag = eComponentTags::Component_Render;
 
         Renderable t_Renderable;
-        t_Renderable.SetMaterial(Resources::GetMaterial(materialName));
-        t_Renderable.SetMesh(Resources::GetMesh(meshName));
-        t_Renderable.SetShader(Resources::GetShaderProgram(shaderName));
+        t_Renderable.SetMaterial(Assets::GetMaterial(materialName));
+        t_Renderable.SetMesh(Assets::GetMesh(meshName));
+        t_Renderable.SetShader(Assets::GetShaderProgram(shaderName));
 
         t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShader());
 
@@ -64,9 +64,9 @@ namespace QwerkE {
         // #TODO Should there be a check to see if a renderable alrady exists?
         Renderable t_Renderable;
 
-        t_Renderable.SetMaterial(Resources::GetMaterial(materialName));
-        t_Renderable.SetMesh(Resources::GetMesh(meshName));
-        t_Renderable.SetShader(Resources::GetShaderProgram(shaderName));
+        t_Renderable.SetMaterial(Assets::GetMaterial(materialName));
+        t_Renderable.SetMesh(Assets::GetMesh(meshName));
+        t_Renderable.SetShader(Assets::GetShaderProgram(shaderName));
 
         t_Renderable.GetMesh()->SetupShaderAttributes(t_Renderable.GetShader());
 
@@ -87,9 +87,9 @@ namespace QwerkE {
         {
             Renderable t_Renderable;
 
-            t_Renderable.SetShader(Resources::GetShaderProgram(null_shader_schematic));
-            t_Renderable.SetMaterial(Resources::GetMaterial(null_material));
-            t_Renderable.SetMesh(Resources::GetMesh(null_mesh));
+            t_Renderable.SetShader(Assets::GetShaderProgram(null_shader_schematic));
+            t_Renderable.SetMaterial(Assets::GetMaterial(null_material));
+            t_Renderable.SetMesh(Assets::GetMesh(null_mesh));
 
             m_Renderables.push_back(t_Renderable);
         }

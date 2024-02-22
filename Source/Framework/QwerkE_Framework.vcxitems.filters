@@ -127,6 +127,9 @@
     <Filter Include="Core\Settings">
       <UniqueIdentifier>{ada24758-a855-4b40-a452-b35c683db07e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Assets">
+      <UniqueIdentifier>{9bc534dd-21d3-4280-8301-e269cf1274bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Audio.cpp">
@@ -206,12 +209,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Physics.cpp">
       <Filter>Core\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Resources.cpp">
-      <Filter>Core\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_MasterAssetList.cpp">
-      <Filter>Core\Resources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CameraComponent.cpp">
       <Filter>Core\Entities\Components\Camera</Filter>
@@ -324,6 +321,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Texture.cpp">
       <Filter>Core\Graphics\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Assets.cpp">
+      <Filter>Core\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -452,9 +452,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PhysicsWorld.h">
       <Filter>Core\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Resources.h">
-      <Filter>Core\Resources</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CameraComponent.h">
       <Filter>Core\Entities\Components\Camera</Filter>
@@ -592,6 +589,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Math.h">
       <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Assets.h">
+      <Filter>Core\Assets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

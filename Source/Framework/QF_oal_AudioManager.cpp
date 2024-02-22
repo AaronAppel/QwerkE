@@ -11,7 +11,7 @@
 
 #include "QF_Log.h"
 #include "QF_FileSystem.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_AudioSource.h"
 
 namespace QwerkE {
@@ -68,7 +68,7 @@ namespace QwerkE {
 
 	void OpenALAudioManager::PlaySound(const char* name)
 	{
-		m_Source->Play(Resources::GetSound(name));
+		m_Source->Play(Assets::GetSound(name));
 	}
 
 	void OpenALAudioManager::SetListenerOrientation(vec3 position, vec3 velocity)

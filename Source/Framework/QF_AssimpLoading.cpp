@@ -17,7 +17,7 @@
 #include "QF_Material.h"
 #include "QF_Mesh.h"
 #include "QF_MeshData.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Texture.h"
 
 // TODO: Support triangle and quad rendering? Set a macro to define the number of verts per face?
@@ -53,9 +53,9 @@ namespace QwerkE {
         if (!modelFullFileName)
             return nullptr;
 
-        if (Resources::MeshExists(modelFullFileName))
+        if (Assets::MeshExists(modelFullFileName))
         {
-            return Resources::GetMesh(modelFullFileName);
+            return Assets::GetMesh(modelFullFileName);
         }
 
         MeshData meshData;
@@ -114,11 +114,11 @@ namespace QwerkE {
             rMesh->BufferMeshData(&meshData);
             rMesh->SetName(mesh->mName.C_Str());
             rMesh->SetFileName(modelFullFileName);
-            Resources::AddMesh(modelFullFileName, rMesh);
+            Assets::AddMesh(modelFullFileName, rMesh);
         }
         else
         {
-            rMesh = Resources::GetMesh(null_mesh);
+            rMesh = Assets::GetMesh(null_mesh);
         }
 
         free(modelFullFileName);
@@ -131,7 +131,7 @@ namespace QwerkE {
         aiString name;
         mat->Get(AI_MATKEY_NAME, name);
         // TODO: Support "DefaultMaterial"
-        if (Resources::MaterialExists(name.C_Str()))
+        if (Assets::MaterialExists(name.C_Str()))
         {
             // material exists already
         }
@@ -155,7 +155,7 @@ namespace QwerkE {
 
                 if (*str.C_Str())
                 {
-                    texture = Resources::GetTexture(str.C_Str());
+                    texture = Assets::GetTexture(str.C_Str());
                 }
 
                 switch (i)
@@ -196,7 +196,7 @@ namespace QwerkE {
                 }
             }
 
-            Resources::AddMaterial(name.C_Str(), material);
+            Assets::AddMaterial(name.C_Str(), material);
         }
 
         matNames.push_back(name.C_Str()); // #NOTE Material loader will use this name later

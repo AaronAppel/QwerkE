@@ -12,7 +12,7 @@
 #include "QF_FrameBufferObject.h"
 #include "QF_ShaderProgram.h"
 #include "QF_ShaderComponent.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 namespace QwerkE {
 
@@ -23,7 +23,7 @@ namespace QwerkE {
     {
         if (m_CurrentShader == nullptr)
         {
-            m_CurrentShader = Resources::GetShaderProgram(null_shader);
+            m_CurrentShader = Assets::GetShaderProgram(null_shader);
             if (m_CurrentShader)
             {
                 m_CurrentShaderComponent = m_CurrentShader->GetVertShader();
@@ -33,7 +33,7 @@ namespace QwerkE {
 
         ImGui::Begin("Shader Editor", isOpen);
 
-        auto shaders = Resources::SeeShaderPrograms();
+        auto shaders = Assets::SeeShaderPrograms();
         std::vector<const char*> shaderNames;
         shaderNames.reserve(3);
 
@@ -55,7 +55,7 @@ namespace QwerkE {
         // ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ShadersComboText) * s_CharacterPixelSize));
         if (ImGui::Combo(s_ShadersComboText, &currentShaderIndex, shaderNames.data(), shaders.size()))
         {
-            m_CurrentShader = Resources::GetShaderProgram(shaderNames[currentShaderIndex]);
+            m_CurrentShader = Assets::GetShaderProgram(shaderNames[currentShaderIndex]);
             if (m_CurrentShader)
             {
                 m_CurrentShaderComponent = m_CurrentShader->GetVertShader();

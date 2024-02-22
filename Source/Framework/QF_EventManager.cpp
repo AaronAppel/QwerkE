@@ -4,7 +4,7 @@
 
 #include "QF_Event.h"
 #include "QF_Log.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 namespace QwerkE {
 
@@ -40,7 +40,7 @@ namespace QwerkE {
         // #TODO Implement thread safe API for multi threaded event queuing
         if (m_EventQueue.size() < m_EventMax)
         {
-            _event->SetID(Resources::CreateGUID());
+            _event->SetID(Assets::GetGUID());
             m_EventQueue.push(_event);
             LOG_INFO("Event {0} Queued!", _event->GetID());
         }

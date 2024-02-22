@@ -7,7 +7,7 @@
 #include "QF_FileUtilities.h"
 #include "QF_GraphicsHelpers.h"
 #include "QF_Log.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
@@ -48,23 +48,23 @@ namespace QwerkE {
 
             if (strcmp(dropFileExtensionStr.get(), "png") == 0 || strcmp(dropFileExtensionStr.get(), "jpg") == 0)
             {
-                if (!Resources::TextureExists(fullFileName.get()))
+                if (!Assets::TextureExists(fullFileName.get()))
                 {
-                    Resources::GetTextureFromPath(*paths);
+                    Assets::GetTextureFromPath(*paths);
                 }
             }
             else if (strcmp(dropFileExtensionStr.get(), "fbx") == 0 || strcmp(dropFileExtensionStr.get(), "obj") == 0)
             {
-                if (!Resources::MeshExists(fullFileName.get()))
+                if (!Assets::MeshExists(fullFileName.get()))
                 {
                     File::LoadModelFileToMeshes(*paths);
                 }
             }
             else if (strcmp(dropFileExtensionStr.get(), "ssch") == 0)
             {
-                if (!Resources::ShaderProgramExists(fullFileName.get()))
+                if (!Assets::ShaderProgramExists(fullFileName.get()))
                 {
-                    Resources::GetShaderProgramFromPath(*paths);
+                    Assets::GetShaderProgramFromPath(*paths);
                 }
             }
             else if (strcmp(dropFileExtensionStr.get(), "qscene") == 0)

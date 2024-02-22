@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssetLoadedEvent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Assets.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssignWin32Keys.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Audio.cpp" />
@@ -48,7 +49,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LightComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LitMaterial.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Log.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_MasterAssetList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mouse.cpp" />
@@ -66,7 +66,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderRoutine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderRoutineUtilities.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Resources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_rkn_Main.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scenes.cpp" />
@@ -85,6 +84,7 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AssetLoadedEvent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Assets.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset_Tag.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Audio.h" />
@@ -156,7 +156,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_RenderComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_RenderRoutine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Resources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Routine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Scenes.h" />

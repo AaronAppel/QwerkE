@@ -11,7 +11,7 @@
 #include "QF_GameObject.h"
 #include "QF_RenderComponent.h"
 #include "QF_RenderRoutine.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"

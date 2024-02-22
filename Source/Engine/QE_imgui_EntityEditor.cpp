@@ -13,7 +13,7 @@
 #include "QF_Mesh.h"
 #include "QF_Physics.h"
 #include "QF_RenderComponent.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Settings.h"
@@ -161,9 +161,9 @@ namespace QwerkE {
                         if (m_CurrentEntity->GetComponent(Component_Render) == nullptr)
                         {
                             Renderable renderable;
-                            renderable.SetMaterial(Resources::GetMaterial(null_material));
-                            renderable.SetShader(Resources::GetShaderProgram(null_shader));
-                            renderable.SetMesh(Resources::GetMesh(null_mesh));
+                            renderable.SetMaterial(Assets::GetMaterial(null_material));
+                            renderable.SetShader(Assets::GetShaderProgram(null_shader));
+                            renderable.SetMesh(Assets::GetMesh(null_mesh));
                             static int uniqueId = 0; // #FEATURE F0004, F0003
                             renderable.SetRenderableName(std::to_string(uniqueId++));
 

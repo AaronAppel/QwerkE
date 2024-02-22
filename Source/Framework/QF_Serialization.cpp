@@ -7,7 +7,7 @@
 #include "QF_GameObject.h"
 #include "QF_Log.h"
 #include "QF_Material.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_Settings.h"
 
 #include "QF_RenderRoutine.h"
@@ -342,7 +342,7 @@ namespace QwerkE {
 
                             Texture texture;
                             DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<Texture>(), &texture);
-                            Texture* result = Resources::GetTexture(texture.s_FileName.c_str());
+                            Texture* result = Assets::GetTexture(texture.s_FileName.c_str());
 
                             std::map<eMaterialMaps, Texture*>& componentMapRef = *texturesMap; // #TODO BUG Look why map->insert({}) wasn't working with initializer list
                             componentMapRef[componentTag] = result;

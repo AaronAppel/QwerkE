@@ -1,6 +1,6 @@
 #include "QF_Physics.h"
 
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 #include "QF_Log.h"
 #include "QF_Settings.h"
@@ -19,7 +19,7 @@ namespace QwerkE {
 
                 // #TODO Review GetMesh() call
                 // Request shapes from Resources
-                // Resources::GetMesh("Cube_UVd.obj");
+                // Assets::GetMesh("Cube_UVd.obj");
             }
             else
             {

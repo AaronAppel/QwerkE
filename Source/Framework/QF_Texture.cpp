@@ -3,7 +3,7 @@
 #include <string>
 
 #include "QF_Defines.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 
 namespace QwerkE {
 
@@ -14,7 +14,7 @@ namespace QwerkE {
 #else
 #pragma warning "Define graphics library!"
 #endif
-        Resources::AddTexture(s_FileName.c_str(), this);
+        Assets::AddTexture(s_FileName.c_str(), this);
     }
 
 }

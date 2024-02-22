@@ -7,7 +7,7 @@
 #include "QF_Graphics_Header.h"
 #include "QF_Log.h"
 #include "QF_Renderer.h"
-#include "QF_Resources.h"
+#include "QF_Assets.h"
 #include "QF_ShaderProgram.h"
 
 namespace QwerkE {
@@ -99,7 +99,7 @@ namespace QwerkE {
         void DrawFont(const char* text, float x, float y, float scale)
         {
             // TODO: Improve font rendering
-            RenderText(Resources::GetShaderProgram("font_shader.ssch"),
+            RenderText(Assets::GetShaderProgram("font_shader.ssch"),
                 std::string(text),
                 x, y, scale,
                 glm::vec3(0, 0, 0));
