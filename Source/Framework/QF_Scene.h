@@ -58,6 +58,9 @@ namespace QwerkE {
 
         void ToggleIsPaused() { m_IsPaused = !m_IsPaused; };
 
+        void SetDirty() { m_IsDirty = true; }
+        bool IsDirty() { return m_IsDirty; }
+
     private:
         void CameraInput(float deltatime);
 
@@ -78,6 +81,7 @@ namespace QwerkE {
         std::vector<GameObject*> m_SceneDrawList;
 
         bool m_IsLoaded = false;
+        bool m_IsDirty = false;
     };
 
 }

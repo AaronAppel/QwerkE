@@ -228,6 +228,15 @@ namespace QwerkE {
 		{
 			return s_Scenes;
 		}
+
+		void SetCurrentSceneDirty()
+		{
+			if (s_CurrentScene)
+			{
+				s_CurrentScene->SetDirty();
+			}
+		}
+
 	}
 
 }

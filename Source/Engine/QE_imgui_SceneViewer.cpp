@@ -54,7 +54,19 @@ namespace QwerkE {
             // ImGui::PopItemWidth();
             // ImGui::SameLine();
 
+            // #TODO Color
+            bool sceneWasDirty = currentScene->IsDirty();
+            if (sceneWasDirty)
+            {
+                ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+            }
             if (ImGui::Button("Save")) currentScene->SaveScene();
+            if (sceneWasDirty)
+            {
+                ImGui::PopStyleColor(3);
+            }
 
             ImGui::SameLine();
             if (ImGui::Button("Reload"))
@@ -113,7 +125,6 @@ namespace QwerkE {
         ImGui::End();
     }
 
-    const char* s_ScenesComboText = "Scene ";
     const int s_CharacterPixelSize = 10;
     void SceneViewer::DrawSceneList()
     {
@@ -130,8 +141,11 @@ namespace QwerkE {
         const int sceneFileNameWidth = strlen(sceneNames[index]) * s_CharacterPixelSize;
         ImGui::PushItemWidth((float)sceneFileNameWidth);
 
-        ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesComboText) * s_CharacterPixelSize));
-        if (ImGui::Combo(s_ScenesComboText, &index, sceneNames.data(), scenes.size()))
+        char s_ScenesCombobuffer [] = "Scenes:    ";
+        snprintf(s_ScenesCombobuffer, strlen(s_ScenesCombobuffer), "Scenes: %i", sceneNames.size());
+
+        ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesCombobuffer) * s_CharacterPixelSize));
+        if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), scenes.size()))
         {
             Scenes::SetCurrentScene(index);
         }

@@ -33,6 +33,8 @@ namespace QwerkE {
         int SceneCount();
         Scene* GetScene(std::string sceneName);
         const std::vector<Scene*>& LookAtScenes();
+
+        void SetCurrentSceneDirty();
     }
 
 }

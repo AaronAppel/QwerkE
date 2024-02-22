@@ -4,6 +4,7 @@
 
 #include "QF_Enums.h"
 #include "QF_Log.h"
+#include "QF_Scenes.h"
 #include "QF_Settings.h"
 
 #include "QF_Component.h"
@@ -81,6 +82,10 @@ namespace QwerkE {
                             const std::string* stringAddress = (const std::string*)strings->data() + i;
                             std::string fieldName = parentName + field.name + std::to_string(i);
                             ImGui::LabelText(fieldName.c_str(), stringAddress->data());
+                            // if ()
+                            // {
+                            //     Scenes::SetCurrentSceneDirty();
+                            // }
                         }
                         break;
                     }
@@ -150,7 +155,10 @@ namespace QwerkE {
                 {
                     float* vector2Address = (float*)fieldAddress;
                     std::string fieldName = parentName + field.name;
-                    ImGui::DragFloat2(fieldName.c_str(), vector2Address, .1f);
+                    if (ImGui::DragFloat2(fieldName.c_str(), vector2Address, .1f))
+                    {
+                        Scenes::SetCurrentSceneDirty();
+                    }
                 }
                 break;
 
@@ -158,7 +166,10 @@ namespace QwerkE {
                 {
                     float* vector3Address = (float*)fieldAddress;
                     std::string fieldName = parentName + field.name;
-                    ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f);
+                    if (ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f))
+                    {
+                        Scenes::SetCurrentSceneDirty();
+                    }
                 }
                 break;
 
@@ -168,7 +179,10 @@ namespace QwerkE {
                     std::string fieldName = parentName + field.name;
                     // ImGui::LabelText(fieldName.c_str(), stringAddress->data());
                     // #TODO Handle buffering for string re-assignment properly
-                    ImGui::InputText(fieldName.c_str(), (char*)stringAddress->data(), stringAddress->capacity());
+                    if (ImGui::InputText(fieldName.c_str(), (char*)stringAddress->data(), stringAddress->capacity()))
+                    {
+                        Scenes::SetCurrentSceneDirty();
+                    }
                 }
                 break;
 
@@ -178,6 +192,10 @@ namespace QwerkE {
                     const char* constCharPtrAddress = *(const char**)fieldAddress;
                     std::string fieldName = parentName + field.name;
                     ImGui::LabelText(fieldName.c_str(), constCharPtrAddress);
+                    // if (true)
+                    // {
+                    //     Scenes::SetCurrentSceneDirty();
+                    // }
                 }
                 break;
 
@@ -188,6 +206,10 @@ namespace QwerkE {
                     char charEscaped[2] = { *charPtrAddress, '\0' };
                     std::string fieldName = parentName + field.name;
                     ImGui::LabelText(fieldName.c_str(), charEscaped);
+                    // if (true)
+                    // {
+                    //     Scenes::SetCurrentSceneDirty();
+                    // }
                 }
                 break;
 
@@ -199,6 +221,7 @@ namespace QwerkE {
                     if (ImGui::InputInt(fieldName.c_str(), &intValue))
                     {
                         *boolAddress = (bool)intValue;
+                        Scenes::SetCurrentSceneDirty();
                     }
                 }
                 break;
@@ -207,7 +230,10 @@ namespace QwerkE {
                 {
                     float* numberAddress = (float*)fieldAddress;
                     std::string fieldName = parentName + field.name;
-                    ImGui::DragFloat(fieldName.c_str(), numberAddress, .1f);
+                    if (ImGui::DragFloat(fieldName.c_str(), numberAddress, .1f))
+                    {
+                        Scenes::SetCurrentSceneDirty();
+                    }
                 }
                 break;
 
@@ -223,20 +249,23 @@ namespace QwerkE {
                 {
                     int* numberAddress = (int*)fieldAddress;
                     std::string fieldName = parentName + field.name;
-                    ImGui::DragInt(fieldName.c_str(), numberAddress);
+                    if (ImGui::DragInt(fieldName.c_str(), numberAddress))
+                    {
+                        Scenes::SetCurrentSceneDirty();
+                    }
                 }
                 break;
 
                 case MirrorTypes::m_int64_t:
                 case MirrorTypes::m_uint64_t:
                 {
-                    double* numberAddress = (double*)fieldAddress;
+                    double* numberAddress = (double*)fieldAddress; // #TODO Implement
                 }
                 break;
 
                 case MirrorTypes::m_double:
                 {
-                    double* numberAddress = (double*)fieldAddress;
+                    double* numberAddress = (double*)fieldAddress; // #TODO Implement
                 }
                 break;
 

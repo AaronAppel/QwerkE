@@ -1,7 +1,5 @@
 #include "QF_Scene.h"
 
-#include <algorithm>
-
 #include "QC_StringHelpers.h"
 
 #include "QF_CameraComponent.h"
@@ -252,6 +250,7 @@ namespace QwerkE {
 
         Serialization::SerializeObjectToFile(*this, ScenesFolderPath(m_SceneFileName.c_str()));
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
+        m_IsDirty = false;
     }
 
     void Scene::LoadSceneFromFile(const char* otherSceneFileName)
@@ -278,6 +277,7 @@ namespace QwerkE {
         LOG_TRACE("{0} \"{1}\" loaded from file", __FUNCTION__, otherSceneFileName);
 
         m_IsLoaded = true;
+        m_IsDirty = false;
     }
 
     void Scene::LoadScene()
@@ -302,6 +302,7 @@ namespace QwerkE {
         LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
 
         m_IsLoaded = true;
+        m_IsDirty = false;
     }
 
     void Scene::UnloadScene()
@@ -325,6 +326,7 @@ namespace QwerkE {
         m_pGameObjects.clear();
 
         m_IsLoaded = false;
+        m_IsDirty = false;
         LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
@@ -366,7 +368,6 @@ namespace QwerkE {
     {
         if (m_pGameObjects.find(name) != m_pGameObjects.end())
             return m_pGameObjects[name];
-
         return nullptr;
     }
 
