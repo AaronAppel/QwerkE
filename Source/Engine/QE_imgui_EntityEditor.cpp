@@ -221,6 +221,7 @@ namespace QwerkE {
                     }
 
                     showComponentSelector = false;
+                    Scenes::SetCurrentSceneDirty();
                 }
             }
 

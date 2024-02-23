@@ -18,6 +18,7 @@ namespace QwerkE {
         m_TextureList = &Assets::SeeTextures();
     }
 
+    const int s_PixelsPerChar = 8;
     void MaterialEditor::Draw(Material* material, bool* isOpen)
     {
         // NOTE: For now just replace existing texture. In the future, think of a way to preserve old data.
@@ -26,17 +27,22 @@ namespace QwerkE {
             const std::map<eMaterialMaps, Texture*>* textures = material->SeeMaterials();
             ImGui::Text(material->GetMaterialName().c_str());
 
+            const char* res = ENUM_TO_STR(eMaterialMaps::_from_index(m_CurrentMap));
+            ImGui::SameLine(ImGui::GetWindowWidth() - (strlen(res) * s_PixelsPerChar));
+            ImGui::Text(res);
+
             ImGui::Separator();
 
             int counter = 0;
+            const int imagesPerRow = 4;
+
             for (auto p : *textures)
             {
-                if (counter > 0) // #TODO Review counter comparison
+                if (counter > 0 && counter % imagesPerRow) // #TODO Review counter comparison
                 {
                     ImGui::SameLine();
                 }
 
-                ImGui::SameLine();
                 ImGui::Text(std::to_string((int)p.first).c_str());
 
                 if (p.second)
@@ -47,6 +53,7 @@ namespace QwerkE {
                     {
                         buttonSize = ImVec2(70, 70);
                     }
+
                     ImGui::ImageButton((ImTextureID)p.second->s_Handle, buttonSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
 
                     // #TODO Add the ability to add or remove textures from a material.
@@ -73,7 +80,7 @@ namespace QwerkE {
             counter = 0;
             for (auto p : *m_TextureList)
             {
-                if (counter % 6) // #TODO Review textures per row variable. Make const
+                if (counter > 0 && counter % imagesPerRow) // #TODO Review counter comparison
                 {
                     ImGui::SameLine();
                 }

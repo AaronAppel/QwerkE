@@ -206,39 +206,37 @@ namespace QwerkE {
 			return s_Textures[null_texture];
 		}
 
-		Material* InstantiateMaterial(const char* matName)
+		Material* InstantiateMaterial(const char* absoluteMaterialFilePath)
 		{
+			if (!absoluteMaterialFilePath)
+				return nullptr;
+
 			Material* material = nullptr;
 
-			if (strcmp(SmartFileExtension(matName).get(), material_schematic_ext) == 0)
+			if (strcmp(SmartFileExtension(absoluteMaterialFilePath).get(), material_schematic_ext) == 0)
 			{
-				if (FileExists(matName))
+				if (FileExists(absoluteMaterialFilePath))
 				{
 					material = new Material();
-					Serialization::DeserializeJsonFromFile(matName, *material);
-				}
-				else if (FileExists(TexturesFolderPath(matName)))
-				{
-					material = new Material();
-					Serialization::DeserializeJsonFromFile(TexturesFolderPath(matName), *material);
+					Serialization::DeserializeJsonFromFile(absoluteMaterialFilePath, *material);
 				}
 				else
 				{
-					LOG_ERROR("{0} Could not find .msch file named: {1}!", __FUNCTION__, matName);
+					LOG_ERROR("{0} Could not find .msch file named: {1}!", __FUNCTION__, absoluteMaterialFilePath);
 				}
 			}
 			else
 			{
-				LOG_WARN("{0} Not a .msch file: {1}", __FUNCTION__, matName);
+				LOG_WARN("{0} Not a {1} file: {2}", __FUNCTION__, shader_schematic_ext, absoluteMaterialFilePath);
 			}
 
 			if (!material)
 			{
-				LOG_WARN("{0} Material not found: {1}", __FUNCTION__, matName);
+				LOG_WARN("{0} Material not found: {1}", __FUNCTION__, absoluteMaterialFilePath);
 				return s_Materials[null_material];
 			}
 
-			if (uPtr<char> fullFileName = SmartFileName(matName, true))
+			if (uPtr<char> fullFileName = SmartFileName(absoluteMaterialFilePath, true))
 			{
 				s_Materials[fullFileName.get()] = material;
 			}
@@ -412,7 +410,7 @@ namespace QwerkE {
 			if (s_Materials.find(name) != s_Materials.end())
 				return s_Materials[name];
 
-			return InstantiateMaterial(TexturesFolderPath(name));
+			return InstantiateMaterial(SchematicsFolderPath(name));
 		}
 
 		Material* GetMaterialFromPath(const char* filePath)
@@ -584,6 +582,47 @@ namespace QwerkE {
 			{
 				InstantiateFileMeshes(absoluteMeshFilePath);
 			}
+		}
+
+		Material* CreateNewMaterialFromFile(const char* absoluteMaterialFilePath)
+		{
+			if (!absoluteMaterialFilePath)
+				return nullptr;
+
+			Material* newMaterial = nullptr;
+			if (strcmp(SmartFileExtension(absoluteMaterialFilePath).get(), material_schematic_ext) == 0)
+			{
+				if (FileExists(absoluteMaterialFilePath))
+				{
+					newMaterial = new Material();
+					Serialization::DeserializeJsonFromFile(absoluteMaterialFilePath, *newMaterial);
+				}
+				else
+				{
+					LOG_ERROR("{0} Could not find {1} file named: {2}!", __FUNCTION__, material_schematic_ext, absoluteMaterialFilePath);
+				}
+			}
+			else
+			{
+				LOG_WARN("{0} Not a {1} file: {2}", __FUNCTION__, shader_schematic_ext, absoluteMaterialFilePath);
+			}
+
+			if (!newMaterial)
+			{
+				LOG_WARN("{0} Material not found: {1}", __FUNCTION__, absoluteMaterialFilePath);
+				return s_Materials[null_material];
+			}
+
+			while (MaterialExists(newMaterial->GetMaterialName().c_str()) || FileExists(SchematicsFolderPath(absoluteMaterialFilePath)))
+			{
+				std::string uniqueName = NumberAppendOrIncrementFileName(newMaterial->GetMaterialName().c_str());
+				uniqueName += ".";
+				uniqueName += material_schematic_ext;
+				newMaterial->SetMaterialName(uniqueName);
+			}
+
+			s_Materials[newMaterial->GetMaterialName().c_str()] = newMaterial;
+			return newMaterial;
 		}
 
 		void TextureLoaded(const char* name, int handle)

@@ -363,7 +363,7 @@ namespace QwerkE {
 
                         for (size_t i = 0; i < jsonGameObjects.size(); i++)
                         {
-                            eMaterialMaps componentTag = (eMaterialMaps)std::stoi(jsonGameObjects[i]->string);
+                            eMaterialMaps componentTag = eMaterialMaps::_from_index(std::stoi(jsonGameObjects[i]->string));
                             if (texturesMap->find(componentTag) != texturesMap->end())
                             {
                                 LOG_ERROR("{0} Found duplicated key {1} in map!", __FUNCTION__, (int)componentTag);
@@ -555,6 +555,11 @@ namespace QwerkE {
             //     return;
             // }
 
+            if (objTypeInfo->enumType == MirrorTypes::Vector3)
+            {
+                int bp = 0;
+            }
+
             for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objTypeInfo->fields[i];
@@ -648,82 +653,99 @@ namespace QwerkE {
                     break;
 
                 case MirrorTypes::m_map_eComponentTags_componentPtr:
-                {
-                    const std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)((char*)obj + field.offset);
-
-                    for (auto var : components)
                     {
-                        Component* component = var.second;
+                        const std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)((char*)obj + field.offset);
 
-                        if (!component)
-                            continue;
-
-                        cJSON* t_Component = CreateArray(std::to_string(component->GetTag()).c_str());
-
-                        switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
+                        for (auto& pair : components)
                         {
-                        case Component_Render:
-                            SerializeObjectToJson(component, Mirror::InfoForType<RenderComponent>(), t_Component);
-                            break;
+                            Component* component = pair.second;
 
-                        case Component_Camera:
-                            SerializeObjectToJson(component, Mirror::InfoForType<ComponentCamera>(), t_Component);
-                            break;
+                            if (!component)
+                                continue;
 
-                        case Component_Light:
-                        case Component_Physics:
-                        case Component_Controller:
-                        case Component_SkyBox:
-                            // #TODO Implement component add
-                            break;
+                            eComponentTags tag = pair.first; // #TODO Review using map key
+
+                            cJSON* t_Component = CreateArray(std::to_string(component->GetTag()).c_str());
+
+                            switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
+                            {
+                            case Component_Render:
+                                SerializeObjectToJson(component, Mirror::InfoForType<RenderComponent>(), t_Component);
+                                break;
+
+                            case Component_Camera:
+                                SerializeObjectToJson(component, Mirror::InfoForType<ComponentCamera>(), t_Component);
+                                break;
+
+                            case Component_Light:
+                            case Component_Physics:
+                            case Component_Controller:
+                            case Component_SkyBox:
+                                // #TODO Implement component add
+                                break;
+                            }
+                            AddItemToArray(arr, t_Component);
                         }
-                        AddItemToArray(arr, t_Component);
                     }
-                }
-                break;
+                    break;
 
                 case MirrorTypes::m_map_eMaterialMaps_texturePtr: // #TODO Textures should be created and requested by Resources
                     {
-                        int bp = 0;
+                        const std::map<eMaterialMaps, Texture*>& components = *(std::map<eMaterialMaps, Texture*>*)((char*)obj + field.offset);
+
+                        for (auto& pair : components)
+                        {
+                            Texture* texture = pair.second;
+
+                            if (!texture)
+                                continue;
+
+                            cJSON* textureJson = CreateArray(std::to_string((int)pair.first).c_str());
+
+                            // #TODO Use field.typeInfo->collectionTypeInfo instead of Mirror::InfoForType<Texture>()
+                            SerializeObjectToJson(texture, Mirror::InfoForType<Texture>(), textureJson);
+
+                            AddItemToArray(arr, textureJson);
+                        }
                     }
                     break;
 
                 case MirrorTypes::m_string:
-                {
-                    const std::string* fieldAddress = (const std::string*)((char*)obj + field.offset);
-                    AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress->data()));
-                }
-                break;
+                    {
+                        const std::string* fieldAddress = (const std::string*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress->data()));
+                    }
+                    break;
 
                 case MirrorTypes::m_charPtr:
                 case MirrorTypes::m_constCharPtr:
-                {
-                    const char* fieldAddress = *(const char**)((char*)obj + field.offset);
-                    AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress));
-                }
-                break;
+                    {
+                        const char* fieldAddress = *(const char**)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateString(field.name.c_str(), fieldAddress));
+                    }
+                    break;
 
                 case MirrorTypes::m_char:
                 case MirrorTypes::eKeys:
-                {
-                    char* stringAddress = (char*)obj + field.offset;
-                    AddItemToArray(objJson, CreateString(field.name.c_str(), stringAddress));
-                }
-                break;
+                    {
+                        char* stringAddress = (char*)obj + field.offset;
+                        AddItemToArray(objJson, CreateString(field.name.c_str(), stringAddress));
+                    }
+                    break;
 
                 case MirrorTypes::m_bool:
-                {
-                    bool* boolAddress = (bool*)((char*)obj + field.offset);
-                    AddItemToArray(objJson, CreateBool(field.name.c_str(), *boolAddress));
-                }
-                break;
+                    {
+                        bool* boolAddress = (bool*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateBool(field.name.c_str(), *boolAddress));
+                    }
+                    break;
 
                 case MirrorTypes::m_float:
-                {
-                    float* numberAddress = (float*)((char*)obj + field.offset);
-                    AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
-                }
-                break;
+                    {
+                        float* numberAddress = (float*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
 
                 case MirrorTypes::m_int8_t:
                 case MirrorTypes::m_int16_t:
@@ -734,30 +756,38 @@ namespace QwerkE {
                 case MirrorTypes::m_int:
                 case MirrorTypes::m_eSceneTypes:
                 case MirrorTypes::m_eGameObjectTags:
-                {
-                    int* numberAddress = (int*)((char*)obj + field.offset);
-                    AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
-                }
-                break;
+                    {
+                        int* numberAddress = (int*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
 
                 case MirrorTypes::m_int64_t:
                 case MirrorTypes::m_uint64_t:
-                {
-                    double* numberAddress = (double*)((char*)obj + field.offset);
-                    AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
-                }
-                break;
+                    {
+                        double* numberAddress = (double*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
 
                 case MirrorTypes::m_double:
-                {
-                    double* numberAddress = (double*)((char*)obj + field.offset);
-                    AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
-                }
-                break;
+                    {
+                        double* numberAddress = (double*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
 
                 default:
-                    LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
-                    break;
+
+                    if (!field.typeInfo->fields.empty())
+                    {
+                        SerializeObjectToJson((char*)obj + field.offset, field.typeInfo, arr);
+                    }
+                    else
+                    {
+                        LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
+                        break;
+                    }
                 }
             }
         }

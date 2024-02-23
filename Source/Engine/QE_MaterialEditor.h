@@ -19,7 +19,7 @@ namespace QwerkE {
 
     private:
         eMaterialMaps m_CurrentMap = eMaterialMaps::MatMap_Null;
-        const std::map<std::string, Texture*>* m_TextureList = nullptr;
+        const std::map<std::string, Texture*>* m_TextureList = nullptr; // #TODO Deprecate cached reference
     };
 
 }

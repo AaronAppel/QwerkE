@@ -47,7 +47,7 @@ namespace QwerkE {
 
         void AddTexture(Texture* comp, eMaterialMaps type)
         {
-            if (type < eMaterialMaps::MatMap_Max && (int)type >= 0)
+            if (type < (int)eMaterialMaps::MatMap_Max && (int)type >= 0)
             {
                 m_Components[type] = comp;
             }
@@ -55,7 +55,7 @@ namespace QwerkE {
 
         void SetTexture(Texture* comp, eMaterialMaps type)
         {
-            if (comp && (int)type > -1 && type < eMaterialMaps::MatMap_Max)
+            if (comp && (int)type > -1 && type < (int)eMaterialMaps::MatMap_Max)
             {
                 m_Components[type] = comp;
             }

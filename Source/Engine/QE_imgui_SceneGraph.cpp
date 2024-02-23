@@ -66,7 +66,9 @@ namespace QwerkE {
 				ImGui::Text("Object Types");
 				ImGui::Separator();
 
+				// #TODO Use NumberAppendOrIncrement() to create a unique object name
 				for (int i = 0; i < eSceneGraphCreateTypes::_size_constant; i++)
+				{
 					if (ImGui::Selectable(ENUM_TO_STR(eSceneGraphCreateTypes::_from_index(i))))
 					{
 						switch (i)
@@ -76,20 +78,21 @@ namespace QwerkE {
 							break;
 
 						case eSceneGraphCreateTypes::Light:
-							{
-								GameObject* newLight = currentScene->CreateNewObjectFromSchematic("Light.osch");
-								currentScene->AddLight(newLight); // #TODO Call from light component or game object
-							}
-							break;
+						{
+							GameObject* newLight = currentScene->CreateNewObjectFromSchematic("Light.osch");
+							currentScene->AddLight(newLight); // #TODO Call from light component or game object
+						}
+						break;
 
 						case eSceneGraphCreateTypes::Camera:
-							{
-								GameObject* newCamera = currentScene->CreateNewObjectFromSchematic("Camera.osch");
-								currentScene->AddCamera(newCamera); // #TODO Call from camera component or game object
-							}
-							break;
+						{
+							GameObject* newCamera = currentScene->CreateNewObjectFromSchematic("Camera.osch");
+							currentScene->AddCamera(newCamera); // #TODO Call from camera component or game object
+						}
+						break;
 						}
 					}
+				}
 				ImGui::EndPopup();
 			}
 			ImGui::Separator();

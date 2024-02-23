@@ -23,6 +23,7 @@ int StringToInt(const char* string);
 char* ReverseString(char* value);
 
 char* NumberAppendOrIncrement(const char* const charArray);
+char* NumberAppendOrIncrementFileName(const char* const charArray);
 
 // std::vector<int> NumberSplitDigits(int number); // Number splitter helper, in some other file
 

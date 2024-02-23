@@ -66,6 +66,10 @@ namespace QwerkE {
 
         void LoadMeshesFromFile(const char* absoluteMeshFilePath);
 
+        // #TODO Define editor only API somehow, using #if directives maybe
+
+        Material* CreateNewMaterialFromFile(const char* absoluteFilePath);
+
         // #TODO Deprecate if possible and own asset creation inside of Assets.
         // Call functions ot generate data, then validate it internally and store or throw assert/errors/warning
         void TextureLoaded(const char* name, int handle);

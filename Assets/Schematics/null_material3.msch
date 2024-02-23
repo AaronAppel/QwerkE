@@ -1,15 +1,15 @@
 {
 	"Material":	[{
-			"m_Name":	"null_material.msch",
+			"m_Name":	"null_material3.msch",
 			"m_Components":	[{
 					"1":	[{
-							"s_FileName":	"null_texture.png"
+							"s_FileName":	"helmet_diff.png"
 						}],
 					"2":	[{
-							"s_FileName":	"null_texture.png"
+							"s_FileName":	"helmet_showroom_spec.png"
 						}],
 					"3":	[{
-							"s_FileName":	"null_texture.png"
+							"s_FileName":	"helmet_showroom_ddn.png"
 						}],
 					"4":	[{
 							"s_FileName":	"null_texture.png"

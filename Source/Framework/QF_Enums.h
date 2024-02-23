@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "Libraries/enum/QC_enum.h"
+
 namespace QwerkE {
 
     enum class eInputDeviceTypes : std::uint8_t
@@ -24,8 +26,7 @@ namespace QwerkE {
         InputDeviceTypes_Max
     };
 
-    enum class eMaterialMaps : std::uint8_t
-    {
+    QC_ENUM(eMaterialMaps, std::uint8_t,
         MatMap_Ambient = 0,
         MatMap_Diffuse,
         MatMap_Specular,
@@ -45,7 +46,30 @@ namespace QwerkE {
         MatMap_Vec3Colour,
         MatMap_Max,
         MatMap_Null
-    };
+    );
+
+    // enum class eMaterialMaps : std::uint8_t
+    // {
+    //     MatMap_Ambient = 0,
+    //     MatMap_Diffuse,
+    //     MatMap_Specular,
+    //     MatMap_Emissive,
+    //     MatMap_Height,
+    //     MatMap_Normals,
+    //     MatMap_Shininess,
+    //     MatMap_Opacity,
+    //     MatMap_Displacement,
+    //     MatMap_LightMap,
+    //     MatMap_Reflection,
+    //     MatMap_Albedo,
+    //     MatMap_Metallic,
+    //     MatMap_AmbientOcclusion,
+    //     MatMap_Roughness,
+    //
+    //     MatMap_Vec3Colour,
+    //     MatMap_Max,
+    //     MatMap_Null
+    // };
 
     enum eOperationResult : std::uint8_t
     {

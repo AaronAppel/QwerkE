@@ -217,3 +217,20 @@ char* NumberAppendOrIncrement(const char* const charArray)
 
 	return returnCharArray;
 }
+
+char* NumberAppendOrIncrementFileName(const char* const charArray)
+{
+	const char* periodChar = strrchr(charArray, '.');
+	if (!periodChar)
+	{
+		return NumberAppendOrIncrement(charArray);
+	}
+
+	std::string fileNameNoExt = charArray;
+	int size = periodChar - charArray;
+	fileNameNoExt.resize(size);
+
+	fileNameNoExt = NumberAppendOrIncrement(fileNameNoExt.c_str());
+	// auto a = std::make_unique<char>(fileNameNoExt.c_str());
+	return _strdup(fileNameNoExt.c_str()); // #TODO Handle allocation
+}

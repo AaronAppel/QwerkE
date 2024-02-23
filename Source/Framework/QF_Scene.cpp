@@ -186,6 +186,7 @@ namespace QwerkE {
                 m_pGameObjects[object->GetName()] = object;
                 AddObjectToSceneDrawList(object);
                 object->OnSceneLoaded(this);
+                SetDirty();
                 return true;
             }
         }

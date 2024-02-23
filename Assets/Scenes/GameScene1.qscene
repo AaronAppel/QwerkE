@@ -10,9 +10,9 @@
 							"m_Tag":	9,
 							"m_Transform":	[{
 									"s_Position":	[{
-											"x":	-0.576172,
-											"y":	3.504816,
-											"z":	-21.965401
+											"x":	0.280427,
+											"y":	2.526494,
+											"z":	-18.195570
 										}],
 									"s_Rotation":	[{
 											"x":	0,
@@ -47,8 +47,8 @@
 							"m_Tag":	9,
 							"m_Transform":	[{
 									"s_Position":	[{
-											"x":	0,
-											"y":	2,
+											"x":	1.400000,
+											"y":	4.600000,
 											"z":	10
 										}],
 									"s_Rotation":	[{
@@ -95,13 +95,13 @@
 							"m_Tag":	9,
 							"m_Transform":	[{
 									"s_Position":	[{
-											"x":	0,
+											"x":	-1.800000,
 											"y":	0.500000,
 											"z":	10
 										}],
 									"s_Rotation":	[{
 											"x":	0,
-											"y":	0,
+											"y":	40.799812,
 											"z":	0
 										}],
 									"s_Scale":	[{
@@ -121,7 +121,7 @@
 												}],
 											"m_RotationOffset":	[{
 													"x":	0,
-													"y":	0,
+													"y":	0.100000,
 													"z":	0
 												}],
 											"m_ScaleOffset":	[{
@@ -154,17 +154,17 @@
 						}],
 					"GameObject":	[{
 							"m_Enabled":	true,
-							"m_Name":	"Nanosuit",
+							"m_Name":	"Visor",
 							"m_Tag":	9,
 							"m_Transform":	[{
 									"s_Position":	[{
 											"x":	0,
 											"y":	0,
-											"z":	0
+											"z":	11
 										}],
 									"s_Rotation":	[{
 											"x":	0,
-											"y":	0,
+											"y":	180,
 											"z":	0
 										}],
 									"s_Scale":	[{
@@ -187,7 +187,7 @@
 													"Renderable":	[{
 															"m_RenderableName":	"0",
 															"m_ShaderName":	"LitMaterial.ssch",
-															"m_MaterialName":	"brickwall.msch",
+															"m_MaterialName":	"null_material4.msch",
 															"m_MeshName":	"Visor",
 															"m_MeshFileName":	"nanosuit.obj"
 														}]
@@ -278,6 +278,226 @@
 															"m_MaterialName":	"null_material.msch",
 															"m_MeshName":	"Plane",
 															"m_MeshFileName":	"Plane.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Legs",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	11
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	180,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"0",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"null_material1.msch",
+															"m_MeshName":	"Legs",
+															"m_MeshFileName":	"nanosuit.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Body",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	11
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	180,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"1",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"null_material0.msch",
+															"m_MeshName":	"Body",
+															"m_MeshFileName":	"nanosuit.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Arms",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	11
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	180,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"0",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"null_material2.msch",
+															"m_MeshName":	"Arms",
+															"m_MeshFileName":	"nanosuit.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Helmet",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	11
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	180,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"0",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"null_material3.msch",
+															"m_MeshName":	"Helmet",
+															"m_MeshFileName":	"nanosuit.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Hands",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	11
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	180,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"1",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"null_material5.msch",
+															"m_MeshName":	"Hands",
+															"m_MeshFileName":	"nanosuit.obj"
 														}]
 												}]
 										}]

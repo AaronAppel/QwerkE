@@ -34,16 +34,16 @@ namespace QwerkE {
     private:
         void RenderModelThumbnails();
 
-        int m_CurrentResource = 0;
+        int m_CurrentSelectedResourceType = 0;
 
         uPtr<MaterialEditor> m_MaterialEditor;
         bool m_ShowMatEditor = false;
         std::string m_MatName = gc_DefaultStringValue;
 
-        unsigned char m_ModelsPerRow = 4;
-        ImVec2 m_ModelThumbnailPixelSize = ImVec2(64, 64);
+        unsigned char m_ModelsPerRow = 4; // #TODO const and move out of header
+        ImVec2 m_ModelThumbnailPixelSize = ImVec2(64, 64); // #TODO const and move out of header
 
-        std::vector<GLuint> m_ModelImageHandles;
+        std::vector<GLuint> m_ModelImageHandles; // #TODO Should not be in an instance as only 1 should exist
 
         GameObject* m_ModelToDraw = nullptr;
         Scene* m_ViewerScene = nullptr;
