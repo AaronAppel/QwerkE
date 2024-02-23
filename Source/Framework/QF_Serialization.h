@@ -8,7 +8,7 @@ namespace QwerkE {
 
     namespace Serialization {
 
-        void DeserializeJsonToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj);
+        void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
         template <class T>
         void DeserializeJsonFromFile(const char* fileName, T& objectReference) // #TODO Handle pointers as well, to avoid need to always dereference (unsafe)
@@ -32,7 +32,8 @@ namespace QwerkE {
                 }
                 else
                 {
-                    DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForClass<T>(), (void*)&objectReference);
+                    DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
+                    // DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
                 }
 
                 ClosecJSONStream(rootJsonObject);
@@ -43,7 +44,8 @@ namespace QwerkE {
             }
         }
 
-        void SerializeObjectToJson(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson);
+        void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
+        // void SerializeObjectToJson(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson);
 
         template <class T>
         void SerializeObjectToFile(const T& objectReference, const char* filePath)
@@ -58,7 +60,7 @@ namespace QwerkE {
             cJSON* jsonRootArray = CreateArray(Mirror::InfoForType<T>()->stringName.c_str());
             AddItemToObject(jsonRootObject, jsonRootArray);
 
-            SerializeObjectToJson((const void*)&objectReference, Mirror::InfoForClass<T>(), jsonRootArray);
+            SerializeObjectToJson((const void*)&objectReference, Mirror::InfoForType<T>(), jsonRootArray);
 
             PrintRootObjectToFile(filePath, jsonRootObject);
             cJSON_Delete(jsonRootObject);

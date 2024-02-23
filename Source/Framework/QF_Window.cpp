@@ -4,11 +4,15 @@
 #include "Libraries/glfw/GLFW/glfw3.h"
 #include "Libraries/imgui/QC_imgui.h"
 
-#include "QF_CallBackFunctions.h" // #TODO Implement
+#include "QF_Assets.h"
 #include "QF_Debug.h"
 #include "QF_Defines.h"
+#include "QF_FileSystem.h"
+#include "QF_FileUtilities.h"
 #include "QF_Log.h"
 #include "QF_Renderer.h"
+#include "QF_Scene.h"
+#include "QF_Scenes.h"
 #include "QF_Settings.h"
 
 const char* g_WindowTitle = "QwerkEngine";
@@ -33,10 +37,21 @@ namespace QwerkE {
     #ifdef GLFW3
         GLFWwindow* s_window = nullptr;
 
+        void priv_error_callback(int error, const char* description)
+        {
+            LOG_ERROR(description);
+        }
+
+        void priv_window_resized_callback(GLFWwindow* window, int width, int height) // #TODO Implement
+        {
+        }
+
         void priv_close_callback(GLFWwindow* window)
         {
             s_closeRequested = true;
         }
+
+        void priv_file_drop_callback(GLFWwindow* window, int count, const char** paths);
 
         void priv_CheckGlfwErrors();
     #endif
@@ -72,8 +87,12 @@ namespace QwerkE {
             glfwSwapInterval(0); // TODO: Add VSynch control and toggling
             glfwMakeContextCurrent(s_window);
             glfwFocusWindow(s_window);
-            SetupCallbacks(s_window); // TODO: Window won't respond to clicking corner 'X'... sometimes?
+
+            glfwSetErrorCallback(priv_error_callback);
             glfwSetWindowCloseCallback(s_window, priv_close_callback);
+            glfwSetWindowSizeCallback(s_window, priv_window_resized_callback);
+            glfwSetDropCallback(s_window, priv_file_drop_callback);
+
     #endif
 
     #ifdef GLEW
@@ -254,6 +273,54 @@ namespace QwerkE {
             ASSERT(false, "Error loading GLFW!");
         }
     #endif
+
+        void priv_file_drop_callback(GLFWwindow* window, int count, const char** paths)
+        {
+            // Path of file drag and dropped onto this window
+            // TODO: Handle file drop correctly. This is hacked in for testing purposes at the moment.
+            // #TODO Use File:: utils
+
+            for (int i = 0; i < count; i++)
+            {
+                uPtr<char> fullFileName = SmartFileName(paths[i], true);
+                uPtr<char> dropFileExtensionStr = SmartFileExtension(paths[i]);
+
+                if (strcmp(dropFileExtensionStr.get(), "png") == 0 || strcmp(dropFileExtensionStr.get(), "jpg") == 0)
+                {
+                    if (!Assets::TextureExists(fullFileName.get()))
+                    {
+                        Assets::GetTextureFromPath(*paths);
+                    }
+                }
+                else if (strcmp(dropFileExtensionStr.get(), "fbx") == 0 || strcmp(dropFileExtensionStr.get(), "obj") == 0)
+                {
+                    if (!Assets::MeshExists(fullFileName.get()))
+                    {
+                        File::LoadModelFileToMeshes(*paths);
+                    }
+                }
+                else if (strcmp(dropFileExtensionStr.get(), "ssch") == 0)
+                {
+                    if (!Assets::ShaderProgramExists(fullFileName.get()))
+                    {
+                        Assets::GetShaderProgramFromPath(*paths);
+                    }
+                }
+                else if (strcmp(dropFileExtensionStr.get(), "qscene") == 0)
+                {
+                    if (Scene* newScene = Scenes::CreateScene(fullFileName.get()))
+                    {
+                        newScene->LoadScene();
+                        newScene->OnLoaded();
+                        Scenes::SetCurrentScene(newScene->GetSceneName());
+                    }
+                }
+                else
+                {
+                    LOG_WARN("Drag file type unsupported: {0}", dropFileExtensionStr.get());
+                }
+            }
+        }
 
     }
 

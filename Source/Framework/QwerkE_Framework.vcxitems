@@ -28,7 +28,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Basic3DShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debugger.cpp" />
@@ -94,7 +93,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_b3_World.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Bullet3Component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_CallBackFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Constants.h" />

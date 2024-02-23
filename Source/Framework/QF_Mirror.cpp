@@ -44,10 +44,41 @@ namespace QwerkE {
 	MIRROR_TYPE(m_routinePtr)
 
 	typedef RenderRoutine* m_renderRoutinePtr;
+	static_assert(std::is_pointer<m_renderRoutinePtr>(), "Error if type is not a pointer!");
 	MIRROR_TYPE(m_renderRoutinePtr)
 
 	typedef TransformRoutine* m_transformRoutinePtr; // #TODO Needed?
 	MIRROR_TYPE(m_transformRoutinePtr)
+
+	MIRROR_CLASS_START(Vector3)
+	MIRROR_CLASS_MEMBER(x)
+	MIRROR_CLASS_MEMBER(y)
+	MIRROR_CLASS_MEMBER(z)
+	MIRROR_CLASS_END(Vector3)
+
+	MIRROR_CLASS_START(Renderable)
+	MIRROR_CLASS_MEMBER(m_RenderableName)
+	MIRROR_CLASS_MEMBER(m_ShaderName)
+	MIRROR_CLASS_MEMBER(m_MaterialName)
+	MIRROR_CLASS_MEMBER(m_MeshFileName)
+	MIRROR_CLASS_END(Renderable)
+
+	// GameObject routines
+	MIRROR_CLASS_START(RenderRoutine)
+	MIRROR_CLASS_END(RenderRoutine)
+
+	MIRROR_CLASS_START(TransformRoutine)
+	MIRROR_CLASS_MEMBER(m_Speed)
+	MIRROR_CLASS_MEMBER(m_PositionOffset)
+	MIRROR_CLASS_MEMBER(m_RotationOffset)
+	MIRROR_CLASS_MEMBER(m_ScaleOffset)
+	MIRROR_CLASS_END(TransformRoutine)
+
+	MIRROR_CLASS_START(Routine)
+	MIRROR_CLASS_ADD_SUBCLASS_ENUM(RenderRoutine, MirrorTypes::RenderRoutine)
+	MIRROR_CLASS_ADD_SUBCLASS(TransformRoutine)
+	MIRROR_CLASS_MEMBER(m_Enabled)
+	MIRROR_CLASS_END(Routine)
 
 	// Vectors
 	typedef std::vector<std::string> m_vector_string;
@@ -57,37 +88,11 @@ namespace QwerkE {
 	MIRROR_TYPE(m_vector_gameobjectPtr)
 
 	typedef std::vector<Routine*> m_vector_routinePtr;
-	template<> const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<m_vector_routinePtr>() {
-		static TypeInfo localStaticTypeInfo; localStaticTypeInfo.stringName = "m_vector_routinePtr"; localStaticTypeInfo.size = sizeof(m_vector_routinePtr); localStaticTypeInfo.enumType = MirrorTypes::m_vector_routinePtr; localStaticTypeInfo.classInfo = nullptr; return &localStaticTypeInfo;
-	} template<> const QwerkE::Mirror::ClassInfo* QwerkE::Mirror::InfoForClass<m_vector_routinePtr>() {
-		return nullptr;
-	}
-
-	MIRROR_CLASS_START(Renderable)
-	MIRROR_CLASS_MEMBER(m_RenderableName)
-	MIRROR_CLASS_MEMBER(m_ShaderName)
-	MIRROR_CLASS_MEMBER(m_MaterialName)
-	MIRROR_CLASS_MEMBER(m_MeshFileName)
-	MIRROR_CLASS_END(Renderable)
+	// MIRROR_TYPE(m_vector_routinePtr);
+	MIRROR_COLLECTION(m_vector_routinePtr, Routine);
 
 	typedef std::vector<Renderable> m_vector_renderable;
-	// MIRROR_COLLECTION(m_vector_renderable, Renderable);
-
-	template<> const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<m_vector_renderable>() {
-		static TypeInfo localStaticTypeInfo; localStaticTypeInfo.stringName = "m_vector_renderable";
-		localStaticTypeInfo.size = sizeof(m_vector_renderable);
-		localStaticTypeInfo.enumType = MirrorTypes::m_vector_renderable;
-		localStaticTypeInfo.classInfo = nullptr;
-		localStaticTypeInfo.collectionTypeInfo = QwerkE::Mirror::InfoForType<Renderable>();
-		// localStaticTypeInfo.collectionClassInfo = QwerkE::Mirror::InfoForClass<Renderable>();
-		return &localStaticTypeInfo;
-	}
-
-	// QwerkE::Mirror::InfoForClass<Renderable>();
-
-	template<> const QwerkE::Mirror::ClassInfo* QwerkE::Mirror::InfoForClass<m_vector_renderable>() {
-		return nullptr;
-	}
+	MIRROR_COLLECTION(m_vector_renderable, Renderable);
 
 	// Maps
 	typedef std::map<eComponentTags, Component*> m_map_eComponentTags_componentPtr;
@@ -97,11 +102,6 @@ namespace QwerkE {
 	MIRROR_TYPE(m_map_eMaterialMaps_texturePtr)
 
 	// Structs
-	MIRROR_CLASS_START(Vector3)
-	MIRROR_CLASS_MEMBER(x)
-	MIRROR_CLASS_MEMBER(y)
-	MIRROR_CLASS_MEMBER(z)
-	MIRROR_CLASS_END(Vector3)
 
 	MIRROR_CLASS_START(Vector2)
 	MIRROR_CLASS_MEMBER(x)
@@ -165,7 +165,8 @@ namespace QwerkE {
 	MIRROR_CLASS_START(Component)
 	MIRROR_CLASS_END(Component)
 
-	MIRROR_SUB_CLASS_START(ComponentCamera, Component)
+	// MIRROR_SUB_CLASS_START(ComponentCamera, Component)
+	MIRROR_CLASS_START(ComponentCamera)
 	MIRROR_CLASS_MEMBER(m_ViewportSize)
 	MIRROR_CLASS_END(ComponentCamera)
 
@@ -177,22 +178,19 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_Renderables)
 	MIRROR_CLASS_END(RenderComponent)
 
-	// GameObject routines
-	MIRROR_CLASS_START(Routine)
-	MIRROR_CLASS_MEMBER(m_Enabled)
-	MIRROR_CLASS_END(Routine)
-
-	MIRROR_CLASS_START(RenderRoutine)
-	MIRROR_CLASS_END(RenderRoutine)
-
-	MIRROR_CLASS_START(TransformRoutine)
-	MIRROR_CLASS_MEMBER(m_Speed)
-	MIRROR_CLASS_MEMBER(m_PositionOffset)
-	MIRROR_CLASS_MEMBER(m_RotationOffset)
-	MIRROR_CLASS_MEMBER(m_ScaleOffset)
-	MIRROR_CLASS_END(TransformRoutine)
 
 	// More classes and complex structs
+
+	// MIRROR_COLLECTION(m_vector_renderable, Renderable);
+
+	// template<> const Mirror::TypeInfo* Mirror::InfoForType<m_vector_renderable>()
+	// {
+	// 	static TypeInfo localStaticTypeInfo; localStaticTypeInfo.stringName = "m_vector_renderable";
+	// 	localStaticTypeInfo.size = sizeof(m_vector_renderable);
+	// 	localStaticTypeInfo.enumType = MirrorTypes::m_vector_renderable;
+	// 	localStaticTypeInfo.collectionTypeInfo = Mirror::InfoForType<Renderable>();
+	// 	return &localStaticTypeInfo;
+	// };
 
 	MIRROR_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)

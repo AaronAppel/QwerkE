@@ -20,9 +20,9 @@ namespace QwerkE {
     namespace Inspector {
 
         static bool hasWarned = false;
-        void InspectFieldRecursive(const Mirror::ClassInfo* classInfo, void* obj, std::string parentName)
+        void InspectFieldRecursive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
-            const std::vector<Mirror::Field>& fields = classInfo->fields;
+            const std::vector<Mirror::Field>& fields = typeInfo->fields;
 
             for (size_t i = 0; i < fields.size(); i++)
             {
@@ -38,15 +38,12 @@ namespace QwerkE {
 
                         if (const Mirror::TypeInfo* collectionTypeInfo = field.typeInfo->collectionTypeInfo)
                         {
-                            if (collectionTypeInfo->classInfo)
+                            for (size_t i = 0; i < renderables->size(); i++)
                             {
-                                for (size_t i = 0; i < renderables->size(); i++)
-                                {
-                                    parentName += field.name + " ";
-                                    InspectFieldRecursive(collectionTypeInfo->classInfo, (void*)(renderables->data() + i), parentName);
-                                    // InspectFieldRecursive(Mirror::InfoForClass<Renderable>(), (Renderable*)renderables->data() + i, parentName);
-                                    parentName.clear();
-                                }
+                                parentName += field.name + " ";
+                                InspectFieldRecursive(field.typeInfo->collectionTypeInfo, (void*)(renderables->data() + i), parentName);
+                                // InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
+                                parentName.clear();
                             }
                         }
                     }
@@ -63,7 +60,7 @@ namespace QwerkE {
                 //             for (size_t i = 0; i < renderables->size(); i++)
                 //             {
                 //                 parentName += field.name;
-                //                 InspectFieldRecursive(Mirror::InfoForClass<Renderable>(), (Renderable*)renderables->data() + i, parentName);
+                //                 InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
                 //                 parentName.clear();
                 //             }
                 //             break;
@@ -101,11 +98,11 @@ namespace QwerkE {
                             switch (routines->at(i)->GetRoutineType())
                             {
                             case QwerkE::Routine_Render:
-                                InspectFieldRecursive(Mirror::InfoForClass<RenderRoutine>(), routines->at(i), parentName);
+                                InspectFieldRecursive(Mirror::InfoForType<RenderRoutine>(), routines->at(i), parentName);
                                 break;
 
                             case QwerkE::Routine_Transform:
-                                InspectFieldRecursive(Mirror::InfoForClass<TransformRoutine>(), routines->at(i), parentName);
+                                InspectFieldRecursive(Mirror::InfoForType<TransformRoutine>(), routines->at(i), parentName);
                                 break;
 
                             case QwerkE::Routine_Physics:
@@ -132,11 +129,11 @@ namespace QwerkE {
                         switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
                         {
                         case Component_Render:
-                            InspectFieldRecursive(Mirror::InfoForClass<RenderComponent>(), (RenderComponent*)component, parentName);
+                            InspectFieldRecursive(Mirror::InfoForType<RenderComponent>(), (RenderComponent*)component, parentName);
                             break;
 
                         case Component_Camera:
-                            InspectFieldRecursive(Mirror::InfoForClass<ComponentCamera>(), (ComponentCamera*)component, parentName);
+                            InspectFieldRecursive(Mirror::InfoForType<ComponentCamera>(), (ComponentCamera*)component, parentName);
                             break;
 
                         case Component_Light:
@@ -270,13 +267,16 @@ namespace QwerkE {
                 break;
 
                 default:
-                    if (field.classInfo)
+                    // #TODO Prevent infinite loop
+                    if (field.typeInfo)
                     {
+                        int bp = 0;
                         parentName += field.name + " ";
-                        InspectFieldRecursive(field.classInfo, (char*)obj + field.offset, parentName);
+                        InspectFieldRecursive(field.typeInfo, (char*)obj + field.offset, parentName);
                         parentName.clear();
                     }
-                    else if (!hasWarned)
+
+                    if (!hasWarned)
                     {
                         LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
                         hasWarned = true;

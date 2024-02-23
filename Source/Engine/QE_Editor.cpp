@@ -99,15 +99,15 @@ namespace QwerkE {
                     switch (s_SettingsEditorOption)
                     {
                     case eSettingsOptions::Engine:
-                        Inspector::InspectFieldRecursive(Mirror::InfoForClass<EngineSettings>(), &Settings::GetEngineSettings(), buffer);
+                        Inspector::InspectFieldRecursive(Mirror::InfoForType<EngineSettings>(), &Settings::GetEngineSettings(), buffer);
                         break;
 
                     case eSettingsOptions::Project:
-                        Inspector::InspectFieldRecursive(Mirror::InfoForClass<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
+                        Inspector::InspectFieldRecursive(Mirror::InfoForType<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
                         break;
 
                     case eSettingsOptions::User:
-                        Inspector::InspectFieldRecursive(Mirror::InfoForClass<UserSettings>(), &Settings::GetUserSettings(), buffer);
+                        Inspector::InspectFieldRecursive(Mirror::InfoForType<UserSettings>(), &Settings::GetUserSettings(), buffer);
                         break;
                     }
 

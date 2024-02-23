@@ -10,12 +10,12 @@ namespace QwerkE {
 
     namespace Inspector {
 
-        void InspectFieldRecursive(const Mirror::ClassInfo* classInfo, void* obj, std::string parentName);
+        void InspectFieldRecursive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
 
         template <class T>
         void InspectFieldRecursive(T& obj, std::string parentName)
         {
-            InspectFieldRecursive(Mirror::InfoForClass<T>(), &obj, parentName);
+            InspectFieldRecursive(Mirror::InfoForType<T>(), &obj, parentName);
         }
 
         template <class T>

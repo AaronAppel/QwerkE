@@ -1,5 +1,8 @@
 #include "QF_Serialization.h"
 
+#include <map>
+#include <vector>
+
 #include "Libraries/cJSON/QC_cJSON.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
@@ -32,9 +35,9 @@ namespace QwerkE {
         void DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
         void DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
 
-        void DeserializeJsonToObject(const cJSON* objJson, const Mirror::ClassInfo* objClassInfo, void* obj)
+        void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
         {
-            if (!objJson || !objClassInfo || !obj)
+            if (!objJson || !objTypeInfo || !obj)
             {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
@@ -46,14 +49,35 @@ namespace QwerkE {
                 jsonStructArr = GetAllSiblingsWithObject(objJson);
             }
 
-            if (jsonStructArr.size() != objClassInfo->fields.size())
+            if (jsonStructArr.size() != objTypeInfo->fields.size())
             {
                 LOG_WARN("{0} Mismatched array sizes for json object {1} ", __FUNCTION__, objJson->string);
             }
 
-            for (size_t i = 0; i < objClassInfo->fields.size(); i++)
+            if (objTypeInfo->IsPrimitive())
             {
-                const Mirror::Field& field = objClassInfo->fields[i];
+                switch (objJson->type)
+                {
+                case cJSON_String:
+                    DeserializeJsonString(objJson, objTypeInfo->enumType, (char*)obj);
+                    break;
+
+                case cJSON_True:
+                case cJSON_False:
+                case cJSON_Number:
+                    DeserializeJsonNumber(objJson, objTypeInfo->enumType, objTypeInfo->size, (char*)obj);
+                    break;
+
+                default:
+                    // #TODO Handle reading/writing a simple primitive to a file
+                    LOG_WARN("{0} Unhandled early return for type {1}", __FUNCTION__, (int)objTypeInfo->enumType);
+                    return;
+                }
+            }
+
+            for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
+            {
+                const Mirror::Field& field = objTypeInfo->fields[i];
 
 #if SERIALIZER_OPTIMIZATION_LEVEL > 0
                 for (size_t j = i; j < jsonStructArr.size(); j++)
@@ -107,19 +131,19 @@ namespace QwerkE {
                 case eRoutineTypes::Routine_Render:
                     {
                         indexPtrAddress = new RenderRoutine();
-                        DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<RenderRoutine>(), indexPtrAddress);
+                        DeserializeJsonToObject(jsonObj, Mirror::InfoForType<RenderRoutine>(), indexPtrAddress);
                     }
                     break;
 
                 case eRoutineTypes::Routine_Print:
                     // indexPtrAddress = new PrintRoutine();
-                    // DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<PrintRoutine>(), indexPtrAddress);
+                    // DeserializeJsonToObject(jsonObj, Mirror::InfoForType<PrintRoutine>(), indexPtrAddress);
                     break;
 
                 case eRoutineTypes::Routine_Transform:
                     {
                         indexPtrAddress = new TransformRoutine();
-                        DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<TransformRoutine>(), indexPtrAddress);
+                        DeserializeJsonToObject(jsonObj, Mirror::InfoForType<TransformRoutine>(), indexPtrAddress);
                     }
                     break;
                 }
@@ -131,7 +155,7 @@ namespace QwerkE {
 
             // Deserialize parent/derived values
             // Mirror::GetParentClassInfo<Routine>()
-            DeserializeJsonToObject(jsonObj, Mirror::InfoForClass<Routine>(), indexPtrAddress);
+            DeserializeJsonToObject(jsonObj, Mirror::InfoForType<Routine>(), indexPtrAddress);
 
             return indexPtrAddress;
         }
@@ -153,7 +177,7 @@ namespace QwerkE {
                 {
                     AbsoluteTypeT* objectPtr = new AbsoluteTypeT();
 
-                    DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), objectPtr);
+                    DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForType<AbsoluteTypeT>(), objectPtr);
                     vectorPtrPtr->push_back(objectPtr);
                 }
             }
@@ -166,7 +190,7 @@ namespace QwerkE {
                 for (size_t i = 0; i < jsonObjectVector.size(); i++)
                 {
                     AbsoluteTypeT objectInstance;
-                    DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForClass<AbsoluteTypeT>(), &objectInstance);
+                    DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForType<AbsoluteTypeT>(), &objectInstance);
                     vectorPtrPtr->push_back(objectInstance);
                 }
             }
@@ -183,56 +207,32 @@ namespace QwerkE {
             switch (field.typeInfo->enumType)
             {
             case MirrorTypes::m_vector_string:
-                {
-                    // DeserializeVector<std::string>(jsonObj, obj); // #TODO Find out why std::string type is not supported
-                    // return;
-
-                    std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj);
-                    const std::vector<cJSON*> jsonStrings = GetAllItemsFromArray(jsonObj);
-                    if (strings)
-                    {
-                        strings->reserve(jsonStrings.size());
-                        strings->resize(0);
-
-                        for (size_t i = 0; i < jsonStrings.size(); i++)
-                        {
-                            // #TODO Handle more types agnosticly, so this logic would also support ints and other primitives/base values
-                            // #TODO This could be templated using the MirrorTypes enum if the function handles more than strings
-                            // DeserializeJsonString(jsonObj, MirrorTypes::m_string, obj);
-
-                            strings->emplace_back(jsonStrings[i]->valuestring);
-                        }
-                    }
-                    else
-                    {
-                        LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
-                    }
-                }
+                // {
+                //     // DeserializeVector<std::string>(jsonObj, obj); // #TODO Find out why std::string type is not supported
+                //     // return;
+                //
+                //     std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj);
+                //     const std::vector<cJSON*> jsonStrings = GetAllItemsFromArray(jsonObj);
+                //     if (strings)
+                //     {
+                //         strings->reserve(jsonStrings.size());
+                //         strings->resize(0);
+                //
+                //         for (size_t i = 0; i < jsonStrings.size(); i++)
+                //         {
+                //             // #TODO Handle more types agnosticly, so this logic would also support ints and other primitives/base values
+                //             // #TODO This could be templated using the MirrorTypes enum if the function handles more than strings
+                //             // DeserializeJsonString(jsonObj, MirrorTypes::m_string, obj);
+                //
+                //             strings->emplace_back(jsonStrings[i]->valuestring);
+                //         }
+                //     }
+                // }
+                DeserializeVector<std::string>(jsonObj, obj);
                 break;
 
             case MirrorTypes::m_vector_renderable:
-
-                if (const Mirror::TypeInfo* collectionTypeInfo = field.typeInfo->collectionTypeInfo)
-                {
-                    if (collectionTypeInfo->classInfo)
-                    {
-                        std::vector<Renderable>* vectorPtrPtr = (std::vector<Renderable>*)obj; // #TODO Review if possible to validate pointer value
-                        const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
-                        vectorPtrPtr->reserve(jsonObjectVector.size());
-                        vectorPtrPtr->resize(0);
-
-                        for (size_t i = 0; i < jsonObjectVector.size(); i++)
-                        {
-                            Renderable objectInstance;
-                            // #TODO Try to emplace new the renderable
-                            DeserializeJsonToObject(jsonObjectVector[i], collectionTypeInfo->classInfo, &objectInstance);
-                            vectorPtrPtr->push_back(objectInstance);
-                        }
-                    }
-
-                }
-
-                // DeserializeVector<Renderable>(jsonObj, obj); // #TODO field.collectionType
+                DeserializeVector<Renderable>(jsonObj, obj);
                 break;
 
             case MirrorTypes::m_vector_gameobjectPtr:
@@ -243,6 +243,23 @@ namespace QwerkE {
             {
                 // DeserializeVector<Routine*>(jsonObj, obj); // #TODO Handle sub class type construction
                 // return;
+
+                if (auto collectionInfo = field.typeInfo->collectionTypeInfo)
+                {
+                    if (!collectionInfo->derivedTypesMap.empty())
+                    {
+                        auto map = collectionInfo->derivedTypesMap;
+                        for (auto& currentRoutine : map)
+                        {
+                            if (false)
+                            {
+                                // #TODO Determine which sub class currentRoutine is
+                                Routine* newRoutine = nullptr;
+                                newRoutine = new RenderRoutine();
+                            }
+                        }
+                    }
+                }
 
                 std::vector<Routine*>* routines = (std::vector<Routine*>*)obj;
                 const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
@@ -271,6 +288,19 @@ namespace QwerkE {
                 const std::vector<cJSON*> jsonGameObjects = GetAllItemsFromArray(jsonObj);
                 if (componentsMap)
                 {
+                    if (auto collectionInfo = field.typeInfo->collectionTypeInfo)
+                    {
+                        if (!collectionInfo->derivedTypesMap.empty())
+                        {
+                            for (size_t i = 0; i < jsonGameObjects.size(); i++)
+                            {
+                                int bp = 0;
+                                // Component* component = nullptr; // #TODO component = (Component*)collectionInfo->CreateSubClass(enumType);
+                                // DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForType<ComponentCamera>(), component);
+                            }
+                        }
+                    }
+
                     componentsMap->clear();
 
                     Component* component = nullptr;
@@ -287,18 +317,18 @@ namespace QwerkE {
                         {
                         case Component_Camera:
                             component = new ComponentCamera();
-                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<ComponentCamera>(), component);
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForType<ComponentCamera>(), component);
                             break;
 
                         case Component_Light:
                             component = new LightComponent();
-                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<LightComponent>(), component);
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForType<LightComponent>(), component);
                             ((LightComponent*)component)->SetColour(vec3(1.0f, 1.0f, 1.0f));
                             break;
 
                         case Component_Render:
                             component = new RenderComponent();
-                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<RenderComponent>(), component);
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForType<RenderComponent>(), component);
                             break;
 
                         case Component_Physics:
@@ -341,7 +371,7 @@ namespace QwerkE {
                             }
 
                             Texture texture;
-                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForClass<Texture>(), &texture);
+                            DeserializeJsonToObject(jsonGameObjects[i], Mirror::InfoForType<Texture>(), &texture);
                             Texture* result = Assets::GetTexture(texture.s_FileName.c_str());
 
                             std::map<eMaterialMaps, Texture*>& componentMapRef = *texturesMap; // #TODO BUG Look why map->insert({}) wasn't working with initializer list
@@ -353,7 +383,7 @@ namespace QwerkE {
                 break;
 
             default:
-                DeserializeJsonToObject(jsonObj, field.classInfo, obj);
+                DeserializeJsonToObject(jsonObj, field.typeInfo, obj);
                 break;
             }
         }
@@ -477,7 +507,7 @@ namespace QwerkE {
                         continue;
 
                     cJSON* newJsonObjectArray = CreateArray(typeInfo->stringName.c_str());
-                    SerializeObjectToJson(vectorPtrPtr->at(i), Mirror::InfoForClass<AbsoluteTypeT>(), newJsonObjectArray);
+                    SerializeObjectToJson(vectorPtrPtr->at(i), Mirror::InfoForType<AbsoluteTypeT>(), newJsonObjectArray);
                     AddItemToArray(objJson, newJsonObjectArray);
                 }
             }
@@ -488,23 +518,23 @@ namespace QwerkE {
                 for (size_t i = 0; i < vectorPtr->size(); i++)
                 {
                     cJSON* newJsonObjectArray = CreateArray(typeInfo->stringName.c_str());
-                    SerializeObjectToJson(&vectorPtr->at(i), Mirror::InfoForClass<AbsoluteTypeT>(), newJsonObjectArray);
+                    SerializeObjectToJson(&vectorPtr->at(i), Mirror::InfoForType<AbsoluteTypeT>(), newJsonObjectArray);
                     AddItemToArray(objJson, newJsonObjectArray);
                 }
             }
         }
 
-        void SerializeObjectToJson(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson)
+        void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
-            if (!objJson || !objClassInfo || !obj)
+            if (!objJson || !objTypeInfo || !obj)
             {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
             }
 
-            for (size_t i = 0; i < objClassInfo->fields.size(); i++)
+            for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             {
-                const Mirror::Field& field = objClassInfo->fields[i];
+                const Mirror::Field& field = objTypeInfo->fields[i];
 
                 cJSON* arr = nullptr;
                 if (!field.typeInfo->IsPrimitive())
@@ -513,11 +543,11 @@ namespace QwerkE {
                     cJSON_AddItemToArray(objJson->child, arr);
                 }
 
-                if (field.classInfo)
-                {
-                    SerializeObjectToJson((char*)obj + field.offset, field.classInfo, arr);
-                    continue;
-                }
+                // if (field.classInfo)
+                // {
+                //     SerializeObjectToJson((char*)obj + field.offset, field.typeInfo, arr);
+                //     continue;
+                // }
 
                 switch (field.typeInfo->enumType)
                 {
@@ -544,27 +574,36 @@ namespace QwerkE {
                     const std::vector<Routine*>* routines = (std::vector<Routine*>*)((char*)obj + field.offset);
                     if (routines)
                     {
+                        if (!field.typeInfo->derivedTypesMap.empty())
+                        {
+                            auto map = field.typeInfo->derivedTypesMap;
+                            for (auto& it : map)
+                            {
+                                // Determine which sub class
+                            }
+                        }
+
                         for (size_t i = 0; i < routines->size(); i++)
                         {
                             Routine* routine = routines->at(i);
                             cJSON* routineJson = CreateArray(std::to_string((int)routine->GetRoutineType()).c_str());
 
                             // Serialize parent class values
-                            SerializeObjectToJson(routine, Mirror::InfoForClass<Routine>(), routineJson);
+                            SerializeObjectToJson(routine, Mirror::InfoForType<Routine>(), routineJson);
 
                             switch (routine->GetRoutineType())
                             {
                             case eRoutineTypes::Routine_Render:
-                                SerializeObjectToJson(routine, Mirror::InfoForClass<RenderRoutine>(), routineJson);
+                                SerializeObjectToJson(routine, Mirror::InfoForType<RenderRoutine>(), routineJson);
                                 // SerializeObjectToJson(routine, Mirror::GetParentClassInfo<RenderRoutine>(), routineJson);
                                 break;
 
                             case eRoutineTypes::Routine_Print:
-                                // SerializeObjectToJson(routine, Mirror::InfoForClass<PrintRoutine>(), routineJson);
+                                // SerializeObjectToJson(routine, Mirror::InfoForType<PrintRoutine>(), routineJson);
                                 break;
 
                             case eRoutineTypes::Routine_Transform:
-                                SerializeObjectToJson(routine, Mirror::InfoForClass<TransformRoutine>(), routineJson);
+                                SerializeObjectToJson(routine, Mirror::InfoForType<TransformRoutine>(), routineJson);
                                 break;
 
                             default:
@@ -601,11 +640,11 @@ namespace QwerkE {
                         switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
                         {
                         case Component_Render:
-                            SerializeObjectToJson(component, Mirror::InfoForClass<RenderComponent>(), t_Component);
+                            SerializeObjectToJson(component, Mirror::InfoForType<RenderComponent>(), t_Component);
                             break;
 
                         case Component_Camera:
-                            SerializeObjectToJson(component, Mirror::InfoForClass<ComponentCamera>(), t_Component);
+                            SerializeObjectToJson(component, Mirror::InfoForType<ComponentCamera>(), t_Component);
                             break;
 
                         case Component_Light:
