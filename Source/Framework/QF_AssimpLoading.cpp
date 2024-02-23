@@ -33,14 +33,17 @@ namespace QwerkE {
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes.push_back(_assimp_loadVertexData(mesh, scene, filePath.c_str()));
-
-            if (mesh->mMaterialIndex >= 0)
+            if (!Assets::MeshExists(mesh->mName.C_Str()))
             {
-                _assimp_loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], filePath, matNames);
+                meshes.push_back(_assimp_loadVertexData(mesh, scene, filePath.c_str()));
+
+                if (mesh->mMaterialIndex >= 0)
+                {
+                    _assimp_loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], filePath, matNames);
+                }
             }
         }
-        // then do the same for each of its children
+        // Loop over children
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
             _assimp_loadSceneNodeData(node->mChildren[i], scene, meshes, filePath, matNames);
@@ -49,14 +52,12 @@ namespace QwerkE {
 
     Mesh* _assimp_loadVertexData(aiMesh* mesh, const aiScene* scene, const char* modelFilePath)
     {
-        char* modelFullFileName = File::FullFileName(modelFilePath);
+        std::unique_ptr<char> modelFullFileName = SmartFileName(modelFilePath, true);
         if (!modelFullFileName)
             return nullptr;
 
-        if (Assets::MeshExists(modelFullFileName))
-        {
-            return Assets::GetMesh(modelFullFileName);
-        }
+        if (Assets::MeshExists(modelFullFileName.get()))
+            return Assets::GetMesh(modelFullFileName.get());
 
         MeshData meshData;
         meshData.positions.resize(mesh->mNumVertices);
@@ -113,15 +114,13 @@ namespace QwerkE {
             rMesh = new Mesh();
             rMesh->BufferMeshData(&meshData);
             rMesh->SetName(mesh->mName.C_Str());
-            rMesh->SetFileName(modelFullFileName);
-            Assets::MeshLoaded(modelFullFileName, rMesh);
+            rMesh->SetFileName(modelFullFileName.get());
         }
         else
         {
-            rMesh = Assets::GetMesh(null_mesh);
+            rMesh = Assets::GetMesh(null_mesh); // #TODO Review case
         }
 
-        free(modelFullFileName);
         return rMesh;
     }
 

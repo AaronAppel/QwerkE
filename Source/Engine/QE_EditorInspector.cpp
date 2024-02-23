@@ -172,12 +172,16 @@ namespace QwerkE {
 
                 case MirrorTypes::m_string:
                 {
-                    const std::string* stringAddress = (const std::string*)fieldAddress;
+                    std::string* stringAddress = (std::string*)fieldAddress;
                     std::string fieldName = parentName + field.name;
-                    // ImGui::LabelText(fieldName.c_str(), stringAddress->data());
-                    // #TODO Handle buffering for string re-assignment properly
-                    if (ImGui::InputText(fieldName.c_str(), (char*)stringAddress->data(), stringAddress->capacity()))
+
+                    std::string buffer;
+                    buffer.reserve(INT8_MAX);
+                    buffer = *stringAddress;
+
+                    if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
                     {
+                        *stringAddress = buffer;
                         Scenes::SetCurrentSceneDirty();
                     }
                 }
@@ -186,13 +190,19 @@ namespace QwerkE {
                 case MirrorTypes::m_charPtr:
                 case MirrorTypes::m_constCharPtr:
                 {
-                    const char* constCharPtrAddress = *(const char**)fieldAddress;
+                    const char** constCharPtrAddress = (const char**)fieldAddress;
                     std::string fieldName = parentName + field.name;
-                    ImGui::LabelText(fieldName.c_str(), constCharPtrAddress);
-                    // if (true)
-                    // {
-                    //     Scenes::SetCurrentSceneDirty();
-                    // }
+
+                    std::string buffer;
+                    buffer.reserve(INT8_MAX);
+                    buffer = *constCharPtrAddress;
+
+                    if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
+                    {
+                        // delete *constCharPtrAddress;
+                        *constCharPtrAddress = strdup(buffer.data());
+                        Scenes::SetCurrentSceneDirty();
+                    }
                 }
                 break;
 
@@ -202,11 +212,15 @@ namespace QwerkE {
                     char* charPtrAddress = (char*)fieldAddress;
                     char charEscaped[2] = { *charPtrAddress, '\0' };
                     std::string fieldName = parentName + field.name;
-                    ImGui::LabelText(fieldName.c_str(), charEscaped);
-                    // if (true)
-                    // {
-                    //     Scenes::SetCurrentSceneDirty();
-                    // }
+                    if (ImGui::InputText(fieldName.c_str(), charEscaped, 2))
+                    {
+                        if (charEscaped[0] >= 97 && charEscaped[0] <= 122)
+                        {
+                            charEscaped[0] -= 32;
+                        }
+                        *charPtrAddress = charEscaped[0];
+                        Scenes::SetCurrentSceneDirty();
+                    }
                 }
                 break;
 
@@ -267,7 +281,7 @@ namespace QwerkE {
                 break;
 
                 default:
-                    // #TODO Prevent infinite loop
+                    // #TODO Review potential for infinite loop
                     if (field.typeInfo)
                     {
                         int bp = 0;
@@ -275,12 +289,12 @@ namespace QwerkE {
                         InspectFieldRecursive(field.typeInfo, (char*)obj + field.offset, parentName);
                         parentName.clear();
                     }
-
-                    if (!hasWarned)
+                    else if (!hasWarned)
                     {
                         LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
                         hasWarned = true;
                     }
+
                     break;
                 }
             }

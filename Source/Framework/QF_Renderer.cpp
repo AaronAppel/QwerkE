@@ -105,6 +105,12 @@ namespace QwerkE {
                 glm::vec3(0, 0, 0));
         }
 
+        const void OnWindowResized(const vec2& newWindowSize)
+        {
+            s_WindowSize = newWindowSize;
+            glViewport(0, 0, (GLsizei)s_WindowSize.x, (GLsizei)s_WindowSize.y);
+        }
+
         const vec2& WindowSize()
         {
             return s_WindowSize;

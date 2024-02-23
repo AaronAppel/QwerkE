@@ -44,6 +44,8 @@ namespace QwerkE {
 
         if (ImGui::Begin("Scene Viewer", &isOpen, ImGuiWindowFlags_NoScrollbar))
         {
+            // ImGui::GetWindowSize();
+
             // ImGui::PushItemWidth(100);
             // const char* runningStates[] = { "Running", "Paused" };
             // m_currentSceneStateIndex = (char)currentScene->GetIsPaused();

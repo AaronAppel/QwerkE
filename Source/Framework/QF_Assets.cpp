@@ -31,13 +31,16 @@ namespace QwerkE {
 		static std::map<std::string, ShaderProgram*> s_ShaderPrograms;
 		static std::map<std::string, ShaderComponent*> s_ShaderComponents;
 
-		Mesh* InstantiateMesh(const char* meshFilePath);
+		Mesh* InstantiateFileMesh(const char* meshFilePath, const char* meshFileName);
+		void InstantiateFileMeshes(const char* meshFilePath);
 		Texture* InstantiateTexture(const char* textureName);
 		Material* InstantiateMaterial(const char* matName);
 		FT_Face InstantiateFont(const char* fontName);
 		ALuint InstantiateSound(const char* soundPath);
 		ShaderProgram* InstantiateShaderProgram(const char* schematicFile);
 		ShaderComponent* InstantiateShaderComponent(const char* componentFilePath);
+
+		bool MeshLoaded(const char* filePath, Mesh* mesh);
 
 		void Initialize()
 		{
@@ -47,7 +50,7 @@ namespace QwerkE {
 				s_ShaderComponents.empty(),
 				"Resources already initialized!");
 
-			ASSERT(InstantiateMesh(MeshesFolderPath(null_mesh)), "Error loading null mesh asset!");
+			ASSERT(InstantiateFileMesh(MeshesFolderPath(null_mesh), null_mesh), "Error loading null mesh asset!");
 			ASSERT(InstantiateTexture(TexturesFolderPath(null_texture)), "Error loading null texture asset!");
 			ASSERT(InstantiateMaterial(SchematicsFolderPath(null_material_schematic)), "Error loading null material asset!");
 			ASSERT(InstantiateFont(FontsFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
@@ -124,29 +127,55 @@ namespace QwerkE {
 		}
 
 		// TODO: Handle errors and deleting assets before returning nullptr
-		Mesh* InstantiateMesh(const char* meshFilePath)
+		Mesh* InstantiateFileMesh(const char* meshFilePath, const char* meshFileName)
 		{
-			if (!meshFilePath)
+			if (!meshFilePath || !meshFileName)
+			{
+				LOG_ERROR("{0} Null mesh file path or mesh name!", __FUNCTION__);
 				return s_Meshes[null_mesh];
+			}
 
 			if (FileExists(meshFilePath))
 			{
-				if (File::LoadModelFileToMeshes(meshFilePath))
+				if (Mesh* mesh = File::LoadMeshInModelByName(meshFilePath, meshFileName))
 				{
-					LOG_TRACE("{0} Mesh loaded {1}", __FUNCTION__, meshFilePath);
+					LOG_TRACE("{0} Mesh loaded {1}", __FUNCTION__, mesh->GetName().c_str());
+					Assets::MeshLoaded(mesh->GetName().c_str(), mesh);
+					return mesh;
 				}
-
-				// #TODO Mesh files can contain any number of meshes, with any names.
-				// Need to handle this more elegantly.
-				if (uPtr<char> meshFullFileName = SmartFileName(meshFilePath, true))
+				else
 				{
-					if (MeshExists(meshFullFileName.get()))
-					{
-						return s_Meshes[meshFullFileName.get()];
-					}
+					LOG_ERROR("{0} Unable to load mesh {1} from file {2}", __FUNCTION__, meshFilePath, meshFileName);
 				}
 			}
 			return s_Meshes[null_mesh];
+		}
+
+		void InstantiateFileMeshes(const char* meshFilePath)
+		{
+			if (!meshFilePath)
+			{
+				LOG_ERROR("{0} Null mesh file path!", __FUNCTION__);
+				return;
+			}
+
+			if (FileExists(meshFilePath))
+			{
+				std::vector<Mesh*> meshes = File::LoadModelFileToMeshes(meshFilePath);
+
+				for (size_t i = 0; i < meshes.size(); i++)
+				{
+					if (meshes[i])
+					{
+						MeshLoaded(meshes[i]->GetFileName().c_str(), meshes[i]);
+						LOG_TRACE("{0} Mesh loaded {1}", __FUNCTION__, meshes[i]->GetName().c_str());
+					}
+					else
+					{
+						LOG_WARN("{0} Null mesh found in file {1}", __FUNCTION__, meshFilePath);
+					}
+				}
+			}
 		}
 
 		Texture* InstantiateTexture(const char* textureName)
@@ -329,14 +358,11 @@ namespace QwerkE {
 
 		Mesh* GetMesh(const char* meshName)
 		{
-			if (!meshName)
-				return s_Meshes[null_mesh];
-
-			if (s_Meshes.find(meshName) != s_Meshes.end())
+			if (meshName && MeshExists(meshName))
 			{
 				return s_Meshes[meshName];
 			}
-			return InstantiateMesh(MeshesFolderPath(meshName));
+			return s_Meshes[null_mesh];
 		}
 
 		Mesh* GetMeshFromFile(const char* fileName, const char* meshName)
@@ -587,6 +613,14 @@ namespace QwerkE {
 		const std::map<std::string, ShaderProgram*>& SeeShaderPrograms() { return s_ShaderPrograms; };
 		const std::map<std::string, ShaderComponent*>& SeeShaderComponents() { return s_ShaderComponents; };
 
+		void LoadMeshesFromFile(const char* absoluteMeshFilePath)
+		{
+			if (absoluteMeshFilePath)
+			{
+				InstantiateFileMeshes(absoluteMeshFilePath);
+			}
+		}
+
 		void TextureLoaded(const char* name, int handle)
 		{
 			if (name) // #TODO Verify handle value?  && handle != 0
@@ -612,16 +646,11 @@ namespace QwerkE {
 			if (!filePath || mesh == nullptr || mesh->GetName() == gc_DefaultStringValue)
 				return false;
 
-			char* fullFileName = File::FullFileName(filePath);
-			if (MeshExists(fullFileName))
+			const char* meshName = mesh->GetName().c_str();
+			if (MeshExists(meshName))
 				return false;
 
-			s_Meshes[fullFileName] = mesh;
-
-			if (fullFileName)
-			{
-				free(fullFileName);
-			}
+			s_Meshes[meshName] = mesh;
 			return true;
 		}
 

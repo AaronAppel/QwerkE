@@ -29,7 +29,7 @@ namespace QwerkE {
         {
             m_Shader = Assets::GetShaderProgram(m_ShaderName.c_str());
             m_Material = Assets::GetMaterial(m_MaterialName.c_str());
-            m_Mesh = Assets::GetMesh(m_MeshFileName.c_str());
+            m_Mesh = Assets::GetMeshFromFile(m_MeshFileName.c_str(), m_MeshName.c_str());
         }
 
         const std::string& GetRenderableName() const { return m_RenderableName; }
@@ -70,6 +70,7 @@ namespace QwerkE {
                 if (m_Shader)
                 {
                     m_Mesh->SetupShaderAttributes(m_Shader);
+                    m_MeshName = mesh->GetName();
                     m_MeshFileName = mesh->GetFileName();
                 }
             }
@@ -84,6 +85,7 @@ namespace QwerkE {
         Mesh* m_Mesh = nullptr;
         std::string m_ShaderName = gc_DefaultStringValue;
         std::string m_MaterialName = gc_DefaultStringValue;
+        std::string m_MeshName = gc_DefaultStringValue;
         std::string m_MeshFileName = gc_DefaultStringValue;
     };
 

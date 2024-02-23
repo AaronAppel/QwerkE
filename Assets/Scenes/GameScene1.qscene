@@ -79,6 +79,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"LightBulb",
 															"m_MeshFileName":	"LightBulb.obj"
 														}]
 												}]
@@ -143,6 +144,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"Pyramid",
 															"m_MeshFileName":	"Pyramid.obj"
 														}]
 												}]
@@ -186,6 +188,7 @@
 															"m_RenderableName":	"0",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"Visor",
 															"m_MeshFileName":	"nanosuit.obj"
 														}]
 												}]
@@ -229,6 +232,7 @@
 															"m_RenderableName":	"0",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"null_material.msch",
+															"m_MeshName":	"Cube_UVd",
 															"m_MeshFileName":	"Cube_UVd.obj"
 														}]
 												}]
@@ -272,6 +276,7 @@
 															"m_RenderableName":	"1",
 															"m_ShaderName":	"Basic3D.ssch",
 															"m_MaterialName":	"null_material.msch",
+															"m_MeshName":	"Plane",
 															"m_MeshFileName":	"Plane.obj"
 														}]
 												}]

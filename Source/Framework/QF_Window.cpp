@@ -28,9 +28,7 @@ namespace QwerkE {
 
     namespace Window {
 
-        unsigned char m_lastFocusedWindowIndex;
-
-        bool s_windowIsMaximized = false;
+        bool s_windowIsMinimized = false;
         bool s_closeRequested = false;
         vec2 s_aspectRatio = vec2(16.f, 9.f);
 
@@ -42,13 +40,24 @@ namespace QwerkE {
             LOG_ERROR(description);
         }
 
-        void priv_window_resized_callback(GLFWwindow* window, int width, int height) // #TODO Implement
+        void priv_framebuffer_size_callback(GLFWwindow* window, int width, int height)
         {
+            // Renderer::OnWindowResized( vec2(width, height) );
+        }
+
+        void priv_window_resized_callback(GLFWwindow* window, int width, int height)
+        {
+            // Renderer::OnWindowResized(vec2(width, height));
         }
 
         void priv_close_callback(GLFWwindow* window)
         {
             s_closeRequested = true;
+        }
+
+        void priv_window_iconify_callback(GLFWwindow* window, int iconified)
+        {
+            s_windowIsMinimized = iconified == 1;
         }
 
         void priv_file_drop_callback(GLFWwindow* window, int count, const char** paths);
@@ -89,8 +98,10 @@ namespace QwerkE {
             glfwFocusWindow(s_window);
 
             glfwSetErrorCallback(priv_error_callback);
+            glfwSetFramebufferSizeCallback(s_window, priv_framebuffer_size_callback);
             glfwSetWindowCloseCallback(s_window, priv_close_callback);
             glfwSetWindowSizeCallback(s_window, priv_window_resized_callback);
+            glfwSetWindowIconifyCallback(s_window, priv_window_iconify_callback);
             glfwSetDropCallback(s_window, priv_file_drop_callback);
 
     #endif
@@ -151,6 +162,14 @@ namespace QwerkE {
         void Window::Render()
         {
     #ifdef dearimgui
+
+            if (s_windowIsMinimized)
+            {
+                ImGui::EndFrame();
+                ImGui::UpdatePlatformWindows();
+                return;
+            }
+
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -183,25 +202,6 @@ namespace QwerkE {
             ImGui::NewFrame();
         }
 
-        void Window::ToggleMaximized()
-        {
-            // #TODO Add more functionality with :
-            // glfwShowWindow
-            // glfwHideWindow
-            // glfwFocusWindow
-            // glfwSetInputMode for handling "Sticky Keys"
-
-            if (s_windowIsMaximized)
-            {
-                glfwRestoreWindow(s_window);
-            }
-            else
-            {
-                glfwMaximizeWindow(s_window);
-            }
-            s_windowIsMaximized = !s_windowIsMaximized;
-        }
-
         void Window::RequestClose()
         {
             s_closeRequested = true;
@@ -227,6 +227,11 @@ namespace QwerkE {
         void* Window::GetContext()
         {
             return s_window;
+        }
+
+        bool IsMinimized()
+        {
+            return s_windowIsMinimized;
         }
 
     #ifdef GLFW3
@@ -274,6 +279,8 @@ namespace QwerkE {
         }
     #endif
 
+        // #TODO Call editor or add an editor callback so window doesn't
+        // have file drop logic in release/non-editor build.
         void priv_file_drop_callback(GLFWwindow* window, int count, const char** paths)
         {
             // Path of file drag and dropped onto this window
@@ -282,33 +289,27 @@ namespace QwerkE {
 
             for (int i = 0; i < count; i++)
             {
-                uPtr<char> fullFileName = SmartFileName(paths[i], true);
+                const char* absoluteFilePath = paths[i]; // #TODO Use absolute paths for file drag and dropping
                 uPtr<char> dropFileExtensionStr = SmartFileExtension(paths[i]);
 
                 if (strcmp(dropFileExtensionStr.get(), "png") == 0 || strcmp(dropFileExtensionStr.get(), "jpg") == 0)
                 {
-                    if (!Assets::TextureExists(fullFileName.get()))
-                    {
-                        Assets::GetTextureFromPath(*paths);
-                    }
+                    Assets::GetTextureFromPath(absoluteFilePath);
                 }
                 else if (strcmp(dropFileExtensionStr.get(), "fbx") == 0 || strcmp(dropFileExtensionStr.get(), "obj") == 0)
                 {
-                    if (!Assets::MeshExists(fullFileName.get()))
-                    {
-                        File::LoadModelFileToMeshes(*paths);
-                    }
+                    Assets::LoadMeshesFromFile(absoluteFilePath);
                 }
                 else if (strcmp(dropFileExtensionStr.get(), "ssch") == 0)
                 {
-                    if (!Assets::ShaderProgramExists(fullFileName.get()))
+                    if (!Assets::ShaderProgramExists(absoluteFilePath))
                     {
                         Assets::GetShaderProgramFromPath(*paths);
                     }
                 }
                 else if (strcmp(dropFileExtensionStr.get(), "qscene") == 0)
                 {
-                    if (Scene* newScene = Scenes::CreateScene(fullFileName.get()))
+                    if (Scene* newScene = Scenes::CreateScene(absoluteFilePath))
                     {
                         newScene->LoadScene();
                         newScene->OnLoaded();

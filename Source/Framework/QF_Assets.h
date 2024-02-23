@@ -64,10 +64,12 @@ namespace QwerkE {
         const std::map<std::string, ShaderProgram*>& SeeShaderPrograms();
         const std::map<std::string, ShaderComponent*>& SeeShaderComponents();
 
-        // #TODO Deprecate if possible and own asset creation inside of Assets
+        void LoadMeshesFromFile(const char* absoluteMeshFilePath);
+
+        // #TODO Deprecate if possible and own asset creation inside of Assets.
+        // Call functions ot generate data, then validate it internally and store or throw assert/errors/warning
         void TextureLoaded(const char* name, int handle);
         bool TextureLoaded(const char* name, Texture* texture);
-        bool MeshLoaded(const char* filePath, Mesh* mesh);
         bool MaterialLoaded(const char* name, Material* material);
         bool FontLoaded(const char* name, FT_Face font);
         bool SoundLoaded(const char* name, ALuint sound);

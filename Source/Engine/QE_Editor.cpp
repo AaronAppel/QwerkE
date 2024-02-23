@@ -10,6 +10,7 @@
 #include "QF_Network.h"
 #include "QF_Time.h"
 #include "QF_Settings.h"
+#include "QF_Window.h"
 
 #include "QE_EditorInspector.h"
 #include "QE_EntityEditor.h"
@@ -63,6 +64,9 @@ namespace QwerkE {
         void Editor::Draw()
         {
             PROFILE_SCOPE("Editor Render");
+            if (Window::IsMinimized())
+                return;
+
 #ifdef dearimgui
 
             priv_DrawMainMenuBar();

@@ -14,6 +14,8 @@ namespace QwerkE {
 
         void DrawFont(const char* text, float x = 100.f, float y = 100.f, float scale = 1.0f);
 
+        const void OnWindowResized(const vec2& newWindowSize);
+
         const vec2& WindowSize();
     }
 

@@ -507,7 +507,7 @@ namespace QwerkE {
                         continue;
 
                     cJSON* newJsonObjectArray = CreateArray(typeInfo->stringName.c_str());
-                    SerializeObjectToJson(vectorPtrPtr->at(i), Mirror::InfoForType<AbsoluteTypeT>(), newJsonObjectArray);
+                    SerializeObjectToJson(vectorPtrPtr->at(i), typeInfo, newJsonObjectArray);
                     AddItemToArray(objJson, newJsonObjectArray);
                 }
             }
@@ -518,7 +518,7 @@ namespace QwerkE {
                 for (size_t i = 0; i < vectorPtr->size(); i++)
                 {
                     cJSON* newJsonObjectArray = CreateArray(typeInfo->stringName.c_str());
-                    SerializeObjectToJson(&vectorPtr->at(i), Mirror::InfoForType<AbsoluteTypeT>(), newJsonObjectArray);
+                    SerializeObjectToJson(&vectorPtr->at(i), typeInfo, newJsonObjectArray);
                     AddItemToArray(objJson, newJsonObjectArray);
                 }
             }
@@ -531,6 +531,29 @@ namespace QwerkE {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
             }
+
+            // Could consider trying switch statement 1st, and then handling non-explicitly supported/complex types in the default case
+            // if (!objTypeInfo->fields.empty())
+            // {
+            //     for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
+            //     {
+            //         const Mirror::Field& field = objTypeInfo->fields[i];
+            //
+            //         cJSON* arr = nullptr;
+            //         if (!field.typeInfo->IsPrimitive())
+            //         {
+            //             arr = CreateArray(field.name.c_str());
+            //             cJSON_AddItemToArray(objJson->child, arr);
+            //         }
+            //         else
+            //         {
+            //             arr = objJson;
+            //         }
+            //
+            //         SerializeObjectToJson((char*)obj + field.offset, field.typeInfo, arr);
+            //     }
+            //     return;
+            // }
 
             for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             {
@@ -551,7 +574,7 @@ namespace QwerkE {
 
                 switch (field.typeInfo->enumType)
                 {
-                case MirrorTypes::m_vector_string:
+                case MirrorTypes::m_vector_string: // #TODO Try to remove this case to use if (!objTypeInfo->fields.empty()) for loop
                     {
                         const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
                         if (strings)

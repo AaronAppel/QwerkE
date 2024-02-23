@@ -14,8 +14,6 @@ namespace QwerkE {
 
         void NewFrame();
 
-        void ToggleMaximized();
-
         void RequestClose();
         bool CloseRequested();
 
@@ -23,6 +21,8 @@ namespace QwerkE {
         vec2 GetAspectRatio();
 
         void* GetContext();
+
+        bool IsMinimized();
 
     }
 

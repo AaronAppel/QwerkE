@@ -1,7 +1,8 @@
 #include "QF_FileSystem.h"
 
-#include <string>
 #include <iostream>
+#include <memory>
+#include <string>
 #include <vector>
 
 #pragma warning( disable : 26495 )
@@ -184,9 +185,12 @@ namespace QwerkE {
 
 		Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName)
 		{
-			if (false == Assets::MeshExists(meshName))
+			if (!modelFilePath || !meshName)
+				return nullptr;
+
+			Mesh* mesh = nullptr;
+			if (!Assets::MeshExists(meshName))
 			{
-				Mesh* mesh = nullptr;
 #ifdef AI_CONFIG_H_INC
 				Assimp::Importer importer;
 				const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -200,49 +204,40 @@ namespace QwerkE {
 #else
 #pragma error "Define model loading library!"
 #endif
-				Assets::MeshLoaded(meshName, mesh);
 			}
-			return Assets::GetMesh(meshName);
+			return mesh;
 		}
 
-		bool LoadModelFileToMeshes(const char* absoluteModelFilePath)
+		std::vector<Mesh*> LoadModelFileToMeshes(const char* absoluteMeshFilePath)
 		{
-			char* modelFullFileName = FullFileName(absoluteModelFilePath);
-			if (!modelFullFileName)
-				return false;
-
-			if (Assets::MeshExists(modelFullFileName))
-			{
-				free(modelFullFileName);
-				return false;
-			}
+			std::unique_ptr<char> fileName = SmartFileName(absoluteMeshFilePath, true);
 
 			std::vector<Mesh*> meshes;
+
+			if (!fileName)
+				return meshes;
+
+			if (Assets::MeshExists(fileName.get()))
+				return meshes;
+
 			std::vector<std::string> matNames;
 
 #ifdef AI_CONFIG_H_INC
 			Assimp::Importer importer;
 
-			const aiScene* scene = importer.ReadFile(absoluteModelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
+			const aiScene* scene = importer.ReadFile(absoluteMeshFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 			if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 			{
 				LOG_ERROR("ERROR::ASSIMP::{0}", importer.GetErrorString());
-				return false;
+				return meshes;
 			}
-			_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, absoluteModelFilePath, matNames);
+			_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, absoluteMeshFilePath, matNames);
 			// TODO: De-allocate RAM created by assimp
 #else
 #pragma error "Define model loading library!"
 #endif
-
-			for (size_t i = 0; i < meshes.size(); i++)
-			{
-				Assets::MeshLoaded(meshes[i]->GetFileName().c_str(), meshes[i]);
-			}
-
-			free(modelFullFileName);
-			return true;
+			return meshes;
 		}
 
 #ifdef OpenAL

@@ -30,8 +30,8 @@ namespace QwerkE {
 
         void Draw() const { (this->*m_DrawFunc)(); };
 
-        std::string GetName() const { return m_Name; };
-        std::string GetFileName() const { return m_FileName; };
+        const std::string& GetName() const { return m_Name; };
+        const std::string& GetFileName() const { return m_FileName; };
 
         void SetName(std::string name) { m_Name = name; }
         void SetFileName(std::string file) { m_FileName = file; }

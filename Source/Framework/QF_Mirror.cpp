@@ -60,6 +60,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_RenderableName)
 	MIRROR_CLASS_MEMBER(m_ShaderName)
 	MIRROR_CLASS_MEMBER(m_MaterialName)
+	MIRROR_CLASS_MEMBER(m_MeshName)
 	MIRROR_CLASS_MEMBER(m_MeshFileName)
 	MIRROR_CLASS_END(Renderable)
 

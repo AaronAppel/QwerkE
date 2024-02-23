@@ -80,6 +80,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"null_mesh.obj",
 															"m_MeshFileName":	"null_mesh.obj"
 														}]
 												}]
@@ -144,6 +145,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"LitMaterial.ssch",
 															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"Teapot",
 															"m_MeshFileName":	"Teapot.obj"
 														}]
 												}]
@@ -206,6 +208,7 @@
 															"m_RenderableName":	"null",
 															"m_ShaderName":	"Basic3D.ssch",
 															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"Cube_UVd",
 															"m_MeshFileName":	"Cube_UVd.obj"
 														}]
 												}]
@@ -249,6 +252,7 @@
 															"m_RenderableName":	"0",
 															"m_ShaderName":	"null_shader.ssch",
 															"m_MaterialName":	"null_material.msch",
+															"m_MeshName":	"Pyramid",
 															"m_MeshFileName":	"Pyramid.obj"
 														}]
 												}]
