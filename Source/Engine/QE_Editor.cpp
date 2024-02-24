@@ -55,7 +55,7 @@ namespace QwerkE {
 
             s_EngineSettings = &Settings::GetEngineSettings();
             ASSERT(s_EngineSettings, "Null engine settings!");
-            static bool* s_showingFPS = &s_EngineSettings->showingFPS;
+            s_showingFPS = &s_EngineSettings->showingFPS;
         }
 
         void Editor::Shutdown()
