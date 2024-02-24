@@ -10,3 +10,6 @@ When moving bullet files, it's important to remember to NOT add any .cpp files t
 
 ## GLM Math Library      [[Library References]]
 Same issue as Bullet with dummy.cpp, where it shouldn't be added to the Visual Studio solution or project.
+
+## ImGui                   [[Library References]]
+Using the docking space feature, a crash will occur if two windows are ever docked to 1 area/section/window. Probably an issue on my end, but all libraries are using old versions so new versions could include fixes for issues like this.

@@ -143,6 +143,11 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(physicsEnabled)
 	MIRROR_CLASS_MEMBER(networkingEnabled)
 	MIRROR_CLASS_MEMBER(consoleOutputWindowEnabled)
+	MIRROR_CLASS_MEMBER(showingSchematicsEditor)
+	MIRROR_CLASS_MEMBER(showingExampleWindow)
+	MIRROR_CLASS_MEMBER(showingShaderEditor)
+	MIRROR_CLASS_MEMBER(showingSettingsEditor)
+	MIRROR_CLASS_MEMBER(showingFPS)
 	MIRROR_CLASS_END(EngineSettings)
 
 	MIRROR_CLASS_START(UserSettings)

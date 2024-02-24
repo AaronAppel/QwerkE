@@ -83,14 +83,11 @@
             "id": "6694405be56e5dc0",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "QwerkE Structure Diagram.canvas",
-                "viewState": {
-                  "x": -100.659070644661,
-                  "y": -399.76303350666973,
-                  "zoom": 0.5625
-                }
+                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
+                "mode": "source",
+                "source": false
               }
             }
           },
@@ -191,7 +188,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "QwerkE Structure Diagram.canvas"
+                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md"
               }
             }
           }
@@ -234,7 +231,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "QwerkE Structure Diagram.canvas",
+                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -246,7 +243,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "QwerkE Structure Diagram.canvas",
+                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -274,8 +271,8 @@
   },
   "active": "6694405be56e5dc0",
   "lastOpenFiles": [
-    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
     "QwerkE Structure Diagram.canvas",
+    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
     "Mirror Library.md",
     "Pointer Manipulation.md",
     "Systems/Saving and Loading/Type Reflection.md",

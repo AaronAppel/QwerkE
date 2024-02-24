@@ -5,14 +5,14 @@ namespace QwerkE {
     namespace Time {
 
         void InitStartTime();
-        double StartTime();
+        const double& StartTime();
 
         void EndFrame();
 
-        float FrameDelta();
-        double FrameDeltaDouble();
+        const float& FrameDelta();
+        const double& FrameDeltaDouble();
 
-        double Now();
+        const double& Now();
 
 		// #TODO This should be in window or some other engine section
         // static void SetMaxFrameRate(float framesPerSecond);

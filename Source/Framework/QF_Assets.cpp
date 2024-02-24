@@ -182,6 +182,14 @@ namespace QwerkE {
 		{
 			if (FileExists(textureName))
 			{
+				bool multiThreaded = false;
+				if (multiThreaded && TextureExists(null_texture))
+				{
+					QLoadAsset* loadAssetJob = new QLoadAsset(textureName);
+					Jobs::ScheduleTask(loadAssetJob); // #TODO Allocation
+					return s_Textures[null_texture];
+				}
+
 				Texture* texture = new Texture();
 				texture->s_Handle = Load2DTexture(textureName);
 				if (uPtr<char> fullFileName = SmartFileName(textureName, true))

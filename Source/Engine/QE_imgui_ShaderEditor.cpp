@@ -19,7 +19,7 @@ namespace QwerkE {
     const char* s_ShadersComboText = "Shader Schematic";
     const int s_CharacterPixelSize = 10;
 
-    void ShaderEditor::Draw(bool* isOpen)
+    void ShaderEditor::Draw(bool& isOpen)
     {
         if (m_CurrentShader == nullptr)
         {
@@ -31,7 +31,7 @@ namespace QwerkE {
             }
         }
 
-        ImGui::Begin("Shader Editor", isOpen);
+        ImGui::Begin("Shader Editor", &isOpen);
 
         auto shaders = Assets::SeeShaderPrograms();
         std::vector<const char*> shaderNames;

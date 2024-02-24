@@ -6,7 +6,7 @@ namespace QwerkE {
 
     class Event;
 
-    class EventManager
+    class EventManager final // #TODO Namespace Events
     {
     public:
         static void Initialize();

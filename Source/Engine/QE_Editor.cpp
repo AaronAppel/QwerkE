@@ -3,6 +3,7 @@
 #include "Libraries/imgui/QC_imgui.h"
 #include "Libraries/enum/QC_enum.h"
 
+#include "QF_Debug.h"
 #include "QF_Defines.h"
 #include "QF_FileSystem.h"
 #include "QF_FileUtilities.h"
@@ -23,24 +24,25 @@ namespace QwerkE {
 
     namespace Editor {
 
-        EntityEditor* s_EntityEditor = nullptr;
-        SceneGraph* s_SceneGraph = nullptr;
-        ShaderEditor* s_ShaderEditor = nullptr;
-        ResourceViewer* s_ResourceViewer = nullptr;
-        SceneViewer* s_SceneViewer = nullptr;
+        static EntityEditor* s_EntityEditor = nullptr;
+        static SceneGraph* s_SceneGraph = nullptr;
+        static ShaderEditor* s_ShaderEditor = nullptr;
+        static ResourceViewer* s_ResourceViewer = nullptr;
+        static SceneViewer* s_SceneViewer = nullptr;
 
-        bool s_ShowingSettingsEditor = false;
+        static EngineSettings* s_EngineSettings = nullptr;
+
         QC_ENUM(eSettingsOptions, int, Null, Engine, Project, User);
-        eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
+        static eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
 
-        bool s_ShowingSchematicsEditor = false;
+        static bool* s_showingFPS = nullptr; // #TODO Review individual value pointers
 
 #ifdef dearimgui
-        void priv_DrawMainMenuBar();
-        void RenderDockingContext();
+        static bool s_ShowingImGuiExampleWindow = false;
 
-        bool s_ShowingExampleWindow = false;
-        bool s_ShowingShaderEditor = false;
+        static void priv_DrawMainMenuBar();
+        static void RenderDockingContext();
+
 #endif
 
         void Editor::Initialize()
@@ -50,6 +52,10 @@ namespace QwerkE {
             s_ResourceViewer = new ResourceViewer();
             s_ShaderEditor = new ShaderEditor();
             s_SceneViewer = new SceneViewer();
+
+            s_EngineSettings = &Settings::GetEngineSettings();
+            ASSERT(s_EngineSettings, "Null engine settings!");
+            static bool* s_showingFPS = &s_EngineSettings->showingFPS;
         }
 
         void Editor::Shutdown()
@@ -64,6 +70,7 @@ namespace QwerkE {
         void Editor::Draw()
         {
             PROFILE_SCOPE("Editor Render");
+
             if (Window::IsMinimized())
                 return;
 
@@ -72,18 +79,26 @@ namespace QwerkE {
             priv_DrawMainMenuBar();
             RenderDockingContext();
 
-            if (s_ShowingExampleWindow)
+            if (s_ShowingImGuiExampleWindow)
             {
-                ImGui::ShowDemoWindow();
+                ImGui::ShowDemoWindow(&s_ShowingImGuiExampleWindow);
             }
 
-            if (s_ShowingShaderEditor)
+            if (s_EngineSettings->showingShaderEditor)
             {
-                s_ShaderEditor->Draw(&s_ShowingShaderEditor);
+                s_ShaderEditor->Draw(s_EngineSettings->showingShaderEditor);
             }
 
-            if (s_ShowingSettingsEditor && ImGui::Begin("Settings Inspector"))
+            const bool before = s_EngineSettings->showingSettingsEditor;
+
+            if (s_EngineSettings->showingSettingsEditor &&
+                ImGui::Begin("Settings Inspector", &s_EngineSettings->showingSettingsEditor))
             {
+                if (ImGui::IsWindowDocked() && !s_EngineSettings->showingSettingsEditor)
+                {
+                    int bp = 0;
+                }
+
                 for (size_t i = 1; i < eSettingsOptions::_size_constant; i++)
                 {
                     if (i > 1) ImGui::SameLine();
@@ -120,8 +135,15 @@ namespace QwerkE {
 
                 ImGui::End();
             }
+            else
+            {
+                if (before != s_EngineSettings->showingSettingsEditor)
+                {
+                    ImGui::End();
+                }
+            }
 
-            if (s_ShowingSchematicsEditor && ImGui::Begin("Schematics Inspector"))
+            if (s_EngineSettings->showingSchematicsEditor && ImGui::Begin("Schematics Inspector", &s_EngineSettings->showingSchematicsEditor))
             {
                 // #TODO Cache result to avoid constant directory info fetching
                 auto dirFileNamesUPtr = ReadDir(SchematicsFolderPath(""));
@@ -154,22 +176,12 @@ namespace QwerkE {
             {
                 if (ImGui::BeginMenu("Menu"))
                 {
-                    if (ImGui::Button("Settings Inspector"))
-                    {
-                        s_ShowingSettingsEditor = !s_ShowingSettingsEditor;
-                    }
-
-                    if (ImGui::Button("Schematics Inspector"))
-                    {
-                        s_ShowingSchematicsEditor = !s_ShowingSchematicsEditor;
-                    }
-
                     static int index = 0;
                     static const int size = 5;
                     const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
                     if (ImGui::ListBox("", &index, d, size, 3))
                     {
-                        if (index == 0) s_ShowingExampleWindow = !s_ShowingExampleWindow;
+                        if (index == 0) s_ShowingImGuiExampleWindow = !s_ShowingImGuiExampleWindow;
                     }
                     ImGui::EndMenu();
                 }
@@ -178,40 +190,39 @@ namespace QwerkE {
                 {
                     const int size = 1;
                     static const char* toolsList[size] = { "Shader Editor" };
-                    static bool* toolsStates[size] = { &s_ShowingShaderEditor };
+                    static bool* toolsStates[size] = { &s_EngineSettings->showingShaderEditor };
 
                     for (int i = 0; i < size; i++)
                     {
                         if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
                         {
-                            s_ShowingShaderEditor = *toolsStates[i];
+                            s_EngineSettings->showingShaderEditor = *toolsStates[i];
                         }
                     }
                     ImGui::EndMenu();
                 }
 
-                static bool showFPS = true;
-                if (ImGui::Button("FPS"))
+                if (ImGui::BeginMenu("Windows"))
                 {
-                    showFPS = !showFPS;
-                }
+                    if (ImGui::Button("Settings Inspector"))
+                    {
+                        s_EngineSettings->showingSettingsEditor = !s_EngineSettings->showingSettingsEditor;
+                        Settings::SaveEngineSettings();
+                    }
 
-                ImGui::SameLine();
-                if (showFPS)
-                {
-                    // #TODO Review deltatime calculation and text positioning to avoid "flickering" and frequent resizing
-                    ImGui::PushItemWidth(200.f);
-                    const float deltaTime = Time::FrameDelta();
-                    if (deltaTime == 0.f)
+                    if (ImGui::Button("Schematics Inspector"))
                     {
-                        ImGui::Text("%1.1f", 0.f);
-                        // ImGui::Text("0.0");
+                        s_EngineSettings->showingSchematicsEditor = !s_EngineSettings->showingSchematicsEditor;
+                        Settings::SaveEngineSettings();
                     }
-                    else
+
+                    if (ImGui::Button("FPS"))
                     {
-                        ImGui::Text("%1.1f", 1.0f / deltaTime);
+                        s_EngineSettings->showingFPS = !s_EngineSettings->showingFPS;
+                        Settings::SaveEngineSettings();
                     }
-                    ImGui::PopItemWidth();
+
+                    ImGui::EndMenu();
                 }
 
                 if (ImGui::BeginMenu("Testing"))
@@ -236,6 +247,51 @@ namespace QwerkE {
 
                     ImGui::EndMenu();
                 }
+
+                ImGui::SameLine(ImGui::GetWindowWidth() - 36); // 4 characters * 9 pixels each
+                if (s_showingFPS)
+                {
+                    char a[] = { '0', '0', '0', '\0' };
+
+                    const float& deltaTime = Time::FrameDelta();
+                    if (deltaTime == .0f)
+                    {
+                        snprintf(a, sizeof(a) / sizeof(char), "%1.1f", deltaTime);
+                    }
+                    else
+                    {
+                        snprintf(a, sizeof(a) / sizeof(char), "%1.1f", 1.f / deltaTime);
+                    }
+
+                    ImGui::PushItemWidth(200.f);
+                    if (ImGui::Button(a))
+                    {
+                    }
+                    ImGui::PopItemWidth();
+
+                    if (ImGui::IsItemClicked())
+                    {
+                        *s_showingFPS = !s_showingFPS;
+                        Settings::SaveEngineSettings();
+                    }
+                }
+
+                // ImGui::SameLine();
+                // if (s_EngineSettings->showingFPS)
+                // {
+                //     // #TODO Review deltatime calculation and text positioning to avoid "flickering" and frequent resizing
+                //     ImGui::PushItemWidth(200.f);
+                //     const float deltaTime = Time::FrameDelta();
+                //     if (deltaTime == 0.f)
+                //     {
+                //         ImGui::Text("%1.1f", 0.f);
+                //     }
+                //     else
+                //     {
+                //         ImGui::Text("%1.1f", 1.0f / deltaTime);
+                //     }
+                //     ImGui::PopItemWidth();
+                // }
 
                 ImGui::EndMainMenuBar();
             }

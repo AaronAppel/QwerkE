@@ -161,12 +161,14 @@ namespace QwerkE {
 
                 case MirrorTypes::Vector3:
                 {
+                    static bool startingColor = true;
                     float* vector3Address = (float*)fieldAddress;
                     std::string fieldName = parentName + field.name;
                     if (ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f))
                     {
                         Scenes::SetCurrentSceneDirty();
                     }
+                    startingColor = !startingColor;
                 }
                 break;
 

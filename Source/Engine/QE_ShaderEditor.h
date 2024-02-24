@@ -10,7 +10,7 @@ namespace QwerkE {
     class ShaderEditor final // #TODO Change for editing any file type as raw text
     {
     public:
-        void Draw(bool* isOpen);
+        void Draw(bool& isOpen);
 
         void SetCurrentShader(ShaderProgram* shader) { m_CurrentShader = shader; };
         const ShaderProgram* GetCurrentShader() { return m_CurrentShader; };

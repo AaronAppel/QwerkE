@@ -28,7 +28,7 @@ namespace QwerkE {
         int windowWidthPixels = 1600; // #TODO Support unsigned short
         int windowHeightPixels = 900;
 
-        bool showFps = true;
+        bool showFps = true; // #TODO Handle duplicated value
         bool limitFramerate = true;
         int maxFramesPerSecond = 120;
 
@@ -39,6 +39,13 @@ namespace QwerkE {
         bool physicsEnabled = false;
         bool networkingEnabled = false;
         bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
+
+        // Editor UI
+        bool showingSchematicsEditor = false;
+        bool showingExampleWindow = false;
+        bool showingShaderEditor = false;
+        bool showingSettingsEditor = false;
+        bool showingFPS = false;
     };
 
     struct UserSettings

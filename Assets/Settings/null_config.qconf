@@ -10,6 +10,11 @@
 			"audioEnabled":	false,
 			"physicsEnabled":	false,
 			"networkingEnabled":	false,
-			"consoleOutputWindowEnabled":	true
+			"consoleOutputWindowEnabled":	true,
+			"showingSchematicsEditor":	false,
+			"showingExampleWindow":	false,
+			"showingShaderEditor":	false,
+			"showingSettingsEditor":	true,
+			"showingFPS":	true
 		}]
 }

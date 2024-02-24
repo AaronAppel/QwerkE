@@ -114,6 +114,8 @@ namespace QwerkE {
 				lastFrameTime = now;
 			}
 
+			Settings::SaveEngineSettings();
+
 			Framework::TearDown();
 			Instrumentor::Get().EndSession();
 
