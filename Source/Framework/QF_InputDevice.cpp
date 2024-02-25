@@ -1,32 +1,35 @@
 #include "QF_InputDevice.h"
 
-#include <cstring>
+#include "QF_Input.h"
 
 namespace QwerkE {
 
-    void InputDevice::RaiseInputEvent(eKeys key, eKeyState state)
-    {
-        s_OneFrameBuffersAreDirty = true;
+    namespace Input {
 
-        for (int i = 0; i < 12; i++)
+        void InputDevice::RaiseInputEvent(eKeys key, eKeyState state)
         {
-            if (s_OneFrameKeyBuffer[i] == eKeys_NULL_KEY)
+            s_OneFrameBuffersAreDirty = true;
+
+            for (int i = 0; i < ONE_FRAME_MAX_INPUT; i++)
             {
-                s_OneFrameKeyBuffer[i] = key;
-                s_OneFrameValueBuffer[i] = state;
-                return;
+                if (s_OneFrameKeyBuffer[i] == eKeys_NULL_KEY)
+                {
+                    s_OneFrameKeyBuffer[i] = key;
+                    s_OneFrameValueBuffer[i] = state;
+                    return;
+                }
             }
         }
-    }
 
-    void InputDevice::NewFrame()
-    {
-        if (s_OneFrameBuffersAreDirty)
+        void InputDevice::NewFrame()
         {
-            // m_MouseDragStart = 0.0f;
-            memset(s_OneFrameKeyBuffer, eKeys_NULL_KEY, 12 * sizeof(short));
-            memset(s_OneFrameValueBuffer, 0, 12); // TODO: Do I want a 3rd key state?
-            s_OneFrameBuffersAreDirty = false;
+            if (s_OneFrameBuffersAreDirty)
+            {
+                // m_MouseDragStart = 0.0f;
+                memset(s_OneFrameKeyBuffer, eKeys_NULL_KEY, ONE_FRAME_MAX_INPUT * sizeof(short));
+                memset(s_OneFrameValueBuffer, 0, ONE_FRAME_MAX_INPUT);
+                s_OneFrameBuffersAreDirty = false;
+            }
         }
     }
 

@@ -4,10 +4,14 @@
 
 namespace QwerkE {
 
-    struct Keyboard : public InputDevice
-    {
-        Keyboard(eInputDeviceTypes type) : InputDevice(type) {}
-        ~Keyboard() {}
-    };
+    namespace Input {
+
+        struct Keyboard : public InputDevice
+        {
+            Keyboard(eInputDeviceTypes type) : InputDevice(type) {}
+            ~Keyboard() {}
+        };
+
+    }
 
 }

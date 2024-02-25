@@ -183,13 +183,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_InputDevice.cpp">
       <Filter>Core\Input</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_KeyboardExtApi.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mouse.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_MouseExtApi.cpp">
       <Filter>Core\Input</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Jobs.cpp">
@@ -406,12 +400,6 @@
       <Filter>Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Keyboard.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_KeyboardExtApi.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_MouseExtApi.h">
       <Filter>Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mouse.h">
