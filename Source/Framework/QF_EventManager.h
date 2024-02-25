@@ -21,7 +21,6 @@ namespace QwerkE {
 
     private:
         EventManager() = default;
-        ~EventManager() = default;
 
         static const int m_EventMax;
         static std::queue<Event*> m_EventQueue;

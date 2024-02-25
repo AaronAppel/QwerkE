@@ -13,7 +13,7 @@ namespace QwerkE {
 
     void JobQueuedEvent::Process()
     {
-        Jobs::ProcessTasks();
+        Jobs::ProcessTasks(); // #TODO Improve
     }
 
 }

@@ -2,15 +2,16 @@
 
 #include "Libraries/pThreads/pthread.h"
 
-#include "QF_Event.h"
-#include "QF_Log.h"
 #include "QF_Assets.h"
+#include "QF_Event.h"
+#include "QF_JobQueuedEvent.h"
+#include "QF_Log.h"
 
 namespace QwerkE {
 
     // #TODO Review QueueEvent() thread safety
     static pthread_mutex_t* s_mutex = nullptr;
-    const int EventManager::m_EventMax = 100;
+    const int EventManager::m_EventMax = 50;
     std::queue<Event*> EventManager::m_EventQueue;
 
     void EventManager::Initialize()
@@ -42,7 +43,7 @@ namespace QwerkE {
         {
             _event->SetID(Assets::GetGUID());
             m_EventQueue.push(_event);
-            LOG_INFO("Event {0} Queued!", _event->GetID());
+            LOG_INFO("Event {0} Queued of type {1}", _event->GetID(), (int)_event->GetType());
         }
         else
         {
@@ -58,15 +59,19 @@ namespace QwerkE {
 
         for (int i = 0; i < size; i++)
         {
-            Event* _event = m_EventQueue.front();
-            _event->Process();
+            Event* event = m_EventQueue.front();
+            event->Process();
 
-            switch (_event->GetType())
+            switch (event->GetType())
             {
             case eEventTypes::eEvent_AssetLoaded:
                 LOG_TRACE("Asset loaded");
                 break;
             case eEventTypes::eEvent_JobQueued:
+                {
+                    JobQueuedEvent* jobQueuedEvent = (JobQueuedEvent*)event;
+                    jobQueuedEvent->Process();
+                }
                 break;
             case eEventTypes::eEvent_InputEvent:
                 break;
@@ -79,6 +84,7 @@ namespace QwerkE {
             }
 
             m_EventQueue.pop();
+            delete event;
         }
         pthread_mutex_unlock(s_mutex);
     }

@@ -1,6 +1,7 @@
 #include "QF_AssetLoadedEvent.h"
 
 #include "QF_Assets.h"
+#include "QF_Log.h"
 #include "QF_ogl_Helpers.h"
 
 namespace QwerkE {
@@ -13,8 +14,9 @@ namespace QwerkE {
 
     void AssetLoadedEvent::Process()
     {
-        if (m_Asset->s_Data != nullptr)
+        if (m_Asset->s_Data)
         {
+            LOG_TRACE("{0} Processing data for {1}", __FUNCTION__, m_Asset->s_FileName.c_str());
             // Take loaded char* data and feed it to OpenGL for a handle
             // Texture* texture = new Texture();
             // texture->s_FileName = m_Asset.s_FileName;
@@ -31,6 +33,10 @@ namespace QwerkE {
             {
                 // delete texture; // #TODO Handle load error
             }
+        }
+        else
+        {
+            LOG_TRACE("{0} Invalid data for {1}", __FUNCTION__, m_Asset->s_FileName.c_str());
         }
     }
 

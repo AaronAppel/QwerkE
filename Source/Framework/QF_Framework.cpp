@@ -164,7 +164,7 @@ namespace QwerkE {
 		void Framework::NewFrame()
 		{
 			Input::NewFrame();
-			EventManager::ProcessEvents(); // #TODO Review ordering
+			EventManager::ProcessEvents();
 			Renderer::NewFrame();
 			Window::NewFrame();
 		}

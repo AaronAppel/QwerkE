@@ -34,6 +34,7 @@ namespace QwerkE {
 		Mesh* InstantiateFileMesh(const char* meshFilePath, const char* meshFileName);
 		void InstantiateFileMeshes(const char* meshFilePath);
 		Texture* InstantiateTexture(const char* textureName);
+		Texture* InstantiateTextureSync(const char* textureName);
 		Material* InstantiateMaterial(const char* matName);
 		FT_Face InstantiateFont(const char* fontName);
 		ALuint InstantiateSound(const char* soundPath);
@@ -51,7 +52,7 @@ namespace QwerkE {
 				"Resources already initialized!");
 
 			ASSERT(InstantiateFileMesh(MeshesFolderPath(null_mesh), null_mesh), "Error loading null mesh asset!");
-			ASSERT(InstantiateTexture(TexturesFolderPath(null_texture)), "Error loading null texture asset!");
+			ASSERT(InstantiateTextureSync(TexturesFolderPath(null_texture)), "Error loading null texture asset!");
 			ASSERT(InstantiateMaterial(SchematicsFolderPath(null_material_schematic)), "Error loading null material asset!");
 			ASSERT(InstantiateFont(FontsFolderPath(null_font)), "Error loading null font asset!"); // TODO: Create a valid null font
 			ASSERT(InstantiateShaderComponent(ShadersFolderPath(null_vert_component)), "Error loading null vertex component asset!"); // TODO: Remove null component references. Store components and reference them in shader programs
@@ -71,13 +72,19 @@ namespace QwerkE {
 		void DeleteAllResources()
 		{
 			for (auto object : s_Meshes)
+			{
 				delete object.second;
+			}
 
 			for (auto object : s_Textures)
+			{
 				glDeleteTextures(1, &object.second->s_Handle);
+			}
 
 			for (auto object : s_Materials)
+			{
 				delete object.second;
+			}
 
 			s_Meshes.clear();
 			s_Textures.clear();
@@ -178,21 +185,13 @@ namespace QwerkE {
 			}
 		}
 
-		Texture* InstantiateTexture(const char* textureName)
+		Texture* InstantiateTextureSync(const char* absoluteTextureFilePath)
 		{
-			if (FileExists(textureName))
+			if (FileExists(absoluteTextureFilePath) && !TextureExists(SmartFileName(absoluteTextureFilePath, true).get()))
 			{
-				bool multiThreaded = false;
-				if (multiThreaded && TextureExists(null_texture))
-				{
-					QLoadAsset* loadAssetJob = new QLoadAsset(textureName);
-					Jobs::ScheduleTask(loadAssetJob); // #TODO Allocation
-					return s_Textures[null_texture];
-				}
-
 				Texture* texture = new Texture();
-				texture->s_Handle = Load2DTexture(textureName);
-				if (uPtr<char> fullFileName = SmartFileName(textureName, true))
+				texture->s_Handle = Load2DTexture(absoluteTextureFilePath);
+				if (uPtr<char> fullFileName = SmartFileName(absoluteTextureFilePath, true))
 				{
 					texture->s_FileName = fullFileName.get();
 				}
@@ -204,11 +203,34 @@ namespace QwerkE {
 				}
 
 				delete texture;
-				LOG_WARN("{0} Invalid texture handle: {1}", __FUNCTION__, textureName);
+				LOG_WARN("{0} Invalid texture handle: {1}", __FUNCTION__, absoluteTextureFilePath);
 			}
 			else
 			{
-				LOG_WARN("{0} Texture not found: {1}", __FUNCTION__, textureName);
+				LOG_WARN("{0} Texture not found: {1}", __FUNCTION__, absoluteTextureFilePath);
+			}
+
+			return s_Textures[null_texture];
+		}
+
+		Texture* InstantiateTexture(const char* absoluteTextureFilePath)
+		{
+			if (!absoluteTextureFilePath)
+				return s_Textures[null_texture];
+
+			uPtr<char> fullFileName = SmartFileName(absoluteTextureFilePath, true);
+			if (FileExists(absoluteTextureFilePath) && !TextureExists(fullFileName.get()))
+			{
+				QLoadAsset* loadAssetJob = new QLoadAsset(absoluteTextureFilePath);
+				Jobs::ScheduleTask(loadAssetJob);
+				Texture* newTexture = new Texture();
+				newTexture->s_Handle = s_Textures[null_texture]->s_Handle;
+				s_Textures[fullFileName.get()] = newTexture;
+				return newTexture;
+			}
+			else
+			{
+				LOG_WARN("{0} Texture not found: {1}", __FUNCTION__, absoluteTextureFilePath);
 			}
 
 			return s_Textures[null_texture];
@@ -633,11 +655,17 @@ namespace QwerkE {
 			return newMaterial;
 		}
 
-		void TextureLoaded(const char* name, int handle)
+		void TextureLoaded(const char* absoluteTextureFilePath, int handle)
 		{
-			if (name) // #TODO Verify handle value?  && handle != 0
+			if (absoluteTextureFilePath) // #TODO Verify handle value?  && handle != 0
 			{
-				s_Textures[name]->s_Handle = (GLuint)handle;
+				if (uPtr<char> fullFileName = SmartFileName(absoluteTextureFilePath, true))
+				{
+					if (TextureExists(fullFileName.get()))
+					{
+						s_Textures[fullFileName.get()]->s_Handle = (GLuint)handle;
+					}
+				}
 			}
 		}
 
