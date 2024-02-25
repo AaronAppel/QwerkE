@@ -6,7 +6,7 @@
 #include "QF_Debug.h"
 #include "QF_Debugger.h"
 #include "QF_Enums.h"
-#include "QF_EventManager.h"
+#include "QF_Events.h"
 #include "QF_FileSystem.h"
 #include "QF_Graphics_Header.h"
 #include "QF_Input.h"
@@ -99,7 +99,7 @@ namespace QwerkE {
 			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.0f);
 			Window::SwapBuffers();
 
-			EventManager::Initialize();
+			Events::Initialize();
 
 			if (engineSettings.physicsEnabled)
 			{
@@ -129,7 +129,7 @@ namespace QwerkE {
 		eOperationResult Framework::TearDown()
         {
 			Scenes::Shutdown();
-            EventManager::Shutdown();
+			Events::Shutdown();
 			Window::Shutdown();
 			Log::Shutdown();
 			return eOperationResult::Success;
@@ -164,7 +164,7 @@ namespace QwerkE {
 		void Framework::NewFrame()
 		{
 			Input::NewFrame();
-			EventManager::ProcessEvents();
+			Events::ProcessEvents();
 			Renderer::NewFrame();
 			Window::NewFrame();
 		}

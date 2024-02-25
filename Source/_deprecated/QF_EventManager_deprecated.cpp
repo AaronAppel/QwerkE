@@ -65,21 +65,21 @@ namespace QwerkE {
             switch (event->GetType())
             {
             case eEventTypes::eEvent_AssetLoaded:
-                LOG_TRACE("Asset loaded");
                 break;
+
             case eEventTypes::eEvent_JobQueued:
                 {
                     JobQueuedEvent* jobQueuedEvent = (JobQueuedEvent*)event;
                     jobQueuedEvent->Process();
                 }
                 break;
+
             case eEventTypes::eEvent_InputEvent:
                 break;
+
             case eEventTypes::eEvent_Invalid:
-                LOG_ERROR("Invalid event type found!");
-                break;
             default:
-                LOG_ERROR("Error reading event type. Make sure all types are handled!");
+                LOG_ERROR("Unsupported event type found!");
                 break;
             }
 

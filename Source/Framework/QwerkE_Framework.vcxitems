@@ -31,7 +31,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debugger.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_EventManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Events.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FontTest.cpp" />
@@ -103,7 +103,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Dynamic_ShaderProgram.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Event.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_EventManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Events.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FileSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FileUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_FontTest.h" />

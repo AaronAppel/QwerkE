@@ -2,7 +2,7 @@
 
 #include <queue>
 
-#include "QF_EventManager.h"
+#include "QF_Events.h"
 #include "QF_FileUtilities.h"
 #include "QF_JobQueuedEvent.h"
 #include "QF_Log.h"
@@ -17,8 +17,8 @@ namespace QwerkE {
     {
         // TODO: Think of avoiding duplicate jobs
         m_JobList.push(job);
-        Event* _event = new JobQueuedEvent(); // #TODO Allocation
-        EventManager::QueueEvent(_event);
+        Event* _event = new JobQueuedEvent();
+        Events::QueueEvent(_event);
     }
 
     void Jobs::ProcessTasks()
@@ -57,7 +57,7 @@ namespace QwerkE {
         if (fileData->s_Data != nullptr)
         {
             AssetLoadedEvent* _event = new AssetLoadedEvent(fileData); // #TODO Allocation
-            EventManager::QueueEvent(_event);
+            Events::QueueEvent(_event);
         }
 
         pthread_exit(NULL);

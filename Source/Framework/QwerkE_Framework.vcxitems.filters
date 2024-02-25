@@ -138,9 +138,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssetLoadedEvent.cpp">
       <Filter>Core\Events</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_EventManager.cpp">
-      <Filter>Core\Events</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.cpp">
       <Filter>Core\Events</Filter>
     </ClCompile>
@@ -319,6 +316,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Assets.cpp">
       <Filter>Core\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Events.cpp">
+      <Filter>Core\Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Audio.h">
@@ -331,9 +331,6 @@
       <Filter>Core\Events</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Event.h">
-      <Filter>Core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_EventManager.h">
       <Filter>Core\Events</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.h">
@@ -583,6 +580,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Asset_Tag.h">
       <Filter>Core\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Events.h">
+      <Filter>Core\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
