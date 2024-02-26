@@ -36,54 +36,19 @@ namespace QwerkE {
 
 		eOperationResult Framework::Startup(const std::string engineSettingsPath)
 		{
-			// #TODO Load libraries dynamically. Need functions to load .dlls
-			// #TODO Try to reduce or avoid order dependency in system creation
-
-			// const char* newName = new char[5] { 'N','a','m', 'e', '\0' };
-			// unsigned  long long counter = UINT64_MAX - 1;
-			// const unsigned long long max = UINT64_MAX - 1;
-			// // const char* newName = new char[12] { 'N', '2', '1', '4', '7', '4', '8', '3', '6', '4', '7', '\0' };
-			// const char* newName = new char[22] { 'N', '1', '8', '4', '4', '6', '7', '4', '4', '0', '7', '3', '7', '0', '9',
-			// 	'5', '5', '1', '6', '1', '4', '\0' };
-			//
-			// while (true)
-			// {
-			// 	const char* oldName = newName;
-			// 	newName = NumberAppendOrIncrement(newName);
-			// 	delete[] oldName;
-			//
-			// 	Log::Console(newName);
-			// 	Log::Console("\n");
-			//
-			// 	std::string value("N");
-			// 	value.append(std::to_string(counter + 1));
-			// 	if (value != newName)
-			// 	{
-			// 		int bp = 0;
-			// 	}
-			//
-			// 	if (counter % 100 == 0)
-			// 	{
-			// 		int bp = 0;
-			// 	}
-			// 	++counter;
-			// }
-			// delete[] newName;
-
             Log::Initialize();
+
+			Events::Initialize();
 
 			Settings::LoadEngineSettings(engineSettingsPath);
 			Settings::LoadProjectSettings(ProjectsFolderPath("Project1.qproj"));
 			Settings::LoadUserSettings(SettingsFolderPath(null_preferences));
 
-			const EngineSettings& engineSettings = Settings::GetEngineSettings();
-			const ProjectSettings& projectSettings = Settings::GetProjectSettings();
-			const UserSettings& userSettings = Settings::GetUserSettings();
-
 			Window::Initialize();
 
             Input::Initialize();
 
+			const EngineSettings& engineSettings = Settings::GetEngineSettings();
             if (engineSettings.audioEnabled && Audio::Initialize())
             {
                 LOG_TRACE("Audio system initialized with OpenAL.");
@@ -93,13 +58,11 @@ namespace QwerkE {
 				LOG_WARN("No audio system loaded.");
             }
 
-            Assets::Initialize(); // #Dependencies Audio, OpenGL, Window?
+            Assets::Initialize();
 
 			Renderer::Initialize();
-			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.0f);
+			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.f);
 			Window::SwapBuffers();
-
-			Events::Initialize();
 
 			if (engineSettings.physicsEnabled)
 			{
@@ -120,8 +83,7 @@ namespace QwerkE {
 				LOG_WARN("No network system loaded.");
 			}
 
-			// #TODO load scene later, like in Run() as it's more than just initializing
-			Scenes::Initialize(); // #TODO Investigate other system dependencies as there are likely several
+			Scenes::Initialize();
 
 			return eOperationResult::Success;
 		}

@@ -60,7 +60,6 @@ namespace QwerkE {
 					const char* projectName = programArgPairs.find(key_ProjectFileName)->second;
 					const char* projectFileName = StringAppend(projectName, ".", projects_file_ext);
 					projectFileName = StringAppend(projectName, "/", projectFileName);
-					// Settings::LoadProjectData(ProjectsFolderPath(projectFileName));
 
 					// #TODO Load project folder
 					// Could find and save preferences file path for recent project(s)
