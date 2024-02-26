@@ -66,7 +66,14 @@ namespace QwerkE {
             DrawEntityEditor();
             if (m_CurrentEntity)
             {
-                Inspector::InspectObject(*m_CurrentEntity, "Inspect Scene Object");
+                if (const bool entityChanged = Inspector::InspectObject(*m_CurrentEntity, "Inspect Scene Object"))
+                {
+                    Scenes::SetCurrentSceneDirty();
+                }
+            }
+            else
+            {
+                // #TODO Draw null error text
             }
 		}
 	}

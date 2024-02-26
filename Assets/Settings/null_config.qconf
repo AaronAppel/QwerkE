@@ -2,11 +2,10 @@
 	"EngineSettings":	[{
 			"windowWidthPixels":	2048,
 			"windowHeightPixels":	1152,
-			"showFps":	true,
 			"limitFramerate":	true,
 			"maxFramesPerSecond":	120,
 			"maxEnabledScenes":	1,
-			"maxConcurrentThreadCount":	1,
+			"maxJobsAdditionalThreadCount":	0,
 			"audioEnabled":	false,
 			"physicsEnabled":	false,
 			"networkingEnabled":	false,

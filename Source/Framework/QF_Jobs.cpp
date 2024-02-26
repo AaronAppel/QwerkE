@@ -6,63 +6,114 @@
 #include "QF_FileUtilities.h"
 #include "QF_JobQueuedEvent.h"
 #include "QF_Log.h"
+#include "QF_Settings.h"
+#include "QF_Time.h"
 
 #include "QF_Defines.h"
 
 namespace QwerkE {
 
-    std::queue<QJob*> Jobs::m_JobList;
+    namespace Jobs {
 
-    void Jobs::ScheduleTask(QJob* job)
-    {
-        // TODO: Think of avoiding duplicate jobs
-        m_JobList.push(job);
-        Event* _event = new JobQueuedEvent();
-        Events::QueueEvent(_event);
-    }
+        static std::queue<QJob*> s_JobList;
+        static const u8 s_MaxQueuedJobs = 50;
+        static u8 s_CurrentActiveJobs = 0;
+        static float s_secondsBeforeNextTask = 0.f;
 
-    void Jobs::ProcessTasks()
-    {
-        for (size_t i = 0; i < m_JobList.size(); i++)
+        void ScheduleJob(QJob* job)
         {
-            QJob* next = m_JobList.front();
+            if (s_JobList.size() < s_MaxQueuedJobs)
+            {
+                s_JobList.push(job); // #TODO Look at avoiding duplicate jobs
+            }
+            else if (const QLoadAsset* assetLoadedJob = static_cast<QLoadAsset*>(job))
+            {
+                LOG_WARN("{0} Job list full. Discarding job {1}", __FUNCTION__, assetLoadedJob->AssetName());
+            }
+            else
+            {
+                LOG_WARN("{0} Job list full", __FUNCTION__);
+            }
+        }
+
+        void ProcessTasks(float minimumDelayBetweenTasksSec)
+        {
+            s_secondsBeforeNextTask -= Time::FrameDelta();
+            if (s_secondsBeforeNextTask <= 0.f)
+            {
+                for (size_t i = 0; i < s_JobList.size(); i++)
+                {
+                    const u8 maxAdditionalThreadCount = Settings::GetEngineSettings().maxJobsAdditionalThreadCount;
+                    const bool singleThreaded = maxAdditionalThreadCount < 1;
+
+                    if (singleThreaded || s_CurrentActiveJobs < maxAdditionalThreadCount)
+                    {
+                        QJob* next = s_JobList.front();
+                        next->Process(!singleThreaded);
+                        s_JobList.pop();
+                        delete next;
+                        ++s_CurrentActiveJobs;
+                        LOG_TRACE("{0} Job started. Active count {1}", __FUNCTION__, s_CurrentActiveJobs);
+                        break;
+                    }
+                }
+                s_secondsBeforeNextTask = minimumDelayBetweenTasksSec;
+            }
+        }
+
+        void ProcessNextTask()
+        {
+            QJob* next = s_JobList.front();
+            s_JobList.pop();
             next->Process();
-            m_JobList.pop();
             delete next;
         }
-    }
 
-    void Jobs::ProcessNextTask()
-    {
-        QJob* next = m_JobList.front();
-        m_JobList.pop();
-
-        next->Process();
-    }
-
-    void* LoadAssetData(void* value)
-    {
-
-        // TODO: Support all types of assets or files
-
-        std::shared_ptr<QImageFile> fileData = std::make_shared<QImageFile>();
-        fileData->s_FileName = (char*)value;
-        LOG_TRACE("{0} File name: {1}", __FUNCTION__, fileData->s_FileName.c_str());
-
-        if (FileExists(fileData->s_FileName.c_str()))
+        void OnJobFinished()
         {
-            fileData->s_Data = (char*)File::LoadImageFileData(fileData->s_FileName.c_str(), &fileData->s_Width, &fileData->s_Height, (GLenum&)fileData->s_Channels, false);
+            --s_CurrentActiveJobs;
         }
 
-        if (fileData->s_Data != nullptr)
+        void* LoadAssetDataSync(void* value)
         {
-            AssetLoadedEvent* _event = new AssetLoadedEvent(fileData); // #TODO Allocation
-            Events::QueueEvent(_event);
+            // TODO: Support all types of assets or files
+
+            std::shared_ptr<QImageFile> fileData = std::make_shared<QImageFile>();
+            fileData->s_FileName = (char*)value;
+            LOG_TRACE("{0} File name: {1}", __FUNCTION__, fileData->s_FileName.c_str());
+
+            if (FileExists(fileData->s_FileName.c_str()))
+            {
+                fileData->s_Data = (char*)File::LoadImageFileData(fileData->s_FileName.c_str(), &fileData->s_Width, &fileData->s_Height, (GLenum&)fileData->s_Channels, false);
+                LOG_TRACE("{0} File exists name: {1}", __FUNCTION__, fileData->s_FileName.c_str());
+            }
+
+            if (fileData->s_Data != nullptr)
+            {
+                AssetLoadedEvent* _event = new AssetLoadedEvent(fileData);
+                Events::QueueEvent(_event);
+                LOG_TRACE("{0} Event queued", __FUNCTION__);
+            }
+
+            if (value)
+            {
+                delete value;
+            }
+
+            Jobs::OnJobFinished();
+
+            return nullptr;
         }
 
-        pthread_exit(NULL);
+        void* LoadAssetDataAsync(void* value)
+        {
+            void* result = LoadAssetDataSync(value);
 
-        return NULL;
+            pthread_exit(nullptr);
+
+            return result;
+        }
+
     }
 
 }

@@ -95,10 +95,10 @@ namespace QwerkE {
     enum eRoutineTypes : std::uint8_t
     {
         // #TODO Enforce null/default values being the 1st (0) value, in all enums. Document rule as well!
-        Routine_Null = 0,
+        Routine_Null = 0, // #NOTE Value saved in data so can mess things up if deleted
         Routine_Render,
         Routine_Physics,
-        Routine_Print,
+        Routine_Unused1,
         Routine_Transform,
         Routine_Max,
     };

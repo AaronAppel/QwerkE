@@ -103,7 +103,6 @@ namespace QwerkE {
 	MIRROR_TYPE(m_map_eMaterialMaps_texturePtr)
 
 	// Structs
-
 	MIRROR_CLASS_START(Vector2)
 	MIRROR_CLASS_MEMBER(x)
 	MIRROR_CLASS_MEMBER(y)
@@ -134,11 +133,10 @@ namespace QwerkE {
 	MIRROR_CLASS_START(EngineSettings)
 	MIRROR_CLASS_MEMBER(windowWidthPixels)
 	MIRROR_CLASS_MEMBER(windowHeightPixels)
-	MIRROR_CLASS_MEMBER(showFps)
 	MIRROR_CLASS_MEMBER(limitFramerate)
 	MIRROR_CLASS_MEMBER(maxFramesPerSecond)
 	MIRROR_CLASS_MEMBER(maxEnabledScenes)
-	MIRROR_CLASS_MEMBER(maxConcurrentThreadCount)
+	MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
 	MIRROR_CLASS_MEMBER(audioEnabled)
 	MIRROR_CLASS_MEMBER(physicsEnabled)
 	MIRROR_CLASS_MEMBER(networkingEnabled)

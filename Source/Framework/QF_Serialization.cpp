@@ -135,11 +135,6 @@ namespace QwerkE {
                     }
                     break;
 
-                case eRoutineTypes::Routine_Print:
-                    // indexPtrAddress = new PrintRoutine();
-                    // DeserializeJsonToObject(jsonObj, Mirror::InfoForType<PrintRoutine>(), indexPtrAddress);
-                    break;
-
                 case eRoutineTypes::Routine_Transform:
                     {
                         indexPtrAddress = new TransformRoutine();
@@ -626,10 +621,6 @@ namespace QwerkE {
                                 // SerializeObjectToJson(routine, Mirror::GetParentClassInfo<RenderRoutine>(), routineJson);
                                 break;
 
-                            case eRoutineTypes::Routine_Print:
-                                // SerializeObjectToJson(routine, Mirror::InfoForType<PrintRoutine>(), routineJson);
-                                break;
-
                             case eRoutineTypes::Routine_Transform:
                                 SerializeObjectToJson(routine, Mirror::InfoForType<TransformRoutine>(), routineJson);
                                 break;
@@ -725,8 +716,8 @@ namespace QwerkE {
                     }
                     break;
 
-                case MirrorTypes::m_char:
                 case MirrorTypes::eKeys:
+                case MirrorTypes::m_char:
                     {
                         char* stringAddress = (char*)obj + field.offset;
                         AddItemToArray(objJson, CreateString(field.name.c_str(), stringAddress));
@@ -747,25 +738,61 @@ namespace QwerkE {
                     }
                     break;
 
-                case MirrorTypes::m_int8_t:
-                case MirrorTypes::m_int16_t:
-                case MirrorTypes::m_int32_t:
-                case MirrorTypes::m_uint8_t:
-                case MirrorTypes::m_uint16_t:
-                case MirrorTypes::m_uint32_t:
-                case MirrorTypes::m_int:
                 case MirrorTypes::m_eSceneTypes:
                 case MirrorTypes::m_eGameObjectTags:
+                case MirrorTypes::m_uint8_t:
                     {
-                        int* numberAddress = (int*)((char*)obj + field.offset);
+                        uint8_t* numberAddress = (uint8_t*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
+
+                case MirrorTypes::m_uint16_t:
+                    {
+                        uint16_t* numberAddress = (uint16_t*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
+
+                case MirrorTypes::m_uint32_t:
+                    {
+                        uint32_t* numberAddress = (uint32_t*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
+
+                case MirrorTypes::m_int8_t:
+                    {
+                        int8_t* numberAddress = (int8_t*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
+
+                case MirrorTypes::m_int16_t:
+                    {
+                        int16_t* numberAddress = (int16_t*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
+
+                case MirrorTypes::m_int:
+                case MirrorTypes::m_int32_t:
+                    {
+                        int32_t* numberAddress = (int32_t*)((char*)obj + field.offset);
                         AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                     }
                     break;
 
                 case MirrorTypes::m_int64_t:
+                    {
+                        int64_t* numberAddress = (int64_t*)((char*)obj + field.offset);
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    }
+                    break;
+
                 case MirrorTypes::m_uint64_t:
                     {
-                        double* numberAddress = (double*)((char*)obj + field.offset);
+                        uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
                         AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
                     }
                     break;

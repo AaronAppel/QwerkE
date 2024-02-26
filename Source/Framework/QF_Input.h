@@ -42,7 +42,7 @@ namespace QwerkE {
 
         const KeyboardExtAPI* GetDeviceAPI();
 
-        bool FrameKeyAction(eKeys key, eKeyState state); // check if key was pressed or released this frame
+        bool FrameKeyAction(eKeys key, eKeyState state); // Check if key was pressed or released this frame
 
         // #TODO Support ProcessMouseScroll
         // #TODO Hide public methods for processing input

@@ -115,18 +115,20 @@ namespace QwerkE {
                     buffer.reserve(200);
                     ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.3f);
 
+                    bool valueChanged = false; // #TODO Set status (button) to dirty (red)
+
                     switch (s_SettingsEditorOption)
                     {
                     case eSettingsOptions::Engine:
-                        Inspector::InspectFieldRecursive(Mirror::InfoForType<EngineSettings>(), &Settings::GetEngineSettings(), buffer);
+                        valueChanged = Inspector::InspectFieldRecursive(Mirror::InfoForType<EngineSettings>(), &Settings::GetEngineSettings(), buffer);
                         break;
 
                     case eSettingsOptions::Project:
-                        Inspector::InspectFieldRecursive(Mirror::InfoForType<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
+                        valueChanged = Inspector::InspectFieldRecursive(Mirror::InfoForType<ProjectSettings>(), &Settings::GetProjectSettings(), buffer);
                         break;
 
                     case eSettingsOptions::User:
-                        Inspector::InspectFieldRecursive(Mirror::InfoForType<UserSettings>(), &Settings::GetUserSettings(), buffer);
+                        valueChanged = Inspector::InspectFieldRecursive(Mirror::InfoForType<UserSettings>(), &Settings::GetUserSettings(), buffer);
                         break;
                     }
 

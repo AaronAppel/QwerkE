@@ -5,43 +5,44 @@
 #include "Libraries/pThreads/pthread.h"
 
 #include "QF_Assets.h"
+#include "QF_Debug.h"
 #include "QF_Event.h"
 #include "QF_JobQueuedEvent.h"
+#include "QF_Jobs.h"
 #include "QF_Log.h"
 
 namespace QwerkE {
 
     namespace Events {
 
-        // #TODO Review QueueEvent() thread safety
-        static pthread_mutex_t* s_mutex = nullptr;
+        static pthread_mutex_t s_mutex;
         static const u8 s_EventMax = 50;
         static std::queue<Event*> s_EventQueue;
 
         void Initialize()
         {
-            s_mutex = new pthread_mutex_t();
-            *s_mutex = PTHREAD_MUTEX_INITIALIZER;
+            const u8 result = pthread_mutex_init(&s_mutex, NULL);
+            ASSERT(result == 0, "Error initializing pthread mutex!");
         }
 
         void Shutdown()
         {
-            pthread_mutex_lock(s_mutex);
-            for (size_t i = 0; i < s_EventQueue.size(); i++)
+            pthread_mutex_lock(&s_mutex); // #TODO Review using pthread_mutex_trylock instead
+            while (!s_EventQueue.empty())
             {
                 if (Event* event = s_EventQueue.front())
                 {
                     delete event;
-                    s_EventQueue.pop();
                 }
+                s_EventQueue.pop();
             }
-            pthread_mutex_unlock(s_mutex);
-            delete s_mutex;
+            pthread_mutex_unlock(&s_mutex);
+            pthread_mutex_destroy(&s_mutex);
         }
 
         void QueueEvent(Event* _event)
         {
-            pthread_mutex_lock(s_mutex);
+            pthread_mutex_lock(&s_mutex);
             // #TODO Implement thread safe API for multi threaded event queuing
             if (s_EventQueue.size() < s_EventMax)
             {
@@ -52,13 +53,14 @@ namespace QwerkE {
             else
             {
                 LOG_ERROR("Event list is full!");
+                delete _event; // #TODO Job memory leaked
             }
-            pthread_mutex_unlock(s_mutex);
+            pthread_mutex_unlock(&s_mutex);
         }
 
         void ProcessEvents()
         {
-            pthread_mutex_lock(s_mutex);
+            pthread_mutex_lock(&s_mutex);
             int size = (int)s_EventQueue.size(); // #TODO Track threads and limit number using ConfigData
 
             for (int i = 0; i < size; i++)
@@ -86,7 +88,7 @@ namespace QwerkE {
                 s_EventQueue.pop();
                 delete event;
             }
-            pthread_mutex_unlock(s_mutex);
+            pthread_mutex_unlock(&s_mutex);
         }
 
         // #FEATURE F0005

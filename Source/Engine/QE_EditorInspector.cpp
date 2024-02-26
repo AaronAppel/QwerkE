@@ -20,8 +20,10 @@ namespace QwerkE {
     namespace Inspector {
 
         static bool hasWarned = false;
-        void InspectFieldRecursive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        bool InspectFieldRecursive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
+            bool valueChanged = false;
+
             const std::vector<Mirror::Field>& fields = typeInfo->fields;
 
             for (size_t i = 0; i < fields.size(); i++)
@@ -41,8 +43,8 @@ namespace QwerkE {
                             for (size_t i = 0; i < renderables->size(); i++)
                             {
                                 parentName += field.name + " ";
-                                InspectFieldRecursive(field.typeInfo->collectionTypeInfo, (void*)(renderables->data() + i), parentName);
-                                // InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
+                                valueChanged |= InspectFieldRecursive(field.typeInfo->collectionTypeInfo, (void*)(renderables->data() + i), parentName);
+                                // valueChanged |= InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
                                 parentName.clear();
                             }
                         }
@@ -60,7 +62,7 @@ namespace QwerkE {
                 //             for (size_t i = 0; i < renderables->size(); i++)
                 //             {
                 //                 parentName += field.name;
-                //                 InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
+                //                 valueChanged |= InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
                 //                 parentName.clear();
                 //             }
                 //             break;
@@ -81,7 +83,7 @@ namespace QwerkE {
                             ImGui::LabelText(fieldName.c_str(), stringAddress->data());
                             // if ()
                             // {
-                            //     Scenes::SetCurrentSceneDirty();
+                            //     valueChanged = true;
                             // }
                         }
                         break;
@@ -98,15 +100,14 @@ namespace QwerkE {
                             switch (routines->at(i)->GetRoutineType())
                             {
                             case QwerkE::Routine_Render:
-                                InspectFieldRecursive(Mirror::InfoForType<RenderRoutine>(), routines->at(i), parentName);
+                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<RenderRoutine>(), routines->at(i), parentName);
                                 break;
 
                             case QwerkE::Routine_Transform:
-                                InspectFieldRecursive(Mirror::InfoForType<TransformRoutine>(), routines->at(i), parentName);
+                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<TransformRoutine>(), routines->at(i), parentName);
                                 break;
 
                             case QwerkE::Routine_Physics:
-                            case QwerkE::Routine_Print:
                             case QwerkE::Routine_Null:
                             case QwerkE::Routine_Max:
                             default:
@@ -119,168 +120,259 @@ namespace QwerkE {
                     break;
 
                 case MirrorTypes::m_map_eComponentTags_componentPtr:
-                {
-                    std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)fieldAddress;
-                    for (auto& it : components)
                     {
-                        Component* component = it.second;
-
-                        parentName += field.name + " ";
-                        switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
+                        std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)fieldAddress;
+                        for (auto& it : components)
                         {
-                        case Component_Render:
-                            InspectFieldRecursive(Mirror::InfoForType<RenderComponent>(), (RenderComponent*)component, parentName);
-                            break;
+                            Component* component = it.second;
 
-                        case Component_Camera:
-                            InspectFieldRecursive(Mirror::InfoForType<ComponentCamera>(), (ComponentCamera*)component, parentName);
-                            break;
+                            parentName += field.name + " ";
+                            switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
+                            {
+                            case Component_Render:
+                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<RenderComponent>(), (RenderComponent*)component, parentName);
+                                break;
 
-                        case Component_Light:
-                        case Component_Physics:
-                        case Component_Controller:
-                        case Component_SkyBox:
-                            // #TODO Implement component add
-                            break;
+                            case Component_Camera:
+                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<ComponentCamera>(), (ComponentCamera*)component, parentName);
+                                break;
+
+                            case Component_Light:
+                            case Component_Physics:
+                            case Component_Controller:
+                            case Component_SkyBox:
+                                // #TODO Implement component add
+                                break;
+                            }
+                            parentName.clear();
                         }
-                        parentName.clear();
                     }
-                }
-                break;
+                    break;
 
                 case MirrorTypes::Vector2:
-                {
-                    float* vector2Address = (float*)fieldAddress;
-                    std::string fieldName = parentName + field.name;
-                    if (ImGui::DragFloat2(fieldName.c_str(), vector2Address, .1f))
                     {
-                        Scenes::SetCurrentSceneDirty();
+                        float* vector2Address = (float*)fieldAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragFloat2(fieldName.c_str(), vector2Address, .1f))
+                        {
+                            valueChanged = true;
+                        }
                     }
-                }
-                break;
+                    break;
 
                 case MirrorTypes::Vector3:
-                {
-                    static bool startingColor = true;
-                    float* vector3Address = (float*)fieldAddress;
-                    std::string fieldName = parentName + field.name;
-                    if (ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f))
                     {
-                        Scenes::SetCurrentSceneDirty();
+                        static bool startingColor = true;
+                        float* vector3Address = (float*)fieldAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f))
+                        {
+                            valueChanged = true;
+                        }
+                        startingColor = !startingColor;
                     }
-                    startingColor = !startingColor;
-                }
-                break;
+                    break;
 
                 case MirrorTypes::m_string:
-                {
-                    std::string* stringAddress = (std::string*)fieldAddress;
-                    std::string fieldName = parentName + field.name;
-
-                    std::string buffer;
-                    buffer.reserve(INT8_MAX);
-                    buffer = *stringAddress;
-
-                    if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
                     {
-                        *stringAddress = buffer;
-                        Scenes::SetCurrentSceneDirty();
+                        std::string* stringAddress = (std::string*)fieldAddress;
+                        std::string fieldName = parentName + field.name;
+
+                        std::string buffer;
+                        buffer.reserve(INT8_MAX);
+                        buffer = *stringAddress;
+
+                        if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
+                        {
+                            *stringAddress = buffer;
+                            valueChanged = true;
+                        }
                     }
-                }
-                break;
+                    break;
 
                 case MirrorTypes::m_charPtr:
                 case MirrorTypes::m_constCharPtr:
-                {
-                    const char** constCharPtrAddress = (const char**)fieldAddress;
-                    std::string fieldName = parentName + field.name;
-
-                    std::string buffer;
-                    buffer.reserve(INT8_MAX);
-                    buffer = *constCharPtrAddress;
-
-                    if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
                     {
-                        // delete *constCharPtrAddress;
-                        *constCharPtrAddress = strdup(buffer.data());
-                        Scenes::SetCurrentSceneDirty();
+                        const char** constCharPtrAddress = (const char**)fieldAddress;
+                        std::string fieldName = parentName + field.name;
+
+                        std::string buffer;
+                        buffer.reserve(INT8_MAX);
+                        buffer = *constCharPtrAddress;
+
+                        if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
+                        {
+                            // delete *constCharPtrAddress;
+                            *constCharPtrAddress = strdup(buffer.data());
+                            valueChanged = true;
+                        }
                     }
-                }
-                break;
+                    break;
 
                 case MirrorTypes::m_char:
                 case MirrorTypes::eKeys:
-                {
-                    char* charPtrAddress = (char*)fieldAddress;
-                    char charEscaped[2] = { *charPtrAddress, '\0' };
-                    std::string fieldName = parentName + field.name;
-                    if (ImGui::InputText(fieldName.c_str(), charEscaped, 2))
                     {
-                        if (charEscaped[0] >= 97 && charEscaped[0] <= 122)
+                        char* charPtrAddress = (char*)fieldAddress;
+                        char charEscaped[2] = { *charPtrAddress, '\0' };
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::InputText(fieldName.c_str(), charEscaped, 2))
                         {
-                            charEscaped[0] -= 32;
+                            if (charEscaped[0] >= 97 && charEscaped[0] <= 122)
+                            {
+                                charEscaped[0] -= 32;
+                            }
+                            *charPtrAddress = charEscaped[0];
+                            valueChanged = true;
                         }
-                        *charPtrAddress = charEscaped[0];
-                        Scenes::SetCurrentSceneDirty();
                     }
-                }
-                break;
+                    break;
 
                 case MirrorTypes::m_bool:
-                {
-                    bool* boolAddress = (bool*)fieldAddress;
-                    int intValue = *boolAddress;
-                    std::string fieldName = parentName + field.name;
-                    if (ImGui::InputInt(fieldName.c_str(), &intValue))
                     {
-                        *boolAddress = (bool)intValue;
-                        Scenes::SetCurrentSceneDirty();
+                        bool* boolAddress = (bool*)fieldAddress;
+                        int intValue = *boolAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::InputInt(fieldName.c_str(), &intValue))
+                        {
+                            *boolAddress = (bool)intValue;
+                            valueChanged = true;
+                        }
                     }
-                }
-                break;
+                    break;
 
                 case MirrorTypes::m_float:
-                {
-                    float* numberAddress = (float*)fieldAddress;
-                    std::string fieldName = parentName + field.name;
-                    if (ImGui::DragFloat(fieldName.c_str(), numberAddress, .1f))
                     {
-                        Scenes::SetCurrentSceneDirty();
+                        float* numberAddress = (float*)fieldAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragFloat(fieldName.c_str(), numberAddress, .1f))
+                        {
+                            valueChanged = true;
+                        }
                     }
-                }
-                break;
+                    break;
 
-                case MirrorTypes::m_int8_t:
-                case MirrorTypes::m_int16_t:
-                case MirrorTypes::m_int32_t:
-                case MirrorTypes::m_uint8_t:
-                case MirrorTypes::m_uint16_t:
-                case MirrorTypes::m_uint32_t:
-                case MirrorTypes::m_int:
+
                 case MirrorTypes::m_eSceneTypes:
                 case MirrorTypes::m_eGameObjectTags:
-                {
-                    int* numberAddress = (int*)fieldAddress;
-                    std::string fieldName = parentName + field.name;
-                    if (ImGui::DragInt(fieldName.c_str(), numberAddress))
+                case MirrorTypes::m_uint8_t:
                     {
-                        Scenes::SetCurrentSceneDirty();
+                        u8* numberAddress = (u8*)fieldAddress;
+                        int temp = (int)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        {
+                            *numberAddress = (u8)temp;
+                            valueChanged = true;
+                        }
                     }
-                }
-                break;
+                    break;
+
+                case MirrorTypes::m_uint16_t:
+                    {
+                        u16* numberAddress = (u16*)fieldAddress;
+                        int temp = (int)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        {
+                            *numberAddress = (u16)temp;
+                            valueChanged = true;
+                        }
+                    }
+                    break;
+
+                case MirrorTypes::m_uint32_t:
+                    {
+                        uint32_t* numberAddress = (uint32_t*)fieldAddress;
+                        int temp = (int)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+
+                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        {
+                            *numberAddress = (uint32_t)temp;
+                            valueChanged = true;
+                        }
+                    }
+                    break;
+
+                case MirrorTypes::m_uint64_t:
+                    {
+                        uint64_t* numberAddress = (uint64_t*)fieldAddress;
+                        int temp = (int)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+
+                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        {
+                            *numberAddress = (uint64_t)temp;
+                            valueChanged = true;
+                        }
+                    }
+                    break;
+
+                case MirrorTypes::m_int8_t:
+                    {
+                        s8* numberAddress = (s8*)fieldAddress;
+                        int temp = (int)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        {
+                            *numberAddress = (s8)temp;
+                            valueChanged = true;
+                        }
+                    }
+                    break;
+
+                case MirrorTypes::m_int16_t:
+                    {
+                        s16* numberAddress = (s16*)fieldAddress;
+                        int temp = (int)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        {
+                            *numberAddress = (s16)temp;
+                            valueChanged = true;
+                        }
+                    }
+                    break;
+
+                case MirrorTypes::m_int32_t:
+                case MirrorTypes::m_int:
+                    {
+                        int* numberAddress = (int*)fieldAddress;
+                        std::string fieldName = parentName + field.name;
+                        if (ImGui::DragInt(fieldName.c_str(), numberAddress))
+                        {
+                            valueChanged = true;
+                        }
+                    }
+                    break;
 
                 case MirrorTypes::m_int64_t:
-                case MirrorTypes::m_uint64_t:
-                {
-                    double* numberAddress = (double*)fieldAddress; // #TODO Implement
-                }
-                break;
+                    {
+                        int64_t* numberAddress = (int64_t*)fieldAddress;
+                        int temp = (int)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+
+                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        {
+                            *numberAddress = (int64_t)temp;
+                            valueChanged = true;
+                        }
+                    }
+                    break;
 
                 case MirrorTypes::m_double:
-                {
-                    double* numberAddress = (double*)fieldAddress; // #TODO Implement
-                }
-                break;
+                    {
+                        double* numberAddress = (double*)fieldAddress;
+                        float temp = (float)*numberAddress;
+                        std::string fieldName = parentName + field.name;
+
+                        if (ImGui::DragFloat(fieldName.c_str(), &temp)) // #TODO Review need for precision
+                        {
+                            *numberAddress = (double)temp;
+                            valueChanged = true;
+                        }
+                    }
+                    break;
 
                 default:
                     // #TODO Review potential for infinite loop
@@ -288,7 +380,7 @@ namespace QwerkE {
                     {
                         int bp = 0;
                         parentName += field.name + " ";
-                        InspectFieldRecursive(field.typeInfo, (char*)obj + field.offset, parentName);
+                        valueChanged |= InspectFieldRecursive(field.typeInfo, (char*)obj + field.offset, parentName);
                         parentName.clear();
                     }
                     else if (!hasWarned)
@@ -300,6 +392,7 @@ namespace QwerkE {
                     break;
                 }
             }
+            return valueChanged;
         }
 
     }

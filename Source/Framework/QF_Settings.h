@@ -25,15 +25,14 @@ namespace QwerkE {
 
     struct EngineSettings
     {
-        int windowWidthPixels = 1600; // #TODO Support unsigned short
-        int windowHeightPixels = 900;
+        u16 windowWidthPixels = 1600;
+        u16 windowHeightPixels = 900;
 
-        bool showFps = true; // #TODO Handle duplicated value
         bool limitFramerate = true;
-        int maxFramesPerSecond = 120;
+        u16 maxFramesPerSecond = 120;
 
-        int maxEnabledScenes = 1;
-        int maxConcurrentThreadCount = 1;
+        u8 maxEnabledScenes = 1;
+        u8 maxJobsAdditionalThreadCount = 1;
 
         bool audioEnabled = false;
         bool physicsEnabled = false;

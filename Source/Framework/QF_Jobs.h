@@ -20,43 +20,52 @@
 
 namespace QwerkE {
 
-    void* LoadAssetData(void* value);
+    class QJob;
+    namespace Jobs {
+
+        void ScheduleJob(QJob* job);
+
+        void ProcessTasks(float minimumDelayBetweenTasksSec = 0.f);
+
+        void ProcessNextTask();
+
+        void OnJobFinished();
+
+        void* LoadAssetDataAsync(void* value);
+        void* LoadAssetDataSync(void* value);
+
+    }
 
     class QJob
     {
     public:
-        virtual void Process() = 0;
+        virtual void Process(bool aSync = true) = 0;
     };
 
     class QLoadAsset : public QJob
     {
     public:
-        QLoadAsset(const char* assetName)
-        {
-            m_AssetName = DeepCopyString(assetName);
-        }
+        QLoadAsset(const char* assetName) { m_AssetName = DeepCopyString(assetName); }
+        ~QLoadAsset() { if (m_AssetName) delete m_AssetName; }
 
-        void Process()
+        void Process(bool aSync = true)
         {
-            pthread_t threadID;
-            pthread_create(&threadID, NULL, LoadAssetData, (void*)m_AssetName);
+            if (aSync)
+            {
+                pthread_t threadID; // #TODO Track thread, or delete? What happens when this scope ends? Does the thread go out of scope?
+                pthread_create(&threadID, NULL, Jobs::LoadAssetDataAsync, (void*)m_AssetName);
+                // #TODO pthread_join or kill at some point on early exit
+            }
+            else
+            {
+                Jobs::LoadAssetDataSync((void*)m_AssetName);
+            }
         };
+
+        const char* const AssetName() const { return m_AssetName; }
+
     private:
         const char* m_AssetName;
-    };
-
-    class Jobs final // #TODO Consider for static namespace
-    {
-    public:
-        static void ScheduleTask(QJob* job);
-
-        static void ProcessTasks();
-
-    private:
-        Jobs() = default;
-
-        static std::queue<QJob*> m_JobList;
-        static void ProcessNextTask();
     };
 
 }

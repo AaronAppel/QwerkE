@@ -221,8 +221,9 @@ namespace QwerkE {
 			uPtr<char> fullFileName = SmartFileName(absoluteTextureFilePath, true);
 			if (FileExists(absoluteTextureFilePath) && !TextureExists(fullFileName.get()))
 			{
-				QLoadAsset* loadAssetJob = new QLoadAsset(absoluteTextureFilePath);
-				Jobs::ScheduleTask(loadAssetJob);
+				QLoadAsset* newLoadAssetJob = new QLoadAsset(absoluteTextureFilePath);
+				Jobs::ScheduleJob(newLoadAssetJob);
+
 				Texture* newTexture = new Texture();
 				newTexture->s_Handle = s_Textures[null_texture]->s_Handle;
 				s_Textures[fullFileName.get()] = newTexture;

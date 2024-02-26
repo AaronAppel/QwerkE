@@ -165,6 +165,7 @@ namespace QwerkE {
 		{
 			Input::NewFrame();
 			Events::ProcessEvents();
+			Jobs::ProcessTasks();
 			Renderer::NewFrame();
 			Window::NewFrame();
 		}

@@ -10,29 +10,31 @@ namespace QwerkE {
 
     namespace Inspector {
 
-        void InspectFieldRecursive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
+        bool InspectFieldRecursive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
 
         template <class T>
-        void InspectFieldRecursive(T& obj, std::string parentName)
+        bool InspectFieldRecursive(T& obj, std::string parentName)
         {
-            InspectFieldRecursive(Mirror::InfoForType<T>(), &obj, parentName);
+            return InspectFieldRecursive(Mirror::InfoForType<T>(), &obj, parentName);
         }
 
         template <class T>
-        void InspectObject(T& object, const char* const windowName)
+        bool InspectObject(T& object, const char* const windowName)
         {
             if (!ImGui::Begin(windowName))
-                return;
+                return false;
 
             // char charArray[200];
             std::string buffer = ""; // charArray;
             buffer.reserve(200);
 
             ImGui::PushItemWidth(ImGui::GetWindowWidth() / 2.5f);
-            InspectFieldRecursive(object, buffer);
+            const bool valueChanged = InspectFieldRecursive(object, buffer);
             ImGui::PopItemWidth();
 
             ImGui::End();
+
+            return valueChanged;
         }
     }
 

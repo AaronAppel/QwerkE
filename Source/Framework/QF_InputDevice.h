@@ -24,7 +24,7 @@ namespace QwerkE {
                 }
                 else
                 {
-                    LOG_ERROR("", __FUNCTION__);
+                    LOG_ERROR("{0} Key codex is already initialized!", __FUNCTION__);
                 }
             }
 

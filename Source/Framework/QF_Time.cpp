@@ -50,7 +50,7 @@ namespace QwerkE {
             return s_StartTime;
         }
 
-        const float& FrameDelta()
+        float FrameDelta()
         {
             return (float)s_FrameDelta;
         };

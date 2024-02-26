@@ -53,9 +53,6 @@ namespace QwerkE {
             AddDevice(keyboard);
             AddDevice(mouse);
 
-            AssignSystemKeys(keyboard);
-            AssignSystemKeys(mouse);
-
             NewFrame(); // Init buffers
         }
 
