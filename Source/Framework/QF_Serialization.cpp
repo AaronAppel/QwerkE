@@ -764,7 +764,7 @@ namespace QwerkE {
                 case MirrorTypes::m_int8_t:
                     {
                         int8_t* numberAddress = (int8_t*)((char*)obj + field.offset);
-                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), (double)*numberAddress));
                     }
                     break;
 
@@ -786,14 +786,14 @@ namespace QwerkE {
                 case MirrorTypes::m_int64_t:
                     {
                         int64_t* numberAddress = (int64_t*)((char*)obj + field.offset);
-                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), (double)*numberAddress));
                     }
                     break;
 
                 case MirrorTypes::m_uint64_t:
                     {
                         uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
-                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                        AddItemToArray(objJson, CreateNumber(field.name.c_str(), (double)*numberAddress));
                     }
                     break;
 

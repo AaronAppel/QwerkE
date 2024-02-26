@@ -46,11 +46,6 @@ char* CombineStrings(const char* a, const char* b) // #TODO Review const return 
 	return buffer;
 }
 
-char* CombineStrings(std::string a, std::string b)
-{
-	return CombineStrings(a.c_str(), b.c_str());
-}
-
 std::string DispStrCombine(const char* a, const char* b) // #TODO Improve naming
 {
 	std::string value;

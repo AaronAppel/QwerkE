@@ -10,6 +10,8 @@ namespace QwerkE {
 
     struct ProjectSettings
     {
+        bool isDirty = false;
+
         const char* projectName = gc_DefaultStringValue;
         const char* assetsDirPath = gc_DefaultStringValue;
 
@@ -25,6 +27,8 @@ namespace QwerkE {
 
     struct EngineSettings
     {
+        bool isDirty = false;
+
         u16 windowWidthPixels = 1600;
         u16 windowHeightPixels = 900;
 
@@ -45,10 +49,13 @@ namespace QwerkE {
         bool showingShaderEditor = false;
         bool showingSettingsEditor = false;
         bool showingFPS = false;
+        bool showingRendererSettings = false;
     };
 
     struct UserSettings
     {
+        bool isDirty = false;
+
         eKeys key_camera_MoveForward = eKeys::eKeys_W;
         eKeys key_camera_MoveBackward = eKeys::eKeys_S;
         eKeys key_camera_MoveLeft = eKeys::eKeys_A;
@@ -59,6 +66,13 @@ namespace QwerkE {
         eKeys key_camera_RotateRight = eKeys::eKeys_T;
 
         // Interface: Window open, UI scaling, etc
+    };
+
+    struct RendererSettings
+    {
+        bool isDirty = false;
+
+        u8 drawingPrimitiveType = 0; // GL_ZERO
     };
 
     namespace Settings
@@ -74,9 +88,13 @@ namespace QwerkE {
         void LoadUserSettings(std::string userSettingsFilePath);
         void SaveUserSettings();
 
+        void LoadRendererSettings(std::string rendererSettingsFilePath);
+        void SaveRendererSettings();
+
         EngineSettings& GetEngineSettings();
         ProjectSettings& GetProjectSettings();
         UserSettings& GetUserSettings();
+        RendererSettings& GetRendererSettings();
     }
 
 }

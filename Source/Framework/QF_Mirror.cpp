@@ -165,6 +165,10 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(sceneFileNames)
 	MIRROR_CLASS_END(ProjectSettings)
 
+	MIRROR_CLASS_START(RendererSettings)
+	MIRROR_CLASS_MEMBER(drawingPrimitiveType)
+	MIRROR_CLASS_END(RendererSettings)
+
 	// GameObject components
 	MIRROR_CLASS_START(Component)
 	MIRROR_CLASS_END(Component)

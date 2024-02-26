@@ -14,7 +14,7 @@ namespace QwerkE {
 
     namespace Renderer {
 
-        vec2 s_WindowSize = vec2(1600, 900);
+        static vec2 s_WindowSize = vec2(1600, 900);
 
         // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glDebugMessageCallback.xhtml
         void APIENTRY OpenGLLogMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)

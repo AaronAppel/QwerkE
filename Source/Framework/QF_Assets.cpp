@@ -48,8 +48,7 @@ namespace QwerkE {
 			ASSERT(s_Meshes.empty() && s_Textures.empty() &&
 				s_Materials.empty() && s_Fonts.empty() &&
 				s_Sounds.empty() && s_ShaderPrograms.empty() &&
-				s_ShaderComponents.empty(),
-				"Resources already initialized!");
+				s_ShaderComponents.empty(), "Resources already initialized!");
 
 			ASSERT(InstantiateFileMesh(MeshesFolderPath(null_mesh), null_mesh), "Error loading null mesh asset!");
 			ASSERT(InstantiateTextureSync(TexturesFolderPath(null_texture)), "Error loading null texture asset!");

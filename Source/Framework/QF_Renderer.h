@@ -12,7 +12,7 @@ namespace QwerkE {
 
         void ClearScreen();
 
-        void DrawFont(const char* text, float x = 100.f, float y = 100.f, float scale = 1.0f);
+        void DrawFont(const char* text, float x = 100.f, float y = 100.f, float scale = 1.f);
 
         const void OnWindowResized(const vec2& newWindowSize);
 

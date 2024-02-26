@@ -1,5 +1,6 @@
 #include "QF_Log.h"
 
+#include <cstdarg> // Variadic arguments
 #include <memory> // std::make_shared
 #include <corecrt_wstdio.h> // stderr
 #include <debugapi.h> // OuputDebugStringA(buffer)
@@ -66,4 +67,5 @@ namespace QwerkE {
     {
         printf(message, arg1, arg2);
     }
+
 }

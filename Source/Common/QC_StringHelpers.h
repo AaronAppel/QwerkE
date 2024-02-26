@@ -9,7 +9,6 @@ char* StringAppend(const char* a, const char* b, const char* c);
 char* DeepCopyString(const char* string);
 
 char* CombineStrings(const char* a, const char* b);
-char* CombineStrings(std::string a, std::string b);
 
 std::string DispStrCombine(const char* a, const char* b);
 

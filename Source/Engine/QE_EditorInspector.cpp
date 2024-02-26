@@ -73,7 +73,7 @@ namespace QwerkE {
                 //     }
                 //     break;
 
-                case MirrorTypes::m_vector_string:
+                case MirrorTypes::m_vector_string: // #TODO Support vector manipulation
                     {
                         std::vector<std::string>* strings = (std::vector<std::string>*)fieldAddress;
                         for (size_t i = 0; i < strings->size(); i++)
@@ -162,14 +162,12 @@ namespace QwerkE {
 
                 case MirrorTypes::Vector3:
                     {
-                        static bool startingColor = true;
                         float* vector3Address = (float*)fieldAddress;
                         std::string fieldName = parentName + field.name;
                         if (ImGui::DragFloat3(fieldName.c_str(), vector3Address, .1f))
                         {
                             valueChanged = true;
                         }
-                        startingColor = !startingColor;
                     }
                     break;
 
@@ -184,8 +182,8 @@ namespace QwerkE {
 
                         if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
                         {
+                            valueChanged |= *stringAddress != buffer;
                             *stringAddress = buffer;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -202,9 +200,10 @@ namespace QwerkE {
 
                         if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
                         {
-                            // delete *constCharPtrAddress;
-                            *constCharPtrAddress = strdup(buffer.data());
-                            valueChanged = true;
+                            // #TODO Review memory leak. delete *constCharPtrAddress;
+                            char* result = strdup(buffer.data());
+                            valueChanged |= strcmp(*constCharPtrAddress, result) != 0;
+                            *constCharPtrAddress = result;
                         }
                     }
                     break;
@@ -221,8 +220,8 @@ namespace QwerkE {
                             {
                                 charEscaped[0] -= 32;
                             }
+                            valueChanged |= *charPtrAddress != charEscaped[0];
                             *charPtrAddress = charEscaped[0];
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -234,8 +233,9 @@ namespace QwerkE {
                         std::string fieldName = parentName + field.name;
                         if (ImGui::InputInt(fieldName.c_str(), &intValue))
                         {
+                            // #TODO Fix rounding where subtracting 0 gives 1, but adding 1 doesn't change the value. Avoid rounding from 0-1 = 1.
+                            valueChanged |= *boolAddress != (bool)intValue;
                             *boolAddress = (bool)intValue;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -261,8 +261,8 @@ namespace QwerkE {
                         std::string fieldName = parentName + field.name;
                         if (ImGui::DragInt(fieldName.c_str(), &temp))
                         {
+                            valueChanged |= *numberAddress != (u8)temp;
                             *numberAddress = (u8)temp;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -274,8 +274,8 @@ namespace QwerkE {
                         std::string fieldName = parentName + field.name;
                         if (ImGui::DragInt(fieldName.c_str(), &temp))
                         {
+                            valueChanged |= *numberAddress != (u16)temp;
                             *numberAddress = (u16)temp;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -288,8 +288,8 @@ namespace QwerkE {
 
                         if (ImGui::DragInt(fieldName.c_str(), &temp))
                         {
+                            valueChanged |= *numberAddress != (uint32_t)temp;
                             *numberAddress = (uint32_t)temp;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -302,8 +302,8 @@ namespace QwerkE {
 
                         if (ImGui::DragInt(fieldName.c_str(), &temp))
                         {
+                            valueChanged |= *numberAddress != (uint64_t)temp;
                             *numberAddress = (uint64_t)temp;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -315,8 +315,8 @@ namespace QwerkE {
                         std::string fieldName = parentName + field.name;
                         if (ImGui::DragInt(fieldName.c_str(), &temp))
                         {
+                            valueChanged |= *numberAddress != (s8)temp;
                             *numberAddress = (s8)temp;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -328,8 +328,8 @@ namespace QwerkE {
                         std::string fieldName = parentName + field.name;
                         if (ImGui::DragInt(fieldName.c_str(), &temp))
                         {
+                            valueChanged |= *numberAddress != (s16)temp;
                             *numberAddress = (s16)temp;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -354,8 +354,8 @@ namespace QwerkE {
 
                         if (ImGui::DragInt(fieldName.c_str(), &temp))
                         {
+                            valueChanged |= *numberAddress != (int64_t)temp;
                             *numberAddress = (int64_t)temp;
-                            valueChanged = true;
                         }
                     }
                     break;
@@ -368,8 +368,8 @@ namespace QwerkE {
 
                         if (ImGui::DragFloat(fieldName.c_str(), &temp)) // #TODO Review need for precision
                         {
+                            valueChanged |= *numberAddress != (double)temp;
                             *numberAddress = (double)temp;
-                            valueChanged = true;
                         }
                     }
                     break;

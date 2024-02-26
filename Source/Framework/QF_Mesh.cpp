@@ -140,11 +140,14 @@ namespace QwerkE {
 
         for (unsigned int i = 0; i < attributes->size(); i++)
         {
-            GLuint attributeLoc = glGetAttribLocation(shader->GetProgram(), DispStrCombine(ShaderFactory::GetAttributeNamePrefix(), attributes->at(i).c_str()).c_str());
+            std::string attributeName = DispStrCombine(ShaderFactory::GetAttributeNamePrefix(), attributes->at(i).c_str());
+            GLuint attributeLoc = glGetAttribLocation(shader->GetProgram(), attributeName.c_str());
+
             if (attributeLoc != -1)
             {
+                // #NOTE glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer)
+
                 if (StringCompare(attributes->at(i), vertexPosition))
-                    // glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer)
                     glVertexAttribPointer(attributeLoc, 3, GL_FLOAT, GL_FALSE, vertexDataStride, (GLvoid*)m_BufferData.PositionOffset());
 
                 else if (StringCompare(attributes->at(i), vertexColour))
@@ -160,10 +163,10 @@ namespace QwerkE {
                     glVertexAttribPointer(attributeLoc, 3, GL_FLOAT, GL_FALSE, vertexDataStride, (GLvoid*)m_BufferData.TangentsOffset());
 
                 else if (StringCompare(attributes->at(i), vertexBitangent))
-                    glVertexAttribPointer(attributeLoc, 3, GL_FLOAT, GL_FALSE, vertexDataStride, (GLvoid*)m_BufferData.BitangentsOffset()); // #TODO Compiler warning: warning C4312: 'type cast': conversion from 'unsigned int' to 'GLvoid *' of greater size
+                    glVertexAttribPointer(attributeLoc, 3, GL_FLOAT, GL_FALSE, vertexDataStride, (GLvoid*)m_BufferData.BitangentsOffset());
                 else
                 {
-                    LOG_WARN("Attribute name not found/supported: {0}", attributes->at(i).c_str());
+                    LOG_WARN("{0} Attribute name not found/supported: {1}", __FUNCTION__, attributes->at(i).c_str());
                     continue;
                 }
 
