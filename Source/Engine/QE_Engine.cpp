@@ -80,11 +80,12 @@ namespace QwerkE {
 			}
 
 			const EngineSettings& engineSettings = Settings::GetEngineSettings();
-			const unsigned int FPS_MAX = (int)(engineSettings.limitFramerate) * engineSettings.maxFramesPerSecond;
-			const float FPS_MAX_DELTA = FPS_MAX ? 1.0f / FPS_MAX : 1.f / 120.f;
+			const u16 FPS_MAX = (int)(engineSettings.limitFramerate) * engineSettings.maxFramesPerSecond;
+			const float SAFE_FPS_MAX = 360.f;
+			const float FPS_MAX_DELTA = FPS_MAX ? 1.f / (float)FPS_MAX : 1.f / SAFE_FPS_MAX;
 
 			double lastFrameTime = Time::Now();
-			double timeUntilNextFrame = 0.0;
+			double timeUntilNextFrame = 0.;
 
 			Time::InitStartTime();
 
@@ -100,7 +101,7 @@ namespace QwerkE {
 
 					Time::EndFrame();
 
-					timeUntilNextFrame = 0.0;
+					timeUntilNextFrame = 0.;
 				}
 				else
 				{

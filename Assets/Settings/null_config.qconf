@@ -5,7 +5,7 @@
 			"limitFramerate":	true,
 			"maxFramesPerSecond":	120,
 			"maxEnabledScenes":	1,
-			"maxJobsAdditionalThreadCount":	0,
+			"maxJobsAdditionalThreadCount":	2,
 			"audioEnabled":	false,
 			"physicsEnabled":	false,
 			"networkingEnabled":	false,
