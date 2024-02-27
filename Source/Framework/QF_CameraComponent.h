@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 #include "Libraries/FlatheadGames/MyMatrix.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 

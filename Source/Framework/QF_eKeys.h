@@ -10,8 +10,8 @@ namespace QwerkE {
 
     enum eKeyState
     {
-        eKeyState_Release = 0,
-        eKeyState_Press,
+        eKeyState_Release = 0, // GLFW_RELEASE is 0
+        eKeyState_Press, // GLFW_PRESS is 1
         // eKeyState_Held, ? affects GetIsKeyDown()
 
         eKeyState_Max

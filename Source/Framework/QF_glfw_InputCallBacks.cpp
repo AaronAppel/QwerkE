@@ -10,7 +10,6 @@
 namespace QwerkE {
 
 #ifdef GLFW3
-
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
     void char_callback(GLFWwindow* window, unsigned int codePoint);
     void char_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods) { }
@@ -31,33 +30,33 @@ namespace QwerkE {
 
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
     {
-#ifdef GLFW3
-        if (action == GLFW_PRESS)
-        {
-            Input::OnKeyEvent(Input::GLFWToQwerkEKey(key), eKeyState::eKeyState_Press);
-        }
-        else if (action == GLFW_RELEASE)
-        {
-            Input::OnKeyEvent(Input::GLFWToQwerkEKey(key), eKeyState::eKeyState_Release);
-        }
-#endif
+        const bool keyIsPressed = action == GLFW_PRESS;
+        const eKeys eKey = Input::GLFWToQwerkEKey(key);
+        Input::OnKeyEvent(eKey, (eKeyState)keyIsPressed);
 
-#if defined(dearimgui) && defined(GLFW3)
+#if defined(dearimgui)
+        // ImGui::CaptureKeyboardFromApp(true);
+
         ImGuiIO& io = ImGui::GetIO();
-
-        if (action == GLFW_PRESS)
+        switch (eKey)
         {
-            io.KeysDown[key] = true;
-        }
-        else if (action == GLFW_RELEASE)
-        {
-            io.KeysDown[key] = false;
+        case eKeys::eKeys_LCTRL:
+            io.AddKeyEvent(ImGuiKey::ImGuiKey_LeftCtrl, keyIsPressed);
+            break;
+
+        case eKeys::eKeys_RCTRL:
+            io.AddKeyEvent(ImGuiKey::ImGuiKey_RightCtrl, keyIsPressed);
+            break;
+
+        default:
+            break;
         }
 
-        io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-        io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-        io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-        io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+        // #TODO See if AddKeyEvent handles modifiers
+        // io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+        // io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+        // io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+        // io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 #endif
     }
 
@@ -78,16 +77,23 @@ namespace QwerkE {
 
     void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
     {
-#ifdef GLFW3
+        // ImGui::CaptureMouseFromApp(true);
         if (action == GLFW_PRESS)
         {
             Input::OnMouseClick(Input::GLFWToQwerkEKey(button), eKeyState::eKeyState_Press);
+#ifdef dearimgui
+            ImGuiIO& io = ImGui::GetIO();
+            io.AddMouseButtonEvent(button, true);
+#endif
         }
         else if (action == GLFW_RELEASE)
         {
             Input::OnMouseClick(Input::GLFWToQwerkEKey(button), eKeyState::eKeyState_Release);
-        }
+#ifdef dearimgui
+            ImGuiIO& io = ImGui::GetIO();
+            io.AddMouseButtonEvent(button, false);
 #endif
+        }
     }
 
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
@@ -98,6 +104,6 @@ namespace QwerkE {
         io.MouseWheel += (float)yoffset;
 #endif
     }
+#endif
 
 }
-#endif

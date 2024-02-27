@@ -8,79 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "4c3749c9271c261a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "da9fe0f8e848604b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ZZ Shared Vault Files ❗/Assets Wishlist.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fc5c74e0d0fd77b1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Development/Feature Tickets/F0004 - GUIDs.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b13500c853f6f290",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Development/Feature Tickets/F0005 - Time Specific Events.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "341ee7ec46b0829b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4aca466780678a6b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Serialization (JSON).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6694405be56e5dc0",
+            "id": "c887bf20b64b3020",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -90,57 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "e63f644d1ddf1a75",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Naming Ideas.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "66b8fc04c675782f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Mirror Library.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bb509d665d0ed27c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ZZ Shared Vault Files ❗/Watched.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e22470c293c77321",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Template.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 7
+        ]
       }
     ],
     "direction": "vertical"
@@ -200,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Naming Ideas.md"
+                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md"
               }
             }
           }
@@ -217,7 +96,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "reflection",
+                "query": "version",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -243,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Naming Ideas.md",
+                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -255,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Naming Ideas.md",
+                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -281,9 +160,12 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "e63f644d1ddf1a75",
+  "active": "c887bf20b64b3020",
   "lastOpenFiles": [
+    "References/Visual Studio.md",
+    "QwerkE Standards/Language Versions.md",
     "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
+    "QwerkE Versioning.md",
     "Naming Ideas.md",
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
@@ -303,14 +185,11 @@
     "Development/Feature Tickets/F0005 - Time Specific Events.md",
     "Event System.md",
     "Research/Game Engine Series YouTube.md",
-    "References/Visual Studio.md",
     "Development/Feature Tickets/F0004 - GUIDs.md",
     "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
     "Development/Features/GUIDs.md",
     "Development/Resolved/F0005 - Null GameObject Data.md",
     "Development/Resolved/F0001 - Reflection.md",
-    "Development/Feature Tickets/F0003 - Select Same Named Entities.md",
-    "Development/Feature Tickets/F0002 - Cross Panel Communication.md",
     "Development/Resolved",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",

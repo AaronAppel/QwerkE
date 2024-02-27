@@ -8,13 +8,12 @@
 // 3. This notice may not be removed or altered from any source distribution.
 
 #include "Libraries/FlatheadGames/MathHelpers.h"
+#include "Libraries/glew/glew.h"
 
 #include "QC_Vector.h" // #TODO Remove vector dependency. Going to need to write my own math types, or use MyVector.h as well
 #include "MyQuaternion.h"
 #include "MyMatrix.h"
 #include "QC_MathConstants.h"
-
-#include "Libraries/glew/GL/glew.h"
 
 void MyMatrix::SetIdentity()
 {

@@ -82,7 +82,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QE_PCH_Windows.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QE_PCH_Windows.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw\GLFW;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
@@ -93,7 +93,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw\GLFW;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>QE_PCH_Windows.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QE_PCH_Windows.h</ForcedIncludeFiles>
@@ -113,7 +113,7 @@
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QE_PCH_Windows.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw\GLFW;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -131,7 +131,7 @@
       <PrecompiledHeaderFile>QE_PCH_Windows.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>QE_PCH_Windows.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw\GLFW;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libraries\;$(SolutionDir)Source\Framework\;$(SolutionDir)Source\Engine\;$(SolutionDir)Source\Common\;$(SolutionDir)Libraries\assimp\Release\x86;$(SolutionDir)Libraries\glm\glm\gtx;$(SolutionDir)Libraries\glm\glm;$(SolutionDir)Libraries\pThreads;$(SolutionDir)Libraries\glfw;$(SolutionDir)Libraries\glew\GL;$(SolutionDir)Libraries\Bullet3;$(SolutionDir)Libraries\Bullet3\BulletCollision;$(SolutionDir)Libraries\Bullet3\BulletDynamics;$(SolutionDir)Libraries\spdlog;$(SolutionDir)Libraries\Freetype2</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>

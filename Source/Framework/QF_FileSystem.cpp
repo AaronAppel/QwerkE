@@ -22,7 +22,7 @@
 #pragma warning( default : 6262 )
 
 #include "Libraries/lodepng/lodepng.h"
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 #include "Libraries/FlatheadGames/ImageHelpers.h"
 
 #include "QF_Defines.h"

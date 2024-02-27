@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 
-// #include "Libraries/glew/GL/glew.h"
+// #include "Libraries/glew/glew.h"
 #include "Libraries/freetype2/ft2build.h" // #TODO Temp build fix
 #include "Libraries/freetype2/freetype/freetype.h"
 // #include "Libraries/OpenAL/include/al.h"

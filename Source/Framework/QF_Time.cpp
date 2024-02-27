@@ -34,7 +34,7 @@ namespace QwerkE {
             s_FrameDelta = s_CurrentFrame - s_LastFrame;
         }
 
-        const double& Now()
+        const double Now()
         {
             unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
             unsigned __int64 time;

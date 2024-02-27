@@ -310,18 +310,7 @@ namespace QwerkE {
                         Settings::SaveEngineSettings();
                     }
 
-                    if (ImGui::Button("FPS"))
-                    {
-                        s_EngineSettings->showingFPS = !s_EngineSettings->showingFPS;
-                        Settings::SaveEngineSettings();
-                    }
-
-                    ImGui::EndMenu();
-                }
-
-                if (ImGui::BeginMenu("Testing"))
-                {
-                    static bool clientServerEnabled = false;
+                    static bool clientServerEnabled = false; // #TODO Create a networking window
                     if (ImGui::Checkbox("Client/Server", &clientServerEnabled))
                     {
                         if (clientServerEnabled)
@@ -337,6 +326,12 @@ namespace QwerkE {
                     if (clientServerEnabled)
                     {
                         Network::TestUpdate();
+                    }
+
+                    if (ImGui::Button("FPS"))
+                    {
+                        s_EngineSettings->showingFPS = !s_EngineSettings->showingFPS;
+                        Settings::SaveEngineSettings();
                     }
 
                     ImGui::EndMenu();
@@ -397,7 +392,7 @@ namespace QwerkE {
             static bool opt_fullscreen_persistant = true;
             bool opt_fullscreen = opt_fullscreen_persistant;
 
-            static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+            ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
             static ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 
             if (opt_fullscreen) // fullscreen
@@ -422,6 +417,7 @@ namespace QwerkE {
                 ImGui::PopStyleVar(2);
 
             ImGuiIO& io = ImGui::GetIO();
+            ImGuiConfigFlags_DockingEnable;
             if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
             {
                 ImGuiID dockspace_id = ImGui::GetID("QwerkEDockSpace");

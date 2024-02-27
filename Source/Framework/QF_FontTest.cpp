@@ -5,7 +5,7 @@
 
 #include "Libraries/freetype2/ft2build.h"
 #include "Libraries/freetype2/freetype/freetype.h"
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 #pragma warning( disable : 26495 )
 #include "Libraries/glm/glm/common.hpp"
 #include "Libraries/glm/glm/gtc/type_ptr.hpp"

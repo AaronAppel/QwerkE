@@ -5,8 +5,8 @@
 #include "QF_Defines.h"
 
 #ifdef GLFW3
-#include "Libraries/glew/GL/glew.h" // #TODO Review GLEW inclusion
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/glew/glew.h" // #TODO Review GLEW inclusion
+#include "Libraries/glfw/glfw3.h"
 #else
 #error Define library!
 #endif

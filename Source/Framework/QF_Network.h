@@ -4,7 +4,7 @@
 
 namespace QwerkE {
 
-    class Network
+    class Network final // #TODO namespace Network
     {
     public:
         static void Initialize();
@@ -22,8 +22,7 @@ namespace QwerkE {
         static bool IsServer() { return m_IsServer; }
 
     private:
-        Network() {}
-        ~Network() {}
+        Network() = default;
 
         static std::string m_IP;
         static bool m_IsServer;

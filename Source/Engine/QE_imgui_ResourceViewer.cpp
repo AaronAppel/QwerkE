@@ -132,7 +132,7 @@ namespace QwerkE {
 			{
 				if (counter % m_ModelsPerRow) ImGui::SameLine();
 
-				ImGui::ImageButton((ImTextureID)p.second->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
+				ImGui::ImageButton("ID4", (ImTextureID)p.second->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1); //#TODO Deprecated imageFramePadding
 
 				if (ImGui::IsItemHovered())
 				{
@@ -140,7 +140,7 @@ namespace QwerkE {
 
 					if (ImGui::IsMouseDown(0))
 					{
-						ImGui::ImageButton((ImTextureID)p.second->s_Handle, tooltipOnClickSize, imageUv0, imageUv1, imageFramePadding);
+						ImGui::ImageButton("ID5", (ImTextureID)p.second->s_Handle, tooltipOnClickSize, imageUv0, imageUv1); //#TODO Deprecated imageFramePadding
 					}
 
 					ImGui::Text(p.second->s_FileName.c_str());
@@ -162,7 +162,7 @@ namespace QwerkE {
 				if (Texture* diffuseTexture = p.second->GetMaterialByType(eMaterialMaps::MatMap_Diffuse))
 				{
 					ImTextureID textureId = (ImTextureID)diffuseTexture->s_Handle;
-					ImGui::ImageButton(textureId, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
+					ImGui::ImageButton("ID6", textureId, m_ModelThumbnailPixelSize, imageUv0, imageUv1); //#TODO Deprecated imageFramePadding
 					if (ImGui::IsItemHovered())
 					{
 						ImGui::BeginTooltip();
@@ -180,7 +180,7 @@ namespace QwerkE {
 				else
 				{
 					Texture* nullTexture = Assets::GetTexture(null_texture);
-					ImGui::ImageButton((ImTextureID)nullTexture->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
+					ImGui::ImageButton("ID4", (ImTextureID)nullTexture->s_Handle, m_ModelThumbnailPixelSize, imageUv0, imageUv1); //#TODO Deprecated imageFramePaddingmageFramePadding
 					if (ImGui::IsItemHovered())
 					{
 						ImGui::BeginTooltip();
@@ -226,14 +226,14 @@ namespace QwerkE {
 			{
 				if (counter % m_ModelsPerRow) ImGui::SameLine();
 
-				ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), m_ModelThumbnailPixelSize, imageUv0, imageUv1, imageFramePadding);
+				ImGui::ImageButton("ID2", (ImTextureID)m_ModelImageHandles.at(i), m_ModelThumbnailPixelSize, imageUv0, imageUv1); // #TODO deprecated imageFramePadding
 
 				if (ImGui::IsItemHovered())
 				{
 					ImGui::BeginTooltip();
 					if (ImGui::IsMouseDown(ImGui::Buttons::MouseLeft))
 					{
-						ImGui::ImageButton((ImTextureID)m_ModelImageHandles.at(i), tooltipOnClickSize, imageUv0, imageUv1, imageFramePadding);
+						ImGui::ImageButton("ID3", (ImTextureID)m_ModelImageHandles.at(i), tooltipOnClickSize, imageUv0, imageUv1); // #TODO deprecated imageFramePadding
 					}
 
 					ImGui::Text(std::to_string(m_ModelImageHandles[i]).c_str());

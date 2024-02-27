@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QC_StringHelpers.h"

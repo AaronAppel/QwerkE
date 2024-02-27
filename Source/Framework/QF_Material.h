@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Enums.h"

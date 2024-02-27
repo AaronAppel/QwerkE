@@ -1,6 +1,6 @@
 #include "QF_Component.h"
 
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/glfw/glfw3.h"
 #include "Libraries/FlatheadGames/MyMatrix.h"
 
 #include "QF_Enums.h"

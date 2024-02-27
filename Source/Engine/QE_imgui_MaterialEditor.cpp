@@ -19,6 +19,8 @@ namespace QwerkE {
     }
 
     const int s_PixelsPerChar = 8;
+    const ImVec2 s_buttonSize = ImVec2(64, 64);
+
     void MaterialEditor::Draw(Material* material, bool* isOpen)
     {
         // NOTE: For now just replace existing texture. In the future, think of a way to preserve old data.
@@ -48,13 +50,13 @@ namespace QwerkE {
                 if (p.second)
                 {
                     ImGui::SameLine();
-                    ImVec2 buttonSize = ImVec2(64, 64);
+                    float scalar = 1.f;
                     if (m_CurrentMap == p.first)
                     {
-                        buttonSize = ImVec2(70, 70);
+                        scalar = 1.1f;
                     }
 
-                    ImGui::ImageButton((ImTextureID)p.second->s_Handle, buttonSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1);
+                    ImGui::ImageButton("ID0", (ImTextureID)p.second->s_Handle, s_buttonSize * scalar, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f)); // #TODO Had to remove deprecated padding value of 1
 
                     // #TODO Add the ability to add or remove textures from a material.
 
@@ -85,7 +87,7 @@ namespace QwerkE {
                     ImGui::SameLine();
                 }
 
-                if (ImGui::ImageButton((ImTextureID)p.second->s_Handle, ImVec2(64, 64), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f), 1))
+                if (ImGui::ImageButton("ID1", (ImTextureID)p.second->s_Handle, s_buttonSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f))) // #TODO Had to remove deprecated padding value of 1
                 {
                 }
 

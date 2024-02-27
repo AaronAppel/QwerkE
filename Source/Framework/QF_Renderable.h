@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Material.h"

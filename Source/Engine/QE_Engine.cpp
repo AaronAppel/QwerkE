@@ -3,8 +3,8 @@
 #include "QF_Framework.h" // #TODO Review include order
 
 #include "Libraries/FlatheadGames/MathHelpers.h"
-#include "Libraries/glew/GL/glew.h"
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/glew/glew.h"
+#include "Libraries/glfw/glfw3.h"
 
 #define IMGUI_EDITOR
 

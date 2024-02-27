@@ -43,9 +43,9 @@
 #include "Libraries/freetype2/ft2build.h"
 #include "Libraries/freetype2/freetype/freetype.h"
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/glfw/glfw3.h"
 
 // TODO: Setup OpenAL
 // https://ffainelli.github.io/openal-example/

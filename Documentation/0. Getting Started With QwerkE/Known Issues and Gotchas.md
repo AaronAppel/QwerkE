@@ -13,3 +13,8 @@ Same issue as Bullet with dummy.cpp, where it shouldn't be added to the Visual S
 
 ## ImGui                   [[Library References]]
 Using the docking space feature, a crash will occur if two windows are ever docked to 1 area/section/window. Probably an issue on my end, but all libraries are using old versions so new versions could include fixes for issues like this.
+
+Access violation exception while dragging an imgui docking window :
+QF_Mesh.cpp, Line 189
+void Mesh::DrawElements() const
+glDrawElements

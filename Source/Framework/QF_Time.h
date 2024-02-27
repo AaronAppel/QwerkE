@@ -4,7 +4,7 @@ namespace QwerkE {
 
     namespace Time {
 
-        const double& Now();
+        const double Now();
 
 		class Timer
 		{
@@ -28,7 +28,7 @@ namespace QwerkE {
         float FrameDelta();
         const double& FrameDeltaDouble();
 
-        const double& Now();
+        const double Now();
 
 		// #TODO This should be in window or some other engine section
         // static void SetMaxFrameRate(float framesPerSecond);

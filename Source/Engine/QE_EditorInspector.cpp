@@ -44,13 +44,13 @@ namespace QwerkE {
                             {
                                 parentName += field.name + " ";
                                 valueChanged |= InspectFieldRecursive(field.typeInfo->collectionTypeInfo, (void*)(renderables->data() + i), parentName);
-                                // valueChanged |= InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
                                 parentName.clear();
                             }
                         }
                     }
                     break;
 
+                    // #TODO Component support
                 // case MirrorTypes::Component:
                 //     {
                 //         Component* component = (Component*)fieldAddress;

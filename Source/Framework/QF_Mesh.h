@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 
 #include "QF_Constants.h"
 #include "QF_MeshData.h"

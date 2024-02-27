@@ -3,7 +3,7 @@
 #include <map>
 #include <memory>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 
 #include "QF_Debug.h"
 #include "QF_Defines.h"

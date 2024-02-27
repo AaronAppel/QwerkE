@@ -2,12 +2,13 @@
 
 #include <Windows.h>
 
-#include "QF_LibrariesLoad.h"
+#include "Libraries/glfw/glfw3.h"
+
+#include "QF_Defines.h"
 
 namespace QwerkE {
 
 #ifndef GLFW3
-
     // Windows 32 bit
     void Input::AssignWin32Keys()
     {

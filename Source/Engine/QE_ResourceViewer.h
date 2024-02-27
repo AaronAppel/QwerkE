@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 #include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_Constants.h"

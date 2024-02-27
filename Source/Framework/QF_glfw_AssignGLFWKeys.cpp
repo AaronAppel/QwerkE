@@ -1,6 +1,6 @@
 #include "QF_Input.h"
 
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/glfw/glfw3.h"
 
 #include "QF_Defines.h"
 

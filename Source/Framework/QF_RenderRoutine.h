@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Libraries/glew/GL/glew.h"
+#include "Libraries/glew/glew.h"
 
 #include "QF_Routine.h"
 

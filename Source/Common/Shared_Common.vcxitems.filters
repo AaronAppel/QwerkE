@@ -84,24 +84,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm.cpp">
       <Filter>Libraries\glm</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_demo.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_draw.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_glfw.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_widgets.cpp">
-      <Filter>Libraries\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp">
       <Filter>Libraries\lodepng</Filter>
     </ClCompile>
@@ -133,6 +115,30 @@
       <Filter>Libraries\FlatheadGames</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Memory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_tables.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_widgets.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_demo.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_draw.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_glfw.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h">
@@ -1085,30 +1091,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\vector_relational.hpp">
       <Filter>Libraries\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imconfig.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_glfw.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_internal.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_rectpack.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_textedit.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_truetype.h">
-      <Filter>Libraries\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.h">
       <Filter>Libraries\lodepng</Filter>
@@ -2643,6 +2625,33 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\entt\entt.hpp">
       <Filter>Libraries\entt</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_glfw.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_internal.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_rectpack.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_textedit.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_truetype.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imconfig.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.h">
+      <Filter>Libraries\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #include "QF_Window.h"
 
-#include "Libraries/glew/GL/glew.h"
-#include "Libraries/glfw/GLFW/glfw3.h"
+#include "Libraries/glew/glew.h"
+#include "Libraries/glfw/glfw3.h"
 #include "Libraries/imgui/QC_imgui.h"
 
 #include "QF_Assets.h"
@@ -117,15 +117,10 @@ namespace QwerkE {
             ImGui::SetCurrentContext(context);
 
             ImGuiIO& io = ImGui::GetIO();
-            io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-            //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-            io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-            io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-            //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
-            //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
-
-            //ImGui::CaptureMouseFromApp(true);
-            //ImGui::CaptureKeyboardFromApp(true);
+            io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+            io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+            io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+            io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
             ImGui::StyleColorsDark();
 
@@ -150,8 +145,13 @@ namespace QwerkE {
     #endif
 
     #ifdef dearimgui
-            ImGui::DestroyContext();
+    #ifdef GLFW3
             ImGui_ImplGlfw_Shutdown();
+    #endif
+    #ifdef OpenGL
+            ImGui_ImplOpenGL3_Shutdown();
+    #endif
+            ImGui::DestroyContext();
     #endif
 
     #ifdef GLFW3
@@ -162,7 +162,6 @@ namespace QwerkE {
         void Window::Render()
         {
     #ifdef dearimgui
-
             if (s_windowIsMinimized)
             {
                 ImGui::EndFrame();
@@ -171,15 +170,18 @@ namespace QwerkE {
             }
 
             ImGui::Render();
+
+    #ifdef OpenGL
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    #endif
 
             ImGuiIO io = ImGui::GetIO();
             if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
             {
-                GLFWwindow* backup_current_context = glfwGetCurrentContext();
                 ImGui::UpdatePlatformWindows();
                 ImGui::RenderPlatformWindowsDefault();
     #ifdef GLFW3
+                GLFWwindow* backup_current_context = glfwGetCurrentContext();
                 glfwMakeContextCurrent(backup_current_context);
     #endif
             }
