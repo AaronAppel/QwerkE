@@ -92,6 +92,18 @@
             }
           },
           {
+            "id": "e63f644d1ddf1a75",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Naming Ideas.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "66b8fc04c675782f",
             "type": "leaf",
             "state": {
@@ -128,7 +140,7 @@
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -188,7 +200,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md"
+                "file": "Naming Ideas.md"
               }
             }
           }
@@ -231,7 +243,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
+                "file": "Naming Ideas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -243,7 +255,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
+                "file": "Naming Ideas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -269,8 +281,10 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "6694405be56e5dc0",
+  "active": "e63f644d1ddf1a75",
   "lastOpenFiles": [
+    "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
+    "Naming Ideas.md",
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
     "Mirror Library.md",
@@ -297,7 +311,6 @@
     "Development/Resolved/F0001 - Reflection.md",
     "Development/Feature Tickets/F0003 - Select Same Named Entities.md",
     "Development/Feature Tickets/F0002 - Cross Panel Communication.md",
-    "Development/TODO/Review Deprecated Files.md",
     "Development/Resolved",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",

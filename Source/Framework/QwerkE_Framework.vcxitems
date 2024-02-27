@@ -41,7 +41,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_glfw_InputCallBacks.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_GraphicsHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Input.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_InputDevice.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Jobs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_LightComponent.cpp" />
@@ -49,7 +48,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Log.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MyFileWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.cpp" />
@@ -113,11 +111,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_GraphicsManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Graphics_Header.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Input.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_InputDevice.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Instrumentor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_JobQueuedEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Jobs.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Keyboard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LibrariesLoad.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_LightComponent.h" />
@@ -129,7 +125,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mouse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MyFileWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.h" />

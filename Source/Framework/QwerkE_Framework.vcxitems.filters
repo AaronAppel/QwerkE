@@ -180,12 +180,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Input.cpp">
       <Filter>Core\Input</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_InputDevice.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mouse.cpp">
-      <Filter>Core\Input</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Jobs.cpp">
       <Filter>Core\Jobs</Filter>
     </ClCompile>
@@ -394,15 +388,6 @@
       <Filter>Core\Graphics\DataTypes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Input.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_InputDevice.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Keyboard.h">
-      <Filter>Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Mouse.h">
       <Filter>Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_QwerKE_eKeys.h">

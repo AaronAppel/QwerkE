@@ -21,42 +21,29 @@ namespace QwerkE {
     // TODO: Provide cross platform callback API for convenience
     // TODO: Add input functions for non-GLFW projects
     // TODO: Add input query functions such as WNDPROC for getting input and CheckInput() game loop function.
-    // TODO: Think of abstracting class for different libraries and platforms
     // TODO: Key event callback registration. Should that be handled by the event system? probably...
-    // TODO: Support more than 1 keyboard or multiple mice... for fun.
-    // TODO: Fix GLFW callbacks to avoid "static" everywhere
 
     namespace Input {
 
-        class KeyboardExtAPI;
-        class InputDevice;
-
-        const u8 ONE_FRAME_MAX_INPUT = 12;
-
         void Initialize();
 
-        void NewFrame(); // Call before other libraries! Resets frame input buffer
+        void NewFrame(); // #Note Call before libraries each frame
 
-        vec2 GetMouseDragDelta(); // get distance from mouse down
-        bool GetIsKeyDown(eKeys key); // check if keyIsDown
+        bool FrameKeyAction(eKeys key, eKeyState state);
 
-        const KeyboardExtAPI* GetDeviceAPI();
+        vec2 GetMouseDragDelta();
 
-        bool FrameKeyAction(eKeys key, eKeyState state); // Check if key was pressed or released this frame
+        bool GetIsKeyDown(eKeys key);
 
-        // #TODO Support ProcessMouseScroll
-        // #TODO Hide public methods for processing input
-        void ProcessMouseMove(vec2 position);
-        void ProcessMouseMove(float x, float y);
-        void ProcessMouseClick(eKeys key, eKeyState state);
-        void ProcessKeyEvent(eKeys key, eKeyState state);
-        eKeys GLFWToQwerkEKey(int key);
+        void OnMouseMove(vec2 position);
+        void OnMouseMove(float x, float y);
+        void OnMouseClick(eKeys key, eKeyState state);
+        void OnKeyEvent(eKeys key, eKeyState state);
 
 #ifdef GLFW3
+        eKeys GLFWToQwerkEKey(int key);
         void SetupCallbacks(GLFWwindow* window);
-
-        void AssignGLFWKeys(eInputDeviceTypes deviceType, u16* deviceKeysCodex);
-        void SetupGLFWKeyCodex(); // TODO: Remove
+        void InitializeGLFWKeysCodex(u16* keysCodex);
 #else
 #error "Define input library!"
 #endif

@@ -13,10 +13,10 @@
 
 namespace QwerkE {
 
-	Scene* s_CurrentScene = nullptr;
-	int s_CurrentSceneIndex = 0;
-	std::vector<Scene*> s_Scenes;
-	std::vector<sPtr<Scene>> s_ScenesSmart; // #TODO Use smart pointers. Deprecate Shutdown
+	static Scene* s_CurrentScene = nullptr;
+	static int s_CurrentSceneIndex = 0;
+	static std::vector<Scene*> s_Scenes;
+	static std::vector<sPtr<Scene>> s_ScenesSmart; // #TODO Use smart pointers. Deprecate Shutdown
 
 	namespace Scenes
 	{
@@ -70,6 +70,7 @@ namespace QwerkE {
 					delete s_Scenes[i];
 				}
 			}
+			s_Scenes.clear();
 		}
 
 		void PauseScene(std::string sceneName)
@@ -159,12 +160,7 @@ namespace QwerkE {
 		{
 			PROFILE_SCOPE("Scene Manager Update");
 
-			if (Input::FrameKeyAction(eKeys::eKeys_P, eKeyState::eKeyState_Press))
-			{
-				GetCurrentScene()->ToggleIsPaused();
-			}
-
-			constexpr size_t numberOfHotkeyedScenes = 10;
+			constexpr size_t numberOfHotkeyedScenes = eKeys::eKeys_F12 - eKeys::eKeys_F1 + 1;
 			for (size_t i = 0; i < numberOfHotkeyedScenes; i++)
 			{
 				if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))

@@ -167,40 +167,20 @@ namespace QwerkE {
         eKeys_MouseButton7,
         eKeys_MouseButton8,
 
-        //#define 	GLFW_JOYSTICK_1   0
-        //#define 	GLFW_JOYSTICK_2   1
-        //#define 	GLFW_JOYSTICK_3   2
-        //#define 	GLFW_JOYSTICK_4   3
-        //#define 	GLFW_JOYSTICK_5   4
-        //#define 	GLFW_JOYSTICK_6   5
-        //#define 	GLFW_JOYSTICK_7   6
-        //#define 	GLFW_JOYSTICK_8   7
-        //#define 	GLFW_JOYSTICK_9   8
-        //#define 	GLFW_JOYSTICK_10   9
-        //#define 	GLFW_JOYSTICK_11   10
-        //#define 	GLFW_JOYSTICK_12   11
-        //#define 	GLFW_JOYSTICK_13   12
-        //#define 	GLFW_JOYSTICK_14   13
-        //#define 	GLFW_JOYSTICK_15   14
-        //#define 	GLFW_JOYSTICK_16   15
-
         // #define 	GLFW_MOD_SHIFT   0x0001
 
-        // Modifiers
-        // Either
         eKeys_CTRL,
         eKeys_SHIFT,
         eKeys_ALT,
-        // Left
+
         eKeys_LCTRL,
         eKeys_LSHIFT,
         eKeys_LALT,
-        // Right
+
         eKeys_RCTRL,
         eKeys_RSHIFT,
         eKeys_RALT,
 
-        // Alternate Keys
         eKeys_Return,
         eKeys_Insert,
         eKeys_Delete,
@@ -214,7 +194,7 @@ namespace QwerkE {
         eKeys_PrintScreen,
         eKeys_Pause,
         eKeys_Menu,
-        eKeys_FN, // Alternate function key (Sleep, volume, etc)
+        eKeys_FN,
 
         eKeys_CapsLock,
         eKeys_NumLock,

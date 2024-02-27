@@ -378,7 +378,6 @@ namespace QwerkE {
                     // #TODO Review potential for infinite loop
                     if (field.typeInfo)
                     {
-                        int bp = 0;
                         parentName += field.name + " ";
                         valueChanged |= InspectFieldRecursive(field.typeInfo, (char*)obj + field.offset, parentName);
                         parentName.clear();

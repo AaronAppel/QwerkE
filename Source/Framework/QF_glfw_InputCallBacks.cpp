@@ -5,9 +5,6 @@
 #endif
 
 #include "QF_Constants.h"
-
-#include "QF_Mouse.h"
-#include "QF_Keyboard.h"
 #include "QF_Renderer.h"
 
 namespace QwerkE {
@@ -21,7 +18,6 @@ namespace QwerkE {
     void cursor_enter_callback(GLFWwindow* window, int entered) { }
     void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-    void joystick_callback(int joy, int event) { }
 
     void Input::SetupCallbacks(GLFWwindow* window)
     {
@@ -31,21 +27,22 @@ namespace QwerkE {
         glfwSetCharModsCallback(window, char_mods_callback);
         glfwSetCursorPosCallback(window, cursor_position_callback);
         glfwSetMouseButtonCallback(window, mouse_button_callback);
-        glfwSetJoystickCallback(joystick_callback);
     }
 
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
     {
+#ifdef GLFW3
         if (action == GLFW_PRESS)
         {
-            Input::ProcessKeyEvent(Input::GLFWToQwerkEKey(key), eKeyState::eKeyState_Press);
+            Input::OnKeyEvent(Input::GLFWToQwerkEKey(key), eKeyState::eKeyState_Press);
         }
         else if (action == GLFW_RELEASE)
         {
-            Input::ProcessKeyEvent(Input::GLFWToQwerkEKey(key), eKeyState::eKeyState_Release);
+            Input::OnKeyEvent(Input::GLFWToQwerkEKey(key), eKeyState::eKeyState_Release);
         }
+#endif
 
-#ifdef dearimgui
+#if defined(dearimgui) && defined(GLFW3)
         ImGuiIO& io = ImGui::GetIO();
 
         if (action == GLFW_PRESS)
@@ -69,26 +66,28 @@ namespace QwerkE {
 #ifdef dearimgui
         if (codePoint > 0 && codePoint < 0x10000)
         {
-            ImGui::GetIO().AddInputCharacter((unsigned short)codePoint);
+            ImGui::GetIO().AddInputCharacter(codePoint);
         }
 #endif
     }
 
     void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
     {
-        Input::ProcessMouseMove((float)xpos, (float)-ypos);
+        Input::OnMouseMove((float)xpos, (float)-ypos);
     }
 
     void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
     {
+#ifdef GLFW3
         if (action == GLFW_PRESS)
         {
-            Input::ProcessMouseClick(Input::GLFWToQwerkEKey(button), eKeyState::eKeyState_Press);
+            Input::OnMouseClick(Input::GLFWToQwerkEKey(button), eKeyState::eKeyState_Press);
         }
         else if (action == GLFW_RELEASE)
         {
-            Input::ProcessMouseClick(Input::GLFWToQwerkEKey(button), eKeyState::eKeyState_Release);
+            Input::OnMouseClick(Input::GLFWToQwerkEKey(button), eKeyState::eKeyState_Release);
         }
+#endif
     }
 
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
@@ -97,7 +96,6 @@ namespace QwerkE {
         ImGuiIO& io = ImGui::GetIO();
         io.MouseWheelH += (float)xoffset;
         io.MouseWheel += (float)yoffset;
-
 #endif
     }
 
