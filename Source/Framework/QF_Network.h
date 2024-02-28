@@ -4,29 +4,22 @@
 
 namespace QwerkE {
 
-    class Network final // #TODO namespace Network
-    {
-    public:
-        static void Initialize();
-        static void TearDown() {};
+    namespace Network {
 
-        static void TestUpdate();
+        void Initialize();
+        void TearDown() {};
 
-        static void ConnectToServer();
-        static void DisconnectFromServer();
+        void TestUpdate();
 
-        static void StartServer();
-        static void StopServer();
+        void ConnectToServer();
+        void DisconnectFromServer();
 
-        static bool IsInitialized() { return m_Initialized; }
-        static bool IsServer() { return m_IsServer; }
+        void StartServer();
+        void StopServer();
 
-    private:
-        Network() = default;
+        bool IsInitialized();
+        bool IsServer();
 
-        static std::string m_IP;
-        static bool m_IsServer;
-        static bool m_Initialized;
-    };
+    }
 
 }

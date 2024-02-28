@@ -211,9 +211,6 @@
       <Filter>Core\Entities\Components\Extended</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Framework.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_rkn_Main.cpp">
-      <Filter>Extended\RakNet</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.cpp">
       <Filter>Extended\OpenAL</Filter>
     </ClCompile>
@@ -306,6 +303,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Events.cpp">
       <Filter>Core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Network.cpp">
+      <Filter>Core\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
