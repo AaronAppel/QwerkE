@@ -1,5 +1,7 @@
 #pragma once
 
+#define _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS
+
 #include <string>
 #include <stdio.h>
 #include <map>

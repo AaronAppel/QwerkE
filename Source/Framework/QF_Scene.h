@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 
+#include "Libraries/entt/entt.hpp"
 #include "Libraries/Mirror/Source/Mirror.h"
+
+#include "QF_GameObject.h" // #TODO Remove
 
 #include "QF_Constants.h"
 
@@ -61,11 +64,16 @@ namespace QwerkE {
         void SetDirty() { m_IsDirty = true; }
         bool IsDirty() { return m_IsDirty; }
 
+        Transform GetCameraTransform();
+
     private:
         void CameraInput(float deltatime);
 
         bool AddObjectToSceneDrawList(GameObject* object);
         bool RemoveObjectFromSceneDrawList(const GameObject* object);
+
+        entt::registry m_Registry;
+        entt::entity m_EntityCamera = entt::null;
 
         MIRROR_PRIVATE_MEMBERS
 

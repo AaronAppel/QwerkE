@@ -2632,9 +2632,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.h">
       <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3_loader.h">
-      <Filter>Libraries\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_internal.h">
       <Filter>Libraries\imgui</Filter>
     </ClInclude>

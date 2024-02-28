@@ -11,11 +11,33 @@
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
 
+struct ExampleComponent
+{
+    ExampleComponent() = default;
+    ExampleComponent(const ExampleComponent& other) = default;
+    ExampleComponent(const int& otherMember) : member(otherMember) {}
+
+    int member = 0;
+};
+
+struct ExampleComponent2
+{
+    ExampleComponent2() = default;
+    ExampleComponent2(const ExampleComponent2& other) = default;
+    ExampleComponent2(const int& otherMember) : member(otherMember) {}
+
+    int member = 0;
+};
+
 namespace QwerkE {
 
     Scene::Scene(const std::string& sceneFileName) :
         m_SceneFileName(sceneFileName)
     {
+        entt::entity entity = entt::null;
+        // m_EntityCamera = m_Registry.create();
+        // m_Registry.emplace<Transform>(m_EntityCamera);
+        // entt::meta
     }
 
     Scene::~Scene()
@@ -43,6 +65,14 @@ namespace QwerkE {
         {
             object.second->Update(deltatime);
         }
+    }
+
+    Transform Scene::GetCameraTransform()
+    {
+        if (m_Registry.any_of<Transform>(m_EntityCamera))
+            return m_Registry.get<Transform>(m_EntityCamera); // #NOTE Return copy for now
+
+        return Transform();
     }
 
     void Scene::CameraInput(float deltatime)

@@ -485,6 +485,7 @@ inline auto get_data(Container& c) -> typename Container::value_type* {
   return c.data();
 }
 
+#define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING // Added by Aaron Appel, Feb 27th 2024 to suppress C4996 compile error
 #if defined(_SECURE_SCL) && _SECURE_SCL
 // Make a checked iterator to avoid MSVC warnings.
 template <typename T> using checked_ptr = stdext::checked_array_iterator<T*>;

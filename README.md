@@ -26,6 +26,8 @@ Libraries or external code I utilize to deliver features (may be outdated) :
 - better-enums: https://github.com/aantron/better-enums
 - Bullet3: https://github.com/bulletphysics/bullet3
 - cJSON: https://github.com/DaveGamble/cJSON
+- CPPList.h: Dave 'Redbeard' Eccleston
+- enTT: https://github.com/skypjack/entt
 - FlatHead Games: https://github.com/JimmyLord
 - freetype2: www.freetype.org/index.html
 - glew: www.github.com/nigels-com/glew
@@ -36,8 +38,8 @@ Libraries or external code I utilize to deliver features (may be outdated) :
 - OpenAL: www.openal.org
 - pthreads: www.github.com/coapp-packages/pthreads
 - RakNet: www.github.com/facebookarchive/RakNet
+- spdlog: https://github.com/gabime/spdlog
 - stb_image: www.github.com/nothings/stb
-- CPPList.h: Dave 'Redbeard' Eccleston
 
 ## License
 This project is licensed under the BSD3 License - see the LICENSE file for full details.

@@ -591,7 +591,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_glfw.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_internal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_rectpack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_textedit.h" />
