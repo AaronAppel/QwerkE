@@ -7,7 +7,7 @@ namespace QwerkE {
     namespace Network {
 
         void Initialize();
-        void TearDown() {};
+        void TearDown();
 
         void TestUpdate();
 

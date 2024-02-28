@@ -77,6 +77,10 @@ namespace QwerkE {
             s_Initialized = true;
         }
 
+        void TearDown()
+        {
+        }
+
         void ConnectToServer()
         {
             if (s_Initialized)
