@@ -14,7 +14,6 @@
 #include "QF_Enums.h"
 #include "QF_eKeys.h"
 #include "QF_Defines.h"
-#include "QC_Vector.h"
 
 namespace QwerkE {
 

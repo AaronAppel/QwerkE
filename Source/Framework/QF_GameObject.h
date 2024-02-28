@@ -13,8 +13,6 @@
 #include "QF_Enums.h"
 #include "QF_Constants.h"
 
-#include "QC_Vector.h"
-
 namespace QwerkE {
 
     class Component;
@@ -27,18 +25,18 @@ namespace QwerkE {
     {
         // MyMatrix s_Mat; Use?
 
-        vec3 s_Position = 0; // calculate from matrix?
-        vec3 s_Rotation = 0;
-        vec3 s_Scale = 1.0f;
+        vec3 s_Position = vec3(.0f);
+        vec3 s_Rotation = vec3(.0f);
+        vec3 s_Scale = vec3(1.0f);
 
         vec3 s_Forward = vec3(0, 0, 1); // TODO: Calculate instead of saving?
         vec3 s_Up = vec3(0, 1, 0);
         vec3 s_Right = vec3(1, 0, 0);
 
         // TODO:
-        void Scale(vec3 scale) {}
-        void Rotate(vec3 rotation) {}
-        void Translate(vec3 translation) {}
+        void Scale(vec3 scale) { }
+        void Rotate(vec3 rotation) { }
+        void Translate(vec3 translation) { }
 
         // TODO: Use quaternions to avoid gimbal lock
     };
@@ -106,6 +104,10 @@ namespace QwerkE {
         eGameObjectTags m_Tag = GO_Tag_Null;
 
         Transform m_Transform;
+
+        vec3 m_Position = vec3(0.f);
+
+        glm::mat4 m_Transform2 = glm::mat4(1.0f);
 
         std::vector<Routine*> m_UpdateList;
         std::vector<Routine*> m_DrawList;

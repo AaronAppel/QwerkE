@@ -62,7 +62,7 @@ namespace QwerkE {
         {
             if (s_MouseDragReset)
             {
-                s_MouseDragStart = 0.0f;
+                s_MouseDragStart = vec2(0.f);
                 s_MouseDragReset = false;
             }
 

@@ -17,9 +17,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_demo.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_draw.cpp" />
@@ -341,9 +339,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\QC_enum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MathHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftconfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftheader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftmodule.h" />
@@ -751,7 +747,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h" />
   </ItemGroup>
   <ItemGroup>

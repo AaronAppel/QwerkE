@@ -79,16 +79,6 @@
 #include "Libraries/glm/glm//gtc/type_ptr.hpp"
 #pragma warning( default : 26495 )
 
-#include "QC_Vector.h"
-#include "Libraries/FlatheadGames/MyQuaternion.h"
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
-#pragma warning( disable : 26495 )
-#include "Libraries/FlatheadGames/MyMatrix.h"
-#pragma warning( default : 4244 )
-#pragma warning( default : 4305 )
-#pragma warning( disable : 26495 )
-
 #pragma warning( disable : 4244 )
 #include "QF_Tween.h"
 #include "QF_TweenFuncs.h"

@@ -3,7 +3,6 @@
 #include "QF_LibrariesLoad.h"
 
 #include "QF_Log.h"
-#include "QC_Vector.h"
 
 #ifdef OpenAL
 #include "QF_oal_AudioManager.h"

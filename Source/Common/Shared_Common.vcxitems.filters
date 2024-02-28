@@ -90,12 +90,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.cpp">
       <Filter>Libraries\cJSON</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.cpp">
-      <Filter>Libraries\FlatheadGames</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.cpp">
-      <Filter>Libraries\FlatheadGames</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.cpp">
       <Filter>Libraries\Mirror</Filter>
     </ClCompile>
@@ -103,9 +97,6 @@
       <Filter>Libraries\Mirror</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.cpp">
-      <Filter>Libraries\FlatheadGames</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Memory.cpp" />
@@ -135,6 +126,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp">
       <Filter>Libraries\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp">
+      <Filter>Libraries\FlatheadGames</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2157,15 +2151,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MathHelpers.h">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Vector.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyQuaternion.h">
-      <Filter>Libraries\FlatheadGames</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMatrix.h">
-      <Filter>Libraries\FlatheadGames</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.h">
       <Filter>Libraries\imgui</Filter>
     </ClInclude>
@@ -2176,9 +2161,6 @@
       <Filter>Libraries\Mirror</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h">
-      <Filter>Libraries\FlatheadGames</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h">
       <Filter>Libraries\FlatheadGames</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\MirrorEnumPrimitives.h">
@@ -2277,6 +2259,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\vector_relational.hpp">
       <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h">
+      <Filter>Libraries\FlatheadGames</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -550,7 +550,7 @@ namespace QwerkE {
             //     return;
             // }
 
-            if (objTypeInfo->enumType == MirrorTypes::Vector3)
+            if (objTypeInfo->enumType == MirrorTypes::vec3)
             {
                 int bp = 0;
             }

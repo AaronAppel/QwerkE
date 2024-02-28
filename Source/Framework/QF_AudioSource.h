@@ -2,7 +2,6 @@
 
 // #TODO Abstract from OpenAL
 #include "Libraries/OpenAL/include/al.h"
-#include "QC_Vector.h"
 
 namespace QwerkE {
 

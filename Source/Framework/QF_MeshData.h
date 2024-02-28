@@ -2,8 +2,6 @@
 
 #include <vector>
 
-#include "QC_Vector.h"
-
 namespace QwerkE {
 
     struct MeshBufferInfo

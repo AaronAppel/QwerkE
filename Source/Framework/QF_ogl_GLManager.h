@@ -1,7 +1,5 @@
 #pragma once
 
-#include "QC_Vector.h"
-
 namespace QwerkE {
 
     // TODO: Rip these functions out and put them in a new opengl_window class that extends the Window class

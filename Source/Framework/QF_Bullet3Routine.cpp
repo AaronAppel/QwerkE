@@ -26,7 +26,6 @@
 
 #include "QF_Bullet3Component.h"
 #include "QF_GameObject.h"
-#include "QC_Vector.h"
 
 namespace QwerkE {
 

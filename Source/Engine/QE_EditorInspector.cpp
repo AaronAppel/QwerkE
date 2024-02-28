@@ -149,7 +149,7 @@ namespace QwerkE {
                     }
                     break;
 
-                case MirrorTypes::Vector2:
+                case MirrorTypes::vec2:
                     {
                         float* vector2Address = (float*)fieldAddress;
                         std::string fieldName = parentName + field.name;
@@ -160,7 +160,7 @@ namespace QwerkE {
                     }
                     break;
 
-                case MirrorTypes::Vector3:
+                case MirrorTypes::vec3:
                     {
                         float* vector3Address = (float*)fieldAddress;
                         std::string fieldName = parentName + field.name;

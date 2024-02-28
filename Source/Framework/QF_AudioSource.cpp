@@ -1,7 +1,6 @@
 #include "QF_AudioSource.h"
 
 #include "Libraries/OpenAL/include/al.h"
-#include "QC_Vector.h"
 
 namespace QwerkE {
 

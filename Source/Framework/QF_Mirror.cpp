@@ -7,8 +7,6 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #include "Libraries/Mirror/Source/MirrorTypes.h"
 
-#include "QC_Vector.h"
-
 #include "QF_eKeys.h"
 #include "QF_Enums.h"
 #include "QF_GameObject.h"
@@ -50,11 +48,11 @@ namespace QwerkE {
 	typedef TransformRoutine* m_transformRoutinePtr; // #TODO Needed?
 	MIRROR_TYPE(m_transformRoutinePtr)
 
-	MIRROR_CLASS_START(Vector3)
+	MIRROR_CLASS_START(vec3)
 	MIRROR_CLASS_MEMBER(x)
 	MIRROR_CLASS_MEMBER(y)
 	MIRROR_CLASS_MEMBER(z)
-	MIRROR_CLASS_END(Vector3)
+	MIRROR_CLASS_END(vec3)
 
 	MIRROR_CLASS_START(Renderable)
 	MIRROR_CLASS_MEMBER(m_RenderableName)
@@ -103,10 +101,10 @@ namespace QwerkE {
 	MIRROR_TYPE(m_map_eMaterialMaps_texturePtr)
 
 	// Structs
-	MIRROR_CLASS_START(Vector2)
+	MIRROR_CLASS_START(vec2)
 	MIRROR_CLASS_MEMBER(x)
 	MIRROR_CLASS_MEMBER(y)
-	MIRROR_CLASS_END(Vector2)
+	MIRROR_CLASS_END(vec2)
 
 	MIRROR_CLASS_START(Transform)
 	MIRROR_CLASS_MEMBER(s_Position)

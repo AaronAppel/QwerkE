@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 
+#include "glm/glm/gtc/type_ptr.hpp"
+
 #include "QF_CameraComponent.h"
 #include "QF_Component.h"
 #include "QF_Enums.h"
@@ -16,7 +18,6 @@
 #include "QF_ShaderProgram.h"
 #include "QF_ShaderVariable_Defines.h"
 #include "QF_Texture.h"
-#include "QC_Vector.h"
 
 namespace QwerkE {
 
@@ -24,23 +25,26 @@ namespace QwerkE {
     {
         ShaderProgram* t_pShader = renderable->GetShader();
 
-        mat4 worldMat;
-        worldMat.CreateSRT(m_pParent->GetScale(), m_pParent->GetRotation(), m_pParent->GetPosition());
-        t_pShader->SetUniformMat4(worldMatrix, &worldMat.m11);
+        mat4 worldMat(1.f);
+        worldMat = glm::scale(worldMat, m_pParent->GetScale());
+        worldMat = glm::rotate(worldMat, 1.0f, m_pParent->GetRotation());
+        worldMat = glm::translate(worldMat, m_pParent->GetPosition());
+        t_pShader->SetUniformMat4(worldMatrix, glm::value_ptr(worldMat));
 
-        t_pShader->SetUniformMat4(viewMatrix, &camera->GetViewMatrix()->m11); // get from camera
+        t_pShader->SetUniformMat4(viewMatrix, glm::value_ptr(camera->GetViewMatrix()));
 
-        t_pShader->SetUniformMat4(projectionMatrix, &camera->GetProjectionMatrix()->m11); // get from camera
+        t_pShader->SetUniformMat4(projectionMatrix, glm::value_ptr(camera->GetProjectionMatrix()));
     }
 
     void RenderRoutine::Setup2DTransform(const ComponentCamera* camera, Renderable* renderable)
     {
         ShaderProgram* t_pShader = renderable->GetShader();
-        mat4 worldMat;
 
-        worldMat.CreateSRT(m_pParent->GetScale(), m_pParent->GetRotation(), m_pParent->GetPosition());
-
-        t_pShader->SetUniformMat4(transform2D, &worldMat.m11); // TODO: Review 2DTransform setup
+        mat4 worldMat(1.f);
+        worldMat = glm::scale(worldMat, m_pParent->GetScale());
+        worldMat = glm::rotate(worldMat, 1.0f, m_pParent->GetRotation());
+        worldMat = glm::translate(worldMat, m_pParent->GetPosition());
+        t_pShader->SetUniformMat4(transform2D, glm::value_ptr(worldMat));
     }
 
     void RenderRoutine::SetupColorUniforms(const ComponentCamera* cameraObject, Renderable* renderable)

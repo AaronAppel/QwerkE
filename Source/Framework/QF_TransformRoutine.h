@@ -4,8 +4,6 @@
 
 #include "QF_Routine.h"
 
-#include "QC_Vector.h"
-
 namespace QwerkE {
 
     class TransformRoutine : public Routine

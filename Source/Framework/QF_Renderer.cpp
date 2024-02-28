@@ -1,7 +1,5 @@
 #include "QF_Renderer.h"
 
-#include "QC_Vector.h"
-
 #include "QF_Debug.h"
 #include "QF_FontTest.h"
 #include "QF_Graphics_Header.h"

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "QC_Vector.h"
-
 #include "QF_Enums.h"
 #include "QF_Component.h"
 

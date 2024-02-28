@@ -3,13 +3,11 @@
 #include <cstdint>
 
 #include "Libraries/glew/glew.h"
-#include "Libraries/FlatheadGames/MyMatrix.h"
 #include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Constants.h"
 #include "QF_Enums.h"
 #include "QF_Component.h"
-#include "QC_Vector.h"
 
 const vec3 g_WORLDUP = vec3(0, 1, 0); // TODO: Fix inverted world Y-axis and move to a better defines file
 
@@ -31,13 +29,12 @@ namespace QwerkE {
     class ComponentCamera : public Component
     {
     public:
-        ComponentCamera(vec3 position = vec3::Zero(), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
-        ~ComponentCamera();
+        ComponentCamera(vec3 position = vec3(0.f), vec3 up = g_WORLDUP, float yaw = gc_YAW, float pitch = gc_PITCH);
 
         void Setup();
 
-        const mat4* GetViewMatrix() const { return m_ViewMatrix; }
-        const mat4* GetProjectionMatrix() const { return m_ProjMatrix; }
+        const mat4& GetViewMatrix() const { return m_ViewMatrix; }
+        const mat4& GetProjectionMatrix() const { return m_ProjMatrix; }
 
         void ProcessKeyboard(eCamera_Movement direction, float deltaTime);
 
@@ -78,8 +75,8 @@ namespace QwerkE {
 
         vec2 m_ViewportSize = vec2(1280, 720);
 
-        mat4* m_ViewMatrix = new mat4();
-        mat4* m_ProjMatrix = new mat4();
+        mat4 m_ViewMatrix = mat4(1.f);
+        mat4 m_ProjMatrix = mat4(1.f);
     };
 
 }

@@ -28,7 +28,6 @@
 
 #include "QF_PhysicsComponent.h"
 #include "QF_Component.h"
-#include "QC_Vector.h"
 #include "QF_GameObject.h"
 
 namespace QwerkE {
