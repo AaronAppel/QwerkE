@@ -218,7 +218,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_UpdateList)
 	MIRROR_CLASS_MEMBER(m_DrawList)
 	MIRROR_CLASS_MEMBER(m_Components)
-	MIRROR_CLASS_MEMBER(m_RenderOrder)
 	MIRROR_CLASS_END(GameObject)
 
 }

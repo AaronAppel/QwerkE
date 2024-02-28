@@ -4,6 +4,10 @@
 #include <string>
 #include <vector>
 
+#include "Libraries/entt/entt.hpp"
+#include "Libraries/glm/glm/common.hpp"
+#include "Libraries/glm/glm/gtc/type_ptr.hpp"
+#include "Libraries/glm/glm/gtc/matrix_transform.hpp"
 #include "Libraries/Mirror/Source/Mirror.h"
 
 #include "QF_Enums.h"
@@ -75,7 +79,6 @@ namespace QwerkE {
         const Component* SeeComponent(eComponentTags tag);
         Routine* GetFirstDrawRoutineOfType(eRoutineTypes type);
         Routine* GetFirstUpdateRoutineOfType(eRoutineTypes type);
-        int GetRenderOrder() { return m_RenderOrder; };
         const Scene* GetScene() { return m_pScene; };
         eGameObjectTags GetTag() { return m_Tag; }
         const Transform& GetTransform() const { return m_Transform; };
@@ -87,15 +90,15 @@ namespace QwerkE {
         void SetPosition(vec3 position);
         void SetRotation(vec3 rotation);
         void SetScale(vec3 scale) { m_Transform.s_Scale = scale; };
-        void SetRenderOrder(int order) { m_RenderOrder = order; };
         void SetTag(eGameObjectTags tag) { m_Tag = tag; }
         void SetTransform(Transform transform) { m_Transform = transform; };
 
-        // #TODO Remove scene dependency
-        void OnSceneLoaded(Scene* scene); // #TODO Rename Initialize()
+        void OnSceneLoaded(Scene* scene);
 
     private:
         MIRROR_PRIVATE_MEMBERS
+
+        entt::entity m_Entity = entt::null;
 
         bool m_Enabled = true;
         Scene* m_pScene = nullptr; // TODO: Remove scene reference in GameObject
@@ -106,7 +109,6 @@ namespace QwerkE {
 
         std::vector<Routine*> m_UpdateList;
         std::vector<Routine*> m_DrawList;
-        int m_RenderOrder = 100;
 
         std::map<eComponentTags, Component*> m_Components;
     };
