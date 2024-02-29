@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 
+#include "Libraries/entt/entt.hpp"
 #include "Libraries/Mirror/Source/Mirror.h"
 #include "Libraries/Mirror/Source/MirrorTypes.h"
 
@@ -38,6 +39,9 @@ namespace QwerkE {
 	MIRROR_TYPE(eKeys)
 
 	// Pointers
+	typedef entt::entity m_enTT_Entity;
+	MIRROR_TYPE(m_enTT_Entity)
+
 	typedef Routine* m_routinePtr;
 	MIRROR_TYPE(m_routinePtr)
 
@@ -80,6 +84,9 @@ namespace QwerkE {
 	MIRROR_CLASS_END(Routine)
 
 	// Vectors
+	typedef std::vector<eComponentTags> m_vector_eComponentTags;
+	MIRROR_TYPE(m_vector_eComponentTags)
+
 	typedef std::vector<std::string> m_vector_string;
 	MIRROR_TYPE(m_vector_string)
 
@@ -216,6 +223,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_UpdateList)
 	MIRROR_CLASS_MEMBER(m_DrawList)
 	MIRROR_CLASS_MEMBER(m_Components)
+	// MIRROR_CLASS_MEMBER(m_EntityComponents)
 	MIRROR_CLASS_END(GameObject)
 
 }

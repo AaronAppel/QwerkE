@@ -302,6 +302,7 @@ cJSON* GetItemFromArrayByIndex(const cJSON* cJSONarray, int index)
 
 void AddItemToObject(cJSON* cJSONObject, cJSON* item)
 {
+	// cJSONObject->child = item;
 	cJSON_AddItemToArray(cJSONObject, item);
 }
 

@@ -9,3 +9,5 @@ From code :
 // #TODO Make a note of key/value naming. Variable names should be used when possible.
 // This is safer when using string matching. For primitives and complex types, variable
 // names should be available. For array elements, the type name will do fine.
+
+Current limitation : Can't write primitives directly to file. Must define a struct/class to write something like an int into a file. If writing a simple 0 or 1 into a file, using the serializer is not the right choice.

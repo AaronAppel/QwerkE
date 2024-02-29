@@ -176,10 +176,12 @@ namespace QwerkE {
         eKeys_LCTRL,
         eKeys_LSHIFT,
         eKeys_LALT,
+        eKeys_LSUPER,
 
         eKeys_RCTRL,
         eKeys_RSHIFT,
         eKeys_RALT,
+        eKeys_RSUPER,
 
         eKeys_Return,
         eKeys_Insert,
@@ -206,8 +208,9 @@ namespace QwerkE {
         eKeys_Pad_Minus,
         eKeys_Pad_Division,
         eKeys_Pad_Multiplication,
-
-        eKeys_0 = 48,
+        eKeys_Pad_Equal, // 46
+        // 47
+        eKeys_0 = 48, // #TODO Move to better ordering
         eKeys_1,
         eKeys_2,
         eKeys_3,

@@ -84,35 +84,41 @@ namespace QwerkE {
 
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::FORWARD, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::FORWARD, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveBackward))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::BACKWARD, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::BACKWARD, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveLeft))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::LEFT, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::LEFT, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveRight))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::RIGHT, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::RIGHT, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveDown))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::DOWN, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::DOWN, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveUp))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::UP, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::UP, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_RotateRight))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::RROTATE, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::RROTATE, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_RotateLeft))
         {
-            t_activecamera->ProcessKeyboard(eCamera_Movement::LROTATE, (float)deltatime);
+            t_activecamera->OnCamMove(eCamera_Movement::LROTATE, (float)deltatime);
+        }
+
+        const vec2& mouseScroll = Input::MouseScrollDelta();
+        if (Input::MouseScrollDelta().x != 0.f || Input::MouseScrollDelta().y != 0.f)
+        {
+            t_activecamera->ProcessMouseScroll(mouseScroll);
         }
     }
 
@@ -135,6 +141,9 @@ namespace QwerkE {
     bool Scene::AddCamera(GameObject* camera)
     {
         m_CameraList.push_back(camera);
+
+        m_CameraEntities.push_back(camera->GetEntity());
+
         return true;
     }
 
@@ -278,6 +287,12 @@ namespace QwerkE {
             LOG_ERROR("{0} Unable to save null scene file name!", __FUNCTION__);
             return;
         }
+
+        // #TODO Handle enTT data serialization
+        // m_Registry.each([&](auto EntityID);
+        // m_Registry.eac;
+        entt::meta_factory factory = entt::meta<ComponentCamera>();
+        // factory.;
 
         Serialization::SerializeObjectToFile(*this, ScenesFolderPath(m_SceneFileName.c_str()));
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));

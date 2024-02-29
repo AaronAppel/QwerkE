@@ -530,6 +530,11 @@ namespace QwerkE {
             // Could consider trying switch statement 1st, and then handling non-explicitly supported/complex types in the default case
             // if (!objTypeInfo->fields.empty())
             // {
+            //     if (objTypeInfo->IsPrimitive())
+            //     {
+            //         LOG_ERROR("{0} Should not be a primitive!", __FUNCTION__);
+            //     }
+            //
             //     for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             //     {
             //         const Mirror::Field& field = objTypeInfo->fields[i];
@@ -550,11 +555,6 @@ namespace QwerkE {
             //     return;
             // }
 
-            if (objTypeInfo->enumType == MirrorTypes::vec3)
-            {
-                int bp = 0;
-            }
-
             for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objTypeInfo->fields[i];
@@ -562,32 +562,20 @@ namespace QwerkE {
                 cJSON* arr = nullptr;
                 if (!field.typeInfo->IsPrimitive())
                 {
-                    arr = CreateArray(field.name.c_str());
-                    cJSON_AddItemToArray(objJson->child, arr);
+                    arr = CreateArray(field.name.c_str()); // #TODO Review using array for everything (like vec2), or JSON object (no'[]' braces)
+                    AddItemToArray(objJson, arr);
                 }
-
-                // if (field.classInfo)
-                // {
-                //     SerializeObjectToJson((char*)obj + field.offset, field.typeInfo, arr);
-                //     continue;
-                // }
 
                 switch (field.typeInfo->enumType)
                 {
                 case MirrorTypes::m_vector_string: // #TODO Try to remove this case to use if (!objTypeInfo->fields.empty()) for loop
                     {
                         const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
-                        if (strings)
+
+                        for (size_t i = 0; i < strings->size(); i++)
                         {
-                            for (size_t i = 0; i < strings->size(); i++)
-                            {
-                                std::string str = strings->at(i);
-                                AddItemToArray(arr, CreateString(std::to_string(i).c_str(), str.c_str()));
-                            }
-                        }
-                        else
-                        {
-                            LOG_WARN("{0} Unable to deserialize type of {1} {2}({3})", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
+                            std::string str = strings->at(i);
+                            AddItemToArray(arr, CreateString(std::to_string(i).c_str(), str.c_str()));
                         }
                     }
                     break;
@@ -602,7 +590,7 @@ namespace QwerkE {
                             auto map = field.typeInfo->derivedTypesMap;
                             for (auto& it : map)
                             {
-                                // Determine which sub class
+                                // #TODO Determine which sub class
                             }
                         }
 
@@ -611,8 +599,7 @@ namespace QwerkE {
                             Routine* routine = routines->at(i);
                             cJSON* routineJson = CreateArray(std::to_string((int)routine->GetRoutineType()).c_str());
 
-                            // Serialize parent class values
-                            SerializeObjectToJson(routine, Mirror::InfoForType<Routine>(), routineJson);
+                            SerializeObjectToJson(routine, Mirror::InfoForType<Routine>(), routineJson); // Serialize parent class values
 
                             switch (routine->GetRoutineType())
                             {

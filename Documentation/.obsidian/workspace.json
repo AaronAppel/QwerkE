@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
+                "file": "Serializer.md",
                 "mode": "source",
                 "source": false
               }
@@ -79,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md"
+                "file": "Serializer.md"
               }
             }
           }
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
+                "file": "Serializer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
+                "file": "Serializer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -162,10 +162,17 @@
   },
   "active": "12aa7dafa4ffc921",
   "lastOpenFiles": [
+    "Serialization (JSON).md",
+    "C++17 Fix.md",
+    "Z. Obsidian/Documentation Assets/DisableSpecificWarnings.png",
+    "ZZ Shared Vault Files ❗/New Project Checklist.md",
+    "ZZ Shared Vault Files ❗/Obsidian/DisableSpecificWarnings.png",
+    "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
+    "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
+    "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
     "README.md",
     "ImGui Input vs Application.md",
     "ZZ Shared Vault Files ❗/Watched.md",
-    "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
     "ZZ Shared Vault Files ❗/To Watch.md",
     "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
     "References/Visual Studio.md",
@@ -179,20 +186,14 @@
     "Systems/Saving and Loading/Type Reflection.md",
     "Serializer.md",
     "Systems/Saving and Loading/Reflection Setup.md",
-    "Serialization (JSON).md",
     "Pretend Blog Post.md",
     "QwerkE Standards/Enums.md",
     "Shader Building.md",
     "Assets and Data/Null Asset Handling.md",
     "Solution Configuration/New QwerkE Project Setup.md",
     "Development/Feature Tickets/F0005 - Time Specific Events.md",
-    "Event System.md",
-    "Research/Game Engine Series YouTube.md",
-    "Development/Feature Tickets/F0004 - GUIDs.md",
-    "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
     "Development/Resolved",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
-    "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "Development/Bug Tickets",
     "Development/Feature Tickets",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",

@@ -66,6 +66,8 @@ namespace QwerkE {
 
         Transform GetCameraTransform();
 
+        std::vector<entt::entity> GetCameraEntities() { return m_CameraEntities; }
+
     private:
         void CameraInput(float deltatime);
 
@@ -84,12 +86,14 @@ namespace QwerkE {
 
         int m_CurrentCameraIndex = 0;
 
+        std::vector<entt::entity> m_CameraEntities; // #TODO Good enTT 1st usage
+
         std::vector<GameObject*> m_CameraList;
         std::vector<GameObject*> m_LightList;
         std::vector<GameObject*> m_SceneDrawList;
 
         bool m_IsLoaded = false;
-        bool m_IsDirty = false;
+        bool m_IsDirty = false; // #TODO Editor only
     };
 
 }

@@ -93,6 +93,10 @@ namespace QwerkE {
 
         void OnSceneLoaded(Scene* scene);
 
+        entt::entity GetEntity() { return m_Entity; }
+
+        std::vector<eComponentTags> GetEntityComponents() { return m_EntityComponents; }
+
     private:
         MIRROR_PRIVATE_MEMBERS
 
@@ -113,6 +117,7 @@ namespace QwerkE {
         std::vector<Routine*> m_DrawList;
 
         std::map<eComponentTags, Component*> m_Components;
+        std::vector<eComponentTags> m_EntityComponents;
     };
 
 }

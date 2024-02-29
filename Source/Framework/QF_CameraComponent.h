@@ -36,18 +36,20 @@ namespace QwerkE {
         const mat4& GetViewMatrix() const { return m_ViewMatrix; }
         const mat4& GetProjectionMatrix() const { return m_ProjMatrix; }
 
-        void ProcessKeyboard(eCamera_Movement direction, float deltaTime);
+        void OnCamMove(eCamera_Movement direction, float deltaTime);
 
         void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
-        void Rotate() {}; // #TODO Deprecate
 
-        void ProcessMouseScroll(float yoffset);
-        void ZoomCamera(float yOffset) { ProcessMouseScroll(yOffset); };
+        void ProcessMouseScroll(const vec2& mouseScroll);
 
         void UpdateCameraVectors();
 
         void SetTargetPosition(vec3 position);
         void SetViewportSize(vec2 size) { m_ViewportSize = size; UpdateCameraVectors(); };
+
+        const vec3& CamRight() const { return m_Right; }
+        const vec3& CamUp() const { return m_CamUp; }
+        const vec3& CamForward() const { return m_Forward; }
 
     protected:
         MIRROR_PRIVATE_MEMBERS

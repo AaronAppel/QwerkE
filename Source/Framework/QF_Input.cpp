@@ -13,9 +13,9 @@ namespace QwerkE {
 
         static const u8 ONE_FRAME_MAX_INPUT = 12;
 
-        static vec2 s_MousePos = vec2(0, 0);
-        static vec2 s_MouseFrameDelta = vec2(0, 0);
-        static vec2 s_MouseDragStart = vec2(0, 0);
+        static vec2 s_MousePos = vec2(0.f);
+        static vec2 s_FrameMouseDelta = vec2(0.f);
+        static vec2 s_MouseDragStart = vec2(0.f);
         static bool s_MouseDragReset = false;
 
         static bool s_KeyEventsAreDirty = true;
@@ -24,6 +24,8 @@ namespace QwerkE {
 
         static u16* s_KeyCodex = new unsigned short[GLFW_KEY_LAST];
         static bool s_KeyStates[eKeys_MAX] = { false };
+
+        static vec2 s_FrameMouseScrollOffsets = vec2(0.f);
 
         static void local_RaiseInputEvent(eKeys key, eKeyState state)
         {
@@ -60,6 +62,9 @@ namespace QwerkE {
 
         void NewFrame()
         {
+            s_FrameMouseScrollOffsets.x = 0.f;
+            s_FrameMouseScrollOffsets.y = 0.f;
+
             if (s_MouseDragReset)
             {
                 s_MouseDragStart = vec2(0.f);
@@ -76,13 +81,13 @@ namespace QwerkE {
 
         void OnMouseMove(vec2 position)
         {
-            s_MouseFrameDelta = s_MousePos - position;
+            s_FrameMouseDelta = s_MousePos - position;
             s_MousePos = position;
         }
 
         void OnMouseMove(float x, float y)
         {
-            s_MouseFrameDelta = s_MousePos - vec2(x, y);
+            s_FrameMouseDelta = s_MousePos - vec2(x, y);
             s_MousePos = vec2(x, y);
         }
 
@@ -102,9 +107,25 @@ namespace QwerkE {
             local_RaiseInputEvent(key, state);
         }
 
+        void OnMouseScroll(float x, float y)
+        {
+            s_FrameMouseScrollOffsets.x = x;
+            s_FrameMouseScrollOffsets.y = y;
+        }
+
+        const vec2& MouseScrollDelta()
+        {
+            return s_FrameMouseScrollOffsets;
+        }
+
         void OnKeyEvent(eKeys key, eKeyState state)
         {
             local_RaiseInputEvent(key, state);
+
+            if (state == eKeyState::eKeyState_Release)
+            {
+                int bp = 0;
+            }
             s_KeyStates[key] = state;
         }
 

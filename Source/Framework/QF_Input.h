@@ -37,6 +37,10 @@ namespace QwerkE {
         void OnMouseMove(vec2 position);
         void OnMouseMove(float x, float y);
         void OnMouseClick(eKeys key, eKeyState state);
+        void OnMouseScroll(float x, float y);
+
+        const vec2& MouseScrollDelta();
+
         void OnKeyEvent(eKeys key, eKeyState state);
 
 #ifdef GLFW3

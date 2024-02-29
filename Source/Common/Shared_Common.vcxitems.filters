@@ -124,11 +124,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.cpp">
       <Filter>Libraries\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp">
-      <Filter>Libraries\cJSON</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp">
       <Filter>Libraries\FlatheadGames</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp">
+      <Filter>Libraries\cJSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2194,9 +2194,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.h">
       <Filter>Libraries\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.h">
-      <Filter>Libraries\cJSON</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\common.hpp">
       <Filter>Libraries\glm</Filter>
     </ClInclude>
@@ -2262,6 +2259,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h">
       <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.h">
+      <Filter>Libraries\cJSON</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

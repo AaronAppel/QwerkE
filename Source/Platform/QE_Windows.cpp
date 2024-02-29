@@ -18,7 +18,7 @@ int main(unsigned int argc, char **argv)
 	ProgramArgsToPairs_Windows(argc, argv, pairs);
 
 	pairs.insert(std::pair<const char*, const char*>(key_ApplicationName, EngineName));
-	pairs.insert(std::pair<const char*, const char*>(key_ProjectFileName, "Project1"));
+	pairs.insert(std::pair<const char*, const char*>(key_ProjectFileName, "Project1")); // "null_project"
 	pairs.insert(std::pair<const char*, const char*>(key_UserName, "User1"));
 
 	if (true) { OutputProgramPairsInfo_Windows(pairs); }

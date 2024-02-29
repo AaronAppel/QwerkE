@@ -11,8 +11,6 @@
 
 namespace QwerkE {
 
-	// public functions
-	// Constructor with vectors
 	ComponentCamera::ComponentCamera(vec3 position, vec3 up, float yaw, float pitch) :
 		m_ViewportSize(Window::GetResolution())
 	{
@@ -26,7 +24,6 @@ namespace QwerkE {
 		UpdateCameraVectors();
 	}
 
-	// Constructor with scalar values
 	ComponentCamera::ComponentCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) :
 		m_ViewportSize(Window::GetResolution())
 	{
@@ -61,44 +58,38 @@ namespace QwerkE {
 		m_pParent->SetPosition(m_Position);
 	}
 
-	void ComponentCamera::ProcessKeyboard(eCamera_Movement direction, float deltaTime)
+	void ComponentCamera::OnCamMove(eCamera_Movement direction, float deltaTime)
 	{
-		// https://learnopengl.com/Getting-started/Camera
+		const float frameMovement = m_MovementSpeed * deltaTime;
 
 		if (direction == eCamera_Movement::FORWARD)
 		{
-			const float forwardVel = m_MovementSpeed * deltaTime;
-			m_Position += m_Forward * forwardVel;
+			m_Position += frameMovement * m_Forward;
 		}
 		else if (direction == eCamera_Movement::BACKWARD)
 		{
-			const float forwardVel = m_MovementSpeed * deltaTime;
-			m_Position -= m_Forward * forwardVel;
+			m_Position -= frameMovement * m_Forward;
 		}
 		else if (direction == eCamera_Movement::RIGHT)
 		{
-			const float velocity = m_MovementSpeed * deltaTime;
-			m_Position += m_Right * velocity;
+			m_Position += frameMovement * m_Right;
 		}
 		else if (direction == eCamera_Movement::LEFT)
 		{
-			const float velocity = m_MovementSpeed * deltaTime;
-			m_Position -= m_Right * velocity;
+			m_Position -= frameMovement * m_Right;
 		}
 		else if (direction == eCamera_Movement::UP)
 		{
-			const float velocity = m_MovementSpeed * deltaTime;
-			m_Position += m_CamUp * velocity;
+			m_Position += frameMovement * m_CamUp;
 		}
 		else if (direction == eCamera_Movement::DOWN)
 		{
-			const float velocity = m_MovementSpeed * deltaTime;
-			m_Position -= m_CamUp * velocity;
+			m_Position -= frameMovement * m_CamUp;
 		}
 		else if (direction == eCamera_Movement::RROTATE)
 		{
 			const float angularVel = 0.35f * deltaTime;
-			m_Forward += vec3(angularVel, 0.0f, angularVel);
+			m_Forward -= vec3(angularVel, 0.0f, angularVel);
 			m_Forward = glm::normalize(m_Forward);
 			m_Right = glm::cross(g_WORLDUP, m_Forward);
 			m_Right = glm::normalize(m_Right) * m_MovementSpeed;
@@ -107,7 +98,7 @@ namespace QwerkE {
 		else if (direction == eCamera_Movement::LROTATE)
 		{
 			const float angularVel = 0.35f * deltaTime;
-			m_Forward -= vec3(angularVel, 0.0f, angularVel);
+			m_Forward += vec3(angularVel, 0.0f, angularVel);
 			m_Forward = glm::normalize(m_Forward);
 			m_Right = glm::cross(g_WORLDUP, m_Forward);
 			m_Right = glm::normalize(m_Right) * m_MovementSpeed;
@@ -134,20 +125,20 @@ namespace QwerkE {
 		UpdateCameraVectors();
 	}
 
-	void ComponentCamera::ProcessMouseScroll(float yoffset)
+	void ComponentCamera::ProcessMouseScroll(const vec2& mouseScroll)
 	{
-		if (m_Zoom >= 1.0f && m_Zoom <= 45.0f)
-		{
-			m_Zoom -= yoffset;
-		}
+		const float scalar = 2.f;
+		m_Zoom -= mouseScroll.y * scalar;
 		m_Zoom = Math::Clamp(1.f, m_Zoom, 45.f);
+
+		UpdateCameraVectors();
 	}
 
 	void ComponentCamera::UpdateCameraVectors()
 	{
-		m_ViewMatrix = glm::lookAt(m_Position, m_Position - m_Forward, m_CamUp); // #TODO What does "center" parameter mean?
+		m_ViewMatrix = glm::lookAt(m_Position, m_Forward - m_Position, m_CamUp); // #TODO What does "center" parameter mean?
 
-		m_ProjMatrix = glm::perspectiveFov(glm::radians(m_Zoom * 0.5f), m_ViewportSize.x, m_ViewportSize.y, m_CAMNEAR, m_CAMFAR);
+		m_ProjMatrix = glm::perspective(glm::radians(m_Zoom * 0.5f), m_ViewportSize.x / m_ViewportSize.y, m_CAMNEAR, m_CAMFAR);
 	}
 
 }

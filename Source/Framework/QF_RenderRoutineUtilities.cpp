@@ -27,7 +27,10 @@ namespace QwerkE {
 
         mat4 worldMat(1.f);
         worldMat = glm::scale(worldMat, m_pParent->GetScale());
-        worldMat = glm::rotate(worldMat, 1.0f, m_pParent->GetRotation());
+        const vec3& parentRotation = m_pParent->GetRotation();
+        worldMat = glm::rotate(worldMat, glm::radians(parentRotation.x), camera->CamRight());
+        worldMat = glm::rotate(worldMat, glm::radians(parentRotation.y), camera->CamUp());
+        worldMat = glm::rotate(worldMat, glm::radians(parentRotation.z), camera->CamForward());
         worldMat = glm::translate(worldMat, m_pParent->GetPosition());
         t_pShader->SetUniformMat4(worldMatrix, glm::value_ptr(worldMat));
 

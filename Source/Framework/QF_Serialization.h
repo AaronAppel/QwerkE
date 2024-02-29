@@ -45,7 +45,6 @@ namespace QwerkE {
         }
 
         void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
-        // void SerializeObjectToJson(const void* obj, const Mirror::ClassInfo* objClassInfo, cJSON* objJson);
 
         template <class T>
         void SerializeObjectToFile(const T& objectReference, const char* filePath)

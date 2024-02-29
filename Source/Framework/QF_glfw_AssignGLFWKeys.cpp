@@ -18,10 +18,12 @@ namespace QwerkE {
             keysCodex[GLFW_KEY_LEFT_CONTROL] = eKeys_LCTRL;
             keysCodex[GLFW_KEY_LEFT_SHIFT] = eKeys_LSHIFT;
             keysCodex[GLFW_KEY_LEFT_ALT] = eKeys_LALT;
+            keysCodex[GLFW_KEY_LEFT_SUPER] = eKeys_LSUPER;
 
             keysCodex[GLFW_KEY_RIGHT_CONTROL] = eKeys_RCTRL;
             keysCodex[GLFW_KEY_RIGHT_SHIFT] = eKeys_RSHIFT;
             keysCodex[GLFW_KEY_RIGHT_ALT] = eKeys_RALT;
+            keysCodex[GLFW_KEY_RIGHT_SUPER] = eKeys_RSUPER;
 
             keysCodex[GLFW_KEY_ENTER] = eKeys_Return;
             keysCodex[GLFW_KEY_INSERT] = eKeys_Insert;
@@ -49,6 +51,7 @@ namespace QwerkE {
             keysCodex[GLFW_KEY_KP_SUBTRACT] = eKeys_Pad_Minus;
             keysCodex[GLFW_KEY_KP_DIVIDE] = eKeys_Pad_Division;
             keysCodex[GLFW_KEY_KP_MULTIPLY] = eKeys_Pad_Multiplication;
+            keysCodex[GLFW_KEY_KP_EQUAL] = eKeys_Pad_Equal;
 
             keysCodex[GLFW_KEY_KP_0] = eKeys_Pad_0;
             keysCodex[GLFW_KEY_KP_1] = eKeys_Pad_1;
@@ -127,9 +130,9 @@ namespace QwerkE {
             keysCodex[GLFW_KEY_F8] = eKeys_F8;
             keysCodex[GLFW_KEY_F9] = eKeys_F9;
             keysCodex[GLFW_KEY_F10] = eKeys_F10;
-
             keysCodex[GLFW_KEY_F11] = eKeys_F11;
             keysCodex[GLFW_KEY_F12] = eKeys_F12;
+
             keysCodex[GLFW_KEY_F13] = eKeys_F13;
             keysCodex[GLFW_KEY_F14] = eKeys_F14;
             keysCodex[GLFW_KEY_F15] = eKeys_F15;
@@ -138,7 +141,6 @@ namespace QwerkE {
             keysCodex[GLFW_KEY_F18] = eKeys_F18;
             keysCodex[GLFW_KEY_F19] = eKeys_F19;
             keysCodex[GLFW_KEY_F20] = eKeys_F20;
-
             keysCodex[GLFW_KEY_F21] = eKeys_F21;
             keysCodex[GLFW_KEY_F22] = eKeys_F22;
             keysCodex[GLFW_KEY_F23] = eKeys_F23;
@@ -157,22 +159,10 @@ namespace QwerkE {
             keysCodex[GLFW_MOUSE_BUTTON_7] = eKeys_MouseButton7;
             keysCodex[GLFW_MOUSE_BUTTON_8] = eKeys_MouseButton8;
 
-            //#define 	GLFW_JOYSTICK_1   0
-            //#define 	GLFW_JOYSTICK_2   1
-            //#define 	GLFW_JOYSTICK_3   2
-            //#define 	GLFW_JOYSTICK_4   3
-            //#define 	GLFW_JOYSTICK_5   4
-            //#define 	GLFW_JOYSTICK_6   5
-            //#define 	GLFW_JOYSTICK_7   6
-            //#define 	GLFW_JOYSTICK_8   7
-            //#define 	GLFW_JOYSTICK_9   8
-            //#define 	GLFW_JOYSTICK_10   9
-            //#define 	GLFW_JOYSTICK_11   10
-            //#define 	GLFW_JOYSTICK_12   11
-            //#define 	GLFW_JOYSTICK_13   12
-            //#define 	GLFW_JOYSTICK_14   13
-            //#define 	GLFW_JOYSTICK_15   14
-            //#define 	GLFW_JOYSTICK_16   15
+            // #Unsupported
+            // #define GLFW_KEY_WORLD_1            161 /* non-US #1 */
+            // #define GLFW_KEY_WORLD_2            162 /* non-US #2 */
+            // #define GLFW_JOYSTICK_1             0, 1, 2, 3...15
 
         }
 #endif

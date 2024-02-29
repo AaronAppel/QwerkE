@@ -30,9 +30,13 @@ namespace QwerkE {
 
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
     {
-        const bool keyIsPressed = action == GLFW_PRESS;
-        const eKeys eKey = Input::GLFWToQwerkEKey(key);
-        Input::OnKeyEvent(eKey, (eKeyState)keyIsPressed);
+        if (action == GLFW_REPEAT)
+        {
+            int bp = 0;
+        }
+        const bool keyIsReleased = action == GLFW_RELEASE;
+        const eKeys eKey = Input::GLFWToQwerkEKey(key); // 343
+        Input::OnKeyEvent(eKey, (eKeyState)!keyIsReleased);
 
 #if defined(dearimgui)
         // ImGui::CaptureKeyboardFromApp(true);
@@ -41,11 +45,11 @@ namespace QwerkE {
         switch (eKey)
         {
         case eKeys::eKeys_LCTRL:
-            io.AddKeyEvent(ImGuiKey::ImGuiKey_LeftCtrl, keyIsPressed);
+            io.AddKeyEvent(ImGuiKey::ImGuiKey_LeftCtrl, !keyIsReleased);
             break;
 
         case eKeys::eKeys_RCTRL:
-            io.AddKeyEvent(ImGuiKey::ImGuiKey_RightCtrl, keyIsPressed);
+            io.AddKeyEvent(ImGuiKey::ImGuiKey_RightCtrl, !keyIsReleased);
             break;
 
         default:
@@ -98,6 +102,8 @@ namespace QwerkE {
 
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     {
+        Input::OnMouseScroll((float)xoffset, (float)yoffset);
+
 #ifdef dearimgui
         ImGuiIO& io = ImGui::GetIO();
         io.MouseWheelH += (float)xoffset;
