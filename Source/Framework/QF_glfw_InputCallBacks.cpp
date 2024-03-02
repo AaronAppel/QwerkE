@@ -5,6 +5,7 @@
 #endif
 
 #include "QF_Constants.h"
+#include "QF_Log.h"
 #include "QF_Renderer.h"
 
 namespace QwerkE {
@@ -30,19 +31,29 @@ namespace QwerkE {
 
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
     {
-        if (action == GLFW_REPEAT)
+        if (key == -1)
         {
-            int bp = 0;
+            switch (scancode)
+            {
+            case 256: // Media key volume up/down
+                break;
+
+            case 290: // Media key play/pause
+                break;
+            }
         }
+
+        const bool keyIsRepeating = action == GLFW_REPEAT;
         const bool keyIsReleased = action == GLFW_RELEASE;
-        const eKeys eKey = Input::GLFWToQwerkEKey(key); // 343
-        Input::OnKeyEvent(eKey, (eKeyState)!keyIsReleased);
+        const eKeys qwerkEeKey = Input::GLFWToQwerkEKey(key);
+
+        Input::OnKeyEvent(qwerkEeKey, (eKeyState)!keyIsReleased);
 
 #if defined(dearimgui)
         // ImGui::CaptureKeyboardFromApp(true);
 
         ImGuiIO& io = ImGui::GetIO();
-        switch (eKey)
+        switch (qwerkEeKey)
         {
         case eKeys::eKeys_LCTRL:
             io.AddKeyEvent(ImGuiKey::ImGuiKey_LeftCtrl, !keyIsReleased);

@@ -45,7 +45,7 @@
 
 #include "Libraries/glew/glew.h"
 
-#include "Libraries/glfw/glfw3.h"
+#include "Libraries/glfw/QC_glfw3.h"
 
 // TODO: Setup OpenAL
 // https://ffainelli.github.io/openal-example/

@@ -164,6 +164,7 @@ namespace QwerkE {
             // #define GLFW_KEY_WORLD_2            162 /* non-US #2 */
             // #define GLFW_JOYSTICK_1             0, 1, 2, 3...15
 
+            keysCodex[GLFW_KEY_LAST] = eKeys_MAX;
         }
 #endif
 

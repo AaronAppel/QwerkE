@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "9df650fe7e77a3bf",
+        "id": "3094265bc2923a24",
         "type": "tabs",
         "children": [
           {
-            "id": "12aa7dafa4ffc921",
+            "id": "7ee414b1d7073bb6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Serializer.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -78,9 +74,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Serializer.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -122,7 +116,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Serializer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +127,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Serializer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -160,8 +152,11 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "12aa7dafa4ffc921",
+  "active": "7ee414b1d7073bb6",
   "lastOpenFiles": [
+    "Development/TODO/Refactor FileSystem.md",
+    "Development/TODO/String Library.md",
+    "Serializer.md",
     "Serialization (JSON).md",
     "C++17 Fix.md",
     "Z. Obsidian/Documentation Assets/DisableSpecificWarnings.png",
@@ -184,14 +179,12 @@
     "Mirror Library.md",
     "Pointer Manipulation.md",
     "Systems/Saving and Loading/Type Reflection.md",
-    "Serializer.md",
     "Systems/Saving and Loading/Reflection Setup.md",
     "Pretend Blog Post.md",
     "QwerkE Standards/Enums.md",
     "Shader Building.md",
     "Assets and Data/Null Asset Handling.md",
     "Solution Configuration/New QwerkE Project Setup.md",
-    "Development/Feature Tickets/F0005 - Time Specific Events.md",
     "Development/Resolved",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "Development/Bug Tickets",

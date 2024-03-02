@@ -28,20 +28,21 @@
 
 namespace QwerkE {
 
-	// Enums
-	typedef eGameObjectTags m_eGameObjectTags;
-	MIRROR_TYPE(m_eGameObjectTags)
+	// External / 3rd party types
+	typedef entt::registry m_entt_registry;
+	MIRROR_TYPE(m_entt_registry)
 
-	typedef eComponentTags m_eComponentTags;
-	MIRROR_TYPE(m_eComponentTags)
-
-	typedef QwerkE::eKeys eKeys;
-	MIRROR_TYPE(eKeys)
-
-	// Pointers
 	typedef entt::entity m_enTT_Entity;
 	MIRROR_TYPE(m_enTT_Entity)
 
+	// Enums
+	MIRROR_TYPE(eGameObjectTags)
+	MIRROR_TYPE(eComponentTags)
+
+	typedef QwerkE::eKeys eKeys; // #TODO Review typedef
+	MIRROR_TYPE(eKeys)
+
+	// Pointers
 	typedef Routine* m_routinePtr;
 	MIRROR_TYPE(m_routinePtr)
 
@@ -86,6 +87,9 @@ namespace QwerkE {
 	// Vectors
 	typedef std::vector<eComponentTags> m_vector_eComponentTags;
 	MIRROR_TYPE(m_vector_eComponentTags)
+
+	typedef std::vector<entt::entity> m_vector_entt_entities;
+	MIRROR_TYPE(m_vector_entt_entities)
 
 	typedef std::vector<std::string> m_vector_string;
 	MIRROR_TYPE(m_vector_string)
@@ -191,7 +195,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_Renderables)
 	MIRROR_CLASS_END(RenderComponent)
 
-
 	// More classes and complex structs
 
 	// MIRROR_COLLECTION(m_vector_renderable, Renderable);
@@ -206,6 +209,7 @@ namespace QwerkE {
 	// };
 
 	MIRROR_CLASS_START(Scene)
+	MIRROR_CLASS_MEMBER(m_Registry)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_MEMBER(m_IsPaused)
 	MIRROR_CLASS_MEMBER(m_CurrentCameraIndex)

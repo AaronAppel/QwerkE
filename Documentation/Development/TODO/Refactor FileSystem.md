@@ -1,0 +1,1 @@
+Try to combine file utility functions into a File namespace, and other helper functions into a Utils namespace. Clean up naming in StringHelpers, FileSystem, and FileUtilities files.

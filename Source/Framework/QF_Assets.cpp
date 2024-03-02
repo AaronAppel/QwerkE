@@ -143,7 +143,7 @@ namespace QwerkE {
 
 			if (FileExists(meshFilePath))
 			{
-				if (Mesh* mesh = File::LoadMeshInModelByName(meshFilePath, meshFileName))
+				if (Mesh* mesh = Files::LoadMeshInModelByName(meshFilePath, meshFileName))
 				{
 					LOG_TRACE("{0} Mesh loaded {1}", __FUNCTION__, mesh->GetName().c_str());
 					Assets::MeshLoaded(mesh->GetName().c_str(), mesh);
@@ -167,7 +167,7 @@ namespace QwerkE {
 
 			if (FileExists(meshFilePath))
 			{
-				std::vector<Mesh*> meshes = File::LoadModelFileToMeshes(meshFilePath);
+				std::vector<Mesh*> meshes = Files::LoadModelFileToMeshes(meshFilePath);
 
 				for (size_t i = 0; i < meshes.size(); i++)
 				{
@@ -301,7 +301,7 @@ namespace QwerkE {
 		ALuint InstantiateSound(const char* soundPath)
 		{
 			ALuint handle = 0;
-			handle = File::LoadSound(soundPath);
+			handle = Files::LoadSound(soundPath);
 
 			if (handle != 0)
 			{
@@ -393,7 +393,7 @@ namespace QwerkE {
 			if (MeshExists(meshName))
 				return s_Meshes[meshName];
 
-			if (Mesh* result = File::LoadMeshInModelByName(MeshesFolderPath(fileName), meshName))
+			if (Mesh* result = Files::LoadMeshInModelByName(MeshesFolderPath(fileName), meshName))
 			{
 				s_Meshes[meshName] = result;
 				return result;
@@ -586,7 +586,14 @@ namespace QwerkE {
 				}
 			}
 
-			if (char* fullFileName = File::FullFileName(filePath))
+			// Files::Path fPath(filePath);
+			// if (ShaderComponentExists(fPath.filename().c_str()))
+			// {
+			// 	// free(fullFileName);
+			// 	return s_ShaderComponents[fullFileName];
+			// }
+
+			if (char* fullFileName = Files::FullFileName(filePath))
 			{
 				if (ShaderComponentExists(filePath))
 				{

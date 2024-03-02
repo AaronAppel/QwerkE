@@ -84,7 +84,7 @@ namespace QwerkE {
 
             if (FileExists(fileData->s_FileName.c_str()))
             {
-                fileData->s_Data = (char*)File::LoadImageFileData(fileData->s_FileName.c_str(), &fileData->s_Width, &fileData->s_Height, (GLenum&)fileData->s_Channels, false);
+                fileData->s_Data = (char*)Files::LoadImageFileData(fileData->s_FileName.c_str(), &fileData->s_Width, &fileData->s_Height, (GLenum&)fileData->s_Channels, false);
                 LOG_TRACE("{0} File exists name: {1}", __FUNCTION__, fileData->s_FileName.c_str());
             }
 

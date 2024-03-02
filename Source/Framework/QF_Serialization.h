@@ -6,25 +6,27 @@
 
 namespace QwerkE {
 
+    class Scene;
+
     namespace Serialization {
 
         void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
         template <class T>
-        void DeserializeJsonFromFile(const char* fileName, T& objectReference) // #TODO Handle pointers as well, to avoid need to always dereference (unsafe)
+        void DeserializeJsonFromFile(const char* absoluteFilePath, T& objectReference) // #TODO Handle pointers as well, to avoid need to always dereference (unsafe)
         {
-            if (!fileName)
+            if (!absoluteFilePath)
             {
                 LOG_ERROR("{0} Null file path given!", __FUNCTION__);
                 return;
             }
 
-            if (cJSON* rootJsonObject = OpencJSONStream(fileName))
+            if (cJSON* rootJsonObject = OpencJSONStream(absoluteFilePath))
             {
                 const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
                 if (!rootJsonObject->child)
                 {
-                    LOG_ERROR("{0} root JSON object has no children in JSON file {1} !", __FUNCTION__, fileName);
+                    LOG_ERROR("{0} root JSON object has no children in JSON file {1} !", __FUNCTION__, absoluteFilePath);
                 }
                 else if (strcmp(rootJsonObject->child->string, typeInfo->stringName.c_str()) != 0)
                 {
@@ -33,23 +35,22 @@ namespace QwerkE {
                 else
                 {
                     DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
-                    // DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
                 }
 
                 ClosecJSONStream(rootJsonObject);
             }
             else
             {
-                LOG_ERROR("{0} Could not load object type {1} from file {2} !", __FUNCTION__, Mirror::InfoForType<T>()->stringName.c_str(), fileName);
+                LOG_ERROR("{0} Could not load object type {1} from file {2} !", __FUNCTION__, Mirror::InfoForType<T>()->stringName.c_str(), absoluteFilePath);
             }
         }
 
         void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         template <class T>
-        void SerializeObjectToFile(const T& objectReference, const char* filePath)
+        void SerializeObjectToFile(const T& objectReference, const char* absoluteFilePath)
         {
-            if (!filePath)
+            if (!absoluteFilePath)
             {
                 LOG_ERROR("{0} Null file path given!", __FUNCTION__);
                 return;
@@ -61,9 +62,12 @@ namespace QwerkE {
 
             SerializeObjectToJson((const void*)&objectReference, Mirror::InfoForType<T>(), jsonRootArray);
 
-            PrintRootObjectToFile(filePath, jsonRootObject);
+            PrintRootObjectToFile(absoluteFilePath, jsonRootObject);
             cJSON_Delete(jsonRootObject);
         }
+
+        void DeserializeScene(const char* const absoluteSceneJsonFilePath, Scene& scene);
+        void SerializeScene(const Scene& scene, const char* const absoluteSceneJsonFilePath);
 
     }
 

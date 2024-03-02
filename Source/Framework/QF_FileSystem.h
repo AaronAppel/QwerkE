@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <string>
 
 #include "QC_StringHelpers.h"
@@ -42,7 +43,12 @@ namespace QwerkE {
         // TODO: ~QSoundFile() alDeleteBuffers(1, &s_Handle)
     };
 
-    namespace File {
+    namespace Files {
+
+        typedef std::filesystem::path Path;
+
+        std::string ExplorerOpen();
+        std::string ExplorerSave();
 
         // TODO: Allow flags for loading images a certain way
         // TODO: Remove GLenum and any implementation specific variables, types, or styles

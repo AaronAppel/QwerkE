@@ -438,6 +438,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glew\GL\wglew.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3native.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\QC_glfw3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\common.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\exponential.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\geometric.hpp" />

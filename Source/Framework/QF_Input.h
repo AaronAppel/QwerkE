@@ -24,6 +24,8 @@ namespace QwerkE {
 
     namespace Input {
 
+        using OnKeyEventCallback = std::function<void(eKeys key, eKeyState state)>;
+
         void Initialize();
 
         void NewFrame(); // #Note Call before libraries each frame
@@ -42,6 +44,11 @@ namespace QwerkE {
         const vec2& MouseScrollDelta();
 
         void OnKeyEvent(eKeys key, eKeyState state);
+
+        void RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
+        void UnregisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
+
+        void ToggleLogKeyEvents();
 
 #ifdef GLFW3
         eKeys GLFWToQwerkEKey(int key);

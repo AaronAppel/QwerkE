@@ -64,6 +64,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderRoutineUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Scenes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_SceneSerialization.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Serialization.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Settings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ShaderComponent.cpp" />

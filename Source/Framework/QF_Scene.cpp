@@ -34,10 +34,6 @@ namespace QwerkE {
     Scene::Scene(const std::string& sceneFileName) :
         m_SceneFileName(sceneFileName)
     {
-        entt::entity entity = entt::null;
-        // m_EntityCamera = m_Registry.create();
-        // m_Registry.emplace<Transform>(m_EntityCamera);
-        // entt::meta
     }
 
     Scene::~Scene()
@@ -65,14 +61,6 @@ namespace QwerkE {
         {
             object.second->Update(deltatime);
         }
-    }
-
-    Transform Scene::GetCameraTransform()
-    {
-        if (m_Registry.any_of<Transform>(m_EntityCamera))
-            return m_Registry.get<Transform>(m_EntityCamera); // #NOTE Return copy for now
-
-        return Transform();
     }
 
     void Scene::CameraInput(float deltatime)
@@ -141,8 +129,6 @@ namespace QwerkE {
     bool Scene::AddCamera(GameObject* camera)
     {
         m_CameraList.push_back(camera);
-
-        m_CameraEntities.push_back(camera->GetEntity());
 
         return true;
     }
@@ -288,13 +274,9 @@ namespace QwerkE {
             return;
         }
 
-        // #TODO Handle enTT data serialization
-        // m_Registry.each([&](auto EntityID);
-        // m_Registry.eac;
-        entt::meta_factory factory = entt::meta<ComponentCamera>();
-        // factory.;
+        Serialization::SerializeScene(*this, ScenesFolderPath(m_SceneFileName.c_str()));
 
-        Serialization::SerializeObjectToFile(*this, ScenesFolderPath(m_SceneFileName.c_str()));
+        // Serialization::SerializeObjectToFile(*this, ScenesFolderPath(m_SceneFileName.c_str()));
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
         m_IsDirty = false;
     }
@@ -314,8 +296,10 @@ namespace QwerkE {
         }
 
         std::string oldName = m_SceneFileName; // #TODO Improve scene file name overwrite logic
-        Serialization::DeserializeJsonFromFile(ScenesFolderPath(otherSceneFileName), *this);
+        // Serialization::DeserializeJsonFromFile(ScenesFolderPath(otherSceneFileName), *this);
         m_SceneFileName = oldName;
+
+        Serialization::DeserializeScene(ScenesFolderPath(otherSceneFileName), *this);
 
         OnLoaded();
 
@@ -340,7 +324,9 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::DeserializeJsonFromFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
+        // Serialization::DeserializeJsonFromFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
+
+        Serialization::DeserializeScene(ScenesFolderPath(m_SceneFileName.c_str()), *this);
 
         OnLoaded();
 

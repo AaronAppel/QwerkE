@@ -60,7 +60,7 @@ namespace QwerkE {
         if (ShaderComponent* result = GenerateShaderFromData(shaderType, shaderString))
         {
             result->SetType(DeepCopyString(SmartFileExtension(shaderFilePath).get()));
-            if (char* fullFileName = File::FullFileName(shaderFilePath))
+            if (char* fullFileName = Files::FullFileName(shaderFilePath))
             {
                 result->SetName(fullFileName);
                 free(fullFileName);

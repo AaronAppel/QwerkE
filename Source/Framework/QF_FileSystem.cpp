@@ -23,6 +23,7 @@
 
 #include "Libraries/lodepng/lodepng.h"
 #include "Libraries/glew/glew.h"
+#include "Libraries/glfw/QC_glfw3.h"
 #include "Libraries/FlatheadGames/ImageHelpers.h"
 
 #include "QF_Defines.h"
@@ -40,12 +41,12 @@
 #include "QF_FileUtilities.h"
 #include "QF_Assets.h"
 #include "QF_Log.h"
-
 #include "QF_Mesh.h"
+#include "QF_Window.h"
 
 namespace QwerkE {
 
-	namespace File {
+	namespace Files {
 
 #ifdef OpenAL
 		void CheckForOpenALErrors(const char* file, int line);
@@ -311,6 +312,66 @@ namespace QwerkE {
 			return retValue;
 		}
 #endif
+
+#include <commdlg.h>
+
+		// std::string filepath = FileDialogs::OpenFile("QwerkE Project (*.qproj)\0*.qproj\0");
+		std::string ExplorerOpen(const char* filter)
+		{
+			OPENFILENAMEA ofn;
+			CHAR szFile[260] = { 0 };
+			CHAR currentDir[256] = { 0 };
+			ZeroMemory(&ofn, sizeof(OPENFILENAME));
+			ofn.lStructSize = sizeof(OPENFILENAME);
+
+#ifdef GLFW3
+			ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Window::GetContext());
+#else
+#error "Define window library!"
+#endif
+			ofn.lpstrFile = szFile;
+			ofn.nMaxFile = sizeof(szFile);
+			if (GetCurrentDirectoryA(256, currentDir))
+				ofn.lpstrInitialDir = currentDir;
+			ofn.lpstrFilter = filter;
+			ofn.nFilterIndex = 1;
+			ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+
+			if (GetOpenFileNameA(&ofn) == TRUE)
+				return ofn.lpstrFile;
+
+			return std::string();
+
+		}
+
+		std::string ExplorerSave(const char* filter)
+		{
+			OPENFILENAMEA ofn;
+			CHAR szFile[260] = { 0 };
+			CHAR currentDir[256] = { 0 };
+			ZeroMemory(&ofn, sizeof(OPENFILENAME));
+			ofn.lStructSize = sizeof(OPENFILENAME);
+#ifdef GLFW3
+			ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Window::GetContext());
+#else
+#error "Define window library!"
+#endif
+			ofn.lpstrFile = szFile;
+			ofn.nMaxFile = sizeof(szFile);
+			if (GetCurrentDirectoryA(256, currentDir))
+				ofn.lpstrInitialDir = currentDir;
+			ofn.lpstrFilter = filter;
+			ofn.nFilterIndex = 1;
+			ofn.Flags = OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_NOCHANGEDIR;
+
+			// Sets the default extension by extracting it from the filter
+			ofn.lpstrDefExt = strchr(filter, '\0') + 1;
+
+			if (GetSaveFileNameA(&ofn) == TRUE)
+				return ofn.lpstrFile;
+
+			return std::string();
+		}
 
 	}
 

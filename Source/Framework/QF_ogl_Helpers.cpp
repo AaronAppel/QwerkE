@@ -91,7 +91,7 @@ namespace QwerkE {
 
         GLenum channels = 4;
         unsigned int width = 0, height = 0;
-        unsigned char* imageData = File::LoadImageFileData(filePath, &width, &height, channels, flipVertically);
+        unsigned char* imageData = Files::LoadImageFileData(filePath, &width, &height, channels, flipVertically);
 
         if (!imageData)
         {

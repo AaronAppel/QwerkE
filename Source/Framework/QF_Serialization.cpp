@@ -726,7 +726,7 @@ namespace QwerkE {
                     break;
 
                 case MirrorTypes::m_eSceneTypes:
-                case MirrorTypes::m_eGameObjectTags:
+                case MirrorTypes::eGameObjectTags:
                 case MirrorTypes::m_uint8_t:
                     {
                         uint8_t* numberAddress = (uint8_t*)((char*)obj + field.offset);

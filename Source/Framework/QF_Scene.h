@@ -54,7 +54,7 @@ namespace QwerkE {
         GameObject* GetCurrentCamera() { return m_CameraList[m_CurrentCameraIndex]; }
         const std::map<std::string, GameObject*>& GetObjectList() { return m_pGameObjects; };
         const std::vector<GameObject*>& GetLightList() const { return m_LightList; };
-        const std::string& GetSceneName() { return m_SceneFileName; }
+        const std::string& GetSceneName() const { return m_SceneFileName; }
 
         void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; };
         void SetCurrentCamera(int newCameraIndex) { m_CurrentCameraIndex = newCameraIndex; };
@@ -63,10 +63,6 @@ namespace QwerkE {
 
         void SetDirty() { m_IsDirty = true; }
         bool IsDirty() { return m_IsDirty; }
-
-        Transform GetCameraTransform();
-
-        std::vector<entt::entity> GetCameraEntities() { return m_CameraEntities; }
 
     private:
         void CameraInput(float deltatime);
@@ -85,8 +81,6 @@ namespace QwerkE {
         std::map<std::string, GameObject*> m_pGameObjects; // #TODO Deprecate
 
         int m_CurrentCameraIndex = 0;
-
-        std::vector<entt::entity> m_CameraEntities; // #TODO Good enTT 1st usage
 
         std::vector<GameObject*> m_CameraList;
         std::vector<GameObject*> m_LightList;

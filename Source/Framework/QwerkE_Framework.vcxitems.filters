@@ -307,6 +307,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Network.cpp">
       <Filter>Core\Network</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_SceneSerialization.cpp">
+      <Filter>Core\Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Audio.h">

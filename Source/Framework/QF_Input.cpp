@@ -1,6 +1,7 @@
 #include "QF_Input.h"
 
 #include <map>
+#include <unordered_map>
 
 #include "QF_Debug.h"
 #include "QF_Enums.h"
@@ -11,6 +12,12 @@ namespace QwerkE {
 
     namespace Input {
 
+        std::vector<std::pair<eKeys, OnKeyEventCallback>> s_OnKeyEventCallBacks;
+
+#ifdef _QDebug
+        bool s_LogKeyEventInfo = false;
+#endif
+
         static const u8 ONE_FRAME_MAX_INPUT = 12;
 
         static vec2 s_MousePos = vec2(0.f);
@@ -18,11 +25,14 @@ namespace QwerkE {
         static vec2 s_MouseDragStart = vec2(0.f);
         static bool s_MouseDragReset = false;
 
-        static bool s_KeyEventsAreDirty = true;
+        static bool s_KeyEventsAreDirty = true; // #TODO Deprecate and use GLFW state to know key states
         static u16 s_InputEventKeys[ONE_FRAME_MAX_INPUT];
         static bool s_InputEventValues[ONE_FRAME_MAX_INPUT] = { false };
 
-        static u16* s_KeyCodex = new unsigned short[GLFW_KEY_LAST];
+#ifdef GLFW3
+        static const u16 s_KeyCodexSize = GLFW_KEY_LAST + 1; // #TODO GLFW dependency
+#endif
+        static u16* s_KeyCodex = new unsigned short[s_KeyCodexSize];
         static bool s_KeyStates[eKeys_MAX] = { false };
 
         static vec2 s_FrameMouseScrollOffsets = vec2(0.f);
@@ -44,13 +54,18 @@ namespace QwerkE {
 
         eKeys GLFWToQwerkEKey(int key)
         {
+            if (key < 0 || key >= s_KeyCodexSize)
+            {
+                LOG_ERROR("{0} Key code {1} unsupported!", __FUNCTION__, key);
+                return eKeys::eKeys_MAX;
+            }
             return (eKeys)s_KeyCodex[key];
         }
 
         void Initialize()
         {
 #ifdef GLFW3
-            memset(s_KeyCodex, 0, GLFW_KEY_LAST);
+            memset(s_KeyCodex, 0, s_KeyCodexSize);
             SetupCallbacks((GLFWwindow*)Window::GetContext());
             InitializeGLFWKeysCodex(s_KeyCodex);
 #else
@@ -118,8 +133,58 @@ namespace QwerkE {
             return s_FrameMouseScrollOffsets;
         }
 
+        void RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback)
+        {
+            s_OnKeyEventCallBacks.push_back(std::make_pair(key, callback));
+        }
+
+        void UnregisterOnKeyEvent(eKeys key, OnKeyEventCallback callback)
+        {
+            for (size_t i = 0; i < s_OnKeyEventCallBacks.size(); i++)
+            {
+                auto pair = s_OnKeyEventCallBacks[i];
+                if (pair.first == key)
+                {
+                    const bool sameAddress = &pair.second == &callback; // #TODO Compare function addresses properly
+                    if (true || sameAddress)
+                    {
+                        s_OnKeyEventCallBacks.erase(s_OnKeyEventCallBacks.begin() + i);
+                        break;
+                    }
+                }
+            }
+        }
+
+        void ToggleLogKeyEvents()
+        {
+#ifdef _QDebug
+            s_LogKeyEventInfo = !s_LogKeyEventInfo;
+#endif
+        }
+
+        void CheckOnKeyEventCallBacks(eKeys key, eKeyState state)
+        {
+            // Backwards in case a callback unregisters itself after call
+            for (int i = s_OnKeyEventCallBacks.size() - 1; i >= 0; i--)
+            {
+                if (s_OnKeyEventCallBacks[i].first)
+                {
+                    s_OnKeyEventCallBacks[i].second(key, state);
+                }
+            }
+        }
+
         void OnKeyEvent(eKeys key, eKeyState state)
         {
+#ifdef _QDebug
+            if (s_LogKeyEventInfo)
+            {
+                LOG_TRACE("{0} Key {1} event {2}", __FUNCTION__, (char)key, (int)state);
+            }
+#endif
+
+            CheckOnKeyEventCallBacks(key, state);
+
             local_RaiseInputEvent(key, state);
 
             if (state == eKeyState::eKeyState_Release)
