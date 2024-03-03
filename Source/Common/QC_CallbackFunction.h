@@ -19,7 +19,7 @@ private:
     uint16_t GetNextId()
     {
         static uint16_t s_IdCounter = 0;
-        return s_IdCounter++;
+        return ++s_IdCounter;
     }
     T m_Callback = nullptr;
     uint16_t m_Id = 0;

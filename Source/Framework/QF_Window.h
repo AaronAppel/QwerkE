@@ -22,6 +22,9 @@ namespace QwerkE {
 
         bool IsMinimized();
 
+        // #TODO Callbacks
+        // void RegisterResizeCallback(resizeCallback); // Called by Renderer
+        // void RegisterKeyCallback(keyCallback);       // Called by Input
     }
 
 }

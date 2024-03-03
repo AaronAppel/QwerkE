@@ -12,44 +12,7 @@ namespace QwerkE {
 
     namespace Input {
 
-        std::vector<std::pair<eKeys, CallbackFunction<OnKeyEventCallback>>> s_OnKeyEventCallBacks2;
-
-        void Test(eKeys key, eKeyState state)
-        {
-            LOG_INFO("{0} Inside", __FUNCTION__);
-        }
-
-        void Test2(eKeys key, eKeyState state)
-        {
-            LOG_INFO("{0} Inside", __FUNCTION__);
-        }
-
-        void Func()
-        {
-            CallbackFunction callback = CallbackFunction<OnKeyEventCallback>(Test);
-            s_OnKeyEventCallBacks2.push_back(std::make_pair(eKeys::eKeys_0, callback));
-
-            CallbackFunction callback2 = CallbackFunction<OnKeyEventCallback>(Test);
-            s_OnKeyEventCallBacks2.push_back(std::make_pair(eKeys::eKeys_0, callback2));
-
-            CallbackFunction callback3 = CallbackFunction<OnKeyEventCallback>(Test2);
-            s_OnKeyEventCallBacks2.push_back(std::make_pair(eKeys::eKeys_0, callback3));
-
-            for (int i = s_OnKeyEventCallBacks2.size() - 1; i >= 0; i--)
-            {
-                auto pair = s_OnKeyEventCallBacks2[i];
-                if (pair.second.Id() == callback2.Id())
-                {
-                    s_OnKeyEventCallBacks2.erase(s_OnKeyEventCallBacks2.begin() + i);
-                    break;
-                }
-            }
-
-            OnKeyEventCallback onKeyEventCallback = s_OnKeyEventCallBacks2[0].second.Callback();
-            onKeyEventCallback(eKeys::eKeys_0, eKeyState::eKeyState_Max);
-        }
-
-        std::vector<std::pair<eKeys, OnKeyEventCallback>> s_OnKeyEventCallBacks;
+        std::vector<std::pair<eKeys, CallbackFunction<OnKeyEventCallback>>> s_OnKeyEventCallBacks;
 
 #ifdef _QDebug
         bool s_LogKeyEventInfo = false;
@@ -170,25 +133,21 @@ namespace QwerkE {
             return s_FrameMouseScrollOffsets;
         }
 
-        void RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback)
+        u16 RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback)
         {
-            s_OnKeyEventCallBacks.push_back(std::make_pair(key, callback));
+            s_OnKeyEventCallBacks.emplace_back(std::make_pair(key, callback));
+            return s_OnKeyEventCallBacks.back().second.Id();
         }
 
-        void UnregisterOnKeyEvent(eKeys key, OnKeyEventCallback callback, u8 id)
+        void UnregisterOnKeyEvent(eKeys key, u16 id)
         {
-            // #TODO Find a way to unregister using function pointer references
             for (size_t i = 0; i < s_OnKeyEventCallBacks.size(); i++)
             {
                 auto pair = s_OnKeyEventCallBacks[i];
-                if (pair.first == key)
+                if (pair.first == key && pair.second.Id() == id)
                 {
-                    const bool sameAddress = &pair.second == &callback; // #TODO Compare function addresses properly
-                    if (true || sameAddress)
-                    {
-                        s_OnKeyEventCallBacks.erase(s_OnKeyEventCallBacks.begin() + i);
-                        break;
-                    }
+                    s_OnKeyEventCallBacks.erase(s_OnKeyEventCallBacks.begin() + i);
+                    return;
                 }
             }
         }
@@ -202,12 +161,11 @@ namespace QwerkE {
 
         void CheckOnKeyEventCallBacks(eKeys key, eKeyState state)
         {
-            // Backwards in case a callback unregisters itself after call
             for (int i = s_OnKeyEventCallBacks.size() - 1; i >= 0; i--)
             {
                 if (s_OnKeyEventCallBacks[i].first)
                 {
-                    s_OnKeyEventCallBacks[i].second(key, state);
+                    s_OnKeyEventCallBacks[i].second.Callback()(key, state);
                 }
             }
         }

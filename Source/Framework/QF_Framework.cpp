@@ -33,16 +33,18 @@ namespace QwerkE {
 			return Startup(SettingsFolderPath(null_config));
 		}
 
+		static u16 keyFuncId = 0;
 		void OnKeyFunc(eKeys key, eKeyState state)
 		{
 			LOG_TRACE("{0} Key {1} state {2}", __FUNCTION__, (char)key, (int)state);
-			Input::UnregisterOnKeyEvent(eKeys_D, OnKeyFunc);
+			Input::UnregisterOnKeyEvent(eKeys_D, keyFuncId);
 		}
 
+		static u16 keyFuncId2 = 0;
 		void OnKeyFunc2(eKeys key, eKeyState state)
 		{
 			LOG_TRACE("{0} Key {1} state {2}", __FUNCTION__, (char)key, (int)state);
-			Input::UnregisterOnKeyEvent(eKeys_D, OnKeyFunc);
+			Input::UnregisterOnKeyEvent(eKeys_D, keyFuncId2);
 		}
 
 		eOperationResult Framework::Startup(const std::string engineSettingsPath)
@@ -58,8 +60,8 @@ namespace QwerkE {
 			Window::Initialize();
 
             Input::Initialize();
-			Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc);
-			Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc2);
+			keyFuncId = Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc);
+			keyFuncId2 = Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc2);
 
 			const EngineSettings& engineSettings = Settings::GetEngineSettings();
             if (engineSettings.audioEnabled && Audio::Initialize())
