@@ -1,13 +1,16 @@
 #pragma once
 
-// #includes forced to be included throughout QwerkE
+// For convenience, include commonly used files, but don't perpetually depend on this file.
 
+#include "QC_CallbackFunction.h"
 #include "QC_TypeDefs.h"
 
+#include "QF_Debug.h"
+#include "QF_Log.h"
 #include "QF_Math.h"
 #include "QF_Memory.h"
 
-// #define GLM_SWIZZLE // #TODO Review build time impact
+#define GLM_FORCE_SWIZZLE // #TODO Review build time impact
 
 #include "Libraries/glm/glm/vec2.hpp"
 typedef glm::vec2 vec2;

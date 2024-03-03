@@ -11,8 +11,12 @@
             "id": "7ee414b1d7073bb6",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Solution Configuration/C++ Project Setup.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -74,7 +78,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Solution Configuration/C++ Project Setup.md"
+              }
             }
           }
         ]
@@ -90,7 +96,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "version",
+                "query": "cherno project",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -116,6 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Solution Configuration/C++ Project Setup.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -127,6 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Solution Configuration/C++ Project Setup.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,6 +162,8 @@
   },
   "active": "7ee414b1d7073bb6",
   "lastOpenFiles": [
+    "Solution Configuration/Projects.md",
+    "Solution Configuration/Visual Studio.md",
     "Development/TODO/Refactor FileSystem.md",
     "Development/TODO/String Library.md",
     "Serializer.md",
@@ -183,8 +193,6 @@
     "Pretend Blog Post.md",
     "QwerkE Standards/Enums.md",
     "Shader Building.md",
-    "Assets and Data/Null Asset Handling.md",
-    "Solution Configuration/New QwerkE Project Setup.md",
     "Development/Resolved",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "Development/Bug Tickets",

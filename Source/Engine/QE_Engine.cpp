@@ -15,7 +15,6 @@
 #endif
 
 #include "QF_Profile.h"
-#include "QF_Debugger.h"
 #include "QF_FrameBufferObject.h"
 #include "QF_Renderer.h"
 #include "QF_Input.h"

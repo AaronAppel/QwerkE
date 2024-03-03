@@ -58,17 +58,11 @@
     <Filter Include="Core\Window">
       <UniqueIdentifier>{2fdbc810-3c3c-4f13-a64a-7af434030efb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DataTypes">
-      <UniqueIdentifier>{0b7cf3ee-0e1c-4a52-b1f7-a1782b37b2e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{4595f103-d97b-42c0-bca5-9a897021c060}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debug\Log">
       <UniqueIdentifier>{6b432c16-e373-4c36-8e96-8b089e1fb9e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Debugger">
-      <UniqueIdentifier>{d363add6-0b53-412b-8514-3f864a488da6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Extended">
       <UniqueIdentifier>{76668ce4-345d-40f2-86f4-d799b524e080}</UniqueIdentifier>
@@ -244,9 +238,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PrintFunctions.cpp">
       <Filter>Debug\Log</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debugger.cpp">
-      <Filter>Debug\Debugger</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.cpp">
       <Filter>Core\Entities\Routines\Extended</Filter>
     </ClCompile>
@@ -282,9 +273,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.cpp">
       <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp">
-      <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Window.cpp">
       <Filter>Core\Window</Filter>
@@ -466,12 +454,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PrintFunctions.h">
       <Filter>Debug\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debugger.h">
-      <Filter>Debug\Debugger</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ObjectPool.h">
-      <Filter>DataTypes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Routine.h">
       <Filter>Core\Entities\Routines</Filter>

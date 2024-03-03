@@ -46,7 +46,7 @@ namespace QwerkE {
         void OnKeyEvent(eKeys key, eKeyState state);
 
         void RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
-        void UnregisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
+        void UnregisterOnKeyEvent(eKeys key, OnKeyEventCallback callback, u8 id = 0); // #TODO Use an id to unregister
 
         void ToggleLogKeyEvents();
 

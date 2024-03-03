@@ -740,6 +740,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\tweakme.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\version.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_CallbackFunction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h" />

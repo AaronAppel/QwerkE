@@ -29,8 +29,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CameraComponent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debug.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Debugger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Events.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileUtilities.cpp" />
@@ -95,7 +93,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Constants.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CubeMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debug.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Debugger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Defines.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Dynamic_ShaderProgram.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Enums.h" />
@@ -129,7 +126,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MyFileWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_ObjectPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_OpenAL_Component.h" />

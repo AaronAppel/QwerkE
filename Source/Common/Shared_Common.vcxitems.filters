@@ -2266,6 +2266,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\QC_glfw3.h">
       <Filter>Libraries\glfw</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_CallbackFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">

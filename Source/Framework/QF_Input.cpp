@@ -12,6 +12,43 @@ namespace QwerkE {
 
     namespace Input {
 
+        std::vector<std::pair<eKeys, CallbackFunction<OnKeyEventCallback>>> s_OnKeyEventCallBacks2;
+
+        void Test(eKeys key, eKeyState state)
+        {
+            LOG_INFO("{0} Inside", __FUNCTION__);
+        }
+
+        void Test2(eKeys key, eKeyState state)
+        {
+            LOG_INFO("{0} Inside", __FUNCTION__);
+        }
+
+        void Func()
+        {
+            CallbackFunction callback = CallbackFunction<OnKeyEventCallback>(Test);
+            s_OnKeyEventCallBacks2.push_back(std::make_pair(eKeys::eKeys_0, callback));
+
+            CallbackFunction callback2 = CallbackFunction<OnKeyEventCallback>(Test);
+            s_OnKeyEventCallBacks2.push_back(std::make_pair(eKeys::eKeys_0, callback2));
+
+            CallbackFunction callback3 = CallbackFunction<OnKeyEventCallback>(Test2);
+            s_OnKeyEventCallBacks2.push_back(std::make_pair(eKeys::eKeys_0, callback3));
+
+            for (int i = s_OnKeyEventCallBacks2.size() - 1; i >= 0; i--)
+            {
+                auto pair = s_OnKeyEventCallBacks2[i];
+                if (pair.second.Id() == callback2.Id())
+                {
+                    s_OnKeyEventCallBacks2.erase(s_OnKeyEventCallBacks2.begin() + i);
+                    break;
+                }
+            }
+
+            OnKeyEventCallback onKeyEventCallback = s_OnKeyEventCallBacks2[0].second.Callback();
+            onKeyEventCallback(eKeys::eKeys_0, eKeyState::eKeyState_Max);
+        }
+
         std::vector<std::pair<eKeys, OnKeyEventCallback>> s_OnKeyEventCallBacks;
 
 #ifdef _QDebug
@@ -25,15 +62,15 @@ namespace QwerkE {
         static vec2 s_MouseDragStart = vec2(0.f);
         static bool s_MouseDragReset = false;
 
-        static bool s_KeyEventsAreDirty = true; // #TODO Deprecate and use GLFW state to know key states
-        static u16 s_InputEventKeys[ONE_FRAME_MAX_INPUT];
-        static bool s_InputEventValues[ONE_FRAME_MAX_INPUT] = { false };
+        static bool s_KeyEventsAreDirty = true;
+        static u16 s_FrameKeyEvents[ONE_FRAME_MAX_INPUT];
+        static bool s_FrameKeyStates[ONE_FRAME_MAX_INPUT] = { false };
 
 #ifdef GLFW3
-        static const u16 s_KeyCodexSize = GLFW_KEY_LAST + 1; // #TODO GLFW dependency
+        static const u16 s_GlfwKeyCodexSize = GLFW_KEY_LAST + 1;
+        static u16* s_GlfwKeyCodex = new unsigned short[s_GlfwKeyCodexSize];
 #endif
-        static u16* s_KeyCodex = new unsigned short[s_KeyCodexSize];
-        static bool s_KeyStates[eKeys_MAX] = { false };
+        static bool s_eKeyStates[eKeys_MAX] = { false };
 
         static vec2 s_FrameMouseScrollOffsets = vec2(0.f);
 
@@ -43,10 +80,10 @@ namespace QwerkE {
 
             for (int i = 0; i < ONE_FRAME_MAX_INPUT; i++)
             {
-                if (s_InputEventKeys[i] == eKeys_NULL_KEY)
+                if (s_FrameKeyEvents[i] == eKeys_NULL_KEY)
                 {
-                    s_InputEventKeys[i] = key;
-                    s_InputEventValues[i] = state;
+                    s_FrameKeyEvents[i] = key;
+                    s_FrameKeyStates[i] = state;
                     return;
                 }
             }
@@ -54,20 +91,20 @@ namespace QwerkE {
 
         eKeys GLFWToQwerkEKey(int key)
         {
-            if (key < 0 || key >= s_KeyCodexSize)
+            if (key < 0 || key >= s_GlfwKeyCodexSize)
             {
                 LOG_ERROR("{0} Key code {1} unsupported!", __FUNCTION__, key);
                 return eKeys::eKeys_MAX;
             }
-            return (eKeys)s_KeyCodex[key];
+            return (eKeys)s_GlfwKeyCodex[key];
         }
 
         void Initialize()
         {
 #ifdef GLFW3
-            memset(s_KeyCodex, 0, s_KeyCodexSize);
+            memset(s_GlfwKeyCodex, 0, s_GlfwKeyCodexSize);
             SetupCallbacks((GLFWwindow*)Window::GetContext());
-            InitializeGLFWKeysCodex(s_KeyCodex);
+            InitializeGLFWKeysCodex(s_GlfwKeyCodex);
 #else
 #error "Define input library!"
 #endif
@@ -88,8 +125,8 @@ namespace QwerkE {
 
             if (s_KeyEventsAreDirty)
             {
-                memset(s_InputEventKeys, eKeys_NULL_KEY, ONE_FRAME_MAX_INPUT * sizeof(short));
-                memset(s_InputEventValues, eKeyState::eKeyState_Release, ONE_FRAME_MAX_INPUT * sizeof(bool));
+                memset(s_FrameKeyEvents, eKeys_NULL_KEY, ONE_FRAME_MAX_INPUT * sizeof(short));
+                memset(s_FrameKeyStates, eKeyState::eKeyState_Release, ONE_FRAME_MAX_INPUT * sizeof(bool));
                 s_KeyEventsAreDirty = false;
             }
         }
@@ -117,7 +154,7 @@ namespace QwerkE {
             {
                 s_MouseDragReset = true; // drag ended, reset value next frame so it can be used this frame
             }
-            s_KeyStates[key] = state; // TODO: Is setting bool to key state an issue?
+            s_eKeyStates[key] = state; // TODO: Is setting bool to key state an issue?
 
             local_RaiseInputEvent(key, state);
         }
@@ -138,8 +175,9 @@ namespace QwerkE {
             s_OnKeyEventCallBacks.push_back(std::make_pair(key, callback));
         }
 
-        void UnregisterOnKeyEvent(eKeys key, OnKeyEventCallback callback)
+        void UnregisterOnKeyEvent(eKeys key, OnKeyEventCallback callback, u8 id)
         {
+            // #TODO Find a way to unregister using function pointer references
             for (size_t i = 0; i < s_OnKeyEventCallBacks.size(); i++)
             {
                 auto pair = s_OnKeyEventCallBacks[i];
@@ -191,12 +229,12 @@ namespace QwerkE {
             {
                 int bp = 0;
             }
-            s_KeyStates[key] = state;
+            s_eKeyStates[key] = state;
         }
 
         vec2 GetMouseDragDelta()
         {
-            if (s_KeyStates[eKeys::eKeys_LeftClick])
+            if (s_eKeyStates[eKeys::eKeys_LeftClick])
             {
                 return s_MousePos - s_MouseDragStart;
             }
@@ -205,17 +243,17 @@ namespace QwerkE {
 
         bool GetIsKeyDown(eKeys key)
         {
-            return s_KeyStates[key];
+            return s_eKeyStates[key];
         }
 
         bool FrameKeyAction(eKeys key, eKeyState state)
         {
-            if (s_InputEventKeys[0] != eKeys::eKeys_NULL_KEY)
+            if (s_FrameKeyEvents[0] != eKeys::eKeys_NULL_KEY)
             {
                 for (int i = 0; i < ONE_FRAME_MAX_INPUT; i++)
                 {
-                    if (s_InputEventKeys[i] == key)
-                        return s_InputEventValues[i] == (bool)state;
+                    if (s_FrameKeyEvents[i] == key)
+                        return s_FrameKeyStates[i] == (bool)state;
                 }
             }
             return false;
