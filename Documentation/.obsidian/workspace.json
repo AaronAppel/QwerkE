@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Solution Configuration/C++ Project Setup.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "mode": "source",
                 "source": false
               }
@@ -79,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Solution Configuration/C++ Project Setup.md"
+                "file": "ZZ Shared Vault Files ❗/Watched.md"
               }
             }
           }
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Solution Configuration/C++ Project Setup.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Solution Configuration/C++ Project Setup.md",
+                "file": "ZZ Shared Vault Files ❗/Watched.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -162,6 +162,7 @@
   },
   "active": "7ee414b1d7073bb6",
   "lastOpenFiles": [
+    "Solution Configuration/C++ Project Setup.md",
     "Solution Configuration/Projects.md",
     "Solution Configuration/Visual Studio.md",
     "Development/TODO/Refactor FileSystem.md",
@@ -192,7 +193,6 @@
     "Systems/Saving and Loading/Reflection Setup.md",
     "Pretend Blog Post.md",
     "QwerkE Standards/Enums.md",
-    "Shader Building.md",
     "Development/Resolved",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "Development/Bug Tickets",

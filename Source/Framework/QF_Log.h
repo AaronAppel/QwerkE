@@ -60,6 +60,8 @@ namespace QwerkE {
 #define LOG_CRITICAL(...)   QwerkE::Log::m_Logger->critical(__VA_ARGS__);
 // #TODO Handle repeated (every frame) logs with some "no spam" function or argument like a bool with a default/optional argument
 
+#define LOG_INFO_ONCE(...) { static bool s_logged = false; if (!s_logged) { s_logged = true; QwerkE::Log::m_Logger->info(__VA_ARGS__); } }
+
 // #TODO Back trace message : https://github.com/gabime/spdlog?tab=readme-ov-file#backtrace-support
 
 // Defined MSVC macros https://learn.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=msvc-170
