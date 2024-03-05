@@ -39,8 +39,6 @@ namespace QwerkE {
         u8 maxJobsAdditionalThreadCount = 1;
 
         bool audioEnabled = false;
-        bool physicsEnabled = false;
-        bool networkingEnabled = false;
         bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
 
         // Editor UI

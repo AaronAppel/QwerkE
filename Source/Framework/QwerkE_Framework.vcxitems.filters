@@ -43,9 +43,6 @@
     <Filter Include="Core\Math\Tween">
       <UniqueIdentifier>{32c1371a-dabf-46a8-a524-d819305e9b03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Network">
-      <UniqueIdentifier>{d39bcca9-950c-4023-8bef-37e53a01815f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Scenes">
       <UniqueIdentifier>{028097ec-6c16-41bf-b118-4e0f7054955a}</UniqueIdentifier>
     </Filter>
@@ -262,9 +259,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Events.cpp">
       <Filter>Core\Events</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Network.cpp">
-      <Filter>Core\Network</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_SceneSerialization.cpp">
       <Filter>Core\Serialization</Filter>
     </ClCompile>
@@ -362,9 +356,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_TweenFuncs.h">
       <Filter>Core\Math\Tween</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Network.h">
-      <Filter>Core\Network</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CameraComponent.h">
       <Filter>Core\Entities\Components\Camera</Filter>

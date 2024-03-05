@@ -1,4 +1,4 @@
-#pragma once
+#include "QF_Texture.h"
 
 #include <string>
 

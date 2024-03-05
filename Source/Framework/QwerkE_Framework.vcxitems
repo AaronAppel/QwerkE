@@ -42,7 +42,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Mesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_MyFileWriter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Network.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.cpp" />
@@ -112,7 +111,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MeshUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_MyFileWriter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Network.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_oal_AudioManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.h" />

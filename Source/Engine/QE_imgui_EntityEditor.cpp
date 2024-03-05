@@ -32,12 +32,6 @@ namespace QwerkE {
             m_ListboxItemTypes.push_back(eComponentTags::Component_SoundListener);
             m_ListboxItemTypes.push_back(eComponentTags::Component_SoundPlayer);
         }
-
-        if (Settings::GetEngineSettings().physicsEnabled)
-        {
-            m_ListboxItemStrings.push_back("Physics");
-            m_ListboxItemTypes.push_back(eComponentTags::Component_Physics);
-        }
 	}
 
 	void EntityEditor::Draw()

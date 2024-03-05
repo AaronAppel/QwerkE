@@ -8,7 +8,6 @@
 #include "QF_FileSystem.h"
 #include "QF_FileUtilities.h"
 #include "QF_Profile.h"
-#include "QF_Network.h"
 #include "QF_Time.h"
 #include "QF_Settings.h"
 #include "QF_Window.h"
@@ -308,24 +307,6 @@ namespace QwerkE {
                     {
                         s_EngineSettings->showingSchematicsEditor = !s_EngineSettings->showingSchematicsEditor;
                         Settings::SaveEngineSettings();
-                    }
-
-                    static bool clientServerEnabled = false; // #TODO Create a networking window
-                    if (ImGui::Checkbox("Client/Server", &clientServerEnabled))
-                    {
-                        if (clientServerEnabled)
-                        {
-                            Network::Initialize();
-                        }
-                        else
-                        {
-                            Network::TearDown();
-                        }
-                    }
-
-                    if (clientServerEnabled)
-                    {
-                        Network::TestUpdate();
                     }
 
                     if (ImGui::Button("FPS"))

@@ -147,8 +147,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(maxEnabledScenes)
 	MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
 	MIRROR_CLASS_MEMBER(audioEnabled)
-	MIRROR_CLASS_MEMBER(physicsEnabled)
-	MIRROR_CLASS_MEMBER(networkingEnabled)
 	MIRROR_CLASS_MEMBER(consoleOutputWindowEnabled)
 	MIRROR_CLASS_MEMBER(showingSchematicsEditor)
 	MIRROR_CLASS_MEMBER(showingExampleWindow)

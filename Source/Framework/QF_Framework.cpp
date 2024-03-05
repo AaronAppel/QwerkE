@@ -11,7 +11,6 @@
 #include "QF_Input.h"
 #include "QF_Jobs.h"
 #include "QF_Log.h"
-#include "QF_Network.h"
 #include "QF_Renderer.h"
 #include "QF_Assets.h"
 #include "QF_Scene.h"
@@ -77,16 +76,6 @@ namespace QwerkE {
 			Renderer::Initialize();
 			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.f);
 			Window::SwapBuffers();
-
-			if (engineSettings.networkingEnabled)
-			{
-				Network::Initialize();
-				LOG_TRACE("Networking system initialized");
-			}
-			else
-			{
-				LOG_WARN("No network system loaded.");
-			}
 
 			Scenes::Initialize();
 
