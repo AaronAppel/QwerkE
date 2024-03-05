@@ -33,6 +33,8 @@ namespace QwerkE {
         static const u16 s_GlfwKeyCodexSize = GLFW_KEY_LAST + 1;
         static u16* s_GlfwKeyCodex = new unsigned short[s_GlfwKeyCodexSize];
 #endif
+        // #TODO Review using GLFW state IF QwerkE::Window can provide a nice un/register API
+        // Windows currently needs to callback to Input. Might as well register callbacks once and avoid the extra logic in Windows.
         static bool s_eKeyStates[eKeys_MAX] = { false };
 
         static vec2 s_FrameMouseScrollOffsets = vec2(0.f);

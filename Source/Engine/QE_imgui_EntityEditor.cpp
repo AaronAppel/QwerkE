@@ -4,14 +4,10 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #include "Libraries/Bullet3/BulletDynamics/Dynamics/btRigidBody.h" // #TODO Remove Bullet3 dependency from here
 
-#include "QF_b3_PhysicsFactory.h" // #TODO Remove Bullet3 dependency from here
-#include "QF_Bullet3Component.h"
-#include "QF_Bullet3Routine.h"
 #include "QF_Defines.h"
 #include "QF_GameObject.h"
 #include "QF_Log.h"
 #include "QF_Mesh.h"
-#include "QF_Physics.h"
 #include "QF_RenderComponent.h"
 #include "QF_Assets.h"
 #include "QF_Scene.h"
@@ -188,40 +184,6 @@ namespace QwerkE {
 
                                 rComp->AddRenderable(renderable);
                                 rComp->GetParent()->GetFirstDrawRoutineOfType(Routine_Render)->Initialize();
-                            }
-                        }
-                        break;
-
-                    case eComponentTags::Component_Physics:
-                        if (Settings::GetEngineSettings().physicsEnabled && m_CurrentEntity->GetComponent(Component_Physics) == nullptr)
-                        {
-                            if (!Settings::GetEngineSettings().physicsEnabled)
-                                break;
-
-                            vec3 position = m_CurrentEntity->GetPosition();
-                            vec3 scale = m_CurrentEntity->GetScale();
-                            btRigidBody* rigidBody = Physics::CreateRigidCube(btVector3(position.x, position.y, position.z), scale.x, scale.y, scale.z, 1.0f);
-                            PhysicsComponent* component = new Bullet3Component(rigidBody);
-
-                            if (m_CurrentEntity->AddComponent(component))
-                            {
-                                Physics::RegisterObject(rigidBody);
-                            }
-                            else
-                            {
-                                delete component;
-                                delete rigidBody; // #TODO Add include file for type
-                                break;
-                            }
-
-                            Bullet3Routine* bulletRoutine = new Bullet3Routine();
-                            if (m_CurrentEntity->AddUpdateRoutine(bulletRoutine))
-                            {
-                                bulletRoutine->Initialize();
-                            }
-                            else
-                            {
-                                delete bulletRoutine;
                             }
                         }
                         break;

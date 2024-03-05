@@ -20,7 +20,6 @@
 #include "QF_Input.h"
 #include "QF_Assets.h"
 #include "QF_Scene.h"
-#include "QF_Physics.h"
 #include "QF_Audio.h"
 #include "QF_ShaderFactory.h"
 #include "QF_Jobs.h"

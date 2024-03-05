@@ -32,7 +32,6 @@ namespace QwerkE {
         void ShowMeshList(RenderComponent* rComp);
 
         void ShowRenderComponent(RenderComponent* rComp);
-        void ShowPhysicsComponent(PhysicsComponent* rComp);
         void ShowLightComponent(LightComponent* rComp);
         void ShowAudioComponent(AudioComponent* rComp);
 

@@ -12,7 +12,6 @@
 #include "QF_Jobs.h"
 #include "QF_Log.h"
 #include "QF_Network.h"
-#include "QF_Physics.h"
 #include "QF_Renderer.h"
 #include "QF_Assets.h"
 #include "QF_Scene.h"
@@ -79,15 +78,6 @@ namespace QwerkE {
 			Renderer::DrawFont("Loading...", 300.f, 100.f, 5.f);
 			Window::SwapBuffers();
 
-			if (engineSettings.physicsEnabled)
-			{
-				Physics::Initialize();
-			}
-			else
-			{
-				LOG_WARN("No physics system loaded.");
-			}
-
 			if (engineSettings.networkingEnabled)
 			{
 				Network::Initialize();
@@ -149,8 +139,6 @@ namespace QwerkE {
 
 		void Framework::Update(float deltatime)
 		{
-			Physics::Tick();
-
 			Scenes::Update(deltatime);
 
 			if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))

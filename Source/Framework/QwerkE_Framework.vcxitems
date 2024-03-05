@@ -21,13 +21,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AssimpLoading.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Audio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_AudioSource.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_b3_Physics.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_b3_PhysicsFactory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_b3_World.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Basic2DShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Basic3DShader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Component.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_CameraComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Events.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_FileSystem.cpp" />
@@ -52,9 +47,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_GLManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_OpenAL_Component.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Physics.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsComponent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)QF_PhysicsWorld.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_PrintFunctions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_RenderComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QF_Renderer.cpp" />
@@ -84,10 +76,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Audio.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AudioComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_AudioSource.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_b3_PhysicsFactory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_b3_World.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Bullet3Component.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Bullet3Routine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_CameraComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Constants.h" />
@@ -130,9 +118,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_ogl_Helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_OpenAL_Component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PCH_Includes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Physics.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_PhysicsComponent.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)QF_PhysicsWorld.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Platform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_PrintFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QF_Profile.h" />

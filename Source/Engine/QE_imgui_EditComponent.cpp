@@ -13,15 +13,12 @@
 #include "QF_RenderRoutine.h"
 #include "QF_GameObject.h"
 #include "QF_LightComponent.h"
-#include "QF_PhysicsComponent.h"
 #include "QF_RenderComponent.h"
 #include "QF_Texture.h"
 #include "QF_Renderable.h"
 #include "QF_ShaderProgram.h"
 #include "QF_Mesh.h"
 #include "QF_Material.h"
-
-#include "QF_Bullet3Component.h" // TESTING:
 
 namespace QwerkE {
 
@@ -40,10 +37,6 @@ namespace QwerkE {
             {
             case eComponentTags::Component_Render:
                 ShowRenderComponent((RenderComponent*)it->second);
-                break;
-
-            case eComponentTags::Component_Physics:
-                ShowPhysicsComponent((PhysicsComponent*)it->second);
                 break;
 
             case eComponentTags::Component_Light:
@@ -273,30 +266,6 @@ namespace QwerkE {
             // ImGui::DragFloat4("Color", colors, 0.05f, 0.0f, 1.0f);
             // rComp->SetColour(vec4(colors[0], colors[1], colors[2], colors[3]));
             // ImGui::PopStyleColor();
-        }
-    }
-
-    void EditComponent::ShowPhysicsComponent(PhysicsComponent* pComp)
-    {
-        if (ImGui::CollapsingHeader("PhysicsComponent", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            // TODO: Remove Bullet3 testing code
-            Bullet3Component* bulletComponent = (Bullet3Component*)pComp;
-            static float amount[3] = { 0.0f, 10.0f, 0.0f };
-
-            if (ImGui::InputFloat3("Force: ", amount))
-            {
-            }
-
-            if (ImGui::Button("ApplyForce"))
-            {
-                bulletComponent->ApplyForce(vec3(amount[0], amount[1], amount[2]));
-            }
-
-            if (ImGui::Button("ApplyTorque"))
-            {
-                bulletComponent->ApplyForce(vec3(amount[0], amount[1], amount[2]));
-            }
         }
     }
 
