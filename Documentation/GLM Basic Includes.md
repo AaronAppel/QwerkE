@@ -1,0 +1,22 @@
+The standard or barebones includes for the GLM open gl math library are :
+common.hpp
+exponential.h
+exponential.hpp
+geometric.hpp
+integer.hpp
+mat2x2.hpp
+mat2x3.hpp
+mat2x4.hpp
+mat3x2.hpp
+mat3x3.hpp
+mat3x4.hpp
+mat4x2.hpp
+mat4x3.hpp
+mat4x4.hpp
+matrix.hpp
+packing.hpp
+trigonometric.hpp
+vec2.hpp
+vec3.hpp
+vec4.hpp
+vector_relational.hpp
