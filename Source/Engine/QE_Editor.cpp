@@ -41,7 +41,7 @@ namespace QwerkE {
         static bool s_ShowingImGuiExampleWindow = false;
 
         static void priv_DrawMainMenuBar();
-        static void RenderDockingContext();
+        static void priv_RenderDockingContext();
 
 #endif
 
@@ -77,7 +77,7 @@ namespace QwerkE {
 #ifdef dearimgui
 
             priv_DrawMainMenuBar();
-            RenderDockingContext();
+            priv_RenderDockingContext();
 
             if (s_ShowingImGuiExampleWindow)
             {
@@ -367,7 +367,7 @@ namespace QwerkE {
             }
         }
 
-        void RenderDockingContext()
+        void priv_RenderDockingContext()
         {
             // Copied from imgui docking example
             static bool opt_fullscreen_persistant = true;

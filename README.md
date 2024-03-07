@@ -55,6 +55,7 @@ Tools and other software I used throughout development.
 - [Visual Studio](https://visualstudio.microsoft.com/vs/) 2017, 2019, 2022
 - [GitHub](https://desktop.github.com/)
 - [Obsidian](https://obsidian.md/)
+- [YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D)
 - [Google](https://www.google.ca/)
 
 ## Acknowledgments and Appreciation

@@ -7,8 +7,6 @@
 			"maxEnabledScenes":	1,
 			"maxJobsAdditionalThreadCount":	2,
 			"audioEnabled":	false,
-			"physicsEnabled":	false,
-			"networkingEnabled":	false,
 			"consoleOutputWindowEnabled":	true,
 			"showingSchematicsEditor":	false,
 			"showingExampleWindow":	false,
