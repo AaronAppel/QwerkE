@@ -4,8 +4,8 @@
 // TODO:: add creation and deletion amount tracking
 // simple num++ would work
 
-#include "QF_Platform.h"
-#include "QF_Defines.h"
+// #include "QF_Platform.h"
+// #include "QF_Defines.h"
 
 #if defined(_Q32Bit) && QWERKE_TRACKING_ALLOCATIONS
 

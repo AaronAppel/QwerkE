@@ -1,0 +1,260 @@
+{
+	"Scene":	[{
+			"m_SceneFileName":	"ThumbNail.qscene",
+			"m_IsPaused":	true,
+			"m_SceneIsActive":	false,
+			"m_CurrentCameraIndex":	0,
+			"m_CameraList":	[{
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Camera0",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0.002349,
+											"y":	-0.004375,
+											"z":	-2.321824
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+							}],
+							"m_Components":	[{
+									"1":	[{
+											"m_ViewportSize":	[{
+													"x":	128,
+													"y":	128
+												}]
+										}]
+								}]
+						}]
+				}],
+			"m_LightList":	[{
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Light13",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	1,
+											"z":	-1
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"3":	[{
+									}],
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"null_mesh.obj",
+															"m_MeshFileName":	"null_mesh.obj"
+														}]
+												}]
+										}]
+								}]
+						}]
+				}],
+			"m_SceneDrawList":	[{
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"TeaPot",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Rotation":	[{
+											"x":	352.125000,
+											"y":	352.125000,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+									"4":	[{
+											"m_Enabled":	true,
+											"m_Speed":	0.500000,
+											"m_PositionOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
+												}],
+											"m_RotationOffset":	[{
+													"x":	0.750000,
+													"y":	0.750000,
+													"z":	0
+												}],
+											"m_ScaleOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
+												}]
+										}]
+								}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"Teapot",
+															"m_MeshFileName":	"Teapot.obj"
+														}]
+												}]
+										}]
+								}]
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Cube",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Rotation":	[{
+											"x":	352.125000,
+											"y":	352.125000,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	0.500000,
+											"y":	0.500000,
+											"z":	0.500000
+										}]
+								}],
+							"m_UpdateList":	[{
+									"4":	[{
+											"m_Enabled":	true,
+											"m_Speed":	0.500000,
+											"m_PositionOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
+												}],
+											"m_RotationOffset":	[{
+													"x":	0.750000,
+													"y":	0.750000,
+													"z":	0
+												}],
+											"m_ScaleOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
+												}]
+										}]
+								}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"Basic3D.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshName":	"Cube_UVd",
+															"m_MeshFileName":	"Cube_UVd.obj"
+														}]
+												}]
+										}]
+								}]
+						}],
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Object0",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0.100000,
+											"z":	0
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"0",
+															"m_ShaderName":	"null_shader.ssch",
+															"m_MaterialName":	"null_material.msch",
+															"m_MeshName":	"Pyramid",
+															"m_MeshFileName":	"Pyramid.obj"
+														}]
+												}]
+										}]
+								}]
+						}]
+				}]
+		}]
+}

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{56EB95D1-428D-C0A7-2B48-D4FB178947F8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\QC_CallbackFunction.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_Macros.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_MathConstants.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_MathFunctions.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_PCH.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_StringHelpers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_Time.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_TypeDefs.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Asset.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_AssetLoadedEvent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Asset_Tag.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Assets.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_AssimpLoading.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Audio.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_AudioComponent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_AudioSource.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_CameraComponent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Component.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Constants.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_CubeMap.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Debug.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Defines.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Enums.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Event.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Events.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_FileSystem.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_FileUtilities.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_FontTest.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ForcedIncludes.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_FrameBufferObject.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Framework.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_GameObject.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_GraphicsHelpers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_GraphicsHeader.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Include.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Input.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Instrumentor.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_JobQueuedEvent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Jobs.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_LibrariesInclude.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_LibrariesLoad.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_LightComponent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_LightData.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Log.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Material.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_MaterialComponent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Math.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Memory.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Mesh.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_MeshData.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_MeshUtilities.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_MyFileWriter.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_OpenAL_Component.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_PCH.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_PrintFunctions.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Profile.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_QwerkE.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_RenderComponent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_RenderRoutine.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Renderable.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Renderer.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Routine.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Scene.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Scenes.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Serialization.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Settings.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ShaderComponent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ShaderFactory.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ShaderProgram.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ShaderUtilities.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ShaderVariable_Defines.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Texture.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Time.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_TransformRoutine.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Tween.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_TweenFuncs.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Window.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_eKeys.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ogl_GLManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ogl_Helpers.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\QC_MathFunctions.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QC_StringHelpers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QC_Time.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_AssetLoadedEvent.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Assets.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_AssignWin32Keys.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_AssimpLoading.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Audio.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_AudioSource.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Basic2DShader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Basic3DShader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_CameraComponent.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Events.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_FileSystem.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_FileUtilities.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_FontTest.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Framework.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_GameObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_GraphicsHelpers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Input.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_JobQueuedEvent.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Jobs.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_LightComponent.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_LitMaterial.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Log.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Memory.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Mesh.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_MeshUtilities.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Mirror.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_MyFileWriter.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_OpenAL_Component.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_PCH.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_PrintFunctions.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_RenderComponent.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_RenderRoutine.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_RenderRoutineUtilities.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Renderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Scene.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_SceneSerialization.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Scenes.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Serialization.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Settings.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ShaderComponent.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ShaderFactory.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ShaderProgram.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ShaderUtilities.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Texture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Time.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_TransformRoutine.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_TweenFuncs.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Window.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_glfw_AssignGLFWKeys.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_glfw_InputCallBacks.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ogl_GLManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ogl_Helpers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

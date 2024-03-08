@@ -1,0 +1,19 @@
+{
+	"EngineSettings":	[{
+			"windowWidthPixels":	2048,
+			"windowHeightPixels":	1152,
+			"limitFramerate":	true,
+			"maxFramesPerSecond":	120,
+			"maxEnabledScenes":	1,
+			"maxJobsAdditionalThreadCount":	2,
+			"audioEnabled":	false,
+			"physicsEnabled":	false,
+			"networkingEnabled":	false,
+			"consoleOutputWindowEnabled":	true,
+			"showingSchematicsEditor":	false,
+			"showingExampleWindow":	false,
+			"showingShaderEditor":	false,
+			"showingSettingsEditor":	true,
+			"showingFPS":	true
+		}]
+}

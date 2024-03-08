@@ -1,11 +1,9 @@
 #include "MyMemory.h"
 
-#include <assert.h>
-#include <stdio.h>
-
-#include "QF_Log.h"
 
 #if defined(_Q32Bit) && QWERKE_TRACKING_ALLOCATIONS
+#include <assert.h>
+#include <stdio.h>
 
 #include "CPPList.h"
 

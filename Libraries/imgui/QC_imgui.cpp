@@ -1,5 +1,6 @@
 #include "QC_imgui.h"
 
+#ifdef dearimgui
 namespace ImGui
 {
 
@@ -13,3 +14,4 @@ namespace ImGui
 	}
 
 }
+#endif

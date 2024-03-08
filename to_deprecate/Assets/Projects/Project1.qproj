@@ -1,0 +1,9 @@
+{
+	"ProjectSettings":	[{
+			"projectName":	"Project1",
+			"assetsDirPath":	"null",
+			"sceneFileNames":	[{
+					"0":	"GameScene1.qscene"
+				}]
+		}]
+}

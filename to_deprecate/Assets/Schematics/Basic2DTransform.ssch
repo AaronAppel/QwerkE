@@ -1,0 +1,8 @@
+{
+	"ShaderProgram":	[{
+		"m_Name":	"Basic2DTransform.ssch",
+		"m_VertName":	"Basic2DTransform.vert",
+		"m_FragName":	"Basic2DTransform.frag",
+		"m_GeoName":	"null"
+	}]
+}

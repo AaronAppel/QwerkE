@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Retail|Win32">
+      <Configuration>Retail</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1362EE31-7FCC-A2A8-C80A-544E34B480FD}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Framework</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\bin\windows-x86-Debug\Framework\</OutDir>
+    <IntDir>..\bin\int\windows-x86-Debug\Framework\</IntDir>
+    <TargetName>Framework</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\bin\windows-x86-Release\Framework\</OutDir>
+    <IntDir>..\bin\int\windows-x86-Release\Framework\</IntDir>
+    <TargetName>Framework</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <OutDir>..\bin\windows-x86-Retail\Framework\</OutDir>
+    <IntDir>..\bin\int\windows-x86-Retail\Framework\</IntDir>
+    <TargetName>Framework</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>..\Libraries\assimp\Release\x86\assimp-vc140-mt.lib;..\Libraries\freetype2\x86\freetype.lib;..\Libraries\glew\glew32d.lib;..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>..\Libraries\assimp\Release\x86\assimp-vc140-mt.lib;..\Libraries\freetype2\x86\freetype.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;..\Libraries\glew\glew32d.lib;..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>..\Libraries\assimp\Release\x86\assimp-vc140-mt.lib;..\Libraries\freetype2\x86\freetype.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;..\Libraries\glew\glew32d.lib;..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\QC_CallbackFunction.h" />
+    <ClInclude Include="Source\QC_Macros.h" />
+    <ClInclude Include="Source\QC_MathConstants.h" />
+    <ClInclude Include="Source\QC_MathFunctions.h" />
+    <ClInclude Include="Source\QC_PCH.h" />
+    <ClInclude Include="Source\QC_StringHelpers.h" />
+    <ClInclude Include="Source\QC_Time.h" />
+    <ClInclude Include="Source\QC_TypeDefs.h" />
+    <ClInclude Include="Source\QF_Asset.h" />
+    <ClInclude Include="Source\QF_AssetLoadedEvent.h" />
+    <ClInclude Include="Source\QF_Asset_Tag.h" />
+    <ClInclude Include="Source\QF_Assets.h" />
+    <ClInclude Include="Source\QF_AssimpLoading.h" />
+    <ClInclude Include="Source\QF_Audio.h" />
+    <ClInclude Include="Source\QF_AudioComponent.h" />
+    <ClInclude Include="Source\QF_AudioSource.h" />
+    <ClInclude Include="Source\QF_CameraComponent.h" />
+    <ClInclude Include="Source\QF_Component.h" />
+    <ClInclude Include="Source\QF_Constants.h" />
+    <ClInclude Include="Source\QF_CubeMap.h" />
+    <ClInclude Include="Source\QF_Debug.h" />
+    <ClInclude Include="Source\QF_Defines.h" />
+    <ClInclude Include="Source\QF_Enums.h" />
+    <ClInclude Include="Source\QF_Event.h" />
+    <ClInclude Include="Source\QF_Events.h" />
+    <ClInclude Include="Source\QF_FileSystem.h" />
+    <ClInclude Include="Source\QF_FileUtilities.h" />
+    <ClInclude Include="Source\QF_FontTest.h" />
+    <ClInclude Include="Source\QF_ForcedIncludes.h" />
+    <ClInclude Include="Source\QF_FrameBufferObject.h" />
+    <ClInclude Include="Source\QF_Framework.h" />
+    <ClInclude Include="Source\QF_GameObject.h" />
+    <ClInclude Include="Source\QF_GraphicsHeader.h" />
+    <ClInclude Include="Source\QF_GraphicsHelpers.h" />
+    <ClInclude Include="Source\QF_Include.h" />
+    <ClInclude Include="Source\QF_Input.h" />
+    <ClInclude Include="Source\QF_Instrumentor.h" />
+    <ClInclude Include="Source\QF_JobQueuedEvent.h" />
+    <ClInclude Include="Source\QF_Jobs.h" />
+    <ClInclude Include="Source\QF_LibrariesInclude.h" />
+    <ClInclude Include="Source\QF_LibrariesLoad.h" />
+    <ClInclude Include="Source\QF_LightComponent.h" />
+    <ClInclude Include="Source\QF_LightData.h" />
+    <ClInclude Include="Source\QF_Log.h" />
+    <ClInclude Include="Source\QF_Material.h" />
+    <ClInclude Include="Source\QF_MaterialComponent.h" />
+    <ClInclude Include="Source\QF_Math.h" />
+    <ClInclude Include="Source\QF_Memory.h" />
+    <ClInclude Include="Source\QF_Mesh.h" />
+    <ClInclude Include="Source\QF_MeshData.h" />
+    <ClInclude Include="Source\QF_MeshUtilities.h" />
+    <ClInclude Include="Source\QF_MyFileWriter.h" />
+    <ClInclude Include="Source\QF_OpenAL_Component.h" />
+    <ClInclude Include="Source\QF_PCH.h" />
+    <ClInclude Include="Source\QF_PrintFunctions.h" />
+    <ClInclude Include="Source\QF_Profile.h" />
+    <ClInclude Include="Source\QF_QwerkE.h" />
+    <ClInclude Include="Source\QF_RenderComponent.h" />
+    <ClInclude Include="Source\QF_RenderRoutine.h" />
+    <ClInclude Include="Source\QF_Renderable.h" />
+    <ClInclude Include="Source\QF_Renderer.h" />
+    <ClInclude Include="Source\QF_Routine.h" />
+    <ClInclude Include="Source\QF_Scene.h" />
+    <ClInclude Include="Source\QF_Scenes.h" />
+    <ClInclude Include="Source\QF_Serialization.h" />
+    <ClInclude Include="Source\QF_Settings.h" />
+    <ClInclude Include="Source\QF_ShaderComponent.h" />
+    <ClInclude Include="Source\QF_ShaderFactory.h" />
+    <ClInclude Include="Source\QF_ShaderProgram.h" />
+    <ClInclude Include="Source\QF_ShaderUtilities.h" />
+    <ClInclude Include="Source\QF_ShaderVariable_Defines.h" />
+    <ClInclude Include="Source\QF_Texture.h" />
+    <ClInclude Include="Source\QF_Time.h" />
+    <ClInclude Include="Source\QF_TransformRoutine.h" />
+    <ClInclude Include="Source\QF_Tween.h" />
+    <ClInclude Include="Source\QF_TweenFuncs.h" />
+    <ClInclude Include="Source\QF_Window.h" />
+    <ClInclude Include="Source\QF_eKeys.h" />
+    <ClInclude Include="Source\QF_ogl_GLManager.h" />
+    <ClInclude Include="Source\QF_ogl_Helpers.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\QC_MathFunctions.cpp" />
+    <ClCompile Include="Source\QC_StringHelpers.cpp" />
+    <ClCompile Include="Source\QC_Time.cpp" />
+    <ClCompile Include="Source\QF_AssetLoadedEvent.cpp" />
+    <ClCompile Include="Source\QF_Assets.cpp" />
+    <ClCompile Include="Source\QF_AssignWin32Keys.cpp" />
+    <ClCompile Include="Source\QF_AssimpLoading.cpp" />
+    <ClCompile Include="Source\QF_Audio.cpp" />
+    <ClCompile Include="Source\QF_AudioSource.cpp" />
+    <ClCompile Include="Source\QF_Basic2DShader.cpp" />
+    <ClCompile Include="Source\QF_Basic3DShader.cpp" />
+    <ClCompile Include="Source\QF_CameraComponent.cpp" />
+    <ClCompile Include="Source\QF_Events.cpp" />
+    <ClCompile Include="Source\QF_FileSystem.cpp" />
+    <ClCompile Include="Source\QF_FileUtilities.cpp" />
+    <ClCompile Include="Source\QF_FontTest.cpp" />
+    <ClCompile Include="Source\QF_Framework.cpp" />
+    <ClCompile Include="Source\QF_GameObject.cpp" />
+    <ClCompile Include="Source\QF_GraphicsHelpers.cpp" />
+    <ClCompile Include="Source\QF_Input.cpp" />
+    <ClCompile Include="Source\QF_JobQueuedEvent.cpp" />
+    <ClCompile Include="Source\QF_Jobs.cpp" />
+    <ClCompile Include="Source\QF_LightComponent.cpp" />
+    <ClCompile Include="Source\QF_LitMaterial.cpp" />
+    <ClCompile Include="Source\QF_Log.cpp" />
+    <ClCompile Include="Source\QF_Memory.cpp" />
+    <ClCompile Include="Source\QF_Mesh.cpp" />
+    <ClCompile Include="Source\QF_MeshUtilities.cpp" />
+    <ClCompile Include="Source\QF_Mirror.cpp" />
+    <ClCompile Include="Source\QF_MyFileWriter.cpp" />
+    <ClCompile Include="Source\QF_OpenAL_Component.cpp" />
+    <ClCompile Include="Source\QF_PCH.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\QF_PrintFunctions.cpp" />
+    <ClCompile Include="Source\QF_RenderComponent.cpp" />
+    <ClCompile Include="Source\QF_RenderRoutine.cpp" />
+    <ClCompile Include="Source\QF_RenderRoutineUtilities.cpp" />
+    <ClCompile Include="Source\QF_Renderer.cpp" />
+    <ClCompile Include="Source\QF_Scene.cpp" />
+    <ClCompile Include="Source\QF_SceneSerialization.cpp" />
+    <ClCompile Include="Source\QF_Scenes.cpp" />
+    <ClCompile Include="Source\QF_Serialization.cpp" />
+    <ClCompile Include="Source\QF_Settings.cpp" />
+    <ClCompile Include="Source\QF_ShaderComponent.cpp" />
+    <ClCompile Include="Source\QF_ShaderFactory.cpp" />
+    <ClCompile Include="Source\QF_ShaderProgram.cpp" />
+    <ClCompile Include="Source\QF_ShaderUtilities.cpp" />
+    <ClCompile Include="Source\QF_Texture.cpp" />
+    <ClCompile Include="Source\QF_Time.cpp" />
+    <ClCompile Include="Source\QF_TransformRoutine.cpp" />
+    <ClCompile Include="Source\QF_TweenFuncs.cpp" />
+    <ClCompile Include="Source\QF_Window.cpp" />
+    <ClCompile Include="Source\QF_glfw_AssignGLFWKeys.cpp" />
+    <ClCompile Include="Source\QF_glfw_InputCallBacks.cpp" />
+    <ClCompile Include="Source\QF_ogl_GLManager.cpp" />
+    <ClCompile Include="Source\QF_ogl_Helpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\cJSON\cJSON.vcxproj">
+      <Project>{A279280F-0E8E-50C0-D70F-F41F43E34CF1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\FlatHeadGames\FlatHeadGames.vcxproj">
+      <Project>{AB46D736-1707-536D-E041-9CEA4CC19749}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\imgui\imgui.vcxproj">
+      <Project>{0098A80F-6CAC-D0C0-352E-7420A101CDF1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\lodepng\lodepng.vcxproj">
+      <Project>{4EBC8887-BA9B-0723-C3B3-92F92F126E84}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Mirror\Mirror.vcxproj">
+      <Project>{00C128C3-EC62-5399-D51D-67EDC15EDAE9}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

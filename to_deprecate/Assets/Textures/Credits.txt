@@ -1,0 +1,15 @@
+container.png
+https://learnopengl.com/img/textures/container.jpg
+
+container_specular.png
+https://learnopengl.com/img/textures/container2.png
+
+wood_floor.png
+https://learnopengl.com/Advanced-Lighting/Parallax-Mapping
+
+brickwall.jpg
+brickwall_normal.jpg
+https://learnopengl.com/Advanced-Lighting/Normal-Mapping
+
+UV Map
+https://i.stack.imgur.com/0leCY.jpg

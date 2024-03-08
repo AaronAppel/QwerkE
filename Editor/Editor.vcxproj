@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Retail|Win32">
+      <Configuration>Retail</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8C1A20B0-78BC-4A86-6177-5EDA4DB8D1D6}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Editor</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\bin\windows-x86-Debug\Editor\</OutDir>
+    <IntDir>..\bin\int\windows-x86-Debug\Editor\</IntDir>
+    <TargetName>Editor</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\bin\windows-x86-Release\Editor\</OutDir>
+    <IntDir>..\bin\int\windows-x86-Release\Editor\</IntDir>
+    <TargetName>Editor</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <OutDir>..\bin\windows-x86-Retail\Editor\</OutDir>
+    <IntDir>..\bin\int\windows-x86-Retail\Editor\</IntDir>
+    <TargetName>Editor</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>QE_PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>..\Framework\Source\QF_ForcedIncludes.h;QE_PCH.h</ForcedIncludeFiles>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>..\Libraries\freetype2\x86\freetype.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>QE_PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>..\Framework\Source\QF_ForcedIncludes.h;QE_PCH.h</ForcedIncludeFiles>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>..\Libraries\freetype2\x86\freetype.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>QE_PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>..\Framework\Source\QF_ForcedIncludes.h;QE_PCH.h</ForcedIncludeFiles>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>..\Libraries\freetype2\x86\freetype.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\QE_EditComponent.h" />
+    <ClInclude Include="Source\QE_Editor.h" />
+    <ClInclude Include="Source\QE_EditorInspector.h" />
+    <ClInclude Include="Source\QE_EntityEditor.h" />
+    <ClInclude Include="Source\QE_MaterialEditor.h" />
+    <ClInclude Include="Source\QE_PCH.h" />
+    <ClInclude Include="Source\QE_ProgramArgs.h" />
+    <ClInclude Include="Source\QE_ResourceViewer.h" />
+    <ClInclude Include="Source\QE_SceneGraph.h" />
+    <ClInclude Include="Source\QE_SceneViewer.h" />
+    <ClInclude Include="Source\QE_ShaderEditor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\QE_Editor.cpp" />
+    <ClCompile Include="Source\QE_EditorInspector.cpp" />
+    <ClCompile Include="Source\QE_PCH.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\QE_ProgramArgs.cpp" />
+    <ClCompile Include="Source\QE_imgui_EditComponent.cpp" />
+    <ClCompile Include="Source\QE_imgui_EntityEditor.cpp" />
+    <ClCompile Include="Source\QE_imgui_MaterialEditor.cpp" />
+    <ClCompile Include="Source\QE_imgui_ResourceViewer.cpp" />
+    <ClCompile Include="Source\QE_imgui_SceneGraph.cpp" />
+    <ClCompile Include="Source\QE_imgui_SceneViewer.cpp" />
+    <ClCompile Include="Source\QE_imgui_ShaderEditor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\FlatHeadGames\FlatHeadGames.vcxproj">
+      <Project>{AB46D736-1707-536D-E041-9CEA4CC19749}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework\Framework.vcxproj">
+      <Project>{1362EE31-7FCC-A2A8-C80A-544E34B480FD}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\imgui\imgui.vcxproj">
+      <Project>{0098A80F-6CAC-D0C0-352E-7420A101CDF1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Mirror\Mirror.vcxproj">
+      <Project>{00C128C3-EC62-5399-D51D-67EDC15EDAE9}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
