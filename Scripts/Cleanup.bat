@@ -1,3 +1,4 @@
+rem pushd ..
 cd ../
 del *.dll
 del *.sln
@@ -9,14 +10,14 @@ rmdir /Q /S bin
 del /Q /F /S /AH .vs
 rmdir /Q /S ".vs"
 
-cd Framework/
+pushd Framework
 call Cleanup.bat
-cd ../
+popd
 
-cd Editor/
+pushd Editor
 call Cleanup.bat
-cd ../
+popd
 
-cd Game/
+pushd Game
 call Cleanup.bat
-cd ../
+popd

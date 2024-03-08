@@ -10,7 +10,6 @@
 #include "QF_Debug.h"
 #include "QF_Log.h"
 #include "QF_Math.h"
-#include "QF_Memory.h"
 
 #ifdef _QGLEW
 #include "Libraries/glew/glew.h" // #TODO Fix include order dependency with gl.h

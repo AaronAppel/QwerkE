@@ -1,5 +1,7 @@
 #pragma once
 
+#include "QF_WindowCallbacks.h"
+
 namespace QwerkE {
 
     namespace Window {
@@ -22,9 +24,10 @@ namespace QwerkE {
 
         bool IsMinimized();
 
-        // #TODO Callbacks
-        // void RegisterResizeCallback(resizeCallback); // Used by Renderer
-        // void RegisterKeyCallback(keyCallback);       // Used by Input
+        void RegisterFramebufferResizedCallback(FramebufferResizedCallback* framebufferResizedCallback);
+        void RegisterWindowResizedCallback(WindowResizedCallback* windowResizedCallback);
+
+        void RegisterKeyCallback(KeyCallback* keyCallback);
     }
 
 }

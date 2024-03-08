@@ -13,12 +13,6 @@
 #endif
 
 #include "QF_Debug.h"
-// #include "QF_FileSystem.h"
-// #include "QF_FileUtilities.h"
-// #include "QF_Log.h"
-// #include "QF_Scene.h"
-// #include "QF_Scenes.h"
-// #include "QF_Settings.h"
 
 const char* g_WindowTitle = "QwerkEngine";
 
@@ -30,6 +24,10 @@ namespace QwerkE {
         bool s_closeRequested = false;
         vec2 s_aspectRatio = vec2(16.f, 9.f);
 
+        FramebufferResizedCallback* s_FramebufferResizedCallback = nullptr;
+        WindowResizedCallback* s_WindowResizedCallback = nullptr;
+        KeyCallback* s_KeyCallback = nullptr;
+
     #ifdef _QGLFW3
         GLFWwindow* s_window = nullptr;
 
@@ -40,12 +38,28 @@ namespace QwerkE {
 
         void local_framebuffer_size_callback(GLFWwindow* window, int width, int height)
         {
-            // Renderer::OnWindowResized( vec2(width, height) );
+            // Renderer::OnFramebufferResized( vec2(width, height) );
+            if (s_FramebufferResizedCallback)
+            {
+                (*s_FramebufferResizedCallback)(width, height);
+            }
         }
 
         void local_window_resized_callback(GLFWwindow* window, int width, int height)
         {
             // Renderer::OnWindowResized(vec2(width, height));
+            if (s_WindowResizedCallback)
+            {
+                (*s_WindowResizedCallback)(width, height);
+            }
+        }
+
+        void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+        {
+            if (s_KeyCallback)
+            {
+                (*s_KeyCallback)(key, scancode, action, mode);
+            }
         }
 
         void local_close_callback(GLFWwindow* window)
@@ -99,6 +113,8 @@ namespace QwerkE {
             glfwSetWindowSizeCallback(s_window, local_window_resized_callback);
             glfwSetWindowIconifyCallback(s_window, local_window_iconify_callback);
             // glfwSetDropCallback(s_window, local_file_drop_callback);
+
+            glfwSetKeyCallback(s_window, key_callback);
 
     #endif
 
@@ -227,6 +243,21 @@ namespace QwerkE {
         bool IsMinimized()
         {
             return s_windowIsMinimized;
+        }
+
+        void RegisterFramebufferResizedCallback(FramebufferResizedCallback* framebufferResizedCallback)
+        {
+            s_FramebufferResizedCallback = framebufferResizedCallback;
+        }
+
+        void RegisterWindowResizedCallback(WindowResizedCallback* windowResizedCallback)
+        {
+            s_WindowResizedCallback = windowResizedCallback;
+        }
+
+        void RegisterKeyCallback(KeyCallback* keyCallback)
+        {
+            s_KeyCallback = keyCallback;
         }
 
     #ifdef _QGLFW3

@@ -4,16 +4,20 @@ namespace QwerkE {
 
     namespace Time {
 
-        const double Now();
+        float FrameNow();
 
 		class Timer
 		{
 		public:
-            Timer(float duration) { m_Duration = duration; m_StartTime = Now(); }
+            Timer(float duration) { m_Duration = duration; Start(); }
 
-            bool Expired() { return (Now() - m_StartTime) >= m_Duration; }
+            void Start() { m_StartTime = FrameNow(); }
 
-            bool Reset() { m_StartTime = Now(); }
+            bool Expired() { return (FrameNow() - m_StartTime) >= m_Duration; }
+
+            void Reset() { m_StartTime = FrameNow(); }
+
+            void SetDuration(float newDuration) { m_Duration = newDuration; }
 
 		private:
             double m_StartTime = 0.;
@@ -28,7 +32,8 @@ namespace QwerkE {
         float FrameDelta();
         const double& FrameDeltaDouble();
 
-        const double Now();
+        float Now();
+        double NowDouble();
 
 		// #TODO This should be in window or some other engine section
         // static void SetMaxFrameRate(float framesPerSecond);

@@ -8,9 +8,9 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #endif
 
-#include "QF_Defines.h"
 #include "QF_GameObject.h"
 #include "QF_Log.h"
+#include "QF_PathDefines.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Settings.h"

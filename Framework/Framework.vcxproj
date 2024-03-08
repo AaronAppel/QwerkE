@@ -85,7 +85,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -114,7 +114,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -145,7 +145,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -161,18 +161,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
-    <ClInclude Include="Source\QC_Macros.h" />
     <ClInclude Include="Source\QC_MathConstants.h" />
     <ClInclude Include="Source\QC_MathFunctions.h" />
     <ClInclude Include="Source\QC_StringHelpers.h" />
     <ClInclude Include="Source\QC_Time.h" />
     <ClInclude Include="Source\QC_TypeDefs.h" />
-    <ClInclude Include="Source\QF_Asset.h" />
     <ClInclude Include="Source\QF_AssetLoadedEvent.h" />
-    <ClInclude Include="Source\QF_Asset_Tag.h" />
     <ClInclude Include="Source\QF_Constants.h" />
     <ClInclude Include="Source\QF_Debug.h" />
-    <ClInclude Include="Source\QF_Defines.h" />
     <ClInclude Include="Source\QF_Enums.h" />
     <ClInclude Include="Source\QF_Event.h" />
     <ClInclude Include="Source\QF_Events.h" />
@@ -181,24 +177,23 @@
     <ClInclude Include="Source\QF_ForcedIncludes.h" />
     <ClInclude Include="Source\QF_Framework.h" />
     <ClInclude Include="Source\QF_GameObject.h" />
-    <ClInclude Include="Source\QF_Include.h" />
     <ClInclude Include="Source\QF_Input.h" />
     <ClInclude Include="Source\QF_Instrumentor.h" />
     <ClInclude Include="Source\QF_JobQueuedEvent.h" />
     <ClInclude Include="Source\QF_Jobs.h" />
     <ClInclude Include="Source\QF_Log.h" />
     <ClInclude Include="Source\QF_Math.h" />
-    <ClInclude Include="Source\QF_Memory.h" />
     <ClInclude Include="Source\QF_MyFileWriter.h" />
     <ClInclude Include="Source\QF_PCH.h" />
+    <ClInclude Include="Source\QF_PathDefines.h" />
     <ClInclude Include="Source\QF_PrintFunctions.h" />
     <ClInclude Include="Source\QF_Profile.h" />
-    <ClInclude Include="Source\QF_QwerkE.h" />
     <ClInclude Include="Source\QF_Scene.h" />
     <ClInclude Include="Source\QF_Scenes.h" />
     <ClInclude Include="Source\QF_Serialization.h" />
     <ClInclude Include="Source\QF_Settings.h" />
     <ClInclude Include="Source\QF_Window.h" />
+    <ClInclude Include="Source\QF_WindowCallbacks.h" />
     <ClInclude Include="Source\QF_eKeys.h" />
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +211,6 @@
     <ClCompile Include="Source\QF_JobQueuedEvent.cpp" />
     <ClCompile Include="Source\QF_Jobs.cpp" />
     <ClCompile Include="Source\QF_Log.cpp" />
-    <ClCompile Include="Source\QF_Memory.cpp" />
     <ClCompile Include="Source\QF_Mirror.cpp" />
     <ClCompile Include="Source\QF_MyFileWriter.cpp" />
     <ClCompile Include="Source\QF_PCH.cpp">

@@ -2,7 +2,7 @@
 
 // #TODO Deprecate file. Maybe move methods to a QC_* file, or extend to a more fully featured logging utility file
 
-#include "QF_Defines.h"
+#include "QF_PathDefines.h"
 
 // #TODO Wrap in #ifdefs
 

@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Retail|Win32">
+      <Configuration>Retail</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6C90947C-58C7-950D-01B4-7B10EDC9110F}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>bgfx</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\bin\windows-x86-Debug\bgfx\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Debug\bgfx\</IntDir>
+    <TargetName>bgfx</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\bin\windows-x86-Release\bgfx\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Release\bgfx\</IntDir>
+    <TargetName>bgfx</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <OutDir>..\..\bin\windows-x86-Retail\bgfx\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Retail\bgfx\</IntDir>
+    <TargetName>bgfx</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="bgfx.idl.inl" />
+    <ClInclude Include="bgfx_p.h" />
+    <ClInclude Include="charset.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="debug_renderdoc.h" />
+    <ClInclude Include="dxgi.h" />
+    <ClInclude Include="emscripten.h" />
+    <ClInclude Include="fs_clear0.bin.h" />
+    <ClInclude Include="fs_clear1.bin.h" />
+    <ClInclude Include="fs_clear2.bin.h" />
+    <ClInclude Include="fs_clear3.bin.h" />
+    <ClInclude Include="fs_clear4.bin.h" />
+    <ClInclude Include="fs_clear5.bin.h" />
+    <ClInclude Include="fs_clear6.bin.h" />
+    <ClInclude Include="fs_clear7.bin.h" />
+    <ClInclude Include="fs_debugfont.bin.h" />
+    <ClInclude Include="glcontext_egl.h" />
+    <ClInclude Include="glcontext_html5.h" />
+    <ClInclude Include="glcontext_wgl.h" />
+    <ClInclude Include="glimports.h" />
+    <ClInclude Include="nvapi.h" />
+    <ClInclude Include="renderer.h" />
+    <ClInclude Include="renderer_d3d.h" />
+    <ClInclude Include="renderer_d3d11.h" />
+    <ClInclude Include="renderer_d3d12.h" />
+    <ClInclude Include="renderer_gl.h" />
+    <ClInclude Include="renderer_mtl.h" />
+    <ClInclude Include="renderer_vk.h" />
+    <ClInclude Include="shader.h" />
+    <ClInclude Include="shader_dxbc.h" />
+    <ClInclude Include="shader_spirv.h" />
+    <ClInclude Include="topology.h" />
+    <ClInclude Include="version.h" />
+    <ClInclude Include="vertexlayout.h" />
+    <ClInclude Include="vs_clear.bin.h" />
+    <ClInclude Include="vs_debugfont.bin.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="amalgamated.cpp" />
+    <ClCompile Include="bgfx.cpp" />
+    <ClCompile Include="debug_renderdoc.cpp" />
+    <ClCompile Include="dxgi.cpp" />
+    <ClCompile Include="glcontext_egl.cpp" />
+    <ClCompile Include="glcontext_html5.cpp" />
+    <ClCompile Include="glcontext_wgl.cpp" />
+    <ClCompile Include="nvapi.cpp" />
+    <ClCompile Include="renderer_agc.cpp" />
+    <ClCompile Include="renderer_d3d11.cpp" />
+    <ClCompile Include="renderer_d3d12.cpp" />
+    <ClCompile Include="renderer_gl.cpp" />
+    <ClCompile Include="renderer_gnm.cpp" />
+    <ClCompile Include="renderer_noop.cpp" />
+    <ClCompile Include="renderer_nvn.cpp" />
+    <ClCompile Include="renderer_vk.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="shader_dxbc.cpp" />
+    <ClCompile Include="shader_spirv.cpp" />
+    <ClCompile Include="topology.cpp" />
+    <ClCompile Include="vertexlayout.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fs_clear0.sc" />
+    <None Include="fs_clear1.sc" />
+    <None Include="fs_clear2.sc" />
+    <None Include="fs_clear3.sc" />
+    <None Include="fs_clear4.sc" />
+    <None Include="fs_clear5.sc" />
+    <None Include="fs_clear6.sc" />
+    <None Include="fs_clear7.sc" />
+    <None Include="fs_debugfont.sc" />
+    <None Include="varying.def.sc" />
+    <None Include="vs_clear.sc" />
+    <None Include="vs_debugfont.sc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bx\bx.vcxproj">
+      <Project>{5F775900-4B03-880B-B4B1-880BA05C880B}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

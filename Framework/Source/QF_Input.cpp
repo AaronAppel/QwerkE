@@ -75,8 +75,16 @@ namespace QwerkE {
 #error "Define input library!"
 #endif
 
+        void OnKeyEvent(int key, int scancode, int action, int mode)
+        {
+
+        }
+
         void Initialize()
         {
+            // KeyCallback kc = &OnKeyEvent;
+            // Window::RegisterKeyCallback(&kc);
+
 #ifdef _QGLFW3
             memset(s_GlfwKeyCodex, 0, s_GlfwKeyCodexSize);
             SetupCallbacks((GLFWwindow*)Window::GetContext());

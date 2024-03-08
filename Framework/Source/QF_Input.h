@@ -2,9 +2,9 @@
 
 // Reference: https://www.gamedev.net/blogs/entry/2250186-designing-a-robust-input-handling-system-for-games/
 
-#include "QF_Defines.h"
 #include "QF_Enums.h"
 #include "QF_eKeys.h"
+#include "QF_PathDefines.h"
 
 #ifdef _QGLFW3
 struct GLFWwindow;

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "QF_Defines.h"
+#include "QF_PathDefines.h"
 #include "QF_Enums.h"
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "QF_Defines.h"
-
 #ifdef _QDebug
 
 #include "QF_Log.h"

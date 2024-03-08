@@ -1,25 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\QC_MathFunctions.cpp" />
     <ClCompile Include="Source\QC_StringHelpers.cpp" />
     <ClCompile Include="Source\QC_Time.cpp" />
-    <ClCompile Include="Source\QF_AssetLoadedEvent.cpp" />
-    <ClCompile Include="Source\QF_AssignWin32Keys.cpp" />
-    <ClCompile Include="Source\QF_FileSystem.cpp" />
-    <ClCompile Include="Source\QF_FileUtilities.cpp" />
-    <ClCompile Include="Source\QF_Framework.cpp" />
-    <ClCompile Include="Source\QF_GameObject.cpp" />
     <ClCompile Include="Source\QF_Jobs.cpp" />
-    <ClCompile Include="Source\QF_Memory.cpp" />
-    <ClCompile Include="Source\QF_Mirror.cpp" />
-    <ClCompile Include="Source\QF_MyFileWriter.cpp" />
-    <ClCompile Include="Source\QF_PCH.cpp" />
-    <ClCompile Include="Source\QF_PrintFunctions.cpp" />
-    <ClCompile Include="Source\QF_Scene.cpp" />
-    <ClCompile Include="Source\QF_SceneSerialization.cpp" />
-    <ClCompile Include="Source\QF_Scenes.cpp" />
-    <ClCompile Include="Source\QF_Serialization.cpp" />
     <ClCompile Include="Source\QF_Settings.cpp" />
     <ClCompile Include="Source\QF_Log.cpp">
       <Filter>Debug</Filter>
@@ -42,39 +26,61 @@
     <ClCompile Include="Source\QF_JobQueuedEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QF_AssignWin32Keys.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_FileUtilities.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_FileSystem.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_GameObject.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_AssetLoadedEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QC_MathFunctions.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_MyFileWriter.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_PrintFunctions.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Mirror.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_PCH.cpp">
+      <Filter>Root Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Framework.cpp">
+      <Filter>Root Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Scenes.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_SceneSerialization.cpp">
+      <Filter>File\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Serialization.cpp">
+      <Filter>File\Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
-    <ClInclude Include="Source\QC_Macros.h" />
-    <ClInclude Include="Source\QC_MathConstants.h" />
-    <ClInclude Include="Source\QC_MathFunctions.h" />
     <ClInclude Include="Source\QC_StringHelpers.h" />
     <ClInclude Include="Source\QC_Time.h" />
     <ClInclude Include="Source\QC_TypeDefs.h" />
-    <ClInclude Include="Source\QF_Asset.h" />
-    <ClInclude Include="Source\QF_AssetLoadedEvent.h" />
-    <ClInclude Include="Source\QF_Asset_Tag.h" />
     <ClInclude Include="Source\QF_Constants.h" />
-    <ClInclude Include="Source\QF_Defines.h" />
+    <ClInclude Include="Source\QF_PathDefines.h" />
     <ClInclude Include="Source\QF_Enums.h" />
-    <ClInclude Include="Source\QF_FileSystem.h" />
-    <ClInclude Include="Source\QF_FileUtilities.h" />
-    <ClInclude Include="Source\QF_ForcedIncludes.h" />
-    <ClInclude Include="Source\QF_Framework.h" />
-    <ClInclude Include="Source\QF_GameObject.h" />
-    <ClInclude Include="Source\QF_Include.h" />
-    <ClInclude Include="Source\QF_Instrumentor.h" />
     <ClInclude Include="Source\QF_Jobs.h" />
-    <ClInclude Include="Source\QF_Math.h" />
-    <ClInclude Include="Source\QF_Memory.h" />
-    <ClInclude Include="Source\QF_MyFileWriter.h" />
-    <ClInclude Include="Source\QF_PCH.h" />
-    <ClInclude Include="Source\QF_PrintFunctions.h" />
-    <ClInclude Include="Source\QF_Profile.h" />
-    <ClInclude Include="Source\QF_QwerkE.h" />
-    <ClInclude Include="Source\QF_Scene.h" />
-    <ClInclude Include="Source\QF_Scenes.h" />
-    <ClInclude Include="Source\QF_Serialization.h" />
     <ClInclude Include="Source\QF_Settings.h" />
     <ClInclude Include="Source\QF_Log.h">
       <Filter>Debug</Filter>
@@ -100,6 +106,60 @@
     <ClInclude Include="Source\QF_JobQueuedEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_FileUtilities.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_FileSystem.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Instrumentor.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_GameObject.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_AssetLoadedEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_MathFunctions.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_MathConstants.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Math.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_MyFileWriter.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_PrintFunctions.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Profile.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_PCH.h">
+      <Filter>Root Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Framework.h">
+      <Filter>Root Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ForcedIncludes.h">
+      <Filter>Root Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Scenes.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Serialization.h">
+      <Filter>File\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_WindowCallbacks.h">
+      <Filter>Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -113,6 +173,27 @@
     </Filter>
     <Filter Include="Events">
       <UniqueIdentifier>{80743b01-b609-4acc-a99d-5043ababe16e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{1309e9d7-5a74-40ee-8c0b-54b057666a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{c4c4ea73-1a65-4be5-bb5a-56051d7d0648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{15bbd1b0-793f-4712-8e8a-1493fdd01425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{a27c432a-4262-4ec4-bc28-97332a9d5293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Root Files">
+      <UniqueIdentifier>{d5b62bcb-1d02-446e-aaa5-d6a2b23f741b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{7599a1b0-c2ae-44ff-a81b-1ed7fdb6316a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Serialization">
+      <UniqueIdentifier>{f032c393-d9d5-474c-b819-bbf4e3be9bd4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

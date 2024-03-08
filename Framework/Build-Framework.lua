@@ -38,6 +38,7 @@ project "Framework"
 	{
 		-- Projects
 		"cJSON",
+		-- "bgfx",
 		"FlatHeadGames",
 		"imgui",
 		"lodepng",

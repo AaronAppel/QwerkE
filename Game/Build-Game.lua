@@ -41,17 +41,10 @@ project "Game"
 	includedirs
 	{
 		"%{wks.location}/Editor/Source/", -- Include Editor source
-		
-		-- #TODO Remove
-		"%{wks.location}/Framework/Source/", -- Include Framework source
-		"%{wks.location}/", -- Root for accessing library source
-		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
 	}
 
 	links
-	{
-		"Mirror", -- #TODO Remove
-		
+	{	
 		"Framework",
 		"Editor",
 	}

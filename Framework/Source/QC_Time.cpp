@@ -1,17 +1,13 @@
 #include "QC_Time.h"
 
-// #include "QF_Platform.h"
-
-#ifdef _QWINDOWS // #TODO QwerkE agnostic way to detect windows/platform
+// #TODO C++ or platform agnostic time solution : https://stackoverflow.com/questions/2808398/easily-measure-elapsed-time
+#ifdef _QWINDOWS
 #include <windows.h>
 #include <profileapi.h>
 #include <winnt.h>
 #else
 #error "Support non windows platform!"
 #endif
-
-#include "QF_Log.h"
-#include "QF_Debug.h"
 
 namespace QwerkE {
 
@@ -35,17 +31,6 @@ namespace QwerkE {
             s_FrameDelta = s_CurrentFrame - s_LastFrame;
         }
 
-        const double Now()
-        {
-            unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
-            unsigned __int64 time;
-
-            QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
-            QueryPerformanceCounter((LARGE_INTEGER*)&time);
-
-            return (double)time / freq;
-        }
-
         const double& StartTime()
         {
             return s_StartTime;
@@ -60,6 +45,33 @@ namespace QwerkE {
         {
             return s_FrameDelta;
         };
+
+        float FrameNow()
+        {
+            return s_CurrentFrame;
+        }
+
+        float Now()
+        {
+            unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
+            unsigned __int64 time;
+
+            QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
+            QueryPerformanceCounter((LARGE_INTEGER*)&time);
+
+            return (float)time / freq;
+        }
+
+        double NowDouble()
+        {
+            unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
+            unsigned __int64 time;
+
+            QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
+            QueryPerformanceCounter((LARGE_INTEGER*)&time);
+
+            return (double)time / freq;
+        }
 
     }
 

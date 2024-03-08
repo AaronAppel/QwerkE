@@ -32,8 +32,6 @@
 #include "Libraries/FlatheadGames/ImageHelpers.h"
 #endif
 
-// #include "QF_Defines.h"
-
 #ifdef _QOPENAL
 #include "Libraries/OpenAL/al.h"
 #include "Libraries/OpenAL/alc.h"

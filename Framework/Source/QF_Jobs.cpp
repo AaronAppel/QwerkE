@@ -10,7 +10,7 @@
 #include "QF_Log.h"
 #include "QF_Settings.h"
 
-#include "QF_Defines.h"
+#include "QF_PathDefines.h"
 
 namespace QwerkE {
 

@@ -4,7 +4,7 @@
 #include <Windows.h>
 #endif
 
-#include "QF_Defines.h"
+#include "QF_PathDefines.h"
 
 namespace QwerkE {
 
