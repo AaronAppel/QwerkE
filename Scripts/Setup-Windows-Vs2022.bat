@@ -1,5 +1,8 @@
 @echo off
 
 premake5.exe --file="premake.lua" vs2022
-echo Done
-pause
+
+IF NOT %errorlevel%==0 (
+	echo Encountered error!
+	pause
+)

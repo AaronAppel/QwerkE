@@ -8,7 +8,6 @@
 
 #include "QC_Time.h"
 
-#include "QF_Assets.h"
 #include "QF_FileUtilities.h"
 #include "QF_Framework.h"
 #include "QF_Input.h"
@@ -20,8 +19,6 @@
 #include "QE_EditorInspector.h"
 #include "QE_EntityEditor.h"
 #include "QE_ProgramArgs.h"
-#include "QE_ResourceViewer.h"
-#include "QE_ShaderEditor.h"
 #include "QE_SceneGraph.h"
 #include "QE_SceneViewer.h"
 
@@ -31,8 +28,6 @@ namespace QwerkE {
 
 		static EntityEditor* s_EntityEditor = nullptr;
 		static SceneGraph* s_SceneGraph = nullptr;
-		static ShaderEditor* s_ShaderEditor = nullptr;
-		static ResourceViewer* s_ResourceViewer = nullptr;
 		static SceneViewer* s_SceneViewer = nullptr;
 
 		static EngineSettings* s_EngineSettings = nullptr;
@@ -85,7 +80,7 @@ namespace QwerkE {
 
             local_EditorInitialize();
 
-            Scenes::LoadFromProjectSettings();
+            Scenes::Initialize();
 
 			const EngineSettings& engineSettings = Settings::GetEngineSettings();
 			const u16 FPS_MAX = (int)(engineSettings.limitFramerate) * engineSettings.maxFramesPerSecond;
@@ -150,34 +145,10 @@ namespace QwerkE {
 			s_EntityEditor->SetCurrentEntity(nullptr);
 		}
 
-        void local_LoadDefaultAssets()
-        {
-            ASSERT(Assets::GetMeshFromFile(NullAssetsFolderPath(null_mesh), null_mesh), "Error loading null mesh asset!");
-            ASSERT(Assets::GetTextureFromPath(NullAssetsFolderPath(null_texture), false), "Error loading null texture asset!");
-            ASSERT(Assets::CreateNewMaterialFromFile(NullAssetsFolderPath(null_material_schematic)), "Error loading null material asset!");
-            ASSERT(Assets::GetFontFromPath(NullAssetsFolderPath(null_font)), "Error loading null font asset!");
-            ASSERT(Assets::GetShaderComponentFromPath(NullAssetsFolderPath(null_vert_component), eShaderComponentTypes::Vertex), "Error loading null vertex component asset!");
-            ASSERT(Assets::GetShaderComponentFromPath(NullAssetsFolderPath(null_frag_component), eShaderComponentTypes::Fragment), "Error loading null fragment component!");
-            ASSERT(Assets::GetShaderComponentFromPath(NullAssetsFolderPath(null_geo_component), eShaderComponentTypes::Geometry), "Error loading null geometry component!");
-            ASSERT(Assets::GetShaderProgramFromPath(NullAssetsFolderPath(null_shader_schematic)), "Error loading null shader program schematic!");
-
-            const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            if (engineSettings.audioEnabled)
-            {
-                // #TODO Handle loading null sound asset when audio system is disabled.
-                // Currently, there is no null asset to fall back on, but audio is no implemented so no references break yet.
-                ASSERT(Assets::GetSoundFromPath(NullAssetsFolderPath(null_sound)), "Error loading null sound asset!");
-            }
-        }
-
 		void local_EditorInitialize()
 		{
-            local_LoadDefaultAssets();
-
 			s_EntityEditor = new EntityEditor();
 			s_SceneGraph = new SceneGraph(s_EntityEditor);
-			s_ResourceViewer = new ResourceViewer();
-			s_ShaderEditor = new ShaderEditor();
 			s_SceneViewer = new SceneViewer();
 
 			s_EngineSettings = &Settings::GetEngineSettings();
@@ -189,8 +160,6 @@ namespace QwerkE {
 		{
 			delete s_EntityEditor;
 			delete s_SceneGraph;
-			delete s_ResourceViewer;
-			delete s_ShaderEditor;
 			delete s_SceneViewer;
 		}
 
@@ -206,11 +175,6 @@ namespace QwerkE {
             if (s_ShowingImGuiExampleWindow)
             {
                 ImGui::ShowDemoWindow(&s_ShowingImGuiExampleWindow);
-            }
-
-            if (s_EngineSettings->showingShaderEditor)
-            {
-                s_ShaderEditor->Draw(s_EngineSettings->showingShaderEditor);
             }
 
             if (s_EngineSettings->showingSettingsEditor &&
@@ -375,7 +339,6 @@ namespace QwerkE {
             }
 #endif
 
-            s_ResourceViewer->Draw();
             s_SceneViewer->Draw();
             s_SceneGraph->Draw();
             s_EntityEditor->Draw();
@@ -398,21 +361,21 @@ namespace QwerkE {
                     ImGui::EndMenu();
                 }
 
-                if (ImGui::BeginMenu("Tools"))
-                {
-                    const int size = 1;
-                    static const char* toolsList[size] = { "Shader Editor" };
-                    static bool* toolsStates[size] = { &s_EngineSettings->showingShaderEditor };
-
-                    for (int i = 0; i < size; i++)
-                    {
-                        if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
-                        {
-                            s_EngineSettings->showingShaderEditor = *toolsStates[i];
-                        }
-                    }
-                    ImGui::EndMenu();
-                }
+                // if (ImGui::BeginMenu("Tools"))
+                // {
+                //     const int size = 1;
+                //     static const char* toolsList[size] = { "Shader Editor" };
+                //     static bool* toolsStates[size] = { &s_EngineSettings->showingShaderEditor };
+                //
+                //     for (int i = 0; i < size; i++)
+                //     {
+                //         if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
+                //         {
+                //             s_EngineSettings->showingShaderEditor = *toolsStates[i];
+                //         }
+                //     }
+                //     ImGui::EndMenu();
+                // }
 
                 if (ImGui::BeginMenu("Windows"))
                 {

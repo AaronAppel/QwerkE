@@ -1,4 +1,3 @@
-rem Delete all .dll files in engine root directory
 cd ../
 del *.dll
 del *.sln
@@ -10,14 +9,14 @@ rmdir /Q /S bin
 del /Q /F /S /AH .vs
 rmdir /Q /S ".vs"
 
-pushd Framework/
+cd Framework/
 call Cleanup.bat
-popd
+cd ../
 
-pushd Editor/
+cd Editor/
 call Cleanup.bat
-popd
+cd ../
 
-pushd Game/
+cd Game/
 call Cleanup.bat
-popd
+cd ../

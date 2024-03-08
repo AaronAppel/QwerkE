@@ -61,9 +61,6 @@ namespace QwerkE {
 
         SoundHandle LoadSound(const char* soundName);
 
-        Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName);
-        std::vector<Mesh*> LoadModelFileToMeshes(const char* absoluteMeshFilePath);
-
         // TODO: Load scene from software like 3DS Max, Blender, etc
         // load things like lights, cameras and everything from 1 file
         // look at creating a conversion helper for QwerkE.scene to unity, blender, etc

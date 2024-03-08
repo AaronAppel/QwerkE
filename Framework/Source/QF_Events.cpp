@@ -9,7 +9,6 @@
 #include "Libraries/pThreads/pthread.h"
 #endif
 
-#include "QF_Assets.h"
 #include "QF_Debug.h"
 #include "QF_Event.h"
 #include "QF_JobQueuedEvent.h"
@@ -51,7 +50,8 @@ namespace QwerkE {
             // #TODO Implement thread safe API for multi threaded event queuing
             if (s_EventQueue.size() < s_EventMax)
             {
-                _event->SetID(Assets::GetGUID());
+                static u16 id = 0;
+                _event->SetID(++id); // Assets::GetGUID());
                 s_EventQueue.push(_event);
                 LOG_INFO("Event {0} Queued of type {1}", _event->GetID(), (int)_event->GetType());
             }

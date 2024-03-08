@@ -6,10 +6,8 @@
 
 #include "QF_FileUtilities.h"
 #include "QF_Input.h"
-#include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
-#include "QF_FrameBufferObject.h"
 #include "QF_Window.h"
 
 #include "QE_Editor.h"
@@ -19,13 +17,10 @@ namespace QwerkE {
 
     SceneViewer::SceneViewer()
     {
-        m_FBO = new FrameBufferObject();
-        m_FBO->Init();
     }
 
     SceneViewer::~SceneViewer()
     {
-        delete m_FBO;
     }
 
     void SceneViewer::Draw()
@@ -104,11 +99,6 @@ namespace QwerkE {
 
             DrawSceneList();
 
-            m_FBO->Bind();
-            Renderer::ClearScreen();
-            Scenes::DrawCurrentScene();
-            m_FBO->UnBind();
-
             const ImVec2 winSize = ImGui::GetWindowSize();
 
             ImVec2 imageSize = winSize; // #TODO The scene view can be different from the window (4:3, or other, and custom ratios)
@@ -119,8 +109,6 @@ namespace QwerkE {
 
             const float offset = 60.f;
             ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + offset));
-
-            ImGui::Image(ImTextureID(m_FBO->GetTextureID()), imageSize, ImVec2(0, 1), ImVec2(1, 0));
         }
 
         ImGui::End();

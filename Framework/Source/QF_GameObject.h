@@ -23,31 +23,7 @@
 
 namespace QwerkE {
 
-    class Component;
-    class Routine;
     class Scene;
-
-    // TODO: setup a Unity-esque transform for a GameObject
-    // TODO: Move transform to it's own math file
-    struct Transform
-    {
-        // MyMatrix s_Mat; Use?
-
-        vec3 s_Position = vec3(.0f);
-        vec3 s_Rotation = vec3(.0f);
-        vec3 s_Scale = vec3(1.0f);
-
-        vec3 s_Forward = vec3(0, 0, 1); // TODO: Calculate instead of saving?
-        vec3 s_Up = vec3(0, 1, 0);
-        vec3 s_Right = vec3(1, 0, 0);
-
-        // TODO:
-        void Scale(vec3 scale) { }
-        void Rotate(vec3 rotation) { }
-        void Translate(vec3 translation) { }
-
-        // TODO: Use quaternions to avoid gimbal lock
-    };
 
     class GameObject final
     {
@@ -60,50 +36,20 @@ namespace QwerkE {
         void Update(double deltatime);
         void Draw(GameObject* camera);
 
-        bool AddComponent(Component* component);
-        void RemoveComponent(eComponentTags tag) { m_Components.erase(tag); };
-
-        bool AddRoutine(Routine* routine);
-        void RemoveRoutine(Routine* routine);
-
-        bool AddUpdateRoutine(Routine* routine);
-        void AddDrawRoutine(Routine* routine);
-
         void Activate();
         void Deactivate();
         bool Enabled() { return m_Enabled; }
 
-        const std::map<eComponentTags, Component*>* SeeComponents() const { return &m_Components; }
-        const std::vector<Routine*>* SeeUpdateRoutines() { return &m_UpdateList; }
-        const std::vector<Routine*>* SeeDrawRoutines() { return &m_DrawList; }
-
         std::string GetName() { return m_Name; };
-        const vec3& GetPosition() const { return m_Transform.s_Position; };
-        const vec3& GetRotation() const { return m_Transform.s_Rotation; };
-        const vec3& GetScale() const { return m_Transform.s_Scale; };
-        const Component* GetComponent(eComponentTags tag);
-        const Component* SeeComponent(eComponentTags tag);
-        Routine* GetFirstDrawRoutineOfType(eRoutineTypes type);
-        Routine* GetFirstUpdateRoutineOfType(eRoutineTypes type);
         const Scene* GetScene() { return m_pScene; };
         eGameObjectTags GetTag() { return m_Tag; }
-        const Transform& GetTransform() const { return m_Transform; };
 
-        // TODO: overload functions to take object like float[x]s
-        void UpdatePosition(vec3 position) { m_Transform.s_Position = position; }; // box 2d
-        void UpdateRotation(vec3 rotation) { m_Transform.s_Rotation = rotation; }; // box 2d
         void SetName(std::string name) { m_Name = name; };
-        void SetPosition(vec3 position);
-        void SetRotation(vec3 rotation);
-        void SetScale(vec3 scale) { m_Transform.s_Scale = scale; };
         void SetTag(eGameObjectTags tag) { m_Tag = tag; }
-        void SetTransform(Transform transform) { m_Transform = transform; };
 
         void OnSceneLoaded(Scene* scene);
 
         entt::entity GetEntity() { return m_Entity; }
-
-        std::vector<eComponentTags> GetEntityComponents() { return m_EntityComponents; }
 
     private:
         MIRROR_PRIVATE_MEMBERS
@@ -115,17 +61,9 @@ namespace QwerkE {
         std::string m_Name = Constants::gc_DefaultStringValue;
         eGameObjectTags m_Tag = GO_Tag_Null;
 
-        Transform m_Transform;
-
         vec3 m_Position = vec3(0.f);
 
         glm::mat4 m_Transform2 = glm::mat4(1.0f);
-
-        std::vector<Routine*> m_UpdateList;
-        std::vector<Routine*> m_DrawList;
-
-        std::map<eComponentTags, Component*> m_Components;
-        std::vector<eComponentTags> m_EntityComponents;
     };
 
 }

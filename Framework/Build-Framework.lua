@@ -20,7 +20,6 @@ project "Framework"
 		"%{wks.location}/%{prj.name}/Source", -- "Source/QF_PCH.h", -- For precompiled headers to work in VS
 		"%{wks.location}/", -- Root for accessing library source
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
-		"%{wks.location}/Libraries/freetype2/", -- Required by freetype2
 	}
 	
 	-- disablewarnings { "warnings" }
@@ -45,8 +44,6 @@ project "Framework"
 		"Mirror",
 		
 		-- Libraries .lib/.dll
-		"%{LibraryLib.assimp}",
-		"%{LibraryLib.freetype2}",
 		"%{LibraryLib.glew}",
 		"%{LibraryLib.glfw}",
 		"%{LibraryLib.OpenAL}",
@@ -54,7 +51,7 @@ project "Framework"
 		"%{LibraryLib.pthreads}",
 	}
 	
-	vpaths
+	vpaths -- VS Filters
 	{
 		-- ["Headers"] = { "**.h", "**.hpp" },
 		-- ["Sources/*"] = {"**.c", "**.cpp"},
@@ -76,25 +73,9 @@ project "Framework"
 		runtime "Release"
 		optimize "On"
 		symbols "On"
-		
-		links
-		{
-			"%{LibraryLib.glew}",
-			"%{LibraryLib.glfw}",
-			"%{LibraryLib.OpenAL}",
-			"opengl32.lib",
-		}
 
 	filter "configurations:Retail"
 		defines { "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "Off"
-		
-		links
-		{
-			"%{LibraryLib.glew}",
-			"%{LibraryLib.glfw}",
-			"%{LibraryLib.OpenAL}",
-			"opengl32.lib",
-		}

@@ -76,8 +76,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QE_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>..\Framework\Source\QF_ForcedIncludes.h;QE_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -94,7 +94,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\freetype2\x86\freetype.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -102,8 +102,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QE_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>..\Framework\Source\QF_ForcedIncludes.h;QE_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -120,7 +120,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\freetype2\x86\freetype.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
@@ -128,8 +128,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QE_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QASSIMP;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEAD;_QFREETYPE2;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;..\Libraries\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\Framework\Source;..\Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>..\Framework\Source\QF_ForcedIncludes.h;QE_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -151,7 +151,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\freetype2\x86\freetype.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -162,7 +162,6 @@
     <ClInclude Include="Source\QE_MaterialEditor.h" />
     <ClInclude Include="Source\QE_PCH.h" />
     <ClInclude Include="Source\QE_ProgramArgs.h" />
-    <ClInclude Include="Source\QE_ResourceViewer.h" />
     <ClInclude Include="Source\QE_SceneGraph.h" />
     <ClInclude Include="Source\QE_SceneViewer.h" />
     <ClInclude Include="Source\QE_ShaderEditor.h" />
@@ -176,11 +175,8 @@
     <ClCompile Include="Source\QE_ProgramArgs.cpp" />
     <ClCompile Include="Source\QE_imgui_EditComponent.cpp" />
     <ClCompile Include="Source\QE_imgui_EntityEditor.cpp" />
-    <ClCompile Include="Source\QE_imgui_MaterialEditor.cpp" />
-    <ClCompile Include="Source\QE_imgui_ResourceViewer.cpp" />
     <ClCompile Include="Source\QE_imgui_SceneGraph.cpp" />
     <ClCompile Include="Source\QE_imgui_SceneViewer.cpp" />
-    <ClCompile Include="Source\QE_imgui_ShaderEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Libraries\FlatHeadGames\FlatHeadGames.vcxproj">

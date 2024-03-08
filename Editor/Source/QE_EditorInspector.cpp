@@ -9,14 +9,6 @@
 #include "QF_Scenes.h"
 #include "QF_Settings.h"
 
-#include "QF_Component.h"
-#include "QF_CameraComponent.h"
-#include "QF_RenderComponent.h"
-
-#include "QF_Routine.h"
-#include "QF_RenderRoutine.h"
-#include "QF_TransformRoutine.h"
-
 namespace QwerkE {
 
     namespace Inspector {
@@ -37,45 +29,6 @@ namespace QwerkE {
 
                 switch (field.typeInfo->enumType)
                 {
-                case MirrorTypes::m_vector_renderable:
-                    {
-                        std::vector<Renderable>* renderables = (std::vector<Renderable>*)fieldAddress;
-
-                        if (const Mirror::TypeInfo* collectionTypeInfo = field.typeInfo->collectionTypeInfo)
-                        {
-                            for (size_t i = 0; i < renderables->size(); i++)
-                            {
-                                parentName += field.name + " ";
-                                valueChanged |= InspectFieldRecursive(field.typeInfo->collectionTypeInfo, (void*)(renderables->data() + i), parentName);
-                                parentName.clear();
-                            }
-                        }
-                    }
-                    break;
-
-                    // #TODO Component support
-                // case MirrorTypes::Component:
-                //     {
-                //         Component* component = (Component*)fieldAddress;
-                //
-                //         switch (component->GetTag())
-                //         {
-                //         case eComponentTags::Component_Render:
-                //             std::vector<Renderable>* renderables = (std::vector<Renderable>*)fieldAddress;
-                //             for (size_t i = 0; i < renderables->size(); i++)
-                //             {
-                //                 parentName += field.name;
-                //                 valueChanged |= InspectFieldRecursive(Mirror::InfoForType<Renderable>(), (Renderable*)renderables->data() + i, parentName);
-                //                 parentName.clear();
-                //             }
-                //             break;
-                //
-                //         default:
-                //             break;
-                //         }
-                //     }
-                //     break;
-
                 case MirrorTypes::m_vector_string: // #TODO Support vector manipulation
                     {
                         std::vector<std::string>* strings = (std::vector<std::string>*)fieldAddress;
@@ -90,65 +43,6 @@ namespace QwerkE {
                             // }
                         }
                         break;
-                    }
-                    break;
-
-                case MirrorTypes::m_vector_routinePtr:
-                    {
-                        std::vector<Routine*>* routines = (std::vector<Routine*>*)fieldAddress;
-
-                        for (size_t i = 0; i < routines->size(); i++)
-                        {
-                            // #TODO Handle derived types
-                            switch (routines->at(i)->GetRoutineType())
-                            {
-                            case QwerkE::Routine_Render:
-                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<RenderRoutine>(), routines->at(i), parentName);
-                                break;
-
-                            case QwerkE::Routine_Transform:
-                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<TransformRoutine>(), routines->at(i), parentName);
-                                break;
-
-                            case QwerkE::Routine_Physics:
-                            case QwerkE::Routine_Null:
-                            case QwerkE::Routine_Max:
-                            default:
-                                LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                    break;
-
-                case MirrorTypes::m_map_eComponentTags_componentPtr:
-                    {
-                        std::map<eComponentTags, Component*>& components = *(std::map<eComponentTags, Component*>*)fieldAddress;
-                        for (auto& it : components)
-                        {
-                            Component* component = it.second;
-
-                            parentName += field.name + " ";
-                            switch (component->GetTag()) // #TODO Look to handle sub classes more elegantly
-                            {
-                            case Component_Render:
-                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<RenderComponent>(), (RenderComponent*)component, parentName);
-                                break;
-
-                            case Component_Camera:
-                                valueChanged |= InspectFieldRecursive(Mirror::InfoForType<ComponentCamera>(), (ComponentCamera*)component, parentName);
-                                break;
-
-                            case Component_Light:
-                            case Component_Physics:
-                            case Component_Controller:
-                            case Component_SkyBox:
-                                // #TODO Implement component add
-                                break;
-                            }
-                            parentName.clear();
-                        }
                     }
                     break;
 

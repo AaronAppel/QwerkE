@@ -1,28 +1,26 @@
 #include "QF_Window.h"
 
+#ifdef _QGLEW
 #include "Libraries/glew/glew.h"
-#include "Libraries/glfw/glfw3.h"
-// #include "Libraries/imgui/QC_imgui.h"
+#endif
 
-// #include "QF_Assets.h"
-// #include "QF_Debug.h"
-// #include "QF_Defines.h"
+#ifdef _QGLFW3
+#include "Libraries/glfw/glfw3.h"
+#endif
+
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/QC_imgui.h"
+#endif
+
+#include "QF_Debug.h"
 // #include "QF_FileSystem.h"
 // #include "QF_FileUtilities.h"
 // #include "QF_Log.h"
-// #include "QF_Renderer.h"
 // #include "QF_Scene.h"
 // #include "QF_Scenes.h"
 // #include "QF_Settings.h"
 
 const char* g_WindowTitle = "QwerkEngine";
-
-// From https://stackoverflow.com/questions/11335301/glfw-get-screen-height-width
-// void Window::CenterTheWindow(){
-// GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-// const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-// glfwSetWindowPos(m_Window, (mode->width - m_Width) / 2, (mode->height - m_Height) / 2);
-// }
 
 namespace QwerkE {
 
@@ -83,7 +81,7 @@ namespace QwerkE {
             glfwWindowHint(GLFW_DEPTH_BITS, 0);
             glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
-            GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor();
+            // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor();
 
             vec2 resolution = vec2(1600, 900); // #TODO Fix hard code
             s_window = glfwCreateWindow((int)resolution.x, (int)resolution.y, g_WindowTitle, NULL, NULL);
@@ -140,19 +138,16 @@ namespace QwerkE {
     #ifdef _QGLFW3
             glfwWindowShouldClose(s_window);
             glfwDestroyWindow(s_window);
-    #endif
 
     #ifdef _QDEARIMGUI
-    #ifdef _QGLFW3
             ImGui_ImplGlfw_Shutdown();
-    #endif
+
     #ifdef _QOPENGL
             ImGui_ImplOpenGL3_Shutdown();
     #endif
             ImGui::DestroyContext();
     #endif
 
-    #ifdef _QGLFW3
             glfwTerminate();
     #endif
         }

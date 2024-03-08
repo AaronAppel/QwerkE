@@ -2,8 +2,6 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_CameraComponent.h"
-#include "QF_Component.h"
 #include "QF_FileUtilities.h"
 #include "QF_GameObject.h"
 #include "QF_Input.h"
@@ -44,11 +42,7 @@ namespace QwerkE {
 
     void Scene::OnWindowResize(unsigned int width, unsigned int height)
     {
-        for (unsigned int i = 0; i < m_CameraList.size(); i++)
-        {
-            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->Setup();
-            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->SetViewportSize(vec2((float)width, (float)height));
-        }
+        SetupCameras();
     }
 
     void Scene::Update(float deltatime)
@@ -66,71 +60,46 @@ namespace QwerkE {
 
     void Scene::CameraInput(float deltatime)
     {
-        // #TODO Put logic in camera component
-        ComponentCamera* t_activecamera = ((ComponentCamera*)m_CameraList.at(m_CurrentCameraIndex)->GetComponent(Component_Camera));
-
         const UserSettings& userSettings = Settings::GetUserSettings();
 
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::FORWARD, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveBackward))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::BACKWARD, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveLeft))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::LEFT, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveRight))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::RIGHT, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveDown))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::DOWN, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_MoveUp))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::UP, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_RotateRight))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::RROTATE, (float)deltatime);
         }
         if (Input::GetIsKeyDown(userSettings.key_camera_RotateLeft))
         {
-            t_activecamera->OnCamMove(eCamera_Movement::LROTATE, (float)deltatime);
         }
 
         const vec2& mouseScroll = Input::MouseScrollDelta();
         if (Input::MouseScrollDelta().x != 0.f || Input::MouseScrollDelta().y != 0.f)
         {
-            t_activecamera->ProcessMouseScroll(mouseScroll);
         }
     }
 
     void Scene::Draw()
     {
-        // #TODO Define draw behaviour (Highest first vs lowest first?)
-
-        GameObject* camera = m_CameraList.at(m_CurrentCameraIndex);
-        for (size_t i = 0; i < m_SceneDrawList.size(); i++)
-        {
-            m_SceneDrawList.at(i)->Draw(camera);
-        }
-
-        for (size_t i = 0; i < m_LightList.size(); i++)
-        {
-            m_LightList.at(i)->Draw(camera);
-        }
     }
 
     bool Scene::AddCamera(GameObject* camera)
     {
         m_CameraList.push_back(camera);
-
         return true;
     }
 
@@ -155,11 +124,6 @@ namespace QwerkE {
 
     void Scene::SetupCameras()
     {
-        for (unsigned int i = 0; i < m_CameraList.size(); i++)
-        {
-            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->Setup();
-            ((ComponentCamera*)m_CameraList.at(i)->GetComponent(Component_Camera))->SetTargetPosition(vec3(0.f, 0.f, 0.f));
-        }
     }
 
     bool Scene::AddLight(GameObject* light)
@@ -261,7 +225,6 @@ namespace QwerkE {
             }
         }
 
-        newGameObject->SetPosition(vec3(0, 0, 0));
         newGameObject->OnSceneLoaded(this);
         AddObjectToScene(newGameObject);
         return newGameObject;

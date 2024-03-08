@@ -5,21 +5,11 @@
 #include <string>
 #include <vector>
 
-#ifdef _QASSIMP
-#pragma warning( disable : 26495 )
-#include "Libraries/assimp/Importer.hpp"
-#include "Libraries/assimp/scene.h"
-#include "Libraries/assimp/postprocess.h"
-#include "Libraries/assimp/config.h"
-#include "Libraries/assimp/material.h"
-#include "QF_AssimpLoading.h"
-#pragma warning( default : 26495 )
-#endif
-
 #ifdef _QSTBIMAGE
 #pragma warning( disable : 28182 )
 #pragma warning( disable : 6001 )
 #pragma warning( disable : 6262 )
+#define STB_IMAGE_IMPLEMENTATION
 #include "Libraries/stb_image.h"
 #pragma warning( default : 28182 )
 #pragma warning( default : 6001 )
@@ -53,9 +43,7 @@
 
 #include "QF_FileSystem.h"
 #include "QF_FileUtilities.h"
-#include "QF_Assets.h"
 #include "QF_Log.h"
-#include "QF_Mesh.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
@@ -202,63 +190,6 @@ namespace QwerkE {
 #pragma error "Define audio library!"
 #endif
 			return soundHandle;
-		}
-
-		Mesh* LoadMeshInModelByName(const char* modelFilePath, const char* meshName)
-		{
-			if (!modelFilePath || !meshName)
-				return nullptr;
-
-			Mesh* mesh = nullptr;
-			if (!Assets::MeshExists(meshName))
-			{
-#ifdef AI_CONFIG_H_INC
-				Assimp::Importer importer;
-				const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
-
-				if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-				{
-					LOG_WARN("ERROR::ASSIMP::{0}", importer.GetErrorString());
-					return nullptr;
-				}
-				_assimp_loadMeshByName(scene->mRootNode, scene, mesh, modelFilePath, meshName);
-#else
-#pragma error "Define model loading library!"
-#endif
-			}
-			return mesh;
-		}
-
-		std::vector<Mesh*> LoadModelFileToMeshes(const char* absoluteMeshFilePath)
-		{
-			std::unique_ptr<char> fileName = SmartFileName(absoluteMeshFilePath, true);
-
-			std::vector<Mesh*> meshes;
-
-			if (!fileName)
-				return meshes;
-
-			if (Assets::MeshExists(fileName.get()))
-				return meshes;
-
-			std::vector<std::string> matNames;
-
-#ifdef AI_CONFIG_H_INC
-			Assimp::Importer importer;
-
-			const aiScene* scene = importer.ReadFile(absoluteMeshFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
-
-			if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-			{
-				LOG_ERROR("ERROR::ASSIMP::{0}", importer.GetErrorString());
-				return meshes;
-			}
-			_assimp_loadSceneNodeData(scene->mRootNode, scene, meshes, absoluteMeshFilePath, matNames);
-			// TODO: De-allocate RAM created by assimp
-#else
-#pragma error "Define model loading library!"
-#endif
-			return meshes;
 		}
 
 #ifdef _QOPENAL

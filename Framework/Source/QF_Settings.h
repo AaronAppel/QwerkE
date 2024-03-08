@@ -38,13 +38,11 @@ namespace QwerkE {
         u8 maxEnabledScenes = 1;
         u8 maxJobsAdditionalThreadCount = 1;
 
-        bool audioEnabled = false;
         bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
 
         // Editor UI
         bool showingSchematicsEditor = false;
         bool showingExampleWindow = false;
-        bool showingShaderEditor = false;
         bool showingSettingsEditor = false;
         bool showingFPS = false;
         bool showingRendererSettings = false;

@@ -11,7 +11,7 @@ namespace QwerkE {
 
     namespace Scenes {
 
-        void LoadFromProjectSettings();
+        void Initialize();
         void Shutdown();
 
         void ActivateScene(std::string sceneName);

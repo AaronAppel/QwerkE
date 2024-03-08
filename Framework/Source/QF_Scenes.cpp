@@ -32,8 +32,10 @@ namespace QwerkE {
 			}
 		}
 
-		void LoadFromProjectSettings() // Change to ScenesLoadFromProjectSettings or something more explicit. Should run with 0 scenes
+		void Initialize() // Change to ScenesLoadFromProjectSettings or something more explicit. Should run with 0 scenes
 		{
+			// Window::OnWindowSizeChange();
+
 			const ProjectSettings& projectSettings = Settings::GetProjectSettings();
 
 			const std::vector<std::string>& sceneFileNames = projectSettings.sceneFileNames;

@@ -1,13 +1,13 @@
 
 LibraryDefines = {
 -- _QALLCAPSNODELIMETERS
-"_QASSIMP",
+-- "_QASSIMP",
 "_QCJSON",
 "_QDEARIMGUI",
 "_QENTT",
 "_QENUM",
-"_QFLATHEAD",
-"_QFREETYPE2",
+"_QFLATHEADGAMES",
+-- "_QFREETYPE2",
 "_QGLEW",
 "_QGLFW3",
 "_QGLM",
@@ -21,8 +21,8 @@ LibraryDefines = {
 }
 
 LibraryLib = {}
-LibraryLib["assimp"] = "%{wks.location}/Libraries/assimp/Release/x86/assimp-vc140-mt.lib"
-LibraryLib["freetype2"] = "%{wks.location}/Libraries/freetype2/x86/freetype.lib"
+-- LibraryLib["assimp"] = "%{wks.location}/Libraries/assimp/Release/x86/assimp-vc140-mt.lib"
+-- LibraryLib["freetype2"] = "%{wks.location}/Libraries/freetype2/x86/freetype.lib"
 LibraryLib["glew"] = "%{wks.location}/Libraries/glew/glew32d.lib"
 LibraryLib["glfw"] = "%{wks.location}/Libraries/glfw/glfw3.lib"
 LibraryLib["OpenAL"] = "%{wks.location}/Libraries/OpenAL/Win32/OpenAL32.lib"

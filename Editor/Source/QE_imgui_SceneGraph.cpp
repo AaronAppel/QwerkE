@@ -14,9 +14,6 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_GameObject.h"
-#include "QF_RenderComponent.h"
-#include "QF_RenderRoutine.h"
-#include "QF_Assets.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
@@ -32,14 +29,6 @@ namespace QwerkE {
 	SceneGraph::SceneGraph(EntityEditor* entityEditor)
 		: m_EntityEditor(entityEditor)
 	{
-	}
-
-	RenderComponent* AddModelComponentFromSchematic(GameObject* entity, const char* objectRecipeName)
-	{
-		RenderComponent* rComp = new RenderComponent();
-		Serialization::DeserializeJsonFromFile(SchematicsFolderPath(objectRecipeName), *rComp);
-		rComp->Activate();
-		return rComp;
 	}
 
 	void SceneGraph::Draw()

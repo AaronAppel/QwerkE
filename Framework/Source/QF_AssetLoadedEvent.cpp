@@ -1,8 +1,6 @@
 #include "QF_AssetLoadedEvent.h"
 
-#include "QF_Assets.h"
 #include "QF_Log.h"
-#include "QF_ogl_Helpers.h"
 
 namespace QwerkE {
 
@@ -14,6 +12,7 @@ namespace QwerkE {
 
     void AssetLoadedEvent::Process()
     {
+        return;
         if (m_Asset->s_Data)
         {
             LOG_TRACE("{0} Processing data for {1}", __FUNCTION__, m_Asset->s_FileName.c_str());
@@ -22,12 +21,12 @@ namespace QwerkE {
             // texture->s_FileName = m_Asset.s_FileName;
             // texture->s_Handle = LoadTextureDataToOpenGL(m_Asset); // #TODO Remove OpenGL dependency
 
-            int handle = LoadTextureDataToOpenGL(*m_Asset);
+            // int handle = LoadTextureDataToOpenGL(*m_Asset);
 
-            if (handle > 0) // if (texture->s_Handle > 0)
+            if (0) // handle > 0) // if (texture->s_Handle > 0)
             {
                 // Update texture data in resource manager
-                Assets::TextureLoaded(m_Asset->s_FileName.c_str(), handle);
+                // Assets::TextureLoaded(m_Asset->s_FileName.c_str(), handle);
             }
             else
             {

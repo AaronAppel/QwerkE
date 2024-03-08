@@ -30,9 +30,45 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "c3921b3663701295",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Open AL Example.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "01f1c0f19399cc0c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Raknet Example.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c191bbf60e027577",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "GLFW Window Center Example.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -92,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Editor Config Files.md"
+                "file": "GLFW Window Center Example.md"
               }
             }
           }
@@ -135,7 +171,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Editor Config Files.md",
+                "file": "GLFW Window Center Example.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -147,7 +183,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Editor Config Files.md",
+                "file": "GLFW Window Center Example.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -173,10 +209,13 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "cb2d1534db6fe407",
+  "active": "c191bbf60e027577",
   "lastOpenFiles": [
-    "README.md",
+    "Raknet Example.md",
+    "GLFW Window Center Example.md",
+    "Open AL Example.md",
     "Editor Config Files.md",
+    "README.md",
     "ZZ Shared Vault Files ❗/C++ Tests.md",
     "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
     "ZZ Shared Vault Files ❗/Watched.md",
@@ -203,9 +242,6 @@
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
     "Mirror Library.md",
-    "Pointer Manipulation.md",
-    "Systems/Saving and Loading/Type Reflection.md",
-    "Systems/Saving and Loading/Reflection Setup.md",
     "Development/Resolved",
     "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
     "Development/Bug Tickets",

@@ -2,7 +2,7 @@
 
 // #include "QF_Platform.h"
 
-#ifdef _QWINDOWS
+#ifdef _QWINDOWS // #TODO QwerkE agnostic way to detect windows/platform
 #include <windows.h>
 #include <profileapi.h>
 #include <winnt.h>

@@ -38,7 +38,7 @@ project "Editor"
 		"%{wks.location}/", -- Root for accessing library source
 		"%{wks.location}/Framework/Source/", -- Include Framework source
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
-		"%{wks.location}/Libraries/freetype2/", -- Required by freetype2
+		-- "%{wks.location}/Libraries/freetype2/", -- Required by freetype2
 	}
 	
 	links
@@ -50,7 +50,7 @@ project "Editor"
 		"Mirror",
 		
 		-- Libraries .lib/.dll
-		"%{LibraryLib.freetype2}",
+		-- "%{LibraryLib.freetype2}",
 		"opengl32.lib",
 	}
 	

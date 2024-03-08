@@ -2,7 +2,9 @@
 
 #include <vector>
 
+#ifdef _QENTT
 #include "Libraries/entt/entt.hpp"
+#endif
 
 #include "QF_Debug.h"
 #include "QF_Scene.h"
