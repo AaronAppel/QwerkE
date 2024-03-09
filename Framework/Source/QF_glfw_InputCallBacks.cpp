@@ -12,11 +12,10 @@
 
 #include "QF_Constants.h"
 #include "QF_Log.h"
-// #include "QF_Renderer.h"
 
 namespace QwerkE {
 
-    namespace Input     {
+    namespace Input {
 
 #ifdef _QGLFW3
         static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);

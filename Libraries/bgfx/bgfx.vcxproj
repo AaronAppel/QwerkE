@@ -75,7 +75,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";BX_CONFIG_DEBUG=1;__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -94,7 +95,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";BX_CONFIG_DEBUG=1;__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -118,7 +120,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";BX_CONFIG_DEBUG=1;__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -132,84 +135,68 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="bgfx.idl.inl" />
-    <ClInclude Include="bgfx_p.h" />
-    <ClInclude Include="charset.h" />
-    <ClInclude Include="config.h" />
-    <ClInclude Include="debug_renderdoc.h" />
-    <ClInclude Include="dxgi.h" />
-    <ClInclude Include="emscripten.h" />
-    <ClInclude Include="fs_clear0.bin.h" />
-    <ClInclude Include="fs_clear1.bin.h" />
-    <ClInclude Include="fs_clear2.bin.h" />
-    <ClInclude Include="fs_clear3.bin.h" />
-    <ClInclude Include="fs_clear4.bin.h" />
-    <ClInclude Include="fs_clear5.bin.h" />
-    <ClInclude Include="fs_clear6.bin.h" />
-    <ClInclude Include="fs_clear7.bin.h" />
-    <ClInclude Include="fs_debugfont.bin.h" />
-    <ClInclude Include="glcontext_egl.h" />
-    <ClInclude Include="glcontext_html5.h" />
-    <ClInclude Include="glcontext_wgl.h" />
-    <ClInclude Include="glimports.h" />
-    <ClInclude Include="nvapi.h" />
-    <ClInclude Include="renderer.h" />
-    <ClInclude Include="renderer_d3d.h" />
-    <ClInclude Include="renderer_d3d11.h" />
-    <ClInclude Include="renderer_d3d12.h" />
-    <ClInclude Include="renderer_gl.h" />
-    <ClInclude Include="renderer_mtl.h" />
-    <ClInclude Include="renderer_vk.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="shader_dxbc.h" />
-    <ClInclude Include="shader_spirv.h" />
-    <ClInclude Include="topology.h" />
-    <ClInclude Include="version.h" />
-    <ClInclude Include="vertexlayout.h" />
-    <ClInclude Include="vs_clear.bin.h" />
-    <ClInclude Include="vs_debugfont.bin.h" />
+    <ClInclude Include="include\bgfx\bgfx.h" />
+    <ClInclude Include="include\bgfx\defines.h" />
+    <ClInclude Include="include\bgfx\embedded_shader.h" />
+    <ClInclude Include="include\bgfx\platform.h" />
+    <ClInclude Include="src\bgfx_p.h" />
+    <ClInclude Include="src\charset.h" />
+    <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\debug_renderdoc.h" />
+    <ClInclude Include="src\dxgi.h" />
+    <ClInclude Include="src\emscripten.h" />
+    <ClInclude Include="src\fs_clear0.bin.h" />
+    <ClInclude Include="src\fs_clear1.bin.h" />
+    <ClInclude Include="src\fs_clear2.bin.h" />
+    <ClInclude Include="src\fs_clear3.bin.h" />
+    <ClInclude Include="src\fs_clear4.bin.h" />
+    <ClInclude Include="src\fs_clear5.bin.h" />
+    <ClInclude Include="src\fs_clear6.bin.h" />
+    <ClInclude Include="src\fs_clear7.bin.h" />
+    <ClInclude Include="src\fs_debugfont.bin.h" />
+    <ClInclude Include="src\glcontext_egl.h" />
+    <ClInclude Include="src\glcontext_html5.h" />
+    <ClInclude Include="src\glcontext_wgl.h" />
+    <ClInclude Include="src\glimports.h" />
+    <ClInclude Include="src\nvapi.h" />
+    <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\renderer_d3d.h" />
+    <ClInclude Include="src\renderer_d3d11.h" />
+    <ClInclude Include="src\renderer_d3d12.h" />
+    <ClInclude Include="src\renderer_gl.h" />
+    <ClInclude Include="src\renderer_mtl.h" />
+    <ClInclude Include="src\renderer_vk.h" />
+    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\shader_dxbc.h" />
+    <ClInclude Include="src\shader_spirv.h" />
+    <ClInclude Include="src\topology.h" />
+    <ClInclude Include="src\version.h" />
+    <ClInclude Include="src\vertexlayout.h" />
+    <ClInclude Include="src\vs_clear.bin.h" />
+    <ClInclude Include="src\vs_debugfont.bin.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="amalgamated.cpp" />
-    <ClCompile Include="bgfx.cpp" />
-    <ClCompile Include="debug_renderdoc.cpp" />
-    <ClCompile Include="dxgi.cpp" />
-    <ClCompile Include="glcontext_egl.cpp" />
-    <ClCompile Include="glcontext_html5.cpp" />
-    <ClCompile Include="glcontext_wgl.cpp" />
-    <ClCompile Include="nvapi.cpp" />
-    <ClCompile Include="renderer_agc.cpp" />
-    <ClCompile Include="renderer_d3d11.cpp" />
-    <ClCompile Include="renderer_d3d12.cpp" />
-    <ClCompile Include="renderer_gl.cpp" />
-    <ClCompile Include="renderer_gnm.cpp" />
-    <ClCompile Include="renderer_noop.cpp" />
-    <ClCompile Include="renderer_nvn.cpp" />
-    <ClCompile Include="renderer_vk.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="shader_dxbc.cpp" />
-    <ClCompile Include="shader_spirv.cpp" />
-    <ClCompile Include="topology.cpp" />
-    <ClCompile Include="vertexlayout.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fs_clear0.sc" />
-    <None Include="fs_clear1.sc" />
-    <None Include="fs_clear2.sc" />
-    <None Include="fs_clear3.sc" />
-    <None Include="fs_clear4.sc" />
-    <None Include="fs_clear5.sc" />
-    <None Include="fs_clear6.sc" />
-    <None Include="fs_clear7.sc" />
-    <None Include="fs_debugfont.sc" />
-    <None Include="varying.def.sc" />
-    <None Include="vs_clear.sc" />
-    <None Include="vs_debugfont.sc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\bx\bx.vcxproj">
-      <Project>{5F775900-4B03-880B-B4B1-880BA05C880B}</Project>
-    </ProjectReference>
+    <ClCompile Include="src\amalgamated.cpp" />
+    <ClCompile Include="src\bgfx.cpp" />
+    <ClCompile Include="src\debug_renderdoc.cpp" />
+    <ClCompile Include="src\dxgi.cpp" />
+    <ClCompile Include="src\glcontext_egl.cpp" />
+    <ClCompile Include="src\glcontext_html5.cpp" />
+    <ClCompile Include="src\glcontext_wgl.cpp" />
+    <ClCompile Include="src\nvapi.cpp" />
+    <ClCompile Include="src\renderer_agc.cpp" />
+    <ClCompile Include="src\renderer_d3d11.cpp" />
+    <ClCompile Include="src\renderer_d3d12.cpp" />
+    <ClCompile Include="src\renderer_gl.cpp" />
+    <ClCompile Include="src\renderer_gnm.cpp" />
+    <ClCompile Include="src\renderer_noop.cpp" />
+    <ClCompile Include="src\renderer_nvn.cpp" />
+    <ClCompile Include="src\renderer_vk.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\shader_dxbc.cpp" />
+    <ClCompile Include="src\shader_spirv.cpp" />
+    <ClCompile Include="src\topology.cpp" />
+    <ClCompile Include="src\vertexlayout.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

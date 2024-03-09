@@ -25,7 +25,7 @@ workspace "QwerkE Game"
 	
 	group "Dependencies"
 	include "../Libraries/bgfx/Build-bgfx.lua"
-	include "../Libraries/bx/Build-bx.lua"
+	-- include "../Libraries/bx/Build-bx.lua"
 	include "../Libraries/cJSON/Build-cJSON.lua"
 	include "../Libraries/FlatHeadGames/Build-FlatHeadGames.lua"
 	include "../Libraries/imgui/Build-imgui.lua"

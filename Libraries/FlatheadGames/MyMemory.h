@@ -1,6 +1,8 @@
 #ifndef __MyMemory_H__
 #define __MyMemory_H__
 
+// Modified by Aaron Appel
+
 // TODO:: add creation and deletion amount tracking
 // simple num++ would work
 
