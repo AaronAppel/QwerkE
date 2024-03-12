@@ -2,8 +2,9 @@
 LibraryDefines = {
 -- _QALLCAPSNODELIMETERS
 -- "_QASSIMP",
+"_QBGFX",
 "_QCJSON",
-"_QDEARIMGUI",
+-- "_QDEARIMGUI",
 "_QENTT",
 "_QENUM",
 "_QFLATHEADGAMES",

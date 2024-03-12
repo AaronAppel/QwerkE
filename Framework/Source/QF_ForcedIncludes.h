@@ -4,6 +4,8 @@
 
 // #NOTE Cannot #include "QF_PCH.h" here. Must be done in VS project settings
 
+#define _QIgnored(x) (static_cast<void>(x))
+
 #include "QC_CallbackFunction.h"
 #include "QC_TypeDefs.h"
 

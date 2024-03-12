@@ -199,16 +199,6 @@ namespace QwerkE {
 		{
 			PROFILE_SCOPE("Scene Manager Update");
 
-			constexpr size_t numberOfHotkeyedScenes = eKeys::eKeys_F12 - eKeys::eKeys_F1 + 1;
-			for (size_t i = 0; i < numberOfHotkeyedScenes; i++)
-			{
-				if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))
-				{
-					SetCurrentScene(i);
-					break;
-				}
-			}
-
 			if (s_CurrentScene)
 			{
 				s_CurrentScene->Update(deltatime);

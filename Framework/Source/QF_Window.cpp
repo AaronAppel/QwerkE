@@ -5,6 +5,7 @@
 #endif
 
 #ifdef _QGLFW3
+// #define GLFW_EXPOSE_NATIVE_WIN32
 #include "Libraries/glfw/glfw3.h"
 #endif
 
@@ -208,9 +209,11 @@ namespace QwerkE {
         void Window::NewFrame()
         {
             glfwPollEvents();
+#ifdef _QDEARIMGUI
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
+#endif
         }
 
         void Window::RequestClose()

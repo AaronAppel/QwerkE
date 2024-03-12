@@ -71,6 +71,12 @@
     <ClCompile Include="Source\QF_Serialization.cpp">
       <Filter>File\Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QF_Renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_RendererBgfxExample.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -160,6 +166,12 @@
     <ClInclude Include="Source\QF_WindowCallbacks.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_Entity.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -194,6 +206,9 @@
     </Filter>
     <Filter Include="File\Serialization">
       <UniqueIdentifier>{f032c393-d9d5-474c-b819-bbf4e3be9bd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{e053b3d5-3dc4-4af2-9b68-6ad556038b53}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

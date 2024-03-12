@@ -2,15 +2,14 @@ include "Libraries.lua"
 
 project "Editor"
 	kind "StaticLib"
-	language "C++"
-	cppdialect "C++17"
-	targetdir "bin/%{cfg.buildcfg}"
-	staticruntime "off"
 	location ""
 	debugargs { "-applicationName", "Test Game" }
 	
 	defines
-	{	
+	{
+		"QWERKE_VERSION=0.01",
+		"EngineName=\"QwerkE\"",
+		
 		-- Path strings
 		"AssetsDir=\"Assets/\"",
 		-- "NullAssetsDir=AssetsDir",
@@ -56,12 +55,7 @@ project "Editor"
 	
 	pchheader "QE_PCH.h"
 	pchsource "Source/QE_PCH.cpp"
-
-	rtti ("Off")
 	
-	targetdir ("../bin/" .. OutputDir .. "/%{prj.name}")
-	objdir ("../bin/int/" .. OutputDir .. "/%{prj.name}")
-
 	filter "system:windows"
 		systemversion "latest"
 		defines { }

@@ -22,7 +22,7 @@ echo Source dir: %sourceDir%
 echo Target dir: %targetDir%
 
 rem @echo off
-xcopy "%sourceDir%assimp\Release\x86\assimp-vc140-mt.dll" "%targetDir%assimp-vc140-mt.dll*" /Y /D
+rem xcopy "%sourceDir%assimp\Release\x86\assimp-vc140-mt.dll" "%targetDir%assimp-vc140-mt.dll*" /Y /D
 xcopy "%sourceDir%freetype2\x86\freetype.dll" "%targetDir%freetype.dll*" /Y /D
 rem xcopy "%sourceDir%glfw\glfw3.dll" "%targetDir%glfw3.dll*" /Y /D
 xcopy "%sourceDir%glew\glew32d.dll" "%targetDir%glew32d.dll*" /Y /D

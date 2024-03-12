@@ -1,23 +1,32 @@
-rem pushd ..
-cd ../
-del *.dll
-del *.sln
+
+rem #TODO Loop over every directory instead of manually entering libraries
+
+cd bgfx
 del *.vcxproj
+del *.user
+cd ../
 
-del /Q /F /S /AH bin
-rmdir /Q /S bin
-
-del /Q /F /S /AH .vs
-rmdir /Q /S ".vs"
-
-pushd Framework
-call Cleanup.bat
+pushd bimg
+del *.vcxproj
+del *.user
 popd
 
-pushd Editor
-call Cleanup.bat
+pushd bx
+del *.vcxproj
+del *.user
 popd
 
-pushd Game
-call Cleanup.bat
+pushd cJSON
+del *.vcxproj
+del *.user
+popd
+
+pushd FlatHeadGames
+del *.vcxproj
+del *.user
+popd
+
+pushd Mirror
+del *.vcxproj
+del *.user
 popd

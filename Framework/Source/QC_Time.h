@@ -4,18 +4,18 @@ namespace QwerkE {
 
     namespace Time {
 
-        float FrameNow();
+        float LastEndFrameNow();
 
 		class Timer
 		{
 		public:
             Timer(float duration) { m_Duration = duration; Start(); }
 
-            void Start() { m_StartTime = FrameNow(); }
+            void Start() { m_StartTime = LastEndFrameNow(); }
 
-            bool Expired() { return (FrameNow() - m_StartTime) >= m_Duration; }
+            bool Expired() { return (LastEndFrameNow() - m_StartTime) >= m_Duration; }
 
-            void Reset() { m_StartTime = FrameNow(); }
+            void Reset() { m_StartTime = LastEndFrameNow(); }
 
             void SetDuration(float newDuration) { m_Duration = newDuration; }
 

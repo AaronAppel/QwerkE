@@ -15,6 +15,7 @@
 #include "QF_GameObject.h" // #TODO Remove for class GameObject; forward declaration instead
 
 #include "QF_Constants.h"
+#include "QF_Entity.h"
 
 namespace QwerkE {
 
@@ -33,7 +34,6 @@ namespace QwerkE {
 
         bool AddCamera(GameObject* camera);
         void RemoveCamera(GameObject* camera);
-        void SetupCameras();
 
         bool AddLight(GameObject* light);
         void RemoveLight(GameObject* light);
@@ -41,6 +41,8 @@ namespace QwerkE {
         bool ObjectWithNameExists(GameObject* object);
         bool AddObjectToScene(GameObject* object);
         void RemoveObjectFromScene(GameObject* object);
+
+        Entity* CreateEntity();
 
         GameObject* CreateNewObject();
         GameObject* CreateNewObjectFromSchematic(const char* const schematicFileName);
@@ -70,14 +72,16 @@ namespace QwerkE {
         void SetDirty() { m_IsDirty = true; }
         bool IsDirty() { return m_IsDirty; }
 
-    private:
-        void CameraInput(float deltatime);
+        // #TODO Hide registry
+        entt::registry& Registry() { return m_Registry; }
 
+    private:
         bool AddObjectToSceneDrawList(GameObject* object);
         bool RemoveObjectFromSceneDrawList(const GameObject* object);
 
         entt::registry m_Registry;
         entt::entity m_EntityCamera = entt::null;
+        std::map<entt::entity, Entity*> m_Entities;
 
         MIRROR_PRIVATE_MEMBERS
 

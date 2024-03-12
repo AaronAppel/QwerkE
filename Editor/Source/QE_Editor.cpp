@@ -36,8 +36,6 @@ namespace QwerkE {
 		static eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
 		static s8 s_LastPopUpIndex = -1;
 
-		static bool* s_showingFPS = nullptr; // #TODO Review individual value pointers
-
 #ifdef _QDEARIMGUI
 		static bool s_ShowingImGuiExampleWindow = false;
 #endif
@@ -62,7 +60,7 @@ namespace QwerkE {
 
             if (pairs.find(key_ApplicationName) == pairs.end())
             {
-                pairs.insert(std::pair<const char*, const char*>(key_ProjectFileName, "Project1")); // "null_project"
+                pairs.insert(std::pair<const char*, const char*>(key_ProjectFileName, "Project1"));
             }
 
             if (pairs.find(key_ApplicationName) == pairs.end())
@@ -153,7 +151,6 @@ namespace QwerkE {
 
 			s_EngineSettings = &Settings::GetEngineSettings();
 			ASSERT(s_EngineSettings, "Null engine settings!");
-			s_showingFPS = &s_EngineSettings->showingFPS;
 		}
 
 		void local_Shutdown()
@@ -401,7 +398,7 @@ namespace QwerkE {
                 }
 
                 ImGui::SameLine(ImGui::GetWindowWidth() - 36); // 4 characters * 9 pixels each
-                if (s_showingFPS)
+                if (s_EngineSettings->showingFPS)
                 {
                     char buffer[] = { '0', '0', '0', '\0' };
 
@@ -423,7 +420,7 @@ namespace QwerkE {
 
                     if (ImGui::IsItemClicked())
                     {
-                        *s_showingFPS = !s_showingFPS;
+                        s_EngineSettings->showingFPS = !s_EngineSettings->showingFPS;
                         Settings::SaveEngineSettings();
                     }
                 }

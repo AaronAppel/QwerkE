@@ -46,9 +46,9 @@ namespace QwerkE {
             return s_FrameDelta;
         };
 
-        float FrameNow()
+        float LastEndFrameNow()
         {
-            return s_CurrentFrame;
+            return (float)s_CurrentFrame;
         }
 
         float Now()

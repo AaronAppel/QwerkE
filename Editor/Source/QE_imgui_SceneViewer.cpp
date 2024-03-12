@@ -1,6 +1,8 @@
 ﻿#include "QE_SceneViewer.h"
 
+#ifdef _QDEARIMGUI
 #include "imgui/imgui.h"
+#endif
 
 #include "QC_StringHelpers.h"
 
@@ -36,6 +38,7 @@ namespace QwerkE {
         if (!currentScene)
             return;
 
+#ifdef _QDEARIMGUI
         if (ImGui::Begin("Scene Viewer", &isOpen, ImGuiWindowFlags_NoScrollbar))
         {
             // ImGui::GetWindowSize();
@@ -112,6 +115,7 @@ namespace QwerkE {
         }
 
         ImGui::End();
+#endif
     }
 
     const int s_CharacterPixelSize = 10;
@@ -128,6 +132,7 @@ namespace QwerkE {
         int index = Scenes::GetCurrentSceneIndex();
 
         const int sceneFileNameWidth = strlen(sceneNames[index]) * s_CharacterPixelSize;
+#ifdef _QDEARIMGUI
         ImGui::PushItemWidth((float)sceneFileNameWidth);
 
         char s_ScenesCombobuffer [] = "Scenes:    ";
@@ -139,6 +144,7 @@ namespace QwerkE {
             Scenes::SetCurrentScene(index);
         }
         ImGui::PopItemWidth();
+#endif
     }
 
 }

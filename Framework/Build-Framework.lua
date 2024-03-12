@@ -2,11 +2,8 @@ include "Libraries.lua"
 
 project "Framework"
 	kind "StaticLib"
-	language "C++"
-	cppdialect "C++17"
-	targetdir "bin/%{cfg.buildcfg}"
-	staticruntime "off" -- https://premake.github.io/docs/staticruntime
 	location ""
+	
 	defines
 	{
 		"AssetsDir=\"../Game/Assets/\"",
@@ -14,12 +11,30 @@ project "Framework"
 	}
 
 	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }
+	excludes { "Source/QF_RendererBgfxExample_minimal.cpp", }
 
 	includedirs
 	{
 		"%{wks.location}/%{prj.name}/Source", -- "Source/QF_PCH.h", -- For precompiled headers to work in VS
 		"%{wks.location}/", -- Root for accessing library source
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
+		
+		-- "%{wks.location}/Libraries/bx/include", -- Required by bgfx
+		-- "%{wks.location}/Libraries/bx/include/compat/msvc", -- Required by bgfx
+		-- "%{wks.location}/Libraries/bimg/include", -- Required by bgfx
+		
+		-- Required by bgfx
+		-- "%{wks.location}/Libraries/bgfx/include",
+		-- "%{wks.location}/Libraries/bgfx/3rdparty",
+		-- "%{wks.location}/Libraries/bgfx/3rdparty/directx-headers/include/directx",
+		-- "%{wks.location}/Libraries/bgfx/3rdparty/khronos",
+		-- "%{wks.location}/Libraries/bx/include",
+		-- "%{wks.location}/Libraries/bx/include/compat/msvc",
+		-- "%{wks.location}/Libraries/bimg/include",
+		
+		"%{wks.location}/Libraries/bgfx/include",
+		"%{wks.location}/Libraries/bx/include",
+		"%{wks.location}/Libraries/bx/include/compat/msvc",
 	}
 	
 	-- disablewarnings { "warnings" }
@@ -29,11 +44,6 @@ project "Framework"
 	pchheader "QF_PCH.h"
 	pchsource "Source/QF_PCH.cpp"
 
-	rtti ("Off")
-
-	targetdir ("../bin/" .. OutputDir .. "/%{prj.name}")
-	objdir ("../bin/int/" .. OutputDir .. "/%{prj.name}")
-	
 	links
 	{
 		-- Projects
@@ -60,10 +70,18 @@ project "Framework"
 	}
 		
 	filter "system:windows"
-	   systemversion "latest"
+		links { "psapi", "gdi32.lib", }
+		systemversion "latest"
 
 	filter "configurations:Debug"
-		defines { "_QDebug", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QDebug",
+			"_Q32Bit",
+			"LibrariesDir=\"%{wks.location}/Libraries/\"",
+			LibraryDefines, 
+			"BX_CONFIG_DEBUG=1", -- Required by bgfx
+		}
 		-- More defines : "QWERKE_TRACKING_ALLOCATIONS", "_QTesting", "_QExample", "_QAdvancedApi", "_QSimpleApi"
 		runtime "Debug"
 		symbols "On"

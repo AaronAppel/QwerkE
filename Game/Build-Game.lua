@@ -1,11 +1,5 @@
-include "Libraries.lua"
-
 project "Game"
 	kind "ConsoleApp"
-	language "C++"
-	cppdialect "C++17"
-	targetdir "bin/%{cfg.buildcfg}"
-	staticruntime "off"
 	location ""
 	
 	defines
@@ -21,6 +15,9 @@ project "Game"
 		"key_ApplicationName=\"-applicationName\"",
 		"key_ProjectFileName=\"-projectFileName\"",
 		"key_UserName=\"-userName\"",
+		
+		-- "BX_CONFIG_DEBUG=1",
+		-- "__STDC_FORMAT_MACROS",
 	}
 	
 	debugargs -- User setting changes require VS reload
@@ -36,16 +33,21 @@ project "Game"
 		"call ../Scripts/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 
-	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }
+	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c", }
 
 	includedirs
 	{
-		"%{wks.location}/Editor/Source/", -- Include Editor source
+		"%{wks.location}/Editor/Source", -- Include Editor source
+		
+		-- Try to remove from Game
+		-- "%{wks.location}/Libraries/bx/include", -- Required by bgfx
+		-- "%{wks.location}/Libraries/bx/include/compat/msvc", -- Required by bgfx
+		-- "%{wks.location}/Libraries/bimg/include", -- Required by bgfx
+		-- "%{wks.location}/Libraries/bx/3rdparty", -- Required by bgfx
 	}
 
 	links
-	{	
-		"Framework",
+	{
 		"Editor",
 	}
 
@@ -56,11 +58,6 @@ project "Game"
 	
 	pchheader "QG_PCH.h"
 	pchsource "Source/QG_PCH.cpp"
-	
-	rtti ("Off")
-	
-	targetdir ("../bin/" .. OutputDir .. "/%{prj.name}")
-	objdir ("../bin/int/" .. OutputDir .. "/%{prj.name}")
 
 	filter "system:windows"
 	   systemversion "latest"
@@ -68,17 +65,12 @@ project "Game"
 
 	filter "configurations:Debug"
 	   defines { "_QDebug", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
-	   runtime "Debug"
-	   symbols "On"
 
 	filter "configurations:Release"
 	   defines { "_QRelease", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
-	   runtime "Release"
-	   optimize "On"
-	   symbols "On"
 
 	filter "configurations:Retail"
 	   defines { "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
-	   runtime "Release"
-	   optimize "On"
-	   symbols "Off"
+		runtime "Release"
+		symbols "off"
+		optimize "on"

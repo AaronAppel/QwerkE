@@ -75,16 +75,15 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>3rdparty;include;include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;_DEBUG;__STDC_FORMAT_MACROS;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;include\compat\msvc;3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/Zc:__cplusplus /wd4201 /wd4324 /Ob2 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -97,8 +96,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>3rdparty;include;include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_DEBUG;__STDC_FORMAT_MACROS;BX_CONFIG_DEBUG=1;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=0;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;include\compat\msvc;3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -107,9 +106,8 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/Zc:__cplusplus /wd4201 /wd4324 /Ob2 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -124,15 +122,14 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QWERKE_VERSION=0.01;_QWINDOWS;WIN32_LEAN_AND_MEAN;EngineName="QwerkE";__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>3rdparty;include;include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_DEBUG;__STDC_FORMAT_MACROS;BX_CONFIG_DEBUG=1;_HAS_EXCEPTIONS=0;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;include\compat\msvc;3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/Zc:__cplusplus /wd4201 /wd4324 /Ob2 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -141,7 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="3rdparty\ini\ini.h" />
     <ClInclude Include="include\bx\allocator.h" />
     <ClInclude Include="include\bx\bounds.h" />
     <ClInclude Include="include\bx\bx.h" />
@@ -212,40 +208,9 @@
     <ClInclude Include="include\bx\typetraits.h" />
     <ClInclude Include="include\bx\uint32_t.h" />
     <ClInclude Include="include\bx\url.h" />
-    <ClInclude Include="include\compat\freebsd\alloca.h" />
-    <ClInclude Include="include\compat\freebsd\dirent.h" />
-    <ClInclude Include="include\compat\freebsd\malloc.h" />
-    <ClInclude Include="include\compat\freebsd\signal.h" />
-    <ClInclude Include="include\compat\ios\malloc.h" />
-    <ClInclude Include="include\compat\linux\sal.h" />
-    <ClInclude Include="include\compat\mingw\alloca.h" />
-    <ClInclude Include="include\compat\mingw\dirent.h" />
-    <ClInclude Include="include\compat\mingw\sal.h" />
-    <ClInclude Include="include\compat\mingw\salieri.h" />
-    <ClInclude Include="include\compat\mingw\specstrings_strict.h" />
-    <ClInclude Include="include\compat\mingw\specstrings_undef.h" />
-    <ClInclude Include="include\compat\msvc\alloca.h" />
-    <ClInclude Include="include\compat\msvc\dirent.h" />
-    <ClInclude Include="include\compat\msvc\inttypes.h" />
-    <ClInclude Include="include\compat\msvc\pre1600\stdint.h" />
-    <ClInclude Include="include\compat\msvc\stdbool.h" />
-    <ClInclude Include="include\compat\osx\malloc.h" />
-    <ClInclude Include="include\tinystl\allocator.h" />
-    <ClInclude Include="include\tinystl\buffer.h" />
-    <ClInclude Include="include\tinystl\hash.h" />
-    <ClInclude Include="include\tinystl\hash_base.h" />
-    <ClInclude Include="include\tinystl\new.h" />
-    <ClInclude Include="include\tinystl\stddef.h" />
-    <ClInclude Include="include\tinystl\string.h" />
-    <ClInclude Include="include\tinystl\traits.h" />
-    <ClInclude Include="include\tinystl\unordered_map.h" />
-    <ClInclude Include="include\tinystl\unordered_set.h" />
-    <ClInclude Include="include\tinystl\vector.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3rdparty\catch\catch_amalgamated.cpp" />
     <ClCompile Include="src\allocator.cpp" />
-    <ClCompile Include="src\amalgamated.cpp" />
     <ClCompile Include="src\bounds.cpp" />
     <ClCompile Include="src\bx.cpp" />
     <ClCompile Include="src\commandline.cpp" />

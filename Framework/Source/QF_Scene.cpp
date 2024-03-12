@@ -1,7 +1,12 @@
 #include "QF_Scene.h"
 
+#ifdef _QENTT
+#include "Libraries/entt/entt.hpp"
+#endif // _QENTT
+
 #include "QC_StringHelpers.h"
 
+#include "QF_Entity.h"
 #include "QF_FileUtilities.h"
 #include "QF_GameObject.h"
 #include "QF_Input.h"
@@ -28,68 +33,106 @@ struct ExampleComponent2
     int member = 0;
 };
 
+static void OnComponentCameraConstruct(entt::registry& registry, entt::entity entity)
+{
+
+}
+
+struct ComponentCamera
+{
+    int placeholder = 0;
+
+    void Move()
+    {
+        const QwerkE::UserSettings& userSettings = QwerkE::Settings::GetUserSettings();
+
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
+        {
+            LOG_TRACE("{0} Camera move forward", __FUNCTION__);
+        }
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveBackward))
+        {
+            LOG_TRACE("{0} Camera move backward", __FUNCTION__);
+        }
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveLeft))
+        {
+            LOG_TRACE("{0} Camera move left", __FUNCTION__);
+        }
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveRight))
+        {
+            LOG_TRACE("{0} Camera move right", __FUNCTION__);
+        }
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveDown))
+        {
+            LOG_TRACE("{0} Camera move down", __FUNCTION__);
+        }
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveUp))
+        {
+            LOG_TRACE("{0} Camera move up", __FUNCTION__);
+        }
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_RotateRight))
+        {
+            LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
+        }
+        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_RotateLeft))
+        {
+            LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
+        }
+
+        const vec2& mouseScroll = QwerkE::Input::MouseScrollDelta();
+        if (QwerkE::Input::MouseScrollDelta().x != 0.f || QwerkE::Input::MouseScrollDelta().y != 0.f)
+        {
+        }
+    }
+};
+
 namespace QwerkE {
 
     Scene::Scene(const std::string& sceneFileName) :
         m_SceneFileName(sceneFileName)
     {
+        m_Registry.on_construct<ComponentCamera>().connect<&OnComponentCameraConstruct>();
+
+        m_EntityCamera = m_Registry.create();
+        Entity* qwerkeEntity = new Entity(this, m_EntityCamera);
+
+        m_Entities.insert(std::pair(m_EntityCamera, qwerkeEntity));
+
+        m_Registry.emplace<ComponentCamera>(m_EntityCamera, ComponentCamera());
     }
 
     Scene::~Scene()
     {
         UnloadScene();
-    }
 
-    void Scene::OnWindowResize(unsigned int width, unsigned int height)
-    {
-        SetupCameras();
+        for (auto& pair : m_Entities)
+        {
+            if (pair.second)
+            {
+                delete pair.second;
+                pair.second = nullptr;
+            }
+        }
+        m_Entities.clear();
+
+        // m_Registry.destroy(); // #TODO Deallocate entt
     }
 
     void Scene::Update(float deltatime)
     {
-        CameraInput(deltatime);
-
         if (m_IsPaused)
             return;
+
+        auto view = m_Registry.view<ComponentCamera>();
+        for (auto entity :view)
+        {
+            ComponentCamera& camera = m_Registry.get<ComponentCamera>(entity);
+            camera.Move();
+        }
 
         for (auto object : m_pGameObjects)
         {
             object.second->Update(deltatime);
-        }
-    }
-
-    void Scene::CameraInput(float deltatime)
-    {
-        const UserSettings& userSettings = Settings::GetUserSettings();
-
-        if (Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
-        {
-        }
-        if (Input::GetIsKeyDown(userSettings.key_camera_MoveBackward))
-        {
-        }
-        if (Input::GetIsKeyDown(userSettings.key_camera_MoveLeft))
-        {
-        }
-        if (Input::GetIsKeyDown(userSettings.key_camera_MoveRight))
-        {
-        }
-        if (Input::GetIsKeyDown(userSettings.key_camera_MoveDown))
-        {
-        }
-        if (Input::GetIsKeyDown(userSettings.key_camera_MoveUp))
-        {
-        }
-        if (Input::GetIsKeyDown(userSettings.key_camera_RotateRight))
-        {
-        }
-        if (Input::GetIsKeyDown(userSettings.key_camera_RotateLeft))
-        {
-        }
-
-        const vec2& mouseScroll = Input::MouseScrollDelta();
-        if (Input::MouseScrollDelta().x != 0.f || Input::MouseScrollDelta().y != 0.f)
-        {
         }
     }
 
@@ -120,10 +163,6 @@ namespace QwerkE {
                 return;
             }
         }
-    }
-
-    void Scene::SetupCameras()
-    {
     }
 
     bool Scene::AddLight(GameObject* light)
@@ -195,6 +234,14 @@ namespace QwerkE {
             m_pGameObjects.erase(object->GetName());
             delete object;
         }
+    }
+
+    Entity* Scene::CreateEntity()
+    {
+        entt::entity enttEntity = m_Registry.create();
+        Entity* entity = new Entity(this, enttEntity);
+        m_Entities.insert(std::pair(enttEntity, entity));
+        return m_Entities.find(enttEntity)->second;
     }
 
     GameObject* Scene::CreateNewObject()
@@ -280,7 +327,6 @@ namespace QwerkE {
 
         OnLoaded();
 
-        SetupCameras();
         LOG_TRACE("{0} \"{1}\" loaded from file", __FUNCTION__, otherSceneFilePath);
 
         m_IsLoaded = true;
@@ -307,7 +353,6 @@ namespace QwerkE {
 
         OnLoaded();
 
-        SetupCameras();
         LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
 
         m_IsLoaded = true;

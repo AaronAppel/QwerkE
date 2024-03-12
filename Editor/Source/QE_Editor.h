@@ -11,6 +11,7 @@ namespace QwerkE {
 
 		void OnReset();
 
+		void RunBgfxExample();
 	}
 
 }
