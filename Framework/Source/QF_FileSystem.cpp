@@ -20,10 +20,6 @@
 #include "Libraries/lodepng/lodepng.h"
 #endif
 
-#ifdef _QGLEW
-#include "Libraries/glew/glew.h"
-#endif
-
 #ifdef _QGLFW3
 #include "Libraries/glfw/QC_glfw3.h"
 #endif

@@ -9,7 +9,7 @@ LibraryDefines = {
 "_QENUM",
 "_QFLATHEADGAMES",
 -- "_QFREETYPE2",
-"_QGLEW",
+-- "_QGLEW",
 "_QGLFW3",
 "_QGLM",
 "_QLODEPNG",

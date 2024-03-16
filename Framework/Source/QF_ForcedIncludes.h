@@ -26,4 +26,8 @@ typedef glm::vec3 vec3;
 typedef glm::vec4 vec4;
 typedef glm::mat4 mat4;
 typedef glm::quat quat;
+
+// #TODO Expose more types like :
+// typedef glm::f32vec2 vec2; // #TODO Make vec2 a 4 byte float by default
+typedef glm::ivec2 vec2i;
 #endif

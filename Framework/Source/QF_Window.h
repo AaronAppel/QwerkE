@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QF_WindowCallbacks.h"
+#include "QF_Callbacks.h"
 
 namespace QwerkE {
 
@@ -9,25 +9,24 @@ namespace QwerkE {
         void Initialize();
         void Shutdown();
 
-        void Render();
-        void SwapBuffers(); // #TODO Only for loading font currently, so try to remove. Should be in Renderer
+        void ImGuiRender();
 
         void NewFrame();
 
         void RequestClose();
         bool CloseRequested();
 
-        vec2 GetResolution();
-        vec2 GetAspectRatio();
+        const vec2 GetResolution();
+        float GetAspectRatio();
 
         void* GetContext();
 
         bool IsMinimized();
 
-        void RegisterFramebufferResizedCallback(FramebufferResizedCallback* framebufferResizedCallback);
-        void RegisterWindowResizedCallback(WindowResizedCallback* windowResizedCallback);
+        void RegisterFramebufferResizedCallback(CallBacks::FramebufferResizedCallback* framebufferResizedCallback);
+        void RegisterWindowResizedCallback(CallBacks::WindowResizedCallback* windowResizedCallback);
 
-        void RegisterKeyCallback(KeyCallback* keyCallback);
+        void RegisterKeyCallback(CallBacks::KeyCallback* keyCallback);
     }
 
 }

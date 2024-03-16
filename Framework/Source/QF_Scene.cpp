@@ -15,6 +15,13 @@
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
 
+// #TODO Remove test code
+#include "QF_ComponentPrint.h"
+#include "QF_ScriptPrint.h"
+#include "QF_NativeScript.h"
+
+#include "Libraries/bgfx/include/bgfx/bgfx.h"
+
 struct ExampleComponent
 {
     ExampleComponent() = default;
@@ -35,7 +42,6 @@ struct ExampleComponent2
 
 static void OnComponentCameraConstruct(entt::registry& registry, entt::entity entity)
 {
-
 }
 
 struct ComponentCamera
@@ -95,15 +101,38 @@ namespace QwerkE {
 
         m_EntityCamera = m_Registry.create();
         Entity* qwerkeEntity = new Entity(this, m_EntityCamera);
+        const bool hasComponent = qwerkeEntity->HasComponent<ComponentCamera>();
 
         m_Entities.insert(std::pair(m_EntityCamera, qwerkeEntity));
 
         m_Registry.emplace<ComponentCamera>(m_EntityCamera, ComponentCamera());
-    }
+        const bool nowHasComponent = qwerkeEntity->HasComponent<ComponentCamera>();
+
+        qwerkeEntity->AddComponent<NativeScriptComponent>().Bind<ScriptablePrint>(qwerkeEntity);
+
+        // m_Registry.emplace<ScriptablePrint>(m_EntityCamera, qwerkeEntity);
+
+        entt::entity m_EntityScript = m_Registry.create();
+        m_Registry.emplace<ComponentPrint>(m_EntityScript);
+
+        m_Registry.emplace<ComponentPrint>(m_Registry.create());
+        m_Registry.emplace<ComponentPrint>(m_Registry.create());
+}
 
     Scene::~Scene()
     {
         UnloadScene();
+
+        auto viewScripts = m_Registry.view<NativeScriptComponent>();
+        for (auto entity : viewScripts)
+        {
+            NativeScriptComponent& script = m_Registry.get<NativeScriptComponent>(entity);
+            if (script.Instance)
+            {
+                script.OnDestroyFunction(script.Instance);
+                script.DeleteFunction();
+            }
+        }
 
         for (auto& pair : m_Entities)
         {
@@ -118,10 +147,20 @@ namespace QwerkE {
         // m_Registry.destroy(); // #TODO Deallocate entt
     }
 
-    void Scene::Update(float deltatime)
+    void Scene::Update(float deltaTime)
     {
         if (m_IsPaused)
             return;
+
+        m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& script)
+        {
+            if (!script.Instance)
+            {
+                script.InstantiateFunction();
+                script.OnCreateFunction(script.Instance);
+            }
+            // script.OnUpdateFunction(script.Instance, deltaTime);
+        });
 
         auto view = m_Registry.view<ComponentCamera>();
         for (auto entity :view)
@@ -130,9 +169,16 @@ namespace QwerkE {
             camera.Move();
         }
 
+        auto viewPrints = m_Registry.view<ComponentPrint>();
+        for (auto entity : viewPrints)
+        {
+            ComponentPrint& print = m_Registry.get<ComponentPrint>(entity);
+            bgfx::dbgTextPrintf(5, print.Position(), 0x0f, "In update ComponentPrint #%s", print.Content().c_str());
+        }
+
         for (auto object : m_pGameObjects)
         {
-            object.second->Update(deltatime);
+            object.second->Update(deltaTime);
         }
     }
 
@@ -239,6 +285,8 @@ namespace QwerkE {
     Entity* Scene::CreateEntity()
     {
         entt::entity enttEntity = m_Registry.create();
+        // #TODO Add anycomponents like a transform. Also look at a no-transform version for directors
+        // Could take in an optional tag/enum value to assign
         Entity* entity = new Entity(this, enttEntity);
         m_Entities.insert(std::pair(enttEntity, entity));
         return m_Entities.find(enttEntity)->second;

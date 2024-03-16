@@ -1,12 +1,28 @@
+include "Libraries.lua"
+
 project "bgfxExampleOrginal"
 	kind "StaticLib"
 	location ""
 
 	files { "**.h", "**.cpp", }
+	
+	excludes
+	{
+		"QF_RendererBgfxExampleOriginal_prev.cpp",
+		"QF_RendererBgfxExampleOriginal_HelloWorld.cpp",
+		"QF_RendererBgfxExampleOriginal_runAppArchitecture",
+		
+		"common/entry/entry_android.cpp",
+		"common/entry/entry_html5.cpp",
+		"common/entry/entry_x11.cpp",
+		-- "common/entry/entry_glfw.cpp",
+		"common/entry/entry_windows.cpp",
+		"common/entry/entry_noop.cpp",
+	}
 
 	includedirs
 	{
-		"%{wks.location}/Libraries/",
+		"%{wks.location}/Libraries/", -- glfw, maybe others
 		"%{wks.location}/Libraries/bgfx/include",
 		"%{wks.location}/Libraries/bgfx/3rdparty",
 		"%{wks.location}/Libraries/bx/include",
@@ -18,7 +34,11 @@ project "bgfxExampleOrginal"
 	links
 	{
 		"bgfx",
+		"%{LibraryLib.glfw}",
 	}
+
+	defines { "ENTRY_CONFIG_USE_GLFW", }
+	
 
 	filter "system:windows"
 		links { "psapi" }

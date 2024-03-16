@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QF_RendererBgfxExampleOriginal.cpp" />
+    <ClCompile Include="QF_RendererBgfxExampleOriginal_runAppArchitecture.cpp" />
     <ClCompile Include="common\bgfx_utils.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -238,25 +239,10 @@
     <ClCompile Include="common\entry\entry.cpp">
       <Filter>common\entry</Filter>
     </ClCompile>
-    <ClCompile Include="common\entry\entry_android.cpp">
-      <Filter>common\entry</Filter>
-    </ClCompile>
     <ClCompile Include="common\entry\entry_glfw.cpp">
       <Filter>common\entry</Filter>
     </ClCompile>
-    <ClCompile Include="common\entry\entry_html5.cpp">
-      <Filter>common\entry</Filter>
-    </ClCompile>
-    <ClCompile Include="common\entry\entry_noop.cpp">
-      <Filter>common\entry</Filter>
-    </ClCompile>
     <ClCompile Include="common\entry\entry_sdl.cpp">
-      <Filter>common\entry</Filter>
-    </ClCompile>
-    <ClCompile Include="common\entry\entry_windows.cpp">
-      <Filter>common\entry</Filter>
-    </ClCompile>
-    <ClCompile Include="common\entry\entry_x11.cpp">
       <Filter>common\entry</Filter>
     </ClCompile>
     <ClCompile Include="common\entry\input.cpp">

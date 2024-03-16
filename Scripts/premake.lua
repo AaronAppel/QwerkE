@@ -3,7 +3,7 @@ include "solution_items.lua"
 workspace "QwerkE Game"
 
 	-- Workspace specific settings
-	startproject "Project2" -- "Game"
+	startproject "Game"
 	location "../"
 
 	-- Solution wide shared settings
@@ -45,11 +45,12 @@ workspace "QwerkE Game"
 	
 	group "Dependencies"
 	include "../Libraries/bgfx/Build-bgfx.lua"
+	include "../Libraries/bgfxImgui/Build-bgfxImgui.lua"
 	include "../Libraries/bimg/Build-bimg.lua"
 	include "../Libraries/bx/Build-bx.lua"
 	include "../Libraries/cJSON/Build-cJSON.lua"
 	include "../Libraries/FlatHeadGames/Build-FlatHeadGames.lua"
-	include "../Libraries/imgui/Build-imgui.lua"
+	-- include "../Libraries/imgui/Build-imgui.lua"
 	include "../Libraries/lodepng/Build-lodepng.lua"
 	include "../Libraries/Mirror/Build-Mirror.lua"
 	group ""
@@ -59,8 +60,3 @@ workspace "QwerkE Game"
 	include "../Framework/Build-Framework.lua"
 	include "../Editor/Build-Editor.lua"
 	include "../Game/Build-Game.lua"
-
-	include "../bgfxExampleMinimal/Build-bgfxExampleMinimal.lua"
-	include "../bgfxExampleOrginal/Build-bgfxExampleOriginal.lua"
-
-	include "../Project2/Build-Project2.lua"

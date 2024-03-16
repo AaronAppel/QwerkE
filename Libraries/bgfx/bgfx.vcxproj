@@ -76,7 +76,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;_DEBUG;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\bx\include;..\bx\include\compat\msvc;..\bimg\include;include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -97,7 +97,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_DEBUG;BX_CONFIG_DEBUG=1;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\bx\include;..\bx\include\compat\msvc;..\bimg\include;include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -123,7 +123,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_DEBUG;BX_CONFIG_DEBUG=1;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\bx\include;..\bx\include\compat\msvc;..\bimg\include;include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -138,6 +138,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rdparty\dear-imgui\imconfig.h" />
+    <ClInclude Include="3rdparty\dear-imgui\imgui.h" />
+    <ClInclude Include="3rdparty\dear-imgui\imgui_internal.h" />
+    <ClInclude Include="3rdparty\dear-imgui\imgui_user.h" />
+    <ClInclude Include="3rdparty\dear-imgui\imstb_rectpack.h" />
+    <ClInclude Include="3rdparty\dear-imgui\imstb_textedit.h" />
+    <ClInclude Include="3rdparty\dear-imgui\imstb_truetype.h" />
     <ClInclude Include="include\bgfx\bgfx.h" />
     <ClInclude Include="include\bgfx\c99\bgfx.h" />
     <ClInclude Include="include\bgfx\defines.h" />
@@ -180,6 +187,13 @@
     <ClInclude Include="src\vs_debugfont.bin.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdparty\dear-imgui\imgui.cpp" />
+    <ClCompile Include="3rdparty\dear-imgui\imgui_demo.cpp" />
+    <ClCompile Include="3rdparty\dear-imgui\imgui_draw.cpp" />
+    <ClCompile Include="3rdparty\dear-imgui\imgui_tables.cpp" />
+    <ClCompile Include="3rdparty\dear-imgui\imgui_widgets.cpp" />
+    <ClCompile Include="3rdparty\meshoptimizer\src\indexcodec.cpp" />
+    <ClCompile Include="3rdparty\meshoptimizer\src\vertexcodec.cpp" />
     <ClCompile Include="src\bgfx.cpp" />
     <ClCompile Include="src\debug_renderdoc.cpp" />
     <ClCompile Include="src\dxgi.cpp" />
@@ -200,6 +214,9 @@
     <ClCompile Include="src\shader_spirv.cpp" />
     <ClCompile Include="src\topology.cpp" />
     <ClCompile Include="src\vertexlayout.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="3rdparty\dear-imgui\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bimg\bimg.vcxproj">

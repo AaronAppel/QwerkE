@@ -592,8 +592,6 @@ BX_PRAGMA_DIAGNOSTIC_POP();
 		bx::free(g_allocator, apps);
 	}
 
-#if 0 // Commented out  - Aaron Appel
-
 	int main(int _argc, const char* const* _argv)
 	{
 		//DBG(BX_COMPILER_NAME " / " BX_CPU_NAME " / " BX_ARCH_NAME " / " BX_PLATFORM_NAME);
@@ -648,7 +646,7 @@ restart:
 		s_restartArgs[0] = '\0';
 		if (0 == s_numApps)
 		{
-			result = ::_main_(_argc, (char**)_argv);
+			result = _main_(_argc, (char**)_argv);
 		}
 		else
 		{
@@ -676,7 +674,6 @@ restart:
 
 		return result;
 	}
-#endif
 
 	WindowState s_window[ENTRY_CONFIG_MAX_WINDOWS];
 

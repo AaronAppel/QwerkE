@@ -32,30 +32,6 @@
             }
           },
           {
-            "id": "c3921b3663701295",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Open AL Example.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "01f1c0f19399cc0c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Raknet Example.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "c191bbf60e027577",
             "type": "leaf",
             "state": {
@@ -66,33 +42,9 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "2dff0da8163c3020",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Kohi Engine.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6c3de1a7b3c4c355",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "BGFX OpenGL Version.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -152,7 +104,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BGFX OpenGL Version.md"
+                "file": "C++17 Fix.md"
               }
             }
           }
@@ -195,7 +147,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BGFX OpenGL Version.md",
+                "file": "C++17 Fix.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -207,7 +159,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BGFX OpenGL Version.md",
+                "file": "C++17 Fix.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -233,15 +185,16 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "6c3de1a7b3c4c355",
+  "active": "c191bbf60e027577",
   "lastOpenFiles": [
-    "Kohi Engine.md",
-    "BGFX OpenGL Version.md",
-    "C++17 Fix.md",
-    "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
-    "GLFW Window Center Example.md",
     "Raknet Example.md",
     "Open AL Example.md",
+    "Kohi Engine.md",
+    "GLFW Window Center Example.md",
+    "BGFX OpenGL Version.md",
+    "GLM Basic Includes.md",
+    "C++17 Fix.md",
+    "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
     "Editor Config Files.md",
     "README.md",
     "ZZ Shared Vault Files ❗/C++ Tests.md",
@@ -263,7 +216,6 @@
     "ZZ Shared Vault Files ❗/To Watch.md",
     "References/Visual Studio.md",
     "QwerkE Standards/Language Versions.md",
-    "QwerkE Versioning.md",
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
     "Development/Resolved",

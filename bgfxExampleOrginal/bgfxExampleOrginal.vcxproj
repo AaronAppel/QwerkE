@@ -75,7 +75,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;ENTRY_CONFIG_USE_GLFW;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Libraries;..\Libraries\bgfx\include;..\Libraries\bgfx\3rdparty;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;..\Libraries\bimg\include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -92,14 +92,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;ENTRY_CONFIG_USE_GLFW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Libraries;..\Libraries\bgfx\include;..\Libraries\bgfx\3rdparty;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;..\Libraries\bimg\include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -121,14 +121,14 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;ENTRY_CONFIG_USE_GLFW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Libraries;..\Libraries\bgfx\include;..\Libraries\bgfx\3rdparty;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;..\Libraries\bimg\include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -143,7 +143,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <Lib>
-      <AdditionalDependencies>psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -214,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QF_RendererBgfxExampleOriginal.cpp" />
+    <ClCompile Include="QF_RendererBgfxExampleOriginal_runAppArchitecture.cpp" />
     <ClCompile Include="common\bgfx_utils.cpp" />
     <ClCompile Include="common\camera.cpp" />
     <ClCompile Include="common\cube_atlas.cpp" />
@@ -221,13 +222,8 @@
     <ClCompile Include="common\entry\cmd.cpp" />
     <ClCompile Include="common\entry\dialog.cpp" />
     <ClCompile Include="common\entry\entry.cpp" />
-    <ClCompile Include="common\entry\entry_android.cpp" />
     <ClCompile Include="common\entry\entry_glfw.cpp" />
-    <ClCompile Include="common\entry\entry_html5.cpp" />
-    <ClCompile Include="common\entry\entry_noop.cpp" />
     <ClCompile Include="common\entry\entry_sdl.cpp" />
-    <ClCompile Include="common\entry\entry_windows.cpp" />
-    <ClCompile Include="common\entry\entry_x11.cpp" />
     <ClCompile Include="common\entry\input.cpp" />
     <ClCompile Include="common\example-glue.cpp" />
     <ClCompile Include="common\font\font_manager.cpp" />

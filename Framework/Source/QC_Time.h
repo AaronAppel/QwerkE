@@ -24,6 +24,8 @@ namespace QwerkE {
             float m_Duration = 0.f;
 		};
 
+        // #TODO TrackGameTime differently, using OnGamePaused(bool paused = true/false). Allows lifetimes to be game time relative
+
         void InitStartTime();
         const double& StartTime();
 

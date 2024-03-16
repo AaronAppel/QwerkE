@@ -5,7 +5,7 @@
 #endif
 
 #ifdef _QGLFW3
-// #define GLFW_EXPOSE_NATIVE_WIN32
+#define GLFW_EXPOSE_NATIVE_WIN32
 #include "Libraries/glfw/glfw3.h"
 #endif
 
@@ -14,6 +14,7 @@
 #endif
 
 #include "QF_Debug.h"
+#include "QF_Settings.h"
 
 const char* g_WindowTitle = "QwerkEngine";
 
@@ -23,14 +24,16 @@ namespace QwerkE {
 
         bool s_windowIsMinimized = false;
         bool s_closeRequested = false;
-        vec2 s_aspectRatio = vec2(16.f, 9.f);
+        float s_aspectRatio = 16.f / 9.f;
 
-        FramebufferResizedCallback* s_FramebufferResizedCallback = nullptr;
-        WindowResizedCallback* s_WindowResizedCallback = nullptr;
-        KeyCallback* s_KeyCallback = nullptr;
+        CallBacks::FramebufferResizedCallback* s_FramebufferResizedCallback = nullptr;
+        CallBacks::WindowResizedCallback* s_WindowResizedCallback = nullptr;
+        CallBacks::KeyCallback* s_KeyCallback = nullptr;
 
     #ifdef _QGLFW3
         GLFWwindow* s_window = nullptr;
+
+        void local_CheckGlfwErrors();
 
         void local_error_callback(int error, const char* description)
         {
@@ -72,8 +75,6 @@ namespace QwerkE {
         {
             s_windowIsMinimized = iconified == 1;
         }
-
-        void local_CheckGlfwErrors();
     #endif
 
         void Window::Initialize()
@@ -82,13 +83,17 @@ namespace QwerkE {
             const int glfwInitCode = glfwInit();
             ASSERT(glfwInitCode == 1, "Error loading GLFW step!");
 
+#if defined(_QOPENGL) && !defined(_QBGFX)
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Using OpenGL 4.3
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
             glfwWindowHint(GLFW_SAMPLES, 8);
-
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
-
+#elif defined(_QBGFX)
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Create future GLFW windows without a OpenGL contexts
+#else
+#error Define graphics library!
+#endif
             glfwWindowHint(GLFW_RED_BITS, 8);
             glfwWindowHint(GLFW_GREEN_BITS, 8);
             glfwWindowHint(GLFW_BLUE_BITS, 8);
@@ -96,17 +101,23 @@ namespace QwerkE {
             glfwWindowHint(GLFW_DEPTH_BITS, 0);
             glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
-            // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor();
+            // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
-            vec2 resolution = vec2(1600, 900); // #TODO Fix hard code
-            s_window = glfwCreateWindow((int)resolution.x, (int)resolution.y, g_WindowTitle, NULL, NULL);
+            const EngineSettings& engineSettings = Settings::GetEngineSettings();
+            s_window = glfwCreateWindow((int)engineSettings.windowWidthPixels, (int)engineSettings.windowHeightPixels, g_WindowTitle, NULL, NULL);
             if (!s_window)
             {
                 local_CheckGlfwErrors();
             }
-            glfwSwapInterval(0); // TODO: Add VSynch control and toggling
+            s_aspectRatio = engineSettings.windowWidthPixels / engineSettings.windowHeightPixels;
+
+            glfwSwapInterval(0); // #TODO Use engineSettings.vSyncEnabled
             glfwMakeContextCurrent(s_window);
-            glfwFocusWindow(s_window);
+            const bool wantWindowFocus = false; // #TODO Add option for window focus (I don't like auto focus)
+            if (wantWindowFocus)
+            {
+                glfwFocusWindow(s_window);
+            }
 
             glfwSetErrorCallback(local_error_callback);
             glfwSetFramebufferSizeCallback(s_window, local_framebuffer_size_callback);
@@ -116,7 +127,6 @@ namespace QwerkE {
             // glfwSetDropCallback(s_window, local_file_drop_callback);
 
             glfwSetKeyCallback(s_window, key_callback);
-
     #endif
 
     #ifdef _QGLEW
@@ -169,7 +179,7 @@ namespace QwerkE {
     #endif
         }
 
-        void Window::Render()
+        void Window::ImGuiRender() // #TODO Move to Renderer
         {
     #ifdef _QDEARIMGUI
             if (s_windowIsMinimized)
@@ -196,14 +206,6 @@ namespace QwerkE {
     #endif
             }
     #endif
-            SwapBuffers();
-        }
-
-        void Window::SwapBuffers()
-        {
-    #ifdef _QGLFW3
-            glfwSwapBuffers(s_window);
-    #endif
         }
 
         void Window::NewFrame()
@@ -226,14 +228,14 @@ namespace QwerkE {
             return s_closeRequested;
         }
 
-        vec2 Window::GetResolution()
+        const vec2 Window::GetResolution()
         {
             int width, height;
             glfwGetWindowSize(s_window, &width, &height);
             return vec2(width, height);
         }
 
-        vec2 Window::GetAspectRatio()
+        float Window::GetAspectRatio()
         {
             return s_aspectRatio;
         }
@@ -248,17 +250,17 @@ namespace QwerkE {
             return s_windowIsMinimized;
         }
 
-        void RegisterFramebufferResizedCallback(FramebufferResizedCallback* framebufferResizedCallback)
+        void RegisterFramebufferResizedCallback(CallBacks::FramebufferResizedCallback* framebufferResizedCallback)
         {
             s_FramebufferResizedCallback = framebufferResizedCallback;
         }
 
-        void RegisterWindowResizedCallback(WindowResizedCallback* windowResizedCallback)
+        void RegisterWindowResizedCallback(CallBacks::WindowResizedCallback* windowResizedCallback)
         {
             s_WindowResizedCallback = windowResizedCallback;
         }
 
-        void RegisterKeyCallback(KeyCallback* keyCallback)
+        void RegisterKeyCallback(CallBacks::KeyCallback* keyCallback)
         {
             s_KeyCallback = keyCallback;
         }

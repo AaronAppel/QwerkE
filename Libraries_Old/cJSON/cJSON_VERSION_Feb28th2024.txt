@@ -1,3 +1,0 @@
-Latest version of cJSON downloaded from :
-https://github.com/DaveGamble/cJSON
-On February 28th 2024

@@ -8,7 +8,7 @@
 #if ENTRY_CONFIG_USE_GLFW
 
 #define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 #if GLFW_VERSION_MINOR < 2
 #	error "GLFW 3.2 or later is required"

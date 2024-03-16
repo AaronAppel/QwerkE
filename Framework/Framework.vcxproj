@@ -76,8 +76,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\3rdparty;..\Libraries\bgfx\include;..\Libraries\bimg\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -94,7 +94,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\glew\glew32d.lib;..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -102,8 +102,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\3rdparty;..\Libraries\bgfx\include;..\Libraries\bimg\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -125,7 +125,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\glew\glew32d.lib;..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
@@ -133,8 +133,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLEW;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\3rdparty;..\Libraries\bgfx\include;..\Libraries\bimg\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -156,7 +156,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\glew\glew32d.lib;..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -167,6 +167,8 @@
     <ClInclude Include="Source\QC_Time.h" />
     <ClInclude Include="Source\QC_TypeDefs.h" />
     <ClInclude Include="Source\QF_AssetLoadedEvent.h" />
+    <ClInclude Include="Source\QF_Callbacks.h" />
+    <ClInclude Include="Source\QF_ComponentPrint.h" />
     <ClInclude Include="Source\QF_Constants.h" />
     <ClInclude Include="Source\QF_Debug.h" />
     <ClInclude Include="Source\QF_Entity.h" />
@@ -185,17 +187,19 @@
     <ClInclude Include="Source\QF_Log.h" />
     <ClInclude Include="Source\QF_Math.h" />
     <ClInclude Include="Source\QF_MyFileWriter.h" />
+    <ClInclude Include="Source\QF_NativeScript.h" />
     <ClInclude Include="Source\QF_PCH.h" />
     <ClInclude Include="Source\QF_PathDefines.h" />
     <ClInclude Include="Source\QF_PrintFunctions.h" />
     <ClInclude Include="Source\QF_Profile.h" />
     <ClInclude Include="Source\QF_Renderer.h" />
+    <ClInclude Include="Source\QF_RendererTempData.h" />
     <ClInclude Include="Source\QF_Scene.h" />
     <ClInclude Include="Source\QF_Scenes.h" />
+    <ClInclude Include="Source\QF_ScriptPrint.h" />
     <ClInclude Include="Source\QF_Serialization.h" />
     <ClInclude Include="Source\QF_Settings.h" />
     <ClInclude Include="Source\QF_Window.h" />
-    <ClInclude Include="Source\QF_WindowCallbacks.h" />
     <ClInclude Include="Source\QF_eKeys.h" />
   </ItemGroup>
   <ItemGroup>
@@ -238,9 +242,6 @@
     </ProjectReference>
     <ProjectReference Include="..\Libraries\FlatHeadGames\FlatHeadGames.vcxproj">
       <Project>{AB46D736-1707-536D-E041-9CEA4CC19749}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Libraries\imgui\imgui.vcxproj">
-      <Project>{0098A80F-6CAC-D0C0-352E-7420A101CDF1}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\lodepng\lodepng.vcxproj">
       <Project>{4EBC8887-BA9B-0723-C3B3-92F92F126E84}</Project>

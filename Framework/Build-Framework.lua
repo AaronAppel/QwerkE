@@ -16,23 +16,12 @@ project "Framework"
 	includedirs
 	{
 		"%{wks.location}/%{prj.name}/Source", -- "Source/QF_PCH.h", -- For precompiled headers to work in VS
-		"%{wks.location}/", -- Root for accessing library source
+		"%{wks.location}/", -- Root for #including "Libraries/..."
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
 		
-		-- "%{wks.location}/Libraries/bx/include", -- Required by bgfx
-		-- "%{wks.location}/Libraries/bx/include/compat/msvc", -- Required by bgfx
-		-- "%{wks.location}/Libraries/bimg/include", -- Required by bgfx
-		
-		-- Required by bgfx
-		-- "%{wks.location}/Libraries/bgfx/include",
-		-- "%{wks.location}/Libraries/bgfx/3rdparty",
-		-- "%{wks.location}/Libraries/bgfx/3rdparty/directx-headers/include/directx",
-		-- "%{wks.location}/Libraries/bgfx/3rdparty/khronos",
-		-- "%{wks.location}/Libraries/bx/include",
-		-- "%{wks.location}/Libraries/bx/include/compat/msvc",
-		-- "%{wks.location}/Libraries/bimg/include",
-		
+		"%{wks.location}/Libraries/bgfx/3rdparty",
 		"%{wks.location}/Libraries/bgfx/include",
+		"%{wks.location}/Libraries/bimg/include",
 		"%{wks.location}/Libraries/bx/include",
 		"%{wks.location}/Libraries/bx/include/compat/msvc",
 	}
@@ -50,12 +39,12 @@ project "Framework"
 		"cJSON",
 		"bgfx",
 		"FlatHeadGames",
-		"imgui",
+		-- "imgui",
 		"lodepng",
 		"Mirror",
 		
 		-- Libraries .lib/.dll
-		"%{LibraryLib.glew}",
+		-- "%{LibraryLib.glew}",
 		"%{LibraryLib.glfw}",
 		"%{LibraryLib.OpenAL}",
 		"opengl32.lib",
@@ -70,7 +59,7 @@ project "Framework"
 	}
 		
 	filter "system:windows"
-		links { "psapi", "gdi32.lib", }
+		links { "psapi", } -- bgfx requires psapi
 		systemversion "latest"
 
 	filter "configurations:Debug"

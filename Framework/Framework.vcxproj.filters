@@ -74,9 +74,6 @@
     <ClCompile Include="Source\QF_Renderer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QF_RendererBgfxExample.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -163,14 +160,24 @@
     <ClInclude Include="Source\QF_Serialization.h">
       <Filter>File\Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_WindowCallbacks.h">
-      <Filter>Window</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_Entity.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Renderer.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_RendererTempData.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Callbacks.h" />
+    <ClInclude Include="Source\QF_ComponentPrint.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ScriptPrint.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_NativeScript.h">
+      <Filter>Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +216,12 @@
     </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{e053b3d5-3dc4-4af2-9b68-6ad556038b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{96c480e2-99c4-4a6f-b574-fa45682e4b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{5b33b51b-906a-4c60-acb7-99eb685eb3db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -33,8 +33,6 @@ namespace QwerkE {
 			// keyFuncId = Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc);
 			// keyFuncId2 = Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc2);
 
-			Window::SwapBuffers();
-
 			return eOperationResult::Success;
 		}
 
@@ -74,7 +72,6 @@ namespace QwerkE {
 		void Draw()
 		{
 			Scenes::DrawCurrentScene();
-			Window::Render();
 			Renderer::EndFrame();
 		}
 

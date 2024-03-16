@@ -44,7 +44,7 @@ project "Editor"
 		-- Projects
 		"FlatHeadGames",
 		"Framework",
-		"imgui",
+		-- "imgui",
 		"Mirror",
 		
 		-- Libraries .lib/.dll

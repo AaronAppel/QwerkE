@@ -25,7 +25,7 @@ namespace QwerkE {
         // };
     };
 
-    struct EngineSettings
+    struct EngineSettings // #TODO Rename to FrameworkSettings
     {
         bool isDirty = false;
 
@@ -40,7 +40,9 @@ namespace QwerkE {
 
         bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
 
-        // Editor UI
+        bool vSyncEnabled = false;
+
+        // Editor UI // #TODO Make EditorSettings struct
         bool showingSchematicsEditor = false;
         bool showingExampleWindow = false;
         bool showingSettingsEditor = false;

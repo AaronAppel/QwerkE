@@ -81,6 +81,7 @@ namespace QwerkE {
 
         entt::registry m_Registry;
         entt::entity m_EntityCamera = entt::null;
+        entt::entity m_EntityScript = entt::null;
         std::map<entt::entity, Entity*> m_Entities;
 
         MIRROR_PRIVATE_MEMBERS

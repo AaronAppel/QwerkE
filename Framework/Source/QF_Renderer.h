@@ -1,10 +1,12 @@
 #pragma once
 
+#include "QF_Enums.h"
+
 namespace QwerkE {
 
 	namespace Renderer {
 
-		void Initialize();
+		eOperationResult Initialize();
 		void EndFrame();
 		void Shutdown();
 
