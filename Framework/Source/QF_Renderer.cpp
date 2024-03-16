@@ -34,6 +34,7 @@
 #include "QF_Window.h"
 
 #ifdef _QBGFX
+#include "QF_RendererHelpers.h"
 #include "QF_RendererTempData.h"
 #endif
 
@@ -49,10 +50,9 @@ namespace QwerkE {
 
 		bgfx::VertexBufferHandle mVbh; // #TODO Remove test code
 		bgfx::IndexBufferHandle mIbh;
-
-		Mesh* m_mesh;
-
 		bgfx::ProgramHandle mProgram;
+
+		Mesh* m_mesh = nullptr;
 #endif
 
 // #ifdef _QDEARIMGUI
@@ -129,7 +129,9 @@ namespace QwerkE {
 			mVbh = bgfx::createVertexBuffer(bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)), PosColorVertex::ms_layout);
 			mIbh = bgfx::createIndexBuffer(bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList)));
 
+#ifdef _QDebug
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
+#endif
 
 			// bgfx::ShaderHandle vsh = myLoadShader("vs_mesh.bin");
 			// bgfx::ShaderHandle fsh = myLoadShader("fs_mesh.bin");
@@ -140,7 +142,7 @@ namespace QwerkE {
 			// Create program from shaders.
 			// mProgram = loadProgram("vs_mesh", "fs_mesh");
 
-			// m_mesh = meshLoad("meshes/bunny.bin");
+			// m_mesh = myMeshLoad("meshes/bunny.bin");
 
 #ifdef _QDebug
 			// Input::OnKeyCallback(OnKeyEvent)
@@ -178,12 +180,13 @@ namespace QwerkE {
 #ifdef _QGLM
 			s_ElapsedTime += Time::FrameDelta();
 
-			const glm::vec3 at = { 0.f, 0.f,   0.f };
+			const glm::vec3 at =  { 0.f, 0.f,  0.f };
 			const glm::vec3 eye = { 0.f, 0.f, -35.f };
-			const glm::vec3 up = { 0.f, 1.f, 0.f };
+			const glm::vec3 up =  { 0.f, 1.f,  0.f };
 
 			glm::mat4 view = glm::lookAt(eye, at, up);
 			glm::mat4 proj = glm::perspective(glm::radians(60.0f), size.x / size.y, .1f, 100.f);
+
 #ifdef _QBGFX
 			bgfx::setViewTransform(0, &view[0][0], &proj[0][0]);
 
@@ -221,7 +224,9 @@ namespace QwerkE {
 				}
 			}
 
+#ifdef _QDebug
 			bgfx::setDebug(s_showStats ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT); // Enable stats or debug text
+#endif
 			bgfx::frame();
 			bgfx::touch(s_ViewIdMain); // View s_ViewIdMain is cleared if no other draw calls are submitted to view s_ViewIdMain
 			bgfx::dbgTextClear();

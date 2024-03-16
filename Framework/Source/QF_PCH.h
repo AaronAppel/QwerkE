@@ -59,11 +59,4 @@
 #pragma warning( default : 6285 )
 #endif
 
-#ifdef _QPTHREADS
-#ifndef HAVE_STRUCT_TIMESPEC
-#define HAVE_STRUCT_TIMESPEC // #TODO Remove have struct pthread order dependency
-#endif
-#include "Libraries/pThreads/pthread.h"
-#endif
-
 // NOTE: Add additional .h files below, if they rarely change

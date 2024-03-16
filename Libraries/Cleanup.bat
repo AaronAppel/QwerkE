@@ -30,3 +30,8 @@ pushd Mirror
 del *.vcxproj
 del *.user
 popd
+
+pushd spdlog
+del *.vcxproj
+del *.user
+popd

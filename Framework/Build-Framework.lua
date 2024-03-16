@@ -42,13 +42,12 @@ project "Framework"
 		-- "imgui",
 		"lodepng",
 		"Mirror",
+		"spdlog",
 		
 		-- Libraries .lib/.dll
 		-- "%{LibraryLib.glew}",
 		"%{LibraryLib.glfw}",
-		"%{LibraryLib.OpenAL}",
 		"opengl32.lib",
-		"%{LibraryLib.pthreads}",
 	}
 	
 	vpaths -- VS Filters

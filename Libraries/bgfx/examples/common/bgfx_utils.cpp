@@ -23,6 +23,31 @@ namespace stl = tinystl;
 
 #include <bimg/decode.h>
 
+//Modified by Aaron Appel Mar 16th 2024
+namespace entry
+{
+	static bx::FileReaderI* s_fileReader = NULL;
+	static bx::FileWriterI* s_fileWriter = NULL;
+
+	// bx::AllocatorI* g_allocator = getDefaultAllocator();
+
+	bx::FileReaderI* getFileReader()
+	{
+		return s_fileReader;
+	}
+
+	bx::AllocatorI* getAllocator()
+	{
+		if (NULL == g_allocator)
+		{
+			g_allocator = getDefaultAllocator();
+		}
+
+		return g_allocator;
+	}
+}
+//Modified by Aaron Appel Mar 16th 2024
+
 void* load(bx::FileReaderI* _reader, bx::AllocatorI* _allocator, const char* _filePath, uint32_t* _size)
 {
 	if (bx::open(_reader, _filePath) )

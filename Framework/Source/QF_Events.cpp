@@ -19,18 +19,23 @@ namespace QwerkE {
 
     namespace Events {
 
+#ifdef _QPTHREADS
         static pthread_mutex_t s_mutex;
+#endif
         static const u8 s_EventMax = 50;
         static std::queue<Event*> s_EventQueue;
 
         void Initialize()
         {
+#ifdef _QPTHREADS
             const u8 result = pthread_mutex_init(&s_mutex, NULL);
             ASSERT(result == 0, "Error initializing pthread mutex!");
+#endif
         }
 
         void Shutdown()
         {
+#ifdef _QPTHREADS
             pthread_mutex_lock(&s_mutex); // #TODO Review using pthread_mutex_trylock instead
             while (!s_EventQueue.empty())
             {
@@ -42,10 +47,12 @@ namespace QwerkE {
             }
             pthread_mutex_unlock(&s_mutex);
             pthread_mutex_destroy(&s_mutex);
+#endif
         }
 
         void QueueEvent(Event* _event)
         {
+#ifdef _QPTHREADS
             pthread_mutex_lock(&s_mutex);
             // #TODO Implement thread safe API for multi threaded event queuing
             if (s_EventQueue.size() < s_EventMax)
@@ -61,10 +68,12 @@ namespace QwerkE {
                 delete _event; // #TODO Job memory leaked
             }
             pthread_mutex_unlock(&s_mutex);
+#endif
         }
 
         void ProcessEvents()
         {
+#ifdef _QPTHREADS
             pthread_mutex_lock(&s_mutex);
             int size = (int)s_EventQueue.size(); // #TODO Track threads and limit number using ConfigData
 
@@ -94,6 +103,7 @@ namespace QwerkE {
                 delete event;
             }
             pthread_mutex_unlock(&s_mutex);
+#endif
         }
 
         // #FEATURE F0005

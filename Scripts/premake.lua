@@ -53,6 +53,7 @@ workspace "QwerkE Game"
 	-- include "../Libraries/imgui/Build-imgui.lua"
 	include "../Libraries/lodepng/Build-lodepng.lua"
 	include "../Libraries/Mirror/Build-Mirror.lua"
+	include "../Libraries/spdlog/Build-spdlog.lua"
 	group ""
 	
 	-- buildoptions { "/EHsc", "/Zc:preprocessor", } -- bx doesn't like "/EHsc", "/Zc:preprocessor"

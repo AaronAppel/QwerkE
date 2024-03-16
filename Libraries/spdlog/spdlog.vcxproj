@@ -15,10 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AB46D736-1707-536D-E041-9CEA4CC19749}</ProjectGuid>
+    <ProjectGuid>{8EAD431C-7A4F-6EF2-630A-82464F4BF542}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>FlatHeadGames</RootNamespace>
+    <RootNamespace>spdlog</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -54,28 +54,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\..\bin\windows-x86-Debug\FlatHeadGames\</OutDir>
-    <IntDir>..\..\bin\int\windows-x86-Debug\FlatHeadGames\</IntDir>
-    <TargetName>FlatHeadGames</TargetName>
+    <OutDir>..\..\bin\windows-x86-Debug\spdlog\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Debug\spdlog\</IntDir>
+    <TargetName>spdlog</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\bin\windows-x86-Release\FlatHeadGames\</OutDir>
-    <IntDir>..\..\bin\int\windows-x86-Release\FlatHeadGames\</IntDir>
-    <TargetName>FlatHeadGames</TargetName>
+    <OutDir>..\..\bin\windows-x86-Release\spdlog\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Release\spdlog\</IntDir>
+    <TargetName>spdlog</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
-    <OutDir>..\..\bin\windows-x86-Retail\FlatHeadGames\</OutDir>
-    <IntDir>..\..\bin\int\windows-x86-Retail\FlatHeadGames\</IntDir>
-    <TargetName>FlatHeadGames</TargetName>
+    <OutDir>..\..\bin\windows-x86-Retail\spdlog\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Retail\spdlog\</IntDir>
+    <TargetName>spdlog</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;_Q32Bit;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -85,6 +85,7 @@
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -95,7 +96,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_Q64Bit;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -135,11 +136,112 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="MyMemory.h" />
+    <ClInclude Include="async.h" />
+    <ClInclude Include="async_logger-inl.h" />
+    <ClInclude Include="async_logger.h" />
+    <ClInclude Include="cfg\argv.h" />
+    <ClInclude Include="cfg\env.h" />
+    <ClInclude Include="cfg\helpers-inl.h" />
+    <ClInclude Include="cfg\helpers.h" />
+    <ClInclude Include="common-inl.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="details\backtracer-inl.h" />
+    <ClInclude Include="details\backtracer.h" />
+    <ClInclude Include="details\circular_q.h" />
+    <ClInclude Include="details\console_globals.h" />
+    <ClInclude Include="details\file_helper-inl.h" />
+    <ClInclude Include="details\file_helper.h" />
+    <ClInclude Include="details\fmt_helper.h" />
+    <ClInclude Include="details\log_msg-inl.h" />
+    <ClInclude Include="details\log_msg.h" />
+    <ClInclude Include="details\log_msg_buffer-inl.h" />
+    <ClInclude Include="details\log_msg_buffer.h" />
+    <ClInclude Include="details\mpmc_blocking_q.h" />
+    <ClInclude Include="details\null_mutex.h" />
+    <ClInclude Include="details\os-inl.h" />
+    <ClInclude Include="details\os.h" />
+    <ClInclude Include="details\periodic_worker-inl.h" />
+    <ClInclude Include="details\periodic_worker.h" />
+    <ClInclude Include="details\registry-inl.h" />
+    <ClInclude Include="details\registry.h" />
+    <ClInclude Include="details\synchronous_factory.h" />
+    <ClInclude Include="details\tcp_client-windows.h" />
+    <ClInclude Include="details\tcp_client.h" />
+    <ClInclude Include="details\thread_pool-inl.h" />
+    <ClInclude Include="details\thread_pool.h" />
+    <ClInclude Include="details\udp_client-windows.h" />
+    <ClInclude Include="details\udp_client.h" />
+    <ClInclude Include="details\windows_include.h" />
+    <ClInclude Include="fmt\bin_to_hex.h" />
+    <ClInclude Include="fmt\bundled\args.h" />
+    <ClInclude Include="fmt\bundled\chrono.h" />
+    <ClInclude Include="fmt\bundled\color.h" />
+    <ClInclude Include="fmt\bundled\compile.h" />
+    <ClInclude Include="fmt\bundled\core.h" />
+    <ClInclude Include="fmt\bundled\format-inl.h" />
+    <ClInclude Include="fmt\bundled\format.h" />
+    <ClInclude Include="fmt\bundled\locale.h" />
+    <ClInclude Include="fmt\bundled\os.h" />
+    <ClInclude Include="fmt\bundled\ostream.h" />
+    <ClInclude Include="fmt\bundled\printf.h" />
+    <ClInclude Include="fmt\bundled\ranges.h" />
+    <ClInclude Include="fmt\bundled\std.h" />
+    <ClInclude Include="fmt\bundled\xchar.h" />
+    <ClInclude Include="fmt\chrono.h" />
+    <ClInclude Include="fmt\compile.h" />
+    <ClInclude Include="fmt\fmt.h" />
+    <ClInclude Include="fmt\ostr.h" />
+    <ClInclude Include="fmt\ranges.h" />
+    <ClInclude Include="fmt\std.h" />
+    <ClInclude Include="fmt\xchar.h" />
+    <ClInclude Include="formatter.h" />
+    <ClInclude Include="fwd.h" />
+    <ClInclude Include="logger-inl.h" />
+    <ClInclude Include="logger.h" />
+    <ClInclude Include="pattern_formatter-inl.h" />
+    <ClInclude Include="pattern_formatter.h" />
+    <ClInclude Include="sinks\android_sink.h" />
+    <ClInclude Include="sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="sinks\ansicolor_sink.h" />
+    <ClInclude Include="sinks\base_sink-inl.h" />
+    <ClInclude Include="sinks\base_sink.h" />
+    <ClInclude Include="sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="sinks\basic_file_sink.h" />
+    <ClInclude Include="sinks\callback_sink.h" />
+    <ClInclude Include="sinks\daily_file_sink.h" />
+    <ClInclude Include="sinks\dist_sink.h" />
+    <ClInclude Include="sinks\dup_filter_sink.h" />
+    <ClInclude Include="sinks\hourly_file_sink.h" />
+    <ClInclude Include="sinks\kafka_sink.h" />
+    <ClInclude Include="sinks\mongo_sink.h" />
+    <ClInclude Include="sinks\msvc_sink.h" />
+    <ClInclude Include="sinks\null_sink.h" />
+    <ClInclude Include="sinks\ostream_sink.h" />
+    <ClInclude Include="sinks\qt_sinks.h" />
+    <ClInclude Include="sinks\ringbuffer_sink.h" />
+    <ClInclude Include="sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="sinks\rotating_file_sink.h" />
+    <ClInclude Include="sinks\sink-inl.h" />
+    <ClInclude Include="sinks\sink.h" />
+    <ClInclude Include="sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="sinks\stdout_color_sinks.h" />
+    <ClInclude Include="sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="sinks\stdout_sinks.h" />
+    <ClInclude Include="sinks\syslog_sink.h" />
+    <ClInclude Include="sinks\systemd_sink.h" />
+    <ClInclude Include="sinks\tcp_sink.h" />
+    <ClInclude Include="sinks\udp_sink.h" />
+    <ClInclude Include="sinks\win_eventlog_sink.h" />
+    <ClInclude Include="sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="sinks\wincolor_sink.h" />
+    <ClInclude Include="spdlog-inl.h" />
+    <ClInclude Include="spdlog.h" />
+    <ClInclude Include="stopwatch.h" />
+    <ClInclude Include="tweakme.h" />
+    <ClInclude Include="version.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImageHelpers.cpp" />
-    <ClCompile Include="MyMemory.cpp" />
+    <ClCompile Include="compile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

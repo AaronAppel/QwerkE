@@ -76,7 +76,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\3rdparty;..\Libraries\bgfx\include;..\Libraries\bimg\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -94,7 +94,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;opengl32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -102,7 +102,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\3rdparty;..\Libraries\bgfx\include;..\Libraries\bimg\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -125,7 +125,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;opengl32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
@@ -133,7 +133,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QF_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QOPENAL;_QPTHREADS;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="../Game/Assets/";NullAssetsDir="../Editor/Assets/";_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;..;..\Libraries;..\Libraries\bgfx\3rdparty;..\Libraries\bgfx\include;..\Libraries\bimg\include;..\Libraries\bx\include;..\Libraries\bx\include\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QF_ForcedIncludes.h;QF_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>None</DebugInformationFormat>
@@ -156,7 +156,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;..\Libraries\OpenAL\Win32\OpenAL32.lib;opengl32.lib;..\Libraries\pThreads\lib\x86\pthreadVC2.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\Libraries\glfw\glfw3.lib;opengl32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -193,6 +193,7 @@
     <ClInclude Include="Source\QF_PrintFunctions.h" />
     <ClInclude Include="Source\QF_Profile.h" />
     <ClInclude Include="Source\QF_Renderer.h" />
+    <ClInclude Include="Source\QF_RendererHelpers.h" />
     <ClInclude Include="Source\QF_RendererTempData.h" />
     <ClInclude Include="Source\QF_Scene.h" />
     <ClInclude Include="Source\QF_Scenes.h" />
@@ -248,6 +249,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Libraries\Mirror\Mirror.vcxproj">
       <Project>{00C128C3-EC62-5399-D51D-67EDC15EDAE9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\spdlog\spdlog.vcxproj">
+      <Project>{8ead431c-7a4f-6ef2-630a-82464f4bf542}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

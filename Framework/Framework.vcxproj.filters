@@ -179,6 +179,9 @@
     <ClInclude Include="Source\QF_NativeScript.h">
       <Filter>Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_RendererHelpers.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -222,6 +225,9 @@
     </Filter>
     <Filter Include="Scripts">
       <UniqueIdentifier>{5b33b51b-906a-4c60-acb7-99eb685eb3db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Mesh">
+      <UniqueIdentifier>{6f2fa8a4-0f5c-4646-8be2-9b0bd0d35e63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

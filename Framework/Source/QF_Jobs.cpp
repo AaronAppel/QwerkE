@@ -2,6 +2,13 @@
 
 #include <queue>
 
+#ifdef _QPTHREADS
+#ifndef HAVE_STRUCT_TIMESPEC
+#define HAVE_STRUCT_TIMESPEC // #TODO Remove have struct pthread order dependency
+#endif
+#include "Libraries/pThreads/pthread.h"
+#endif
+
 #include "QC_Time.h"
 
 #include "QF_Events.h"
@@ -110,7 +117,10 @@ namespace QwerkE {
         {
             void* result = LoadAssetDataSync(value);
 
+#ifdef _QPTHREADS
             pthread_exit(nullptr);
+#endif
+
 
             return result;
         }

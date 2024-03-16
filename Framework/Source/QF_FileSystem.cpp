@@ -174,7 +174,9 @@ namespace QwerkE {
 		{
 			SoundHandle soundHandle = 0;
 			QSoundFile soundFile;
-			priv_LoadSoundFileData(soundPath, soundFile);
+
+			// #TODO Refactor audio API
+			// priv_LoadSoundFileData(soundPath, soundFile);
 
 #ifdef _QOPENAL
 			soundHandle = OpenAL_LoadSound(soundFile);
