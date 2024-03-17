@@ -138,7 +138,6 @@
     <ClInclude Include="MyMemory.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImageHelpers.cpp" />
     <ClCompile Include="MyMemory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
