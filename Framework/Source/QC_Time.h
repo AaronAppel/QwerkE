@@ -4,18 +4,19 @@ namespace QwerkE {
 
     namespace Time {
 
-        float LastEndFrameNow();
+        // #TODO Manage game time and real time separately
+
+        double Now();
 
 		class Timer
 		{
 		public:
+            Timer() = default;
             Timer(float duration) { m_Duration = duration; Start(); }
 
-            void Start() { m_StartTime = LastEndFrameNow(); }
+            void Start() { m_StartTime = Now(); }
 
-            bool Expired() { return (LastEndFrameNow() - m_StartTime) >= m_Duration; }
-
-            void Reset() { m_StartTime = LastEndFrameNow(); }
+            bool Expired() { return (Now() - m_StartTime) >= m_Duration; }
 
             void SetDuration(float newDuration) { m_Duration = newDuration; }
 
@@ -26,16 +27,17 @@ namespace QwerkE {
 
         // #TODO TrackGameTime differently, using OnGamePaused(bool paused = true/false). Allows lifetimes to be game time relative
 
-        void InitStartTime();
-        const double& StartTime();
+        void WriteAppStartTime();
+        const double& AppStartTime();
 
-        void EndFrame();
+        void SetMaximumFramerate(u16 maximumFramerate);
 
-        float FrameDelta();
-        const double& FrameDeltaDouble();
+        bool ShouldProcessNextFrame();
+        void StartFrame();
 
-        float Now();
-        double NowDouble();
+        const double& PreviousFrameDuration();
+
+        float NowFloat();
 
         // TODO: Add methods: UpdateDeltaTime(), DeltaTime(), GetSystemTime(), GetFixedTimestep()
 

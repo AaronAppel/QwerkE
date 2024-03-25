@@ -50,9 +50,6 @@
     <ClCompile Include="Source\QF_PrintFunctions.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QF_Mirror.cpp">
-      <Filter>Library</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QF_PCH.cpp">
       <Filter>Root Files</Filter>
     </ClCompile>
@@ -74,6 +71,7 @@
     <ClCompile Include="Source\QF_Renderer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QF_Mirror.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -181,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Source\QF_RendererHelpers.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ComponentCamera.h">
+      <Filter>Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

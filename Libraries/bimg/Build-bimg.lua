@@ -5,8 +5,8 @@ project "bimg"
 	files
 	{
 		"include/bimg/*.h",
-		"src/image.cpp",
-		"src/image_gnf.cpp",
+		-- "src/image.cpp",
+		-- "src/image_gnf.cpp",
 		"src/*.h",
 		"src/*.cpp",
 		"3rdparty/astc-encoder/source/*",
@@ -14,13 +14,7 @@ project "bimg"
 	}
 
 	includedirs
-	{
-		-- "include",
-		-- "3rdparty/astc-encoder/include",
-		-- "3rdparty/tinyexr/deps/miniz",
-		-- "../bx/include/compat/msvc",
-		-- "../bx/include",
-		
+	{		
 		"%{wks.location}/Libraries/bx/include",
 		"%{wks.location}/Libraries/bx/include/compat/msvc",
 		
@@ -35,23 +29,11 @@ project "bimg"
 
 	defines
 	{
-		-- "BX_CONFIG_DEBUG=1",
-		-- "__STDC_LIMIT_MACROS",
-		-- "__STDC_FORMAT_MACROS",
-		-- "__STDC_CONSTANT_MACROS",
-		-- "_DEBUG",
-		-- "WIN32",
-		-- "_WIN32",
-		-- "_HAS_EXCEPTIONS=0",
-		-- "_SCL_SECURE=0",
-		-- "_SECURE_SCL=0",
-		-- "_SCL_SECURE_NO_WARNINGS",
-		-- "_CRT_SECURE_NO_WARNINGS",
-		-- "_CRT_SECURE_NO_DEPRECATE",
-		
-		"_DEBUG",
-		"BX_CONFIG_DEBUG=1",
-		"_HAS_EXCEPTIONS=0",
+		"_HAS_EXCEPTIONS=0", -- #TODO Add to target configuration
 	}
 	
-	links { }
+	filter "configurations:Debug"
+		defines { "BX_CONFIG_DEBUG=1", "_DEBUG", }
+		
+	filter "configurations:Release"
+		defines { "BX_CONFIG_DEBUG=0", }

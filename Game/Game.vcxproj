@@ -79,7 +79,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QG_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";WINDOWS;_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";WINDOWS;_QDebug;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QBGFXFRAMEWORK;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Editor\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QG_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -105,7 +105,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QG_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";WINDOWS;_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";WINDOWS;_QRelease;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QBGFXFRAMEWORK;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Editor\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QG_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>None</DebugInformationFormat>
@@ -136,7 +136,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>QG_PCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";WINDOWS;_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QCJSON;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;AssetsDir="Assets/";NullAssetsDir="A:/GitHub/PremakeProject/Editor/Assets/";key_StartupDir="-startupDir";key_ApplicationFileName="-appName";key_ApplicationName="-applicationName";key_ProjectFileName="-projectFileName";key_UserName="-userName";WINDOWS;_QRetail;_Q32Bit;LibrariesDir="../Libraries/";_QBGFX;_QBGFXFRAMEWORK;_QCJSON;_QDEARIMGUI;_QENTT;_QENUM;_QFLATHEADGAMES;_QGLFW3;_QGLM;_QLODEPNG;_QMIRROR;_QOPENGL;_QSPDLOG;_QSTBIMAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Editor\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>QG_PCH.h</ForcedIncludeFiles>
       <DebugInformationFormat>None</DebugInformationFormat>

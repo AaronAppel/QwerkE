@@ -19,7 +19,7 @@ namespace QwerkE {
 
 			Events::Initialize();
 
-			Settings::LoadEngineSettings(""); // engineSettingsPath
+			Settings::LoadEngineSettings("TODO");
 			Settings::LoadProjectSettings(ProjectsFolderPath("Project1.qproj"));
 			Settings::LoadUserSettings(SettingsFolderPath(null_preferences));
 
@@ -56,6 +56,7 @@ namespace QwerkE {
 
 		void Update(float deltatime)
 		{
+			// #TODO This is editor only logic
 			constexpr size_t numberOfHotkeyedScenes = eKeys::eKeys_F12 - eKeys::eKeys_F1 + 1;
 			for (size_t i = 0; i < numberOfHotkeyedScenes; i++)
 			{
@@ -69,7 +70,17 @@ namespace QwerkE {
 			Scenes::Update(deltatime);
 		}
 
-		void Draw()
+		void DrawImguiStart()
+		{
+			Renderer::StartImGui();
+		}
+
+		void DrawImguiEnd()
+		{
+			Renderer::EndImGui();
+		}
+
+		void DrawFrameEnd()
 		{
 			Scenes::DrawCurrentScene();
 			Renderer::EndFrame();

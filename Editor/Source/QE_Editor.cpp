@@ -74,26 +74,21 @@ namespace QwerkE {
             if (true) { OutputProgramPairsInfo_Windows(pairs); }
 
 			Framework::Initialize();
-            // Scenes::LoadFromProjectSettings();
 
             local_EditorInitialize();
 
             Scenes::Initialize();
 
-			const EngineSettings& engineSettings = Settings::GetEngineSettings();
-			const u16 FPS_MAX = (int)(engineSettings.limitFramerate) * engineSettings.maxFramesPerSecond;
-			const float SAFE_FPS_MAX = 360.f;
-			const float FPS_MAX_DELTA = FPS_MAX ? 1.f / (float)FPS_MAX : 1.f / SAFE_FPS_MAX;
-
-			double lastFrameTime = Time::Now();
-			double timeUntilNextFrame = 0.;
-
-			Time::InitStartTime();
+            const EngineSettings& engineSettings = Settings::GetEngineSettings();
+            Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.defaultMaxFramesPerSecond);
+            Time::WriteAppStartTime();
 
 			while (StillRunning())
 			{
-				if (timeUntilNextFrame >= FPS_MAX_DELTA)
+				if (Time::ShouldProcessNextFrame())
 				{
+                    Time::StartFrame();
+
 					Framework::NewFrame();
 
 					if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
@@ -101,25 +96,20 @@ namespace QwerkE {
 						Stop();
 					}
 
-					Framework::Update(Time::FrameDelta());
+					Framework::Update(Time::PreviousFrameDuration());
+
+                    Framework::DrawImguiStart();
 
 					local_EditorDraw();
 
-					Framework::Draw();
+					Framework::DrawImguiEnd();
 
-					Time::EndFrame();
-
-					timeUntilNextFrame = 0.;
+                    Framework::DrawFrameEnd();
 				}
 				else
 				{
 					YieldProcessor();
 				}
-
-				const double now = Time::Now();
-				const double frameDelta = now - lastFrameTime;
-				timeUntilNextFrame += frameDelta;
-				lastFrameTime = now;
 			}
 
 			Settings::SaveEngineSettings();
@@ -351,7 +341,7 @@ namespace QwerkE {
                     static int index = 0;
                     static const int size = 5;
                     const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
-                    if (ImGui::ListBox("", &index, d, size, 3))
+                    if (ImGui::ListBox("MainMenuBar", &index, d, size, 3))
                     {
                         if (index == 0) s_ShowingImGuiExampleWindow = !s_ShowingImGuiExampleWindow;
                     }
@@ -397,19 +387,18 @@ namespace QwerkE {
                     ImGui::EndMenu();
                 }
 
-                ImGui::SameLine(ImGui::GetWindowWidth() - 36); // 4 characters * 9 pixels each
+                char buffer[] = { '0', '0', '0', '\0' };
+                ImGui::SameLine(ImGui::GetWindowWidth() - sizeof(buffer) * 9); // n characters * 9 pixels each (width)
                 if (s_EngineSettings->showingFPS)
                 {
-                    char buffer[] = { '0', '0', '0', '\0' };
-
-                    const float& deltaTime = Time::FrameDelta();
+                    const float& deltaTime = Time::PreviousFrameDuration();
                     if (deltaTime == .0f)
                     {
                         snprintf(buffer, sizeof(buffer) / sizeof(char), "%1.1f", deltaTime);
                     }
                     else
                     {
-                        snprintf(buffer, sizeof(buffer) / sizeof(char), "%1.1f", 1.f / deltaTime);
+                        snprintf(buffer, sizeof(buffer) / sizeof(char), "%3.2f", 1.f / deltaTime);
                     }
 
                     ImGui::PushItemWidth(200.f);

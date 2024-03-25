@@ -9,49 +9,56 @@
 #error "Support non windows platform!"
 #endif
 
+#include "QF_Debug.h"
+
 namespace QwerkE {
 
-    double s_StartTime = 0.;
-    double s_FrameDelta = 0.;
-    double s_CurrentFrame = 0.;
-    double s_LastFrame = 0.;
+    static double s_AppStartTime = 0.;
+    static double s_FrameDelta = 0.;
+
+    static double s_MinimumtimeBetweenFrames = 0.;
+    static double s_LatestFrameStartTime = 0.;
+    static double s_PreviousFrameDuration = 0.;
 
     namespace Time {
 
-        void InitStartTime()
+        void WriteAppStartTime()
         {
-            ASSERT(!s_StartTime, "Start time has already been set!");
-            s_StartTime = Now();
+            LOG_WARN(!s_AppStartTime, "App start time has already been set");
+            s_AppStartTime = Now();
+            s_LatestFrameStartTime = s_AppStartTime;
         }
 
-        void EndFrame()
+        void SetMaximumFramerate(u16 maximumFramerate)
         {
-            s_LastFrame = s_CurrentFrame;
-            s_CurrentFrame = Now();
-            s_FrameDelta = s_CurrentFrame - s_LastFrame;
+            ASSERT(maximumFramerate > 0, "Maximum framerate must be greater than 0!");
+            s_MinimumtimeBetweenFrames = 1.0 / (double)maximumFramerate;
         }
 
-        const double& StartTime()
+        bool ShouldProcessNextFrame()
         {
-            return s_StartTime;
+            const double now = Now();
+            return (now - s_LatestFrameStartTime) >= s_MinimumtimeBetweenFrames;
         }
 
-        float FrameDelta()
+        void StartFrame()
         {
-            return (float)s_FrameDelta;
-        };
-
-        const double& FrameDeltaDouble()
-        {
-            return s_FrameDelta;
-        };
-
-        float LastEndFrameNow()
-        {
-            return (float)s_CurrentFrame;
+            const double now = Now();
+            s_PreviousFrameDuration = now - s_LatestFrameStartTime;
+            s_LatestFrameStartTime = now;
         }
 
-        float Now()
+        const double& AppStartTime()
+        {
+            return s_AppStartTime;
+        }
+
+        const double& PreviousFrameDuration()
+        {
+            return s_PreviousFrameDuration;
+        }
+
+        double Now()
         {
             unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
             unsigned __int64 time;
@@ -59,10 +66,10 @@ namespace QwerkE {
             QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
             QueryPerformanceCounter((LARGE_INTEGER*)&time);
 
-            return (float)time / freq;
+            return (double)time / (double)freq;
         }
 
-        double NowDouble()
+        float NowFloat()
         {
             unsigned __int64 freq; // #TODO Frequency can be cached to avoid future assignments, which will be often
             unsigned __int64 time;
@@ -70,7 +77,7 @@ namespace QwerkE {
             QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
             QueryPerformanceCounter((LARGE_INTEGER*)&time);
 
-            return (double)time / freq;
+            return (float)time / (float)freq;
         }
 
     }

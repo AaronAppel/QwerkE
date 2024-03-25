@@ -1,3 +1,5 @@
+#pragma once // Modified by Aaron Appel Mar 23rd 2024
+
 namespace ImGui
 {
     struct MemoryEditor

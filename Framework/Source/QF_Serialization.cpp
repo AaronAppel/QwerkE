@@ -44,13 +44,13 @@ namespace QwerkE {
 
             if (jsonStructArr.size() != objTypeInfo->fields.size())
             {
-                if (const bool nonInheritanceMismatch = !objTypeInfo->hasSubClass && !objTypeInfo->isSubClass)
+                if (const bool nonInheritanceMismatch = !objTypeInfo->hasSubClass() && !objTypeInfo->isSubClass())
                 {
                     LOG_WARN("{0} Mismatched array sizes for json object {1} ", __FUNCTION__, objJson->string);
                 }
             }
 
-            if (objTypeInfo->IsPrimitive())
+            if (objTypeInfo->isPrimitive())
             {
                 switch (objJson->type)
                 {
@@ -395,7 +395,7 @@ namespace QwerkE {
                 const Mirror::Field& field = objTypeInfo->fields[i];
 
                 cJSON* arr = nullptr;
-                if (!field.typeInfo->IsPrimitive())
+                if (!field.typeInfo->isPrimitive())
                 {
                     arr = CreateArray(field.name.c_str()); // #TODO Review using array for everything (like vec2), or JSON object (no'[]' braces)
                     AddItemToArray(objJson, arr);

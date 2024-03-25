@@ -15,10 +15,6 @@ pushd Framework
 call Cleanup.bat
 popd
 
-pushd Editor
-call Cleanup.bat
-popd
-
 pushd Game
 call Cleanup.bat
 popd

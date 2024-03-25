@@ -47,6 +47,9 @@ namespace QwerkE {
 	public:
 		Scriptable* Instance = nullptr;
 
+		// ScriptableEntity*(*InstantiateFunction)();
+		// void (*DeleteFunction)(NativeScriptComponent*);
+
 		std::function<void()> InstantiateFunction;
 		std::function<void()> DeleteFunction;
 
@@ -54,9 +57,21 @@ namespace QwerkE {
 		std::function<void(Scriptable*)> OnDestroyFunction;
 		std::function<void(Scriptable*, float)> OnUpdateFunction;
 
+		// void OnAwake() {}
+		// void OnActivate(true/false) {}
+
+		// void OnFixedUpdate() {}
+		// void OnLateUpdate() {}
+
+		// void OnTriggerCollision() {}
+		// void OnBodyCollision() {}
+
 		template <typename T>
 		void Bind(Entity* entity)
 		{
+			// InstantiateFunction = []() { return static_cast<ScriptableEntity*>()(new T(entity)); };
+			// DeleteFunction = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
+
 			InstantiateFunction = [&]() { Instance = new T(entity); };
 			DeleteFunction = [&]() { delete (T*)Instance; Instance = nullptr; };
 

@@ -28,6 +28,9 @@ namespace QwerkE {
 
         std::vector<const char*> m_ListboxItemStrings = { "Render" };
         std::vector<eComponentTags> m_ListboxItemTypes = { eComponentTags::Component_Render };
+
+        // #TODO View Cherno video on improving imgui in Hazel : https://www.youtube.com/watch?v=oESRecjuLNY&ab_channel=TheCherno
+        // Look at transform X, Y, X, colored buttons, better font usage in imgui, and templated draw components methods
     };
 
 }

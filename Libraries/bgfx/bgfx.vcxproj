@@ -142,6 +142,7 @@
     <ClInclude Include="3rdparty\dear-imgui\imgui.h" />
     <ClInclude Include="3rdparty\dear-imgui\imgui_internal.h" />
     <ClInclude Include="3rdparty\dear-imgui\imgui_user.h" />
+    <ClInclude Include="3rdparty\dear-imgui\imgui_user.inl" />
     <ClInclude Include="3rdparty\dear-imgui\imstb_rectpack.h" />
     <ClInclude Include="3rdparty\dear-imgui\imstb_textedit.h" />
     <ClInclude Include="3rdparty\dear-imgui\imstb_truetype.h" />
@@ -214,9 +215,6 @@
     <ClCompile Include="src\shader_spirv.cpp" />
     <ClCompile Include="src\topology.cpp" />
     <ClCompile Include="src\vertexlayout.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="3rdparty\dear-imgui\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\bimg\bimg.vcxproj">

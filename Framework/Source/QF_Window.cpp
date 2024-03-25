@@ -10,7 +10,8 @@
 #endif
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+// #include "Libraries/imgui/QC_imgui.h"
+#include <bgfx/3rdparty/dear-imgui/imgui.h>
 #endif
 
 #include "QF_Debug.h"
@@ -109,7 +110,7 @@ namespace QwerkE {
             {
                 local_CheckGlfwErrors();
             }
-            s_aspectRatio = engineSettings.windowWidthPixels / engineSettings.windowHeightPixels;
+            s_aspectRatio = (float)engineSettings.windowWidthPixels / (float)engineSettings.windowHeightPixels;
 
             glfwSwapInterval(0); // #TODO Use engineSettings.vSyncEnabled
             glfwMakeContextCurrent(s_window);
@@ -134,30 +135,31 @@ namespace QwerkE {
             ASSERT(glewInitCode == GLEW_OK, "Error loading GLEW!");
     #endif
 
-    #ifdef _QDEARIMGUI
-            ImGuiContext* context = ImGui::CreateContext();
-            ASSERT(context != nullptr, "Error loading imgui!");
-            ImGui::SetCurrentContext(context);
-
-            ImGuiIO& io = ImGui::GetIO();
-            io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-            io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-            io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-            io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
-            ImGui::StyleColorsDark();
-
-            ImGuiStyle& style = ImGui::GetStyle();
-            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-            {
-                style.WindowRounding = 0.0f;
-                style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-            }
-
-            ImGui_ImplOpenGL3_Init("#version 410");
-
-            ImGui_ImplGlfw_InitForOpenGL(s_window, false);
-    #endif
+            // imgui handled by bgfx for now. Look to remove this deprecated code
+    //#ifdef _QDEARIMGUI
+    //        ImGuiContext* context = ImGui::CreateContext();
+    //        ASSERT(context != nullptr, "Error loading imgui!");
+    //        ImGui::SetCurrentContext(context);
+    //
+    //        ImGuiIO& io = ImGui::GetIO();
+    //        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    //        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+    //        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    //        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+    //
+    //        ImGui::StyleColorsDark();
+    //
+    //        ImGuiStyle& style = ImGui::GetStyle();
+    //        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    //        {
+    //            style.WindowRounding = 0.0f;
+    //            style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    //        }
+    //
+    //        ImGui_ImplOpenGL3_Init("#version 410");
+    //
+    //        ImGui_ImplGlfw_InitForOpenGL(s_window, false);
+    //#endif
         }
 
         void Window::Shutdown()
@@ -166,14 +168,15 @@ namespace QwerkE {
             glfwWindowShouldClose(s_window);
             glfwDestroyWindow(s_window);
 
-    #ifdef _QDEARIMGUI
-            ImGui_ImplGlfw_Shutdown();
-
-    #ifdef _QOPENGL
-            ImGui_ImplOpenGL3_Shutdown();
-    #endif
-            ImGui::DestroyContext();
-    #endif
+            // imgui handled by bgfx for now. Look to remove this deprecated code
+    // #ifdef _QDEARIMGUI
+    //         ImGui_ImplGlfw_Shutdown();
+    //
+    // #ifdef _QOPENGL
+    //         ImGui_ImplOpenGL3_Shutdown();
+    // #endif
+    //         ImGui::DestroyContext();
+    // #endif
 
             glfwTerminate();
     #endif
@@ -181,41 +184,43 @@ namespace QwerkE {
 
         void Window::ImGuiRender() // #TODO Move to Renderer
         {
-    #ifdef _QDEARIMGUI
-            if (s_windowIsMinimized)
-            {
-                ImGui::EndFrame();
-                ImGui::UpdatePlatformWindows();
-                return;
-            }
-
-            ImGui::Render();
-
-    #if defined(_QOPENGL) && defined(_QDEARIMGUI)
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    #endif
-
-            ImGuiIO io = ImGui::GetIO();
-            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-            {
-                ImGui::UpdatePlatformWindows();
-                ImGui::RenderPlatformWindowsDefault();
-    #ifdef _QGLFW3
-                GLFWwindow* backup_current_context = glfwGetCurrentContext();
-                glfwMakeContextCurrent(backup_current_context);
-    #endif
-            }
-    #endif
+                // imgui handled by bgfx for now. Look to remove this deprecated code
+    // #ifdef _QDEARIMGUI
+    //         if (s_windowIsMinimized)
+    //         {
+    //             ImGui::EndFrame();
+    //             ImGui::UpdatePlatformWindows();
+    //             return;
+    //         }
+    //
+    //         ImGui::Render();
+    //
+    // #if defined(_QOPENGL) && defined(_QDEARIMGUI)
+    //         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    // #endif
+    //
+    //         ImGuiIO io = ImGui::GetIO();
+    //         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    //         {
+    //             ImGui::UpdatePlatformWindows();
+    //             ImGui::RenderPlatformWindowsDefault();
+    // #ifdef _QGLFW3
+    //             GLFWwindow* backup_current_context = glfwGetCurrentContext();
+    //             glfwMakeContextCurrent(backup_current_context);
+    // #endif
+    //         }
+    // #endif
         }
 
         void Window::NewFrame()
         {
             glfwPollEvents();
-#ifdef _QDEARIMGUI
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-#endif
+            // imgui handled by bgfx for now. Look to remove this deprecated code
+//#ifdef _QDEARIMGUI
+//            ImGui_ImplOpenGL3_NewFrame();
+//            ImGui_ImplGlfw_NewFrame();
+//            ImGui::NewFrame();
+//#endif
         }
 
         void Window::RequestClose()

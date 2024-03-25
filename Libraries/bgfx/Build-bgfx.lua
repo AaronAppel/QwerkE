@@ -8,12 +8,13 @@ project "bgfx"
 		"src/*.cpp",
 		"src/*.h",
 		"3rdparty/meshoptimizer/src/*codec.cpp",
-		"3rdparty/dear-imgui/*",
+		"3rdparty/dear-imgui/*.h",
+		"3rdparty/dear-imgui/*.cpp",
+		"3rdparty/dear-imgui/*.inl",
 	}
 	
 	excludes
 	{
-		"3rdparty/dear-imgui/*.inl",
 		"src/amalgamated.cpp",
 	}
 

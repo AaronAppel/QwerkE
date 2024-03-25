@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bgfxFramework">
+      <UniqueIdentifier>{0D8CC3B6-79F8-7EB1-42EC-160FAE17A119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bgfxFramework\debugDraw">
+      <UniqueIdentifier>{917103C4-FD54-1204-0658-404072BAD854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bgfxFramework\entry">
+      <UniqueIdentifier>{8E10F6B3-FA1D-249A-8304-2085EF10F050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bgfxFramework\imguiCommon">
+      <UniqueIdentifier>{40E2A76B-AC50-FDEA-F539-B8EA61E7F286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\debugDraw">
+      <UniqueIdentifier>{B1F89178-1DB9-0DAF-E6F3-562C5273528B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\entry">
+      <UniqueIdentifier>{AE071EB5-1A72-D22B-63B0-83D1CF59B080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\font">
+      <UniqueIdentifier>{730430CF-5FD1-8ADA-88EA-78827416C068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imguiCommon">
+      <UniqueIdentifier>{60B1F47D-CC3C-6242-D54D-E5364158BE42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\particleSystem">
+      <UniqueIdentifier>{956D272D-8151-E882-EAB1-E2D5D6B4D204}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\bgfxFramework\LoadShader.h">
+      <Filter>include\bgfxFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\SampleRenderData.h">
+      <Filter>include\bgfxFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\bgfxFramework.h">
+      <Filter>include\bgfxFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\bgfx_utils.h">
+      <Filter>include\bgfxFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\camera.h">
+      <Filter>include\bgfxFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\common.h">
+      <Filter>include\bgfxFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\debugDraw\debugdraw.h">
+      <Filter>include\bgfxFramework\debugDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\entry\bgfxFrameworkEntry.h">
+      <Filter>include\bgfxFramework\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bgfxFramework\imguiCommon\imguiCommon.h">
+      <Filter>include\bgfxFramework\imguiCommon</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\LoadShader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bgfx_utils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cube_atlas.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debugDraw\debugdraw.cpp">
+      <Filter>src\debugDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\bgfxFrameworkEntry.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\cmd.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\dialog.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry_android.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry_glfw.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry_html5.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry_noop.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry_sdl.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry_windows.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\entry_x11.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry\input.cpp">
+      <Filter>src\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\example-glue.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font\font_manager.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font\text_buffer_manager.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font\text_metrics.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font\utf8.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imguiCommon\imguiCommon.cpp">
+      <Filter>src\imguiCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particleSystem\particle_system.cpp">
+      <Filter>src\particleSystem</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,2 +1,0 @@
-Docking branch of dear imgui 1.90.4 or Feb 27th 2024, from Github :
-https://github.com/ocornut/imgui/tree/docking

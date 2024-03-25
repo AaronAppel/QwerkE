@@ -13,7 +13,9 @@ namespace QwerkE {
 
 		void NewFrame();
 		void Update(float deltatime);
-		void Draw();
+		void DrawImguiStart();
+		void DrawImguiEnd();
+		void DrawFrameEnd();
 
 	}
 

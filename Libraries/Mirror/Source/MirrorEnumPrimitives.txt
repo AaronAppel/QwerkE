@@ -1,0 +1,22 @@
+
+// Primitive types. #NOTE A prefix is used to avoid naming collisions with standard type keywords
+
+// Enum values
+m_int8_t,
+m_int16_t,
+m_int32_t,
+m_int64_t,
+
+m_uint8_t,
+m_uint16_t,
+m_uint32_t,
+m_uint64_t,
+
+m_int, // #TODO Consider removing in favour of above (explicit) int types
+m_bool,
+m_char,
+m_float,
+m_double,
+m_charPtr,
+m_constCharPtr,
+m_string,

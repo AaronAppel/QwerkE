@@ -75,7 +75,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;_DEBUG;BX_CONFIG_DEBUG=1;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=1;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\bx\include;..\bx\include\compat\msvc;include;3rdparty;3rdparty\astc-codec;3rdparty\astc-codec\include;3rdparty\astc-encoder\include;3rdparty\iqa\include;3rdparty\tinyexr\deps\miniz;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -96,7 +96,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_DEBUG;BX_CONFIG_DEBUG=1;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\bx\include;..\bx\include\compat\msvc;include;3rdparty;3rdparty\astc-codec;3rdparty\astc-codec\include;3rdparty\astc-encoder\include;3rdparty\iqa\include;3rdparty\tinyexr\deps\miniz;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
@@ -122,7 +122,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_DEBUG;BX_CONFIG_DEBUG=1;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\bx\include;..\bx\include\compat\msvc;include;3rdparty;3rdparty\astc-codec;3rdparty\astc-codec\include;3rdparty\astc-encoder\include;3rdparty\iqa\include;3rdparty\tinyexr\deps\miniz;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>

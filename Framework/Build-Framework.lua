@@ -21,6 +21,7 @@ project "Framework"
 		
 		"%{wks.location}/Libraries/bgfx/3rdparty",
 		"%{wks.location}/Libraries/bgfx/include",
+		"%{wks.location}/Libraries/bgfxFramework/include",
 		"%{wks.location}/Libraries/bimg/include",
 		"%{wks.location}/Libraries/bx/include",
 		"%{wks.location}/Libraries/bx/include/compat/msvc",
@@ -37,7 +38,7 @@ project "Framework"
 	{
 		-- Projects
 		"cJSON",
-		"bgfx",
+		"bgfxFramework",
 		"FlatHeadGames",
 		-- "imgui",
 		"lodepng",

@@ -8,6 +8,9 @@ project "spdlog"
 		"**.cpp",
 	}
 
-	includedirs	{ }
+	includedirs
+	{
+		"%{wks.location}/Libraries/",
+	}
 
 	defines { }

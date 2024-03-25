@@ -2,10 +2,11 @@
 
 #ifdef _QENTT
 #include "Libraries/entt/entt.hpp"
-#endif // _QENTT
+#endif
 
 #include "QC_StringHelpers.h"
 
+#include "QF_ComponentCamera.h"
 #include "QF_Entity.h"
 #include "QF_FileUtilities.h"
 #include "QF_GameObject.h"
@@ -22,75 +23,9 @@
 
 #include "Libraries/bgfx/include/bgfx/bgfx.h"
 
-struct ExampleComponent
-{
-    ExampleComponent() = default;
-    ExampleComponent(const ExampleComponent& other) = default;
-    ExampleComponent(const int& otherMember) : member(otherMember) {}
-
-    int member = 0;
-};
-
-struct ExampleComponent2
-{
-    ExampleComponent2() = default;
-    ExampleComponent2(const ExampleComponent2& other) = default;
-    ExampleComponent2(const int& otherMember) : member(otherMember) {}
-
-    int member = 0;
-};
-
 static void OnComponentCameraConstruct(entt::registry& registry, entt::entity entity)
 {
 }
-
-struct ComponentCamera
-{
-    int placeholder = 0;
-
-    void Move()
-    {
-        const QwerkE::UserSettings& userSettings = QwerkE::Settings::GetUserSettings();
-
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
-        {
-            LOG_TRACE("{0} Camera move forward", __FUNCTION__);
-        }
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveBackward))
-        {
-            LOG_TRACE("{0} Camera move backward", __FUNCTION__);
-        }
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveLeft))
-        {
-            LOG_TRACE("{0} Camera move left", __FUNCTION__);
-        }
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveRight))
-        {
-            LOG_TRACE("{0} Camera move right", __FUNCTION__);
-        }
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveDown))
-        {
-            LOG_TRACE("{0} Camera move down", __FUNCTION__);
-        }
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveUp))
-        {
-            LOG_TRACE("{0} Camera move up", __FUNCTION__);
-        }
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_RotateRight))
-        {
-            LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
-        }
-        if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_RotateLeft))
-        {
-            LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
-        }
-
-        const vec2& mouseScroll = QwerkE::Input::MouseScrollDelta();
-        if (QwerkE::Input::MouseScrollDelta().x != 0.f || QwerkE::Input::MouseScrollDelta().y != 0.f)
-        {
-        }
-    }
-};
 
 namespace QwerkE {
 
@@ -170,11 +105,7 @@ namespace QwerkE {
         }
 
         auto viewPrints = m_Registry.view<ComponentPrint>();
-        for (auto entity : viewPrints)
-        {
-            ComponentPrint& print = m_Registry.get<ComponentPrint>(entity);
-            bgfx::dbgTextPrintf(5, print.Position(), 0x0f, "In update ComponentPrint #%s", print.Content().c_str());
-        }
+        bgfx::dbgTextPrintf(0, 5, 0x0f, "ComponentPrints #%i", viewPrints.size());
 
         for (auto object : m_pGameObjects)
         {

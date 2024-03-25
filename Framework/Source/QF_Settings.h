@@ -34,6 +34,7 @@ namespace QwerkE {
 
         bool limitFramerate = true;
         u16 maxFramesPerSecond = 120;
+        u16 defaultMaxFramesPerSecond = 360;
 
         u8 maxEnabledScenes = 1;
         u8 maxJobsAdditionalThreadCount = 1;
@@ -46,7 +47,7 @@ namespace QwerkE {
         bool showingSchematicsEditor = false;
         bool showingExampleWindow = false;
         bool showingSettingsEditor = false;
-        bool showingFPS = false;
+        bool showingFPS = true;
         bool showingRendererSettings = false;
     };
 

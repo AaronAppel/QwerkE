@@ -35,9 +35,11 @@
             "id": "c191bbf60e027577",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png"
+                "file": "cJSON.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -102,7 +104,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png"
+                "file": "cJSON.md"
               }
             }
           }
@@ -145,7 +147,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
+                "file": "cJSON.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -157,7 +159,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
+                "file": "cJSON.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,15 +187,16 @@
   },
   "active": "c191bbf60e027577",
   "lastOpenFiles": [
-    "C++17 Fix.md",
-    "Z. Obsidian/Documentation Assets/DisableSpecificWarnings.png",
+    "C2995 - Templating Error.md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "Raknet Example.md",
     "Open AL Example.md",
     "Kohi Engine.md",
     "GLFW Window Center Example.md",
     "BGFX OpenGL Version.md",
+    "Z. Obsidian/Documentation Assets/DisableSpecificWarnings.png",
     "GLM Basic Includes.md",
+    "C++17 Fix.md",
     "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
     "Editor Config Files.md",
     "README.md",

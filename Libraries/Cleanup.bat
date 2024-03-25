@@ -6,6 +6,11 @@ del *.vcxproj
 del *.user
 cd ../
 
+pushd bgfxFramework
+del *.vcxproj
+del *.user
+popd
+
 pushd bimg
 del *.vcxproj
 del *.user

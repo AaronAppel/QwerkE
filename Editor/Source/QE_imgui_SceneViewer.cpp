@@ -107,7 +107,7 @@ namespace QwerkE {
             ImVec2 imageSize = winSize; // #TODO The scene view can be different from the window (4:3, or other, and custom ratios)
             const float scalar = 7.63f;
             imageSize.x += winSize.x * scalar;
-            const vec2& aspectRatio = Window::GetAspectRatio();
+            const vec2& aspectRatio = Window::GetResolution();
             imageSize = ImVec2(imageSize.x / aspectRatio.y, imageSize.x / aspectRatio.x);
 
             const float offset = 60.f;

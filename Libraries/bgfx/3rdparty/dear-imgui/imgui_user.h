@@ -1,3 +1,5 @@
+#pragma once // Modified by Aaron Appel Mar 23rd 2024
+
 #include <stdint.h>
 #include <inttypes.h>
 

@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Retail|Win32">
+      <Configuration>Retail</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5AA1FDC8-C661-79FF-8F9C-C27CFB1BBEDB}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>bgfxFramework</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\bin\windows-x86-Debug\bgfxFramework\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Debug\bgfxFramework\</IntDir>
+    <TargetName>bgfxFramework</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\bin\windows-x86-Release\bgfxFramework\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Release\bgfxFramework\</IntDir>
+    <TargetName>bgfxFramework</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <OutDir>..\..\bin\windows-x86-Retail\bgfxFramework\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86-Retail\bgfxFramework\</IntDir>
+    <TargetName>bgfxFramework</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include\bgfxFramework;..\bgfx\3rdparty;..\bgfx\include;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include\bgfxFramework;..\bgfx\3rdparty;..\bgfx\include;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include\bgfxFramework;..\bgfx\3rdparty;..\bgfx\include;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\bgfxFramework\LoadShader.h" />
+    <ClInclude Include="include\bgfxFramework\SampleRenderData.h" />
+    <ClInclude Include="include\bgfxFramework\bgfxFramework.h" />
+    <ClInclude Include="include\bgfxFramework\bgfx_utils.h" />
+    <ClInclude Include="include\bgfxFramework\camera.h" />
+    <ClInclude Include="include\bgfxFramework\common.h" />
+    <ClInclude Include="include\bgfxFramework\debugDraw\debugdraw.h" />
+    <ClInclude Include="include\bgfxFramework\entry\bgfxFrameworkEntry.h" />
+    <ClInclude Include="include\bgfxFramework\imguiCommon\imguiCommon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\LoadShader.cpp" />
+    <ClCompile Include="src\bgfx_utils.cpp" />
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\cube_atlas.cpp" />
+    <ClCompile Include="src\debugDraw\debugdraw.cpp" />
+    <ClCompile Include="src\entry\bgfxFrameworkEntry.cpp" />
+    <ClCompile Include="src\entry\cmd.cpp" />
+    <ClCompile Include="src\entry\dialog.cpp" />
+    <ClCompile Include="src\entry\entry.cpp" />
+    <ClCompile Include="src\entry\entry_android.cpp" />
+    <ClCompile Include="src\entry\entry_glfw.cpp" />
+    <ClCompile Include="src\entry\entry_html5.cpp" />
+    <ClCompile Include="src\entry\entry_noop.cpp" />
+    <ClCompile Include="src\entry\entry_sdl.cpp" />
+    <ClCompile Include="src\entry\entry_windows.cpp" />
+    <ClCompile Include="src\entry\entry_x11.cpp" />
+    <ClCompile Include="src\entry\input.cpp" />
+    <ClCompile Include="src\example-glue.cpp" />
+    <ClCompile Include="src\font\font_manager.cpp" />
+    <ClCompile Include="src\font\text_buffer_manager.cpp" />
+    <ClCompile Include="src\font\text_metrics.cpp" />
+    <ClCompile Include="src\font\utf8.cpp" />
+    <ClCompile Include="src\imguiCommon\imguiCommon.cpp" />
+    <ClCompile Include="src\particleSystem\particle_system.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bgfx\bgfx.vcxproj">
+      <Project>{6C90947C-58C7-950D-01B4-7B10EDC9110F}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
