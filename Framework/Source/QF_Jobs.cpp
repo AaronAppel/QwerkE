@@ -27,7 +27,6 @@ namespace QwerkE {
         static const u8 s_MaxQueuedJobs = 50;
         static u8 s_CurrentActiveJobs = 0;
         static float s_secondsBeforeNextTask = 0.f;
-        static Time::Timer s_NextTaskTimer;
 
         void ScheduleJob(QJob* job)
         {
@@ -47,8 +46,8 @@ namespace QwerkE {
 
         void ProcessTasks(const float minimumDelayBetweenTasksSec)
         {
-            // s_secondsBeforeNextTask -= Time::FrameDelta();
-            if (s_NextTaskTimer.Expired())
+            s_secondsBeforeNextTask -= Time::PreviousFrameDuration();
+            if (s_secondsBeforeNextTask <= 0.f)
             {
                 for (size_t i = 0; i < s_JobList.size(); i++)
                 {
@@ -67,7 +66,6 @@ namespace QwerkE {
                     }
                 }
                 s_secondsBeforeNextTask = minimumDelayBetweenTasksSec;
-                s_NextTaskTimer.Start();
             }
         }
 

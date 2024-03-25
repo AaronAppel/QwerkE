@@ -44,11 +44,7 @@ project "Editor"
 		-- Projects
 		"FlatHeadGames",
 		"Framework",
-		-- "imgui",
 		"Mirror",
-		
-		-- Libraries .lib/.dll
-		"opengl32.lib",
 	}
 	
 	forceincludes { "%{wks.location}/Framework/Source/QF_ForcedIncludes.h", "QE_PCH.h" }
@@ -65,18 +61,15 @@ project "Editor"
 		runtime "Debug"
 		optimize "Off"
 		symbols "On"
-		architecture "x86"
 
 	filter "configurations:Release"
 		defines { "_QRelease", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "Off"
 		symbols "Off"
-		architecture "x86"
 
 	filter "configurations:Retail"
 		defines { "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "Off"
-		architecture "x86"

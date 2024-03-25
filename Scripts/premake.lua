@@ -1,5 +1,3 @@
-include "solution_items.lua"
-
 workspace "QwerkE Game"
 
 	-- Workspace specific settings
@@ -8,21 +6,20 @@ workspace "QwerkE Game"
 
 	-- Solution wide shared settings
 	configurations { "Debug", "Release", "Retail" }
-	-- solution_items { ".editorconfig" }
 	flags { "MultiProcessorCompile" }
 	rtti "Off"
 	staticruntime "off" -- https://premake.github.io/docs/staticruntime
 	language "C++"
 	cppdialect "C++17"
 
-	-- filter "configurations:*86"
-		-- architecture "x86"
+	-- filter "configurations:*32"
+	-- 	architecture "x86"
 	-- filter "configurations:*64"
-		-- architecture "x64"
-		
-	filter "configurations:*"
-		architecture "x86" -- Only 32 bit supported for now
+	-- 	architecture "x86_64"
 	
+	filter "configurations:*"
+		architecture "x86_64"
+		
 	OutputDir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 	targetdir ("%{wks.location}/bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("%{wks.location}/bin/int/" .. OutputDir .. "/%{prj.name}")

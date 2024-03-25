@@ -46,9 +46,7 @@ project "Framework"
 		"spdlog",
 		
 		-- Libraries .lib/.dll
-		-- "%{LibraryLib.glew}",
 		"%{LibraryLib.glfw}",
-		"opengl32.lib",
 	}
 	
 	vpaths -- VS Filters
