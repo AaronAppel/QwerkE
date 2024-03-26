@@ -3,6 +3,11 @@
  * License: https://github.com/bkaradzic/bgfx/blob/master/LICENSE
  */
 
+// Modifications by Aaron Appel
+
+#include <string>
+#include <vector>
+
 #include <bgfx/bgfx.h>
 #include <bgfx/embedded_shader.h>
 #include <bx/allocator.h>
@@ -198,9 +203,39 @@ struct OcornutImguiContext
 
 		ImGuiIO& io = ImGui::GetIO();
 
-		io.DisplaySize = ImVec2(1280.0f, 720.0f);
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+		io.DisplaySize = ImVec2(1280.0f, 720.0f); // #TODO Get proper display size
 		io.DeltaTime   = 1.0f / 60.0f;
-		io.IniFilename = NULL;
+
+		io.IniFilename = "imgui.ini";
+
+		std::vector<std::string> fontFiles = {
+			"Assets/Fonts/OpenSans/OpenSans-Regular.ttf",
+
+			"Assets/Fonts/OpenSans/OpenSans-Bold.ttf",
+			"Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf",
+			"Assets/Fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf",
+			"Assets/Fonts/OpenSans/OpenSans-SemiBold.ttf",
+			"Assets/Fonts/OpenSans/OpenSans-SemiBoldItalic.ttf",
+
+			"Assets/Fonts/OpenSans/OpenSans-Italic.ttf",
+
+			"Assets/Fonts/OpenSans/OpenSans-Light.ttf",
+			"Assets/Fonts/OpenSans/OpenSans-LightItalic.ttf",
+
+			"Assets/Fonts/OpenSans/OpenSans-Medium.ttf",
+			"Assets/Fonts/OpenSans/OpenSans-MediumItalic.ttf",
+		};
+
+		for (size_t i = 0; i < fontFiles.size(); i++)
+		{
+			io.Fonts->AddFontFromFileTTF(fontFiles[i].c_str(), _fontSize);
+		}
+		io.FontDefault = io.Fonts->Fonts[ImGui::Font::Regular];
 
 		setupStyle(true);
 
@@ -382,15 +417,10 @@ struct OcornutImguiContext
 			, 0
 			, bgfx::copy(data, width*height*4)
 			);
-
-		// #TODO Fix imgui docking
-		// ImGui::InitDockContext();
 	}
 
 	void destroy()
 	{
-		// #TODO Fix imgui docking
-		// ImGui::ShutdownDockContext();
 		ImGui::DestroyContext(m_imgui);
 
 		bgfx::destroy(s_tex);
@@ -405,11 +435,44 @@ struct OcornutImguiContext
 
 	void setupStyle(bool _dark)
 	{
-		// Doug Binks' darl color scheme
-		// https://gist.github.com/dougbinks/8089b4bbaccaaf6fa204236978d165a9
 		ImGuiStyle& style = ImGui::GetStyle();
-		if (_dark)
+		if (true)
 		{
+			// Cherno colour theme for Hazel : https://github.com/TheCherno/Hazel/blob/1feb70572fa87fa1c4ba784a2cfeada5b4a500db/Hazel/src/Hazel/ImGui/ImGuiLayer.cpp#L116
+			auto& colors = ImGui::GetStyle().Colors;
+			colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.105f, 0.11f, 1.0f };
+
+			// Headers
+			colors[ImGuiCol_Header] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+			colors[ImGuiCol_HeaderHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
+			colors[ImGuiCol_HeaderActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+
+			// Buttons
+			colors[ImGuiCol_Button] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+			colors[ImGuiCol_ButtonHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
+			colors[ImGuiCol_ButtonActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+
+			// Frame BG
+			colors[ImGuiCol_FrameBg] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+			colors[ImGuiCol_FrameBgHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
+			colors[ImGuiCol_FrameBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+
+			// Tabs
+			colors[ImGuiCol_Tab] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TabHovered] = ImVec4{ 0.38f, 0.3805f, 0.381f, 1.0f };
+			colors[ImGuiCol_TabActive] = ImVec4{ 0.28f, 0.2805f, 0.281f, 1.0f };
+			colors[ImGuiCol_TabUnfocused] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TabUnfocusedActive] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+
+			// Title
+			colors[ImGuiCol_TitleBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TitleBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+			colors[ImGuiCol_TitleBgCollapsed] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+		}
+		else if (_dark)
+		{
+			// Doug Binks' dark color scheme
+			// https://gist.github.com/dougbinks/8089b4bbaccaaf6fa204236978d165a9
 			ImGui::StyleColorsDark(&style);
 		}
 		else

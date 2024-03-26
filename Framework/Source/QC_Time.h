@@ -12,17 +12,17 @@ namespace QwerkE {
 		{
 		public:
             Timer() = default;
-            Timer(float duration) { m_Duration = duration; Start(); }
+            Timer(double duration) { m_Duration = duration; Start(); }
 
             void Start() { m_StartTime = Now(); }
 
             bool Expired() { return (Now() - m_StartTime) >= m_Duration; }
 
-            void SetDuration(float newDuration) { m_Duration = newDuration; }
+            void SetDuration(double newDuration) { m_Duration = newDuration; }
 
 		private:
             double m_StartTime = 0.;
-            float m_Duration = 0.f;
+            double m_Duration = 0.f;
 		};
 
         // #TODO TrackGameTime differently, using OnGamePaused(bool paused = true/false). Allows lifetimes to be game time relative

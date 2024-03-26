@@ -40,7 +40,7 @@ project "Framework"
 		"cJSON",
 		"bgfxFramework",
 		"FlatHeadGames",
-		-- "imgui",
+		"imgui",
 		"lodepng",
 		"Mirror",
 		"spdlog",

@@ -5,15 +5,20 @@
 #ifdef _QBGFX
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h> // bgfx::PlatformData
-#include <bx/math.h> // #TODO Remove testing bgfx logo
 #include <bgfx/../../src/bgfx_p.h> // bgfx::setGraphicsDebuggerPresent
+#include <bx/math.h> // #TODO Remove testing bgfx logo
+#include <bgfx/logo.h> // #TODO Remove testing bgfx logo
+
+#ifndef BX_CONFIG_DEBUG // From bx/config.h
+#	error "BX_CONFIG_DEBUG must be defined in build script!"
+#endif // BX_CONFIG_DEBUG
 
 #ifdef _QBGFXFRAMEWORK
 #include "bgfxFramework/common.h"
 #include "bgfxFramework/bgfx_utils.h" // Requires "..\Libraries\bimg\include"
 #include "bgfxFramework/debugDraw/debugdraw.h"
 #include "bgfxFramework/LoadShader.h"
-#include "bgfxFramework/SampleRenderData.h"
+// #include "bgfxFramework/SampleRenderData.h"
 
 #ifdef _QDEARIMGUI
 #include "bgfxFramework/imguiCommon/imguiCommon.h"
@@ -36,10 +41,17 @@ namespace QwerkE {
 
 	namespace Renderer {
 
-		bool s_showRendererDebugStats = false;
+		static bool s_showRendererDebugStats = false;
 
 #ifdef _QBGFX
-		const bgfx::ViewId s_ViewIdMain = 0;
+		static const bgfx::ViewId s_ViewIdMain = 0;
+		static const bgfx::ViewId s_ViewIdImGui = 1;
+		static const bgfx::ViewId s_ViewIdFbo1 = 2;
+
+		bgfx::FrameBufferHandle s_FrameBufferHandle; // #TESTING
+		const u8 s_FrameBufferTextureCount = 1;
+		bgfx::TextureHandle s_FrameBufferTextures[s_FrameBufferTextureCount]; // #TODO Destroy
+		bgfx::TextureHandle s_ReadBackTexture; // #TODO Destroy
 #endif
 
 		void OnWindowResize(int newWidth, int newHeight)
@@ -78,7 +90,7 @@ namespace QwerkE {
 				, 0
 			);
 #endif
-			const vec2& size = Window::GetResolution();
+			const vec2& size = Window::GetSize();
 			OnWindowResize(size.x, size.y);
 
 #ifdef _QDebug
@@ -87,21 +99,45 @@ namespace QwerkE {
 
 #ifdef _QBGFX
 #ifdef _QDEARIMGUI
-			imguiCreate();
+			imguiCreate(18.f);
 			ddInit();
 #endif
+			// the regular image texture
+			const vec2& windowSize = Window::GetSize();
+			const bool has_mips = false;
+			const uint16_t num_layers = 1;
+
+			s_ReadBackTexture = bgfx::createTexture2D(windowSize.x, windowSize.y,
+				has_mips, num_layers,
+				bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_READ_BACK | BGFX_TEXTURE_BLIT_DST);
+			ASSERT(bgfx::isValid(s_ReadBackTexture), "Error creating read back texture!");
+
+			s_FrameBufferTextures[0] = bgfx::createTexture2D(windowSize.x, windowSize.y,
+				has_mips, num_layers,
+				bgfx::TextureFormat::BGRA8,
+				BGFX_TEXTURE_RT);
+			ASSERT(bgfx::isValid(s_FrameBufferTextures[0]), "Error creating frame buffer texture [0]!");
+
+			s_FrameBufferHandle = bgfx::createFrameBuffer(s_FrameBufferTextureCount, s_FrameBufferTextures); // #TESTING
+			ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandle.idx, "Error creating frame buffer!");
+
+			bgfx::touch(s_ViewIdMain); // Render main view 1st frame
 #endif
+
 			return eOperationResult::Success;
 		}
 
 		void StartImGui()
 		{
+			if (Window::IsMinimized())
+				return;
+
 			GLFWwindow* window = static_cast<GLFWwindow*>(Window::GetContext());
 
 			double x, y;
 			glfwGetCursorPos(window, &x, &y);
 
-			const vec2& windowSize = Window::GetResolution();
+			const vec2& windowSize = Window::GetSize();
 
 			imguiBeginFrame(
 				x, y
@@ -111,18 +147,33 @@ namespace QwerkE {
 				, 0
 				, uint16_t(windowSize.x)
 				, uint16_t(windowSize.y)
+				, -1
+				, s_ViewIdImGui
 			);
+
+			bgfx::touch(s_ViewIdImGui); // #REVIEW
 		}
 
 		void EndImGui()
 		{
+			if (Window::IsMinimized())
+				return;
+
 			imguiEndFrame();
 		}
 
 		void EndFrame()
 		{
+			if (Window::IsMinimized())
+				return;
+
 #ifdef _QBGFX
+			bgfx::dbgTextPrintf(0, 3, 0x0f, "Framebuffer %i", (int)s_ViewIdFbo1);
+
+			// bgfx::setViewFrameBuffer(s_ViewIdMain, frame_buffer_handle_);
+
 			bgfx::frame();
+			bgfx::touch(s_ViewIdMain);
 #ifdef _QDebug
 			bgfx::setDebug(s_showRendererDebugStats ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT);
 			bgfx::dbgTextClear();
@@ -132,10 +183,14 @@ namespace QwerkE {
 
 		void Shutdown()
 		{
+			if (Window::IsMinimized())
+				return;
+
 #ifdef _QBGFX
 #ifdef _QDEARIMGUI
 			imguiDestroy();
 #endif
+			bgfx::destroy(s_FrameBufferHandle); // #TESTING
 
 			ddShutdown();
 

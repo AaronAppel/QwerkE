@@ -72,6 +72,8 @@ namespace QwerkE {
 
         if (ImGui::Begin("Entity Editor"))
         {
+            // #TODO Nicer looking '+/-' buttons : https://youtu.be/oESRecjuLNY?t=1787
+
             //// Begin drawing entity data...
             // Draw generic GameObject data like transform and name
             // std::string name = m_CurrentEntity->GetName().c_str() + ' '; // extra space for editing

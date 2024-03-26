@@ -17,14 +17,6 @@
 
 namespace QwerkE {
 
-    SceneViewer::SceneViewer()
-    {
-    }
-
-    SceneViewer::~SceneViewer()
-    {
-    }
-
     void SceneViewer::Draw()
     {
         DrawSceneView();
@@ -33,6 +25,7 @@ namespace QwerkE {
     void SceneViewer::DrawSceneView()
     {
         static bool isOpen = true;
+        static bool isSceneTextureOpen = true;
 
         Scene* currentScene = Scenes::GetCurrentScene();
         if (!currentScene)
@@ -101,19 +94,16 @@ namespace QwerkE {
             }
 
             DrawSceneList();
-
-            const ImVec2 winSize = ImGui::GetWindowSize();
-
-            ImVec2 imageSize = winSize; // #TODO The scene view can be different from the window (4:3, or other, and custom ratios)
-            const float scalar = 7.63f;
-            imageSize.x += winSize.x * scalar;
-            const vec2& aspectRatio = Window::GetResolution();
-            imageSize = ImVec2(imageSize.x / aspectRatio.y, imageSize.x / aspectRatio.x);
-
-            const float offset = 60.f;
-            ImGui::SetWindowSize(ImVec2(winSize.x, imageSize.y + offset));
         }
+        ImGui::End();
 
+        if (ImGui::Begin("Scene Texture", &isSceneTextureOpen, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar))
+        {
+            ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
+
+            // #TODO Replace hard coded texture ID
+            ImGui::Image(ImTextureID(4), ImVec2(contentRegionAvailable.x, contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
+        }
         ImGui::End();
 #endif
     }

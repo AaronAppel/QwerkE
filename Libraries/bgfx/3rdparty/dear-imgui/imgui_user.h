@@ -11,6 +11,7 @@ namespace ImGui
         {
             Regular,
             Mono,
+            Bold,
 
             Count
         };

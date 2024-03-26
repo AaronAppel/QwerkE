@@ -83,6 +83,10 @@ namespace QwerkE {
             Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.defaultMaxFramesPerSecond);
             Time::WriteAppStartTime();
 
+            bool showEditorUI = true;
+
+            Time::Timer fontChangeTimer(1.f);
+
 			while (StillRunning())
 			{
 				if (Time::ShouldProcessNextFrame())
@@ -95,12 +99,28 @@ namespace QwerkE {
 					{
 						Stop();
 					}
+                    if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press))
+                    {
+                        showEditorUI = !showEditorUI;
+                    }
 
-					Framework::Update(Time::PreviousFrameDuration());
+					Framework::Update((float)Time::PreviousFrameDuration());
 
                     Framework::DrawImguiStart();
 
-					local_EditorDraw();
+                    static ImGui::Fonts fontIndex = ImGui::Fonts::Regular;
+                    ImGui::PushFontQw(fontIndex);
+                    // ImGui::PushFontQw(ImGui::Fonts::Bold);
+                    if (showEditorUI)
+                    {
+                        local_EditorDraw();
+                    }
+                    ImGui::PopFont();
+                    if (fontChangeTimer.Expired())
+                    {
+                        fontIndex = static_cast<ImGui::Fonts>(((int)fontIndex + 1) % (int)ImGui::Fonts::Count);
+                        fontChangeTimer.Start();
+                    }
 
 					Framework::DrawImguiEnd();
 
@@ -391,7 +411,7 @@ namespace QwerkE {
                 ImGui::SameLine(ImGui::GetWindowWidth() - sizeof(buffer) * 9); // n characters * 9 pixels each (width)
                 if (s_EngineSettings->showingFPS)
                 {
-                    const float& deltaTime = Time::PreviousFrameDuration();
+                    const float& deltaTime = (float)Time::PreviousFrameDuration();
                     if (deltaTime == .0f)
                     {
                         snprintf(buffer, sizeof(buffer) / sizeof(char), "%1.1f", deltaTime);

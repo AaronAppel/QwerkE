@@ -18,7 +18,7 @@ workspace "QwerkE Game"
 	-- 	architecture "x86_64"
 	
 	filter "configurations:*"
-		architecture "x86_64"
+		architecture "x64"
 		
 	OutputDir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 	targetdir ("%{wks.location}/bin/" .. OutputDir .. "/%{prj.name}")
@@ -47,6 +47,7 @@ workspace "QwerkE Game"
 	include "../Libraries/bx/Build-bx.lua"
 	include "../Libraries/cJSON/Build-cJSON.lua"
 	include "../Libraries/FlatHeadGames/Build-FlatHeadGames.lua"
+	include "../Libraries/imgui/Build-imgui.lua"
 	include "../Libraries/lodepng/Build-lodepng.lua"
 	include "../Libraries/Mirror/Build-Mirror.lua"
 	include "../Libraries/spdlog/Build-spdlog.lua"

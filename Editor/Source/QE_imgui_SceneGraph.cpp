@@ -97,6 +97,11 @@ namespace QwerkE {
 			int sameLineCounter = 0;
 			ImGui::PushItemWidth(50);
 
+			// For drawing scene hierarchy of nodes
+			const bool selected = false;
+			ImGuiTreeNodeFlags flags = (selected ? ImGuiTreeNodeFlags_Selected : 0 ) | ImGuiTreeNodeFlags_OpenOnArrow;
+			flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
 			switch (m_CurrentList)
 			{
 			case eSceneGraphFilter::Actors:

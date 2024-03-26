@@ -46,7 +46,7 @@ namespace QwerkE {
 
         void ProcessTasks(const float minimumDelayBetweenTasksSec)
         {
-            s_secondsBeforeNextTask -= Time::PreviousFrameDuration();
+            s_secondsBeforeNextTask -= (float)Time::PreviousFrameDuration();
             if (s_secondsBeforeNextTask <= 0.f)
             {
                 for (size_t i = 0; i < s_JobList.size(); i++)

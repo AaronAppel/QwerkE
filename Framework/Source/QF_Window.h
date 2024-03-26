@@ -16,7 +16,7 @@ namespace QwerkE {
         void RequestClose();
         bool CloseRequested();
 
-        const vec2 GetResolution();
+        const vec2 GetSize();
         float GetAspectRatio();
 
         void* GetContext();

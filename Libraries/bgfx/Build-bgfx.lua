@@ -30,15 +30,6 @@ project "bgfx"
 		"%{wks.location}/Libraries/bx/include/compat/msvc",
 		"%{wks.location}/Libraries/bimg/include",
 	}
-
-	defines
-	{
-		"_DEBUG", -- Extra?
-		"BX_CONFIG_DEBUG=1",
-		"__STDC_FORMAT_MACROS",
-		"_CRT_SECURE_NO_WARNINGS",
-		"_HAS_EXCEPTIONS=0",
-	}
 	
 	links
 	{
@@ -47,7 +38,19 @@ project "bgfx"
 	}
 
 	filter "configurations:Debug"
-		defines "BX_CONFIG_DEBUG=1"
+		defines
+		{
+			"__STDC_FORMAT_MACROS",
+			"_CRT_SECURE_NO_WARNINGS",
+			"_HAS_EXCEPTIONS=0",
+			"BX_CONFIG_DEBUG=1",
+		}
 		
 	filter "configurations:Release"
-		defines "BX_CONFIG_DEBUG=0"
+		defines
+		{
+			"__STDC_FORMAT_MACROS",
+			"_CRT_SECURE_NO_WARNINGS",
+			"_HAS_EXCEPTIONS=0",
+			"BX_CONFIG_DEBUG=0",
+		}

@@ -15,10 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6C90947C-58C7-950D-01B4-7B10EDC9110F}</ProjectGuid>
+    <ProjectGuid>{0098A80F-6CAC-D0C0-352E-7420A101CDF1}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>bgfx</RootNamespace>
+    <RootNamespace>imgui</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -54,29 +54,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\..\bin\windows-x86_64-Debug\bgfx\</OutDir>
-    <IntDir>..\..\bin\int\windows-x86_64-Debug\bgfx\</IntDir>
-    <TargetName>bgfx</TargetName>
+    <OutDir>..\..\bin\windows-x86_64-Debug\imgui\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86_64-Debug\imgui\</IntDir>
+    <TargetName>imgui</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\..\bin\windows-x86_64-Release\bgfx\</OutDir>
-    <IntDir>..\..\bin\int\windows-x86_64-Release\bgfx\</IntDir>
-    <TargetName>bgfx</TargetName>
+    <OutDir>..\..\bin\windows-x86_64-Release\imgui\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86_64-Release\imgui\</IntDir>
+    <TargetName>imgui</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Retail|x64'">
-    <OutDir>..\..\bin\windows-x86_64-Retail\bgfx\</OutDir>
-    <IntDir>..\..\bin\int\windows-x86_64-Retail\bgfx\</IntDir>
-    <TargetName>bgfx</TargetName>
+    <OutDir>..\..\bin\windows-x86_64-Retail\imgui\</OutDir>
+    <IntDir>..\..\bin\int\windows-x86_64-Retail\imgui\</IntDir>
+    <TargetName>imgui</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;_QDebug;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -96,8 +95,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;__STDC_FORMAT_MACROS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;BX_CONFIG_DEBUG=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -123,7 +121,6 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_QWINDOWS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;3rdparty;3rdparty\directx-headers\include\directx;3rdparty\dxsdk\include;3rdparty\khronos;..\bx\include;..\bx\include\compat\msvc;..\bimg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -138,91 +135,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="3rdparty\dear-imgui\imconfig.h" />
-    <ClInclude Include="3rdparty\dear-imgui\imgui.h" />
-    <ClInclude Include="3rdparty\dear-imgui\imgui_internal.h" />
-    <ClInclude Include="3rdparty\dear-imgui\imgui_user.h" />
-    <ClInclude Include="3rdparty\dear-imgui\imgui_user.inl" />
-    <ClInclude Include="3rdparty\dear-imgui\imstb_rectpack.h" />
-    <ClInclude Include="3rdparty\dear-imgui\imstb_textedit.h" />
-    <ClInclude Include="3rdparty\dear-imgui\imstb_truetype.h" />
-    <ClInclude Include="include\bgfx\bgfx.h" />
-    <ClInclude Include="include\bgfx\c99\bgfx.h" />
-    <ClInclude Include="include\bgfx\defines.h" />
-    <ClInclude Include="include\bgfx\embedded_shader.h" />
-    <ClInclude Include="include\bgfx\platform.h" />
-    <ClInclude Include="src\bgfx_p.h" />
-    <ClInclude Include="src\charset.h" />
-    <ClInclude Include="src\config.h" />
-    <ClInclude Include="src\debug_renderdoc.h" />
-    <ClInclude Include="src\dxgi.h" />
-    <ClInclude Include="src\emscripten.h" />
-    <ClInclude Include="src\fs_clear0.bin.h" />
-    <ClInclude Include="src\fs_clear1.bin.h" />
-    <ClInclude Include="src\fs_clear2.bin.h" />
-    <ClInclude Include="src\fs_clear3.bin.h" />
-    <ClInclude Include="src\fs_clear4.bin.h" />
-    <ClInclude Include="src\fs_clear5.bin.h" />
-    <ClInclude Include="src\fs_clear6.bin.h" />
-    <ClInclude Include="src\fs_clear7.bin.h" />
-    <ClInclude Include="src\fs_debugfont.bin.h" />
-    <ClInclude Include="src\glcontext_egl.h" />
-    <ClInclude Include="src\glcontext_html5.h" />
-    <ClInclude Include="src\glcontext_wgl.h" />
-    <ClInclude Include="src\glimports.h" />
-    <ClInclude Include="src\nvapi.h" />
-    <ClInclude Include="src\renderer.h" />
-    <ClInclude Include="src\renderer_d3d.h" />
-    <ClInclude Include="src\renderer_d3d11.h" />
-    <ClInclude Include="src\renderer_d3d12.h" />
-    <ClInclude Include="src\renderer_gl.h" />
-    <ClInclude Include="src\renderer_mtl.h" />
-    <ClInclude Include="src\renderer_vk.h" />
-    <ClInclude Include="src\shader.h" />
-    <ClInclude Include="src\shader_dxbc.h" />
-    <ClInclude Include="src\shader_spirv.h" />
-    <ClInclude Include="src\topology.h" />
-    <ClInclude Include="src\version.h" />
-    <ClInclude Include="src\vertexlayout.h" />
-    <ClInclude Include="src\vs_clear.bin.h" />
-    <ClInclude Include="src\vs_debugfont.bin.h" />
+    <ClInclude Include="QC_imgui.h" />
+    <ClInclude Include="imconfig.h" />
+    <ClInclude Include="imgui.h" />
+    <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="imstb_rectpack.h" />
+    <ClInclude Include="imstb_textedit.h" />
+    <ClInclude Include="imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3rdparty\dear-imgui\imgui.cpp" />
-    <ClCompile Include="3rdparty\dear-imgui\imgui_demo.cpp" />
-    <ClCompile Include="3rdparty\dear-imgui\imgui_draw.cpp" />
-    <ClCompile Include="3rdparty\dear-imgui\imgui_tables.cpp" />
-    <ClCompile Include="3rdparty\dear-imgui\imgui_widgets.cpp" />
-    <ClCompile Include="3rdparty\meshoptimizer\src\indexcodec.cpp" />
-    <ClCompile Include="3rdparty\meshoptimizer\src\vertexcodec.cpp" />
-    <ClCompile Include="src\bgfx.cpp" />
-    <ClCompile Include="src\debug_renderdoc.cpp" />
-    <ClCompile Include="src\dxgi.cpp" />
-    <ClCompile Include="src\glcontext_egl.cpp" />
-    <ClCompile Include="src\glcontext_html5.cpp" />
-    <ClCompile Include="src\glcontext_wgl.cpp" />
-    <ClCompile Include="src\nvapi.cpp" />
-    <ClCompile Include="src\renderer_agc.cpp" />
-    <ClCompile Include="src\renderer_d3d11.cpp" />
-    <ClCompile Include="src\renderer_d3d12.cpp" />
-    <ClCompile Include="src\renderer_gl.cpp" />
-    <ClCompile Include="src\renderer_gnm.cpp" />
-    <ClCompile Include="src\renderer_noop.cpp" />
-    <ClCompile Include="src\renderer_nvn.cpp" />
-    <ClCompile Include="src\renderer_vk.cpp" />
-    <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\shader_dxbc.cpp" />
-    <ClCompile Include="src\shader_spirv.cpp" />
-    <ClCompile Include="src\topology.cpp" />
-    <ClCompile Include="src\vertexlayout.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\bimg\bimg.vcxproj">
-      <Project>{C499947C-B0D0-950D-59BD-7B1045D3110F}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\bx\bx.vcxproj">
-      <Project>{5F775900-4B03-880B-B4B1-880BA05C880B}</Project>
-    </ProjectReference>
+    <ClCompile Include="QC_imgui.cpp" />
+    <ClCompile Include="imgui.cpp" />
+    <ClCompile Include="imgui_demo.cpp" />
+    <ClCompile Include="imgui_draw.cpp" />
+    <ClCompile Include="imgui_tables.cpp" />
+    <ClCompile Include="imgui_widgets.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

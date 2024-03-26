@@ -233,7 +233,7 @@ namespace QwerkE {
             return s_closeRequested;
         }
 
-        const vec2 Window::GetResolution()
+        const vec2 Window::GetSize()
         {
             int width, height;
             glfwGetWindowSize(s_window, &width, &height);

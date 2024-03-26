@@ -42,9 +42,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "ca9bc987671603b7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Lumix engine.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -104,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "cJSON.md"
+                "file": "Lumix engine.md"
               }
             }
           }
@@ -147,7 +159,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "cJSON.md",
+                "file": "Lumix engine.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -159,7 +171,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "cJSON.md",
+                "file": "Lumix engine.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,8 +197,10 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "c191bbf60e027577",
+  "active": "ca9bc987671603b7",
   "lastOpenFiles": [
+    "cJSON.md",
+    "Lumix engine.md",
     "C2995 - Templating Error.md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "Raknet Example.md",
@@ -214,8 +228,6 @@
     "ZZ Shared Vault Files ❗/Obsidian/Markdown Syntax Reference.md",
     "ZZ Shared Vault Files ❗/Visual Studio Hotkeys.md",
     "ImGui Input vs Application.md",
-    "ZZ Shared Vault Files ❗/To Watch.md",
-    "References/Visual Studio.md",
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
     "Development/Resolved",
