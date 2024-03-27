@@ -38,7 +38,8 @@ namespace QwerkE
 			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; }
 			bool isSubClass() const { return superTypeInfo != nullptr; }
 			bool hasSubClass() const { return !derivedTypesMap.empty(); }
-			bool isCollection() const { return collectionTypeInfo != nullptr; }
+			bool isCollection() const { return isArray() || collectionTypeInfo != nullptr; }
+			bool isArray() const { return enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END; }
 			bool isPointer = false;
 
 			std::vector<Field> fields = { }; // #TODO Hide/private non-constants
@@ -103,10 +104,28 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 #define MIRROR_CLASS_MEMBER(MEMBER_NAME) \
 	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 }; \
 	QwerkE::Mirror::Field MEMBER_NAME##field; \
+	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>(); \
+	MEMBER_NAME##field.name = #MEMBER_NAME; \
+	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME); \
+	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
+
+#define MIRROR_CLASS_MEMBER_TYPE_OVERRIDE(MEMBER_NAME, OVERRIDE_TYPE) \
+	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 }; \
+	QwerkE::Mirror::Field MEMBER_NAME##field; \
+	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<OVERRIDE_TYPE>(); \
+	MEMBER_NAME##field.name = #MEMBER_NAME; \
+	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME); \
+	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
+
+#define MIRROR_CLASS_MEMBER_ARRAY(MEMBER_NAME, TYPE, ARRAY_SIZE) \
+	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 }; \
+	QwerkE::Mirror::Field MEMBER_NAME##field; \
 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field); \
-	localStaticTypeInfo.fields[MEMBER_NAME##Index].typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>(); \
+	localStaticTypeInfo.fields[MEMBER_NAME##Index].typeInfo = QwerkE::Mirror::InfoForType<TYPE*>(); \
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].name = #MEMBER_NAME; \
-	localStaticTypeInfo.fields[MEMBER_NAME##Index].offset = offsetof(ClassType, MEMBER_NAME);
+	localStaticTypeInfo.fields[MEMBER_NAME##Index].offset = offsetof(ClassType, MEMBER_NAME); \
+	localStaticTypeInfo.fields[MEMBER_NAME##Index].isArray = true; \
+	localStaticTypeInfo.fields[MEMBER_NAME##Index].arraySize = ARRAY_SIZE;
 
 #define MIRROR_CLASS_END(TYPE) \
 	if (localStaticTypeInfo.fields.size() >= fieldsCount) { bool warning = true; } \

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Libraries/Enum/enum.h"
+#include "enum.h"
 
 #define ENUM_TO_STR(x) (+x)._to_string()
 

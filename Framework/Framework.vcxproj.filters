@@ -125,9 +125,6 @@
     <ClInclude Include="Source\QC_MathFunctions.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QC_MathConstants.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_Math.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -162,9 +159,6 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Renderer.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QF_RendererTempData.h">
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Callbacks.h" />
@@ -202,9 +196,6 @@
     </Filter>
     <Filter Include="Entity">
       <UniqueIdentifier>{c4c4ea73-1a65-4be5-bb5a-56051d7d0648}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Library">
-      <UniqueIdentifier>{15bbd1b0-793f-4712-8e8a-1493fdd01425}</UniqueIdentifier>
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{a27c432a-4262-4ec4-bc28-97332a9d5293}</UniqueIdentifier>

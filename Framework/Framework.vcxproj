@@ -161,7 +161,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
-    <ClInclude Include="Source\QC_MathConstants.h" />
     <ClInclude Include="Source\QC_MathFunctions.h" />
     <ClInclude Include="Source\QC_StringHelpers.h" />
     <ClInclude Include="Source\QC_Time.h" />

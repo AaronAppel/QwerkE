@@ -7,6 +7,11 @@ enum class MirrorTypes
 
     m_CLASSES_START,
 
+    // ImGui
+    ImGuiStyle,
+    ImVec2,
+    ImVec4,
+
     // Settings
     EngineSettings,
     RendererSettings,
@@ -43,6 +48,10 @@ enum class MirrorTypes
     m_entt_registry,
     m_CLASSES_END,
 
+    m_ARRAYS_START,
+    m_imvec4_array,
+    m_ARRAYS_END,
+
     m_VECTORS_START,
     m_vector_eComponentTags,
     m_vector_entt_entities,
@@ -53,8 +62,6 @@ enum class MirrorTypes
     m_VECTORS_END,
 
     m_MAPS_START,
-    m_map_eComponentTags_componentPtr,
-    m_map_eMaterialMaps_texturePtr,
     m_MAPS_END,
 
     m_POINTERS_START, // #TODO Deprecate using std::is_pointer

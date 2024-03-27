@@ -109,6 +109,7 @@ namespace QwerkE {
     }
 
     const int s_CharacterPixelSize = 10;
+    const int s_DropDownArrowSize = 20;
     void SceneViewer::DrawSceneList()
     {
         const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
@@ -123,7 +124,7 @@ namespace QwerkE {
 
         const int sceneFileNameWidth = strlen(sceneNames[index]) * s_CharacterPixelSize;
 #ifdef _QDEARIMGUI
-        ImGui::PushItemWidth((float)sceneFileNameWidth);
+        ImGui::PushItemWidth((float)sceneFileNameWidth + s_DropDownArrowSize);
 
         char s_ScenesCombobuffer [] = "Scenes:    ";
         snprintf(s_ScenesCombobuffer, strlen(s_ScenesCombobuffer), "Scenes: %i", sceneNames.size());

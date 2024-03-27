@@ -4,6 +4,10 @@ namespace QwerkE {
 
 	namespace Math
 	{
+		#define PI  3.1415926535897932384626433832795
+
+		#define DEG_TO_RAD  0.01745329251994329576923690768489
+		#define RAD_TO_DEG  57.295779513082320876798154814105
 
 		template <typename T>
 		inline T Clamp(T min, T value, T max)

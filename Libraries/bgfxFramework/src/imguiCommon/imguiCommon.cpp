@@ -30,6 +30,11 @@
 #include "icons_kenney.ttf.h"
 #include "icons_font_awesome.ttf.h"
 
+// #TESTING
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include "../../glfw/glfw3.h"
+#include "../../glfw/glfw3native.h"
+
 static const bgfx::EmbeddedShader s_embeddedShaders[] =
 {
 	BGFX_EMBEDDED_SHADER(vs_ocornut_imgui),
@@ -181,6 +186,103 @@ struct OcornutImguiContext
 		}
 	}
 
+	struct ImGuiViewportDataGlfw
+	{
+		GLFWwindow* window;
+		bool        window_owned;
+	};
+
+	static void renderer_create_window(ImGuiViewport* vp) {
+		ImGuiViewportDataGlfw* data = (ImGuiViewportDataGlfw*)vp->PlatformUserData;
+
+		if (!data->window_owned) {
+			return;
+		}
+
+		void* native_handle = glfwGetWin32Window(data->window);
+
+		bgfx::FrameBufferHandle handle = bgfx::createFrameBuffer(
+			native_handle,
+			uint16_t(vp->Size.x),
+			uint16_t(vp->Size.y));
+
+		vp->RendererUserData = (void*)(uintptr_t)handle.idx;
+	}
+
+	static void renderer_destroy_window(ImGuiViewport* vp) {
+		ImGuiViewportDataGlfw* data = (ImGuiViewportDataGlfw*)vp->PlatformUserData;
+
+		if (!data->window_owned) {
+			return;
+		}
+
+		bgfx::FrameBufferHandle handle = { (uint16_t)(uintptr_t)vp->RendererUserData };
+
+		bgfx::destroy(handle);
+
+		// Flush destruction of swap chain before destroying window!
+		bgfx::frame();
+		bgfx::frame();
+
+		vp->RendererUserData = nullptr;
+	}
+
+	static void renderer_set_window_size(ImGuiViewport* vp, ImVec2 size) {
+		ImGuiViewportDataGlfw* data = (ImGuiViewportDataGlfw*)vp->PlatformUserData;
+
+		//printf("%s:%d\n", __FILE__, __LINE__);
+
+		if (!data->window_owned) {
+			return;
+		}
+
+		//printf("%s:%d\n", __FILE__, __LINE__);
+
+		renderer_destroy_window(vp);
+		renderer_create_window(vp);
+	}
+
+	static void renderer_render_window(ImGuiViewport* vp, void* render_arg) {
+		ImGuiViewportDataGlfw* data = (ImGuiViewportDataGlfw*)vp->PlatformUserData;
+
+		//printf("%s:%d\n", __FILE__, __LINE__);
+
+		if (!data->window_owned) {
+			return;
+		}
+
+		int display_w, display_h;
+		glfwGetWindowSize(data->window, &display_w, &display_h);
+
+		//printf("%s:%d\n", __FILE__, __LINE__);
+
+		bgfx::FrameBufferHandle handle = { (uint16_t)(uintptr_t)vp->RendererUserData };
+
+		//printf("render to new frame buffer %f %f - %d\n", vp->Size.x, vp->Size.y, handle.idx);
+
+		bgfx::setViewFrameBuffer(1, handle);
+		bgfx::setViewRect(1, 0, 0, uint16_t(display_w), uint16_t(display_h));
+
+		bgfx::setViewClear(1
+			, BGFX_CLEAR_COLOR
+			, 0xff00ffff
+			, 1.0f
+			, 0
+		);
+
+		// Set render states.
+		bgfx::setState(BGFX_STATE_DEFAULT);
+
+		// imguiRenderDraws(vp->DrawData, 1, display_w, display_h);
+
+		bgfx::touch(1);
+	}
+
+	static void renderer_swap_buffers(ImGuiViewport* vp, void* render_arg)
+	{
+
+	}
+
 	void create(float _fontSize, bx::AllocatorI* _allocator)
 	{
 		IMGUI_CHECKVERSION();
@@ -200,6 +302,16 @@ struct OcornutImguiContext
 		ImGui::SetAllocatorFunctions(memAlloc, memFree, NULL);
 
 		m_imgui = ImGui::CreateContext();
+
+		m_imgui->IO.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+		// #TODO Setup viewports for ImGui and bgfx
+		ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+		// platform_io.Renderer_CreateWindow = renderer_create_window;
+		// platform_io.Renderer_DestroyWindow = renderer_destroy_window;
+		// platform_io.Renderer_SetWindowSize = renderer_set_window_size;
+		// platform_io.Renderer_RenderWindow = renderer_render_window;
+		// platform_io.Renderer_SwapBuffers = renderer_swap_buffers;
 
 		ImGuiIO& io = ImGui::GetIO();
 
@@ -237,122 +349,7 @@ struct OcornutImguiContext
 		}
 		io.FontDefault = io.Fonts->Fonts[ImGui::Font::Regular];
 
-		setupStyle(true);
-
 		io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;
-
-#if USE_ENTRY
-		for (int32_t ii = 0; ii < (int32_t)entry::Key::Count; ++ii)
-		{
-			m_keyMap[ii] = ImGuiKey_None;
-		}
-
-		m_keyMap[entry::Key::Esc]          = ImGuiKey_Escape;
-		m_keyMap[entry::Key::Return]       = ImGuiKey_Enter;
-		m_keyMap[entry::Key::Tab]          = ImGuiKey_Tab;
-		m_keyMap[entry::Key::Space]        = ImGuiKey_Space;
-		m_keyMap[entry::Key::Backspace]    = ImGuiKey_Backspace;
-		m_keyMap[entry::Key::Up]           = ImGuiKey_UpArrow;
-		m_keyMap[entry::Key::Down]         = ImGuiKey_DownArrow;
-		m_keyMap[entry::Key::Left]         = ImGuiKey_LeftArrow;
-		m_keyMap[entry::Key::Right]        = ImGuiKey_RightArrow;
-		m_keyMap[entry::Key::Insert]       = ImGuiKey_Insert;
-		m_keyMap[entry::Key::Delete]       = ImGuiKey_Delete;
-		m_keyMap[entry::Key::Home]         = ImGuiKey_Home;
-		m_keyMap[entry::Key::End]          = ImGuiKey_End;
-		m_keyMap[entry::Key::PageUp]       = ImGuiKey_PageUp;
-		m_keyMap[entry::Key::PageDown]     = ImGuiKey_PageDown;
-		m_keyMap[entry::Key::Print]        = ImGuiKey_PrintScreen;
-		m_keyMap[entry::Key::Plus]         = ImGuiKey_Equal;
-		m_keyMap[entry::Key::Minus]        = ImGuiKey_Minus;
-		m_keyMap[entry::Key::LeftBracket]  = ImGuiKey_LeftBracket;
-		m_keyMap[entry::Key::RightBracket] = ImGuiKey_RightBracket;
-		m_keyMap[entry::Key::Semicolon]    = ImGuiKey_Semicolon;
-		m_keyMap[entry::Key::Quote]        = ImGuiKey_Apostrophe;
-		m_keyMap[entry::Key::Comma]        = ImGuiKey_Comma;
-		m_keyMap[entry::Key::Period]       = ImGuiKey_Period;
-		m_keyMap[entry::Key::Slash]        = ImGuiKey_Slash;
-		m_keyMap[entry::Key::Backslash]    = ImGuiKey_Backslash;
-		m_keyMap[entry::Key::Tilde]        = ImGuiKey_GraveAccent;
-		m_keyMap[entry::Key::F1]           = ImGuiKey_F1;
-		m_keyMap[entry::Key::F2]           = ImGuiKey_F2;
-		m_keyMap[entry::Key::F3]           = ImGuiKey_F3;
-		m_keyMap[entry::Key::F4]           = ImGuiKey_F4;
-		m_keyMap[entry::Key::F5]           = ImGuiKey_F5;
-		m_keyMap[entry::Key::F6]           = ImGuiKey_F6;
-		m_keyMap[entry::Key::F7]           = ImGuiKey_F7;
-		m_keyMap[entry::Key::F8]           = ImGuiKey_F8;
-		m_keyMap[entry::Key::F9]           = ImGuiKey_F9;
-		m_keyMap[entry::Key::F10]          = ImGuiKey_F10;
-		m_keyMap[entry::Key::F11]          = ImGuiKey_F11;
-		m_keyMap[entry::Key::F12]          = ImGuiKey_F12;
-		m_keyMap[entry::Key::NumPad0]      = ImGuiKey_Keypad0;
-		m_keyMap[entry::Key::NumPad1]      = ImGuiKey_Keypad1;
-		m_keyMap[entry::Key::NumPad2]      = ImGuiKey_Keypad2;
-		m_keyMap[entry::Key::NumPad3]      = ImGuiKey_Keypad3;
-		m_keyMap[entry::Key::NumPad4]      = ImGuiKey_Keypad4;
-		m_keyMap[entry::Key::NumPad5]      = ImGuiKey_Keypad5;
-		m_keyMap[entry::Key::NumPad6]      = ImGuiKey_Keypad6;
-		m_keyMap[entry::Key::NumPad7]      = ImGuiKey_Keypad7;
-		m_keyMap[entry::Key::NumPad8]      = ImGuiKey_Keypad8;
-		m_keyMap[entry::Key::NumPad9]      = ImGuiKey_Keypad9;
-		m_keyMap[entry::Key::Key0]         = ImGuiKey_0;
-		m_keyMap[entry::Key::Key1]         = ImGuiKey_1;
-		m_keyMap[entry::Key::Key2]         = ImGuiKey_2;
-		m_keyMap[entry::Key::Key3]         = ImGuiKey_3;
-		m_keyMap[entry::Key::Key4]         = ImGuiKey_4;
-		m_keyMap[entry::Key::Key5]         = ImGuiKey_5;
-		m_keyMap[entry::Key::Key6]         = ImGuiKey_6;
-		m_keyMap[entry::Key::Key7]         = ImGuiKey_7;
-		m_keyMap[entry::Key::Key8]         = ImGuiKey_8;
-		m_keyMap[entry::Key::Key9]         = ImGuiKey_9;
-		m_keyMap[entry::Key::KeyA]         = ImGuiKey_A;
-		m_keyMap[entry::Key::KeyB]         = ImGuiKey_B;
-		m_keyMap[entry::Key::KeyC]         = ImGuiKey_C;
-		m_keyMap[entry::Key::KeyD]         = ImGuiKey_D;
-		m_keyMap[entry::Key::KeyE]         = ImGuiKey_E;
-		m_keyMap[entry::Key::KeyF]         = ImGuiKey_F;
-		m_keyMap[entry::Key::KeyG]         = ImGuiKey_G;
-		m_keyMap[entry::Key::KeyH]         = ImGuiKey_H;
-		m_keyMap[entry::Key::KeyI]         = ImGuiKey_I;
-		m_keyMap[entry::Key::KeyJ]         = ImGuiKey_J;
-		m_keyMap[entry::Key::KeyK]         = ImGuiKey_K;
-		m_keyMap[entry::Key::KeyL]         = ImGuiKey_L;
-		m_keyMap[entry::Key::KeyM]         = ImGuiKey_M;
-		m_keyMap[entry::Key::KeyN]         = ImGuiKey_N;
-		m_keyMap[entry::Key::KeyO]         = ImGuiKey_O;
-		m_keyMap[entry::Key::KeyP]         = ImGuiKey_P;
-		m_keyMap[entry::Key::KeyQ]         = ImGuiKey_Q;
-		m_keyMap[entry::Key::KeyR]         = ImGuiKey_R;
-		m_keyMap[entry::Key::KeyS]         = ImGuiKey_S;
-		m_keyMap[entry::Key::KeyT]         = ImGuiKey_T;
-		m_keyMap[entry::Key::KeyU]         = ImGuiKey_U;
-		m_keyMap[entry::Key::KeyV]         = ImGuiKey_V;
-		m_keyMap[entry::Key::KeyW]         = ImGuiKey_W;
-		m_keyMap[entry::Key::KeyX]         = ImGuiKey_X;
-		m_keyMap[entry::Key::KeyY]         = ImGuiKey_Y;
-		m_keyMap[entry::Key::KeyZ]         = ImGuiKey_Z;
-
-		io.ConfigFlags |= 0
-			| ImGuiConfigFlags_NavEnableGamepad
-			| ImGuiConfigFlags_NavEnableKeyboard
-			;
-
-		m_keyMap[entry::Key::GamepadStart]     = ImGuiKey_GamepadStart;
-		m_keyMap[entry::Key::GamepadBack]      = ImGuiKey_GamepadBack;
-		m_keyMap[entry::Key::GamepadY]         = ImGuiKey_GamepadFaceUp;
-		m_keyMap[entry::Key::GamepadA]         = ImGuiKey_GamepadFaceDown;
-		m_keyMap[entry::Key::GamepadX]         = ImGuiKey_GamepadFaceLeft;
-		m_keyMap[entry::Key::GamepadB]         = ImGuiKey_GamepadFaceRight;
-		m_keyMap[entry::Key::GamepadUp]        = ImGuiKey_GamepadDpadUp;
-		m_keyMap[entry::Key::GamepadDown]      = ImGuiKey_GamepadDpadDown;
-		m_keyMap[entry::Key::GamepadLeft]      = ImGuiKey_GamepadDpadLeft;
-		m_keyMap[entry::Key::GamepadRight]     = ImGuiKey_GamepadDpadRight;
-		m_keyMap[entry::Key::GamepadShoulderL] = ImGuiKey_GamepadL1;
-		m_keyMap[entry::Key::GamepadShoulderR] = ImGuiKey_GamepadR1;
-		m_keyMap[entry::Key::GamepadThumbL]    = ImGuiKey_GamepadL3;
-		m_keyMap[entry::Key::GamepadThumbR]    = ImGuiKey_GamepadR3;
-#endif // USE_ENTRY
 
 		bgfx::RendererType::Enum type = bgfx::getRendererType();
 		m_program = bgfx::createProgram(
@@ -433,57 +430,6 @@ struct OcornutImguiContext
 		m_allocator = NULL;
 	}
 
-	void setupStyle(bool _dark)
-	{
-		ImGuiStyle& style = ImGui::GetStyle();
-		if (true)
-		{
-			// Cherno colour theme for Hazel : https://github.com/TheCherno/Hazel/blob/1feb70572fa87fa1c4ba784a2cfeada5b4a500db/Hazel/src/Hazel/ImGui/ImGuiLayer.cpp#L116
-			auto& colors = ImGui::GetStyle().Colors;
-			colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.105f, 0.11f, 1.0f };
-
-			// Headers
-			colors[ImGuiCol_Header] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
-			colors[ImGuiCol_HeaderHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
-			colors[ImGuiCol_HeaderActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-
-			// Buttons
-			colors[ImGuiCol_Button] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
-			colors[ImGuiCol_ButtonHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
-			colors[ImGuiCol_ButtonActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-
-			// Frame BG
-			colors[ImGuiCol_FrameBg] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
-			colors[ImGuiCol_FrameBgHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
-			colors[ImGuiCol_FrameBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-
-			// Tabs
-			colors[ImGuiCol_Tab] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-			colors[ImGuiCol_TabHovered] = ImVec4{ 0.38f, 0.3805f, 0.381f, 1.0f };
-			colors[ImGuiCol_TabActive] = ImVec4{ 0.28f, 0.2805f, 0.281f, 1.0f };
-			colors[ImGuiCol_TabUnfocused] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-			colors[ImGuiCol_TabUnfocusedActive] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
-
-			// Title
-			colors[ImGuiCol_TitleBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-			colors[ImGuiCol_TitleBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-			colors[ImGuiCol_TitleBgCollapsed] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-		}
-		else if (_dark)
-		{
-			// Doug Binks' dark color scheme
-			// https://gist.github.com/dougbinks/8089b4bbaccaaf6fa204236978d165a9
-			ImGui::StyleColorsDark(&style);
-		}
-		else
-		{
-			ImGui::StyleColorsLight(&style);
-		}
-
-		style.FrameRounding    = 4.0f;
-		style.WindowBorderSize = 0.0f;
-	}
-
 	void beginFrame(
 		  int32_t _mx
 		, int32_t _my
@@ -537,9 +483,18 @@ struct OcornutImguiContext
 		// ImGuizmo::BeginFrame();
 	}
 
+	// #TODO Improve
 	void endFrame()
 	{
 		ImGui::Render();
+
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+		}
+
 		render(ImGui::GetDrawData() );
 	}
 

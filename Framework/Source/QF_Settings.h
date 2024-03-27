@@ -10,7 +10,7 @@ namespace QwerkE {
 
     struct ProjectSettings
     {
-        bool isDirty = false;
+        bool isDirty = false; // #TODO isDirty should be an editor only state, so move to editor domain
 
         const char* projectName = Constants::gc_DefaultStringValue;
         const char* assetsDirPath = Constants::gc_DefaultStringValue;
@@ -29,8 +29,8 @@ namespace QwerkE {
     {
         bool isDirty = false;
 
-        u16 windowWidthPixels = 1600;
-        u16 windowHeightPixels = 900;
+        u16 windowWidthPixels = 2048; // #TODO Set back to 1080p, 900p, or 720p
+        u16 windowHeightPixels = 1152;
 
         bool limitFramerate = true;
         u16 maxFramesPerSecond = 120;
@@ -49,6 +49,7 @@ namespace QwerkE {
         bool showingSettingsEditor = false;
         bool showingFPS = true;
         bool showingRendererSettings = false;
+        bool showingStylePicker = false;
     };
 
     struct UserSettings
@@ -76,6 +77,8 @@ namespace QwerkE {
 
     namespace Settings
     {
+        const char* GetStyleFileName();
+
         void LoadEngineSettings(); // #TODO Load from file path. Do not rely on default paths, but instead generate the default path
         void LoadEngineSettings(std::string engineSettingsFilePath); // #TODO Write and chain with above overloaded method
         void SaveEngineSettings();

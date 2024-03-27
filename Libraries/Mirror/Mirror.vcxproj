@@ -137,7 +137,6 @@
   <ItemGroup>
     <ClInclude Include="Source\Mirror.h" />
     <ClInclude Include="Source\MirrorTypes.h" />
-    <ClInclude Include="Source\QF_MirrorTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mirror.cpp" />

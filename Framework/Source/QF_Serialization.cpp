@@ -11,6 +11,10 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #endif
 
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/imgui.h"
+#endif
+
 #include "QF_eKeys.h"
 #include "QF_GameObject.h"
 #include "QF_Log.h"
@@ -138,7 +142,7 @@ namespace QwerkE {
         }
 
         template <class T>
-        void DeserializeVector(const cJSON * jsonObj, void* obj)
+        void DeserializeVector(const cJSON* jsonObj, void* obj)
         {
             typedef std::remove_pointer_t<T> AbsoluteTypeT;
 
@@ -173,7 +177,7 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializeJsonArray(const cJSON * jsonObj, const Mirror::Field & field, void* obj)
+        void local_DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field & field, void* obj)
         {
             if (!jsonObj || !jsonObj->type || jsonObj->type != cJSON_Array || !obj)
             {
@@ -183,6 +187,25 @@ namespace QwerkE {
 
             switch (field.typeInfo->enumType)
             {
+            // imgui types
+            case MirrorTypes::m_imvec4_array:
+                {
+                    if (field.typeInfo->isCollection())
+                    {
+                        ImVec4* colours = (ImVec4*)obj; // #TODO Review if possible to validate pointer value
+                        auto typeInfo = Mirror::InfoForType<ImVec4>();
+
+                        const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
+
+                        for (size_t i = 0; i < jsonObjectVector.size(); i++)
+                        {
+                            DeserializeJsonToObject(jsonObjectVector[i], typeInfo, &colours[i]);
+                        }
+                    }
+                }
+                break;
+            //
+
             case MirrorTypes::m_vector_string:
                 // {
                 //     // DeserializeVector<std::string>(jsonObj, obj); // #TODO Find out why std::string type is not supported
@@ -218,7 +241,7 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializeJsonNumber(const cJSON * jsonObj, const MirrorTypes type, const unsigned int typeSize, void* obj)
+        void local_DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int typeSize, void* obj)
         {
             if (!jsonObj || !obj)
             {
@@ -280,7 +303,7 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializeJsonString(const cJSON * jsonObj, const MirrorTypes type, void* obj)
+        void local_DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj)
         {
             if (!jsonObj || !jsonObj->valuestring || (jsonObj->type != cJSON_String) || !obj)
             {
@@ -354,7 +377,7 @@ namespace QwerkE {
             }
         }
 
-        void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo * objTypeInfo, cJSON * objJson)
+        void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
             if (!objJson || !objTypeInfo || !obj)
             {
@@ -403,6 +426,25 @@ namespace QwerkE {
 
                 switch (field.typeInfo->enumType)
                 {
+                // imgui types
+                case MirrorTypes::m_imvec4_array:
+                    {
+                        if (field.typeInfo->isArray())
+                        {
+                            const ImVec4* colours = (ImVec4*)((char*)obj + field.offset);
+                            const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<ImVec4>();
+
+                            // #TODO Get array size
+                            for (size_t i = 0; i < ImGuiCol_COUNT; i++)
+                            {
+                                cJSON* imvec4ArrayJson = CreateArray(typeInfo->stringName.c_str());
+                                AddItemToArray(arr, imvec4ArrayJson);
+                                SerializeObjectToJson(&colours[i], typeInfo, imvec4ArrayJson);
+                            }
+                        }
+                    }
+                    break;
+                //
                 case MirrorTypes::m_vector_string: // #TODO Try to remove this case to use if (!objTypeInfo->fields.empty()) for loop
                 {
                     const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);

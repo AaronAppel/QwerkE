@@ -13,6 +13,11 @@ namespace QwerkE {
 		UserSettings s_userSettings;
 		RendererSettings s_rendererSettings;
 
+		const char* GetStyleFileName()
+		{
+			return "imguiStyle.style";
+		}
+
 		void LoadEngineSettings(/* #TODO Take in file path */)
 		{
 			// LoadEngineSettings(configFilePath);

@@ -10,8 +10,7 @@
 #endif
 
 #ifdef _QDEARIMGUI
-// #include "Libraries/imgui/QC_imgui.h"
-#include <bgfx/3rdparty/dear-imgui/imgui.h>
+#include "Libraries/imgui/QC_imgui.h"
 #endif
 
 #include "QF_Debug.h"

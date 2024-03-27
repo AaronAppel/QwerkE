@@ -4,9 +4,16 @@
 #include <map>
 #include <vector>
 
-#include "Libraries/entt/entt.hpp"
 #include "Libraries/Mirror/Source/Mirror.h"
 #include "Libraries/Mirror/Source/MirrorTypes.h"
+
+#ifdef _QENTT
+#include "Libraries/entt/entt.hpp"
+#endif
+
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/imgui.h"
+#endif
 
 #include "QF_eKeys.h"
 #include "QF_Enums.h"
@@ -16,12 +23,81 @@
 
 namespace QwerkE {
 
+#ifdef _QDEARIMGUI
+	MIRROR_CLASS_START(ImVec2)
+	MIRROR_CLASS_MEMBER(x)
+	MIRROR_CLASS_MEMBER(y)
+	MIRROR_CLASS_END(ImVec2)
+
+	MIRROR_CLASS_START(ImVec4)
+	MIRROR_CLASS_MEMBER(x)
+	MIRROR_CLASS_MEMBER(y)
+	MIRROR_CLASS_MEMBER(z)
+	MIRROR_CLASS_MEMBER(w)
+	MIRROR_CLASS_END(ImVec4)
+
+	typedef ImVec4* m_imvec4_array;
+	MIRROR_TYPE(m_imvec4_array)
+
+	MIRROR_CLASS_START(ImGuiStyle)
+	MIRROR_CLASS_MEMBER(Alpha)
+	MIRROR_CLASS_MEMBER(DisabledAlpha)
+	MIRROR_CLASS_MEMBER(WindowPadding)
+	MIRROR_CLASS_MEMBER(WindowRounding)
+	MIRROR_CLASS_MEMBER(WindowBorderSize)
+	MIRROR_CLASS_MEMBER(WindowMinSize)
+	MIRROR_CLASS_MEMBER(WindowTitleAlign)
+	MIRROR_CLASS_MEMBER(WindowMenuButtonPosition)
+	MIRROR_CLASS_MEMBER(ChildRounding)
+	MIRROR_CLASS_MEMBER(ChildBorderSize)
+	MIRROR_CLASS_MEMBER(PopupRounding)
+	MIRROR_CLASS_MEMBER(PopupBorderSize)
+	MIRROR_CLASS_MEMBER(FramePadding)
+	MIRROR_CLASS_MEMBER(FrameRounding)
+	MIRROR_CLASS_MEMBER(FrameBorderSize)
+	MIRROR_CLASS_MEMBER(ItemSpacing)
+	MIRROR_CLASS_MEMBER(ItemInnerSpacing)
+	MIRROR_CLASS_MEMBER(CellPadding)
+	MIRROR_CLASS_MEMBER(TouchExtraPadding)
+	MIRROR_CLASS_MEMBER(IndentSpacing)
+	MIRROR_CLASS_MEMBER(ColumnsMinSpacing)
+	MIRROR_CLASS_MEMBER(ScrollbarSize)
+	MIRROR_CLASS_MEMBER(ScrollbarRounding)
+	MIRROR_CLASS_MEMBER(GrabMinSize)
+	MIRROR_CLASS_MEMBER(GrabRounding)
+	MIRROR_CLASS_MEMBER(LogSliderDeadzone)
+	MIRROR_CLASS_MEMBER(TabRounding)
+	MIRROR_CLASS_MEMBER(TabBorderSize)
+	MIRROR_CLASS_MEMBER(TabMinWidthForCloseButton)
+	MIRROR_CLASS_MEMBER(TabBarBorderSize)
+	MIRROR_CLASS_MEMBER(TableAngledHeadersAngle)
+	MIRROR_CLASS_MEMBER(ColorButtonPosition)
+	MIRROR_CLASS_MEMBER(ButtonTextAlign)
+	MIRROR_CLASS_MEMBER(SelectableTextAlign)
+	MIRROR_CLASS_MEMBER(SeparatorTextBorderSize)
+	MIRROR_CLASS_MEMBER(SeparatorTextAlign)
+	MIRROR_CLASS_MEMBER(SeparatorTextPadding)
+	MIRROR_CLASS_MEMBER(DisplayWindowPadding)
+	MIRROR_CLASS_MEMBER(DisplaySafeAreaPadding)
+	MIRROR_CLASS_MEMBER(DockingSeparatorSize)
+	MIRROR_CLASS_MEMBER(MouseCursorScale)
+	MIRROR_CLASS_MEMBER(AntiAliasedLines)
+	MIRROR_CLASS_MEMBER(AntiAliasedLinesUseTex)
+	MIRROR_CLASS_MEMBER(AntiAliasedFill)
+	MIRROR_CLASS_MEMBER(CurveTessellationTol)
+	MIRROR_CLASS_MEMBER(CircleTessellationMaxError)
+	MIRROR_CLASS_MEMBER_TYPE_OVERRIDE(Colors, m_imvec4_array)
+	MIRROR_CLASS_END(ImGuiStyle)
+#endif
+
+#ifdef _QENTT
 	// External / 3rd party types
 	typedef entt::registry m_entt_registry;
 	MIRROR_TYPE(m_entt_registry)
 
 	typedef entt::entity m_enTT_Entity;
 	MIRROR_TYPE(m_enTT_Entity)
+#endif
 
 	// Enums
 	MIRROR_TYPE(eGameObjectTags)
@@ -29,10 +105,6 @@ namespace QwerkE {
 
 	typedef QwerkE::eKeys eKeys; // #TODO Review typedef
 	MIRROR_TYPE(eKeys)
-
-	// Pointers
-
-	// Structs
 
 	// Vectors
 	typedef std::vector<eComponentTags> m_vector_eComponentTags;
@@ -46,8 +118,6 @@ namespace QwerkE {
 
 	typedef std::vector<GameObject*> m_vector_gameobjectPtr;
 	MIRROR_TYPE(m_vector_gameobjectPtr)
-
-	// Maps
 
 	// Structs
 	MIRROR_CLASS_START(vec2)
@@ -73,6 +143,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(showingExampleWindow)
 	MIRROR_CLASS_MEMBER(showingSettingsEditor)
 	MIRROR_CLASS_MEMBER(showingFPS)
+	MIRROR_CLASS_MEMBER(showingStylePicker)
 	MIRROR_CLASS_END(EngineSettings)
 
 	MIRROR_CLASS_START(UserSettings)
