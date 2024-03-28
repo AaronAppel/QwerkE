@@ -72,6 +72,12 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Mirror.cpp" />
+    <ClCompile Include="Source\QF_Assets.cpp">
+      <Filter>Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ComponentMesh.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -166,16 +172,22 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_ScriptPrint.h">
-      <Filter>Scripts</Filter>
+      <Filter>Game Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_NativeScript.h">
-      <Filter>Scripts</Filter>
+      <Filter>Game Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_RendererHelpers.h">
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_ComponentCamera.h">
-      <Filter>Scripts</Filter>
+      <Filter>Game Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Assets.h">
+      <Filter>Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ComponentMesh.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,11 +227,14 @@
     <Filter Include="Components">
       <UniqueIdentifier>{96c480e2-99c4-4a6f-b574-fa45682e4b6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{5b33b51b-906a-4c60-acb7-99eb685eb3db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Renderer\Mesh">
       <UniqueIdentifier>{6f2fa8a4-0f5c-4646-8be2-9b0bd0d35e63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{59332054-2f7b-47ee-ac59-7ed08c2e0a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Scripts">
+      <UniqueIdentifier>{5b33b51b-906a-4c60-acb7-99eb685eb3db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

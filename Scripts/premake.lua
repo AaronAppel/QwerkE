@@ -30,7 +30,7 @@ workspace "QwerkE Game"
 		defines { "_QWINDOWS", "WIN32_LEAN_AND_MEAN", }
 		
 	filter "configurations:Debug"
-		defines { "_QDebug", "WIN32_LEAN_AND_MEAN", } -- #TODO _QDEBUG should be all caps to match convention
+		defines { "_QDEBUG", "WIN32_LEAN_AND_MEAN", } -- #TODO _QDEBUG should be all caps to match convention
 		runtime "Debug"
 		symbols "on"
 		optimize "off"

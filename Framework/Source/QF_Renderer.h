@@ -2,6 +2,8 @@
 
 #include "QF_Enums.h"
 
+struct DebugDrawEncoder;
+
 namespace QwerkE {
 
 	namespace Renderer {
@@ -13,6 +15,8 @@ namespace QwerkE {
 		void Shutdown();
 
 		void ToggleDebugStats();
+
+		DebugDrawEncoder& DebugDrawer();
 
 	}
 

@@ -63,7 +63,7 @@ project "Framework"
 	filter "configurations:Debug"
 		defines
 		{
-			"_QDebug",
+			"_QDEBUG",
 			"_Q32Bit",
 			"LibrariesDir=\"%{wks.location}/Libraries/\"",
 			LibraryDefines, 
@@ -75,13 +75,13 @@ project "Framework"
 		debugargs { }
 
 	filter "configurations:Release"
-		defines { "_QRelease", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "_QRELEASE", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "On"
 
 	filter "configurations:Retail"
-		defines { "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "_QRETAIL", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

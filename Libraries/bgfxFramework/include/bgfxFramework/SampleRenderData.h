@@ -19,7 +19,7 @@ struct PosColorVertex
 	}
 	static bgfx::VertexLayout ms_layout;
 };
-bgfx::VertexLayout PosColorVertex::ms_layout;
+bgfx::VertexLayout PosColorVertex::ms_layout; // #TODO Improve. Can't #include more than 1 time
 
 static PosColorVertex s_cubeVertices[] =
 {

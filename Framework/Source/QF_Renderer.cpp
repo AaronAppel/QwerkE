@@ -18,7 +18,6 @@
 #include "bgfxFramework/bgfx_utils.h" // Requires "..\Libraries\bimg\include"
 #include "bgfxFramework/debugDraw/debugdraw.h"
 #include "bgfxFramework/LoadShader.h"
-// #include "bgfxFramework/SampleRenderData.h"
 
 #ifdef _QDEARIMGUI
 #include "bgfxFramework/imguiCommon/imguiCommon.h"
@@ -48,10 +47,15 @@ namespace QwerkE {
 		static const bgfx::ViewId s_ViewIdImGui = 1;
 		static const bgfx::ViewId s_ViewIdFbo1 = 2;
 
+		// #TODO static these
 		bgfx::FrameBufferHandle s_FrameBufferHandle; // #TESTING
 		const u8 s_FrameBufferTextureCount = 1;
 		bgfx::TextureHandle s_FrameBufferTextures[s_FrameBufferTextureCount]; // #TODO Destroy
 		bgfx::TextureHandle s_ReadBackTexture; // #TODO Destroy
+
+#ifdef _QDEBUG
+		static DebugDrawEncoder* s_DebugDrawer = nullptr;
+#endif
 #endif
 
 		void OnWindowResize(int newWidth, int newHeight)
@@ -93,7 +97,7 @@ namespace QwerkE {
 			const vec2& size = Window::GetSize();
 			OnWindowResize(size.x, size.y);
 
-#ifdef _QDebug
+#ifdef _QDEBUG
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
 #endif
 
@@ -122,6 +126,10 @@ namespace QwerkE {
 			ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandle.idx, "Error creating frame buffer!");
 
 			bgfx::touch(s_ViewIdMain); // Render main view 1st frame
+#endif
+
+#ifdef _QDEBUG
+			s_DebugDrawer = new DebugDrawEncoder();
 #endif
 
 			return eOperationResult::Success;
@@ -174,7 +182,7 @@ namespace QwerkE {
 
 			bgfx::frame();
 			bgfx::touch(s_ViewIdMain);
-#ifdef _QDebug
+#ifdef _QDEBUG
 			bgfx::setDebug(s_showRendererDebugStats ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT);
 			bgfx::dbgTextClear();
 #endif
@@ -197,11 +205,21 @@ namespace QwerkE {
 			bgfx::setGraphicsDebuggerPresent(true); //#TODO Investigate debug break
 			bgfx::shutdown();
 #endif
+
+#ifdef _QDEBUG
+			delete s_DebugDrawer;
+#endif
+
 		}
 
 		void ToggleDebugStats()
 		{
 			s_showRendererDebugStats = !s_showRendererDebugStats;
+		}
+
+		DebugDrawEncoder& DebugDrawer()
+		{
+			return *s_DebugDrawer;
 		}
 
 	}

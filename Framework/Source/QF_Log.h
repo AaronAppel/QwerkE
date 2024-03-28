@@ -44,7 +44,7 @@ namespace QwerkE {
 
 }
 
-#if _QDebug
+#if _QDEBUG
 #define LOG_TRACE(...)      QwerkE::Log::Log(QwerkE::Log::eLogLevel::Trace, __VA_ARGS__);
 #define LOG_INFO(...)       QwerkE::Log::Log(QwerkE::Log::eLogLevel::Info, __VA_ARGS__);
 #define LOG_WARN(...)       QwerkE::Log::Log(QwerkE::Log::eLogLevel::Warn, __VA_ARGS__);

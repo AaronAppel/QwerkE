@@ -21,7 +21,7 @@ namespace QwerkE {
 
         std::vector<std::pair<eKeys, CallbackFunction<OnKeyEventCallback>>> s_OnKeyEventCallBacks;
 
-#ifdef _QDebug
+#ifdef _QDEBUG
         bool s_LogKeyEventInfo = false;
 #endif
 
@@ -175,7 +175,7 @@ namespace QwerkE {
 
         void ToggleLogKeyEvents()
         {
-#ifdef _QDebug
+#ifdef _QDEBUG
             s_LogKeyEventInfo = !s_LogKeyEventInfo;
 #endif
         }
@@ -193,7 +193,7 @@ namespace QwerkE {
 
         void OnKeyEvent(eKeys key, eKeyState state)
         {
-#ifdef _QDebug
+#ifdef _QDEBUG
             if (s_LogKeyEventInfo)
             {
                 LOG_TRACE("{0} Key {1} event {2}", __FUNCTION__, (char)key, (int)state);

@@ -78,6 +78,8 @@ Documentation/.obsidian/workspace.json
 *.recipe
 *.enc
 *.sln
+*.vcxproj
+*.filters
 
 # Additional Misc.
 *.tlog
