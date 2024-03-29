@@ -4,8 +4,8 @@
 #include <memory>
 #include <vector>
 
-// #TODO Move/deprecate file utils to File:: namespace/struct
-char* LoadFile(const char* fileName);
+// #TODO Move/deprecate file utils to Files:: namespace/struct
+
 char* LoadCompleteFile(const char* fileName, long* length);
 char* ReadRawBytesFromFile(const char* const fileName);
 

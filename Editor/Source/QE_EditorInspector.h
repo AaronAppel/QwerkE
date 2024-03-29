@@ -4,8 +4,6 @@
 
 #include "Libraries/Mirror/Source/Mirror.h"
 
-#include "QF_Constants.h"
-
 namespace QwerkE {
 
     namespace Inspector {

@@ -22,16 +22,16 @@ namespace QwerkE {
 
         bool FrameKeyAction(eKeys key, eKeyState state);
 
-        vec2 GetMouseDragDelta();
+        vec2f GetMouseDragDelta();
 
         bool GetIsKeyDown(eKeys key);
 
-        void OnMouseMove(vec2 position);
+        void OnMouseMove(vec2f position);
         void OnMouseMove(float x, float y);
         void OnMouseClick(eKeys key, eKeyState state);
         void OnMouseScroll(float x, float y);
 
-        const vec2& MouseScrollDelta();
+        const vec2f& MouseScrollDelta();
 
         void OnKeyEvent(eKeys key, eKeyState state);
 

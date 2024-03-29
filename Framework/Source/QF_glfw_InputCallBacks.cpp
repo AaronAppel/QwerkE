@@ -10,7 +10,6 @@
 #error Define library!
 #endif
 
-#include "QF_Constants.h"
 #include "QF_Log.h"
 
 namespace QwerkE {

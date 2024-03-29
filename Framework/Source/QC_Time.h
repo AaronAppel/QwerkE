@@ -22,7 +22,7 @@ namespace QwerkE {
 
 		private:
             double m_StartTime = 0.;
-            double m_Duration = 0.f;
+            double m_Duration = 0.;
 		};
 
         // #TODO TrackGameTime differently, using OnGamePaused(bool paused = true/false). Allows lifetimes to be game time relative

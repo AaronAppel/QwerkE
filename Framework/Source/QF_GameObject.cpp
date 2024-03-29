@@ -10,7 +10,7 @@ namespace QwerkE {
         m_pScene = scene;
     }
 
-    GameObject::GameObject(Scene* scene, vec3 position)
+    GameObject::GameObject(Scene* scene, vec3f position)
     {
         m_pScene = scene; // TODO: Remove scene reference in GameObject
     }

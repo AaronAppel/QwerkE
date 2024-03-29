@@ -94,7 +94,7 @@ namespace QwerkE {
 				, 0
 			);
 #endif
-			const vec2& size = Window::GetSize();
+			const vec2f& size = Window::GetSize();
 			OnWindowResize(size.x, size.y);
 
 #ifdef _QDEBUG
@@ -107,7 +107,7 @@ namespace QwerkE {
 			ddInit();
 #endif
 			// the regular image texture
-			const vec2& windowSize = Window::GetSize();
+			const vec2f& windowSize = Window::GetSize();
 			const bool has_mips = false;
 			const uint16_t num_layers = 1;
 
@@ -145,7 +145,7 @@ namespace QwerkE {
 			double x, y;
 			glfwGetCursorPos(window, &x, &y);
 
-			const vec2& windowSize = Window::GetSize();
+			const vec2f& windowSize = Window::GetSize();
 
 			imguiBeginFrame(
 				x, y

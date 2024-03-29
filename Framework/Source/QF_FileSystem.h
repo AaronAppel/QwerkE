@@ -5,8 +5,6 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_Constants.h"
-
 typedef unsigned int GLenum;
 
 namespace QwerkE {

@@ -56,7 +56,7 @@ namespace QwerkE {
     {
 #ifdef _QDEBUG // #TESTING
 
-        const vec2& windowSize = Window::GetSize();
+        const vec2f& windowSize = Window::GetSize();
 
         bgfx::setViewName(Renderer::s_ViewIdFbo1, "FBO1");
         bgfx::setViewClear(Renderer::s_ViewIdFbo1, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
@@ -114,10 +114,10 @@ namespace QwerkE {
                 | 0 // #REVIEW
                 ;
 
-            // Submit 11x11 cubes.
-            for (uint32_t yy = 0; yy < 11; ++yy)
+            // Submit m_Rows x m_Columns cubes
+            for (uint32_t yy = 0; yy < m_Columns; ++yy)
             {
-                for (uint32_t xx = 0; xx < 11; ++xx)
+                for (uint32_t xx = 0; xx < m_Rows; ++xx)
                 {
                     float mtx[16];
                     bx::mtxRotateXY(mtx, time + xx * 0.21f, time + yy * 0.37f);

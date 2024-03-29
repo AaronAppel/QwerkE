@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\QC_StringHelpers.cpp" />
     <ClCompile Include="Source\QC_Time.cpp" />
     <ClCompile Include="Source\QF_Jobs.cpp" />
     <ClCompile Include="Source\QF_Settings.cpp" />
@@ -44,9 +43,6 @@
     <ClCompile Include="Source\QC_MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QF_MyFileWriter.cpp">
-      <Filter>File</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QF_PrintFunctions.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
@@ -78,13 +74,17 @@
     <ClCompile Include="Source\QF_ComponentMesh.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QC_StringHelpers.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Files.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
-    <ClInclude Include="Source\QC_StringHelpers.h" />
     <ClInclude Include="Source\QC_Time.h" />
     <ClInclude Include="Source\QC_TypeDefs.h" />
-    <ClInclude Include="Source\QF_Constants.h" />
     <ClInclude Include="Source\QF_PathDefines.h" />
     <ClInclude Include="Source\QF_Enums.h" />
     <ClInclude Include="Source\QF_Jobs.h" />
@@ -134,9 +134,6 @@
     <ClInclude Include="Source\QF_Math.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_MyFileWriter.h">
-      <Filter>File</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_PrintFunctions.h">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -180,14 +177,26 @@
     <ClInclude Include="Source\QF_RendererHelpers.h">
       <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_ComponentCamera.h">
-      <Filter>Game Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_Assets.h">
       <Filter>Assets</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_ComponentMesh.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ComponentCamera.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_StringHelpers.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Files.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_AssetsTypes.h">
+      <Filter>Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Buffer.h">
+      <Filter>File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,9 +227,6 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{7599a1b0-c2ae-44ff-a81b-1ed7fdb6316a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="File\Serialization">
-      <UniqueIdentifier>{f032c393-d9d5-474c-b819-bbf4e3be9bd4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{e053b3d5-3dc4-4af2-9b68-6ad556038b53}</UniqueIdentifier>
     </Filter>
@@ -235,6 +241,12 @@
     </Filter>
     <Filter Include="Game Scripts">
       <UniqueIdentifier>{5b33b51b-906a-4c60-acb7-99eb685eb3db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{0052a5f9-40cd-41bf-bdc1-fd33742b091f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Serialization">
+      <UniqueIdentifier>{f032c393-d9d5-474c-b819-bbf4e3be9bd4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

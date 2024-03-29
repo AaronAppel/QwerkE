@@ -39,15 +39,19 @@ namespace QwerkE {
 
         qwerkeEntity->AddComponent<NativeScriptComponent>().Bind<ScriptablePrint>(qwerkeEntity);
 
-        // m_Registry.emplace<ScriptablePrint>(m_EntityCamera, qwerkeEntity);
-
         entt::entity m_EntityScript = m_Registry.create();
         m_Registry.emplace<ComponentPrint>(m_EntityScript);
 
         m_Registry.emplace<ComponentPrint>(m_Registry.create());
         m_Registry.emplace<ComponentPrint>(m_Registry.create());
 
-        m_Registry.emplace<MeshComponent>(m_Registry.create()).Create();
+        MeshComponent& mesh1 = m_Registry.emplace<MeshComponent>(m_Registry.create());
+        mesh1.Create();
+        mesh1.SetDimensions(11, 1);
+
+        MeshComponent& mesh2 = m_Registry.emplace<MeshComponent>(m_Registry.create());
+        mesh2.Create();
+        mesh2.SetDimensions(1,11);
     }
 
     Scene::~Scene()
@@ -117,8 +121,6 @@ namespace QwerkE {
         bgfx::dbgTextPrintf(0, 5, 0x0f, "ComponentPrints #%i", viewPrints.size());
 
         auto viewMeshes = m_Registry.view<MeshComponent>();
-        bgfx::dbgTextPrintf(0, 5, 0x0f, "MeshComponent #%i", viewMeshes.size());
-
         for (auto entity : viewMeshes)
         {
             MeshComponent& mesh = m_Registry.get<MeshComponent>(entity);

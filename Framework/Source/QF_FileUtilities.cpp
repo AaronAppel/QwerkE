@@ -156,29 +156,6 @@ char* ReadRawBytesFromFile(const char* const fileName)
 
 	return nullptr;
 }
-
-char* LoadFile(const char* fileName)
-{
-	FILE* filehandle;
-	errno_t error = fopen_s(&filehandle, fileName, "rb");
-	if (filehandle)
-	{
-		// find the length of the file
-		fseek(filehandle, 0, SEEK_END); // go to the end
-		long size = ftell(filehandle); // read the position in bytes
-		rewind(filehandle); // go back to the beginning
-							// before we can read, we need to allocate a buffer of the right filePathLength
-		char* buffer = new char[size];
-		fread(buffer, size, 1, filehandle);
-		fclose(filehandle);
-
-		return buffer;
-	}
-	else
-	{
-		return NULL;
-	}
-}
 // TODO: Deprecate?
 char* LoadCompleteFile(const char* filename, long* length = nullptr)
 {

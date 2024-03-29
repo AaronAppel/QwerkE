@@ -4,7 +4,7 @@
 
 // #NOTE Cannot #include "QF_PCH.h" here. Must be done in VS project settings
 
-#define _QIgnored(x) (static_cast<void>(x))
+#define _QIGNORED(x) (static_cast<void>(x))
 
 #include "QC_CallbackFunction.h"
 #include "QC_TypeDefs.h"
@@ -13,21 +13,30 @@
 #include "QF_Log.h"
 #include "QF_Math.h"
 
-#ifdef _QGLEW
-#include "Libraries/glew/glew.h" // #TODO Fix include order dependency with gl.h
-#endif
-
 #ifdef _QGLM
 // #define GLM_FORCE_SWIZZLE // #NOTE Compiler runs out of heap space
 // #include "Libraries/glm/detail/type_vec.hpp"
 #include "Libraries/glm/glm.hpp"
-typedef glm::vec2 vec2;
-typedef glm::vec3 vec3;
-typedef glm::vec4 vec4;
-typedef glm::mat4 mat4;
-typedef glm::quat quat;
+
+typedef glm::vec2		vec2f;
+typedef glm::u16vec2	vec2u16;
+// typedef glm::i32vec2	vec2s32;
+
+typedef glm::vec3		vec3f;
+typedef glm::vec4		vec4f;
+typedef glm::mat4		mat4;
+typedef glm::quat		quat;
 
 // #TODO Expose more types like :
 // typedef glm::f32vec2 vec2; // #TODO Make vec2 a 4 byte float by default
-typedef glm::ivec2 vec2i;
 #endif
+
+namespace QwerkE {
+
+	namespace Constants {
+
+		static constexpr char* gc_DefaultStringValue = "null";
+
+	}
+
+}

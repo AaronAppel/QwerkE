@@ -19,7 +19,6 @@
 #endif
 
 #include "QF_Enums.h"
-#include "QF_Constants.h"
 
 namespace QwerkE {
 
@@ -30,7 +29,7 @@ namespace QwerkE {
     public:
         GameObject() = default;
         GameObject(Scene* scene);
-        GameObject(Scene* scene, vec3 position);
+        GameObject(Scene* scene, vec3f position);
         ~GameObject();
 
         void Update(double deltatime);
@@ -61,7 +60,7 @@ namespace QwerkE {
         std::string m_Name = Constants::gc_DefaultStringValue;
         eGameObjectTags m_Tag = GO_Tag_Null;
 
-        vec3 m_Position = vec3(0.f);
+        vec3f m_Position = vec3f(0.f);
 
         glm::mat4 m_Transform2 = glm::mat4(1.0f);
     };

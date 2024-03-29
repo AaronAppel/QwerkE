@@ -27,9 +27,9 @@ namespace QwerkE {
 
         static const u8 ONE_FRAME_MAX_INPUT = 12;
 
-        static vec2 s_MousePos = vec2(0.f);
-        static vec2 s_FrameMouseDelta = vec2(0.f);
-        static vec2 s_MouseDragStart = vec2(0.f);
+        static vec2f s_MousePos = vec2f(.0f);
+        static vec2f s_FrameMouseDelta = vec2f(.0f);
+        static vec2f s_MouseDragStart = vec2f(.0f);
         static bool s_MouseDragReset = false;
 
         static bool s_KeyEventsAreDirty = true;
@@ -44,7 +44,7 @@ namespace QwerkE {
         // Windows currently needs to callback to Input. Might as well register callbacks once and avoid the extra logic in Windows.
         static bool s_eKeyStates[eKeys_MAX] = { false };
 
-        static vec2 s_FrameMouseScrollOffsets = vec2(0.f);
+        static vec2f s_FrameMouseScrollOffsets = vec2f(.0f);
 
         static void local_RaiseInputEvent(eKeys key, eKeyState state)
         {
@@ -103,7 +103,7 @@ namespace QwerkE {
 
             if (s_MouseDragReset)
             {
-                s_MouseDragStart = vec2(0.f);
+                s_MouseDragStart = vec2f(0.f);
                 s_MouseDragReset = false;
             }
 
@@ -115,7 +115,7 @@ namespace QwerkE {
             }
         }
 
-        void OnMouseMove(vec2 position)
+        void OnMouseMove(vec2f position)
         {
             s_FrameMouseDelta = s_MousePos - position;
             s_MousePos = position;
@@ -123,8 +123,8 @@ namespace QwerkE {
 
         void OnMouseMove(float x, float y)
         {
-            s_FrameMouseDelta = s_MousePos - vec2(x, y);
-            s_MousePos = vec2(x, y);
+            s_FrameMouseDelta = s_MousePos - vec2f(x, y);
+            s_MousePos = vec2f(x, y);
         }
 
         void OnMouseClick(eKeys key, eKeyState state)
@@ -149,7 +149,7 @@ namespace QwerkE {
             s_FrameMouseScrollOffsets.y = y;
         }
 
-        const vec2& MouseScrollDelta()
+        const vec2f& MouseScrollDelta()
         {
             return s_FrameMouseScrollOffsets;
         }
@@ -211,13 +211,13 @@ namespace QwerkE {
             s_eKeyStates[key] = state;
         }
 
-        vec2 GetMouseDragDelta()
+        vec2f GetMouseDragDelta()
         {
             if (s_eKeyStates[eKeys::eKeys_LeftClick])
             {
                 return s_MousePos - s_MouseDragStart;
             }
-            return vec2(0.0f, 0.0f);
+            return vec2f(.0f, .0f);
         }
 
         bool GetIsKeyDown(eKeys key)

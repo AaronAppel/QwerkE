@@ -137,8 +137,5 @@
     <ClCompile Include="src\particleSystem\particle_system.cpp">
       <Filter>src\particleSystem</Filter>
     </ClCompile>
-    <ClCompile Include="include\bgfxFramework\SampleRenderData.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

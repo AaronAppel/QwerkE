@@ -14,7 +14,6 @@
 
 #include "QF_GameObject.h" // #TODO Remove for class GameObject; forward declaration instead
 
-#include "QF_Constants.h"
 #include "QF_Entity.h"
 
 namespace QwerkE {

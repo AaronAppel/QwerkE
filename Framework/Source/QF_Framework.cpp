@@ -62,7 +62,7 @@ namespace QwerkE {
 			{
 				if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))
 				{
-					Scenes::SetCurrentScene(i);
+					Scenes::SetCurrentScene((int)i);
 					break;
 				}
 			}

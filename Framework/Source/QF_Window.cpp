@@ -232,11 +232,11 @@ namespace QwerkE {
             return s_closeRequested;
         }
 
-        const vec2 Window::GetSize()
+        const vec2f Window::GetSize()
         {
             int width, height;
             glfwGetWindowSize(s_window, &width, &height);
-            return vec2(width, height);
+            return vec2f(width, height);
         }
 
         float Window::GetAspectRatio()
