@@ -3,8 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "QF_FileSystem.h"
-#include "QF_FileUtilities.h"
+#include "QF_Files.h"
 
 namespace QwerkE {
 

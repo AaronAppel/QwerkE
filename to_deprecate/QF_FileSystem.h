@@ -43,15 +43,13 @@ namespace QwerkE {
 
     namespace Files {
 
-        typedef std::filesystem::path Path;
-
         std::string ExplorerOpen();
         std::string ExplorerSave();
 
         // TODO: Allow flags for loading images a certain way
         // TODO: Remove GLenum and any implementation specific variables, types, or styles
         // TODO: LoadHDRImage // https://learnopengl.com/PBR/IBL/Diffuse-irradiance
-        // LoadImage is a macro somewhere
+        // LoadImage is already a windows macro...
 
         char* FullFileName(const char* filePath); // #TODO Use smart pointer to de-allocate
 

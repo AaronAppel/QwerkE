@@ -44,6 +44,8 @@ namespace QwerkE {
 
 	namespace Files {
 
+		// typedef std::filesystem::path Path;
+
 #ifdef _QOPENAL
 		void CheckForOpenALErrors(const char* file, int line);
 		ALuint OpenAL_LoadSound(const QSoundFile& soundFile);
@@ -141,13 +143,13 @@ namespace QwerkE {
 		{
 			unsigned char* returnBuffer = nullptr;
 
-			std::string extention = SmartFileExtension(path).get();
+			uPtr<char> extention = SmartFileExtension(path);
 
-			if (strcmp(extention.c_str(), "jpg") == 0)
+			if (strcmp(extention.get(), "jpg") == 0)
 			{
 				LOG_ERROR("{0} .jpg image not loaded. No working jpg load function currently: {1}", __FUNCTION__, path);
 			}
-			else if (strcmp(extention.c_str(), "png") == 0)
+			else if (strcmp(extention.get(), "png") == 0)
 			{
 #ifdef _QLODEPNG
 				returnBuffer = priv_QwerkE_lodepng_loadImage(path, imageWidth, imageHeight, channels, flipVertically);

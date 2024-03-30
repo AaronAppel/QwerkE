@@ -48,9 +48,10 @@ char* CombineStrings(const char* a, const char* b) // #TODO Review const return 
 	return buffer;
 }
 
-std::string Concatenate(const char* a, const char* b)
+std::string DispStrCombine(const char* a, const char* b) // #TODO Improve naming
 {
-	std::string value = a;
+	std::string value;
+	value.append(a);
 	value.append(b);
 
 	return value;
@@ -71,9 +72,9 @@ bool StringCompare(std::string a, std::string b) // #TODO Rename for boolean ret
 	return strcmp(a.c_str(), b.c_str()) == 0;
 }
 
-bool StringHasText(std::string content, std::string searchText)
+bool SearchForString(std::string line, std::string word)
 {
-	return content.find(searchText) != content.npos;
+	return line.find(word) != line.npos;
 }
 
 int StringToInt(const char* string)

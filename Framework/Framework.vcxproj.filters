@@ -28,12 +28,6 @@
     <ClCompile Include="Source\QF_AssignWin32Keys.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QF_FileUtilities.cpp">
-      <Filter>File</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\QF_FileSystem.cpp">
-      <Filter>File</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QF_GameObject.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
@@ -59,10 +53,10 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_SceneSerialization.cpp">
-      <Filter>File\Serialization</Filter>
+      <Filter>FileIO\Serialization</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Serialization.cpp">
-      <Filter>File\Serialization</Filter>
+      <Filter>FileIO\Serialization</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Renderer.cpp">
       <Filter>Renderer</Filter>
@@ -78,7 +72,13 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Files.cpp">
-      <Filter>File</Filter>
+      <Filter>FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Directory.cpp">
+      <Filter>FileIO\Directory</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_Helpers.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,12 +112,6 @@
     </ClInclude>
     <ClInclude Include="Source\QF_JobQueuedEvent.h">
       <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QF_FileUtilities.h">
-      <Filter>File</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QF_FileSystem.h">
-      <Filter>File</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Instrumentor.h">
       <Filter>Debug</Filter>
@@ -156,7 +150,7 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Serialization.h">
-      <Filter>File\Serialization</Filter>
+      <Filter>FileIO\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Entity.h">
       <Filter>Scene</Filter>
@@ -190,13 +184,19 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Files.h">
-      <Filter>File</Filter>
+      <Filter>FileIO</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_AssetsTypes.h">
       <Filter>Assets</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Buffer.h">
-      <Filter>File</Filter>
+      <Filter>FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Directory.h">
+      <Filter>FileIO\Directory</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Helpers.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +211,6 @@
     </Filter>
     <Filter Include="Events">
       <UniqueIdentifier>{80743b01-b609-4acc-a99d-5043ababe16e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="File">
-      <UniqueIdentifier>{1309e9d7-5a74-40ee-8c0b-54b057666a3f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Entity">
       <UniqueIdentifier>{c4c4ea73-1a65-4be5-bb5a-56051d7d0648}</UniqueIdentifier>
@@ -245,8 +242,14 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{0052a5f9-40cd-41bf-bdc1-fd33742b091f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="File\Serialization">
+    <Filter Include="FileIO">
+      <UniqueIdentifier>{1309e9d7-5a74-40ee-8c0b-54b057666a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileIO\Serialization">
       <UniqueIdentifier>{f032c393-d9d5-474c-b819-bbf4e3be9bd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileIO\Directory">
+      <UniqueIdentifier>{77441806-04ea-418e-b81e-be2556cd0de7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

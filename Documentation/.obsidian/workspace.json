@@ -90,9 +90,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "652fe073cda5cfee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Game Ideas.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -152,7 +164,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Oracle Cloud Perforce (Free).md"
+                "file": "Game Ideas.md"
               }
             }
           }
@@ -195,7 +207,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Oracle Cloud Perforce (Free).md",
+                "file": "Game Ideas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -207,7 +219,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Oracle Cloud Perforce (Free).md",
+                "file": "Game Ideas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -234,10 +246,11 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "cf0c8dd39da625b3",
+  "active": "652fe073cda5cfee",
   "lastOpenFiles": [
-    "README.md",
     "Oracle Cloud Perforce (Free).md",
+    "Game Ideas.md",
+    "README.md",
     "bgfx Render tutorial.md",
     "entt Callbacks.md",
     "Lumix engine.md",
@@ -263,7 +276,6 @@
     "Development/TODO/String Library.md",
     "Serializer.md",
     "Serialization (JSON).md",
-    "ZZ Shared Vault Files ❗/New Project Checklist.md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableSpecificWarnings.png",
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",

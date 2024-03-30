@@ -14,8 +14,9 @@ unsigned char* LoadWavFileData(const char* filePath, unsigned long& bufferSize, 
 void WriteRawBytesToFile(const char* filename, const char* data, int numBytes);
 void WriteStringToFile(const char* filename, const char* string);
 
-char* UniqueFileNameNumberAppend(const char* fileDirectory, const char* fileName, const char* extension);
 bool FileExists(const char* filePath);
+char* UniqueFileNameNumberAppend(const char* fileDirectory, const char* fileName, const char* extension);
+
 std::unique_ptr<std::vector<std::string>> ReadDir(const char* directoryPath); // #TODO Review name. Could involve "list" like ListDirFiles(path)
 
 std::unique_ptr<char> SmartFileName(const char* filePathOrName, bool includeExtension);

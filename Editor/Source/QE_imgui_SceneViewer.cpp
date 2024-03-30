@@ -6,7 +6,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_FileUtilities.h"
+#include "QF_Files.h"
 #include "QF_Input.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
@@ -77,13 +77,13 @@ namespace QwerkE {
 
                 // #TODO Fix non unique number
                 char* newFilePath = UniqueFileNameNumberAppend(ScenesFolderPath(""), newFileDefaultName, scene_ext);
-                uPtr<char> newFileName = SmartFileName(newFilePath, true);
+                Path newFileName = Files::FileName(newFilePath);
                 free(newFilePath);
 
-                Scene* newScene = Scenes::CreateSceneFromFile(newFileName.get());
+                Scene* newScene = Scenes::CreateSceneFromFile(newFileName.c_str());
                 newScene->LoadSceneFromFilePath(emptyScenePrefabFileName);
                 newScene->OnLoaded();
-                Scenes::SetCurrentScene(newFileName.get());
+                Scenes::SetCurrentScene(newFileName.c_str());
             }
 
             ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f - 20.f);

@@ -1,15 +1,13 @@
 #include "QE_ProgramArgs.h"
 
-#ifdef _QWINDOWS
+#include <filesystem>
 #include <map>
 #include <string>
 
-#include "QF_FileUtilities.h"
-
-void ProgramArgsToPairs_Windows(unsigned int numArgs, char** argArr, std::map<std::string, const char*>& argumentPairs)
+void ProgramArgsToPairs(unsigned int numArgs, char** argArr, std::map<std::string, const char*>& argumentPairs)
 {
 	argumentPairs.insert(std::pair<std::string, const char*>(key_StartupDir, argArr[0]));
-	argumentPairs.insert(std::pair<std::string, const char*>(key_ApplicationFileName, FileName(argArr[0], true)));
+	argumentPairs.insert(std::pair<std::string, const char*>(key_ApplicationFileName, std::filesystem::path(argArr[0]).filename().string().c_str()));
 
 	for (size_t i = 1; i < numArgs; ++i)
 	{
@@ -24,7 +22,7 @@ void ProgramArgsToPairs_Windows(unsigned int numArgs, char** argArr, std::map<st
 	}
 }
 
-void OutputProgramPairsInfo_Windows(const std::map<std::string, const char*>& argumentPairs)
+void OutputProgramPairsInfo(const std::map<std::string, const char*>& argumentPairs)
 {
 	if (argumentPairs.find(key_StartupDir) != argumentPairs.end())
 	{
@@ -43,4 +41,3 @@ void OutputProgramPairsInfo_Windows(const std::map<std::string, const char*>& ar
 		printf("%s, \"%s\"\n", it->first.c_str(), it->second);
 	}
 }
-#endif
