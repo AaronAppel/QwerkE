@@ -12,6 +12,7 @@
 *.suo
 *.opendb
 *.obj
+*.vcxproj
 
 *.dll
 !QwerkE_Framework/Libraries/**/*.dll
