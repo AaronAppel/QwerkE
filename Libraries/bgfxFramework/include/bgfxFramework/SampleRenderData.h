@@ -1,7 +1,7 @@
 #pragma once
 
-#ifdef _QBGFX
 #include <bgfx/bgfx.h>
+#include <bx/bx.h>
 
 struct PosColorVertex
 {
@@ -19,7 +19,6 @@ struct PosColorVertex
 	}
 	static bgfx::VertexLayout ms_layout;
 };
-bgfx::VertexLayout PosColorVertex::ms_layout; // #TODO Improve. Can't #include more than 1 time
 
 static PosColorVertex s_cubeVertices[] =
 {
@@ -52,4 +51,3 @@ static const uint64_t s_ptState[]
 	BGFX_STATE_PT_POINTS,
 };
 BX_STATIC_ASSERT(BX_COUNTOF(s_ptState) == BX_COUNTOF(s_ptNames));
-#endif

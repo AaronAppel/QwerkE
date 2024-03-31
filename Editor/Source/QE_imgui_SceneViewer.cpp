@@ -15,6 +15,8 @@
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"
 
+#include "QF_ComponentMesh.h"
+
 namespace QwerkE {
 
     void SceneViewer::Draw()
@@ -75,15 +77,13 @@ namespace QwerkE {
                 constexpr const char* newFileDefaultName = "NewScene";
                 constexpr const char* emptyScenePrefabFileName = "Empty.qscene";
 
-                // #TODO Fix non unique number
-                char* newFilePath = UniqueFileNameNumberAppend(ScenesFolderPath(""), newFileDefaultName, scene_ext);
-                Path newFileName = Files::FileName(newFilePath);
-                free(newFilePath);
+                // #NOTE Previous function UniqueFileNameNumberAppend(ScenesFolderPath(""), newFileDefaultName, scene_ext);
+                uPtr<char[]> newFilePath = Files::UniqueFileName(ScenesFolderPath(newFileDefaultName, ".", scene_ext));
 
-                Scene* newScene = Scenes::CreateSceneFromFile(newFileName.c_str());
+                Scene* newScene = Scenes::CreateSceneFromFile(newFilePath.get());
                 newScene->LoadSceneFromFilePath(emptyScenePrefabFileName);
                 newScene->OnLoaded();
-                Scenes::SetCurrentScene(newFileName.c_str());
+                Scenes::SetCurrentScene(newFilePath.get());
             }
 
             ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f - 20.f);
@@ -91,6 +91,32 @@ namespace QwerkE {
             if (ImGui::Button(buttonText))
             {
                 currentScene->SetIsPaused(!currentScene->GetIsPaused());
+            }
+
+            if (currentScene)
+            {
+                static bool isOpen = false;
+                ImGui::Begin("MeshPositionWindow", &isOpen);
+
+                auto viewMeshes = currentScene->Registry().view<MeshComponent>();
+                int i = 0;
+                for (auto entity : viewMeshes)
+                {
+                    MeshComponent& mesh = currentScene->Registry().get<MeshComponent>(entity);
+
+                    vec3f meshPosition = mesh.GetPosition();
+
+                    std::string meshName = "MeshPosition";
+                    if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
+                    {
+                        mesh.SetPosition(meshPosition);
+                    }
+
+                    mesh.Draw();
+                    ++i;
+                }
+
+                ImGui::End();
             }
 
             DrawSceneList();

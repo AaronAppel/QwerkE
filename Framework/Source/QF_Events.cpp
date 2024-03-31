@@ -11,8 +11,6 @@
 
 #include "QF_Debug.h"
 #include "QF_Event.h"
-#include "QF_JobQueuedEvent.h"
-#include "QF_Jobs.h"
 #include "QF_Log.h"
 
 namespace QwerkE {

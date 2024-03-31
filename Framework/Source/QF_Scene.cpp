@@ -45,13 +45,20 @@ namespace QwerkE {
         m_Registry.emplace<ComponentPrint>(m_Registry.create());
         m_Registry.emplace<ComponentPrint>(m_Registry.create());
 
-        MeshComponent& mesh1 = m_Registry.emplace<MeshComponent>(m_Registry.create());
-        mesh1.Create();
-        mesh1.SetDimensions(11, 1);
+        const u8 rows = 11;
+        const u8 columns = 11;
+        const float scalar = 3.f;
 
-        MeshComponent& mesh2 = m_Registry.emplace<MeshComponent>(m_Registry.create());
-        mesh2.Create();
-        mesh2.SetDimensions(1,11);
+        for (uint32_t yy = 0; yy < columns; ++yy)
+        {
+            for (uint32_t xx = 0; xx < rows; ++xx)
+            {
+                MeshComponent& mesh1 = m_Registry.emplace<MeshComponent>(m_Registry.create());
+                mesh1.Create();
+                mesh1.SetDimensions(1, 1);
+                mesh1.SetPosition( { float(xx) * scalar - 15.f, float(yy) * scalar - 15.f, .0f } );
+            }
+        }
     }
 
     Scene::~Scene()
@@ -124,6 +131,8 @@ namespace QwerkE {
         for (auto entity : viewMeshes)
         {
             MeshComponent& mesh = m_Registry.get<MeshComponent>(entity);
+            // TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
+            // mesh.SetTransformUniform(transform);
             mesh.Draw();
         }
     }
@@ -297,11 +306,11 @@ namespace QwerkE {
         }
 
         std::string oldName = m_SceneFileName; // #TODO Improve scene file name overwrite logic
-        if (FileExists(otherSceneFilePath))
+        if (Files::Exists(otherSceneFilePath))
         {
             Serialization::DeserializeJsonFromFile(otherSceneFilePath, *this);
         }
-        else if (FileExists(ScenesFolderPath(otherSceneFilePath)))
+        else if (Files::Exists(ScenesFolderPath(otherSceneFilePath)))
         {
             Serialization::DeserializeJsonFromFile(ScenesFolderPath(otherSceneFilePath), *this);
         }

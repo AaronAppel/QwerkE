@@ -18,6 +18,9 @@ namespace QwerkE {
 
         void SetDimensions(u8 rows, u8 columns) { m_Rows = rows; m_Columns = columns; }
 
+        void SetPosition(vec3f newPosition) { m_Position = newPosition; }
+        vec3f GetPosition() { return m_Position; }
+
     private:
         bgfx::VertexBufferHandle m_vbh;
         bgfx::IndexBufferHandle m_ibh;
@@ -27,6 +30,8 @@ namespace QwerkE {
 
         u8 m_Rows = 11;
         u8 m_Columns = 11;
+
+        vec3f m_Position;
     };
 
 }

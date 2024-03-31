@@ -34,15 +34,13 @@ namespace QwerkE {
         m_StartingTimeOffset = bx::getHPCounter();
 
         // #TESTING
-        // Create vertex stream declaration.
-        PosColorVertex::init();
-
         // Create static vertex buffer.
         m_vbh = bgfx::createVertexBuffer(
             // Static data can be passed with bgfx::makeRef
             bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices))
             , PosColorVertex::ms_layout
         );
+
         m_ibh = bgfx::createIndexBuffer(
             // Static data can be passed with bgfx::makeRef
             bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
@@ -114,31 +112,30 @@ namespace QwerkE {
                 | 0 // #REVIEW
                 ;
 
-            // Submit m_Rows x m_Columns cubes
-            for (uint32_t yy = 0; yy < m_Columns; ++yy)
-            {
-                for (uint32_t xx = 0; xx < m_Rows; ++xx)
-                {
-                    float mtx[16];
-                    bx::mtxRotateXY(mtx, time + xx * 0.21f, time + yy * 0.37f);
-                    mtx[12] = -15.0f + float(xx) * 3.0f;
-                    mtx[13] = -15.0f + float(yy) * 3.0f;
-                    mtx[14] = 0.0f;
+            float mtx[16];
+            bx::mtxRotateXY(mtx, time + m_Position.x * 0.21f, time + m_Position.y * 0.37f);
 
-                    // Set model matrix for rendering.
-                    bgfx::setTransform(mtx);
+            //* Rotates
+            mtx[12] = m_Position.x;
+            mtx[13] = m_Position.y;
+            mtx[14] = m_Position.z;
 
-                    // Set vertex and index buffer.
-                    bgfx::setVertexBuffer(0, m_vbh);
-                    bgfx::setIndexBuffer(m_ibh);
+            /*/ // Doesn't rotate
+            bx::mtxTranslate(mtx, m_Position.x, m_Position.y, m_Position.z);
+            //*/
 
-                    // Set render states.
-                    bgfx::setState(state);
+            // Set model matrix for rendering.
+            bgfx::setTransform(mtx);
 
-                    // Submit primitive for rendering to view 0.
-                    bgfx::submit(Renderer::s_ViewIdFbo1, m_program);
-                }
-            }
+            // Set vertex and index buffer.
+            bgfx::setVertexBuffer(0, m_vbh);
+            bgfx::setIndexBuffer(m_ibh);
+
+            // Set render states.
+            bgfx::setState(state);
+
+            // Submit primitive for rendering to view 0.
+            bgfx::submit(Renderer::s_ViewIdFbo1, m_program);
         }
 #endif
     }

@@ -8,6 +8,7 @@
 
 #include "QC_Time.h"
 
+#include "QF_Directory.h"
 #include "QF_Files.h"
 #include "QF_Framework.h"
 #include "QF_Input.h"
@@ -58,7 +59,7 @@ namespace QwerkE {
             Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str());
 
             std::map<std::string, const char*> pairs;
-            ProgramArgsToPairs_Windows(argc, argv, pairs);
+            ProgramArgsToPairs(argc, argv, pairs);
 
             if (pairs.find(key_ApplicationName) == pairs.end())
             {
@@ -78,7 +79,7 @@ namespace QwerkE {
             pairs.insert(std::pair<const char*, const char*>("AssetsDir", AssetsDir));
             pairs.insert(std::pair<const char*, const char*>("NullAssetsDir", NullAssetsDir));
 
-            if (true) { OutputProgramPairsInfo_Windows(pairs); }
+            if (true) { OutputProgramPairsInfo(pairs); }
 
 			Framework::Initialize();
 
@@ -333,12 +334,11 @@ namespace QwerkE {
             if (s_EngineSettings->showingSchematicsEditor && ImGui::Begin("Schematics Inspector", &s_EngineSettings->showingSchematicsEditor))
             {
                 // #TODO Cache result to avoid constant directory info fetching
-                const auto dirFileNamesUPtr = ReadDir(SchematicsFolderPath(""));
-                const auto fileNames = dirFileNamesUPtr.get();
+                const std::vector<std::string> dirFileNames = Directory::ListDir(SchematicsFolderPath(""));
 
-                for (size_t i = 0; i < fileNames->size(); i++)
+                for (size_t i = 0; i < dirFileNames.size(); i++)
                 {
-                    ImGui::Button(fileNames->at(i).c_str());
+                    ImGui::Button(dirFileNames.at(i).c_str());
                 }
 
                 ImGui::End();

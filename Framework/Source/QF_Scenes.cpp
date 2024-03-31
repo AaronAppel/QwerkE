@@ -43,7 +43,7 @@ namespace QwerkE {
 			for (size_t i = 0; i < sceneFileNames.size(); i++)
 			{
 				const char* sceneFileName = sceneFileNames[i].c_str();
-				if (!FileExists(ScenesFolderPath(sceneFileName)))
+				if (!Files::Exists(ScenesFolderPath(sceneFileName)))
 				{
 					LOG_WARN("Initialize(): File not found: {0}", sceneFileName);
 					continue;
@@ -111,15 +111,15 @@ namespace QwerkE {
 
 		Scene* CreateSceneFromFile(const std::string& sceneFilePath, bool addToProjectsSceneFiles)
 		{
-			uPtr<char> sceneFileName = SmartFileName(sceneFilePath.c_str(), true);
+			Path sceneFileName = Files::FileName(sceneFilePath.c_str());
 
-			if (const Scene* existingScene = GetScene(sceneFileName.get()))
+			if (const Scene* existingScene = GetScene(sceneFileName.string().c_str()))
 			{
-				LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__, sceneFileName.get());
+				LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__, sceneFileName.string().c_str());
 				return nullptr;
 			}
 
-			Scene* newScene = new Scene(sceneFileName.get());
+			Scene* newScene = new Scene(sceneFileName.string().c_str());
 			newScene->LoadSceneFromFilePath(sceneFilePath.c_str());
 			s_Scenes.push_back(newScene);
 

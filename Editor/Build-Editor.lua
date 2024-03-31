@@ -37,6 +37,8 @@ project "Editor"
 		"%{wks.location}/", -- Root for accessing library source
 		"%{wks.location}/Framework/Source/", -- Include Framework source
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
+		
+		"%{wks.location}/Libraries/bgfx/include", -- For testing calls to bgfx in editor code
 	}
 	
 	links

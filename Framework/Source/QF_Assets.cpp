@@ -46,11 +46,12 @@ namespace QwerkE {
 		{
 			ASSERT(textureFilePath, "Invalid textureFilePath!");
 
-			uPtr<char> fileName = SmartFileName(textureFilePath, true);
-			if (local_Has(fileName.get()))
+			Path fileName = Files::FileName(textureFilePath);
+			// #TODO Make fileName.string().c_str() nicer to use
+			if (local_Has(fileName.string().c_str()))
 			{
 #ifdef _QDEBUG
-				LOG_WARN("{0} Asset already exists: {1}", __FUNCTION__, fileName.get());
+				LOG_WARN("{0} Asset already exists: {1}", __FUNCTION__, fileName.string().c_str());
 #endif
 				return *s_Textures[textureFilePath];
 			}

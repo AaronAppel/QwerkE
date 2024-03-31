@@ -18,6 +18,7 @@
 #include "bgfxFramework/bgfx_utils.h" // Requires "..\Libraries\bimg\include"
 #include "bgfxFramework/debugDraw/debugdraw.h"
 #include "bgfxFramework/LoadShader.h"
+#include <bgfxFramework/SampleRenderData.h>
 
 #ifdef _QDEARIMGUI
 #include "bgfxFramework/imguiCommon/imguiCommon.h"
@@ -75,6 +76,8 @@ namespace QwerkE {
 #ifdef _QBGFX
 			bgfx::renderFrame(); // Prevent bgfx from creating a separate render thread
 			bgfx::Init init;
+
+			PosColorVertex::init(); // Create vertex stream declaration.
 
 #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
 			init.platformData.ndt = glfwGetX11Display();

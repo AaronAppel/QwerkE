@@ -25,7 +25,7 @@ namespace QwerkE {
 
         char* ReverseString(char* value);
 
-        char* NumberAppendOrIncrement(const char* const charArray);
+        uPtr<char[]> NumberAppendOrIncrement(const char* const charArray);
 
         // https://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 #include <memory>
