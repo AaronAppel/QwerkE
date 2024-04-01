@@ -1,0 +1,11 @@
+{
+	"Name":	"null_object.osch",
+	"Renderables":	[{
+			"R1":	[{
+					"Shader":	"null_shader.ssch",
+					"Material":	"null_material.msch",
+					"MeshFile":	"null_mesh.obj",
+					"MeshName":	"null_mesh"
+				}]
+		}]
+}

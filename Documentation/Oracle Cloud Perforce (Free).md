@@ -1,0 +1,1 @@
+https://dev.epicgames.com/community/learning/tutorials/1lV4/unreal-engine-perforce-setup-on-oracle-cloud-free-tier

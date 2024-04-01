@@ -24,6 +24,7 @@ int main()
 Libraries or external code I utilize to deliver features (may be outdated) :
 - assimp: www.github.com/assimp/assimp
 - better-enums: https://github.com/aantron/better-enums
+- bgfx, bimg, bx: https://github.com/bkaradzic/bgfx
 - Bullet3: https://github.com/bulletphysics/bullet3
 - cJSON: https://github.com/DaveGamble/cJSON
 - CPPList.h: Dave 'Redbeard' Eccleston

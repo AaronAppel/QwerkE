@@ -12,4 +12,15 @@ namespace ImGui
 		return ImGuiKey_Z;
 	}
 
+	void PushFontQw(Fonts font)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		ImGui::PushFont(io.Fonts->Fonts[(int)font]);
+	}
+
+	void PopFontQw()
+	{
+		ImGui::PopFont();
+	}
+
 }

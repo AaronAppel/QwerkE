@@ -1,29 +1,62 @@
 #include "QC_cJSON.h"
 
+#include <stdio.h>
 #include <vector>
 
 #include "cJSON.h"
 
 // #TODO This file should be a library and can't include engine code, or be moved to become engine code
-#include "QF_Log.h"
-#include "QF_FileUtilities.h"
+
+char* cjson_LoadFile(const char* fileName)
+{
+	FILE* filehandle;
+	errno_t error = fopen_s(&filehandle, fileName, "rb");
+	if (filehandle)
+	{
+		// find the length of the file
+		fseek(filehandle, 0, SEEK_END); // go to the end
+		long size = ftell(filehandle); // read the position in bytes
+		rewind(filehandle); // go back to the beginning
+		// before we can read, we need to allocate a buffer of the right filePathLength
+		char* buffer = new char[size];
+		fread(buffer, size, 1, filehandle);
+		fclose(filehandle);
+
+		return buffer;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+void cjson_WriteStringToFile(const char* filename, const char* string)
+{
+	FILE* filehandle;
+	errno_t error = fopen_s(&filehandle, filename, "w+");
+	if (filehandle)
+	{
+		fwrite(string, 1, strlen(string), filehandle);
+		fclose(filehandle);
+	}
+}
 
 cJSON* OpencJSONStream(const char* fileDirectory)
 {
 	if (json_FileExists(fileDirectory))
 	{
-		char* str = LoadFile(fileDirectory);
+		char* str = cjson_LoadFile(fileDirectory);
 		cJSON* root = cJSON_Parse(str);
 
 		if (root == nullptr)
 		{
-			LOG_ERROR("{0}(): Could not open cJSON stream. Possible compile error. Check {1} file for typos!", __FUNCTION__, fileDirectory);
+			printf("{%s}(): Could not open cJSON stream. Possible compile error. Check {%s} file for typos!", __FUNCTION__, fileDirectory);
 		}
 
 		delete[] str;
 		return root;
 	}
-	LOG_ERROR("{0}(): Could not find JSON file {1}!", __FUNCTION__, fileDirectory);
+	printf("{%s}(): Could not find JSON file {%s}!", __FUNCTION__, fileDirectory);
 	return nullptr;
 }
 
@@ -460,7 +493,7 @@ void json_CreateNewFile(const char* filename)
 
 	if (error == 0)
 	{
-		LOG_ERROR("CreateNewFile(): {0} already exists", filename);
+		printf("CreateNewFile(): {%s} already exists", filename);
 		fclose(filehandle);
 	}
 	else if (filehandle == nullptr)
@@ -496,6 +529,6 @@ void AddItemToRootOfFile(cJSON* item, const char* filename)
 void PrintRootObjectToFile(const char* filename, cJSON* root)
 {
 	const char* jSonstr = cJSON_Print(root);
-	WriteStringToFile(filename, jSonstr);
+	cjson_WriteStringToFile(filename, jSonstr);
 	free((char*)jSonstr);
 }

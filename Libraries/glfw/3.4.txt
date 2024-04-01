@@ -1,0 +1,3 @@
+Version is 3.4 from March 25th 2024
+
+Latest: https://www.glfw.org/download.html

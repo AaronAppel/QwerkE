@@ -19,8 +19,8 @@ enum class MirrorTypes
     ProjectSettings,
 
     // Types
-    vec2,
-    vec3,
+    vec2f,
+    vec3f,
 
     // Game
     ComponentCamera,

@@ -1,0 +1,1 @@
+`BGFX_CONFIG_RENDERER_OPENGL=44` it will set GL to 4.4 but that's minimum required. - bkaradzic

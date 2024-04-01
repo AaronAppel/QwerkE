@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\QE_imgui_SceneViewer.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QE_imgui_EditComponent.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QE_imgui_EntityEditor.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QE_imgui_SceneGraph.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QE_EditorInspector.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QE_Editor.cpp">
+      <Filter>Root Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QE_PCH.cpp">
+      <Filter>Root Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QE_ProgramArgs.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\QE_EditComponent.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorInspector.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_MaterialEditor.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EntityEditor.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_SceneGraph.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_SceneViewer.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_ShaderEditor.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_Editor.h">
+      <Filter>Root Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_PCH.h">
+      <Filter>Root Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_ProgramArgs.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{b65493ab-9efd-43bf-a216-f10b7f09c065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Root Files">
+      <UniqueIdentifier>{9684db7b-7a5d-4fe5-bddc-fde7ef1797a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{22e305f0-c945-4673-bcd5-c5dee96782a7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

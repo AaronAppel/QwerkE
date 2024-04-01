@@ -1,0 +1,8 @@
+{
+	"ShaderProgram":	[{
+		"m_Name":	"PBR1.ssch",
+		"m_VertName":	"PBR1.vert",
+		"m_FragName":	"PBR1.frag",
+		"m_GeoName":	"null"
+	}]
+}

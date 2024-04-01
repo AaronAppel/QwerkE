@@ -1,0 +1,19 @@
+{
+	"Material":	[{
+			"m_Name":	"brickwall.msch",
+			"m_Components":	[{
+					"0":	[{
+							"s_FileName":	"brickwall.png"
+						}],
+					"1":	[{
+							"s_FileName":	"brickwall.png"
+						}],
+					"2":	[{
+							"s_FileName":	"brickwall.png"
+						}],
+					"5":	[{
+							"s_FileName":	"brickwall_normal.png"
+						}]
+				}]
+		}]
+}

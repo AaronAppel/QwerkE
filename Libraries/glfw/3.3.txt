@@ -1,3 +1,0 @@
-Version is 3.3 from April 15th 2019
-
-Latest: https://www.glfw.org/download.html
