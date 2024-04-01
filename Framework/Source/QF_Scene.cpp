@@ -21,6 +21,7 @@
 
 #include "QF_ComponentPrint.h"
 #include "QF_ComponentMesh.h"
+#include "QF_ComponentTransform.h"
 #include "QF_ScriptPrint.h"
 
 namespace QwerkE {
@@ -47,16 +48,19 @@ namespace QwerkE {
 
         const u8 rows = 11;
         const u8 columns = 11;
-        const float scalar = 3.f;
+        const float spacingScalar = 3.f;
+        const float offset = 15.f;
 
         for (uint32_t yy = 0; yy < columns; ++yy)
         {
             for (uint32_t xx = 0; xx < rows; ++xx)
             {
-                MeshComponent& mesh1 = m_Registry.emplace<MeshComponent>(m_Registry.create());
-                mesh1.Create();
-                mesh1.SetDimensions(1, 1);
-                mesh1.SetPosition( { float(xx) * scalar - 15.f, float(yy) * scalar - 15.f, .0f } );
+                entt::entity entityId = m_Registry.create();
+                ComponentTransform& transform = m_Registry.emplace<ComponentTransform>(entityId);
+                transform.SetPosition({ float(xx) * spacingScalar - offset, float(yy) * spacingScalar - offset, .0f });
+
+                ComponentMesh& mesh = m_Registry.emplace<ComponentMesh>(entityId);
+                mesh.Create();
             }
         }
     }
@@ -65,10 +69,10 @@ namespace QwerkE {
     {
         UnloadScene();
 
-        auto viewMeshes = m_Registry.view<MeshComponent>();
+        auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto entity : viewMeshes)
         {
-            MeshComponent& mesh = m_Registry.get<MeshComponent>(entity);
+            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
             mesh.Destroy();
         }
 
@@ -127,13 +131,15 @@ namespace QwerkE {
         auto viewPrints = m_Registry.view<ComponentPrint>();
         bgfx::dbgTextPrintf(0, 5, 0x0f, "ComponentPrints #%i", viewPrints.size());
 
-        auto viewMeshes = m_Registry.view<MeshComponent>();
+        auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto entity : viewMeshes)
         {
-            MeshComponent& mesh = m_Registry.get<MeshComponent>(entity);
-            // TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
-            // mesh.SetTransformUniform(transform);
-            mesh.Draw();
+            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
+            if (m_Registry.has<ComponentTransform>(entity))
+            {
+                ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
+                mesh.Draw(transform);
+            }
         }
     }
 

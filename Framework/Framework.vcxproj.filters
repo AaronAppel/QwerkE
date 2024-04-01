@@ -73,6 +73,9 @@
     <ClCompile Include="Source\QF_Helpers.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QF_ComponentTransform.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -184,6 +187,10 @@
     <ClInclude Include="Source\QF_Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_ComponentTransform.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Colours.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

@@ -16,6 +16,7 @@
 #include "QE_EntityEditor.h"
 
 #include "QF_ComponentMesh.h"
+#include "QF_ComponentTransform.h"
 
 namespace QwerkE {
 
@@ -98,21 +99,21 @@ namespace QwerkE {
                 static bool isOpen = false;
                 ImGui::Begin("MeshPositionWindow", &isOpen);
 
-                auto viewMeshes = currentScene->Registry().view<MeshComponent>();
+                auto viewTransforms = currentScene->Registry().view<ComponentTransform>();
                 int i = 0;
-                for (auto entity : viewMeshes)
+                for (auto entity : viewTransforms)
                 {
-                    MeshComponent& mesh = currentScene->Registry().get<MeshComponent>(entity);
+                    ComponentTransform& transform = currentScene->Registry().get<ComponentTransform>(entity);
 
-                    vec3f meshPosition = mesh.GetPosition();
+                    vec3f meshPosition = transform.GetPosition();
 
                     std::string meshName = "MeshPosition";
                     if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
                     {
-                        mesh.SetPosition(meshPosition);
+                        transform.SetPosition(meshPosition);
                     }
 
-                    mesh.Draw();
+                    // mesh.Draw();
                     ++i;
                 }
 
