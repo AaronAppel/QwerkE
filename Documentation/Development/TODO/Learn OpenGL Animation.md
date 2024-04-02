@@ -1,0 +1,1 @@
+Look at how Learn OpenGL plays animation in github example projects

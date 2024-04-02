@@ -30,6 +30,7 @@ namespace QwerkE {
 
         void Update(float deltatime);
         void Draw();
+        void DrawImgui();
 
         bool AddCamera(GameObject* camera);
         void RemoveCamera(GameObject* camera);
@@ -73,6 +74,7 @@ namespace QwerkE {
 
         // #TODO Hide registry
         entt::registry& Registry() { return m_Registry; }
+        Entity* GetCurrentCameraEntity() { return m_CameraEntity; }
 
     private:
         bool AddObjectToSceneDrawList(GameObject* object);
@@ -80,6 +82,9 @@ namespace QwerkE {
 
         entt::registry m_Registry;
         entt::entity m_EntityCamera = entt::null;
+        entt::entity m_SelectedObject = entt::null;
+        Entity* m_CameraEntity = nullptr;
+
         entt::entity m_EntityScript = entt::null;
         std::map<entt::entity, Entity*> m_Entities;
 

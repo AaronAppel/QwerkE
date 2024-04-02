@@ -13,6 +13,7 @@
 #include "QF_Framework.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
@@ -38,21 +39,22 @@ namespace QwerkE {
 		static SceneGraph* s_SceneGraph = nullptr;
 		static SceneViewer* s_SceneViewer = nullptr;
 
-		static EngineSettings* s_EngineSettings = nullptr;
+        EngineSettings* s_EngineSettings = nullptr; // #TODO Static and not shared with QF_MenuBar.cpp
 
 		QC_ENUM(eSettingsOptions, int, Null, Engine, Project, User, Renderer);
 		static eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
 		static s8 s_LastPopUpIndex = -1;
 
 #ifdef _QDEARIMGUI
-		static bool s_ShowingImGuiExampleWindow = false;
+		bool s_ShowingImGuiExampleWindow = false; // #TODO Static and not shared with QF_MenuBar.cpp
 #endif
 
         void local_EditorInitialize();
         void local_Shutdown();
         void local_EditorDraw();
+        void local_EditorDrawImGui(bool showEditorUI);
         void local_DrawMainMenuBar();
-        void local_RenderDockingContext();
+        void local_DrawDockingContext();
 
 		void Run(unsigned int argc, char** argv)
 		{
@@ -113,14 +115,7 @@ namespace QwerkE {
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    Framework::DrawImguiStart();
-
-                    if (showEditorUI)
-                    {
-                        local_EditorDraw();
-                    }
-
-					Framework::DrawImguiEnd();
+                    local_EditorDrawImGui(showEditorUI);
 
                     Framework::DrawFrameEnd();
 				}
@@ -170,13 +165,30 @@ namespace QwerkE {
 			delete s_SceneViewer;
 		}
 
+        void local_EditorDrawImGui(bool showEditorUI)
+        {
+            if (Window::IsMinimized())
+                return;
+
+            Framework::DrawImguiStart();
+
+            Scenes::GetCurrentScene()->DrawImgui();
+
+            if (showEditorUI)
+            {
+                local_EditorDraw();
+            }
+
+            Framework::DrawImguiEnd();
+        }
+
 		void local_EditorDraw()
 		{
             if (Window::IsMinimized())
                 return;
 
             local_DrawMainMenuBar();
-            local_RenderDockingContext();
+            local_DrawDockingContext();
 
 #ifdef _QDEARIMGUI
             if (s_ShowingImGuiExampleWindow)
@@ -354,294 +366,6 @@ namespace QwerkE {
             s_SceneGraph->Draw();
             s_EntityEditor->Draw();
 		}
-
-        void local_DrawMainMenuBar()
-        {
-#ifdef _QDEARIMGUI
-            if (ImGui::BeginMainMenuBar())
-            {
-                if (ImGui::BeginMenu("Menu"))
-                {
-                    static int index = 0;
-                    static const int size = 5;
-                    const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
-                    if (ImGui::ListBox("MainMenuBar", &index, d, size, 3))
-                    {
-                        if (index == 0) s_ShowingImGuiExampleWindow = !s_ShowingImGuiExampleWindow;
-                    }
-                    ImGui::EndMenu();
-                }
-
-                // if (ImGui::BeginMenu("Tools"))
-                // {
-                //     const int size = 1;
-                //     static const char* toolsList[size] = { "Shader Editor" };
-                //     static bool* toolsStates[size] = { &s_EngineSettings->showingShaderEditor };
-                //
-                //     for (int i = 0; i < size; i++)
-                //     {
-                //         if (ImGui::Checkbox(toolsList[i], toolsStates[i]))
-                //         {
-                //             s_EngineSettings->showingShaderEditor = *toolsStates[i];
-                //         }
-                //     }
-                //     ImGui::EndMenu();
-                // }
-
-                if (ImGui::BeginMenu("Windows"))
-                {
-                    if (ImGui::Button("Settings Inspector"))
-                    {
-                        s_EngineSettings->showingSettingsEditor = !s_EngineSettings->showingSettingsEditor;
-                        Settings::SaveEngineSettings();
-                    }
-
-                    if (ImGui::Button("Schematics Inspector"))
-                    {
-                        s_EngineSettings->showingSchematicsEditor = !s_EngineSettings->showingSchematicsEditor;
-                        Settings::SaveEngineSettings();
-                    }
-
-                    if (ImGui::Button("Style Picker"))
-                    {
-                        s_EngineSettings->showingStylePicker = !s_EngineSettings->showingStylePicker;
-                        Settings::SaveEngineSettings();
-                    }
-
-                    if (ImGui::Button("FPS"))
-                    {
-                        s_EngineSettings->showingFPS = !s_EngineSettings->showingFPS;
-                        Settings::SaveEngineSettings();
-                    }
-
-                    ImGui::EndMenu();
-                }
-
-                char buffer[] = { '0', '0', '0', '\0' };
-                ImGui::SameLine(ImGui::GetWindowWidth() - sizeof(buffer) * 9); // n characters * 9 pixels each (width)
-                if (s_EngineSettings->showingFPS)
-                {
-                    const float& deltaTime = (float)Time::PreviousFrameDuration();
-                    if (deltaTime == .0f)
-                    {
-                        snprintf(buffer, sizeof(buffer) / sizeof(char), "%1.1f", deltaTime);
-                    }
-                    else
-                    {
-                        snprintf(buffer, sizeof(buffer) / sizeof(char), "%3.2f", 1.f / deltaTime);
-                    }
-
-                    ImGui::PushItemWidth(200.f);
-                    if (ImGui::Button(buffer))
-                    {
-                    }
-                    ImGui::PopItemWidth();
-
-                    if (ImGui::IsItemClicked())
-                    {
-                        s_EngineSettings->showingFPS = !s_EngineSettings->showingFPS;
-                        Settings::SaveEngineSettings();
-                    }
-                }
-
-                // ImGui::SameLine();
-                // if (s_EngineSettings->showingFPS)
-                // {
-                //     // #TODO Review deltatime calculation and text positioning to avoid "flickering" and frequent resizing
-                //     ImGui::PushItemWidth(200.f);
-                //     const float deltaTime = Time::FrameDelta();
-                //     if (deltaTime == 0.f)
-                //     {
-                //         ImGui::Text("%1.1f", flags.f);
-                //     }
-                //     else
-                //     {
-                //         ImGui::Text("%1.1f", 1.flagsf / deltaTime);
-                //     }
-                //     ImGui::PopItemWidth();
-                // }
-
-                ImGui::EndMainMenuBar();
-            }
-#endif
-        }
-
-        void local_DrawStylePicker(bool save) // #TODO Create a new StyleEditor class/UI window
-        {
-            // #TODO Add presets and load from file (presets can be files too instead of hard coded)
-
-            static bool isOpen = true;
-            bool edited = false;
-            ImGuiStyle& style = ImGui::GetStyle();
-
-            if (ImGui::Begin("Style Picker", &isOpen))
-            {
-                const Mirror::TypeInfo* styleTypeInfo = Mirror::InfoForType<ImGuiStyle>();
-
-                for (size_t i = 0; i < styleTypeInfo->fields.size(); i++)
-                {
-                    // #TODO Look at using the inspector to render widgets for ImGuiStyle members
-
-                    const Mirror::Field& field = styleTypeInfo->fields[i];
-
-                    if (field.typeInfo->enumType == MirrorTypes::m_float &&
-                        strcmp(styleTypeInfo->fields[i].name.c_str(), "Alpha") == 0)
-                    {
-                        ImGui::Text("Alpha");
-                        ImGui::SameLine();
-                        ImGui::DragFloat("##Alpha", &style.Alpha, .01f, .01f, 1.f); // #NOTE .01f minimum or ImGui will say End() wasn't called
-                        continue;
-                    }
-
-                    // #TODO Edit save if () { edited = true; }
-
-                    switch (field.typeInfo->enumType)
-                    {
-                    case MirrorTypes::m_float:
-                        ImGui::Text(field.name.c_str());
-                        // ImGui::SameLine();
-                        // ImGui::DragFloat(field.name.c_str(), (float*)((char*)&style + field.offset), 0.1f, 0.f, 1.f);
-                        break;
-
-                    case MirrorTypes::ImVec2:
-                        ImGui::Text(field.name.c_str());
-                        // ImGui::SameLine();
-                        // ImGui::DragFloat("##WindowPaddingX", &style.WindowPadding.x, 0.1f, 0.f, 1000.f);
-                        // ImGui::SameLine();
-                        // ImGui::DragFloat("##WindowPaddingY", &style.WindowPadding.y, 0.1f, 0.f, 1000.f);
-                        break;
-
-                    case MirrorTypes::m_int:
-                        ImGui::Text(field.name.c_str());
-                        break;
-
-                    case MirrorTypes::m_imvec4_array:
-                        if (ImGui::CollapsingHeader(styleTypeInfo->fields[i].name.c_str(), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_SpanAvailWidth))
-                        {
-                            ImGui::Text("Info:");
-
-                            ImGui::SameLine();
-                            static bool uiOptionsEnabled = false;
-                            ImGui::Checkbox("ColourPickerOptionsCheck", &uiOptionsEnabled);
-
-                            ImGui::SameLine();
-                            static float uiScalar = .8f;
-                            ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-                            ImGui::SliderFloat("ColourPickerSlider", &uiScalar, .1f, 1.2f);
-                            ImGui::PopItemWidth();
-
-                            ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * uiScalar);
-
-                            ImGuiColorEditFlags_ flags = static_cast<ImGuiColorEditFlags_>(
-                                ImGuiColorEditFlags_NoSidePreview |
-                                ImGuiColorEditFlags_PickerHueWheel |
-                                ImGuiColorEditFlags_NoLabel
-                                );
-                            flags = static_cast<ImGuiColorEditFlags_>(flags | (uiOptionsEnabled ? ImGuiColorEditFlags_None : ImGuiColorEditFlags_NoInputs));
-
-                            const size_t range = ImGuiCol_qw::_size_constant - 1;
-                            for (int i = 0; i < range; i++)
-                            {
-                                ImGui::Text(ENUM_TO_STR(ImGuiCol_qw::_from_index(i)));
-                                if (ImGui::ColorPicker4(ENUM_TO_STR(ImGuiCol_qw::_from_index(i)), (float*)&style.Colors[i], flags)) { edited = true; }
-                            }
-
-                            ImGui::PopItemWidth();
-                        }
-                        break;
-
-                    default:
-                        break;
-                    }
-
-                    if (strcmp(styleTypeInfo->fields[i].name.c_str(), "DisabledAlpha") == 0)
-                    {
-                        ImGui::Text("DisabledAlpha");
-                        ImGui::SameLine();
-                        ImGui::DragFloat("##DisabledAlpha", &style.DisabledAlpha, 0.1f, 0.f, 1.f);
-                    }
-                }
-            }
-            ImGui::End();
-
-            // style.FrameRounding = 4.0f;
-            // style.WindowBorderSize = 0.0f;
-
-            // if (save && edited)
-            if (edited)
-            {
-                Serialization::SerializeObjectToFile(style, Settings::GetStyleFileName());
-            }
-        }
-
-        void local_RenderDockingContext()
-        {
-#ifdef _QDEARIMGUI
-            // Copied from imgui docking example
-            static bool opt_fullscreen_persistant = true;
-            bool opt_fullscreen = opt_fullscreen_persistant;
-
-            ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
-            static ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-
-            if (opt_fullscreen) // fullscreen
-            {
-                ImGuiViewport* viewport = ImGui::GetMainViewport();
-                ImGui::SetNextWindowPos(viewport->Pos);
-                ImGui::SetNextWindowSize(viewport->Size);
-                ImGui::SetNextWindowViewport(viewport->ID);
-                ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-                ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-                window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-                window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-            }
-
-            static bool open = true;
-
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("DockSpace Demo", &open, window_flags);
-            ImGui::PopStyleVar();
-
-            if (opt_fullscreen)
-                ImGui::PopStyleVar(2);
-
-            ImGuiIO& io = ImGui::GetIO();
-            ImGuiConfigFlags_DockingEnable;
-            if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
-            {
-                ImGuiID dockspace_id = ImGui::GetID("QwerkEDockSpace");
-                ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-            }
-
-            static bool dockspaceOpen = true;
-
-            if (ImGui::BeginMenuBar())
-            {
-                if (ImGui::BeginMenu("Docking"))
-                {
-                    // Disabling fullscreen would allow the window to be moved to the front of other windows,
-                    // which we can't undo at the moment without finer window depth/z control.
-                    //ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
-
-                    if (ImGui::MenuItem("Flag: NoSplit", "", (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0))                 dockspace_flags ^= ImGuiDockNodeFlags_NoSplit;
-                    if (ImGui::MenuItem("Flag: NoResize", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0))                dockspace_flags ^= ImGuiDockNodeFlags_NoResize;
-                    if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))  dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode;
-                    if (ImGui::MenuItem("Flag: PassthruCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0))     dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode;
-                    if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0))          dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar;
-                    ImGui::Separator();
-                    if (ImGui::MenuItem("Close DockSpace", NULL, false, dockspaceOpen != NULL))
-                    {
-                        dockspaceOpen = false;
-                    }
-                    ImGui::EndMenu();
-                }
-
-                ImGui::EndMenuBar();
-            }
-
-            ImGui::End();
-#endif
-        }
 
 	}
 

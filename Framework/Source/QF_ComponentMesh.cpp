@@ -1,16 +1,18 @@
 #include "QF_ComponentMesh.h"
 
-#ifdef _QDEBUG
 #ifdef _QBGFX
 #include <bgfx/bgfx.h>
+#include <bx/bx.h>
+#include <bx/math.h>
 #include <bx/timer.h>
 #ifdef _QBGFXFRAMEWORK
 #include <bgfxFramework/SampleRenderData.h>
 #include <bgfxFramework/LoadShader.h>
+#ifdef _QDEBUG
 #include <bgfxFramework/debugDraw/debugdraw.h>
-#endif
-#endif
-#endif
+#endif // _QDEBUG
+#endif // _QBGFXFRAMEWORK
+#endif // _QBGFX
 
 #include "QF_ComponentTransform.h"
 #include "QF_Renderer.h"
@@ -89,22 +91,6 @@ namespace QwerkE {
 
         {
             const float time = (float)((bx::getHPCounter() - m_StartingTimeOffset) / double(bx::getHPFrequency()));
-
-            const bx::Vec3 at = { .0f, .0f,   .0f };
-            const bx::Vec3 eye = { .0f, .0f, -35.f };
-
-            // Set view and projection matrix for view 0.
-            {
-                float view[16];
-                bx::mtxLookAt(view, eye, at);
-
-                float proj[16];
-                bx::mtxProj(proj, 60.f, windowSize.x / windowSize.y, .1f, 100.f, bgfx::getCaps()->homogeneousDepth);
-                bgfx::setViewTransform(Renderer::s_ViewIdFbo1, view, proj);
-
-                // Set view 0 default viewport.
-                // bgfx::setViewRect(Renderer::s_ViewIdFbo1, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
-            }
 
             // This dummy draw call is here to make sure that view 0 is cleared
             // if no other draw calls are submitted to view 0.

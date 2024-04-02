@@ -1,8 +1,8 @@
 
 int main(unsigned int argc, char** argv)
 {
-	const bool supportingEditorReloading = false;
-	const bool editorRequestedReload = false;
+	const bool supportingEditorReloading = false; // #FEATURE
+	const bool editorRequestedReload = false; // #FEATURE
 
 	do
 	{

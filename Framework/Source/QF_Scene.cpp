@@ -4,6 +4,10 @@
 #include "Libraries/entt/entt.hpp"
 #endif
 
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/QC_imgui.h"
+#endif
+
 #include "QC_StringHelpers.h"
 
 #include "QF_ComponentCamera.h"
@@ -16,13 +20,13 @@
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
 
-// #TODO Remove test code
-#include "QF_NativeScript.h"
-
 #include "QF_ComponentPrint.h"
 #include "QF_ComponentMesh.h"
+#include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
-#include "QF_ScriptPrint.h"
+
+#include "QF_Scriptable.h"
+#include "QF_ScriptCamera.h"
 
 namespace QwerkE {
 
@@ -30,15 +34,17 @@ namespace QwerkE {
         m_SceneFileName(sceneFileName)
     {
         m_EntityCamera = m_Registry.create();
-        Entity* qwerkeEntity = new Entity(this, m_EntityCamera);
-        const bool hasComponent = qwerkeEntity->HasComponent<ComponentCamera>();
+        m_CameraEntity = new Entity(this, m_EntityCamera);
 
-        m_Entities.insert(std::pair(m_EntityCamera, qwerkeEntity));
+        const bool hasComponent = m_CameraEntity->HasComponent<ComponentCamera>();
+
+        m_Entities.insert(std::pair(m_EntityCamera, m_CameraEntity));
 
         m_Registry.emplace<ComponentCamera>(m_EntityCamera, ComponentCamera());
-        const bool nowHasComponent = qwerkeEntity->HasComponent<ComponentCamera>();
+        const bool nowHasComponent = m_CameraEntity->HasComponent<ComponentCamera>();
 
-        qwerkeEntity->AddComponent<NativeScriptComponent>().Bind<ScriptablePrint>(qwerkeEntity);
+        m_CameraEntity->AddComponent<ComponentTransform>();
+        // m_CameraEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
 
         entt::entity m_EntityScript = m_Registry.create();
         m_Registry.emplace<ComponentPrint>(m_EntityScript);
@@ -61,8 +67,14 @@ namespace QwerkE {
 
                 ComponentMesh& mesh = m_Registry.emplace<ComponentMesh>(entityId);
                 mesh.Create();
+
+                m_SelectedObject = entityId;
             }
         }
+
+        Entity* selectedEntity = new Entity(this, m_SelectedObject);
+        selectedEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
+        m_Entities.insert(std::pair(m_SelectedObject, selectedEntity));
     }
 
     Scene::~Scene()
@@ -76,14 +88,14 @@ namespace QwerkE {
             mesh.Destroy();
         }
 
-        auto viewScripts = m_Registry.view<NativeScriptComponent>();
+        auto viewScripts = m_Registry.view<ComponentScript>();
         for (auto entity : viewScripts)
         {
-            NativeScriptComponent& script = m_Registry.get<NativeScriptComponent>(entity);
+            ComponentScript& script = m_Registry.get<ComponentScript>(entity);
             if (script.Instance)
             {
-                script.OnDestroyFunction(script.Instance);
-                script.DeleteFunction();
+                script.Instance->OnDestroy();
+                script.DeleteScript(&script); // #TODO Bug check self delete
             }
         }
 
@@ -96,6 +108,8 @@ namespace QwerkE {
             }
         }
         m_Entities.clear();
+
+        // delete m_CameraEntity;
     }
 
     void Scene::Update(float deltaTime)
@@ -103,21 +117,41 @@ namespace QwerkE {
         if (m_IsPaused)
             return;
 
-        m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& script)
+        auto scripts = m_Registry.view<ComponentScript>();
+        for (auto& entity : scripts)
         {
+            auto& script = m_Registry.get<ComponentScript>(entity);
+            // #TODO Instance is not being saved and objects are being created every frame
             if (!script.Instance)
             {
-                script.InstantiateFunction();
-                script.OnCreateFunction(script.Instance);
+                script.Instance = script.InstantiateScript();
+                script.Instance->SetEntity(m_Entities[entity]);
+                script.Instance->OnCreate();
             }
-            // script.OnUpdateFunction(script.Instance, deltaTime);
-        });
+            script.Instance->OnUpdate(deltaTime);
+        }
 
-        auto view = m_Registry.view<ComponentCamera>();
-        for (auto entity :view)
+        // m_Registry.view<ComponentScript>().each([=](auto entity, auto& script)
+        // {
+        //     // #TODO Instance is not being saved and objects are being created every frame
+        //     if (!script.Instance)
+        //     {
+        //         script.InstantiateFunction(m_Entities[entity]);
+        //         script.OnCreateFunction(script.Instance);
+        //     }
+        //     script.OnUpdateFunction(script.Instance, deltaTime);
+        // });
+
+        ComponentCamera& camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
+        camera.Move();
+
+        if (false && Input::GetIsKeyDown(eKeys_W))
         {
-            ComponentCamera& camera = m_Registry.get<ComponentCamera>(entity);
-            camera.Move();
+            ComponentTransform& transform = m_Registry.get<ComponentTransform>(m_SelectedObject);
+            const float moveSpeed = 3.f;
+            vec3f tempTransform = transform.GetPosition();
+            tempTransform.x = tempTransform.x + (moveSpeed * deltaTime);
+            transform.SetPosition(tempTransform);
         }
 
         for (auto object : m_pGameObjects)
@@ -128,19 +162,33 @@ namespace QwerkE {
 
     void Scene::Draw()
     {
-        auto viewPrints = m_Registry.view<ComponentPrint>();
-        bgfx::dbgTextPrintf(0, 5, 0x0f, "ComponentPrints #%i", viewPrints.size());
+        auto camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
+        camera.PreDrawSetup(2);
 
         auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto entity : viewMeshes)
         {
-            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
+            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity); // #TODO Learn syntax to access mesh from viewMeshes
             if (m_Registry.has<ComponentTransform>(entity))
             {
                 ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
                 mesh.Draw(transform);
             }
         }
+    }
+
+    void Scene::DrawImgui()
+    {
+        if (ImGui::Begin("SceneDrawImGui"))
+        {
+            auto& camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
+            auto atCopy = camera.m_At;
+            if (ImGui::DragFloat3("CameraTransform", &atCopy.x, .1f))
+            {
+                camera.m_At = atCopy;
+            }
+        }
+        ImGui::End();
     }
 
     bool Scene::AddCamera(GameObject* camera)

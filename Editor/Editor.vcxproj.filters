@@ -25,6 +25,9 @@
     <ClCompile Include="Source\QE_ProgramArgs.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QE_MenuBar.cpp" />
+    <ClCompile Include="Source\QE_WindowDockingContext.cpp" />
+    <ClCompile Include="Source\QE_WindowStylePicker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QE_EditComponent.h">
@@ -57,6 +60,7 @@
     <ClInclude Include="Source\QE_ProgramArgs.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

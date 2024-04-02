@@ -2554,6 +2554,12 @@ void DebugDrawEncoder::drawOrb(float _x, float _y, float _z, float _radius, Axis
 	DEBUG_DRAW_ENCODER(drawOrb(_x, _y, _z, _radius, _highlight) );
 }
 
+void DebugDrawEncoder::drawSphere(float _x, float _y, float _z, float _radius, Axis::Enum /*_highlight*/) // Modified by Aaron Appel Apr 2nd 24
+{
+	bx::Sphere sphere = { { bx::Vec3(_x, _y, _z)}, _radius };
+	draw(sphere);
+}
+
 DebugDrawEncoderScopePush::DebugDrawEncoderScopePush(DebugDrawEncoder& _dde)
 	: m_dde(_dde)
 {

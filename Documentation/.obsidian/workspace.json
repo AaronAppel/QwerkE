@@ -97,7 +97,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Game Ideas.md",
+                "file": "Development/TODO/bgfx Improvements.md",
                 "mode": "source",
                 "source": false
               }
@@ -164,7 +164,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Game Ideas.md"
+                "file": "Development/TODO/bgfx Improvements.md"
               }
             }
           }
@@ -207,7 +207,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Game Ideas.md",
+                "file": "Development/TODO/bgfx Improvements.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -219,7 +219,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Game Ideas.md",
+                "file": "Development/TODO/bgfx Improvements.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -248,8 +248,10 @@
   },
   "active": "652fe073cda5cfee",
   "lastOpenFiles": [
-    "Oracle Cloud Perforce (Free).md",
+    "Development/TODO/Learn OpenGL Animation.md",
+    "Development/TODO/bgfx Improvements.md",
     "Game Ideas.md",
+    "Oracle Cloud Perforce (Free).md",
     "README.md",
     "bgfx Render tutorial.md",
     "entt Callbacks.md",
@@ -274,8 +276,6 @@
     "Solution Configuration/Visual Studio.md",
     "Development/TODO/Refactor FileSystem.md",
     "Development/TODO/String Library.md",
-    "Serializer.md",
-    "Serialization (JSON).md",
     "ZZ Shared Vault Files ❗/Obsidian/DisableSpecificWarnings.png",
     "QwerkE Structure Diagram.canvas",
     "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
