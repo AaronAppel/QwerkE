@@ -1,7 +1,5 @@
 #pragma once
 
-#include <functional>
-
 namespace QwerkE {
 
 	class Entity;
@@ -15,14 +13,14 @@ namespace QwerkE {
 		virtual void OnDestroy() { }
 		virtual void OnUpdate(float deltaTime) { }
 
-		// virtual void OnAwake() {}
-		// virtual void OnActivate(true/false) {}
+		// virtual void OnAwake() { }
+		// virtual void OnActivate(true/false) { }
 
-		// virtual void OnFixedUpdate() {}
-		// virtual void OnLateUpdate() {}
+		// virtual void OnFixedUpdate() { }
+		// virtual void OnLateUpdate() { }
 
-		// virtual void OnTriggerCollision() {}
-		// virtual void OnBodyCollision() {}
+		// virtual void OnTriggerCollision() { }
+		// virtual void OnBodyCollision() { }
 
 		void SetEntity(Entity* newEntity) { m_Entity = newEntity; }
 

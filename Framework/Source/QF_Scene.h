@@ -75,6 +75,7 @@ namespace QwerkE {
         // #TODO Hide registry
         entt::registry& Registry() { return m_Registry; }
         Entity* GetCurrentCameraEntity() { return m_CameraEntity; }
+        Entity* CreateEntityFromSchematic(const char* schematicFilePath);
 
     private:
         bool AddObjectToSceneDrawList(GameObject* object);

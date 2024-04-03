@@ -61,8 +61,7 @@ namespace QwerkE {
 
 			registry1->each([&](entt::entity entity)
 				{
-					// entitiesVec.push_back(entity);
-
+					entitiesVec.push_back(entity);
 					// #TODO Could macro same logic functions
 					if (registry1->has<ComponentTransform>(entity))
 					{

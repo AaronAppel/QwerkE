@@ -156,8 +156,6 @@ namespace QwerkE {
 			ASSERT(s_EngineSettings, "Null engine settings!");
 		}
 
-        void local_DrawStylePicker(bool save);
-
 		void local_Shutdown()
 		{
 			delete s_EntityEditor;
@@ -172,15 +170,16 @@ namespace QwerkE {
 
             Framework::DrawImguiStart();
 
-            Scenes::GetCurrentScene()->DrawImgui();
-
             if (showEditorUI)
             {
-                local_EditorDraw();
+                local_EditorDraw(); // Start dock context. ImGui code above won't dock
+                Scenes::GetCurrentScene()->DrawImgui();
             }
 
             Framework::DrawImguiEnd();
         }
+
+        void local_DrawStylePicker(bool save);
 
 		void local_EditorDraw()
 		{

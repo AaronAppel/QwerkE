@@ -80,6 +80,10 @@ Documentation/.obsidian/workspace.json
 *.sln
 *.vcxproj
 *.filters
+*.user
+
+# Local only files
+*❗*
 
 # Additional Misc.
 *.tlog
@@ -91,6 +95,4 @@ Documentation/.obsidian/workspace.json
 *.VC.db
 *.suo
 *.opendb
-
-# Local only files
-*❗*
+/Game/Assets/Scenes/Backup

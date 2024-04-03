@@ -148,12 +148,6 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Callbacks.h" />
-    <ClInclude Include="Source\QF_ComponentPrint.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QF_ComponentScript.h">
-      <Filter>Game Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_RendererHelpers.h">
       <Filter>Renderer</Filter>
     </ClInclude>
@@ -193,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="Source\QF_Scriptable.h">
       <Filter>Game Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ComponentScript.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

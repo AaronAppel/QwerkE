@@ -23,7 +23,6 @@ enum class MirrorTypes
     vec3f,
 
     // Game
-    ComponentCamera,
     GameObject,
     FirstPersonCameraComponent,
     RenderComponent,
@@ -43,6 +42,12 @@ enum class MirrorTypes
     ShaderProgram,
     Material,
 
+    // Components
+    ComponentCamera,
+    ComponentMesh,
+    ComponentScript,
+    ComponentTransform,
+
     // External libraries
     m_enTT_Entity,
     m_entt_registry,
@@ -50,6 +55,7 @@ enum class MirrorTypes
 
     m_ARRAYS_START,
     m_imvec4_array,
+    m_floatArray16,
     m_ARRAYS_END,
 
     m_VECTORS_START,

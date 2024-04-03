@@ -20,7 +20,6 @@
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
 
-#include "QF_ComponentPrint.h"
 #include "QF_ComponentMesh.h"
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
@@ -44,13 +43,7 @@ namespace QwerkE {
         const bool nowHasComponent = m_CameraEntity->HasComponent<ComponentCamera>();
 
         m_CameraEntity->AddComponent<ComponentTransform>();
-        // m_CameraEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
-
-        entt::entity m_EntityScript = m_Registry.create();
-        m_Registry.emplace<ComponentPrint>(m_EntityScript);
-
-        m_Registry.emplace<ComponentPrint>(m_Registry.create());
-        m_Registry.emplace<ComponentPrint>(m_Registry.create());
+        m_CameraEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
 
         const u8 rows = 11;
         const u8 columns = 11;
@@ -72,9 +65,9 @@ namespace QwerkE {
             }
         }
 
-        Entity* selectedEntity = new Entity(this, m_SelectedObject);
-        selectedEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
-        m_Entities.insert(std::pair(m_SelectedObject, selectedEntity));
+        // Entity* selectedEntity = new Entity(this, m_SelectedObject);
+        // selectedEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
+        // m_Entities.insert(std::pair(m_SelectedObject, selectedEntity));
     }
 
     Scene::~Scene()
@@ -121,7 +114,6 @@ namespace QwerkE {
         for (auto& entity : scripts)
         {
             auto& script = m_Registry.get<ComponentScript>(entity);
-            // #TODO Instance is not being saved and objects are being created every frame
             if (!script.Instance)
             {
                 script.Instance = script.InstantiateScript();
@@ -130,20 +122,6 @@ namespace QwerkE {
             }
             script.Instance->OnUpdate(deltaTime);
         }
-
-        // m_Registry.view<ComponentScript>().each([=](auto entity, auto& script)
-        // {
-        //     // #TODO Instance is not being saved and objects are being created every frame
-        //     if (!script.Instance)
-        //     {
-        //         script.InstantiateFunction(m_Entities[entity]);
-        //         script.OnCreateFunction(script.Instance);
-        //     }
-        //     script.OnUpdateFunction(script.Instance, deltaTime);
-        // });
-
-        ComponentCamera& camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
-        camera.Move();
 
         if (false && Input::GetIsKeyDown(eKeys_W))
         {
@@ -166,9 +144,9 @@ namespace QwerkE {
         camera.PreDrawSetup(2);
 
         auto viewMeshes = m_Registry.view<ComponentMesh>();
-        for (auto entity : viewMeshes)
+        for (auto& entity : viewMeshes)
         {
-            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity); // #TODO Learn syntax to access mesh from viewMeshes
+            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
             if (m_Registry.has<ComponentTransform>(entity))
             {
                 ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
@@ -181,11 +159,44 @@ namespace QwerkE {
     {
         if (ImGui::Begin("SceneDrawImGui"))
         {
-            auto& camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
-            auto atCopy = camera.m_At;
-            if (ImGui::DragFloat3("CameraTransform", &atCopy.x, .1f))
+            if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
             {
-                camera.m_At = atCopy;
+                auto& camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
+                auto atCopy = camera.m_At;
+                if (ImGui::DragFloat3("CameraAt", &atCopy.x, .1f))
+                {
+                    camera.m_At = atCopy;
+                }
+
+                auto eyeCopy = camera.m_Eye;
+                if (ImGui::DragFloat3("CameraEye", &eyeCopy.x, .1f))
+                {
+                    camera.m_Eye = eyeCopy;
+                }
+
+                float moveSpeedCopy = camera.m_MoveSpeed;
+                if (ImGui::DragFloat("CameraMoveSpeed", &moveSpeedCopy, .1f))
+                {
+                    camera.m_MoveSpeed = moveSpeedCopy;
+                }
+
+                float fovCopy = camera.m_Fov;
+                if (ImGui::DragFloat("CameraFov", &fovCopy, .1f))
+                {
+                    camera.m_Fov = fovCopy;
+                }
+
+                float nearCopy = camera.m_Near;
+                if (ImGui::DragFloat("CameraNear", &nearCopy, .1f))
+                {
+                    camera.m_Near = nearCopy;
+                }
+
+                float farCopy = camera.m_Far;
+                if (ImGui::DragFloat("CameraFar", &farCopy, .1f))
+                {
+                    camera.m_Far = farCopy;
+                }
             }
         }
         ImGui::End();
@@ -338,7 +349,7 @@ namespace QwerkE {
             return;
         }
 
-        // Serialization::SerializeScene(*this, ScenesFolderPath(m_SceneFileName.c_str()));
+        Serialization::SerializeScene(*this, StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext));
 
         Serialization::SerializeObjectToFile(*this, ScenesFolderPath(m_SceneFileName.c_str()));
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
@@ -475,6 +486,13 @@ namespace QwerkE {
     {
         if (m_pGameObjects.find(name) != m_pGameObjects.end())
             return m_pGameObjects[name];
+        return nullptr;
+    }
+
+    Entity* Scene::CreateEntityFromSchematic(const char* schematicFilePath)
+    {
+        GameObject obj;
+        Serialization::DeserializeJsonFromFile(schematicFilePath, obj);
         return nullptr;
     }
 

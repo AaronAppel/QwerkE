@@ -21,6 +21,11 @@
 #include "QF_Scene.h"
 #include "QF_Settings.h"
 
+#include "QF_ComponentCamera.h"
+#include "QF_ComponentMesh.h"
+#include "QF_ComponentScript.h"
+#include "QF_ComponentTransform.h"
+
 namespace QwerkE {
 
 #ifdef _QDEARIMGUI
@@ -36,7 +41,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(w)
 	MIRROR_CLASS_END(ImVec4)
 
-	typedef ImVec4* m_imvec4_array;
+	typedef ImVec4* m_imvec4_array; // #TODO try : using m_imvec4_array = ImVec4[4]; to see if it works any better
 	MIRROR_TYPE(m_imvec4_array)
 
 	MIRROR_CLASS_START(ImGuiStyle)
@@ -119,6 +124,10 @@ namespace QwerkE {
 	typedef std::vector<GameObject*> m_vector_gameobjectPtr;
 	MIRROR_TYPE(m_vector_gameobjectPtr)
 
+	// Arrays
+	using m_floatArray16 = float[16]; // #TODO Try
+	MIRROR_TYPE(m_floatArray16)
+
 	// Structs
 	MIRROR_CLASS_START(vec2f)
 	MIRROR_CLASS_MEMBER(x)
@@ -184,5 +193,19 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_Tag)
 	// MIRROR_CLASS_MEMBER(m_EntityComponents)
 	MIRROR_CLASS_END(GameObject)
+
+	// Components
+	MIRROR_CLASS_START(ComponentCamera)
+	MIRROR_CLASS_END(ComponentCamera)
+
+	MIRROR_CLASS_START(ComponentMesh)
+	MIRROR_CLASS_END(ComponentMesh)
+
+	MIRROR_CLASS_START(ComponentScript)
+	MIRROR_CLASS_END(ComponentScript)
+
+	MIRROR_CLASS_START(ComponentTransform)
+	MIRROR_CLASS_MEMBER(m_Matrix)
+	MIRROR_CLASS_END(ComponentTransform)
 
 }

@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Mirror.h"
+#endif
+
 namespace QwerkE {
 
 	class ComponentTransform
@@ -16,6 +20,7 @@ namespace QwerkE {
 		const float* const GetMatrix() const { return m_Matrix; }
 
 	private:
+		MIRROR_PRIVATE_MEMBERS
 		float m_Matrix[16];
 	};
 

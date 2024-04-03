@@ -445,6 +445,16 @@ namespace QwerkE {
                     }
                     break;
                 //
+                case MirrorTypes::m_floatArray16:
+                    {
+                        float* floatArray = (float*)((char*)obj + field.offset);
+                        for (size_t i = 0; i < 16; i++)
+                        {
+                            AddItemToArray(arr, CreateNumber(std::to_string(i).c_str(), floatArray[i]));
+                        }
+                    }
+                    break;
+
                 case MirrorTypes::m_vector_string: // #TODO Try to remove this case to use if (!objTypeInfo->fields.empty()) for loop
                 {
                     const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
