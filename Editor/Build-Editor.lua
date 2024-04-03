@@ -13,7 +13,7 @@ project "Editor"
 		-- Path strings
 		"AssetsDir=\"Assets/\"",
 		-- "NullAssetsDir=AssetsDir",
-		"NullAssetsDir=\"A:/GitHub/PremakeProject/Editor/Assets/\"" ,
+		"NullAssetsDir=\"../../../Editor/Assets/\"" ,
 		
 		-- Command line arguments
 		"key_StartupDir=\"-startupDir\"",

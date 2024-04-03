@@ -6,7 +6,7 @@ project "Game"
 	{	
 		-- Path strings
 		"AssetsDir=\"Assets/\"" ,
-		"NullAssetsDir=\"A:/GitHub/PremakeProject/Editor/Assets/\"" ,
+		"NullAssetsDir=\"../../../Editor/Assets/\"" ,
 		
 		-- Command line arguments
 		-- #TODO These need to be in sync with Editor. Change that

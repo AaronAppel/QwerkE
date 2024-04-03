@@ -45,6 +45,8 @@ namespace QwerkE {
         m_CameraEntity->AddComponent<ComponentTransform>();
         m_CameraEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
 
+        return;
+
         const u8 rows = 11;
         const u8 columns = 11;
         const float spacingScalar = 3.f;
@@ -64,10 +66,6 @@ namespace QwerkE {
                 m_SelectedObject = entityId;
             }
         }
-
-        // Entity* selectedEntity = new Entity(this, m_SelectedObject);
-        // selectedEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
-        // m_Entities.insert(std::pair(m_SelectedObject, selectedEntity));
     }
 
     Scene::~Scene()
@@ -387,7 +385,7 @@ namespace QwerkE {
 
         m_SceneFileName = oldName;
 
-        // Serialization::DeserializeScene(ScenesFolderPath(otherSceneFilePath), *this);
+        Serialization::DeserializeScene(ScenesFolderPath(otherSceneFilePath), *this);
 
         OnLoaded();
 
@@ -413,7 +411,7 @@ namespace QwerkE {
 
         Serialization::DeserializeJsonFromFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
 
-        // Serialization::DeserializeScene(ScenesFolderPath(m_SceneFileName.c_str()), *this);
+        Serialization::DeserializeScene(StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext), *this);
 
         OnLoaded();
 
@@ -480,6 +478,13 @@ namespace QwerkE {
                 }
             }
         }
+
+        auto viewCameras = m_Registry.view<ComponentCamera>();
+        for (auto& entity : viewCameras)
+        {
+            // #TODO Setup cameras and references
+        }
+        m_EntityCamera = viewCameras[0];
     }
 
     const GameObject* Scene::GetGameObject(const char* name)

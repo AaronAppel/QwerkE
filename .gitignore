@@ -82,7 +82,7 @@ Documentation/.obsidian/workspace.json
 *.filters
 *.user
 
-# Local only files
+# Local only special exclude
 *❗*
 
 # Additional Misc.
@@ -95,4 +95,7 @@ Documentation/.obsidian/workspace.json
 *.VC.db
 *.suo
 *.opendb
+
+# Local only
 /Game/Assets/Scenes/Backup
+/Editor/Assets/Backup

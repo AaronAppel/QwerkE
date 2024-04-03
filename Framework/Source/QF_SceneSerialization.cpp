@@ -21,16 +21,6 @@ namespace QwerkE {
 
 	namespace Serialization {
 
-		template <typename T>
-		const T* SerializeEnttComponent(const entt::registry* const registry, const entt::entity& entity)
-		{
-			if (registry->has<T>(entity))
-			{
-				return &registry->get<T>(entity);
-			}
-			return nullptr;
-		}
-
 		void SerializeScene(const Scene& scene, const char* const absoluteSceneJsonFilePath)
 		{
 			if (!absoluteSceneJsonFilePath)
@@ -55,153 +45,99 @@ namespace QwerkE {
 				}
 			}
 
-			entt::registry* registry1 = (entt::registry*)((char*)&scene + registryOffset);
+			entt::registry* registry = (entt::registry*)((char*)&scene + registryOffset);
 
 			std::vector<entt::entity> entitiesVec;
 
-			registry1->each([&](entt::entity entity)
+			registry->each([&](entt::entity entity)
 				{
 					// entitiesVec.push_back(entity);
 
+					cJSON* entityJsonArray = CreateArray("Entity");
+					AddItemToArray(jsonRootArray, entityJsonArray);
+
+					cJSON* entityComponentsJsonArray = CreateArray("Components");
+					AddItemToArray(entityJsonArray, entityComponentsJsonArray);
+
 					// #TODO Could macro same logic functions
-					if (registry1->has<ComponentTransform>(entity))
+					if (registry->has<ComponentTransform>(entity))
 					{
-						auto& transform = registry1->get<ComponentTransform>(entity);
+						auto& transform = registry->get<ComponentTransform>(entity);
 						auto componentTypeInfo = Mirror::InfoForType<ComponentTransform>();
 						cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str());
 						SerializeObjectToJson(&transform, componentTypeInfo, newJsonObjectArray);
-						AddItemToArray(jsonRootArray, newJsonObjectArray);
+						AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
 					}
-					if (registry1->has<ComponentMesh>(entity))
+					if (registry->has<ComponentMesh>(entity))
 					{
-						auto mesh = registry1->get<ComponentMesh>(entity);
-						// #TODO Serialize component of type ComponentMesh
-						SerializeObjectToJson(&mesh, Mirror::InfoForType<ComponentMesh>(), jsonRootArray);
+						auto mesh = registry->get<ComponentMesh>(entity);
+						auto componentTypeInfo = Mirror::InfoForType<ComponentMesh>();
+						cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str());
+						SerializeObjectToJson(&mesh, componentTypeInfo, newJsonObjectArray);
+						AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
 					}
 				});
 
 			PrintRootObjectToFile(absoluteSceneJsonFilePath, jsonRootObject);
 			cJSON_Delete(jsonRootObject);
-
-			return;
-
-			// m_Registry.view<ComponentScript>().each([=](auto entity, auto& script)
-			// {
-			//     // #TODO Instance is not being saved and objects are being created every frame
-			//     if (!script.Instance)
-			//     {
-			//         script.InstantiateFunction(m_Entities[entity]);
-			//         script.OnCreateFunction(script.Instance);
-			//     }
-			//     script.OnUpdateFunction(script.Instance, deltaTime);
-			// });
-
-			// Step 1 : Find entities vector
-			std::vector<entt::entity>* entities = nullptr;
-			for (size_t i = 0; i < sceneTypeInfo->fields.size(); i++)
-			{
-				const Mirror::Field& field = sceneTypeInfo->fields[i];
-
-				if (field.typeInfo->enumType == MirrorTypes::m_vector_entt_entities)
-				{
-					void* entitiesVectorAddress = ((char*)&scene) + field.offset;
-					entities = (std::vector<entt::entity>*)(entitiesVectorAddress);
-					break;
-				}
-			}
-
-			ASSERT(entities != nullptr, "Could not find field info for entt entities list!");
-			entities = new (entities) std::vector<entt::entity>;
-
-			// Step 2 : Find registry
-			entt::registry* registry = nullptr;
-			for (size_t i = 0; i < sceneTypeInfo->fields.size(); i++)
-			{
-				const Mirror::Field& field = sceneTypeInfo->fields[i];
-
-				if (field.typeInfo->enumType == MirrorTypes::m_entt_registry)
-				{
-					void* registryAddress = ((char*)&scene) + field.offset;
-					registry = (entt::registry*)(registryAddress);
-					break;
-				}
-			}
-
-			ASSERT(registry != nullptr, "Could not find field info for entt registry list!");
-
-			registry = new (registry) entt::registry;
-
-			registry->each([&](auto entityId)
-				{
-					entt::entity currentEntity = entityId;
-
-					// Determine which components an entity has and serialize component data
-					if (auto component = SerializeEnttComponent<int>(registry, currentEntity))
-					{
-
-					}
-
-					// Get GameObject save data for component data
-
-					// Build GameObject from file data, then tell registry about it's components
-					const bool entityDataHasComponentInt = false;
-					if (entityDataHasComponentInt)
-					{
-						int component = registry->emplace<int>(currentEntity);
-					}
-
-				});
-
-			Serialization::SerializeObjectToFile(scene, absoluteSceneJsonFilePath);
 		}
 
 		void DeserializeScene(const char* const absoluteSceneJsonFilePath, Scene& scene)
 		{
+			if (!absoluteSceneJsonFilePath)
+			{
+				LOG_ERROR("{0} Null file path given!", __FUNCTION__);
+				return;
+			}
+
+			// #TODO Access registry as friend class or some better way than a public getter
+			entt::registry& registry = scene.Registry();
+
 			const Mirror::TypeInfo* sceneTypeInfo = Mirror::InfoForType<Scene>();
-
-			// Step 1 : Find registry
-			entt::registry* registry = nullptr;
-			for (size_t i = 0; i < sceneTypeInfo->fields.size(); i++)
+			if (cJSON* rootJsonObject = OpencJSONStream(absoluteSceneJsonFilePath))
 			{
-				const Mirror::Field& field = sceneTypeInfo->fields[i];
-
-				if (field.typeInfo->enumType == MirrorTypes::m_entt_registry)
+				if (!rootJsonObject->child)
 				{
-					void* registryAddress = ((char*)&scene) + field.offset;
-					registry = (entt::registry*)(registryAddress);
-					break;
+					LOG_ERROR("{0} root JSON object has no children in JSON file {1}!", __FUNCTION__, absoluteSceneJsonFilePath);
 				}
-			}
-			ASSERT(registry != nullptr, "Could not find field info for entt registry list!");
+				else if (strcmp(rootJsonObject->child->string, sceneTypeInfo->stringName.c_str()) != 0)
+				{
+					LOG_ERROR("{0} root 1st level object name {1} doesn't match given type of {2}!", __FUNCTION__, rootJsonObject->child->string, sceneTypeInfo->stringName.c_str());
+				}
+				else
+				{
+					std::vector<cJSON*> entitiesList = GetAllItemsFromArray(rootJsonObject->child);
 
-			registry = new (registry) entt::registry;
-
-			registry->each([&](auto entityId)
-			{
-					entt::entity currentEntity = entityId;
-
-					// Get GameObject save data for component data
-
-					// Build GameObject from file data, then tell registry about it's components
-					const bool entityDataHasComponentInt = false;
-					if (entityDataHasComponentInt)
+					for (size_t i = 0; i < entitiesList.size(); i++)
 					{
-						int component = registry->emplace<int>(currentEntity);
+						entt::entity entityId = registry.create();
+						std::vector<cJSON*> componentsList = GetAllItemsFromArray(entitiesList[i]->child->child);
+
+						for (size_t j = 0; j < componentsList.size(); j++)
+						{
+							// #TODO Look at using a macro for convenience
+							if (strcmp(componentsList.at(j)->string, "ComponentTransform") == 0)
+							{
+								ComponentTransform& transform = registry.emplace<ComponentTransform>(entityId);
+								DeserializeJsonToObject(componentsList[j], Mirror::InfoForType<ComponentTransform>(), (void*)&transform);
+							}
+							if (strcmp(componentsList.at(j)->string, "ComponentMesh") == 0)
+							{
+								ComponentMesh& mesh = registry.emplace<ComponentMesh>(entityId);
+								DeserializeJsonToObject(componentsList[j], Mirror::InfoForType<ComponentMesh>(), (void*)&mesh);
+								mesh.Create();
+								int bp = 0;
+							}
+						}
 					}
+				}
 
-			});
-
-			cJSON* jsonRootObject = cJSON_CreateObject();
-			// cJSON* jsonRootArray = CreateArray(Mirror::InfoForType<T>()->stringName.c_str());
-			// AddItemToObject(jsonRootObject, jsonRootArray);
-
-			// Step 3 : Start adding entities and their components from file data
-			// for (size_t i = 0; i < entities->size(); i++)
-			{
+				ClosecJSONStream(rootJsonObject);
 			}
-
-			// Step 4 : Serialize all other (non entt) Scene fields
-			Serialization::DeserializeJsonFromFile(absoluteSceneJsonFilePath, scene);
+			else
+			{
+				LOG_ERROR("{0} Could not load object type {1} from file {2}!", __FUNCTION__, sceneTypeInfo->stringName.c_str(), absoluteSceneJsonFilePath);
+			}
 		}
 
 	}
