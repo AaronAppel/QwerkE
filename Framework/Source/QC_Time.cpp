@@ -24,7 +24,7 @@ namespace QwerkE {
 
         void WriteAppStartTime()
         {
-            LOG_WARN(!s_AppStartTime, "App start time has already been set");
+            ASSERT(!s_AppStartTime, "App start time has already been set");
             s_AppStartTime = Now();
             s_LatestFrameStartTime = s_AppStartTime;
         }

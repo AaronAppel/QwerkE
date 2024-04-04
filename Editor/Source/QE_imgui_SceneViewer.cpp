@@ -79,7 +79,7 @@ namespace QwerkE {
                 constexpr const char* emptyScenePrefabFileName = "Empty.qscene";
 
                 // #NOTE Previous function UniqueFileNameNumberAppend(ScenesFolderPath(""), newFileDefaultName, scene_ext);
-                uPtr<char[]> newFilePath = Files::UniqueFileName(ScenesFolderPath(newFileDefaultName, ".", scene_ext));
+                uPtr<char[]> newFilePath = Files::UniqueFileName(Paths::Scene(StringAppend(newFileDefaultName, ".", scene_ext)).c_str());
 
                 Scene* newScene = Scenes::CreateSceneFromFile(newFilePath.get());
                 newScene->LoadSceneFromFilePath(emptyScenePrefabFileName);

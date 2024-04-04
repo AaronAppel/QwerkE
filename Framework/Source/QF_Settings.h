@@ -79,17 +79,18 @@ namespace QwerkE {
         const char* GetStyleFileName();
 
         void LoadEngineSettings(); // #TODO Load from file path. Do not rely on default paths, but instead generate the default path
-        void LoadEngineSettings(std::string engineSettingsFilePath); // #TODO Write and chain with above overloaded method
+        void LoadEngineSettings(const std::string& engineSettingsFilePath); // #TODO Write and chain with above overloaded method
         void SaveEngineSettings();
 
-        void LoadProjectSettings(std::string projectSettingsFilePath);
+        // #TODO Load settings for a project, or a more complex project object?
+        void LoadProjectSettings(const std::string& projectSettingsFilePath);
         void SaveProjectSettings();
-        void SaveProjectSettings(std::string projectSettingsFilePath);
+        void SaveProjectSettings(const std::string& projectSettingsFilePath);
 
-        void LoadUserSettings(std::string userSettingsFilePath);
+        void LoadUserSettings(const std::string& userSettingsFilePath);
         void SaveUserSettings();
 
-        void LoadRendererSettings(std::string rendererSettingsFilePath);
+        void LoadRendererSettings(const std::string& rendererSettingsFilePath);
         void SaveRendererSettings();
 
         EngineSettings& GetEngineSettings();

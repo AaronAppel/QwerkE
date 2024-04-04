@@ -19,8 +19,8 @@ namespace QwerkE {
 			Events::Initialize();
 
 			Settings::LoadEngineSettings("TODO");
-			Settings::LoadProjectSettings(ProjectsFolderPath("Project1.qproj"));
-			Settings::LoadUserSettings(SettingsFolderPath(null_preferences));
+			Settings::LoadProjectSettings(Paths::Project("Project1.qproj"));
+			Settings::LoadUserSettings(Paths::Settings(null_preferences));
 
 			const EngineSettings& engineSettings = Settings::GetEngineSettings();
 

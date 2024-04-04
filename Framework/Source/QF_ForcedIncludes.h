@@ -12,6 +12,7 @@
 #include "QF_Debug.h"
 #include "QF_Log.h"
 #include "QF_Math.h"
+#include "QF_Paths.h"
 
 #ifdef _QGLM
 // #define GLM_FORCE_SWIZZLE // #NOTE Compiler runs out of heap space

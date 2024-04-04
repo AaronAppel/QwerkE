@@ -21,8 +21,13 @@
 #include "QE_Editor.h"
 #include "QE_EntityEditor.h"
 
-QC_ENUM(eSceneGraphFilter, int, Actors, Cams, Lights)
-QC_ENUM(eSceneGraphCreateTypes, int, Empty, Light, Camera)
+#include "QF_ComponentCamera.h"
+#include "QF_ComponentLight.h"
+#include "QF_ComponentMesh.h"
+#include "QF_ComponentScript.h"
+
+QC_ENUM(eSceneGraphFilter, u8, Actors, Cams, Lights)
+QC_ENUM(eSceneGraphCreateTypes, u8, Empty, Light, Camera, Script, Mesh)
 
 namespace QwerkE {
 
@@ -61,6 +66,7 @@ namespace QwerkE {
 				ImGui::Text("Object Types");
 				ImGui::Separator();
 
+				// #TODO Option to create from prefab (or add option to create prefab instance another way)
 				// #TODO Use NumberAppendOrIncrement() to create a unique object name
 				for (int i = 0; i < eSceneGraphCreateTypes::_size_constant; i++)
 				{
@@ -69,22 +75,29 @@ namespace QwerkE {
 						switch (i)
 						{
 						case eSceneGraphCreateTypes::Empty:
-							currentScene->CreateNewObjectFromSchematic("GameObject.osch");
+							currentScene->CreateEntity();
 							break;
 
 						case eSceneGraphCreateTypes::Light:
-						{
-							GameObject* newLight = currentScene->CreateNewObjectFromSchematic("Light.osch");
-							currentScene->AddLight(newLight); // #TODO Call from light component or game object
-						}
-						break;
+							currentScene->CreateEntity()->AddComponent<ComponentLight>();
+							break;
 
 						case eSceneGraphCreateTypes::Camera:
-						{
-							GameObject* newCamera = currentScene->CreateNewObjectFromSchematic("Camera.osch");
-							currentScene->AddCamera(newCamera); // #TODO Call from camera component or game object
-						}
-						break;
+							currentScene->CreateEntity()->AddComponent<ComponentCamera>();
+							break;
+
+						case eSceneGraphCreateTypes::Script:
+							// currentScene->CreateEntity()->AddComponent<ComponentScript>();
+							// #TODO Bind to a script type. Might need a sub-context menu option and list script options
+							LOG_WARN("{0} Case not implemented yet", __FUNCTION__);
+							break;
+
+						case eSceneGraphCreateTypes::Mesh:
+							currentScene->CreateEntity()->AddComponent<ComponentMesh>();
+							break;
+
+						default:
+							break;
 						}
 					}
 				}

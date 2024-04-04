@@ -6,8 +6,9 @@ project "Framework"
 	
 	defines
 	{
-		"AssetsDir=\"../Game/Assets/\"",
-		"NullAssetsDir=\"../../../Editor/Assets/\"", -- Needs to be better managed
+		-- "AssetsDir=\"%{wks.location}/Editor/Assets/\"" ,
+		-- "NullAssetsDir=\"%{wks.location}/Editor/Assets/\"" ,
+		"WorkspaceRootDir=\"%{wks.location}/\"",
 	}
 
 	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }

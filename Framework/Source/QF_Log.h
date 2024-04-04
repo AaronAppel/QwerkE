@@ -40,16 +40,20 @@ namespace QwerkE {
 
         void Log(eLogLevel logLevel, ...);
         void Log(eLogLevel logLevel, const char* message, ...);
+
+        struct Logger {
+            static std::shared_ptr<spdlog::logger> s_Logger;
+        };
     }
 
 }
 
 #if _QDEBUG
-#define LOG_TRACE(...)      QwerkE::Log::Log(QwerkE::Log::eLogLevel::Trace, __VA_ARGS__);
-#define LOG_INFO(...)       QwerkE::Log::Log(QwerkE::Log::eLogLevel::Info, __VA_ARGS__);
-#define LOG_WARN(...)       QwerkE::Log::Log(QwerkE::Log::eLogLevel::Warn, __VA_ARGS__);
-#define LOG_ERROR(...)      QwerkE::Log::Log(QwerkE::Log::eLogLevel::Error, __VA_ARGS__);
-#define LOG_CRITICAL(...)   QwerkE::Log::Log(QwerkE::Log::eLogLevel::Critical, __VA_ARGS__);
+#define LOG_TRACE(...)      QwerkE::Log::Logger::s_Logger->trace(__VA_ARGS__);
+#define LOG_INFO(...)       QwerkE::Log::Logger::s_Logger->info(__VA_ARGS__);
+#define LOG_WARN(...)       QwerkE::Log::Logger::s_Logger->warn(__VA_ARGS__);
+#define LOG_ERROR(...)      QwerkE::Log::Logger::s_Logger->error(__VA_ARGS__);
+#define LOG_CRITICAL(...)   QwerkE::Log::Logger::s_Logger->critical(__VA_ARGS__);
 
 #define LOG_INFO_ONCE(...) { static bool s_logged = false; if (!s_logged) { s_logged = true; QwerkE::Log::s_Logger->info(__VA_ARGS__); } }
 

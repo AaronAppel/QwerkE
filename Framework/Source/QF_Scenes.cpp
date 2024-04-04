@@ -7,6 +7,7 @@
 #include "QF_Files.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Paths.h"
 #include "QF_Profile.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
@@ -43,13 +44,13 @@ namespace QwerkE {
 			for (size_t i = 0; i < sceneFileNames.size(); i++)
 			{
 				const char* sceneFileName = sceneFileNames[i].c_str();
-				if (!Files::Exists(ScenesFolderPath(sceneFileName)))
+				if (!Files::Exists(Paths::Scene(sceneFileName).c_str()))
 				{
 					LOG_WARN("Initialize(): File not found: {0}", sceneFileName);
 					continue;
 				}
 
-				if (Scene* newScene = CreateSceneFromFile(ScenesFolderPath(sceneFileName), false))
+				if (Scene* newScene = CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), false))
 				{
 					newScene->LoadScene(); // #TODO Should the scene load itself/contents right away?
 				}
@@ -157,7 +158,7 @@ namespace QwerkE {
 				}
 			}
 
-			newScene->LoadSceneFromFilePath(NullAssetsFolderPath(null_scene));
+			newScene->LoadSceneFromFilePath(Paths::NullAsset(null_scene).c_str());
 			s_Scenes.push_back(newScene);
 
 			if (s_CurrentScene == nullptr)

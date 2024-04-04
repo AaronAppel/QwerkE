@@ -37,6 +37,10 @@ namespace QwerkE {
 		template <typename T>
 		void RemoveComponent()
 		{
+			if (std::is_same_v<T, ComponentTransform>)
+			{
+				LOG_WARN("Removing ComponentTransform from entity {0}", (u32)m_EntityHandle);
+			}
 			m_Scene->Registry().remove<T>(m_EntityHandle);
 		}
 

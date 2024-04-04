@@ -16,6 +16,7 @@
 #include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Paths.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
@@ -200,60 +201,6 @@ namespace QwerkE {
         ImGui::End();
     }
 
-    bool Scene::AddCamera(GameObject* camera)
-    {
-        m_CameraList.push_back(camera);
-        return true;
-    }
-
-    void Scene::RemoveCamera(GameObject* camera)
-    {
-        if (m_CameraList.size() < 2)
-        {
-            LOG_ERROR("Unable to remove camera as 1 must remain");
-            return;
-        }
-
-        for (unsigned int i = 0; i < m_CameraList.size(); i++)
-        {
-            if (m_CameraList.at(i) == camera)
-            {
-                m_CameraList.erase(m_CameraList.begin() + i);
-                // #TODO Delete?
-                return;
-            }
-        }
-    }
-
-    bool Scene::AddLight(GameObject* light)
-    {
-        // #TODO Insert in/by render order, or sort after all objects have been added
-
-        m_LightList.push_back(light);
-        m_SceneDrawList.push_back(light);
-        return true;
-    }
-
-    void Scene::RemoveLight(GameObject* light)
-    {
-        if (m_LightList.size() < 2)
-        {
-            LOG_ERROR("Unable to remove light as 1 must remain"); // #BUG B0001
-            return;
-        }
-
-        for (unsigned int i = 0; i < m_LightList.size(); i++)
-        {
-            if (m_LightList.at(i) == light)
-            {
-                m_LightList.erase(m_LightList.begin() + i);
-                auto it = m_SceneDrawList.erase(m_SceneDrawList.begin() + i);
-                // #TODO Delete object
-                return;
-            }
-        }
-    }
-
     bool Scene::ObjectWithNameExists(GameObject* object)
     {
         if (!object)
@@ -299,9 +246,9 @@ namespace QwerkE {
     Entity* Scene::CreateEntity()
     {
         entt::entity enttEntity = m_Registry.create();
-        // #TODO Add anycomponents like a transform. Also look at a no-transform version for directors
-        // Could take in an optional tag/enum value to assign
+        // #TODO Look at object tagging. Might need an enum that uses priority overriding, or a list/flags for tags. Tag flags sounds good
         Entity* entity = new Entity(this, enttEntity);
+        entity->AddComponent<ComponentTransform>();
         m_Entities.insert(std::pair(enttEntity, entity));
         return m_Entities.find(enttEntity)->second;
     }
@@ -316,7 +263,7 @@ namespace QwerkE {
     GameObject* Scene::CreateNewObjectFromSchematic(const char* const schematicFileName)
     {
         GameObject* newGameObject = new GameObject(this);
-        Serialization::DeserializeJsonFromFile(SchematicsFolderPath(schematicFileName), *newGameObject);
+        Serialization::DeserializeJsonFromFile(Paths::Schematic(schematicFileName).c_str(), *newGameObject);
 
         while (ObjectWithNameExists(newGameObject))
         {
@@ -347,10 +294,12 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::SerializeScene(*this, StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext));
+        std::string sceneFilePath = Paths::Scene(StringAppend(m_SceneFileName.c_str(), ".", scene_ext));
+        Serialization::SerializeScene(*this, sceneFilePath.c_str());
+        // Serialization::SerializeScene(*this, StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext));
 
-        Serialization::SerializeObjectToFile(*this, ScenesFolderPath(m_SceneFileName.c_str()));
-        LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, ScenesFolderPath(m_SceneFileName.c_str()));
+        Serialization::SerializeObjectToFile(*this, Paths::Schematic(m_SceneFileName.c_str()).c_str());
+        LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, Paths::Scene(m_SceneFileName.c_str()));
         m_IsDirty = false;
     }
 
@@ -371,11 +320,14 @@ namespace QwerkE {
         std::string oldName = m_SceneFileName; // #TODO Improve scene file name overwrite logic
         if (Files::Exists(otherSceneFilePath))
         {
-            Serialization::DeserializeJsonFromFile(otherSceneFilePath, *this);
+            // Serialization::DeserializeJsonFromFile(otherSceneFilePath, *this);
+
+            std::string sceneFilePath = Paths::Scene(StringAppend(m_SceneFileName.c_str(), ".", scene_ext));
+            Serialization::DeserializeScene(sceneFilePath.c_str(), *this);
         }
-        else if (Files::Exists(ScenesFolderPath(otherSceneFilePath)))
+        else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {
-            Serialization::DeserializeJsonFromFile(ScenesFolderPath(otherSceneFilePath), *this);
+            Serialization::DeserializeJsonFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
         }
         else
         {
@@ -384,8 +336,6 @@ namespace QwerkE {
         }
 
         m_SceneFileName = oldName;
-
-        Serialization::DeserializeScene(ScenesFolderPath(otherSceneFilePath), *this);
 
         OnLoaded();
 
@@ -409,9 +359,11 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::DeserializeJsonFromFile(ScenesFolderPath(m_SceneFileName.c_str()), *this);
+        Serialization::DeserializeJsonFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
 
-        Serialization::DeserializeScene(StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext), *this);
+        std::string sceneFilePath = Paths::Scene(StringAppend(m_SceneFileName.c_str(), ".", scene_ext));
+        Serialization::DeserializeScene(sceneFilePath.c_str(), *this);
+        // Serialization::DeserializeScene(StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext), *this);
 
         OnLoaded();
 

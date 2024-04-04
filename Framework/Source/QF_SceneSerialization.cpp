@@ -111,6 +111,8 @@ namespace QwerkE {
 					for (size_t i = 0; i < entitiesList.size(); i++)
 					{
 						entt::entity entityId = registry.create();
+						Entity entity(&scene, entityId);
+
 						std::vector<cJSON*> componentsList = GetAllItemsFromArray(entitiesList[i]->child->child);
 
 						for (size_t j = 0; j < componentsList.size(); j++)
@@ -118,7 +120,8 @@ namespace QwerkE {
 							// #TODO Look at using a macro for convenience
 							if (strcmp(componentsList.at(j)->string, "ComponentTransform") == 0)
 							{
-								ComponentTransform& transform = registry.emplace<ComponentTransform>(entityId);
+								ASSERT(entity.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
+								ComponentTransform& transform = entity.GetComponent<ComponentTransform>();
 								DeserializeJsonToObject(componentsList[j], Mirror::InfoForType<ComponentTransform>(), (void*)&transform);
 							}
 							if (strcmp(componentsList.at(j)->string, "ComponentMesh") == 0)

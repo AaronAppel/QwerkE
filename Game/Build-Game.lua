@@ -5,8 +5,9 @@ project "Game"
 	defines
 	{	
 		-- Path strings
-		"AssetsDir=\"Assets/\"" ,
-		"NullAssetsDir=\"../../../Editor/Assets/\"" ,
+		-- "AssetsDir=\"%{wks.location}/Game/Assets/\"" ,
+		-- "NullAssetsDir=\"%{wks.location}/Editor/Assets/\"" ,
+		"WorkspaceRootDir=\"%{wks.location}/\"",
 		
 		-- Command line arguments
 		-- #TODO These need to be in sync with Editor. Change that

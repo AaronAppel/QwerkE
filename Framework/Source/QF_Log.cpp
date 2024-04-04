@@ -7,24 +7,24 @@
 
 #include "Libraries/spdlog/sinks/stdout_color_sinks.h"
 
-// #include "QF_Debug.h"
+#include "QF_Debug.h"
 
 namespace QwerkE {
 
     namespace Log {
 
         bool s_initialized = false;
-        std::shared_ptr<spdlog::logger> s_Logger;
+        std::shared_ptr<spdlog::logger> Logger::s_Logger;
 
         void Initialize()
         {
-            // ASSERT(!m_initialized, "Log is already initialized!");
+            ASSERT(!s_initialized, "Log is already initialized!");
             if (!s_initialized)
             {
                 spdlog::set_pattern("%^[%T] %n: %v%$");
                 const char* loggerName = "Logger1";
-                s_Logger = spdlog::stdout_color_mt(loggerName);
-                s_Logger->set_level(spdlog::level::trace);
+                Logger::s_Logger = spdlog::stdout_color_mt(loggerName);
+                Logger::s_Logger->set_level(spdlog::level::trace);
 
                 s_initialized = true;
                 LOG_TRACE("{0} Logger \"{1}\" initialized", __FUNCTION__, loggerName);
@@ -95,23 +95,23 @@ namespace QwerkE {
             switch (logLevel)
             {
             case Trace:
-                s_Logger->trace(formattedString.data());
+                Logger::s_Logger->trace(formattedString.data());
                 break;
 
             case Info:
-                s_Logger->info(formattedString.data());
+                Logger::s_Logger->info(formattedString.data());
                 break;
 
             case Warn:
-                s_Logger->warn(formattedString.data());
+                Logger::s_Logger->warn(formattedString.data());
                 break;
 
             case Error:
-                s_Logger->error(formattedString.data());
+                Logger::s_Logger->error(formattedString.data());
                 break;
 
             case Critical:
-                s_Logger->critical(formattedString.data());
+                Logger::s_Logger->critical(formattedString.data());
                 break;
             }
         }

@@ -41,7 +41,7 @@ namespace QwerkE {
 
         EngineSettings* s_EngineSettings = nullptr; // #TODO Static and not shared with QF_MenuBar.cpp
 
-		QC_ENUM(eSettingsOptions, int, Null, Engine, Project, User, Renderer);
+		QC_ENUM(eSettingsOptions, u8, Null, Engine, Project, User, Renderer);
 		static eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
 		static s8 s_LastPopUpIndex = -1;
 
@@ -78,8 +78,7 @@ namespace QwerkE {
                 pairs.insert(std::pair<const char*, const char*>(key_UserName, "User1"));
             }
 
-            pairs.insert(std::pair<const char*, const char*>("AssetsDir", AssetsDir));
-            pairs.insert(std::pair<const char*, const char*>("NullAssetsDir", NullAssetsDir));
+            pairs.insert(std::pair<const char*, const char*>("WorkspaceRootDir", WorkspaceRootDir));
 
             if (true) { OutputProgramPairsInfo(pairs); }
 
@@ -282,15 +281,15 @@ namespace QwerkE {
                             break;
 
                         case eSettingsOptions::Project:
-                            Settings::LoadProjectSettings(ProjectsFolderPath("Project1.qproj")); // #TODO Load proper project file
+                            Settings::LoadProjectSettings(Paths::Project("Project1.qproj")); // #TODO Load proper project file
                             break;
 
                         case eSettingsOptions::User:
-                            Settings::LoadUserSettings(SettingsFolderPath("User1.qproj"));
+                            Settings::LoadUserSettings(Paths::Settings("User1.qproj"));
                             break;
 
                         case eSettingsOptions::Renderer:
-                            Settings::LoadRendererSettings(SettingsFolderPath("RendererSettings1.qren"));
+                            Settings::LoadRendererSettings(Paths::Settings("RendererSettings1.qren"));
                             break;
                         }
                     }
@@ -345,7 +344,7 @@ namespace QwerkE {
             if (s_EngineSettings->showingSchematicsEditor && ImGui::Begin("Schematics Inspector", &s_EngineSettings->showingSchematicsEditor))
             {
                 // #TODO Cache result to avoid constant directory info fetching
-                const std::vector<std::string> dirFileNames = Directory::ListDir(SchematicsFolderPath(""));
+                const std::vector<std::string> dirFileNames = Directory::ListDir(Paths::Schematic("").c_str());
 
                 for (size_t i = 0; i < dirFileNames.size(); i++)
                 {

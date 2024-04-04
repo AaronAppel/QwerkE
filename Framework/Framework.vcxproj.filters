@@ -76,6 +76,7 @@
     <ClCompile Include="Source\QF_ComponentTransform.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QF_Paths.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -189,6 +190,10 @@
       <Filter>Game Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_ComponentScript.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Paths.h" />
+    <ClInclude Include="Source\QF_ComponentLight.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

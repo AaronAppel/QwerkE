@@ -11,9 +11,9 @@ project "Editor"
 		"EngineName=\"QwerkE\"",
 		
 		-- Path strings
-		"AssetsDir=\"Assets/\"",
-		-- "NullAssetsDir=AssetsDir",
-		"NullAssetsDir=\"../../../Editor/Assets/\"" ,
+		-- "AssetsDir=\"Assets/\"",
+		-- "NullAssetsDir=\"%{wks.location}/Editor/Assets/\"",
+		"WorkspaceRootDir=\"%{wks.location}/\"",
 		
 		-- Command line arguments
 		"key_StartupDir=\"-startupDir\"",
@@ -38,7 +38,12 @@ project "Editor"
 		"%{wks.location}/Framework/Source/", -- Include Framework source
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
 		
+		"%{wks.location}/Libraries/bgfxFramework/include", -- For bgfx helpers
+		
 		"%{wks.location}/Libraries/bgfx/include", -- For testing calls to bgfx in editor code
+		
+		"%{wks.location}/Libraries/bx/include", -- To support creating components that depend on bx
+		"%{wks.location}/Libraries/bx/include/compat/msvc",
 	}
 	
 	links
@@ -59,19 +64,19 @@ project "Editor"
 		defines { }
 
 	filter "configurations:Debug"
-		defines { "_QDebug", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "BX_CONFIG_DEBUG=1", "_QDebug", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Debug"
 		optimize "Off"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines { "_QRelease", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "BX_CONFIG_DEBUG=0", "_QRelease", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "Off"
 		symbols "Off"
 
 	filter "configurations:Retail"
-		defines { "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "BX_CONFIG_DEBUG=0", "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

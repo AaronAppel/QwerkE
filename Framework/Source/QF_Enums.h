@@ -8,27 +8,7 @@
 
 namespace QwerkE {
 
-    enum class eInputDeviceTypes : std::uint8_t
-    {
-        // #TODO Deprecate or move to input files domain. Maybe a new input file like eKeys but eInputDevices
-        Keyboard_Min = 0,
-        Keyboard_Device0,
-        Keyboard_Device1,
-        Keyboard_Device2,
-        Keyboard_Device3,
-        Keyboard_Max,
-
-        Mouse_Min,
-        Mouse_Device0,
-        Mouse_Device1,
-        Mouse_Device2,
-        Mouse_Device3,
-        Mouse_Max,
-
-        InputDeviceTypes_Max
-    };
-
-    QC_ENUM(eMaterialMaps, std::uint8_t,
+    QC_ENUM(eMaterialMaps, u8,
         MatMap_Ambient = 0,
         MatMap_Diffuse,
         MatMap_Specular,
@@ -50,37 +30,14 @@ namespace QwerkE {
         MatMap_Null
     );
 
-    // enum class eMaterialMaps : std::uint8_t
-    // {
-    //     MatMap_Ambient = 0,
-    //     MatMap_Diffuse,
-    //     MatMap_Specular,
-    //     MatMap_Emissive,
-    //     MatMap_Height,
-    //     MatMap_Normals,
-    //     MatMap_Shininess,
-    //     MatMap_Opacity,
-    //     MatMap_Displacement,
-    //     MatMap_LightMap,
-    //     MatMap_Reflection,
-    //     MatMap_Albedo,
-    //     MatMap_Metallic,
-    //     MatMap_AmbientOcclusion,
-    //     MatMap_Roughness,
-    //
-    //     MatMap_Vec3Colour,
-    //     MatMap_Max,
-    //     MatMap_Null
-    // };
-
-    enum eOperationResult : std::uint8_t
+    enum eOperationResult : u8
     {
         Undefined = 0,
         Success,
         Failure
     };
 
-    enum eComponentTags : std::uint8_t
+    enum eComponentTags : u8
     {
         Component_Null = 0,
         Component_Camera,
@@ -94,7 +51,7 @@ namespace QwerkE {
         Component_Max // #TODO Don't create values that shouldn't be serialized. Create a ENUM_SIZE() macro or something instead
     };
 
-    enum eRoutineTypes : std::uint8_t
+    enum eRoutineTypes : u8
     {
         // #TODO Enforce null/default values being the 1st (0) value, in all enums. Document rule as well!
         Routine_Null = 0, // #NOTE Value saved in data so can mess things up if deleted
@@ -106,7 +63,7 @@ namespace QwerkE {
     };
 
     // Light Types
-    enum eLightType : std::uint8_t // TODO: Hide from program?
+    enum eLightType : u8
     {
         LightType_Point = 0,
         LightType_Area,
@@ -117,7 +74,7 @@ namespace QwerkE {
     };
 
     // TODO: Adding object tags ruins object saving and loading. Fix!
-    enum eGameObjectTags : std::uint8_t
+    enum eGameObjectTags : u8
     {
         GO_Tag_Player = 0,
         // Cameras

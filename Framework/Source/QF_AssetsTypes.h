@@ -17,7 +17,7 @@ namespace QwerkE {
 		obj,
 	};
 
-	QC_ENUM(eAssetType, int,
+	QC_ENUM(eAssetType, u8,
 		// Invalid, Use AssetHandle::INVALID_HANDLE instead
 		Texture
 	);

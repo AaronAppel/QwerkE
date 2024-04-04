@@ -23,7 +23,7 @@ namespace QwerkE {
 			// LoadEngineSettings(configFilePath);
 		}
 
-		void LoadEngineSettings(std::string configFilePath)
+		void LoadEngineSettings(const std::string& configFilePath)
 		{
 			s_engineSettings.isDirty = false;
 		}
@@ -33,7 +33,7 @@ namespace QwerkE {
 			s_engineSettings.isDirty = false;
 		}
 
-		void LoadProjectSettings(std::string projectSettingsFilePath)
+		void LoadProjectSettings(const std::string& projectSettingsFilePath)
 		{
 			s_projectSettings.isDirty = false;
 		}
@@ -42,12 +42,12 @@ namespace QwerkE {
 		{
 		}
 
-		void SaveProjectSettings(std::string projectSettingsFilePath)
+		void SaveProjectSettings(const std::string& projectSettingsFilePath)
 		{
 			s_projectSettings.isDirty = false;
 		}
 
-		void LoadUserSettings(std::string userSettingsFilePath)
+		void LoadUserSettings(const std::string& userSettingsFilePath)
 		{
 			s_userSettings.isDirty = false;
 		}
@@ -57,7 +57,7 @@ namespace QwerkE {
 			s_userSettings.isDirty = false;
 		}
 
-		void LoadRendererSettings(std::string rendererSettingsFilePath)
+		void LoadRendererSettings(const std::string& rendererSettingsFilePath)
 		{
 			s_rendererSettings.isDirty = false;
 		}

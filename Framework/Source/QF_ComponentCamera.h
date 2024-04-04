@@ -32,7 +32,7 @@ namespace QwerkE {
             }
         }
 
-        float m_MoveSpeed = 1.f;
+        float m_MoveSpeed = 5.f;
 
         bx::Vec3 m_At = { .0f, .0f,   .0f };
         bx::Vec3 m_Eye = { .0f, .0f, -35.f };

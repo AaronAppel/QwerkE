@@ -32,12 +32,6 @@ namespace QwerkE {
         void Draw();
         void DrawImgui();
 
-        bool AddCamera(GameObject* camera);
-        void RemoveCamera(GameObject* camera);
-
-        bool AddLight(GameObject* light);
-        void RemoveLight(GameObject* light);
-
         bool ObjectWithNameExists(GameObject* object);
         bool AddObjectToScene(GameObject* object);
         void RemoveObjectFromScene(GameObject* object);

@@ -50,7 +50,7 @@ cJSON* OpencJSONStream(const char* fileDirectory)
 
 		if (root == nullptr)
 		{
-			printf("{%s}(): Could not open cJSON stream. Possible compile error. Check {%s} file for typos!", __FUNCTION__, fileDirectory);
+			printf("%s(): Could not open cJSON stream. Possible compile error. Check %s file for typos!", __FUNCTION__, fileDirectory);
 		}
 
 		delete[] str;
