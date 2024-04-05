@@ -97,10 +97,6 @@ namespace QwerkE {
 #endif
 
 #ifdef _QENTT
-	// External / 3rd party types
-	typedef entt::registry m_entt_registry;
-	MIRROR_TYPE(m_entt_registry)
-
 	typedef entt::entity m_enTT_Entity;
 	MIRROR_TYPE(m_enTT_Entity)
 #endif
@@ -178,13 +174,7 @@ namespace QwerkE {
 	MIRROR_CLASS_END(RendererSettings)
 
 	MIRROR_CLASS_START(Scene)
-	MIRROR_CLASS_MEMBER(m_Registry)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
-	MIRROR_CLASS_MEMBER(m_IsPaused)
-	MIRROR_CLASS_MEMBER(m_CurrentCameraIndex)
-	MIRROR_CLASS_MEMBER(m_CameraList)
-	MIRROR_CLASS_MEMBER(m_LightList)
-	MIRROR_CLASS_MEMBER(m_SceneDrawList)
 	MIRROR_CLASS_END(Scene)
 
 	MIRROR_CLASS_START(GameObject)
