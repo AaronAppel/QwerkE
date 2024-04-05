@@ -9,6 +9,7 @@
 #include "QF_Log.h"
 #include "QF_Paths.h"
 #include "QF_Profile.h"
+#include "QF_Projects.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
 
@@ -37,9 +38,9 @@ namespace QwerkE {
 		{
 			// Window::OnWindowSizeChange();
 
-			const ProjectSettings& projectSettings = Settings::GetProjectSettings();
+			const Project& project = Projects::CurrentProject();
 
-			const std::vector<std::string>& sceneFileNames = projectSettings.sceneFileNames;
+			const std::vector<std::string>& sceneFileNames = project.sceneFileNames;
 
 			for (size_t i = 0; i < sceneFileNames.size(); i++)
 			{
@@ -60,7 +61,7 @@ namespace QwerkE {
 			{
 				// Scene* newScene = Scenes::CreateSceneFromFile(NullAssetsFolderPath(null_scene), true);
 				Scene* newScene = Scenes::CreateEmptyScene();
-				LOG_WARN("Null scene loaded as no scene files found for project: {0}", projectSettings.projectName);
+				LOG_WARN("Null scene loaded as no scene files found for project: {0}", project.projectName);
 			}
 		}
 
@@ -132,7 +133,7 @@ namespace QwerkE {
 
 			if (addToProjectsSceneFiles)
 			{
-				Settings::GetProjectSettings().sceneFileNames.push_back(newScene->GetSceneName().c_str());
+				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
 			}
 
 			return newScene;
@@ -167,7 +168,7 @@ namespace QwerkE {
 				priv_UpdateCurrentSceneIndex();
 			}
 
-			Settings::GetProjectSettings().sceneFileNames.push_back(newScene->GetSceneName().c_str());
+			Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
 
 			return newScene;
 		}
@@ -181,12 +182,13 @@ namespace QwerkE {
 				{
 					returnScene = s_Scenes[i];
 					s_Scenes.erase(s_Scenes.begin() + i);
-					auto projectSettings = Settings::GetProjectSettings();
-					for (size_t i = 0; i < projectSettings.sceneFileNames.size(); i++)
+
+					Project& project = Projects::CurrentProject();
+					for (size_t i = 0; i < project.sceneFileNames.size(); i++)
 					{
-						if (strcmp(projectSettings.sceneFileNames[i].c_str(), scene->GetSceneName().c_str()) == 0)
+						if (strcmp(project.sceneFileNames[i].c_str(), scene->GetSceneName().c_str()) == 0)
 						{
-							projectSettings.sceneFileNames.erase(projectSettings.sceneFileNames.begin() + i);
+							project.sceneFileNames.erase(project.sceneFileNames.begin() + i);
 							break;
 						}
 					}

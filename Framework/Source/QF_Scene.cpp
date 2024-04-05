@@ -263,7 +263,7 @@ namespace QwerkE {
     GameObject* Scene::CreateNewObjectFromSchematic(const char* const schematicFileName)
     {
         GameObject* newGameObject = new GameObject(this);
-        Serialization::DeserializeJsonFromFile(Paths::Schematic(schematicFileName).c_str(), *newGameObject);
+        Serialization::DeserializeObjectFromFile(Paths::Schematic(schematicFileName).c_str(), *newGameObject);
 
         while (ObjectWithNameExists(newGameObject))
         {
@@ -294,7 +294,7 @@ namespace QwerkE {
             return;
         }
 
-        std::string sceneFilePath = Paths::Scene(StringAppend(m_SceneFileName.c_str(), ".", scene_ext));
+        std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
         Serialization::SerializeScene(*this, sceneFilePath.c_str());
         // Serialization::SerializeScene(*this, StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext));
 
@@ -322,12 +322,12 @@ namespace QwerkE {
         {
             // Serialization::DeserializeJsonFromFile(otherSceneFilePath, *this);
 
-            std::string sceneFilePath = Paths::Scene(StringAppend(m_SceneFileName.c_str(), ".", scene_ext));
+            std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
             Serialization::DeserializeScene(sceneFilePath.c_str(), *this);
         }
         else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {
-            Serialization::DeserializeJsonFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
+            Serialization::DeserializeObjectFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
         }
         else
         {
@@ -359,11 +359,10 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::DeserializeJsonFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
+        Serialization::DeserializeObjectFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
 
-        std::string sceneFilePath = Paths::Scene(StringAppend(m_SceneFileName.c_str(), ".", scene_ext));
+        std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
         Serialization::DeserializeScene(sceneFilePath.c_str(), *this);
-        // Serialization::DeserializeScene(StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext), *this);
 
         OnLoaded();
 
@@ -449,7 +448,7 @@ namespace QwerkE {
     Entity* Scene::CreateEntityFromSchematic(const char* schematicFilePath)
     {
         GameObject obj;
-        Serialization::DeserializeJsonFromFile(schematicFilePath, obj);
+        Serialization::DeserializeObjectFromFile(schematicFilePath, obj);
         return nullptr;
     }
 

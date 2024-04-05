@@ -13,6 +13,7 @@
 #include "QF_Framework.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Projects.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
@@ -30,7 +31,7 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile()
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialization::DeserializeJsonFromFile(Settings::GetStyleFileName(), style);
+        Serialization::DeserializeObjectFromFile(Settings::GetStyleFileName(), style);
     }
 
 	namespace Editor {
@@ -41,7 +42,7 @@ namespace QwerkE {
 
         EngineSettings* s_EngineSettings = nullptr; // #TODO Static and not shared with QF_MenuBar.cpp
 
-		QC_ENUM(eSettingsOptions, u8, Null, Engine, Project, User, Renderer);
+		QC_ENUM(eSettingsOptions, u8, Null, Engine, User, Renderer, Project); // #TODO Project isn't settings anymore. Could be reviewed to move
 		static eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
 		static s8 s_LastPopUpIndex = -1;
 
@@ -210,16 +211,16 @@ namespace QwerkE {
                         pushIsDirtyStyleColor = Settings::GetEngineSettings().isDirty;
                         break;
 
-                    case eSettingsOptions::Project:
-                        pushIsDirtyStyleColor = Settings::GetProjectSettings().isDirty;
-                        break;
-
                     case eSettingsOptions::User:
                         pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
                         break;
 
                     case eSettingsOptions::Renderer:
                         pushIsDirtyStyleColor = Settings::GetRendererSettings().isDirty;
+                        break;
+
+                    case eSettingsOptions::Project:
+                        pushIsDirtyStyleColor = Projects::CurrentProject().isDirty;
                         break;
                     }
 
@@ -257,16 +258,16 @@ namespace QwerkE {
                             Settings::SaveEngineSettings();
                             break;
 
-                        case eSettingsOptions::Project:
-                            Settings::SaveProjectSettings();
-                            break;
-
                         case eSettingsOptions::User:
                             Settings::SaveUserSettings();
                             break;
 
                         case eSettingsOptions::Renderer:
                             Settings::SaveRendererSettings();
+                            break;
+
+                        case eSettingsOptions::Project:
+                            Projects::SaveProject();
                             break;
                         }
                     }
@@ -277,19 +278,19 @@ namespace QwerkE {
                         switch (s_LastPopUpIndex)
                         {
                         case eSettingsOptions::Engine:
-                            Settings::LoadEngineSettings();
-                            break;
-
-                        case eSettingsOptions::Project:
-                            Settings::LoadProjectSettings(Paths::Project("Project1.qproj")); // #TODO Load proper project file
+                            Settings::LoadEngineSettings("");
                             break;
 
                         case eSettingsOptions::User:
-                            Settings::LoadUserSettings(Paths::Settings("User1.qproj"));
+                            Settings::LoadUserSettings("User1.qproj");
                             break;
 
                         case eSettingsOptions::Renderer:
-                            Settings::LoadRendererSettings(Paths::Settings("RendererSettings1.qren"));
+                            Settings::LoadRendererSettings("RendererSettings1.qren");
+                            break;
+
+                        case eSettingsOptions::Project:
+                            Projects::LoadProject("Project1.qproj"); // #TODO Load proper project file
                             break;
                         }
                     }
@@ -313,13 +314,6 @@ namespace QwerkE {
                         }
                         break;
 
-                    case eSettingsOptions::Project:
-                        {
-                            ProjectSettings& projectSettings = Settings::GetProjectSettings();
-                            projectSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<ProjectSettings>(), &projectSettings, buffer);
-                        }
-                        break;
-
                     case eSettingsOptions::User:
                         {
                             UserSettings& userSettings = Settings::GetUserSettings();
@@ -333,6 +327,13 @@ namespace QwerkE {
                             rendererSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
                         }
                         break;
+
+                    case eSettingsOptions::Project:
+                        {
+                            Project& project = Projects::CurrentProject();
+                            project.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<Project>(), &project, buffer);
+                        }
+                        break;
                     }
 
                     ImGui::PopItemWidth();
@@ -344,7 +345,7 @@ namespace QwerkE {
             if (s_EngineSettings->showingSchematicsEditor && ImGui::Begin("Schematics Inspector", &s_EngineSettings->showingSchematicsEditor))
             {
                 // #TODO Cache result to avoid constant directory info fetching
-                const std::vector<std::string> dirFileNames = Directory::ListDir(Paths::Schematic("").c_str());
+                const std::vector<std::string> dirFileNames = Directory::ListDir(StringAppend(Paths::AssetsDir().c_str(), "Schematics/"));
 
                 for (size_t i = 0; i < dirFileNames.size(); i++)
                 {

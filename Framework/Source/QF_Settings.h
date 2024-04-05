@@ -7,23 +7,6 @@
 
 namespace QwerkE {
 
-    struct ProjectSettings
-    {
-        bool isDirty = false; // #TODO isDirty should be an editor only state, so move to editor domain
-
-        const char* projectName = Constants::gc_DefaultStringValue;
-        const char* assetsDirPath = Constants::gc_DefaultStringValue;
-
-        // Referenced Scenes
-        std::vector<std::string> sceneFileNames;
-
-        // struct ConfiguredGameKeys
-        // {
-        //     eKeys action1 = eKeys::eKeys_MAX; // eKeys::eKeys_K;
-        //     const char* resetScene = gc_DefaultStringValue;
-        // };
-    };
-
     struct EngineSettings // #TODO Rename to FrameworkSettings
     {
         bool isDirty = false;
@@ -78,14 +61,8 @@ namespace QwerkE {
     {
         const char* GetStyleFileName();
 
-        void LoadEngineSettings(); // #TODO Load from file path. Do not rely on default paths, but instead generate the default path
         void LoadEngineSettings(const std::string& engineSettingsFilePath); // #TODO Write and chain with above overloaded method
         void SaveEngineSettings();
-
-        // #TODO Load settings for a project, or a more complex project object?
-        void LoadProjectSettings(const std::string& projectSettingsFilePath);
-        void SaveProjectSettings();
-        void SaveProjectSettings(const std::string& projectSettingsFilePath);
 
         void LoadUserSettings(const std::string& userSettingsFilePath);
         void SaveUserSettings();
@@ -93,10 +70,14 @@ namespace QwerkE {
         void LoadRendererSettings(const std::string& rendererSettingsFilePath);
         void SaveRendererSettings();
 
+        void LoadProject(const std::string& projectFileName);
+        void SaveProject();
+        void SaveProject(const std::string& projectFileName);
+
         EngineSettings& GetEngineSettings();
-        ProjectSettings& GetProjectSettings();
         UserSettings& GetUserSettings();
         RendererSettings& GetRendererSettings();
+
     }
 
 }

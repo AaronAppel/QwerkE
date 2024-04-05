@@ -18,6 +18,7 @@
 #include "QF_eKeys.h"
 #include "QF_Enums.h"
 #include "QF_GameObject.h"
+#include "QF_Projects.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
 
@@ -166,11 +167,11 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(key_camera_RotateRight)
 	MIRROR_CLASS_END(UserSettings)
 
-	MIRROR_CLASS_START(ProjectSettings)
+	MIRROR_CLASS_START(Project)
 	MIRROR_CLASS_MEMBER(projectName)
 	MIRROR_CLASS_MEMBER(assetsDirPath)
 	MIRROR_CLASS_MEMBER(sceneFileNames)
-	MIRROR_CLASS_END(ProjectSettings)
+	MIRROR_CLASS_END(Project)
 
 	MIRROR_CLASS_START(RendererSettings)
 	MIRROR_CLASS_MEMBER(drawingPrimitiveType)

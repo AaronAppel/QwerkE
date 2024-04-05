@@ -3,10 +3,7 @@ project "Game"
 	location ""
 	
 	defines
-	{	
-		-- Path strings
-		-- "AssetsDir=\"%{wks.location}/Game/Assets/\"" ,
-		-- "NullAssetsDir=\"%{wks.location}/Editor/Assets/\"" ,
+	{
 		"WorkspaceRootDir=\"%{wks.location}/\"",
 		
 		-- Command line arguments

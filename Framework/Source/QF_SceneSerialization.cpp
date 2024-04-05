@@ -21,6 +21,16 @@ namespace QwerkE {
 
 	namespace Serialization {
 
+#define SerializeComponent(COMPONENT_TYPE) \
+		if (registry->has<COMPONENT_TYPE>(entity)) \
+		{ \
+			auto& component = registry->get<COMPONENT_TYPE>(entity); \
+			auto componentTypeInfo = Mirror::InfoForType<COMPONENT_TYPE>(); \
+			cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str()); \
+			SerializeObjectToJson(&component, componentTypeInfo, newJsonObjectArray); \
+			AddItemToArray(entityComponentsJsonArray, newJsonObjectArray); \
+		}
+
 		void SerializeScene(const Scene& scene, const char* const absoluteSceneJsonFilePath)
 		{
 			if (!absoluteSceneJsonFilePath)
@@ -35,7 +45,7 @@ namespace QwerkE {
 			cJSON* jsonRootArray = CreateArray(sceneTypeInfo->stringName.c_str());
 			AddItemToObject(jsonRootObject, jsonRootArray);
 
-			u8 registryOffset = 0;
+			u8 registryOffset = 0; // #TODO Get offset reference instead
 			for (size_t i = 0; i < sceneTypeInfo->fields.size(); i++)
 			{
 				if (strcmp(sceneTypeInfo->fields[i].name.c_str(), "m_Registry") == 0)
@@ -51,31 +61,14 @@ namespace QwerkE {
 
 			registry->each([&](entt::entity entity)
 				{
-					// entitiesVec.push_back(entity);
-
 					cJSON* entityJsonArray = CreateArray("Entity");
 					AddItemToArray(jsonRootArray, entityJsonArray);
 
 					cJSON* entityComponentsJsonArray = CreateArray("Components");
 					AddItemToArray(entityJsonArray, entityComponentsJsonArray);
 
-					// #TODO Could macro same logic functions
-					if (registry->has<ComponentTransform>(entity))
-					{
-						auto& transform = registry->get<ComponentTransform>(entity);
-						auto componentTypeInfo = Mirror::InfoForType<ComponentTransform>();
-						cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str());
-						SerializeObjectToJson(&transform, componentTypeInfo, newJsonObjectArray);
-						AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
-					}
-					if (registry->has<ComponentMesh>(entity))
-					{
-						auto mesh = registry->get<ComponentMesh>(entity);
-						auto componentTypeInfo = Mirror::InfoForType<ComponentMesh>();
-						cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str());
-						SerializeObjectToJson(&mesh, componentTypeInfo, newJsonObjectArray);
-						AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
-					}
+					SerializeComponent(ComponentTransform)
+					SerializeComponent(ComponentMesh)
 				});
 
 			PrintRootObjectToFile(absoluteSceneJsonFilePath, jsonRootObject);
@@ -111,22 +104,23 @@ namespace QwerkE {
 					for (size_t i = 0; i < entitiesList.size(); i++)
 					{
 						entt::entity entityId = registry.create();
-						Entity entity(&scene, entityId);
+						Entity* entity = scene.CreateEntity();
 
 						std::vector<cJSON*> componentsList = GetAllItemsFromArray(entitiesList[i]->child->child);
 
 						for (size_t j = 0; j < componentsList.size(); j++)
 						{
 							// #TODO Look at using a macro for convenience
+							// #TODO Look at using component enum instead of strings
 							if (strcmp(componentsList.at(j)->string, "ComponentTransform") == 0)
 							{
-								ASSERT(entity.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
-								ComponentTransform& transform = entity.GetComponent<ComponentTransform>();
+								ASSERT(entity->HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
+								ComponentTransform& transform = entity->GetComponent<ComponentTransform>();
 								DeserializeJsonToObject(componentsList[j], Mirror::InfoForType<ComponentTransform>(), (void*)&transform);
 							}
 							if (strcmp(componentsList.at(j)->string, "ComponentMesh") == 0)
 							{
-								ComponentMesh& mesh = registry.emplace<ComponentMesh>(entityId);
+								ComponentMesh& mesh = entity->AddComponent<ComponentMesh>();
 								DeserializeJsonToObject(componentsList[j], Mirror::InfoForType<ComponentMesh>(), (void*)&mesh);
 								mesh.Create();
 								int bp = 0;

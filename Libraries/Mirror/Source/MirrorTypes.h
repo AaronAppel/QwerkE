@@ -16,7 +16,8 @@ enum class MirrorTypes
     EngineSettings,
     RendererSettings,
     UserSettings,
-    ProjectSettings,
+
+    Project,
 
     // Types
     vec2f,

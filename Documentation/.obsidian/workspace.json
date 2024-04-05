@@ -1,124 +1,35 @@
 {
   "main": {
-    "id": "38ecc9bd16875c34",
+    "id": "a0f06928577bbd31",
     "type": "split",
     "children": [
       {
-        "id": "3094265bc2923a24",
+        "id": "f7458b4633ed602b",
         "type": "tabs",
         "children": [
           {
-            "id": "7ee414b1d7073bb6",
+            "id": "c315115b897a8c1c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "cb2d1534db6fe407",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Editor Config Files.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c191bbf60e027577",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "cJSON.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ca9bc987671603b7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Lumix engine.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b4c21e590112354c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "bgfx Render tutorial.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c4aa2da5d1ae7922",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "entt Callbacks.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "cf0c8dd39da625b3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Oracle Cloud Perforce (Free).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "652fe073cda5cfee",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Development/TODO/bgfx Improvements.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 7
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "b60aa1b1092095aa",
+    "id": "c458447989b247ca",
     "type": "split",
     "children": [
       {
-        "id": "011961b88bbc11c7",
+        "id": "3cd74c9b80c509a4",
         "type": "tabs",
         "children": [
           {
-            "id": "55628a392364c2db",
+            "id": "a32eb8c2c73ea618",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -128,60 +39,12 @@
             }
           },
           {
-            "id": "1cd1ae727923bcd4",
-            "type": "leaf",
-            "state": {
-              "type": "bookmarks",
-              "state": {}
-            }
-          },
-          {
-            "id": "e17a9190ad6a97bb",
-            "type": "leaf",
-            "state": {
-              "type": "mk-path-view",
-              "state": {}
-            }
-          }
-        ]
-      }
-    ],
-    "direction": "horizontal",
-    "width": 374.5083198547363
-  },
-  "right": {
-    "id": "5c784de895a99dca",
-    "type": "split",
-    "children": [
-      {
-        "id": "46519dbc7b373804",
-        "type": "tabs",
-        "dimension": 74.55268389662028,
-        "children": [
-          {
-            "id": "7099b2a8eb1e34ad",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "Development/TODO/bgfx Improvements.md"
-              }
-            }
-          }
-        ]
-      },
-      {
-        "id": "d7c9b4b6c9222e72",
-        "type": "tabs",
-        "dimension": 25.44731610337972,
-        "children": [
-          {
-            "id": "6e6727655ad579b3",
+            "id": "a4c278ffba40c218",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "glm math",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -191,50 +54,78 @@
             }
           },
           {
-            "id": "0d536386095aef11",
+            "id": "b73e73a070455987",
             "type": "leaf",
             "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": false
-              }
-            }
-          },
-          {
-            "id": "dad04b4ed9f8f30a",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "Development/TODO/bgfx Improvements.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "edefc86514e78499",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "Development/TODO/bgfx Improvements.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": false
-              }
+              "type": "bookmarks",
+              "state": {}
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 240.5,
+    "width": 300
+  },
+  "right": {
+    "id": "9e1f1994bb2ad496",
+    "type": "split",
+    "children": [
+      {
+        "id": "2622a45cba504537",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "202f0b9b9e0e7a86",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "ca38aa2dc9874733",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "cc1bcbb8ccd88183",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "9af46507b738ec24",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
     "collapsed": true
   },
   "left-ribbon": {
@@ -242,59 +133,11 @@
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
-      "command-palette:Open command palette": false,
-      "workspaces:Manage workspace layouts": false
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
     }
   },
-  "active": "652fe073cda5cfee",
-  "lastOpenFiles": [
-    "Development/TODO/Learn OpenGL Animation.md",
-    "Development/TODO/bgfx Improvements.md",
-    "Game Ideas.md",
-    "Oracle Cloud Perforce (Free).md",
-    "README.md",
-    "bgfx Render tutorial.md",
-    "entt Callbacks.md",
-    "Lumix engine.md",
-    "cJSON.md",
-    "C2995 - Templating Error.md",
-    "ZZ Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
-    "Raknet Example.md",
-    "Open AL Example.md",
-    "Kohi Engine.md",
-    "GLFW Window Center Example.md",
-    "BGFX OpenGL Version.md",
-    "Z. Obsidian/Documentation Assets/DisableSpecificWarnings.png",
-    "GLM Basic Includes.md",
-    "C++17 Fix.md",
-    "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
-    "Editor Config Files.md",
-    "ZZ Shared Vault Files ❗/C++ Tests.md",
-    "ZZ Shared Vault Files ❗/Watched.md",
-    "Solution Configuration/C++ Project Setup.md",
-    "Solution Configuration/Projects.md",
-    "Solution Configuration/Visual Studio.md",
-    "Development/TODO/Refactor FileSystem.md",
-    "Development/TODO/String Library.md",
-    "ZZ Shared Vault Files ❗/Obsidian/DisableSpecificWarnings.png",
-    "QwerkE Structure Diagram.canvas",
-    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png",
-    "Development/Resolved",
-    "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideExternalDependenciesFolder.png",
-    "Development/Bug Tickets",
-    "Development/Feature Tickets",
-    "ZZ Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
-    "CPPList.h",
-    "Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png",
-    "Z. Obsidian/Documentation Assets/GameEngineBookEngineDiagram.png.crdownload",
-    "Z. Obsidian/Documentation Assets/HighTaleStudiosEngineDiagram.png.crdownload",
-    "Development/Features/Resource Management",
-    "Systems/Untitled",
-    "Systems/Window",
-    "Systems/Input",
-    "Z. Obsidian/Documentation Assets/SupressLinterWarnings.jpg",
-    "ZZ Shared Vault Files ❗/Obsidian/SetupFilesAndLinks.png",
-    "New Bitmap image.bmp",
-    "QwerkE Standards/Include Flow Diagram.canvas"
-  ]
+  "active": "c315115b897a8c1c",
+  "lastOpenFiles": []
 }

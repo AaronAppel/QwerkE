@@ -8,12 +8,13 @@
   "outgoing-link",
   "tag-pane",
   "page-preview",
+  "daily-notes",
+  "templates",
   "note-composer",
   "command-palette",
   "editor-status",
   "bookmarks",
   "outline",
   "word-count",
-  "workspaces",
   "file-recovery"
 ]

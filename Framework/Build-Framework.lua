@@ -6,8 +6,6 @@ project "Framework"
 	
 	defines
 	{
-		-- "AssetsDir=\"%{wks.location}/Editor/Assets/\"" ,
-		-- "NullAssetsDir=\"%{wks.location}/Editor/Assets/\"" ,
 		"WorkspaceRootDir=\"%{wks.location}/\"",
 	}
 

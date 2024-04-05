@@ -86,12 +86,12 @@ namespace QwerkE {
 
 		Path FileName(const char* filePath)
 		{
-			return Path().filename();
+			return Path(filePath).filename();
 		}
 
 		Path FileExtension(const char* filePath)
 		{
-			return Path().extension();
+			return Path(filePath).extension();
 		}
 
 		uPtr<char[]> UniqueFileName(const char* const filePath)

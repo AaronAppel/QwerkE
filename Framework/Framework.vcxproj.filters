@@ -77,6 +77,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Paths.cpp" />
+    <ClCompile Include="Source\QF_Projects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Source\QF_ComponentLight.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_Projects.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

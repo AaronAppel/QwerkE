@@ -3,6 +3,7 @@
 #include "QF_Events.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Projects.h"
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Settings.h"
@@ -19,8 +20,9 @@ namespace QwerkE {
 			Events::Initialize();
 
 			Settings::LoadEngineSettings("TODO");
-			Settings::LoadProjectSettings(Paths::Project("Project1.qproj"));
-			Settings::LoadUserSettings(Paths::Settings(null_preferences));
+			Settings::LoadUserSettings(null_preferences);
+
+			Projects::LoadProject("Project1.qproj");
 
 			const EngineSettings& engineSettings = Settings::GetEngineSettings();
 

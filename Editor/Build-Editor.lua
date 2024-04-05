@@ -9,10 +9,6 @@ project "Editor"
 	{
 		"QWERKE_VERSION=0.01",
 		"EngineName=\"QwerkE\"",
-		
-		-- Path strings
-		-- "AssetsDir=\"Assets/\"",
-		-- "NullAssetsDir=\"%{wks.location}/Editor/Assets/\"",
 		"WorkspaceRootDir=\"%{wks.location}/\"",
 		
 		-- Command line arguments
