@@ -11,6 +11,7 @@
 #endif
 
 #include "QF_Debug.h"
+#include "QF_EntityHandle.h"
 #include "QF_Log.h"
 #include "QF_Scene.h"
 
@@ -22,16 +23,16 @@ namespace QwerkE {
 	namespace Serialization {
 
 #define SerializeComponent(COMPONENT_TYPE) \
-		if (registry->has<COMPONENT_TYPE>(entity)) \
+		if (registry.has<COMPONENT_TYPE>(entity)) \
 		{ \
-			auto& component = registry->get<COMPONENT_TYPE>(entity); \
+			auto& component = registry.get<COMPONENT_TYPE>(entity); \
 			auto componentTypeInfo = Mirror::InfoForType<COMPONENT_TYPE>(); \
 			cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str()); \
 			SerializeObjectToJson(&component, componentTypeInfo, newJsonObjectArray); \
 			AddItemToArray(entityComponentsJsonArray, newJsonObjectArray); \
 		}
 
-		void SerializeScene(const Scene& scene, const char* const absoluteSceneJsonFilePath)
+		void SerializeScene(Scene& scene, const char* const absoluteSceneJsonFilePath)
 		{
 			if (!absoluteSceneJsonFilePath)
 			{
@@ -42,27 +43,16 @@ namespace QwerkE {
 			const Mirror::TypeInfo* sceneTypeInfo = Mirror::InfoForType<Scene>();
 
 			cJSON* jsonRootObject = cJSON_CreateObject();
-			cJSON* jsonRootArray = CreateArray(sceneTypeInfo->stringName.c_str());
-			AddItemToObject(jsonRootObject, jsonRootArray);
+			cJSON* sceneArray = CreateArray(sceneTypeInfo->stringName.c_str());
+			SerializeObjectToJson(&scene, sceneTypeInfo, sceneArray);
 
-			u8 registryOffset = 0; // #TODO Get offset reference instead
-			for (size_t i = 0; i < sceneTypeInfo->fields.size(); i++)
-			{
-				if (strcmp(sceneTypeInfo->fields[i].name.c_str(), "m_Registry") == 0)
-				{
-					registryOffset = sceneTypeInfo->fields[i].offset;
-					break;
-				}
-			}
 
-			entt::registry* registry = (entt::registry*)((char*)&scene + registryOffset);
 
-			std::vector<entt::entity> entitiesVec;
-
-			registry->each([&](entt::entity entity)
+			entt::registry& registry = scene.Registry();
+			registry.each([&](const entt::entity entity)
 				{
 					cJSON* entityJsonArray = CreateArray("Entity");
-					AddItemToArray(jsonRootArray, entityJsonArray);
+					AddItemToArray(sceneArray, entityJsonArray);
 
 					cJSON* entityComponentsJsonArray = CreateArray("Components");
 					AddItemToArray(entityJsonArray, entityComponentsJsonArray);
@@ -103,8 +93,7 @@ namespace QwerkE {
 
 					for (size_t i = 0; i < entitiesList.size(); i++)
 					{
-						entt::entity entityId = registry.create();
-						Entity* entity = scene.CreateEntity();
+						EntityHandle entity = scene.CreateEntity();
 
 						std::vector<cJSON*> componentsList = GetAllItemsFromArray(entitiesList[i]->child->child);
 
@@ -114,13 +103,13 @@ namespace QwerkE {
 							// #TODO Look at using component enum instead of strings
 							if (strcmp(componentsList.at(j)->string, "ComponentTransform") == 0)
 							{
-								ASSERT(entity->HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
-								ComponentTransform& transform = entity->GetComponent<ComponentTransform>();
+								ASSERT(entity.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
+								ComponentTransform& transform = entity.GetComponent<ComponentTransform>();
 								DeserializeJsonToObject(componentsList[j], Mirror::InfoForType<ComponentTransform>(), (void*)&transform);
 							}
 							if (strcmp(componentsList.at(j)->string, "ComponentMesh") == 0)
 							{
-								ComponentMesh& mesh = entity->AddComponent<ComponentMesh>();
+								ComponentMesh& mesh = entity.AddComponent<ComponentMesh>();
 								DeserializeJsonToObject(componentsList[j], Mirror::InfoForType<ComponentMesh>(), (void*)&mesh);
 								mesh.Create();
 								int bp = 0;

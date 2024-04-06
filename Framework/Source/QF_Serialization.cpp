@@ -16,7 +16,6 @@
 #endif
 
 #include "QF_eKeys.h"
-#include "QF_GameObject.h"
 #include "QF_Log.h"
 #include "QF_Settings.h"
 
@@ -241,10 +240,6 @@ namespace QwerkE {
 				//     }
 				// }
 				DeserializeVector<std::string>(jsonObj, obj);
-				break;
-
-			case MirrorTypes::m_vector_gameobjectPtr:
-				DeserializeVector<GameObject*>(jsonObj, obj);
 				break;
 
 			default:
@@ -480,10 +475,6 @@ namespace QwerkE {
 				}
 				break;
 
-				case MirrorTypes::m_vector_gameobjectPtr:
-					SerializeVector<GameObject*>((void*)((char*)obj + field.offset), arr);
-					break;
-
 				case MirrorTypes::m_string:
 				{
 					const std::string* fieldAddress = (const std::string*)((char*)obj + field.offset);
@@ -522,7 +513,6 @@ namespace QwerkE {
 				break;
 
 				case MirrorTypes::m_eSceneTypes:
-				case MirrorTypes::eGameObjectTags:
 				case MirrorTypes::m_uint8_t:
 				{
 					uint8_t* numberAddress = (uint8_t*)((char*)obj + field.offset);

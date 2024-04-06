@@ -1,6 +1,6 @@
 #pragma once
 
-// Int types
+// Primitive types
 #include <stdint.h>
 typedef int8_t s8;
 typedef int16_t s16;

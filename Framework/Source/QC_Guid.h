@@ -12,6 +12,9 @@ namespace QwerkE {
 		GUID(const GUID&) = default;
 
 		operator u64() const { return m_Guid; }
+
+		static const u64 Invalid = 0;
+
 	private:
 		u64 m_Guid;
 	};

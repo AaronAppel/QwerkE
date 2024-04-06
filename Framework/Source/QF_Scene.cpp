@@ -11,9 +11,8 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_ComponentCamera.h"
-#include "QF_Entity.h"
+#include "QF_EntityHandle.h"
 #include "QF_Files.h"
-#include "QF_GameObject.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
 #include "QF_Paths.h"
@@ -21,6 +20,7 @@
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
 
+#include "QF_ComponentInfo.h"
 #include "QF_ComponentMesh.h"
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
@@ -33,18 +33,14 @@ namespace QwerkE {
     Scene::Scene(const std::string& sceneFileName) :
         m_SceneFileName(sceneFileName)
     {
-        m_EntityCamera = m_Registry.create();
-        m_CameraEntity = new Entity(this, m_EntityCamera);
+        EntityHandle cameraEntity = EntityHandle(this);
+        ComponentInfo& info = cameraEntity.GetComponent<ComponentInfo>();
+        info.m_EditorDisplayName = "Camera 0";
+        m_GuidsToEntts[info.m_Guid] = cameraEntity.m_EnttId;
+        m_CameraEntityGuid = info.m_Guid;
 
-        const bool hasComponent = m_CameraEntity->HasComponent<ComponentCamera>();
-
-        m_Entities.insert(std::pair(m_EntityCamera, m_CameraEntity));
-
-        m_Registry.emplace<ComponentCamera>(m_EntityCamera, ComponentCamera());
-        const bool nowHasComponent = m_CameraEntity->HasComponent<ComponentCamera>();
-
-        m_CameraEntity->AddComponent<ComponentTransform>();
-        m_CameraEntity->AddComponent<ComponentScript>().Bind<ScriptableCamera>();
+        ComponentCamera& camera = cameraEntity.AddComponent<ComponentCamera>();
+        cameraEntity.AddComponent<ComponentScript>().Bind<ScriptableCamera>();
 
         return;
 
@@ -63,8 +59,6 @@ namespace QwerkE {
 
                 ComponentMesh& mesh = m_Registry.emplace<ComponentMesh>(entityId);
                 mesh.Create();
-
-                m_SelectedObject = entityId;
             }
         }
     }
@@ -73,6 +67,7 @@ namespace QwerkE {
     {
         UnloadScene();
 
+        // #TODO Should UnloadScene() also do the work below?
         auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto entity : viewMeshes)
         {
@@ -90,18 +85,6 @@ namespace QwerkE {
                 script.DeleteScript(&script); // #TODO Bug check self delete
             }
         }
-
-        for (auto& pair : m_Entities)
-        {
-            if (pair.second)
-            {
-                delete pair.second;
-                pair.second = nullptr;
-            }
-        }
-        m_Entities.clear();
-
-        // delete m_CameraEntity;
     }
 
     void Scene::Update(float deltaTime)
@@ -115,32 +98,20 @@ namespace QwerkE {
             auto& script = m_Registry.get<ComponentScript>(entity);
             if (!script.Instance)
             {
+                auto& info = m_Registry.get<ComponentInfo>(entity);
                 script.Instance = script.InstantiateScript();
-                script.Instance->SetEntity(m_Entities[entity]);
+                script.Instance->SetEntity(EntityHandle(this, m_GuidsToEntts[info.m_Guid]));
                 script.Instance->OnCreate();
             }
             script.Instance->OnUpdate(deltaTime);
-        }
-
-        if (false && Input::GetIsKeyDown(eKeys_W))
-        {
-            ComponentTransform& transform = m_Registry.get<ComponentTransform>(m_SelectedObject);
-            const float moveSpeed = 3.f;
-            vec3f tempTransform = transform.GetPosition();
-            tempTransform.x = tempTransform.x + (moveSpeed * deltaTime);
-            transform.SetPosition(tempTransform);
-        }
-
-        for (auto object : m_pGameObjects)
-        {
-            object.second->Update(deltaTime);
         }
     }
 
     void Scene::Draw()
     {
-        auto camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
-        camera.PreDrawSetup(2);
+        const u8 viewId = 2; // #TODO Fill viewId properly
+        auto& camera = m_Registry.get<ComponentCamera>(m_GuidsToEntts[m_CameraEntityGuid]);
+        camera.PreDrawSetup(viewId);
 
         auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto& entity : viewMeshes)
@@ -160,7 +131,8 @@ namespace QwerkE {
         {
             if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
             {
-                auto& camera = m_Registry.get<ComponentCamera>(m_EntityCamera);
+                auto& camera = m_Registry.get<ComponentCamera>(m_GuidsToEntts[m_CameraEntityGuid]);
+
                 auto atCopy = camera.m_At;
                 if (ImGui::DragFloat3("CameraAt", &atCopy.x, .1f))
                 {
@@ -201,89 +173,13 @@ namespace QwerkE {
         ImGui::End();
     }
 
-    bool Scene::ObjectWithNameExists(GameObject* object)
+    EntityHandle Scene::CreateEntity()
     {
-        if (!object)
-            return true;
-
-        return m_pGameObjects.find(object->GetName()) != m_pGameObjects.end();
-    }
-
-    bool Scene::AddObjectToScene(GameObject* object)
-    {
-        if (object)
-        {
-            if (ObjectWithNameExists(object))
-            {
-                LOG_WARN("{0} Object with name \"{1}\" already exists in scene{2}", __FUNCTION__, object->GetName().c_str(), this->GetSceneName().c_str());
-            }
-            else
-            {
-                m_pGameObjects[object->GetName()] = object;
-                AddObjectToSceneDrawList(object);
-                object->OnSceneLoaded(this);
-                SetDirty();
-                return true;
-            }
-        }
-        else
-        {
-            LOG_ERROR("{0} Object was null!", __FUNCTION__);
-        }
-        return false;
-    }
-
-    void Scene::RemoveObjectFromScene(GameObject* object)
-    {
-        if (m_pGameObjects.find(object->GetName().c_str()) != m_pGameObjects.end())
-        {
-            RemoveObjectFromSceneDrawList(object);
-            m_pGameObjects.erase(object->GetName());
-            delete object;
-        }
-    }
-
-    Entity* Scene::CreateEntity()
-    {
-        entt::entity enttEntity = m_Registry.create();
-        // #TODO Look at object tagging. Might need an enum that uses priority overriding, or a list/flags for tags. Tag flags sounds good
-        Entity* entity = new Entity(this, enttEntity);
-        entity->AddComponent<ComponentTransform>();
-        m_Entities.insert(std::pair(enttEntity, entity));
-        return m_Entities.find(enttEntity)->second;
-    }
-
-    GameObject* Scene::CreateNewObject()
-    {
-        GameObject* newObject = new GameObject(this);
-
-        return newObject;
-    }
-
-    GameObject* Scene::CreateNewObjectFromSchematic(const char* const schematicFileName)
-    {
-        GameObject* newGameObject = new GameObject(this);
-        Serialization::DeserializeObjectFromFile(Paths::Schematic(schematicFileName).c_str(), *newGameObject);
-
-        while (ObjectWithNameExists(newGameObject))
-        {
-            char* newName = NumberAppendOrIncrement(newGameObject->GetName().c_str());
-            if (newName)
-            {
-                newGameObject->SetName(newName); // #TODO Handle memory allocations
-                delete[] newName;
-            }
-            else
-            {
-                LOG_ERROR("{0} Unable to name new game object!", __FUNCTION__);
-                delete newGameObject;
-                return nullptr;
-            }
-        }
-
-        newGameObject->OnSceneLoaded(this);
-        AddObjectToScene(newGameObject);
-        return newGameObject;
+        EntityHandle entity = EntityHandle(this);
+        const GUID guid = entity.GetComponent<ComponentInfo>().m_Guid;
+        m_GuidsToEntts[guid] = entity.m_EnttId;
+        return entity;
+        // return m_GuidsToEntts.insert(entity->GetComponent<ComponentInfo>().m_Guid, entity).second;
     }
 
     void Scene::SaveScene()
@@ -380,18 +276,6 @@ namespace QwerkE {
             return;
         }
 
-        for (size_t i = 0; i < m_CameraList.size(); i++)
-        {
-            delete m_CameraList.at(i);
-        }
-        m_CameraList.clear();
-
-        for (auto object : m_pGameObjects)
-        {
-            delete object.second;
-        }
-        m_pGameObjects.clear();
-
         m_IsLoaded = false;
         m_IsDirty = false;
         LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_SceneFileName.c_str());
@@ -404,72 +288,26 @@ namespace QwerkE {
         LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
-    void Scene::OnLoaded() // #TODO Improve load logic. These callbacks are to resolve serialization effects
+    void Scene::OnLoaded()
     {
-        for (size_t i = 0; i < m_SceneDrawList.size(); i++)
-        {
-            m_SceneDrawList[i]->OnSceneLoaded(this);
-        }
-        for (size_t i = 0; i < m_CameraList.size(); i++)
-        {
-            m_CameraList[i]->OnSceneLoaded(this);
-        }
-        for (size_t i = 0; i < m_LightList.size(); i++)
-        {
-            m_LightList[i]->OnSceneLoaded(this);
-        }
+    }
 
-        for (size_t i = 0; i < m_SceneDrawList.size(); i++)
+    EntityHandle Scene::GetCurrentCameraEntity()
+    {
+        return EntityHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
+    }
+
+    void Scene::SetCurrentCameraEntity(EntityHandle newCameraEntity)
+    {
+        if (newCameraEntity.HasComponent<ComponentCamera>())
         {
-            if (m_pGameObjects.find(m_SceneDrawList[i]->GetName()) == m_pGameObjects.end())
+            const GUID newCameraGuid = newCameraEntity.GetComponent<ComponentInfo>().m_Guid;
+            if (m_GuidsToEntts.find(newCameraGuid) != m_GuidsToEntts.end())
             {
-                if (m_SceneDrawList[i]->GetTag() != eGameObjectTags::GO_Tag_Light)
-                {
-                    m_pGameObjects[m_SceneDrawList[i]->GetName()] = m_SceneDrawList[i];
-                }
+                m_GuidsToEntts[newCameraGuid] = newCameraEntity.m_EnttId;
             }
+            m_CameraEntityGuid = newCameraGuid;
         }
-
-        auto viewCameras = m_Registry.view<ComponentCamera>();
-        for (auto& entity : viewCameras)
-        {
-            // #TODO Setup cameras and references
-        }
-        m_EntityCamera = viewCameras[0];
-    }
-
-    const GameObject* Scene::GetGameObject(const char* name)
-    {
-        if (m_pGameObjects.find(name) != m_pGameObjects.end())
-            return m_pGameObjects[name];
-        return nullptr;
-    }
-
-    Entity* Scene::CreateEntityFromSchematic(const char* schematicFilePath)
-    {
-        GameObject obj;
-        Serialization::DeserializeObjectFromFile(schematicFilePath, obj);
-        return nullptr;
-    }
-
-    bool Scene::AddObjectToSceneDrawList(GameObject* object)
-    {
-        // #TODO Sort by draw order
-        m_SceneDrawList.push_back(object);
-        return true;
-    }
-
-    bool Scene::RemoveObjectFromSceneDrawList(const GameObject* object)
-    {
-        for (auto it = m_SceneDrawList.begin(); it != m_SceneDrawList.end(); it++)
-        {
-            if (*it == object)
-            {
-                m_SceneDrawList.erase(it);
-                return true;
-            }
-        }
-        return false;
     }
 
 }

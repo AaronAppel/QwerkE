@@ -3,6 +3,10 @@
 #include <map>
 #include <string>
 
+#ifdef _QENTT
+#include "Libraries/entt/entt.hpp"
+#endif
+
 #ifdef _QENUM
 #include "Libraries/Enum/QC_enum.h"
 #endif
@@ -13,7 +17,6 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_GameObject.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
@@ -79,11 +82,11 @@ namespace QwerkE {
 							break;
 
 						case eSceneGraphCreateTypes::Light:
-							currentScene->CreateEntity()->AddComponent<ComponentLight>();
+							currentScene->CreateEntity().AddComponent<ComponentLight>();
 							break;
 
 						case eSceneGraphCreateTypes::Camera:
-							currentScene->CreateEntity()->AddComponent<ComponentCamera>();
+							currentScene->CreateEntity().AddComponent<ComponentCamera>();
 							break;
 
 						case eSceneGraphCreateTypes::Script:
@@ -93,7 +96,7 @@ namespace QwerkE {
 							break;
 
 						case eSceneGraphCreateTypes::Mesh:
-							currentScene->CreateEntity()->AddComponent<ComponentMesh>();
+							currentScene->CreateEntity().AddComponent<ComponentMesh>();
 							break;
 
 						default:
@@ -119,16 +122,20 @@ namespace QwerkE {
 			{
 			case eSceneGraphFilter::Actors:
 				{
-					std::map<std::string, GameObject*> entities = currentScene->GetObjectList();
-					std::map<std::string, GameObject*>::iterator it;
-					for (it = entities.begin(); it != entities.end(); it++)
+					entt::registry& registry = currentScene->Registry();
+					auto viewTransforms = registry.view<ComponentTransform>();
+					for (auto entity : viewTransforms)
 					{
-						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-
-						if (ImGui::Button(it->second->GetName().c_str()))
-						{
-							m_EntityEditor->SetCurrentEntity(it->second);
+						if (registry.has<ComponentCamera>(entity) || registry.has<ComponentLight>(entity))
 							break;
+
+						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
+						ComponentTransform& transform = registry.get<ComponentTransform>(entity);
+						// #TODO Get name for camera
+						// if (ImGui::Button(transform[i]->GetName().c_str()))
+						{
+							// m_EntityEditor->SetCurrentEntity(entity);
+							// break;
 						}
 						sameLineCounter++;
 					}
@@ -136,16 +143,18 @@ namespace QwerkE {
 				break;
 
 			case eSceneGraphFilter::Cams:
-				{	// #TODO Move logic to a re-usable function as it's the same logic as for lights below, with different input
-					std::vector<GameObject*> cameras = currentScene->GetCameraList();
-					for (unsigned int i = 0; i < cameras.size(); i++)
+				{
+					entt::registry& registry = currentScene->Registry();
+					auto viewCameras = registry.view<ComponentCamera>();
+					for (auto entity : viewCameras)
 					{
 						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-
-						if (ImGui::Button(cameras[i]->GetName().c_str()))
+						ComponentCamera& camera = registry.get<ComponentCamera>(entity);
+						// #TODO Get name for camera
+						// if (ImGui::Button(cameras[i]->GetName().c_str()))
 						{
-							m_EntityEditor->SetCurrentEntity(cameras[i]);
-							break;
+							// m_EntityEditor->SetCurrentEntity(entity);
+							// break;
 						}
 						sameLineCounter++;
 					}
@@ -153,16 +162,17 @@ namespace QwerkE {
 				break;
 
 			case eSceneGraphFilter::Lights:
-				std::vector<GameObject*> lights = currentScene->GetLightList();
-				for (unsigned int i = 0; i < lights.size(); i++)
+				entt::registry& registry = currentScene->Registry();
+				auto viewLights = registry.view<ComponentLight>();
+				for (auto entity : viewLights)
 				{
-					if (sameLineCounter % itemsPerRow)
-						ImGui::SameLine();
-
-					if (ImGui::Button(lights[i]->GetName().c_str()))
+					if (sameLineCounter % itemsPerRow) ImGui::SameLine();
+					ComponentLight& light = registry.get<ComponentLight>(entity);
+					// #TODO Get name for light
+					// if (ImGui::Button(lights[i]->GetName().c_str()))
 					{
-						m_EntityEditor->SetCurrentEntity(lights[i]);
-						break;
+						// m_EntityEditor->SetCurrentEntity(entity);
+						// break;
 					}
 					sameLineCounter++;
 				}

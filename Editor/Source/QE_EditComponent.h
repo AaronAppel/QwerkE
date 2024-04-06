@@ -1,13 +1,13 @@
 #pragma once
 
-namespace QwerkE {
+#include "QF_EntityHandle.h"
 
-    class GameObject;
+namespace QwerkE {
 
     class EditComponent
     {
     public:
-        void Draw(GameObject* entity);
+        void Draw(const EntityHandle& entity);
 
     private:
         unsigned int m_SelectedRenderableIndex = 0;
@@ -16,7 +16,7 @@ namespace QwerkE {
         bool m_ShowMaterialList = true;
         bool m_ShowMeshList = true;
 
-        GameObject* m_LastEntity = nullptr;
+        EntityHandle m_LastEntity;
     };
 
 }

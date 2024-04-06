@@ -8,18 +8,16 @@
 
 #include "QC_StringHelpers.h"
 
+#include "QF_EntityHandle.h"
 #include "QF_Enums.h"
-#include "QF_GameObject.h"
 
 namespace QwerkE {
 
-    void EditComponent::Draw(GameObject* entity)
+    void EditComponent::Draw(const EntityHandle& entity)
     {
         if (m_LastEntity != entity)
         {
-            m_SelectedRenderableIndex = 0;
         }
-
         m_LastEntity = entity;
     }
 

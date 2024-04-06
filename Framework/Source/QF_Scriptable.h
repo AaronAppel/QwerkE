@@ -1,8 +1,8 @@
 #pragma once
 
-namespace QwerkE {
+#include "QF_EntityHandle.h"
 
-	class Entity;
+namespace QwerkE {
 
 	class Scriptable
 	{
@@ -22,12 +22,12 @@ namespace QwerkE {
 		// virtual void OnTriggerCollision() { }
 		// virtual void OnBodyCollision() { }
 
-		void SetEntity(Entity* newEntity) { m_Entity = newEntity; }
+		void SetEntity(EntityHandle newEntity) { m_Entity = newEntity; }
 
 	protected:
 		Scriptable() = default;
 
-		Entity* m_Entity = nullptr;
+		EntityHandle m_Entity;
 	};
 
 }

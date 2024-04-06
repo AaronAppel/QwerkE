@@ -24,7 +24,6 @@ enum class MirrorTypes
     vec3f,
 
     // Game
-    GameObject,
     FirstPersonCameraComponent,
     RenderComponent,
     FreeCameraComponent,
@@ -49,6 +48,9 @@ enum class MirrorTypes
     ComponentScript,
     ComponentTransform,
 
+    //
+    EntityHandle,
+
     // External libraries
     m_enTT_Entity,
     m_entt_registry,
@@ -63,7 +65,6 @@ enum class MirrorTypes
     m_vector_eComponentTags,
     m_vector_entt_entities,
     m_vector_string,
-    m_vector_gameobjectPtr,
     m_vector_routinePtr,
     m_vector_renderable,
     m_VECTORS_END,
@@ -72,7 +73,6 @@ enum class MirrorTypes
     m_MAPS_END,
 
     m_POINTERS_START, // #TODO Deprecate using std::is_pointer
-    m_gameObjectPtr,
     m_routinePtr,
     m_renderRoutinePtr,
     m_transformRoutinePtr,
@@ -85,7 +85,6 @@ enum class MirrorTypes
     eKeys,
     eSceneStates, // #TODO Review deprecating
     m_eSceneTypes,
-    eGameObjectTags,
     eComponentTags,
     m_ENUMS_END,
 

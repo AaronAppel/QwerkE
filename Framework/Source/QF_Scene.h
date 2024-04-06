@@ -12,13 +12,11 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #endif
 
-#include "QF_GameObject.h" // #TODO Remove for class GameObject; forward declaration instead
-
-#include "QF_Entity.h"
+#include "QC_Guid.h"
 
 namespace QwerkE {
 
-    class GameObject;
+    class EntityHandle;
 
     class Scene final
     {
@@ -26,20 +24,11 @@ namespace QwerkE {
         Scene(const std::string& sceneFileName);
         ~Scene();
 
-        void OnWindowResize(unsigned int width, unsigned int height);
-
         void Update(float deltatime);
         void Draw();
         void DrawImgui();
 
-        bool ObjectWithNameExists(GameObject* object);
-        bool AddObjectToScene(GameObject* object);
-        void RemoveObjectFromScene(GameObject* object);
-
-        Entity* CreateEntity();
-
-        GameObject* CreateNewObject();
-        GameObject* CreateNewObjectFromSchematic(const char* const schematicFileName);
+        EntityHandle CreateEntity();
 
         void SaveScene();
         void LoadSceneFromFilePath(const char* otherSceneFileName);
@@ -49,56 +38,36 @@ namespace QwerkE {
 
         void OnLoaded();
 
-        const GameObject* GetGameObject(const char* name);
-        bool GetIsPaused() { return m_IsPaused; };
-        std::vector<GameObject*> GetCameraList() { return m_CameraList; };
-        GameObject* GetCurrentCamera() { return m_CameraList[m_CurrentCameraIndex]; }
-        const std::map<std::string, GameObject*>& GetObjectList() { return m_pGameObjects; };
-        const std::vector<GameObject*>& GetLightList() const { return m_LightList; };
+        bool GetIsPaused() { return m_IsPaused; }
         const std::string& GetSceneName() const { return m_SceneFileName; }
 
-        void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; };
-        void SetCurrentCamera(int newCameraIndex) { m_CurrentCameraIndex = newCameraIndex; };
+        void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; }
         void SetName(std::string newName) { m_SceneFileName = newName; } // #TODO Scene file names should be reviewed
 
-        void ToggleIsPaused() { m_IsPaused = !m_IsPaused; };
+        void ToggleIsPaused() { m_IsPaused = !m_IsPaused; }
 
         void SetDirty() { m_IsDirty = true; }
         bool IsDirty() { return m_IsDirty; }
 
         // #TODO Hide registry
         entt::registry& Registry() { return m_Registry; }
-        Entity* GetCurrentCameraEntity() { return m_CameraEntity; }
-        Entity* CreateEntityFromSchematic(const char* schematicFilePath);
+        EntityHandle GetCurrentCameraEntity();
+        void SetCurrentCameraEntity(EntityHandle newCameraEntity);
 
     private:
-        bool AddObjectToSceneDrawList(GameObject* object);
-        bool RemoveObjectFromSceneDrawList(const GameObject* object);
+        MIRROR_PRIVATE_MEMBERS
+        friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
+
+        GUID m_CameraEntityGuid = GUID::Invalid;
 
         entt::registry m_Registry;
-        entt::entity m_EntityCamera = entt::null;
-        entt::entity m_SelectedObject = entt::null;
-        Entity* m_CameraEntity = nullptr;
-
-        entt::entity m_EntityScript = entt::null;
-        std::map<entt::entity, Entity*> m_Entities;
-
-        MIRROR_PRIVATE_MEMBERS
-
-        bool m_IsPaused = false;
+        std::unordered_map<GUID, entt::entity> m_GuidsToEntts;
 
         std::string m_SceneFileName = Constants::gc_DefaultStringValue;
 
-        std::map<std::string, GameObject*> m_pGameObjects; // #TODO Deprecate
-
-        int m_CurrentCameraIndex = 0;
-
-        std::vector<GameObject*> m_CameraList;
-        std::vector<GameObject*> m_LightList;
-        std::vector<GameObject*> m_SceneDrawList;
-
         bool m_IsLoaded = false;
-        bool m_IsDirty = false; // #TODO Editor only
+        bool m_IsDirty = false; // #TODO Editor only state. Move out of here
+        bool m_IsPaused = false; // #TODO Move state to editor as it's really for higher control (editor, or cutscene state, etc)
     };
 
 }

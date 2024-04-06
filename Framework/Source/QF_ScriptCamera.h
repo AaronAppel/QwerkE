@@ -14,26 +14,26 @@ namespace QwerkE {
 	public:
 		void OnCreate() override
 		{
-			if (!m_Entity->HasComponent<ComponentTransform>() ||
-				!m_Entity->HasComponent<ComponentCamera>())
+			if (!m_Entity.HasComponent<ComponentTransform>() ||
+				!m_Entity.HasComponent<ComponentCamera>())
 			{
 				LOG_ERROR("Entity ___ missing ScriptableCamera!");
-				m_Entity->RemoveComponent<ComponentScript>();
+				m_Entity.RemoveComponent<ComponentScript>();
 			}
 		}
 
 		void OnUpdate(float deltaTime) override
 		{
-			if (!m_Entity->HasComponent<ComponentTransform>() ||
-				!m_Entity->HasComponent<ComponentCamera>())
+			if (!m_Entity.HasComponent<ComponentTransform>() ||
+				!m_Entity.HasComponent<ComponentCamera>())
 			{
 				LOG_ERROR("Entity ___ missing ScriptableCamera!");
-				m_Entity->RemoveComponent<ComponentScript>();
+				m_Entity.RemoveComponent<ComponentScript>();
 			}
 
 			const QwerkE::UserSettings& userSettings = QwerkE::Settings::GetUserSettings();
 
-			ComponentCamera& camera = m_Entity->GetComponent<ComponentCamera>();
+			ComponentCamera& camera = m_Entity.GetComponent<ComponentCamera>();
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
 			{
 				camera.m_Eye.z = camera.m_Eye.z + (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());

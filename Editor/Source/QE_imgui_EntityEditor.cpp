@@ -8,7 +8,6 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #endif
 
-#include "QF_GameObject.h"
 #include "QF_Log.h"
 #include "QF_PathDefines.h"
 #include "QF_Scene.h"
@@ -23,6 +22,7 @@ namespace QwerkE {
 	EntityEditor::EntityEditor()
 	{
 #ifdef _QDEARIMGUI
+        m_CurrentEntity = EntityHandle::InvalidHandle();
         m_EditComponent = std::make_unique<EditComponent>();
 #endif
 	}
@@ -30,36 +30,15 @@ namespace QwerkE {
 	void EntityEditor::Draw()
 	{
 #ifdef _QDEARIMGUI
-        GameObject* currentEntity = nullptr;
-        if (m_CurrentEntity)
-        {
-            currentEntity = m_CurrentEntity;
-        }
-        else if (Scene* currentScene = Scenes::GetCurrentScene())
-        {
-            const std::map<std::string, GameObject*>& list = currentScene->GetObjectList();
-            auto begin = list.begin(); // #TODO Review logic
-            if (begin != list.end())
-            {
-                m_CurrentEntity = begin->second;
-            }
-        }
+        if (!m_CurrentEntity)
+            return;
 
-		if (currentEntity != nullptr)
+        DrawEntityEditor();
+
+        if (const bool entityChanged = Inspector::InspectObject(m_CurrentEntity, "Inspect Scene Object"))
         {
-            DrawEntityEditor();
-            if (m_CurrentEntity)
-            {
-                if (const bool entityChanged = Inspector::InspectObject(*m_CurrentEntity, "Inspect Scene Object"))
-                {
-                    Scenes::SetCurrentSceneDirty();
-                }
-            }
-            else
-            {
-                // #TODO Draw null error text
-            }
-		}
+            Scenes::SetCurrentSceneDirty();
+        }
 #endif
 	}
 
@@ -77,26 +56,18 @@ namespace QwerkE {
             //// Begin drawing entity data...
             // Draw generic GameObject data like transform and name
             // std::string name = m_CurrentEntity->GetName().c_str() + ' '; // extra space for editing
-            if (ImGui::InputText("Name: ", (char*)m_CurrentEntity->GetName().c_str(), m_CurrentEntity->GetName().size()))
+            char* entityName = (char*)m_CurrentEntity.EntityName();
+            if (ImGui::InputText("Name: ", entityName, strlen(entityName)))
             {
-
             }
-            // m_CurrentEntity->SetName(); // #TODO Scene map probably needs to handle name changes
 
             ImGui::Separator();
 
             static bool showComponentSelector = false;
-            const char* enabledState = m_CurrentEntity->Enabled() ? "Deactivate" : "Activate";
+            const char* enabledState = m_CurrentEntity.IsEnabled() ? "Deactivate" : "Activate";
             if (ImGui::Button(enabledState))
             {
-                if (m_CurrentEntity->Enabled())
-                {
-                    m_CurrentEntity->Deactivate();
-                }
-                else
-                {
-                    m_CurrentEntity->Activate();
-                }
+                m_CurrentEntity.SetIsEnabled(!m_CurrentEntity.IsEnabled());
             }
 
             m_EditComponent->Draw(m_CurrentEntity);

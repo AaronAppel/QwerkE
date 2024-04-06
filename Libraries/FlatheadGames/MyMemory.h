@@ -2,13 +2,6 @@
 #define __MyMemory_H__
 
 // Modified by Aaron Appel
-
-// TODO:: add creation and deletion amount tracking
-// simple num++ would work
-
-// #include "QF_Platform.h"
-// #include "QF_PathDefines.h"
-
 #if defined(_Q32Bit) && QWERKE_TRACKING_ALLOCATIONS
 
 void MyMemory_ValidateAllocations(bool AssertOnAnyAllocation);

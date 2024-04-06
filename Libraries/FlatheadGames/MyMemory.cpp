@@ -1,6 +1,8 @@
 #include "MyMemory.h"
 
 // Modified by Aaron Appel
+// #TODO Add total creation and total deletion count tracking
+// Simple num++ would work
 
 #if defined(_Q32Bit) && QWERKE_TRACKING_ALLOCATIONS
 #include <assert.h>

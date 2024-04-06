@@ -73,25 +73,4 @@ namespace QwerkE {
         LightType_NULL
     };
 
-    // TODO: Adding object tags ruins object saving and loading. Fix!
-    enum eGameObjectTags : u8
-    {
-        GO_Tag_Player = 0,
-        // Cameras
-        GO_Tag_Camera,
-        // Lights
-        GO_Tag_Light,
-        // Shapes
-        GO_Tag_Cube,
-        GO_Tag_Plane,
-        GO_Tag_Sphere,
-        // Scenery
-        GO_Tag_SkyBox,
-        // Test
-        GO_Tag_TestModel,
-
-        GO_Tag_Max,
-        GO_Tag_Null,
-    };
-
 }

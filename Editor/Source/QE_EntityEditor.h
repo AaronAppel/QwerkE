@@ -4,11 +4,11 @@
 #include <vector>
 
 #include "QE_EditComponent.h"
+#include "QF_EntityHandle.h"
 #include "QF_Enums.h"
 
 namespace QwerkE {
 
-    class GameObject;
     class EditComponent;
 
     class EntityEditor final
@@ -18,12 +18,12 @@ namespace QwerkE {
 
         virtual void Draw();
 
-        void SetCurrentEntity(GameObject* object) { m_CurrentEntity = object; };
+        void OnReset() { m_CurrentEntity.Invalidate(); }
 
     private:
         void DrawEntityEditor();
 
-        GameObject* m_CurrentEntity = nullptr;
+        EntityHandle m_CurrentEntity;;
         uPtr<EditComponent> m_EditComponent = nullptr;
 
         std::vector<const char*> m_ListboxItemStrings = { "Render" };

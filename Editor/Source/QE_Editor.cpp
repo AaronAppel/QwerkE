@@ -143,7 +143,7 @@ namespace QwerkE {
 
 		void OnReset()
 		{
-			s_EntityEditor->SetCurrentEntity(nullptr);
+			s_EntityEditor->OnReset();
 		}
 
 		void local_EditorInitialize()
@@ -362,7 +362,8 @@ namespace QwerkE {
 #endif
 
             s_SceneViewer->Draw();
-            s_SceneGraph->Draw();
+            s_SceneGraph->Draw(); // <-- Missing ImGui::End()
+            return;
             s_EntityEditor->Draw();
 		}
 

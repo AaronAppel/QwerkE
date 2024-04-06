@@ -72,7 +72,7 @@ namespace QwerkE {
         }
 
         void DeserializeScene(const char* const absoluteSceneJsonFilePath, Scene& scene);
-        void SerializeScene(const Scene& scene, const char* const absoluteSceneJsonFilePath);
+        void SerializeScene(Scene& scene, const char* const absoluteSceneJsonFilePath);
 
     }
 

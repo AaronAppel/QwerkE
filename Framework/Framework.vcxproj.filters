@@ -24,9 +24,6 @@
     <ClCompile Include="Source\QF_AssignWin32Keys.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QF_GameObject.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QC_MathFunctions.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -40,10 +37,10 @@
       <Filter>Root Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Scene.cpp">
-      <Filter>Scene</Filter>
+      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Scenes.cpp">
-      <Filter>Scene</Filter>
+      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_SceneSerialization.cpp">
       <Filter>Utils\FileIO\Serialization</Filter>
@@ -78,6 +75,7 @@
     </ClCompile>
     <ClCompile Include="Source\QF_Paths.cpp" />
     <ClCompile Include="Source\QF_Projects.cpp" />
+    <ClCompile Include="Source\QC_Guid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -110,9 +108,6 @@
     <ClInclude Include="Source\QF_Instrumentor.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_GameObject.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QC_MathFunctions.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -135,16 +130,13 @@
       <Filter>Root Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Scenes.h">
-      <Filter>Scene</Filter>
+      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Scene.h">
-      <Filter>Scene</Filter>
+      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Serialization.h">
       <Filter>Utils\FileIO\Serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QF_Entity.h">
-      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Renderer.h">
       <Filter>Renderer</Filter>
@@ -198,6 +190,11 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Projects.h" />
+    <ClInclude Include="Source\QC_Guid.h" />
+    <ClInclude Include="Source\QF_ComponentInfo.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_EntityHandle.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -212,17 +209,11 @@
     <Filter Include="Events">
       <UniqueIdentifier>{80743b01-b609-4acc-a99d-5043ababe16e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity">
-      <UniqueIdentifier>{c4c4ea73-1a65-4be5-bb5a-56051d7d0648}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{a27c432a-4262-4ec4-bc28-97332a9d5293}</UniqueIdentifier>
     </Filter>
     <Filter Include="Root Files">
       <UniqueIdentifier>{d5b62bcb-1d02-446e-aaa5-d6a2b23f741b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{7599a1b0-c2ae-44ff-a81b-1ed7fdb6316a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{e053b3d5-3dc4-4af2-9b68-6ad556038b53}</UniqueIdentifier>
@@ -250,6 +241,9 @@
     </Filter>
     <Filter Include="Utils\FileIO\Serialization">
       <UniqueIdentifier>{f032c393-d9d5-474c-b819-bbf4e3be9bd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{7599a1b0-c2ae-44ff-a81b-1ed7fdb6316a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

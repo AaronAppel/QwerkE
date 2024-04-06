@@ -16,8 +16,8 @@
 #endif
 
 #include "QF_eKeys.h"
+#include "QF_EntityHandle.h"
 #include "QF_Enums.h"
-#include "QF_GameObject.h"
 #include "QF_Projects.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
@@ -97,12 +97,11 @@ namespace QwerkE {
 #endif
 
 #ifdef _QENTT
-	typedef entt::entity m_enTT_Entity;
+	typedef entt::entity m_enTT_Entity; // #TODO Review if still needed or should be serialized
 	MIRROR_TYPE(m_enTT_Entity)
 #endif
 
 	// Enums
-	MIRROR_TYPE(eGameObjectTags)
 	MIRROR_TYPE(eComponentTags)
 
 	typedef QwerkE::eKeys eKeys; // #TODO Review typedef
@@ -117,9 +116,6 @@ namespace QwerkE {
 
 	typedef std::vector<std::string> m_vector_string;
 	MIRROR_TYPE(m_vector_string)
-
-	typedef std::vector<GameObject*> m_vector_gameobjectPtr;
-	MIRROR_TYPE(m_vector_gameobjectPtr)
 
 	// Arrays
 	using m_floatArray16 = float[16]; // #TODO Try
@@ -177,14 +173,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_END(Scene)
 
-	MIRROR_CLASS_START(GameObject)
-	// m_pScene not serializable
-	MIRROR_CLASS_MEMBER(m_Enabled)
-	MIRROR_CLASS_MEMBER(m_Name)
-	MIRROR_CLASS_MEMBER(m_Tag)
-	// MIRROR_CLASS_MEMBER(m_EntityComponents)
-	MIRROR_CLASS_END(GameObject)
-
 	// Components
 	MIRROR_CLASS_START(ComponentCamera)
 	MIRROR_CLASS_END(ComponentCamera)
@@ -192,11 +180,11 @@ namespace QwerkE {
 	MIRROR_CLASS_START(ComponentMesh)
 	MIRROR_CLASS_END(ComponentMesh)
 
-	MIRROR_CLASS_START(ComponentScript)
-	MIRROR_CLASS_END(ComponentScript)
-
 	MIRROR_CLASS_START(ComponentTransform)
 	MIRROR_CLASS_MEMBER(m_Matrix)
 	MIRROR_CLASS_END(ComponentTransform)
 
+	// Misc
+	MIRROR_CLASS_START(EntityHandle)
+	MIRROR_CLASS_END(EntityHandle)
 }

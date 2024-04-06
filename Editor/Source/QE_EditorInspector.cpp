@@ -150,7 +150,6 @@ namespace QwerkE {
 
 
                 case MirrorTypes::m_eSceneTypes:
-                case MirrorTypes::eGameObjectTags:
                 case MirrorTypes::m_uint8_t:
                     {
                         u8* numberAddress = (u8*)fieldAddress;
