@@ -46,20 +46,34 @@ namespace QwerkE {
 			cJSON* sceneArray = CreateArray(sceneTypeInfo->stringName.c_str());
 			SerializeObjectToJson(&scene, sceneTypeInfo, sceneArray);
 
+			// #TODO Implement map
+			// const auto& entities = scene.EntitiesMap();
+			// for (auto& entityPair : entities)
+			// {
+			// 	const entity = entityPair.second;
+			//
+			// 	cJSON* entityJsonArray = CreateArray("Entity");
+			// 	AddItemToArray(sceneArray, entityJsonArray);
+			//
+			// 	cJSON* entityComponentsJsonArray = CreateArray("Components");
+			// 	AddItemToArray(entityJsonArray, entityComponentsJsonArray);
+			//
+			// 	SerializeComponent(ComponentTransform)
+			// 	SerializeComponent(ComponentMesh)
+			// }
 
-
-			entt::registry& registry = scene.Registry();
-			registry.each([&](const entt::entity entity)
-				{
-					cJSON* entityJsonArray = CreateArray("Entity");
-					AddItemToArray(sceneArray, entityJsonArray);
-
-					cJSON* entityComponentsJsonArray = CreateArray("Components");
-					AddItemToArray(entityJsonArray, entityComponentsJsonArray);
-
-					SerializeComponent(ComponentTransform)
-					SerializeComponent(ComponentMesh)
-				});
+			// entt::registry& registry = scene.Registry();
+			// registry.each([&](const entt::entity entity)
+			// 	{
+			// 		cJSON* entityJsonArray = CreateArray("Entity");
+			// 		AddItemToArray(sceneArray, entityJsonArray);
+			//
+			// 		cJSON* entityComponentsJsonArray = CreateArray("Components");
+			// 		AddItemToArray(entityJsonArray, entityComponentsJsonArray);
+			//
+			// 		SerializeComponent(ComponentTransform)
+			// 		SerializeComponent(ComponentMesh)
+			// 	});
 
 			PrintRootObjectToFile(absoluteSceneJsonFilePath, jsonRootObject);
 			cJSON_Delete(jsonRootObject);
@@ -74,7 +88,7 @@ namespace QwerkE {
 			}
 
 			// #TODO Access registry as friend class or some better way than a public getter
-			entt::registry& registry = scene.Registry();
+			// entt::registry& registry = scene.Registry();
 
 			const Mirror::TypeInfo* sceneTypeInfo = Mirror::InfoForType<Scene>();
 			if (cJSON* rootJsonObject = OpencJSONStream(absoluteSceneJsonFilePath))

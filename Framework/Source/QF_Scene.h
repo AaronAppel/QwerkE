@@ -49,8 +49,14 @@ namespace QwerkE {
         void SetDirty() { m_IsDirty = true; }
         bool IsDirty() { return m_IsDirty; }
 
-        // #TODO Hide registry
-        entt::registry& Registry() { return m_Registry; }
+        template<typename... Components>
+        auto ViewComponents()
+        {
+            return m_Registry.view<Components...>();
+        }
+
+        const std::unordered_map<GUID, entt::entity>& EntitiesMap() { return m_GuidsToEntts; }
+
         EntityHandle GetCurrentCameraEntity();
         void SetCurrentCameraEntity(EntityHandle newCameraEntity);
 

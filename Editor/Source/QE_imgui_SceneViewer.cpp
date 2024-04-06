@@ -99,11 +99,11 @@ namespace QwerkE {
                 static bool isOpen = false;
                 ImGui::Begin("MeshPositionWindow", &isOpen);
 
-                auto viewTransforms = currentScene->Registry().view<ComponentTransform>();
+                auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
                 int i = 0;
                 for (auto entity : viewTransforms)
                 {
-                    ComponentTransform& transform = currentScene->Registry().get<ComponentTransform>(entity);
+                    ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
 
                     vec3f meshPosition = transform.GetPosition();
 

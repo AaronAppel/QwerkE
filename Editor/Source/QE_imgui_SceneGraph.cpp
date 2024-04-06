@@ -122,15 +122,15 @@ namespace QwerkE {
 			{
 			case eSceneGraphFilter::Actors:
 				{
-					entt::registry& registry = currentScene->Registry();
-					auto viewTransforms = registry.view<ComponentTransform>();
+					auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
 					for (auto entity : viewTransforms)
 					{
-						if (registry.has<ComponentCamera>(entity) || registry.has<ComponentLight>(entity))
+						EntityHandle handle(currentScene, entity);
+						if (handle.HasComponent<ComponentCamera>() || handle.HasComponent<ComponentLight>())
 							break;
 
 						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-						ComponentTransform& transform = registry.get<ComponentTransform>(entity);
+						ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
 						// #TODO Get name for camera
 						// if (ImGui::Button(transform[i]->GetName().c_str()))
 						{
@@ -142,19 +142,19 @@ namespace QwerkE {
 				}
 				break;
 
-			case eSceneGraphFilter::Cams:
+			case eSceneGraphFilter::Cams: // #TODO Duplicated logic with lights. Could be templated or macro'd
 				{
-					entt::registry& registry = currentScene->Registry();
-					auto viewCameras = registry.view<ComponentCamera>();
+					auto viewCameras = currentScene->ViewComponents<ComponentCamera>();
 					for (auto entity : viewCameras)
 					{
 						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-						ComponentCamera& camera = registry.get<ComponentCamera>(entity);
-						// #TODO Get name for camera
-						// if (ImGui::Button(cameras[i]->GetName().c_str()))
+
+						EntityHandle handle(currentScene, entity);
+						ComponentInfo& info = handle.GetComponent<ComponentInfo>();
+						if (ImGui::Button(info.m_EditorDisplayName))
 						{
-							// m_EntityEditor->SetCurrentEntity(entity);
-							// break;
+							m_EntityEditor->SetCurrentEntity(handle);
+							break;
 						}
 						sameLineCounter++;
 					}
@@ -162,17 +162,17 @@ namespace QwerkE {
 				break;
 
 			case eSceneGraphFilter::Lights:
-				entt::registry& registry = currentScene->Registry();
-				auto viewLights = registry.view<ComponentLight>();
+				auto viewLights = currentScene->ViewComponents<ComponentLight>();
 				for (auto entity : viewLights)
 				{
 					if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-					ComponentLight& light = registry.get<ComponentLight>(entity);
-					// #TODO Get name for light
-					// if (ImGui::Button(lights[i]->GetName().c_str()))
+
+					EntityHandle handle(currentScene, entity);
+					const ComponentInfo& info = handle.GetComponent<ComponentInfo>();
+					if (ImGui::Button(info.m_EditorDisplayName))
 					{
-						// m_EntityEditor->SetCurrentEntity(entity);
-						// break;
+						m_EntityEditor->SetCurrentEntity(handle);
+						break;
 					}
 					sameLineCounter++;
 				}
