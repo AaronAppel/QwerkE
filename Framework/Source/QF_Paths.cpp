@@ -24,9 +24,14 @@ namespace QwerkE {
 			return AssetsDir() + "Projects/" + projectFileName;
 		}
 
+		std::string ScenesDir()
+		{
+			return AssetsDir() + "Scenes/";
+		}
+
 		std::string Scene(const char* sceneFileName)
 		{
-			return AssetsDir() + "Scenes/" + sceneFileName;
+			return ScenesDir() + sceneFileName;
 		}
 
 		std::string Schematic(const char* schematicFileName)

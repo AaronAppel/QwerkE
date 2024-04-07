@@ -192,10 +192,7 @@ namespace QwerkE {
 
         std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
         Serialization::SerializeScene(*this, sceneFilePath.c_str());
-        // Serialization::SerializeScene(*this, StringAppend(ScenesFolderPath(m_SceneFileName.c_str()), ".", scene_ext));
-
-        Serialization::SerializeObjectToFile(*this, Paths::Schematic(m_SceneFileName.c_str()).c_str());
-        LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, Paths::Scene(m_SceneFileName.c_str()));
+        LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, sceneFilePath.c_str());
         m_IsDirty = false;
     }
 
@@ -217,9 +214,7 @@ namespace QwerkE {
         if (Files::Exists(otherSceneFilePath))
         {
             // Serialization::DeserializeJsonFromFile(otherSceneFilePath, *this);
-
-            std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
-            Serialization::DeserializeScene(sceneFilePath.c_str(), *this);
+            Serialization::DeserializeScene(otherSceneFilePath, *this);
         }
         else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {

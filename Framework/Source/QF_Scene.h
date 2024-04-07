@@ -42,7 +42,6 @@ namespace QwerkE {
         const std::string& GetSceneName() const { return m_SceneFileName; }
 
         void SetIsPaused(bool isPaused) { m_IsPaused = isPaused; }
-        void SetName(std::string newName) { m_SceneFileName = newName; } // #TODO Scene file names should be reviewed
 
         void ToggleIsPaused() { m_IsPaused = !m_IsPaused; }
 

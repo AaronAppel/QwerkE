@@ -15,13 +15,19 @@ namespace QwerkE {
         void Shutdown();
 
         void ActivateScene(std::string sceneName);
+
         void SetCurrentScene(std::string sceneName);
         void SetCurrentScene(int index);
+        void SetCurrentScene(Scene* scene);
+
         void PauseScene(std::string sceneName);
-        void UnpauseScene(std::string sceneName);
+        void UnpauseScene(std::string sceneName); // #TODO Could probably use a SetScenePaused(bool isPaused) method
 
         Scene* CreateSceneFromFile(const std::string& sceneName, bool addToProjectsSceneFiles = true);
         Scene* CreateEmptyScene();
+        Scene* CreateScene(const std::string& sceneName, bool addToProjectsSceneFiles);
+
+        Scene* MainCreateScene(const char* const sceneFileNamePrefix, bool addToProjectsSceneFiles = true);
 
         Scene* RemoveScene(Scene* scene);
 

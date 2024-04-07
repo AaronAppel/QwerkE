@@ -73,18 +73,15 @@ namespace QwerkE {
             ImGui::SameLine();
             if (ImGui::Button("+"))
             {
-                // #TODO Ask Scenes:: for a new scene and remove ability to
-                // create Scene objects externally.
-                constexpr const char* newFileDefaultName = "NewScene";
+                const char* const newFileDefaultName = StringAppend("NewScene", ".", scene_ext); // #TODO constexpr
                 constexpr const char* emptyScenePrefabFileName = "Empty.qscene";
 
-                // #NOTE Previous function UniqueFileNameNumberAppend(ScenesFolderPath(""), newFileDefaultName, scene_ext);
-                uPtr<char[]> newFilePath = Files::UniqueFileName(Paths::Scene(StringAppend(newFileDefaultName, ".", scene_ext)).c_str());
-
-                Scene* newScene = Scenes::CreateSceneFromFile(newFilePath.get());
-                newScene->LoadSceneFromFilePath(emptyScenePrefabFileName);
-                newScene->OnLoaded();
-                Scenes::SetCurrentScene(newFilePath.get());
+                if (Scene* newScene = Scenes::MainCreateScene(newFileDefaultName, true))
+                {
+                    newScene->LoadSceneFromFilePath(Paths::Scene(emptyScenePrefabFileName).c_str());
+                    newScene->OnLoaded();
+                    Scenes::SetCurrentScene(newScene);
+                }
             }
 
             ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f - 20.f);

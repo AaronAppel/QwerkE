@@ -15,6 +15,7 @@
 #include "QF_Log.h"
 #include "QF_Scene.h"
 
+#include "QF_ComponentCamera.h"
 #include "QF_ComponentMesh.h"
 #include "QF_ComponentTransform.h"
 
@@ -23,9 +24,9 @@ namespace QwerkE {
 	namespace Serialization {
 
 #define SerializeComponent(COMPONENT_TYPE) \
-		if (registry.has<COMPONENT_TYPE>(entity)) \
+		if (handle.HasComponent<COMPONENT_TYPE>()) \
 		{ \
-			auto& component = registry.get<COMPONENT_TYPE>(entity); \
+			auto& component = handle.GetComponent<COMPONENT_TYPE>(); \
 			auto componentTypeInfo = Mirror::InfoForType<COMPONENT_TYPE>(); \
 			cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str()); \
 			SerializeObjectToJson(&component, componentTypeInfo, newJsonObjectArray); \
@@ -44,36 +45,28 @@ namespace QwerkE {
 
 			cJSON* jsonRootObject = cJSON_CreateObject();
 			cJSON* sceneArray = CreateArray(sceneTypeInfo->stringName.c_str());
+			AddItemToArray(jsonRootObject, sceneArray);
+
 			SerializeObjectToJson(&scene, sceneTypeInfo, sceneArray);
 
-			// #TODO Implement map
-			// const auto& entities = scene.EntitiesMap();
-			// for (auto& entityPair : entities)
-			// {
-			// 	const entity = entityPair.second;
-			//
-			// 	cJSON* entityJsonArray = CreateArray("Entity");
-			// 	AddItemToArray(sceneArray, entityJsonArray);
-			//
-			// 	cJSON* entityComponentsJsonArray = CreateArray("Components");
-			// 	AddItemToArray(entityJsonArray, entityComponentsJsonArray);
-			//
-			// 	SerializeComponent(ComponentTransform)
-			// 	SerializeComponent(ComponentMesh)
-			// }
+			cJSON* entitiesJsonArray = CreateArray("Entities");
+			AddItemToArray(sceneArray, entitiesJsonArray);
 
-			// entt::registry& registry = scene.Registry();
-			// registry.each([&](const entt::entity entity)
-			// 	{
-			// 		cJSON* entityJsonArray = CreateArray("Entity");
-			// 		AddItemToArray(sceneArray, entityJsonArray);
-			//
-			// 		cJSON* entityComponentsJsonArray = CreateArray("Components");
-			// 		AddItemToArray(entityJsonArray, entityComponentsJsonArray);
-			//
-			// 		SerializeComponent(ComponentTransform)
-			// 		SerializeComponent(ComponentMesh)
-			// 	});
+			const auto& entities = scene.EntitiesMap();
+			for (auto& entityPair : entities)
+			{
+				EntityHandle handle(&scene, entityPair.second);
+
+				cJSON* entityJsonArray = CreateArray("Entity");
+				AddItemToArray(entitiesJsonArray, entityJsonArray);
+
+				cJSON* entityComponentsJsonArray = CreateArray("Components");
+				AddItemToArray(entityJsonArray, entityComponentsJsonArray);
+
+				SerializeComponent(ComponentTransform)
+				SerializeComponent(ComponentMesh)
+				SerializeComponent(ComponentCamera)
+			}
 
 			PrintRootObjectToFile(absoluteSceneJsonFilePath, jsonRootObject);
 			cJSON_Delete(jsonRootObject);

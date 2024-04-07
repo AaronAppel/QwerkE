@@ -55,6 +55,8 @@ namespace QwerkE {
 #define LOG_ERROR(...)      QwerkE::Log::Logger::s_Logger->error(__VA_ARGS__);
 #define LOG_CRITICAL(...)   QwerkE::Log::Logger::s_Logger->critical(__VA_ARGS__);
 
+// Variadic argument passing : https://thispointer.com/c11-variadic-template-function-tutorial-examples/
+
 #define LOG_INFO_ONCE(...) { static bool s_logged = false; if (!s_logged) { s_logged = true; QwerkE::Log::s_Logger->info(__VA_ARGS__); } }
 
 // #TODO Back trace message : https://github.com/gabime/spdlog?tab=readme-ov-file#backtrace-support

@@ -22,7 +22,8 @@ namespace QwerkE {
         // std::string ExplorerOpen();
         // std::string ExplorerSave();
 
-        uPtr<char[]> UniqueFileName(const char* const filePath);
+        Path UniqueFilePath(const char* const filePath);
+        Path UniqueFilePath(const char* const dirPath, const char* const fileName);
 
     }
 

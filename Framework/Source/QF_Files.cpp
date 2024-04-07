@@ -84,7 +84,7 @@ namespace QwerkE {
 			return buffer;
 		}
 
-		Path FileName(const char* filePath)
+		Path FileName(const char* const filePath)
 		{
 			return Path(filePath).filename();
 		}
@@ -94,26 +94,33 @@ namespace QwerkE {
 			return Path(filePath).extension();
 		}
 
-		uPtr<char[]> UniqueFileName(const char* const filePath)
+		Path UniqueFilePath(const char* const filePath)
 		{
-			const char* periodChar = strrchr(filePath, '.');
-			if (!periodChar)
+			const char* fullFileExtension = strrchr(filePath, '.');
+			if (!fullFileExtension)
 			{
-				uPtr<char[]> ptr = Helpers::NumberAppendOrIncrement(filePath);
-				return ptr;
+				return Helpers::NumberAppendOrIncrement(filePath).get();
 			}
 
 			std::string fileNameNoExt = filePath;
-			const u64 size = periodChar - filePath;
+			const u64 size = fullFileExtension - filePath; // Subtract pointer addresses
+			const u8 extensionWithPeriodLength = strlen(filePath) - size;
 			fileNameNoExt.resize(size);
 
-			fileNameNoExt = NumberAppendOrIncrement(fileNameNoExt.c_str());
-			const u8 stringSize = strlen(fileNameNoExt.c_str()) + 1;
-			uPtr<char[]> ptr = std::make_unique<char[]>(stringSize);
-			LOG_WARN("Test {0} for errors. Maybe add a test case", __FUNCTION__);
-			// ptr.get() = _strdup(fileNameNoExt.c_str()); // #TODO Write into buffer instead of creating a new one, so string copy
-			strcpy_s(ptr.get(), stringSize, fileNameNoExt.c_str());
-			return ptr;
+			// #TODO Loop until confirmed unique
+			while (Files::Exists((fileNameNoExt + fullFileExtension).c_str()))
+			{
+				fileNameNoExt = NumberAppendOrIncrement(fileNameNoExt.c_str());
+			}
+			fileNameNoExt += fullFileExtension;
+			return fileNameNoExt.c_str();
+		}
+
+		Path UniqueFilePath(const char* const dirPath, const char* const fileName)
+		{
+			std::string filePath = dirPath;
+			filePath += fileName;
+			return UniqueFilePath(filePath.c_str());
 		}
 
     }

@@ -111,6 +111,18 @@ namespace QwerkE {
 			}
 		}
 
+		void SetCurrentScene(Scene* scene)
+		{
+			for (size_t i = 0; i < s_Scenes.size(); i++)
+			{
+				if (s_Scenes[i] == scene)
+				{
+					s_CurrentScene = s_Scenes[i];
+					return;
+				}
+			}
+		}
+
 		Scene* CreateSceneFromFile(const std::string& sceneFilePath, bool addToProjectsSceneFiles)
 		{
 			Path sceneFileName = Files::FileName(sceneFilePath.c_str());
@@ -141,20 +153,21 @@ namespace QwerkE {
 
 		Scene* CreateEmptyScene()
 		{
-			Scene* newScene = new Scene("NewScene");
+			Scene* newScene = nullptr;
+			std::string newSceneName = "NewScene";
 
-			while (const Scene* existingScene = GetScene(newScene->GetSceneName()))
+			while (const Scene* existingScene = GetScene(newSceneName.c_str()))
 			{
-				char* newName = NumberAppendOrIncrement(newScene->GetSceneName().c_str());
+				char* newName = NumberAppendOrIncrement(newSceneName.c_str()); // #TODO Handle memory allocations
 				if (newName)
 				{
-					newScene->SetName(newName); // #TODO Handle memory allocations
+					newSceneName = newName;
+					newScene = new Scene(newSceneName);
 					delete[] newName;
 				}
 				else
 				{
 					LOG_ERROR("{0} Unable to name new game object!", __FUNCTION__);
-					delete newScene;
 					return nullptr;
 				}
 			}
@@ -169,6 +182,59 @@ namespace QwerkE {
 			}
 
 			Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
+
+			return newScene;
+		}
+
+		Scene* CreateScene(const std::string& sceneName, bool addToProjectsSceneFiles)
+		{
+			if (const Scene* existingScene = GetScene(sceneName.c_str()))
+			{
+				LOG_ERROR("{0} Scene with file name \"{1}\" already exists!", __FUNCTION__, sceneName.c_str());
+				return nullptr;
+			}
+
+			Scene* newScene = new Scene(sceneName);
+			newScene->LoadSceneFromFilePath(Paths::NullAsset(null_scene).c_str());
+			s_Scenes.push_back(newScene);
+
+			s_CurrentScene = newScene;
+			priv_UpdateCurrentSceneIndex();
+
+
+			if (addToProjectsSceneFiles)
+			{
+				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
+			}
+
+			return newScene;
+		}
+
+		Scene* MainCreateScene(const char* const sceneFileName, bool addToProjectsSceneFiles)
+		{
+			ASSERT(sceneFileName, "Null argument passed!");
+
+			Path uniqueSceneFilePath = Files::UniqueFilePath(Paths::ScenesDir().c_str(), sceneFileName);
+			Path uniqueFileNamePath = Files::FileName(uniqueSceneFilePath.string().c_str());
+			std::string uniqueFileName = uniqueFileNamePath.string();
+
+			if (const Scene* existingScene = GetScene(uniqueFileName.c_str()))
+			{
+				LOG_ERROR("{0} Scene exists with same name {1}", __FUNCTION__, uniqueFileName.c_str());
+				// #TODO Decide how to handle case where file was deleted, but scene with same name is still loaded.
+				// Can find a new and more valid scene name, guaranteeing a valid scene is created and a pointer returned.
+				// while(GetScene(uniqueFileName.c_str()) uniqueFileName = NumberAppendOrIncrement(uniqueFileName.c_str());
+				return nullptr;
+			}
+
+			Scene* newScene = new Scene(uniqueFileName.c_str());
+			s_Scenes.push_back(newScene);
+
+			if (addToProjectsSceneFiles)
+			{
+				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
+				newScene->SetDirty();
+			}
 
 			return newScene;
 		}
