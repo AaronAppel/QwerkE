@@ -6,6 +6,20 @@
 #include "Libraries/imgui/QC_imgui.h"
 #endif
 
+#ifdef _QBGFX
+#include <bgfx/bgfx.h>
+#include <bx/bx.h>
+#include <bx/math.h>
+#include <bx/timer.h>
+#ifdef _QBGFXFRAMEWORK
+#include <bgfxFramework/SampleRenderData.h>
+#include <bgfxFramework/LoadShader.h>
+#ifdef _QDEBUG
+#include <bgfxFramework/debugDraw/debugdraw.h>
+#endif // _QDEBUG
+#endif // _QBGFXFRAMEWORK
+#endif // _QBGFX
+
 #include "QC_Time.h"
 
 #include "QF_Directory.h"
@@ -14,6 +28,7 @@
 #include "QF_Input.h"
 #include "QF_Log.h"
 #include "QF_Projects.h"
+#include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
@@ -52,8 +67,9 @@ namespace QwerkE {
 
         void local_EditorInitialize();
         void local_Shutdown();
-        void local_EditorDraw();
         void local_EditorDrawImGui(bool showEditorUI);
+        void local_EditorDraw();
+        void local_DrawEndFrame();
         void local_DrawMainMenuBar();
         void local_DrawDockingContext();
 
@@ -117,7 +133,7 @@ namespace QwerkE {
 
                     local_EditorDrawImGui(showEditorUI);
 
-                    Framework::DrawFrameEnd();
+                    local_DrawEndFrame();
 				}
 				else
 				{
@@ -366,6 +382,29 @@ namespace QwerkE {
             return;
             s_EntityEditor->Draw();
 		}
+
+        void local_DrawEndFrame()
+        {
+            {   // Debug drawer calls
+                const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+                bgfx::touch(viewIdFbo1);
+
+                DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
+                debugDrawer.begin(viewIdFbo1);
+
+                const bx::Vec3 normal = { .0f,  1.f, .0f };
+                const bx::Vec3 pos = { .0f, .0f, .0f };
+
+                bx::Plane plane(bx::InitNone);
+                bx::calcPlane(plane, normal, pos);
+
+                debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
+
+                debugDrawer.end();
+            }
+
+            Framework::DrawFrameEnd();
+        }
 
 	}
 

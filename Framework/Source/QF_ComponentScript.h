@@ -4,12 +4,14 @@
 
 namespace QwerkE {
 
+	enum eScriptTypes;
 	class Scriptable;
 
 	class ComponentScript
 	{
 	public:
 		Scriptable* Instance = nullptr;
+		eScriptTypes m_ScriptType = (eScriptTypes)0;
 
 		Scriptable* (*InstantiateScript)();
 		void (*DeleteScript)(ComponentScript*);

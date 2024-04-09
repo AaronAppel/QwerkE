@@ -44,12 +44,14 @@ enum class MirrorTypes
 
     // Components
     ComponentCamera,
+    ComponentInfo,
     ComponentMesh,
     ComponentScript,
     ComponentTransform,
 
-    //
+    // Misc
     EntityHandle,
+    GUID,
 
     // External libraries
     m_enTT_Entity,
@@ -70,6 +72,7 @@ enum class MirrorTypes
     m_VECTORS_END,
 
     m_MAPS_START,
+    m_map_guid_entt,
     m_MAPS_END,
 
     m_POINTERS_START, // #TODO Deprecate using std::is_pointer
@@ -84,6 +87,7 @@ enum class MirrorTypes
     m_ENUMS_START,
     eKeys,
     eSceneStates, // #TODO Review deprecating
+    eScriptTypes,
     m_eSceneTypes,
     eComponentTags,
     m_ENUMS_END,

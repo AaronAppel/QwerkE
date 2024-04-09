@@ -20,18 +20,7 @@
 
 namespace QwerkE {
 
-    namespace Renderer {
-
-        const bgfx::ViewId s_ViewIdFbo1 = 2;
-
-        extern bgfx::FrameBufferHandle s_FrameBufferHandle;
-        extern const u8 s_FrameBufferTextureCount = 2;
-        extern bgfx::TextureHandle s_FrameBufferTextures[s_FrameBufferTextureCount];
-        extern bgfx::TextureHandle s_ReadBackTexture; // #TODO Destroy
-
-    }
-
-    void ComponentMesh::Create()
+    void ComponentMesh::Create() // #TODO Move to Assets or a graphics data loader/creator
     {
         m_StartingTimeOffset = bx::getHPCounter();
 
@@ -65,18 +54,12 @@ namespace QwerkE {
     {
 #ifdef _QDEBUG // #TESTING
 
-        const vec2f& windowSize = Window::GetSize();
+        const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
 
-        bgfx::setViewName(Renderer::s_ViewIdFbo1, "FBO1");
-        bgfx::setViewClear(Renderer::s_ViewIdFbo1, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
-        bgfx::setViewRect(Renderer::s_ViewIdFbo1, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
-
-        bgfx::setViewFrameBuffer(Renderer::s_ViewIdFbo1, Renderer::s_FrameBufferHandle);
-        bgfx::touch(Renderer::s_ViewIdFbo1);
-
+        if (false)
         {   // Debug drawer calls
             DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-            debugDrawer.begin(Renderer::s_ViewIdFbo1);
+            debugDrawer.begin(viewIdFbo1);
 
             const bx::Vec3 normal = { .0f,  1.f, .0f };
             const bx::Vec3 pos = { .0f, -2.f, .0f };
@@ -129,7 +112,7 @@ namespace QwerkE {
             bgfx::setState(state);
 
             // Submit primitive for rendering to view 0.
-            bgfx::submit(Renderer::s_ViewIdFbo1, m_program);
+            bgfx::submit(viewIdFbo1, m_program);
         }
 #endif
     }

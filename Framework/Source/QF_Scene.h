@@ -29,6 +29,7 @@ namespace QwerkE {
         void DrawImgui();
 
         EntityHandle CreateEntity();
+        EntityHandle CreateEntity(const GUID& existingGuid);
 
         void SaveScene();
         void LoadSceneFromFilePath(const char* otherSceneFileName);
@@ -62,6 +63,7 @@ namespace QwerkE {
     private:
         MIRROR_PRIVATE_MEMBERS
         friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
+        friend class SceneCreator;
 
         GUID m_CameraEntityGuid = GUID::Invalid;
 

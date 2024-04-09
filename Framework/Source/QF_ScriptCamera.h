@@ -18,7 +18,15 @@ namespace QwerkE {
 				!m_Entity.HasComponent<ComponentCamera>())
 			{
 				LOG_ERROR("Entity ___ missing ScriptableCamera!");
-				m_Entity.RemoveComponent<ComponentScript>();
+
+				if (m_Entity.HasComponent<ComponentScript>())
+				{
+					m_Entity.RemoveComponent<ComponentScript>();
+				}
+				else
+				{
+					LOG_CRITICAL("Could not remove ComponentScript!");
+				}
 			}
 		}
 
@@ -28,35 +36,49 @@ namespace QwerkE {
 				!m_Entity.HasComponent<ComponentCamera>())
 			{
 				LOG_ERROR("Entity ___ missing ScriptableCamera!");
-				m_Entity.RemoveComponent<ComponentScript>();
+
+				if (m_Entity.HasComponent<ComponentScript>())
+				{
+					m_Entity.RemoveComponent<ComponentScript>();
+				}
+				else
+				{
+					LOG_CRITICAL("Could not remove ComponentScript!");
+				}
 			}
+
+
+			if (!m_Entity.HasComponent<ComponentScript>())
+				return;
 
 			const QwerkE::UserSettings& userSettings = QwerkE::Settings::GetUserSettings();
 
 			ComponentCamera& camera = m_Entity.GetComponent<ComponentCamera>();
+			ComponentTransform& transform = m_Entity.GetComponent<ComponentTransform>();
+
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveForward))
 			{
-				camera.m_Eye.z = camera.m_Eye.z + (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveBackward))
 			{
-				camera.m_Eye.z = camera.m_Eye.z - (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveLeft))
 			{
-				camera.m_Eye.x = camera.m_Eye.x - (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[12] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveRight))
 			{
-				camera.m_Eye.x = camera.m_Eye.x + (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[12] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveDown))
 			{
-				camera.m_Eye.y = camera.m_Eye.y + (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[13] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_MoveUp))
 			{
-				camera.m_Eye.y = camera.m_Eye.y - (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[13] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (QwerkE::Input::GetIsKeyDown(userSettings.key_camera_RotateRight))
 			{
@@ -72,6 +94,12 @@ namespace QwerkE {
 			{
 			}
 		}
+
+		eScriptTypes ScriptType()
+		{
+			return eScriptTypes::Camera;
+		}
+
 	};
 
 }

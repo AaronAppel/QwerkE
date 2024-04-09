@@ -7,6 +7,10 @@
 #include "Libraries/cJSON/QC_cJSON.h"
 #endif
 
+#ifdef _QENTT
+#include "Libraries/entt/entt.hpp"
+#endif
+
 #ifdef _QMIRROR
 #include "Libraries/Mirror/Source/Mirror.h"
 #endif
@@ -15,9 +19,19 @@
 #include "Libraries/imgui/imgui.h"
 #endif
 
+#include "QC_Guid.h"
+
 #include "QF_eKeys.h"
+#include "QF_EntityHandle.h"
 #include "QF_Log.h"
 #include "QF_Settings.h"
+
+#include "QF_ComponentCamera.h"
+#include "QF_ComponentInfo.h"
+#include "QF_ComponentLight.h"
+#include "QF_ComponentMesh.h"
+#include "QF_ComponentScript.h"
+#include "QF_ComponentTransform.h"
 
 #define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
 
@@ -39,20 +53,6 @@ namespace QwerkE {
 				return;
 			}
 
-			std::vector<cJSON*> jsonStructArr = GetAllItemsFromArray(objJson); // #TODO Walk the linked list instead of creating a new, temp vector?
-			if (jsonStructArr.empty() && objJson->type != cJSON_Array)
-			{
-				jsonStructArr = GetAllSiblingsWithObject(objJson);
-			}
-
-			if (jsonStructArr.size() != objTypeInfo->fields.size())
-			{
-				if (const bool nonInheritanceMismatch = !objTypeInfo->hasSubClass() && !objTypeInfo->isSubClass())
-				{
-					LOG_WARN("{0} Mismatched array sizes for json object {1} ", __FUNCTION__, objJson->string);
-				}
-			}
-
 			if (objTypeInfo->isPrimitive())
 			{
 				switch (objJson->type)
@@ -70,7 +70,22 @@ namespace QwerkE {
 				default:
 					// #TODO Handle reading/writing a simple primitive to a file
 					LOG_WARN("{0} Unhandled early return for type {1}", __FUNCTION__, (int)objTypeInfo->enumType);
-					return;
+				}
+
+				return; // Avoid non-primitive type logic below
+			}
+
+			std::vector<cJSON*> jsonStructArr = GetAllItemsFromArray(objJson); // #TODO Walk the linked list instead of creating a temporary vector?
+			if (jsonStructArr.empty() && !objTypeInfo->isPrimitive() && objJson->type != cJSON_Array)
+			{
+				jsonStructArr = GetAllSiblingsWithObject(objJson);
+			}
+
+			if (jsonStructArr.size() != objTypeInfo->fields.size())
+			{
+				if (const bool nonInheritanceMismatch = !objTypeInfo->hasSubClass() && !objTypeInfo->isSubClass())
+				{
+					LOG_WARN("{0} Mismatched array sizes for json object {1} ", __FUNCTION__, objJson->string);
 				}
 			}
 
@@ -176,6 +191,14 @@ namespace QwerkE {
 			}
 		}
 
+#define DeserializeComponent(COMPONENT_TYPE) \
+		if (strcmp(componentsJsonVector.at(j)->string, #COMPONENT_TYPE) == 0) \
+		{ \
+			COMPONENT_TYPE& component = entity.AddComponent<COMPONENT_TYPE>(); \
+			DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<COMPONENT_TYPE>(), (void*)&component); \
+			continue; \
+		}
+
 		void local_DeserializeJsonArray(const cJSON * jsonObj, const Mirror::Field & field, void* obj)
 		{
 			if (!jsonObj || !jsonObj->type || jsonObj->type != cJSON_Array || !obj)
@@ -205,6 +228,70 @@ namespace QwerkE {
 			break;
 			//
 
+			case MirrorTypes::m_map_guid_entt:
+				{
+					std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
+					entitiesMap->clear();
+					Scene* scene = (Scene*)((char*)obj - field.offset);
+
+					const std::vector<cJSON*> entitiesJsonVector = GetAllItemsFromArray(jsonObj);
+
+					for (size_t i = 0; i < entitiesJsonVector.size(); i++)
+					{
+						const std::vector<cJSON*> componentsJsonVector = GetAllItemsFromArray(entitiesJsonVector[i]->child->child);
+
+						GUID guid;
+						if (strcmp(entitiesJsonVector[i]->string, "Entity") != 0)
+						{
+							guid = std::stoull(entitiesJsonVector[i]->string);
+						}
+
+						EntityHandle entity = scene->CreateEntity(guid);
+
+						for (size_t j = 0; j < componentsJsonVector.size(); j++)
+						{
+							// #TODO Look at using component enum instead of strings
+
+							DeserializeComponent(ComponentCamera)
+							// DeserializeComponent(ComponentInfo)
+							// DeserializeComponent(ComponentMesh)
+							// DeserializeComponent(ComponentTransform)
+							DeserializeComponent(ComponentScript)
+
+							// Created when Entity instantiated
+							if (strcmp(componentsJsonVector.at(j)->string, "ComponentTransform") == 0)
+							{
+								ComponentTransform& transform = entity.GetComponent<ComponentTransform>();
+								DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<ComponentTransform>(), (void*)&transform);
+								continue;
+							}
+							else if (strcmp(componentsJsonVector.at(j)->string, "ComponentInfo") == 0)
+							{
+								ComponentInfo& info = entity.GetComponent<ComponentInfo>();
+								DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<ComponentInfo>(), (void*)&info);
+								int bp = 0;
+							}
+
+							// Needs to be created
+							else if (strcmp(componentsJsonVector.at(j)->string, "ComponentMesh") == 0)
+							{
+								ComponentMesh& mesh = entity.AddComponent<ComponentMesh>();
+								DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<ComponentMesh>(), (void*)&mesh);
+								mesh.Create();
+							}
+						}
+
+						ASSERT(entity.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
+						ASSERT(entity.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
+
+						if (entity.HasComponent<ComponentCamera>())
+						{
+							int bp = 0;
+						}
+					}
+				}
+				break;
+
 			case MirrorTypes::m_floatArray16:
 			{
 				float* floatArray = (float*)obj;
@@ -213,7 +300,6 @@ namespace QwerkE {
 				{
 					floatArray[i] = jsonObjectVector[i]->valuedouble;
 				}
-
 			}
 			break;
 
@@ -289,6 +375,14 @@ namespace QwerkE {
 				{
 					double* doubleValuePtr = (double*)fieldAddress;
 					*doubleValuePtr = (double)jsonObj->valuedouble;
+				}
+				break;
+
+				case MirrorTypes::m_uint64_t:
+				{
+					u64* valuePtr = (u64*)fieldAddress;
+					const u64 temp = (u64)jsonObj->valuedouble;
+					*valuePtr = temp;
 				}
 				break;
 
@@ -384,6 +478,16 @@ namespace QwerkE {
 			}
 		}
 
+#define SerializeComponent(COMPONENT_TYPE) \
+		if (handle.HasComponent<COMPONENT_TYPE>()) \
+		{ \
+			auto& component = handle.GetComponent<COMPONENT_TYPE>(); \
+			auto componentTypeInfo = Mirror::InfoForType<COMPONENT_TYPE>(); \
+			cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str()); \
+			SerializeObjectToJson(&component, componentTypeInfo, newJsonObjectArray); \
+			AddItemToArray(entityComponentsJsonArray, newJsonObjectArray); \
+		}
+
 		void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo * objTypeInfo, cJSON * objJson)
 		{
 			if (!objJson || !objTypeInfo || !obj)
@@ -453,6 +557,32 @@ namespace QwerkE {
 				break;
 				// imgui types
 
+				case MirrorTypes::m_map_guid_entt:
+					{
+						// #NOTE m_map_guid_entt type can only be owned by a Scene. Look at enforcing through some static asserts of runtime cast checks
+						const std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)((char*)obj + field.offset);
+						Scene* scene = (Scene*)obj;
+
+						for (auto& entityPair : *entitiesMap)
+						{
+							EntityHandle handle(scene, entityPair.second);
+
+							// cJSON* entityJsonArray = CreateArray("Entity");
+							cJSON* entityJsonArray = CreateArray(std::to_string(handle.EntityGuid()).c_str());
+							AddItemToArray(arr, entityJsonArray);
+
+							cJSON* entityComponentsJsonArray = CreateArray("Components");
+							AddItemToArray(entityJsonArray, entityComponentsJsonArray);
+
+							SerializeComponent(ComponentCamera)
+							SerializeComponent(ComponentInfo)
+							SerializeComponent(ComponentMesh)
+							SerializeComponent(ComponentTransform)
+							SerializeComponent(ComponentScript)
+						}
+					}
+					break;
+
 				case MirrorTypes::m_floatArray16:
 				{
 					float* floatArray = (float*)((char*)obj + field.offset);
@@ -512,6 +642,7 @@ namespace QwerkE {
 				}
 				break;
 
+				case MirrorTypes::eScriptTypes: // #TODO Add a case for all enums by default
 				case MirrorTypes::m_eSceneTypes:
 				case MirrorTypes::m_uint8_t:
 				{

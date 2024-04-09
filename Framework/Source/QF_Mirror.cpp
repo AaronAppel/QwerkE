@@ -15,6 +15,8 @@
 #include "Libraries/imgui/imgui.h"
 #endif
 
+#include "QC_Guid.h"
+
 #include "QF_eKeys.h"
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
@@ -23,6 +25,7 @@
 #include "QF_Settings.h"
 
 #include "QF_ComponentCamera.h"
+#include "QF_ComponentInfo.h"
 #include "QF_ComponentMesh.h"
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
@@ -97,14 +100,13 @@ namespace QwerkE {
 #endif
 
 #ifdef _QENTT
-	typedef entt::entity m_enTT_Entity; // #TODO Review if still needed or should be serialized
+	typedef entt::entity m_enTT_Entity;
 	MIRROR_TYPE(m_enTT_Entity)
 #endif
 
 	// Enums
+	MIRROR_TYPE(eScriptTypes)
 	MIRROR_TYPE(eComponentTags)
-
-	typedef QwerkE::eKeys eKeys; // #TODO Review typedef
 	MIRROR_TYPE(eKeys)
 
 	// Vectors
@@ -118,10 +120,18 @@ namespace QwerkE {
 	MIRROR_TYPE(m_vector_string)
 
 	// Arrays
-	using m_floatArray16 = float[16]; // #TODO Try
+	using m_floatArray16 = float[16]; // #TODO Review hard coded size, and name
 	MIRROR_TYPE(m_floatArray16)
 
+	// Maps
+	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
+	MIRROR_TYPE(m_map_guid_entt)
+
 	// Structs
+	MIRROR_CLASS_START(GUID)
+	MIRROR_CLASS_MEMBER(m_Guid)
+	MIRROR_CLASS_END(GUID)
+
 	MIRROR_CLASS_START(vec2f)
 	MIRROR_CLASS_MEMBER(x)
 	MIRROR_CLASS_MEMBER(y)
@@ -171,11 +181,23 @@ namespace QwerkE {
 
 	MIRROR_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
+	MIRROR_CLASS_MEMBER(m_GuidsToEntts)
 	MIRROR_CLASS_END(Scene)
 
 	// Components
 	MIRROR_CLASS_START(ComponentCamera)
+	MIRROR_CLASS_MEMBER(m_MoveSpeed)
+	MIRROR_CLASS_MEMBER(m_At)
+	MIRROR_CLASS_MEMBER(m_Fov)
+	MIRROR_CLASS_MEMBER(m_Near)
+	MIRROR_CLASS_MEMBER(m_Far)
 	MIRROR_CLASS_END(ComponentCamera)
+
+	MIRROR_CLASS_START(ComponentInfo)
+	MIRROR_CLASS_MEMBER(m_EditorDisplayName)
+	// MIRROR_CLASS_MEMBER(m_Guid) // #TODO Current cJSON implementation doesn't serialize 64 bit values
+	MIRROR_CLASS_MEMBER(m_Enabled)
+	MIRROR_CLASS_END(ComponentInfo)
 
 	MIRROR_CLASS_START(ComponentMesh)
 	MIRROR_CLASS_END(ComponentMesh)
@@ -183,6 +205,10 @@ namespace QwerkE {
 	MIRROR_CLASS_START(ComponentTransform)
 	MIRROR_CLASS_MEMBER(m_Matrix)
 	MIRROR_CLASS_END(ComponentTransform)
+
+	MIRROR_CLASS_START(ComponentScript)
+	MIRROR_CLASS_MEMBER(m_ScriptType)
+	MIRROR_CLASS_END(ComponentScript)
 
 	// Misc
 	MIRROR_CLASS_START(EntityHandle)

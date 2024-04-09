@@ -3,7 +3,8 @@
 			"projectName":	"Project1",
 			"assetsDirPath":	"null",
 			"sceneFileNames":	[{
-					"0":	"GameScene1.qscene"
+					"0":	"NewScene1.qscene",
+					"1":	"GameScene1.qscene"
 				}]
 		}]
 }

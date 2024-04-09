@@ -16,16 +16,16 @@
 namespace QwerkE {
 
 	static Scene* s_CurrentScene = nullptr;
-	static int s_CurrentSceneIndex = 0;
+	static u32 s_CurrentSceneIndex = 0;
 	static std::vector<Scene*> s_Scenes;
-	static std::vector<sPtr<Scene>> s_ScenesSmart; // #TODO Use smart pointers. Deprecate Shutdown
+	// static std::vector<sPtr<Scene>> s_ScenesSmart; // #TODO Use smart pointers. Deprecate Shutdown
 
 	namespace Scenes
 	{
 
 		void priv_UpdateCurrentSceneIndex()
 		{
-			for (size_t i = 0; i < s_Scenes.size(); i++)
+			for (u32 i = 0; i < s_Scenes.size(); i++)
 			{
 				if (s_Scenes[i] == s_CurrentScene)
 				{
@@ -51,16 +51,12 @@ namespace QwerkE {
 					continue;
 				}
 
-				if (Scene* newScene = CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), false))
-				{
-					newScene->LoadScene(); // #TODO Should the scene load itself/contents right away?
-				}
+				CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), false);
 			}
 
 			if (s_Scenes.empty())
 			{
-				// Scene* newScene = Scenes::CreateSceneFromFile(NullAssetsFolderPath(null_scene), true);
-				Scene* newScene = Scenes::CreateEmptyScene();
+				CreateSceneFromFile(Paths::NullAsset(null_scene), false);
 				LOG_WARN("Null scene loaded as no scene files found for project: {0}", project.projectName);
 			}
 		}
@@ -151,66 +147,7 @@ namespace QwerkE {
 			return newScene;
 		}
 
-		Scene* CreateEmptyScene()
-		{
-			Scene* newScene = nullptr;
-			std::string newSceneName = "NewScene";
-
-			while (const Scene* existingScene = GetScene(newSceneName.c_str()))
-			{
-				char* newName = NumberAppendOrIncrement(newSceneName.c_str()); // #TODO Handle memory allocations
-				if (newName)
-				{
-					newSceneName = newName;
-					newScene = new Scene(newSceneName);
-					delete[] newName;
-				}
-				else
-				{
-					LOG_ERROR("{0} Unable to name new game object!", __FUNCTION__);
-					return nullptr;
-				}
-			}
-
-			newScene->LoadSceneFromFilePath(Paths::NullAsset(null_scene).c_str());
-			s_Scenes.push_back(newScene);
-
-			if (s_CurrentScene == nullptr)
-			{
-				s_CurrentScene = newScene;
-				priv_UpdateCurrentSceneIndex();
-			}
-
-			Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-
-			return newScene;
-		}
-
-		Scene* CreateScene(const std::string& sceneName, bool addToProjectsSceneFiles)
-		{
-			if (const Scene* existingScene = GetScene(sceneName.c_str()))
-			{
-				LOG_ERROR("{0} Scene with file name \"{1}\" already exists!", __FUNCTION__, sceneName.c_str());
-				return nullptr;
-			}
-
-			Scene* newScene = new Scene(sceneName);
-			newScene->LoadSceneFromFilePath(Paths::NullAsset(null_scene).c_str());
-			s_Scenes.push_back(newScene);
-
-			s_CurrentScene = newScene;
-			priv_UpdateCurrentSceneIndex();
-
-
-			if (addToProjectsSceneFiles)
-			{
-				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-			}
-
-			return newScene;
-		}
-
-		Scene* MainCreateScene(const char* const sceneFileName, bool addToProjectsSceneFiles)
+		Scene* CreateScene(const char* const sceneFileName, bool addToProjectsSceneFiles)
 		{
 			ASSERT(sceneFileName, "Null argument passed!");
 
@@ -228,7 +165,11 @@ namespace QwerkE {
 			}
 
 			Scene* newScene = new Scene(uniqueFileName.c_str());
+			newScene->LoadSceneFromFilePath(Paths::NullAsset(null_scene).c_str());
 			s_Scenes.push_back(newScene);
+
+			s_CurrentScene = newScene;
+			priv_UpdateCurrentSceneIndex();
 
 			if (addToProjectsSceneFiles)
 			{
@@ -239,29 +180,32 @@ namespace QwerkE {
 			return newScene;
 		}
 
-		Scene* RemoveScene(Scene* scene)
+		void DestroyScene(const Scene* const scene)
 		{
-			Scene* returnScene = nullptr;
+			if (!scene || !GetScene(scene))
+			{
+				LOG_ERROR("{0} Could not destroy scene!", __FUNCTION__);
+				return;
+			}
+
 			for (size_t i = 0; i < s_Scenes.size(); i++)
 			{
-				if (s_Scenes[i] == scene)
-				{
-					returnScene = s_Scenes[i];
-					s_Scenes.erase(s_Scenes.begin() + i);
+				if (s_Scenes[i] != scene)
+					continue;
 
-					Project& project = Projects::CurrentProject();
-					for (size_t i = 0; i < project.sceneFileNames.size(); i++)
+				s_Scenes.erase(s_Scenes.begin() + i);
+
+				Project& project = Projects::CurrentProject();
+				for (size_t i = 0; i < project.sceneFileNames.size(); i++)
+				{
+					if (strcmp(project.sceneFileNames[i].c_str(), scene->GetSceneName().c_str()) == 0)
 					{
-						if (strcmp(project.sceneFileNames[i].c_str(), scene->GetSceneName().c_str()) == 0)
-						{
-							project.sceneFileNames.erase(project.sceneFileNames.begin() + i);
-							break;
-						}
+						project.sceneFileNames.erase(project.sceneFileNames.begin() + i);
+						break;
 					}
-					break;
 				}
+				break;
 			}
-			return returnScene;
 		}
 
 		void Update(float deltatime)
@@ -300,6 +244,21 @@ namespace QwerkE {
 					return s_Scenes[i];
 				}
 			}
+			return nullptr;
+		}
+
+		Scene* GetScene(const Scene* const scene)
+		{
+			NULL_ARG_CHECK_RETURN(scene, nullptr)
+
+			for (size_t i = 0; i < s_Scenes.size(); i++)
+			{
+				if (scene == s_Scenes[i])
+				{
+					return s_Scenes[i];
+				}
+			}
+			LOG_WARN("{0} Scene not found", __FUNCTION__);
 			return nullptr;
 		}
 

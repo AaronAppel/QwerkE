@@ -46,6 +46,22 @@ namespace QwerkE {
 			}
 		}
 
+		EntityHandle(Scene* scene, const GUID& existingGuid) :
+			m_Scene(scene)
+		{
+			ASSERT(m_Scene, "Null m_Scene reference!");
+			m_EnttId = m_Scene->m_Registry.create();
+			if (!HasComponent<ComponentInfo>())
+			{
+				AddComponent<ComponentInfo>(existingGuid);
+			}
+
+			if (!HasComponent<ComponentTransform>())
+			{
+				AddComponent<ComponentTransform>();
+			}
+		}
+
 		// #TODO Add asserts
 
 		const GUID& EntityGuid()

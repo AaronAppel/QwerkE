@@ -1,61 +1,79 @@
 {
-	"":	{
-		"Scene":	[{
-				"m_SceneFileName":	"NewScene1.qscene",
-				"Entities":	[{
-						"Entity":	[{
-								"Components":	[{
-										"ComponentTransform":	[{
-												"m_Matrix":	[{
-														"0":	1,
-														"1":	0,
-														"2":	0,
-														"3":	0,
-														"4":	0,
-														"5":	1,
-														"6":	0,
-														"7":	0,
-														"8":	0,
-														"9":	0,
-														"10":	1,
-														"11":	0,
-														"12":	8.5,
-														"13":	0,
-														"14":	0,
-														"15":	1
-													}]
-											}],
-										"ComponentMesh":	[{
-											}]
-									}]
-							}],
-						"Entity":	[{
-								"Components":	[{
-										"ComponentTransform":	[{
-												"m_Matrix":	[{
-														"0":	1,
-														"1":	0,
-														"2":	0,
-														"3":	0,
-														"4":	0,
-														"5":	1,
-														"6":	0,
-														"7":	0,
-														"8":	0,
-														"9":	0,
-														"10":	1,
-														"11":	0,
-														"12":	23.799999237060547,
-														"13":	0,
-														"14":	0,
-														"15":	1
-													}]
-											}],
-										"ComponentCamera":	[{
-											}]
-									}]
-							}]
-					}]
-			}]
-	}
+	"Scene":	[{
+			"m_SceneFileName":	"NewScene1.qscene",
+			"m_GuidsToEntts":	[{
+					"86783912041551776":	[{
+							"Components":	[{
+									"ComponentInfo":	[{
+											"m_EditorDisplayName":	"null",
+											"m_Enabled":	false
+										}],
+									"ComponentMesh":	[{
+										}],
+									"ComponentTransform":	[{
+											"m_Matrix":	[{
+													"0":	1,
+													"1":	0,
+													"2":	0,
+													"3":	0,
+													"4":	0,
+													"5":	1,
+													"6":	0,
+													"7":	0,
+													"8":	0,
+													"9":	0,
+													"10":	1,
+													"11":	0,
+													"12":	-7.5999999046325684,
+													"13":	-3.7000000476837158,
+													"14":	0,
+													"15":	1
+												}]
+										}]
+								}]
+						}],
+					"17118034475384361668":	[{
+							"Components":	[{
+									"ComponentCamera":	[{
+											"m_MoveSpeed":	10,
+											"m_At":	[{
+													"x":	0,
+													"y":	-7.5999999046325684,
+													"z":	0
+												}],
+											"m_Fov":	60,
+											"m_Near":	0.10000000149011612,
+											"m_Far":	100
+										}],
+									"ComponentInfo":	[{
+											"m_EditorDisplayName":	"Camera 0",
+											"m_Enabled":	false
+										}],
+									"ComponentTransform":	[{
+											"m_Matrix":	[{
+													"0":	1,
+													"1":	0,
+													"2":	0,
+													"3":	0,
+													"4":	0,
+													"5":	1,
+													"6":	0,
+													"7":	0,
+													"8":	0,
+													"9":	0,
+													"10":	1,
+													"11":	0,
+													"12":	11.29393196105957,
+													"13":	-8.17366600036621,
+													"14":	-24.557479858398438,
+													"15":	1
+												}]
+										}],
+									"ComponentScript":	[{
+											"m_ScriptType":	1
+										}]
+								}]
+						}]
+				}]
+		}]
 }

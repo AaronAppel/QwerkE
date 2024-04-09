@@ -71,9 +71,6 @@ namespace QwerkE {
             cJSON_Delete(jsonRootObject);
         }
 
-        void DeserializeScene(const char* const absoluteSceneJsonFilePath, Scene& scene);
-        void SerializeScene(Scene& scene, const char* const absoluteSceneJsonFilePath);
-
     }
 
 }

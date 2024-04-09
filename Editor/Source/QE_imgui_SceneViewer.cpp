@@ -76,7 +76,7 @@ namespace QwerkE {
                 const char* const newFileDefaultName = StringAppend("NewScene", ".", scene_ext); // #TODO constexpr
                 constexpr const char* emptyScenePrefabFileName = "Empty.qscene";
 
-                if (Scene* newScene = Scenes::MainCreateScene(newFileDefaultName, true))
+                if (Scene* newScene = Scenes::CreateScene(newFileDefaultName, true))
                 {
                     newScene->LoadSceneFromFilePath(Paths::Scene(emptyScenePrefabFileName).c_str());
                     newScene->OnLoaded();
@@ -109,8 +109,6 @@ namespace QwerkE {
                     {
                         transform.SetPosition(meshPosition);
                     }
-
-                    // mesh.Draw();
                     ++i;
                 }
 

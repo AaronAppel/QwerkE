@@ -181,8 +181,6 @@ namespace QwerkE {
 #ifdef _QBGFX
 			bgfx::dbgTextPrintf(0, 3, 0x0f, "Framebuffer %i", (int)s_ViewIdFbo1);
 
-			// bgfx::setViewFrameBuffer(s_ViewIdMain, frame_buffer_handle_);
-
 			bgfx::frame();
 			bgfx::touch(s_ViewIdMain);
 #ifdef _QDEBUG

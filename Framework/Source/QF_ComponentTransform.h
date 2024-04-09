@@ -19,8 +19,6 @@ namespace QwerkE {
 
 		const float* const GetMatrix() const { return m_Matrix; }
 
-	private:
-		MIRROR_PRIVATE_MEMBERS
 		float m_Matrix[16];
 	};
 

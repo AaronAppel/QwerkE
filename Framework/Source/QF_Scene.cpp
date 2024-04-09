@@ -33,15 +33,6 @@ namespace QwerkE {
     Scene::Scene(const std::string& sceneFileName) :
         m_SceneFileName(sceneFileName)
     {
-        EntityHandle cameraEntity = EntityHandle(this);
-        ComponentInfo& info = cameraEntity.GetComponent<ComponentInfo>();
-        info.m_EditorDisplayName = "Camera 0";
-        m_GuidsToEntts[info.m_Guid] = cameraEntity.m_EnttId;
-        m_CameraEntityGuid = info.m_Guid;
-
-        ComponentCamera& camera = cameraEntity.AddComponent<ComponentCamera>();
-        cameraEntity.AddComponent<ComponentScript>().Bind<ScriptableCamera>();
-
         return;
 
         const u8 rows = 11;
@@ -101,6 +92,7 @@ namespace QwerkE {
                 auto& info = m_Registry.get<ComponentInfo>(entity);
                 script.Instance = script.InstantiateScript();
                 script.Instance->SetEntity(EntityHandle(this, m_GuidsToEntts[info.m_Guid]));
+                script.m_ScriptType = script.Instance->ScriptType();
                 script.Instance->OnCreate();
             }
             script.Instance->OnUpdate(deltaTime);
@@ -109,9 +101,12 @@ namespace QwerkE {
 
     void Scene::Draw()
     {
-        const u8 viewId = 2; // #TODO Fill viewId properly
-        auto& camera = m_Registry.get<ComponentCamera>(m_GuidsToEntts[m_CameraEntityGuid]);
-        camera.PreDrawSetup(viewId);
+        EntityHandle cameraHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
+        auto& camera = cameraHandle.GetComponent<ComponentCamera>();
+        auto& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
+
+        const u16 viewId = 2; // #TODO Fix hard coded value
+        camera.PreDrawSetup(viewId, cameraTransform.GetPosition());
 
         auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto& entity : viewMeshes)
@@ -129,44 +124,53 @@ namespace QwerkE {
     {
         if (ImGui::Begin("SceneDrawImGui"))
         {
-            if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
+            for (auto& guidEnttPairs : m_GuidsToEntts)
             {
-                auto& camera = m_Registry.get<ComponentCamera>(m_GuidsToEntts[m_CameraEntityGuid]);
+                EntityHandle cameraHandle(this, guidEnttPairs.second);
+                if (!cameraHandle.HasComponent<ComponentCamera>())
+                    continue;
 
-                auto atCopy = camera.m_At;
-                if (ImGui::DragFloat3("CameraAt", &atCopy.x, .1f))
-                {
-                    camera.m_At = atCopy;
-                }
+                ComponentInfo& info = cameraHandle.GetComponent<ComponentInfo>();
 
-                auto eyeCopy = camera.m_Eye;
-                if (ImGui::DragFloat3("CameraEye", &eyeCopy.x, .1f))
+                if (ImGui::CollapsingHeader(info.m_EditorDisplayName, ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
                 {
-                    camera.m_Eye = eyeCopy;
-                }
+                    ComponentCamera& camera = cameraHandle.GetComponent<ComponentCamera>();
+                    auto atCopy = camera.m_At;
+                    if (ImGui::DragFloat3("CameraAt", &atCopy.x, .1f))
+                    {
+                        camera.m_At = atCopy;
+                    }
 
-                float moveSpeedCopy = camera.m_MoveSpeed;
-                if (ImGui::DragFloat("CameraMoveSpeed", &moveSpeedCopy, .1f))
-                {
-                    camera.m_MoveSpeed = moveSpeedCopy;
-                }
+                    ComponentTransform& transform = cameraHandle.GetComponent<ComponentTransform>();
+                    vec3f eyeCopy = transform.GetPosition();
+                    if (ImGui::DragFloat3("CameraEye", &eyeCopy.x, .1f))
+                    {
+                        transform.SetPosition(eyeCopy);
+                    }
 
-                float fovCopy = camera.m_Fov;
-                if (ImGui::DragFloat("CameraFov", &fovCopy, .1f))
-                {
-                    camera.m_Fov = fovCopy;
-                }
+                    float moveSpeedCopy = camera.m_MoveSpeed;
+                    if (ImGui::DragFloat("CameraMoveSpeed", &moveSpeedCopy, .1f))
+                    {
+                        camera.m_MoveSpeed = moveSpeedCopy;
+                    }
 
-                float nearCopy = camera.m_Near;
-                if (ImGui::DragFloat("CameraNear", &nearCopy, .1f))
-                {
-                    camera.m_Near = nearCopy;
-                }
+                    float fovCopy = camera.m_Fov;
+                    if (ImGui::DragFloat("CameraFov", &fovCopy, .1f))
+                    {
+                        camera.m_Fov = fovCopy;
+                    }
 
-                float farCopy = camera.m_Far;
-                if (ImGui::DragFloat("CameraFar", &farCopy, .1f))
-                {
-                    camera.m_Far = farCopy;
+                    float nearCopy = camera.m_Near;
+                    if (ImGui::DragFloat("CameraNear", &nearCopy, .1f))
+                    {
+                        camera.m_Near = nearCopy;
+                    }
+
+                    float farCopy = camera.m_Far;
+                    if (ImGui::DragFloat("CameraFar", &farCopy, .1f))
+                    {
+                        camera.m_Far = farCopy;
+                    }
                 }
             }
         }
@@ -182,6 +186,20 @@ namespace QwerkE {
         // return m_GuidsToEntts.insert(entity->GetComponent<ComponentInfo>().m_Guid, entity).second;
     }
 
+    EntityHandle Scene::CreateEntity(const GUID& existingGuid)
+    {
+        if (m_GuidsToEntts.find(existingGuid) != m_GuidsToEntts.end())
+        {
+            LOG_ERROR("{0} GUID already exists!", __FUNCTION__);
+        }
+
+        EntityHandle entity = EntityHandle(this, existingGuid);
+        const GUID guid = entity.GetComponent<ComponentInfo>().m_Guid;
+        m_GuidsToEntts[guid] = entity.m_EnttId;
+        return entity;
+        // return m_GuidsToEntts.insert(entity->GetComponent<ComponentInfo>().m_Guid, entity).second;
+    }
+
     void Scene::SaveScene()
     {
         if (m_SceneFileName == Constants::gc_DefaultStringValue)
@@ -191,7 +209,7 @@ namespace QwerkE {
         }
 
         std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
-        Serialization::SerializeScene(*this, sceneFilePath.c_str());
+        Serialization::SerializeObjectToFile(*this, sceneFilePath.c_str());
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, sceneFilePath.c_str());
         m_IsDirty = false;
     }
@@ -213,8 +231,7 @@ namespace QwerkE {
         std::string oldName = m_SceneFileName; // #TODO Improve scene file name overwrite logic
         if (Files::Exists(otherSceneFilePath))
         {
-            // Serialization::DeserializeJsonFromFile(otherSceneFilePath, *this);
-            Serialization::DeserializeScene(otherSceneFilePath, *this);
+            Serialization::DeserializeObjectFromFile(otherSceneFilePath, *this);
         }
         else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {
@@ -252,9 +269,6 @@ namespace QwerkE {
 
         Serialization::DeserializeObjectFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
 
-        std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
-        Serialization::DeserializeScene(sceneFilePath.c_str(), *this);
-
         OnLoaded();
 
         LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
@@ -285,6 +299,34 @@ namespace QwerkE {
 
     void Scene::OnLoaded()
     {
+        // #TODO Remove camera component requirement or handle when no camera components exist
+        auto viewCameras = m_Registry.view<ComponentCamera>();
+        ASSERT(!viewCameras.empty(), "{0} No camera components found in scene {1}", __FUNCTION__, m_SceneFileName.c_str());
+
+        for (auto& guidEnttPair : m_GuidsToEntts)
+        {
+            if (guidEnttPair.second == viewCameras[0])
+            {
+                m_CameraEntityGuid = guidEnttPair.first;
+                break;
+            }
+        }
+
+        EntityHandle cameraEntity(this, m_GuidsToEntts[m_CameraEntityGuid]);
+
+        if (cameraEntity.HasComponent<ComponentScript>())
+        {
+            ComponentScript& script = cameraEntity.GetComponent<ComponentScript>();
+            switch (script.m_ScriptType)
+            {
+            case eScriptTypes::Camera:
+                script.Bind<ScriptableCamera>();
+                break;
+
+            default:
+                break;
+            }
+        }
     }
 
     EntityHandle Scene::GetCurrentCameraEntity()

@@ -2,6 +2,10 @@
 
 // Sourced from : UUID.h -> https://github.com/TheCherno/Hazel/tree/master/Hazel/src/Hazel/Core
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Mirror.h"
+#endif
+
 namespace QwerkE {
 
 	class GUID
@@ -16,6 +20,7 @@ namespace QwerkE {
 		static const u64 Invalid = 0;
 
 	private:
+		MIRROR_PRIVATE_MEMBERS
 		u64 m_Guid;
 	};
 

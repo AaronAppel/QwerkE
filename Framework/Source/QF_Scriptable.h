@@ -4,6 +4,12 @@
 
 namespace QwerkE {
 
+	enum eScriptTypes : u8
+	{
+		Invalid = 0,
+		Camera,
+	};
+
 	class Scriptable
 	{
 	public:
@@ -23,6 +29,8 @@ namespace QwerkE {
 		// virtual void OnBodyCollision() { }
 
 		void SetEntity(EntityHandle newEntity) { m_Entity = newEntity; }
+
+		virtual eScriptTypes ScriptType() = 0;
 
 	protected:
 		Scriptable() = default;
