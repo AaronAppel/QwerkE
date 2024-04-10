@@ -73,6 +73,9 @@
     <ClCompile Include="Source\QF_Paths.cpp" />
     <ClCompile Include="Source\QF_Projects.cpp" />
     <ClCompile Include="Source\QC_Guid.cpp" />
+    <ClCompile Include="Source\QF_Scripting.cpp">
+      <Filter>Game Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -192,6 +195,12 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_EntityHandle.h" />
+    <ClInclude Include="Source\QF_ScriptTesting.h">
+      <Filter>Game Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Scripting.h">
+      <Filter>Game Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

@@ -4,10 +4,12 @@
 
 namespace QwerkE {
 
+	// #NOTE These values are serialized so value changes matter
 	enum eScriptTypes : u8
 	{
 		Invalid = 0,
 		Camera,
+		Testing,
 	};
 
 	class Scriptable

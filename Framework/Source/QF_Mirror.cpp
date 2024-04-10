@@ -124,6 +124,9 @@ namespace QwerkE {
 	MIRROR_TYPE(m_floatArray16)
 
 	// Maps
+	typedef std::unordered_map<eScriptTypes, Scriptable*> m_map_eScriptTypes_ScriptablePtr;
+	MIRROR_TYPE(m_map_eScriptTypes_ScriptablePtr)
+
 	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
 	MIRROR_TYPE(m_map_guid_entt)
 
@@ -195,7 +198,8 @@ namespace QwerkE {
 
 	MIRROR_CLASS_START(ComponentInfo)
 	MIRROR_CLASS_MEMBER(m_EditorDisplayName)
-	// MIRROR_CLASS_MEMBER(m_Guid) // #TODO Current cJSON implementation doesn't serialize 64 bit values
+	// MIRROR_CLASS_MEMBER(m_Guid)	// #NOTE Unserialized as needed earlier (array name instead)
+									// and current cJSON implementation doesn't serialize 64 bit values
 	MIRROR_CLASS_MEMBER(m_Enabled)
 	MIRROR_CLASS_END(ComponentInfo)
 
@@ -207,7 +211,7 @@ namespace QwerkE {
 	MIRROR_CLASS_END(ComponentTransform)
 
 	MIRROR_CLASS_START(ComponentScript)
-	MIRROR_CLASS_MEMBER(m_ScriptType)
+	MIRROR_CLASS_MEMBER(m_ScriptInstances)
 	MIRROR_CLASS_END(ComponentScript)
 
 	// Misc

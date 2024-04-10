@@ -228,6 +228,38 @@ namespace QwerkE {
 			break;
 			//
 
+			case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
+				{
+					std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)obj;
+					scriptsMap->clear();
+
+					// #TODO Get enums from json and assign to scripts map
+					const std::vector<cJSON*> scriptsJsonVector = GetAllItemsFromArray(jsonObj);
+					for (size_t i = 0; i < scriptsJsonVector.size(); i++)
+					{
+						const eScriptTypes scriptType = (eScriptTypes)std::stoi(scriptsJsonVector[i]->string);
+
+						scriptsMap->insert({ scriptType, nullptr });
+
+						switch (scriptType)
+						{
+						case eScriptTypes::Invalid:
+							break;
+
+						case eScriptTypes::Camera:
+							break;
+
+						case eScriptTypes::Testing:
+							break;
+
+						default:
+							LOG_ERROR("{0} Unsupported script type!", __FUNCTION__);
+							break;
+						}
+					}
+				}
+				break;
+
 			case MirrorTypes::m_map_guid_entt:
 				{
 					std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
@@ -252,13 +284,9 @@ namespace QwerkE {
 						{
 							// #TODO Look at using component enum instead of strings
 
-							DeserializeComponent(ComponentCamera)
-							// DeserializeComponent(ComponentInfo)
-							// DeserializeComponent(ComponentMesh)
-							// DeserializeComponent(ComponentTransform)
-							DeserializeComponent(ComponentScript)
-
 							// Created when Entity instantiated
+							// DeserializeComponent(ComponentInfo)
+							// DeserializeComponent(ComponentTransform)
 							if (strcmp(componentsJsonVector.at(j)->string, "ComponentTransform") == 0)
 							{
 								ComponentTransform& transform = entity.GetComponent<ComponentTransform>();
@@ -272,13 +300,10 @@ namespace QwerkE {
 								int bp = 0;
 							}
 
-							// Needs to be created
-							else if (strcmp(componentsJsonVector.at(j)->string, "ComponentMesh") == 0)
-							{
-								ComponentMesh& mesh = entity.AddComponent<ComponentMesh>();
-								DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<ComponentMesh>(), (void*)&mesh);
-								mesh.Create();
-							}
+							// Need to be created
+							DeserializeComponent(ComponentCamera)
+							DeserializeComponent(ComponentMesh)
+							DeserializeComponent(ComponentScript)
 						}
 
 						ASSERT(entity.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
@@ -556,6 +581,18 @@ namespace QwerkE {
 				}
 				break;
 				// imgui types
+
+
+				case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
+					{
+						const std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)((char*)obj + field.offset);
+
+						for (auto& scriptTypeScriptablePair : *scriptsMap)
+						{
+							AddItemToArray(arr, CreateNumber(std::to_string(scriptTypeScriptablePair.first).c_str(), (u8)scriptTypeScriptablePair.first));
+						}
+					}
+					break;
 
 				case MirrorTypes::m_map_guid_entt:
 					{

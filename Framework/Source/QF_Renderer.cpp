@@ -127,6 +127,7 @@ namespace QwerkE {
 
 			s_FrameBufferHandle = bgfx::createFrameBuffer(s_FrameBufferTextureCount, s_FrameBufferTextures); // #TESTING
 			ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandle.idx, "Error creating frame buffer!");
+			bgfx::setViewName(s_ViewIdFbo1, "FBO1");
 
 			bgfx::touch(s_ViewIdMain); // Render main view 1st frame
 #endif
@@ -182,6 +183,22 @@ namespace QwerkE {
 			bgfx::dbgTextPrintf(0, 3, 0x0f, "Framebuffer %i", (int)s_ViewIdFbo1);
 
 			bgfx::frame();
+
+			uint64_t state = 0
+				| BGFX_STATE_WRITE_R
+				| BGFX_STATE_WRITE_G
+				| BGFX_STATE_WRITE_B
+				| BGFX_STATE_WRITE_A
+				| BGFX_STATE_WRITE_Z
+				| BGFX_STATE_DEPTH_TEST_LESS
+				| BGFX_STATE_CULL_CW
+				| BGFX_STATE_MSAA
+				| 0 // #REVIEW
+				;
+			bgfx::setState(state);
+
+			bgfx::setViewClear(s_ViewIdFbo1, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
+
 			bgfx::touch(s_ViewIdMain);
 #ifdef _QDEBUG
 			bgfx::setDebug(s_showRendererDebugStats ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT);

@@ -27,6 +27,7 @@
 
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
+#include "QF_Scripting.h"
 
 namespace QwerkE {
 
@@ -57,25 +58,6 @@ namespace QwerkE {
     Scene::~Scene()
     {
         UnloadScene();
-
-        // #TODO Should UnloadScene() also do the work below?
-        auto viewMeshes = m_Registry.view<ComponentMesh>();
-        for (auto entity : viewMeshes)
-        {
-            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
-            mesh.Destroy();
-        }
-
-        auto viewScripts = m_Registry.view<ComponentScript>();
-        for (auto entity : viewScripts)
-        {
-            ComponentScript& script = m_Registry.get<ComponentScript>(entity);
-            if (script.Instance)
-            {
-                script.Instance->OnDestroy();
-                script.DeleteScript(&script); // #TODO Bug check self delete
-            }
-        }
     }
 
     void Scene::Update(float deltaTime)
@@ -87,15 +69,11 @@ namespace QwerkE {
         for (auto& entity : scripts)
         {
             auto& script = m_Registry.get<ComponentScript>(entity);
-            if (!script.Instance)
+            if (!script.m_Bound)
             {
-                auto& info = m_Registry.get<ComponentInfo>(entity);
-                script.Instance = script.InstantiateScript();
-                script.Instance->SetEntity(EntityHandle(this, m_GuidsToEntts[info.m_Guid]));
-                script.m_ScriptType = script.Instance->ScriptType();
-                script.Instance->OnCreate();
+                script.Bind(this, entity);
             }
-            script.Instance->OnUpdate(deltaTime);
+            script.Update(deltaTime);
         }
     }
 
@@ -285,6 +263,25 @@ namespace QwerkE {
             return;
         }
 
+        auto viewMeshes = m_Registry.view<ComponentMesh>();
+        for (auto entity : viewMeshes)
+        {
+            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
+            mesh.Destroy(); // #TODO Assets:: should manage mesh memory
+        }
+
+        auto scripts = m_Registry.view<ComponentScript>();
+        for (auto& entity : scripts)
+        {
+            auto& script = m_Registry.get<ComponentScript>(entity);
+            script.Unbind();
+        }
+
+        m_Registry.each([&](auto entityID)
+            {
+                m_Registry.destroy(entityID);
+            });
+
         m_IsLoaded = false;
         m_IsDirty = false;
         LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_SceneFileName.c_str());
@@ -301,7 +298,7 @@ namespace QwerkE {
     {
         // #TODO Remove camera component requirement or handle when no camera components exist
         auto viewCameras = m_Registry.view<ComponentCamera>();
-        ASSERT(!viewCameras.empty(), "{0} No camera components found in scene {1}", __FUNCTION__, m_SceneFileName.c_str());
+        ASSERT(!viewCameras.empty(), "No camera components found in scene!");
 
         for (auto& guidEnttPair : m_GuidsToEntts)
         {
@@ -312,20 +309,17 @@ namespace QwerkE {
             }
         }
 
-        EntityHandle cameraEntity(this, m_GuidsToEntts[m_CameraEntityGuid]);
-
-        if (cameraEntity.HasComponent<ComponentScript>())
+        auto viewMeshes = m_Registry.view<ComponentMesh>();
+        for (auto& enttId : viewMeshes)
         {
-            ComponentScript& script = cameraEntity.GetComponent<ComponentScript>();
-            switch (script.m_ScriptType)
-            {
-            case eScriptTypes::Camera:
-                script.Bind<ScriptableCamera>();
-                break;
+            viewMeshes.get<ComponentMesh>(enttId).Create(); // #TODO Assets:: should manage mesh memory
+        }
 
-            default:
-                break;
-            }
+        auto viewScripts = m_Registry.view<ComponentScript>();
+        for (auto& enttId : viewScripts)
+        {
+            ComponentScript& script = viewScripts.get<ComponentScript>(enttId);
+            script.Bind(this, enttId);
         }
     }
 

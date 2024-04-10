@@ -24,7 +24,7 @@ namespace QwerkE {
 
         vec2f GetMouseDragDelta();
 
-        bool GetIsKeyDown(eKeys key);
+        bool IsKeyDown(eKeys key);
 
         void OnMouseMove(vec2f position);
         void OnMouseMove(float x, float y);

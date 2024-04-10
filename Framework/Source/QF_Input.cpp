@@ -220,7 +220,7 @@ namespace QwerkE {
             return vec2f(.0f, .0f);
         }
 
-        bool GetIsKeyDown(eKeys key)
+        bool IsKeyDown(eKeys key)
         {
             return s_eKeyStates[key];
         }

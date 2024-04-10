@@ -1,34 +1,63 @@
 #pragma once
 
-#include <functional>
+#include <map>
+
+#include "QF_Scene.h"
+#include "QF_Scriptable.h"
+#include "QF_Scripting.h"
 
 namespace QwerkE {
-
-	enum eScriptTypes;
-	class Scriptable;
 
 	class ComponentScript
 	{
 	public:
-		Scriptable* Instance = nullptr;
-		eScriptTypes m_ScriptType = (eScriptTypes)0;
+		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
+		bool m_Bound = false;
 
-		Scriptable* (*InstantiateScript)();
-		void (*DeleteScript)(ComponentScript*);
-
-		template <typename T>
-		void Bind()
+		void Bind(Scene* scene, entt::entity enttId)
 		{
-			InstantiateScript = []()
-				{
-					return static_cast<Scriptable*>(new T());
-				};
+			if (m_Bound)
+			{
+				LOG_WARN("{0} Scripts already bound", __FUNCTION__);
+				return;
+			}
 
-			DeleteScript = [](ComponentScript* nsc)
+			for (auto& enumScriptablePair : m_ScriptInstances)
+			{
+				Scriptable* newScript = Scripting::InstantiateScript(enumScriptablePair.first);
+				newScript->SetEntity({ scene, enttId });
+				m_ScriptInstances[enumScriptablePair.first] = newScript;
+			}
+			m_Bound = true;
+		}
+
+		void Unbind()
+		{
+			if (!m_Bound)
+			{
+				LOG_WARN("{0} Scripts not bound", __FUNCTION__);
+				return;
+			}
+
+			for (auto& enumScriptablePair : m_ScriptInstances)
+			{
+				if (enumScriptablePair.second)
 				{
-					delete (T*)nsc->Instance;
-					nsc->Instance = nullptr;
-				};
+					delete enumScriptablePair.second;
+				}
+			}
+			m_Bound = false;
+		}
+
+		void Update(float deltaTime)
+		{
+			for (auto& enumScriptablePair : m_ScriptInstances)
+			{
+				if (enumScriptablePair.second)
+				{
+					enumScriptablePair.second->OnUpdate(deltaTime);
+				}
+			}
 		}
 
 	};

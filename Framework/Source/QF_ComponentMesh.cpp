@@ -109,7 +109,7 @@ namespace QwerkE {
             bgfx::setIndexBuffer(m_ibh);
 
             // Set render states.
-            bgfx::setState(state);
+            // bgfx::setState(state);
 
             // Submit primitive for rendering to view 0.
             bgfx::submit(viewIdFbo1, m_program);

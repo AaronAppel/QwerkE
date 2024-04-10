@@ -72,6 +72,7 @@ enum class MirrorTypes
     m_VECTORS_END,
 
     m_MAPS_START,
+    m_map_eScriptTypes_ScriptablePtr,
     m_map_guid_entt,
     m_MAPS_END,
 
