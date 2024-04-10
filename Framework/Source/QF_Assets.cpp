@@ -3,6 +3,10 @@
 #include <string>
 #include <unordered_map>
 
+#ifdef _QBGFX
+#include <bgfx/bgfx.h>
+#endif
+
 #include "QF_Files.h"
 
 namespace QwerkE {
@@ -12,8 +16,20 @@ namespace QwerkE {
 		Texture s_NullTexture;
 		static std::unordered_map<std::string, Texture*> s_Textures;
 
+		Texture s_NullMesh;
+		static std::unordered_map<std::string, Texture*> s_Meshes;
+
 		bool local_Has(const char* textureName);
 		const Texture& local_Load(const char* textureFilePath);
+
+		bgfx::VertexBufferHandle m_vbhCube;
+		bgfx::IndexBufferHandle m_ibhCube;
+		bgfx::ProgramHandle m_programCube;
+
+		const Texture& GetMesh(const char* assetName)
+		{
+			return *s_Meshes[assetName];
+		}
 
 		const Texture& GetTexture(const char* assetName)
 		{

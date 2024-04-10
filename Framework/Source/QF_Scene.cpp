@@ -264,7 +264,7 @@ namespace QwerkE {
         }
 
         auto viewMeshes = m_Registry.view<ComponentMesh>();
-        for (auto entity : viewMeshes)
+        for (auto& entity : viewMeshes)
         {
             ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
             mesh.Destroy(); // #TODO Assets:: should manage mesh memory
@@ -308,6 +308,7 @@ namespace QwerkE {
                 break;
             }
         }
+        ASSERT(GUID::Invalid != m_CameraEntityGuid, "Could not find camera component!");
 
         auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto& enttId : viewMeshes)

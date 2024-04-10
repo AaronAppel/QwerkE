@@ -148,6 +148,9 @@ struct DebugDrawEncoder
 	void draw(GeometryHandle _handle);
 
 	///
+	void drawLine(const bx::Vec3& start, const bx::Vec3& end);
+
+	///
 	void drawLineList(uint32_t _numVertices, const DdVertex* _vertices, uint32_t _numIndices = 0, const uint16_t* _indices = NULL);
 
 	///

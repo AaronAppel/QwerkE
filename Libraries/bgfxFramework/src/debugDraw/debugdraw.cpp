@@ -2474,6 +2474,13 @@ void DebugDrawEncoder::draw(GeometryHandle _handle)
 	DEBUG_DRAW_ENCODER(draw(_handle) );
 }
 
+void DebugDrawEncoder::drawLine(const bx::Vec3& start, const bx::Vec3& end)
+{
+	moveTo(start);
+	lineTo(end);
+	close();
+}
+
 void DebugDrawEncoder::drawLineList(uint32_t _numVertices, const DdVertex* _vertices, uint32_t _numIndices, const uint16_t* _indices)
 {
 	DEBUG_DRAW_ENCODER(draw(true, _numVertices, _vertices, _numIndices, _indices) );
