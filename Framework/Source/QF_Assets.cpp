@@ -3,8 +3,9 @@
 #include <string>
 #include <unordered_map>
 
-#ifdef _QBGFX
-#include <bgfx/bgfx.h>
+#ifdef _QBGFXFRAMEWORK
+#include <bgfxFramework/SampleRenderData.h>
+#include <bgfxFramework/LoadShader.h>
 #endif
 
 #include "QF_Files.h"
@@ -22,13 +23,47 @@ namespace QwerkE {
 		bool local_Has(const char* textureName);
 		const Texture& local_Load(const char* textureFilePath);
 
-		bgfx::VertexBufferHandle m_vbhCube;
-		bgfx::IndexBufferHandle m_ibhCube;
-		bgfx::ProgramHandle m_programCube;
+		static bgfx::VertexBufferHandle s_vbhCube;
+		static bgfx::IndexBufferHandle s_ibhCube;
+		static bgfx::ProgramHandle s_programCube;
 
-		const Texture& GetMesh(const char* assetName)
+		void Initialize()
 		{
-			return *s_Meshes[assetName];
+			s_vbhCube = bgfx::createVertexBuffer(
+				// Static data can be passed with bgfx::makeRef
+				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices))
+				, PosColorVertex::ms_layout
+			);
+
+			s_ibhCube = bgfx::createIndexBuffer(
+				// Static data can be passed with bgfx::makeRef
+				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
+			);
+
+			// Create program from shaders.
+			s_programCube = myLoadShaderProgram("vs_cubes.bin", "fs_cubes.bin");
+		}
+
+		void Shutdown()
+		{
+			bgfx::destroy(s_vbhCube);
+			bgfx::destroy(s_ibhCube);
+			bgfx::destroy(s_programCube);
+		}
+
+		const bgfx::VertexBufferHandle& GetVbh()
+		{
+			return s_vbhCube;
+		}
+
+		const bgfx::IndexBufferHandle& GetIbh()
+		{
+			return s_ibhCube;
+		}
+
+		const bgfx::ProgramHandle& GetProgram()
+		{
+			return s_programCube;
 		}
 
 		const Texture& GetTexture(const char* assetName)

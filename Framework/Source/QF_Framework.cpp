@@ -1,5 +1,6 @@
 #include "QF_Framework.h"
 
+#include "QF_Assets.h"
 #include "QF_Events.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
@@ -19,12 +20,9 @@ namespace QwerkE {
 
 			Events::Initialize();
 
-			Settings::LoadEngineSettings("TODO");
+			Settings::LoadEngineSettings(null_config);
 			Settings::LoadUserSettings(null_preferences);
-
-			Projects::LoadProject("Project1.qproj");
-
-			const EngineSettings& engineSettings = Settings::GetEngineSettings();
+			Projects::LoadProject("Project1.qproj"); // #TODO Get from command line or settings
 
 			Window::Initialize();
 
@@ -34,12 +32,15 @@ namespace QwerkE {
 			// keyFuncId = Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc);
 			// keyFuncId2 = Input::RegisterOnKeyEvent(eKeys_D, OnKeyFunc2);
 
+			Assets::Initialize();
+
 			return eOperationResult::Success;
 		}
 
 		eOperationResult Shutdown()
 		{
 			Scenes::Shutdown();
+			Assets::Shutdown();
 			Events::Shutdown();
 			Renderer::Shutdown();
 			Window::Shutdown();

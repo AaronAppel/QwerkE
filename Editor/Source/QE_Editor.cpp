@@ -400,9 +400,6 @@ namespace QwerkE {
 
                 debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
 
-                // #TODO Create a simpler drawLine(from, to) helper method
-                debugDrawer.drawLine({ 0, 0, 0 }, { 3, 4, 5 });
-
                 debugDrawer.end();
             }
 

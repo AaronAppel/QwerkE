@@ -13,8 +13,7 @@ namespace QwerkE {
     public:
         ComponentMesh() = default;
 
-        void Create();
-        void Destroy();
+        void Initialize();
 
         void Draw(const ComponentTransform& transform);
 

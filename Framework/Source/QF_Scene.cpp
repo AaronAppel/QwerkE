@@ -50,7 +50,7 @@ namespace QwerkE {
                 transform.SetPosition({ float(xx) * spacingScalar - offset, float(yy) * spacingScalar - offset, .0f });
 
                 ComponentMesh& mesh = m_Registry.emplace<ComponentMesh>(entityId);
-                mesh.Create();
+                mesh.Initialize();
             }
         }
     }
@@ -263,13 +263,6 @@ namespace QwerkE {
             return;
         }
 
-        auto viewMeshes = m_Registry.view<ComponentMesh>();
-        for (auto& entity : viewMeshes)
-        {
-            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
-            mesh.Destroy(); // #TODO Assets:: should manage mesh memory
-        }
-
         auto scripts = m_Registry.view<ComponentScript>();
         for (auto& entity : scripts)
         {
@@ -313,7 +306,7 @@ namespace QwerkE {
         auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (auto& enttId : viewMeshes)
         {
-            viewMeshes.get<ComponentMesh>(enttId).Create(); // #TODO Assets:: should manage mesh memory
+            viewMeshes.get<ComponentMesh>(enttId).Initialize(); // #TODO Assets:: should manage mesh memory
         }
 
         auto viewScripts = m_Registry.view<ComponentScript>();

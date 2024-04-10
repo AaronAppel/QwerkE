@@ -5,49 +5,25 @@
 #include <bx/bx.h>
 #include <bx/math.h>
 #include <bx/timer.h>
-#ifdef _QBGFXFRAMEWORK
-#include <bgfxFramework/SampleRenderData.h>
-#include <bgfxFramework/LoadShader.h>
 #ifdef _QDEBUG
 #include <bgfxFramework/debugDraw/debugdraw.h>
 #endif // _QDEBUG
-#endif // _QBGFXFRAMEWORK
 #endif // _QBGFX
 
+#include "QF_Assets.h"
 #include "QF_ComponentTransform.h"
 #include "QF_Renderer.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
 
-    void ComponentMesh::Create() // #TODO Move to Assets or a graphics data loader/creator
+    void ComponentMesh::Initialize() // #TODO Move to Assets or a graphics data loader/creator
     {
         m_StartingTimeOffset = bx::getHPCounter();
 
-        // #TESTING
-        // Create static vertex buffer.
-        m_vbh = bgfx::createVertexBuffer(
-            // Static data can be passed with bgfx::makeRef
-            bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices))
-            , PosColorVertex::ms_layout
-        );
-
-        m_ibh = bgfx::createIndexBuffer(
-            // Static data can be passed with bgfx::makeRef
-            bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
-        );
-
-        // Create program from shaders.
-        m_program = myLoadShaderProgram("vs_cubes.bin", "fs_cubes.bin");
-    }
-
-    void ComponentMesh::Destroy()
-    {
-        bgfx::destroy(m_ibh);
-        bgfx::destroy(m_vbh);
-        bgfx::destroy(m_program);
-
-        // m_Registry.destroy(); // #TODO Deallocate entt
+        m_vbh = Assets::GetVbh();
+        m_ibh = Assets::GetIbh();
+        m_program = Assets::GetProgram();
     }
 
     void ComponentMesh::Draw(const ComponentTransform& transform)
