@@ -118,7 +118,7 @@ namespace QwerkE {
 		void Invalidate() { m_EnttId != entt::null; m_Scene = nullptr; }
 		static EntityHandle InvalidHandle() { return EntityHandle(); }
 
-		operator bool() const { return m_EnttId != entt::null; }
+		operator bool() const { return m_EnttId != entt::null && m_Scene; }
 
 		bool EntityHandle::operator == (const EntityHandle& other) const { return other.m_EnttId == m_EnttId; }
 		bool EntityHandle::operator != (const EntityHandle& other) const { return other.m_EnttId != m_EnttId; }

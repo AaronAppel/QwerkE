@@ -127,15 +127,15 @@ namespace QwerkE {
 					{
 						EntityHandle handle(currentScene, entity);
 						if (handle.HasComponent<ComponentCamera>() || handle.HasComponent<ComponentLight>())
-							break;
+							continue;
 
 						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-						ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
-						// #TODO Get name for camera
-						// if (ImGui::Button(transform[i]->GetName().c_str()))
+
+						ComponentInfo& info = handle.GetComponent<ComponentInfo>();
+						if (ImGui::Button(info.m_EditorDisplayName))
 						{
-							// m_EntityEditor->SetCurrentEntity(entity);
-							// break;
+							m_EntityEditor->SetCurrentEntity(handle);
+							break;
 						}
 						sameLineCounter++;
 					}

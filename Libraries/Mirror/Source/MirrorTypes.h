@@ -45,6 +45,7 @@ enum class MirrorTypes
     // Components
     ComponentCamera,
     ComponentInfo,
+    ComponentLight,
     ComponentMesh,
     ComponentScript,
     ComponentTransform,

@@ -7,7 +7,7 @@ namespace QwerkE {
     class EditComponent
     {
     public:
-        void Draw(const EntityHandle& entity);
+        void Draw(EntityHandle& entity);
 
     private:
         unsigned int m_SelectedRenderableIndex = 0;

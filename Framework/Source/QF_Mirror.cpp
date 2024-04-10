@@ -26,6 +26,7 @@
 
 #include "QF_ComponentCamera.h"
 #include "QF_ComponentInfo.h"
+#include "QF_ComponentLight.h"
 #include "QF_ComponentMesh.h"
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
@@ -202,6 +203,9 @@ namespace QwerkE {
 									// and current cJSON implementation doesn't serialize 64 bit values
 	MIRROR_CLASS_MEMBER(m_Enabled)
 	MIRROR_CLASS_END(ComponentInfo)
+
+	MIRROR_CLASS_START(ComponentLight)
+	MIRROR_CLASS_END(ComponentLight)
 
 	MIRROR_CLASS_START(ComponentMesh)
 	MIRROR_CLASS_END(ComponentMesh)

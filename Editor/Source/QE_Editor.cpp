@@ -378,8 +378,7 @@ namespace QwerkE {
 #endif
 
             s_SceneViewer->Draw();
-            s_SceneGraph->Draw(); // <-- Missing ImGui::End()
-            return;
+            s_SceneGraph->Draw();
             s_EntityEditor->Draw();
 		}
 

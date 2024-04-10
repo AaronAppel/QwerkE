@@ -29,6 +29,16 @@ namespace QwerkE {
 
                 switch (field.typeInfo->enumType)
                 {
+                case MirrorTypes::m_floatArray16:
+                    {
+                        float* f16matrix = (float*)fieldAddress;
+                        ImGui::DragFloat4("0", f16matrix, .1f);
+                        ImGui::DragFloat4("1", &f16matrix[4], .1f);
+                        ImGui::DragFloat4("2", &f16matrix[8], .1f);
+                        ImGui::DragFloat4("3", &f16matrix[12], .1f);
+                    }
+                    break;
+
                 case MirrorTypes::m_vector_string: // #TODO Support vector manipulation
                     {
                         std::vector<std::string>* strings = (std::vector<std::string>*)fieldAddress;
@@ -37,6 +47,7 @@ namespace QwerkE {
                             const std::string* stringAddress = (const std::string*)strings->data() + i;
                             std::string fieldName = parentName + field.name + std::to_string(i);
                             ImGui::LabelText(fieldName.c_str(), stringAddress->data());
+                            // #TODO Edit strings
                             // if ()
                             // {
                             //     valueChanged = true;

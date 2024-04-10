@@ -23,7 +23,7 @@ namespace QwerkE {
             // Can use a separate text field for field names to look better.
 
             if (!ImGui::Begin(windowName))
-                return false;
+                return false; // #TODO ImGui::End() needed?
 
             // char charArray[200];
             std::string buffer = ""; // charArray;

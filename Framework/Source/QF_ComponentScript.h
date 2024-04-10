@@ -14,7 +14,12 @@ namespace QwerkE {
 		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
 		bool m_Bound = false;
 
-		void Bind(Scene* scene, entt::entity enttId)
+		void Bind(Scene* scene, entt::entity enttId) // #TODO Review if arguments are proper
+		{
+			Bind(EntityHandle(scene, enttId));
+		}
+
+		void Bind(const EntityHandle& entityHandle)
 		{
 			if (m_Bound)
 			{
@@ -25,7 +30,7 @@ namespace QwerkE {
 			for (auto& enumScriptablePair : m_ScriptInstances)
 			{
 				Scriptable* newScript = Scripting::InstantiateScript(enumScriptablePair.first);
-				newScript->SetEntity({ scene, enttId });
+				newScript->SetEntity(entityHandle);
 				m_ScriptInstances[enumScriptablePair.first] = newScript;
 			}
 			m_Bound = true;
