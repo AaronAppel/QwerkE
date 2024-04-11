@@ -98,4 +98,6 @@ namespace ImGui
 
 	void PushFontQw(Fonts font);
 	void PopFontQw();
+
+	void SameLineEnd(float scaling);
 }

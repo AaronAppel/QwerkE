@@ -23,25 +23,6 @@ enum class MirrorTypes
     vec2f,
     vec3f,
 
-    // Game
-    FirstPersonCameraComponent,
-    RenderComponent,
-    FreeCameraComponent,
-    StaticCameraComponent,
-    ThirdPersonCameraComponent,
-    RenderRoutine,
-    LightComponent,
-    Scene,
-    SceneViewerData,
-    Transform,
-    Renderable,
-    Routine,
-    Component,
-    Texture,
-    TransformRoutine,
-    ShaderProgram,
-    Material,
-
     // Components
     ComponentCamera,
     ComponentInfo,
@@ -51,8 +32,11 @@ enum class MirrorTypes
     ComponentTransform,
 
     // Misc
+    Scene,
     EntityHandle,
     GUID,
+    Mesh,
+    Shader,
 
     // External libraries
     m_enTT_Entity,

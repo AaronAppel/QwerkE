@@ -3,8 +3,6 @@
 #ifdef _QBGFX
 #include <bgfx/bgfx.h>
 #include <bx/bx.h>
-#include <bx/math.h>
-#include <bx/timer.h>
 #ifdef _QDEBUG
 #include <bgfxFramework/debugDraw/debugdraw.h>
 #endif // _QDEBUG
@@ -17,13 +15,14 @@
 
 namespace QwerkE {
 
-    void ComponentMesh::Initialize() // #TODO Move to Assets or a graphics data loader/creator
+    ComponentMesh::ComponentMesh()
     {
-        m_StartingTimeOffset = bx::getHPCounter();
+        // #TODO Use GUIDs. Can take in as arguments, but serialization "CAN" set initial values.
+        // Could assign data in memory, then emplace new to use empty/default constructor to get proper mesh data
+        // from data member values.
 
-        m_vbh = Assets::GetVbh();
-        m_ibh = Assets::GetIbh();
-        m_program = Assets::GetProgram();
+        m_Mesh = Assets::Get<Mesh>(GUID::Invalid); // #TODO Get proper guid
+        m_Shader = Assets::Get<Shader>(GUID::Invalid); // #TODO Get proper guid
     }
 
     void ComponentMesh::Draw(const ComponentTransform& transform)
@@ -48,48 +47,10 @@ namespace QwerkE {
             debugDrawer.end();
         }
 
-        {
-            const float time = (float)((bx::getHPCounter() - m_StartingTimeOffset) / double(bx::getHPFrequency()));
-
-            // This dummy draw call is here to make sure that view 0 is cleared
-            // if no other draw calls are submitted to view 0.
-
-            uint64_t state = 0
-                | BGFX_STATE_WRITE_R
-                | BGFX_STATE_WRITE_G
-                | BGFX_STATE_WRITE_B
-                | BGFX_STATE_WRITE_A
-                | BGFX_STATE_WRITE_Z
-                | BGFX_STATE_DEPTH_TEST_LESS
-                | BGFX_STATE_CULL_CW
-                | BGFX_STATE_MSAA
-                | 0 // #REVIEW
-                ;
-
-            // bx::mtxRotateXY(m_Matrix, time + m_Matrix[12] * 0.21f, time + m_Matrix[13] * 0.37f);
-
-            //* Rotates
-            // m_Matrix[12] = m_Position.x;
-            // m_Matrix[13] = m_Position.y;
-            // m_Matrix[14] = m_Position.z;
-
-            /*/ // Doesn't rotate
-            bx::mtxTranslate(m_Matrix, m_Position.x, m_Position.y, m_Position.z);
-            //*/
-
-            // Set model matrix for rendering.
-            bgfx::setTransform(transform.GetMatrix());
-
-            // Set vertex and index buffer.
-            bgfx::setVertexBuffer(0, m_vbh);
-            bgfx::setIndexBuffer(m_ibh);
-
-            // Set render states.
-            // bgfx::setState(state);
-
-            // Submit primitive for rendering to view 0.
-            bgfx::submit(viewIdFbo1, m_program);
-        }
+        bgfx::setTransform(transform.GetMatrix());
+        bgfx::setVertexBuffer(0, m_Mesh->m_vbh);
+        bgfx::setIndexBuffer(m_Mesh->m_ibh);
+        bgfx::submit(viewIdFbo1, m_Shader->m_Program);
 #endif
     }
 

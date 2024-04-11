@@ -29,7 +29,6 @@ namespace QwerkE {
 	EntityEditor::EntityEditor()
 	{
 #ifdef _QDEARIMGUI
-        m_CurrentEntity = EntityHandle::InvalidHandle();
         m_EditComponent = std::make_unique<EditComponent>();
 #endif
 	}
@@ -48,6 +47,19 @@ namespace QwerkE {
         }
 #endif
 	}
+
+    template <typename T>
+    T* AddComponentEntry(EntityHandle& entity)
+    {
+        const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+        if (!entity.HasComponent<T>() && ImGui::MenuItem(typeInfo->stringName.c_str()))
+        {
+            T& component = entity.AddComponent<T>();
+            ImGui::CloseCurrentPopup();
+            return &component;
+        }
+        return nullptr;
+    }
 
 	void EntityEditor::DrawEntityEditor()
 	{
@@ -93,12 +105,17 @@ namespace QwerkE {
 
             if (ImGui::BeginPopup("ComponentList"))
             {
-                if (!m_CurrentEntity.HasComponent<ComponentScript>() && ImGui::MenuItem("ComponentScript"))
+                AddComponentEntry<ComponentInfo>(m_CurrentEntity);
+                AddComponentEntry<ComponentTransform>(m_CurrentEntity);
+
+                AddComponentEntry<ComponentCamera>(m_CurrentEntity);
+                AddComponentEntry<ComponentLight>(m_CurrentEntity);
+
+                if (ComponentScript* script = AddComponentEntry<ComponentScript>(m_CurrentEntity))
                 {
-                    ComponentScript& script = m_CurrentEntity.AddComponent<ComponentScript>();
-                    script.m_ScriptInstances.insert({ eScriptTypes::Testing, nullptr});
-                    script.Bind(m_CurrentEntity);
-                    ImGui::CloseCurrentPopup();
+                    // #TODO Pick a script type
+                    script->m_ScriptInstances.insert({ eScriptTypes::Testing, nullptr });
+                    script->Bind(m_CurrentEntity);
                 }
                 ImGui::EndPopup();
             }

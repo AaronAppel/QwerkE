@@ -29,14 +29,28 @@
 #include "QF_ComponentMesh.h"
 #include "QF_ComponentScript.h"
 
-QC_ENUM(eSceneGraphFilter, u8, Actors, Cams, Lights)
-QC_ENUM(eSceneGraphCreateTypes, u8, Empty, Light, Camera, Script, Mesh)
+QC_ENUM(eSceneGraphCreateTypes, u8, Empty, Light, Camera, Script, Mesh) // #TODO Use a proper eComponentTypes enum everywhere
 
 namespace QwerkE {
 
 	SceneGraph::SceneGraph(EntityEditor* entityEditor)
 		: m_EntityEditor(entityEditor)
-	{
+	{ }
+
+#define SceneGraphEntityList(COMPONENT_TYPE) \
+	auto viewComponents = currentScene->ViewComponents<COMPONENT_TYPE>(); \
+	for (auto entity : viewComponents) \
+	{ \
+		if (sameLineCounter % itemsPerRow) ImGui::SameLine(); \
+ \
+		EntityHandle handle(currentScene, entity); \
+		ComponentInfo& info = handle.GetComponent<ComponentInfo>(); \
+		if (ImGui::Button(info.m_EditorDisplayName)) \
+		{ \
+			m_EntityEditor->SetCurrentEntity(handle); \
+			break; \
+		} \
+		sameLineCounter++; \
 	}
 
 	void SceneGraph::Draw()
@@ -48,25 +62,16 @@ namespace QwerkE {
 			if (currentScene == nullptr)
 				return;
 
-			for (size_t i = 0; i < eSceneGraphFilter::_size_constant; i++)
-			{
-				if (i > 0) ImGui::SameLine();
-
-				if (ImGui::Button(ENUM_TO_STR(eSceneGraphFilter::_from_index(i))))
-				{
-					m_CurrentList = i;
-				}
-			}
-
-			ImGui::SameLine();
+			ImGui::Text((currentScene->GetSceneName() + ":").c_str());
+			ImGui::SameLineEnd(1.f);
 			if (ImGui::Button("+"))
 			{
-				ImGui::OpenPopup("Create Object");
+				ImGui::OpenPopup("Create Entity");
 			}
 
-			if (ImGui::BeginPopup("Create Object")) // #TODO Support file and prefab instantiation
+			if (ImGui::BeginPopup("Create Entity")) // #TODO Support file and prefab instantiation
 			{
-				ImGui::Text("Object Types");
+				ImGui::Text("Entity Types");
 				ImGui::Separator();
 
 				// #TODO Option to create from prefab (or add option to create prefab instance another way)
@@ -75,6 +80,7 @@ namespace QwerkE {
 				{
 					if (ImGui::Selectable(ENUM_TO_STR(eSceneGraphCreateTypes::_from_index(i))))
 					{
+						// #TODO Look at a using a macro/template function for repition
 						switch (i)
 						{
 						case eSceneGraphCreateTypes::Empty:
@@ -90,95 +96,29 @@ namespace QwerkE {
 							break;
 
 						case eSceneGraphCreateTypes::Script:
-							// currentScene->CreateEntity()->AddComponent<ComponentScript>();
-							// #TODO Bind to a script type. Might need a sub-context menu option and list script options
-							LOG_WARN("{0} Case not implemented yet", __FUNCTION__);
+							currentScene->CreateEntity().AddComponent<ComponentScript>();
 							break;
 
 						case eSceneGraphCreateTypes::Mesh:
 							currentScene->CreateEntity().AddComponent<ComponentMesh>();
-							break;
-
-						default:
 							break;
 						}
 					}
 				}
 				ImGui::EndPopup();
 			}
-			ImGui::Separator();
 
-			const float itemWidth = 100;
-			const int itemsPerRow = (int)(ImGui::GetWindowWidth() / itemWidth + 1.f);
-			int sameLineCounter = 0;
-			ImGui::PushItemWidth(50);
-
-			// For drawing scene hierarchy of nodes
-			const bool selected = false;
-			ImGuiTreeNodeFlags flags = (selected ? ImGuiTreeNodeFlags_Selected : 0 ) | ImGuiTreeNodeFlags_OpenOnArrow;
-			flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
-
-			switch (m_CurrentList)
+			auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
+			for (auto entity : viewTransforms)
 			{
-			case eSceneGraphFilter::Actors:
+				EntityHandle handle(currentScene, entity);
+				ComponentInfo& info = handle.GetComponent<ComponentInfo>();
+				if (ImGui::Button(info.m_EditorDisplayName))
 				{
-					auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
-					for (auto entity : viewTransforms)
-					{
-						EntityHandle handle(currentScene, entity);
-						if (handle.HasComponent<ComponentCamera>() || handle.HasComponent<ComponentLight>())
-							continue;
-
-						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-
-						ComponentInfo& info = handle.GetComponent<ComponentInfo>();
-						if (ImGui::Button(info.m_EditorDisplayName))
-						{
-							m_EntityEditor->SetCurrentEntity(handle);
-							break;
-						}
-						sameLineCounter++;
-					}
+					m_EntityEditor->SetCurrentEntity(handle);
+					break;
 				}
-				break;
-
-			case eSceneGraphFilter::Cams: // #TODO Duplicated logic with lights. Could be templated or macro'd
-				{
-					auto viewCameras = currentScene->ViewComponents<ComponentCamera>();
-					for (auto entity : viewCameras)
-					{
-						if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-
-						EntityHandle handle(currentScene, entity);
-						ComponentInfo& info = handle.GetComponent<ComponentInfo>();
-						if (ImGui::Button(info.m_EditorDisplayName))
-						{
-							m_EntityEditor->SetCurrentEntity(handle);
-							break;
-						}
-						sameLineCounter++;
-					}
-				}
-				break;
-
-			case eSceneGraphFilter::Lights:
-				auto viewLights = currentScene->ViewComponents<ComponentLight>();
-				for (auto entity : viewLights)
-				{
-					if (sameLineCounter % itemsPerRow) ImGui::SameLine();
-
-					EntityHandle handle(currentScene, entity);
-					const ComponentInfo& info = handle.GetComponent<ComponentInfo>();
-					if (ImGui::Button(info.m_EditorDisplayName))
-					{
-						m_EntityEditor->SetCurrentEntity(handle);
-						break;
-					}
-					sameLineCounter++;
-				}
-				break;
 			}
-			ImGui::PopItemWidth();
 		}
 		ImGui::End();
 #endif

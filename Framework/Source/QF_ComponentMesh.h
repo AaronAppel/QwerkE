@@ -5,24 +5,21 @@
 #endif
 
 #include "QF_ComponentTransform.h"
+#include "QF_Mesh.h"
+#include "QF_Shader.h"
 
 namespace QwerkE {
 
     class ComponentMesh
     {
     public:
-        ComponentMesh() = default;
-
-        void Initialize();
+        ComponentMesh();
 
         void Draw(const ComponentTransform& transform);
 
     private:
-        bgfx::VertexBufferHandle m_vbh;
-        bgfx::IndexBufferHandle m_ibh;
-        bgfx::ProgramHandle m_program;
-
-        int64_t m_StartingTimeOffset = INT64_MIN;
+        sPtr<Mesh> m_Mesh;
+        sPtr<Shader> m_Shader;
     };
 
 }

@@ -24,7 +24,7 @@ namespace QwerkE {
     private:
         void DrawEntityEditor();
 
-        EntityHandle m_CurrentEntity;;
+        EntityHandle m_CurrentEntity;
         uPtr<EditComponent> m_EditComponent = nullptr;
 
         std::vector<const char*> m_ListboxItemStrings = { "Render" };

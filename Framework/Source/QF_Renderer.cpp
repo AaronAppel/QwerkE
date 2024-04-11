@@ -180,8 +180,6 @@ namespace QwerkE {
 				return;
 
 #ifdef _QBGFX
-			bgfx::dbgTextPrintf(0, 3, 0x0f, "Framebuffer %i", (int)s_ViewIdFbo1);
-
 			bgfx::frame();
 
 			uint64_t state = 0

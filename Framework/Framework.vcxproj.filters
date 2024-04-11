@@ -46,7 +46,7 @@
       <Filter>Utils\FileIO\Serialization</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Renderer.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Mirror.cpp" />
     <ClCompile Include="Source\QF_Assets.cpp">
@@ -139,11 +139,11 @@
       <Filter>Utils\FileIO\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Renderer.h">
-      <Filter>Renderer</Filter>
+      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Callbacks.h" />
     <ClInclude Include="Source\QF_RendererHelpers.h">
-      <Filter>Renderer</Filter>
+      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Assets.h">
       <Filter>Assets</Filter>
@@ -159,9 +159,6 @@
     </ClInclude>
     <ClInclude Include="Source\QF_Files.h">
       <Filter>Utils\FileIO</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QF_AssetsTypes.h">
-      <Filter>Assets</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Buffer.h">
       <Filter>Utils\FileIO</Filter>
@@ -201,6 +198,12 @@
     <ClInclude Include="Source\QF_Scripting.h">
       <Filter>Game Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_Mesh.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_Shader.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -221,14 +224,8 @@
     <Filter Include="Root Files">
       <UniqueIdentifier>{d5b62bcb-1d02-446e-aaa5-d6a2b23f741b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Renderer">
-      <UniqueIdentifier>{e053b3d5-3dc4-4af2-9b68-6ad556038b53}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{96c480e2-99c4-4a6f-b574-fa45682e4b6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Renderer\Mesh">
-      <UniqueIdentifier>{6f2fa8a4-0f5c-4646-8be2-9b0bd0d35e63}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{59332054-2f7b-47ee-ac59-7ed08c2e0a30}</UniqueIdentifier>
@@ -250,6 +247,12 @@
     </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{7599a1b0-c2ae-44ff-a81b-1ed7fdb6316a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{e053b3d5-3dc4-4af2-9b68-6ad556038b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\Mesh">
+      <UniqueIdentifier>{6f2fa8a4-0f5c-4646-8be2-9b0bd0d35e63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

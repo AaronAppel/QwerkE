@@ -42,15 +42,24 @@ namespace QwerkE {
 
             const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
 
-            if (ImGui::CollapsingHeader(typeInfo->stringName.c_str(), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_None))
+            const float minusButtonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
+
+            const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+            const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, typeInfo->stringName.c_str());
+
+            if (!std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>)
             {
-                Inspector::InspectObject(component, "Entity Editor");
+                ImGui::SameLine(minusButtonWidth);
+                if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
+                {
+                    entity.RemoveComponent<T>();
+                }
             }
 
-            ImGui::SameLine(ImGui::GetContentRegionAvail().x - lineHeight * 0.5f);
-            if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
+            if (nodeOpen)
             {
-                // ImGui::OpenPopup("ComponentSettings");
+                Inspector::InspectObject(component, "Entity Editor");
+                ImGui::TreePop();
             }
         }
     }

@@ -21,6 +21,7 @@
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
 #include "QF_Projects.h"
+#include "QF_Mesh.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
 
@@ -221,4 +222,11 @@ namespace QwerkE {
 	// Misc
 	MIRROR_CLASS_START(EntityHandle)
 	MIRROR_CLASS_END(EntityHandle)
+
+	// Assets
+	MIRROR_CLASS_START(Mesh)
+	MIRROR_CLASS_END(Mesh)
+
+	MIRROR_CLASS_START(Shader)
+	MIRROR_CLASS_END(Shader)
 }

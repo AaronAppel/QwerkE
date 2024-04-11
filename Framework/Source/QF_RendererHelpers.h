@@ -50,7 +50,7 @@ bgfx::ProgramHandle myLoadShaderProgram(const char* vertexShaderFilePath, const 
 	const bgfx::ShaderHandle vertexShader = myLoadShader(vertexShaderFilePath);
 	const bgfx::ShaderHandle fragmentShader = myLoadShader(fragmentShaderFilePath);
 
-	return bgfx::createProgram(vertexShader, fragmentShader, true);
+	return bgfx::createProgram(vertexShader, fragmentShader, false);
 }
 
 // Mesh* otherMeshLoad(bx::ReaderSeekerI* _reader, bool _ramcopy)

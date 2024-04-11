@@ -50,7 +50,6 @@ namespace QwerkE {
                 transform.SetPosition({ float(xx) * spacingScalar - offset, float(yy) * spacingScalar - offset, .0f });
 
                 ComponentMesh& mesh = m_Registry.emplace<ComponentMesh>(entityId);
-                mesh.Initialize();
             }
         }
     }
@@ -302,12 +301,6 @@ namespace QwerkE {
             }
         }
         ASSERT(GUID::Invalid != m_CameraEntityGuid, "Could not find camera component!");
-
-        auto viewMeshes = m_Registry.view<ComponentMesh>();
-        for (auto& enttId : viewMeshes)
-        {
-            viewMeshes.get<ComponentMesh>(enttId).Initialize(); // #TODO Assets:: should manage mesh memory
-        }
 
         auto viewScripts = m_Registry.view<ComponentScript>();
         for (auto& enttId : viewScripts)

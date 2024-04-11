@@ -23,4 +23,11 @@ namespace ImGui
 		ImGui::PopFont();
 	}
 
+	void SameLineEnd(float scaling)
+	{
+		const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
+		const float offset = ImGui::GetContentRegionAvail().x - lineHeight * scaling;
+		ImGui::SameLine(offset);
+	}
+
 }
