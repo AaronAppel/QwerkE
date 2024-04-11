@@ -18,77 +18,60 @@
 
 namespace QwerkE {
 
-	sPtr<Mesh> Assets::m_NullMesh = nullptr;
-	std::unordered_map<GUID, sPtr<Mesh>> Assets::m_Meshes;
-
-	using AssetsMap = std::unordered_map<GUID, void*>;
 	std::unordered_map<MirrorTypes, AssetsMap> Assets::m_MapOfAssetMaps;
-
-	// const sPtr<T> local_Load(const std::unordered_map<GUID, sPtr<T>>& assetMap, const GUID& guid);
-
-	sPtr<Shader> Assets::m_NullShader = nullptr;
-	bgfx::ProgramHandle Assets::m_ProgramCube;
 
 	void Assets::Initialize()
 	{
-		m_NullMesh = std::make_shared<Mesh>();
-		m_NullMesh->m_vbh = bgfx::createVertexBuffer(
-			// Static data can be passed with bgfx::makeRef
-			bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices))
-			, PosColorVertex::ms_layout
-		);
+		{
+			Mesh* nullMesh = new Mesh();
+			nullMesh->m_vbh = bgfx::createVertexBuffer(
+				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)), // Static data can be passed with bgfx::makeRef
+				PosColorVertex::ms_layout
+			);
+			nullMesh->m_ibh = bgfx::createIndexBuffer(
+				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
+			);
+			m_MapOfAssetMaps[MirrorTypes::Mesh][GUID::Invalid] = nullMesh;
+		}
 
-		m_NullMesh->m_ibh = bgfx::createIndexBuffer(
-			// Static data can be passed with bgfx::makeRef
-			bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
-		);
-		m_Meshes.insert({ m_NullMesh->m_GUID, m_NullMesh });
-
-		m_MapOfAssetMaps[MirrorTypes::Mesh].insert({ GUID::Invalid, (void*)&m_NullMesh });
-
-		m_NullShader = std::make_shared<Shader>();
-		m_NullShader->m_Program = myLoadShaderProgram("vs_cubes.bin", "fs_cubes.bin");
-		m_MapOfAssetMaps[MirrorTypes::Shader].insert({ GUID::Invalid, (void*)&m_NullShader });
+		{
+			Shader* nullShader = new Shader();
+			nullShader->m_Program = myLoadShaderProgram("vs_cubes.bin", "fs_cubes.bin");
+			m_MapOfAssetMaps[MirrorTypes::Shader][GUID::Invalid] = nullShader;
+		}
 	}
 
 	void Assets::Shutdown()
 	{
-		m_Meshes.clear();
-		m_NullMesh.reset();
-		// #TODO ASSERT all meshes were released
-
-		m_NullShader.reset();
-
-		bgfx::destroy(m_ProgramCube);
-	}
-
-	// template <typename T>
-	// void GetAsset(const char* assetName)
-	// {
-	// 	// Get extension
-	// 	// For a given extension, check if file is loaded
-	// 	// For a given extension, load if needed
-	// 	// For a loaded asset, return asset
-	// 	// Handle invalid (unloaded) asset case
-	// 	return ;
-	// }
-
-	template <typename T>
-	sPtr<T>& local_Load(const std::unordered_map<GUID, sPtr<T>>& assetMap, const GUID& guid)
-	{
-		ASSERT(textureFilePath, "Invalid textureFilePath!");
-
-		Path fileName = Files::FileName(textureFilePath);
-		// #TODO Make fileName.string().c_str() nicer to use
-		if (local_Has(fileName.string().c_str()))
+		for (auto& mirrorTypeAssetMapPair : m_MapOfAssetMaps)
 		{
-#ifdef _QDEBUG
-			LOG_WARN("{0} Asset already exists: {1}", __FUNCTION__, fileName.string().c_str());
-#endif
-			return *s_Textures[textureFilePath];
+			AssetsMap assetsMap = mirrorTypeAssetMapPair.second;
+
+			for (auto& guidVoidPtrPair : assetsMap)
+			{
+				if (guidVoidPtrPair.second)
+				{
+					switch (mirrorTypeAssetMapPair.first)
+					{
+					case MirrorTypes::Mesh:
+						delete static_cast<Mesh*>(guidVoidPtrPair.second);
+						break;
+
+					case MirrorTypes::Shader:
+						delete static_cast<Shader*>(guidVoidPtrPair.second);
+						break;
+
+					default:
+						LOG_CRITICAL("{0} Unsupported type!", __FUNCTION__);
+						break;
+					}
+				}
+			}
+			assetsMap.clear();
 		}
-		// #TODO Load asset
-		return s_NullTexture;
+		m_MapOfAssetMaps.clear();
+
+		// #TODO ASSERT all assets were properly released
 	}
 
 }

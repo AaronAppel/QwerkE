@@ -204,6 +204,9 @@
     <ClInclude Include="Source\QF_Shader.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_AssetsHandle.h">
+      <Filter>Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

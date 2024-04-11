@@ -1,6 +1,7 @@
 #include "QE_Editor.h"
 
-#include <string> // For std::map<std::string, const char*> pairs;
+#include <map>      // For std::map<std::string, const char*> pairs;
+#include <string>   // For std::map<std::string, const char*> pairs;
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QC_imgui.h"
@@ -22,8 +23,8 @@
 
 #include "QC_Time.h"
 
+#include "QF_Assets.h"
 #include "QF_Directory.h"
-#include "QF_Files.h"
 #include "QF_Framework.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
@@ -40,6 +41,11 @@
 #include "QE_ProgramArgs.h"
 #include "QE_SceneGraph.h"
 #include "QE_SceneViewer.h"
+
+// #TESTING
+#include "QC_Guid.h"
+#include "QF_Mesh.h"
+// #TESTING
 
 namespace QwerkE {
 
@@ -191,6 +197,17 @@ namespace QwerkE {
                 local_EditorDraw(); // Start dock context. ImGui code above won't dock
                 Scenes::GetCurrentScene()->DrawImgui();
             }
+
+            if (ImGui::Begin("Assets"))
+            {
+                const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
+                for (auto& guidMeshPair : meshes)
+                {
+                    Mesh* mesh = guidMeshPair.second;
+                    ImGui::Text(std::to_string(mesh->m_GUID).c_str());
+                }
+            }
+            ImGui::End();
 
             Framework::DrawImguiEnd();
         }

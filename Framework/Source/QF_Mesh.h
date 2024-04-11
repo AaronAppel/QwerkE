@@ -9,15 +9,13 @@ namespace QwerkE {
 	class Mesh
 	{
 	public:
-		Mesh::Mesh()
-		{
-			// #TODO Should take in buffer GUIDs?
-		}
-
 		Mesh::~Mesh()
 		{
-			bgfx::destroy(m_vbh);
-			bgfx::destroy(m_ibh);
+			if (true) // #TODO Validate if destroy is needed
+			{
+				bgfx::destroy(m_vbh);
+				bgfx::destroy(m_ibh);
+			}
 		}
 
 		void PreDrawSetup()

@@ -18,8 +18,8 @@ namespace QwerkE {
         void Draw(const ComponentTransform& transform);
 
     private:
-        sPtr<Mesh> m_Mesh;
-        sPtr<Shader> m_Shader;
+        Mesh* m_Mesh = nullptr;
+        Shader* m_Shader = nullptr;
     };
 
 }

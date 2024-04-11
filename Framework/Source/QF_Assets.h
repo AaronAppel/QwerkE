@@ -6,61 +6,56 @@
 
 #include "QC_Guid.h"
 
+enum class MirrorTypes;
+
 namespace QwerkE {
 
-	class Mesh;
-	class Shader;
-
-	using AssetsMap = std::unordered_map<GUID, void*>;
+	using AssetsMap = std::unordered_map<GUID, void*>; // #NOTE Smart pointers require compile time types. Could look at another solution
 
 	class Assets
 	{
 	public:
 		Assets() = delete;
-		~Assets() = delete;
 
-		static const bgfx::ProgramHandle& GetProgram() { return m_ProgramCube; }
-
-		template <typename T>
-		static bool Has(const std::unordered_map<GUID, sPtr<T>>& assetMap, const GUID& guid)
-		{
-			// ASSERT(guid != GUID::Invalid, "Invalid guid!");
-			return assetMap.find(guid) != assetMap.end();
-		}
-
-		// const sPtr<T> local_Load(const std::unordered_map<GUID, sPtr<T>>& assetMap, const GUID& guid);
+		static void Initialize();
+		static void Shutdown();
 
 		template <typename T>
-		static sPtr<T> Get(GUID guid)
+		static bool Has(GUID guid)
 		{
 			const MirrorTypes typeEnum = Mirror::InfoForType<T>()->enumType;
-			std::unordered_map<GUID, sPtr<T>>* assetMap = (std::unordered_map<GUID, sPtr<T>>*)&m_MapOfAssetMaps[typeEnum];
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
 
-			if (!Has(*assetMap, guid))
+			return assetMap->find(guid) != assetMap->end();
+		}
+
+		template <typename T>
+		static T* Get(GUID guid)
+		{
+			const MirrorTypes typeEnum = Mirror::InfoForType<T>()->enumType;
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
+
+			if (!Has<T>(guid))
 			{
 				guid = GUID::Invalid;
 			}
 
 			void* assetPtr = m_MapOfAssetMaps[typeEnum][guid];
-			return *(sPtr<T>*)assetPtr;
+			return static_cast<T*>(assetPtr);
 		}
 
-		static void Initialize();
-		static void Shutdown();
-
 #ifndef _QRETAIL
-		// For editor only, really. Maybe find another use for exposing assets collections
-		// map<TypeId, map<Id, Asset>> ViewAssets();
+		template <typename T>
+		static const std::unordered_map<GUID, T*>& ViewAssets()
+		{
+			const MirrorTypes typeEnum = Mirror::InfoForType<T>()->enumType;
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
+			return *assetMap;
+		}
 #endif
 
 	private:
-		static sPtr<Mesh> m_NullMesh;
-		static sPtr<Shader> m_NullShader;
-
-		static std::unordered_map<GUID, sPtr<Mesh>> m_Meshes;
 		static std::unordered_map<MirrorTypes, AssetsMap> m_MapOfAssetMaps;
-
-		static bgfx::ProgramHandle m_ProgramCube;
 	};
 
 }
