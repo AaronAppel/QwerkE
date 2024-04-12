@@ -26,7 +26,7 @@ namespace QwerkE {
         {
             const vec2f& windowSize = Window::GetSize();
 
-            // bgfx::setViewClear(viewId, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
+            bgfx::setViewClear(viewId, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
             bgfx::setViewRect(viewId, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
 
             bgfx::setViewFrameBuffer(viewId, Renderer::s_FrameBufferHandle);
@@ -39,6 +39,7 @@ namespace QwerkE {
             bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
             bgfx::setViewTransform(viewId, m_View, m_Proj);
 
+            if (m_ShowSphere)
             {
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
                 debugDrawer.begin(viewId);
@@ -46,6 +47,8 @@ namespace QwerkE {
                 debugDrawer.end();
             }
         }
+
+        bool m_ShowSphere = true;
 
         float m_MoveSpeed = 5.f;
 

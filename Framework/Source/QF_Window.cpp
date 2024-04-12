@@ -13,7 +13,12 @@
 #include "Libraries/imgui/QC_imgui.h"
 #endif
 
+#include "QF_Assets.h"
 #include "QF_Debug.h"
+#include "QF_Files.h"
+#include "QF_Paths.h"
+#include "QF_Scene.h"
+#include "QF_Scenes.h"
 #include "QF_Settings.h"
 
 const char* g_WindowTitle = "QwerkEngine";
@@ -33,6 +38,7 @@ namespace QwerkE {
     #ifdef _QGLFW3
         GLFWwindow* s_window = nullptr;
 
+        void local_file_drop_callback(GLFWwindow* window, int fileCount, const char** filePaths);
         void local_CheckGlfwErrors();
 
         void local_error_callback(int error, const char* description)
@@ -124,7 +130,7 @@ namespace QwerkE {
             glfwSetWindowCloseCallback(s_window, local_close_callback);
             glfwSetWindowSizeCallback(s_window, local_window_resized_callback);
             glfwSetWindowIconifyCallback(s_window, local_window_iconify_callback);
-            // glfwSetDropCallback(s_window, local_file_drop_callback);
+            glfwSetDropCallback(s_window, local_file_drop_callback);
 
             glfwSetKeyCallback(s_window, key_callback);
     #endif
@@ -270,6 +276,33 @@ namespace QwerkE {
         }
 
     #ifdef _QGLFW3
+        // #TODO Call editor or add an editor callback so window doesn't have file drop logic in release/non-editor build.
+        void local_file_drop_callback(GLFWwindow* window, int fileCount, const char** filePaths)
+        {
+            for (int i = 0; i < fileCount; i++)
+            {
+                const Path fileName = Files::FileName(filePaths[i]);
+                const Path fileExtension = Files::FileExtension(filePaths[i]);
+
+                if (strcmp(fileExtension.string().c_str(), ".qscene") == 0)
+                {
+                    std::string scenefilePath = Paths::ScenesDir() + fileName.string();
+                    if (Files::Exists(scenefilePath.c_str()))
+                    {
+                        if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
+                        {
+                            Scenes::SetCurrentScene(newScene);
+                            Assets::AddToRegistry(newScene->GetGuid(), newScene->GetSceneName());
+                        }
+                    }
+                }
+                else
+                {
+                    LOG_WARN("Drag file type unsupported: {0}", fileExtension.string().c_str());
+                }
+            }
+        }
+
         void local_CheckGlfwErrors()
         {
             int glfwErrorCode = glfwGetError(NULL);

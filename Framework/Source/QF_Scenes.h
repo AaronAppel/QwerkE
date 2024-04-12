@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "QC_Guid.h"
+
 #include "QF_Enums.h"
 
 namespace QwerkE {
@@ -35,6 +37,7 @@ namespace QwerkE {
         Scene* GetCurrentScene();
         int GetCurrentSceneIndex();
         int SceneCount();
+        Scene* GetScene(const GUID& guid);
         Scene* GetScene(std::string sceneName);
         Scene* GetScene(const Scene* const scene);
         const std::vector<Scene*>& LookAtScenes();

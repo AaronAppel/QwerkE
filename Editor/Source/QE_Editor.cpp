@@ -55,6 +55,8 @@ namespace QwerkE {
 
 	namespace Editor {
 
+        static EditorDirtyFlags s_DirtyFlags = EditorDirtyFlags::None;
+
 		static EntityEditor* s_EntityEditor = nullptr;
 		static SceneGraph* s_SceneGraph = nullptr;
 		static SceneViewer* s_SceneViewer = nullptr;
@@ -165,6 +167,11 @@ namespace QwerkE {
 		{
 			s_EntityEditor->OnReset();
 		}
+
+        const EditorDirtyFlags& DirtyFlags()
+        {
+            return s_DirtyFlags;
+        }
 
 		void local_EditorInitialize()
 		{
@@ -326,7 +333,7 @@ namespace QwerkE {
                             break;
 
                         case eSettingsOptions::Assets:
-                            Assets::SaveToRegistry();
+                            Assets::SaveRegistry();
                             break;
                         }
                     }

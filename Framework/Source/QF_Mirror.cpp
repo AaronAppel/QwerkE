@@ -188,6 +188,7 @@ namespace QwerkE {
 
 	// Components
 	MIRROR_CLASS_START(ComponentCamera)
+	MIRROR_CLASS_MEMBER(m_ShowSphere)
 	MIRROR_CLASS_MEMBER(m_MoveSpeed)
 	MIRROR_CLASS_MEMBER(m_At)
 	MIRROR_CLASS_MEMBER(m_Fov)

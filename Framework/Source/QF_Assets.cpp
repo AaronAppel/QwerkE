@@ -50,7 +50,7 @@ namespace QwerkE {
 
 	void Assets::Shutdown()
 	{
-		SaveToRegistry();
+		SaveRegistry();
 
 		for (auto& mirrorTypeAssetMapPair : m_MapOfAssetMaps)
 		{
@@ -83,9 +83,30 @@ namespace QwerkE {
 		// #TODO ASSERT all assets were properly released
 	}
 
-	void Assets::SaveToRegistry()
+	void Assets::SaveRegistry()
 	{
 		Serialization::SerializeObjectToFile(s_AssetGuidToFileRegistry, Paths::Settings(s_AssetsRegistryFileName).c_str());
+	}
+
+	void Assets::ExistsInRegistry(const GUID& guid, const std::string& fileName)
+	{
+		// #TODO Implement
+	}
+
+	void Assets::AddToRegistry(const GUID& guid, const std::string& fileName)
+	{
+		// #TODO if (!ExistsInRegistry(giod, fileName))
+
+		for (size_t i = 0; i < s_AssetGuidToFileRegistry.size(); i++)
+		{
+			std::pair<GUID, std::string>& pair = s_AssetGuidToFileRegistry[i];
+			if (pair.first == guid || pair.second == fileName)
+			{
+				LOG_WARN("{0} Asset exists in registry ({1}, {2})", __FUNCTION__, std::to_string(pair.first).c_str(), pair.second.c_str());
+				return;
+			}
+		}
+		s_AssetGuidToFileRegistry.push_back({ guid, fileName });
 	}
 
 	std::vector<std::pair<GUID, std::string>>& Assets::ViewRegistry()

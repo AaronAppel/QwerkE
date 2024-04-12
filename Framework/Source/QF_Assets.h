@@ -55,8 +55,9 @@ namespace QwerkE {
 			return *assetMap;
 		}
 #endif
-		static void SaveToRegistry();
-
+		static void SaveRegistry();
+		static void ExistsInRegistry(const GUID& guid, const std::string& fileName);
+		static void AddToRegistry(const GUID& guid, const std::string& fileName);
 		static std::vector<std::pair<GUID, std::string>>& ViewRegistry();
 
 	private:

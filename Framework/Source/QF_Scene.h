@@ -62,6 +62,8 @@ namespace QwerkE {
         EntityHandle GetCurrentCameraEntity();
         void SetCurrentCameraEntity(EntityHandle newCameraEntity);
 
+        const GUID& GetGuid() { return m_SceneGuid; }
+
     private:
         MIRROR_PRIVATE_MEMBERS
         friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
@@ -73,6 +75,8 @@ namespace QwerkE {
         std::unordered_map<GUID, entt::entity> m_GuidsToEntts;
 
         std::string m_SceneFileName = Constants::gc_DefaultStringValue;
+
+        GUID m_SceneGuid;
 
         bool m_IsLoaded = false;
         bool m_IsDirty = false; // #TODO Editor only state. Move out of here

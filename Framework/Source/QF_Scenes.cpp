@@ -235,6 +235,18 @@ namespace QwerkE {
 			}
 		}
 
+		Scene* GetScene(const GUID& guid)
+		{
+			for (size_t i = 0; i < s_Scenes.size(); i++)
+			{
+				if (s_Scenes[i]->GetGuid() == guid)
+				{
+					return s_Scenes[i];
+				}
+			}
+			return nullptr;
+		}
+
 		Scene* GetScene(std::string sceneName)
 		{
 			for (size_t i = 0; i < s_Scenes.size(); i++)
