@@ -191,15 +191,17 @@ namespace QwerkE {
 			}
 		}
 
-#define DeserializeComponent(COMPONENT_TYPE) \
+		// #TODO Look at using component enum instead of strings
+#define DeserializeComponent(COMPONENT_TYPE, add) \
 		if (strcmp(componentsJsonVector.at(j)->string, #COMPONENT_TYPE) == 0) \
 		{ \
-			COMPONENT_TYPE& component = entity.AddComponent<COMPONENT_TYPE>(); \
+			if (add) entity.AddComponent<COMPONENT_TYPE>(); \
+			COMPONENT_TYPE& component = entity.GetComponent<COMPONENT_TYPE>(); \
 			DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<COMPONENT_TYPE>(), (void*)&component); \
 			continue; \
 		}
 
-		void local_DeserializeJsonArray(const cJSON * jsonObj, const Mirror::Field & field, void* obj)
+		void local_DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
 		{
 			if (!jsonObj || !jsonObj->type || jsonObj->type != cJSON_Array || !obj)
 			{
@@ -215,7 +217,7 @@ namespace QwerkE {
 				if (field.typeInfo->isCollection())
 				{
 					ImVec4* colours = (ImVec4*)obj; // #TODO Review if possible to validate pointer value
-					auto typeInfo = Mirror::InfoForType<ImVec4>();
+					const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<ImVec4>();
 
 					const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
 
@@ -227,6 +229,24 @@ namespace QwerkE {
 			}
 			break;
 			//
+
+			case MirrorTypes::m_vec_pair_guid_string:
+				{
+					std::vector<std::pair<GUID, std::string>>* vecGuidStrings = (std::vector<std::pair<GUID, std::string>>*)obj;
+					const std::vector<cJSON*> guidStringsJsonVector = GetAllItemsFromArray(jsonObj);
+
+					vecGuidStrings->reserve(guidStringsJsonVector.size());
+					for (size_t i = 0; i < guidStringsJsonVector.size(); i++)
+					{
+						using PairGuidString = std::pair<GUID, std::string>;
+						PairGuidString pair;
+
+						const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<PairGuidString>();
+						DeserializeJsonToObject(guidStringsJsonVector[i], typeInfo, &pair);
+						vecGuidStrings->push_back(pair);
+					}
+				}
+				break;
 
 			case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
 				{
@@ -283,27 +303,11 @@ namespace QwerkE {
 						for (size_t j = 0; j < componentsJsonVector.size(); j++)
 						{
 							// #TODO Look at using component enum instead of strings
-
-							// Created when Entity instantiated
-							// DeserializeComponent(ComponentInfo)
-							// DeserializeComponent(ComponentTransform)
-							if (strcmp(componentsJsonVector.at(j)->string, "ComponentTransform") == 0)
-							{
-								ComponentTransform& transform = entity.GetComponent<ComponentTransform>();
-								DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<ComponentTransform>(), (void*)&transform);
-								continue;
-							}
-							else if (strcmp(componentsJsonVector.at(j)->string, "ComponentInfo") == 0)
-							{
-								ComponentInfo& info = entity.GetComponent<ComponentInfo>();
-								DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<ComponentInfo>(), (void*)&info);
-								int bp = 0;
-							}
-
-							// Need to be created
-							DeserializeComponent(ComponentCamera)
-							DeserializeComponent(ComponentMesh)
-							DeserializeComponent(ComponentScript)
+							DeserializeComponent(ComponentTransform, false) // #NOTE Added to every entity on creation
+							DeserializeComponent(ComponentInfo, false)
+							DeserializeComponent(ComponentCamera, true) // #NOTE Need to be added only if in data
+							DeserializeComponent(ComponentMesh, true)
+							DeserializeComponent(ComponentScript, true) // #TODO Consider using ComponentScript.AddScript()
 						}
 
 						ASSERT(entity.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
@@ -582,6 +586,19 @@ namespace QwerkE {
 				break;
 				// imgui types
 
+				case MirrorTypes::m_vec_pair_guid_string:
+					{
+						using PairGuidString = std::pair<GUID, std::string>;
+						const std::vector<PairGuidString>* vecGuidStrings = (std::vector<PairGuidString>*)((char*)obj + field.offset);
+
+						for (size_t i = 0; i < vecGuidStrings->size(); i++)
+						{
+							const PairGuidString& pair = vecGuidStrings->at(i);
+
+							SerializeObjectToJson((void*)&pair, field.typeInfo, arr);
+						}
+					}
+					break;
 
 				case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
 					{

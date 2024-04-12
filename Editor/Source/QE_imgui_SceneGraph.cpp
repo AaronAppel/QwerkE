@@ -109,7 +109,7 @@ namespace QwerkE {
 			}
 
 			auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
-			for (auto entity : viewTransforms)
+			for (auto& entity : viewTransforms)
 			{
 				EntityHandle handle(currentScene, entity);
 				ComponentInfo& info = handle.GetComponent<ComponentInfo>();

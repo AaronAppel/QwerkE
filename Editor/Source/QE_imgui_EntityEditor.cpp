@@ -39,6 +39,14 @@ namespace QwerkE {
         DrawEntityEditor();
 
         if (!m_CurrentEntity)
+        {
+            if (Scene* scene = Scenes::GetCurrentScene())
+            {
+                m_CurrentEntity = scene->GetCurrentCameraEntity();
+            }
+        }
+
+        if (!m_CurrentEntity)
             return;
 
         if (const bool entityChanged = Inspector::InspectObject(m_CurrentEntity, "Inspect Scene Object"))
@@ -55,6 +63,19 @@ namespace QwerkE {
         if (!entity.HasComponent<T>() && ImGui::MenuItem(typeInfo->stringName.c_str()))
         {
             T& component = entity.AddComponent<T>();
+            if (std::is_same_v<T, ComponentScript>)
+            {
+                ComponentScript* script = (ComponentScript*)&component;
+
+                for (auto& pair : script->m_ScriptInstances)
+                {
+                    if (pair.second && !pair.second->GetEntity())
+                    {
+                        pair.second->SetEntity(entity);
+                    }
+                }
+            }
+
             ImGui::CloseCurrentPopup();
             return &component;
         }
@@ -105,18 +126,12 @@ namespace QwerkE {
 
             if (ImGui::BeginPopup("ComponentList"))
             {
-                AddComponentEntry<ComponentInfo>(m_CurrentEntity);
-                AddComponentEntry<ComponentTransform>(m_CurrentEntity);
-
                 AddComponentEntry<ComponentCamera>(m_CurrentEntity);
+                AddComponentEntry<ComponentInfo>(m_CurrentEntity);
                 AddComponentEntry<ComponentLight>(m_CurrentEntity);
-
-                if (ComponentScript* script = AddComponentEntry<ComponentScript>(m_CurrentEntity))
-                {
-                    // #TODO Pick a script type
-                    script->m_ScriptInstances.insert({ eScriptTypes::Testing, nullptr });
-                    script->Bind(m_CurrentEntity);
-                }
+                AddComponentEntry<ComponentMesh>(m_CurrentEntity);
+                AddComponentEntry<ComponentScript>(m_CurrentEntity);
+                AddComponentEntry<ComponentTransform>(m_CurrentEntity);
                 ImGui::EndPopup();
             }
 

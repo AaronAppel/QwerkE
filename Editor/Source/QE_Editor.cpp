@@ -21,6 +21,7 @@
 #endif // _QBGFXFRAMEWORK
 #endif // _QBGFX
 
+#include "QC_Guid.h"
 #include "QC_Time.h"
 
 #include "QF_Assets.h"
@@ -28,12 +29,14 @@
 #include "QF_Framework.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Mesh.h"
 #include "QF_Projects.h"
 #include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
+#include "QF_Shader.h"
 #include "QF_Window.h"
 
 #include "QE_EditorInspector.h"
@@ -41,11 +44,6 @@
 #include "QE_ProgramArgs.h"
 #include "QE_SceneGraph.h"
 #include "QE_SceneViewer.h"
-
-// #TESTING
-#include "QC_Guid.h"
-#include "QF_Mesh.h"
-// #TESTING
 
 namespace QwerkE {
 
@@ -63,7 +61,7 @@ namespace QwerkE {
 
         EngineSettings* s_EngineSettings = nullptr; // #TODO Static and not shared with QF_MenuBar.cpp
 
-		QC_ENUM(eSettingsOptions, u8, Null, Engine, User, Renderer, Project); // #TODO Project isn't settings anymore. Could be reviewed to move
+		QC_ENUM(eSettingsOptions, u8, Null, Engine, User, Renderer, Project, Assets); // #TODO Project isn't settings anymore. Could be reviewed to move
 		static eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
 		static s8 s_LastPopUpIndex = -1;
 
@@ -200,11 +198,24 @@ namespace QwerkE {
 
             if (ImGui::Begin("Assets"))
             {
-                const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
-                for (auto& guidMeshPair : meshes)
                 {
-                    Mesh* mesh = guidMeshPair.second;
-                    ImGui::Text(std::to_string(mesh->m_GUID).c_str());
+                    ImGui::Text("Meshes:");
+                    const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
+                    for (auto& guidMeshPair : meshes)
+                    {
+                        Mesh* mesh = guidMeshPair.second;
+                        ImGui::Text(std::to_string(mesh->m_GUID).c_str());
+                    }
+                }
+
+                {
+                    ImGui::Text("Shaders:");
+                    const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
+                    for (auto& guidShaderPair : shaders)
+                    {
+                        Shader* shader = guidShaderPair.second;
+                        ImGui::Text(std::to_string(shader->m_GUID).c_str());
+                    }
                 }
             }
             ImGui::End();
@@ -301,6 +312,10 @@ namespace QwerkE {
 
                         case eSettingsOptions::Project:
                             Projects::SaveProject();
+                            break;
+
+                        case eSettingsOptions::Assets:
+                            Assets::SaveToRegistry();
                             break;
                         }
                     }

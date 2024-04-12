@@ -26,7 +26,6 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
-		// #TODO Need to serialize as field, not as a complex type
 		Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFile).c_str(), m_AssetGuidToFileRegistry);
 
 		m_AssetGuidToFileRegistry.emplace_back(GUID(), "ExampleFile.obj");

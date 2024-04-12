@@ -17,6 +17,7 @@
 
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
+#include "QF_Scenes.h"
 
 #include "QE_EditorInspector.h"
 
@@ -33,7 +34,7 @@ namespace QwerkE {
         }
 
     template <typename T>
-    void DrawEditComponentT(EntityHandle& entity)
+    bool DrawEditComponentT(EntityHandle& entity)
     {
         if (entity.HasComponent<T>())
         {
@@ -58,10 +59,11 @@ namespace QwerkE {
 
             if (nodeOpen)
             {
-                Inspector::InspectObject(component, "Entity Editor");
                 ImGui::TreePop();
+                return Inspector::InspectObject(component, "Entity Editor");
             }
         }
+        return false;
     }
 
     void EditComponent::Draw(EntityHandle& entity)
@@ -69,19 +71,26 @@ namespace QwerkE {
         if (!entity)
             return;
 
-        // DrawEditComponent(ComponentInfo)
-        // DrawEditComponent(ComponentTransform)
-        DrawEditComponentT<ComponentTransform>(entity);
+        DrawEditComponentT<ComponentTransform>(entity); // Draw above
 
         DrawEditComponentT<ComponentCamera>(entity);
         DrawEditComponentT<ComponentLight>(entity);
         DrawEditComponentT<ComponentMesh>(entity);
-        DrawEditComponentT<ComponentScript>(entity);
+        if (DrawEditComponentT<ComponentScript>(entity))
+        {
+            ComponentScript& script = entity.GetComponent<ComponentScript>();
 
-        // DrawEditComponent(ComponentCamera)
-        // DrawEditComponent(ComponentLight)
-        // DrawEditComponent(ComponentMesh)
-        // DrawEditComponent(ComponentScript)
+            for (auto& pair : script.m_ScriptInstances)
+            {
+                if (pair.second && !pair.second->GetEntity())
+                {
+                    pair.second->SetEntity(EntityHandle(Scenes::GetCurrentScene(), entity.EntityGuid()));
+                    pair.second->OnCreate(); // #TODO Can remove component and break iterator
+                    break;
+                }
+            }
+            script.Bind(entity);
+        }
 
         m_LastEntity = entity;
     }

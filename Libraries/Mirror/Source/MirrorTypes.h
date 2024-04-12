@@ -38,9 +38,12 @@ enum class MirrorTypes
     Mesh,
     Shader,
 
+    m_pair_guid_string,
+
     // External libraries
     m_enTT_Entity,
     m_entt_registry,
+
     m_CLASSES_END,
 
     m_ARRAYS_START,
@@ -49,11 +52,9 @@ enum class MirrorTypes
     m_ARRAYS_END,
 
     m_VECTORS_START,
-    m_vector_eComponentTags,
+    m_vec_pair_guid_string,
     m_vector_entt_entities,
     m_vector_string,
-    m_vector_routinePtr,
-    m_vector_renderable,
     m_VECTORS_END,
 
     m_MAPS_START,

@@ -30,6 +30,7 @@ namespace QwerkE {
 		// virtual void OnTriggerCollision() { }
 		// virtual void OnBodyCollision() { }
 
+		const EntityHandle& GetEntity() { return m_Entity; }
 		void SetEntity(EntityHandle newEntity) { m_Entity = newEntity; }
 
 		virtual eScriptTypes ScriptType() = 0;

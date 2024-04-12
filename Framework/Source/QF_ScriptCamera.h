@@ -5,6 +5,7 @@
 
 #include "QC_Time.h"
 
+#include "QF_EntityHandle.h"
 #include "QF_Input.h"
 #include "QF_Scriptable.h"
 #include "QF_Settings.h"
@@ -19,11 +20,12 @@ namespace QwerkE {
 			if (!m_Entity.HasComponent<ComponentTransform>() ||
 				!m_Entity.HasComponent<ComponentCamera>())
 			{
-				LOG_ERROR("Entity ___ missing ScriptableCamera!");
+				LOG_ERROR("Entity {0} missing ScriptableCamera!", m_Entity.GetComponent<ComponentInfo>().m_EditorDisplayName);
 
 				if (m_Entity.HasComponent<ComponentScript>())
 				{
-					m_Entity.RemoveComponent<ComponentScript>();
+					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
+					script.RemoveScript(eScriptTypes::Camera);
 				}
 				else
 				{
@@ -41,14 +43,14 @@ namespace QwerkE {
 
 				if (m_Entity.HasComponent<ComponentScript>())
 				{
-					m_Entity.RemoveComponent<ComponentScript>();
+					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
+					script.RemoveScript(eScriptTypes::Camera);
 				}
 				else
 				{
 					LOG_CRITICAL("Could not remove ComponentScript!");
 				}
 			}
-
 
 			if (!m_Entity.HasComponent<ComponentScript>())
 				return;

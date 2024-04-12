@@ -53,6 +53,7 @@ namespace QwerkE {
 			return *assetMap;
 		}
 #endif
+		static void SaveToRegistry();
 
 	private:
 		static std::unordered_map<MirrorTypes, AssetsMap> m_MapOfAssetMaps;

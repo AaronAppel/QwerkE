@@ -112,9 +112,6 @@ namespace QwerkE {
 	MIRROR_TYPE(eKeys)
 
 	// Vectors
-	typedef std::vector<eComponentTags> m_vector_eComponentTags;
-	MIRROR_TYPE(m_vector_eComponentTags)
-
 	typedef std::vector<entt::entity> m_vector_entt_entities;
 	MIRROR_TYPE(m_vector_entt_entities)
 
@@ -224,6 +221,12 @@ namespace QwerkE {
 	MIRROR_CLASS_END(EntityHandle)
 
 	// Assets
+	typedef std::pair<GUID, std::string> m_pair_guid_string;
+	MIRROR_TYPE(m_pair_guid_string);
+
+	typedef std::vector<std::pair<GUID, std::string>> m_vec_pair_guid_string;
+	MIRROR_TYPE(m_vec_pair_guid_string);
+
 	MIRROR_CLASS_START(Mesh)
 	MIRROR_CLASS_END(Mesh)
 

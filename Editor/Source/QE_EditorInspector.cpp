@@ -4,10 +4,15 @@
 #include "Libraries/imgui/QC_imgui.h"
 #endif
 
+#include "QF_ComponentScript.h"
 #include "QF_Enums.h"
 #include "QF_Log.h"
 #include "QF_Scenes.h"
 #include "QF_Settings.h"
+
+#include "QF_Scriptable.h"
+#include "QF_ScriptCamera.h"
+#include "QF_ScriptTesting.h"
 
 namespace QwerkE {
 
@@ -29,13 +34,72 @@ namespace QwerkE {
 
                 switch (field.typeInfo->enumType)
                 {
+                case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
+                    {
+                        if (typeInfo->enumType != MirrorTypes::ComponentScript)
+                        {
+                            LOG_ERROR("{0} Expected different parent type!", __FUNCTION__);
+                            break;
+                        }
+
+                        std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)fieldAddress;
+
+                        if (ImGui::Button("+"))
+                        {
+                            ImGui::OpenPopup("ScriptList");
+                        }
+
+                        if (ImGui::BeginPopup("ScriptList"))
+                        {
+                            ComponentScript* script = (ComponentScript*)obj;
+
+                            const u8 start = (u8)eScriptTypes::Invalid + 1;
+                            const u8 range = (u8)eScriptTypes::Testing + 1;
+                            for (size_t i = start; i < range; i++)
+                            {
+                                eScriptTypes scriptType = (eScriptTypes)i;
+                                if (!script->HasScript(scriptType) && ImGui::Button(std::to_string(i).c_str()))
+                                {
+                                    script->AddScript(scriptType, EntityHandle::InvalidHandle()); // #TODO Get proper entity handle
+                                    valueChanged = true;
+                                    ImGui::CloseCurrentPopup();
+                                }
+                            }
+                            ImGui::EndPopup();
+                        }
+
+                        eScriptTypes removedScriptType = eScriptTypes::Invalid;
+                        for (auto& pair : *scriptsMap)
+                        {
+                            ImGui::Text(std::to_string(pair.first).c_str());
+                            const char* minusButtonTitle = "-";
+                            ImGui::SameLineEnd(minusButtonTitle);
+                            if (ImGui::Button(minusButtonTitle))
+                            {
+                                removedScriptType = pair.first;
+                            }
+
+                            // const Mirror::TypeInfo* scriptableTypeInfo = Mirror::InfoForType<Scriptable>();
+                            // valueChanged |= InspectFieldRecursive(scriptableTypeInfo, (void*) & pair.second, parentName);
+                        }
+
+                        if (removedScriptType != eScriptTypes::Invalid)
+                        {
+                            ComponentScript* script = (ComponentScript*)obj;
+                            script->RemoveScript(removedScriptType);
+                            // #TODO Look to remove script
+                            valueChanged = true;
+                        }
+                    }
+                    break;
+
                 case MirrorTypes::m_floatArray16:
                     {
                         float* f16matrix = (float*)fieldAddress;
-                        ImGui::DragFloat4("0", f16matrix, .1f);
-                        ImGui::DragFloat4("1", &f16matrix[4], .1f);
-                        ImGui::DragFloat4("2", &f16matrix[8], .1f);
-                        ImGui::DragFloat4("3", &f16matrix[12], .1f);
+                        valueChanged |= ImGui::DragFloat4("0", f16matrix, .1f);
+                        valueChanged |= ImGui::DragFloat4("1", &f16matrix[4], .1f);
+                        valueChanged |= ImGui::DragFloat4("2", &f16matrix[8], .1f);
+                        valueChanged |= ImGui::DragFloat4("3", &f16matrix[12], .1f);
                     }
                     break;
 
@@ -50,7 +114,7 @@ namespace QwerkE {
                             // #TODO Edit strings
                             // if ()
                             // {
-                            //     valueChanged = true;
+                            //     valueChanged |= ImGui::InputText;
                             // }
                         }
                         break;

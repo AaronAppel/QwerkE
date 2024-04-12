@@ -100,4 +100,5 @@ namespace ImGui
 	void PopFontQw();
 
 	void SameLineEnd(float scaling);
+	void SameLineEnd(const char* text);
 }

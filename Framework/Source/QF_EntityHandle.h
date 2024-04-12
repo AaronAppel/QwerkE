@@ -50,7 +50,19 @@ namespace QwerkE {
 			m_Scene(scene)
 		{
 			ASSERT(m_Scene, "Null m_Scene reference!");
-			m_EnttId = m_Scene->m_Registry.create();
+
+			// #TODO Define behaviour. When should a new entt entity be created?
+			EntityHandle handle = m_Scene->GetEntityByGuid(existingGuid);
+			if (handle)
+			{
+				m_EnttId = handle.m_EnttId;
+			}
+			else
+			{
+				EntityHandle newHandle = m_Scene->CreateEntity();
+				m_EnttId = newHandle.m_EnttId;
+			}
+
 			if (!HasComponent<ComponentInfo>())
 			{
 				AddComponent<ComponentInfo>(existingGuid);

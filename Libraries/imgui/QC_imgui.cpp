@@ -30,4 +30,11 @@ namespace ImGui
 		ImGui::SameLine(offset);
 	}
 
+	void SameLineEnd(const char* text)
+	{
+		const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
+		const float offset = ImGui::GetContentRegionAvail().x - lineHeight * strlen(text);
+		ImGui::SameLine(offset);
+	}
+
 }

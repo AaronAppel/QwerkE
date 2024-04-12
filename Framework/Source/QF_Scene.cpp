@@ -68,10 +68,7 @@ namespace QwerkE {
         for (auto& entity : scripts)
         {
             auto& script = m_Registry.get<ComponentScript>(entity);
-            if (!script.m_Bound)
-            {
-                script.Bind(this, entity);
-            }
+            script.Bind(EntityHandle(this, entity)); // #TODO Reiew binding and when it should be done
             script.Update(deltaTime);
         }
     }
@@ -175,6 +172,15 @@ namespace QwerkE {
         m_GuidsToEntts[guid] = entity.m_EnttId;
         return entity;
         // return m_GuidsToEntts.insert(entity->GetComponent<ComponentInfo>().m_Guid, entity).second;
+    }
+
+    const EntityHandle& Scene::GetEntityByGuid(const GUID& existingGuid)
+    {
+        if (m_GuidsToEntts.find(existingGuid) != m_GuidsToEntts.end())
+        {
+            return EntityHandle(this,  m_GuidsToEntts[existingGuid]);
+        }
+        return EntityHandle::InvalidHandle();
     }
 
     void Scene::SaveScene()
@@ -306,13 +312,17 @@ namespace QwerkE {
         for (auto& enttId : viewScripts)
         {
             ComponentScript& script = viewScripts.get<ComponentScript>(enttId);
-            script.Bind(this, enttId);
+            script.Bind(EntityHandle(this, enttId));
         }
     }
 
     EntityHandle Scene::GetCurrentCameraEntity()
     {
-        return EntityHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
+        if (m_GuidsToEntts.find(m_CameraEntityGuid) != m_GuidsToEntts.end())
+        {
+            return EntityHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
+        }
+        return EntityHandle::InvalidHandle();
     }
 
     void Scene::SetCurrentCameraEntity(EntityHandle newCameraEntity)

@@ -11,47 +11,36 @@ namespace QwerkE {
 	class ComponentScript
 	{
 	public:
-		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
-		bool m_Bound = false;
-
-		void Bind(Scene* scene, entt::entity enttId) // #TODO Review if arguments are proper
+		~ComponentScript()
 		{
-			Bind(EntityHandle(scene, enttId));
+			// #TODO Find out why destructor is immediately called
+			// Unbind();
 		}
+
+		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
 
 		void Bind(const EntityHandle& entityHandle)
 		{
-			if (m_Bound)
-			{
-				LOG_WARN("{0} Scripts already bound", __FUNCTION__);
-				return;
-			}
-
 			for (auto& enumScriptablePair : m_ScriptInstances)
 			{
-				Scriptable* newScript = Scripting::InstantiateScript(enumScriptablePair.first);
-				newScript->SetEntity(entityHandle);
-				m_ScriptInstances[enumScriptablePair.first] = newScript;
+				if (!enumScriptablePair.second)
+				{
+					AddScript(enumScriptablePair.first, entityHandle);
+				}
 			}
-			m_Bound = true;
 		}
 
 		void Unbind()
 		{
-			if (!m_Bound)
+			std::vector<eScriptTypes> scriptTypes;
+			for (auto& pair : m_ScriptInstances)
 			{
-				LOG_WARN("{0} Scripts not bound", __FUNCTION__);
-				return;
+				scriptTypes.push_back(pair.first);
 			}
-
-			for (auto& enumScriptablePair : m_ScriptInstances)
+			for (size_t i = 0; i < scriptTypes.size(); i++)
 			{
-				if (enumScriptablePair.second)
-				{
-					delete enumScriptablePair.second;
-				}
+				RemoveScript(scriptTypes[i]);
 			}
-			m_Bound = false;
 		}
 
 		void Update(float deltaTime)
@@ -63,6 +52,34 @@ namespace QwerkE {
 					enumScriptablePair.second->OnUpdate(deltaTime);
 				}
 			}
+		}
+
+		bool HasScript(const eScriptTypes scriptType) // #NOTE Editor only
+		{
+			return m_ScriptInstances.find(scriptType) != m_ScriptInstances.end();
+		}
+
+		void AddScript(const eScriptTypes scriptType, const EntityHandle& entityHandle)
+		{
+			Scriptable* newScript = Scripting::InstantiateScript(scriptType);
+			newScript->SetEntity(entityHandle);
+			m_ScriptInstances[scriptType] = newScript;
+		}
+
+		bool RemoveScript(const eScriptTypes scriptType)
+		{
+			// #TODO Removing from map causes crashed in external loops
+			if (m_ScriptInstances.find(scriptType) != m_ScriptInstances.end())
+			{
+				if (Scriptable* scriptable = m_ScriptInstances[scriptType])
+				{
+					delete scriptable;
+				}
+				m_ScriptInstances.erase(scriptType);
+				return true;
+			}
+			LOG_ERROR("{0} Unable to remove script!", __FUNCTION__);
+			return false;
 		}
 
 	};
