@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #ifdef _QBGFX
 #include <bgfx/bgfx.h>
 #endif
@@ -54,6 +56,8 @@ namespace QwerkE {
 		}
 #endif
 		static void SaveToRegistry();
+
+		static std::vector<std::pair<GUID, std::string>>& ViewRegistry();
 
 	private:
 		static std::unordered_map<MirrorTypes, AssetsMap> m_MapOfAssetMaps;

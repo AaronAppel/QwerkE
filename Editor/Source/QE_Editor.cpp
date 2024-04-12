@@ -217,6 +217,17 @@ namespace QwerkE {
                         ImGui::Text(std::to_string(shader->m_GUID).c_str());
                     }
                 }
+
+                {
+                    ImGui::Text("Assets Registry:");
+                    auto assetRegistry = Assets::ViewRegistry();
+                    for (size_t i = 0; i < assetRegistry.size(); i++)
+                    {
+                        ImGui::Text(std::to_string(assetRegistry[i].first).c_str());
+                        ImGui::SameLine();
+                        ImGui::Text(assetRegistry[i].second.c_str());
+                    }
+                }
             }
             ImGui::End();
 

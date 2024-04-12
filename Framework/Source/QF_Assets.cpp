@@ -21,15 +21,13 @@ namespace QwerkE {
 
 	std::unordered_map<MirrorTypes, AssetsMap> Assets::m_MapOfAssetMaps;
 
-	const char* s_AssetsRegistryFile = "Assets.qreg";
-	std::vector<std::pair<GUID, std::string>> m_AssetGuidToFileRegistry;
+	const char* const s_AssetsRegistryFileName = "Assets.qreg";
+	static std::vector<std::pair<GUID, std::string>> s_AssetGuidToFileRegistry;
 
 	void Assets::Initialize()
 	{
 		// #TODO Need to serialize as field, not as a complex type
-		Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFile).c_str(), m_AssetGuidToFileRegistry);
-
-		m_AssetGuidToFileRegistry.emplace_back(GUID(), "ExampleFile.obj");
+		Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 
 		{
 			Mesh* nullMesh = new Mesh();
@@ -87,7 +85,12 @@ namespace QwerkE {
 
 	void Assets::SaveToRegistry()
 	{
-		Serialization::SerializeObjectToFile(m_AssetGuidToFileRegistry, Paths::Settings(s_AssetsRegistryFile).c_str());
+		Serialization::SerializeObjectToFile(s_AssetGuidToFileRegistry, Paths::Settings(s_AssetsRegistryFileName).c_str());
+	}
+
+	std::vector<std::pair<GUID, std::string>>& Assets::ViewRegistry()
+	{
+		return s_AssetGuidToFileRegistry;
 	}
 
 }

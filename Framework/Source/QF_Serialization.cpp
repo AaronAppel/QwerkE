@@ -45,6 +45,8 @@ namespace QwerkE {
 		void local_DeserializeJsonNumber(const cJSON* jsonObj, const MirrorTypes type, const unsigned int size, void* obj);
 		void local_DeserializeJsonString(const cJSON* jsonObj, const MirrorTypes type, void* obj);
 
+		void local_DeserializeFieldJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* fieldTypeInfo, void* fieldObj);
+
 		void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
 		{
 			if (!objJson || !objTypeInfo || !obj)
@@ -73,6 +75,12 @@ namespace QwerkE {
 				}
 
 				return; // Avoid non-primitive type logic below
+			}
+
+			if (objTypeInfo->fields.empty())
+			{
+				local_DeserializeFieldJsonToObject(objJson, objTypeInfo, obj);
+				return;
 			}
 
 			std::vector<cJSON*> jsonStructArr = GetAllItemsFromArray(objJson); // #TODO Walk the linked list instead of creating a temporary vector?
@@ -129,6 +137,50 @@ namespace QwerkE {
 
 					break; // Next field
 				}
+			}
+		}
+
+		void local_DeserializeFieldJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* fieldTypeInfo, void* fieldObj)
+		{
+			if (!objJson || !fieldTypeInfo || !fieldObj)
+			{
+				LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+				return;
+			}
+
+			switch (fieldTypeInfo->enumType)
+			{
+			case MirrorTypes::m_pair_guid_string:
+				{
+					using PairGuidString = std::pair<GUID, std::string>;
+					PairGuidString* guidStringPair = (PairGuidString*)((char*)fieldObj);
+
+					guidStringPair->first = std::stoll(objJson->string);
+					guidStringPair->second = objJson->valuestring;
+				}
+				break;
+
+			case MirrorTypes::m_vec_pair_guid_string:
+				{
+					using PairGuidString = std::pair<GUID, std::string>;
+					std::vector<PairGuidString>* vecGuidStrings = (std::vector<PairGuidString>*)((char*)fieldObj);
+
+					std::vector<cJSON*> pairsArray = GetAllItemsFromArray(objJson);
+
+					const Mirror::TypeInfo* pairTypeInfo = Mirror::InfoForType<PairGuidString>();
+					for (size_t i = 0; i < pairsArray.size(); i++)
+					{
+						PairGuidString pairGuidString;
+						cJSON* pairJson = pairsArray[i]->child->child; // #TODO Shouldn't have to do ->child->child
+						DeserializeJsonToObject(pairJson, pairTypeInfo, (void*)&pairGuidString);
+						vecGuidStrings->push_back(pairGuidString);
+					}
+				}
+				break;
+
+			default:
+				LOG_WARN("{0} Unsupported type", __FUNCTION__);
+				break;
 			}
 		}
 
@@ -443,6 +495,18 @@ namespace QwerkE {
 
 			switch (type)
 			{
+			case MirrorTypes::m_pair_guid_string:
+				{
+					int bp = 0;
+				}
+				break;
+
+			case MirrorTypes::m_vec_pair_guid_string:
+				{
+					int bp = 0;
+				}
+				break;
+
 			case MirrorTypes::m_string:
 			{
 				std::string* fieldAddress = (std::string*)((char*)obj);
@@ -517,7 +581,9 @@ namespace QwerkE {
 			AddItemToArray(entityComponentsJsonArray, newJsonObjectArray); \
 		}
 
-		void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo * objTypeInfo, cJSON * objJson)
+		void SerializeFieldToJson(const void* fieldObj, const Mirror::TypeInfo* fieldTypeInfo, cJSON* objJson);
+
+		void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
 		{
 			if (!objJson || !objTypeInfo || !obj)
 			{
@@ -525,33 +591,10 @@ namespace QwerkE {
 				return;
 			}
 
-			// Could consider trying switch statement 1st, and then handling non-explicitly supported/complex types in the default case
-			// if (!objTypeInfo->fields.empty())
-			// {
-			//     if (objTypeInfo->IsPrimitive())
-			//     {
-			//         LOG_ERROR("{0} Should not be a primitive!", __FUNCTION__);
-			//     }
-			//
-			//     for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
-			//     {
-			//         const Mirror::Field& field = objTypeInfo->fields[i];
-			//
-			//         cJSON* arr = nullptr;
-			//         if (!field.typeInfo->IsPrimitive())
-			//         {
-			//             arr = CreateArray(field.name.c_str());
-			//             cJSON_AddItemToArray(objJson->child, arr);
-			//         }
-			//         else
-			//         {
-			//             arr = objJson;
-			//         }
-			//
-			//         SerializeObjectToJson((char*)obj + field.offset, field.typeInfo, arr);
-			//     }
-			//     return;
-			// }
+			if (objTypeInfo->fields.empty())
+			{
+				SerializeFieldToJson(obj, objTypeInfo, objJson);
+			}
 
 			for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
 			{
@@ -586,20 +629,7 @@ namespace QwerkE {
 				break;
 				// imgui types
 
-				case MirrorTypes::m_vec_pair_guid_string:
-					{
-						using PairGuidString = std::pair<GUID, std::string>;
-						const std::vector<PairGuidString>* vecGuidStrings = (std::vector<PairGuidString>*)((char*)obj + field.offset);
-
-						for (size_t i = 0; i < vecGuidStrings->size(); i++)
-						{
-							const PairGuidString& pair = vecGuidStrings->at(i);
-
-							SerializeObjectToJson((void*)&pair, field.typeInfo, arr);
-						}
-					}
-					break;
-
+				// #TODO May need to move as this is a collection (field), not a complex type
 				case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
 					{
 						const std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)((char*)obj + field.offset);
@@ -774,6 +804,49 @@ namespace QwerkE {
 						break;
 					}
 				}
+			}
+		}
+
+		void SerializeFieldToJson(const void* fieldObj, const Mirror::TypeInfo* fieldTypeInfo, cJSON* objJson)
+		{
+			if (!fieldObj || !fieldTypeInfo || !objJson)
+			{
+				LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+				return;
+			}
+
+			switch (fieldTypeInfo->enumType)
+			{
+			case MirrorTypes::m_pair_guid_string:
+				{
+					using PairGuidString = std::pair<GUID, std::string>;
+					const PairGuidString* guidStringPair = (PairGuidString*)((char*)fieldObj);
+
+					cJSON* pairArray = CreateArray(fieldTypeInfo->stringName.c_str());
+					cJSON* pairEntry = CreateString(std::to_string(guidStringPair->first).c_str(), guidStringPair->second.c_str());
+					AddItemToArray(pairArray, pairEntry);
+					AddItemToArray(objJson, pairArray);
+				}
+				break;
+
+			case MirrorTypes::m_vec_pair_guid_string:
+				{
+					using PairGuidString = std::pair<GUID, std::string>;
+					const std::vector<PairGuidString>* vecGuidStrings = (std::vector<PairGuidString>*)((char*)fieldObj);
+
+					for (size_t i = 0; i < vecGuidStrings->size(); i++)
+					{
+						const PairGuidString& pair = vecGuidStrings->at(i);
+
+						const Mirror::TypeInfo* pairTypeInfo = Mirror::InfoForType<PairGuidString>();
+						SerializeObjectToJson((void*)&pair, pairTypeInfo, objJson);
+					}
+				}
+				break;
+
+			default:
+				LOG_WARN("{0} Unsupported type", __FUNCTION__);
+				break;
 			}
 		}
 
