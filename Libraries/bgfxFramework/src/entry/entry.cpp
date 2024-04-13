@@ -592,6 +592,7 @@ BX_PRAGMA_DIAGNOSTIC_POP();
 		bx::free(g_allocator, apps);
 	}
 
+#if 0
 	int main(int _argc, const char* const* _argv)
 	{
 		//DBG(BX_COMPILER_NAME " / " BX_CPU_NAME " / " BX_ARCH_NAME " / " BX_PLATFORM_NAME);
@@ -674,6 +675,7 @@ restart:
 
 		return result;
 	}
+#endif
 
 	WindowState s_window[ENTRY_CONFIG_MAX_WINDOWS];
 

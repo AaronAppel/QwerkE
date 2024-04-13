@@ -376,7 +376,7 @@ namespace bgfx
 	int32_t read(bx::ReaderI* _reader, bgfx::VertexLayout& _layout, bx::Error* _err);
 }
 
-void Mesh::load(bx::ReaderSeekerI* _reader, bool _ramcopy)
+void loadMesh(bgfxFramework::Mesh* mesh, bx::ReaderSeekerI* _reader, bool _ramcopy)
 {
 	constexpr uint32_t kChunkVertexBuffer           = BX_MAKEFOURCC('V', 'B', ' ', 0x1);
 	constexpr uint32_t kChunkVertexBufferCompressed = BX_MAKEFOURCC('V', 'B', 'C', 0x0);
@@ -404,9 +404,9 @@ void Mesh::load(bx::ReaderSeekerI* _reader, bool _ramcopy)
 				read(_reader, group.m_aabb, &err);
 				read(_reader, group.m_obb, &err);
 
-				read(_reader, m_layout, &err);
+				read(_reader, mesh->m_layout, &err);
 
-				uint16_t stride = m_layout.getStride();
+				uint16_t stride = mesh->m_layout.getStride();
 
 				read(_reader, group.m_numVertices, &err);
 				const bgfx::Memory* mem = bgfx::alloc(group.m_numVertices*stride);
@@ -418,7 +418,7 @@ void Mesh::load(bx::ReaderSeekerI* _reader, bool _ramcopy)
 					bx::memCopy(group.m_vertices, mem->data, mem->size);
 				}
 
-				group.m_vbh = bgfx::createVertexBuffer(mem, m_layout);
+				group.m_vbh = bgfx::createVertexBuffer(mem, mesh->m_layout);
 			}
 				break;
 
@@ -428,9 +428,9 @@ void Mesh::load(bx::ReaderSeekerI* _reader, bool _ramcopy)
 				read(_reader, group.m_aabb, &err);
 				read(_reader, group.m_obb, &err);
 
-				read(_reader, m_layout, &err);
+				read(_reader, mesh->m_layout, &err);
 
-				uint16_t stride = m_layout.getStride();
+				uint16_t stride = mesh->m_layout.getStride();
 
 				read(_reader, group.m_numVertices, &err);
 
@@ -452,7 +452,7 @@ void Mesh::load(bx::ReaderSeekerI* _reader, bool _ramcopy)
 					bx::memCopy(group.m_vertices, mem->data, mem->size);
 				}
 
-				group.m_vbh = bgfx::createVertexBuffer(mem, m_layout);
+				group.m_vbh = bgfx::createVertexBuffer(mem, mesh->m_layout);
 			}
 				break;
 
@@ -532,7 +532,7 @@ void Mesh::load(bx::ReaderSeekerI* _reader, bool _ramcopy)
 					group.m_prims.push_back(prim);
 				}
 
-				m_groups.push_back(group);
+				mesh->m_groups.push_back(group);
 				group.reset();
 			}
 				break;
@@ -544,7 +544,7 @@ void Mesh::load(bx::ReaderSeekerI* _reader, bool _ramcopy)
 	}
 }
 
-void Mesh::unload()
+void bgfxFramework::Mesh::unload()
 {
 	bx::AllocatorI* allocator = entry::getAllocator();
 
@@ -571,7 +571,7 @@ void Mesh::unload()
 	m_groups.clear();
 }
 
-void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, const float* _mtx, uint64_t _state) const
+void bgfxFramework::Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, const float* _mtx, uint64_t _state) const
 {
 	if (BGFX_STATE_MASK == _state)
 	{
@@ -606,7 +606,7 @@ void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, const float* _
 	bgfx::discard();
 }
 
-void Mesh::submit(const MeshState*const* _state, uint8_t _numPasses, const float* _mtx, uint16_t _numMatrices) const
+void bgfxFramework::Mesh::submit(const MeshState*const* _state, uint8_t _numPasses, const float* _mtx, uint16_t _numMatrices) const
 {
 	uint32_t cached = bgfx::setTransform(_mtx, _numMatrices);
 
@@ -653,27 +653,7 @@ void Mesh::submit(const MeshState*const* _state, uint8_t _numPasses, const float
 	bgfx::discard();
 }
 
-Mesh* meshLoad(bx::ReaderSeekerI* _reader, bool _ramcopy)
-{
-	Mesh* mesh = new Mesh;
-	mesh->load(_reader, _ramcopy);
-	return mesh;
-}
-
-Mesh* meshLoad(const char* _filePath, bool _ramcopy)
-{
-	bx::FileReaderI* reader = entry::getFileReader();
-	if (bx::open(reader, _filePath) )
-	{
-		Mesh* mesh = meshLoad(reader, _ramcopy);
-		bx::close(reader);
-		return mesh;
-	}
-
-	return NULL;
-}
-
-void meshUnload(Mesh* _mesh)
+void meshUnload(bgfxFramework::Mesh* _mesh)
 {
 	_mesh->unload();
 	delete _mesh;
@@ -690,12 +670,12 @@ void meshStateDestroy(MeshState* _meshState)
 	bx::free(entry::getAllocator(), _meshState);
 }
 
-void meshSubmit(const Mesh* _mesh, bgfx::ViewId _id, bgfx::ProgramHandle _program, const float* _mtx, uint64_t _state)
+void meshSubmit(const bgfxFramework::Mesh* _mesh, bgfx::ViewId _id, bgfx::ProgramHandle _program, const float* _mtx, uint64_t _state)
 {
 	_mesh->submit(_id, _program, _mtx, _state);
 }
 
-void meshSubmit(const Mesh* _mesh, const MeshState*const* _state, uint8_t _numPasses, const float* _mtx, uint16_t _numMatrices)
+void meshSubmit(const bgfxFramework::Mesh* _mesh, const MeshState*const* _state, uint8_t _numPasses, const float* _mtx, uint16_t _numMatrices)
 {
 	_mesh->submit(_state, _numPasses, _mtx, _numMatrices);
 }

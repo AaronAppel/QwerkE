@@ -1,15 +1,22 @@
 #pragma once
 
+#ifdef _QENUM
+#include "Libraries/enum/QC_enum.h"
+#endif
+
 #include "QF_EntityHandle.h"
 
 namespace QwerkE {
 
 	// #NOTE These values are serialized so value changes matter
+	QC_ENUM(eScriptTypesStr, u8, Invalid = 0, Camera, Testing, Patrol, Count)
 	enum eScriptTypes : u8
 	{
 		Invalid = 0,
 		Camera,
 		Testing,
+		Patrol,
+		Count,
 	};
 
 	class Scriptable

@@ -12,6 +12,7 @@
 
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
+#include "QF_ScriptPatrol.h"
 #include "QF_ScriptTesting.h"
 
 namespace QwerkE {
@@ -54,7 +55,7 @@ namespace QwerkE {
                             ComponentScript* script = (ComponentScript*)obj;
 
                             const u8 start = (u8)eScriptTypes::Invalid + 1;
-                            const u8 range = (u8)eScriptTypes::Testing + 1;
+                            const u8 range = (u8)eScriptTypes::Count;
                             for (size_t i = start; i < range; i++)
                             {
                                 eScriptTypes scriptType = (eScriptTypes)i;
@@ -71,7 +72,10 @@ namespace QwerkE {
                         eScriptTypes removedScriptType = eScriptTypes::Invalid;
                         for (auto& pair : *scriptsMap)
                         {
-                            ImGui::Text(std::to_string(pair.first).c_str());
+                            ImGui::Text((std::to_string(pair.first) + " ").c_str());
+                            ImGui::SameLine();
+                            ImGui::Text(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)pair.first)));
+
                             const char* minusButtonTitle = "-";
                             ImGui::SameLineEnd(minusButtonTitle);
                             if (ImGui::Button(minusButtonTitle))
@@ -79,8 +83,26 @@ namespace QwerkE {
                                 removedScriptType = pair.first;
                             }
 
-                            // const Mirror::TypeInfo* scriptableTypeInfo = Mirror::InfoForType<Scriptable>();
-                            // valueChanged |= InspectFieldRecursive(scriptableTypeInfo, (void*) & pair.second, parentName);
+                            switch (pair.first)
+                            {
+                            case eScriptTypes::Camera:
+                                break;
+
+                            case eScriptTypes::Patrol:
+                                {
+                                    const Mirror::TypeInfo* scriptableTypeInfo = Mirror::InfoForType<ScriptablePatrol>();
+                                    ScriptablePatrol* scr = (ScriptablePatrol*)pair.second;
+                                    valueChanged |= InspectFieldRecursive(scriptableTypeInfo, (void*)pair.second, parentName);
+                                }
+                                break;
+
+                            case eScriptTypes::Testing:
+                                break;
+
+                            default:
+                                ASSERT(false, "Unsupported script type!");
+                                break;
+                            }
                         }
 
                         if (removedScriptType != eScriptTypes::Invalid)
@@ -268,10 +290,33 @@ namespace QwerkE {
                 case MirrorTypes::m_uint64_t:
                     {
                         uint64_t* numberAddress = (uint64_t*)fieldAddress;
-                        int temp = (int)*numberAddress;
                         std::string fieldName = parentName + field.name;
 
-                        if (ImGui::DragInt(fieldName.c_str(), &temp))
+                        std::string numberAsString = std::to_string(*numberAddress);
+                        if (ImGui::InputText(fieldName.c_str(), numberAsString.data(), numberAsString.size(), ImGuiInputTextFlags_ReadOnly))
+                        {
+                            // #TODO Fix when cursor selects text box, the last character is deleted
+                            *numberAddress = std::stoull(numberAsString.c_str());
+                            valueChanged = true;
+                        }
+
+                        if (ImGui::IsItemClicked(ImGui::MouseRight))
+                        {
+                            ImGui::OpenPopup("CopyToClipboard");
+                        }
+
+                        if (ImGui::BeginPopup("CopyToClipboard"))
+                        {
+                            if (ImGui::Button("Copy To Clipboard"))
+                            {
+                                ImGui::SetClipboardText(numberAsString.c_str());
+                                LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
+                            }
+                            ImGui::EndPopup();
+                        }
+
+                        int temp = (int)*numberAddress;
+                        if (false && ImGui::DragInt(fieldName.c_str(), &temp))
                         {
                             valueChanged |= *numberAddress != (uint64_t)temp;
                             *numberAddress = (uint64_t)temp;

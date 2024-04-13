@@ -26,7 +26,10 @@ namespace QwerkE {
 
         void Update(float deltatime);
         void Draw();
-        void DrawImgui();
+
+#ifdef _QDEBUG
+        void DebugDrawImgui();
+#endif
 
         EntityHandle CreateEntity();
         EntityHandle CreateEntity(const GUID& existingGuid);

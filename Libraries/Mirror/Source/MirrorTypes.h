@@ -31,6 +31,9 @@ enum class MirrorTypes
     ComponentScript,
     ComponentTransform,
 
+    // Scripts
+    ScriptablePatrol,
+
     // Misc
     Scene,
     EntityHandle,

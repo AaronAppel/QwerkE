@@ -32,6 +32,8 @@
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
 
+#include "QF_ScriptPatrol.h"
+
 namespace QwerkE {
 
 #ifdef _QDEARIMGUI
@@ -207,6 +209,8 @@ namespace QwerkE {
 	MIRROR_CLASS_END(ComponentLight)
 
 	MIRROR_CLASS_START(ComponentMesh)
+	MIRROR_CLASS_MEMBER(m_MeshGuid)
+	MIRROR_CLASS_MEMBER(m_ShaderGuid)
 	MIRROR_CLASS_END(ComponentMesh)
 
 	MIRROR_CLASS_START(ComponentTransform)
@@ -216,6 +220,12 @@ namespace QwerkE {
 	MIRROR_CLASS_START(ComponentScript)
 	MIRROR_CLASS_MEMBER(m_ScriptInstances)
 	MIRROR_CLASS_END(ComponentScript)
+
+	// Scripts
+	MIRROR_CLASS_START(ScriptablePatrol)
+	MIRROR_CLASS_MEMBER(m_Stride)
+	MIRROR_CLASS_MEMBER(m_Speed)
+	MIRROR_CLASS_END(ScriptablePatrol)
 
 	// Misc
 	MIRROR_CLASS_START(EntityHandle)

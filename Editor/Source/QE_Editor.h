@@ -4,8 +4,8 @@ namespace QwerkE {
 
 	namespace Editor {
 
-		typedef unsigned long long u64;
-		enum EditorDirtyFlags : u64
+		typedef unsigned char u8;
+		enum EditorDirtyFlags : u8
 		{
 			None				= 0,
 

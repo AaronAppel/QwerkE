@@ -74,49 +74,62 @@ namespace QwerkE {
 			}
 		}
 
-		// #TODO Add asserts
-
 		const GUID& EntityGuid()
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_Guid;
 		}
 
 		const char* const EntityName()
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_EditorDisplayName;
 		}
 
 		bool IsEnabled()
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_Enabled;
 		}
 
 		void SetIsEnabled(bool isEnabled)
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			GetComponent<ComponentInfo>().m_Enabled = isEnabled;
 		}
 
 		template <typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(!m_Scene->m_Registry.has<T>(m_EnttId), "Entity already has component!");
 			return m_Scene->m_Registry.emplace<T>(m_EnttId, std::forward<Args>(args)...);
 		}
 
 		template <typename T>
 		bool HasComponent() const
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
 			return m_Scene->m_Registry.has<T>(m_EnttId);
 		}
 
 		template <typename T>
 		T& GetComponent()
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
 			return m_Scene->m_Registry.get<T>(m_EnttId);
 		}
 
 		template <typename T>
 		void RemoveComponent()
 		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
 			if (std::is_same_v<T, ComponentTransform> ||
 				std::is_same_v<T, ComponentInfo>)
 			{

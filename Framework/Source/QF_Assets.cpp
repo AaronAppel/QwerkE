@@ -14,6 +14,7 @@
 
 #include "QF_Files.h"
 #include "QF_Mesh.h"
+#include "QF_RendererHelpers.h"
 #include "QF_Serialization.h"
 #include "QF_Shader.h"
 
@@ -24,10 +25,24 @@ namespace QwerkE {
 	const char* const s_AssetsRegistryFileName = "Assets.qreg";
 	static std::vector<std::pair<GUID, std::string>> s_AssetGuidToFileRegistry;
 
+	static std::vector<bgfxFramework::Mesh*> s_WrongMeshAssets;
+
 	void Assets::Initialize()
 	{
-		// #TODO Need to serialize as field, not as a complex type
 		Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
+
+		for (size_t i = 0; i < s_AssetGuidToFileRegistry.size(); i++)
+		{
+			// #TODO Load asset
+			Mesh* newMesh = new Mesh();
+			std::string filePath = Paths::Mesh(s_AssetGuidToFileRegistry[i].second.c_str()).c_str();
+			auto wrongMeshClass = myMeshLoad(filePath.c_str());
+			s_WrongMeshAssets.push_back(wrongMeshClass);
+			newMesh->m_ibh = wrongMeshClass->m_groups[0].m_ibh;
+			newMesh->m_vbh = wrongMeshClass->m_groups[0].m_vbh;
+			newMesh->m_GUID = s_AssetGuidToFileRegistry[i].first;
+			m_MapOfAssetMaps[MirrorTypes::Mesh][newMesh->m_GUID] = newMesh;
+		}
 
 		{
 			Mesh* nullMesh = new Mesh();
@@ -38,20 +53,20 @@ namespace QwerkE {
 			nullMesh->m_ibh = bgfx::createIndexBuffer(
 				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
 			);
-			m_MapOfAssetMaps[MirrorTypes::Mesh][GUID::Invalid] = nullMesh;
+			nullMesh->m_GUID = GUID::Invalid;
+			m_MapOfAssetMaps[MirrorTypes::Mesh][nullMesh->m_GUID] = nullMesh;
 		}
 
 		{
 			Shader* nullShader = new Shader();
 			nullShader->m_Program = myLoadShaderProgram("vs_cubes.bin", "fs_cubes.bin");
-			m_MapOfAssetMaps[MirrorTypes::Shader][GUID::Invalid] = nullShader;
+			nullShader->m_GUID = GUID::Invalid;
+			m_MapOfAssetMaps[MirrorTypes::Shader][nullShader->m_GUID] = nullShader;
 		}
 	}
 
 	void Assets::Shutdown()
 	{
-		SaveRegistry();
-
 		for (auto& mirrorTypeAssetMapPair : m_MapOfAssetMaps)
 		{
 			AssetsMap assetsMap = mirrorTypeAssetMapPair.second;
@@ -79,6 +94,16 @@ namespace QwerkE {
 			assetsMap.clear();
 		}
 		m_MapOfAssetMaps.clear();
+
+		for (size_t i = 0; i < s_WrongMeshAssets.size(); i++)
+		{
+			if (s_WrongMeshAssets[i])
+			{
+				// #TODO Fix bgfx break point on delete
+				// s_WrongMeshAssets[i]->unload();
+			}
+		}
+		s_WrongMeshAssets.clear();
 
 		// #TODO ASSERT all assets were properly released
 	}

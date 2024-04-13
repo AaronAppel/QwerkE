@@ -2,6 +2,7 @@
 
 #include "QF_ComponentCamera.h"
 #include "QF_ComponentTransform.h"
+#include "QF_ComponentScript.h"
 
 #include "QC_Time.h"
 

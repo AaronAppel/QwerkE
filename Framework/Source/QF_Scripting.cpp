@@ -5,6 +5,7 @@
 
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
+#include "QF_ScriptPatrol.h"
 #include "QF_ScriptTesting.h"
 
 namespace QwerkE {
@@ -20,6 +21,9 @@ namespace QwerkE {
 
             case eScriptTypes::Testing:
                 return new ScriptableTesting();
+
+            case eScriptTypes::Patrol:
+                return new ScriptablePatrol();
 
             default:
                 ASSERT(false, "Unsupported script type!");

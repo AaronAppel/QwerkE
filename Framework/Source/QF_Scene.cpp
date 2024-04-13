@@ -94,62 +94,15 @@ namespace QwerkE {
         }
     }
 
-    void Scene::DrawImgui()
+#ifdef _QDEBUG
+    void Scene::DebugDrawImgui()
     {
         if (ImGui::Begin("SceneDrawImGui"))
         {
-            for (auto& guidEnttPairs : m_GuidsToEntts)
-            {
-                EntityHandle cameraHandle(this, guidEnttPairs.second);
-                if (!cameraHandle.HasComponent<ComponentCamera>())
-                    continue;
-
-                ComponentInfo& info = cameraHandle.GetComponent<ComponentInfo>();
-
-                if (ImGui::CollapsingHeader(info.m_EditorDisplayName, ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
-                {
-                    ComponentCamera& camera = cameraHandle.GetComponent<ComponentCamera>();
-                    auto atCopy = camera.m_At;
-                    if (ImGui::DragFloat3("CameraAt", &atCopy.x, .1f))
-                    {
-                        camera.m_At = atCopy;
-                    }
-
-                    ComponentTransform& transform = cameraHandle.GetComponent<ComponentTransform>();
-                    vec3f eyeCopy = transform.GetPosition();
-                    if (ImGui::DragFloat3("CameraEye", &eyeCopy.x, .1f))
-                    {
-                        transform.SetPosition(eyeCopy);
-                    }
-
-                    float moveSpeedCopy = camera.m_MoveSpeed;
-                    if (ImGui::DragFloat("CameraMoveSpeed", &moveSpeedCopy, .1f))
-                    {
-                        camera.m_MoveSpeed = moveSpeedCopy;
-                    }
-
-                    float fovCopy = camera.m_Fov;
-                    if (ImGui::DragFloat("CameraFov", &fovCopy, .1f))
-                    {
-                        camera.m_Fov = fovCopy;
-                    }
-
-                    float nearCopy = camera.m_Near;
-                    if (ImGui::DragFloat("CameraNear", &nearCopy, .1f))
-                    {
-                        camera.m_Near = nearCopy;
-                    }
-
-                    float farCopy = camera.m_Far;
-                    if (ImGui::DragFloat("CameraFar", &farCopy, .1f))
-                    {
-                        camera.m_Far = farCopy;
-                    }
-                }
-            }
         }
         ImGui::End();
     }
+#endif
 
     EntityHandle Scene::CreateEntity()
     {

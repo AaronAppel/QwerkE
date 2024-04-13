@@ -12,10 +12,10 @@
 
 namespace QwerkE {
 
-    ComponentMesh::ComponentMesh()
+    void ComponentMesh::Initialize()
     {
-        m_Mesh = Assets::Get<Mesh>(GUID::Invalid); // #TODO Get proper guid
-        m_Shader = Assets::Get<Shader>(GUID::Invalid); // #TODO Get proper guid
+        m_Mesh = Assets::Get<Mesh>(m_MeshGuid);
+        m_Shader = Assets::Get<Shader>(m_ShaderGuid);
     }
 
     void ComponentMesh::Draw(const ComponentTransform& transform)

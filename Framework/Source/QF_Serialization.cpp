@@ -33,6 +33,8 @@
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
 
+#include "QF_ScriptPatrol.h"
+
 #define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
 
 // #TODO Look at removing from QwerkE namespace, or have a #using QwerkE just in this .cpp.
@@ -155,7 +157,7 @@ namespace QwerkE {
 					using PairGuidString = std::pair<GUID, std::string>;
 					PairGuidString* guidStringPair = (PairGuidString*)((char*)fieldObj);
 
-					guidStringPair->first = std::stoll(objJson->string);
+					guidStringPair->first = std::stoull(objJson->string);
 					guidStringPair->second = objJson->valuestring;
 				}
 				break;
@@ -243,14 +245,26 @@ namespace QwerkE {
 			}
 		}
 
-		// #TODO Look at using component enum instead of strings
-#define DeserializeComponent(COMPONENT_TYPE, add) \
-		if (strcmp(componentsJsonVector.at(j)->string, #COMPONENT_TYPE) == 0) \
-		{ \
-			if (add) entity.AddComponent<COMPONENT_TYPE>(); \
-			COMPONENT_TYPE& component = entity.GetComponent<COMPONENT_TYPE>(); \
-			DeserializeJsonToObject(componentsJsonVector[j], Mirror::InfoForType<COMPONENT_TYPE>(), (void*)&component); \
-			continue; \
+		template <typename T>
+		void DeserializeComponent(EntityHandle handle, cJSON* componentJson, bool addComponent)
+		{
+			const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<T>();
+			if (strcmp(componentJson->string, componentTypeInfo->stringName.c_str()) != 0)
+				return;
+
+			if (addComponent)
+			{
+				handle.AddComponent<T>();
+			}
+
+			T& component = handle.GetComponent<T>();
+			DeserializeJsonToObject(componentJson, componentTypeInfo, (void*)&component);
+
+			if (std::is_same_v<T, ComponentMesh>)
+			{
+				ComponentMesh* mesh = (ComponentMesh*)&component;
+				mesh->Initialize();
+			}
 		}
 
 		void local_DeserializeJsonArray(const cJSON* jsonObj, const Mirror::Field& field, void* obj)
@@ -321,6 +335,16 @@ namespace QwerkE {
 						case eScriptTypes::Camera:
 							break;
 
+						case eScriptTypes::Patrol:
+							{
+								// #TODO Need to set entity for script component before script OnCreate() can be called
+								// ScriptablePatrol* patrol = new ScriptablePatrol();
+								// const Mirror::TypeInfo* patrolTypeInfo = Mirror::InfoForType<ScriptablePatrol>();
+								// DeserializeJsonToObject(scriptsJsonVector[i], patrolTypeInfo, patrol);
+								// scriptsMap->insert_or_assign(eScriptTypes::Patrol, patrol);
+							}
+							break;
+
 						case eScriptTypes::Testing:
 							break;
 
@@ -350,25 +374,20 @@ namespace QwerkE {
 							guid = std::stoull(entitiesJsonVector[i]->string);
 						}
 
-						EntityHandle entity = scene->CreateEntity(guid);
+						EntityHandle handle = scene->CreateEntity(guid);
 
 						for (size_t j = 0; j < componentsJsonVector.size(); j++)
 						{
 							// #TODO Look at using component enum instead of strings
-							DeserializeComponent(ComponentTransform, false) // #NOTE Added to every entity on creation
-							DeserializeComponent(ComponentInfo, false)
-							DeserializeComponent(ComponentCamera, true) // #NOTE Need to be added only if in data
-							DeserializeComponent(ComponentMesh, true)
-							DeserializeComponent(ComponentScript, true) // #TODO Consider using ComponentScript.AddScript()
+							DeserializeComponent<ComponentTransform>(handle, componentsJsonVector[j], false); // #NOTE Added to every entity on creation
+							DeserializeComponent<ComponentInfo>(handle, componentsJsonVector[j], false);
+							DeserializeComponent<ComponentCamera>(handle, componentsJsonVector[j], true) ; // #NOTE Need to be added only if in data
+							DeserializeComponent<ComponentMesh>(handle, componentsJsonVector[j], true);
+							DeserializeComponent<ComponentScript>(handle, componentsJsonVector[j], true); // #TODO Consider using ComponentScript.AddScript()
 						}
 
-						ASSERT(entity.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
-						ASSERT(entity.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
-
-						if (entity.HasComponent<ComponentCamera>())
-						{
-							int bp = 0;
-						}
+						ASSERT(handle.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
+						ASSERT(handle.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
 					}
 				}
 				break;
@@ -495,6 +514,14 @@ namespace QwerkE {
 
 			switch (type)
 			{
+			case MirrorTypes::m_uint64_t:
+				{
+					u64* valuePtr = (u64*)obj;
+					const u64 temp = std::stoull(jsonObj->valuestring);
+					*valuePtr = temp;
+				}
+				break;
+
 			case MirrorTypes::m_pair_guid_string:
 				{
 					int bp = 0;
@@ -571,14 +598,14 @@ namespace QwerkE {
 			}
 		}
 
-#define SerializeComponent(COMPONENT_TYPE) \
-		if (handle.HasComponent<COMPONENT_TYPE>()) \
-		{ \
-			auto& component = handle.GetComponent<COMPONENT_TYPE>(); \
-			auto componentTypeInfo = Mirror::InfoForType<COMPONENT_TYPE>(); \
-			cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str()); \
-			SerializeObjectToJson(&component, componentTypeInfo, newJsonObjectArray); \
-			AddItemToArray(entityComponentsJsonArray, newJsonObjectArray); \
+		template <typename T>
+		void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
+		{
+			T& component = handle.GetComponent<T>();
+			auto componentTypeInfo = Mirror::InfoForType<T>();
+			cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str());
+			SerializeObjectToJson(&component, componentTypeInfo, newJsonObjectArray);
+			AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
 		}
 
 		void SerializeFieldToJson(const void* fieldObj, const Mirror::TypeInfo* fieldTypeInfo, cJSON* objJson);
@@ -658,11 +685,11 @@ namespace QwerkE {
 							cJSON* entityComponentsJsonArray = CreateArray("Components");
 							AddItemToArray(entityJsonArray, entityComponentsJsonArray);
 
-							SerializeComponent(ComponentCamera)
-							SerializeComponent(ComponentInfo)
-							SerializeComponent(ComponentMesh)
-							SerializeComponent(ComponentTransform)
-							SerializeComponent(ComponentScript)
+							SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
+							SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);
+							SerializeComponent<ComponentMesh>(handle, entityComponentsJsonArray);
+							SerializeComponent<ComponentTransform>(handle, entityComponentsJsonArray);
+							SerializeComponent<ComponentScript>(handle, entityComponentsJsonArray);
 						}
 					}
 					break;
@@ -780,8 +807,16 @@ namespace QwerkE {
 
 				case MirrorTypes::m_uint64_t:
 				{
-					uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
-					AddItemToArray(objJson, CreateNumber(field.name.c_str(), (double)*numberAddress));
+					if (const bool writeAsString = true)
+					{
+						uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
+						AddItemToArray(objJson, CreateString(field.name.c_str(), std::to_string(*numberAddress).c_str()));
+					}
+					else
+					{
+						uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
+						AddItemToArray(objJson, CreateNumber(field.name.c_str(), (double)*numberAddress));
+					}
 				}
 				break;
 

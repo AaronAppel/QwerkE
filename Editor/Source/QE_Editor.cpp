@@ -200,7 +200,9 @@ namespace QwerkE {
             if (showEditorUI)
             {
                 local_EditorDraw(); // Start dock context. ImGui code above won't dock
-                Scenes::GetCurrentScene()->DrawImgui();
+#ifdef _QDEBUG
+                Scenes::GetCurrentScene()->DebugDrawImgui();
+#endif
             }
 
             if (ImGui::Begin("Assets"))
@@ -211,6 +213,8 @@ namespace QwerkE {
                     for (auto& guidMeshPair : meshes)
                     {
                         Mesh* mesh = guidMeshPair.second;
+                        ImGui::Text("GUID: ");
+                        ImGui::SameLine();
                         ImGui::Text(std::to_string(mesh->m_GUID).c_str());
                     }
                 }
@@ -221,8 +225,18 @@ namespace QwerkE {
                     for (auto& guidShaderPair : shaders)
                     {
                         Shader* shader = guidShaderPair.second;
+                        ImGui::Text("GUID: ");
+                        ImGui::SameLine();
                         ImGui::Text(std::to_string(shader->m_GUID).c_str());
                     }
+                }
+
+                {
+                    ImGui::Text("Textures:");
+                }
+
+                {
+                    ImGui::Text("Materials:");
                 }
 
                 {
@@ -230,7 +244,11 @@ namespace QwerkE {
                     auto assetRegistry = Assets::ViewRegistry();
                     for (size_t i = 0; i < assetRegistry.size(); i++)
                     {
+                        ImGui::Text("GUID: ");
+                        ImGui::SameLine();
                         ImGui::Text(std::to_string(assetRegistry[i].first).c_str());
+                        ImGui::SameLine();
+                        ImGui::Text(" File: ");
                         ImGui::SameLine();
                         ImGui::Text(assetRegistry[i].second.c_str());
                     }

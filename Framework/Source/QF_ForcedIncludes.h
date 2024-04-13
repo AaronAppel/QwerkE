@@ -6,6 +6,9 @@
 
 #define _QIGNORED(x) (static_cast<void>(x))
 
+#include <string>
+typedef std::string str; // #TODO Review if wanted or not
+
 #include "QC_CallbackFunction.h"
 #include "QC_TypeDefs.h"
 

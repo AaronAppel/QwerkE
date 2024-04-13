@@ -15,6 +15,9 @@ namespace QwerkE {
 
 		std::string Project(const char* projectFileName);
 
+		std::string MeshesDir();
+		std::string Mesh(const char* meshFileName);
+
 		std::string ScenesDir();
 		std::string Scene(const char* sceneFileName);
 

@@ -60,6 +60,13 @@ namespace QwerkE {
             if (nodeOpen)
             {
                 ImGui::TreePop();
+
+                if (std::is_same_v<T, ComponentCamera> &&
+                    entity.HasComponent<ComponentCamera>() &&
+                    ImGui::Button("Switch To"))
+                {
+                    Scenes::GetCurrentScene()->SetCurrentCameraEntity(entity);
+                }
                 return Inspector::InspectObject(component, "Entity Editor");
             }
         }

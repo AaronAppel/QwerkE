@@ -76,6 +76,9 @@
     <ClCompile Include="Source\QF_Scripting.cpp">
       <Filter>Game Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QF_RendererHelpers.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="Source\QF_AssetsHandle.h">
       <Filter>Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ScriptPatrol.h">
+      <Filter>Game Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
