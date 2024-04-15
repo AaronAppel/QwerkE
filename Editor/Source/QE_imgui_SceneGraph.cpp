@@ -63,7 +63,7 @@ namespace QwerkE {
 				return;
 
 			ImGui::Text((currentScene->GetSceneName() + ":").c_str());
-			ImGui::SameLineEnd(1.f);
+			ImGui::SameLineEnd(1, 1.f);
 			if (ImGui::Button("+"))
 			{
 				ImGui::OpenPopup("Create Entity");

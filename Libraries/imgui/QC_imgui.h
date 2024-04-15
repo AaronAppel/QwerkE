@@ -99,7 +99,7 @@ namespace ImGui
 	void PushFontQw(Fonts font);
 	void PopFontQw();
 
-	void SameLineEnd(float scaling);
+	void SameLineEnd(int16_t numberOfChars, float scaling = 1.f);
 	void SameLineEnd(const char* text);
 
 	template <typename Function>
