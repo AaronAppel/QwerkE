@@ -10,6 +10,7 @@ LibraryDefines = {
 "_QFLATHEADGAMES",
 "_QGLFW3",
 "_QGLM",
+"_QJOLT",
 "_QLODEPNG",
 "_QMIRROR",
 "_QOPENGL",

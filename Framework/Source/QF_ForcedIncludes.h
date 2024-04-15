@@ -1,5 +1,7 @@
 #pragma once
 
+// "QF_PCH.h" already included as forced include in premake build file
+
 // For convenience, include commonly used files, but don't perpetually depend on this file.
 
 // #NOTE Cannot #include "QF_PCH.h" here. Must be done in VS project settings

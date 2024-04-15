@@ -115,7 +115,8 @@ namespace QwerkE {
 				| BGFX_STATE_MSAA
 				| 0 // #REVIEW
 				;
-			bgfx::setState(state);
+			// bgfx::setState(state);
+			bgfx::setState(BGFX_STATE_DEFAULT);
 #endif
 			const vec2f& size = Window::GetSize();
 			OnWindowResize(size.x, size.y);
@@ -150,8 +151,9 @@ namespace QwerkE {
 			s_FrameBufferHandle = bgfx::createFrameBuffer(s_FrameBufferTextureCount, s_FrameBufferTextures); // #TESTING
 			ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandle.idx, "Error creating frame buffer!");
 
-			{	// Setup view
+			{	// SetupFBO view
 				bgfx::setViewName(s_ViewIdFbo1, "FBO1");
+				bgfx::setViewFrameBuffer(s_ViewIdFbo1, s_FrameBufferHandle);
 				bgfx::setViewClear(s_ViewIdFbo1
 					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
 					, 0x303030ff
@@ -207,27 +209,6 @@ namespace QwerkE {
 #ifdef _QBGFX
 			bgfx::frame();
 
-			uint64_t state = 0
-				| BGFX_STATE_WRITE_R
-				| BGFX_STATE_WRITE_G
-				| BGFX_STATE_WRITE_B
-				| BGFX_STATE_WRITE_A
-				| BGFX_STATE_WRITE_Z
-				| BGFX_STATE_DEPTH_TEST_LESS
-				| BGFX_STATE_CULL_CW
-				| BGFX_STATE_MSAA
-				| 0 // #REVIEW
-				;
-			// bgfx::setState(state);
-			// bgfx::setState(BGFX_STATE_DEFAULT);
-
-			// bgfx::setViewClear(s_ViewIdMain, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
-			// bgfx::setViewClear(s_ViewIdImGui, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
-			bgfx::setViewClear(s_ViewIdFbo1, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
-
-			// bgfx::touch(s_ViewIdMain);
-			// bgfx::touch(s_ViewIdImGui);
-			// bgfx::touch(s_ViewIdFbo1);
 #ifdef _QDEBUG
 			bgfx::setDebug(s_showRendererDebugStats ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT);
 			bgfx::dbgTextClear();

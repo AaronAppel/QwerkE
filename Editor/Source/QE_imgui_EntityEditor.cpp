@@ -38,20 +38,9 @@ namespace QwerkE {
 #ifdef _QDEARIMGUI
         DrawEntityEditor();
 
-        if (!m_CurrentEntity)
+        if (!m_CurrentEntity; Scene* scene = Scenes::GetCurrentScene())
         {
-            if (Scene* scene = Scenes::GetCurrentScene())
-            {
-                m_CurrentEntity = scene->GetCurrentCameraEntity();
-            }
-        }
-
-        if (!m_CurrentEntity)
-            return;
-
-        if (const bool entityChanged = Inspector::InspectObject(m_CurrentEntity, "Inspect Scene Object"))
-        {
-            Scenes::SetCurrentSceneDirty();
+            m_CurrentEntity = scene->GetCurrentCameraEntity();
         }
 #endif
 	}

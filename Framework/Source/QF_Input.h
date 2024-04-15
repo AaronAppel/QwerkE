@@ -2,7 +2,6 @@
 
 // Reference: https://www.gamedev.net/blogs/entry/2250186-designing-a-robust-input-handling-system-for-games/
 
-#include "QF_Enums.h"
 #include "QF_eKeys.h"
 #include "QF_PathDefines.h"
 
@@ -22,6 +21,7 @@ namespace QwerkE {
 
         bool FrameKeyAction(eKeys key, eKeyState state);
 
+        const vec2f& MousePosition();
         vec2f MouseDragDelta();
         const vec2f& MouseFrameDelta();
         const vec2f& MouseScrollDelta();

@@ -1,9 +1,5 @@
 #include "QF_Window.h"
 
-#ifdef _QGLEW
-#include "Libraries/glew/glew.h"
-#endif
-
 #ifdef _QGLFW3
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "Libraries/glfw/glfw3.h"

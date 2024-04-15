@@ -14,6 +14,8 @@
 
 #include "QC_Guid.h"
 
+class PhysicsSystem;
+
 namespace QwerkE {
 
     class EntityHandle;
@@ -76,6 +78,8 @@ namespace QwerkE {
         std::string m_SceneFileName = Constants::gc_DefaultStringValue;
 
         GUID m_SceneGuid;
+
+        PhysicsSystem* m_PhysicsSystem = nullptr;
 
         bool m_IsLoaded = false;
         bool m_IsDirty = false; // #TODO Editor only state. Move out of here

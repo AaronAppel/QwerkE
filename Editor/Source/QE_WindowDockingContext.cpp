@@ -4,12 +4,17 @@
 #include "Libraries/imgui/QC_imgui.h"
 #endif
 
+#include "QF_Window.h"
+
 namespace QwerkE {
 
     namespace Editor {
 
         void local_DrawDockingContext()
         {
+            if (Window::IsMinimized())
+                return;
+
 #ifdef _QDEARIMGUI
             // Copied from imgui docking example
             static bool opt_fullscreen_persistant = true;

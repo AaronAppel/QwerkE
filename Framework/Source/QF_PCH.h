@@ -8,6 +8,12 @@
 
 #include "QC_TypeDefs.h"
 
+#ifdef _QBGFX
+#include "Libraries/bx/include/bx/bx.h"
+#include "Libraries/bimg/include/bimg/bimg.h"
+#include "Libraries/bgfx/include/bgfx/bgfx.h"
+#endif
+
 #ifdef _QENTT
 #include "Libraries/entt/entt.hpp"
 #endif
@@ -22,15 +28,6 @@
 #pragma warning( default : 4244 )
 #endif
 
-#ifdef _QFREETYPE2
-#include "Libraries/freetype2/ft2build.h"
-#include "Libraries/freetype2/freetype/freetype.h"
-#endif
-
-#ifdef _QGLEW
-#include "Libraries/glew/glew.h"
-#endif
-
 #ifdef _QGLFW3
 #include "Libraries/glfw/QC_glfw3.h"
 #endif
@@ -41,6 +38,10 @@
 #include "Libraries/glm/gtc/matrix_transform.hpp"
 #include "Libraries/glm//gtc/type_ptr.hpp"
 #pragma warning( default : 26495 )
+#endif
+
+#ifdef _QGLM
+#include "Libraries/Jolt/Jolt.h"
 #endif
 
 #ifdef _QSPDLOG

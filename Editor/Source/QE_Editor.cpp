@@ -47,7 +47,7 @@
 
 namespace QwerkE {
 
-    void LoadImGuiStyleFromFile()
+    void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
         Serialization::DeserializeObjectFromFile(Settings::GetStyleFileName(), style);
@@ -137,18 +137,12 @@ namespace QwerkE {
 
                     Framework::DrawImguiStart();
 
-                    if (!Window::IsMinimized())
-                    {
-                        local_DrawDockingContext();
-                        local_DrawMainMenuBar();
-                    }
+                    local_DrawDockingContext();
+                    local_DrawMainMenuBar();
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    if (!Window::IsMinimized())
-                    {
-                        local_EditorDrawImGui(showEditorUI);
-                    }
+                    local_EditorDrawImGui(showEditorUI);
 
                     Framework::DrawImguiEnd();
 

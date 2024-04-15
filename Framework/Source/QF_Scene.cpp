@@ -1,11 +1,15 @@
 #include "QF_Scene.h"
 
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/QC_imgui.h"
+#endif
+
 #ifdef _QENTT
 #include "Libraries/entt/entt.hpp"
 #endif
 
-#ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#ifdef _QJOLT
+#include "Libraries/Jolt/Physics/PhysicsSystem.h"
 #endif
 
 #include "QC_StringHelpers.h"
@@ -34,8 +38,11 @@ namespace QwerkE {
     Scene::Scene(const std::string& sceneFileName) :
         m_SceneFileName(sceneFileName)
     {
+        // m_PhysicsSystem = new PhysicsSystem();
+
         return;
 
+        // #TESTING Code below is for testing mesh generation
         const u8 rows = 11;
         const u8 columns = 11;
         const float spacingScalar = 3.f;

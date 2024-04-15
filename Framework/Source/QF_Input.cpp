@@ -218,6 +218,11 @@ namespace QwerkE {
             s_eKeyStates[key] = state;
         }
 
+        const vec2f& MousePosition()
+        {
+            return s_MousePos;
+        }
+
         vec2f MouseDragDelta()
         {
             if (s_eKeyStates[eKeys::eKeys_LeftClick])

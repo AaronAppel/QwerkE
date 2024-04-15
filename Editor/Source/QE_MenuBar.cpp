@@ -31,6 +31,9 @@ namespace QwerkE {
 
         void local_DrawMainMenuBar()
         {
+            if (Window::IsMinimized())
+                return;
+
 #ifdef _QDEARIMGUI
             if (ImGui::BeginMainMenuBar())
             {

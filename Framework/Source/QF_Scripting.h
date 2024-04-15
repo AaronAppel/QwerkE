@@ -1,5 +1,7 @@
 #pragma once
 
+#include "QF_EntityHandle.h"
+
 namespace QwerkE {
 
 	class Scriptable;

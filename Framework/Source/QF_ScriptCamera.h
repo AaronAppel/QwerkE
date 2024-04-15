@@ -12,8 +12,10 @@
 
 #include "QF_EntityHandle.h"
 #include "QF_Input.h"
+#include "QF_InputMouseDragTracker.h"
 #include "QF_Math.h"
 #include "QF_Scriptable.h"
+#include "QF_Scripting.h"
 #include "QF_Settings.h"
 
 namespace QwerkE {
@@ -23,78 +25,45 @@ namespace QwerkE {
 	public:
 		void OnCreate() override
 		{
-			if (!m_Entity.HasComponent<ComponentTransform>() ||
-				!m_Entity.HasComponent<ComponentCamera>())
-			{
-				LOG_ERROR("Entity {0} missing ScriptableCamera!", m_Entity.GetComponent<ComponentInfo>().m_EditorDisplayName);
-
-				if (m_Entity.HasComponent<ComponentScript>())
-				{
-					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
-					script.RemoveScript(eScriptTypes::Camera);
-				}
-				else
-				{
-					LOG_CRITICAL("Could not remove ComponentScript!");
-				}
-			}
+			HasRequiredComponents<ComponentTransform, ComponentCamera, ComponentScript>();
 		}
 
 		void OnUpdate(float deltaTime) override
 		{
-			if (!m_Entity.HasComponent<ComponentTransform>() ||
-				!m_Entity.HasComponent<ComponentCamera>())
-			{
-				LOG_ERROR("Entity ___ missing ScriptableCamera!");
-
-				if (m_Entity.HasComponent<ComponentScript>())
-				{
-					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
-					script.RemoveScript(eScriptTypes::Camera);
-				}
-				else
-				{
-					LOG_CRITICAL("Could not remove ComponentScript!");
-				}
-			}
-
-			if (!m_Entity.HasComponent<ComponentScript>())
+			if (!HasRequiredComponents<ComponentTransform, ComponentCamera, ComponentScript>())
 				return;
 
 			ComponentCamera& camera = m_Entity.GetComponent<ComponentCamera>();
 			ComponentTransform& transform = m_Entity.GetComponent<ComponentTransform>();
 
-			vec4f rotationVec;
-			vec2f mouseFrameDelta = Input::MouseFrameDelta();
-			if (Input::IsKeyDown(eKeys::eKeys_MouseButton2))
-			{
-				// bx::mtxRotateXYZ(rotation, -mouseFrameDelta.y * deltaTime, -mouseFrameDelta.x * deltaTime, 0.f);
-				// bx::mtxMul(transform.m_Matrix, transform.m_Matrix, rotation);
+			static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
 
+			m_MouseDragTracker.Update();
+			if (m_MouseDragTracker.IsActive())
+			{
 				static float yaw = 0.f;
-				yaw += mouseFrameDelta.x * deltaTime;
+				yaw -= m_MouseDragTracker.MouseFrameDelta().x / pixelRatio * deltaTime;
+
+				static float pitch = 0.f;
+				pitch -= m_MouseDragTracker.MouseFrameDelta().y / pixelRatio * deltaTime;
 
 				constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
-				bx::Vec3 rotate = { 0.f, yaw, 0.f };
+				bx::Vec3 rotate = { pitch, yaw, 0.f };
 				const vec3f& translate = transform.GetPosition();
 
 				bx::mtxSRT(transform.m_Matrix,
 					scale.x, scale.y, scale.z,
 					rotate.x, rotate.y, rotate.z,
 					translate.x, translate.y, translate.z);
-
-				rotationVec.y = -mouseFrameDelta.y;
-				rotationVec.x = -mouseFrameDelta.x;
-
-				// bx::vec4MulMtx(transform.m_Matrix, &rotationVec.x, transform.m_Matrix);
-				// camera.m_LookAtPosition = ;
 			}
 
-			if (ImGui::Begin("MouseFrameDelta"))
+			ImGui::DefaultDebugWindow([&]()
 			{
-				ImGui::DragFloat2("MouseFrameDelta", &mouseFrameDelta.x, .1f);
-			}
-			ImGui::End();
+				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
+
+				vec2f mouseTrackerDelta = m_MouseDragTracker.MouseFrameDelta();
+				ImGui::DragFloat2("MouseDragTracker", &mouseTrackerDelta.x, .05f);
+			});
 
 			const vec3f transformForward = transform.Forward();
 
@@ -151,7 +120,7 @@ namespace QwerkE {
 			}
 			if (Input::IsKeyDown(userSettings.key_camera_RotateLeft))
 			{
-				constexpr float rotationSpeed = Math::PI();
+				constexpr float rotationSpeed = Math::PI_f();
 				bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
 				LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
@@ -184,6 +153,7 @@ namespace QwerkE {
 			return eScriptTypes::Camera;
 		}
 
+		Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(eKeys::eKeys_MouseButton2);
 		bool orbit = false;
 	};
 

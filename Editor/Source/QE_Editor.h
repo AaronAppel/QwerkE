@@ -24,6 +24,7 @@ namespace QwerkE {
 		void OnReset();
 
 		const EditorDirtyFlags& DirtyFlags();
+
 	}
 
 }

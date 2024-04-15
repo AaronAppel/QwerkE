@@ -213,6 +213,9 @@
     <ClInclude Include="Source\QF_ScriptPatrol.h">
       <Filter>Game Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_InputMouseDragTracker.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

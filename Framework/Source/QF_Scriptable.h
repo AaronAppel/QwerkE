@@ -45,6 +45,26 @@ namespace QwerkE {
 	protected:
 		Scriptable() = default;
 
+		template <typename... Args>
+		bool HasRequiredComponents()
+		{
+			if (!m_Entity.HasAllComponents<Args...>())
+			{
+				LOG_CRITICAL_ONCE("Entity {0} missing ScriptableCamera!", m_Entity.GetComponent<ComponentInfo>().m_EditorDisplayName);
+				if (m_Entity.HasComponent<ComponentScript>())
+				{
+					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
+					script.RemoveScript(eScriptTypes::Camera);
+				}
+				else
+				{
+					LOG_CRITICAL_ONCE("Could not remove ComponentScript!");
+				}
+				return false;
+			}
+			return true;
+		}
+
 		EntityHandle m_Entity;
 	};
 

@@ -101,4 +101,18 @@ namespace ImGui
 
 	void SameLineEnd(float scaling);
 	void SameLineEnd(const char* text);
+
+	template <typename Function>
+	void DefaultDebugWindow(Function function)
+	{
+		// if (!Window::IsMinimized())
+		{
+			if (ImGui::Begin("Default Debug Window"))
+			{
+				function();
+			}
+			ImGui::End();
+		}
+	}
+
 }

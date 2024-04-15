@@ -40,6 +40,7 @@ project "Framework"
 		"bgfxFramework",
 		"FlatHeadGames",
 		"imgui",
+		"Jolt",
 		"lodepng",
 		"Mirror",
 		"spdlog",
