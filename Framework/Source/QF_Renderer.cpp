@@ -172,9 +172,6 @@ namespace QwerkE {
 
 		void StartImGui()
 		{
-			if (Window::IsMinimized())
-				return;
-
 			GLFWwindow* window = static_cast<GLFWwindow*>(Window::GetContext());
 
 			double x, y;
@@ -199,9 +196,6 @@ namespace QwerkE {
 
 		void EndImGui()
 		{
-			if (Window::IsMinimized())
-				return;
-
 			imguiEndFrame();
 		}
 
