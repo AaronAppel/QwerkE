@@ -94,16 +94,6 @@ namespace QwerkE {
         }
     }
 
-#ifdef _QDEBUG
-    void Scene::DebugDrawImgui()
-    {
-        if (ImGui::Begin("SceneDrawImGui"))
-        {
-        }
-        ImGui::End();
-    }
-#endif
-
     EntityHandle Scene::CreateEntity()
     {
         EntityHandle entity = EntityHandle(this);

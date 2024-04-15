@@ -9,6 +9,7 @@
 #endif
 #endif
 
+#include "QF_ComponentTransform.h"
 #include "QF_Renderer.h"
 #include "QF_Window.h"
 
@@ -33,7 +34,7 @@ namespace QwerkE {
             bgfx::touch(viewId);
 
             bx::Vec3 eye = { position.x, position.y, position.z };
-            bx::Vec3 at = { m_At.x, m_At.y, m_At.z };
+            bx::Vec3 at = { m_LookAtPosition.x, m_LookAtPosition.y, m_LookAtPosition.z };
             bx::mtxLookAt(m_View, eye, at);
 
             bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
@@ -43,7 +44,7 @@ namespace QwerkE {
             {
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
                 debugDrawer.begin(viewId);
-                debugDrawer.drawSphere(m_At.x, m_At.y, m_At.z, 3.f);
+                debugDrawer.drawSphere(m_LookAtPosition.x, m_LookAtPosition.y, m_LookAtPosition.z, 3.f);
                 debugDrawer.end();
             }
         }
@@ -52,7 +53,7 @@ namespace QwerkE {
 
         float m_MoveSpeed = 5.f;
 
-        vec3f m_At = { .0f, .0f, .0f };
+        vec3f m_LookAtPosition = { .0f, .0f, .0f };
 
         float m_Fov = 60.f;
         float m_Near = .1f;
@@ -60,6 +61,11 @@ namespace QwerkE {
 
         float m_View[16];
         float m_Proj[16];
+
+        // #TESTING New camera movement
+        bx::Vec3 m_up = bx::InitZero;
+        float m_horizontalAngle;
+        float m_verticalAngle;
     };
 
 }

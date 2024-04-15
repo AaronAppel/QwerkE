@@ -135,11 +135,27 @@ namespace QwerkE {
                         showEditorUI = !showEditorUI;
                     }
 
+                    Framework::DrawImguiStart();
+
+                    if (!Window::IsMinimized())
+                    {
+                        local_DrawDockingContext();
+                        local_DrawMainMenuBar();
+                    }
+
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    local_EditorDrawImGui(showEditorUI);
+                    if (!Window::IsMinimized())
+                    {
+                        local_EditorDrawImGui(showEditorUI);
+                    }
 
-                    local_DrawEndFrame();
+                    Framework::DrawImguiEnd();
+
+                    if (!Window::IsMinimized())
+                    {
+                        local_DrawEndFrame();
+                    }
 				}
 				else
 				{
@@ -195,14 +211,9 @@ namespace QwerkE {
             if (Window::IsMinimized())
                 return;
 
-            Framework::DrawImguiStart();
-
             if (showEditorUI)
             {
                 local_EditorDraw(); // Start dock context. ImGui code above won't dock
-#ifdef _QDEBUG
-                Scenes::GetCurrentScene()->DebugDrawImgui();
-#endif
             }
 
             if (ImGui::Begin("Assets"))
@@ -255,20 +266,12 @@ namespace QwerkE {
                 }
             }
             ImGui::End();
-
-            Framework::DrawImguiEnd();
         }
 
         void local_DrawStylePicker(bool save);
 
 		void local_EditorDraw()
 		{
-            if (Window::IsMinimized())
-                return;
-
-            local_DrawMainMenuBar();
-            local_DrawDockingContext();
-
 #ifdef _QDEARIMGUI
             if (s_ShowingImGuiExampleWindow)
             {
@@ -454,13 +457,14 @@ namespace QwerkE {
         {
             {   // Debug drawer calls
                 const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-                bgfx::touch(viewIdFbo1);
 
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-                debugDrawer.begin(viewIdFbo1);
+                debugDrawer.begin(viewIdFbo1, true);
 
                 const bx::Vec3 normal = { .0f,  1.f, .0f };
                 const bx::Vec3 pos = { .0f, .0f, .0f };
+
+                debugDrawer.drawSphere(0.f, 0.f, 0.f, 3.f, Axis::X);
 
                 bx::Plane plane(bx::InitNone);
                 bx::calcPlane(plane, normal, pos);

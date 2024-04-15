@@ -77,7 +77,7 @@ namespace QwerkE {
 
         void OnKeyEvent(int key, int scancode, int action, int mode)
         {
-
+            int bp = 0;
         }
 
         void Initialize()
@@ -130,11 +130,13 @@ namespace QwerkE {
         void OnMouseClick(eKeys key, eKeyState state)
         {
             // TODO:: Handle mouse drag for eKeys_RightClick and eKeys_MiddleClick
-            if (key == eKeys_LeftClick && state == eKeyState::eKeyState_Press)
+            if ((key == eKeys_MouseButton1 || key == eKeys_MouseButton2) &&
+                state == eKeyState::eKeyState_Press)
             {
                 s_MouseDragStart = s_MousePos; // start drag
             }
-            else if (key == eKeys_LeftClick && state == eKeyState::eKeyState_Release)
+            else if ((key == eKeys_MouseButton1 || key == eKeys_MouseButton2) &&
+                state == eKeyState::eKeyState_Release)
             {
                 s_MouseDragReset = true; // drag ended, reset value next frame so it can be used this frame
             }
@@ -147,6 +149,11 @@ namespace QwerkE {
         {
             s_FrameMouseScrollOffsets.x = x;
             s_FrameMouseScrollOffsets.y = y;
+        }
+
+        const vec2f& MouseFrameDelta()
+        {
+            return s_FrameMouseDelta;
         }
 
         const vec2f& MouseScrollDelta()
@@ -211,7 +218,7 @@ namespace QwerkE {
             s_eKeyStates[key] = state;
         }
 
-        vec2f GetMouseDragDelta()
+        vec2f MouseDragDelta()
         {
             if (s_eKeyStates[eKeys::eKeys_LeftClick])
             {

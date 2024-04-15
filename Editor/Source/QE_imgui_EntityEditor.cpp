@@ -75,6 +75,11 @@ namespace QwerkE {
                     }
                 }
             }
+            else if (std::is_same_v<T, ComponentMesh>)
+            {
+                ComponentMesh* mesh = (ComponentMesh*)&component;
+                mesh->Initialize();
+            }
 
             ImGui::CloseCurrentPopup();
             return &component;

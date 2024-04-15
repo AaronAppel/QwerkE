@@ -30,4 +30,10 @@ namespace QwerkE {
 		m_Matrix[14] = newPosition.z;
 	}
 
+	vec3f ComponentTransform::Forward() const
+	{
+		const vec3f dirFromTransform = vec3f(m_Matrix[2], m_Matrix[6], m_Matrix[10]);
+		return dirFromTransform;
+	}
+
 }

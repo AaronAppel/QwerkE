@@ -601,6 +601,9 @@ namespace QwerkE {
 		template <typename T>
 		void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
 		{
+			if (!handle.HasComponent<T>())
+				return;
+
 			T& component = handle.GetComponent<T>();
 			auto componentTypeInfo = Mirror::InfoForType<T>();
 			cJSON* newJsonObjectArray = CreateArray(componentTypeInfo->stringName.c_str());
