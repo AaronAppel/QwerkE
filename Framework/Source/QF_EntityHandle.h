@@ -121,7 +121,7 @@ namespace QwerkE {
 		bool HasAllComponents() const // #TODO Would be cool to pass in multiple components to check
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			return m_Scene->m_Registry.any<Args...>(m_EnttId);
+			return m_Scene->m_Registry.has<Args...>(m_EnttId);
 		}
 
 		template <typename T>
