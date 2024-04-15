@@ -76,9 +76,11 @@ namespace QwerkE {
                             ImGui::SameLine();
                             ImGui::Text(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)pair.first)));
 
-                            const char* minusButtonTitle = "-";
-                            ImGui::SameLineEnd(minusButtonTitle);
-                            if (ImGui::Button(minusButtonTitle))
+                            std::string minusButtonTitle = "-";
+                            ImGui::SameLineEnd(minusButtonTitle.c_str());
+                            minusButtonTitle += "##";
+                            minusButtonTitle += std::to_string((u8)pair.first);
+                            if (ImGui::Button(minusButtonTitle.c_str()))
                             {
                                 removedScriptType = pair.first;
                             }

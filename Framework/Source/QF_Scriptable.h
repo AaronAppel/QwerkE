@@ -50,7 +50,7 @@ namespace QwerkE {
 		{
 			if (!m_Entity.HasAllComponents<Args...>())
 			{
-				LOG_CRITICAL_ONCE("Entity {0} missing ScriptableCamera!", m_Entity.GetComponent<ComponentInfo>().m_EditorDisplayName);
+				LOG_CRITICAL("Entity \"{0}\" missing ScriptableCamera!", m_Entity.GetComponent<ComponentInfo>().m_EditorDisplayName);
 				if (m_Entity.HasComponent<ComponentScript>())
 				{
 					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
@@ -58,7 +58,7 @@ namespace QwerkE {
 				}
 				else
 				{
-					LOG_CRITICAL_ONCE("Could not remove ComponentScript!");
+					LOG_CRITICAL("Could not remove ComponentScript!");
 				}
 				return false;
 			}
