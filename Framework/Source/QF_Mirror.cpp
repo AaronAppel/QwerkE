@@ -199,9 +199,8 @@ namespace QwerkE {
 	MIRROR_CLASS_END(ComponentCamera)
 
 	MIRROR_CLASS_START(ComponentInfo)
-	MIRROR_CLASS_MEMBER(m_EditorDisplayName)
-	// MIRROR_CLASS_MEMBER(m_Guid)	// #NOTE Unserialized as needed earlier (array name instead)
-									// and current cJSON implementation doesn't serialize 64 bit values
+	MIRROR_CLASS_MEMBER_FLAGS(m_EntityName, FieldSerializationFlags::_HideInInspector)
+	// MIRROR_CLASS_MEMBER(m_Guid)	// #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
 	MIRROR_CLASS_MEMBER(m_Enabled)
 	MIRROR_CLASS_END(ComponentInfo)
 

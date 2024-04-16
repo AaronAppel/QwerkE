@@ -100,7 +100,10 @@ namespace ImGui
 	void PopFontQw();
 
 	void SameLineEnd(int16_t numberOfChars, float horizontalScaling = 1.f);
-	void SameLineEnd(const char* text);
+	void SameLineEnd(const char* text, float horizontalScaling = 1.f);
+
+	void SameLineCentered(int16_t numberOfChars, float horizontalScaling = 1.f);
+	void SameLineCentered(const char* text, float horizontalScaling = 1.f);
 
 	template <typename Function>
 	void DefaultDebugWindow(Function function)

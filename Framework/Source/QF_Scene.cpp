@@ -78,24 +78,63 @@ namespace QwerkE {
             script.Bind(EntityHandle(this, entity)); // #TODO Reiew binding and when it should be done
             script.Update(deltaTime);
         }
+
+        {
+            static bool isOpen = false;
+            ImGui::Begin("MeshPositionWindow", &isOpen);
+
+            auto viewTransforms = ViewComponents<ComponentTransform>();
+            int i = 0;
+            for (auto entity : viewTransforms)
+            {
+                ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
+
+                vec3f meshPosition = transform.GetPosition();
+
+                std::string meshName = "MeshPosition";
+                if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
+                {
+                    transform.SetPosition(meshPosition);
+                }
+                ++i;
+            }
+
+            ImGui::End();
+        }
     }
 
     void Scene::Draw(u16 viewId)
     {
-        EntityHandle cameraHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
-        auto& camera = cameraHandle.GetComponent<ComponentCamera>();
-        auto& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
-
-        camera.PreDrawSetup(viewId, cameraTransform.GetPosition());
-
-        auto viewMeshes = m_Registry.view<ComponentMesh>();
-        for (auto& entity : viewMeshes)
+        if (!m_CameraEntityGuid)
         {
-            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
-            if (m_Registry.has<ComponentTransform>(entity))
+            auto viewCameraInfos = m_Registry.view<ComponentCamera, ComponentInfo>();
+            for (auto& entity : viewCameraInfos)
             {
-                ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
-                mesh.Draw(viewId, transform);
+                ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
+                m_CameraEntityGuid = info.m_Guid;
+            }
+        }
+
+        if (m_CameraEntityGuid)
+        {
+            EntityHandle cameraHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
+            if (cameraHandle)
+            {
+                auto& camera = cameraHandle.GetComponent<ComponentCamera>();
+                auto& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
+
+                camera.PreDrawSetup(viewId, cameraTransform.GetPosition());
+            }
+
+            auto viewMeshes = m_Registry.view<ComponentMesh>();
+            for (auto& entity : viewMeshes)
+            {
+                ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
+                if (m_Registry.has<ComponentTransform>(entity))
+                {
+                    ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
+                    mesh.Draw(viewId, transform);
+                }
             }
         }
     }
@@ -123,7 +162,26 @@ namespace QwerkE {
         // return m_GuidsToEntts.insert(entity->GetComponent<ComponentInfo>().m_Guid, entity).second;
     }
 
-    const EntityHandle& Scene::GetEntityByGuid(const GUID& existingGuid)
+    void Scene::DestroyEntity(EntityHandle& entity)
+    {
+        if (m_Registry.valid(entity.m_EnttId))
+        {
+            if (entity.EntityGuid() == m_CameraEntityGuid)
+            {
+                m_CameraEntityGuid = GUID::Invalid;
+            }
+
+            m_GuidsToEntts.erase(entity.EntityGuid());
+            m_Registry.destroy(entity.m_EnttId);
+
+            entity.Invalidate();
+
+            return;
+        }
+        LOG_WARN("{0} Could not destroy entity with entt ID {1}", __FUNCTION__, (u32)entity.m_EnttId);
+    }
+
+    const EntityHandle Scene::GetEntityByGuid(const GUID& existingGuid)
     {
         if (m_GuidsToEntts.find(existingGuid) != m_GuidsToEntts.end())
         {

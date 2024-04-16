@@ -22,11 +22,6 @@ namespace QwerkE {
 
     void SceneViewer::Draw()
     {
-        DrawSceneView();
-    }
-
-    void SceneViewer::DrawSceneView()
-    {
         static bool isOpen = true;
         static bool isSceneTextureOpen = true;
 
@@ -35,21 +30,8 @@ namespace QwerkE {
             return;
 
 #ifdef _QDEARIMGUI
-        if (ImGui::Begin("Scene Viewer", &isOpen, ImGuiWindowFlags_NoScrollbar))
+        if (ImGui::Begin("Scene Controls", &isOpen, ImGuiWindowFlags_NoScrollbar))
         {
-            // ImGui::GetWindowSize();
-
-            // ImGui::PushItemWidth(100);
-            // const char* runningStates[] = { "Running", "Paused" };
-            // m_currentSceneStateIndex = (char)currentScene->GetIsPaused();
-            // if (ImGui::Combo("", &m_currentSceneStateIndex, runningStates, sizeof(runningStates)/sizeof(const char*)))
-            // {
-            //     currentScene->SetIsPaused((bool)m_currentSceneStateIndex);
-            // }
-            // ImGui::PopItemWidth();
-            // ImGui::SameLine();
-
-            // #TODO Color
             bool sceneWasDirty = currentScene->IsDirty();
             if (sceneWasDirty)
             {
@@ -84,70 +66,45 @@ namespace QwerkE {
                 }
             }
 
-            ImGui::SameLine(ImGui::GetWindowWidth() * 0.5f - 20.f);
             const char* buttonText = currentScene->GetIsPaused() ? ">" : "||";
+            ImGui::SameLineCentered(buttonText);
             if (ImGui::Button(buttonText))
             {
                 currentScene->SetIsPaused(!currentScene->GetIsPaused());
             }
 
-            if (currentScene)
             {
-                static bool isOpen = false;
-                ImGui::Begin("MeshPositionWindow", &isOpen);
+                constexpr u32 s_CharacterPixelSize = 10;
+                constexpr u32 s_DropDownArrowSize = 20;
 
-                auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
-                int i = 0;
-                for (auto entity : viewTransforms)
+                const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
+                std::vector<const char*> sceneNames;
+                sceneNames.reserve(3);
+
+                for (size_t i = 0; i < scenes.size(); i++)
                 {
-                    ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
-
-                    vec3f meshPosition = transform.GetPosition();
-
-                    std::string meshName = "MeshPosition";
-                    if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
-                    {
-                        transform.SetPosition(meshPosition);
-                    }
-                    ++i;
+                    sceneNames.push_back(scenes[i]->GetSceneName().c_str());
                 }
+                int index = Scenes::GetCurrentSceneIndex();
 
-                ImGui::End();
+                const u32 sceneFileNameWidth = strlen(sceneNames[index]) * s_CharacterPixelSize;
+#ifdef _QDEARIMGUI
+                ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
+
+                char s_ScenesCombobuffer[] = "Scenes:    ";
+                snprintf(s_ScenesCombobuffer, strlen(s_ScenesCombobuffer), "Scenes: %i", (int)sceneNames.size());
+
+                ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesCombobuffer) * s_CharacterPixelSize));
+                if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), (s32)scenes.size()))
+                {
+                    Scenes::SetCurrentScene(index);
+                }
+                ImGui::PopItemWidth();
+#endif
             }
-
-            DrawSceneList();
         }
         ImGui::End();
-#endif
-    }
 
-    const int s_CharacterPixelSize = 10;
-    const int s_DropDownArrowSize = 20;
-    void SceneViewer::DrawSceneList()
-    {
-        const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
-        std::vector<const char*> sceneNames;
-        sceneNames.reserve(3);
-
-        for (size_t i = 0; i < scenes.size(); i++)
-        {
-            sceneNames.push_back(scenes[i]->GetSceneName().c_str());
-        }
-        int index = Scenes::GetCurrentSceneIndex();
-
-        const int sceneFileNameWidth = strlen(sceneNames[index]) * s_CharacterPixelSize;
-#ifdef _QDEARIMGUI
-        ImGui::PushItemWidth((float)sceneFileNameWidth + s_DropDownArrowSize);
-
-        char s_ScenesCombobuffer [] = "Scenes:    ";
-        snprintf(s_ScenesCombobuffer, strlen(s_ScenesCombobuffer), "Scenes: %i", sceneNames.size());
-
-        ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesCombobuffer) * s_CharacterPixelSize));
-        if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), scenes.size()))
-        {
-            Scenes::SetCurrentScene(index);
-        }
-        ImGui::PopItemWidth();
 #endif
     }
 

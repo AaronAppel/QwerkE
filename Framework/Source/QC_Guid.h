@@ -19,6 +19,9 @@ namespace QwerkE {
 
 		static const u64 Invalid = 0;
 
+		bool operator ==(const GUID& other) const { return m_Guid == other.m_Guid; }
+		// #NOTE Spdlog doesn't like this : operator bool() const { return m_Guid != Invalid; }
+
 	private:
 		MIRROR_PRIVATE_MEMBERS
 		u64 m_Guid;

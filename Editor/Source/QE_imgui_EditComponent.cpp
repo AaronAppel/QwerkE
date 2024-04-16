@@ -78,7 +78,8 @@ namespace QwerkE {
         if (!entity)
             return;
 
-        DrawEditComponentT<ComponentTransform>(entity); // Draw above
+        DrawEditComponentT<ComponentInfo>(entity); // Draw above
+        DrawEditComponentT<ComponentTransform>(entity);
 
         DrawEditComponentT<ComponentCamera>(entity);
         DrawEditComponentT<ComponentLight>(entity);

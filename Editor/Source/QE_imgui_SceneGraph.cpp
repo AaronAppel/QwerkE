@@ -113,7 +113,7 @@ namespace QwerkE {
 			{
 				EntityHandle handle(currentScene, entity);
 				ComponentInfo& info = handle.GetComponent<ComponentInfo>();
-				if (ImGui::Button(info.m_EditorDisplayName))
+				if (ImGui::Button((info.m_EntityName + "##" + std::to_string(info.m_Guid)).c_str()))
 				{
 					m_EntityEditor->SetCurrentEntity(handle);
 					break;

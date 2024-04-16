@@ -58,9 +58,6 @@ namespace QwerkE {
             bgfx::setViewClear(viewId, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
             bgfx::setViewRect(viewId, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
 
-            // bgfx::setViewFrameBuffer(viewId, Renderer::s_FrameBufferHandle);
-            bgfx::touch(viewId);
-
             bx::mtxLookAt(m_View, m_Eye, m_LookAtTarget);
 
             bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
@@ -178,7 +175,8 @@ namespace QwerkE {
 					{
 						Stop();
 					}
-                    if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press))
+                    if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press) &&
+                        (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
                     {
                         showEditorUI = !showEditorUI;
                     }
@@ -188,12 +186,15 @@ namespace QwerkE {
                     local_DrawDockingContext();
                     local_DrawMainMenuBar();
 
-                    s_EditorWindowSceneViewEditor.Draw();
-                    s_EditorWindowSceneViewGame.Draw();
-
 					Framework::Update((float)Time::PreviousFrameDuration());
 
                     local_EditorDrawImGui(showEditorUI);
+
+                    if (showEditorUI)
+                    {
+                        s_EditorWindowSceneViewEditor.Draw();
+                        s_EditorWindowSceneViewGame.Draw();
+                    }
 
                     Framework::DrawImguiEnd();
 

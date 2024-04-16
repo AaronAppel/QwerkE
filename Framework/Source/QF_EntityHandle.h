@@ -81,11 +81,18 @@ namespace QwerkE {
 			return GetComponent<ComponentInfo>().m_Guid;
 		}
 
-		const char* const EntityName()
+		const std::string& EntityName()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
-			return GetComponent<ComponentInfo>().m_EditorDisplayName;
+			return GetComponent<ComponentInfo>().m_EntityName;
+		}
+
+		void SetEntityName(const std::string& newEntityName)
+		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
+			GetComponent<ComponentInfo>().m_EntityName = newEntityName;
 		}
 
 		bool IsEnabled()
@@ -147,7 +154,7 @@ namespace QwerkE {
 
 		Scene* GetScene() { return m_Scene; }
 
-		void Invalidate() { m_EnttId != entt::null; m_Scene = nullptr; }
+		void Invalidate() { m_EnttId = entt::null; m_Scene = nullptr; }
 		static EntityHandle InvalidHandle() { return EntityHandle(); }
 
 		operator bool() const { return m_EnttId != entt::null && m_Scene; }

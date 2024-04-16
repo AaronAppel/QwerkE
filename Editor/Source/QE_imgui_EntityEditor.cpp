@@ -98,10 +98,15 @@ namespace QwerkE {
             //// Begin drawing entity data...
             // Draw generic GameObject data like transform and name
             // std::string name = m_CurrentEntity->GetName().c_str() + ' '; // extra space for editing
-            char* entityName = (char*)m_CurrentEntity.EntityName();
-            ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x / 1.6f);
-            if (ImGui::InputText("##EntityName", entityName, strlen(entityName)))
+
+            std::string nameBuffer = m_CurrentEntity.EntityName();
+
+            constexpr float scalar = 1.6f; // #NOTE Aesthetic
+            ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x / scalar);
+            if (ImGui::InputText(("##" + nameBuffer).c_str(), nameBuffer.data(), nameBuffer.size() + 1)) // #NOTE +1 to avoid deleting the last char on box selection
             {
+                ComponentInfo& info = m_CurrentEntity.GetComponent<ComponentInfo>();
+                info.m_EntityName = nameBuffer;
             }
             ImGui::SameLine();
             ImGui::Text(std::to_string(m_CurrentEntity.EntityGuid()).c_str());
@@ -116,6 +121,11 @@ namespace QwerkE {
                 m_CurrentEntity.SetIsEnabled(!m_CurrentEntity.IsEnabled());
             }
             ImGui::SameLine();
+            if (ImGui::Button("Destroy"))
+            {
+                currentScene->DestroyEntity(m_CurrentEntity);
+            }
+            ImGui::SameLineEnd("Add Component");
             if (ImGui::Button("Add Component"))
             {
                 ImGui::OpenPopup("ComponentList");
@@ -133,7 +143,10 @@ namespace QwerkE {
             }
 
             // #TOOD Deprecate m_EditComponent if it stays small
-            m_EditComponent->Draw(m_CurrentEntity);
+            if (m_CurrentEntity)
+            {
+                m_EditComponent->Draw(m_CurrentEntity);
+            }
         }
 
         ImGui::End();

@@ -32,7 +32,9 @@ namespace QwerkE {
         EntityHandle CreateEntity();
         EntityHandle CreateEntity(const GUID& existingGuid);
 
-        const EntityHandle& GetEntityByGuid(const GUID& existingGuid);
+        void DestroyEntity(EntityHandle& entity);
+
+        const EntityHandle GetEntityByGuid(const GUID& existingGuid);
 
         void SaveScene();
         void LoadSceneFromFilePath(const char* otherSceneFileName);

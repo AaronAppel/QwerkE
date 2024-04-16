@@ -4,6 +4,10 @@
 #include "Libraries/imgui/QC_imgui.h"
 #endif
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Mirror.h"
+#endif
+
 #include "QF_ComponentScript.h"
 #include "QF_Enums.h"
 #include "QF_Log.h"
@@ -30,6 +34,9 @@ namespace QwerkE {
             for (size_t i = 0; i < fields.size(); i++)
             {
                 const Mirror::Field field = fields[i];
+
+                if (field.serializationFlags & Mirror::FieldSerializationFlags::_HideInInspector)
+                    continue;
 
                 const void* fieldAddress = (void*)((char*)obj + field.offset);
 
@@ -76,7 +83,7 @@ namespace QwerkE {
                             ImGui::SameLine();
                             ImGui::Text(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)pair.first)));
 
-                            char minusButtonTitle[] = { '-', '#', '#', (u8)pair.first, '\0' };
+                            char minusButtonTitle[] = { '-', '#', '#', (char)pair.first, '\0' };
                             ImGui::SameLineEnd(1);
                             if (ImGui::Button(minusButtonTitle))
                             {
@@ -223,13 +230,10 @@ namespace QwerkE {
                 case MirrorTypes::m_bool:
                     {
                         bool* boolAddress = (bool*)fieldAddress;
-                        int intValue = *boolAddress;
                         std::string fieldName = parentName + field.name;
-                        if (ImGui::InputInt(fieldName.c_str(), &intValue))
+                        if (ImGui::Checkbox(fieldName.c_str(), boolAddress))
                         {
-                            // #TODO Fix rounding where subtracting 0 gives 1, but adding 1 doesn't change the value. Avoid rounding from 0-1 = 1.
-                            valueChanged |= *boolAddress != (bool)intValue;
-                            *boolAddress = (bool)intValue;
+                            valueChanged = true;
                         }
                     }
                     break;

@@ -14,7 +14,7 @@ namespace QwerkE {
 		EditorWindowSceneView::EditorWindowSceneView(std::string windowName) :
 			EditorWindow(windowName)
 		{
-			m_Flags = ImGuiWindowFlags_NoScrollbar; // | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground
+			m_Flags = ImGuiWindowFlags_NoScrollbar;
 		}
 
 		void EditorWindowSceneView::DrawInternal()

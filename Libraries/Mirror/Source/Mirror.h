@@ -14,6 +14,7 @@
 
 #define MIRROR_MEMBER_FIELDS_DEFAULT 3
 #define MIRROR_PRIVATE_MEMBERS friend struct Mirror;
+#define MIRROR_EXPOSE_FIELD_FLAGS 1
 
 namespace QwerkE
 {
@@ -22,11 +23,23 @@ namespace QwerkE
 	{
 		struct TypeInfo;
 
+#ifdef MIRROR_EXPOSE_FIELD_FLAGS
+		enum FieldSerializationFlags : uint8_t
+		{
+			_None				= 0,
+			_HideInInspector	= 1 << 0, // Serialize but don't show in editor UI
+			_InspectorOnly		= 1 << 1, // Do not serialize the value
+		};
+#endif
+
 		struct Field
 		{
 			const TypeInfo* typeInfo = nullptr;
 			std::string name = "";
 			size_t offset = 0;
+#ifdef MIRROR_EXPOSE_FIELD_FLAGS
+			uint8_t serializationFlags = FieldSerializationFlags::_None;
+#endif
 		};
 
 		struct TypeInfo
@@ -108,6 +121,17 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	MEMBER_NAME##field.name = #MEMBER_NAME; \
 	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME); \
 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
+
+#ifdef MIRROR_EXPOSE_FIELD_FLAGS
+#define MIRROR_CLASS_MEMBER_FLAGS(MEMBER_NAME, FLAGS) \
+	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 }; \
+	QwerkE::Mirror::Field MEMBER_NAME##field; \
+	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>(); \
+	MEMBER_NAME##field.name = #MEMBER_NAME; \
+	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME); \
+	MEMBER_NAME##field.serializationFlags = FLAGS; \
+	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
+#endif
 
 #define MIRROR_CLASS_MEMBER_TYPE_OVERRIDE(MEMBER_NAME, OVERRIDE_TYPE) \
 	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 }; \

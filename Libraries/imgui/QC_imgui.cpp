@@ -25,16 +25,34 @@ namespace ImGui
 
 	void SameLineEnd(int16_t numberOfChars, float horizontalScaling)
 	{
-		const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
-		const float offset = ImGui::GetContentRegionAvail().x - lineHeight * numberOfChars * horizontalScaling;
+		constexpr float pixelsPerCharacter = 6.f;
+
+		const float padding = ImGui::GetStyle().FramePadding.x;
+		const float lineHeight = ImGui::GetFontSize() + padding * 2.0f;
+		const float contentWidth = lineHeight + (numberOfChars * pixelsPerCharacter * horizontalScaling);
+		const float offset = ImGui::GetContentRegionAvail().x - contentWidth + padding;
 		ImGui::SameLine(offset);
 	}
 
-	void SameLineEnd(const char* text)
+	void SameLineEnd(const char* text, float horizontalScaling)
 	{
-		const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
-		const float offset = ImGui::GetContentRegionAvail().x - lineHeight * strlen(text);
+		SameLineEnd(strlen(text), horizontalScaling);
+	}
+
+	void SameLineCentered(int16_t numberOfChars, float horizontalScaling)
+	{
+		constexpr float pixelsPerCharacter = 6.f;
+
+		const float padding = ImGui::GetStyle().FramePadding.x;
+		const float lineHeight = ImGui::GetFontSize() + padding * 2.0f;
+		const float contentWidth = lineHeight + (numberOfChars * pixelsPerCharacter * horizontalScaling);
+		const float offset = (ImGui::GetWindowWidth() / 2.f) - contentWidth;
 		ImGui::SameLine(offset);
+	}
+
+	void SameLineCentered(const char* text, float horizontalScaling)
+	{
+		SameLineCentered(strlen(text), horizontalScaling);
 	}
 
 }

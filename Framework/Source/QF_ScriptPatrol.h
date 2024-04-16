@@ -13,7 +13,7 @@ namespace QwerkE {
 		{
 			if (!m_Entity.HasComponent<ComponentTransform>())
 			{
-				LOG_ERROR("Entity {0} missing ScriptableTransform!", m_Entity.GetComponent<ComponentInfo>().m_EditorDisplayName);
+				LOG_ERROR("Entity {0} missing ScriptableTransform!", m_Entity.GetComponent<ComponentInfo>().m_EntityName.c_str());
 
 				if (m_Entity.HasComponent<ComponentScript>())
 				{

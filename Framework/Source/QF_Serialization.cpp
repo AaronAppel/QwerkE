@@ -68,7 +68,7 @@ namespace QwerkE {
 				case cJSON_True:
 				case cJSON_False:
 				case cJSON_Number:
-					local_DeserializeJsonNumber(objJson, objTypeInfo->enumType, objTypeInfo->size, (char*)obj);
+					local_DeserializeJsonNumber(objJson, objTypeInfo->enumType, (u32)objTypeInfo->size, (char*)obj);
 					break;
 
 				default:
@@ -103,6 +103,9 @@ namespace QwerkE {
 			{
 				const Mirror::Field& field = objTypeInfo->fields[i];
 
+				if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
+					continue;
+
 #if SERIALIZER_OPTIMIZATION_LEVEL > 0
 				for (size_t j = i; j < jsonStructArr.size(); j++)
 				{
@@ -123,7 +126,7 @@ namespace QwerkE {
 					case cJSON_True:
 					case cJSON_False:
 					case cJSON_Number:
-						local_DeserializeJsonNumber(jsonStructArr[j], field.typeInfo->enumType, field.typeInfo->size, (char*)obj + field.offset);
+						local_DeserializeJsonNumber(jsonStructArr[j], field.typeInfo->enumType, (u32)field.typeInfo->size, (char*)obj + field.offset);
 						break;
 
 					case cJSON_Array:
@@ -434,7 +437,7 @@ namespace QwerkE {
 			}
 		}
 
-		void local_DeserializeJsonNumber(const cJSON * jsonObj, const MirrorTypes type, const unsigned int typeSize, void* obj)
+		void local_DeserializeJsonNumber(const cJSON * jsonObj, const MirrorTypes type, const u32 typeSize, void* obj)
 		{
 			if (!jsonObj || !obj)
 			{
@@ -524,13 +527,13 @@ namespace QwerkE {
 
 			case MirrorTypes::m_pair_guid_string:
 				{
-					int bp = 0;
+					int bp = 0; // #TODO Support
 				}
 				break;
 
 			case MirrorTypes::m_vec_pair_guid_string:
 				{
-					int bp = 0;
+					int bp = 0; // #TODO Support
 				}
 				break;
 
@@ -629,6 +632,9 @@ namespace QwerkE {
 			for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
 			{
 				const Mirror::Field& field = objTypeInfo->fields[i];
+
+				if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
+					continue;
 
 				cJSON* arr = nullptr;
 				if (!field.typeInfo->isPrimitive())
