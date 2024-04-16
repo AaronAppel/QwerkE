@@ -218,12 +218,12 @@ namespace QwerkE {
 			}
 		}
 
-		void DrawCurrentScene()
+		void DrawCurrentScene(u16 viewId)
 		{
 			PROFILE_SCOPE("Scene Manager Render");
 			if (s_CurrentScene)
 			{
-				s_CurrentScene->Draw();
+				s_CurrentScene->Draw(viewId);
 			}
 		}
 

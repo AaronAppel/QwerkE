@@ -44,6 +44,7 @@ namespace QwerkE {
 				static float yaw = 0.f;
 				yaw -= m_MouseDragTracker.MouseFrameDelta().x / pixelRatio * deltaTime;
 
+				// Pitch transform.m_Matrix[6];
 				static float pitch = 0.f;
 				pitch -= m_MouseDragTracker.MouseFrameDelta().y / pixelRatio * deltaTime;
 
@@ -57,55 +58,54 @@ namespace QwerkE {
 					translate.x, translate.y, translate.z);
 			}
 
-			ImGui::DefaultDebugWindow([&]()
-			{
-				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
-
-				vec2f mouseTrackerDelta = m_MouseDragTracker.MouseFrameDelta();
-				ImGui::DragFloat2("MouseDragTracker", &mouseTrackerDelta.x, .05f);
-			});
-
 			const vec3f transformForward = transform.Forward();
-
-			const bx::Vec3 direction =
+			const bx::Vec3 forward =
 			{
-				bx::cos(camera.m_verticalAngle) * bx::sin(camera.m_horizontalAngle),
-				bx::sin(camera.m_verticalAngle),
-				bx::cos(camera.m_verticalAngle) * bx::cos(camera.m_horizontalAngle),
-			};
-
-			const bx::Vec3 right =
-			{
-				bx::sin(camera.m_horizontalAngle - bx::kPiHalf),
-				0.0f,
-				bx::cos(camera.m_horizontalAngle - bx::kPiHalf),
+				transformForward.x,
+				transformForward.y,
+				transformForward.z
 			};
 
 			const UserSettings& userSettings = Settings::GetUserSettings();
 			if (Input::IsKeyDown(userSettings.key_camera_MoveForward))
 			{
 				vec3f pos = transform.GetPosition();
-				bx::Vec3 eye = bx::mad(direction, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+				bx::Vec3 eye = bx::mad(forward, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::IsKeyDown(userSettings.key_camera_MoveBackward))
 			{
 				vec3f pos = transform.GetPosition();
-				bx::Vec3 eye = bx::mad(direction, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+				bx::Vec3 eye = bx::mad(forward, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
+
+			const bx::Vec3 right =
+			{
+				transform.m_Matrix[0],
+				transform.m_Matrix[4],
+				transform.m_Matrix[8]
+			};
+
 			if (Input::IsKeyDown(userSettings.key_camera_MoveLeft))
 			{
-				transform.m_Matrix[12] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				vec3f pos = transform.GetPosition();
+				bx::Vec3 eye = bx::mad(right, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
+				// transform.m_Matrix[12] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::IsKeyDown(userSettings.key_camera_MoveRight))
 			{
-				transform.m_Matrix[12] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				vec3f pos = transform.GetPosition();
+				bx::Vec3 eye = bx::mad(right, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
+				// transform.m_Matrix[12] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 
-			const bx::Vec3 up = bx::cross(right, direction);
+			const bx::Vec3 up = bx::cross(right, forward);
+
 			if (Input::IsKeyDown(userSettings.key_camera_MoveDown))
 			{
 				transform.m_Matrix[13] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
@@ -134,18 +134,30 @@ namespace QwerkE {
 			if (const bool useTargetLookAt = false)
 			{
 				// #TODO Add option to reference an existing transform component in the scene
-				vec3f targetPosition = vec3f();
+				vec3f targetPosition = camera.m_LookAtPosition;
 				camera.m_LookAtPosition = targetPosition;
 			}
 			else if (const bool useDirectionalLookAt = true)
 			{
 				// #TODO Only re-calculate if forward changed
 				constexpr float scalar = 1.f;
+				const float* position = nullptr;
 				vec3f forwardPosition = transform.GetPosition() + (transform.Forward() * scalar);
 				camera.m_LookAtPosition = forwardPosition;
 			}
 
-			camera.m_up = bx::cross(right, direction);
+			m_up = bx::cross(right, forward);
+
+			ImGui::DefaultDebugWindow([&]()
+			{
+				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
+
+				vec2f mouseTrackerDelta = m_MouseDragTracker.MouseFrameDelta();
+				ImGui::DragFloat2("MouseDragTracker", &mouseTrackerDelta.x, .05f);
+
+				vec3f forward = transformForward;
+				ImGui::DragFloat3("TransformForward", &forward.x, .05f);
+			});
 		}
 
 		eScriptTypes ScriptType() override
@@ -154,7 +166,25 @@ namespace QwerkE {
 		}
 
 		Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(eKeys::eKeys_MouseButton2);
-		bool orbit = false;
+
+		enum RotationMode
+		{
+			OrbitTarget = 0,
+			OrbitSelf
+		};
+
+		enum LookAtMode
+		{
+			LookAtTarget = 0,
+			LookForward
+		};
+
+		bool m_RotationMode = OrbitSelf;
+
+		// #TESTING New camera movement
+		bx::Vec3 m_up = bx::InitZero;
+		float m_horizontalAngle;
+		float m_verticalAngle;
 	};
 
 }

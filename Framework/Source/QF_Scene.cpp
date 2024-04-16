@@ -80,13 +80,12 @@ namespace QwerkE {
         }
     }
 
-    void Scene::Draw()
+    void Scene::Draw(u16 viewId)
     {
         EntityHandle cameraHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
         auto& camera = cameraHandle.GetComponent<ComponentCamera>();
         auto& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
 
-        const u16 viewId = 2; // #TODO Fix hard coded value
         camera.PreDrawSetup(viewId, cameraTransform.GetPosition());
 
         auto viewMeshes = m_Registry.view<ComponentMesh>();
@@ -96,7 +95,7 @@ namespace QwerkE {
             if (m_Registry.has<ComponentTransform>(entity))
             {
                 ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
-                mesh.Draw(transform);
+                mesh.Draw(viewId, transform);
             }
         }
     }

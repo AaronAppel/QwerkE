@@ -59,7 +59,7 @@ namespace QwerkE {
                             for (size_t i = start; i < range; i++)
                             {
                                 eScriptTypes scriptType = (eScriptTypes)i;
-                                if (!script->HasScript(scriptType) && ImGui::Button(std::to_string(i).c_str()))
+                                if (!script->HasScript(scriptType) && ImGui::Button(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)i))))
                                 {
                                     script->AddScript(scriptType, EntityHandle::InvalidHandle()); // #TODO Get proper entity handle
                                     valueChanged = true;

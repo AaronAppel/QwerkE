@@ -82,9 +82,9 @@ namespace QwerkE {
 			Renderer::EndImGui();
 		}
 
-		void DrawFrameEnd()
+		void DrawFrameEnd(u16 viewId)
 		{
-			Scenes::DrawCurrentScene();
+			Scenes::DrawCurrentScene(viewId);
 			Renderer::EndFrame();
 		}
 

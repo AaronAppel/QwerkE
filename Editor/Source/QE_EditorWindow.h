@@ -1,5 +1,7 @@
 #pragma once
 
+#include "QC_Guid.h"
+
 namespace QwerkE {
 
 	namespace Editor {
@@ -7,22 +9,20 @@ namespace QwerkE {
 		class EditorWindow
 		{
 		public:
-			void Create();
-			void Destroy();
+			EditorWindow(std::string windowName) : m_WindowName(windowName)
+			{
+				m_WindowName += "##";
+				m_WindowName += std::to_string(m_Guid);
+			}
 
 			void Draw();
 
+		protected:
+			virtual void DrawInternal() { }
+
 		private:
-			EditorWindow() = default;
-
-			void Initialize();
-			void Shutdown();
-
-			void EditorDraw();
-
-			void DrawMainMenuBar();
-			void DrawDockingContext();
-			void DrawStylePicker(bool save);
+			std::string m_WindowName;
+			GUID m_Guid;
 
 		};
 

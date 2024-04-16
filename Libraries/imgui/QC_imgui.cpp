@@ -23,10 +23,10 @@ namespace ImGui
 		ImGui::PopFont();
 	}
 
-	void SameLineEnd(int16_t numberOfChars, float scaling)
+	void SameLineEnd(int16_t numberOfChars, float horizontalScaling)
 	{
 		const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
-		const float offset = ImGui::GetContentRegionAvail().x - lineHeight * numberOfChars * scaling;
+		const float offset = ImGui::GetContentRegionAvail().x - lineHeight * numberOfChars * horizontalScaling;
 		ImGui::SameLine(offset);
 	}
 

@@ -1,7 +1,7 @@
 ﻿#include "QE_SceneViewer.h"
 
 #ifdef _QDEARIMGUI
-#include "imgui/imgui.h"
+#include "Libraries/imgui/QC_imgui.h"
 #endif
 
 #include "QC_StringHelpers.h"
@@ -124,7 +124,18 @@ namespace QwerkE {
             ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
             // #TODO Replace hard coded texture ID
-            ImGui::Image(ImTextureID(4), ImVec2(contentRegionAvailable.x, contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
+            static int textureId1 = 3;
+            static int textureId2 = 4;
+
+            ImGui::Image(ImTextureID(textureId1), ImVec2(contentRegionAvailable.x / 2.f - (ImGui::GetStyle().FramePadding.x), contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
+            ImGui::SameLine();
+            ImGui::Image(ImTextureID(textureId2), ImVec2(contentRegionAvailable.x / 2.f - (ImGui::GetStyle().FramePadding.x), contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
+
+            ImGui::DefaultDebugWindow([&]()
+            {
+                ImGui::InputInt("Scene view texture ID1", &textureId1);
+                ImGui::InputInt("Scene view texture ID2", &textureId2);
+            });
         }
         ImGui::End();
 #endif

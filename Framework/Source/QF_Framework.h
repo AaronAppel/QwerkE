@@ -15,7 +15,7 @@ namespace QwerkE {
 		void Update(float deltatime);
 		void DrawImguiStart();
 		void DrawImguiEnd();
-		void DrawFrameEnd();
+		void DrawFrameEnd(u16 viewId = 0);
 
 	}
 

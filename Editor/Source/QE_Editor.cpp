@@ -45,7 +45,47 @@
 #include "QE_SceneGraph.h"
 #include "QE_SceneViewer.h"
 
+#include "QE_EditorWindow.h"
+
 namespace QwerkE {
+
+    struct EditorCamera
+    {
+        void PreDrawSetup(bgfx::ViewId viewId)
+        {
+            const vec2f& windowSize = Window::GetSize();
+
+            bgfx::setViewClear(viewId, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
+            bgfx::setViewRect(viewId, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
+
+            // bgfx::setViewFrameBuffer(viewId, Renderer::s_FrameBufferHandle);
+            bgfx::touch(viewId);
+
+            bx::mtxLookAt(m_View, m_Eye, m_LookAtTarget);
+
+            bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
+            bgfx::setViewTransform(viewId, m_View, m_Proj);
+
+            if (m_ShowSphere)
+            {
+                DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
+                debugDrawer.begin(viewId);
+                debugDrawer.drawSphere(m_LookAtTarget.x, m_LookAtTarget.y, m_LookAtTarget.z, 3.f);
+                debugDrawer.end();
+            }
+        }
+
+        bool m_ShowSphere = false;
+        bx::Vec3 m_Eye = bx::Vec3(0.f);
+        bx::Vec3 m_LookAtTarget = bx::Vec3(0.f);;
+
+        float m_Fov = 60.f;
+        float m_Near = .1f;
+        float m_Far = 100.f;
+
+        float m_View[16];
+        float m_Proj[16];
+    };
 
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
@@ -54,6 +94,10 @@ namespace QwerkE {
     }
 
 	namespace Editor {
+
+        static EditorWindow s_EditorWindow1("Window1");
+
+        static EditorCamera s_EditorCamera;
 
         static EditorDirtyFlags s_DirtyFlags = EditorDirtyFlags::None;
 
@@ -139,6 +183,8 @@ namespace QwerkE {
 
                     local_DrawDockingContext();
                     local_DrawMainMenuBar();
+
+                    s_EditorWindow1.Draw();
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
@@ -449,9 +495,8 @@ namespace QwerkE {
 
         void local_DrawEndFrame()
         {
+            const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
             {   // Debug drawer calls
-                const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
                 debugDrawer.begin(viewIdFbo1, true);
 
@@ -468,7 +513,10 @@ namespace QwerkE {
                 debugDrawer.end();
             }
 
-            Framework::DrawFrameEnd();
+            Framework::DrawFrameEnd(viewIdFbo1);
+
+            s_EditorCamera.PreDrawSetup(0);
+            Framework::DrawFrameEnd(0);
         }
 
 	}

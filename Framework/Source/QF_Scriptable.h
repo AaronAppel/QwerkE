@@ -42,6 +42,9 @@ namespace QwerkE {
 
 		virtual eScriptTypes ScriptType() = 0;
 
+		// #TODO Check if entity has required components for this script instance
+		virtual bool ValidEntityForScript(const EntityHandle& entity) { return true; }
+
 	protected:
 		Scriptable() = default;
 

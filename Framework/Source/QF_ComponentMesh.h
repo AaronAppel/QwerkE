@@ -20,7 +20,7 @@ namespace QwerkE {
     {
     public:
         void Initialize();
-        void Draw(const ComponentTransform& transform);
+        void Draw(u16 viewId, const ComponentTransform& transform);
 
     private:
         MIRROR_PRIVATE_MEMBERS

@@ -31,7 +31,7 @@ namespace QwerkE {
         void DestroyScene(const Scene* const scene);
 
         void Update(float deltatime);
-        void DrawCurrentScene();
+        void DrawCurrentScene(u16 viewId = 0);
         void DrawScene(std::string sceneName);
 
         Scene* GetCurrentScene();

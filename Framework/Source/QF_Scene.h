@@ -27,7 +27,7 @@ namespace QwerkE {
         ~Scene();
 
         void Update(float deltatime);
-        void Draw();
+        void Draw(u16 viewId = 0);
 
         EntityHandle CreateEntity();
         EntityHandle CreateEntity(const GUID& existingGuid);

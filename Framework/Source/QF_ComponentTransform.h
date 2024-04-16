@@ -15,7 +15,7 @@ namespace QwerkE {
 		ComponentTransform(float newPositionX, float newPositionY, float newPositionZ);
 
 		void SetPosition(const vec3f& newPosition);
-		const vec3f& GetPosition() const { return static_cast<vec3f>(m_Matrix[12]); }
+		vec3f GetPosition() const { return vec3f(m_Matrix[12], m_Matrix[13], m_Matrix[14]); }
 
 		vec3f Forward() const;
 

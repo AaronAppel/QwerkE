@@ -30,9 +30,6 @@ namespace QwerkE {
             bgfx::setViewClear(viewId, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
             bgfx::setViewRect(viewId, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
 
-            bgfx::setViewFrameBuffer(viewId, Renderer::s_FrameBufferHandle);
-            bgfx::touch(viewId);
-
             bx::Vec3 eye = { position.x, position.y, position.z };
             bx::Vec3 at = { m_LookAtPosition.x, m_LookAtPosition.y, m_LookAtPosition.z };
             bx::mtxLookAt(m_View, eye, at);
@@ -61,11 +58,6 @@ namespace QwerkE {
 
         float m_View[16];
         float m_Proj[16];
-
-        // #TESTING New camera movement
-        bx::Vec3 m_up = bx::InitZero;
-        float m_horizontalAngle;
-        float m_verticalAngle;
     };
 
 }

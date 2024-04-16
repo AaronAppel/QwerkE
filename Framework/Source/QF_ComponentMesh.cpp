@@ -18,7 +18,7 @@ namespace QwerkE {
         m_Shader = Assets::Get<Shader>(m_ShaderGuid);
     }
 
-    void ComponentMesh::Draw(const ComponentTransform& transform)
+    void ComponentMesh::Draw(u16 viewId, const ComponentTransform& transform)
     {
 #ifdef _QDEBUG // #TESTING
 
@@ -26,8 +26,7 @@ namespace QwerkE {
         bgfx::setVertexBuffer(0, m_Mesh->m_vbh);
         bgfx::setIndexBuffer(m_Mesh->m_ibh);
 
-        const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-        bgfx::submit(viewIdFbo1, m_Shader->m_Program);
+        bgfx::submit(viewId, m_Shader->m_Program);
 #endif
     }
 

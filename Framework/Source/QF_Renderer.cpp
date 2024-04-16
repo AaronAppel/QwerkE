@@ -49,10 +49,11 @@ namespace QwerkE {
 		static const bgfx::ViewId s_ViewIdFbo1 = 2;
 
 		// #TODO static these
-		bgfx::FrameBufferHandle s_FrameBufferHandle; // #TESTING
-		const u8 s_FrameBufferTextureCount = 1;
-		bgfx::TextureHandle s_FrameBufferTextures[s_FrameBufferTextureCount]; // #TODO Destroy
-		bgfx::TextureHandle s_ReadBackTexture; // #TODO Destroy
+		bgfx::FrameBufferHandle s_FrameBufferHandleFbo; // #TESTING
+		bgfx::TextureHandle s_FrameBufferTextureFBO; // #TODO Destroy
+		bgfx::FrameBufferHandle s_FrameBufferHandleEditorCamera; // #TESTING
+		bgfx::TextureHandle s_FrameBufferTextureEditorCamera; // #TODO Destroy
+		// bgfx::TextureHandle s_ReadBackTexture; // #TODO Destroy
 
 #ifdef _QDEBUG
 		static DebugDrawEncoder* s_DebugDrawer = nullptr;
@@ -137,24 +138,48 @@ namespace QwerkE {
 			const bool has_mips = false;
 			const uint16_t num_layers = 1;
 
-			s_ReadBackTexture = bgfx::createTexture2D(windowSize.x, windowSize.y,
-				has_mips, num_layers,
-				bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_READ_BACK | BGFX_TEXTURE_BLIT_DST);
-			ASSERT(bgfx::isValid(s_ReadBackTexture), "Error creating read back texture!");
+			// s_ReadBackTexture = bgfx::createTexture2D(windowSize.x, windowSize.y,
+			// 	has_mips, num_layers,
+			// 	bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_READ_BACK | BGFX_TEXTURE_BLIT_DST);
+			// ASSERT(bgfx::isValid(s_ReadBackTexture), "Error creating read back texture!");
 
-			s_FrameBufferTextures[0] = bgfx::createTexture2D(windowSize.x, windowSize.y,
-				has_mips, num_layers,
-				bgfx::TextureFormat::BGRA8,
-				BGFX_TEXTURE_RT);
-			ASSERT(bgfx::isValid(s_FrameBufferTextures[0]), "Error creating frame buffer texture [0]!");
+			{
+				s_FrameBufferTextureFBO = bgfx::createTexture2D(windowSize.x, windowSize.y,
+					has_mips, num_layers,
+					bgfx::TextureFormat::BGRA8,
+					BGFX_TEXTURE_RT);
+				ASSERT(bgfx::isValid(s_FrameBufferTextureFBO), "Error creating frame buffer texture [0]!");
 
-			s_FrameBufferHandle = bgfx::createFrameBuffer(s_FrameBufferTextureCount, s_FrameBufferTextures); // #TESTING
-			ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandle.idx, "Error creating frame buffer!");
+				s_FrameBufferHandleFbo = bgfx::createFrameBuffer(1, &s_FrameBufferTextureFBO); // #TESTING
+				ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandleFbo.idx, "Error creating frame buffer!");
+			}
 
 			{	// SetupFBO view
 				bgfx::setViewName(s_ViewIdFbo1, "FBO1");
-				bgfx::setViewFrameBuffer(s_ViewIdFbo1, s_FrameBufferHandle);
+				bgfx::setViewFrameBuffer(s_ViewIdFbo1, s_FrameBufferHandleFbo);
 				bgfx::setViewClear(s_ViewIdFbo1
+					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
+					, 0x303030ff
+					, 1.0f
+					, 0
+				);
+			}
+
+			{
+				s_FrameBufferTextureEditorCamera = bgfx::createTexture2D(windowSize.x, windowSize.y,
+					has_mips, num_layers,
+					bgfx::TextureFormat::BGRA8,
+					BGFX_TEXTURE_RT);
+				ASSERT(bgfx::isValid(s_FrameBufferTextureEditorCamera), "Error creating frame buffer texture [0]!");
+
+				s_FrameBufferHandleEditorCamera = bgfx::createFrameBuffer(1, &s_FrameBufferTextureEditorCamera); // #TESTING
+				ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandleEditorCamera.idx, "Error creating frame buffer!");
+			}
+
+			{	// Setup editor camera view
+				bgfx::setViewName(s_ViewIdMain, "Main");
+				bgfx::setViewFrameBuffer(s_ViewIdMain, s_FrameBufferHandleEditorCamera);
+				bgfx::setViewClear(s_ViewIdMain
 					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
 					, 0x303030ff
 					, 1.0f
@@ -225,7 +250,8 @@ namespace QwerkE {
 #ifdef _QDEARIMGUI
 			imguiDestroy();
 #endif
-			bgfx::destroy(s_FrameBufferHandle);
+			bgfx::destroy(s_FrameBufferHandleFbo);
+			bgfx::destroy(s_FrameBufferHandleEditorCamera);
 
 			ddShutdown();
 
