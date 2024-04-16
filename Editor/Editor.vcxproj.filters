@@ -31,6 +31,9 @@
     <ClCompile Include="Source\QE_EditorWindow.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QE_EditorWindowSceneView.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QE_EditComponent.h">
@@ -64,6 +67,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\QE_EditorWindow.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSceneView.h">
       <Filter>Windows</Filter>
     </ClInclude>
   </ItemGroup>

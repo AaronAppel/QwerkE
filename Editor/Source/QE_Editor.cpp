@@ -45,7 +45,7 @@
 #include "QE_SceneGraph.h"
 #include "QE_SceneViewer.h"
 
-#include "QE_EditorWindow.h"
+#include "QE_EditorWindowSceneView.h"
 
 namespace QwerkE {
 
@@ -95,7 +95,8 @@ namespace QwerkE {
 
 	namespace Editor {
 
-        static EditorWindow s_EditorWindow1("Window1");
+        static EditorWindowSceneView s_EditorWindowSceneViewEditor("EditorView");
+        static EditorWindowSceneView s_EditorWindowSceneViewGame("GameView");
 
         static EditorCamera s_EditorCamera;
 
@@ -162,6 +163,9 @@ namespace QwerkE {
 
             bool showEditorUI = true;
 
+            s_EditorWindowSceneViewEditor.SetViewId(3);
+            s_EditorWindowSceneViewGame.SetViewId(4);
+
 			while (StillRunning())
 			{
 				if (Time::ShouldProcessNextFrame())
@@ -184,7 +188,8 @@ namespace QwerkE {
                     local_DrawDockingContext();
                     local_DrawMainMenuBar();
 
-                    s_EditorWindow1.Draw();
+                    s_EditorWindowSceneViewEditor.Draw();
+                    s_EditorWindowSceneViewGame.Draw();
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 

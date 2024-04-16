@@ -4,14 +4,13 @@
 #include "Libraries/imgui/QC_imgui.h"
 #endif
 
-
 namespace QwerkE {
 
 	namespace Editor {
 
 		void EditorWindow::Draw()
 		{
-			if (ImGui::Begin(m_WindowName.c_str()))
+			if (ImGui::Begin(m_WindowName.c_str(), &m_IsOpen, m_Flags))
 			{
 				DrawInternal();
 			}

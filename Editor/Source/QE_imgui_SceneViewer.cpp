@@ -118,26 +118,6 @@ namespace QwerkE {
             DrawSceneList();
         }
         ImGui::End();
-
-        if (ImGui::Begin("Scene Texture", &isSceneTextureOpen, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar))
-        {
-            ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-
-            // #TODO Replace hard coded texture ID
-            static int textureId1 = 3;
-            static int textureId2 = 4;
-
-            ImGui::Image(ImTextureID(textureId1), ImVec2(contentRegionAvailable.x / 2.f - (ImGui::GetStyle().FramePadding.x), contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
-            ImGui::SameLine();
-            ImGui::Image(ImTextureID(textureId2), ImVec2(contentRegionAvailable.x / 2.f - (ImGui::GetStyle().FramePadding.x), contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
-
-            ImGui::DefaultDebugWindow([&]()
-            {
-                ImGui::InputInt("Scene view texture ID1", &textureId1);
-                ImGui::InputInt("Scene view texture ID2", &textureId2);
-            });
-        }
-        ImGui::End();
 #endif
     }
 
