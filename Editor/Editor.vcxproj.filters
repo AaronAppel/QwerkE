@@ -1,16 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\QE_imgui_SceneViewer.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QE_imgui_EditComponent.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\QE_imgui_EntityEditor.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\QE_imgui_SceneGraph.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\QE_EditorInspector.cpp">
@@ -25,13 +16,7 @@
     <ClCompile Include="Source\QE_ProgramArgs.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QE_MenuBar.cpp" />
-    <ClCompile Include="Source\QE_WindowDockingContext.cpp" />
-    <ClCompile Include="Source\QE_WindowStylePicker.cpp" />
-    <ClCompile Include="Source\QE_EditorWindow.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\QE_EditorWindowSceneView.cpp">
+    <ClCompile Include="Source\QE_EditorWindowStylePicker.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,9 +36,6 @@
     <ClInclude Include="Source\QE_SceneGraph.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QE_SceneViewer.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QE_ShaderEditor.h">
       <Filter>Windows</Filter>
     </ClInclude>
@@ -70,6 +52,36 @@
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\QE_EditorWindowSceneView.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowMenuBar.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowAssets.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSettings.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowStylePicker.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSceneControls.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowDockingContext.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSceneGraph.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowEntityInspector.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowImGuiDemo.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowDefaultDebug.h">
       <Filter>Windows</Filter>
     </ClInclude>
   </ItemGroup>

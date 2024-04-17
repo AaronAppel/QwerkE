@@ -11,11 +11,10 @@ namespace QwerkE {
 		eOperationResult Initialize();
 		eOperationResult Shutdown();
 
-		void NewFrame();
+		void StartFrame();
 		void Update(float deltatime);
-		void DrawImguiStart();
-		void DrawImguiEnd();
-		void DrawFrameEnd(u16 viewId = 0);
+		void RenderView(u16 viewId = 0);
+		void EndFrame();
 
 	}
 

@@ -94,6 +94,8 @@ namespace ImGui
 		Count,
 	};
 
+	constexpr ImGuiID InvalidId() { return 0; }
+
 	ImGuiKey KeyCodeToImGuiKey(int keyCode);
 
 	void PushFontQw(Fonts font);
@@ -108,14 +110,11 @@ namespace ImGui
 	template <typename Function>
 	void DefaultDebugWindow(Function function)
 	{
-		// if (!Window::IsMinimized())
+		if (ImGui::Begin("Default Debug Window"))
 		{
-			if (ImGui::Begin("Default Debug Window"))
-			{
-				function();
-			}
-			ImGui::End();
+			function();
 		}
+		ImGui::End();
 	}
 
 }

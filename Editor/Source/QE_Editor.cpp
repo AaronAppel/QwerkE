@@ -39,13 +39,23 @@
 #include "QF_Shader.h"
 #include "QF_Window.h"
 
-#include "QE_EditorInspector.h"
-#include "QE_EntityEditor.h"
 #include "QE_ProgramArgs.h"
-#include "QE_SceneGraph.h"
-#include "QE_SceneViewer.h"
 
+// #TODO Remove after supporting EditorWindow classes
+#include "QE_EditorInspector.h"
+
+// #TODO Remove after adding indirection
+#include "QE_EditorWindowAssets.h"
+#include "QE_EditorWindowDockingContext.h"
+#include "QE_EditorWindowEntityInspector.h"
+#include "QE_EditorWindowImGuiDemo.h"
+#include "QE_EditorWindowMenuBar.h"
+#include "QE_EditorWindowSceneControls.h"
+#include "QE_EditorWindowSceneGraph.h"
 #include "QE_EditorWindowSceneView.h"
+#include "QE_EditorWindowSettings.h"
+#include "QE_EditorWindowStylePicker.h"
+#include "QE_EditorWindowDefaultDebug.h"
 
 namespace QwerkE {
 
@@ -92,34 +102,29 @@ namespace QwerkE {
 
 	namespace Editor {
 
+        static bool s_ShowingEditorUI = true;
+
+        // #TODO Move windows to a collection
+        static EditorWindowAssets s_EditorWindowAssets;
+        static EditorWindowDefaultDebug s_EditorWindowDefaultDebug;
+        static EditorWindowDockingContext s_EditorWindowDockingContext;
+        static EditorWindowEntityInspector s_EditorWindowEntityInspector;
+        static EditorWindowImGuiDemo s_EditorWindowImGuiDemo;
+        static EditorWindowMenuBar s_EditorWindowMenuBar;
+        static EditorWindowSceneControls s_EditorWindowSceneControls;
+        static EditorWindowSceneGraph s_EditorWindowSceneGraph;
         static EditorWindowSceneView s_EditorWindowSceneViewEditor("EditorView");
         static EditorWindowSceneView s_EditorWindowSceneViewGame("GameView");
+        static EditorWindowSettings s_EditorWindowSettings;
+        static EditorWindowStylePicker s_EditorWindowStylePicker;
 
         static EditorCamera s_EditorCamera;
 
-        static EditorDirtyFlags s_DirtyFlags = EditorDirtyFlags::None;
-
-		static EntityEditor* s_EntityEditor = nullptr;
-		static SceneGraph* s_SceneGraph = nullptr;
-		static SceneViewer* s_SceneViewer = nullptr;
-
-        EngineSettings* s_EngineSettings = nullptr; // #TODO Static and not shared with QF_MenuBar.cpp
-
-		QC_ENUM(eSettingsOptions, u8, Null, Engine, User, Renderer, Project, Assets); // #TODO Project isn't settings anymore. Could be reviewed to move
-		static eSettingsOptions s_SettingsEditorOption = eSettingsOptions::Null;
-		static s8 s_LastPopUpIndex = -1;
-
-#ifdef _QDEARIMGUI
-		bool s_ShowingImGuiExampleWindow = false; // #TODO Static and not shared with QF_MenuBar.cpp
-#endif
+        static EditorStateFlags s_EditorStateFlags = EditorStateFlags::EditorStateFlagsNone;
 
         void local_EditorInitialize();
         void local_Shutdown();
-        void local_EditorDrawImGui(bool showEditorUI);
-        void local_EditorDraw();
-        void local_DrawEndFrame();
-        void local_DrawMainMenuBar();
-        void local_DrawDockingContext();
+        void local_EndFrame();
 
 		void Run(unsigned int argc, char** argv)
 		{
@@ -133,12 +138,16 @@ namespace QwerkE {
                 pairs.insert(std::pair<const char*, const char*>(key_ApplicationName, EngineName));
             }
 
-            if (pairs.find(key_ApplicationName) == pairs.end())
+            if (pairs.find(key_ProjectFileName) == pairs.end())
             {
                 pairs.insert(std::pair<const char*, const char*>(key_ProjectFileName, "Project1"));
             }
+            else
+            {
+                // #TODO Load last opened project
+            }
 
-            if (pairs.find(key_ApplicationName) == pairs.end())
+            if (pairs.find(key_UserName) == pairs.end())
             {
                 pairs.insert(std::pair<const char*, const char*>(key_UserName, "User1"));
             }
@@ -154,14 +163,12 @@ namespace QwerkE {
 
             Scenes::Initialize();
 
+            s_EditorWindowSceneViewEditor.SetViewId(3);
+            s_EditorWindowSceneViewGame.SetViewId(4);
+
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
             Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.defaultMaxFramesPerSecond);
             Time::WriteAppStartTime();
-
-            bool showEditorUI = true;
-
-            s_EditorWindowSceneViewEditor.SetViewId(3);
-            s_EditorWindowSceneViewGame.SetViewId(4);
 
 			while (StillRunning())
 			{
@@ -169,7 +176,7 @@ namespace QwerkE {
 				{
                     Time::StartFrame();
 
-					Framework::NewFrame();
+					Framework::StartFrame();
 
 					if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
 					{
@@ -178,30 +185,43 @@ namespace QwerkE {
                     if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press) &&
                         (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
                     {
-                        showEditorUI = !showEditorUI;
+                        s_ShowingEditorUI = !s_ShowingEditorUI;
                     }
 
-                    Framework::DrawImguiStart();
+                    Renderer::StartImGui();
 
-                    local_DrawDockingContext();
-                    local_DrawMainMenuBar();
+                    s_EditorWindowDockingContext.Draw();
+                    s_EditorWindowMenuBar.Draw();
+                    s_EditorWindowDefaultDebug.Draw();
+
+                    if (true)
+                    {
+                        constexpr size_t numberOfHotkeyedScenes = eKeys::eKeys_F12 - eKeys::eKeys_F1 + 1;
+                        for (size_t i = 0; i < numberOfHotkeyedScenes; i++)
+                        {
+                            if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))
+                            {
+                                Scenes::SetCurrentScene((int)i);
+                                break;
+                            }
+                        }
+                    }
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    local_EditorDrawImGui(showEditorUI);
+                    s_EditorWindowAssets.Draw();
+                    s_EditorWindowSceneViewEditor.Draw();
+                    s_EditorWindowSceneViewGame.Draw();
+                    s_EditorWindowSettings.Draw();
+                    s_EditorWindowStylePicker.Draw();
+                    s_EditorWindowSceneControls.Draw();
+                    s_EditorWindowSceneGraph.Draw();
+                    s_EditorWindowEntityInspector.Draw();
+                    s_EditorWindowImGuiDemo.Draw();
 
-                    if (showEditorUI)
-                    {
-                        s_EditorWindowSceneViewEditor.Draw();
-                        s_EditorWindowSceneViewGame.Draw();
-                    }
+                    Renderer::EndImGui();
 
-                    Framework::DrawImguiEnd();
-
-                    if (!Window::IsMinimized())
-                    {
-                        local_DrawEndFrame();
-                    }
+                    local_EndFrame();
 				}
 				else
 				{
@@ -210,6 +230,8 @@ namespace QwerkE {
 			}
 
 			Settings::SaveEngineSettings();
+
+            // #TODO Save editor state for next launch
 
 			Framework::Shutdown();
             local_Shutdown();
@@ -225,282 +247,50 @@ namespace QwerkE {
 			return !Window::CloseRequested();
 		}
 
-		void OnReset()
+		void ResetReferences()
 		{
-			s_EntityEditor->OnReset();
+            // #TODO Add callbacks to EditorWindows to register to, so they know whn things happen like :
+            // Selection made, references are dirty (state change)
+			// s_EntityEditor->ResetReferences();
 		}
 
-        const EditorDirtyFlags& DirtyFlags()
+        const EditorStateFlags& GetEditorStateFlags()
         {
-            return s_DirtyFlags;
+            return s_EditorStateFlags;
+        }
+
+        void SetEditorStateFlags(const EditorStateFlags& flags)
+        {
+            s_EditorStateFlags = (EditorStateFlags)(s_EditorStateFlags ^ flags);
+        }
+
+        bool ShowingEditorUI()
+        {
+            return s_ShowingEditorUI;
         }
 
 		void local_EditorInitialize()
 		{
-			s_EntityEditor = new EntityEditor();
-			s_SceneGraph = new SceneGraph(s_EntityEditor);
-			s_SceneViewer = new SceneViewer();
-
-			s_EngineSettings = &Settings::GetEngineSettings();
-			ASSERT(s_EngineSettings, "Null engine settings!");
+            // #TODO Add instances of EditorWindow sub classes to a collection.
+            // Could load previous editor state to reload window info (sizes, positions, selections, etc)
 		}
 
 		void local_Shutdown()
 		{
-			delete s_EntityEditor;
-			delete s_SceneGraph;
-			delete s_SceneViewer;
+            // #TODO Delete EditorWindow instances
 		}
 
         void local_EditorDrawImGui(bool showEditorUI)
         {
+            if (Window::IsMinimized() || !showEditorUI)
+                return;
+        }
+
+        void local_EndFrame()
+        {
             if (Window::IsMinimized())
                 return;
 
-            if (showEditorUI)
-            {
-                local_EditorDraw(); // Start dock context. ImGui code above won't dock
-            }
-
-            if (ImGui::Begin("Assets"))
-            {
-                {
-                    ImGui::Text("Meshes:");
-                    const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
-                    for (auto& guidMeshPair : meshes)
-                    {
-                        Mesh* mesh = guidMeshPair.second;
-                        ImGui::Text("GUID: ");
-                        ImGui::SameLine();
-                        ImGui::Text(std::to_string(mesh->m_GUID).c_str());
-                    }
-                }
-
-                {
-                    ImGui::Text("Shaders:");
-                    const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
-                    for (auto& guidShaderPair : shaders)
-                    {
-                        Shader* shader = guidShaderPair.second;
-                        ImGui::Text("GUID: ");
-                        ImGui::SameLine();
-                        ImGui::Text(std::to_string(shader->m_GUID).c_str());
-                    }
-                }
-
-                {
-                    ImGui::Text("Textures:");
-                }
-
-                {
-                    ImGui::Text("Materials:");
-                }
-
-                {
-                    ImGui::Text("Assets Registry:");
-                    auto assetRegistry = Assets::ViewRegistry();
-                    for (size_t i = 0; i < assetRegistry.size(); i++)
-                    {
-                        ImGui::Text("GUID: ");
-                        ImGui::SameLine();
-                        ImGui::Text(std::to_string(assetRegistry[i].first).c_str());
-                        ImGui::SameLine();
-                        ImGui::Text(" File: ");
-                        ImGui::SameLine();
-                        ImGui::Text(assetRegistry[i].second.c_str());
-                    }
-                }
-            }
-            ImGui::End();
-        }
-
-        void local_DrawStylePicker(bool save);
-
-		void local_EditorDraw()
-		{
-#ifdef _QDEARIMGUI
-            if (s_ShowingImGuiExampleWindow)
-            {
-                ImGui::ShowDemoWindow(&s_ShowingImGuiExampleWindow);
-            }
-
-            if (s_EngineSettings->showingSettingsEditor &&
-                ImGui::Begin("Settings Inspector", &s_EngineSettings->showingSettingsEditor))
-            {
-
-                for (size_t i = 1; i < eSettingsOptions::_size_constant; i++)
-                {
-                    if (i > 1) ImGui::SameLine();
-
-                    bool pushIsDirtyStyleColor = false;
-
-                    switch (i)
-                    {
-                    case eSettingsOptions::Engine:
-                        pushIsDirtyStyleColor = Settings::GetEngineSettings().isDirty;
-                        break;
-
-                    case eSettingsOptions::User:
-                        pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
-                        break;
-
-                    case eSettingsOptions::Renderer:
-                        pushIsDirtyStyleColor = Settings::GetRendererSettings().isDirty;
-                        break;
-
-                    case eSettingsOptions::Project:
-                        pushIsDirtyStyleColor = Projects::CurrentProject().isDirty;
-                        break;
-                    }
-
-                    if (pushIsDirtyStyleColor)
-                    {
-                        ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
-                        ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
-                    }
-
-                    if (ImGui::Button(ENUM_TO_STR(eSettingsOptions::_from_index(i))))
-                    {
-                        s_SettingsEditorOption = eSettingsOptions::_from_index(i);
-                    }
-
-                    if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
-                    {
-                        s_LastPopUpIndex = (s8)i;
-                        ImGui::OpenPopup("Settings Context Pop Up");
-                    }
-
-                    if (pushIsDirtyStyleColor)
-                    {
-                        ImGui::PopStyleColor(3);
-                    }
-                }
-
-                if (ImGui::BeginPopup("Settings Context Pop Up"))
-                {
-                    if (ImGui::MenuItem("Save"))
-                    {
-                        switch (s_LastPopUpIndex)
-                        {
-                        case eSettingsOptions::Engine:
-                            Settings::SaveEngineSettings();
-                            break;
-
-                        case eSettingsOptions::User:
-                            Settings::SaveUserSettings();
-                            break;
-
-                        case eSettingsOptions::Renderer:
-                            Settings::SaveRendererSettings();
-                            break;
-
-                        case eSettingsOptions::Project:
-                            Projects::SaveProject();
-                            break;
-
-                        case eSettingsOptions::Assets:
-                            Assets::SaveRegistry();
-                            break;
-                        }
-                    }
-
-                    if (ImGui::MenuItem("Reload"))
-                    {
-                        // #TODO Load user settings instead of default
-                        switch (s_LastPopUpIndex)
-                        {
-                        case eSettingsOptions::Engine:
-                            Settings::LoadEngineSettings("");
-                            break;
-
-                        case eSettingsOptions::User:
-                            Settings::LoadUserSettings("User1.qproj");
-                            break;
-
-                        case eSettingsOptions::Renderer:
-                            Settings::LoadRendererSettings("RendererSettings1.qren");
-                            break;
-
-                        case eSettingsOptions::Project:
-                            Projects::LoadProject("Project1.qproj"); // #TODO Load proper project file
-                            break;
-                        }
-                    }
-                    ImGui::EndPopup();
-                }
-
-                if (s_SettingsEditorOption != (eSettingsOptions)eSettingsOptions::Null)
-                {
-                    std::string buffer = "";
-                    buffer.reserve(200);
-                    ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.3f);
-
-                    ImGui::Text(ENUM_TO_STR(eSettingsOptions::_from_index(s_SettingsEditorOption)));
-
-                    switch (s_SettingsEditorOption)
-                    {
-                    case eSettingsOptions::Engine:
-                        {
-                            EngineSettings& engineSettings = Settings::GetEngineSettings();
-                            engineSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
-                        }
-                        break;
-
-                    case eSettingsOptions::User:
-                        {
-                            UserSettings& userSettings = Settings::GetUserSettings();
-                            userSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<UserSettings>(), &userSettings, buffer);
-                        }
-                        break;
-
-                    case eSettingsOptions::Renderer:
-                        {
-                            RendererSettings& rendererSettings = Settings::GetRendererSettings();
-                            rendererSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
-                        }
-                        break;
-
-                    case eSettingsOptions::Project:
-                        {
-                            Project& project = Projects::CurrentProject();
-                            project.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<Project>(), &project, buffer);
-                        }
-                        break;
-                    }
-
-                    ImGui::PopItemWidth();
-                }
-
-                ImGui::End();
-            }
-
-            if (s_EngineSettings->showingSchematicsEditor && ImGui::Begin("Schematics Inspector", &s_EngineSettings->showingSchematicsEditor))
-            {
-                // #TODO Cache result to avoid constant directory info fetching
-                const std::vector<std::string> dirFileNames = Directory::ListDir(StringAppend(Paths::AssetsDir().c_str(), "Schematics/"));
-
-                for (size_t i = 0; i < dirFileNames.size(); i++)
-                {
-                    ImGui::Button(dirFileNames.at(i).c_str());
-                }
-
-                ImGui::End();
-            }
-
-            if (s_EngineSettings->showingStylePicker)
-            {
-                local_DrawStylePicker(true);
-            }
-#endif
-
-            s_SceneViewer->Draw();
-            s_SceneGraph->Draw();
-            s_EntityEditor->Draw();
-		}
-
-        void local_DrawEndFrame()
-        {
             const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
             {   // Debug drawer calls
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
@@ -519,10 +309,12 @@ namespace QwerkE {
                 debugDrawer.end();
             }
 
-            Framework::DrawFrameEnd(viewIdFbo1);
+            Framework::RenderView(viewIdFbo1);
 
             s_EditorCamera.PreDrawSetup(0);
-            Framework::DrawFrameEnd(0);
+            Framework::RenderView(0);
+
+            Framework::EndFrame();
         }
 
 	}

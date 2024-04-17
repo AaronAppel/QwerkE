@@ -216,6 +216,9 @@
     <ClInclude Include="Source\QF_InputMouseDragTracker.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_EntityComponents.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

@@ -13,29 +13,35 @@ namespace QwerkE {
 
     namespace Log {
 
-        bool s_initialized = false;
+        bool s_Initialized = false;
         std::shared_ptr<spdlog::logger> Logger::s_Logger;
 
         void Initialize()
         {
-            ASSERT(!s_initialized, "Log is already initialized!");
-            if (!s_initialized)
+            ASSERT(!s_Initialized, "Log is already initialized!");
+            if (!s_Initialized)
             {
                 spdlog::set_pattern("%^[%T] %n: %v%$");
                 const char* loggerName = "Logger1";
                 Logger::s_Logger = spdlog::stdout_color_mt(loggerName);
                 Logger::s_Logger->set_level(spdlog::level::trace);
 
-                s_initialized = true;
+                s_Initialized = true;
                 LOG_TRACE("{0} Logger \"{1}\" initialized", __FUNCTION__, loggerName);
             }
         }
 
         void Shutdown()
         {
-            // ASSERT(m_initialized, "Cannot shutdown if uninitialized!");
-            spdlog::shutdown();
-            s_initialized = false;
+            if (s_Initialized)
+            {
+                spdlog::shutdown();
+                s_Initialized = false;
+            }
+            else
+            {
+                LOG_WARN("{0} Shutdown called when uninitialized", __FUNCTION__);
+            }
         }
 
         void Print(const char* message)
@@ -54,7 +60,7 @@ namespace QwerkE {
 #include <stdarg.h>  // For va_start, etc.
 #include <memory>    // For std::unique_ptr
 
-        // #TODO Clean up
+        // #TODO Clean up and move to helper file
         std::string string_format(const std::string fmt_str, ...) {
             int final_n, n = ((int)fmt_str.size()) * 2; /* Reserve two times as much as the length of the fmt_str */
             std::unique_ptr<char[]> formatted;

@@ -15,6 +15,7 @@
 
 namespace QwerkE {
 
+	static bool s_Initialized = false;
 	static Scene* s_CurrentScene = nullptr;
 	static u32 s_CurrentSceneIndex = 0;
 	static std::vector<Scene*> s_Scenes;
@@ -23,7 +24,7 @@ namespace QwerkE {
 	namespace Scenes
 	{
 
-		void priv_UpdateCurrentSceneIndex()
+		void local_UpdateCurrentSceneIndex()
 		{
 			for (u32 i = 0; i < s_Scenes.size(); i++)
 			{
@@ -34,13 +35,27 @@ namespace QwerkE {
 			}
 		}
 
+		void local_UpdateCurrentScene()
+		{
+			if (!GetScene(s_CurrentScene))
+			{
+				s_CurrentScene = nullptr;
+				if (!s_Scenes.empty())
+				{
+					s_CurrentScene = s_Scenes[0];
+				}
+			}
+
+			local_UpdateCurrentSceneIndex();
+		}
+
 		void Initialize() // Change to ScenesLoadFromProjectSettings or something more explicit. Should run with 0 scenes
 		{
-			// Window::OnWindowSizeChange();
+			ASSERT(!s_Initialized, "Scenes already initialized!");
 
 			const Project& project = Projects::CurrentProject();
 
-			const std::vector<std::string>& sceneFileNames = project.sceneFileNames;
+			const std::vector<std::string> sceneFileNames = project.sceneFileNames;
 
 			for (size_t i = 0; i < sceneFileNames.size(); i++)
 			{
@@ -51,14 +66,15 @@ namespace QwerkE {
 					continue;
 				}
 
-				CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), false);
+				CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), true);
 			}
 
 			if (s_Scenes.empty())
 			{
-				CreateSceneFromFile(Paths::NullAsset(null_scene), false);
+				CreateSceneFromFile(Paths::NullAsset(null_scene), true);
 				LOG_WARN("Null scene loaded as no scene files found for project: {0}", project.projectName);
 			}
+			s_Initialized = true;
 		}
 
 		void Shutdown()
@@ -94,7 +110,7 @@ namespace QwerkE {
 			if (Scene* scene = GetScene(sceneName))
 			{
 				s_CurrentScene = scene;
-				priv_UpdateCurrentSceneIndex();
+				local_UpdateCurrentSceneIndex();
 			}
 		}
 
@@ -103,7 +119,7 @@ namespace QwerkE {
 			if (index >= 0 && index < (int)s_Scenes.size())
 			{
 				s_CurrentScene = s_Scenes[index];
-				priv_UpdateCurrentSceneIndex();
+				local_UpdateCurrentSceneIndex();
 			}
 		}
 
@@ -136,7 +152,7 @@ namespace QwerkE {
 			if (s_CurrentScene == nullptr)
 			{
 				s_CurrentScene = newScene;
-				priv_UpdateCurrentSceneIndex();
+				local_UpdateCurrentSceneIndex();
 			}
 
 			if (addToProjectsSceneFiles)
@@ -169,7 +185,7 @@ namespace QwerkE {
 			s_Scenes.push_back(newScene);
 
 			s_CurrentScene = newScene;
-			priv_UpdateCurrentSceneIndex();
+			local_UpdateCurrentSceneIndex();
 
 			if (addToProjectsSceneFiles)
 			{
@@ -193,6 +209,9 @@ namespace QwerkE {
 				if (s_Scenes[i] != scene)
 					continue;
 
+				LOG_INFO("{0} Destroying scene {1}", __FUNCTION__, scene->GetSceneName().c_str());
+
+				s_Scenes[i]->UnloadScene();
 				s_Scenes.erase(s_Scenes.begin() + i);
 
 				Project& project = Projects::CurrentProject();
@@ -204,8 +223,10 @@ namespace QwerkE {
 						break;
 					}
 				}
+				LOG_INFO("{0} Scene destroyed", __FUNCTION__);
 				break;
 			}
+			local_UpdateCurrentScene();
 		}
 
 		void Update(float deltatime)

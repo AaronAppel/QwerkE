@@ -1,6 +1,14 @@
 #pragma once
 
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/QC_imgui.h"
+#endif
+
 #include "QC_Guid.h"
+
+#include "QF_Window.h"
+
+#include "QE_Editor.h"
 
 typedef int ImGuiWindowFlags;
 
@@ -8,28 +16,73 @@ namespace QwerkE {
 
 	namespace Editor {
 
+		typedef unsigned int u32;
+		enum EditorWindowFlags : u32
+		{
+			EditorWindowFlagsNone	= 0,
+			IsOpen					= 1 << 0,
+			Hidden					= 1 << 1,
+			ExactNameNoguid			= 1 << 2,
+		};
+
 		class EditorWindow
 		{
 		public:
-			void Draw();
+			virtual ~EditorWindow() = default;
+
+			void EditorWindow::Draw()
+			{
+				// #TODO Check if the window is also EditorWindowFlags::IsOpen?
+				if (m_WindowFlags & EditorWindowFlags::Hidden)
+				{
+					DrawInternal();
+					return;
+				}
+
+				if (!Editor::ShowingEditorUI() || Window::IsMinimized())
+					return;
+
+				// #TODO IsOpen not working
+				bool isOpen = m_WindowFlags & EditorWindowFlags::IsOpen;
+				if (ImGui::Begin(m_WindowName.c_str(), &isOpen, m_ImGuiFlags))
+				{
+					DrawInternal();
+				}
+				ImGui::End();
+				u32 result = isOpen ? m_WindowFlags | EditorWindowFlags::IsOpen : m_WindowFlags & ~EditorWindowFlags::IsOpen;
+				m_WindowFlags = (EditorWindowFlags)result;
+			}
+
+			virtual bool IsUnique() { return false; }
 
 		protected:
-			EditorWindow(std::string windowName) : m_WindowName(windowName)
+			EditorWindow(std::string windowName, EditorWindowFlags flags = EditorWindowFlags::IsOpen)
+				:	m_WindowName(windowName),
+					m_WindowFlags(flags)
 			{
-				m_WindowName += "##";
-				m_WindowName += std::to_string(m_Guid);
+				EditorWindowFlags result = (EditorWindowFlags)(m_WindowFlags & ExactNameNoguid);
+				if (!result)
+				{
+					m_WindowName += "##";
+					m_WindowName += std::to_string(m_Guid);
+				}
 			}
 
 			virtual void DrawInternal() = 0;
 
-			ImGuiWindowFlags m_Flags = 0;
+			ImGuiWindowFlags m_ImGuiFlags = 0;
+			EditorWindowFlags m_WindowFlags = EditorWindowFlagsNone;
 
 			const GUID& GetGuid() { return m_Guid; }
 
 		private:
 			std::string m_WindowName;
-			GUID m_Guid;
+			GUID m_Guid; // #NOTE Window is static so has order dependency with GUID engine init
 			bool m_IsOpen = true;
+
+			// #TODO Handle resizing window
+			u16 m_MinimumWidth = 0;
+			u16 m_MinimumHeight = 0;
 		};
 
 	}

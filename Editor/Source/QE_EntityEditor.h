@@ -18,7 +18,7 @@ namespace QwerkE {
 
         virtual void Draw();
 
-        void OnReset() { m_CurrentEntity.Invalidate(); }
+        void ResetReferences() { m_CurrentEntity.Invalidate(); }
         void SetCurrentEntity(const EntityHandle& newEntity) { m_CurrentEntity = newEntity; }
 
     private:
