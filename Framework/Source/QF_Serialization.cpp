@@ -35,6 +35,20 @@
 
 #include "QF_ScriptPatrol.h"
 
+// Editor types
+#include "../Editor/Source/QE_EditorWindow.h"
+#include "../Editor/Source/QE_EditorWindowAssets.h"
+#include "../Editor/Source/QE_EditorWindowEntityInspector.h"
+#include "../Editor/Source/QE_EditorWindowSceneControls.h"
+#include "../Editor/Source/QE_EditorWindowSceneGraph.h"
+#include "../Editor/Source/QE_EditorWindowSceneView.h"
+#include "../Editor/Source/QE_EditorWindowSettings.h"
+#include "../Editor/Source/QE_EditorWindowStylePicker.h"
+#include "../Editor/Source/QE_EditorWindowDefaultDebug.h"
+#include "../Editor/Source/QE_EditorWindowDockingContext.h"
+#include "../Editor/Source/QE_EditorWindowImGuiDemo.h"
+#include "../Editor/Source/QE_EditorWindowMenuBar.h"
+
 #define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
 
 // #TODO Look at removing from QwerkE namespace, or have a #using QwerkE just in this .cpp.
@@ -155,6 +169,83 @@ namespace QwerkE {
 
 			switch (fieldTypeInfo->enumType)
 			{
+			case MirrorTypes::m_umap_guid_editorWindowPtr:
+				{
+					std::unordered_map<GUID, Editor::EditorWindow*>* mapGuidEditorWindows = (std::unordered_map<GUID, Editor::EditorWindow*>*)fieldObj;
+					mapGuidEditorWindows->clear();
+
+					const std::vector<cJSON*> guidEditorWindowsJsonVector = GetAllItemsFromArray(objJson);
+
+					for (size_t i = 0; i < guidEditorWindowsJsonVector.size(); i++)
+					{
+						const Editor::EditorWindowTypes editorWindowType = Editor::EditorWindowTypes::_from_index(std::stoi(guidEditorWindowsJsonVector[i]->string));
+						cJSON* editorWindowJson = guidEditorWindowsJsonVector[i]->child->child;
+
+						// #TODO m_WindowName contains name and guid. Should try to use to persist name, and can get guid too to stay synced.
+						GUID guid = std::stoull(editorWindowJson->child->child->valuestring);
+
+						Editor::EditorWindow* newEditorWindow = nullptr;
+						switch (editorWindowType)
+						{
+						case Editor::EditorWindowTypes::Assets:
+							newEditorWindow = new Editor::EditorWindowAssets(guid);
+							break;
+
+						case Editor::EditorWindowTypes::DefaultDebug:
+							newEditorWindow = new Editor::EditorWindowDefaultDebug(guid);
+							break;
+
+						case Editor::EditorWindowTypes::DockingContext:
+							newEditorWindow = new Editor::EditorWindowDockingContext(guid);
+							break;
+
+						case Editor::EditorWindowTypes::EntityInspector:
+							newEditorWindow = new Editor::EditorWindowEntityInspector(guid);
+							break;
+
+						case Editor::EditorWindowTypes::ImGuiDemo:
+							newEditorWindow = new Editor::EditorWindowImGuiDemo(guid);
+							break;
+
+						case Editor::EditorWindowTypes::MenuBar:
+							newEditorWindow = new Editor::EditorWindowMenuBar(guid);
+							break;
+
+						case Editor::EditorWindowTypes::SceneControls:
+							newEditorWindow = new Editor::EditorWindowSceneControls(guid);
+							break;
+
+						case Editor::EditorWindowTypes::SceneGraph:
+							newEditorWindow = new Editor::EditorWindowSceneGraph(guid);
+							break;
+
+						case Editor::EditorWindowTypes::SceneView:
+							// #TODO Get string value
+							newEditorWindow = new Editor::EditorWindowSceneView("Scene View", 3, guid);
+							break;
+
+						case Editor::EditorWindowTypes::Settings:
+							newEditorWindow = new Editor::EditorWindowSettings(guid);
+							break;
+
+						case Editor::EditorWindowTypes::StylePicker:
+							newEditorWindow = new Editor::EditorWindowStylePicker(guid);
+							break;
+
+						case Editor::EditorWindowTypes::EditorWindowTypesInvalid:
+						default:
+							LOG_WARN("{0} Unsupported EditorWindowTypes value", __FUNCTION__);
+							break;
+						}
+
+						if (newEditorWindow)
+						{
+							mapGuidEditorWindows->insert({ newEditorWindow->Guid(), newEditorWindow });
+						}
+					}
+				}
+				break;
+
 			case MirrorTypes::m_pair_guid_string:
 				{
 					using PairGuidString = std::pair<GUID, std::string>;
@@ -627,6 +718,7 @@ namespace QwerkE {
 			if (objTypeInfo->fields.empty())
 			{
 				SerializeFieldToJson(obj, objTypeInfo, objJson);
+				return;
 			}
 
 			for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
@@ -762,6 +854,7 @@ namespace QwerkE {
 				}
 				break;
 
+				case MirrorTypes::EditorWindowTypes:
 				case MirrorTypes::eScriptTypes: // #TODO Add a case for all enums by default
 				case MirrorTypes::m_eSceneTypes:
 				case MirrorTypes::m_uint8_t:
@@ -861,6 +954,23 @@ namespace QwerkE {
 
 			switch (fieldTypeInfo->enumType)
 			{
+			case MirrorTypes::m_umap_guid_editorWindowPtr:
+				{
+					const std::unordered_map<GUID, Editor::EditorWindow*>* guidEditorWindowPairs = (std::unordered_map<GUID, Editor::EditorWindow*>*)((char*)fieldObj);
+
+					for (auto& pair : *guidEditorWindowPairs)
+					{
+						const Mirror::TypeInfo* editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindow>();
+
+						// cJSON* editorWindowJson = CreateArray((std::to_string(pair.first)).c_str());
+						cJSON* editorWindowJson = CreateArray((std::to_string((u32)pair.second->Type())).c_str());
+
+						SerializeObjectToJson((void*)pair.second, editorWindowTypeInfo, editorWindowJson);
+						AddItemToArray(objJson, editorWindowJson);
+					}
+				}
+				break;
+
 			case MirrorTypes::m_pair_guid_string:
 				{
 					using PairGuidString = std::pair<GUID, std::string>;
@@ -889,7 +999,7 @@ namespace QwerkE {
 				break;
 
 			default:
-				LOG_WARN("{0} Unsupported type", __FUNCTION__);
+				LOG_WARN("{0} Unsupported user defined field type {1}({2}) for serialization!", __FUNCTION__, fieldTypeInfo->stringName, (u32)fieldTypeInfo->enumType);
 				break;
 			}
 		}

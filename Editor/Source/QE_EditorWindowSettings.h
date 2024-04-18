@@ -4,8 +4,11 @@
 #include "Libraries/enum/QC_enum.h"
 #endif
 
+#include "QF_Directory.h"
+#include "QF_Projects.h"
 #include "QF_Settings.h"
 
+#include "QE_EditorInspector.h"
 #include "QE_EditorWindow.h"
 
 namespace QwerkE {
@@ -17,7 +20,7 @@ namespace QwerkE {
         class EditorWindowSettings : public EditorWindow
         {
         public:
-            EditorWindowSettings() : EditorWindow("Settings") { }
+            EditorWindowSettings(GUID guid = GUID()) : EditorWindow("Settings", EditorWindowTypes::Settings, guid) { }
 
         private:
             void DrawInternal() override

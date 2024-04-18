@@ -1,5 +1,7 @@
 #pragma once
 
+#include "QC_Time.h"
+
 #include "QF_Settings.h"
 
 #include "QE_Editor.h"
@@ -12,7 +14,7 @@ namespace QwerkE {
 		class EditorWindowMenuBar : public EditorWindow
 		{
 		public:
-			EditorWindowMenuBar() : EditorWindow("MenuBar", EditorWindowFlags::Hidden) { }
+			EditorWindowMenuBar(GUID guid) : EditorWindow("MenuBar", EditorWindowTypes::MenuBar, guid, EditorWindowFlags::Hidden) { }
 
             bool IsUnique() override { return true; }
 
@@ -36,10 +38,20 @@ namespace QwerkE {
                     EngineSettings& engineSettings = Settings::GetEngineSettings();
                     if (ImGui::BeginMenu("Windows"))
                     {
-                        if (ImGui::Button("Settings Inspector"))
                         {
-                            engineSettings.showingSettingsEditor = !engineSettings.showingSettingsEditor;
-                            Settings::SaveEngineSettings();
+                            // Menu of window types
+                            // Open -> context pop out/window/whatever
+
+                            for (int i = 0; i < EditorWindowTypes::_size_constant; i++)
+                            {
+                                EditorWindowTypes type = EditorWindowTypes::_from_index(i);
+                                if (ImGui::Button(ENUM_TO_STR(type)))
+                                {
+                                    Editor::OpenNewEditorWindow((u32)type);
+                                    // #TODO Set editor UI state to dirty
+                                }
+                            }
+                            ImGui::Separator();
                         }
 
                         if (ImGui::Button("Schematics Inspector"))
@@ -48,12 +60,7 @@ namespace QwerkE {
                             Settings::SaveEngineSettings();
                         }
 
-                        if (ImGui::Button("Style Picker"))
-                        {
-                            engineSettings.showingStylePicker = !engineSettings.showingStylePicker;
-                            Settings::SaveEngineSettings();
-                        }
-
+                        ImGui::Separator();
                         if (ImGui::Button("FPS"))
                         {
                             engineSettings.showingFPS = !engineSettings.showingFPS;

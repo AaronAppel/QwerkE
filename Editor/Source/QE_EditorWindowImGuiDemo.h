@@ -9,7 +9,7 @@ namespace QwerkE {
 		class EditorWindowImGuiDemo : public EditorWindow
 		{
 		public:
-			EditorWindowImGuiDemo() : EditorWindow("ImGui Demo", EditorWindowFlags::Hidden) { }
+			EditorWindowImGuiDemo(GUID guid) : EditorWindow("ImGui Demo", EditorWindowTypes::ImGuiDemo, guid, EditorWindowFlags::Hidden) { }
 
 		private:
 			void DrawInternal() override

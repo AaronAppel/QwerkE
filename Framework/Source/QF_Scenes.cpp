@@ -49,32 +49,9 @@ namespace QwerkE {
 			local_UpdateCurrentSceneIndex();
 		}
 
-		void Initialize() // Change to ScenesLoadFromProjectSettings or something more explicit. Should run with 0 scenes
+		void Initialize()
 		{
-			ASSERT(!s_Initialized, "Scenes already initialized!");
-
-			const Project& project = Projects::CurrentProject();
-
-			const std::vector<std::string> sceneFileNames = project.sceneFileNames;
-
-			for (size_t i = 0; i < sceneFileNames.size(); i++)
-			{
-				const char* sceneFileName = sceneFileNames[i].c_str();
-				if (!Files::Exists(Paths::Scene(sceneFileName).c_str()))
-				{
-					LOG_WARN("Initialize(): File not found: {0}", sceneFileName);
-					continue;
-				}
-
-				CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), true);
-			}
-
-			if (s_Scenes.empty())
-			{
-				CreateSceneFromFile(Paths::NullAsset(null_scene), true);
-				LOG_WARN("Null scene loaded as no scene files found for project: {0}", project.projectName);
-			}
-			s_Initialized = true;
+			//#NOTE Kept for consistent API with other systems. Currently unused
 		}
 
 		void Shutdown()

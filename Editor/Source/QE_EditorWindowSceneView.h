@@ -13,8 +13,8 @@ namespace QwerkE {
 		class EditorWindowSceneView : public EditorWindow
 		{
 		public:
-			EditorWindowSceneView::EditorWindowSceneView(std::string windowName) :
-				EditorWindow(windowName)
+			EditorWindowSceneView::EditorWindowSceneView(std::string windowName, u8 viewId = 0, GUID guid = GUID()) :
+				EditorWindow(windowName, EditorWindowTypes::SceneView, guid)
 			{
 				m_ImGuiFlags = ImGuiWindowFlags_NoScrollbar;
 			}

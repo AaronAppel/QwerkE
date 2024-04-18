@@ -11,7 +11,7 @@ namespace QwerkE {
 		class EditorWindowDockingContext : public EditorWindow
 		{
 		public:
-            EditorWindowDockingContext() : EditorWindow("Docking Context", EditorWindowFlags::Hidden) { }
+            EditorWindowDockingContext(GUID guid) : EditorWindow("Docking Context", EditorWindowTypes::DockingContext, guid, EditorWindowFlags::Hidden) { }
 
             bool IsUnique() override { return true; }
 

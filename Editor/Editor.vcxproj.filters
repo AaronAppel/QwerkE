@@ -17,7 +17,7 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\QE_EditorWindowStylePicker.cpp">
-      <Filter>Windows</Filter>
+      <Filter>Windows\Instanced</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,38 +51,38 @@
     <ClInclude Include="Source\QE_EditorWindow.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowSceneView.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QE_EditorWindowMenuBar.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowAssets.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowSettings.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowStylePicker.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowSceneControls.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowDockingContext.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowSceneGraph.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_EditorWindowEntityInspector.h">
-      <Filter>Windows</Filter>
+      <Filter>Windows\Unique</Filter>
     </ClInclude>
     <ClInclude Include="Source\QE_EditorWindowImGuiDemo.h">
-      <Filter>Windows</Filter>
+      <Filter>Windows\Unique</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowDockingContext.h">
+      <Filter>Windows\Unique</Filter>
     </ClInclude>
     <ClInclude Include="Source\QE_EditorWindowDefaultDebug.h">
-      <Filter>Windows</Filter>
+      <Filter>Windows\Unique</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowAssets.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowEntityInspector.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSceneControls.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSceneGraph.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSceneView.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowSettings.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowStylePicker.h">
+      <Filter>Windows\Instanced</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +94,12 @@
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{22e305f0-c945-4673-bcd5-c5dee96782a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Unique">
+      <UniqueIdentifier>{93cb9dc8-1734-47b6-b174-b4dc83767fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Instanced">
+      <UniqueIdentifier>{ad298d2d-2571-4e2d-80dc-09536052f26d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

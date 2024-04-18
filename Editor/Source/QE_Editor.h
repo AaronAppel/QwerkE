@@ -34,6 +34,8 @@ namespace QwerkE {
 
 		bool ShowingEditorUI();
 
+		void OpenNewEditorWindow(u32 editorWindowType);
+
 	}
 
 }

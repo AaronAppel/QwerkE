@@ -34,6 +34,9 @@
 
 #include "QF_ScriptPatrol.h"
 
+// Editor types
+#include "../Editor/Source/QE_EditorWindow.h"
+
 namespace QwerkE {
 
 #ifdef _QDEARIMGUI
@@ -171,6 +174,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(key_camera_MoveDown)
 	MIRROR_CLASS_MEMBER(key_camera_RotateLeft)
 	MIRROR_CLASS_MEMBER(key_camera_RotateRight)
+	MIRROR_CLASS_MEMBER(lastOpenedProjectFileName)
 	MIRROR_CLASS_END(UserSettings)
 
 	MIRROR_CLASS_START(Project)
@@ -242,4 +246,20 @@ namespace QwerkE {
 
 	MIRROR_CLASS_START(Shader)
 	MIRROR_CLASS_END(Shader)
+
+	// Editor types
+	typedef Editor::EditorWindowTypes EditorWindowTypes;
+	MIRROR_TYPE(EditorWindowTypes)
+
+	typedef Editor::EditorWindow* m_editorWindowPtr;
+	MIRROR_TYPE(m_editorWindowPtr)
+
+	typedef Editor::EditorWindow EditorWindow;
+	MIRROR_CLASS_START(EditorWindow)
+	MIRROR_CLASS_MEMBER(m_Guid)
+	MIRROR_CLASS_MEMBER(m_EditorWindowType)
+	MIRROR_CLASS_END(EditorWindow)
+
+	typedef std::unordered_map<GUID, m_editorWindowPtr> m_umap_guid_editorWindowPtr;
+	MIRROR_TYPE(m_umap_guid_editorWindowPtr)
 }

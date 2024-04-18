@@ -9,7 +9,7 @@ namespace QwerkE {
         class EditorWindowStylePicker : public EditorWindow
         {
         public:
-            EditorWindowStylePicker() : EditorWindow("Style Picker") { }
+            EditorWindowStylePicker(GUID guid = GUID()) : EditorWindow("Style Picker", EditorWindowTypes::StylePicker, guid) { }
 
         private:
             void DrawInternal() override;

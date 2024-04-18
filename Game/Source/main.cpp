@@ -1,4 +1,6 @@
 
+#include "QE_Editor.h"
+
 int main(unsigned int argc, char** argv)
 {
 	const bool supportingEditorReloading = false; // #FEATURE

@@ -9,13 +9,11 @@ namespace QwerkE {
 
 	namespace Settings {
 
-		static const char* const s_ImGuiStyleFileName = "imguiStyle.style";
+		constexpr char* s_ImGuiStyleFileName = "imguiStyle.style";
 
-		static const char* const s_NullEngineSettings = "null_settings.qeng";
-		static const char* const s_NullRendererSettings = "null_settings.qren";
-		static const char* const s_NullUserSettings = "null_settings.quser";
-
-		static const char* const s_NullProjectSettings = "null_project.qproj";
+		constexpr char* s_NullEngineSettings = "null_settings.qeng";
+		constexpr char* s_NullRendererSettings = "null_settings.qren";
+		constexpr char* s_NullUserSettings = "null_settings.quser";
 
 		EngineSettings s_engineSettings;
 		UserSettings s_userSettings;
@@ -43,7 +41,7 @@ namespace QwerkE {
 
 		void LoadEngineSettings(const std::string& engineSettingsFileName)
 		{
-			std::string engineSettingsFilePath = Paths::Project(engineSettingsFileName.c_str());
+			std::string engineSettingsFilePath = Paths::Settings(engineSettingsFileName.c_str());
 			s_engineSettings.isDirty = false;
 		}
 
@@ -54,9 +52,8 @@ namespace QwerkE {
 
 		void LoadUserSettings(const std::string& userSettingsFileName)
 		{
-			std::string userSettingsFilePath = Paths::Project(userSettingsFileName.c_str());
-			if (userSettingsFileName.empty() || userSettingsFilePath.empty() ||
-				!Files::Exists(userSettingsFilePath.c_str()))
+			std::string userSettingsFilePath = Paths::Settings(userSettingsFileName.c_str());
+			if (userSettingsFilePath.empty() || !Files::Exists(userSettingsFilePath.c_str()))
 			{
 				userSettingsFilePath = Paths::NullAsset(null_config);
 			}
@@ -70,7 +67,7 @@ namespace QwerkE {
 
 		void LoadRendererSettings(const std::string& rendererSettingsFileName)
 		{
-			std::string rendererSettingsFilePath = Paths::Project(rendererSettingsFileName.c_str());
+			std::string rendererSettingsFilePath = Paths::Settings(rendererSettingsFileName.c_str());
 			if (rendererSettingsFileName.empty() || rendererSettingsFilePath.empty() ||
 				!Files::Exists(rendererSettingsFilePath.c_str()))
 			{

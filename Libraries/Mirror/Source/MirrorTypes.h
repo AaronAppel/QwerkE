@@ -43,6 +43,11 @@ enum class MirrorTypes
 
     m_pair_guid_string,
 
+    // Editor types
+    EditorWindow,
+    m_editorWindowPtr,
+    m_umap_guid_editorWindowPtr,
+
     // External libraries
     m_enTT_Entity,
     m_entt_registry,
@@ -81,6 +86,8 @@ enum class MirrorTypes
     m_eSceneTypes,
     eComponentTags,
     m_ENUMS_END,
+
+    EditorWindowTypes, // Editor
 
     m_PRIMITIVE_TYPES,
 #include "MirrorEnumPrimitives.txt"

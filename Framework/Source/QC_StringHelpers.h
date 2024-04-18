@@ -23,6 +23,8 @@ char* ReverseString(char* value);
 
 char* NumberAppendOrIncrement(const char* const charArray);
 
+std::string wstrtostr(const std::wstring& wstr);
+
 // std::vector<int> NumberSplitDigits(int number); // Number splitter helper, in some other file
 
 // #TODO FormatString(const char* string) // For formatting, inserting, or replacing, variable argument strings

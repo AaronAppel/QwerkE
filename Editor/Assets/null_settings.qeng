@@ -1,7 +1,7 @@
 {
 	"EngineSettings":	[{
-			"windowWidthPixels":	2048,
-			"windowHeightPixels":	1152,
+			"windowWidthPixels":	1920,
+			"windowHeightPixels":	1080,
 			"limitFramerate":	true,
 			"maxFramesPerSecond":	120,
 			"maxEnabledScenes":	1,

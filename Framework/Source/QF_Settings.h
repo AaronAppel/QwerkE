@@ -11,8 +11,8 @@ namespace QwerkE {
     {
         bool isDirty = false;
 
-        u16 windowWidthPixels = 2048; // #TODO Set back to 1080p, 900p, or 720p
-        u16 windowHeightPixels = 1152;
+        u16 windowWidthPixels = 1920;
+        u16 windowHeightPixels = 1080;
 
         bool limitFramerate = true;
         u16 maxFramesPerSecond = 120;
@@ -47,6 +47,8 @@ namespace QwerkE {
         eKeys key_camera_RotateLeft = eKeys::eKeys_R;
         eKeys key_camera_RotateRight = eKeys::eKeys_T;
 
+        const char* lastOpenedProjectFileName = Constants::gc_DefaultStringValue;
+
         // Interface: Window open, UI scaling, etc
     };
 
@@ -69,10 +71,6 @@ namespace QwerkE {
 
         void LoadRendererSettings(const std::string& rendererSettingsFilePath);
         void SaveRendererSettings();
-
-        void LoadProject(const std::string& projectFileName);
-        void SaveProject();
-        void SaveProject(const std::string& projectFileName);
 
         EngineSettings& GetEngineSettings();
         UserSettings& GetUserSettings();

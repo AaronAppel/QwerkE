@@ -61,11 +61,13 @@ namespace QwerkE {
                 return;
             }
 
+            const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+
             cJSON* jsonRootObject = cJSON_CreateObject();
-            cJSON* jsonRootArray = CreateArray(Mirror::InfoForType<T>()->stringName.c_str());
+            cJSON* jsonRootArray = CreateArray(typeInfo->stringName.c_str());
             AddItemToObject(jsonRootObject, jsonRootArray);
 
-            SerializeObjectToJson((const void*)&objectReference, Mirror::InfoForType<T>(), jsonRootArray);
+            SerializeObjectToJson((const void*)&objectReference, typeInfo, jsonRootArray);
 
             PrintRootObjectToFile(absoluteFilePath, jsonRootObject);
             cJSON_Delete(jsonRootObject);

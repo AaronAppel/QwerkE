@@ -36,12 +36,6 @@ project "Game"
 	includedirs
 	{
 		"%{wks.location}/Editor/Source", -- Include Editor source
-		
-		-- Try to remove from Game
-		-- "%{wks.location}/Libraries/bx/include", -- Required by bgfx
-		-- "%{wks.location}/Libraries/bx/include/compat/msvc", -- Required by bgfx
-		-- "%{wks.location}/Libraries/bimg/include", -- Required by bgfx
-		-- "%{wks.location}/Libraries/bx/3rdparty", -- Required by bgfx
 	}
 
 	links

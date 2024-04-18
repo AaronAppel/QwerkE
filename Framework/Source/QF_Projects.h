@@ -18,6 +18,7 @@ namespace QwerkE {
         //     eKeys action1 = eKeys::eKeys_MAX; // eKeys::eKeys_K;
         //     const char* resetScene = gc_DefaultStringValue;
         // };
+        const char* lastOpenedEngineSettingsFileName = Constants::gc_DefaultStringValue;
     };
 
     namespace Projects {

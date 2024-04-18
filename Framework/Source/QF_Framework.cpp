@@ -4,10 +4,8 @@
 #include "QF_Events.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
-#include "QF_Projects.h" // TODO Editor only
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
-#include "QF_Settings.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
@@ -20,11 +18,6 @@ namespace QwerkE {
 
 			Events::Initialize();
 
-			// #TODO Editor only settings
-			Settings::LoadEngineSettings(null_config);
-			Settings::LoadUserSettings(null_preferences);
-			Projects::LoadProject("Project1.qproj"); // #TODO Get from command line or settings
-
 			Window::Initialize();
 
 			Renderer::Initialize();
@@ -32,6 +25,8 @@ namespace QwerkE {
 			Input::Initialize();
 
 			Assets::Initialize();
+
+			Scenes::Initialize();
 
 			return eOperationResult::Success;
 		}

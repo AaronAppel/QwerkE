@@ -8,6 +8,8 @@ namespace QwerkE {
 
     namespace Projects {
 
+		constexpr char* s_NullProjectSettings = "null_project.qproj";
+
         Project s_CurrentProject;
 
         Project& CurrentProject()
