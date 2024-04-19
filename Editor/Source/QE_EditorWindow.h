@@ -45,7 +45,7 @@ namespace QwerkE {
 			SceneControls,
 			SceneGraph,
 			SceneView,
-			Settings,
+			Settings = 10,
 			StylePicker,
 			MaterialEditor,
 			FolderViewer,

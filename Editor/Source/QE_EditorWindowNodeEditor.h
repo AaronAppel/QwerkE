@@ -2,6 +2,12 @@
 
 #include "QE_EditorWindow.h"
 
+namespace ax {
+	namespace NodeEditor {
+		struct EditorContext;
+	}
+}
+
 namespace QwerkE {
 
 	namespace Editor {
@@ -9,13 +15,14 @@ namespace QwerkE {
 		class EditorWindowNodeEditor : public EditorWindow
 		{
 		public:
-            EditorWindowNodeEditor::EditorWindowNodeEditor(GUID guid = GUID()) :
-				EditorWindow("Node Editor", EditorWindowTypes::NodeEditor, guid) { }
+            EditorWindowNodeEditor::EditorWindowNodeEditor(GUID guid = GUID());
+            EditorWindowNodeEditor::~EditorWindowNodeEditor();
 
 		private:
-			void DrawInternal() override
-			{
-			}
+			void DrawInternal() override;
+
+            ax::NodeEditor::EditorContext* m_Context = nullptr;
+            const char* m_SettingsFileName = "NodeEditorWidgets.json";
 		};
 
 	}

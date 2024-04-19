@@ -40,6 +40,7 @@ project "Framework"
 		"bgfxFramework",
 		"FlatHeadGames",
 		"imgui",
+		"imgui-node-editor",
 		"Jolt",
 		"lodepng",
 		"Mirror",

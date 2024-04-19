@@ -38,16 +38,20 @@
 // Editor types
 #include "../Editor/Source/QE_EditorWindow.h"
 #include "../Editor/Source/QE_EditorWindowAssets.h"
+#include "../Editor/Source/QE_EditorWindowDefaultDebug.h"
+#include "../Editor/Source/QE_EditorWindowDockingContext.h"
 #include "../Editor/Source/QE_EditorWindowEntityInspector.h"
+#include "../Editor/Source/QE_EditorWindowFolderViewer.h"
+#include "../Editor/Source/QE_EditorWindowImGuiDemo.h"
+#include "../Editor/Source/QE_EditorWindowMaterialEditor.h"
+#include "../Editor/Source/QE_EditorWindowMenuBar.h"
+#include "../Editor/Source/QE_EditorWindowNodeEditor.h"
 #include "../Editor/Source/QE_EditorWindowSceneControls.h"
 #include "../Editor/Source/QE_EditorWindowSceneGraph.h"
 #include "../Editor/Source/QE_EditorWindowSceneView.h"
 #include "../Editor/Source/QE_EditorWindowSettings.h"
+#include "../Editor/Source/QE_EditorWindowShaderEditor.h"
 #include "../Editor/Source/QE_EditorWindowStylePicker.h"
-#include "../Editor/Source/QE_EditorWindowDefaultDebug.h"
-#include "../Editor/Source/QE_EditorWindowDockingContext.h"
-#include "../Editor/Source/QE_EditorWindowImGuiDemo.h"
-#include "../Editor/Source/QE_EditorWindowMenuBar.h"
 
 #define SERIALIZER_OPTIMIZATION_LEVEL 0 // Unsafe if serialization pattern changed, but much less redundant checking
 
@@ -188,49 +192,36 @@ namespace QwerkE {
 						switch (editorWindowType)
 						{
 						case Editor::EditorWindowTypes::Assets:
-							newEditorWindow = new Editor::EditorWindowAssets(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowAssets(guid); break;
 						case Editor::EditorWindowTypes::DefaultDebug:
-							newEditorWindow = new Editor::EditorWindowDefaultDebug(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowDefaultDebug(guid); break;
 						case Editor::EditorWindowTypes::DockingContext:
-							newEditorWindow = new Editor::EditorWindowDockingContext(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowDockingContext(guid); break;
 						case Editor::EditorWindowTypes::EntityInspector:
-							newEditorWindow = new Editor::EditorWindowEntityInspector(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowEntityInspector(guid); break;
 						case Editor::EditorWindowTypes::ImGuiDemo:
-							newEditorWindow = new Editor::EditorWindowImGuiDemo(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowImGuiDemo(guid); break;
 						case Editor::EditorWindowTypes::MenuBar:
-							newEditorWindow = new Editor::EditorWindowMenuBar(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowMenuBar(guid); break;
 						case Editor::EditorWindowTypes::SceneControls:
-							newEditorWindow = new Editor::EditorWindowSceneControls(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowSceneControls(guid); break;
 						case Editor::EditorWindowTypes::SceneGraph:
-							newEditorWindow = new Editor::EditorWindowSceneGraph(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowSceneGraph(guid); break;
 						case Editor::EditorWindowTypes::SceneView:
-							// #TODO Get string value
-							newEditorWindow = new Editor::EditorWindowSceneView("Scene View", 3, guid);
-							break;
-
+							// #TODO Get window name value
+							newEditorWindow = new Editor::EditorWindowSceneView("Scene View", 3, guid); break;
 						case Editor::EditorWindowTypes::Settings:
-							newEditorWindow = new Editor::EditorWindowSettings(guid);
-							break;
-
+							newEditorWindow = new Editor::EditorWindowSettings(guid); break;
 						case Editor::EditorWindowTypes::StylePicker:
-							newEditorWindow = new Editor::EditorWindowStylePicker(guid);
-							break;
+							newEditorWindow = new Editor::EditorWindowStylePicker(guid); break;
+						case Editor::EditorWindowTypes::MaterialEditor:
+							newEditorWindow = new Editor::EditorWindowMaterialEditor(guid); break;
+						case Editor::EditorWindowTypes::FolderViewer:
+							newEditorWindow = new Editor::EditorWindowFolderViewer(guid); break;
+						case Editor::EditorWindowTypes::NodeEditor:
+							newEditorWindow = new Editor::EditorWindowNodeEditor(guid); break;
+						case Editor::EditorWindowTypes::ShaderEditor:
+							newEditorWindow = new Editor::EditorWindowShaderEditor(guid); break;
 
 						case Editor::EditorWindowTypes::EditorWindowTypesInvalid:
 						default:
@@ -962,7 +953,6 @@ namespace QwerkE {
 					{
 						const Mirror::TypeInfo* editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindow>();
 
-						// cJSON* editorWindowJson = CreateArray((std::to_string(pair.first)).c_str());
 						cJSON* editorWindowJson = CreateArray((std::to_string((u32)pair.second->Type())).c_str());
 
 						SerializeObjectToJson((void*)pair.second, editorWindowTypeInfo, editorWindowJson);

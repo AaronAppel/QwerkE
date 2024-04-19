@@ -44,6 +44,7 @@ project "Game"
 	}
 
 	-- Linker Additional Options "/NODEFAULTLIB:msvcrt.lib" to disable warning
+	-- ignoredefaultlibraries { "msvcrt" }
 	-- Also warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32d.lib(glew32d.dll); second definition ignored
 
 	forceincludes { "QG_PCH.h" }

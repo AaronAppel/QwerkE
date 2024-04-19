@@ -45,9 +45,7 @@ project "Editor"
 	links
 	{
 		-- Projects
-		"FlatHeadGames",
 		"Framework",
-		"Mirror",
 	}
 	
 	forceincludes { "%{wks.location}/Framework/Source/QF_ForcedIncludes.h", "QE_PCH.h" }
