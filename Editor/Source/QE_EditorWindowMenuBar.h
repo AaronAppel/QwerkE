@@ -14,7 +14,7 @@ namespace QwerkE {
 		class EditorWindowMenuBar : public EditorWindow
 		{
 		public:
-			EditorWindowMenuBar(GUID guid) : EditorWindow("MenuBar", EditorWindowTypes::MenuBar, guid, EditorWindowFlags::Hidden) { }
+			EditorWindowMenuBar(GUID guid) : EditorWindow("MenuBar", EditorWindowTypes::MenuBar, guid, EditorWindowFlags::Headless) { }
 
             bool IsUnique() override { return true; }
 
@@ -30,7 +30,7 @@ namespace QwerkE {
                         const char* d[size] = { "ExampleWindow", "two", "three", "four", "five" };
                         if (ImGui::ListBox("MainMenuBar", &index, d, size, 3))
                         {
-                            if (index == 0) Editor::SetEditorStateFlags(EditorStateFlags::UiMainMenuShowingImGuiExample);
+                            if (index == 0) Editor::ToggleEditorStateFlags(EditorStateFlags::UiMainMenuShowingImGuiExample);
                         }
                         ImGui::EndMenu();
                     }
@@ -48,7 +48,7 @@ namespace QwerkE {
                                 EditorWindowTypes type = EditorWindowTypes::_from_index(i);
                                 if (ImGui::Button(ENUM_TO_STR(type)))
                                 {
-                                    Editor::OpenNewEditorWindow((u32)type);
+                                    Editor::OpenEditorWindow((u32)type);
                                     // #TODO Set editor UI state to dirty
                                 }
                             }

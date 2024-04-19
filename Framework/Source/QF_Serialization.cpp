@@ -183,26 +183,27 @@ namespace QwerkE {
 					for (size_t i = 0; i < guidEditorWindowsJsonVector.size(); i++)
 					{
 						const Editor::EditorWindowTypes editorWindowType = Editor::EditorWindowTypes::_from_index(std::stoi(guidEditorWindowsJsonVector[i]->string));
-						cJSON* editorWindowJson = guidEditorWindowsJsonVector[i]->child->child;
+						const cJSON* const editorWindowJson = guidEditorWindowsJsonVector[i]->child->child;
 
 						// #TODO m_WindowName contains name and guid. Should try to use to persist name, and can get guid too to stay synced.
-						GUID guid = std::stoull(editorWindowJson->child->child->valuestring);
+						const GUID guid = std::stoull(editorWindowJson->child->child->valuestring);
 
 						Editor::EditorWindow* newEditorWindow = nullptr;
 						switch (editorWindowType)
 						{
+							// Unique
+						case Editor::EditorWindowTypes::DefaultDebug:
+						case Editor::EditorWindowTypes::DockingContext:
+						case Editor::EditorWindowTypes::ImGuiDemo:
+						case Editor::EditorWindowTypes::MenuBar:
+							LOG_ERROR("{0} Cannot deserialize unique editor windows dynamically!", __FUNCTION__);
+							break;
+
+							// Instanced
 						case Editor::EditorWindowTypes::Assets:
 							newEditorWindow = new Editor::EditorWindowAssets(guid); break;
-						case Editor::EditorWindowTypes::DefaultDebug:
-							newEditorWindow = new Editor::EditorWindowDefaultDebug(guid); break;
-						case Editor::EditorWindowTypes::DockingContext:
-							newEditorWindow = new Editor::EditorWindowDockingContext(guid); break;
 						case Editor::EditorWindowTypes::EntityInspector:
 							newEditorWindow = new Editor::EditorWindowEntityInspector(guid); break;
-						case Editor::EditorWindowTypes::ImGuiDemo:
-							newEditorWindow = new Editor::EditorWindowImGuiDemo(guid); break;
-						case Editor::EditorWindowTypes::MenuBar:
-							newEditorWindow = new Editor::EditorWindowMenuBar(guid); break;
 						case Editor::EditorWindowTypes::SceneControls:
 							newEditorWindow = new Editor::EditorWindowSceneControls(guid); break;
 						case Editor::EditorWindowTypes::SceneGraph:
@@ -483,7 +484,7 @@ namespace QwerkE {
 				const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
 				for (size_t i = 0; i < jsonObjectVector.size(); i++)
 				{
-					floatArray[i] = jsonObjectVector[i]->valuedouble;
+					floatArray[i] = (float)jsonObjectVector[i]->valuedouble;
 				}
 			}
 			break;

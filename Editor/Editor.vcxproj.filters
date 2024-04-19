@@ -19,6 +19,9 @@
     <ClCompile Include="Source\QE_EditorWindowNodeEditor.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QE_EditorWindowNodeEditorBlueprints.cpp">
+      <Filter>Windows\Instanced</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QE_EditorInspector.h">

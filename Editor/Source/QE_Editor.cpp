@@ -2,7 +2,7 @@
 
 #include <map>      // For std::map<std::string, const char*> pairs; and EditorWindows collection
 #include <string>   // For std::map<std::string, const char*> pairs;
-#include <vector>
+#include <vector>   // For s_EditorWindowsQueuedForDelete
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QC_imgui.h"
@@ -81,6 +81,7 @@ namespace QwerkE {
         static EditorWindowMenuBar s_EditorWindowMenuBar(GUID::Invalid);
 
         static std::unordered_map<GUID, EditorWindow*> s_EditorWindows;
+        static std::vector<EditorWindow*> s_EditorWindowsQueuedForDelete;
 
         constexpr char* s_EditorWindowDataFileName = "EditorWindowData.qdata";
 
@@ -235,7 +236,7 @@ namespace QwerkE {
             return s_EditorStateFlags;
         }
 
-        void SetEditorStateFlags(const EditorStateFlags& flags)
+        void ToggleEditorStateFlags(const EditorStateFlags& flags)
         {
             s_EditorStateFlags = (EditorStateFlags)(s_EditorStateFlags ^ flags);
         }
@@ -245,16 +246,7 @@ namespace QwerkE {
             return s_ShowingEditorUI;
         }
 
-        void ResetEditorWindowReferences()
-        {
-            // #TODO Add callbacks to EditorWindows to register to, so they know whn things happen like :
-            // Selection made, references are dirty (state change)
-            // s_EntityEditor->ResetReferences();
-
-            // s_EditorWindows[guid]->ResetReferences();
-        }
-
-        void OpenNewEditorWindow(u32 enumToInt)
+        void OpenEditorWindow(u32 enumToInt)
         {
             EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(enumToInt);
             EditorWindow* newWindow = nullptr;
@@ -263,12 +255,16 @@ namespace QwerkE {
             switch (editorWindowType)
             {
             case EditorWindowTypes::DefaultDebug:
+                s_EditorWindowDefaultDebug.ToggleHidden();
                 break;
             case EditorWindowTypes::DockingContext:
+                s_EditorWindowDockingContext.ToggleHidden();
                 break;
             case EditorWindowTypes::ImGuiDemo:
+                s_EditorWindowImGuiDemo.ToggleHidden();
                 break;
             case EditorWindowTypes::MenuBar:
+                s_EditorWindowMenuBar.ToggleHidden();
                 break;
 
             /////////////////////
@@ -320,6 +316,27 @@ namespace QwerkE {
             {
                 s_EditorWindows[newWindow->Guid()] = newWindow;
             }
+        }
+
+        void CloseEditorWindow(const GUID& guid)
+        {
+            if (s_EditorWindows.find(guid) != s_EditorWindows.end())
+            {
+                s_EditorWindowsQueuedForDelete.push_back(s_EditorWindows[guid]);
+            }
+            else
+            {
+                LOG_WARN("{0} Could not close editor window with GUID {1}", __FUNCTION__, guid);
+            }
+        }
+
+        void ResetEditorWindowReferences()
+        {
+            // #TODO Add callbacks to EditorWindows to register to, so they know whn things happen like :
+            // Selection made, references are dirty (state change)
+            // s_EntityEditor->ResetReferences();
+
+            // s_EditorWindows[guid]->ResetReferences();
         }
 
         void OnEntitySelected(const EntityHandle& entity)
@@ -374,8 +391,14 @@ namespace QwerkE {
             while (it != s_EditorWindows.end())
             {
                 it->second->Draw();
-                ++it; // #TODO Windows may get removed while iterating
+                ++it;
             }
+
+            for (size_t i = 0; i < s_EditorWindowsQueuedForDelete.size(); i++)
+            {
+                s_EditorWindows.erase(s_EditorWindowsQueuedForDelete[i]->Guid());
+            }
+            s_EditorWindowsQueuedForDelete.clear();
         }
 
         void local_EndFrame()

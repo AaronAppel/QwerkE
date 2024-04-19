@@ -9,19 +9,30 @@ namespace QwerkE {
 		class EditorWindowImGuiDemo : public EditorWindow
 		{
 		public:
-			EditorWindowImGuiDemo(GUID guid) : EditorWindow("ImGui Demo", EditorWindowTypes::ImGuiDemo, guid, EditorWindowFlags::Hidden) { }
+			EditorWindowImGuiDemo(GUID guid) :
+				EditorWindow("ImGui Demo",
+					EditorWindowTypes::ImGuiDemo,
+					guid,
+					(EditorWindowFlags)(EditorWindowFlags::Headless | EditorWindowFlags::Hidden))
+			{ }
 
 		private:
 			void DrawInternal() override
 			{
-				bool isOpen = m_WindowFlags & EditorWindowFlags::IsOpen;
-				if (isOpen)
+				const auto result = m_WindowFlags;
+				bool isShowingDemo = true;
+				if (isShowingDemo)
 				{
-					ImGui::ShowDemoWindow(&isOpen);
+					ImGui::ShowDemoWindow(&isShowingDemo);
 				}
-				u32 result = isOpen ? m_WindowFlags | EditorWindowFlags::IsOpen : m_WindowFlags & ~EditorWindowFlags::IsOpen;
-				m_WindowFlags = (EditorWindowFlags)result;
+
+				if (!isShowingDemo)
+				{
+					ToggleHidden();
+				}
 			}
+
+			bool m_IsShowingImGuiDemoWindow = false;
 		};
 
 	}

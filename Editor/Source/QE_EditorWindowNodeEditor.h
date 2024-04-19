@@ -20,6 +20,7 @@ namespace QwerkE {
 
 		private:
 			void DrawInternal() override;
+			void DrawBluePrintsExample();
 
             ax::NodeEditor::EditorContext* m_Context = nullptr;
             const char* m_SettingsFileName = "NodeEditorWidgets.json";
