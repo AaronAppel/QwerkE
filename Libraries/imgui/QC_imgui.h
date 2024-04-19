@@ -112,6 +112,7 @@ namespace ImGui
 	{
 		if (ImGui::Begin("Default Debug Window"))
 		{
+			ImGui::Separator();
 			function();
 		}
 		ImGui::End();

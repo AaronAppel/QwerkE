@@ -42,7 +42,8 @@ namespace QwerkE {
                             // Menu of window types
                             // Open -> context pop out/window/whatever
 
-                            for (int i = 0; i < EditorWindowTypes::_size_constant; i++)
+                            constexpr u32 startingIndex = EditorWindowTypes::EditorWindowTypesInvalid + 1;
+                            for (u32 i = startingIndex; i < EditorWindowTypes::_size_constant; i++)
                             {
                                 EditorWindowTypes type = EditorWindowTypes::_from_index(i);
                                 if (ImGui::Button(ENUM_TO_STR(type)))
@@ -54,26 +55,18 @@ namespace QwerkE {
                             ImGui::Separator();
                         }
 
-                        if (ImGui::Button("Schematics Inspector"))
+                        if (m_ShowingFps && ImGui::Button("FPS"))
                         {
-                            engineSettings.showingSchematicsEditor = !engineSettings.showingSchematicsEditor;
-                            Settings::SaveEngineSettings();
-                        }
-
-                        ImGui::Separator();
-                        if (ImGui::Button("FPS"))
-                        {
-                            engineSettings.showingFPS = !engineSettings.showingFPS;
-                            Settings::SaveEngineSettings();
+                            m_ShowingFps = !m_ShowingFps;
                         }
 
                         ImGui::EndMenu();
                     }
 
-                    char buffer[] = { '0', '0', '0', '\0' };
-                    ImGui::SameLine(ImGui::GetWindowWidth() - sizeof(buffer) * 9); // n characters * 9 pixels each (width)
-                    if (engineSettings.showingFPS)
+                    ImGui::SameLineEnd(3);
+                    if (m_ShowingFps)
                     {
+                        char buffer[] = { '0', '0', '0', '\0' };
                         const float& deltaTime = (float)Time::PreviousFrameDuration();
                         if (deltaTime == .0f)
                         {
@@ -92,13 +85,14 @@ namespace QwerkE {
 
                         if (ImGui::IsItemClicked())
                         {
-                            engineSettings.showingFPS = !engineSettings.showingFPS;
-                            Settings::SaveEngineSettings();
+                            m_ShowingFps = !m_ShowingFps;
                         }
                     }
                 }
                 ImGui::EndMainMenuBar();
 			}
+
+            bool m_ShowingFps = true;
 		};
 
 	}

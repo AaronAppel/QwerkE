@@ -16,7 +16,7 @@ namespace QwerkE {
 			}
 		}
 
-		eScriptTypes ScriptType()
+		eScriptTypes ScriptType() override
 		{
 			return eScriptTypes::Testing;
 		}

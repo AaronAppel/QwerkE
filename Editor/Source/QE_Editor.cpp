@@ -41,64 +41,29 @@
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
-#include "QF_Shader.h"
 #include "QF_Window.h"
 
 #include "QE_ProgramArgs.h"
 
-// #TODO Remove after supporting EditorWindow classes
-#include "QE_EditorInspector.h"
-
 // #TODO Remove after adding indirection
 #include "QE_EditorWindow.h"
 #include "QE_EditorWindowAssets.h"
+#include "QE_EditorWindowDefaultDebug.h"
 #include "QE_EditorWindowDockingContext.h"
 #include "QE_EditorWindowEntityInspector.h"
+#include "QE_EditorWindowFolderViewer.h"
 #include "QE_EditorWindowImGuiDemo.h"
+#include "QE_EditorWindowMaterialEditor.h"
 #include "QE_EditorWindowMenuBar.h"
+#include "QE_EditorWindowNodeEditor.h"
 #include "QE_EditorWindowSceneControls.h"
 #include "QE_EditorWindowSceneGraph.h"
 #include "QE_EditorWindowSceneView.h"
 #include "QE_EditorWindowSettings.h"
+#include "QE_EditorWindowShaderEditor.h"
 #include "QE_EditorWindowStylePicker.h"
-#include "QE_EditorWindowDefaultDebug.h"
 
 namespace QwerkE {
-
-    struct EditorCamera
-    {
-        void PreDrawSetup(bgfx::ViewId viewId)
-        {
-            const vec2f& windowSize = Window::GetSize();
-
-            bgfx::setViewClear(viewId, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
-            bgfx::setViewRect(viewId, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
-
-            bx::mtxLookAt(m_View, m_Eye, m_LookAtTarget);
-
-            bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
-            bgfx::setViewTransform(viewId, m_View, m_Proj);
-
-            if (m_ShowSphere)
-            {
-                DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
-                debugDrawer.begin(viewId);
-                debugDrawer.drawSphere(m_LookAtTarget.x, m_LookAtTarget.y, m_LookAtTarget.z, 3.f);
-                debugDrawer.end();
-            }
-        }
-
-        bool m_ShowSphere = false;
-        bx::Vec3 m_Eye = bx::Vec3(0.f);
-        bx::Vec3 m_LookAtTarget = bx::Vec3(0.f);;
-
-        float m_Fov = 60.f;
-        float m_Near = .1f;
-        float m_Far = 100.f;
-
-        float m_View[16];
-        float m_Proj[16];
-    };
 
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
@@ -118,8 +83,6 @@ namespace QwerkE {
         static std::unordered_map<GUID, EditorWindow*> s_EditorWindows;
 
         constexpr char* s_EditorWindowDataFileName = "EditorWindowData.qdata";
-
-        static EditorCamera s_EditorCamera;
 
         static EditorStateFlags s_EditorStateFlags = EditorStateFlags::EditorStateFlagsNone;
 
@@ -239,13 +202,6 @@ namespace QwerkE {
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    auto it = s_EditorWindows.begin(); // #TODO Windows may get removed while iterating
-                    while (it != s_EditorWindows.end())
-                    {
-                        it->second->Draw();
-                        ++it;
-                    }
-
                     Renderer::EndImGui();
 
                     local_EndFrame();
@@ -274,15 +230,6 @@ namespace QwerkE {
 			return !Window::CloseRequested();
 		}
 
-		void ResetReferences()
-		{
-            // #TODO Add callbacks to EditorWindows to register to, so they know whn things happen like :
-            // Selection made, references are dirty (state change)
-			// s_EntityEditor->ResetReferences();
-
-            // s_EditorWindows[guid]->ResetReferences();
-		}
-
         const EditorStateFlags& GetEditorStateFlags()
         {
             return s_EditorStateFlags;
@@ -298,28 +245,39 @@ namespace QwerkE {
             return s_ShowingEditorUI;
         }
 
+        void ResetEditorWindowReferences()
+        {
+            // #TODO Add callbacks to EditorWindows to register to, so they know whn things happen like :
+            // Selection made, references are dirty (state change)
+            // s_EntityEditor->ResetReferences();
+
+            // s_EditorWindows[guid]->ResetReferences();
+        }
+
         void OpenNewEditorWindow(u32 enumToInt)
         {
             EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(enumToInt);
             EditorWindow* newWindow = nullptr;
 
+            // #TODO Handle unique windows?
             switch (editorWindowType)
             {
-            case EditorWindowTypes::EditorWindowTypesInvalid:
-                break;
-            case EditorWindowTypes::Assets:
-                newWindow = new EditorWindowAssets();
-                break;
             case EditorWindowTypes::DefaultDebug:
                 break;
             case EditorWindowTypes::DockingContext:
                 break;
-            case EditorWindowTypes::EntityInspector:
-                newWindow = new EditorWindowEntityInspector();
-                break;
             case EditorWindowTypes::ImGuiDemo:
                 break;
             case EditorWindowTypes::MenuBar:
+                break;
+
+            /////////////////////
+
+            case EditorWindowTypes::Assets:
+                newWindow = new EditorWindowAssets();
+                break;
+            case EditorWindowTypes::EntityInspector:
+                newWindow = new EditorWindowEntityInspector();
                 break;
             case EditorWindowTypes::SceneControls:
                 newWindow = new EditorWindowSceneControls();
@@ -339,8 +297,22 @@ namespace QwerkE {
             case EditorWindowTypes::StylePicker:
                 newWindow = new EditorWindowStylePicker();
                 break;
+            case EditorWindowTypes::MaterialEditor:
+                newWindow = new EditorWindowMaterialEditor();
+                break;
+            case EditorWindowTypes::FolderViewer:
+                newWindow = new EditorWindowFolderViewer();
+                break;
+            case EditorWindowTypes::NodeEditor:
+                newWindow = new EditorWindowNodeEditor();
+                break;
+            case EditorWindowTypes::ShaderEditor:
+                newWindow = new EditorWindowShaderEditor();
+                break;
 
+            case EditorWindowTypes::EditorWindowTypesInvalid:
             default:
+                LOG_ERROR("{0} Unsupported EditorWindow type!", __FUNCTION__);
                 break;
             }
 
@@ -350,16 +322,17 @@ namespace QwerkE {
             }
         }
 
+        void OnEntitySelected(const EntityHandle& entity)
+        {
+            for (auto& it : s_EditorWindows)
+            {
+                it.second->OnEntitySelected(entity);
+            }
+        }
+
 		void local_Initialize()
 		{
             Serialization::DeserializeObjectFromFile(Paths::Settings(s_EditorWindowDataFileName).c_str(), s_EditorWindows);
-            return;
-
-            // EditorWindowSceneView* editorWindowSceneViewEditor = new EditorWindowSceneView("EditorView", 3);
-            // s_EditorWindows[editorWindowSceneViewEditor->Guid()] = editorWindowSceneViewEditor;
-            //
-            // EditorWindowSceneView* editorWindowSceneViewGame = new EditorWindowSceneView("GameView", 4);
-            // s_EditorWindows[editorWindowSceneViewGame->Guid()] = editorWindowSceneViewGame;
 		}
 
 		void local_Shutdown()
@@ -396,6 +369,13 @@ namespace QwerkE {
                     break;
                 }
             }
+
+            auto it = s_EditorWindows.begin();
+            while (it != s_EditorWindows.end())
+            {
+                it->second->Draw();
+                ++it; // #TODO Windows may get removed while iterating
+            }
         }
 
         void local_EndFrame()
@@ -420,11 +400,8 @@ namespace QwerkE {
                     debugDrawer.end();
                 }
 
-                Framework::RenderView(viewIdFbo1);
-
-                s_EditorCamera.PreDrawSetup(0);
-                Framework::RenderView(0);
-
+                // #TODO Replace draws by moving to EditorWindowSceneView class
+                // Framework::RenderView(viewIdFbo1);
             }
             Framework::EndFrame();
         }

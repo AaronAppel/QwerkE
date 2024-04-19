@@ -40,7 +40,7 @@ namespace QwerkE {
                 ImGui::SameLine();
                 if (ImGui::Button("Reload"))
                 {
-                    Editor::ResetReferences();
+                    Editor::ResetEditorWindowReferences();
                     currentScene->ReloadScene();
                 }
 
@@ -62,7 +62,7 @@ namespace QwerkE {
                 if (ImGui::Button("-"))
                 {
                     Scenes::DestroyScene(currentScene);
-                    Editor::ResetReferences();
+                    Editor::ResetEditorWindowReferences();
                 }
 
                 const char* buttonText = currentScene->GetIsPaused() ? ">" : "||";

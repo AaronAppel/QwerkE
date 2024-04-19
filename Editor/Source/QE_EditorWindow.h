@@ -14,6 +14,7 @@
 
 #include "QC_Guid.h"
 
+#include "QF_EntityHandle.h"
 #include "QF_Window.h"
 
 #include "QE_Editor.h"
@@ -45,7 +46,12 @@ namespace QwerkE {
 			SceneGraph,
 			SceneView,
 			Settings,
-			StylePicker
+			StylePicker,
+			MaterialEditor,
+			FolderViewer,
+			NodeEditor,
+			ShaderEditor
+			// #NOTE Serialized, so don't change ordering
 		)
 
 		class EditorWindow
@@ -82,6 +88,8 @@ namespace QwerkE {
 
 			GUID Guid() { return m_Guid; }
 			EditorWindowTypes Type() { return m_EditorWindowType; }
+
+			virtual void OnEntitySelected(const EntityHandle& entity) { }
 
 		protected:
 			EditorWindow(std::string windowName, EditorWindowTypes editorWindowType, GUID guid = GUID::Invalid, EditorWindowFlags flags = EditorWindowFlags::IsOpen)

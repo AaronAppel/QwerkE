@@ -75,31 +75,30 @@ namespace QwerkE {
         for (auto& entity : scripts)
         {
             auto& script = m_Registry.get<ComponentScript>(entity);
-            script.Bind(EntityHandle(this, entity)); // #TODO Reiew binding and when it should be done
+            script.Bind(EntityHandle(this, entity)); // #TODO Review binding and when it should be done
             script.Update(deltaTime);
         }
 
         {
-            static bool isOpen = false;
-            ImGui::Begin("MeshPositionWindow", &isOpen);
+            ImGui::DefaultDebugWindow([&]() {
 
-            auto viewTransforms = ViewComponents<ComponentTransform>();
-            int i = 0;
-            for (auto entity : viewTransforms)
-            {
-                ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
-
-                vec3f meshPosition = transform.GetPosition();
-
-                std::string meshName = "MeshPosition";
-                if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
+                auto viewTransforms = ViewComponents<ComponentTransform>();
+                int i = 0;
+                for (auto entity : viewTransforms)
                 {
-                    transform.SetPosition(meshPosition);
-                }
-                ++i;
-            }
+                    ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
 
-            ImGui::End();
+                    vec3f meshPosition = transform.GetPosition();
+
+                    std::string meshName = "MeshPosition";
+                    if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
+                    {
+                        transform.SetPosition(meshPosition);
+                    }
+                    ++i;
+                }
+
+            });
         }
     }
 

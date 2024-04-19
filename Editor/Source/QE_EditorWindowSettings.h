@@ -15,7 +15,8 @@ namespace QwerkE {
 
 	namespace Editor {
 
-        QC_ENUM(eSettingsOptions, u8, Null, Engine, User, Renderer, Project, Assets); // #TODO Project isn't settings anymore. Could be reviewed to move
+        QC_ENUM(eSettingsOptions, u8, Null, Engine, User, Renderer, Project); // #TODO Project isn't settings anymore. Could be reviewed to move
+        // #TODO Physics can be another add. Editing collision between layers, global gravity, etc.
 
         class EditorWindowSettings : public EditorWindow
         {
@@ -26,157 +27,151 @@ namespace QwerkE {
             void DrawInternal() override
             {
                 EngineSettings& engineSettings = Settings::GetEngineSettings();
-                if (engineSettings.showingSettingsEditor &&
-                    ImGui::Begin("Settings Inspector", &engineSettings.showingSettingsEditor))
+
+                for (size_t i = 1; i < eSettingsOptions::_size_constant; i++)
                 {
-                    for (size_t i = 1; i < eSettingsOptions::_size_constant; i++)
+                    if (i > 1) ImGui::SameLine();
+
+                    bool pushIsDirtyStyleColor = false;
+
+                    switch (i)
                     {
-                        if (i > 1) ImGui::SameLine();
+                    case eSettingsOptions::Engine:
+                        pushIsDirtyStyleColor = Settings::GetEngineSettings().isDirty;
+                        break;
 
-                        bool pushIsDirtyStyleColor = false;
+                    case eSettingsOptions::User:
+                        pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
+                        break;
 
-                        switch (i)
-                        {
-                        case eSettingsOptions::Engine:
-                            pushIsDirtyStyleColor = Settings::GetEngineSettings().isDirty;
-                            break;
+                    case eSettingsOptions::Renderer:
+                        pushIsDirtyStyleColor = Settings::GetRendererSettings().isDirty;
+                        break;
 
-                        case eSettingsOptions::User:
-                            pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
-                            break;
-
-                        case eSettingsOptions::Renderer:
-                            pushIsDirtyStyleColor = Settings::GetRendererSettings().isDirty;
-                            break;
-
-                        case eSettingsOptions::Project:
-                            pushIsDirtyStyleColor = Projects::CurrentProject().isDirty;
-                            break;
-                        }
-
-                        if (pushIsDirtyStyleColor)
-                        {
-                            ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
-                            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
-                            ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
-                        }
-
-                        if (ImGui::Button(ENUM_TO_STR(eSettingsOptions::_from_index(i))))
-                        {
-                            m_SettingsEditorOption = eSettingsOptions::_from_index(i);
-                        }
-
-                        if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
-                        {
-                            m_LastPopUpIndex = (s8)i;
-                            ImGui::OpenPopup("Settings Context Pop Up");
-                        }
-
-                        if (pushIsDirtyStyleColor)
-                        {
-                            ImGui::PopStyleColor(3);
-                        }
+                    case eSettingsOptions::Project:
+                        pushIsDirtyStyleColor = Projects::CurrentProject().isDirty;
+                        break;
                     }
 
-                    if (ImGui::BeginPopup("Settings Context Pop Up"))
+                    if (pushIsDirtyStyleColor)
                     {
-                        if (ImGui::MenuItem("Save"))
-                        {
-                            switch (m_LastPopUpIndex)
-                            {
-                            case eSettingsOptions::Engine:
-                                Settings::SaveEngineSettings();
-                                break;
-
-                            case eSettingsOptions::User:
-                                Settings::SaveUserSettings();
-                                break;
-
-                            case eSettingsOptions::Renderer:
-                                Settings::SaveRendererSettings();
-                                break;
-
-                            case eSettingsOptions::Project:
-                                Projects::SaveProject();
-                                break;
-
-                            case eSettingsOptions::Assets:
-                                Assets::SaveRegistry();
-                                break;
-                            }
-                        }
-
-                        if (ImGui::MenuItem("Reload"))
-                        {
-                            // #TODO Load user settings instead of default
-                            switch (m_LastPopUpIndex)
-                            {
-                            case eSettingsOptions::Engine:
-                                Settings::LoadEngineSettings("");
-                                break;
-
-                            case eSettingsOptions::User:
-                                Settings::LoadUserSettings("User1.qproj");
-                                break;
-
-                            case eSettingsOptions::Renderer:
-                                Settings::LoadRendererSettings("RendererSettings1.qren");
-                                break;
-
-                            case eSettingsOptions::Project:
-                                Projects::LoadProject("Project1.qproj"); // #TODO Load proper project file
-                                break;
-                            }
-                        }
-                        ImGui::EndPopup();
+                        ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                        ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
                     }
 
-                    if (m_SettingsEditorOption != (eSettingsOptions)eSettingsOptions::Null)
+                    if (ImGui::Button(ENUM_TO_STR(eSettingsOptions::_from_index(i))))
                     {
-                        std::string buffer = "";
-                        buffer.reserve(200);
-                        ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.3f);
-
-                        ImGui::Text(ENUM_TO_STR(eSettingsOptions::_from_index(m_SettingsEditorOption)));
-
-                        switch (m_SettingsEditorOption)
-                        {
-                        case eSettingsOptions::Engine:
-                        {
-                            EngineSettings& engineSettings = Settings::GetEngineSettings();
-                            engineSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
-                        }
-                        break;
-
-                        case eSettingsOptions::User:
-                        {
-                            UserSettings& userSettings = Settings::GetUserSettings();
-                            userSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<UserSettings>(), &userSettings, buffer);
-                        }
-                        break;
-
-                        case eSettingsOptions::Renderer:
-                        {
-                            RendererSettings& rendererSettings = Settings::GetRendererSettings();
-                            rendererSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
-                        }
-                        break;
-
-                        case eSettingsOptions::Project:
-                        {
-                            Project& project = Projects::CurrentProject();
-                            project.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<Project>(), &project, buffer);
-                        }
-                        break;
-                        }
-
-                        ImGui::PopItemWidth();
+                        m_SettingsEditorOption = eSettingsOptions::_from_index(i);
                     }
 
-                    ImGui::End();
+                    if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
+                    {
+                        m_LastPopUpIndex = (s8)i;
+                        ImGui::OpenPopup("Settings Context Pop Up");
+                    }
+
+                    if (pushIsDirtyStyleColor)
+                    {
+                        ImGui::PopStyleColor(3);
+                    }
                 }
 
-                if (engineSettings.showingSchematicsEditor && ImGui::Begin("Schematics Inspector", &engineSettings.showingSchematicsEditor))
+                if (ImGui::BeginPopup("Settings Context Pop Up"))
+                {
+                    if (ImGui::MenuItem("Save"))
+                    {
+                        switch (m_LastPopUpIndex)
+                        {
+                        case eSettingsOptions::Engine:
+                            Settings::SaveEngineSettings();
+                            break;
+
+                        case eSettingsOptions::User:
+                            Settings::SaveUserSettings();
+                            break;
+
+                        case eSettingsOptions::Renderer:
+                            Settings::SaveRendererSettings();
+                            break;
+
+                        case eSettingsOptions::Project:
+                            Projects::SaveProject();
+                            break;
+                        }
+                    }
+
+                    if (ImGui::MenuItem("Reload"))
+                    {
+                        // #TODO Load user settings instead of default
+                        switch (m_LastPopUpIndex)
+                        {
+                        case eSettingsOptions::Engine:
+                            Settings::LoadEngineSettings("");
+                            break;
+
+                        case eSettingsOptions::User:
+                            Settings::LoadUserSettings("User1.qproj");
+                            break;
+
+                        case eSettingsOptions::Renderer:
+                            Settings::LoadRendererSettings("RendererSettings1.qren");
+                            break;
+
+                        case eSettingsOptions::Project:
+                            Projects::LoadProject("Project1.qproj"); // #TODO Load proper project file
+                            break;
+                        }
+                    }
+                    ImGui::EndPopup();
+                }
+
+                if (m_SettingsEditorOption != (eSettingsOptions)eSettingsOptions::Null)
+                {
+                    std::string buffer = "";
+                    buffer.reserve(200);
+                    ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.3f);
+
+                    ImGui::Text(ENUM_TO_STR(eSettingsOptions::_from_index(m_SettingsEditorOption)));
+
+                    switch (m_SettingsEditorOption)
+                    {
+                    case eSettingsOptions::Engine:
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("          Changes require engine restart");
+                        EngineSettings& engineSettings = Settings::GetEngineSettings();
+                        engineSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
+                    }
+                    break;
+
+                    case eSettingsOptions::User:
+                    {
+                        UserSettings& userSettings = Settings::GetUserSettings();
+                        userSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<UserSettings>(), &userSettings, buffer);
+                    }
+                    break;
+
+                    case eSettingsOptions::Renderer:
+                    {
+                        RendererSettings& rendererSettings = Settings::GetRendererSettings();
+                        rendererSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
+                    }
+                    break;
+
+                    case eSettingsOptions::Project:
+                    {
+                        Project& project = Projects::CurrentProject();
+                        project.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<Project>(), &project, buffer);
+                    }
+                    break;
+                    }
+
+                    ImGui::PopItemWidth();
+                }
+
+                // #TODO Move to a new Schematics/Prefab Inspector EditorWindow
+                if (false && ImGui::Begin("Schematics Inspector", NULL))
                 {
                     // #TODO Cache result to avoid constant directory info fetching
                     const std::vector<std::string> dirFileNames = Directory::ListDir(StringAppend(Paths::AssetsDir().c_str(), "Schematics/"));

@@ -125,10 +125,11 @@ namespace QwerkE {
                 case MirrorTypes::m_floatArray16:
                     {
                         float* f16matrix = (float*)fieldAddress;
-                        valueChanged |= ImGui::DragFloat4("0", f16matrix, .1f);
-                        valueChanged |= ImGui::DragFloat4("1", &f16matrix[4], .1f);
-                        valueChanged |= ImGui::DragFloat4("2", &f16matrix[8], .1f);
-                        valueChanged |= ImGui::DragFloat4("3", &f16matrix[12], .1f);
+                        std::string fieldName = parentName + field.name;
+                        valueChanged |= ImGui::DragFloat4(fieldName.c_str(), f16matrix, .1f);
+                        valueChanged |= ImGui::DragFloat4("##1", &f16matrix[4], .1f);
+                        valueChanged |= ImGui::DragFloat4("##2", &f16matrix[8], .1f);
+                        valueChanged |= ImGui::DragFloat4("##3", &f16matrix[12], .1f);
                     }
                     break;
 
@@ -199,12 +200,15 @@ namespace QwerkE {
                         buffer.reserve(INT8_MAX);
                         buffer = *constCharPtrAddress;
 
-                        if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
+                        if (ImGui::InputText(fieldName.c_str(), buffer.data(), buffer.capacity()))
                         {
-                            // #TODO Review memory leak. delete *constCharPtrAddress;
+                            auto oldData = constCharPtrAddress;
+
                             char* result = strdup(buffer.data());
                             valueChanged |= strcmp(*constCharPtrAddress, result) != 0;
                             *constCharPtrAddress = result;
+
+                            //delete oldData; // #TODO Review memory leak. delete *constCharPtrAddress;
                         }
                     }
                     break;

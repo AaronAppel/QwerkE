@@ -13,6 +13,8 @@ namespace QwerkE {
 
         private:
             void DrawInternal() override;
+
+            bool m_Edited = false;
 		};
 
 	}

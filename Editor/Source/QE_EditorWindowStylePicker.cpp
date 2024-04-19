@@ -11,16 +11,26 @@ namespace QwerkE {
 
         void EditorWindowStylePicker::DrawInternal()
         {
-            EngineSettings& engineSettings = Settings::GetEngineSettings();
-            if (!engineSettings.showingStylePicker)
-                return;
+            // #TODO Add preset styles to choose and load from file
 
-            // #TODO Add presets and load from file (presets can be files too instead of hard coded)
-
-            static bool isOpen = true;
-            bool edited = false;
-            bool saveChanges = false; // #TODO Enable saving/loading or add some buttons
             ImGuiStyle& style = ImGui::GetStyle();
+
+            if (m_Edited)
+            {
+                ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+            }
+
+            if (ImGui::Button("Save Style"))
+            {
+                Serialization::SerializeObjectToFile(style, Settings::GetStyleFileName());
+            }
+
+            if (m_Edited)
+            {
+                ImGui::PopStyleColor(3);
+            }
 
             const Mirror::TypeInfo* styleTypeInfo = Mirror::InfoForType<ImGuiStyle>();
 
@@ -35,7 +45,7 @@ namespace QwerkE {
                 {
                     ImGui::Text("Alpha");
                     ImGui::SameLine();
-                    ImGui::DragFloat("##Alpha", &style.Alpha, .01f, .01f, 1.f); // #NOTE .01f minimum or ImGui will say End() wasn't called
+                    m_Edited |= ImGui::DragFloat("##Alpha", &style.Alpha, .01f, .01f, 1.f); // #NOTE .01f minimum or ImGui will say End() wasn't called
                     continue;
                 }
 
@@ -64,7 +74,7 @@ namespace QwerkE {
                 case MirrorTypes::m_imvec4_array:
                     if (ImGui::CollapsingHeader(styleTypeInfo->fields[i].name.c_str(), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_SpanAvailWidth))
                     {
-                        ImGui::Text("Info:");
+                        ImGui::Text("More Info:");
 
                         ImGui::SameLine();
                         static bool uiOptionsEnabled = false;
@@ -73,7 +83,7 @@ namespace QwerkE {
                         ImGui::SameLine();
                         static float uiScalar = .8f;
                         ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-                        ImGui::SliderFloat("ColourPickerSlider", &uiScalar, .1f, 1.2f);
+                        m_Edited |= ImGui::SliderFloat("ColourPickerSlider", &uiScalar, .1f, 1.2f);
                         ImGui::PopItemWidth();
 
                         ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * uiScalar);
@@ -89,7 +99,7 @@ namespace QwerkE {
                         for (int i = 0; i < range; i++)
                         {
                             ImGui::Text(ENUM_TO_STR(ImGuiCol_qw::_from_index(i)));
-                            if (ImGui::ColorPicker4(ENUM_TO_STR(ImGuiCol_qw::_from_index(i)), (float*)&style.Colors[i], flags)) { edited = true; }
+                            if (ImGui::ColorPicker4(ENUM_TO_STR(ImGuiCol_qw::_from_index(i)), (float*)&style.Colors[i], flags)) { m_Edited = true; }
                         }
 
                         ImGui::PopItemWidth();
@@ -104,13 +114,8 @@ namespace QwerkE {
                 {
                     ImGui::Text("DisabledAlpha");
                     ImGui::SameLine();
-                    ImGui::DragFloat("##DisabledAlpha", &style.DisabledAlpha, 0.1f, 0.f, 1.f);
+                    m_Edited |= ImGui::DragFloat("##DisabledAlpha", &style.DisabledAlpha, 0.1f, 0.f, 1.f);
                 }
-            }
-
-            if (edited && saveChanges)
-            {
-                Serialization::SerializeObjectToFile(style, Settings::GetStyleFileName());
             }
         }
 

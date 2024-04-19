@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Mirror.h"
+#endif
+
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
 #include "QF_Scriptable.h"
@@ -11,24 +15,14 @@ namespace QwerkE {
 	public:
 		void OnCreate() override
 		{
-			if (!m_Entity.HasComponent<ComponentTransform>())
-			{
-				LOG_ERROR("Entity {0} missing ScriptableTransform!", m_Entity.GetComponent<ComponentInfo>().m_EntityName.c_str());
-
-				if (m_Entity.HasComponent<ComponentScript>())
-				{
-					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
-					script.RemoveScript(eScriptTypes::Camera);
-				}
-				else
-				{
-					LOG_CRITICAL("Could not remove ComponentScript!");
-				}
-			}
+			HasRequiredComponents<ComponentTransform, ComponentScript>();
 		}
 
 		void OnUpdate(float deltaTime) override
 		{
+			if (!HasRequiredComponents<ComponentTransform, ComponentScript>())
+				return;
+
 			ComponentTransform& transform = m_Entity.GetComponent<ComponentTransform>();
 
 			if (m_DistanceTraveled >= m_Stride)
@@ -41,15 +35,17 @@ namespace QwerkE {
 			m_DistanceTraveled += abs(m_Direction) * m_Speed * deltaTime;
 		}
 
-		eScriptTypes ScriptType()
+		eScriptTypes ScriptType() override
 		{
 			return eScriptTypes::Patrol;
 		}
 
+	private:
+		MIRROR_PRIVATE_MEMBERS
+
 		float m_Stride = 5.f;
 		float m_Speed = 1.f;
 
-	private:
 		float m_Direction = 1.f;
 		float m_DistanceTraveled = 0.f;
 	};

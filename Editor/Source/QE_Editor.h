@@ -2,6 +2,8 @@
 
 namespace QwerkE {
 
+	class EntityHandle;
+
 	namespace Editor {
 
 		typedef unsigned int u32;
@@ -27,14 +29,14 @@ namespace QwerkE {
 
 		bool StillRunning();
 
-		void ResetReferences();
-
 		const EditorStateFlags& GetEditorStateFlags();
 		void SetEditorStateFlags(const EditorStateFlags& flags);
 
 		bool ShowingEditorUI();
 
+		void ResetEditorWindowReferences();
 		void OpenNewEditorWindow(u32 editorWindowType);
+		void OnEntitySelected(const EntityHandle& entity);
 
 	}
 

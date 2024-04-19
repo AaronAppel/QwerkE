@@ -83,8 +83,7 @@ namespace QwerkE {
 					ComponentInfo& info = handle.GetComponent<ComponentInfo>();
 					if (ImGui::Button((info.m_EntityName + "##" + std::to_string(info.m_Guid)).c_str()))
 					{
-						// #TODO Notify other windows of selection, or update editor state(s)
-						// m_EntityEditor->SetCurrentEntity(handle);
+						Editor::OnEntitySelected(handle);
 						break;
 					}
 				}

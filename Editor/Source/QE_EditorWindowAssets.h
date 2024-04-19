@@ -22,8 +22,13 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
+                if (ImGui::Button("Save Asset Registry"))
                 {
-                    ImGui::Text("Meshes:");
+                    Assets::SaveRegistry();
+                }
+
+                if (ImGui::CollapsingHeader("Meshes"))
+                {
                     const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
                     for (auto& guidMeshPair : meshes)
                     {
@@ -34,8 +39,8 @@ namespace QwerkE {
                     }
                 }
 
+                if (ImGui::CollapsingHeader("Shaders"))
                 {
-                    ImGui::Text("Shaders:");
                     const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
                     for (auto& guidShaderPair : shaders)
                     {
@@ -46,16 +51,16 @@ namespace QwerkE {
                     }
                 }
 
+                if (ImGui::CollapsingHeader("Textures"))
                 {
-                    ImGui::Text("Textures:");
                 }
 
+                if (ImGui::CollapsingHeader("Materials"))
                 {
-                    ImGui::Text("Materials:");
                 }
 
+                if (ImGui::CollapsingHeader("Assets Registry"))
                 {
-                    ImGui::Text("Assets Registry:");
                     auto assetRegistry = Assets::ViewRegistry();
                     for (size_t i = 0; i < assetRegistry.size(); i++)
                     {

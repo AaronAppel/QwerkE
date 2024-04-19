@@ -9,7 +9,7 @@ namespace QwerkE {
 
     struct EngineSettings // #TODO Rename to FrameworkSettings
     {
-        bool isDirty = false;
+        bool isDirty = false; // #TODO Make editor state and remove from framework
 
         u16 windowWidthPixels = 1920;
         u16 windowHeightPixels = 1080;
@@ -24,14 +24,6 @@ namespace QwerkE {
         bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
 
         bool vSyncEnabled = false;
-
-        // Editor UI // #TODO Make EditorSettings struct
-        bool showingSchematicsEditor = false;
-        bool showingExampleWindow = false;
-        bool showingSettingsEditor = false;
-        bool showingFPS = true;
-        bool showingRendererSettings = false;
-        bool showingStylePicker = false;
     };
 
     struct UserSettings
