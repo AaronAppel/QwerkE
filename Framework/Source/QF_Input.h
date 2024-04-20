@@ -9,6 +9,7 @@
 struct GLFWwindow;
 #endif
 
+enum ImGuiKey : int;
 namespace QwerkE {
 
     namespace Input {
@@ -40,10 +41,10 @@ namespace QwerkE {
 
         void ToggleLogKeyEvents();
 
-        void InitializeKeysCodex(u16* keysCodex);
-
 #ifdef _QGLFW3
         eKeys GLFWToQwerkEKey(int key);
+
+        ImGuiKey QwerkEKeyToImGui(eKeys key);
         void SetupCallbacks(GLFWwindow* window);
 #else
 #error "Define window/input library!"

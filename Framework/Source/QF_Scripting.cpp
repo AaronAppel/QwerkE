@@ -5,6 +5,7 @@
 
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
+#include "QF_ScriptPathFinder.h"
 #include "QF_ScriptPatrol.h"
 #include "QF_ScriptTesting.h"
 
@@ -24,6 +25,9 @@ namespace QwerkE {
 
             case eScriptTypes::Patrol:
                 return new ScriptablePatrol();
+
+            case eScriptTypes::PathFinder:
+                return new ScriptablePathFinder();
 
             default:
                 ASSERT(false, "Unsupported script type!");

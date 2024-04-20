@@ -25,13 +25,13 @@ namespace QwerkE {
 		}
 
 		template <typename T>
-		inline T ClampRollover(T min, T value, T max)
+		inline T ClampRollover(T min, T value, T max) // #TODO Add tests
 		{
-			auto range = max - min;
+			auto range = max - min + 1; // #NOTE Inclusive
 
 			if (value < min)
 			{
-				return value + range;
+				return value + range; // #TODO What if the value is super low so + range still isn't in range?
 			}
 			else if (value > max)
 			{

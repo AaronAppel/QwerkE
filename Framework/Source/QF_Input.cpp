@@ -5,8 +5,10 @@
 
 #ifdef _QGLFW3
 #include "Libraries/glfw/glfw3.h"
-#else
-#error Define window/input library!
+#endif
+
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/QC_imgui.h"
 #endif
 
 #include "QC_CallbackFunction.h"
@@ -40,6 +42,11 @@ namespace QwerkE {
         static const u16 s_GlfwKeyCodexSize = GLFW_KEY_LAST + 1;
         static u16* s_GlfwKeyCodex = new unsigned short[s_GlfwKeyCodexSize];
 #endif
+
+#ifdef _QDEARIMGUI
+        static u16* s_ImGuiKeyCodex = new unsigned short[eKeys_MAX];
+#endif
+
         // #TODO Review using GLFW state IF QwerkE::Window can provide a nice un/register API
         // Windows currently needs to callback to Input. Might as well register callbacks once and avoid the extra logic in Windows.
         static bool s_eKeyStates[eKeys_MAX] = { false };
@@ -71,14 +78,17 @@ namespace QwerkE {
             }
             return (eKeys)s_GlfwKeyCodex[key];
         }
-#else
-#error "Define input library!"
 #endif
 
-        void OnKeyEvent(int key, int scancode, int action, int mode)
+#ifdef _QDEARIMGUI
+        ImGuiKey QwerkEKeyToImGui(eKeys key)
         {
-            int bp = 0;
+            return (ImGuiKey)s_ImGuiKeyCodex[key];
         }
+#endif
+
+        void local_GlfwKeysCodex(u16* keysCodex);
+        void local_ImGuiKeysCodex(u16* keysCodex);
 
         void Initialize()
         {
@@ -88,7 +98,8 @@ namespace QwerkE {
 #ifdef _QGLFW3
             memset(s_GlfwKeyCodex, 0, s_GlfwKeyCodexSize);
             SetupCallbacks((GLFWwindow*)Window::GetContext());
-            InitializeKeysCodex(s_GlfwKeyCodex);
+            local_GlfwKeysCodex(s_GlfwKeyCodex);
+            local_ImGuiKeysCodex(s_ImGuiKeyCodex);
 #else
 #error "Define input library!"
 #endif
@@ -208,13 +219,7 @@ namespace QwerkE {
 #endif
 
             CheckOnKeyEventCallBacks(key, state);
-
             local_RaiseInputEvent(key, state);
-
-            if (state == eKeyState::eKeyState_Release)
-            {
-                int bp = 0;
-            }
             s_eKeyStates[key] = state;
         }
 

@@ -130,37 +130,6 @@ namespace QwerkE {
 
             glfwSetKeyCallback(s_window, key_callback);
     #endif
-
-    #ifdef _QGLEW
-            const GLenum glewInitCode = glewInit();
-            ASSERT(glewInitCode == GLEW_OK, "Error loading GLEW!");
-    #endif
-
-            // imgui handled by bgfx for now. Look to remove this deprecated code
-    //#ifdef _QDEARIMGUI
-    //        ImGuiContext* context = ImGui::CreateContext();
-    //        ASSERT(context != nullptr, "Error loading imgui!");
-    //        ImGui::SetCurrentContext(context);
-    //
-    //        ImGuiIO& io = ImGui::GetIO();
-    //        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    //        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-    //        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    //        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-    //
-    //        ImGui::StyleColorsDark();
-    //
-    //        ImGuiStyle& style = ImGui::GetStyle();
-    //        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    //        {
-    //            style.WindowRounding = 0.0f;
-    //            style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-    //        }
-    //
-    //        ImGui_ImplOpenGL3_Init("#version 410");
-    //
-    //        ImGui_ImplGlfw_InitForOpenGL(s_window, false);
-    //#endif
         }
 
         void Window::Shutdown()
@@ -169,59 +138,13 @@ namespace QwerkE {
             glfwWindowShouldClose(s_window);
             glfwDestroyWindow(s_window);
 
-            // imgui handled by bgfx for now. Look to remove this deprecated code
-    // #ifdef _QDEARIMGUI
-    //         ImGui_ImplGlfw_Shutdown();
-    //
-    // #ifdef _QOPENGL
-    //         ImGui_ImplOpenGL3_Shutdown();
-    // #endif
-    //         ImGui::DestroyContext();
-    // #endif
-
             glfwTerminate();
     #endif
-        }
-
-        void Window::ImGuiRender() // #TODO Move to Renderer
-        {
-                // imgui handled by bgfx for now. Look to remove this deprecated code
-    // #ifdef _QDEARIMGUI
-    //         if (s_windowIsMinimized)
-    //         {
-    //             ImGui::EndFrame();
-    //             ImGui::UpdatePlatformWindows();
-    //             return;
-    //         }
-    //
-    //         ImGui::Render();
-    //
-    // #if defined(_QOPENGL) && defined(_QDEARIMGUI)
-    //         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    // #endif
-    //
-    //         ImGuiIO io = ImGui::GetIO();
-    //         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    //         {
-    //             ImGui::UpdatePlatformWindows();
-    //             ImGui::RenderPlatformWindowsDefault();
-    // #ifdef _QGLFW3
-    //             GLFWwindow* backup_current_context = glfwGetCurrentContext();
-    //             glfwMakeContextCurrent(backup_current_context);
-    // #endif
-    //         }
-    // #endif
         }
 
         void Window::NewFrame()
         {
             glfwPollEvents();
-            // imgui handled by bgfx for now. Look to remove this deprecated code
-//#ifdef _QDEARIMGUI
-//            ImGui_ImplOpenGL3_NewFrame();
-//            ImGui_ImplGlfw_NewFrame();
-//            ImGui::NewFrame();
-//#endif
         }
 
         void Window::RequestClose()
@@ -271,7 +194,6 @@ namespace QwerkE {
             s_KeyCallback = keyCallback;
         }
 
-    #ifdef _QGLFW3
         // #TODO Call editor or add an editor callback so window doesn't have file drop logic in release/non-editor build.
         void local_file_drop_callback(GLFWwindow* window, int fileCount, const char** filePaths)
         {
@@ -299,6 +221,7 @@ namespace QwerkE {
             }
         }
 
+#ifdef _QGLFW3
         void local_CheckGlfwErrors()
         {
             int glfwErrorCode = glfwGetError(NULL);

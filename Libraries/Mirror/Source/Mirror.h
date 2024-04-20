@@ -29,6 +29,7 @@ namespace QwerkE
 			_None				= 0,
 			_HideInInspector	= 1 << 0, // Serialize but don't show in editor UI
 			_InspectorOnly		= 1 << 1, // Do not serialize the value
+			_InspectorViewOnly	= 1 << 1, // Do not serialize the value or allow changes
 		};
 #endif
 

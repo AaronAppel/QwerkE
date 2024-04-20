@@ -9,8 +9,6 @@ namespace QwerkE {
         void Initialize();
         void Shutdown();
 
-        void ImGuiRender();
-
         void NewFrame();
 
         void RequestClose();

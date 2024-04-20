@@ -2,15 +2,13 @@
 
 #ifdef _QGLFW3
 #include "Libraries/glfw/glfw3.h"
-#else
-#error "Define window/input library!"
 #endif
 
 namespace QwerkE {
 
     namespace Input {
 
-        void InitializeKeysCodex(u16* keysCodex)
+        void local_GlfwKeysCodex(u16* keysCodex)
         {
 #ifdef _QGLFW3
             // keysCodex[?] = eKeys_CTRL; // TODO: Handle either left Or right

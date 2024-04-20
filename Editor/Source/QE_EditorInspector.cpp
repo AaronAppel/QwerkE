@@ -16,6 +16,7 @@
 
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
+#include "QF_ScriptPathFinder.h"
 #include "QF_ScriptPatrol.h"
 #include "QF_ScriptTesting.h"
 
@@ -37,6 +38,11 @@ namespace QwerkE {
 
                 if (field.serializationFlags & Mirror::FieldSerializationFlags::_HideInInspector)
                     continue;
+
+                if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorViewOnly)
+                {
+                    // #TODO Show but prevent editing
+                }
 
                 const void* fieldAddress = (void*)((char*)obj + field.offset);
 
@@ -62,7 +68,7 @@ namespace QwerkE {
                             ComponentScript* script = (ComponentScript*)obj;
 
                             const u8 start = (u8)eScriptTypes::Invalid + 1;
-                            const u8 range = (u8)eScriptTypes::Count;
+                            const u8 range = (u8)eScriptTypes::COUNT;
                             for (size_t i = start; i < range; i++)
                             {
                                 eScriptTypes scriptType = (eScriptTypes)i;
@@ -104,6 +110,14 @@ namespace QwerkE {
                                 break;
 
                             case eScriptTypes::Testing:
+                                break;
+
+                            case eScriptTypes::PathFinder:
+                                {
+                                    const Mirror::TypeInfo* scriptableTypeInfo = Mirror::InfoForType<ScriptablePathFinder>();
+                                    ScriptablePathFinder* scr = (ScriptablePathFinder*)pair.second;
+                                    valueChanged |= InspectFieldRecursive(scriptableTypeInfo, (void*)pair.second, parentName);
+                                }
                                 break;
 
                             default:
@@ -182,7 +196,7 @@ namespace QwerkE {
                         buffer.reserve(INT8_MAX);
                         buffer = *stringAddress;
 
-                        if (ImGui::InputText(fieldName.c_str(), (char*)buffer.data(), buffer.capacity()))
+                        if (ImGui::InputText(fieldName.c_str(), buffer.data(), buffer.capacity()))
                         {
                             valueChanged |= *stringAddress != buffer;
                             *stringAddress = buffer;

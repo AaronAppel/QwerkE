@@ -68,7 +68,7 @@ namespace QwerkE {
 								break;
 
 							case eSceneGraphCreateTypes::Mesh:
-								currentScene->CreateEntity().AddComponent<ComponentMesh>();
+								currentScene->CreateEntity().AddComponent<ComponentMesh>().Initialize();
 								break;
 							}
 						}

@@ -32,6 +32,7 @@ enum class MirrorTypes
     ComponentTransform,
 
     // Scripts
+    ScriptablePathFinder,
     ScriptablePatrol,
 
     // Misc

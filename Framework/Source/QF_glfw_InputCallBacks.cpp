@@ -56,22 +56,11 @@ namespace QwerkE {
             OnKeyEvent(qwerkEeKey, (eKeyState)!keyIsReleased);
 
 #ifdef _QDEARIMGUI
-            // ImGui::CaptureKeyboardFromApp(true);
+            ImGuiKey imguiKey = QwerkEKeyToImGui(qwerkEeKey);
+            ImGui::GetIO().AddKeyEvent(imguiKey, !keyIsReleased);
 
-            // ImGuiIO& io = ImGui::GetIO();
-            // switch (qwerkEeKey)
-            // {
-            // case eKeys::eKeys_LCTRL:
-            //     io.AddKeyEvent(ImGuiKey::ImGuiKey_LeftCtrl, !keyIsReleased);
-            //     break;
-            //
-            // case eKeys::eKeys_RCTRL:
-            //     io.AddKeyEvent(ImGuiKey::ImGuiKey_RightCtrl, !keyIsReleased);
-            //     break;
-            //
-            // default:
-            //     break;
-            // }
+            // ImGui::CaptureKeyboardFromApp(true);
+            // ImGui::CaptureMouseFromApp(true);
 
             // #TODO See if AddKeyEvent handles modifiers
             // io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];

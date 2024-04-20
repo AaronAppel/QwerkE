@@ -6,7 +6,7 @@
     <ClCompile Include="Source\QF_Log.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QF_glfw_AssignGLFWKeys.cpp">
+    <ClCompile Include="Source\QF_GlfwKeysCodex.cpp">
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_glfw_InputCallBacks.cpp">
@@ -81,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="Source\QC_System.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QF_ImGuiKeysCodex.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="Source\QC_System.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ScriptPathFinder.h">
+      <Filter>Game Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

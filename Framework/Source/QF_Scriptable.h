@@ -8,15 +8,17 @@
 
 namespace QwerkE {
 
-	// #NOTE These values are serialized so value changes matter
-	QC_ENUM(eScriptTypesStr, u8, Invalid = 0, Camera, Testing, Patrol, Count)
+	QC_ENUM(eScriptTypesStr, u8, Invalid = 0, Camera, Testing, Patrol, PathFinder, COUNT)
 	enum eScriptTypes : u8
 	{
 		Invalid = 0,
 		Camera,
 		Testing,
 		Patrol,
-		Count,
+		PathFinder,
+
+		// #NOTE These values are serialized so value changes matter
+		COUNT,
 	};
 
 	class Scriptable

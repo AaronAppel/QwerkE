@@ -332,10 +332,7 @@ namespace QwerkE {
 
         void ResetEditorWindowReferences()
         {
-            // #TODO Add callbacks to EditorWindows to register to, so they know whn things happen like :
-            // Selection made, references are dirty (state change)
             // s_EntityEditor->ResetReferences();
-
             // s_EditorWindows[guid]->ResetReferences();
         }
 

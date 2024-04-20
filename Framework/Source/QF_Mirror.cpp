@@ -32,6 +32,7 @@
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
 
+#include "QF_ScriptPathFinder.h"
 #include "QF_ScriptPatrol.h"
 
 // Editor types
@@ -224,6 +225,13 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_Stride)
 	MIRROR_CLASS_MEMBER(m_Speed)
 	MIRROR_CLASS_END(ScriptablePatrol)
+
+	MIRROR_CLASS_START(ScriptablePathFinder)
+	MIRROR_CLASS_MEMBER(m_MovementSpeed)
+	MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
+	MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
+	// #TODO Serialize guids or entity handle references to show/edit in GUI m_Transforms
+	MIRROR_CLASS_END(ScriptablePathFinder)
 
 	// Misc
 	MIRROR_CLASS_START(EntityHandle)
