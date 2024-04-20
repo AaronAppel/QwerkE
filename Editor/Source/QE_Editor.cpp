@@ -283,8 +283,9 @@ namespace QwerkE {
                 break;
             case EditorWindowTypes::SceneView:
                 {
-                    constexpr u8 defaultViewId = 1;
-                    newWindow = new EditorWindowSceneView("Scene View", defaultViewId);
+                    constexpr u8 defaultTextureId = 4;
+                    constexpr u8 defaultViewId = 2;
+                    newWindow = new EditorWindowSceneView(defaultTextureId, defaultViewId);
                 }
                 break;
             case EditorWindowTypes::Settings:

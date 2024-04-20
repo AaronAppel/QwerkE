@@ -1,8 +1,12 @@
 #pragma once
 
-#include "QE_EditorWindow.h"
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Mirror.h"
+#endif
 
 #include "QF_Scenes.h"
+
+#include "QE_EditorWindow.h"
 
 namespace QwerkE {
 
@@ -48,8 +52,16 @@ namespace QwerkE {
 		class EditorWindowSceneView : public EditorWindow
 		{
 		public:
-			EditorWindowSceneView::EditorWindowSceneView(std::string windowName, u8 viewId = 0, GUID guid = GUID()) :
-				EditorWindow(windowName, EditorWindowTypes::SceneView, guid)
+			EditorWindowSceneView::EditorWindowSceneView(u8 textureId, u8 viewId) :
+				EditorWindow("Scene View", EditorWindowTypes::SceneView),
+				m_TextureId(textureId),
+				m_ViewId(viewId)
+			{
+				m_ImGuiFlags = ImGuiWindowFlags_NoScrollbar;
+			}
+
+			EditorWindowSceneView::EditorWindowSceneView(GUID guid = GUID()) :
+				EditorWindow("Scene View", EditorWindowTypes::SceneView, guid)
 			{
 				m_ImGuiFlags = ImGuiWindowFlags_NoScrollbar;
 			}
@@ -96,6 +108,8 @@ namespace QwerkE {
 				ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 				ImGui::Image(ImTextureID(m_TextureId), ImVec2(contentRegionAvailable.x, contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
 			}
+
+			MIRROR_PRIVATE_MEMBERS
 
 			EditorCamera m_EditorCamera;
 

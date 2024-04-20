@@ -7,6 +7,8 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 
+#include "QE_EditorInspector.h"
+
 namespace QwerkE {
 
 	namespace Editor {

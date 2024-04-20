@@ -95,7 +95,7 @@ namespace QwerkE {
 			void ToggleHidden() { m_WindowFlags = (EditorWindowFlags)(m_WindowFlags ^ Hidden); }
 
 		protected:
-			EditorWindow(std::string windowName, EditorWindowTypes editorWindowType, GUID guid = GUID::Invalid, EditorWindowFlags flags = EditorWindowFlags::EditorWindowFlagsNone)
+			EditorWindow(std::string windowName, EditorWindowTypes editorWindowType, GUID guid = GUID(), EditorWindowFlags flags = EditorWindowFlags::EditorWindowFlagsNone)
 				:	m_WindowName(windowName),
 					m_EditorWindowType(editorWindowType),
 					m_WindowFlags(flags),

@@ -97,7 +97,7 @@ namespace QwerkE {
 				return; // Avoid non-primitive type logic below
 			}
 
-			if (objTypeInfo->fields.empty())
+			if (!objTypeInfo->isClass && objTypeInfo->fields.empty())
 			{
 				local_DeserializeFieldJsonToObject(objJson, objTypeInfo, obj);
 				return;
@@ -183,10 +183,11 @@ namespace QwerkE {
 					for (size_t i = 0; i < guidEditorWindowsJsonVector.size(); i++)
 					{
 						const Editor::EditorWindowTypes editorWindowType = Editor::EditorWindowTypes::_from_index(std::stoi(guidEditorWindowsJsonVector[i]->string));
-						const cJSON* const editorWindowJson = guidEditorWindowsJsonVector[i]->child->child;
+						const cJSON* const guidJson = guidEditorWindowsJsonVector[i]->child->child;
 
 						// #TODO m_WindowName contains name and guid. Should try to use to persist name, and can get guid too to stay synced.
-						const GUID guid = std::stoull(editorWindowJson->child->child->valuestring);
+						// #NOTE Order dependency. m_Guid must be 1st serialized member
+						const GUID guid = std::stoull(guidJson->child->child->valuestring);
 
 						Editor::EditorWindow* newEditorWindow = nullptr;
 						switch (editorWindowType)
@@ -209,10 +210,16 @@ namespace QwerkE {
 						case Editor::EditorWindowTypes::SceneGraph:
 							newEditorWindow = new Editor::EditorWindowSceneGraph(guid); break;
 						case Editor::EditorWindowTypes::SceneView:
-							// #TODO Get window name value
-							newEditorWindow = new Editor::EditorWindowSceneView("Scene View", 3, guid); break;
+							{
+								// #TODO Get window name value
+								newEditorWindow = new Editor::EditorWindowSceneView(guid);
+								DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneView>(), newEditorWindow);
+							}
+							break;
 						case Editor::EditorWindowTypes::Settings:
-							newEditorWindow = new Editor::EditorWindowSettings(guid); break;
+							newEditorWindow = new Editor::EditorWindowSettings(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSettings>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::StylePicker:
 							newEditorWindow = new Editor::EditorWindowStylePicker(guid); break;
 						case Editor::EditorWindowTypes::MaterialEditor:
@@ -226,7 +233,7 @@ namespace QwerkE {
 
 						case Editor::EditorWindowTypes::EditorWindowTypesInvalid:
 						default:
-							LOG_WARN("{0} Unsupported EditorWindowTypes value", __FUNCTION__);
+							LOG_WARN("{0} Unsupported EditorWindowTypes value {1}", __FUNCTION__, (u8)editorWindowType);
 							break;
 						}
 
@@ -707,7 +714,7 @@ namespace QwerkE {
 				return;
 			}
 
-			if (objTypeInfo->fields.empty())
+			if (!objTypeInfo->isClass && objTypeInfo->fields.empty())
 			{
 				SerializeFieldToJson(obj, objTypeInfo, objJson);
 				return;
@@ -846,6 +853,7 @@ namespace QwerkE {
 				}
 				break;
 
+				case MirrorTypes::EditorWindowFlags:
 				case MirrorTypes::EditorWindowTypes:
 				case MirrorTypes::eScriptTypes: // #TODO Add a case for all enums by default
 				case MirrorTypes::m_eSceneTypes:
@@ -952,12 +960,64 @@ namespace QwerkE {
 
 					for (auto& pair : *guidEditorWindowPairs)
 					{
-						const Mirror::TypeInfo* editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindow>();
+						if (!pair.second)
+							continue;
 
-						cJSON* editorWindowJson = CreateArray((std::to_string((u32)pair.second->Type())).c_str());
+						const Mirror::TypeInfo* editorWindowTypeInfo = nullptr;
+						Editor::EditorWindowTypes editorWindowType = pair.second->Type();
 
-						SerializeObjectToJson((void*)pair.second, editorWindowTypeInfo, editorWindowJson);
-						AddItemToArray(objJson, editorWindowJson);
+						switch (editorWindowType)
+						{
+							// Unique
+						case Editor::EditorWindowTypes::DefaultDebug:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowDefaultDebug>(); break;
+						case Editor::EditorWindowTypes::DockingContext:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowDefaultDebug>(); break;
+						case Editor::EditorWindowTypes::ImGuiDemo:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowImGuiDemo>(); break;
+						case Editor::EditorWindowTypes::MenuBar:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowMenuBar>(); break;
+							// Instanced
+						case Editor::EditorWindowTypes::Assets:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowAssets>(); break;
+						case Editor::EditorWindowTypes::EntityInspector:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowEntityInspector>(); break;
+						case Editor::EditorWindowTypes::SceneControls:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowSceneControls>(); break;
+						case Editor::EditorWindowTypes::SceneGraph:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowSceneGraph>(); break;
+						case Editor::EditorWindowTypes::SceneView:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowSceneView>(); break;
+						case Editor::EditorWindowTypes::Settings:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowSettings>(); break;
+						case Editor::EditorWindowTypes::StylePicker:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowStylePicker>(); break;
+						case Editor::EditorWindowTypes::MaterialEditor:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowMaterialEditor>(); break;
+						case Editor::EditorWindowTypes::FolderViewer:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowFolderViewer>(); break;
+						case Editor::EditorWindowTypes::NodeEditor:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowNodeEditor>(); break;
+						case Editor::EditorWindowTypes::ShaderEditor:
+							editorWindowTypeInfo = Mirror::InfoForType<Editor::EditorWindowShaderEditor>(); break;
+
+						case Editor::EditorWindowTypes::EditorWindowTypesInvalid:
+						default:
+							LOG_WARN("{0} Unsupported EditorWindowTypes value {1}", __FUNCTION__, (u8)editorWindowType);
+							break;
+						}
+
+						if (editorWindowTypeInfo)
+						{
+							cJSON* editorWindowJson = CreateArray((std::to_string((u32)pair.second->Type())).c_str());
+							if (editorWindowTypeInfo->isSubClass() && editorWindowTypeInfo->superTypeInfo)
+							{
+								SerializeObjectToJson((void*)pair.second, editorWindowTypeInfo->superTypeInfo, editorWindowJson);
+							}
+
+							SerializeObjectToJson((void*)pair.second, editorWindowTypeInfo, editorWindowJson);
+							AddItemToArray(objJson, editorWindowJson);
+						}
 					}
 				}
 				break;

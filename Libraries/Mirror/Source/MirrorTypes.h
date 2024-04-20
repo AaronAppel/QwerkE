@@ -46,6 +46,21 @@ enum class MirrorTypes
 
     // Editor types
     EditorWindow,
+    EditorWindowAssets,
+    EditorWindowDefaultDebug,
+    EditorWindowDockingContext,
+    EditorWindowEntityInspector,
+    EditorWindowImGuiDemo,
+    EditorWindowMenuBar,
+    EditorWindowSceneControls,
+    EditorWindowSceneGraph,
+    EditorWindowSceneView,
+    EditorWindowSettings,
+    EditorWindowStylePicker,
+    EditorWindowMaterialEditor,
+    EditorWindowFolderViewer,
+    EditorWindowNodeEditor,
+    EditorWindowShaderEditor,
     m_editorWindowPtr,
     m_umap_guid_editorWindowPtr,
 
@@ -86,9 +101,9 @@ enum class MirrorTypes
     eScriptTypes,
     m_eSceneTypes,
     eComponentTags,
+    EditorWindowTypes, // Editor only
+    EditorWindowFlags, // Editor only
     m_ENUMS_END,
-
-    EditorWindowTypes, // Editor
 
     m_PRIMITIVE_TYPES,
 #include "MirrorEnumPrimitives.txt"

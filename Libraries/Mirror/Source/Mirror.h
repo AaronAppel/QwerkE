@@ -14,17 +14,19 @@
 
 #define MIRROR_MEMBER_FIELDS_DEFAULT 3
 #define MIRROR_PRIVATE_MEMBERS friend struct Mirror;
-#define MIRROR_EXPOSE_FIELD_FLAGS 1
 
-namespace QwerkE
-{
+// #NOTE Experimental feature
+#define MIRROR_EXPOSE_FIELD_FLAGS 1
+#define MIRROR_FIELD_FLAG_SIZE uint8_t
+
+namespace QwerkE {
 
 	struct Mirror
 	{
 		struct TypeInfo;
 
 #ifdef MIRROR_EXPOSE_FIELD_FLAGS
-		enum FieldSerializationFlags : uint8_t
+		enum FieldSerializationFlags : MIRROR_FIELD_FLAG_SIZE
 		{
 			_None				= 0,
 			_HideInInspector	= 1 << 0, // Serialize but don't show in editor UI
@@ -49,12 +51,13 @@ namespace QwerkE
 			MirrorTypes enumType = MirrorTypes::m_Invalid;
 			size_t size = 0;
 
-			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; }
+			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; } // { return !isClass; } // { return enumType > MirrorTypes::m_PRIMITIVES_START; }
 			bool isSubClass() const { return superTypeInfo != nullptr; }
 			bool hasSubClass() const { return !derivedTypesMap.empty(); }
 			bool isCollection() const { return isArray() || collectionTypeInfo != nullptr; }
 			bool isArray() const { return enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END; }
 			bool isPointer = false;
+			bool isClass = false;
 
 			std::vector<Field> fields = { }; // #TODO Hide/private non-constants
 			std::map<MirrorTypes, const TypeInfo*> derivedTypesMap;
@@ -90,6 +93,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	localStaticTypeInfo.stringName = #TYPE; \
 	localStaticTypeInfo.size = sizeof(TYPE); \
 	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
+	localStaticTypeInfo.isClass = false; \
 	return &localStaticTypeInfo; \
 }
 
@@ -106,6 +110,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	const int fieldsCount = FIELDCOUNT; \
 	localStaticTypeInfo.fields.reserve(fieldsCount); \
 	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
+	localStaticTypeInfo.isClass = true; \
  \
 	using ClassType = TYPE; \
 	enum { BASE = __COUNTER__ };
