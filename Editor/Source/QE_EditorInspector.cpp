@@ -53,7 +53,7 @@ namespace QwerkE {
                         ScriptGuiButton* button = (ScriptGuiButton*)fieldAddress;
 
                         std::string fieldName = button->m_ButtonName + "##" + parentName + field.name;
-                        if (ImGui::Button(fieldName.c_str()))
+                        if (ImGui::Button(fieldName.c_str()) && button->m_CallbackFunction)
                         {
                             button->m_CallbackFunction();
                         }
