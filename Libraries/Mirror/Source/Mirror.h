@@ -40,6 +40,7 @@ namespace QwerkE {
 			const TypeInfo* typeInfo = nullptr;
 			std::string name = "";
 			size_t offset = 0;
+			size_t size = 0;
 #ifdef MIRROR_EXPOSE_FIELD_FLAGS
 			uint8_t serializationFlags = FieldSerializationFlags::_None;
 #endif
@@ -54,8 +55,25 @@ namespace QwerkE {
 			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; } // { return !isClass; } // { return enumType > MirrorTypes::m_PRIMITIVES_START; }
 			bool isSubClass() const { return superTypeInfo != nullptr; }
 			bool hasSubClass() const { return !derivedTypesMap.empty(); }
-			bool isCollection() const { return isArray() || collectionTypeInfo != nullptr; }
-			bool isArray() const { return enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END; }
+			bool isCollection() const { return isPair() || isArray() || isMap() || isVector() || collectionTypeInfo != nullptr; }
+
+			bool isPair() const { return false; }
+			// bool isPair() const { return enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END; } // #TODO Deprecate enum dependency
+			bool isArray() const { return enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END; } // #TODO Deprecate enum dependency
+			bool isMap() const { return enumType > MirrorTypes::m_MAPS_START && enumType < MirrorTypes::m_MAPS_END; } // #TODO Deprecate enum dependency
+			bool isVector() const { return false; }
+			// bool isVector() const { return enumType > MirrorTypes::m_VECTORS_START && enumType < MirrorTypes::m_VECTORS_END; } // #TODO Deprecate enum dependency
+
+			bool newIsCollection() const { return
+				enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END ||
+				enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END ||
+				enumType > MirrorTypes::m_MAPS_START && enumType < MirrorTypes::m_MAPS_END;
+			}
+
+			bool newIsClass() const {
+				return isClass && !newIsCollection();
+			}
+
 			bool isPointer = false;
 			bool isClass = false;
 
@@ -93,7 +111,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	localStaticTypeInfo.stringName = #TYPE; \
 	localStaticTypeInfo.size = sizeof(TYPE); \
 	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
-	localStaticTypeInfo.isClass = false; \
+	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection(); \
 	return &localStaticTypeInfo; \
 }
 
@@ -110,7 +128,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	const int fieldsCount = FIELDCOUNT; \
 	localStaticTypeInfo.fields.reserve(fieldsCount); \
 	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
-	localStaticTypeInfo.isClass = true; \
+	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection(); \
  \
 	using ClassType = TYPE; \
 	enum { BASE = __COUNTER__ };
@@ -126,6 +144,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>(); \
 	MEMBER_NAME##field.name = #MEMBER_NAME; \
 	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME); \
+	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME)); \
 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
 
 #ifdef MIRROR_EXPOSE_FIELD_FLAGS
@@ -135,6 +154,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>(); \
 	MEMBER_NAME##field.name = #MEMBER_NAME; \
 	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME); \
+	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME)); \
 	MEMBER_NAME##field.serializationFlags = FLAGS; \
 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
 #endif
@@ -145,6 +165,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<OVERRIDE_TYPE>(); \
 	MEMBER_NAME##field.name = #MEMBER_NAME; \
 	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME); \
+	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME)); \
 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
 
 #define MIRROR_CLASS_MEMBER_ARRAY(MEMBER_NAME, TYPE, ARRAY_SIZE) \
@@ -154,6 +175,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].typeInfo = QwerkE::Mirror::InfoForType<TYPE*>(); \
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].name = #MEMBER_NAME; \
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].offset = offsetof(ClassType, MEMBER_NAME); \
+	localStaticTypeInfo.fields[MEMBER_NAME##Index].size = sizeof(decltype(ClassType::MEMBER_NAME)); \
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].isArray = true; \
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].arraySize = ARRAY_SIZE;
 

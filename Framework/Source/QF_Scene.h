@@ -34,7 +34,7 @@ namespace QwerkE {
 
         void DestroyEntity(EntityHandle& entity);
 
-        const EntityHandle GetEntityByGuid(const GUID& existingGuid);
+        EntityHandle GetEntityByGuid(const GUID& existingGuid);
 
         void SaveScene();
         void LoadSceneFromFilePath(const char* otherSceneFileName);

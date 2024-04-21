@@ -21,6 +21,13 @@ namespace QwerkE {
 		COUNT,
 	};
 
+	struct ScriptGuiButton
+	{
+		using CallBackFunction = void(*)(void);
+		CallBackFunction m_CallbackFunction = nullptr;
+		std::string m_ButtonName = Constants::gc_DefaultStringValue;
+	};
+
 	class Scriptable
 	{
 	public:
@@ -55,7 +62,7 @@ namespace QwerkE {
 		{
 			if (!m_Entity.HasAllComponents<Args...>())
 			{
-				LOG_CRITICAL("Entity \"{0}\" missing ScriptableCamera!", m_Entity.GetComponent<ComponentInfo>().m_EntityName.c_str());
+				LOG_CRITICAL("Entity \"{0}\" missing required component(s)!", m_Entity.GetComponent<ComponentInfo>().m_EntityName.c_str());
 				if (m_Entity.HasComponent<ComponentScript>())
 				{
 					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();

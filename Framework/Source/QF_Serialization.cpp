@@ -909,16 +909,9 @@ namespace QwerkE {
 
 				case MirrorTypes::m_uint64_t:
 				{
-					if (const bool writeAsString = true)
-					{
-						uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
-						AddItemToArray(objJson, CreateString(field.name.c_str(), std::to_string(*numberAddress).c_str()));
-					}
-					else
-					{
-						uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
-						AddItemToArray(objJson, CreateNumber(field.name.c_str(), (double)*numberAddress));
-					}
+					// Use string instead of a double to avoid conversion issues
+					uint64_t* numberAddress = (uint64_t*)((char*)obj + field.offset);
+					AddItemToArray(objJson, CreateString(field.name.c_str(), std::to_string(*numberAddress).c_str()));
 				}
 				break;
 

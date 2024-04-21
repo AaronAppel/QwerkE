@@ -42,8 +42,6 @@ enum class MirrorTypes
     Mesh,
     Shader,
 
-    m_pair_guid_string,
-
     // Editor types
     EditorWindow,
     EditorWindowAssets,
@@ -61,14 +59,19 @@ enum class MirrorTypes
     EditorWindowFolderViewer,
     EditorWindowNodeEditor,
     EditorWindowShaderEditor,
-    m_editorWindowPtr,
-    m_umap_guid_editorWindowPtr,
+
+    ScriptGuiButton,
+    CallBackFunction,
 
     // External libraries
     m_enTT_Entity,
     m_entt_registry,
 
     m_CLASSES_END,
+
+    m_PAIRS_START,
+    m_pair_guid_string,
+    m_PAIRS_END,
 
     m_ARRAYS_START,
     m_imvec4_array,
@@ -84,12 +87,15 @@ enum class MirrorTypes
     m_MAPS_START,
     m_map_eScriptTypes_ScriptablePtr,
     m_map_guid_entt,
+    m_umap_guid_editorWindowPtr,
+    m_umap_int_bool,
     m_MAPS_END,
 
     m_POINTERS_START, // #TODO Deprecate using std::is_pointer
     m_routinePtr,
     m_renderRoutinePtr,
     m_transformRoutinePtr,
+    m_editorWindowPtr, // Editor only
     m_POINTERS_END,
 
     // Primitive types. #NOTE A prefix is used to avoid naming collisions with standard type keywords

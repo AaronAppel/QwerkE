@@ -26,6 +26,12 @@ namespace QwerkE {
 		void OnCreate() override
 		{
 			HasRequiredComponents<ComponentTransform, ComponentScript>();
+
+			// Editor only
+			m_Button.m_ButtonName = "Update Targets";
+			m_Button.m_CallbackFunction = []() {
+				ImGui::Text("Hello World!");
+			};
 		}
 
 		void OnUpdate(float deltaTime) override
@@ -86,6 +92,9 @@ namespace QwerkE {
 		float m_DistanceToChangeTargets = 1.f;
 		u8 m_CurrentTransformTargetIndex = 0;
 		std::vector<EntityHandle> m_TransformHandles;
+
+		// Editor only
+		ScriptGuiButton m_Button;
 	};
 
 }

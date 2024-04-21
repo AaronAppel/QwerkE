@@ -32,6 +32,7 @@
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
 
+#include "QF_Scriptable.h"
 #include "QF_ScriptPathFinder.h"
 #include "QF_ScriptPatrol.h"
 
@@ -145,6 +146,9 @@ namespace QwerkE {
 	MIRROR_TYPE(m_floatArray16)
 
 	// Maps
+	typedef std::unordered_map<int, bool> m_umap_int_bool; // #TESTING
+	MIRROR_TYPE(m_umap_int_bool)
+
 	typedef std::unordered_map<eScriptTypes, Scriptable*> m_map_eScriptTypes_ScriptablePtr;
 	MIRROR_TYPE(m_map_eScriptTypes_ScriptablePtr)
 
@@ -237,6 +241,13 @@ namespace QwerkE {
 	MIRROR_CLASS_END(ComponentScript)
 
 	// Scripts
+	using CallBackFunction = void(*)(void);
+	MIRROR_TYPE(CallBackFunction)
+
+	MIRROR_CLASS_START(ScriptGuiButton)
+	MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
+	MIRROR_CLASS_END(ScriptGuiButton)
+
 	MIRROR_CLASS_START(ScriptablePatrol)
 	MIRROR_CLASS_MEMBER(m_Stride)
 	MIRROR_CLASS_MEMBER(m_Speed)
@@ -246,6 +257,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_MovementSpeed)
 	MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
 	MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
+	MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
 	// #TODO Serialize guids or entity handle references to show/edit in GUI m_Transforms
 	MIRROR_CLASS_END(ScriptablePathFinder)
 
@@ -255,10 +267,10 @@ namespace QwerkE {
 
 	// Assets
 	typedef std::pair<GUID, std::string> m_pair_guid_string;
-	MIRROR_TYPE(m_pair_guid_string);
+	MIRROR_TYPE(m_pair_guid_string); // #TODO Look at using MIRROR_COLLECTION(...)
 
 	typedef std::vector<std::pair<GUID, std::string>> m_vec_pair_guid_string;
-	MIRROR_TYPE(m_vec_pair_guid_string);
+	MIRROR_TYPE(m_vec_pair_guid_string); // #TODO Look at using MIRROR_COLLECTION(...)
 
 	MIRROR_CLASS_START(Mesh)
 	MIRROR_CLASS_END(Mesh)
@@ -361,12 +373,9 @@ namespace QwerkE {
 	MIRROR_CLASS_SUBCLASS(EditorWindowMaterialEditor)
 	MIRROR_CLASS_SUBCLASS(EditorWindowFolderViewer)
 	MIRROR_CLASS_SUBCLASS(EditorWindowNodeEditor)
-	const QwerkE::Mirror::TypeInfo* EditorWindowShaderEditorInfo = QwerkE::Mirror::InfoForType<EditorWindowShaderEditor>();
-	localStaticTypeInfo.derivedTypesMap[MirrorTypes::EditorWindowShaderEditor] = EditorWindowShaderEditorInfo;
-	const_cast<QwerkE::Mirror::TypeInfo*>(EditorWindowShaderEditorInfo)->superTypeInfo = &localStaticTypeInfo;
-	int bp = 0;
+	MIRROR_CLASS_SUBCLASS(EditorWindowShaderEditor)
 	MIRROR_CLASS_END(EditorWindow)
 
 	typedef std::unordered_map<GUID, m_editorWindowPtr> m_umap_guid_editorWindowPtr;
-	MIRROR_TYPE(m_umap_guid_editorWindowPtr)
+	MIRROR_TYPE(m_umap_guid_editorWindowPtr) // #TODO Look at using MIRROR_COLLECTION(...)
 }

@@ -8,6 +8,11 @@
 #include "QF_Scenes.h"
 #include "QF_Window.h"
 
+#include <string>
+#include "QC_Guid.h"
+#include "QF_Serialization.h" // #TESTING
+#include "QF_Settings.h" // #TESTING
+
 namespace QwerkE {
 
 	namespace Framework {
@@ -27,6 +32,16 @@ namespace QwerkE {
 			Assets::Initialize();
 
 			Scenes::Initialize();
+
+			{	// #TESTING
+				// int value = 5;
+				// EngineSettings value;
+				// std::unordered_map<int, bool> value;
+				std::vector<std::pair<GUID, std::string>> value;
+				value.emplace_back(std::make_pair(GUID(), "ABC"));
+				value.emplace_back(std::make_pair(GUID(), "XYZ"));
+				// Serialization::NewSerializeObjectToFile(value, "NewSerialization");
+			}
 
 			return eOperationResult::Success;
 		}

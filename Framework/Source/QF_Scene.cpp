@@ -180,7 +180,7 @@ namespace QwerkE {
         LOG_WARN("{0} Could not destroy entity with entt ID {1}", __FUNCTION__, (u32)entity.m_EnttId);
     }
 
-    const EntityHandle Scene::GetEntityByGuid(const GUID& existingGuid)
+    EntityHandle Scene::GetEntityByGuid(const GUID& existingGuid)
     {
         if (m_GuidsToEntts.find(existingGuid) != m_GuidsToEntts.end())
         {
@@ -240,6 +240,9 @@ namespace QwerkE {
 
         m_IsLoaded = true;
         m_IsDirty = false;
+
+        // #TESTING
+        Serialization::NewSerializeObjectToFile(*this, "NewSerialization");
     }
 
     void Scene::LoadScene()

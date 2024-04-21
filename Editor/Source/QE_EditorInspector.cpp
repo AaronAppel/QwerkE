@@ -48,6 +48,18 @@ namespace QwerkE {
 
                 switch (field.typeInfo->enumType)
                 {
+                case MirrorTypes::ScriptGuiButton:
+                    {
+                        ScriptGuiButton* button = (ScriptGuiButton*)fieldAddress;
+
+                        std::string fieldName = button->m_ButtonName + "##" + parentName + field.name;
+                        if (ImGui::Button(fieldName.c_str()))
+                        {
+                            button->m_CallbackFunction();
+                        }
+                    }
+                    break;
+
                 case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
                     {
                         if (typeInfo->enumType != MirrorTypes::ComponentScript)

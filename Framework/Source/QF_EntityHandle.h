@@ -77,6 +77,7 @@ namespace QwerkE {
 		const GUID& EntityGuid()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_Guid;
 		}
@@ -84,6 +85,7 @@ namespace QwerkE {
 		const std::string& EntityName()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_EntityName;
 		}
@@ -91,6 +93,7 @@ namespace QwerkE {
 		void SetEntityName(const std::string& newEntityName)
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			GetComponent<ComponentInfo>().m_EntityName = newEntityName;
 		}
@@ -98,6 +101,7 @@ namespace QwerkE {
 		bool IsEnabled()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_Enabled;
 		}
@@ -105,6 +109,7 @@ namespace QwerkE {
 		void SetIsEnabled(bool isEnabled)
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			GetComponent<ComponentInfo>().m_Enabled = isEnabled;
 		}
@@ -113,6 +118,7 @@ namespace QwerkE {
 		T& AddComponent(Args&&... args)
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(!m_Scene->m_Registry.has<T>(m_EnttId), "Entity already has component!");
 			return m_Scene->m_Registry.emplace<T>(m_EnttId, std::forward<Args>(args)...);
 		}
@@ -121,6 +127,7 @@ namespace QwerkE {
 		bool HasComponent() const
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			return m_Scene->m_Registry.has<T>(m_EnttId);
 		}
 
@@ -128,6 +135,7 @@ namespace QwerkE {
 		bool HasAllComponents() const // #TODO Would be cool to pass in multiple components to check
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			return m_Scene->m_Registry.has<Args...>(m_EnttId);
 		}
 
@@ -135,6 +143,7 @@ namespace QwerkE {
 		T& GetComponent()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
 			return m_Scene->m_Registry.get<T>(m_EnttId);
 		}
@@ -143,6 +152,7 @@ namespace QwerkE {
 		void RemoveComponent()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
 			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
 			if (std::is_same_v<T, ComponentTransform> ||
 				std::is_same_v<T, ComponentInfo>)
@@ -157,7 +167,16 @@ namespace QwerkE {
 		void Invalidate() { m_EnttId = entt::null; m_Scene = nullptr; }
 		static EntityHandle InvalidHandle() { return EntityHandle(); }
 
-		operator bool() const { return m_EnttId != entt::null && m_Scene && m_Scene->m_Registry.valid(m_EnttId); }
+		operator bool() const {
+			bool result =
+				m_EnttId != entt::null &&
+				m_Scene &&
+				m_Scene->m_Registry.valid(m_EnttId);
+				// #TODO Look at adding another case to verify GUID or enttId for object in m_Scene
+				// && m_Scene->GetEntityByGuid(EntityGuid()).EntityGuid() != GUID::Invalid;
+				// auto& a = m_Scene->GetEntityByGuid(this->EntityGuid()).EntityGuid();
+				return result;
+		}
 
 		bool EntityHandle::operator == (const EntityHandle& other) const { return other.m_EnttId == m_EnttId; }
 		bool EntityHandle::operator != (const EntityHandle& other) const { return other.m_EnttId != m_EnttId; }
