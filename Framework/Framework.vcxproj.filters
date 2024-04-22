@@ -228,13 +228,16 @@
     <ClInclude Include="Source\QF_InputMouseDragTracker.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_EntityComponents.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QC_System.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_ScriptPathFinder.h">
+      <Filter>Game Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ComponentHelpers.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QF_ScriptHelpers.h">
       <Filter>Game Scripts</Filter>
     </ClInclude>
   </ItemGroup>

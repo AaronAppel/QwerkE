@@ -27,7 +27,9 @@
 
 #include "QF_ComponentHelpers.h"
 
-#include "QF_ScriptHelpers.h"
+#include "QF_Scriptable.h"
+#include "QF_ScriptPathFinder.h"
+#include "QF_ScriptPatrol.h"
 
 // Editor types
 // #TODO Move serialization code out of framework domain
@@ -111,66 +113,6 @@ namespace QwerkE {
 	MIRROR_TYPE(eScriptTypes)
 	MIRROR_TYPE(eComponentTags)
 	MIRROR_TYPE(eKeys)
-
-	// Vectors
-	typedef std::vector<entt::entity> m_vector_entt_entities;
-	MIRROR_TYPE(m_vector_entt_entities)
-
-	typedef std::vector<std::string> m_vec_string;
-	MIRROR_TYPE(m_vec_string)
-
-	// Arrays
-	using m_arr_float16 = float[16]; // #TODO Review hard coded size, and name
-	MIRROR_TYPE(m_arr_float16)
-
-	// Maps
-	// #TODO Move collections to bottom
-
-	// Scripts
-	using CallBackFunction = void(*)(void);
-	MIRROR_TYPE(CallBackFunction)
-
-	MIRROR_CLASS_START(ScriptGuiButton)
-	MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
-	MIRROR_CLASS_END(ScriptGuiButton)
-
-	MIRROR_CLASS_START(ScriptableCamera)
-	MIRROR_CLASS_END(ScriptableCamera)
-
-	MIRROR_CLASS_START(ScriptablePatrol)
-	MIRROR_CLASS_MEMBER(m_Stride)
-	MIRROR_CLASS_MEMBER(m_Speed)
-	MIRROR_CLASS_END(ScriptablePatrol)
-
-	MIRROR_CLASS_START(ScriptablePathFinder)
-	MIRROR_CLASS_MEMBER(m_MovementSpeed)
-	MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
-	MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
-	MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
-	// #TODO Serialize guids or entity handle references to show/edit in GUI m_Transforms
-	MIRROR_CLASS_END(ScriptablePathFinder)
-
-	MIRROR_CLASS_START(ScriptableTesting)
-	MIRROR_CLASS_END(ScriptableTesting)
-
-	MIRROR_CLASS_START(Scriptable) // #TODO Look at using a templated enum to list types and generate data using templated functions
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptableCamera, eScriptTypes::Camera)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptableTesting, eScriptTypes::Testing)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptablePatrol, eScriptTypes::Patrol)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptablePathFinder, eScriptTypes::PathFinder)
-	MIRROR_CLASS_END(Scriptable)
-
-	typedef Scriptable* m_scriptablePtr;
-	MIRROR_POINTER(m_scriptablePtr)
-
-	typedef	std::pair<eScriptTypes, Scriptable*> m_pair_eScriptTypes_ScriptablePtr;
-	MIRROR_PAIR(m_pair_eScriptTypes_ScriptablePtr, eScriptTypes, Scriptable*)
-
-	typedef std::unordered_map<eScriptTypes, Scriptable*> m_map_eScriptTypes_ScriptablePtr;
-	MIRROR_MAP(m_map_eScriptTypes_ScriptablePtr, m_pair_eScriptTypes_ScriptablePtr)
-
-	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
-	MIRROR_TYPE(m_map_guid_entt)
 
 	// Structs
 	MIRROR_CLASS_START(GUID)
@@ -257,16 +199,30 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_ScriptInstances)
 	MIRROR_CLASS_END(ComponentScript)
 
+	// Scripts
+	using CallBackFunction = void(*)(void);
+	MIRROR_TYPE(CallBackFunction)
+
+	MIRROR_CLASS_START(ScriptGuiButton)
+	MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
+	MIRROR_CLASS_END(ScriptGuiButton)
+
+	MIRROR_CLASS_START(ScriptablePatrol)
+	MIRROR_CLASS_MEMBER(m_Stride)
+	MIRROR_CLASS_MEMBER(m_Speed)
+	MIRROR_CLASS_END(ScriptablePatrol)
+
+	MIRROR_CLASS_START(ScriptablePathFinder)
+	MIRROR_CLASS_MEMBER(m_MovementSpeed)
+	MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
+	MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
+	MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
+	// #TODO Serialize guids or entity handle references to show/edit in GUI m_Transforms
+	MIRROR_CLASS_END(ScriptablePathFinder)
+
 	// Misc
 	MIRROR_CLASS_START(EntityHandle)
 	MIRROR_CLASS_END(EntityHandle)
-
-	// Assets
-	typedef std::pair<GUID, std::string> m_pair_guid_string;
-	MIRROR_PAIR(m_pair_guid_string, GUID, std::string);
-
-	typedef std::vector<m_pair_guid_string> m_vec_pair_guid_string;
-	MIRROR_VECTOR(m_vec_pair_guid_string, m_pair_guid_string);
 
 	MIRROR_CLASS_START(Mesh)
 	MIRROR_CLASS_END(Mesh)
@@ -370,11 +326,46 @@ namespace QwerkE {
 	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowShaderEditor, Editor::EditorWindowTypes::ShaderEditor)
 	MIRROR_CLASS_END(EditorWindow)
 
+	// Pointers
 	typedef Editor::EditorWindow* m_editorWindowPtr;
 	MIRROR_POINTER(m_editorWindowPtr)
 
+	typedef Scriptable* m_scriptablePtr;
+	MIRROR_POINTER(m_scriptablePtr)
+
+	// Pairs
+	typedef std::pair<GUID, entt::entity> m_pair_guid_enttEntity;
+	MIRROR_PAIR(m_pair_guid_enttEntity, GUID, entt::entity)
+
 	typedef std::pair<GUID, m_editorWindowPtr> m_pair_guid_editorWindowPtr;
 	MIRROR_PAIR(m_pair_guid_editorWindowPtr, GUID, m_editorWindowPtr)
+
+	typedef std::pair<eScriptTypes, Scriptable*> m_pair_eScriptTypes_ScriptablePtr;
+	MIRROR_PAIR(m_pair_eScriptTypes_ScriptablePtr, eScriptTypes, Scriptable*)
+
+	typedef std::pair<GUID, std::string> m_pair_guid_string;
+	MIRROR_PAIR(m_pair_guid_string, GUID, std::string);
+
+	// Vectors
+	typedef std::vector<m_pair_guid_string> m_vec_pair_guid_string;
+	MIRROR_VECTOR(m_vec_pair_guid_string, m_pair_guid_string);
+
+	typedef std::vector<entt::entity> m_vector_entt_entities;
+	MIRROR_VECTOR(m_vector_entt_entities, entt::entity)
+
+	typedef std::vector<std::string> m_vec_string;
+	MIRROR_VECTOR(m_vec_string, std::string)
+
+	// Arrays
+	using m_arr_float16 = float[16]; // #TODO Review hard coded size, and name
+	MIRROR_ARRAY(m_arr_float16, float)
+
+	// Maps
+	typedef std::unordered_map<eScriptTypes, Scriptable*> m_map_eScriptTypes_ScriptablePtr;
+	MIRROR_MAP(m_map_eScriptTypes_ScriptablePtr, m_map_eScriptTypes_ScriptablePtr)
+
+	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
+	MIRROR_MAP(m_map_guid_entt, m_pair_guid_enttEntity)
 
 	typedef std::unordered_map<GUID, m_editorWindowPtr> m_umap_guid_editorWindowPtr;
 	MIRROR_MAP(m_umap_guid_editorWindowPtr, m_pair_guid_editorWindowPtr)

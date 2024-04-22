@@ -148,7 +148,7 @@ namespace QwerkE {
                     }
                     break;
 
-                case MirrorTypes::m_floatArray16:
+                case MirrorTypes::m_arr_float16:
                     {
                         float* f16matrix = (float*)fieldAddress;
                         std::string fieldName = parentName + field.name;
@@ -159,7 +159,7 @@ namespace QwerkE {
                     }
                     break;
 
-                case MirrorTypes::m_vector_string: // #TODO Support vector manipulation
+                case MirrorTypes::m_vec_string: // #TODO Support vector manipulation
                     {
                         std::vector<std::string>* strings = (std::vector<std::string>*)fieldAddress;
                         for (size_t i = 0; i < strings->size(); i++)

@@ -4,10 +4,7 @@
 #include "Libraries/Enum/QC_enum.h"
 #endif
 
-#include "QF_ComponentCamera.h"
-#include "QF_ComponentLight.h"
-#include "QF_ComponentMesh.h"
-#include "QF_ComponentScript.h"
+#include "QF_ComponentHelpers.h"
 
 #include "QE_EditorWindow.h"
 

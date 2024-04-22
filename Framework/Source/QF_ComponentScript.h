@@ -2,6 +2,7 @@
 
 #include <map>
 
+#include "QF_EntityHandle.h"
 #include "QF_Scene.h"
 #include "QF_Scriptable.h"
 #include "QF_Scripting.h"

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\QE_EditorInspector.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QE_Editor.cpp">
       <Filter>Root Files</Filter>
     </ClCompile>
@@ -25,15 +22,13 @@
     <ClCompile Include="Source\QE_EditorWindowSettings.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QE_EditorInspector.cpp" />
+    <ClCompile Include="Source\QE_EditorWindowHelpers.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\QE_EditorInspector.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QE_MaterialEditor.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_SceneGraph.h">
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\QE_ShaderEditor.h">
@@ -96,6 +91,10 @@
     <ClInclude Include="Source\QE_EditorWindowShaderEditor.h">
       <Filter>Windows\Instanced</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QE_EditorWindowHelpers.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QE_EditorInspector.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

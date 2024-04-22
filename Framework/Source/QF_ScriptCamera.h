@@ -4,9 +4,7 @@
 #include "Libraries/imgui/QC_imgui.h"
 #endif
 
-#include "QF_ComponentCamera.h"
-#include "QF_ComponentTransform.h"
-#include "QF_ComponentScript.h"
+#include "QF_ComponentHelpers.h"
 
 #include "QC_Time.h"
 
@@ -15,7 +13,6 @@
 #include "QF_InputMouseDragTracker.h"
 #include "QF_Math.h"
 #include "QF_Scriptable.h"
-#include "QF_Scripting.h"
 #include "QF_Settings.h"
 
 namespace QwerkE {

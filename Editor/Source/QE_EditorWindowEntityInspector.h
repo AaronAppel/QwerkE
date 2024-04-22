@@ -2,10 +2,11 @@
 
 #include "QE_EditorWindow.h"
 
-#include "QF_EntityComponents.h"
+#include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
+#include "QF_ScriptHelpers.h"
 
 #include "QE_EditorInspector.h"
 

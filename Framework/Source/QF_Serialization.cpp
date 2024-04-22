@@ -26,12 +26,7 @@
 #include "QF_Log.h"
 #include "QF_Settings.h"
 
-#include "QF_ComponentCamera.h"
-#include "QF_ComponentInfo.h"
-#include "QF_ComponentLight.h"
-#include "QF_ComponentMesh.h"
-#include "QF_ComponentScript.h"
-#include "QF_ComponentTransform.h"
+#include "QF_ComponentHelpers.h"
 
 #include "QF_ScriptPatrol.h"
 
@@ -280,29 +275,6 @@ namespace QwerkE {
 		}
 
 		template <class T>
-		T* DeserializeSubclassPointer(const cJSON * jsonObj) // #TODO Look to handle sub classes more elegantly
-		{
-			T* indexPtrAddress = nullptr;
-
-			switch (Mirror::InfoForType<T>()->enumType)
-			{
-			case MirrorTypes::Routine:
-				switch ((eRoutineTypes)std::stoi(jsonObj->string))
-				{
-
-				default:
-					break;
-				}
-
-				// Deserialize parent/derived values
-				// Mirror::GetParentClassInfo<Routine>()
-				// DeserializeJsonToObject(jsonObj, Mirror::InfoForType<Routine>(), indexPtrAddress);
-
-				return indexPtrAddress;
-			}
-		}
-
-		template <class T>
 		void DeserializeVector(const cJSON * jsonObj, void* obj)
 		{
 			typedef std::remove_pointer_t<T> AbsoluteTypeT;
@@ -485,7 +457,7 @@ namespace QwerkE {
 				}
 				break;
 
-			case MirrorTypes::m_floatArray16:
+			case MirrorTypes::m_arr_float16:
 			{
 				float* floatArray = (float*)obj;
 				const std::vector<cJSON*> jsonObjectVector = GetAllItemsFromArray(jsonObj);
@@ -496,7 +468,7 @@ namespace QwerkE {
 			}
 			break;
 
-			case MirrorTypes::m_vector_string:
+			case MirrorTypes::m_vec_string:
 				// {
 				//     // DeserializeVector<std::string>(jsonObj, obj); // #TODO Find out why std::string type is not supported
 				//     // return;
@@ -794,7 +766,7 @@ namespace QwerkE {
 					}
 					break;
 
-				case MirrorTypes::m_floatArray16:
+				case MirrorTypes::m_arr_float16:
 				{
 					float* floatArray = (float*)((char*)obj + field.offset);
 					for (size_t i = 0; i < 16; i++)
@@ -804,7 +776,7 @@ namespace QwerkE {
 				}
 				break;
 
-				case MirrorTypes::m_vector_string: // #TODO Try to remove this case to use if (!objTypeInfo->fields.empty()) for loop
+				case MirrorTypes::m_vec_string: // #TODO Try to remove this case to use if (!objTypeInfo->fields.empty()) for loop
 				{
 					const std::vector<std::string>* strings = (std::vector<std::string>*)((char*)obj + field.offset);
 

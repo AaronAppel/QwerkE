@@ -45,23 +45,7 @@
 
 #include "QE_ProgramArgs.h"
 
-// #TODO Remove after adding indirection
-#include "QE_EditorWindow.h"
-#include "QE_EditorWindowAssets.h"
-#include "QE_EditorWindowDefaultDebug.h"
-#include "QE_EditorWindowDockingContext.h"
-#include "QE_EditorWindowEntityInspector.h"
-#include "QE_EditorWindowFolderViewer.h"
-#include "QE_EditorWindowImGuiDemo.h"
-#include "QE_EditorWindowMaterialEditor.h"
-#include "QE_EditorWindowMenuBar.h"
-#include "QE_EditorWindowNodeEditor.h"
-#include "QE_EditorWindowSceneControls.h"
-#include "QE_EditorWindowSceneGraph.h"
-#include "QE_EditorWindowSceneView.h"
-#include "QE_EditorWindowSettings.h"
-#include "QE_EditorWindowShaderEditor.h"
-#include "QE_EditorWindowStylePicker.h"
+#include "QE_EditorWindowHelpers.h"
 
 namespace QwerkE {
 
@@ -249,9 +233,7 @@ namespace QwerkE {
         void OpenEditorWindow(u32 enumToInt)
         {
             EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(enumToInt);
-            EditorWindow* newWindow = nullptr;
 
-            // #TODO Handle unique windows?
             switch (editorWindowType)
             {
             case EditorWindowTypes::DefaultDebug:
@@ -267,55 +249,12 @@ namespace QwerkE {
                 s_EditorWindowMenuBar.ToggleHidden();
                 break;
 
-            /////////////////////
-
-            case EditorWindowTypes::Assets:
-                newWindow = new EditorWindowAssets();
-                break;
-            case EditorWindowTypes::EntityInspector:
-                newWindow = new EditorWindowEntityInspector();
-                break;
-            case EditorWindowTypes::SceneControls:
-                newWindow = new EditorWindowSceneControls();
-                break;
-            case EditorWindowTypes::SceneGraph:
-                newWindow = new EditorWindowSceneGraph();
-                break;
-            case EditorWindowTypes::SceneView:
+            default:
+                if (EditorWindow* newWindow = NewEditorWindowByType(editorWindowType))
                 {
-                    constexpr u8 defaultTextureId = 4;
-                    constexpr u8 defaultViewId = 2;
-                    newWindow = new EditorWindowSceneView(defaultTextureId, defaultViewId);
+                    s_EditorWindows[newWindow->Guid()] = newWindow;
                 }
                 break;
-            case EditorWindowTypes::Settings:
-                newWindow = new EditorWindowSettings();
-                break;
-            case EditorWindowTypes::StylePicker:
-                newWindow = new EditorWindowStylePicker();
-                break;
-            case EditorWindowTypes::MaterialEditor:
-                newWindow = new EditorWindowMaterialEditor();
-                break;
-            case EditorWindowTypes::FolderViewer:
-                newWindow = new EditorWindowFolderViewer();
-                break;
-            case EditorWindowTypes::NodeEditor:
-                newWindow = new EditorWindowNodeEditor();
-                break;
-            case EditorWindowTypes::ShaderEditor:
-                newWindow = new EditorWindowShaderEditor();
-                break;
-
-            case EditorWindowTypes::EditorWindowTypesInvalid:
-            default:
-                LOG_ERROR("{0} Unsupported EditorWindow type!", __FUNCTION__);
-                break;
-            }
-
-            if (newWindow)
-            {
-                s_EditorWindows[newWindow->Guid()] = newWindow;
             }
         }
 
@@ -348,6 +287,9 @@ namespace QwerkE {
 		void local_Initialize()
 		{
             Serialization::DeserializeObjectFromFile(Paths::Settings(s_EditorWindowDataFileName).c_str(), s_EditorWindows);
+
+            // #TESTING
+            Serialization::NewSerializeObjectToFile(s_EditorWindows, "NewSerializationWindow");
 		}
 
 		void local_Shutdown()

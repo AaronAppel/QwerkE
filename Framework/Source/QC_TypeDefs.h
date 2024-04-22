@@ -22,3 +22,7 @@ using uPtr = std::unique_ptr<T>;
 
 template<typename T>
 using wPtr = std::weak_ptr<T>;
+
+// Templating
+template<typename... T>
+struct TemplateArgumentList { };

@@ -32,8 +32,11 @@ enum class MirrorTypes
     ComponentTransform,
 
     // Scripts
+    Scriptable,
+    ScriptableCamera,
     ScriptablePathFinder,
     ScriptablePatrol,
+    ScriptableTesting,
 
     // Misc
     Scene,
@@ -71,30 +74,30 @@ enum class MirrorTypes
 
     m_PAIRS_START,
     m_pair_guid_string,
+    m_pair_eScriptTypes_ScriptablePtr,
+    m_pair_guid_enttEntity,
+    m_pair_guid_editorWindowPtr, // Editor only
     m_PAIRS_END,
 
     m_ARRAYS_START,
     m_imvec4_array,
-    m_floatArray16,
+    m_arr_float16,
     m_ARRAYS_END,
 
     m_VECTORS_START,
     m_vec_pair_guid_string,
+    m_vec_string,
     m_vector_entt_entities,
-    m_vector_string,
     m_VECTORS_END,
 
     m_MAPS_START,
     m_map_eScriptTypes_ScriptablePtr,
     m_map_guid_entt,
     m_umap_guid_editorWindowPtr,
-    m_umap_int_bool,
     m_MAPS_END,
 
     m_POINTERS_START, // #TODO Deprecate using std::is_pointer
-    m_routinePtr,
-    m_renderRoutinePtr,
-    m_transformRoutinePtr,
+    m_scriptablePtr,
     m_editorWindowPtr, // Editor only
     m_POINTERS_END,
 

@@ -16,7 +16,6 @@
 #include "QF_EntityHandle.h"
 #include "QF_Math.h"
 #include "QF_Scriptable.h"
-#include "QF_Scripting.h"
 
 namespace QwerkE {
 
@@ -30,7 +29,9 @@ namespace QwerkE {
 			// Editor only
 			m_Button.m_ButtonName = "Update Targets";
 			m_Button.m_CallbackFunction = []() {
-				ImGui::Text("Hello World!");
+				// #TODO Find a good way to capture [this]
+				// Reference : https://stackoverflow.com/questions/7895879/using-data-member-in-lambda-capture-list-inside-a-member-function
+				// IncrementTarget();
 			};
 		}
 
@@ -66,7 +67,7 @@ namespace QwerkE {
 				const vec3f distanceBeforeMove = otherTransform.GetPosition() - myTransform.GetPosition();
 				if (glm::length(distanceBeforeMove) <= m_DistanceToChangeTargets)
 				{
-					m_CurrentTransformTargetIndex = Math::ClampRollover((size_t)0, (size_t)m_CurrentTransformTargetIndex + 1, m_TransformHandles.size() - 1);
+					IncrementTarget();
 				}
 
 				EntityHandle& newTargetHandle = m_TransformHandles[m_CurrentTransformTargetIndex];
@@ -86,6 +87,11 @@ namespace QwerkE {
 		}
 
 	private:
+		void IncrementTarget()
+		{
+			m_CurrentTransformTargetIndex = (u8)Math::ClampRollover((size_t)0, (size_t)m_CurrentTransformTargetIndex + 1, m_TransformHandles.size() - 1);
+		}
+
 		MIRROR_PRIVATE_MEMBERS
 
 		float m_MovementSpeed = 1.f;

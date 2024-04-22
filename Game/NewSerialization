@@ -1,72 +1,69 @@
 {
 	"Scene":	{
-		"":	"GameScene1.qscene",
+		"m_SceneFileName":	"GameScene1.qscene",
 		"m_map_guid_entt":	{
-			"":	{
-				"2156538372710297745":	[{
-						"ComponentInfo":	[{
-								"m_EntityName":	"null",
-								"m_Enabled":	false
-							}],
-						"ComponentTransform":	[{
-								"m_Matrix":	[{
-										"0":	1,
-										"1":	0,
-										"2":	0,
-										"3":	0,
-										"4":	0,
-										"5":	1,
-										"6":	0,
-										"7":	0,
-										"8":	0,
-										"9":	0,
-										"10":	1,
-										"11":	0,
-										"12":	0,
-										"13":	0,
-										"14":	0,
-										"15":	1
-									}]
-							}]
-					}],
-				"7861884455120703093":	[{
-						"ComponentCamera":	[{
-								"m_ShowSphere":	true,
-								"m_MoveSpeed":	5,
-								"m_LookAtPosition":	[{
-										"x":	0,
-										"y":	0,
-										"z":	0
-									}],
-								"m_Fov":	60,
-								"m_Near":	0.10000000149011612,
-								"m_Far":	100
-							}],
-						"ComponentInfo":	[{
-								"m_EntityName":	"Came",
-								"m_Enabled":	false
-							}],
-						"ComponentTransform":	[{
-								"m_Matrix":	[{
-										"0":	1,
-										"1":	0,
-										"2":	0,
-										"3":	0,
-										"4":	0,
-										"5":	1,
-										"6":	0,
-										"7":	0,
-										"8":	0,
-										"9":	0,
-										"10":	1,
-										"11":	0,
-										"12":	13.812999725341797,
-										"13":	-8.3489999771118164,
-										"14":	-32.610000610351562,
-										"15":	1
-									}]
-							}]
-					}]
+			"3885702115510784482":	{
+				"ComponentInfo":	{
+					"m_EntityName":	"null",
+					"m_Enabled":	false
+				},
+				"ComponentTransform":	{
+					"m_arr_float16":	{
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1
+					}
+				}
+			},
+			"17830232768883434764":	{
+				"ComponentCamera":	{
+					"m_MoveSpeed":	5,
+					"vec3f":	{
+						"x":	0,
+						"y":	0,
+						"z":	0
+					},
+					"m_Fov":	60,
+					"m_Near":	0.10000000149011612,
+					"m_Far":	100
+				},
+				"ComponentInfo":	{
+					"m_EntityName":	"Came",
+					"m_Enabled":	false
+				},
+				"ComponentTransform":	{
+					"m_arr_float16":	{
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	13.812999725341797,
+						"m_float":	-8.3489999771118164,
+						"m_float":	-32.610000610351562,
+						"m_float":	1
+					}
+				}
 			}
 		}
 	}

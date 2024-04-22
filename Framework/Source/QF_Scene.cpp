@@ -14,7 +14,7 @@
 
 #include "QC_StringHelpers.h"
 
-#include "QF_ComponentCamera.h"
+#include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Files.h"
 #include "QF_Input.h"
@@ -23,11 +23,6 @@
 #include "QF_Scenes.h"
 #include "QF_Serialization.h"
 #include "QF_Settings.h"
-
-#include "QF_ComponentInfo.h"
-#include "QF_ComponentMesh.h"
-#include "QF_ComponentScript.h"
-#include "QF_ComponentTransform.h"
 
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
@@ -243,6 +238,7 @@ namespace QwerkE {
 
         // #TESTING
         Serialization::NewSerializeObjectToFile(*this, "NewSerialization");
+        int bp = 0;
     }
 
     void Scene::LoadScene()

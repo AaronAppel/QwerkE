@@ -55,7 +55,7 @@ namespace QwerkE {
 			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; } // { return !isClass; } // { return enumType > MirrorTypes::m_PRIMITIVES_START; }
 			bool isSubClass() const { return superTypeInfo != nullptr; }
 			bool hasSubClass() const { return !derivedTypesMap.empty(); }
-			bool isCollection() const { return isPair() || isArray() || isMap() || isVector() || collectionTypeInfo != nullptr; }
+			bool isCollection() const { return isPair() || isArray() || isMap() || isVector() || CollectionTypeInfoFirst() != nullptr || CollectionTypeInfoSecond() != nullptr; }
 
 			bool isPair() const { return false; }
 			// bool isPair() const { return enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END; } // #TODO Deprecate enum dependency
@@ -74,14 +74,30 @@ namespace QwerkE {
 				return isClass && !newIsCollection();
 			}
 
-			bool isPointer = false;
+			bool isPointer = false; // #TODO Turn to bit flags
 			bool isClass = false;
+			bool isAbstract = false;
 
 			std::vector<Field> fields = { }; // #TODO Hide/private non-constants
-			std::map<MirrorTypes, const TypeInfo*> derivedTypesMap;
+			std::map<uint16_t, const TypeInfo*> derivedTypesMap;
+			const TypeInfo* DerivedTypeInfo(uint16_t typeInfoKey) const {
+				if (derivedTypesMap.find(typeInfoKey) == derivedTypesMap.end()) return nullptr;
+				return derivedTypesMap.at(typeInfoKey);
+			}
 
-			const TypeInfo* collectionTypeInfo = nullptr;
+			static constexpr int8_t collectionInfoArraySize = 2;
+			const TypeInfo* collectionTypeInfo[collectionInfoArraySize] = { nullptr, nullptr };
+			const TypeInfo* CollectionTypeInfoFirst() const { return collectionTypeInfo[0]; }
+			const TypeInfo* CollectionTypeInfoSecond() const { return collectionTypeInfo[1]; }
+			// const TypeInfo* CollectionTypeInfoThird() const { return collectionTypeInfo[2]; }
+
 			const TypeInfo* superTypeInfo = nullptr;
+			const TypeInfo* pointerDereferencedTypeInfo = nullptr; // #TODO Can union with superTypeInfo to save space
+
+			const TypeInfo* AbsoluteType() const {
+				if (pointerDereferencedTypeInfo) return pointerDereferencedTypeInfo;
+				return this;
+			}
 		};
 
 		template <class T>
@@ -91,7 +107,7 @@ namespace QwerkE {
 		static const TypeInfo* InfoForType();
 
 		template <class T>
-		static const TypeInfo* GetParentClassInfo();
+		static const TypeInfo* GetSuperClassInfo(); // #TODO Return super pointer
 	};
 
 }
@@ -111,9 +127,27 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	localStaticTypeInfo.stringName = #TYPE; \
 	localStaticTypeInfo.size = sizeof(TYPE); \
 	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
+	localStaticTypeInfo.pointerDereferencedTypeInfo = nullptr; \
 	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection(); \
+	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>; \
 	return &localStaticTypeInfo; \
 }
+
+// #TODO Might be causing issues. See dereferenced/remove pointer section
+#define MIRROR_POINTER(TYPE) \
+template<> \
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
+	static QwerkE::Mirror::TypeInfo localStaticTypeInfo; \
+	if (localStaticTypeInfo.enumType != MirrorTypes::m_Invalid) { return &localStaticTypeInfo; } \
+	localStaticTypeInfo.enumType = MirrorTypes::TYPE; \
+	localStaticTypeInfo.stringName = #TYPE; \
+	localStaticTypeInfo.size = sizeof(TYPE); \
+	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
+	localStaticTypeInfo.pointerDereferencedTypeInfo = QwerkE::Mirror::InfoForType<std::remove_pointer_t<TYPE>>(); \
+	localStaticTypeInfo.isClass = false; \
+	localStaticTypeInfo.isAbstract = false; \
+	return &localStaticTypeInfo; \
+	}
 
 #define MIRROR_CLASS_START(TYPE) MIRROR_CLASS_STARTN(TYPE, MIRROR_MEMBER_FIELDS_DEFAULT)
 #define MIRROR_CLASS_STARTN(TYPE, FIELDCOUNT) \
@@ -129,6 +163,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	localStaticTypeInfo.fields.reserve(fieldsCount); \
 	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
 	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection(); \
+	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>; \
  \
 	using ClassType = TYPE; \
 	enum { BASE = __COUNTER__ };
@@ -136,6 +171,12 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 #define MIRROR_CLASS_SUBCLASS(SUBCLASS_TYPE) \
 	const QwerkE::Mirror::TypeInfo* SUBCLASS_TYPE##Info = QwerkE::Mirror::InfoForType<SUBCLASS_TYPE>(); \
 	localStaticTypeInfo.derivedTypesMap[MirrorTypes::SUBCLASS_TYPE] = SUBCLASS_TYPE##Info; \
+	const_cast<QwerkE::Mirror::TypeInfo*>(SUBCLASS_TYPE##Info)->superTypeInfo = &localStaticTypeInfo; \
+
+// #TODO See if using the user type as the key works better. Need to change derivedTypesMap to an int most likely, and enum type cast everywhere.
+#define MIRROR_CLASS_SUBCLASS_USER_TYPE(SUBCLASS_TYPE, USER_TYPE) \
+	const QwerkE::Mirror::TypeInfo* SUBCLASS_TYPE##Info = QwerkE::Mirror::InfoForType<SUBCLASS_TYPE>(); \
+	localStaticTypeInfo.derivedTypesMap[(uint16_t)USER_TYPE] = SUBCLASS_TYPE##Info; \
 	const_cast<QwerkE::Mirror::TypeInfo*>(SUBCLASS_TYPE##Info)->superTypeInfo = &localStaticTypeInfo; \
 
 #define MIRROR_CLASS_MEMBER(MEMBER_NAME) \
@@ -187,13 +228,28 @@ static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForT
 // Call above initializes field class reference(s). Ideally, remove it and find another init method
 
 // #NOTE Experimental collection type macro (currently unused)
-#define MIRROR_COLLECTION(TYPE, COLLECTIONTYPE) \
+// #TODO Veridy that MIRROR_ARRAY stores size of array
+#define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE) MIRROR_MAP(ARRAY_TYPE, COLLECTION_TYPE)
+#define MIRROR_VECTOR(VECTOR_TYPE, COLLECTION_TYPE) MIRROR_MAP(VECTOR_TYPE, COLLECTION_TYPE)
+#define MIRROR_MAP(MAP_TYPE, COLLECTION_TYPE) \
 template<> \
-const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<MAP_TYPE>() { \
 	static TypeInfo localStaticTypeInfo; \
-	localStaticTypeInfo.stringName = #TYPE; \
-	localStaticTypeInfo.size = sizeof(TYPE); \
-	localStaticTypeInfo.enumType = MirrorTypes::TYPE; \
-	localStaticTypeInfo.collectionTypeInfo = QwerkE::Mirror::InfoForType<COLLECTIONTYPE>(); \
+	localStaticTypeInfo.stringName = #MAP_TYPE; \
+	localStaticTypeInfo.size = sizeof(MAP_TYPE); \
+	localStaticTypeInfo.enumType = MirrorTypes::MAP_TYPE; \
+	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<COLLECTION_TYPE>(); \
+	return &localStaticTypeInfo; \
+}
+
+#define MIRROR_PAIR(PAIR_TYPE, FIRST_TYPE, SECOND_TYPE) \
+template<> \
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<PAIR_TYPE>() { \
+	static TypeInfo localStaticTypeInfo; \
+	localStaticTypeInfo.stringName = #PAIR_TYPE; \
+	localStaticTypeInfo.size = sizeof(PAIR_TYPE); \
+	localStaticTypeInfo.enumType = MirrorTypes::PAIR_TYPE; \
+	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<FIRST_TYPE>(); \
+	localStaticTypeInfo.collectionTypeInfo[1] = QwerkE::Mirror::InfoForType<SECOND_TYPE>(); \
 	return &localStaticTypeInfo; \
 }

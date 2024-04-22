@@ -6,7 +6,6 @@
 
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
-#include "QF_Scriptable.h"
 
 namespace QwerkE {
 
