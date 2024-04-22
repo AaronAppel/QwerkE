@@ -18,6 +18,7 @@ namespace QwerkE {
 
 }
 ```
-2. Implement base pure virtual method(s)
-3. Include new header file in QF_EditorWindowHelpers.h list of editor window header includes
-4. Add type to EditorWindowsList
+2. Add entry to enum EditorWindowTypes
+3. Implement base pure virtual method(s)
+4. Include new header file in QF_EditorWindowHelpers.h list of editor window header includes
+5. Add type to EditorWindowsList

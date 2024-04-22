@@ -118,6 +118,7 @@ static const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType(const TYPE& t
 	return Mirror::InfoForType<TYPE>();
 }
 
+#define MIRROR_ENUM(ENUM_TYPE) MIRROR_TYPE(ENUM_TYPE) // Nothing special for enums currently
 #define MIRROR_TYPE(TYPE) \
 template<> \
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
@@ -133,7 +134,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	return &localStaticTypeInfo; \
 }
 
-// #TODO Might be causing issues. See dereferenced/remove pointer section
+// #TODO Look to combine with MIRROR_TYPE, or at least reduce duplication
 #define MIRROR_POINTER(TYPE) \
 template<> \
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
@@ -227,8 +228,6 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForType<TYPE>(); \
 // Call above initializes field class reference(s). Ideally, remove it and find another init method
 
-// #NOTE Experimental collection type macro (currently unused)
-// #TODO Veridy that MIRROR_ARRAY stores size of array
 #define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE) MIRROR_MAP(ARRAY_TYPE, COLLECTION_TYPE)
 #define MIRROR_VECTOR(VECTOR_TYPE, COLLECTION_TYPE) MIRROR_MAP(VECTOR_TYPE, COLLECTION_TYPE)
 #define MIRROR_MAP(MAP_TYPE, COLLECTION_TYPE) \

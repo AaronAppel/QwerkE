@@ -13,6 +13,7 @@
 namespace QwerkE {
 
     using ComponentScriptsList = TemplateArgumentList <
+        // #NOTE Order matters! Match enum eScriptTypes order
         ScriptableCamera,
         ScriptablePathFinder,
         ScriptablePatrol,

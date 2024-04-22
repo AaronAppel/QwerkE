@@ -35,6 +35,23 @@
 
 namespace QwerkE {
 
+	template <typename... T>
+	void MirrorSubClassUserType(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+	{
+		uint16_t enumValue = enumStartOffset;
+		([&]()
+		{
+			MIRROR_CLASS_SUBCLASS_USER_TYPE(T, enumValue)
+			++enumValue;
+		}(), ...);
+	}
+
+	template<typename... T>
+	static void MirrorSubClassUserTypes(TemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+	{
+		MirrorSubClassUserType<T...>(localStaticTypeInfo, enumStartOffset);
+	}
+
 #ifdef _QDEARIMGUI
 	MIRROR_CLASS_START(ImVec2)
 	MIRROR_CLASS_MEMBER(x)
@@ -49,7 +66,9 @@ namespace QwerkE {
 	MIRROR_CLASS_END(ImVec4)
 
 	typedef ImVec4* m_imvec4_array; // #TODO try : using m_imvec4_array = ImVec4[4]; to see if it works any better
-	MIRROR_TYPE(m_imvec4_array)
+	// MIRROR_TYPE(m_imvec4_array)
+	// MIRROR_ARRAY(m_imvec4_array, ImVec4) // #NOTE MIRROR_ARRAY can determine size of array at compile time
+	MIRROR_POINTER(m_imvec4_array)
 
 	MIRROR_CLASS_START(ImGuiStyle)
 	MIRROR_CLASS_MEMBER(Alpha)
@@ -108,20 +127,20 @@ namespace QwerkE {
 #endif
 
 	// Enums
-	MIRROR_TYPE(eScriptTypes)
-	MIRROR_TYPE(eComponentTags)
-	MIRROR_TYPE(eKeys)
+	MIRROR_ENUM(eScriptTypes)
+	MIRROR_ENUM(eComponentTags)
+	MIRROR_ENUM(eKeys)
 
 	// Vectors
 	typedef std::vector<entt::entity> m_vector_entt_entities;
-	MIRROR_TYPE(m_vector_entt_entities)
+	MIRROR_VECTOR(m_vector_entt_entities, entt::entity)
 
 	typedef std::vector<std::string> m_vec_string;
-	MIRROR_TYPE(m_vec_string)
+	MIRROR_VECTOR(m_vec_string, std::string)
 
 	// Arrays
-	using m_arr_float16 = float[16]; // #TODO Review hard coded size, and name
-	MIRROR_TYPE(m_arr_float16)
+	using m_arr_float16 = float[16];
+	MIRROR_ARRAY(m_arr_float16, float)
 
 	// Maps
 	// #TODO Move collections to bottom
@@ -147,17 +166,15 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
 	MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
 	MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
-	// #TODO Serialize guids or entity handle references to show/edit in GUI m_Transforms
 	MIRROR_CLASS_END(ScriptablePathFinder)
 
 	MIRROR_CLASS_START(ScriptableTesting)
 	MIRROR_CLASS_END(ScriptableTesting)
 
-	MIRROR_CLASS_START(Scriptable) // #TODO Look at using a templated enum to list types and generate data using templated functions
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptableCamera, eScriptTypes::Camera)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptableTesting, eScriptTypes::Testing)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptablePatrol, eScriptTypes::Patrol)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(ScriptablePathFinder, eScriptTypes::PathFinder)
+	MIRROR_CLASS_START(Scriptable)
+	// #TODO Look at generating empty types or not yet declared types automatically as well.
+	// Would save a step when creating a new type and still allow exposing members for specific types
+	MirrorSubClassUserTypes(ComponentScriptsList{}, localStaticTypeInfo, eScriptTypes::Camera);
 	MIRROR_CLASS_END(Scriptable)
 
 	typedef Scriptable* m_scriptablePtr;
@@ -169,14 +186,17 @@ namespace QwerkE {
 	typedef std::unordered_map<eScriptTypes, Scriptable*> m_map_eScriptTypes_ScriptablePtr;
 	MIRROR_MAP(m_map_eScriptTypes_ScriptablePtr, m_pair_eScriptTypes_ScriptablePtr)
 
-	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
-	MIRROR_TYPE(m_map_guid_entt)
-
-	// Structs
 	MIRROR_CLASS_START(GUID)
 	MIRROR_CLASS_MEMBER(m_Guid)
 	MIRROR_CLASS_END(GUID)
 
+	typedef	std::pair<GUID, entt::entity> m_pair_guid_enttEntity;
+	MIRROR_PAIR(m_pair_guid_enttEntity, GUID, entt::entity)
+
+	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
+	MIRROR_MAP(m_map_guid_entt, m_pair_guid_enttEntity)
+
+	// Structs
 	MIRROR_CLASS_START(vec2f)
 	MIRROR_CLASS_MEMBER(x)
 	MIRROR_CLASS_MEMBER(y)
@@ -276,10 +296,10 @@ namespace QwerkE {
 
 	// Editor types
 	typedef Editor::EditorWindowFlags EditorWindowFlags;
-	MIRROR_TYPE(EditorWindowFlags)
+	MIRROR_ENUM(EditorWindowFlags)
 
 	typedef Editor::EditorWindowTypes EditorWindowTypes;
-	MIRROR_TYPE(EditorWindowTypes)
+	MIRROR_ENUM(EditorWindowTypes)
 
 	typedef Editor::EditorWindowAssets EditorWindowAssets;
 	MIRROR_CLASS_START(EditorWindowAssets)
@@ -352,22 +372,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_MinimumWidth)
 	MIRROR_CLASS_MEMBER(m_MinimumHeight)
 	MIRROR_CLASS_MEMBER(m_EditorWindowType)
-
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowAssets, Editor::EditorWindowTypes::Assets)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowDefaultDebug, Editor::EditorWindowTypes::DefaultDebug)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowDockingContext, Editor::EditorWindowTypes::DockingContext)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowEntityInspector, Editor::EditorWindowTypes::EntityInspector)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowImGuiDemo, Editor::EditorWindowTypes::ImGuiDemo)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowMenuBar, Editor::EditorWindowTypes::MenuBar)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowSceneControls, Editor::EditorWindowTypes::SceneControls)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowSceneGraph, Editor::EditorWindowTypes::SceneGraph)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowSceneView, Editor::EditorWindowTypes::SceneView)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowSettings, Editor::EditorWindowTypes::Settings)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowStylePicker, Editor::EditorWindowTypes::StylePicker)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowMaterialEditor, Editor::EditorWindowTypes::MaterialEditor)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowFolderViewer, Editor::EditorWindowTypes::FolderViewer)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowNodeEditor, Editor::EditorWindowTypes::NodeEditor)
-	MIRROR_CLASS_SUBCLASS_USER_TYPE(EditorWindowShaderEditor, Editor::EditorWindowTypes::ShaderEditor)
+	MirrorSubClassUserTypes(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
 	MIRROR_CLASS_END(EditorWindow)
 
 	typedef Editor::EditorWindow* m_editorWindowPtr;

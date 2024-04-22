@@ -146,72 +146,52 @@ namespace QwerkE {
             switch (objTypeInfo->enumType)
             {
             case MirrorTypes::m_string:
-            {
-                const std::string* fieldAddress = (std::string*)obj;
-                cJsonItem = CreateString(name.c_str(), fieldAddress->data()); // #TODO Requires ->data() so can't work with TestCreateString()
-            }
-            break;
+                {
+                    const std::string* fieldAddress = (std::string*)obj;
+                    cJsonItem = CreateString(name.c_str(), fieldAddress->data()); // #TODO Requires ->data() so can't work with TestCreateString()
+                }
+                break;
 
             case MirrorTypes::eKeys:
             case MirrorTypes::m_char: // #TODO Note that const is forced here
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
-                cJsonItem = TestCreateString<const char*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateString<const char*>(name, obj); break;
             case MirrorTypes::m_bool:
-                cJsonItem = TestCreateBool<bool*>(name, obj);
-                break;
-
-            case MirrorTypes::m_float:
-                cJsonItem = TestCreateNumber<float*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateBool<bool*>(name, obj); break;
             case MirrorTypes::EditorWindowFlags:
             case MirrorTypes::EditorWindowTypes:
             case MirrorTypes::eScriptTypes: // #TODO Add a case for all enums by default
             case MirrorTypes::m_eSceneTypes:
             case MirrorTypes::m_uint8_t:
-                cJsonItem = TestCreateNumber<uint8_t*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateNumber<uint8_t*>(name, obj); break;
             case MirrorTypes::m_uint16_t:
-                cJsonItem = TestCreateNumber<uint16_t*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateNumber<uint16_t*>(name, obj); break;
             case MirrorTypes::m_uint32_t:
-                cJsonItem = TestCreateNumber<uint32_t*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateNumber<uint32_t*>(name, obj); break;
             case MirrorTypes::m_int8_t:
-                cJsonItem = TestCreateNumber<int8_t*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateNumber<int8_t*>(name, obj); break;
             case MirrorTypes::m_int16_t:
-                cJsonItem = TestCreateNumber<int16_t*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateNumber<int16_t*>(name, obj); break;
             case MirrorTypes::m_int:
             case MirrorTypes::m_int32_t:
-                cJsonItem = TestCreateNumber<int32_t*>(name, obj);
-                break;
-
+                cJsonItem = TestCreateNumber<int32_t*>(name, obj); break;
             case MirrorTypes::m_int64_t:
-                cJsonItem = TestCreateNumber<int64_t*>(name, obj);
-                break;
+                cJsonItem = TestCreateNumber<int64_t*>(name, obj); break;
 
             case MirrorTypes::m_uint64_t: // #NOTE Special case of conversion on 64 bit types
-            {
-                // Use string instead of a double to avoid conversion issues
-                uint64_t* numberAddress = (uint64_t*)obj;
-                cJsonItem = CreateString(name.c_str(), std::to_string(*numberAddress).c_str());
-            }
-            // cJsonItem = TestCreateNumber<uint64_t*>(name, obj);
-            break;
-
-            case MirrorTypes::m_double:
-                cJsonItem = TestCreateNumber<double*>(name, obj);
+                {
+                    // Use string instead of a double to avoid conversion issues
+                    uint64_t* numberAddress = (uint64_t*)obj;
+                    cJsonItem = CreateString(name.c_str(), std::to_string(*numberAddress).c_str());
+                }
+                // cJsonItem = TestCreateNumber<uint64_t*>(name, obj);
                 break;
+
+            case MirrorTypes::m_float:
+                cJsonItem = TestCreateNumber<float*>(name, obj); break;
+            case MirrorTypes::m_double:
+                cJsonItem = TestCreateNumber<double*>(name, obj); break;
 
             default:
                 LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, name, objTypeInfo->stringName, (int)objTypeInfo->enumType);
@@ -344,18 +324,18 @@ namespace QwerkE {
         void NewSerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
         {
             ([&]()
-                {
-                    if (!handle.HasComponent<Component>())
-                        return;
+            {
+                if (!handle.HasComponent<Component>())
+                    return;
 
-                    const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
+                const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
 
-                    cJSON* componentJsonItem = TestCreateObject(componentTypeInfo->stringName.c_str());
-                    AddItemToObject(entityComponentsJsonArray, componentJsonItem);
+                cJSON* componentJsonItem = TestCreateObject(componentTypeInfo->stringName.c_str());
+                AddItemToObject(entityComponentsJsonArray, componentJsonItem);
 
-                    Component& component = handle.GetComponent<Component>();
-                    local_SerializeClass(&component, componentTypeInfo, componentJsonItem);
-                }(), ...);
+                Component& component = handle.GetComponent<Component>();
+                local_SerializeClass(&component, componentTypeInfo, componentJsonItem);
+            }(), ...);
         }
 
         template<typename... Component>

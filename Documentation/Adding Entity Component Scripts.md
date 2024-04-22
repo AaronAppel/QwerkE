@@ -19,6 +19,7 @@ namespace QwerkE {
 
 }
 ```
-2. Implement base pure virtual method(s)
-3. Include new header file in QF_Scripting.h list of script header includes
-4. Add type to ComponentScriptsList
+2. Add entry to enums eScriptTypes, and eScriptTypesStr
+3. Implement base pure virtual method(s)
+4. Include new header file in QF_Scripting.h list of script header includes
+5. Add type to ComponentScriptsList

@@ -25,3 +25,4 @@ Notes on entity components:
 - Data is public so struct is used to avoid unnecessary getters and setters
 - No base class inheritance, so common API or members between component types
 - Must have an empty constructor implementation (or default) for de/serialization purposes
+- No enum type for serialization or other purposes

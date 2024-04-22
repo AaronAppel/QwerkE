@@ -24,6 +24,7 @@ namespace QwerkE {
 		EditorWindow* NewEditorWindowByType(EditorWindowTypes editorWindowType);
 
         using EditorWindowsList = TemplateArgumentList <
+			// #NOTE Order matters! Match enum EditorWindowTypes order
 			EditorWindowAssets,
 			EditorWindowDefaultDebug,
 			EditorWindowDockingContext,
