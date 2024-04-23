@@ -39,7 +39,7 @@ namespace QwerkE {
 		{
 			const TypeInfo* typeInfo = nullptr;
 			std::string name = "";
-			size_t offset = 0;
+			size_t offset = 0; // #TODO Shrink sizes to shorts
 			size_t size = 0;
 #ifdef MIRROR_EXPOSE_FIELD_FLAGS
 			uint8_t serializationFlags = FieldSerializationFlags::_None;
@@ -48,10 +48,12 @@ namespace QwerkE {
 
 		struct TypeInfo
 		{
+			// #TODO Look at shrinking types and using unions for exclusive members
 			std::string stringName = "";
 			MirrorTypes enumType = MirrorTypes::m_Invalid;
 			size_t size = 0;
 
+			// #TODO Can create a TypeCategory enum type to switch on instead of using if/else
 			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; } // { return !isClass; } // { return enumType > MirrorTypes::m_PRIMITIVES_START; }
 			bool isSubClass() const { return superTypeInfo != nullptr; }
 			bool hasSubClass() const { return !derivedTypesMap.empty(); }
@@ -67,6 +69,7 @@ namespace QwerkE {
 			bool newIsCollection() const { return
 				enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END ||
 				enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END ||
+				enumType > MirrorTypes::m_VECTORS_START && enumType < MirrorTypes::m_VECTORS_END ||
 				enumType > MirrorTypes::m_MAPS_START && enumType < MirrorTypes::m_MAPS_END;
 			}
 
@@ -118,7 +121,7 @@ static const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType(const TYPE& t
 	return Mirror::InfoForType<TYPE>();
 }
 
-#define MIRROR_ENUM(ENUM_TYPE) MIRROR_TYPE(ENUM_TYPE) // Nothing special for enums currently
+#define MIRROR_ENUM(ENUM_TYPE) MIRROR_TYPE(ENUM_TYPE) // Nothing special for enums currently. Could use std::is_enum_v<ENUM_TYPE>
 #define MIRROR_TYPE(TYPE) \
 template<> \
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
@@ -143,6 +146,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 	localStaticTypeInfo.enumType = MirrorTypes::TYPE; \
 	localStaticTypeInfo.stringName = #TYPE; \
 	localStaticTypeInfo.size = sizeof(TYPE); \
+	static_assert(std::is_pointer_v<TYPE>); \
 	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>; \
 	localStaticTypeInfo.pointerDereferencedTypeInfo = QwerkE::Mirror::InfoForType<std::remove_pointer_t<TYPE>>(); \
 	localStaticTypeInfo.isClass = false; \
@@ -228,7 +232,8 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForType<TYPE>(); \
 // Call above initializes field class reference(s). Ideally, remove it and find another init method
 
-#define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE) MIRROR_MAP(ARRAY_TYPE, COLLECTION_TYPE)
+// static_assert(std::is_array_v<ARRAY_TYPE>);
+#define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE) MIRROR_MAP(ARRAY_TYPE, COLLECTION_TYPE) // Could use std::is_array_v<ARRAY_TYPE>
 #define MIRROR_VECTOR(VECTOR_TYPE, COLLECTION_TYPE) MIRROR_MAP(VECTOR_TYPE, COLLECTION_TYPE)
 #define MIRROR_MAP(MAP_TYPE, COLLECTION_TYPE) \
 template<> \

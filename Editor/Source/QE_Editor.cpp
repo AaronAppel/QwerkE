@@ -53,6 +53,7 @@ namespace QwerkE {
     {
         ImGuiStyle& style = ImGui::GetStyle();
         Serialization::DeserializeObjectFromFile(Settings::GetStyleFileName(), style);
+        // Serialization::NewDeserializeFromToFile("NewSerialization", style);
     }
 
 	namespace Editor {
@@ -287,6 +288,7 @@ namespace QwerkE {
 		void local_Initialize()
 		{
             Serialization::DeserializeObjectFromFile(Paths::Settings(s_EditorWindowDataFileName).c_str(), s_EditorWindows);
+            Serialization::NewDeserializeFromToFile("NewSerializationWindow", s_EditorWindows);
 
             // #TESTING
             Serialization::NewSerializeObjectToFile(s_EditorWindows, "NewSerializationWindow");

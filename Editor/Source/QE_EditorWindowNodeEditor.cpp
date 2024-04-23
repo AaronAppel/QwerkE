@@ -45,7 +45,7 @@ namespace QwerkE {
         void local_WidgetsNodeEditor(ax::NodeEditor::EditorContext* context);
         void EditorWindowNodeEditor::DrawInternal()
         {
-            if (const bool simpleExample = false)
+            if (const bool simpleExample = true)
             {
                 local_SimpleNodeEditor(m_Context);
             }

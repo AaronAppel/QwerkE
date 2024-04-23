@@ -216,10 +216,12 @@ namespace QwerkE {
         if (Files::Exists(otherSceneFilePath))
         {
             Serialization::DeserializeObjectFromFile(otherSceneFilePath, *this);
+            Serialization::NewDeserializeFromToFile("NewSerialization", *this);
         }
         else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {
             Serialization::DeserializeObjectFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
+            Serialization::NewDeserializeFromToFile("NewSerialization", *this);
         }
         else
         {
@@ -256,6 +258,7 @@ namespace QwerkE {
         }
 
         Serialization::DeserializeObjectFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
+        Serialization::NewDeserializeFromToFile("NewSerialization", *this);
 
         OnLoaded();
 

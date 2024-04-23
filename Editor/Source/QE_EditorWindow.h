@@ -65,6 +65,12 @@ namespace QwerkE {
 					m_WindowFlags & EditorWindowFlags::Hidden)
 					return;
 
+				// #TODO Find why new windows are still too small, and if this check does anything
+				if (m_WindowFlags & EditorWindowFlags::Hidden == 0)
+				{
+					ImGui::SetNextWindowSizeConstraints({ m_MinimumWidth , m_MinimumHeight }, { FLT_MAX, FLT_MAX });
+				}
+
 				// #TODO Check if the window is also EditorWindowFlags::IsOpen?
 				if (m_WindowFlags & EditorWindowFlags::Headless)
 				{
@@ -113,8 +119,8 @@ namespace QwerkE {
 
 			virtual void DrawInternal() = 0;
 
-			ImGuiWindowFlags m_ImGuiFlags = 0;
-			EditorWindowFlags m_WindowFlags = EditorWindowFlagsNone;
+			ImGuiWindowFlags m_ImGuiFlags = ImGuiWindowFlags_::ImGuiWindowFlags_None;
+			EditorWindowFlags m_WindowFlags = EditorWindowFlags::EditorWindowFlagsNone;
 
 			const GUID& GetGuid() { return m_Guid; }
 
@@ -124,9 +130,11 @@ namespace QwerkE {
 			std::string m_WindowName = Constants::gc_DefaultStringValue;
 			GUID m_Guid; // #NOTE Window is static so has order dependency with GUID engine init
 
-			// #TODO Handle resizing window
-			u16 m_MinimumWidth = 0;
-			u16 m_MinimumHeight = 0;
+			const float m_StartingWidth = 100.f;
+			const float m_StartingHeight = 150.f;
+
+			float m_MinimumWidth = m_StartingWidth;
+			float m_MinimumHeight = m_StartingHeight;
 
 			EditorWindowTypes m_EditorWindowType;
 		};

@@ -9,10 +9,7 @@
 
 #include "QC_Guid.h"
 
-// Game scripts
-#include "QF_Scripting.h"
-#include "QF_Scriptable.h"
-#include "QF_ScriptPatrol.h"
+#include "QF_ScriptHelpers.h"
 
 #include "QF_ComponentHelpers.h"
 

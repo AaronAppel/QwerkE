@@ -101,7 +101,7 @@ namespace ImGui
 	void PushFontQw(Fonts font);
 	void PopFontQw();
 
-	void SameLineEnd(int16_t numberOfChars, float horizontalScaling = 1.f);
+	void SameLineEnd(int16_t numberOfChars= 0 , float horizontalScaling = 1.f);
 	void SameLineEnd(const char* text, float horizontalScaling = 1.f);
 
 	void SameLineCentered(int16_t numberOfChars, float horizontalScaling = 1.f);

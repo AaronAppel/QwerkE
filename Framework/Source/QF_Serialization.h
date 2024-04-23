@@ -73,10 +73,30 @@ namespace QwerkE {
             cJSON_Delete(jsonRootObject);
         }
 
-        void NewDeserializeToJson(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         template <class T>
-        void NewDeserializeObjectToFile(const char* absoluteFilePath, const T& objectReference)
+        void NewSerializeObjectToFile(const T& objectReference, const char* absoluteFilePath)
+        {
+            if (!absoluteFilePath)
+            {
+                LOG_ERROR("{0} Null file path given!", __FUNCTION__);
+                return;
+            }
+
+            cJSON* jsonRootObject = cJSON_CreateObject();
+
+            const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+            SerializeToJson((const void*)&objectReference, typeInfo, jsonRootObject);
+
+            PrintRootObjectToFile(absoluteFilePath, jsonRootObject);
+            cJSON_Delete(jsonRootObject);
+        }
+
+        void DeserializeFromJson(cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+
+        template <class T>
+        void NewDeserializeFromToFile(const char* absoluteFilePath, T& objectReference)
         {
             if (!absoluteFilePath)
             {
@@ -97,7 +117,7 @@ namespace QwerkE {
                 }
                 else
                 {
-                    NewDeserializeToJson(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
+                    DeserializeFromJson(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
                 }
 
                 ClosecJSONStream(rootJsonObject);
@@ -106,27 +126,6 @@ namespace QwerkE {
             {
                 LOG_ERROR("{0} Could not load object type {1} from file {2}!", __FUNCTION__, Mirror::InfoForType<T>()->stringName.c_str(), absoluteFilePath);
             }
-        }
-
-        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
-
-        template <class T>
-        void NewSerializeObjectToFile(const T& objectReference, const char* absoluteFilePath)
-        {
-            if (!absoluteFilePath)
-            {
-                LOG_ERROR("{0} Null file path given!", __FUNCTION__);
-                return;
-            }
-
-            const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-
-            cJSON* jsonRootObject = cJSON_CreateObject();
-
-            SerializeToJson((const void*)&objectReference, typeInfo, jsonRootObject);
-
-            PrintRootObjectToFile(absoluteFilePath, jsonRootObject);
-            cJSON_Delete(jsonRootObject);
         }
 
     }

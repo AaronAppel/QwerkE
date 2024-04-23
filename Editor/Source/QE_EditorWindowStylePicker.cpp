@@ -25,6 +25,7 @@ namespace QwerkE {
             if (ImGui::Button("Save Style"))
             {
                 Serialization::SerializeObjectToFile(style, Settings::GetStyleFileName());
+                Serialization::NewSerializeObjectToFile(style, "NewSerializationWindow");
             }
 
             if (m_Edited)

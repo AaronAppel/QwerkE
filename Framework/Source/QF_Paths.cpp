@@ -11,22 +11,22 @@ namespace QwerkE {
 
 		std::string AssetsDir()
 		{
-			return RootDir() + "Game/Assets/";
+			return RootDir() + "Game\\Assets\\";
 		}
 
 		std::string NullAsset(const char* sceneFileName)
 		{
-			return RootDir() + "Editor/Assets/" + sceneFileName;
+			return RootDir() + "Editor\\Assets\\" + sceneFileName;
 		}
 
 		std::string Project(const char* projectFileName)
 		{
-			return AssetsDir() + "Projects/" + projectFileName;
+			return AssetsDir() + "Projects\\" + projectFileName;
 		}
 
 		std::string MeshesDir()
 		{
-			return AssetsDir() + "Meshes/";
+			return AssetsDir() + "Meshes\\";
 		}
 
 		std::string Mesh(const char* meshFileName)
@@ -36,7 +36,7 @@ namespace QwerkE {
 
 		std::string ScenesDir()
 		{
-			return AssetsDir() + "Scenes/";
+			return AssetsDir() + "Scenes\\";
 		}
 
 		std::string Scene(const char* sceneFileName)
@@ -46,12 +46,22 @@ namespace QwerkE {
 
 		std::string Schematic(const char* schematicFileName)
 		{
-			return AssetsDir() + "Schematics/" + schematicFileName;
+			return AssetsDir() + "Schematics\\" + schematicFileName;
 		}
 
 		std::string Settings(const char* settingsFileName)
 		{
-			return AssetsDir() + "Settings/" + settingsFileName;
+			return AssetsDir() + "Settings\\" + settingsFileName;
+		}
+
+		std::string ShadersDir()
+		{
+			return AssetsDir() + "Shaders\\";
+		}
+
+		std::string Shader(const char* shaderFileName)
+		{
+			return ShadersDir() + shaderFileName;
 		}
 
 	}

@@ -29,7 +29,9 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
-		Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
+		// Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
+		// Serialization::NewSerializeObjectToFile(s_AssetGuidToFileRegistry, "NewSerialization");
+		Serialization::NewDeserializeFromToFile("NewSerialization", s_AssetGuidToFileRegistry);
 
 		for (size_t i = 0; i < s_AssetGuidToFileRegistry.size(); i++)
 		{
@@ -111,6 +113,7 @@ namespace QwerkE {
 	void Assets::SaveRegistry()
 	{
 		Serialization::SerializeObjectToFile(s_AssetGuidToFileRegistry, Paths::Settings(s_AssetsRegistryFileName).c_str());
+		Serialization::NewSerializeObjectToFile(s_AssetGuidToFileRegistry, "NewSerializationWindow");
 	}
 
 	void Assets::ExistsInRegistry(const GUID& guid, const std::string& fileName)

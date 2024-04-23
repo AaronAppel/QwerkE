@@ -1,6 +1,9 @@
 #pragma once
 
+#include <filesystem>
 #include <string>
+
+typedef std::filesystem::path Path;
 
 namespace QwerkE {
 
@@ -24,6 +27,9 @@ namespace QwerkE {
 		std::string Schematic(const char* schematicFileName);
 
 		std::string Settings(const char* settingsFileName);
+
+		std::string ShadersDir();
+		std::string Shader(const char* shaderFileName);
 
 	}
 
