@@ -14,7 +14,15 @@ namespace QwerkE {
 		class EditorWindowMenuBar : public EditorWindow
 		{
 		public:
-			EditorWindowMenuBar(GUID guid) : EditorWindow("MenuBar", EditorWindowTypes::MenuBar, guid, EditorWindowFlags::Headless) { }
+            EditorWindowMenuBar(GUID guid) :
+                EditorWindow("MenuBar",
+                    EditorWindowTypes::MenuBar,
+                    guid,
+                    (EditorWindowFlags)(EditorWindowFlags::Headless | EditorWindowFlags::Singleton))
+            {
+                m_MinimumWidth = 0.f;
+                m_MinimumHeight = 0.f;
+            }
 
             bool IsUnique() override { return true; }
 
@@ -46,10 +54,12 @@ namespace QwerkE {
                             for (u32 i = startingIndex; i < EditorWindowTypes::_size_constant; i++)
                             {
                                 EditorWindowTypes type = EditorWindowTypes::_from_index(i);
+                                if (EditorWindowTypes::MenuBar == (u32)type)
+                                    continue;
+
                                 if (ImGui::Button(ENUM_TO_STR(type)))
                                 {
                                     Editor::OpenEditorWindow((u32)type);
-                                    // #TODO Set editor UI state to dirty
                                 }
                             }
                             ImGui::Separator();

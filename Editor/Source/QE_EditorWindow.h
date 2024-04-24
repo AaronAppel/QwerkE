@@ -32,6 +32,7 @@ namespace QwerkE {
 			Headless				= 1 << 0,
 			ExactNameNoguid			= 1 << 1,
 			Hidden					= 1 << 2,
+			Singleton				= 1 << 3,
 		};
 
 		QC_ENUM(EditorWindowTypes, u32,
@@ -66,7 +67,7 @@ namespace QwerkE {
 					return;
 
 				// #TODO Find why new windows are still too small, and if this check does anything
-				if (m_WindowFlags & EditorWindowFlags::Hidden == 0)
+				if ((m_WindowFlags & EditorWindowFlags::Hidden) == 0)
 				{
 					ImGui::SetNextWindowSizeConstraints({ m_MinimumWidth , m_MinimumHeight }, { FLT_MAX, FLT_MAX });
 				}
@@ -95,6 +96,7 @@ namespace QwerkE {
 
 			GUID Guid() { return m_Guid; }
 			EditorWindowTypes Type() { return m_EditorWindowType; }
+			EditorWindowFlags WindowFlags() { return m_WindowFlags; }
 
 			virtual void OnEntitySelected(const EntityHandle& entity) { }
 
@@ -124,17 +126,17 @@ namespace QwerkE {
 
 			const GUID& GetGuid() { return m_Guid; }
 
-		private:
-			MIRROR_PRIVATE_MEMBERS
-
-			std::string m_WindowName = Constants::gc_DefaultStringValue;
-			GUID m_Guid; // #NOTE Window is static so has order dependency with GUID engine init
-
 			const float m_StartingWidth = 100.f;
 			const float m_StartingHeight = 150.f;
 
 			float m_MinimumWidth = m_StartingWidth;
 			float m_MinimumHeight = m_StartingHeight;
+
+		private:
+			MIRROR_PRIVATE_MEMBERS
+
+			std::string m_WindowName = Constants::gc_DefaultStringValue;
+			GUID m_Guid; // #NOTE Singleton windows are static and have GUID dependency with init
 
 			EditorWindowTypes m_EditorWindowType;
 		};

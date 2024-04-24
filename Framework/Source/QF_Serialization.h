@@ -7,6 +7,7 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #endif
 
+#include "QF_Files.h"
 #include "QF_Log.h"
 
 namespace QwerkE {
@@ -14,6 +15,9 @@ namespace QwerkE {
     class Scene;
 
     namespace Serialization {
+
+        // #TODO Move somewhere better
+        cJSON* ParseJsonFile(const char* absoluteFilePath);
 
         void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
@@ -25,6 +29,29 @@ namespace QwerkE {
                 LOG_ERROR("{0} Null file path given!", __FUNCTION__);
                 return;
             }
+
+            if (cJSON* rootJsonObject = ParseJsonFile(absoluteFilePath))
+            {
+                const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+                if (!rootJsonObject->child)
+                {
+                    LOG_ERROR("{0} root JSON object has no children in JSON file {1}!", __FUNCTION__, absoluteFilePath);
+                }
+                else if (strcmp(rootJsonObject->child->string, typeInfo->stringName.c_str()) != 0)
+                {
+                    LOG_ERROR("{0} root 1st level object name {1} doesn't match given type of {2}!", __FUNCTION__, rootJsonObject->child->string, typeInfo->stringName.c_str());
+                }
+                else
+                {
+                    DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
+                }
+            }
+            else
+            {
+                LOG_ERROR("{0} Could not load object type {1} from file {2}!", __FUNCTION__, Mirror::InfoForType<T>()->stringName.c_str(), absoluteFilePath);
+            }
+
+            int bp = 0;
 
             if (cJSON* rootJsonObject = OpencJSONStream(absoluteFilePath))
             {

@@ -60,10 +60,7 @@ namespace QwerkE {
 
         static bool s_ShowingEditorUI = true;
 
-        static EditorWindowDefaultDebug s_EditorWindowDefaultDebug(GUID::Invalid); // #TODO Review serializaing and using persistent guids
         static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid);
-        static EditorWindowImGuiDemo s_EditorWindowImGuiDemo(GUID::Invalid);
-        static EditorWindowMenuBar s_EditorWindowMenuBar(GUID::Invalid);
 
         static std::unordered_map<GUID, EditorWindow*> s_EditorWindows;
         static std::vector<EditorWindow*> s_EditorWindowsQueuedForDelete;
@@ -83,6 +80,16 @@ namespace QwerkE {
 
             std::map<std::string, const char*> pairs;
             ProgramArgsToPairs(argc, argv, pairs);
+
+            // Set application directories
+            if (pairs.find(key_NullAssetsDirPath) != pairs.end())
+            {
+                Paths::SetNullAssetsDir(pairs[key_NullAssetsDirPath]);
+            }
+            if (pairs.find(key_AssetsDirPath) != pairs.end())
+            {
+                Paths::SetAssetsDir(pairs[key_AssetsDirPath]);
+            }
 
             if (pairs.find(key_ApplicationName) == pairs.end())
             {
@@ -179,9 +186,6 @@ namespace QwerkE {
                     if (s_ShowingEditorUI)
                     {
                         s_EditorWindowDockingContext.Draw();
-                        s_EditorWindowMenuBar.Draw();
-                        s_EditorWindowDefaultDebug.Draw();
-                        s_EditorWindowImGuiDemo.Draw();
                     }
 
                     local_Update();
@@ -235,27 +239,21 @@ namespace QwerkE {
         {
             EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(enumToInt);
 
-            switch (editorWindowType)
+            for (auto& pair : s_EditorWindows)
             {
-            case EditorWindowTypes::DefaultDebug:
-                s_EditorWindowDefaultDebug.ToggleHidden();
-                break;
-            case EditorWindowTypes::DockingContext:
-                s_EditorWindowDockingContext.ToggleHidden();
-                break;
-            case EditorWindowTypes::ImGuiDemo:
-                s_EditorWindowImGuiDemo.ToggleHidden();
-                break;
-            case EditorWindowTypes::MenuBar:
-                s_EditorWindowMenuBar.ToggleHidden();
-                break;
-
-            default:
-                if (EditorWindow* newWindow = NewEditorWindowByType(editorWindowType))
+                if (pair.second->WindowFlags() & EditorWindowFlags::Singleton &&
+                    pair.second->Type() == enumToInt)
                 {
-                    s_EditorWindows[newWindow->Guid()] = newWindow;
+                    pair.second->ToggleHidden();
+                    // #TODO Set editor UI state to dirty
+                    return;
                 }
-                break;
+            }
+
+            if (EditorWindow* newWindow = NewEditorWindowByType(editorWindowType))
+            {
+                s_EditorWindows[newWindow->Guid()] = newWindow;
+                // #TODO Set editor UI state to dirty
             }
         }
 
@@ -289,6 +287,21 @@ namespace QwerkE {
 		{
             Serialization::DeserializeObjectFromFile(Paths::Settings(s_EditorWindowDataFileName).c_str(), s_EditorWindows);
             Serialization::NewDeserializeFromToFile("NewSerializationWindow", s_EditorWindows);
+
+            bool missingMenuBarWindow = true;
+            for (auto& pair : s_EditorWindows)
+            {
+                if (EditorWindowTypes::MenuBar == (u32)pair.second->Type())
+                {
+                    missingMenuBarWindow = false;
+                    break;
+                }
+            }
+
+            if (missingMenuBarWindow)
+            {
+                OpenEditorWindow(EditorWindowTypes::MenuBar);
+            }
 
             // #TESTING
             Serialization::NewSerializeObjectToFile(s_EditorWindows, "NewSerializationWindow");

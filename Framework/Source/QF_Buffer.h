@@ -7,7 +7,15 @@ namespace QwerkE {
 	public:
 
 		Buffer() = default;
-		Buffer(const Buffer&) = default;
+		Buffer(const Buffer& other)
+		{
+			this->m_Data = other.m_Data;
+			this->m_SizeBytes = other.m_SizeBytes;
+
+			// #TODO Investigate proper way to copy buffer references, or smart pointer usage
+			other.m_OwnershipTransferred = true;
+			this->m_OwnershipTransferred = false;
+		}
 
 		Buffer(u64 bytes)
 		{
@@ -16,7 +24,10 @@ namespace QwerkE {
 
 		virtual ~Buffer()
 		{
-			Release();
+			if (!m_OwnershipTransferred)
+			{
+				Release();
+			}
 		}
 
 		void Allocate(u64 bytes)
@@ -52,6 +63,8 @@ namespace QwerkE {
 	protected:
 		u8* m_Data = nullptr;
 		u64 m_SizeBytes = 0;
+
+		mutable bool m_OwnershipTransferred = false;
 	};
 
 }

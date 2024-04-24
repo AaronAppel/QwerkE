@@ -187,23 +187,41 @@ namespace QwerkE {
 						Editor::EditorWindow* newEditorWindow = nullptr;
 						switch (editorWindowType)
 						{
-							// Unique
+							// Singleton
 						case Editor::EditorWindowTypes::DefaultDebug:
+							newEditorWindow = new Editor::EditorWindowDefaultDebug(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowDefaultDebug>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::DockingContext:
+							newEditorWindow = new Editor::EditorWindowDockingContext(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowDockingContext>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::ImGuiDemo:
+							newEditorWindow = new Editor::EditorWindowImGuiDemo(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowImGuiDemo>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::MenuBar:
-							LOG_ERROR("{0} Cannot deserialize unique editor windows dynamically!", __FUNCTION__);
+							newEditorWindow = new Editor::EditorWindowMenuBar(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowMenuBar>(), newEditorWindow);
 							break;
 
 							// Instanced
 						case Editor::EditorWindowTypes::Assets:
-							newEditorWindow = new Editor::EditorWindowAssets(guid); break;
+							newEditorWindow = new Editor::EditorWindowAssets(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowAssets>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::EntityInspector:
-							newEditorWindow = new Editor::EditorWindowEntityInspector(guid); break;
+							newEditorWindow = new Editor::EditorWindowEntityInspector(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowEntityInspector>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::SceneControls:
-							newEditorWindow = new Editor::EditorWindowSceneControls(guid); break;
+							newEditorWindow = new Editor::EditorWindowSceneControls(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneControls>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::SceneGraph:
-							newEditorWindow = new Editor::EditorWindowSceneGraph(guid); break;
+							newEditorWindow = new Editor::EditorWindowSceneGraph(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneGraph>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::SceneView:
 							{
 								// #TODO Get window name value
@@ -216,15 +234,25 @@ namespace QwerkE {
 							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSettings>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::StylePicker:
-							newEditorWindow = new Editor::EditorWindowStylePicker(guid); break;
+							newEditorWindow = new Editor::EditorWindowStylePicker(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowStylePicker>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::MaterialEditor:
-							newEditorWindow = new Editor::EditorWindowMaterialEditor(guid); break;
+							newEditorWindow = new Editor::EditorWindowMaterialEditor(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowMaterialEditor>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::FolderViewer:
-							newEditorWindow = new Editor::EditorWindowFolderViewer(guid); break;
+							newEditorWindow = new Editor::EditorWindowFolderViewer(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowFolderViewer>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::NodeEditor:
-							newEditorWindow = new Editor::EditorWindowNodeEditor(guid); break;
+							newEditorWindow = new Editor::EditorWindowNodeEditor(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowNodeEditor>(), newEditorWindow);
+							break;
 						case Editor::EditorWindowTypes::ShaderEditor:
-							newEditorWindow = new Editor::EditorWindowShaderEditor(guid); break;
+							newEditorWindow = new Editor::EditorWindowShaderEditor(guid);
+							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowShaderEditor>(), newEditorWindow);
+							break;
 
 						case Editor::EditorWindowTypes::EditorWindowTypesInvalid:
 						default:

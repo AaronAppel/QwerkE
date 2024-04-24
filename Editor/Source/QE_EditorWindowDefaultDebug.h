@@ -10,7 +10,10 @@ namespace QwerkE {
 		{
 		public:
 			EditorWindowDefaultDebug::EditorWindowDefaultDebug(GUID guid) :
-				EditorWindow("Default Debug Window", EditorWindowTypes::DefaultDebug, guid, EditorWindowFlags::ExactNameNoguid)
+				EditorWindow("Default Debug Window",
+					EditorWindowTypes::DefaultDebug,
+					guid,
+					(EditorWindowFlags)(EditorWindowFlags::ExactNameNoguid | EditorWindowFlags::Singleton))
 			{ }
 
 			bool IsUnique() override { return true; }

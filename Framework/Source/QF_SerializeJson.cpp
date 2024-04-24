@@ -20,6 +20,23 @@ namespace QwerkE {
 
     namespace Serialization {
 
+        cJSON* ParseJsonFile(const char* absoluteFilePath)
+        {
+            if (Buffer jsonFileBuffer = Files::LoadFile(absoluteFilePath))
+            {
+                if (cJSON* root = cJSON_Parse(jsonFileBuffer.As<char>()))
+                {
+                    return root;
+                }
+                // LOG_ERROR("{0} Could not parse JSON file {1}!", __FUNCTION__, absoluteFilePath);
+                printf("%s(): Could not open cJSON stream. Possible compile error. Check %s file for typos!", __FUNCTION__, absoluteFilePath);
+                return nullptr;
+            }
+            // LOG_ERROR("{0} Could not parse JSON file {1}!", __FUNCTION__, absoluteFilePath);
+            printf("{%s}(): Could not find JSON file \"%s\"!", __FUNCTION__, absoluteFilePath);
+            return nullptr;
+        }
+
         void local_SerializePrimitive(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
         void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
         void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);

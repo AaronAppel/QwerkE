@@ -345,6 +345,8 @@ namespace QwerkE {
 
 	typedef Editor::EditorWindowStylePicker EditorWindowStylePicker;
 	MIRROR_CLASS_START(EditorWindowStylePicker)
+	MIRROR_CLASS_MEMBER(m_ShowMoreInfo)
+	MIRROR_CLASS_MEMBER(m_UiScaling)
 	MIRROR_CLASS_END(EditorWindowStylePicker)
 
 	typedef Editor::EditorWindowMaterialEditor EditorWindowMaterialEditor;

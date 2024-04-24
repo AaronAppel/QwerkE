@@ -8,21 +8,25 @@ project "Game"
 		
 		-- Command line arguments
 		-- #TODO These need to be in sync with Editor. Change that
-		"key_StartupDir=\"-startupDir\"",
+		"key_StartupDir=\"-startupDir\"", -- #TODO Change to -executablePath (includes "app.exe")
 		"key_ApplicationFileName=\"-appName\"",
 		"key_ApplicationName=\"-applicationName\"",
 		"key_ProjectFileName=\"-projectFileName\"",
 		"key_UserName=\"-userName\"",
+		"key_AssetsDirPath=\"-assetsDirPath\"",
+		"key_NullAssetsDirPath=\"-nullAssetsDirPath\"",
 		
 		-- "BX_CONFIG_DEBUG=1",
 		-- "__STDC_FORMAT_MACROS",
 	}
 	
-	debugargs -- User setting changes require VS reload
+	debugargs -- #NOTE User setting changes require VS reload
 	{
 		"-applicationName", "\"Test Game\"",
 		"-projectFileName", "\"Project1\"",
 		"-userName", "\"User1\"",
+		"-assetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",
+		"-nullAssetsDirPath", "\"%{wks.location}Editor\\Assets\"",
 	}
 	
 	postbuildcommands

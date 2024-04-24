@@ -4,9 +4,13 @@ project "Framework"
 	kind "StaticLib"
 	location ""
 	
+	local rootDir = "%{wks.location}/"
+	rootDir = rootDir:gsub("/", "\\") -- Replace '/' with '\\' for paths
+	
 	defines
 	{
-		"WorkspaceRootDir=\"%{wks.location}/\"",
+		-- #TODO Deprecate WorkspaceRootDir
+		"WorkspaceRootDir=\"" .. "%{wks.location}/" .. "\"",
 	}
 
 	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }

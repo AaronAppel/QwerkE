@@ -56,7 +56,7 @@ cJSON* OpencJSONStream(const char* fileDirectory)
 		delete[] str;
 		return root;
 	}
-	printf("{%s}(): Could not find JSON file {%s}!", __FUNCTION__, fileDirectory);
+	printf("{%s}(): Could not find JSON file \"%s\"!", __FUNCTION__, fileDirectory);
 	return nullptr;
 }
 

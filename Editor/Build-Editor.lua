@@ -17,9 +17,11 @@ project "Editor"
 		"key_ApplicationName=\"-applicationName\"",
 		"key_ProjectFileName=\"-projectFileName\"",
 		"key_UserName=\"-userName\"",
+		"key_AssetsDirPath=\"-assetsDirPath\"",
+		"key_NullAssetsDirPath=\"-nullAssetsDirPath\"",
 	}
 	
-	debugargs -- User setting changes require VS reload
+	debugargs -- #NOTE User setting changes require VS reload
 	{
 		"-applicationName", "\"QwerkEditor\"",
 		"-projectFileName", "\"Project1\"",

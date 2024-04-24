@@ -24,6 +24,9 @@ namespace QwerkE {
 		{
 			Buffer buffer;
 
+			if (!filePath)
+				return buffer;
+
 			FILE* filehandle;
 			const errno_t error = fopen_s(&filehandle, filePath, "rb");
 
@@ -38,7 +41,7 @@ namespace QwerkE {
 				fclose(filehandle);
 			}
 
-			return buffer;
+			return buffer; // #TODO Buffer memory is released in destructor
 		}
 
 		Buffer LoadPng(const char* filePath, unsigned int* imageWidth, unsigned int* imageHeight, u16& channels)

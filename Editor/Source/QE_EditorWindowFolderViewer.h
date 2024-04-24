@@ -24,10 +24,7 @@ namespace QwerkE {
 				ImGui::SameLineEnd();
 				if (ImGui::Button("<-"))
 				{
-					if (m_CurrentDirectory.string().find('\\', 0) != std::string::npos)
-					{
-						m_CurrentDirectory = m_CurrentDirectory.parent_path();
-					}
+					m_CurrentDirectory = m_CurrentDirectory.parent_path();
 				}
 
 				static float padding = 16.0f;
@@ -43,6 +40,7 @@ namespace QwerkE {
 
 				for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 				{
+					// #NOTE Crashes when viewing file names containing emojis
 					const auto& path = directoryEntry.path();
 					std::string filenameString = path.filename().string();
 

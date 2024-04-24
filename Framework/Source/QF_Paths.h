@@ -9,13 +9,19 @@ namespace QwerkE {
 
 	namespace Paths {
 
+		// #TODO Look at using std::strings or string views instead of const char*
+
+		void SetNullAssetsDir(std::string newRootDir);
+		void SetAssetsDir(std::string newAssetsDir);
+
 		std::string RootDir();
 
 		std::string AssetsDir();
 
-		// #TODO Look at using std::strings or string views instead of const char*
+		std::string NullAssetsDir();
 		std::string NullAsset(const char* sceneFileName);
 
+		std::string ProjectsDir();
 		std::string Project(const char* projectFileName);
 
 		std::string MeshesDir();

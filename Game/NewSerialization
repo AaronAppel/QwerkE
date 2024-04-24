@@ -2,7 +2,7 @@
 	"Scene":	{
 		"m_SceneFileName":	"GameScene1.qscene",
 		"m_map_guid_entt":	{
-			"14449797510095424961":	{
+			"15362979326662513913":	{
 				"ComponentInfo":	{
 					"m_EntityName":	"null",
 					"m_Enabled":	false
@@ -28,7 +28,7 @@
 					}
 				}
 			},
-			"13752704923376635916":	{
+			"11672074356997087012":	{
 				"ComponentCamera":	{
 					"m_MoveSpeed":	5,
 					"vec3f":	{

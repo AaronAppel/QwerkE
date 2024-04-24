@@ -13,7 +13,7 @@ namespace QwerkE {
 				EditorWindow("ImGui Demo",
 					EditorWindowTypes::ImGuiDemo,
 					guid,
-					(EditorWindowFlags)(EditorWindowFlags::Headless | EditorWindowFlags::Hidden))
+					(EditorWindowFlags)(EditorWindowFlags::Headless | EditorWindowFlags::Hidden | EditorWindowFlags::Singleton))
 			{ }
 
 		private:
