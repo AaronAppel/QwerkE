@@ -14,8 +14,8 @@
 
 #define AddItemToRoot(root, item) AddItemToObject(root, item)
 
-cJSON* OpencJSONStream(const char* fileDirectory);
-void ClosecJSONStream(const cJSON* root);
+cJSON* OpencJSONStream(const char* const fileDirectory);
+void ClosecJSONStream(cJSON* root);
 
 void AddItemToRootOfFile(cJSON* object, char* filename);
 void PrintRootObjectToFile(const char* filename, cJSON* root);

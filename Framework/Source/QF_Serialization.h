@@ -45,13 +45,13 @@ namespace QwerkE {
                 {
                     DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
                 }
+                cJSON_Delete(rootJsonObject);
             }
             else
             {
                 LOG_ERROR("{0} Could not load object type {1} from file {2}!", __FUNCTION__, Mirror::InfoForType<T>()->stringName.c_str(), absoluteFilePath);
             }
-
-            int bp = 0;
+            return; // #TODO Remove code after testing
 
             if (cJSON* rootJsonObject = OpencJSONStream(absoluteFilePath))
             {

@@ -29,9 +29,9 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
-		// Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
+		Serialization::DeserializeObjectFromFile(Paths::Settings(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 		// Serialization::NewSerializeObjectToFile(s_AssetGuidToFileRegistry, "NewSerialization");
-		Serialization::NewDeserializeFromToFile("NewSerialization", s_AssetGuidToFileRegistry);
+		// Serialization::NewDeserializeFromToFile("NewSerialization", s_AssetGuidToFileRegistry);
 
 		for (size_t i = 0; i < s_AssetGuidToFileRegistry.size(); i++)
 		{

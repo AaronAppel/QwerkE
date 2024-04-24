@@ -41,7 +41,7 @@ void cjson_WriteStringToFile(const char* filename, const char* string)
 	}
 }
 
-cJSON* OpencJSONStream(const char* fileDirectory)
+cJSON* OpencJSONStream(const char* const fileDirectory)
 {
 	if (json_FileExists(fileDirectory))
 	{
@@ -60,11 +60,11 @@ cJSON* OpencJSONStream(const char* fileDirectory)
 	return nullptr;
 }
 
-void ClosecJSONStream(const cJSON* root)
+void ClosecJSONStream(cJSON* root)
 {
 	if (root)
 	{
-		cJSON_Delete((cJSON*)root);
+		cJSON_Delete(root);
 	}
 }
 

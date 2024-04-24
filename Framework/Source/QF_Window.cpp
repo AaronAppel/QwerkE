@@ -204,7 +204,7 @@ namespace QwerkE {
 
                 if (strcmp(fileExtension.string().c_str(), ".qscene") == 0)
                 {
-                    std::string scenefilePath = Paths::ScenesDir() + fileName.string();
+                    std::string scenefilePath = Paths::Scene(fileName.string().c_str());
                     if (Files::Exists(scenefilePath.c_str()))
                     {
                         if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
@@ -212,6 +212,15 @@ namespace QwerkE {
                             Scenes::SetCurrentScene(newScene);
                             Assets::AddToRegistry(newScene->GetGuid(), newScene->GetSceneName());
                         }
+                    }
+                }
+                else if (strcmp(fileExtension.string().c_str(), ".bin") == 0 ||
+                         strcmp(fileExtension.string().c_str(), ".obj") == 0)
+                {
+                    std::string meshfilePath = Paths::Mesh(fileName.string().c_str());
+                    if (Files::Exists(meshfilePath.c_str()))
+                    {
+                        Assets::AddToRegistry(GUID(), fileName.string());
                     }
                 }
                 else
