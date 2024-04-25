@@ -13,6 +13,7 @@
 #include "QF_Debug.h"
 #include "QF_Files.h"
 #include "QF_Paths.h"
+#include "QF_Projects.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Settings.h"
@@ -217,10 +218,18 @@ namespace QwerkE {
                 else if (strcmp(fileExtension.string().c_str(), ".bin") == 0 ||
                          strcmp(fileExtension.string().c_str(), ".obj") == 0)
                 {
-                    std::string meshfilePath = Paths::Mesh(fileName.string().c_str());
-                    if (Files::Exists(meshfilePath.c_str()))
+                    std::string meshFilePath = Paths::Mesh(fileName.string().c_str());
+                    if (Files::Exists(meshFilePath.c_str()))
                     {
                         Assets::AddToRegistry(GUID(), fileName.string());
+                    }
+                }
+                else if (strcmp(fileExtension.string().c_str(), ".qproj"))
+                {
+                    std::string projectFilePath = Paths::Project(fileName.string().c_str());
+                    if (Files::Exists(projectFilePath.c_str()))
+                    {
+                        Projects::LoadProject(fileName.string());
                     }
                 }
                 else

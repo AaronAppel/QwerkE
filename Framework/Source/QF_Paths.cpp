@@ -63,14 +63,23 @@ namespace QwerkE {
 			return ScenesDir() + "\\" + sceneFileName;
 		}
 
-		std::string Schematic(const char* schematicFileName)
+		std::string SchematicsDir()
 		{
-			return AssetsDir() + "\\Schematics\\" + schematicFileName;
+			return AssetsDir() + "\\Schematics";
 		}
 
-		std::string Settings(const char* settingsFileName)
+		std::string Schematic(const char* schematicFileName)
 		{
-			return AssetsDir() + "\\Settings\\" + settingsFileName;
+			return SchematicsDir() + "\\" + schematicFileName;
+		}
+
+		std::string SettingsDir()
+		{
+			return AssetsDir() + "\\Settings";
+		}
+		std::string Setting(const char* settingsFileName)
+		{
+			return SettingsDir() + "\\" + settingsFileName;
 		}
 
 		std::string ShadersDir()

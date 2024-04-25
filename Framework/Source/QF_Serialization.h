@@ -1,6 +1,6 @@
 
 #ifdef _QCJSON
-#include "Libraries/cJSON/QC_cJSON.h"
+#include "Libraries/cJSON/cJSON.h"
 #endif
 
 #ifdef _QMIRROR
@@ -10,6 +10,8 @@
 #include "QF_Files.h"
 #include "QF_Log.h"
 
+struct cJSON;
+
 namespace QwerkE {
 
     class Scene;
@@ -18,6 +20,8 @@ namespace QwerkE {
 
         // #TODO Move somewhere better
         cJSON* ParseJsonFile(const char* absoluteFilePath);
+        void PrintJsonToFile(cJSON* jsonRootObject, const char* absoluteFilePath);
+        cJSON* TempCreateArray(const char* key);
 
         void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
@@ -53,28 +57,27 @@ namespace QwerkE {
             }
             return; // #TODO Remove code after testing
 
-            if (cJSON* rootJsonObject = OpencJSONStream(absoluteFilePath))
-            {
-                const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-                if (!rootJsonObject->child)
-                {
-                    LOG_ERROR("{0} root JSON object has no children in JSON file {1}!", __FUNCTION__, absoluteFilePath);
-                }
-                else if (strcmp(rootJsonObject->child->string, typeInfo->stringName.c_str()) != 0)
-                {
-                    LOG_ERROR("{0} root 1st level object name {1} doesn't match given type of {2}!", __FUNCTION__, rootJsonObject->child->string, typeInfo->stringName.c_str());
-                }
-                else
-                {
-                    DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
-                }
-
-                ClosecJSONStream(rootJsonObject);
-            }
-            else
-            {
-                LOG_ERROR("{0} Could not load object type {1} from file {2}!", __FUNCTION__, Mirror::InfoForType<T>()->stringName.c_str(), absoluteFilePath);
-            }
+            // if (cJSON* rootJsonObject = OpencJSONStream(absoluteFilePath))
+            // {
+            //     const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+            //     if (!rootJsonObject->child)
+            //     {
+            //         LOG_ERROR("{0} root JSON object has no children in JSON file {1}!", __FUNCTION__, absoluteFilePath);
+            //     }
+            //     else if (strcmp(rootJsonObject->child->string, typeInfo->stringName.c_str()) != 0)
+            //     {
+            //         LOG_ERROR("{0} root 1st level object name {1} doesn't match given type of {2}!", __FUNCTION__, rootJsonObject->child->string, typeInfo->stringName.c_str());
+            //     }
+            //     else
+            //     {
+            //         DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
+            //     }
+            //     cJSON_Delete(rootJsonObject);
+            // }
+            // else
+            // {
+            //     LOG_ERROR("{0} Could not load object type {1} from file {2}!", __FUNCTION__, Mirror::InfoForType<T>()->stringName.c_str(), absoluteFilePath);
+            // }
         }
 
         void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
@@ -91,19 +94,25 @@ namespace QwerkE {
             const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
 
             cJSON* jsonRootObject = cJSON_CreateObject();
-            cJSON* jsonRootArray = CreateArray(typeInfo->stringName.c_str());
-            AddItemToObject(jsonRootObject, jsonRootArray);
+            // cJSON* jsonRootArray = TempCreateArray(typeInfo->stringName.c_str());
+
+            // #TODO Move to new function
+            cJSON* jsonRootArray = cJSON_CreateArray();
+            jsonRootArray->child = cJSON_CreateObject();
+            jsonRootArray->string = _strdup(typeInfo->stringName.c_str());
+
+            cJSON_AddItemToArray(jsonRootObject, jsonRootArray);
 
             SerializeObjectToJson((const void*)&objectReference, typeInfo, jsonRootArray);
 
-            PrintRootObjectToFile(absoluteFilePath, jsonRootObject);
+            PrintJsonToFile(jsonRootObject, absoluteFilePath);
             cJSON_Delete(jsonRootObject);
         }
 
         void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         template <class T>
-        void NewSerializeObjectToFile(const T& objectReference, const char* absoluteFilePath)
+        void NewSerializeToFile(const T& objectReference, const char* absoluteFilePath)
         {
             if (!absoluteFilePath)
             {
@@ -116,14 +125,14 @@ namespace QwerkE {
             const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
             SerializeToJson((const void*)&objectReference, typeInfo, jsonRootObject);
 
-            PrintRootObjectToFile(absoluteFilePath, jsonRootObject);
+            PrintJsonToFile(jsonRootObject, absoluteFilePath);
             cJSON_Delete(jsonRootObject);
         }
 
-        void DeserializeFromJson(cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+        void DeserializeFromJson(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
         template <class T>
-        void NewDeserializeFromToFile(const char* absoluteFilePath, T& objectReference)
+        void NewDeserializeFromFile(const char* absoluteFilePath, T& objectReference)
         {
             if (!absoluteFilePath)
             {
@@ -131,7 +140,7 @@ namespace QwerkE {
                 return;
             }
 
-            if (cJSON* rootJsonObject = OpencJSONStream(absoluteFilePath))
+            if (cJSON* rootJsonObject = ParseJsonFile(absoluteFilePath))
             {
                 const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
                 if (!rootJsonObject->child)
@@ -146,8 +155,7 @@ namespace QwerkE {
                 {
                     DeserializeFromJson(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
                 }
-
-                ClosecJSONStream(rootJsonObject);
+                cJSON_Delete(rootJsonObject);
             }
             else
             {

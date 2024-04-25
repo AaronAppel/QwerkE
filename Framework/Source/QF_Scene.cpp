@@ -216,12 +216,12 @@ namespace QwerkE {
         if (Files::Exists(otherSceneFilePath))
         {
             Serialization::DeserializeObjectFromFile(otherSceneFilePath, *this);
-            Serialization::NewDeserializeFromToFile("NewSerialization", *this);
+            // Serialization::NewDeserializeFromToFile("NewSerialization", *this);
         }
         else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {
             Serialization::DeserializeObjectFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
-            Serialization::NewDeserializeFromToFile("NewSerialization", *this);
+            // Serialization::NewDeserializeFromToFile("NewSerialization", *this);
         }
         else
         {
@@ -239,7 +239,7 @@ namespace QwerkE {
         m_IsDirty = false;
 
         // #TESTING
-        Serialization::NewSerializeObjectToFile(*this, "NewSerialization");
+        Serialization::NewSerializeToFile(*this, "NewSerialization");
         int bp = 0;
     }
 
@@ -258,7 +258,7 @@ namespace QwerkE {
         }
 
         Serialization::DeserializeObjectFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
-        Serialization::NewDeserializeFromToFile("NewSerialization", *this);
+        // Serialization::NewDeserializeFromToFile("NewSerialization", *this);
 
         OnLoaded();
 

@@ -63,8 +63,7 @@ namespace QwerkE {
 			// bool isPair() const { return enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END; } // #TODO Deprecate enum dependency
 			bool isArray() const { return enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END; } // #TODO Deprecate enum dependency
 			bool isMap() const { return enumType > MirrorTypes::m_MAPS_START && enumType < MirrorTypes::m_MAPS_END; } // #TODO Deprecate enum dependency
-			bool isVector() const { return false; }
-			// bool isVector() const { return enumType > MirrorTypes::m_VECTORS_START && enumType < MirrorTypes::m_VECTORS_END; } // #TODO Deprecate enum dependency
+			bool isVector() const { return enumType > MirrorTypes::m_VECTORS_START && enumType < MirrorTypes::m_VECTORS_END; } // #TODO Deprecate enum dependency
 
 			bool newIsCollection() const { return
 				enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END ||
@@ -235,14 +234,14 @@ static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForT
 // static_assert(std::is_array_v<ARRAY_TYPE>);
 #define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE) MIRROR_MAP(ARRAY_TYPE, COLLECTION_TYPE) // Could use std::is_array_v<ARRAY_TYPE>
 #define MIRROR_VECTOR(VECTOR_TYPE, COLLECTION_TYPE) MIRROR_MAP(VECTOR_TYPE, COLLECTION_TYPE)
-#define MIRROR_MAP(MAP_TYPE, COLLECTION_TYPE) \
+#define MIRROR_MAP(MAP_TYPE, PAIR_TYPE) \
 template<> \
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<MAP_TYPE>() { \
 	static TypeInfo localStaticTypeInfo; \
 	localStaticTypeInfo.stringName = #MAP_TYPE; \
 	localStaticTypeInfo.size = sizeof(MAP_TYPE); \
 	localStaticTypeInfo.enumType = MirrorTypes::MAP_TYPE; \
-	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<COLLECTION_TYPE>(); \
+	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<PAIR_TYPE>(); \
 	return &localStaticTypeInfo; \
 }
 

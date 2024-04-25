@@ -930,7 +930,7 @@ namespace QwerkE {
 					}
 					else
 					{
-						LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name, field.typeInfo->stringName, (int)field.typeInfo->enumType);
+						LOG_WARN("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, field.name.c_str(), field.typeInfo->stringName.c_str(), (int)field.typeInfo->enumType);
 						break;
 					}
 				}

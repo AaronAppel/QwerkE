@@ -41,7 +41,7 @@ namespace QwerkE {
 
 		void LoadEngineSettings(const std::string& engineSettingsFileName)
 		{
-			std::string engineSettingsFilePath = Paths::Settings(engineSettingsFileName.c_str());
+			std::string engineSettingsFilePath = Paths::Setting(engineSettingsFileName.c_str());
 			s_engineSettings.isDirty = false;
 		}
 
@@ -52,7 +52,7 @@ namespace QwerkE {
 
 		void LoadUserSettings(const std::string& userSettingsFileName)
 		{
-			std::string userSettingsFilePath = Paths::Settings(userSettingsFileName.c_str());
+			std::string userSettingsFilePath = Paths::Setting(userSettingsFileName.c_str());
 			if (userSettingsFilePath.empty() || !Files::Exists(userSettingsFilePath.c_str()))
 			{
 				userSettingsFilePath = Paths::NullAsset(null_config);
@@ -67,7 +67,7 @@ namespace QwerkE {
 
 		void LoadRendererSettings(const std::string& rendererSettingsFileName)
 		{
-			std::string rendererSettingsFilePath = Paths::Settings(rendererSettingsFileName.c_str());
+			std::string rendererSettingsFilePath = Paths::Setting(rendererSettingsFileName.c_str());
 			if (rendererSettingsFileName.empty() || rendererSettingsFilePath.empty() ||
 				!Files::Exists(rendererSettingsFilePath.c_str()))
 			{

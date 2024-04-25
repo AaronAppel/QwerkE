@@ -17,11 +17,21 @@ namespace QwerkE {
             return s_CurrentProject;
         }
 
+		void UnloadCurrentProject() // #TODO Expose in header?
+		{
+			// #TODO Unload s_CurrentProject
+		}
+
 		void LoadProject(const std::string& projectSettingsFilePath)
 		{
+			if (s_CurrentProject.isLoaded)
+			{
+				UnloadCurrentProject();
+			}
+
 			std::string projectFilePath = Paths::Project(projectSettingsFilePath.c_str());
 			Serialization::DeserializeObjectFromFile(projectFilePath.c_str(), s_CurrentProject);
-			Serialization::NewDeserializeFromToFile("NewSerialization", s_CurrentProject);
+			Serialization::NewDeserializeFromFile(projectFilePath.c_str(), s_CurrentProject);
 		}
 
 		void SaveProject()

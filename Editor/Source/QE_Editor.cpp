@@ -47,6 +47,9 @@
 
 #include "QE_EditorWindowHelpers.h"
 
+// #TESTING
+#include "Libraries/Mirror/Source/MirrorTesting.h"
+
 namespace QwerkE {
 
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
@@ -117,7 +120,12 @@ namespace QwerkE {
 
 			Framework::Initialize();
 
-             // #TODO Move somewhere better
+            TestStruct testStruct;
+            // Serialization::SerializeObjectToFile(testStruct, "TestStruct");
+            // Serialization::NewSerializeToFile(testStruct, "TestStruct");
+            Serialization::NewDeserializeFromFile("TestStruct", testStruct);
+
+            // #TODO Move somewhere better
             std::string userSettingsFileName = pairs[key_UserName];
             if (userSettingsFileName == Constants::gc_DefaultStringValue)
             {
@@ -285,8 +293,8 @@ namespace QwerkE {
 
 		void local_Initialize()
 		{
-            Serialization::DeserializeObjectFromFile(Paths::Settings(s_EditorWindowDataFileName).c_str(), s_EditorWindows);
-            Serialization::NewDeserializeFromToFile("NewSerializationWindow", s_EditorWindows);
+            Serialization::DeserializeObjectFromFile(Paths::Setting(s_EditorWindowDataFileName).c_str(), s_EditorWindows);
+            // Serialization::NewDeserializeFromToFile("NewSerializationWindow", s_EditorWindows);
 
             bool missingMenuBarWindow = true;
             for (auto& pair : s_EditorWindows)
@@ -304,12 +312,12 @@ namespace QwerkE {
             }
 
             // #TESTING
-            Serialization::NewSerializeObjectToFile(s_EditorWindows, "NewSerializationWindow");
+            Serialization::NewSerializeToFile(s_EditorWindows, "NewSerializationWindow");
 		}
 
 		void local_Shutdown()
 		{
-            Serialization::SerializeObjectToFile(s_EditorWindows, Paths::Settings(s_EditorWindowDataFileName).c_str());
+            Serialization::SerializeObjectToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
 
             auto it = s_EditorWindows.begin();
             while (it != s_EditorWindows.end())

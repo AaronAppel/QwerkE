@@ -30,9 +30,11 @@ namespace QwerkE {
 		std::string ScenesDir();
 		std::string Scene(const char* sceneFileName);
 
+		std::string SchematicsDir();
 		std::string Schematic(const char* schematicFileName);
 
-		std::string Settings(const char* settingsFileName);
+		std::string SettingsDir();
+		std::string Setting(const char* settingsFileName);
 
 		std::string ShadersDir();
 		std::string Shader(const char* shaderFileName);
