@@ -86,8 +86,9 @@ namespace QwerkE {
         void TestSerializeUMap(const void* obj, cJSON* collectionJsonContainer);
         template <typename T>
         void TestSerializeVector(const void* obj, cJSON* collectionJsonContainer);
-        template <typename T, size_t size>
+        template <typename T, size_t size> // #TODO Deprecate
         void TestSerializeArray(const void* obj, cJSON* collectionJsonContainer);
+        void TestSerializeContiguous(size_t objCount, const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
         template <typename T>
         void TestSerializePair(const void* obj, cJSON* collectionJsonContainer);
 
@@ -363,11 +364,14 @@ namespace QwerkE {
                 TestSerializeVector<char>(obj, collectionJsonContainer); break;
 
             case MirrorTypes::m_imvec4_array: // imgui types
-                TestSerializeArray<ImVec4, ImGuiCol_COUNT>(obj, collectionJsonContainer); break;
+                // TestSerializeArray<ImVec4, ImGuiCol_COUNT>(obj, collectionJsonContainer); break;
+                TestSerializeContiguous(ImGuiCol_COUNT, obj, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer); break;
             case MirrorTypes::m_arr_float16:
-                TestSerializeArray<float, 16>(obj, collectionJsonContainer); break;
+                // TestSerializeArray<float, 16>(obj, collectionJsonContainer); break;
+                TestSerializeContiguous(16, obj, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer); break;
             case MirrorTypes::m_arr_float10: // #TESTING
-                TestSerializeArray<float, 10>(obj, collectionJsonContainer); break;
+                // TestSerializeArray<float, 10>(obj, collectionJsonContainer); break;
+                TestSerializeContiguous(10, obj, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer); break;
 
             // #TODO Try using 1 method for all arrays AND vectors
             // case All arrays :
@@ -497,18 +501,10 @@ namespace QwerkE {
             // if (!Mirror::InfoForType<T>()->isVector()) return;
 
             const std::vector<T>* objVector = (std::vector<T>*)obj;
-
-            for (size_t i = 0; i < objVector->size(); i++)
-            {
-                const T& vectorElement = objVector->at(i);
-
-                const Mirror::TypeInfo* objTypeInfo = Mirror::InfoForType<T>();
-                if (objTypeInfo->isPointer) LOG_WARN("{0} Review pointer type usage", __FUNCTION__)
-                SerializeToJson((void*)&vectorElement, objTypeInfo, collectionJsonContainer);
-            }
+            TestSerializeContiguous(objVector->size(), objVector->data(), Mirror::InfoForType<T>(), collectionJsonContainer);
         }
 
-        void SerializeArray(size_t objCount, const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        void TestSerializeContiguous(size_t objCount, const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -518,13 +514,11 @@ namespace QwerkE {
 
             // if (!Mirror::InfoForType<T>()->isArray()) return;
 
-            const Mirror::TypeInfo* elementTypeInfo = objTypeInfo->CollectionTypeInfoFirst();
-
             for (size_t i = 0; i < objCount; i++)
             {
                 if (objTypeInfo->isPointer) LOG_WARN("{0} Review pointer type usage", __FUNCTION__)
-                void* elementAddress = (char*)obj + (elementTypeInfo->size * i);
-                SerializeToJson(elementAddress, elementTypeInfo, objJson);
+                void* elementAddress = (char*)obj + (objTypeInfo->size * i);
+                SerializeToJson(elementAddress, objTypeInfo, objJson);
             }
         }
 

@@ -47,7 +47,7 @@ namespace QwerkE {
         }
 
         template <typename T, typename U>
-        void Write(void* destination, const void* source)
+        void local_Write(void* destination, const void* source)
         {
             T* objAddress = (T*)destination;
             *objAddress = *(U*)source;
@@ -107,9 +107,9 @@ namespace QwerkE {
 
             // Numbers
             case MirrorTypes::m_float:
-                Write<float, double>(obj, &objJson->valuedouble); break;
+                local_Write<float, double>(obj, &objJson->valuedouble); break;
             case MirrorTypes::m_double:
-                Write<double, double>(obj, &objJson->valuedouble); break;
+                local_Write<double, double>(obj, &objJson->valuedouble); break;
             // Bool
             case MirrorTypes::m_bool:
                 {
@@ -158,7 +158,7 @@ namespace QwerkE {
         }
 
         template <typename T, typename U>
-        void TestDeserializeUMap(const cJSON* collectionJsonContainer, void* obj)
+        void local_DeserializeUMap(const cJSON* collectionJsonContainer, void* obj)
         {
             // if (!Mirror::InfoForType<T>()->isMap()) return;
 
@@ -183,7 +183,7 @@ namespace QwerkE {
         }
 
         template <typename T>
-        void TestDeserializeVector(const cJSON* collectionJsonContainer, void* obj)
+        void local_DeserializeVector(const cJSON* collectionJsonContainer, void* obj)
         {
             // if (!Mirror::InfoForType<T>()->isVector()) return;
 
@@ -203,7 +203,7 @@ namespace QwerkE {
         }
 
         template <typename T, size_t size>
-        void TestDeserializeArray(const cJSON* collectionJsonContainer, void* obj)
+        void local_DeserializeArray(const cJSON* collectionJsonContainer, void* obj)
         {
             // if (!Mirror::InfoForType<T>()->isArray()) return;
             T* objArray = (T*)obj;
@@ -223,7 +223,7 @@ namespace QwerkE {
         }
 
         template <typename T, typename Parent>
-        void TestDeserializeContiguous(const cJSON* collectionJsonContainer, void* obj)
+        void local_DeserializeContiguous(const cJSON* collectionJsonContainer, void* obj)
         {
             // #TODO Try to remove template requirement with
             // objTypeInfo->collectionTypeInfo()
@@ -270,7 +270,7 @@ namespace QwerkE {
         }
 
         // #TODO Theoretical experiment
-        void TestDeserializePair(const Mirror::TypeInfo* objTypeInfoFirst, const Mirror::TypeInfo* objTypeInfoSecond, cJSON* objJson, void* obj)
+        void local_DeserializePair(const Mirror::TypeInfo* objTypeInfoFirst, const Mirror::TypeInfo* objTypeInfoSecond, cJSON* objJson, void* obj)
         {
             if (!objTypeInfoFirst || !objTypeInfoSecond || !obj || !objJson)
             {
@@ -280,7 +280,7 @@ namespace QwerkE {
         }
 
         template <typename T, typename U>
-        void WriteStringTemplated(void* destination, const void* source)
+        void local_WriteStringTemplated(void* destination, const void* source)
         {
             if (!source || !destination)
             {
@@ -292,7 +292,7 @@ namespace QwerkE {
             *destinationAddress = (U)source;
         }
 
-        void WriteNumberTemplated(void* destination, const char* source, const Mirror::TypeInfo* objTypeInfo)
+        void local_WriteNumberTemplated(void* destination, const char* source, const Mirror::TypeInfo* objTypeInfo)
         {
             switch (objTypeInfo->enumType)
             {
@@ -354,7 +354,7 @@ namespace QwerkE {
         }
 
         template <typename T>
-        void TestDeserializePair(const cJSON* objJson, void* obj)
+        void local_DeserializePair(const cJSON* objJson, void* obj)
         {
             // if (!Mirror::InfoForType<T>()->isPair()) return;
 
@@ -378,15 +378,15 @@ namespace QwerkE {
             // #NOTE Cast is for enums. This will fail for all non-numeric first types (ex. string)
             if (MirrorTypes::m_string == firstTypeInfo->enumType)
             {
-                WriteStringTemplated<std::string, const char*>(&objPair->first, pairJson->string);
+                local_WriteStringTemplated<std::string, const char*>(&objPair->first, pairJson->string);
             }
             else if (MirrorTypes::m_constCharPtr == firstTypeInfo->enumType)
             {
-                WriteStringTemplated<const char*, const char*>(&objPair->first, _strdup(pairJson->string));
+                local_WriteStringTemplated<const char*, const char*>(&objPair->first, _strdup(pairJson->string));
             }
             else
             {
-                WriteNumberTemplated(&objPair->first, pairJson->string, firstTypeInfo);
+                local_WriteNumberTemplated(&objPair->first, pairJson->string, firstTypeInfo);
             }
 
             // Second
@@ -428,44 +428,43 @@ namespace QwerkE {
             switch (objTypeInfo->enumType)
             {
             case MirrorTypes::m_map_guid_entt:
-                TestDeserializeUMap<GUID, entt::entity>(objJson, obj); break;
+                local_DeserializeUMap<GUID, entt::entity>(objJson, obj); break;
             case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
-                TestDeserializeUMap<eScriptTypes, Scriptable*>(objJson, obj); break;
+                local_DeserializeUMap<eScriptTypes, Scriptable*>(objJson, obj); break;
             case MirrorTypes::m_umap_guid_editorWindowPtr:
-                TestDeserializeUMap<GUID, Editor::EditorWindow*>(objJson, obj); break;
+                local_DeserializeUMap<GUID, Editor::EditorWindow*>(objJson, obj); break;
             case MirrorTypes::m_umap_string_int32:
-                TestDeserializeUMap<std::string, s32>(objJson, obj); break;
+                local_DeserializeUMap<std::string, s32>(objJson, obj); break;
 
             case MirrorTypes::m_vec_string:
-                TestDeserializeVector<std::string>(objJson, obj); break;
+                local_DeserializeVector<std::string>(objJson, obj); break;
             case MirrorTypes::m_vec_pair_guid_string:
-                TestDeserializeVector<std::pair<GUID, std::string>>(objJson, obj); break;
+                local_DeserializeVector<std::pair<GUID, std::string>>(objJson, obj); break;
             case MirrorTypes::m_vec_char:
                 // TestDeserializeVector<char>(objJson, obj); break;
-                TestDeserializeContiguous<char, std::vector<char>>(objJson, obj); break;
+                local_DeserializeContiguous<char, std::vector<char>>(objJson, obj); break;
 
             case MirrorTypes::m_imvec4_array: // imgui types
                 // TestDeserializeArray<ImVec4, ImGuiCol_COUNT>(objJson, obj); break;
-                TestDeserializeContiguous<ImVec4, ImVec4*>(objJson, obj); break;
+                local_DeserializeContiguous<ImVec4, ImVec4*>(objJson, obj); break;
             case MirrorTypes::m_arr_float16:
                 // TestDeserializeArray<float, 16>(objJson, obj); break;
             case MirrorTypes::m_arr_float10:
                 // TestDeserializeArray<float, 10>(objJson, obj); break;
-                TestDeserializeContiguous<float, float[10]>(objJson, obj); break;
+                local_DeserializeContiguous<float, float[10]>(objJson, obj); break;
 
             case MirrorTypes::m_pair_eScriptTypes_ScriptablePtr:
-
-                TestDeserializePair<std::pair<eScriptTypes, Scriptable*>>(objJson, obj); break;
+                local_DeserializePair<std::pair<eScriptTypes, Scriptable*>>(objJson, obj); break;
             case MirrorTypes::m_pair_guid_string:
                 // #TODO Make type agnostic for other types of pairs
                 // typedef std::pair<GUID, std::string> m_pair_guid_string;
                 // MIRROR_PAIR(m_pair_guid_string, GUID, std::string);
                 using PairGuidString = std::pair<GUID, std::string>;
-                TestDeserializePair<PairGuidString>(objJson, obj); break;
+                local_DeserializePair<PairGuidString>(objJson, obj); break;
             case MirrorTypes::m_pair_guid_editorWindowPtr:
-                TestDeserializePair<std::pair<GUID, Editor::EditorWindow*>>(objJson, obj); break;
+                local_DeserializePair<std::pair<GUID, Editor::EditorWindow*>>(objJson, obj); break;
             case MirrorTypes::m_pair_string_int32:
-                TestDeserializePair<std::pair<std::string, s32>>(objJson, obj); break;
+                local_DeserializePair<std::pair<std::string, s32>>(objJson, obj); break;
 
             default:
                 break;
