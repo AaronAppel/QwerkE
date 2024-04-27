@@ -11,9 +11,9 @@ namespace QwerkE {
 
     namespace Serialization {
 
-        void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+        void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj, bool useNameString = false);
         void local_DeserializeClass(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
-        void local_DeserializeCollection(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+        void local_DeserializeCollection(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj, const std::string& name);
 
         void DeserializeFromJson(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
         {
@@ -23,12 +23,7 @@ namespace QwerkE {
                 return;
             }
 
-            // #TODO Add safety like string comparisons: objTypeInfo->name == jSON->string
-
-            if (strcmp(objJson->string, objTypeInfo->stringName.c_str()) != 0)
-            {
-                // LOG_WARN("{0} Mismatched names!", __FUNCTION__);
-            }
+            // #TODO Add safety checks
 
             if (objTypeInfo->isPrimitive())
             {
@@ -47,12 +42,12 @@ namespace QwerkE {
             }
             else if (objTypeInfo->isCollection())
             {
-                local_DeserializeCollection(objJson, objTypeInfo, obj);
+                local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName);
             }
         }
 
         template <typename T, typename U>
-        void local_Write(void* destination, const void* source)
+        void local_Write(void* destination, const void* source) // #TODO Deprecate
         {
             T* objAddress = (T*)destination;
 
@@ -64,7 +59,7 @@ namespace QwerkE {
             int bp = 0;
         }
 
-        void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
+        void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj, bool useNameString)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -72,14 +67,25 @@ namespace QwerkE {
                 return;
             }
 
+            void* payload = nullptr;
+            if (useNameString)
+            {
+                payload = objJson->string;
+            }
+            else
+            {
+                payload = objJson->valuestring;
+            }
+
             switch (objTypeInfo->enumType)
             {
             // Strings
             case MirrorTypes::m_string:
                 // local_Write<std::string, const char**>(obj, objJson->valuestring); break;
+                if (payload)
                 {
                     std::string* str = (std::string*)obj;
-                    *str = objJson->valuestring;
+                    *str = (const char*)payload;
                 }
                 break;
             case MirrorTypes::m_charPtr:
@@ -157,17 +163,19 @@ namespace QwerkE {
                 if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
                     continue;
 
-                // if (secondTypeInfo->isPointer)
-                // {
-                //     // #TODO Allocate
-                //     secondTypeInfo->AbsoluteType();
-                //     DeserializeFromJson(it, field.typeInfo, (char*)obj + field.offset);
-                // }
-                // else
-                // {
-                //     DeserializeFromJson(it, field.typeInfo, (char*)obj + field.offset);
-                // }
-                DeserializeFromJson(it, field.typeInfo, (char*)obj + field.offset);
+                if (strcmp(field.name.c_str(), it->string) != 0)
+                {
+                    LOG_WARN("{0} Mismatched names!", __FUNCTION__);
+                }
+                if (field.typeInfo->isCollection())
+                {
+                    local_DeserializeCollection(it, field.typeInfo, (char*)obj + field.offset, field.name);
+                }
+                else
+                {
+                    DeserializeFromJson(it, field.typeInfo, (char*)obj + field.offset);
+                }
+
                 it = it->next;
                 ++index;
             }
@@ -178,61 +186,19 @@ namespace QwerkE {
         {
             // if (!Mirror::InfoForType<T>()->isMap()) return;
 
-            // TestDeserializeUMap<GUID, entt::entity>(objJson, obj); break;
-            // TestDeserializeUMap<eScriptTypes, Scriptable*>(objJson, obj); break;
-            // TestDeserializeUMap<GUID, Editor::EditorWindow*>(objJson, obj); break;
-            // TestDeserializeUMap<std::string, s32>(objJson, obj); break;
-
-            std::unordered_map<T, U>* objMapOfPairs = (std::unordered_map<T, U>*)obj;
-            objMapOfPairs->clear();
-
             const Mirror::TypeInfo* mapTypeInfo = Mirror::InfoForType<std::pair<T, U>>();
+
+            char* tempPairBuffer = new char[mapTypeInfo->size];
 
             const cJSON* it = collectionJsonContainer->child;
             while (it)
             {
-                std::pair<T, U> tempPair;
-                local_DeserializeCollection(it, mapTypeInfo, &tempPair);
-                objMapOfPairs->insert(tempPair);
+                local_DeserializeCollection(it, mapTypeInfo, &tempPairBuffer);
+                mapTypeInfo->CollectionAdd(obj, 0, &tempPairBuffer);
                 it = it->next;
             }
-        }
 
-        template <typename T>
-        const QwerkE::Mirror::TypeInfo* CollectionResize(void* collectionAddress)
-        {
-            T* collection = (T*)obj;
-            collection->resize();
-        }
-
-        void local_DeserializeContiguous(const Mirror::TypeInfo* collectionTypeInfo, const cJSON* collectionJson, void* obj)
-        {
-            const Mirror::TypeInfo* elementInfo = collectionTypeInfo->CollectionTypeInfoFirst();
-            char* elementBuffer = new char[elementInfo->size];
-
-            const cJSON* it = collectionJson->child;
-            size_t index = 0;
-
-            while (it)
-            {
-                DeserializeFromJson(it, elementInfo, elementBuffer);
-                collectionTypeInfo->CollectionAdd(obj, index, elementBuffer);
-
-                if (collectionTypeInfo->isPair())
-                {
-                    int bp = 0;
-                }
-
-                if (elementInfo->isClass)
-                {
-                    elementInfo->typeConstructorFunc(elementBuffer);
-                }
-
-                it = it->next;
-                ++index;
-            }
-
-            delete[] elementBuffer;
+            delete[] tempPairBuffer;
         }
 
         // #TODO Theoretical experiment
@@ -243,19 +209,6 @@ namespace QwerkE {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
             }
-        }
-
-        template <typename T, typename U>
-        void local_WriteStringTemplated(void* destination, const void* source)
-        {
-            if (!source || !destination)
-            {
-                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
-                return;
-            }
-
-            T* destinationAddress = (T*)destination;
-            *destinationAddress = (U)source;
         }
 
         void local_WriteNumberTemplated(void* destination, const char* source, const Mirror::TypeInfo* objTypeInfo)
@@ -379,7 +332,7 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializeCollection(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
+        void local_DeserializeCollection(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -387,45 +340,75 @@ namespace QwerkE {
                 return;
             }
 
-            // #TODO Try this instead of switch
-            // TestDeserializePair(objTypeInfo->CollectionTypeInfoFirst(), objTypeInfo->CollectionTypeInfoSecond(), objJson, obj); break;
-            // Might need "hard" types for iteration
+            const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->CollectionTypeInfoFirst();
+            char* elementFirstBuffer = new char[elementFirstTypeInfo->size];
 
-            switch (objTypeInfo->enumType)
+            const cJSON* it = objJson->child;
+            size_t index = 0;
+
+            while (it)
             {
-            // case MirrorTypes::m_map_guid_entt:
-            //     local_DeserializeUMap<GUID, entt::entity>(objJson, obj); break;
-            // case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
-            //     local_DeserializeUMap<eScriptTypes, Scriptable*>(objJson, obj); break;
-            // case MirrorTypes::m_umap_guid_editorWindowPtr:
-            //     local_DeserializeUMap<GUID, Editor::EditorWindow*>(objJson, obj); break;
-            // case MirrorTypes::m_umap_string_int32:
-            //     local_DeserializeUMap<std::string, s32>(objJson, obj); break;
+                if (elementFirstTypeInfo->isClass ||
+                    !elementFirstTypeInfo->isPrimitive() ||
+                    MirrorTypes::m_string == elementFirstTypeInfo->enumType)
+                {
+                    // #TODO Construct before or after buffer data deserialization? Add m_DelayConstruction bool?
+                    ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
+                    elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer);
+                }
 
-            case MirrorTypes::m_vec_string:
-            case MirrorTypes::m_vec_pair_guid_string:
-            case MirrorTypes::m_vec_char:
-            case MirrorTypes::m_imvec4_array: // imgui types
-            case MirrorTypes::m_arr_float16:
-            case MirrorTypes::m_arr_float10:
-                local_DeserializeContiguous(objTypeInfo, objJson, obj); break;
+                if (objTypeInfo->isMap())
+                {
+                    std::unordered_map<std::string, int32_t>* mapPtr = (std::unordered_map<std::string, int32_t>*)obj;
+                    if (elementFirstTypeInfo && elementFirstTypeInfo->CollectionTypeInfoFirst()->enumType == MirrorTypes::m_string)
+                    {
+                        // #TODO Check if construction needed
+                        new (elementFirstBuffer) std::string("In");
+                    }
+                }
 
-            // case MirrorTypes::m_pair_eScriptTypes_ScriptablePtr:
-            //     local_DeserializePair<std::pair<eScriptTypes, Scriptable*>>(objJson, obj); break;
-            // case MirrorTypes::m_pair_guid_string:
-            //     // #TODO Make type agnostic for other types of pairs
-            //     // typedef std::pair<GUID, std::string> m_pair_guid_string;
-            //     // MIRROR_PAIR(m_pair_guid_string, GUID, std::string);
-            //     using PairGuidString = std::pair<GUID, std::string>;
-            //     local_DeserializePair<PairGuidString>(objJson, obj); break;
-            // case MirrorTypes::m_pair_guid_editorWindowPtr:
-            //     local_DeserializePair<std::pair<GUID, Editor::EditorWindow*>>(objJson, obj); break;
-            // case MirrorTypes::m_pair_string_int32:
-            //     local_DeserializePair<std::pair<std::string, s32>>(objJson, obj); break;
+                if (objTypeInfo->isPair())
+                {
+                    const Mirror::TypeInfo* const elementSecondInfo = objTypeInfo->CollectionTypeInfoSecond();
+                    char* elementSecondBuffer = new char[elementSecondInfo->size];
 
-            default:
-                break;
+                    if (elementFirstTypeInfo->isPrimitive())
+                    {
+                        if (MirrorTypes::m_string == elementFirstTypeInfo->enumType)
+                        {
+                            // #TODO Check if construction needed
+                            new (elementFirstBuffer) std::string(it->string);
+                        }
+                        local_DeserializePrimitive(it, elementFirstTypeInfo, elementFirstBuffer, true);
+                    }
+                    else
+                    {
+                        LOG_ERROR("{0} Non-primitive currently unsupported!", __FUNCTION__);
+                        DeserializeFromJson(it, elementFirstTypeInfo, elementFirstBuffer);
+                    }
+
+                    DeserializeFromJson(it, elementSecondInfo, elementSecondBuffer);
+                    objTypeInfo->CollectionAdd(obj, index, elementFirstBuffer, elementSecondBuffer); // #TODO CollectionAppend
+
+                    delete[] elementSecondBuffer;
+                }
+                else
+                {
+                    std::vector<char>* chars = (std::vector<char>*)obj;
+                    DeserializeFromJson(it, elementFirstTypeInfo, elementFirstBuffer);
+                    objTypeInfo->CollectionAdd(obj, index, elementFirstBuffer); // #TODO CollectionAppend
+                }
+
+                if (elementFirstTypeInfo->isClass) // #TODO Construct before or after? Add m_DelayConstruction bool?
+                {
+                    // elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer);
+                }
+
+                it = it->next;
+                ++index;
             }
+
+            delete[] elementFirstBuffer;
         }
 
     }

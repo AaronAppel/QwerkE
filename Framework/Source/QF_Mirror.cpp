@@ -123,7 +123,7 @@ namespace QwerkE {
 
 #ifdef _QENTT
 	typedef entt::entity m_enTT_Entity;
-	MIRROR_TYPE(m_enTT_Entity)
+	MIRROR_PRIMITIVE_TYPE(m_enTT_Entity)
 #endif
 
 	// Enums
@@ -147,7 +147,7 @@ namespace QwerkE {
 
 	// Scripts
 	using CallBackFunction = void(*)(void);
-	MIRROR_TYPE(CallBackFunction)
+	MIRROR_PRIMITIVE_TYPE(CallBackFunction)
 
 	MIRROR_CLASS_START(ScriptGuiButton)
 	MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
@@ -171,7 +171,7 @@ namespace QwerkE {
 	MIRROR_CLASS_START(ScriptableTesting)
 	MIRROR_CLASS_END(ScriptableTesting)
 
-	MIRROR_CLASS_START(Scriptable)
+	MIRROR_ABSTRACT_CLASS_START(Scriptable)
 	// #TODO Look at generating empty types or not yet declared types automatically as well.
 	// Would save a step when creating a new type and still allow exposing members for specific types
 	MirrorSubClassUserTypes(ComponentScriptsList{}, localStaticTypeInfo, eScriptTypes::Camera);
@@ -240,7 +240,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(drawingPrimitiveType)
 	MIRROR_CLASS_END(RendererSettings)
 
-	MIRROR_CLASS_START(Scene)
+	MIRROR_ABSTRACT_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_MEMBER(m_GuidsToEntts)
 	MIRROR_CLASS_END(Scene)
@@ -302,71 +302,71 @@ namespace QwerkE {
 	MIRROR_ENUM(EditorWindowTypes)
 
 	typedef Editor::EditorWindowAssets EditorWindowAssets;
-	MIRROR_CLASS_START(EditorWindowAssets)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
 	MIRROR_CLASS_END(EditorWindowAssets)
 
 	typedef Editor::EditorWindowDefaultDebug EditorWindowDefaultDebug;
-	MIRROR_CLASS_START(EditorWindowDefaultDebug)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowDefaultDebug, m_Guid)
 	MIRROR_CLASS_END(EditorWindowDefaultDebug)
 
 	typedef Editor::EditorWindowDockingContext EditorWindowDockingContext;
-	MIRROR_CLASS_START(EditorWindowDockingContext)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowDockingContext)
 	MIRROR_CLASS_END(EditorWindowDockingContext)
 
 	typedef Editor::EditorWindowEntityInspector EditorWindowEntityInspector;
-	MIRROR_CLASS_START(EditorWindowEntityInspector)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowEntityInspector)
 	MIRROR_CLASS_END(EditorWindowEntityInspector)
 
 	typedef Editor::EditorWindowImGuiDemo EditorWindowImGuiDemo;
-	MIRROR_CLASS_START(EditorWindowImGuiDemo)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiDemo)
 	MIRROR_CLASS_END(EditorWindowImGuiDemo)
 
 	typedef Editor::EditorWindowMenuBar EditorWindowMenuBar;
-	MIRROR_CLASS_START(EditorWindowMenuBar)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowMenuBar)
 	MIRROR_CLASS_END(EditorWindowMenuBar)
 
 	typedef Editor::EditorWindowSceneControls EditorWindowSceneControls;
-	MIRROR_CLASS_START(EditorWindowSceneControls)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneControls)
 	MIRROR_CLASS_END(EditorWindowSceneControls)
 
 	typedef Editor::EditorWindowSceneGraph EditorWindowSceneGraph;
-	MIRROR_CLASS_START(EditorWindowSceneGraph)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneGraph)
 	MIRROR_CLASS_END(EditorWindowSceneGraph)
 
 	typedef Editor::EditorWindowSceneView EditorWindowSceneView;
-	MIRROR_CLASS_START(EditorWindowSceneView)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneView)
 	MIRROR_CLASS_MEMBER(m_TextureId)
 	MIRROR_CLASS_MEMBER(m_ViewId)
 	MIRROR_CLASS_END(EditorWindowSceneView)
 
 	typedef Editor::EditorWindowSettings EditorWindowSettings;
-	MIRROR_CLASS_START(EditorWindowSettings)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowSettings)
 	MIRROR_CLASS_END(EditorWindowSettings)
 
 	typedef Editor::EditorWindowStylePicker EditorWindowStylePicker;
-	MIRROR_CLASS_START(EditorWindowStylePicker)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowStylePicker)
 	MIRROR_CLASS_MEMBER(m_ShowMoreInfo)
 	MIRROR_CLASS_MEMBER(m_UiScaling)
 	MIRROR_CLASS_END(EditorWindowStylePicker)
 
 	typedef Editor::EditorWindowMaterialEditor EditorWindowMaterialEditor;
-	MIRROR_CLASS_START(EditorWindowMaterialEditor)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowMaterialEditor)
 	MIRROR_CLASS_END(EditorWindowMaterialEditor)
 
 	typedef Editor::EditorWindowFolderViewer EditorWindowFolderViewer;
-	MIRROR_CLASS_START(EditorWindowFolderViewer)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
 	MIRROR_CLASS_END(EditorWindowFolderViewer)
 
 	typedef Editor::EditorWindowNodeEditor EditorWindowNodeEditor;
-	MIRROR_CLASS_START(EditorWindowNodeEditor)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowNodeEditor)
 	MIRROR_CLASS_END(EditorWindowNodeEditor)
 
 	typedef Editor::EditorWindowShaderEditor EditorWindowShaderEditor;
-	MIRROR_CLASS_START(EditorWindowShaderEditor)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowShaderEditor)
 	MIRROR_CLASS_END(EditorWindowShaderEditor)
 
 	typedef Editor::EditorWindow EditorWindow;
-	MIRROR_CLASS_START(EditorWindow)
+	MIRROR_ABSTRACT_CLASS_START(EditorWindow)
 	MIRROR_CLASS_MEMBER(m_Guid) // Order dependency! 1st
 	MIRROR_CLASS_MEMBER(m_WindowName)
 	MIRROR_CLASS_MEMBER(m_ImGuiFlags)
