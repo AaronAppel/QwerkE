@@ -12,6 +12,25 @@
 namespace QwerkE {
 
     // #TODO Add inheritance structure
+
+    struct Base
+    {
+        int baseX = 1;
+    };
+
+    struct Derived : public Base
+    {
+        float derivedY = 2.f;
+    };
+
+    MIRROR_CLASS_START(Derived)
+    MIRROR_CLASS_MEMBER(derivedY)
+    MIRROR_CLASS_END(Derived);
+
+    MIRROR_CLASS_START(Base)
+    MIRROR_CLASS_MEMBER(baseX)
+    MIRROR_CLASS_END(Base);
+
     struct TestStruct
     {
         bool m_Bool = true;
@@ -35,6 +54,8 @@ namespace QwerkE {
 
         int32_t* m_Int32Ptr = nullptr;
         // #TODO More complicated pointers
+        Base m_Base;
+        Derived m_Derived;
     };
 
     // Add to MirrorTypes.h "m_arr_float10,"

@@ -129,7 +129,7 @@ namespace QwerkE {
             cJSON_Delete(jsonRootObject);
         }
 
-        void DeserializeFromJson(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+        void DeserializeFromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
 
         template <class T>
         void NewDeserializeFromFile(const char* absoluteFilePath, T& objectReference)

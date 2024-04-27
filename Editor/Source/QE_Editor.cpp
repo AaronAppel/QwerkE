@@ -121,9 +121,19 @@ namespace QwerkE {
 			Framework::Initialize();
 
             TestStruct testStruct;
+            for (size_t i = 0; i < 10; i++)
+            {
+                testStruct.m_FloatArray10[i] = i + (.1 * i);
+            }
+            for (size_t i = 0; i < 5; i++)
+            {
+                testStruct.m_CharVector.push_back(66 + i);
+            }
             // Serialization::SerializeObjectToFile(testStruct, "TestStruct");
-            // Serialization::NewSerializeToFile(testStruct, "TestStruct");
+            Serialization::NewSerializeToFile(testStruct, "TestStruct");
             Serialization::NewDeserializeFromFile("TestStruct", testStruct);
+            signed long long num1 = 4755182615248502784;
+            signed long long num2 = 8000000000;
 
             // #TODO Move somewhere better
             std::string userSettingsFileName = pairs[key_UserName];

@@ -51,7 +51,7 @@ namespace QwerkE {
 		template <typename T>
 		T* As()
 		{
-			// return static_cast<T*>(m_Data);
+			// #TODO Expirment with: return static_cast<T*>(m_Data);
 			return (T*)m_Data;
 		}
 

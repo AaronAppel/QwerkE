@@ -65,10 +65,13 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(w)
 	MIRROR_CLASS_END(ImVec4)
 
-	typedef ImVec4* m_imvec4_array; // #TODO try : using m_imvec4_array = ImVec4[4]; to see if it works any better
+	// typedef ImVec4* m_imvec4_array; // #TODO try : using m_imvec4_array = ImVec4[4]; to see if it works any better
+	// typedef ImVec4* m_imvec4_array; // #TODO try : using m_imvec4_array = ImVec4[4]; to see if it works any better
 	// MIRROR_TYPE(m_imvec4_array)
 	// MIRROR_ARRAY(m_imvec4_array, ImVec4) // #NOTE MIRROR_ARRAY can determine size of array at compile time
-	MIRROR_POINTER(m_imvec4_array)
+	// MIRROR_POINTER(m_imvec4_array)
+	using m_imvec4_array = ImVec4[ImGuiCol_COUNT];
+	MIRROR_ARRAY(m_imvec4_array, ImVec4)
 
 	MIRROR_CLASS_START(ImGuiStyle)
 	MIRROR_CLASS_MEMBER(Alpha)

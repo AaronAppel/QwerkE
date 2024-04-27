@@ -8,6 +8,8 @@ enum class MirrorTypes
     m_CLASSES_START,
 
     TestStruct, // #NOTE For use with MirrorTesting.h
+    Base, // #NOTE For use with MirrorTesting.h
+    Derived, // #NOTE For use with MirrorTesting.h
 
     // ImGui
     ImGuiStyle,

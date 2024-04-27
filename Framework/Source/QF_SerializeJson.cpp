@@ -82,15 +82,10 @@ namespace QwerkE {
         template<typename... Component>
         static void NewSerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray);
 
-        template <typename T, typename U>
-        void TestSerializeUMap(const void* obj, cJSON* collectionJsonContainer);
-        template <typename T>
-        void TestSerializeVector(const void* obj, cJSON* collectionJsonContainer);
-        template <typename T, size_t size> // #TODO Deprecate
-        void TestSerializeArray(const void* obj, cJSON* collectionJsonContainer);
-        void TestSerializeContiguous(size_t objCount, const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
         template <typename T>
         void TestSerializePair(const void* obj, cJSON* collectionJsonContainer);
+
+        void TestAgnostic(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         template <typename T>
         cJSON* TestCreateBool(const std::string& name, const void* obj);
@@ -355,41 +350,20 @@ namespace QwerkE {
             switch (objTypeInfo->enumType)
             {
             case MirrorTypes::m_map_guid_entt:
-                TestSerializeUMap<GUID, entt::entity>(obj, collectionJsonContainer); break;
             case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
-                TestSerializeUMap<eScriptTypes, Scriptable*>(obj, collectionJsonContainer); break;
             case MirrorTypes::m_umap_guid_editorWindowPtr:
-                TestSerializeUMap<GUID, Editor::EditorWindow*>(obj, collectionJsonContainer); break;
             case MirrorTypes::m_umap_string_int32:
-                TestSerializeUMap<std::string, s32>(obj, collectionJsonContainer); break;
-
             case MirrorTypes::m_vec_string:
-                TestSerializeVector<std::string>(obj, collectionJsonContainer); break;
             case MirrorTypes::m_vec_pair_guid_string:
-                TestSerializeVector<std::pair<GUID, std::string>>(obj, collectionJsonContainer); break;
             case MirrorTypes::m_vec_char:
-                TestSerializeVector<char>(obj, collectionJsonContainer); break;
-
             case MirrorTypes::m_imvec4_array: // imgui types
-                // TestSerializeArray<ImVec4, ImGuiCol_COUNT>(obj, collectionJsonContainer); break;
-                TestSerializeContiguous(ImGuiCol_COUNT, obj, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer); break;
             case MirrorTypes::m_arr_float16:
-                // TestSerializeArray<float, 16>(obj, collectionJsonContainer); break;
-                TestSerializeContiguous(16, obj, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer); break;
-            case MirrorTypes::m_arr_float10: // #TESTING
-                // TestSerializeArray<float, 10>(obj, collectionJsonContainer); break;
-                TestSerializeContiguous(10, obj, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer); break;
-
-            // #TODO Try using 1 method for all arrays AND vectors
-            // case All arrays :
-                // SerializeArray(size_t objCount, const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+            case MirrorTypes::m_arr_float10:
+                TestAgnostic(obj, objTypeInfo, collectionJsonContainer); break;
 
             case MirrorTypes::m_pair_eScriptTypes_ScriptablePtr:
                 TestSerializePair<std::pair<eScriptTypes, Scriptable*>>(obj, collectionJsonContainer); break;
             case MirrorTypes::m_pair_guid_string:
-                // #TODO Make type agnostic for other types of pairs
-                // typedef std::pair<GUID, std::string> m_pair_guid_string;
-                // MIRROR_PAIR(m_pair_guid_string, GUID, std::string);
                 using PairGuidString = std::pair<GUID, std::string>;
                 TestSerializePair<PairGuidString>(obj, collectionJsonContainer); break;
             case MirrorTypes::m_pair_guid_editorWindowPtr:
@@ -433,114 +407,20 @@ namespace QwerkE {
             NewSerializeComponent<Component...>(handle, entityComponentsJsonArray);
         }
 
-        template <typename T, typename U>
-        void TestSerializeUMap(const void* obj, cJSON* collectionJsonContainer)
+        void TestAgnostic(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
-            // if (!Mirror::InfoForType<T>()->isMap()) return;
-
-            const std::unordered_map<T, U>* scriptsMap = (std::unordered_map<T, U>*)obj;
-
-            const Mirror::TypeInfo* objTypeInfo = Mirror::InfoForType<std::unordered_map<T, U>>();
-
-            if (MirrorTypes::m_map_guid_entt == objTypeInfo->enumType)
+            if (objTypeInfo->isPair())
             {
-                // #NOTE m_map_guid_entt type should only be owned by a Scene.
-                // Look at enforcing that through some static asserts of runtime cast checks
-                const std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
-
-                const Mirror::TypeInfo* sceneInfo = Mirror::InfoForType<Scene>();
-                if (!sceneInfo || sceneInfo->enumType != MirrorTypes::Scene)
-                {
-                    LOG_ERROR("{0} Cannot serialize {1} type!", __FUNCTION__, objTypeInfo->stringName.c_str());
-                    return;
-                }
-
-                const std::string memberName = "m_GuidsToEntts";
-                size_t m_GuidsToEntts_Offset = INT8_MAX;
-                for (size_t i = 0; i < sceneInfo->fields.size(); i++)
-                {
-                    const Mirror::Field& field = sceneInfo->fields[i];
-                    if (field.name == memberName)
-                    {
-                        m_GuidsToEntts_Offset = field.offset;
-                        break;
-                    }
-                }
-
-                if (INT8_MAX == m_GuidsToEntts_Offset)
-                {
-                    LOG_CRITICAL("{0} Could not serialize type {1} {2}!", __FUNCTION__, objTypeInfo->stringName, (u8)objTypeInfo->enumType);
-                    return;
-                }
-
-                // #TODO Fix ugly special case requiring knowledge of owning type.
-                // Look at adding some objTypeInfo->Owner that returns the start of the owning type object instance in memory
-                Scene* scene = (Scene*)((char*)obj - m_GuidsToEntts_Offset);
-
-                for (auto& entityPair : *entitiesMap)
-                {
-                    EntityHandle handle(scene, entityPair.second);
-
-                    // #TODO Special case where GUID needs to be known before object creation,
-                    // So create an array with the GUID as the name. Review for better solution.
-                    cJSON* entityJsonContainer = TestCreateObject(std::to_string(handle.EntityGuid()).c_str());
-                    cJSON_AddItemToArray(collectionJsonContainer, entityJsonContainer);
-                    NewSerializeComponents(EntityComponentsList{}, handle, entityJsonContainer);
-                }
-                return;
+                int bp = 0;
             }
 
-            for (auto& scriptTypeScriptablePair : *scriptsMap)
+            size_t counter = 0;
+            void* elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
+            while (elementAddress)
             {
-                if (!objTypeInfo->CollectionTypeInfoFirst())
-                {
-                    LOG_ERROR("{0} Null collection type!", __FUNCTION__);
-                    break;
-                }
-
-                SerializeToJson((void*)&scriptTypeScriptablePair, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer);
-            }
-        }
-
-        template <typename T>
-        void TestSerializeVector(const void* obj, cJSON* collectionJsonContainer)
-        {
-            // if (!Mirror::InfoForType<T>()->isVector()) return;
-
-            const std::vector<T>* objVector = (std::vector<T>*)obj;
-            TestSerializeContiguous(objVector->size(), objVector->data(), Mirror::InfoForType<T>(), collectionJsonContainer);
-        }
-
-        void TestSerializeContiguous(size_t objCount, const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
-        {
-            if (!obj || !objTypeInfo || !objJson)
-            {
-                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
-                return;
-            }
-
-            // if (!Mirror::InfoForType<T>()->isArray()) return;
-
-            for (size_t i = 0; i < objCount; i++)
-            {
-                if (objTypeInfo->isPointer) LOG_WARN("{0} Review pointer type usage", __FUNCTION__)
-                void* elementAddress = (char*)obj + (objTypeInfo->size * i);
-                SerializeToJson(elementAddress, objTypeInfo, objJson);
-            }
-        }
-
-        template <typename T, size_t size>
-        void TestSerializeArray(const void* obj, cJSON* collectionJsonContainer)
-        {
-            // if (!Mirror::InfoForType<T>()->isArray()) return;
-
-            const T* objArray = (T*)obj;
-            const Mirror::TypeInfo* objTypeInfo = Mirror::InfoForType<T>();
-
-            for (size_t i = 0; i < size; i++)
-            {
-                if (objTypeInfo->isPointer) LOG_WARN("{0} Review pointer type usage", __FUNCTION__)
-                SerializeToJson((void*)&objArray[i], objTypeInfo, collectionJsonContainer);
+                SerializeToJson(elementAddress, objTypeInfo->CollectionTypeInfoFirst(), objJson);
+                ++counter;
+                elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
             }
         }
 
