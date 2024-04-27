@@ -122,7 +122,7 @@ namespace QwerkE {
 
             TestStruct testStruct;
             // Serialization::SerializeObjectToFile(testStruct, "TestStruct");
-            Serialization::NewSerializeToFile(testStruct, "TestStruct");
+            // Serialization::NewSerializeToFile(testStruct, "TestStruct");
             Serialization::NewDeserializeFromFile("TestStruct", testStruct);
 
             // #TODO Move somewhere better

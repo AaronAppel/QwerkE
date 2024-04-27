@@ -46,6 +46,9 @@ namespace QwerkE {
 #endif
 		};
 
+		using Func_void_voidPtr_sizet_voidPtr_voidPtr = void (*)(void*, size_t, void*, void*);
+		using Func_void_voidPtr = void (*)(void*);
+
 		struct TypeInfo
 		{
 			// #TODO Look at shrinking types and using unions for exclusive members
@@ -98,8 +101,21 @@ namespace QwerkE {
 
 			const TypeInfo* AbsoluteType() const {
 				if (pointerDereferencedTypeInfo) return pointerDereferencedTypeInfo;
+
+				unsigned char buf[2];
+				char* tptr = new(buf) char;
+
 				return this;
 			}
+
+			// #TODO Look at sizing vector ahead of time to avoid allocations + copies
+			// using Func_void_voidPtr_sizet = void (*)(void*, size_t);
+			// Func_void_voidPtr_sizet collectionResize;
+
+			void CollectionAdd(void* collectionAddress, size_t index, void* first, void* second = nullptr) const { collectionAddFunc(collectionAddress, index, first, second); }
+
+			Func_void_voidPtr_sizet_voidPtr_voidPtr collectionAddFunc;
+			Func_void_voidPtr typeConstructorFunc;
 		};
 
 		template <class T>
@@ -231,9 +247,33 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() { \
 static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForType<TYPE>(); \
 // Call above initializes field class reference(s). Ideally, remove it and find another init method
 
-// static_assert(std::is_array_v<ARRAY_TYPE>);
-#define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE) MIRROR_MAP(ARRAY_TYPE, COLLECTION_TYPE) // Could use std::is_array_v<ARRAY_TYPE>
-#define MIRROR_VECTOR(VECTOR_TYPE, COLLECTION_TYPE) MIRROR_MAP(VECTOR_TYPE, COLLECTION_TYPE)
+// Could use std::is_array_v<ARRAY_TYPE>
+#define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE) \
+template<> \
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<ARRAY_TYPE>() { \
+	static TypeInfo localStaticTypeInfo; \
+	localStaticTypeInfo.stringName = #ARRAY_TYPE; \
+	localStaticTypeInfo.size = sizeof(ARRAY_TYPE); \
+	localStaticTypeInfo.enumType = MirrorTypes::ARRAY_TYPE; \
+	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<COLLECTION_TYPE>(); \
+	localStaticTypeInfo.collectionAddFunc = [](void* collectionAddress, size_t index, void* elementFirst, void* /*elementSecond*/) { memcpy((char*)collectionAddress + (sizeof(COLLECTION_TYPE) * index), elementFirst, sizeof(COLLECTION_TYPE)); }; \
+	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) COLLECTION_TYPE; }; \
+	return &localStaticTypeInfo; \
+}
+
+#define MIRROR_VECTOR(VECTOR_TYPE, COLLECTION_TYPE) \
+template<> \
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<VECTOR_TYPE>() { \
+	static TypeInfo localStaticTypeInfo; \
+	localStaticTypeInfo.stringName = #VECTOR_TYPE; \
+	localStaticTypeInfo.size = sizeof(VECTOR_TYPE); \
+	localStaticTypeInfo.enumType = MirrorTypes::VECTOR_TYPE; \
+	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<COLLECTION_TYPE>(); \
+	localStaticTypeInfo.collectionAddFunc = [](void* collectionAddress, size_t /*index*/, void* elementFirst, void* /*elementSecond*/) { ((VECTOR_TYPE*)collectionAddress)->push_back(*(COLLECTION_TYPE*)elementFirst); }; \
+	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) COLLECTION_TYPE; }; \
+	return &localStaticTypeInfo; \
+}
+
 #define MIRROR_MAP(MAP_TYPE, PAIR_TYPE) \
 template<> \
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<MAP_TYPE>() { \
@@ -242,6 +282,8 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<MAP_TYPE>() { \
 	localStaticTypeInfo.size = sizeof(MAP_TYPE); \
 	localStaticTypeInfo.enumType = MirrorTypes::MAP_TYPE; \
 	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<PAIR_TYPE>(); \
+	localStaticTypeInfo.collectionAddFunc = [](void* collectionAddress, size_t /*index*/, void* elementFirst, void* elementSecond) { ((MAP_TYPE*)collectionAddress)->insert( { *(PAIR_TYPE::first_type*)elementFirst, *(PAIR_TYPE::second_type*)elementFirst }); }; \
+	localStaticTypeInfo.typeConstructorFunc = nullptr; \
 	return &localStaticTypeInfo; \
 }
 

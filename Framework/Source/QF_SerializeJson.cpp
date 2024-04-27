@@ -203,7 +203,7 @@ namespace QwerkE {
             case MirrorTypes::eKeys:
             case MirrorTypes::m_char:
                 {
-                    char charArr[2] = { '\0' };
+                    char charArr[2] = { '\0', '\0'};
                     charArr[0] = *(char*)obj;
                     cJsonItem = cJSON_CreateString(charArr);
                     cJsonItem->string = _strdup(name.c_str());
@@ -236,6 +236,7 @@ namespace QwerkE {
                 // Use string instead of a double to avoid conversion issues
                 int64_t* numberAddress = (int64_t*)obj;
                 cJsonItem = TestCreateString<const char>(name, std::to_string(*numberAddress).c_str());
+                // #TODO Try using objJson->valuedouble and a memcpy to see if that works
             }
             // cJsonItem = TestCreateNumber<int64_t>(name, obj); break;
             break;
@@ -245,6 +246,7 @@ namespace QwerkE {
                     // Use string instead of a double to avoid conversion issues
                     uint64_t* numberAddress = (uint64_t*)obj;
                     cJsonItem = TestCreateString<const char>(name, std::to_string(*numberAddress).c_str());
+                    // #TODO Try using objJson->valuedouble and a memcpy to see if that works
                 }
                 // cJsonItem = TestCreateNumber<uint64_t>(name, obj);
                 break;
@@ -313,6 +315,11 @@ namespace QwerkE {
                     const std::string name = field.name;
                     if (field.typeInfo->isPointer)
                     {
+                        field.typeInfo->AbsoluteType();
+
+                        void* a = *(void**)fieldAddress;
+                        void* b = (void*)fieldAddress;
+
                         local_SerializePrimitive(*(void**)fieldAddress, field.typeInfo, objJson, name);
                     }
                     else
