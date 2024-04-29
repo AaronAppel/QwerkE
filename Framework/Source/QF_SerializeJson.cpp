@@ -79,7 +79,7 @@ namespace QwerkE {
 
         void local_SerializePrimitive(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
         void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
-        void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
+        void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 
         cJSON* TestCreateObject(const char* key = nullptr);
 
@@ -109,7 +109,7 @@ namespace QwerkE {
             T& component = handle.GetComponent<T>();
             auto componentTypeInfo = Mirror::InfoForType<T>();
             cJSON* newJsonObjectArray = TestCreateObject(componentTypeInfo->stringName.c_str());
-            SerializeToJson(&component, componentTypeInfo, newJsonObjectArray);
+            SerializeToJson(&component, componentTypeInfo, newJsonObjectArray, componentTypeInfo->stringName);
             cJSON_AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
         }
 
@@ -145,7 +145,7 @@ namespace QwerkE {
             return false;
         }
 
-        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -155,6 +155,12 @@ namespace QwerkE {
 
             if (TypeInfoHasSerializeOverride(obj, objTypeInfo, objJson))
                 return;
+
+            if (objTypeInfo->isPointer)
+            {
+                // Add object
+                // #TODO Look to remove pointer as category
+            }
 
             switch (objTypeInfo->category)
             {
@@ -166,13 +172,13 @@ namespace QwerkE {
                 break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
                 {
-                    cJSON* classJson = TestCreateObject(objTypeInfo->stringName.c_str());
+                    cJSON* classJson = TestCreateObject(name.c_str());
                     cJSON_AddItemToArray(objJson, classJson);
                     local_SerializeClass(obj, objTypeInfo, classJson);
                 }
                 break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
-                local_SerializeCollection(obj, objTypeInfo, objJson); break;
+                local_SerializeCollection(obj, objTypeInfo, objJson, name); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer: // #TODO Look to remove
                 {
                     if (nullptr == *(const void**)obj)
@@ -181,10 +187,11 @@ namespace QwerkE {
                         return;
                     }
 
-                    cJSON* pointerJson = TestCreateObject(objTypeInfo->stringName.c_str());
+                    cJSON* pointerJson = TestCreateObject(name.c_str());
                     cJSON_AddItemToArray(objJson, pointerJson);
 
-                    SerializeToJson(*(void**)obj, objTypeInfo->AbsoluteType(), pointerJson);
+                    const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType();
+                    SerializeToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
                 }
                 break;
 
@@ -233,7 +240,7 @@ namespace QwerkE {
                 break;
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
-                cJsonItem = TestCreateString<const char>(name, obj); break;
+                cJsonItem = TestCreateString<const char>(name, *(void**)obj); break;
             case MirrorTypes::m_bool:
                 cJsonItem = TestCreateBool<bool>(name, obj); break;
             case MirrorTypes::EditorWindowFlags:
@@ -337,12 +344,12 @@ namespace QwerkE {
                 else
                 {
                     // #TODO This also checks if primitive so maybe avoid redundancy
-                    SerializeToJson(fieldAddress, field.typeInfo, objJson);
+                    SerializeToJson(fieldAddress, field.typeInfo, objJson, field.name);
                 }
             }
         }
 
-        void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -356,7 +363,7 @@ namespace QwerkE {
                 return;
             }
 
-            cJSON* collectionJsonContainer = TestCreateObject(objTypeInfo->stringName.c_str());
+            cJSON* collectionJsonContainer = TestCreateObject(name.c_str());
             cJSON_AddItemToArray(objJson, collectionJsonContainer);
 
             switch (objTypeInfo->enumType)
@@ -430,7 +437,14 @@ namespace QwerkE {
             void* elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
             while (elementAddress)
             {
-                SerializeToJson(elementAddress, objTypeInfo->CollectionTypeInfoFirst(), objJson);
+                if (auto first = objTypeInfo->CollectionTypeInfoFirst())
+                {
+                    SerializeToJson(elementAddress, objTypeInfo->CollectionTypeInfoFirst(), objJson, objTypeInfo->CollectionTypeInfoFirst()->stringName);
+                }
+                else
+                {
+                    LOG_WARN("{0} First info is null!", __FUNCTION__);
+                }
                 ++counter;
                 elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
             }
@@ -464,25 +478,24 @@ namespace QwerkE {
                 absoluteObjectAddress = *(void**)absoluteObjectAddress;
             }
 
-            std::string x; // #NOTE Handles keys of string and non-string types
-            if (MirrorTypes::m_string == absoluteFirstTypeInfo->enumType)
-            {
-                std::string* str = (std::string*)&objPair->first;
-                x = *str;
-            }
-            else
-            {
-                u32* number = (u32*)&objPair->first;
-                x = std::to_string(*number);
-            }
-
             if (absoluteSecondTypeInfo->isPrimitive())
             {
+                std::string x; // #NOTE Handles keys of string and non-string types
+                if (MirrorTypes::m_string == absoluteFirstTypeInfo->enumType)
+                {
+                    std::string* str = (std::string*)&objPair->first;
+                    x = *str;
+                }
+                else
+                {
+                    u32* number = (u32*)&objPair->first;
+                    x = std::to_string(*number);
+                }
                 local_SerializePrimitive(absoluteObjectAddress, absoluteSecondTypeInfo, collectionJsonContainer, x.c_str());
             }
             else if (absoluteSecondTypeInfo->isClass)
             {
-                cJSON* classJsonItem = TestCreateObject(x.c_str());
+                cJSON* classJsonItem = TestCreateObject(absoluteSecondTypeInfo->stringName.c_str());
 
                 cJSON_AddItemToArray(collectionJsonContainer, classJsonItem);
 
@@ -529,7 +542,7 @@ namespace QwerkE {
             else if (absoluteSecondTypeInfo->isCollection())
             {
                 cJSON* collectionJsonItem = TestCreateObject();
-                local_SerializeCollection(absoluteObjectAddress, absoluteSecondTypeInfo, collectionJsonItem);
+                local_SerializeCollection(absoluteObjectAddress, absoluteSecondTypeInfo, collectionJsonItem, absoluteSecondTypeInfo->stringName);
             }
         }
 

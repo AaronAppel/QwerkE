@@ -410,7 +410,8 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<MAP_TYPE>() {							
 		MAP_TYPE* map = (MAP_TYPE*)collectionAddress;																			\
 		static MAP_TYPE::iterator iterator = map->begin();																		\
 		if (aIndex < index) { index = aIndex; iterator = map->begin(); }														\
-		if (aIndex >= map->size()) { index = 0; return nullptr; }																\
+		if (aIndex >= map->size()) { return nullptr; }																			\
+		++index;																												\
 		return (char*)&iterator->first;																							\
 	};																															\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Collection;												\

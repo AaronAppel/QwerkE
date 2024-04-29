@@ -58,7 +58,7 @@ namespace QwerkE {
         const char* m_ConstCharPtr = "null";
 
         float m_FloatArray10[10] = { 0.1f };
-        std::vector<char> m_CharVector = { 'A' };
+        std::vector<char> m_CharVector; // = { 'A' };
         std::unordered_map<std::string, int32_t> m_UmapStringInt32 = { { "Str", 123 }};
 
         int32_t* m_Int32Ptr = nullptr;

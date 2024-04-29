@@ -109,7 +109,7 @@ namespace QwerkE {
             cJSON_Delete(jsonRootObject);
         }
 
-        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
+        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 
         template <class T>
         void NewSerializeToFile(const T& objectReference, const char* absoluteFilePath)
@@ -123,7 +123,7 @@ namespace QwerkE {
             cJSON* jsonRootObject = cJSON_CreateObject();
 
             const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-            SerializeToJson((const void*)&objectReference, typeInfo, jsonRootObject);
+            SerializeToJson((const void*)&objectReference, typeInfo, jsonRootObject, typeInfo->stringName);
 
             PrintJsonToFile(jsonRootObject, absoluteFilePath);
             cJSON_Delete(jsonRootObject);

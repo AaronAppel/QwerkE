@@ -154,6 +154,11 @@ namespace QwerkE {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
                 local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer: // #TODO Look to remove
+                {
+                    // #TODO Handle constructor calls
+                    *(void**)obj = new char[objTypeInfo->pointerDereferencedTypeInfo->size];
+                    DeserializeFromJson(objJson->child, objTypeInfo->pointerDereferencedTypeInfo, *(void**)obj);
+                }
                 break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Invalid:
@@ -261,7 +266,7 @@ namespace QwerkE {
 
             if (objTypeInfo->superTypeInfo)
             {
-                // #TODO Serialize super type
+                local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
             }
 
             while (iterator)
@@ -270,10 +275,13 @@ namespace QwerkE {
                 {
                     const Mirror::Field& field = objTypeInfo->fields[i];
 
-#if DEBUG_LEVEL 1
                     if (strcmp(field.name.c_str(), iterator->string) != 0)
-                        LOG_WARN("{0} Mismatched names {1} and {2}!", __FUNCTION__, field.name.c_str(), iterator->string);
+                    {
+#if DEBUG_LEVEL 1
+                        // LOG_WARN("{0} Mismatched names {1} and {2}!", __FUNCTION__, field.name.c_str(), iterator->string);
 #endif
+                        continue;
+                    }
 
                     if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
                         continue;

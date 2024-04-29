@@ -1,43 +1,53 @@
 {
 	"TestStruct":	{
-		"Base":	{
-			"baseX":	1
+		"m_DerivedPtr":	{
+			"Derived":	{
+				"baseX":	60,
+				"derivedY":	50
+			}
 		},
-		"Derived":	{
-			"baseX":	1,
-			"derivedY":	2
+		"m_Base":	{
+			"baseX":	90
 		},
-		"m_Bool":	true,
-		"m_U8":	1,
-		"m_U16":	2,
-		"m_U32":	3,
-		"m_U64":	"4",
-		"m_S8":	5,
-		"m_S16":	6,
-		"m_S32":	7,
-		"m_S64":	"8",
-		"m_Float":	9.0000095367431641,
-		"m_Double":	10.000000001,
-		"m_String":	"null",
-		"m_ConstCharPtr":	"null",
-		"m_arr_float10":	{
-			"m_float":	0.10000000149011612,
-			"m_float":	0,
-			"m_float":	0,
-			"m_float":	0,
-			"m_float":	0,
-			"m_float":	0,
-			"m_float":	0,
-			"m_float":	0,
-			"m_float":	0,
-			"m_float":	0
+		"m_Derived":	{
+			"baseX":	70,
+			"derivedY":	80
 		},
-		"m_vec_char":	{
-			"m_char":	"A"
+		"m_Bool":	false,
+		"m_U8":	2,
+		"m_U16":	3,
+		"m_U32":	4,
+		"m_U64":	"5",
+		"m_S8":	6,
+		"m_S16":	7,
+		"m_S32":	8,
+		"m_S64":	"9",
+		"m_Float":	10.500009536743164,
+		"m_Double":	11.500000001,
+		"m_String":	"test",
+		"m_ConstCharPtr":	"test",
+		"m_FloatArray10":	{
+			"m_float":	0,
+			"m_float":	1.1000000238418579,
+			"m_float":	2.2000000476837158,
+			"m_float":	3.2999999523162842,
+			"m_float":	4.4000000953674316,
+			"m_float":	5.5,
+			"m_float":	6.5999999046325684,
+			"m_float":	7.6999998092651367,
+			"m_float":	8.8000001907348633,
+			"m_float":	9.8999996185302734
 		},
-		"m_umap_string_int32":	{
+		"m_CharVector":	{
+			"m_char":	"B",
+			"m_char":	"C",
+			"m_char":	"D",
+			"m_char":	"E",
+			"m_char":	"F"
+		},
+		"m_UmapStringInt32":	{
 			"m_pair_string_int32":	{
-				"Str":	123
+				"test":	890
 			}
 		}
 	}
