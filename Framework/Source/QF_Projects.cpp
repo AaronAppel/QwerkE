@@ -30,7 +30,7 @@ namespace QwerkE {
 			}
 
 			std::string projectFilePath = Paths::Project(projectSettingsFilePath.c_str());
-			Serialization::DeserializeObjectFromFile(projectFilePath.c_str(), s_CurrentProject);
+			// Serialization::OldDeserializeObjectFromFile(projectFilePath.c_str(), s_CurrentProject);
 			Serialization::NewDeserializeFromFile(projectFilePath.c_str(), s_CurrentProject);
 		}
 

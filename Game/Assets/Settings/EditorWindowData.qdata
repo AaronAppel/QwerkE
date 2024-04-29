@@ -1,153 +1,17 @@
 {
-	"m_umap_guid_editorWindowPtr":	[{
-			"9":	[{
-					"m_Guid":	[{
-							"m_Guid":	"1115291326460599621"
-						}],
-					"m_WindowName":	"Scene View##1115291326460599621",
-					"m_ImGuiFlags":	8,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	9,
-					"m_TextureId":	3,
-					"m_ViewId":	2
-				}],
-			"5":	[{
-					"m_Guid":	[{
-							"m_Guid":	"12400662462144430613"
-						}],
-					"m_WindowName":	"ImGui Demo##12400662462144430613",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	13,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	5
-				}],
-			"9":	[{
-					"m_Guid":	[{
-							"m_Guid":	"10699484532983307413"
-						}],
-					"m_WindowName":	"Scene View##10699484532983307413",
-					"m_ImGuiFlags":	8,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	9,
-					"m_TextureId":	4,
-					"m_ViewId":	0
-				}],
-			"11":	[{
-					"m_Guid":	[{
-							"m_Guid":	"6330455056799829152"
-						}],
-					"m_WindowName":	"Style Picker##6330455056799829152",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	11,
-					"m_ShowMoreInfo":	true,
-					"m_UiScaling":	0.800000011920929
-				}],
-			"10":	[{
-					"m_Guid":	[{
-							"m_Guid":	"12871130240402226042"
-						}],
-					"m_WindowName":	"Settings##12871130240402226042",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	10
-				}],
-			"7":	[{
-					"m_Guid":	[{
-							"m_Guid":	"1101746784741971318"
-						}],
-					"m_WindowName":	"Scene Controls##1101746784741971318",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	7
-				}],
-			"8":	[{
-					"m_Guid":	[{
-							"m_Guid":	"16797067160888874644"
-						}],
-					"m_WindowName":	"Scene Graph##16797067160888874644",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	8
-				}],
-			"4":	[{
-					"m_Guid":	[{
-							"m_Guid":	"12156884515091030135"
-						}],
-					"m_WindowName":	"Entity Inspector##12156884515091030135",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	4
-				}],
-			"1":	[{
-					"m_Guid":	[{
-							"m_Guid":	"16361816450129038057"
-						}],
-					"m_WindowName":	"Assets##16361816450129038057",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	1
-				}],
-			"13":	[{
-					"m_Guid":	[{
-							"m_Guid":	"381350733800919805"
-						}],
-					"m_WindowName":	"Folder Viewer##381350733800919805",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	13
-				}],
-			"14":	[{
-					"m_Guid":	[{
-							"m_Guid":	"915478954851588846"
-						}],
-					"m_WindowName":	"Node Editor##915478954851588846",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	14
-				}],
-			"15":	[{
-					"m_Guid":	[{
-							"m_Guid":	"9199934483382878657"
-						}],
-					"m_WindowName":	"Shader Editor##9199934483382878657",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	15
-				}],
-			"6":	[{
-					"m_Guid":	[{
-							"m_Guid":	"18189145940117915324"
-						}],
-					"m_WindowName":	"MenuBar##18189145940117915324",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	9,
-					"m_MinimumWidth":	0,
-					"m_MinimumHeight":	0,
-					"m_EditorWindowType":	6
-				}]
-		}]
+	"m_umap_guid_editorWindowPtr":	{
+		"m_pair_guid_editorWindowPtr":	{
+			"445844569":	{
+				"GUID":	{
+					"m_Guid":	"10998772592454863961"
+				},
+				"m_WindowName":	"MenuBar##10998772592454863961",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	9,
+				"m_MinimumWidth":	0,
+				"m_MinimumHeight":	0,
+				"m_EditorWindowType":	6
+			}
+		}
+	}
 }

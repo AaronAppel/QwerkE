@@ -7,11 +7,17 @@
 #include "Libraries/imgui/imgui.h"
 #endif
 
+#ifdef _QENTT
+#include "Libraries/entt/entt.hpp"
+#endif
+
 #include "QC_Guid.h"
 
 #include "QF_ComponentHelpers.h"
+#include "QF_EntityHandle.h"
 #include "QF_Files.h"
 #include "QF_Log.h"
+#include "QF_Scene.h"
 #include "QF_ScriptHelpers.h"
 
 // Editor types
@@ -94,6 +100,51 @@ namespace QwerkE {
         template <typename T>
         cJSON* TestCreateString(const std::string& name, const void* obj);
 
+        template <typename T>
+        void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
+        {
+            if (!handle.HasComponent<T>())
+                return;
+
+            T& component = handle.GetComponent<T>();
+            auto componentTypeInfo = Mirror::InfoForType<T>();
+            cJSON* newJsonObjectArray = TestCreateObject(componentTypeInfo->stringName.c_str());
+            SerializeToJson(&component, componentTypeInfo, newJsonObjectArray);
+            cJSON_AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
+        }
+
+        bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        {
+            switch (objTypeInfo->enumType)
+            {
+            case MirrorTypes::m_map_guid_entt:
+                {
+                    const std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
+                    Scene* scene = (Scene*)obj;
+
+                    for (auto& entityPair : *entitiesMap)
+                    {
+                        EntityHandle handle(scene, entityPair.second);
+
+                        // cJSON* entityJsonArray = CreateArray("Entity");
+                        cJSON* entityJsonArray = TestCreateObject(std::to_string(handle.EntityGuid()).c_str());
+                        cJSON_AddItemToArray(objJson, entityJsonArray);
+
+                        cJSON* entityComponentsJsonArray = TestCreateObject("Components");
+                        cJSON_AddItemToArray(objJson, entityComponentsJsonArray);
+
+                        SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
+                        SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);
+                        SerializeComponent<ComponentMesh>(handle, entityComponentsJsonArray);
+                        SerializeComponent<ComponentTransform>(handle, entityComponentsJsonArray);
+                        SerializeComponent<ComponentScript>(handle, entityComponentsJsonArray);
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
         void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
             if (!obj || !objTypeInfo || !objJson)
@@ -102,39 +153,45 @@ namespace QwerkE {
                 return;
             }
 
-            if (objTypeInfo->isPointer)
-            {
-                // #TODO Look at using objTypeInfo->AbsoluteType()
-                LOG_ERROR("{0} Pointer types are not currently supported!", __FUNCTION__);
+            if (TypeInfoHasSerializeOverride(obj, objTypeInfo, objJson))
                 return;
-            }
 
-            if (objTypeInfo->isPrimitive())
+            switch (objTypeInfo->category)
             {
-                const std::string name = objTypeInfo->stringName;
-                local_SerializePrimitive(obj, objTypeInfo, objJson, name);
-            }
-            else if (objTypeInfo->newIsClass())
-            {
-                cJSON* container = objJson;
-
-                // #TODO Don't add object for super class, but still need to add it for non-abstract base classes
-                if (!objTypeInfo->isAbstract && !objTypeInfo->hasSubClass())
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
+                {
+                    const std::string name = objTypeInfo->stringName;
+                    local_SerializePrimitive(obj, objTypeInfo, objJson, name);
+                }
+                break;
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
                 {
                     cJSON* classJson = TestCreateObject(objTypeInfo->stringName.c_str());
                     cJSON_AddItemToArray(objJson, classJson);
-                    container = classJson;
+                    local_SerializeClass(obj, objTypeInfo, classJson);
                 }
+                break;
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
+                local_SerializeCollection(obj, objTypeInfo, objJson); break;
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer: // #TODO Look to remove
+                {
+                    if (nullptr == *(const void**)obj)
+                    {
+                        LOG_ERROR("{0} Pointer is null!", __FUNCTION__);
+                        return;
+                    }
 
-                local_SerializeClass(obj, objTypeInfo, container);
-            }
-            else if (objTypeInfo->newIsCollection())
-            {
-                local_SerializeCollection(obj, objTypeInfo, objJson);
-            }
-            else
-            {
-                LOG_ERROR("{0} Error deducing type!", __FUNCTION__);
+                    cJSON* pointerJson = TestCreateObject(objTypeInfo->stringName.c_str());
+                    cJSON_AddItemToArray(objJson, pointerJson);
+
+                    SerializeToJson(*(void**)obj, objTypeInfo->AbsoluteType(), pointerJson);
+                }
+                break;
+
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Invalid:
+            default:
+                ASSERT(false, "Unsupported category!");
+                break;
             }
         }
 
@@ -146,12 +203,8 @@ namespace QwerkE {
                 return;
             }
 
-            // #TODO Actually serialize a given primitive value.
-
             // #TODO Try using memcpy or simple copying or raw byte data, if possible, to avoid handlling individual types.
             // Use type offset and size info.
-
-            // memcpy_s(dest, destSize, src, srcSize);
 
             const size_t sizeOfType = objTypeInfo->size;
 
@@ -159,32 +212,6 @@ namespace QwerkE {
             // That would mean special logic like setting the cJSON type would be needed below,
             // or more switch/if logic here (later probably better).
             cJSON* cJsonItem = nullptr;
-
-            if (const bool testing = false)
-            {
-                if (MirrorTypes::m_bool == objTypeInfo->enumType)
-                {
-                    cJsonItem = TestCreateBool<bool>(name, obj);
-                }
-                else if (8 > sizeOfType) // 2 or 4 bytes
-                {
-                    cJsonItem = TestCreateNumber<uint32_t>(name, obj);
-                    memcpy((void*)&cJsonItem->valueint, obj, sizeOfType); // #TODO Pick one value to use
-                    memcpy((void*)&cJsonItem->valuedouble, obj, sizeOfType);
-                }
-                else if (8 == sizeOfType)
-                {
-                    cJsonItem = TestCreateNumber<uint64_t>(name, obj); // #TODO Review typing
-                    memcpy((void*)&cJsonItem->valuedouble, obj, sizeOfType);
-                }
-                else
-                {
-                    // Write to string?
-
-                    // uint64_t* numberAddress = (uint64_t*)obj;
-                    // AddItemToArray(objJson, CreateString(name.c_str(), std::to_string(*numberAddress).c_str()));
-                }
-            }
 
             switch (objTypeInfo->enumType)
             {
@@ -280,11 +307,11 @@ namespace QwerkE {
             {
                 if (objTypeInfo->superTypeInfo)
                 {
-                    SerializeToJson(obj, objTypeInfo->superTypeInfo, objJson);
+                    local_SerializeClass(obj, objTypeInfo->superTypeInfo, objJson);
                 }
                 else
                 {
-                    LOG_ERROR("{0} Invalid type info!", __FUNCTION__);
+                    LOG_ERROR("{0} Invalid superTypeInfo!", __FUNCTION__);
                     return;
                 }
             }
@@ -294,8 +321,6 @@ namespace QwerkE {
                 LOG_WARN("{0} Class has no serialized members", __FUNCTION__);
             }
 
-            const Editor::EditorWindow* potentialWindow = (Editor::EditorWindow*)obj;
-
             for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objTypeInfo->fields[i];
@@ -303,24 +328,11 @@ namespace QwerkE {
                 if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
                     continue;
 
-                void* fieldAddress = (char*)obj + field.offset;
+                const void* fieldAddress = (char*)obj + field.offset;
 
                 if (field.typeInfo->isPrimitive()) // #TODO Review handling primitive here (dependent on field name)
                 {
-                    const std::string name = field.name;
-                    if (field.typeInfo->isPointer)
-                    {
-                        field.typeInfo->AbsoluteType();
-
-                        void* a = *(void**)fieldAddress;
-                        void* b = (void*)fieldAddress;
-
-                        local_SerializePrimitive(*(void**)fieldAddress, field.typeInfo, objJson, name);
-                    }
-                    else
-                    {
-                        local_SerializePrimitive(fieldAddress, field.typeInfo, objJson, name);
-                    }
+                    local_SerializePrimitive(fieldAddress, field.typeInfo, objJson, field.name);
                 }
                 else
                 {

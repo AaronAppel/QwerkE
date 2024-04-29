@@ -55,8 +55,8 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialization::DeserializeObjectFromFile(Settings::GetStyleFileName(), style);
-        // Serialization::NewDeserializeFromToFile("NewSerialization", style);
+        // Serialization::OldDeserializeObjectFromFile(Settings::GetStyleFileName(), style);
+        Serialization::NewDeserializeFromFile("NewSerialization", style);
     }
 
 	namespace Editor {
@@ -120,18 +120,28 @@ namespace QwerkE {
 
 			Framework::Initialize();
 
-            TestStruct testStruct;
+            TestStruct testStructSerialize;
+            // Serialization::OldSerializeObjectToFile(testStructSerialize, "TestStruct");
+            Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
+
+            // Re-arrange default data
+            //
+            testStructSerialize.m_Base.baseX = 90;
+            testStructSerialize.m_Derived.derivedY = 80;
+            testStructSerialize.m_Derived.baseX = 70;
             for (size_t i = 0; i < 10; i++)
             {
-                testStruct.m_FloatArray10[i] = i + (.1 * i);
+                testStructSerialize.m_FloatArray10[i] = i + (.1 * i);
             }
             for (size_t i = 0; i < 5; i++)
             {
-                testStruct.m_CharVector.push_back(66 + i);
+                testStructSerialize.m_CharVector.push_back(66 + i);
             }
-            // Serialization::SerializeObjectToFile(testStruct, "TestStruct");
-            Serialization::NewSerializeToFile(testStruct, "TestStruct");
-            Serialization::NewDeserializeFromFile("TestStruct", testStruct);
+            Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
+            //
+
+            TestStruct testStructDeserialize;
+            Serialization::NewDeserializeFromFile("TestStruct", testStructDeserialize);
             signed long long num1 = 4755182615248502784;
             signed long long num2 = 8000000000;
 
@@ -144,6 +154,11 @@ namespace QwerkE {
 
             userSettingsFileName += ".";
             userSettingsFileName += preferences_ext;
+            if (!Files::Exists(Paths::Setting(userSettingsFileName.c_str()).c_str()))
+            {
+                UserSettings defaultUserSettings;
+                Serialization::NewSerializeToFile(defaultUserSettings, userSettingsFileName.c_str());
+            }
             Settings::LoadUserSettings(userSettingsFileName.c_str());
 
             const UserSettings& userSettings = Settings::GetUserSettings();
@@ -303,8 +318,13 @@ namespace QwerkE {
 
 		void local_Initialize()
 		{
-            Serialization::DeserializeObjectFromFile(Paths::Setting(s_EditorWindowDataFileName).c_str(), s_EditorWindows);
-            // Serialization::NewDeserializeFromToFile("NewSerializationWindow", s_EditorWindows);
+            std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
+            if (!Files::Exists(windowsDataFilePath.c_str()))
+            {
+                Serialization::NewSerializeToFile(s_EditorWindows, windowsDataFilePath.c_str());
+            }
+            // Serialization::OldDeserializeObjectFromFile(windowsDataFilePath.c_str(), s_EditorWindows);
+            Serialization::NewDeserializeFromFile(windowsDataFilePath.c_str(), s_EditorWindows);
 
             bool missingMenuBarWindow = true;
             for (auto& pair : s_EditorWindows)
@@ -320,14 +340,12 @@ namespace QwerkE {
             {
                 OpenEditorWindow(EditorWindowTypes::MenuBar);
             }
-
-            // #TESTING
-            Serialization::NewSerializeToFile(s_EditorWindows, "NewSerializationWindow");
 		}
 
 		void local_Shutdown()
 		{
-            Serialization::SerializeObjectToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
+            // Serialization::OldSerializeObjectToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
+            Serialization::NewSerializeToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
 
             auto it = s_EditorWindows.begin();
             while (it != s_EditorWindows.end())

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Adding Entity Components.md",
+                "file": "Development/Features/ASSERT Expanded.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Adding Entity Components.md",
+                "file": "Development/Features/ASSERT Expanded.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Adding Entity Components.md",
+                "file": "Development/Features/ASSERT Expanded.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Adding Entity Components.md"
+                "file": "Development/Features/ASSERT Expanded.md"
               }
             }
           }
@@ -148,8 +148,10 @@
   },
   "active": "c315115b897a8c1c",
   "lastOpenFiles": [
+    "Adding Entity Components.md",
+    "Development/Features/0. Features List.md",
+    "Development/Features/0. Features Kanban.md",
     "Adding EditorWindows.md",
-    "Adding Entity Component Scripts.md",
-    "Adding Entity Components.md"
+    "Adding Entity Component Scripts.md"
   ]
 }

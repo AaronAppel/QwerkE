@@ -62,7 +62,7 @@ namespace QwerkE {
 
 		void local_DeserializeFieldJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* fieldTypeInfo, void* fieldObj);
 
-		void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
+		void OldOldDeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
 		{
 			if (!objJson || !objTypeInfo || !obj)
 			{
@@ -158,6 +158,23 @@ namespace QwerkE {
 			}
 		}
 
+		template <typename... T>
+		Editor::EditorWindow* CreateEditorWindow(const Editor::EditorWindowTypes editorWindowType, GUID guid)
+		{
+			// #TODO Can add pure virtual, static GetType() method to EditorWindows
+			// and use it to generate type data by iterating over EditorWindowsList
+			// until argument type matches
+			Editor::EditorWindow* returnPointer = nullptr;
+			([&]()
+			{
+				if (T::GetTypeStatic() == editorWindowType)
+				{
+					returnPointer = new T(guid);
+				}
+			}(), ...);
+			return returnPointer;
+		}
+
 		void local_DeserializeFieldJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* fieldTypeInfo, void* fieldObj)
 		{
 			if (!objJson || !fieldTypeInfo || !fieldObj)
@@ -190,68 +207,68 @@ namespace QwerkE {
 							// Singleton
 						case Editor::EditorWindowTypes::DefaultDebug:
 							newEditorWindow = new Editor::EditorWindowDefaultDebug(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowDefaultDebug>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowDefaultDebug>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::DockingContext:
 							newEditorWindow = new Editor::EditorWindowDockingContext(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowDockingContext>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowDockingContext>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::ImGuiDemo:
 							newEditorWindow = new Editor::EditorWindowImGuiDemo(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowImGuiDemo>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowImGuiDemo>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::MenuBar:
 							newEditorWindow = new Editor::EditorWindowMenuBar(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowMenuBar>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowMenuBar>(), newEditorWindow);
 							break;
 
 							// Instanced
 						case Editor::EditorWindowTypes::Assets:
 							newEditorWindow = new Editor::EditorWindowAssets(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowAssets>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowAssets>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::EntityInspector:
 							newEditorWindow = new Editor::EditorWindowEntityInspector(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowEntityInspector>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowEntityInspector>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::SceneControls:
 							newEditorWindow = new Editor::EditorWindowSceneControls(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneControls>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneControls>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::SceneGraph:
 							newEditorWindow = new Editor::EditorWindowSceneGraph(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneGraph>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneGraph>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::SceneView:
 							{
 								// #TODO Get window name value
 								newEditorWindow = new Editor::EditorWindowSceneView(guid);
-								DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneView>(), newEditorWindow);
+								OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSceneView>(), newEditorWindow);
 							}
 							break;
 						case Editor::EditorWindowTypes::Settings:
 							newEditorWindow = new Editor::EditorWindowSettings(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSettings>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowSettings>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::StylePicker:
 							newEditorWindow = new Editor::EditorWindowStylePicker(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowStylePicker>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowStylePicker>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::MaterialEditor:
 							newEditorWindow = new Editor::EditorWindowMaterialEditor(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowMaterialEditor>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowMaterialEditor>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::FolderViewer:
 							newEditorWindow = new Editor::EditorWindowFolderViewer(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowFolderViewer>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowFolderViewer>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::NodeEditor:
 							newEditorWindow = new Editor::EditorWindowNodeEditor(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowNodeEditor>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowNodeEditor>(), newEditorWindow);
 							break;
 						case Editor::EditorWindowTypes::ShaderEditor:
 							newEditorWindow = new Editor::EditorWindowShaderEditor(guid);
-							DeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowShaderEditor>(), newEditorWindow);
+							OldDeserializeJsonToObject(guidEditorWindowsJsonVector[i], Mirror::InfoForType<Editor::EditorWindowShaderEditor>(), newEditorWindow);
 							break;
 
 						case Editor::EditorWindowTypes::EditorWindowTypesInvalid:
@@ -290,7 +307,7 @@ namespace QwerkE {
 					{
 						PairGuidString pairGuidString;
 						cJSON* pairJson = pairsArray[i]->child->child; // #TODO Shouldn't have to do ->child->child
-						DeserializeJsonToObject(pairJson, pairTypeInfo, (void*)&pairGuidString);
+						OldDeserializeJsonToObject(pairJson, pairTypeInfo, (void*)&pairGuidString);
 						vecGuidStrings->push_back(pairGuidString);
 					}
 				}
@@ -319,7 +336,7 @@ namespace QwerkE {
 				{
 					AbsoluteTypeT* objectPtr = new AbsoluteTypeT();
 
-					DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForType<AbsoluteTypeT>(), objectPtr);
+					OldDeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForType<AbsoluteTypeT>(), objectPtr);
 					vectorPtrPtr->push_back(objectPtr);
 				}
 			}
@@ -332,7 +349,7 @@ namespace QwerkE {
 				for (size_t i = 0; i < jsonObjectVector.size(); i++)
 				{
 					AbsoluteTypeT objectInstance;
-					DeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForType<AbsoluteTypeT>(), &objectInstance);
+					OldDeserializeJsonToObject(jsonObjectVector[i], Mirror::InfoForType<AbsoluteTypeT>(), &objectInstance);
 					vectorPtrPtr->push_back(objectInstance);
 				}
 			}
@@ -351,7 +368,7 @@ namespace QwerkE {
 			}
 
 			T& component = handle.GetComponent<T>();
-			DeserializeJsonToObject(componentJson, componentTypeInfo, (void*)&component);
+			OldDeserializeJsonToObject(componentJson, componentTypeInfo, (void*)&component);
 
 			if (std::is_same_v<T, ComponentMesh>)
 			{
@@ -382,7 +399,7 @@ namespace QwerkE {
 
 					for (size_t i = 0; i < jsonObjectVector.size(); i++)
 					{
-						DeserializeJsonToObject(jsonObjectVector[i], typeInfo, &colours[i]);
+						OldDeserializeJsonToObject(jsonObjectVector[i], typeInfo, &colours[i]);
 					}
 				}
 			}
@@ -401,7 +418,7 @@ namespace QwerkE {
 						PairGuidString pair;
 
 						const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<PairGuidString>();
-						DeserializeJsonToObject(guidStringsJsonVector[i], typeInfo, &pair);
+						OldDeserializeJsonToObject(guidStringsJsonVector[i], typeInfo, &pair);
 						vecGuidStrings->push_back(pair);
 					}
 				}
@@ -433,7 +450,7 @@ namespace QwerkE {
 								// #TODO Need to set entity for script component before script OnCreate() can be called
 								// ScriptablePatrol* patrol = new ScriptablePatrol();
 								// const Mirror::TypeInfo* patrolTypeInfo = Mirror::InfoForType<ScriptablePatrol>();
-								// DeserializeJsonToObject(scriptsJsonVector[i], patrolTypeInfo, patrol);
+								// OldDeserializeJsonToObject(scriptsJsonVector[i], patrolTypeInfo, patrol);
 								// scriptsMap->insert_or_assign(eScriptTypes::Patrol, patrol);
 							}
 							break;
@@ -522,7 +539,7 @@ namespace QwerkE {
 				break;
 
 			default:
-				DeserializeJsonToObject(jsonObj, field.typeInfo, obj);
+				OldDeserializeJsonToObject(jsonObj, field.typeInfo, obj);
 				break;
 			}
 		}

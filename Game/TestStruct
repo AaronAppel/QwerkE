@@ -1,38 +1,43 @@
 {
 	"TestStruct":	{
-		"m_Bool":	false,
-		"m_U8":	10,
-		"m_U16":	20,
-		"m_U32":	30,
-		"m_U64":	"40",
-		"m_S8":	50,
-		"m_S16":	60,
-		"m_S32":	70,
-		"m_S64":	"80",
-		"m_Float":	90.0000095367431641,
-		"m_Double":	100.000000001,
-		"m_String":	"test",
-		"m_ConstCharPtr":	"test",
+		"Base":	{
+			"baseX":	1
+		},
+		"Derived":	{
+			"baseX":	1,
+			"derivedY":	2
+		},
+		"m_Bool":	true,
+		"m_U8":	1,
+		"m_U16":	2,
+		"m_U32":	3,
+		"m_U64":	"4",
+		"m_S8":	5,
+		"m_S16":	6,
+		"m_S32":	7,
+		"m_S64":	"8",
+		"m_Float":	9.0000095367431641,
+		"m_Double":	10.000000001,
+		"m_String":	"null",
+		"m_ConstCharPtr":	"null",
 		"m_arr_float10":	{
-			"m_float":	10.2000000476837158,
-			"m_float":	20.2000000476837158,
-			"m_float":	30.2000000476837158,
-			"m_float":	40.1999998092651367,
-			"m_float":	50.1999998092651367,
-			"m_float":	60.1999998092651367,
-			"m_float":	70.1999998092651367,
-			"m_float":	80.1999998092651367,
-			"m_float":	90.1999998092651367,
-			"m_float":	100.199999809265137
+			"m_float":	0.10000000149011612,
+			"m_float":	0,
+			"m_float":	0,
+			"m_float":	0,
+			"m_float":	0,
+			"m_float":	0,
+			"m_float":	0,
+			"m_float":	0,
+			"m_float":	0,
+			"m_float":	0
 		},
 		"m_vec_char":	{
-			"m_char":	"Z",
-			"m_char":	"Y",
-			"m_char":	"X"
+			"m_char":	"A"
 		},
 		"m_umap_string_int32":	{
 			"m_pair_string_int32":	{
-				"test":	890
+				"Str":	123
 			}
 		}
 	}

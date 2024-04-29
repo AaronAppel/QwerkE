@@ -23,10 +23,10 @@ namespace QwerkE {
         void PrintJsonToFile(cJSON* jsonRootObject, const char* absoluteFilePath);
         cJSON* TempCreateArray(const char* key);
 
-        void DeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+        void OldDeserializeJsonToObject(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
         template <class T>
-        void DeserializeObjectFromFile(const char* absoluteFilePath, T& objectReference) // #TODO Handle pointers as well, to avoid need to always dereference (unsafe)
+        void OldDeserializeObjectFromFile(const char* absoluteFilePath, T& objectReference) // #TODO Handle pointers as well, to avoid need to always dereference (unsafe)
         {
             if (!absoluteFilePath)
             {
@@ -47,7 +47,7 @@ namespace QwerkE {
                 }
                 else
                 {
-                    DeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
+                    OldDeserializeJsonToObject(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
                 }
                 cJSON_Delete(rootJsonObject);
             }
@@ -80,10 +80,10 @@ namespace QwerkE {
             // }
         }
 
-        void SerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
+        void OldSerializeObjectToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         template <class T>
-        void SerializeObjectToFile(const T& objectReference, const char* absoluteFilePath)
+        void OldSerializeObjectToFile(const T& objectReference, const char* absoluteFilePath)
         {
             if (!absoluteFilePath)
             {
@@ -103,7 +103,7 @@ namespace QwerkE {
 
             cJSON_AddItemToArray(jsonRootObject, jsonRootArray);
 
-            SerializeObjectToJson((const void*)&objectReference, typeInfo, jsonRootArray);
+            OldSerializeObjectToJson((const void*)&objectReference, typeInfo, jsonRootArray);
 
             PrintJsonToFile(jsonRootObject, absoluteFilePath);
             cJSON_Delete(jsonRootObject);

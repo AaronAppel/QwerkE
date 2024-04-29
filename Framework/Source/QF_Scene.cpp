@@ -193,7 +193,8 @@ namespace QwerkE {
         }
 
         std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
-        Serialization::SerializeObjectToFile(*this, sceneFilePath.c_str());
+        // Serialization::OldSerializeObjectToFile(*this, sceneFilePath.c_str());
+        Serialization::NewSerializeToFile(*this, sceneFilePath.c_str());
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, sceneFilePath.c_str());
         m_IsDirty = false;
     }
@@ -215,13 +216,15 @@ namespace QwerkE {
         std::string oldName = m_SceneFileName; // #TODO Improve scene file name overwrite logic
         if (Files::Exists(otherSceneFilePath))
         {
-            Serialization::DeserializeObjectFromFile(otherSceneFilePath, *this);
-            // Serialization::NewDeserializeFromToFile("NewSerialization", *this);
+            // Serialization::OldDeserializeObjectFromFile(otherSceneFilePath, *this);
+            // Serialization::NewSerializeToFile(*this, otherSceneFilePath);
+            Serialization::NewDeserializeFromFile(otherSceneFilePath, *this);
         }
         else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {
-            Serialization::DeserializeObjectFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
-            // Serialization::NewDeserializeFromToFile("NewSerialization", *this);
+            // Serialization::OldDeserializeObjectFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
+            // Serialization::NewSerializeToFile(*this, Paths::Scene(otherSceneFilePath).c_str());
+            Serialization::NewDeserializeFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
         }
         else
         {
@@ -257,8 +260,8 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::DeserializeObjectFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
-        // Serialization::NewDeserializeFromToFile("NewSerialization", *this);
+        // Serialization::OldDeserializeObjectFromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
+        Serialization::NewDeserializeFromFile("NewSerialization", *this);
 
         OnLoaded();
 
@@ -304,7 +307,7 @@ namespace QwerkE {
     {
         // #TODO Remove camera component requirement or handle when no camera components exist
         auto viewCameras = m_Registry.view<ComponentCamera>();
-        ASSERT(!viewCameras.empty(), "No camera components found in scene!");
+        // ASSERT(!viewCameras.empty(), "No camera components found in scene!");
 
         for (auto& guidEnttPair : m_GuidsToEntts)
         {
@@ -314,7 +317,7 @@ namespace QwerkE {
                 break;
             }
         }
-        ASSERT(GUID::Invalid != m_CameraEntityGuid, "Could not find camera component!");
+        // ASSERT(GUID::Invalid != m_CameraEntityGuid, "Could not find camera component!");
 
         auto viewScripts = m_Registry.view<ComponentScript>();
         for (auto& enttId : viewScripts)

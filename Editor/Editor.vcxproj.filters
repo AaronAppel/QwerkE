@@ -95,6 +95,9 @@
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="Source\QE_EditorInspector.h" />
+    <ClInclude Include="Source\QE_EditorWindowPrefabScene.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

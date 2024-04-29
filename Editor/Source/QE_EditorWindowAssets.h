@@ -17,8 +17,6 @@ namespace QwerkE {
 		public:
             EditorWindowAssets(GUID guid = GUID()) : EditorWindow("Assets", EditorWindowTypes::Assets, guid) { }
 
-            virtual EditorWindowTypes Type() { return EditorWindowTypes::Assets; }
-
 		private:
 			void DrawInternal() override
 			{

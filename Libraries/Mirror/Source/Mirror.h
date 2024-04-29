@@ -285,7 +285,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 
 #define MIRROR_CLASS_SUBCLASS(SUBCLASS_TYPE)																					\
 	const QwerkE::Mirror::TypeInfo* SUBCLASS_TYPE##Info = QwerkE::Mirror::InfoForType<SUBCLASS_TYPE>();							\
-	localStaticTypeInfo.derivedTypesMap[MirrorTypes::SUBCLASS_TYPE] = SUBCLASS_TYPE##Info;										\
+	localStaticTypeInfo.derivedTypesMap[(uint16_t)MirrorTypes::SUBCLASS_TYPE] = SUBCLASS_TYPE##Info;							\
 	const_cast<QwerkE::Mirror::TypeInfo*>(SUBCLASS_TYPE##Info)->superTypeInfo = &localStaticTypeInfo;							\
 
 // #TODO See if using the user type as the key works better.

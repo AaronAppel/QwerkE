@@ -51,7 +51,8 @@ namespace QwerkE {
 			MaterialEditor,
 			FolderViewer,
 			NodeEditor,
-			ShaderEditor
+			ShaderEditor,
+			PrefabScene
 			// #NOTE Serialized, so don't change ordering
 		)
 

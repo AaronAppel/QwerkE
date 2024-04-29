@@ -66,6 +66,7 @@ enum class MirrorTypes
     EditorWindowFolderViewer,
     EditorWindowNodeEditor,
     EditorWindowShaderEditor,
+    EditorWindowPrefabScene,
 
     ScriptGuiButton,
     CallBackFunction,
@@ -108,6 +109,7 @@ enum class MirrorTypes
     m_scriptablePtr,
     m_editorWindowPtr, // Editor only
     m_int32Ptr, // #NOTE For use with MirrorTesting.h
+    m_derivedPtr,
     m_POINTERS_END,
 
     // Primitive types. #NOTE A prefix is used to avoid naming collisions with standard type keywords
