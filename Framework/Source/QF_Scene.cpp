@@ -92,7 +92,6 @@ namespace QwerkE {
                     }
                     ++i;
                 }
-
             });
         }
     }

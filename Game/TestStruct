@@ -1,17 +1,33 @@
 {
 	"TestStruct":	{
-		"m_DerivedPtr":	{
-			"Derived":	{
-				"baseX":	60,
-				"derivedY":	50
+		"m_BasePtrDerived":	{
+			"Derived2":	{
+				"baseX":	1,
+				"derivedY":	5.5
+			}
+		},
+		"m_Derived1Ptr":	{
+			"Derived1":	{
+				"baseX":	1,
+				"derivedZ":	2
+			}
+		},
+		"m_Derived2Ptr":	{
+			"Derived2":	{
+				"baseX":	1,
+				"derivedY":	5.5
 			}
 		},
 		"m_Base":	{
 			"baseX":	90
 		},
-		"m_Derived":	{
+		"m_Derived1":	{
 			"baseX":	70,
-			"derivedY":	80
+			"derivedZ":	80
+		},
+		"m_Derived2":	{
+			"baseX":	1,
+			"derivedY":	5.5
 		},
 		"m_Bool":	false,
 		"m_U8":	2,
@@ -49,6 +65,9 @@
 			"m_pair_string_int32":	{
 				"test":	890
 			}
+		},
+		"m_Int32Ptr":	{
+			"nullptr":	0
 		}
 	}
 }

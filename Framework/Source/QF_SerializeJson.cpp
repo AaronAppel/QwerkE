@@ -11,6 +11,10 @@
 #include "Libraries/entt/entt.hpp"
 #endif
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/MirrorTesting.h"
+#endif
+
 #include "QC_Guid.h"
 
 #include "QF_ComponentHelpers.h"
@@ -133,11 +137,13 @@ namespace QwerkE {
                         cJSON* entityComponentsJsonArray = TestCreateObject("Components");
                         cJSON_AddItemToArray(objJson, entityComponentsJsonArray);
 
-                        SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
-                        SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);
-                        SerializeComponent<ComponentMesh>(handle, entityComponentsJsonArray);
-                        SerializeComponent<ComponentTransform>(handle, entityComponentsJsonArray);
-                        SerializeComponent<ComponentScript>(handle, entityComponentsJsonArray);
+                        NewSerializeComponents(EntityComponentsList{}, handle, entityComponentsJsonArray);
+
+                        // SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentMesh>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentTransform>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentScript>(handle, entityComponentsJsonArray);
                     }
                 }
                 return true;
@@ -181,16 +187,32 @@ namespace QwerkE {
                 local_SerializeCollection(obj, objTypeInfo, objJson, name); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer: // #TODO Look to remove
                 {
-                    if (nullptr == *(const void**)obj)
-                    {
-                        LOG_ERROR("{0} Pointer is null!", __FUNCTION__);
-                        return;
-                    }
-
                     cJSON* pointerJson = TestCreateObject(name.c_str());
                     cJSON_AddItemToArray(objJson, pointerJson);
 
+                    if (nullptr == *(const void**)obj)
+                    {
+                        LOG_ERROR("{0} Pointer is null!", __FUNCTION__);
+                        uint8_t pointerValue = 0;
+                        local_SerializePrimitive(&pointerValue, Mirror::InfoForType<uint8_t>(), pointerJson, MIRROR_TO_STR(nullptr));
+                        return;
+                    }
+
                     const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType();
+                    if (objTypeInfo->AbsoluteType()->hasSubClass())
+                    {
+                        if (objTypeInfo->AbsoluteType()->isAbstract) {}
+
+                        for (const auto& pair : objTypeInfo->AbsoluteType()->derivedTypesMap)
+                        {
+                            if (pair.second->typeDynamicCastFunc(obj))
+                            {
+                                absoluteTypeInfo = pair.second;
+                                break;
+                            }
+                        }
+                    }
+
                     SerializeToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
                 }
                 break;

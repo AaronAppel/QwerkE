@@ -74,7 +74,9 @@ namespace QwerkE {
 
 		using Func_void_voidPtr_sizet_voidPtr_voidPtr = void (*)(void*, size_t, void*, void*);
 		using Func_void_voidPtr = void (*)(void*);
+		using Func_void_voidPtr_voidPtr = void (*)(void*, void*);
 		using Func_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
+		using Func_bool_constVoidPtr = bool (*)(const void*);
 
 		struct TypeInfo
 		{
@@ -145,6 +147,10 @@ namespace QwerkE {
 			Func_void_voidPtr_sizet_voidPtr_voidPtr collectionAddFunc = nullptr;
 			Func_void_voidPtr typeConstructorFunc = nullptr;
 			Func_charPtr_constVoidPtr_sizet typeIterateCurrentFunc = nullptr;
+			Func_bool_constVoidPtr typeDynamicCastFunc = nullptr;
+
+			Func_void_voidPtr_voidPtr typeConstructorDependentFunc = nullptr;
+			uint16_t sizeOfConstructorArgumentBuffer = 0;
 
 			TypeInfoCategories category = TypeInfoCategories::TypeInfoCategory_Invalid;
 		};
@@ -220,6 +226,21 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	return &localStaticTypeInfo;																								\
 	}
 
+#define MIRROR_CONSTRUCTOR(TYPE_FIRST)																							\
+	localStaticTypeInfo.typeConstructorDependentFunc = [](void* preallocatedMemoryAddress, void* argumentBuffer) {				\
+		TYPE_FIRST first = *(TYPE_FIRST*)argumentBuffer;																		\
+		new(preallocatedMemoryAddress) ClassType(first);																		\
+		sizeOfConstructorArgumentBuffer	= sizeof(TYPE_FIRST);																	\
+	};
+
+#define MIRROR_CONSTRUCTOR2(TYPE_FIRST, TYPE_Second)																			\
+	localStaticTypeInfo.typeConstructorDependentFunc = [](void* preallocatedMemoryAddress, void* argumentBuffer) {				\
+		TYPE_FIRST first = *(TYPE_FIRST*)argumentBuffer;																		\
+		TYPE_Second second = *(TYPE_Second*)argumentBuffer;																		\
+		new(preallocatedMemoryAddress) ClassType(first, second);																\
+		sizeOfConstructorArgumentBuffer	= sizeof(TYPE_FIRST) + sizeof(TYPE_Second);												\
+	};
+
 #define MIRROR_CLASS_START(TYPE) MIRROR_CLASS_STARTN(TYPE, MIRROR_MEMBER_FIELDS_DEFAULT)
 #define MIRROR_CLASS_STARTN(TYPE, FIELDCOUNT)																					\
 template<>																														\
@@ -287,6 +308,10 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	const QwerkE::Mirror::TypeInfo* SUBCLASS_TYPE##Info = QwerkE::Mirror::InfoForType<SUBCLASS_TYPE>();							\
 	localStaticTypeInfo.derivedTypesMap[(uint16_t)MirrorTypes::SUBCLASS_TYPE] = SUBCLASS_TYPE##Info;							\
 	const_cast<QwerkE::Mirror::TypeInfo*>(SUBCLASS_TYPE##Info)->superTypeInfo = &localStaticTypeInfo;							\
+	const_cast<QwerkE::Mirror::TypeInfo*>(SUBCLASS_TYPE##Info)->typeDynamicCastFunc =											\
+	[](const void* pointerToInstance) -> bool {																					\
+		return dynamic_cast<SUBCLASS_TYPE*>(*(ClassType**)pointerToInstance) != nullptr;										\
+	};																															\
 
 // #TODO See if using the user type as the key works better.
 // Need to change derivedTypesMap to an int most likely, and enum type cast everywhere.

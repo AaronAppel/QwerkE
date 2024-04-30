@@ -3,6 +3,7 @@
 #include <map>      // For std::map<std::string, const char*> pairs; and EditorWindows collection
 #include <string>   // For std::map<std::string, const char*> pairs;
 #include <vector>   // For s_EditorWindowsQueuedForDelete
+#include <typeinfo> // For typeid()
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QC_imgui.h"
@@ -120,21 +121,21 @@ namespace QwerkE {
 
 			Framework::Initialize();
 
-            if (const bool Serialize = false)
+            if (const bool Serialize = true)
             {
                 TestStruct testStructSerialize;
                 auto loc = &testStructSerialize.m_UmapStringInt32;
                 // Serialization::OldSerializeObjectToFile(testStructSerialize, "TestStruct");
-                Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
+                // Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
 
                 // Re-arrange default data
                 testStructSerialize.m_Base.baseX = 90;
-                testStructSerialize.m_Derived.derivedY = 80;
-                testStructSerialize.m_Derived.baseX = 70;
-                if (testStructSerialize.m_DerivedPtr)
+                testStructSerialize.m_Derived1.derivedZ = 80;
+                testStructSerialize.m_Derived1.baseX = 70;
+                if (testStructSerialize.m_Derived1Ptr)
                 {
-                    testStructSerialize.m_DerivedPtr->baseX = 60;
-                    testStructSerialize.m_DerivedPtr->derivedY = 50;
+                    testStructSerialize.m_Derived1Ptr->baseX = 60;
+                    testStructSerialize.m_Derived1Ptr->derivedZ = 50;
                 }
                 for (size_t i = 0; i < 10; i++)
                 {
@@ -160,6 +161,16 @@ namespace QwerkE {
                 testStructSerialize.m_UmapStringInt32.clear();
                 testStructSerialize.m_UmapStringInt32.insert( {"test", 890 });
                 auto loc2 = &testStructSerialize.m_UmapStringInt32;
+
+                testStructSerialize.m_Derived1Ptr = new Derived1();
+                testStructSerialize.m_Derived2Ptr = new Derived2();
+                if (false)
+                    testStructSerialize.m_BasePtrDerived = new Derived1();
+                else if (true)
+                    testStructSerialize.m_BasePtrDerived = new Derived2();
+                else
+                    testStructSerialize.m_BasePtrDerived = new Base();
+
                 Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
             }
 
@@ -167,6 +178,7 @@ namespace QwerkE {
             {
                 TestStruct testStructDeserialize;
                 Serialization::NewDeserializeFromFile("TestStruct", testStructDeserialize);
+                testStructDeserialize.m_BasePtrDerived;
                 signed long long num1 = 4755182615248502784;
                 signed long long num2 = 8000000000;
             }
@@ -298,6 +310,12 @@ namespace QwerkE {
         {
             EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(enumToInt);
 
+            if (editorWindowType == s_EditorWindowDockingContext.Type())
+            {
+                // s_EditorWindowDockingContext.ToggleHidden();
+                return;
+            }
+
             for (auto& pair : s_EditorWindows)
             {
                 if (pair.second->WindowFlags() & EditorWindowFlags::Singleton &&
@@ -350,6 +368,7 @@ namespace QwerkE {
                 Serialization::NewSerializeToFile(s_EditorWindows, windowsDataFilePath.c_str());
             }
             // Serialization::OldDeserializeObjectFromFile(windowsDataFilePath.c_str(), s_EditorWindows);
+            // Serialization::NewSerializeToFile(s_EditorWindows, windowsDataFilePath.c_str());
             Serialization::NewDeserializeFromFile(windowsDataFilePath.c_str(), s_EditorWindows);
 
             bool missingMenuBarWindow = true;

@@ -37,17 +37,29 @@
 namespace QwerkE {
 
 	// Start Mirror testing
-	MIRROR_CLASS_START(Derived)
-	MIRROR_CLASS_MEMBER(derivedY)
-	MIRROR_CLASS_END(Derived)
+	MIRROR_CLASS_START(Derived1)
+	// MIRROR_CONSTRUCTOR(float)
+	MIRROR_CLASS_MEMBER(derivedZ)
+	MIRROR_CLASS_END(Derived1)
 
-	typedef Derived* m_derivedPtr;
-	MIRROR_POINTER(m_derivedPtr)
+	MIRROR_CLASS_START(Derived2)
+	MIRROR_CLASS_MEMBER(derivedY)
+	MIRROR_CLASS_END(Derived2)
+
+	typedef Derived1* m_derived1Ptr;
+	MIRROR_POINTER(m_derived1Ptr)
+
+	typedef Derived2* m_derived2Ptr;
+	MIRROR_POINTER(m_derived2Ptr)
 
 	MIRROR_CLASS_START(Base)
 	MIRROR_CLASS_MEMBER(baseX)
-	MIRROR_CLASS_SUBCLASS(Derived)
+	MIRROR_CLASS_SUBCLASS(Derived1)
+	MIRROR_CLASS_SUBCLASS(Derived2)
 	MIRROR_CLASS_END(Base)
+
+	typedef Base* m_basePtr;
+	MIRROR_POINTER(m_basePtr)
 
 	// Add to MirrorTypes.h "m_arr_float10,"
 	using m_arr_float10 = float[10];
@@ -70,9 +82,12 @@ namespace QwerkE {
 	MIRROR_POINTER(m_int32Ptr)
 
 	MIRROR_CLASS_START(TestStruct)
-	MIRROR_CLASS_MEMBER(m_DerivedPtr)
+	MIRROR_CLASS_MEMBER(m_BasePtrDerived)
+	MIRROR_CLASS_MEMBER(m_Derived1Ptr)
+	MIRROR_CLASS_MEMBER(m_Derived2Ptr)
 	MIRROR_CLASS_MEMBER(m_Base)
-	MIRROR_CLASS_MEMBER(m_Derived)
+	MIRROR_CLASS_MEMBER(m_Derived1)
+	MIRROR_CLASS_MEMBER(m_Derived2)
 	MIRROR_CLASS_MEMBER(m_Bool)
 	MIRROR_CLASS_MEMBER(m_U8)
 	MIRROR_CLASS_MEMBER(m_U16)

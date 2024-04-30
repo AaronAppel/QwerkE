@@ -3,6 +3,7 @@ include "Libraries.lua"
 project "Framework"
 	kind "StaticLib"
 	location ""
+	rtti "On" -- Enabled for Mirror serialization
 	
 	local rootDir = "%{wks.location}/"
 	rootDir = rootDir:gsub("/", "\\") -- Replace '/' with '\\' for paths

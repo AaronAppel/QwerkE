@@ -16,11 +16,29 @@ namespace QwerkE {
     struct Base
     {
         int baseX = 1;
+        virtual void f() {} // must be polymorphic to use runtime-checked dynamic_cast
     };
 
-    struct Derived : public Base
+    struct Derived1 : public Base
     {
+        float derivedZ = 2.f;
+        virtual void f() {} // must be polymorphic to use runtime-checked dynamic_cast
+    };
+
+    struct Derived2 : public Base
+    {
+        Derived2()
+        {
+            derivedY = 5.5f;
+        }
+
+        Derived2(float arg)
+        {
+            derivedY = arg;
+        }
+
         float derivedY = 2.f;
+        virtual void f() {} // must be polymorphic to use runtime-checked dynamic_cast
     };
 
     // #TODO
@@ -31,14 +49,20 @@ namespace QwerkE {
     {
         TestStruct()
         {
-            // m_DerivedPtr = new Derived();
+            // m_Derived1Ptr = new Derived1();
+            // m_Derived2Ptr = new Derived2();
+            int bp = 0;
         }
 
         ~TestStruct()
         {
-            if (m_DerivedPtr)
+            if (m_Derived1Ptr)
             {
-                delete m_DerivedPtr;
+                delete m_Derived1Ptr;
+            }
+            if (m_Derived2Ptr)
+            {
+                delete m_Derived2Ptr;
             }
         }
 
@@ -64,8 +88,11 @@ namespace QwerkE {
         int32_t* m_Int32Ptr = nullptr;
         // #TODO More complicated pointers
         Base m_Base;
-        Derived m_Derived;
-        Derived* m_DerivedPtr = nullptr;
+        Derived1 m_Derived1;
+        Derived1* m_Derived1Ptr = nullptr;
+        Derived2 m_Derived2;
+        Derived2* m_Derived2Ptr = nullptr;
+        Base* m_BasePtrDerived = nullptr;
     };
 
 }

@@ -13,32 +13,44 @@ namespace QwerkE {
 
     namespace Serialization {
 
-#define DEBUG_LEVEL 1
-
         void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
         void local_DeserializeClass(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
         void local_DeserializeCollection(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
-        template <typename T>
-        void DeserializeComponent(EntityHandle handle, const cJSON* componentJson, bool addComponent)
+        template<typename... Component>
+        void NewDeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray)
         {
-            const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<T>();
-            if (strcmp(componentJson->string, componentTypeInfo->stringName.c_str()) != 0)
-                return;
-
-            if (addComponent)
+            ([&]()
             {
-                handle.AddComponent<T>();
-            }
+                // #TODO Implement
 
-            T& component = handle.GetComponent<T>();
-            DeserializeFromJson(componentJson, componentTypeInfo, (void*)&component);
+                // bool addComponent = !std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>;
 
-            if (std::is_same_v<T, ComponentMesh>)
-            {
-                ComponentMesh* mesh = (ComponentMesh*)&component;
-                mesh->Initialize();
-            }
+                const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
+                // #TODO Iterate over entityComponentsJsonArray
+                // if (strcmp(componentJson->string, componentTypeInfo->stringName.c_str()) != 0)
+                //     return;
+                //
+                // if (addComponent)
+                // {
+                //     handle.AddComponent<T>();
+                // }
+                //
+                // T& component = handle.GetComponent<T>();
+                // DeserializeFromJson(componentJson, componentTypeInfo, (void*)&component);
+                //
+                // if (std::is_same_v<T, ComponentMesh>)
+                // {
+                //     ComponentMesh* mesh = (ComponentMesh*)&component;
+                //     mesh->Initialize();
+                // }
+            }(), ...);
+        }
+
+        template<typename... Component>
+        static void NewDeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray)
+        {
+            NewDeserializeComponent<Component...>(handle, entityComponentsJsonArray);
         }
 
         s32 OffsetOfMember(const Mirror::TypeInfo* objTypeInfo, const char* memberName)
@@ -60,15 +72,17 @@ namespace QwerkE {
             {
             case MirrorTypes::m_map_guid_entt:
                 {
-                    std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
-                    entitiesMap->clear();
+                    // std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
 
                     const s32 offSetOfEntitiesMap = OffsetOfMember(Mirror::InfoForType<Scene>(), "m_GuidsToEntts");
+                    if (offSetOfEntitiesMap < 0)
+                    {
+                        LOG_ERROR("{0} Offset not found!", __FUNCTION__);
+                        return true;
+                    }
                     Scene* scene = (Scene*)((char*)obj - offSetOfEntitiesMap);
 
                     const cJSON* iteratorEntities = objJson->child;
-                    size_t counterEntities = 0;
-
                     while (iteratorEntities)
                     {
                         GUID guid;
@@ -80,54 +94,25 @@ namespace QwerkE {
                         EntityHandle handle = scene->CreateEntity(guid);
 
                         const cJSON* iteratorComponents = iteratorEntities->child;
-                        size_t counterComponents = 0;
+
+                        NewDeserializeComponents(EntityComponentsList{}, handle, iteratorComponents);
 
                         while (iteratorComponents)
-                        {
-                            // #TODO Look at using component enum instead of strings
-                            // #TODO Serialize using EntityComponentsList
-                            DeserializeComponent<ComponentTransform>(handle, iteratorComponents, false); // #NOTE Added to every entity on creation
-                            DeserializeComponent<ComponentInfo>(handle, iteratorComponents, false);
-                            DeserializeComponent<ComponentCamera>(handle, iteratorComponents, true); // #NOTE Need to be added only if in data
-                            DeserializeComponent<ComponentMesh>(handle, iteratorComponents, true);
-                            DeserializeComponent<ComponentScript>(handle, iteratorComponents, true); // #TODO Consider using ComponentScript.AddScript()
+                        {   // #TODO Look at using component enum instead of strings
+                            // DeserializeComponent<ComponentTransform>(handle, iteratorComponents, false); // #NOTE Added to every entity on creation
+                            // DeserializeComponent<ComponentInfo>(handle, iteratorComponents, false);
+                            // DeserializeComponent<ComponentCamera>(handle, iteratorComponents, true); // #NOTE Need to be added only if in data
+                            // DeserializeComponent<ComponentMesh>(handle, iteratorComponents, true);
+                            // DeserializeComponent<ComponentScript>(handle, iteratorComponents, true); // #TODO Consider using ComponentScript.AddScript()
 
                             iteratorComponents = iteratorComponents->next;
-                            ++counterComponents;
                         }
 
                         ASSERT(handle.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
                         ASSERT(handle.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
 
                         iteratorEntities = iteratorEntities->next;
-                        ++counterEntities;
                     }
-
-                    // for (size_t i = 0; i < entitiesJsonVector.size(); i++)
-                    // {
-                    //     const std::vector<cJSON*> componentsJsonVector = GetAllItemsFromArray(entitiesJsonVector[i]->child->child);
-                    //
-                    //     GUID guid;
-                    //     if (strcmp(entitiesJsonVector[i]->string, "Entity") != 0)
-                    //     {
-                    //         guid = std::stoull(entitiesJsonVector[i]->string);
-                    //     }
-                    //
-                    //     EntityHandle handle = scene->CreateEntity(guid);
-                    //
-                    //     for (size_t j = 0; j < componentsJsonVector.size(); j++)
-                    //     {
-                    //         // #TODO Look at using component enum instead of strings
-                    //         DeserializeComponent<ComponentTransform>(handle, componentsJsonVector[j], false); // #NOTE Added to every entity on creation
-                    //         DeserializeComponent<ComponentInfo>(handle, componentsJsonVector[j], false);
-                    //         DeserializeComponent<ComponentCamera>(handle, componentsJsonVector[j], true); // #NOTE Need to be added only if in data
-                    //         DeserializeComponent<ComponentMesh>(handle, componentsJsonVector[j], true);
-                    //         DeserializeComponent<ComponentScript>(handle, componentsJsonVector[j], true); // #TODO Consider using ComponentScript.AddScript()
-                    //     }
-                    //
-                    //     ASSERT(handle.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
-                    //     ASSERT(handle.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
-                    // }
                 }
                 return true;
             }
@@ -153,11 +138,49 @@ namespace QwerkE {
                 local_DeserializeClass(objJson, objTypeInfo, obj); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
                 local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
-            case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer: // #TODO Look to remove
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
                 {
-                    // #TODO Handle constructor calls
-                    *(void**)obj = new char[objTypeInfo->pointerDereferencedTypeInfo->size];
-                    DeserializeFromJson(objJson->child, objTypeInfo->pointerDereferencedTypeInfo, *(void**)obj);
+                    if (strcmp(objJson->child->string, MIRROR_TO_STR(nullptr)) == 0)
+                    {
+                        LOG_WARN("{0} Null pointer!", __FUNCTION__);
+                        *(void**)obj = nullptr;
+                        return;
+                    }
+
+                    const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo;
+
+                    if (dereferencedTypeInfo->hasSubClass() &&
+                        strcmp(dereferencedTypeInfo->stringName.c_str(), objJson->child->string) != 0)
+                    {
+                        if (dereferencedTypeInfo->isAbstract) {}
+
+                        for (const auto& pair : dereferencedTypeInfo->derivedTypesMap)
+                        {
+                            if (strcmp(pair.second->stringName.c_str(), objJson->child->string) == 0)
+                            {
+                                dereferencedTypeInfo = pair.second;
+                                break;
+                            }
+                        }
+                    }
+
+                    void* derefencedTypeObjAddress = *(void**)obj;
+                    derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
+                    *(void**)obj = derefencedTypeObjAddress;
+                    DeserializeFromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
+
+                    // #EXPERIMENTAL
+                    const bool constructorHasDependency = nullptr != dereferencedTypeInfo->typeConstructorDependentFunc;
+                    if (constructorHasDependency)
+                    {
+                        void* buffer = new char[dereferencedTypeInfo->sizeOfConstructorArgumentBuffer];
+                        buffer; // #TODO Fill buffer with argument data. Might need to parse json structure for keys
+                        dereferencedTypeInfo->typeConstructorDependentFunc(derefencedTypeObjAddress, buffer);
+                    }
+                    else
+                    {
+                        dereferencedTypeInfo->typeConstructorFunc(derefencedTypeObjAddress);
+                    }
                 }
                 break;
 
@@ -166,14 +189,6 @@ namespace QwerkE {
                 ASSERT(false, "Unsupported category!");
                 break;
             }
-        }
-
-        template <typename T, typename U>
-        void local_Write(void* destination, const void* source) // #TODO Deprecate
-        {
-            // #NOTE Value of this function is in type conversion, rather than writing bytes of data that isn't in required format
-            T* objAddress = (T*)destination;
-            *objAddress = *(U*)source;
         }
 
         void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool isPairFirst)
@@ -186,56 +201,21 @@ namespace QwerkE {
 
             switch (objTypeInfo->enumType)
             {
-            case MirrorTypes::m_string:
-                {
-                    std::string* str = (std::string*)obj;
-                    const char* result = isPairFirst ? objJson->string : objJson->valuestring;
-                    if (!result) // #TODO Take out safety check with a better solution
-                    {
-                        result = isPairFirst ? objJson->valuestring : objJson->string;
-                    }
-                    *str = result;
-                }
-                break;
+            case MirrorTypes::m_string: // #NOTE Handle when obj is pair.first
+                *(std::string*)obj = objJson->valuestring ? objJson->valuestring : objJson->string; break;
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
-                {
-                    const char** str = (const char**)obj;
-                    *str = _strdup(objJson->valuestring);
-                }
-                break;
-
+                *(const char**)obj = _strdup(objJson->valuestring); break;
             case MirrorTypes::m_uint64_t: // #NOTE Storing uint64 as string
-                {
-                    u64* valuePtr = (u64*)obj;
-                    if (!objJson->valuestring)
-                    {
-                        LOG_ERROR("{0} objJson->valuestring is null!", __FUNCTION__);
-                        return;
-                    }
-                    const u64 temp = std::stoull(objJson->valuestring);
-                    *valuePtr = temp;
-                    // #TODO Try using objJson->valuedouble and a memcpy to see if that works
-                }
-                break;
+                *(uint64_t*)obj = std::stoull(objJson->valuestring); break;
             case MirrorTypes::m_int64_t: // #NOTE Storing int64 as string
-                {
-                    s64* valuePtr = (s64*)obj;
-                    const s64 temp = std::stoll(objJson->valuestring);
-                    *valuePtr = temp;
-                    // #TODO Try using objJson->valuedouble and a memcpy to see if that works
-                }
-                break;
-
+                *(int64_t*)obj = std::stoll(objJson->valuestring); break;
             case MirrorTypes::m_float:
-                local_Write<float, double>(obj, &objJson->valuedouble); break;
+                *(float*)obj = objJson->valuedouble; break;
 
             default:
-                // if (cJSON_Number == objJson->type || cJSON_True == objJson->type || cJSON_False == objJson->type)
                 if (objJson->type | cJSON_Number | cJSON_True | cJSON_False)
-                {
-                    // #TODO Potential bug writing to fieldAddress with size less than objJson->valueint
-                    // #TODO Try to use memcpy for bool, float, double, and char assignments/cases
+                {   // #TODO Potential bug writing to fieldAddress with size less than objJson->valueint
                     void* fieldAddress = ((char*)obj);
                     void* sourceAddress = (void*)&objJson->valueint;
 
@@ -250,45 +230,34 @@ namespace QwerkE {
                     }
                     memcpy(fieldAddress, sourceAddress, objTypeInfo->size);
                 }
-#if DEBUG_LEVEL 1
                 else
                 {
                     LOG_WARN("{0} Unsupported Type!", __FUNCTION__);
                 }
-#endif
                 break;
             }
         }
 
         void local_DeserializeClass(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
-            const cJSON* iterator = objJson->child;
-
             if (objTypeInfo->superTypeInfo)
             {
                 local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
             }
 
+            const cJSON* iterator = objJson->child;
             while (iterator)
             {
                 for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
                 {
                     const Mirror::Field& field = objTypeInfo->fields[i];
 
-                    if (strcmp(field.name.c_str(), iterator->string) != 0)
-                    {
-#if DEBUG_LEVEL 1
-                        // LOG_WARN("{0} Mismatched names {1} and {2}!", __FUNCTION__, field.name.c_str(), iterator->string);
-#endif
-                        continue;
-                    }
-
-                    if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
+                    if (strcmp(field.name.c_str(), iterator->string) != 0 ||
+                        field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
                         continue;
 
-                    if (field.typeInfo->isCollection())
+                    if (field.typeInfo->isCollection()) // #NOTE Needed to pass name of member collection
                     {
-                        // #NOTE Needed to pass name
                         local_DeserializeCollection(iterator, field.typeInfo, (char*)obj + field.offset, field.name);
                     }
                     else
@@ -315,10 +284,9 @@ namespace QwerkE {
             const Mirror::TypeInfo* const elementSecondInfo = objTypeInfo->CollectionTypeInfoSecond();
             Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
 
-            const cJSON* it = objJson->child;
-            size_t index = 0; // #TODO Use fields array in a for loop
-
-            while (it)
+            const cJSON* iterator = objJson->child;
+            size_t index = 0;
+            while (iterator)
             {
                 const bool hasConstructionDependency = false;
                 // #TODO Handle case where string needs construction, but not basic/primitive types
@@ -329,11 +297,11 @@ namespace QwerkE {
                     elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>());
                 }
 
-                DeserializeFromJson(it, elementFirstTypeInfo, elementFirstBuffer.As<void>());
+                DeserializeFromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
 
                 if (objTypeInfo->isPair())
                 {
-                    DeserializeFromJson(it, elementSecondInfo, elementSecondBuffer.As<void>());
+                    DeserializeFromJson(iterator, elementSecondInfo, elementSecondBuffer.As<void>());
                 }
 
                 objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
@@ -345,7 +313,7 @@ namespace QwerkE {
                     elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>()); // #TODO Add/supply constructor argument data
                 }
 
-                it = it->next;
+                iterator = iterator->next;
                 ++index;
             }
         }

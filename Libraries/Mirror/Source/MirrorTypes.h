@@ -9,7 +9,8 @@ enum class MirrorTypes
 
     TestStruct, // #NOTE For use with MirrorTesting.h
     Base, // #NOTE For use with MirrorTesting.h
-    Derived, // #NOTE For use with MirrorTesting.h
+    Derived1, // #NOTE For use with MirrorTesting.h
+    Derived2, // #NOTE For use with MirrorTesting.h
 
     // ImGui
     ImGuiStyle,
@@ -109,7 +110,9 @@ enum class MirrorTypes
     m_scriptablePtr,
     m_editorWindowPtr, // Editor only
     m_int32Ptr, // #NOTE For use with MirrorTesting.h
-    m_derivedPtr,
+    m_derived1Ptr, // #NOTE For use with MirrorTesting.h
+    m_derived2Ptr, // #NOTE For use with MirrorTesting.h
+    m_basePtr, // #NOTE For use with MirrorTesting.h
     m_POINTERS_END,
 
     // Primitive types. #NOTE A prefix is used to avoid naming collisions with standard type keywords
