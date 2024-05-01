@@ -3,6 +3,7 @@ include "Libraries.lua"
 project "Editor"
 	kind "StaticLib"
 	location ""
+	rtti "On" -- Enabled for Mirror serialization
 	debugargs { "-applicationName", "Test Game" }
 	
 	defines

@@ -9,6 +9,8 @@
 
 #include "Mirror.h"
 
+#include "../../../Editor/Source/QE_EditorWindowHelpers.h" // #TODO Remove
+
 namespace QwerkE {
 
     // #TODO Add inheritance structure
@@ -65,6 +67,8 @@ namespace QwerkE {
                 delete m_Derived2Ptr;
             }
         }
+
+        Editor::EditorWindow* m_EditorWindowPtr = nullptr;
 
         bool m_Bool = true;
         uint8_t m_U8 = 1;

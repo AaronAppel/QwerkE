@@ -41,6 +41,7 @@ namespace QwerkE {
 			TypeInfoCategory_Class,
 			TypeInfoCategory_Collection,
 			TypeInfoCategory_Pointer,
+			TypeInfoCategory_Pair,
 		};
 
 		struct Iterator
@@ -74,6 +75,7 @@ namespace QwerkE {
 
 		using Func_void_voidPtr_sizet_voidPtr_voidPtr = void (*)(void*, size_t, void*, void*);
 		using Func_void_voidPtr = void (*)(void*);
+		using Func_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
 		using Func_void_voidPtr_voidPtr = void (*)(void*, void*);
 		using Func_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
 		using Func_bool_constVoidPtr = bool (*)(const void*);
@@ -90,13 +92,9 @@ namespace QwerkE {
 			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; } // { return !isClass; } // { return enumType > MirrorTypes::m_PRIMITIVES_START; }
 			bool isSubClass() const { return superTypeInfo != nullptr; }
 			bool hasSubClass() const { return !derivedTypesMap.empty(); }
-			bool isCollection() const { return isPair() || isArray() || isMap() || isVector() || CollectionTypeInfoFirst() != nullptr || CollectionTypeInfoSecond() != nullptr; }
+			bool isCollection() const { return TypeInfoCategories::TypeInfoCategory_Collection == category;; }
 
-			// bool isPair() const { return false; }
-			bool isPair() const { return enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END; } // #TODO Deprecate enum dependency
-			bool isArray() const { return enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END; } // #TODO Deprecate enum dependency
-			bool isMap() const { return enumType > MirrorTypes::m_MAPS_START && enumType < MirrorTypes::m_MAPS_END; } // #TODO Deprecate enum dependency
-			bool isVector() const { return enumType > MirrorTypes::m_VECTORS_START && enumType < MirrorTypes::m_VECTORS_END; } // #TODO Deprecate enum dependency
+			bool isPair() const { return TypeInfoCategories::TypeInfoCategory_Pair == category; }
 
 			bool newIsCollection() const { return
 				enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END ||
@@ -145,12 +143,14 @@ namespace QwerkE {
 			void CollectionAppend(void* collectionAddress, size_t index, void* first, void* second = nullptr) const { collectionAddFunc(collectionAddress, index, first, second); }
 
 			Func_void_voidPtr_sizet_voidPtr_voidPtr collectionAddFunc = nullptr;
+			Func_voidPtr_constVoidPtr_bool collectionFirstSecondFunc = nullptr;
 			Func_void_voidPtr typeConstructorFunc = nullptr;
 			Func_charPtr_constVoidPtr_sizet typeIterateCurrentFunc = nullptr;
 			Func_bool_constVoidPtr typeDynamicCastFunc = nullptr;
 
 			Func_void_voidPtr_voidPtr typeConstructorDependentFunc = nullptr;
 			uint16_t sizeOfConstructorArgumentBuffer = 0;
+			std::string constructorDependentMemberName = "";
 
 			TypeInfoCategories category = TypeInfoCategories::TypeInfoCategory_Invalid;
 		};
@@ -226,20 +226,36 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	return &localStaticTypeInfo;																								\
 	}
 
+// #define MIRROR_CLASS_MEMBER(MEMBER_NAME)																						\
+// 	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 };																		\
+// 	QwerkE::Mirror::Field MEMBER_NAME##field;																					\
+// 	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>();								\
+// 	MEMBER_NAME##field.name = #MEMBER_NAME;																						\
+// 	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME);																\
+// 	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME));															\
+// 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
+
+// #TODO Keep logic here. Check if this calss needs it's own member to construct
+#define MIRROR_CONSTRUCT_USING_MEMBER(MEMBER_NAME)																				\
+	localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress, void* memberAddress) {							\
+		new(instanceAddress) ClassType(*(decltype(ClassType::MEMBER_NAME)*)memberAddress);										\
+	};																															\
+	localStaticTypeInfo.constructorDependentMemberName = #MEMBER_NAME;
+
 #define MIRROR_CONSTRUCTOR(TYPE_FIRST)																							\
 	localStaticTypeInfo.typeConstructorDependentFunc = [](void* preallocatedMemoryAddress, void* argumentBuffer) {				\
 		TYPE_FIRST first = *(TYPE_FIRST*)argumentBuffer;																		\
 		new(preallocatedMemoryAddress) ClassType(first);																		\
-		sizeOfConstructorArgumentBuffer	= sizeof(TYPE_FIRST);																	\
-	};
+	};																															\
+	sizeOfConstructorArgumentBuffer = sizeof(TYPE_FIRST);
 
 #define MIRROR_CONSTRUCTOR2(TYPE_FIRST, TYPE_Second)																			\
 	localStaticTypeInfo.typeConstructorDependentFunc = [](void* preallocatedMemoryAddress, void* argumentBuffer) {				\
 		TYPE_FIRST first = *(TYPE_FIRST*)argumentBuffer;																		\
 		TYPE_Second second = *(TYPE_Second*)argumentBuffer;																		\
 		new(preallocatedMemoryAddress) ClassType(first, second);																\
-		sizeOfConstructorArgumentBuffer	= sizeof(TYPE_FIRST) + sizeof(TYPE_Second);												\
-	};
+	};																															\
+	sizeOfConstructorArgumentBuffer	= sizeof(TYPE_FIRST) + sizeof(TYPE_Second);
 
 #define MIRROR_CLASS_START(TYPE) MIRROR_CLASS_STARTN(TYPE, MIRROR_MEMBER_FIELDS_DEFAULT)
 #define MIRROR_CLASS_STARTN(TYPE, FIELDCOUNT)																					\
@@ -435,7 +451,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<MAP_TYPE>() {							
 		MAP_TYPE* map = (MAP_TYPE*)collectionAddress;																			\
 		static MAP_TYPE::iterator iterator = map->begin();																		\
 		if (aIndex < index) { index = aIndex; iterator = map->begin(); }														\
-		if (aIndex >= map->size()) { return nullptr; }																			\
+		if (index >= map->size()) { ++index; return nullptr; }																	\
 		++index;																												\
 		return (char*)&iterator->first;																							\
 	};																															\
@@ -459,6 +475,11 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<PAIR_TYPE>() {						
 	};																															\
 	localStaticTypeInfo.typeConstructorFunc =																					\
 		[](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) PAIR_TYPE; };										\
-	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Collection;												\
+	localStaticTypeInfo.collectionFirstSecondFunc =																				\
+		[](const void* pairObjAddress, bool isFirst) -> void* {																	\
+		if (isFirst) return &(((PAIR_TYPE*)pairObjAddress)->first);																\
+		return &(((PAIR_TYPE*)pairObjAddress)->second);																			\
+	};																															\
+	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Pair;													\
 	return &localStaticTypeInfo;																								\
 }

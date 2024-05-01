@@ -756,7 +756,7 @@ namespace QwerkE {
 				// imgui types
 				case MirrorTypes::m_imvec4_array:
 				{
-					if (field.typeInfo->isArray())
+					if (field.typeInfo->isCollection())
 					{
 						const ImVec4* colours = (ImVec4*)((char*)obj + field.offset);
 						const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<ImVec4>();

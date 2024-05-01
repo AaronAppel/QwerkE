@@ -121,7 +121,7 @@ namespace QwerkE {
 
 			Framework::Initialize();
 
-            if (const bool Serialize = true)
+            if (const bool Serialize = false)
             {
                 TestStruct testStructSerialize;
                 auto loc = &testStructSerialize.m_UmapStringInt32;
@@ -170,6 +170,8 @@ namespace QwerkE {
                     testStructSerialize.m_BasePtrDerived = new Derived2();
                 else
                     testStructSerialize.m_BasePtrDerived = new Base();
+
+                testStructSerialize.m_EditorWindowPtr = new Editor::EditorWindowAssets(GUID());
 
                 Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
             }

@@ -84,6 +84,7 @@ namespace QwerkE {
         void local_SerializePrimitive(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
         void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
         void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
+        void local_SerializePair(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         cJSON* TestCreateObject(const char* key = nullptr);
 
@@ -91,9 +92,6 @@ namespace QwerkE {
         void NewSerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray);
         template<typename... Component>
         static void NewSerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray);
-
-        template <typename T>
-        void TestSerializePair(const void* obj, cJSON* collectionJsonContainer);
 
         void TestAgnostic(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
@@ -216,6 +214,9 @@ namespace QwerkE {
                     SerializeToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
                 }
                 break;
+
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
+                local_SerializePair(obj, objTypeInfo, objJson); break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Invalid:
             default:
@@ -388,35 +389,134 @@ namespace QwerkE {
             cJSON* collectionJsonContainer = TestCreateObject(name.c_str());
             cJSON_AddItemToArray(objJson, collectionJsonContainer);
 
-            switch (objTypeInfo->enumType)
+            if (!objTypeInfo->isPair())
             {
-            case MirrorTypes::m_map_guid_entt:
-            case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
-            case MirrorTypes::m_umap_guid_editorWindowPtr:
-            case MirrorTypes::m_umap_string_int32:
-            case MirrorTypes::m_vec_string:
-            case MirrorTypes::m_vec_pair_guid_string:
-            case MirrorTypes::m_vec_char:
-            case MirrorTypes::m_imvec4_array: // imgui types
-            case MirrorTypes::m_arr_float16:
-            case MirrorTypes::m_arr_float10:
-                TestAgnostic(obj, objTypeInfo, collectionJsonContainer); break;
-
-            case MirrorTypes::m_pair_eScriptTypes_ScriptablePtr:
-                TestSerializePair<std::pair<eScriptTypes, Scriptable*>>(obj, collectionJsonContainer); break;
-            case MirrorTypes::m_pair_guid_string:
-                using PairGuidString = std::pair<GUID, std::string>;
-                TestSerializePair<PairGuidString>(obj, collectionJsonContainer); break;
-            case MirrorTypes::m_pair_guid_editorWindowPtr:
-                TestSerializePair<std::pair<GUID, Editor::EditorWindow*>>(obj, collectionJsonContainer); break;
-            case MirrorTypes::m_pair_string_int32:
-                TestSerializePair<std::pair<std::string, s32>>(obj, collectionJsonContainer); break;
-
-            default:
-                LOG_WARN("{0} Unsupported user defined field type {1}({2}) for serialization!", __FUNCTION__, objTypeInfo->stringName, (u32)objTypeInfo->enumType);
-                break;
+                size_t counter = 0;
+                void* elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
+                while (elementAddress)
+                {
+                    if (auto first = objTypeInfo->CollectionTypeInfoFirst())
+                    {
+                        SerializeToJson(elementAddress, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer, objTypeInfo->CollectionTypeInfoFirst()->stringName);
+                    }
+                    else
+                    {
+                        LOG_WARN("{0} First info is null!", __FUNCTION__);
+                    }
+                    ++counter;
+                    elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
+                }
+            }
+            else
+            {
+                ASSERT(false, "Should not hit this line!");
             }
         }
+
+        void local_SerializePair(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        {
+            cJSON* pairJson = TestCreateObject(objTypeInfo->stringName.c_str());
+            cJSON_AddItemToArray(objJson, pairJson);
+
+            const Mirror::TypeInfo* const objTypeInfoFirst = objTypeInfo->CollectionTypeInfoFirst();
+            const Mirror::TypeInfo* const objTypeInfoSecond = objTypeInfo->CollectionTypeInfoSecond();
+
+            const void* firstAddress = objTypeInfo->collectionFirstSecondFunc(obj, true);
+            const void* secondAddress = objTypeInfo->collectionFirstSecondFunc(obj, false);
+
+            if (objTypeInfoFirst->isPrimitive())
+            {
+                cJSON* pairFirstJson = TestCreateObject(objTypeInfoFirst->stringName.c_str());
+                cJSON_AddItemToArray(pairJson, pairFirstJson);
+                local_SerializePrimitive(firstAddress, objTypeInfoFirst, pairFirstJson, objTypeInfoFirst->stringName);
+            }
+            else
+            {
+                SerializeToJson(firstAddress, objTypeInfoFirst, pairJson, objTypeInfoFirst->stringName);
+            }
+
+            cJSON* pairSecondJson = TestCreateObject(objTypeInfoSecond->stringName.c_str());
+            cJSON_AddItemToArray(pairJson, pairSecondJson);
+
+            switch (objTypeInfoSecond->category)
+            {
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
+                local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
+
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
+                local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson); break;
+
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
+                local_SerializeCollection(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
+
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
+            {
+                // #TODO Deduce derived type
+                const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType();
+                if (secondAbsoluteTypeInfoDerived->hasSubClass())
+                {
+                    for (const auto& pair : secondAbsoluteTypeInfoDerived->derivedTypesMap)
+                    {
+                        ASSERT(pair.second->typeDynamicCastFunc, "Null typeDynamicCastFunc!");
+                        if (pair.second->typeDynamicCastFunc(secondAddress))
+                        {
+                            secondAbsoluteTypeInfoDerived = pair.second;
+                            break;
+                        }
+                    }
+                }
+                SerializeToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
+            }
+            break;
+
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
+                local_SerializePair(secondAddress, objTypeInfoSecond, pairSecondJson); break;
+
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Invalid:
+            default:
+                break;
+            }
+
+            // if (objTypeInfoSecond->isPrimitive())
+            // {
+            //     local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
+            // }
+            // else if (objTypeInfoSecond->isClass)
+            // {
+            //     local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson);
+            // }
+            // else if (objTypeInfoSecond->isCollection())
+            // {
+            //     local_SerializeCollection(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
+            // }
+            // else if (objTypeInfoSecond->isPair())
+            // {
+            //     local_SerializePair(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
+            // }
+            // else if (objTypeInfoSecond->isPointer)
+            // {
+            //     // #TODO Deduce derived type
+            //     const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType();
+            //     if (secondAbsoluteTypeInfoDerived->hasSubClass())
+            //     {
+            //         for (const auto& pair : secondAbsoluteTypeInfoDerived->derivedTypesMap)
+            //         {
+            //             ASSERT(pair.second->typeDynamicCastFunc, "Null typeDynamicCastFunc!");
+            //             if (pair.second->typeDynamicCastFunc(secondAddress))
+            //             {
+            //                 secondAbsoluteTypeInfoDerived = pair.second;
+            //                 break;
+            //             }
+            //         }
+            //     }
+            //     SerializeToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
+            // }
+            // else
+            // {
+            //     LOG_ERROR("{0} Unsupported type info!", __FUNCTION__);
+            // }
+        }
+
         cJSON* TestCreateObject(const char* key)
         {
             cJSON* returnJSONItem = cJSON_CreateObject();
@@ -446,126 +546,6 @@ namespace QwerkE {
         static void NewSerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray)
         {
             NewSerializeComponent<Component...>(handle, entityComponentsJsonArray);
-        }
-
-        void TestAgnostic(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
-        {
-            if (objTypeInfo->isPair())
-            {
-                int bp = 0;
-            }
-
-            size_t counter = 0;
-            void* elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
-            while (elementAddress)
-            {
-                if (auto first = objTypeInfo->CollectionTypeInfoFirst())
-                {
-                    SerializeToJson(elementAddress, objTypeInfo->CollectionTypeInfoFirst(), objJson, objTypeInfo->CollectionTypeInfoFirst()->stringName);
-                }
-                else
-                {
-                    LOG_WARN("{0} First info is null!", __FUNCTION__);
-                }
-                ++counter;
-                elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
-            }
-        }
-
-        template <typename T>
-        void TestSerializePair(const void* obj, cJSON* collectionJsonContainer)
-        {
-            // if (!Mirror::InfoForType<T>()->isPair()) return;
-
-            const Mirror::TypeInfo* const objTypeInfo = Mirror::InfoForType<T>();;
-            const Mirror::TypeInfo* const firstTypeInfo = objTypeInfo->CollectionTypeInfoFirst();
-            const Mirror::TypeInfo* const absoluteFirstTypeInfo = firstTypeInfo->AbsoluteType();
-            const Mirror::TypeInfo* const secondTypeInfo = objTypeInfo->CollectionTypeInfoSecond();
-            const Mirror::TypeInfo* const absoluteSecondTypeInfo = secondTypeInfo->AbsoluteType();
-
-            const T* objPair = (T*)obj;
-
-            if (objTypeInfo->CollectionTypeInfoFirst()->isPointer) LOG_WARN("{0} Review first pointer type usage", __FUNCTION__)
-            // if (objTypeInfo->CollectionTypeInfoSecond()->isPointer) LOG_WARN("{0} Review second pointer type usage", __FUNCTION__)
-
-            if (!firstTypeInfo->isPrimitive() && MirrorTypes::GUID != firstTypeInfo->enumType)
-            {
-                // #NOTE The first type is assumed to be primitive
-                LOG_WARN("{0} Verify that non-primitive pair.first is valid and works with current logic", __FUNCTION__);
-            }
-
-            void* absoluteObjectAddress = (void*)&objPair->second;
-            if (secondTypeInfo->isPointer) // #TODO Handle multiple levels of pointers
-            {
-                absoluteObjectAddress = *(void**)absoluteObjectAddress;
-            }
-
-            if (absoluteSecondTypeInfo->isPrimitive())
-            {
-                std::string x; // #NOTE Handles keys of string and non-string types
-                if (MirrorTypes::m_string == absoluteFirstTypeInfo->enumType)
-                {
-                    std::string* str = (std::string*)&objPair->first;
-                    x = *str;
-                }
-                else
-                {
-                    u32* number = (u32*)&objPair->first;
-                    x = std::to_string(*number);
-                }
-                local_SerializePrimitive(absoluteObjectAddress, absoluteSecondTypeInfo, collectionJsonContainer, x.c_str());
-            }
-            else if (absoluteSecondTypeInfo->isClass)
-            {
-                cJSON* classJsonItem = TestCreateObject(absoluteSecondTypeInfo->stringName.c_str());
-
-                cJSON_AddItemToArray(collectionJsonContainer, classJsonItem);
-
-                if (absoluteSecondTypeInfo->hasSubClass())
-                {
-                    u8 derivedType = UINT8_MAX;
-
-                    switch (objTypeInfo->enumType)
-                    {
-                    case MirrorTypes::m_pair_guid_editorWindowPtr:
-                        {
-                            using PairType = std::pair<GUID, Editor::EditorWindow*>;
-                            const PairType* p = (PairType*)obj;
-                            derivedType = p->second->Type();
-                        }
-                        break;
-
-                    case MirrorTypes::m_pair_eScriptTypes_ScriptablePtr:
-                        {
-                            using PairType = std::pair<eScriptTypes, Scriptable*>;
-                            const PairType* p = (PairType*)obj;
-                            derivedType = p->second->ScriptType();
-                        }
-                        break;
-
-                    default:
-                        LOG_WARN("{0} Unsupported pair type", __FUNCTION__); break;
-                    }
-
-                    if (const Mirror::TypeInfo* derivedTypeInfo = absoluteSecondTypeInfo->DerivedTypeInfo(derivedType))
-                    {
-                        local_SerializeClass(absoluteObjectAddress, derivedTypeInfo, classJsonItem);
-                        return;
-                    }
-                }
-
-                if (absoluteSecondTypeInfo->isAbstract)
-                {
-                    LOG_ERROR("{0} Could not deduce derived type!", __FUNCTION__);
-                    return;
-                }
-                local_SerializeClass(absoluteObjectAddress, absoluteSecondTypeInfo, classJsonItem);
-            }
-            else if (absoluteSecondTypeInfo->isCollection())
-            {
-                cJSON* collectionJsonItem = TestCreateObject();
-                local_SerializeCollection(absoluteObjectAddress, absoluteSecondTypeInfo, collectionJsonItem, absoluteSecondTypeInfo->stringName);
-            }
         }
 
         template <typename T>

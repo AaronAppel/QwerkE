@@ -1,5 +1,18 @@
 {
 	"TestStruct":	{
+		"m_EditorWindowPtr":	{
+			"EditorWindowAssets":	{
+				"m_Guid":	{
+					"m_Guid":	"13784972768589422052"
+				},
+				"m_WindowName":	"Assets##13784972768589422052",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	0,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_EditorWindowType":	1
+			}
+		},
 		"m_BasePtrDerived":	{
 			"Derived2":	{
 				"baseX":	1,
@@ -62,8 +75,11 @@
 			"m_char":	"F"
 		},
 		"m_UmapStringInt32":	{
-			"m_pair_string_int32":	{
-				"test":	890
+			"m_string":	{
+				"m_string":	"test"
+			},
+			"m_int32_t":	{
+				"m_int32_t":	890
 			}
 		},
 		"m_Int32Ptr":	{

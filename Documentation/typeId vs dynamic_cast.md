@@ -1,0 +1,2 @@
+#TODO Look at switching from dynamic_cast to typeid() in Mirror, now that I know RTTI must be enabled.
+https://stackoverflow.com/questions/456951/what-is-the-best-way-to-check-the-type-of-base-class-pointer?rq=3

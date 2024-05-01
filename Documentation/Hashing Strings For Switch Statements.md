@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/65195841/hash-function-to-switch-on-a-string

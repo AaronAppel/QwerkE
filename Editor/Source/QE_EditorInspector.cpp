@@ -30,6 +30,17 @@ namespace QwerkE {
             bool valueChanged = false;
 
 #ifdef _QDEARIMGUI
+
+            if (ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+                {
+                    const wchar_t* path = (const wchar_t*)payload->Data;
+                    std::filesystem::path texturePath(path);
+                }
+                ImGui::EndDragDropTarget();
+            }
+
             const std::vector<Mirror::Field>& fields = typeInfo->fields;
 
             for (size_t i = 0; i < fields.size(); i++)

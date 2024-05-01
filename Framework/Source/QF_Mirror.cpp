@@ -80,32 +80,6 @@ namespace QwerkE {
 	// Add to MirrorTypes.h "m_int32Ptr,"
 	typedef int32_t* m_int32Ptr;
 	MIRROR_POINTER(m_int32Ptr)
-
-	MIRROR_CLASS_START(TestStruct)
-	MIRROR_CLASS_MEMBER(m_BasePtrDerived)
-	MIRROR_CLASS_MEMBER(m_Derived1Ptr)
-	MIRROR_CLASS_MEMBER(m_Derived2Ptr)
-	MIRROR_CLASS_MEMBER(m_Base)
-	MIRROR_CLASS_MEMBER(m_Derived1)
-	MIRROR_CLASS_MEMBER(m_Derived2)
-	MIRROR_CLASS_MEMBER(m_Bool)
-	MIRROR_CLASS_MEMBER(m_U8)
-	MIRROR_CLASS_MEMBER(m_U16)
-	MIRROR_CLASS_MEMBER(m_U32)
-	MIRROR_CLASS_MEMBER(m_U64)
-	MIRROR_CLASS_MEMBER(m_S8)
-	MIRROR_CLASS_MEMBER(m_S16)
-	MIRROR_CLASS_MEMBER(m_S32)
-	MIRROR_CLASS_MEMBER(m_S64)
-	MIRROR_CLASS_MEMBER(m_Float)
-	MIRROR_CLASS_MEMBER(m_Double)
-	MIRROR_CLASS_MEMBER(m_String)
-	MIRROR_CLASS_MEMBER(m_ConstCharPtr)
-	MIRROR_CLASS_MEMBER(m_FloatArray10)
-	MIRROR_CLASS_MEMBER(m_CharVector)
-	MIRROR_CLASS_MEMBER(m_UmapStringInt32)
-	MIRROR_CLASS_MEMBER(m_Int32Ptr)
-	MIRROR_CLASS_END(TestStruct);
 	// End Mirror Testing
 
 	template <typename... T>
@@ -379,6 +353,7 @@ namespace QwerkE {
 
 	typedef Editor::EditorWindowAssets EditorWindowAssets;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowAssets)
 
 	typedef Editor::EditorWindowDefaultDebug EditorWindowDefaultDebug;
@@ -447,14 +422,18 @@ namespace QwerkE {
 
 	typedef Editor::EditorWindow EditorWindow;
 	MIRROR_ABSTRACT_CLASS_START(EditorWindow)
-	MIRROR_CLASS_MEMBER(m_Guid) // Order dependency! 1st
+	MIRROR_CLASS_MEMBER(m_Guid) // Order dependency! 1st // #TODO Review dependency
 	MIRROR_CLASS_MEMBER(m_WindowName)
 	MIRROR_CLASS_MEMBER(m_ImGuiFlags)
 	MIRROR_CLASS_MEMBER(m_WindowFlags)
 	MIRROR_CLASS_MEMBER(m_MinimumWidth)
 	MIRROR_CLASS_MEMBER(m_MinimumHeight)
 	MIRROR_CLASS_MEMBER(m_EditorWindowType)
-	MirrorSubClassUserTypes(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
+
+	// #TODO Support more types
+	MIRROR_CLASS_SUBCLASS(EditorWindowAssets)
+	MIRROR_CLASS_SUBCLASS(EditorWindowMenuBar)
+	// MirrorSubClassUserTypes(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
 	MIRROR_CLASS_END(EditorWindow)
 
 	typedef Editor::EditorWindow* m_editorWindowPtr;
@@ -465,4 +444,31 @@ namespace QwerkE {
 
 	typedef std::unordered_map<GUID, m_editorWindowPtr> m_umap_guid_editorWindowPtr;
 	MIRROR_MAP(m_umap_guid_editorWindowPtr, m_pair_guid_editorWindowPtr)
+
+	MIRROR_CLASS_START(TestStruct)
+	MIRROR_CLASS_MEMBER(m_EditorWindowPtr)
+	MIRROR_CLASS_MEMBER(m_BasePtrDerived)
+	MIRROR_CLASS_MEMBER(m_Derived1Ptr)
+	MIRROR_CLASS_MEMBER(m_Derived2Ptr)
+	MIRROR_CLASS_MEMBER(m_Base)
+	MIRROR_CLASS_MEMBER(m_Derived1)
+	MIRROR_CLASS_MEMBER(m_Derived2)
+	MIRROR_CLASS_MEMBER(m_Bool)
+	MIRROR_CLASS_MEMBER(m_U8)
+	MIRROR_CLASS_MEMBER(m_U16)
+	MIRROR_CLASS_MEMBER(m_U32)
+	MIRROR_CLASS_MEMBER(m_U64)
+	MIRROR_CLASS_MEMBER(m_S8)
+	MIRROR_CLASS_MEMBER(m_S16)
+	MIRROR_CLASS_MEMBER(m_S32)
+	MIRROR_CLASS_MEMBER(m_S64)
+	MIRROR_CLASS_MEMBER(m_Float)
+	MIRROR_CLASS_MEMBER(m_Double)
+	MIRROR_CLASS_MEMBER(m_String)
+	MIRROR_CLASS_MEMBER(m_ConstCharPtr)
+	MIRROR_CLASS_MEMBER(m_FloatArray10)
+	MIRROR_CLASS_MEMBER(m_CharVector)
+	MIRROR_CLASS_MEMBER(m_UmapStringInt32)
+	MIRROR_CLASS_MEMBER(m_Int32Ptr)
+	MIRROR_CLASS_END(TestStruct);
 }
