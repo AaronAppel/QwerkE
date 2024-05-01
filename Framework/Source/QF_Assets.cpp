@@ -112,7 +112,6 @@ namespace QwerkE {
 
 	void Assets::SaveRegistry()
 	{
-		// Serialization::OldSerializeObjectToFile(s_AssetGuidToFileRegistry, Paths::Setting(s_AssetsRegistryFileName).c_str());
 		Serialization::NewSerializeToFile(s_AssetGuidToFileRegistry, "NewSerializationWindow");
 	}
 

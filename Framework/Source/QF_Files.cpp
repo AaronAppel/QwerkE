@@ -1,6 +1,7 @@
 #include "QF_Files.h"
 
 #include <filesystem>
+#include <stdio.h> // For fwrite, fclose, and general file I/O
 
 #ifdef _QLODEPNG
 #include "Libraries/lodepng/lodepng.h"
@@ -52,7 +53,6 @@ namespace QwerkE {
 			channels = 0x1908; // GL_RGBA;
 
 			Buffer fileBuffer = Files::LoadFile(filePath);
-
 			Buffer returnBuffer = Buffer(fileBuffer.SizeInBytes());
 
 			if (fileBuffer)
@@ -82,7 +82,7 @@ namespace QwerkE {
 
 			if (!buffer)
 			{
-				LOG_ERROR("Error loading sound file!");
+				LOG_ERROR("{0} Error loading sound file!", __FUNCTION__);
 			}
 			return buffer;
 		}
@@ -95,6 +95,27 @@ namespace QwerkE {
 		Path FileExtension(const char* filePath)
 		{
 			return Path(filePath).extension();
+		}
+
+		void WriteStringToFile(const char* const fileData, const char* const filePath)
+		{
+			if (!filePath)
+			{
+				LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+				return;
+			}
+
+			FILE* filehandle;
+			errno_t error = fopen_s(&filehandle, filePath, "w+");
+			if (!error && filehandle)
+			{
+				fwrite(fileData, 1, strlen(fileData), filehandle);
+				fclose(filehandle);
+			}
+			else
+			{
+				LOG_ERROR("{0} Could not open file for write {1}", __FUNCTION__, filePath);
+			}
 		}
 
 		Path UniqueFilePath(const char* const filePath)

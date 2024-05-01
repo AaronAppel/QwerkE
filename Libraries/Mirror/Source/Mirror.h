@@ -40,26 +40,8 @@ namespace QwerkE {
 			TypeInfoCategory_Primitive,
 			TypeInfoCategory_Class,
 			TypeInfoCategory_Collection,
-			TypeInfoCategory_Pointer,
 			TypeInfoCategory_Pair,
-		};
-
-		struct Iterator
-		{
-			const void* collectionAddress = nullptr;
-			const TypeInfo* typeInfo = nullptr;
-			size_t index = 0; // #TODO Private
-			void* current = nullptr;
-
-			operator bool() const { return current != nullptr && typeInfo; }
-			void operator ++() { if (current != nullptr && typeInfo) current = (char*)current + typeInfo->size; }
-
-			//void* ElementAddress()
-			//{
-			//	if (!typeInfo) return nullptr;
-			//
-			//	void* a = typeInfo->typeConstructorFunc;
-			//}
+			TypeInfoCategory_Pointer,
 		};
 
 		struct Field
@@ -73,20 +55,12 @@ namespace QwerkE {
 #endif
 		};
 
-		using Func_void_voidPtr_sizet_voidPtr_voidPtr = void (*)(void*, size_t, void*, void*);
-		using Func_void_voidPtr = void (*)(void*);
-		using Func_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
-		using Func_void_voidPtr_voidPtr = void (*)(void*, void*);
-		using Func_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
-		using Func_bool_constVoidPtr = bool (*)(const void*);
-
 		struct TypeInfo
 		{
 			// #TODO Look at shrinking types and using unions for exclusive members
 			std::string stringName = "";
 			MirrorTypes enumType = MirrorTypes::m_Invalid;
 			size_t size = 0;
-			size_t arrayCount = 0;
 
 			// #TODO Can create a TypeCategory enum type to switch on instead of using if/else
 			bool isPrimitive() const { return enumType > MirrorTypes::m_PRIMITIVES_START; } // { return !isClass; } // { return enumType > MirrorTypes::m_PRIMITIVES_START; }
@@ -95,21 +69,6 @@ namespace QwerkE {
 			bool isCollection() const { return TypeInfoCategories::TypeInfoCategory_Collection == category;; }
 
 			bool isPair() const { return TypeInfoCategories::TypeInfoCategory_Pair == category; }
-
-			bool newIsCollection() const { return
-				enumType > MirrorTypes::m_PAIRS_START && enumType < MirrorTypes::m_PAIRS_END ||
-				enumType > MirrorTypes::m_ARRAYS_START && enumType < MirrorTypes::m_ARRAYS_END ||
-				enumType > MirrorTypes::m_VECTORS_START && enumType < MirrorTypes::m_VECTORS_END ||
-				enumType > MirrorTypes::m_MAPS_START && enumType < MirrorTypes::m_MAPS_END;
-			}
-
-			bool newIsClass() const {
-				return isClass && !newIsCollection();
-			}
-
-			bool isPointer = false; // #TODO Turn to bit flags
-			bool isClass = false;
-			bool isAbstract = false;
 
 			std::vector<Field> fields = { }; // #TODO Hide/private non-constants
 			std::map<uint16_t, const TypeInfo*> derivedTypesMap;
@@ -142,6 +101,13 @@ namespace QwerkE {
 
 			void CollectionAppend(void* collectionAddress, size_t index, void* first, void* second = nullptr) const { collectionAddFunc(collectionAddress, index, first, second); }
 
+			using Func_void_voidPtr_sizet_voidPtr_voidPtr = void (*)(void*, size_t, void*, void*);
+			using Func_void_voidPtr = void (*)(void*);
+			using Func_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
+			using Func_void_voidPtr_voidPtr = void (*)(void*, void*);
+			using Func_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
+			using Func_bool_constVoidPtr = bool (*)(const void*);
+
 			Func_void_voidPtr_sizet_voidPtr_voidPtr collectionAddFunc = nullptr;
 			Func_voidPtr_constVoidPtr_bool collectionFirstSecondFunc = nullptr;
 			Func_void_voidPtr typeConstructorFunc = nullptr;
@@ -173,6 +139,12 @@ static const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType(const TYPE& t
 	return Mirror::InfoForType<TYPE>();
 }
 
+// localStaticTypeInfo.category = ... ? ... : TypeInfoCategories::TypeInfoCategory_Primitive;
+// localStaticTypeInfo.category = std::is_class_v<TYPE> ? TypeInfoCategories::TypeInfoCategory_Class;
+// localStaticTypeInfo.category = ... ? TypeInfoCategories::TypeInfoCategory_Collection;
+// localStaticTypeInfo.category = std::is_save_v<TYPE, PAIR> ? TypeInfoCategories::TypeInfoCategory_Pair;
+// localStaticTypeInfo.category = std::is_pointer_v<TYPE> ? TypeInfoCategories::TypeInfoCategory_Pointer;
+
 #define MIRROR_ENUM(ENUM_TYPE) MIRROR_PRIMITIVE_TYPE(ENUM_TYPE) // Nothing special for enums currently. Could use std::is_enum_v<ENUM_TYPE>
 #define MIRROR_PRIMITIVE_TYPE(TYPE)																								\
 template<>																														\
@@ -182,10 +154,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	localStaticTypeInfo.enumType = MirrorTypes::TYPE;																			\
 	localStaticTypeInfo.stringName = #TYPE;																						\
 	localStaticTypeInfo.size = sizeof(TYPE);																					\
-	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>;																	\
 	localStaticTypeInfo.pointerDereferencedTypeInfo = nullptr;																	\
-	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection();									\
-	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>;																	\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Primitive;												\
 	return &localStaticTypeInfo;																								\
 }
@@ -198,10 +167,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	localStaticTypeInfo.enumType = MirrorTypes::TYPE;																			\
 	localStaticTypeInfo.stringName = #TYPE;																						\
 	localStaticTypeInfo.size = sizeof(TYPE);																					\
-	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>;																	\
 	localStaticTypeInfo.pointerDereferencedTypeInfo = nullptr;																	\
-	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection();									\
-	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>;																	\
 	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) TYPE; };		\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Primitive;												\
 	return &localStaticTypeInfo;																								\
@@ -211,31 +177,19 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 #define MIRROR_POINTER(TYPE)																									\
 template<>																														\
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {															\
+	static_assert(std::is_pointer_v<TYPE>);																						\
 	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;																		\
 	if (localStaticTypeInfo.enumType != MirrorTypes::m_Invalid) { return &localStaticTypeInfo; }								\
 	localStaticTypeInfo.enumType = MirrorTypes::TYPE;																			\
 	localStaticTypeInfo.stringName = #TYPE;																						\
 	localStaticTypeInfo.size = sizeof(TYPE);																					\
-	static_assert(std::is_pointer_v<TYPE>);																						\
-	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>;																	\
 	localStaticTypeInfo.pointerDereferencedTypeInfo = QwerkE::Mirror::InfoForType<std::remove_pointer_t<TYPE>>();				\
-	localStaticTypeInfo.isClass = false;																						\
-	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>;																	\
 	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) TYPE; };		\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Pointer;												\
 	return &localStaticTypeInfo;																								\
 	}
 
-// #define MIRROR_CLASS_MEMBER(MEMBER_NAME)																						\
-// 	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 };																		\
-// 	QwerkE::Mirror::Field MEMBER_NAME##field;																					\
-// 	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>();								\
-// 	MEMBER_NAME##field.name = #MEMBER_NAME;																						\
-// 	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME);																\
-// 	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME));															\
-// 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
-
-// #TODO Keep logic here. Check if this calss needs it's own member to construct
+// #TODO Keep logic here. Check if this class needs it's own member to construct
 #define MIRROR_CONSTRUCT_USING_MEMBER(MEMBER_NAME)																				\
 	localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress, void* memberAddress) {							\
 		new(instanceAddress) ClassType(*(decltype(ClassType::MEMBER_NAME)*)memberAddress);										\
@@ -261,6 +215,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 #define MIRROR_CLASS_STARTN(TYPE, FIELDCOUNT)																					\
 template<>																														\
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {															\
+	static_assert(std::is_class_v<TYPE>);																						\
 	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;																		\
 	if (localStaticTypeInfo.enumType != MirrorTypes::m_Invalid) { return &localStaticTypeInfo; }								\
 	localStaticTypeInfo.enumType = MirrorTypes::TYPE;																			\
@@ -269,9 +224,6 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
     if (localStaticTypeInfo.fields.size() > 0) { return &localStaticTypeInfo; }													\
 	const int fieldsCount = FIELDCOUNT;																							\
 	localStaticTypeInfo.fields.reserve(fieldsCount);																			\
-	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>;																	\
-	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection();									\
-	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>;																	\
 	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) TYPE(); };	\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Class;													\
 																																\
@@ -290,9 +242,6 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
     if (localStaticTypeInfo.fields.size() > 0) { return &localStaticTypeInfo; }													\
 	const int fieldsCount = FIELDCOUNT;																							\
 	localStaticTypeInfo.fields.reserve(fieldsCount);																			\
-	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>;																	\
-	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection();									\
-	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>;																	\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Class;													\
 																																\
 	using ClassType = TYPE;																										\
@@ -312,9 +261,6 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
     if (localStaticTypeInfo.fields.size() > 0) { return &localStaticTypeInfo; }													\
 	const int fieldsCount = FIELDCOUNT;																							\
 	localStaticTypeInfo.fields.reserve(fieldsCount);																			\
-	localStaticTypeInfo.isPointer = std::is_pointer_v<TYPE>;																	\
-	localStaticTypeInfo.isClass = std::is_class_v<TYPE> && !localStaticTypeInfo.isCollection();									\
-	localStaticTypeInfo.isAbstract = std::is_abstract_v<TYPE>;																	\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Class;													\
 																																\
 	using ClassType = TYPE;																										\
@@ -391,7 +337,6 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<ARRAY_TYPE>() {					
 	static TypeInfo localStaticTypeInfo;																						\
 	localStaticTypeInfo.stringName = #ARRAY_TYPE;																				\
 	localStaticTypeInfo.size = sizeof(ARRAY_TYPE);																				\
-	localStaticTypeInfo.arrayCount = sizeof(ARRAY_TYPE) / sizeof(COLLECTION_TYPE);												\
 	localStaticTypeInfo.enumType = MirrorTypes::ARRAY_TYPE;																		\
 	localStaticTypeInfo.collectionTypeInfo[0] = QwerkE::Mirror::InfoForType<COLLECTION_TYPE>();									\
 	localStaticTypeInfo.collectionAddFunc =																						\
@@ -402,7 +347,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<ARRAY_TYPE>() {					
 		[](const void* collectionAddress, size_t aIndex) -> char* {																\
 		static size_t index = 0;																								\
 		if (aIndex < index) index = aIndex;																						\
-		if (index >= localStaticTypeInfo.arrayCount) { index = 0; return nullptr; }												\
+		if (index >= sizeof(ARRAY_TYPE) / sizeof(COLLECTION_TYPE)) { index = 0; return nullptr; }								\
 		return (char*)collectionAddress + (sizeof(COLLECTION_TYPE) * index++);													\
 	};																															\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Collection;												\

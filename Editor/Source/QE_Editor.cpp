@@ -124,8 +124,6 @@ namespace QwerkE {
             {
                 TestStruct testStructSerialize;
                 auto loc = &testStructSerialize.m_UmapStringInt32;
-                // Serialization::OldSerializeObjectToFile(testStructSerialize, "TestStruct");
-                // Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
 
                 // Re-arrange default data
                 testStructSerialize.m_Base.baseX = 90;
@@ -368,8 +366,6 @@ namespace QwerkE {
             {
                 Serialization::NewSerializeToFile(s_EditorWindows, windowsDataFilePath.c_str());
             }
-            // Serialization::OldDeserializeObjectFromFile(windowsDataFilePath.c_str(), s_EditorWindows);
-            // Serialization::NewSerializeToFile(s_EditorWindows, windowsDataFilePath.c_str());
             Serialization::NewDeserializeFromFile(windowsDataFilePath.c_str(), s_EditorWindows);
 
             bool missingMenuBarWindow = true;
@@ -390,7 +386,6 @@ namespace QwerkE {
 
 		void local_Shutdown()
 		{
-            // Serialization::OldSerializeObjectToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
             Serialization::NewSerializeToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
 
             auto it = s_EditorWindows.begin();

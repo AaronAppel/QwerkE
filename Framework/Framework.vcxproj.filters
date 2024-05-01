@@ -42,9 +42,6 @@
     <ClCompile Include="Source\QF_Scenes.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QF_Serialization.cpp">
-      <Filter>Utils\FileIO\Serialization</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QF_Renderer.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>

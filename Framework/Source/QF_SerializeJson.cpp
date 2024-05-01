@@ -1,7 +1,7 @@
 #include "QF_Serialization.h"
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/imgui.h"
@@ -19,7 +19,6 @@
 
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
-#include "QF_Files.h"
 #include "QF_Log.h"
 #include "QF_Scene.h"
 #include "QF_ScriptHelpers.h"
@@ -31,123 +30,26 @@ namespace QwerkE {
 
     namespace Serialization {
 
-        // #TODO Note cJSON_AddItemToArray adds to object. Maybe create a helper for consistant readability
-
-        cJSON* ParseJsonFile(const char* absoluteFilePath)
-        {
-            if (Buffer jsonFileBuffer = Files::LoadFile(absoluteFilePath))
-            {
-                if (cJSON* root = cJSON_Parse(jsonFileBuffer.As<char>()))
-                {
-                    return root;
-                }
-                LOG_ERROR("{0} Could not parse JSON file {1}! Possible compile error. Check file for typos", __FUNCTION__, absoluteFilePath);
-                return nullptr;
-            }
-            LOG_ERROR("{0} Could not load JSON file {1}!", __FUNCTION__, absoluteFilePath);
-            return nullptr;
-        }
-
-        // #TODO Move to a Files:: helper for writing to a file using a Buffer object
-        #include <stdio.h>
-        void PrintJsonToFile(cJSON* jsonRootObject, const char* absoluteFilePath)
-        {
-            if (jsonRootObject && absoluteFilePath)
-            {
-                const char* jsonStructureString = cJSON_Print(jsonRootObject);
-                {
-                    FILE* filehandle;
-                    errno_t error = fopen_s(&filehandle, absoluteFilePath, "w+");
-                    if (filehandle)
-                    {
-                        fwrite(jsonStructureString, 1, strlen(jsonStructureString), filehandle);
-                        fclose(filehandle);
-                    }
-                    else
-                    {
-                        // #TODO Error message
-                    }
-                }
-
-                free((char*)jsonStructureString);
-            }
-        }
-
-        cJSON* TempCreateArray(const char* key)
-        {
-            cJSON* returnArray = cJSON_CreateArray();
-            returnArray->child = cJSON_CreateObject();
-            returnArray->string = _strdup(key);
-            return returnArray;
-        }
-
         void local_SerializePrimitive(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
         void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
         void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
         void local_SerializePair(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
-        cJSON* TestCreateObject(const char* key = nullptr);
+        cJSON* CreateJsonObject(const char* key = nullptr);
 
-        template<typename... Component> // #TODO Consider moving to QF_ComponentHelpers.h
-        void NewSerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray);
+        template <typename T>
+        cJSON* CreateJsonBool(const std::string& name, const void* obj);
+        template <typename T>
+        cJSON* CreateJsonNumber(const std::string& name, const void* obj);
+        template <typename T>
+        cJSON* CreateJsonString(const std::string& name, const void* obj);
+
         template<typename... Component>
-        static void NewSerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray);
+        void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray);
+        template<typename... Component>
+        static void SerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray);
 
-        void TestAgnostic(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
-
-        template <typename T>
-        cJSON* TestCreateBool(const std::string& name, const void* obj);
-        template <typename T>
-        cJSON* TestCreateNumber(const std::string& name, const void* obj);
-        template <typename T>
-        cJSON* TestCreateString(const std::string& name, const void* obj);
-
-        template <typename T>
-        void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
-        {
-            if (!handle.HasComponent<T>())
-                return;
-
-            T& component = handle.GetComponent<T>();
-            auto componentTypeInfo = Mirror::InfoForType<T>();
-            cJSON* newJsonObjectArray = TestCreateObject(componentTypeInfo->stringName.c_str());
-            SerializeToJson(&component, componentTypeInfo, newJsonObjectArray, componentTypeInfo->stringName);
-            cJSON_AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
-        }
-
-        bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
-        {
-            switch (objTypeInfo->enumType)
-            {
-            case MirrorTypes::m_map_guid_entt:
-                {
-                    const std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
-                    Scene* scene = (Scene*)obj;
-
-                    for (auto& entityPair : *entitiesMap)
-                    {
-                        EntityHandle handle(scene, entityPair.second);
-
-                        // cJSON* entityJsonArray = CreateArray("Entity");
-                        cJSON* entityJsonArray = TestCreateObject(std::to_string(handle.EntityGuid()).c_str());
-                        cJSON_AddItemToArray(objJson, entityJsonArray);
-
-                        cJSON* entityComponentsJsonArray = TestCreateObject("Components");
-                        cJSON_AddItemToArray(objJson, entityComponentsJsonArray);
-
-                        NewSerializeComponents(EntityComponentsList{}, handle, entityComponentsJsonArray);
-
-                        // SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentMesh>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentTransform>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentScript>(handle, entityComponentsJsonArray);
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
+        bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
@@ -160,12 +62,6 @@ namespace QwerkE {
             if (TypeInfoHasSerializeOverride(obj, objTypeInfo, objJson))
                 return;
 
-            if (objTypeInfo->isPointer)
-            {
-                // Add object
-                // #TODO Look to remove pointer as category
-            }
-
             switch (objTypeInfo->category)
             {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
@@ -176,16 +72,16 @@ namespace QwerkE {
                 break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
                 {
-                    cJSON* classJson = TestCreateObject(name.c_str());
+                    cJSON* classJson = CreateJsonObject(name.c_str());
                     cJSON_AddItemToArray(objJson, classJson);
                     local_SerializeClass(obj, objTypeInfo, classJson);
                 }
                 break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
                 local_SerializeCollection(obj, objTypeInfo, objJson, name); break;
-            case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer: // #TODO Look to remove
+            case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
                 {
-                    cJSON* pointerJson = TestCreateObject(name.c_str());
+                    cJSON* pointerJson = CreateJsonObject(name.c_str());
                     cJSON_AddItemToArray(objJson, pointerJson);
 
                     if (nullptr == *(const void**)obj)
@@ -199,8 +95,6 @@ namespace QwerkE {
                     const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType();
                     if (objTypeInfo->AbsoluteType()->hasSubClass())
                     {
-                        if (objTypeInfo->AbsoluteType()->isAbstract) {}
-
                         for (const auto& pair : objTypeInfo->AbsoluteType()->derivedTypesMap)
                         {
                             if (pair.second->typeDynamicCastFunc(obj))
@@ -233,14 +127,6 @@ namespace QwerkE {
                 return;
             }
 
-            // #TODO Try using memcpy or simple copying or raw byte data, if possible, to avoid handlling individual types.
-            // Use type offset and size info.
-
-            const size_t sizeOfType = objTypeInfo->size;
-
-            // #TODO Consider creating an empty item here, instead of in each enum case.
-            // That would mean special logic like setting the cJSON type would be needed below,
-            // or more switch/if logic here (later probably better).
             cJSON* cJsonItem = nullptr;
 
             switch (objTypeInfo->enumType)
@@ -248,7 +134,7 @@ namespace QwerkE {
             case MirrorTypes::m_string:
                 {
                     const std::string* fieldAddress = (std::string*)obj;
-                    cJsonItem = TestCreateString<const char>(name, fieldAddress->data()); // #TODO Requires ->data() so can't work with TestCreateString()
+                    cJsonItem = CreateJsonString<const char>(name, fieldAddress->data()); // #TODO Requires ->data() so can't work with CreateJsonString()
                 }
                 break;
 
@@ -263,50 +149,50 @@ namespace QwerkE {
                 break;
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
-                cJsonItem = TestCreateString<const char>(name, *(void**)obj); break;
+                cJsonItem = CreateJsonString<const char>(name, *(void**)obj); break;
             case MirrorTypes::m_bool:
-                cJsonItem = TestCreateBool<bool>(name, obj); break;
+                cJsonItem = CreateJsonBool<bool>(name, obj); break;
             case MirrorTypes::EditorWindowFlags:
             case MirrorTypes::EditorWindowTypes:
             case MirrorTypes::eScriptTypes: // #TODO Add a case for all enums by default
             case MirrorTypes::m_eSceneTypes:
             case MirrorTypes::m_uint8_t:
-                cJsonItem = TestCreateNumber<uint8_t>(name, obj); break;
+                cJsonItem = CreateJsonNumber<uint8_t>(name, obj); break;
             case MirrorTypes::m_uint16_t:
-                cJsonItem = TestCreateNumber<uint16_t>(name, obj); break;
+                cJsonItem = CreateJsonNumber<uint16_t>(name, obj); break;
             case MirrorTypes::m_uint32_t:
-                cJsonItem = TestCreateNumber<uint32_t>(name, obj); break;
+                cJsonItem = CreateJsonNumber<uint32_t>(name, obj); break;
             case MirrorTypes::m_int8_t:
-                cJsonItem = TestCreateNumber<int8_t>(name, obj); break;
+                cJsonItem = CreateJsonNumber<int8_t>(name, obj); break;
             case MirrorTypes::m_int16_t:
-                cJsonItem = TestCreateNumber<int16_t>(name, obj); break;
+                cJsonItem = CreateJsonNumber<int16_t>(name, obj); break;
             case MirrorTypes::m_int:
             case MirrorTypes::m_int32_t:
-                cJsonItem = TestCreateNumber<int32_t>(name, obj); break;
+                cJsonItem = CreateJsonNumber<int32_t>(name, obj); break;
             case MirrorTypes::m_int64_t: // #NOTE Special case of conversion on 64 bit types
             {
                 // Use string instead of a double to avoid conversion issues
                 int64_t* numberAddress = (int64_t*)obj;
-                cJsonItem = TestCreateString<const char>(name, std::to_string(*numberAddress).c_str());
+                cJsonItem = CreateJsonString<const char>(name, std::to_string(*numberAddress).c_str());
                 // #TODO Try using objJson->valuedouble and a memcpy to see if that works
             }
-            // cJsonItem = TestCreateNumber<int64_t>(name, obj); break;
+            // cJsonItem = CreateJsonNumber<int64_t>(name, obj); break;
             break;
 
             case MirrorTypes::m_uint64_t: // #NOTE Special case of conversion on 64 bit types
                 {
                     // Use string instead of a double to avoid conversion issues
                     uint64_t* numberAddress = (uint64_t*)obj;
-                    cJsonItem = TestCreateString<const char>(name, std::to_string(*numberAddress).c_str());
+                    cJsonItem = CreateJsonString<const char>(name, std::to_string(*numberAddress).c_str());
                     // #TODO Try using objJson->valuedouble and a memcpy to see if that works
                 }
-                // cJsonItem = TestCreateNumber<uint64_t>(name, obj);
+                // cJsonItem = CreateJsonNumber<uint64_t>(name, obj);
                 break;
 
             case MirrorTypes::m_float: // #TODO write with decimals
-                cJsonItem = TestCreateNumber<float>(name, obj); break;
+                cJsonItem = CreateJsonNumber<float>(name, obj); break;
             case MirrorTypes::m_double:
-                cJsonItem = TestCreateNumber<double>(name, obj); break;
+                cJsonItem = CreateJsonNumber<double>(name, obj); break;
 
             default:
                 LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, name.c_str(), objTypeInfo->stringName.c_str(), (int)objTypeInfo->enumType);
@@ -321,34 +207,20 @@ namespace QwerkE {
 
         void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
-            if (!obj || !objTypeInfo || !objJson)
+            if (!obj || !objTypeInfo || !objJson || objTypeInfo->category != Mirror::TypeInfoCategory_Class)
             {
-                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+                LOG_ERROR("{0} Invalid argument passed!", __FUNCTION__);
                 return;
             }
 
-            if (!objTypeInfo->isClass)
+            if (objTypeInfo->superTypeInfo)
             {
-                LOG_ERROR("{0} Invalid type info!", __FUNCTION__);
-                return;
-            }
-
-            if (objTypeInfo->isSubClass())
-            {
-                if (objTypeInfo->superTypeInfo)
-                {
-                    local_SerializeClass(obj, objTypeInfo->superTypeInfo, objJson);
-                }
-                else
-                {
-                    LOG_ERROR("{0} Invalid superTypeInfo!", __FUNCTION__);
-                    return;
-                }
+                local_SerializeClass(obj, objTypeInfo->superTypeInfo, objJson);
             }
 
             if (objTypeInfo->fields.empty())
             {
-                LOG_WARN("{0} Class has no serialized members", __FUNCTION__);
+                LOG_WARN("{0} Class {1} has no serialized members", __FUNCTION__, objTypeInfo->stringName.c_str());
             }
 
             for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
@@ -386,7 +258,7 @@ namespace QwerkE {
                 return;
             }
 
-            cJSON* collectionJsonContainer = TestCreateObject(name.c_str());
+            cJSON* collectionJsonContainer = CreateJsonObject(name.c_str());
             cJSON_AddItemToArray(objJson, collectionJsonContainer);
 
             if (!objTypeInfo->isPair())
@@ -415,7 +287,7 @@ namespace QwerkE {
 
         void local_SerializePair(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
-            cJSON* pairJson = TestCreateObject(objTypeInfo->stringName.c_str());
+            cJSON* pairJson = CreateJsonObject(objTypeInfo->stringName.c_str());
             cJSON_AddItemToArray(objJson, pairJson);
 
             const Mirror::TypeInfo* const objTypeInfoFirst = objTypeInfo->CollectionTypeInfoFirst();
@@ -426,7 +298,7 @@ namespace QwerkE {
 
             if (objTypeInfoFirst->isPrimitive())
             {
-                cJSON* pairFirstJson = TestCreateObject(objTypeInfoFirst->stringName.c_str());
+                cJSON* pairFirstJson = CreateJsonObject(objTypeInfoFirst->stringName.c_str());
                 cJSON_AddItemToArray(pairJson, pairFirstJson);
                 local_SerializePrimitive(firstAddress, objTypeInfoFirst, pairFirstJson, objTypeInfoFirst->stringName);
             }
@@ -435,7 +307,7 @@ namespace QwerkE {
                 SerializeToJson(firstAddress, objTypeInfoFirst, pairJson, objTypeInfoFirst->stringName);
             }
 
-            cJSON* pairSecondJson = TestCreateObject(objTypeInfoSecond->stringName.c_str());
+            cJSON* pairSecondJson = CreateJsonObject(objTypeInfoSecond->stringName.c_str());
             cJSON_AddItemToArray(pairJson, pairSecondJson);
 
             switch (objTypeInfoSecond->category)
@@ -475,56 +347,41 @@ namespace QwerkE {
             default:
                 break;
             }
-
-            // if (objTypeInfoSecond->isPrimitive())
-            // {
-            //     local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
-            // }
-            // else if (objTypeInfoSecond->isClass)
-            // {
-            //     local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson);
-            // }
-            // else if (objTypeInfoSecond->isCollection())
-            // {
-            //     local_SerializeCollection(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
-            // }
-            // else if (objTypeInfoSecond->isPair())
-            // {
-            //     local_SerializePair(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
-            // }
-            // else if (objTypeInfoSecond->isPointer)
-            // {
-            //     // #TODO Deduce derived type
-            //     const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType();
-            //     if (secondAbsoluteTypeInfoDerived->hasSubClass())
-            //     {
-            //         for (const auto& pair : secondAbsoluteTypeInfoDerived->derivedTypesMap)
-            //         {
-            //             ASSERT(pair.second->typeDynamicCastFunc, "Null typeDynamicCastFunc!");
-            //             if (pair.second->typeDynamicCastFunc(secondAddress))
-            //             {
-            //                 secondAbsoluteTypeInfoDerived = pair.second;
-            //                 break;
-            //             }
-            //         }
-            //     }
-            //     SerializeToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
-            // }
-            // else
-            // {
-            //     LOG_ERROR("{0} Unsupported type info!", __FUNCTION__);
-            // }
         }
 
-        cJSON* TestCreateObject(const char* key)
+        cJSON* CreateJsonObject(const char* key)
         {
             cJSON* returnJSONItem = cJSON_CreateObject();
             if (key) returnJSONItem->string = _strdup(key); // #TODO Look into deallocation responsibility
             return returnJSONItem;
         }
 
+        template <typename T>
+        cJSON* CreateJsonBool(const std::string& name, const void* obj)
+        {
+            cJSON* returnBool = cJSON_CreateBool(*(T*)obj);
+            returnBool->string = _strdup(name.c_str()); // #TODO Check memory deallocation
+            return returnBool;
+        }
+
+        template <typename T>
+        cJSON* CreateJsonNumber(const std::string& name, const void* obj)
+        {
+            cJSON* returnNumber = cJSON_CreateNumber(*(T*)obj);
+            returnNumber->string = _strdup(name.c_str());
+            return returnNumber;
+        }
+
+        template <typename T>
+        cJSON* CreateJsonString(const std::string& name, const void* obj)
+        {
+            cJSON* returnString = cJSON_CreateString((T*)obj); // #NOTE (T*)obj is not dereferenced
+            returnString->string = _strdup(name.c_str());
+            return returnString;
+        }
+
         template<typename... Component> // #TODO Consider moving to QF_ComponentHelpers.h
-        void NewSerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
+        void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
         {
             ([&]()
             {
@@ -533,7 +390,7 @@ namespace QwerkE {
 
                 const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
 
-                cJSON* componentJsonItem = TestCreateObject(componentTypeInfo->stringName.c_str());
+                cJSON* componentJsonItem = CreateJsonObject(componentTypeInfo->stringName.c_str());
                 cJSON_AddItemToArray(entityComponentsJsonArray, componentJsonItem);
 
                 Component& component = handle.GetComponent<Component>();
@@ -541,44 +398,58 @@ namespace QwerkE {
             }(), ...);
         }
 
+        template <typename T>
+        void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
+        {
+            if (!handle.HasComponent<T>())
+                return;
+
+            T& component = handle.GetComponent<T>();
+            auto componentTypeInfo = Mirror::InfoForType<T>();
+            cJSON* newJsonObjectArray = CreateJsonObject(componentTypeInfo->stringName.c_str());
+            SerializeToJson(&component, componentTypeInfo, newJsonObjectArray, componentTypeInfo->stringName);
+            cJSON_AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
+        }
+
         template<typename... Component>
-        static void NewSerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray)
+        static void SerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray)
         {
-            NewSerializeComponent<Component...>(handle, entityComponentsJsonArray);
+            SerializeComponent<Component...>(handle, entityComponentsJsonArray);
         }
 
-        template <typename T>
-        cJSON* TestCreateBool(const std::string& name, const void* obj) // #TODO Rename from "Test"
+        bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
-            cJSON* returnBool = cJSON_CreateBool(*(T*)obj);
-            returnBool->string = _strdup(name.c_str()); // #TODO Check memory de-allocation
-            return returnBool;
-        }
+            switch (objTypeInfo->enumType)
+            {
+            case MirrorTypes::m_map_guid_entt:
+                {
+                    const std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
 
-        template <typename T>
-        cJSON* TestCreateNumber(const std::string& name, const void* obj) // #TODO Rename from "Test"
-        {
-            // Old
-            // float* numberAddress = (float*)((char*)obj + field.offset);
-            // AddItemToArray(objJson, CreateNumber(field.name.c_str(), *numberAddress));
+                    Scene* scene = (Scene*)obj;
 
-            // CreateNumber(const char*, double)
-            // cJSON* returnNumber = cJSON_CreateNumber(value);
-            // returnNumber->string = _strdup(key);
+                    for (auto& entityPair : *entitiesMap)
+                    {
+                        EntityHandle handle(scene, entityPair.second);
 
-            T test = *(T*)obj;
-            double cache = test;
-            cJSON* returnNumber = cJSON_CreateNumber(cache);
-            returnNumber->string = _strdup(name.c_str());
-            return returnNumber;
-        }
+                        // cJSON* entityJsonArray = CreateArray("Entity");
+                        cJSON* entityJsonArray = CreateJsonObject(std::to_string(handle.EntityGuid()).c_str());
+                        cJSON_AddItemToArray(objJson, entityJsonArray);
 
-        template <typename T>
-        cJSON* TestCreateString(const std::string& name, const void* obj) // #TODO Rename from "Test"
-        {
-            cJSON* returnString = cJSON_CreateString((T*)obj); // #NOTE (T*)obj is not dereferenced
-            returnString->string = _strdup(name.c_str());
-            return returnString;
+                        cJSON* entityComponentsJsonArray = CreateJsonObject("Components");
+                        cJSON_AddItemToArray(objJson, entityComponentsJsonArray);
+
+                        SerializeComponents(EntityComponentsList{}, handle, entityComponentsJsonArray);
+
+                        // SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentMesh>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentTransform>(handle, entityComponentsJsonArray);
+                        // SerializeComponent<ComponentScript>(handle, entityComponentsJsonArray);
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
     }
