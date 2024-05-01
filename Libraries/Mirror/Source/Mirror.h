@@ -450,10 +450,16 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<MAP_TYPE>() {							
 		static size_t index = 0;																								\
 		MAP_TYPE* map = (MAP_TYPE*)collectionAddress;																			\
 		static MAP_TYPE::iterator iterator = map->begin();																		\
-		if (aIndex < index) { index = aIndex; iterator = map->begin(); }														\
+		if (aIndex < index || map->end() == iterator)																			\
+		{																														\
+			index = aIndex;																										\
+			iterator = map->begin();																							\
+		}																														\
 		if (index >= map->size()) { ++index; return nullptr; }																	\
 		++index;																												\
-		return (char*)&iterator->first;																							\
+		auto result = (char*)&iterator->first;																					\
+		++iterator;																												\
+		return result;																											\
 	};																															\
 	localStaticTypeInfo.category = TypeInfoCategories::TypeInfoCategory_Collection;												\
 	return &localStaticTypeInfo;																								\

@@ -395,9 +395,9 @@ namespace QwerkE {
                 void* elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
                 while (elementAddress)
                 {
-                    if (auto first = objTypeInfo->CollectionTypeInfoFirst())
+                    if (auto firstTypeInfo = objTypeInfo->CollectionTypeInfoFirst())
                     {
-                        SerializeToJson(elementAddress, objTypeInfo->CollectionTypeInfoFirst(), collectionJsonContainer, objTypeInfo->CollectionTypeInfoFirst()->stringName);
+                        SerializeToJson(elementAddress, firstTypeInfo, collectionJsonContainer, firstTypeInfo->stringName);
                     }
                     else
                     {
@@ -451,7 +451,6 @@ namespace QwerkE {
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
             {
-                // #TODO Deduce derived type
                 const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType();
                 if (secondAbsoluteTypeInfoDerived->hasSubClass())
                 {

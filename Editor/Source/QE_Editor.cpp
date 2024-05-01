@@ -56,8 +56,7 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        // Serialization::OldDeserializeObjectFromFile(Settings::GetStyleFileName(), style);
-        Serialization::NewDeserializeFromFile("NewSerialization", style);
+        Serialization::NewDeserializeFromFile(Settings::GetStyleFileName(), style);
     }
 
 	namespace Editor {

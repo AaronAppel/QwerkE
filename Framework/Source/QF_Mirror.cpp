@@ -82,6 +82,29 @@ namespace QwerkE {
 	MIRROR_POINTER(m_int32Ptr)
 	// End Mirror Testing
 
+	template <typename Super, typename... SubClass>
+	void MirrorSubClassUserType2(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+	{
+		uint16_t enumValue = enumStartOffset;
+		([&]()
+		{
+			const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
+			localStaticTypeInfo.derivedTypesMap[(uint16_t)enumValue] = subclassTypeInfo;
+			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
+			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
+				[](const void* pointerToInstance) -> bool {
+				return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
+			};
+			++enumValue;
+		}(), ...);
+	}
+
+	template<typename Super, typename... T>
+	static void MirrorSubClassUserTypes2(TemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+	{
+		MirrorSubClassUserType2<Super, T...>(localStaticTypeInfo, enumStartOffset);
+	}
+
 	template <typename... T>
 	void MirrorSubClassUserType(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
 	{
@@ -357,67 +380,82 @@ namespace QwerkE {
 	MIRROR_CLASS_END(EditorWindowAssets)
 
 	typedef Editor::EditorWindowDefaultDebug EditorWindowDefaultDebug;
-	MIRROR_DEPENDENT_CLASS_START(EditorWindowDefaultDebug, m_Guid)
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowDefaultDebug)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowDefaultDebug)
 
 	typedef Editor::EditorWindowDockingContext EditorWindowDockingContext;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowDockingContext)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowDockingContext)
 
 	typedef Editor::EditorWindowEntityInspector EditorWindowEntityInspector;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowEntityInspector)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowEntityInspector)
 
 	typedef Editor::EditorWindowImGuiDemo EditorWindowImGuiDemo;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiDemo)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowImGuiDemo)
 
 	typedef Editor::EditorWindowMenuBar EditorWindowMenuBar;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowMenuBar)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowMenuBar)
 
 	typedef Editor::EditorWindowSceneControls EditorWindowSceneControls;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneControls)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowSceneControls)
 
 	typedef Editor::EditorWindowSceneGraph EditorWindowSceneGraph;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneGraph)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowSceneGraph)
 
 	typedef Editor::EditorWindowSceneView EditorWindowSceneView;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneView)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_MEMBER(m_TextureId)
 	MIRROR_CLASS_MEMBER(m_ViewId)
 	MIRROR_CLASS_END(EditorWindowSceneView)
 
 	typedef Editor::EditorWindowSettings EditorWindowSettings;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowSettings)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowSettings)
 
 	typedef Editor::EditorWindowStylePicker EditorWindowStylePicker;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowStylePicker)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_MEMBER(m_ShowMoreInfo)
 	MIRROR_CLASS_MEMBER(m_UiScaling)
 	MIRROR_CLASS_END(EditorWindowStylePicker)
 
 	typedef Editor::EditorWindowMaterialEditor EditorWindowMaterialEditor;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowMaterialEditor)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowMaterialEditor)
 
 	typedef Editor::EditorWindowFolderViewer EditorWindowFolderViewer;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowFolderViewer)
 
 	typedef Editor::EditorWindowNodeEditor EditorWindowNodeEditor;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowNodeEditor)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowNodeEditor)
 
 	typedef Editor::EditorWindowShaderEditor EditorWindowShaderEditor;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowShaderEditor)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowShaderEditor)
 
 	typedef Editor::EditorWindowPrefabScene EditorWindowPrefabScene;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowPrefabScene)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowPrefabScene)
 
 	typedef Editor::EditorWindow EditorWindow;
@@ -430,10 +468,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_MinimumHeight)
 	MIRROR_CLASS_MEMBER(m_EditorWindowType)
 
-	// #TODO Support more types
-	MIRROR_CLASS_SUBCLASS(EditorWindowAssets)
-	MIRROR_CLASS_SUBCLASS(EditorWindowMenuBar)
-	// MirrorSubClassUserTypes(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
+	MirrorSubClassUserTypes2<EditorWindow>(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
 	MIRROR_CLASS_END(EditorWindow)
 
 	typedef Editor::EditorWindow* m_editorWindowPtr;

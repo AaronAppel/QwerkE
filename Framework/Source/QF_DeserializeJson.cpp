@@ -174,7 +174,8 @@ namespace QwerkE {
                     DeserializeFromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
 
                     // #EXPERIMENTAL
-                    const bool constructorHasDependency = nullptr != dereferencedTypeInfo->typeConstructorDependentFunc;
+                    const bool constructorHasDependency = nullptr != objTypeInfo->typeConstructorDependentFunc ||
+                                                          nullptr != dereferencedTypeInfo->typeConstructorDependentFunc;
                     if (constructorHasDependency && !dereferencedTypeInfo->constructorDependentMemberName.empty())
                     {
                         auto parentTypeInfo = objTypeInfo->pointerDereferencedTypeInfo;
@@ -187,22 +188,29 @@ namespace QwerkE {
                                 break;
                             }
                         }
+
+                        auto childTypeInfo = dereferencedTypeInfo; // #TODO Review if child type
                         if (offset == -1)
                         {
-                            auto childTypeInfo = dereferencedTypeInfo;
                             for (size_t i = 0; i < childTypeInfo->fields.size(); i++)
                             {
                                 if (strcmp(dereferencedTypeInfo->constructorDependentMemberName.c_str(), childTypeInfo->fields[i].name.c_str()) == 0)
                                 {
                                     offset = childTypeInfo->fields[i].offset;
+                                    break;
                                 }
                             }
                         }
-                        // #TODO Find member/field from parent or derived type
-                        // Need address to data
-                        // dereferencedTypeInfo->constructorDependentMemberName
+
                         void* memberAddress = (char*)derefencedTypeObjAddress + offset;
-                        dereferencedTypeInfo->typeConstructorDependentFunc(derefencedTypeObjAddress, memberAddress);
+                        if (parentTypeInfo->typeConstructorDependentFunc)
+                        {
+                            parentTypeInfo->typeConstructorDependentFunc(derefencedTypeObjAddress, memberAddress);
+                        }
+                        else
+                        {
+                            childTypeInfo->typeConstructorDependentFunc(derefencedTypeObjAddress, memberAddress);
+                        }
                     }
                     else
                     {
