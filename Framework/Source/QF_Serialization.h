@@ -71,8 +71,10 @@ namespace QwerkE {
                     }
                     cJSON_Delete(rootJsonObject);
                 }
-                LOG_ERROR("{0} Could not parse JSON file {1}! Possible compile error. Check file for typos", __FUNCTION__, absoluteFilePath);
-                return;
+                else
+                {
+                    LOG_ERROR("{0} Could not parse JSON file {1}! Possible compile error. Check file for typos", __FUNCTION__, absoluteFilePath);
+                }
             }
             else
             {

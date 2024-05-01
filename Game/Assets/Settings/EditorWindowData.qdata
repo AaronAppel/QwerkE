@@ -14,7 +14,8 @@
 					"m_WindowFlags":	9,
 					"m_MinimumWidth":	0,
 					"m_MinimumHeight":	0,
-					"m_EditorWindowType":	6
+					"m_EditorWindowType":	{
+					}
 				}
 			}
 		},
@@ -32,7 +33,8 @@
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	1
+					"m_EditorWindowType":	{
+					}
 				}
 			}
 		},
@@ -50,7 +52,8 @@
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	7
+					"m_EditorWindowType":	{
+					}
 				}
 			}
 		},
@@ -68,7 +71,8 @@
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	8
+					"m_EditorWindowType":	{
+					}
 				}
 			}
 		},
@@ -86,7 +90,8 @@
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	4
+					"m_EditorWindowType":	{
+					}
 				}
 			}
 		},
@@ -104,7 +109,8 @@
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	9,
+					"m_EditorWindowType":	{
+					},
 					"m_TextureId":	3,
 					"m_ViewId":	0
 				}
@@ -124,7 +130,8 @@
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	9,
+					"m_EditorWindowType":	{
+					},
 					"m_TextureId":	3,
 					"m_ViewId":	0
 				}

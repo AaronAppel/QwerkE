@@ -36,6 +36,29 @@
 
 namespace QwerkE {
 
+	template <typename Super, typename... SubClass>
+	void MirrorSubClassUserType(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+	{
+		uint16_t enumValue = enumStartOffset;
+		([&]()
+			{
+				const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
+				localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
+				const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
+				const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
+					[](const void* pointerToInstance) -> bool {
+					return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
+					};
+				++enumValue;
+			}(), ...);
+	}
+
+	template<typename Super, typename... T>
+	static void MirrorSubClassUserTypes(TemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+	{
+		MirrorSubClassUserType<Super, T...>(localStaticTypeInfo, enumStartOffset);
+	}
+
 	// Start Mirror testing
 	MIRROR_CLASS_START(Derived1)
 	// MIRROR_CONSTRUCTOR(float)
@@ -54,8 +77,7 @@ namespace QwerkE {
 
 	MIRROR_CLASS_START(Base)
 	MIRROR_CLASS_MEMBER(baseX)
-	MIRROR_CLASS_SUBCLASS(Derived1)
-	MIRROR_CLASS_SUBCLASS(Derived2)
+	MirrorSubClassUserTypes<Base>(TemplateArgumentList<Derived1, Derived2>{}, localStaticTypeInfo, 0);
 	MIRROR_CLASS_END(Base)
 
 	typedef Base* m_basePtr;
@@ -81,46 +103,6 @@ namespace QwerkE {
 	typedef int32_t* m_int32Ptr;
 	MIRROR_POINTER(m_int32Ptr)
 	// End Mirror Testing
-
-	template <typename Super, typename... SubClass>
-	void MirrorSubClassUserType2(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
-	{
-		uint16_t enumValue = enumStartOffset;
-		([&]()
-		{
-			const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
-			localStaticTypeInfo.derivedTypesMap[(uint16_t)enumValue] = subclassTypeInfo;
-			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
-			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
-				[](const void* pointerToInstance) -> bool {
-				return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
-			};
-			++enumValue;
-		}(), ...);
-	}
-
-	template<typename Super, typename... T>
-	static void MirrorSubClassUserTypes2(TemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
-	{
-		MirrorSubClassUserType2<Super, T...>(localStaticTypeInfo, enumStartOffset);
-	}
-
-	template <typename... T>
-	void MirrorSubClassUserType(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
-	{
-		uint16_t enumValue = enumStartOffset;
-		([&]()
-		{
-			MIRROR_CLASS_SUBCLASS_USER_TYPE(T, enumValue)
-			++enumValue;
-		}(), ...);
-	}
-
-	template<typename... T>
-	static void MirrorSubClassUserTypes(TemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
-	{
-		MirrorSubClassUserType<T...>(localStaticTypeInfo, enumStartOffset);
-	}
 
 #ifdef _QDEARIMGUI
 	MIRROR_CLASS_START(ImVec2)
@@ -196,13 +178,13 @@ namespace QwerkE {
 
 #ifdef _QENTT
 	typedef entt::entity m_enTT_Entity;
-	MIRROR_PRIMITIVE_TYPE(m_enTT_Entity)
+	MIRROR_TYPE(m_enTT_Entity)
 #endif
 
 	// Enums
-	MIRROR_ENUM(eScriptTypes)
-	MIRROR_ENUM(eComponentTags)
-	MIRROR_ENUM(eKeys)
+	MIRROR_TYPE(eScriptTypes)
+	MIRROR_TYPE(eComponentTags)
+	MIRROR_TYPE(eKeys)
 
 	// Vectors
 	typedef std::vector<entt::entity> m_vector_entt_entities;
@@ -220,7 +202,7 @@ namespace QwerkE {
 
 	// Scripts
 	using CallBackFunction = void(*)(void);
-	MIRROR_PRIMITIVE_TYPE(CallBackFunction)
+	MIRROR_TYPE(CallBackFunction)
 
 	MIRROR_CLASS_START(ScriptGuiButton)
 	MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
@@ -247,7 +229,7 @@ namespace QwerkE {
 	MIRROR_ABSTRACT_CLASS_START(Scriptable)
 	// #TODO Look at generating empty types or not yet declared types automatically as well.
 	// Would save a step when creating a new type and still allow exposing members for specific types
-	MirrorSubClassUserTypes(ComponentScriptsList{}, localStaticTypeInfo, eScriptTypes::Camera);
+	MirrorSubClassUserTypes<Scriptable>(ComponentScriptsList{}, localStaticTypeInfo);
 	MIRROR_CLASS_END(Scriptable)
 
 	typedef Scriptable* m_scriptablePtr;
@@ -313,7 +295,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(drawingPrimitiveType)
 	MIRROR_CLASS_END(RendererSettings)
 
-	MIRROR_ABSTRACT_CLASS_START(Scene)
+	MIRROR_DEPENDENT_CLASS_START(Scene)
 	MIRROR_CLASS_MEMBER(m_SceneFileName)
 	MIRROR_CLASS_MEMBER(m_GuidsToEntts)
 	MIRROR_CLASS_END(Scene)
@@ -369,10 +351,10 @@ namespace QwerkE {
 
 	// Editor types
 	typedef Editor::EditorWindowFlags EditorWindowFlags;
-	MIRROR_ENUM(EditorWindowFlags)
+	MIRROR_TYPE(EditorWindowFlags)
 
 	typedef Editor::EditorWindowTypes EditorWindowTypes;
-	MIRROR_ENUM(EditorWindowTypes)
+	MIRROR_TYPE(EditorWindowTypes)
 
 	typedef Editor::EditorWindowAssets EditorWindowAssets;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
@@ -468,7 +450,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_MinimumHeight)
 	MIRROR_CLASS_MEMBER(m_EditorWindowType)
 
-	MirrorSubClassUserTypes2<EditorWindow>(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
+	MirrorSubClassUserTypes<EditorWindow>(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
 	MIRROR_CLASS_END(EditorWindow)
 
 	typedef Editor::EditorWindow* m_editorWindowPtr;

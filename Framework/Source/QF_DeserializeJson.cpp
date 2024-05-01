@@ -153,14 +153,14 @@ namespace QwerkE {
 
                     const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo;
 
-                    if (dereferencedTypeInfo->hasSubClass() &&
+                    if (!dereferencedTypeInfo->derivedTypes.empty() &&
                         strcmp(dereferencedTypeInfo->stringName.c_str(), objJson->child->string) != 0)
                     {
-                        for (const auto& pair : dereferencedTypeInfo->derivedTypesMap)
+                        for (const auto& derivedType : dereferencedTypeInfo->derivedTypes)
                         {
-                            if (strcmp(pair.second->stringName.c_str(), objJson->child->string) == 0)
+                            if (strcmp(derivedType->stringName.c_str(), objJson->child->string) == 0)
                             {
-                                dereferencedTypeInfo = pair.second;
+                                dereferencedTypeInfo = derivedType;
                                 break;
                             }
                         }
@@ -220,11 +220,6 @@ namespace QwerkE {
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
                 local_DeserializePair(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
-
-            case Mirror::TypeInfoCategories::TypeInfoCategory_Invalid:
-            default:
-                ASSERT(false, "Unsupported category!");
-                break;
             }
         }
 
@@ -299,8 +294,8 @@ namespace QwerkE {
                         field.typeInfo->typeConstructorFunc(fieldAddress);
                     }
 
-                    if (field.typeInfo->isCollection()) // #NOTE Needed to pass name of member collection
-                    {
+                    if (field.typeInfo->category == Mirror::TypeInfoCategory_Collection)
+                    {   // #NOTE Needed to pass name of member collection
                         local_DeserializeCollection(iterator, field.typeInfo, fieldAddress, field.name);
                     }
                     else
@@ -321,7 +316,7 @@ namespace QwerkE {
                 return;
             }
 
-            const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->CollectionTypeInfoFirst();
+            const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
 
             const cJSON* iterator = objJson->child;
@@ -331,7 +326,8 @@ namespace QwerkE {
                 const bool hasConstructionDependency = false;
                 // #TODO Handle case where string needs construction, but not basic/primitive types
                 if (!hasConstructionDependency &&
-                    (!elementFirstTypeInfo->isPrimitive() || MirrorTypes::m_string == elementFirstTypeInfo->enumType))
+                    (elementFirstTypeInfo->category != Mirror::TypeInfoCategory_Primitive ||
+                        MirrorTypes::m_string == elementFirstTypeInfo->enumType))
                 {
                     ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
                     elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>());
@@ -344,7 +340,8 @@ namespace QwerkE {
                 objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
 
                 if (hasConstructionDependency &&
-                    (!elementFirstTypeInfo->isPrimitive() || MirrorTypes::m_string == elementFirstTypeInfo->enumType))
+                    (elementFirstTypeInfo->category != Mirror::TypeInfoCategory_Primitive ||
+                        MirrorTypes::m_string == elementFirstTypeInfo->enumType))
                 {
                     ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
                     elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>()); // #TODO Add/supply constructor argument data
@@ -363,22 +360,23 @@ namespace QwerkE {
                 return;
             }
 
-            if (!objTypeInfo->isPair())
+            if (!objTypeInfo->category == Mirror::TypeInfoCategory_Pair)
             {
                 LOG_ERROR("{0} Not a apair!", __FUNCTION__);
                 return;
             }
 
-            const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->CollectionTypeInfoFirst();
+            const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
 
-            const Mirror::TypeInfo* const elementSecondInfo = objTypeInfo->CollectionTypeInfoSecond();
+            const Mirror::TypeInfo* const elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
             Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
 
             const bool hasConstructionDependency = elementFirstTypeInfo->typeConstructorDependentFunc != nullptr;
             // #TODO Handle case where string needs construction, but not basic/primitive types
             if (!hasConstructionDependency &&
-                (!elementFirstTypeInfo->isPrimitive() || MirrorTypes::m_string == elementFirstTypeInfo->enumType))
+                (elementFirstTypeInfo->category != Mirror::TypeInfoCategory_Primitive ||
+                    MirrorTypes::m_string == elementFirstTypeInfo->enumType))
             {
                 ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
                 elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>());
@@ -389,7 +387,7 @@ namespace QwerkE {
 
             objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
 
-            if (hasConstructionDependency && (!elementFirstTypeInfo->isPrimitive()))
+            if (hasConstructionDependency && Mirror::TypeInfoCategory_Primitive != elementFirstTypeInfo->category)
             {
                 ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
                 elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>()); // #TODO Add/supply constructor argument data
