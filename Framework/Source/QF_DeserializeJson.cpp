@@ -1,4 +1,4 @@
-#include "QF_Serialization.h"
+#include "QF_Serialize.h"
 
 #include <unordered_map>
 
@@ -14,7 +14,7 @@
 
 namespace QwerkE {
 
-    namespace Serialization {
+    namespace Serialize {
 
         void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
         void local_DeserializeClass(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
@@ -22,7 +22,7 @@ namespace QwerkE {
         void local_DeserializePair(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
         template<typename... Component>
-        void NewDeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray)
+        void DeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray)
         {
             ([&]()
             {
@@ -52,9 +52,9 @@ namespace QwerkE {
         }
 
         template<typename... Component>
-        static void NewDeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray)
+        static void DeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray)
         {
-            NewDeserializeComponent<Component...>(handle, entityComponentsJsonArray);
+            DeserializeComponent<Component...>(handle, entityComponentsJsonArray);
         }
 
         s32 OffsetOfMember(const Mirror::TypeInfo* objTypeInfo, const char* memberName)
@@ -99,7 +99,7 @@ namespace QwerkE {
 
                         const cJSON* iteratorComponents = iteratorEntities->child;
 
-                        NewDeserializeComponents(EntityComponentsList{}, handle, iteratorComponents);
+                        DeserializeComponents(EntityComponentsList{}, handle, iteratorComponents);
 
                         while (iteratorComponents)
                         {   // #TODO Look at using component enum instead of strings
@@ -123,7 +123,7 @@ namespace QwerkE {
             return false;
         }
 
-        void DeserializeFromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
+        void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -169,7 +169,7 @@ namespace QwerkE {
                     void* derefencedTypeObjAddress = *(void**)obj;
                     derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
                     *(void**)obj = derefencedTypeObjAddress;
-                    DeserializeFromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
+                    FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
 
                     // #EXPERIMENTAL
                     const bool constructorHasDependency = nullptr != objTypeInfo->typeConstructorDependentFunc ||
@@ -300,7 +300,7 @@ namespace QwerkE {
                     }
                     else
                     {
-                        DeserializeFromJson(iterator, field.typeInfo, (char*)obj + field.offset);
+                        FromJson(iterator, field.typeInfo, (char*)obj + field.offset);
                     }
                 }
 
@@ -335,7 +335,7 @@ namespace QwerkE {
 
                 // Pointer is added to map, but is null
                 std::pair<GUID, Editor::EditorWindow*>* window = elementFirstBuffer.As<std::pair<GUID, Editor::EditorWindow*>>();
-                DeserializeFromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
+                FromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
 
                 objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
 
@@ -382,8 +382,8 @@ namespace QwerkE {
                 elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>());
             }
 
-            DeserializeFromJson(objJson->child, elementFirstTypeInfo, elementFirstBuffer.As<void>());
-            DeserializeFromJson(objJson->child->next, elementSecondInfo, elementSecondBuffer.As<void>());
+            FromJson(objJson->child, elementFirstTypeInfo, elementFirstBuffer.As<void>());
+            FromJson(objJson->child->next, elementSecondInfo, elementSecondBuffer.As<void>());
 
             objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
 

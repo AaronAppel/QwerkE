@@ -15,7 +15,7 @@
 #include "QF_Files.h"
 #include "QF_Mesh.h"
 #include "QF_RendererHelpers.h"
-#include "QF_Serialization.h"
+#include "QF_Serialize.h"
 #include "QF_Shader.h"
 
 namespace QwerkE {
@@ -29,9 +29,7 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
-		// Serialization::DeserializeObjectFromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
-		// Serialization::NewSerializeToFile(s_AssetGuidToFileRegistry, "NewSerialization");
-		// Serialization::NewDeserializeFromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
+		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 
 		for (size_t i = 0; i < s_AssetGuidToFileRegistry.size(); i++)
 		{
@@ -112,7 +110,7 @@ namespace QwerkE {
 
 	void Assets::SaveRegistry()
 	{
-		Serialization::NewSerializeToFile(s_AssetGuidToFileRegistry, "NewSerializationWindow");
+		Serialize::ToFile(s_AssetGuidToFileRegistry, "NewSerializationWindow");
 	}
 
 	void Assets::ExistsInRegistry(const GUID& guid, const std::string& fileName)

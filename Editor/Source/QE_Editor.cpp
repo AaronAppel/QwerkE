@@ -40,7 +40,7 @@
 #include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
-#include "QF_Serialization.h"
+#include "QF_Serialize.h"
 #include "QF_Settings.h"
 #include "QF_Window.h"
 
@@ -56,7 +56,7 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialization::NewDeserializeFromFile(Settings::GetStyleFileName(), style);
+        Serialize::FromFile(Settings::GetStyleFileName(), style);
     }
 
 	namespace Editor {
@@ -170,13 +170,13 @@ namespace QwerkE {
 
                 testStructSerialize.m_EditorWindowPtr = new Editor::EditorWindowAssets(GUID());
 
-                Serialization::NewSerializeToFile(testStructSerialize, "TestStruct");
+                Serialize::ToFile(testStructSerialize, "TestStruct");
             }
 
             if (const bool Deserialize = true)
             {
                 TestStruct testStructDeserialize;
-                Serialization::NewDeserializeFromFile("TestStruct", testStructDeserialize);
+                Serialize::FromFile("TestStruct", testStructDeserialize);
                 testStructDeserialize.m_BasePtrDerived;
                 signed long long num1 = 4755182615248502784;
                 signed long long num2 = 8000000000;
@@ -194,7 +194,7 @@ namespace QwerkE {
             if (!Files::Exists(Paths::Setting(userSettingsFileName.c_str()).c_str()))
             {
                 UserSettings defaultUserSettings;
-                Serialization::NewSerializeToFile(defaultUserSettings, userSettingsFileName.c_str());
+                Serialize::ToFile(defaultUserSettings, userSettingsFileName.c_str());
             }
             Settings::LoadUserSettings(userSettingsFileName.c_str());
 
@@ -369,9 +369,9 @@ namespace QwerkE {
             std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
             if (!Files::Exists(windowsDataFilePath.c_str()))
             {
-                Serialization::NewSerializeToFile(s_EditorWindows, windowsDataFilePath.c_str());
+                Serialize::ToFile(s_EditorWindows, windowsDataFilePath.c_str());
             }
-            Serialization::NewDeserializeFromFile(windowsDataFilePath.c_str(), s_EditorWindows);
+            Serialize::FromFile(windowsDataFilePath.c_str(), s_EditorWindows);
 
             bool missingMenuBarWindow = true;
             for (auto& pair : s_EditorWindows)
@@ -391,7 +391,7 @@ namespace QwerkE {
 
 		void local_Shutdown()
 		{
-            Serialization::NewSerializeToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
+            Serialize::ToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
 
             auto it = s_EditorWindows.begin();
             while (it != s_EditorWindows.end())

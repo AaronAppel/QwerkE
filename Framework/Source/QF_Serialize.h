@@ -16,12 +16,12 @@ namespace QwerkE {
 
     class Scene;
 
-    namespace Serialization {
+    namespace Serialize {
 
-        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
+        void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 
         template <class T>
-        void NewSerializeToFile(const T& objectReference, const char* absoluteFilePath)
+        void ToFile(const T& objectReference, const char* absoluteFilePath)
         {
             if (!absoluteFilePath)
             {
@@ -32,7 +32,7 @@ namespace QwerkE {
             cJSON* jsonRootObject = cJSON_CreateObject();
 
             const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-            SerializeToJson((const void*)&objectReference, typeInfo, jsonRootObject, typeInfo->stringName);
+            ToJson((const void*)&objectReference, typeInfo, jsonRootObject, typeInfo->stringName);
 
             const char* jsonStructureString = cJSON_Print(jsonRootObject);
             Files::WriteStringToFile(jsonStructureString, absoluteFilePath);
@@ -41,10 +41,10 @@ namespace QwerkE {
             cJSON_Delete(jsonRootObject);
         }
 
-        void DeserializeFromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
 
         template <class T>
-        void NewDeserializeFromFile(const char* absoluteFilePath, T& objectReference)
+        void FromFile(const char* absoluteFilePath, T& objectReference)
         {
             if (!absoluteFilePath)
             {
@@ -67,7 +67,7 @@ namespace QwerkE {
                     }
                     else
                     {
-                        DeserializeFromJson(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
+                        FromJson(rootJsonObject->child, Mirror::InfoForType<T>(), (void*)&objectReference);
                     }
                     cJSON_Delete(rootJsonObject);
                 }

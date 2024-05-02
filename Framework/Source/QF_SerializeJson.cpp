@@ -1,4 +1,4 @@
-#include "QF_Serialization.h"
+#include "QF_Serialize.h"
 
 #include <string>
 #include <unordered_map>
@@ -28,7 +28,7 @@
 
 namespace QwerkE {
 
-    namespace Serialization {
+    namespace Serialize {
 
         void local_SerializePrimitive(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
         void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
@@ -51,7 +51,7 @@ namespace QwerkE {
 
         bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
-        void SerializeToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
+        void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -89,7 +89,7 @@ namespace QwerkE {
                     }
 
                     const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType()->DerivedType(obj);
-                    SerializeToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
+                    ToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
                 }
                 break;
 
@@ -218,7 +218,7 @@ namespace QwerkE {
                 }
                 else
                 {   // #TODO This also checks if primitive so maybe avoid redundancy
-                    SerializeToJson(fieldAddress, field.typeInfo, objJson, field.name);
+                    ToJson(fieldAddress, field.typeInfo, objJson, field.name);
                 }
             }
         }
@@ -246,7 +246,7 @@ namespace QwerkE {
             {
                 if (auto firstTypeInfo = objTypeInfo->collectionTypeInfoFirst)
                 {
-                    SerializeToJson(elementAddress, firstTypeInfo, collectionJsonContainer, firstTypeInfo->stringName);
+                    ToJson(elementAddress, firstTypeInfo, collectionJsonContainer, firstTypeInfo->stringName);
                 }
                 else
                 {
@@ -276,7 +276,7 @@ namespace QwerkE {
             }
             else
             {
-                SerializeToJson(firstAddress, objTypeInfoFirst, pairJson, objTypeInfoFirst->stringName);
+                ToJson(firstAddress, objTypeInfoFirst, pairJson, objTypeInfoFirst->stringName);
             }
 
             cJSON* pairSecondJson = CreateJsonObject(objTypeInfoSecond->stringName.c_str());
@@ -296,7 +296,7 @@ namespace QwerkE {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
             {
                 const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType()->DerivedType(secondAddress);
-                SerializeToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
+                ToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
             }
             break;
 

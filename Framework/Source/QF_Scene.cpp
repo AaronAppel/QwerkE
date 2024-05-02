@@ -21,7 +21,7 @@
 #include "QF_Log.h"
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
-#include "QF_Serialization.h"
+#include "QF_Serialize.h"
 #include "QF_Settings.h"
 
 #include "QF_Scriptable.h"
@@ -192,7 +192,7 @@ namespace QwerkE {
         }
 
         std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
-        Serialization::NewSerializeToFile(*this, sceneFilePath.c_str());
+        Serialize::ToFile(*this, sceneFilePath.c_str());
         LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, sceneFilePath.c_str());
         m_IsDirty = false;
     }
@@ -214,11 +214,11 @@ namespace QwerkE {
         std::string oldName = m_SceneFileName; // #TODO Improve scene file name overwrite logic
         if (Files::Exists(otherSceneFilePath))
         {
-            Serialization::NewDeserializeFromFile(otherSceneFilePath, *this);
+            Serialize::FromFile(otherSceneFilePath, *this);
         }
         else if (Files::Exists(Paths::Scene(otherSceneFilePath).c_str()))
         {
-            Serialization::NewDeserializeFromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
+            Serialize::FromFile(Paths::Scene(otherSceneFilePath).c_str(), *this);
         }
         else
         {
@@ -236,7 +236,7 @@ namespace QwerkE {
         m_IsDirty = false;
 
         // #TESTING
-        Serialization::NewSerializeToFile(*this, "NewSerialization");
+        Serialize::ToFile(*this, "NewSerialization");
         int bp = 0;
     }
 
@@ -254,7 +254,7 @@ namespace QwerkE {
             return;
         }
 
-        Serialization::NewDeserializeFromFile("NewSerialization", *this);
+        Serialize::FromFile("NewSerialization", *this);
 
         OnLoaded();
 

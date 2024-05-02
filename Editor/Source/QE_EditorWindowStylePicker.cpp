@@ -1,6 +1,6 @@
 #include "QE_EditorWindowStylePicker.h"
 
-#include "QF_Serialization.h"
+#include "QF_Serialize.h"
 #include "QF_Settings.h"
 
 #include "QE_EditorWindow.h"
@@ -24,7 +24,7 @@ namespace QwerkE {
 
             if (ImGui::Button("Save Style"))
             {
-                Serialization::NewSerializeToFile(style, Settings::GetStyleFileName());
+                Serialize::ToFile(style, Settings::GetStyleFileName());
                 // Editor::SetEditorStateFlags(EditorStateFlags::StyleSettingsDirty);
                 if (m_Edited)
                 {

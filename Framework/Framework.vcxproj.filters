@@ -147,7 +147,7 @@
     <ClInclude Include="Source\QF_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_Serialization.h">
+    <ClInclude Include="Source\QF_Serialize.h">
       <Filter>Utils\FileIO\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Renderer.h">

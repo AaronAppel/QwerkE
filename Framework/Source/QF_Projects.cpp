@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "QF_Serialization.h"
+#include "QF_Serialize.h"
 
 namespace QwerkE {
 
@@ -30,7 +30,7 @@ namespace QwerkE {
 			}
 
 			std::string projectFilePath = Paths::Project(projectSettingsFilePath.c_str());
-			Serialization::NewDeserializeFromFile(projectFilePath.c_str(), s_CurrentProject);
+			Serialize::FromFile(projectFilePath.c_str(), s_CurrentProject);
 		}
 
 		void SaveProject()
