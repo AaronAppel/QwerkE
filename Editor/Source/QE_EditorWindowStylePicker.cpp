@@ -25,6 +25,12 @@ namespace QwerkE {
             if (ImGui::Button("Save Style"))
             {
                 Serialization::NewSerializeToFile(style, Settings::GetStyleFileName());
+                // Editor::SetEditorStateFlags(EditorStateFlags::StyleSettingsDirty);
+                if (m_Edited)
+                {
+                    m_Edited = false;
+                    ImGui::PopStyleColor(3);
+                }
             }
 
             if (m_Edited)

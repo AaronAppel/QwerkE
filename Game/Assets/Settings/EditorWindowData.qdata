@@ -59,6 +59,25 @@
 		},
 		"m_pair_guid_editorWindowPtr":	{
 			"GUID":	{
+				"m_Guid":	"2178403579249483222"
+			},
+			"m_editorWindowPtr":	{
+				"EditorWindowSettings":	{
+					"m_Guid":	{
+						"m_Guid":	"2178403579249483222"
+					},
+					"m_WindowName":	"Settings##2178403579249483222",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	0,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150,
+					"m_EditorWindowType":	{
+					}
+				}
+			}
+		},
+		"m_pair_guid_editorWindowPtr":	{
+			"GUID":	{
 				"m_Guid":	"7252906528000205047"
 			},
 			"m_editorWindowPtr":	{

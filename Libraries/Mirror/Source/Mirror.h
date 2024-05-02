@@ -182,6 +182,7 @@ constexpr QwerkE::Mirror::TypeInfoCategories SetCategory()
 	if (std::is_same_v<T, std::string>) return QwerkE::Mirror::TypeInfoCategory_Primitive;
 	if (std::is_same_v<T, const char*>) return QwerkE::Mirror::TypeInfoCategory_Primitive;
 
+	if (std::is_array_v<T>) return QwerkE::Mirror::TypeInfoCategory_Collection;
 	if (std::is_pointer_v<T>) return QwerkE::Mirror::TypeInfoCategory_Pointer;
 	if (is_stl_pair<T>::value) return QwerkE::Mirror::TypeInfoCategory_Pair;
 	if (is_stl_container<T>::value) return QwerkE::Mirror::TypeInfoCategory_Collection;

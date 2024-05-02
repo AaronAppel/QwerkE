@@ -18,12 +18,13 @@ namespace QwerkE {
 			UserSettingsDirty				= 1 << 1,
 			ProjectStateDirty				= 1 << 2,
 			SceneStateDirty					= 1 << 3,
+			StyleSettingsDirty				= 1 << 4,
 
-			UiMainMenuShowingImGuiExample	= 1 << 10,
+			UiMainMenuShowingImGuiExample	= 1 << 100,
 
-			Placeholder1					= 1 << 20,
+			Placeholder1					= 1 << 200,
 
-			Placeholder2					= 1 << 30,
+			Placeholder2					= 1 << 300,
 		};
 
 		void Run(unsigned int argc, char** argv);
@@ -32,6 +33,7 @@ namespace QwerkE {
 		bool StillRunning();
 
 		const EditorStateFlags& GetEditorStateFlags();
+		void SetEditorStateFlags(const EditorStateFlags& flags);
 		void ToggleEditorStateFlags(const EditorStateFlags& flags);
 
 		bool ShowingEditorUI();

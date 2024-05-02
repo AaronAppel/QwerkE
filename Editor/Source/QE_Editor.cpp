@@ -56,8 +56,7 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialization::NewSerializeToFile(style, Settings::GetStyleFileName());
-        // Serialization::NewDeserializeFromFile(Settings::GetStyleFileName(), style);
+        Serialization::NewDeserializeFromFile(Settings::GetStyleFileName(), style);
     }
 
 	namespace Editor {
@@ -294,6 +293,11 @@ namespace QwerkE {
         const EditorStateFlags& GetEditorStateFlags()
         {
             return s_EditorStateFlags;
+        }
+
+        void SetEditorStateFlags(const EditorStateFlags& flags)
+        {
+            s_EditorStateFlags = (EditorStateFlags)(s_EditorStateFlags & flags);
         }
 
         void ToggleEditorStateFlags(const EditorStateFlags& flags)

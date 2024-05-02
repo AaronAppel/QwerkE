@@ -172,7 +172,7 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(AntiAliasedFill)
 	MIRROR_CLASS_MEMBER(CurveTessellationTol)
 	MIRROR_CLASS_MEMBER(CircleTessellationMaxError)
-	MIRROR_CLASS_MEMBER_TYPE_OVERRIDE(Colors, m_imvec4_array)
+	MIRROR_CLASS_MEMBER(Colors)
 	MIRROR_CLASS_END(ImGuiStyle)
 #endif
 
