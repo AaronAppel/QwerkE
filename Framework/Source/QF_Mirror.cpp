@@ -385,20 +385,7 @@ namespace QwerkE {
 
 	typedef Editor::EditorWindowMenuBar EditorWindowMenuBar;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowMenuBar)
-		localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress) {
-		using MemberType = decltype(ClassType::m_Guid);
-		char* memberAddress = (char*)instanceAddress + offsetof(ClassType, m_Guid);
-
-		Editor::EditorWindow* window = (Editor::EditorWindow*)instanceAddress;
-		Editor::EditorWindowMenuBar* menuBar = (Editor::EditorWindowMenuBar*)instanceAddress;
-		GUID guid2 = window->Guid();
-		GUID* windowGuidOffset = (GUID*)window + 72;
-		GUID* guidAddress = menuBar->GuidAddress();
-
-		decltype(ClassType::m_Guid)* guid = (decltype(ClassType::m_Guid)*)memberAddress;
-		new(instanceAddress) ClassType(*(MemberType*)memberAddress);
-		};
-	localStaticTypeInfo.constructorDependentMemberName = "m_Guid";
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowMenuBar)
 
 	typedef Editor::EditorWindowSceneControls EditorWindowSceneControls;

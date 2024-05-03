@@ -254,8 +254,8 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 #define MIRROR_CONSTRUCT_USING_MEMBER(MEMBER_NAME)																				\
 	localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress) {												\
 		using MemberType = decltype(ClassType::MEMBER_NAME);																	\
-		MemberType* memberAddress = (MemberType*)instanceAddress + offsetof(ClassType, MEMBER_NAME);							\
-		new(instanceAddress) ClassType(*memberAddress);																			\
+		char* memberAddress = (char*)instanceAddress + offsetof(ClassType, MEMBER_NAME);										\
+		new(instanceAddress) ClassType(*(MemberType*)memberAddress);															\
 	};																															\
 	localStaticTypeInfo.constructorDependentMemberName = #MEMBER_NAME;
 
