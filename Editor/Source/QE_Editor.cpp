@@ -63,7 +63,7 @@ namespace QwerkE {
 
         static bool s_ShowingEditorUI = true;
 
-        static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid);
+        static EditorWindowDockingContext s_EditorWindowDockingContext(1 /*GUID::Invalid*/); // #NOTE Draw order dependency
 
         static std::unordered_map<GUID, EditorWindow*> s_EditorWindows;
         static std::vector<EditorWindow*> s_EditorWindowsQueuedForDelete;
@@ -173,7 +173,7 @@ namespace QwerkE {
                 Serialize::ToFile(testStructSerialize, "TestStruct");
             }
 
-            if (const bool Deserialize = true)
+            if (const bool Deserialize = false)
             {
                 TestStruct testStructDeserialize;
                 Serialize::FromFile("TestStruct", testStructDeserialize);

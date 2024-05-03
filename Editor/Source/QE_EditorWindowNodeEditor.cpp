@@ -41,16 +41,17 @@ namespace QwerkE {
             ax::NodeEditor::DestroyEditor(m_Context);
         }
 
-        void local_SimpleNodeEditor(ax::NodeEditor::EditorContext* context);
+        void local_SimpleNodeEditor(ax::NodeEditor::EditorContext* context, const std::string& nodeEditorName);
         void local_WidgetsNodeEditor(ax::NodeEditor::EditorContext* context);
         void EditorWindowNodeEditor::DrawInternal()
         {
             if (const bool simpleExample = true)
             {
-                local_SimpleNodeEditor(m_Context);
+                local_SimpleNodeEditor(m_Context, m_WindowName);
             }
             else if (const bool widgetsExample = true)
             {
+                // #TODO Fix deallocation crash
                 local_WidgetsNodeEditor(m_Context);
             }
             else
@@ -59,7 +60,7 @@ namespace QwerkE {
             }
         }
 
-        void local_SimpleNodeEditor(ax::NodeEditor::EditorContext* context)
+        void local_SimpleNodeEditor(ax::NodeEditor::EditorContext* context, const std::string& nodeEditorName)
         {
             auto& io = ImGui::GetIO();
 
@@ -68,20 +69,26 @@ namespace QwerkE {
             ImGui::Separator();
 
             ax::NodeEditor::SetCurrentEditor(context);
-            ax::NodeEditor::Begin("My Editor", ImVec2(0.0, 0.0f));
+            ax::NodeEditor::Begin(nodeEditorName.c_str(), ImVec2(0.0, 0.0f));
             int uniqueId = 1;
 
-            // Start drawing nodes.
-            ax::NodeEditor::BeginNode(uniqueId++);
-            ImGui::Text("Node A");
-            ax::NodeEditor::BeginPin(uniqueId++, ax::NodeEditor::PinKind::Input);
-            ImGui::Text("-> In");
-            ax::NodeEditor::EndPin();
-            ImGui::SameLine();
-            ax::NodeEditor::BeginPin(uniqueId++, ax::NodeEditor::PinKind::Output);
-            ImGui::Text("Out ->");
-            ax::NodeEditor::EndPin();
-            ax::NodeEditor::EndNode();
+            for (size_t i = 0; i < 3; i++)
+            {
+                std::string nodeName = "Node ";
+                nodeName += (char)(65 + i);
+
+                ax::NodeEditor::BeginNode(uniqueId++);
+                ImGui::Text(nodeName.c_str());
+                ax::NodeEditor::BeginPin(uniqueId++, ax::NodeEditor::PinKind::Input);
+                ImGui::Text("-> In");
+                ax::NodeEditor::EndPin();
+                ImGui::SameLine();
+                ax::NodeEditor::BeginPin(uniqueId++, ax::NodeEditor::PinKind::Output);
+                ImGui::Text("Out ->");
+                ax::NodeEditor::EndPin();
+                ax::NodeEditor::EndNode();
+            }
+
             ax::NodeEditor::End();
             ax::NodeEditor::SetCurrentEditor(nullptr);
         }
@@ -344,8 +351,6 @@ namespace QwerkE {
             ed::Resume();
             // End of "Deferred Pop-up section"
 
-
-
             // Plot Widgets =========================================================================================
             // Note: most of these plots can't be used in nodes missing, because they spawn tooltips automatically,
             // so we can't trap them in our deferred pop-up mechanism.  This causes them to fly into a random screen
@@ -370,7 +375,6 @@ namespace QwerkE {
             progress += progress_dir * 0.4f * ImGui::GetIO().DeltaTime;
             if (progress >= +1.1f) { progress = +1.1f; progress_dir *= -1.0f; }
             if (progress <= -0.1f) { progress = -0.1f; progress_dir *= -1.0f; }
-
 
             // Typically we would use ImVec2(-1.0f,0.0f) or ImVec2(-FLT_MIN,0.0f) to use all available width,
             // or ImVec2(width,0.0f) for a specified width. ImVec2(0.0f,0.0f) uses ItemWidth.

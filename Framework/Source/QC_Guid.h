@@ -24,7 +24,7 @@ namespace QwerkE {
 
 	private:
 		MIRROR_PRIVATE_MEMBERS
-		u64 m_Guid;
+		u64 m_Guid = Invalid;
 	};
 
 }

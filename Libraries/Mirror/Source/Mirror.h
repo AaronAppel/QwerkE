@@ -122,13 +122,25 @@ namespace QwerkE {
 			const TypeInfo* pointerDereferencedTypeInfo = nullptr;
 
 			const TypeInfo* AbsoluteType() const { return pointerDereferencedTypeInfo ? pointerDereferencedTypeInfo : this; }
-			const TypeInfo* DerivedType(const void* instanceAddress) const
+			const TypeInfo* DerivedTypeFromPointer(const void* instanceAddress) const
 			{
 				if (derivedTypes.empty()) return this;
 				for (const auto& derivedType : derivedTypes)
 				{
 					assert(derivedType->typeDynamicCastFunc, "Null typeDynamicCastFunc!");
 					if (derivedType->typeDynamicCastFunc(instanceAddress))
+					{
+						return derivedType;
+					}
+				}
+				return this;
+			}
+			const TypeInfo* DerivedTypeFromTypeName(const std::string& typeName) const
+			{
+				if (derivedTypes.empty()) return this;
+				for (const auto& derivedType : derivedTypes)
+				{
+					if (strcmp(derivedType->stringName.c_str(), typeName.c_str()) == 0)
 					{
 						return derivedType;
 					}
@@ -142,20 +154,36 @@ namespace QwerkE {
 				collectionAddFunc(collectionAddress, index, first, second);
 			}
 
+			void Construct(void* instanceAddress) const
+			{
+				if (typeConstructorFunc)
+				{
+					typeConstructorFunc(instanceAddress);
+				}
+				else if (typeConstructorDependentFunc)
+				{
+					typeConstructorDependentFunc(instanceAddress);
+				}
+				else
+				{
+					// Warn/error
+				}
+			}
+
 			using Func_void_voidPtr_sizet_voidPtr_voidPtr = void (*)(void*, size_t, void*, void*);
 			using Func_void_voidPtr = void (*)(void*);
 			using Func_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
-			using Func_void_voidPtr_voidPtr = void (*)(void*, void*);
 			using Func_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
 			using Func_bool_constVoidPtr = bool (*)(const void*);
+			// using Func_void_voidPtr_voidPtr = void (*)(void*, void*);
 
 			Func_void_voidPtr_sizet_voidPtr_voidPtr collectionAddFunc = nullptr;
 			Func_voidPtr_constVoidPtr_bool collectionFirstSecondFunc = nullptr;
-			Func_void_voidPtr typeConstructorFunc = nullptr;
 			Func_charPtr_constVoidPtr_sizet typeIterateCurrentFunc = nullptr;
 			Func_bool_constVoidPtr typeDynamicCastFunc = nullptr;
 
-			Func_void_voidPtr_voidPtr typeConstructorDependentFunc = nullptr;
+			Func_void_voidPtr typeConstructorFunc = nullptr; // #TODO Look to hold only 1 construction lambda
+			Func_void_voidPtr typeConstructorDependentFunc = nullptr;
 			uint16_t sizeOfConstructorArgumentBuffer = 0;
 			std::string constructorDependentMemberName = "";
 		};
@@ -181,6 +209,7 @@ constexpr QwerkE::Mirror::TypeInfoCategories SetCategory()
 	// #TODO Review special cases
 	if (std::is_same_v<T, std::string>) return QwerkE::Mirror::TypeInfoCategory_Primitive;
 	if (std::is_same_v<T, const char*>) return QwerkE::Mirror::TypeInfoCategory_Primitive;
+	if (std::is_enum_v<T>) return QwerkE::Mirror::TypeInfoCategory_Primitive; // #REVIEW Extra
 
 	if (std::is_array_v<T>) return QwerkE::Mirror::TypeInfoCategory_Collection;
 	if (std::is_pointer_v<T>) return QwerkE::Mirror::TypeInfoCategory_Pointer;
@@ -207,11 +236,10 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	return &localStaticTypeInfo;																								\
 }
 
-// #TODO String constructor needed. See about a more elegant solution
-#define MIRROR_PRIMITIVE_TYPE_STRING(TYPE)																						\
-	MIRROR_GENERIC(TYPE)																										\
-	static_assert(std::is_same_v<TYPE, std::string>);																			\
-	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) TYPE; };		\
+// #TODO QC_ENUM() is actually a class so category needs overriding
+#define MIRROR_ENUM(ENUM_TYPE)																									\
+	MIRROR_GENERIC(ENUM_TYPE)																									\
+	localStaticTypeInfo.category = QwerkE::Mirror::TypeInfoCategory_Primitive;													\
 	return &localStaticTypeInfo;																								\
 }
 
@@ -224,8 +252,10 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 
 // #TODO Keep logic here. Check if this class needs it's own member to construct
 #define MIRROR_CONSTRUCT_USING_MEMBER(MEMBER_NAME)																				\
-	localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress, void* memberAddress) {							\
-		new(instanceAddress) ClassType(*(decltype(ClassType::MEMBER_NAME)*)memberAddress);										\
+	localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress) {												\
+		using MemberType = decltype(ClassType::MEMBER_NAME);																	\
+		MemberType* memberAddress = (MemberType*)instanceAddress + offsetof(ClassType, MEMBER_NAME);							\
+		new(instanceAddress) ClassType(*memberAddress);																			\
 	};																															\
 	localStaticTypeInfo.constructorDependentMemberName = #MEMBER_NAME;
 
@@ -365,15 +395,17 @@ static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForT
 	return &localStaticTypeInfo;																								\
 }
 
-#define MIRROR_PAIR(PAIR_TYPE, FIRST_TYPE, SECOND_TYPE)																			\
+#define MIRROR_PAIR(PAIR_TYPE)																									\
 	MIRROR_GENERIC(PAIR_TYPE)																									\
 	static_assert(is_stl_pair<PAIR_TYPE>::value);																				\
-	localStaticTypeInfo.collectionTypeInfoFirst = QwerkE::Mirror::InfoForType<FIRST_TYPE>();									\
-	localStaticTypeInfo.collectionTypeInfoSecond = QwerkE::Mirror::InfoForType<SECOND_TYPE>();									\
+	localStaticTypeInfo.collectionTypeInfoFirst = QwerkE::Mirror::InfoForType<PAIR_TYPE::first_type>();							\
+	localStaticTypeInfo.collectionTypeInfoSecond = QwerkE::Mirror::InfoForType<PAIR_TYPE::second_type>();						\
 	localStaticTypeInfo.collectionAddFunc =																						\
 		[](void* collectionAddress, size_t /*index*/, void* elementFirst, void* elementSecond) {								\
-		((PAIR_TYPE*)collectionAddress)->first = *(FIRST_TYPE*)elementFirst;													\
-		((PAIR_TYPE*)collectionAddress)->second = *(SECOND_TYPE*)elementSecond;													\
+		localStaticTypeInfo.collectionTypeInfoFirst->Construct(&((PAIR_TYPE*)collectionAddress)->first);						\
+		((PAIR_TYPE*)collectionAddress)->first = *(PAIR_TYPE::first_type*)elementFirst;											\
+		localStaticTypeInfo.collectionTypeInfoSecond->Construct(&((PAIR_TYPE*)collectionAddress)->second);						\
+		((PAIR_TYPE*)collectionAddress)->second = *(PAIR_TYPE::second_type*)elementSecond;										\
 	};																															\
 	localStaticTypeInfo.typeConstructorFunc =																					\
 		[](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) PAIR_TYPE; };										\

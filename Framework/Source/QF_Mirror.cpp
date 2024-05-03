@@ -41,16 +41,17 @@ namespace QwerkE {
 	{
 		uint16_t enumValue = enumStartOffset;
 		([&]()
-			{
-				const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
-				localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
-				const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
-				const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
-					[](const void* pointerToInstance) -> bool {
-					return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
-					};
-				++enumValue;
-			}(), ...);
+		{
+			const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
+			localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
+			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
+			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
+				[](const void* pointerToInstance) -> bool {
+				SubClass* subClass = (SubClass*)pointerToInstance;
+				return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
+			};
+			++enumValue;
+		}(), ...);
 	}
 
 	template<typename Super, typename... T>
@@ -93,7 +94,7 @@ namespace QwerkE {
 
 	// Add to MirrorTypes.h "m_pair_string_int32,"
 	typedef std::pair<std::string, int32_t> m_pair_string_int32;
-	MIRROR_PAIR(m_pair_string_int32, std::string, int32_t);
+	MIRROR_PAIR(m_pair_string_int32)
 
 	// Add to MirrorTypes.h "m_umap_string_s32,"
 	typedef std::unordered_map<std::string, int32_t> m_umap_string_int32;
@@ -182,9 +183,9 @@ namespace QwerkE {
 #endif
 
 	// Enums
-	MIRROR_TYPE(eScriptTypes)
-	MIRROR_TYPE(eComponentTags)
-	MIRROR_TYPE(eKeys)
+	MIRROR_ENUM(eScriptTypes)
+	MIRROR_ENUM(eComponentTags)
+	MIRROR_ENUM(eKeys)
 
 	// Vectors
 	typedef std::vector<entt::entity> m_vector_entt_entities;
@@ -236,17 +237,18 @@ namespace QwerkE {
 	MIRROR_POINTER(m_scriptablePtr)
 
 	typedef	std::pair<eScriptTypes, Scriptable*> m_pair_eScriptTypes_ScriptablePtr;
-	MIRROR_PAIR(m_pair_eScriptTypes_ScriptablePtr, eScriptTypes, Scriptable*)
+	MIRROR_PAIR(m_pair_eScriptTypes_ScriptablePtr)
 
 	typedef std::unordered_map<eScriptTypes, Scriptable*> m_map_eScriptTypes_ScriptablePtr;
 	MIRROR_MAP(m_map_eScriptTypes_ScriptablePtr, m_pair_eScriptTypes_ScriptablePtr)
 
 	MIRROR_CLASS_START(GUID)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_MEMBER(m_Guid)
 	MIRROR_CLASS_END(GUID)
 
 	typedef	std::pair<GUID, entt::entity> m_pair_guid_enttEntity;
-	MIRROR_PAIR(m_pair_guid_enttEntity, GUID, entt::entity)
+	MIRROR_PAIR(m_pair_guid_enttEntity)
 
 	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
 	MIRROR_MAP(m_map_guid_entt, m_pair_guid_enttEntity)
@@ -338,7 +340,7 @@ namespace QwerkE {
 
 	// Assets
 	typedef std::pair<GUID, std::string> m_pair_guid_string;
-	MIRROR_PAIR(m_pair_guid_string, GUID, std::string);
+	MIRROR_PAIR(m_pair_guid_string)
 
 	typedef std::vector<m_pair_guid_string> m_vec_pair_guid_string;
 	MIRROR_VECTOR(m_vec_pair_guid_string, m_pair_guid_string);
@@ -351,10 +353,10 @@ namespace QwerkE {
 
 	// Editor types
 	typedef Editor::EditorWindowFlags EditorWindowFlags;
-	MIRROR_TYPE(EditorWindowFlags)
+	MIRROR_ENUM(EditorWindowFlags)
 
 	typedef Editor::EditorWindowTypes EditorWindowTypes;
-	MIRROR_TYPE(EditorWindowTypes)
+	MIRROR_ENUM(EditorWindowTypes)
 
 	typedef Editor::EditorWindowAssets EditorWindowAssets;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
@@ -383,7 +385,20 @@ namespace QwerkE {
 
 	typedef Editor::EditorWindowMenuBar EditorWindowMenuBar;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowMenuBar)
-	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+		localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress) {
+		using MemberType = decltype(ClassType::m_Guid);
+		char* memberAddress = (char*)instanceAddress + offsetof(ClassType, m_Guid);
+
+		Editor::EditorWindow* window = (Editor::EditorWindow*)instanceAddress;
+		Editor::EditorWindowMenuBar* menuBar = (Editor::EditorWindowMenuBar*)instanceAddress;
+		GUID guid2 = window->Guid();
+		GUID* windowGuidOffset = (GUID*)window + 72;
+		GUID* guidAddress = menuBar->GuidAddress();
+
+		decltype(ClassType::m_Guid)* guid = (decltype(ClassType::m_Guid)*)memberAddress;
+		new(instanceAddress) ClassType(*(MemberType*)memberAddress);
+		};
+	localStaticTypeInfo.constructorDependentMemberName = "m_Guid";
 	MIRROR_CLASS_END(EditorWindowMenuBar)
 
 	typedef Editor::EditorWindowSceneControls EditorWindowSceneControls;
@@ -457,7 +472,7 @@ namespace QwerkE {
 	MIRROR_POINTER(m_editorWindowPtr)
 
 	typedef std::pair<GUID, m_editorWindowPtr> m_pair_guid_editorWindowPtr;
-	MIRROR_PAIR(m_pair_guid_editorWindowPtr, GUID, m_editorWindowPtr)
+	MIRROR_PAIR(m_pair_guid_editorWindowPtr)
 
 	typedef std::unordered_map<GUID, m_editorWindowPtr> m_umap_guid_editorWindowPtr;
 	MIRROR_MAP(m_umap_guid_editorWindowPtr, m_pair_guid_editorWindowPtr)

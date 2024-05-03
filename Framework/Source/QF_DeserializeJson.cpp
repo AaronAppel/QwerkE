@@ -16,10 +16,10 @@ namespace QwerkE {
 
     namespace Serialize {
 
-        void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
-        void local_DeserializeClass(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
-        void local_DeserializeCollection(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
-        void local_DeserializePair(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
+        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
+        void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
+        void local_DeserializePair(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
         template<typename... Component>
         void DeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray)
@@ -151,70 +151,18 @@ namespace QwerkE {
                         return;
                     }
 
-                    const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo;
-
-                    if (!dereferencedTypeInfo->derivedTypes.empty() &&
-                        strcmp(dereferencedTypeInfo->stringName.c_str(), objJson->child->string) != 0)
-                    {
-                        for (const auto& derivedType : dereferencedTypeInfo->derivedTypes)
-                        {
-                            if (strcmp(derivedType->stringName.c_str(), objJson->child->string) == 0)
-                            {
-                                dereferencedTypeInfo = derivedType;
-                                break;
-                            }
-                        }
-                    }
+                    const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo->DerivedTypeFromTypeName(objJson->child->string);
 
                     void* derefencedTypeObjAddress = *(void**)obj;
                     derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
                     *(void**)obj = derefencedTypeObjAddress;
                     FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
 
-                    // #EXPERIMENTAL
-                    const bool constructorHasDependency = nullptr != objTypeInfo->typeConstructorDependentFunc ||
-                                                          nullptr != dereferencedTypeInfo->typeConstructorDependentFunc;
-                    if (constructorHasDependency && !dereferencedTypeInfo->constructorDependentMemberName.empty())
-                    {
-                        auto parentTypeInfo = objTypeInfo->pointerDereferencedTypeInfo;
-                        s16 offset = -1;
-                        for (size_t i = 0; i < parentTypeInfo->fields.size(); i++)
-                        {
-                            if (strcmp(dereferencedTypeInfo->constructorDependentMemberName.c_str(), parentTypeInfo->fields[i].name.c_str()) == 0)
-                            {
-                                offset = parentTypeInfo->fields[i].offset;
-                                break;
-                            }
-                        }
-
-                        auto childTypeInfo = dereferencedTypeInfo; // #TODO Review if child type
-                        if (offset == -1)
-                        {
-                            for (size_t i = 0; i < childTypeInfo->fields.size(); i++)
-                            {
-                                if (strcmp(dereferencedTypeInfo->constructorDependentMemberName.c_str(), childTypeInfo->fields[i].name.c_str()) == 0)
-                                {
-                                    offset = childTypeInfo->fields[i].offset;
-                                    break;
-                                }
-                            }
-                        }
-
-                        void* memberAddress = (char*)derefencedTypeObjAddress + offset;
-                        if (parentTypeInfo->typeConstructorDependentFunc)
-                        {
-                            parentTypeInfo->typeConstructorDependentFunc(derefencedTypeObjAddress, memberAddress);
-                        }
-                        else
-                        {
-                            childTypeInfo->typeConstructorDependentFunc(derefencedTypeObjAddress, memberAddress);
-                        }
-                    }
-                    else
-                    {
-                        ASSERT(dereferencedTypeInfo->typeConstructorFunc, "Null constructor funciton pointer!");
-                        dereferencedTypeInfo->typeConstructorFunc(derefencedTypeObjAddress);
-                    }
+                    // #TODO Fix edtor window guids being 0
+                    Editor::EditorWindow* window = (Editor::EditorWindow*)derefencedTypeObjAddress;
+                    GUID guid = window->Guid();
+                    dereferencedTypeInfo->Construct(derefencedTypeObjAddress);
+                    int bp = 0;
                 }
                 break;
 
@@ -223,7 +171,7 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializePrimitive(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool isPairFirst)
+        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool isPairFirst)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -233,7 +181,8 @@ namespace QwerkE {
 
             switch (objTypeInfo->enumType)
             {
-            case MirrorTypes::m_string: // #NOTE Handle when obj is pair.first
+            case MirrorTypes::m_string: // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
+                objTypeInfo->typeConstructorFunc(obj); // #NOTE String must be constructed before assigned
                 *(std::string*)obj = objJson->valuestring ? objJson->valuestring : objJson->string; break;
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
@@ -270,12 +219,21 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializeClass(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
+        void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
             if (objTypeInfo->superTypeInfo)
             {
+                // #TODO Should super constructor be called?
                 local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
             }
+
+            if (objTypeInfo->typeConstructorFunc)
+            {
+                objTypeInfo->typeConstructorFunc(obj);
+            }
+
+            if (objTypeInfo->fields.empty())
+                return;
 
             const cJSON* iterator = objJson->child;
             while (iterator)
@@ -289,10 +247,6 @@ namespace QwerkE {
                         continue;
 
                     void* fieldAddress = (char*)obj + field.offset;
-                    if (MirrorTypes::m_string == field.typeInfo->enumType)
-                    {
-                        field.typeInfo->typeConstructorFunc(fieldAddress);
-                    }
 
                     if (field.typeInfo->category == Mirror::TypeInfoCategory_Collection)
                     {   // #NOTE Needed to pass name of member collection
@@ -302,13 +256,14 @@ namespace QwerkE {
                     {
                         FromJson(iterator, field.typeInfo, (char*)obj + field.offset);
                     }
+                    break;
                 }
 
                 iterator = iterator->next;
             }
         }
 
-        void local_DeserializeCollection(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
+        void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -320,49 +275,22 @@ namespace QwerkE {
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
 
             const cJSON* iterator = objJson->child;
-            size_t index = 0;
+            size_t index = 0; // #TODO Scrap index for non-contiguous collections if possible
             while (iterator)
             {
-                const bool hasConstructionDependency = false;
-                // #TODO Handle case where string needs construction, but not basic/primitive types
-                if (!hasConstructionDependency &&
-                    (elementFirstTypeInfo->category != Mirror::TypeInfoCategory_Primitive ||
-                        MirrorTypes::m_string == elementFirstTypeInfo->enumType))
-                {
-                    ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
-                    elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>());
-                }
-
-                // Pointer is added to map, but is null
-                std::pair<GUID, Editor::EditorWindow*>* window = elementFirstBuffer.As<std::pair<GUID, Editor::EditorWindow*>>();
+                std::unordered_map<GUID, Editor::EditorWindow*>* window = (std::unordered_map<GUID, Editor::EditorWindow*>*)obj;
                 FromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
-
                 objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
-
-                if (hasConstructionDependency &&
-                    (elementFirstTypeInfo->category != Mirror::TypeInfoCategory_Primitive ||
-                        MirrorTypes::m_string == elementFirstTypeInfo->enumType))
-                {
-                    ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
-                    elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>()); // #TODO Add/supply constructor argument data
-                }
-
                 iterator = iterator->next;
                 ++index;
             }
         }
 
-        void local_DeserializePair(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
+        void local_DeserializePair(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
         {
-            if (!obj || !objTypeInfo || !objJson)
+            if (!obj || !objTypeInfo || !objJson || objTypeInfo->category != Mirror::TypeInfoCategory_Pair)
             {
-                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
-                return;
-            }
-
-            if (!objTypeInfo->category == Mirror::TypeInfoCategory_Pair)
-            {
-                LOG_ERROR("{0} Not a apair!", __FUNCTION__);
+                LOG_ERROR("{0} Invalid argument passed!", __FUNCTION__);
                 return;
             }
 
@@ -372,26 +300,16 @@ namespace QwerkE {
             const Mirror::TypeInfo* const elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
             Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
 
-            const bool hasConstructionDependency = elementFirstTypeInfo->typeConstructorDependentFunc != nullptr;
-            // #TODO Handle case where string needs construction, but not basic/primitive types
-            if (!hasConstructionDependency &&
-                (elementFirstTypeInfo->category != Mirror::TypeInfoCategory_Primitive ||
-                    MirrorTypes::m_string == elementFirstTypeInfo->enumType))
-            {
-                ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
-                elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>());
-            }
-
             FromJson(objJson->child, elementFirstTypeInfo, elementFirstBuffer.As<void>());
-            FromJson(objJson->child->next, elementSecondInfo, elementSecondBuffer.As<void>());
+
+            const cJSON* secondJson = objJson->child->next;
+            if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category)
+            {   // #TODO Review handling primitives differently
+                secondJson = secondJson->child;
+            }
+            FromJson(secondJson, elementSecondInfo, elementSecondBuffer.As<void>());
 
             objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
-
-            if (hasConstructionDependency && Mirror::TypeInfoCategory_Primitive != elementFirstTypeInfo->category)
-            {
-                ASSERT(elementFirstTypeInfo->typeConstructorFunc, "Construct function is null!");
-                elementFirstTypeInfo->typeConstructorFunc(elementFirstBuffer.As<void>()); // #TODO Add/supply constructor argument data
-            }
         }
 
     }

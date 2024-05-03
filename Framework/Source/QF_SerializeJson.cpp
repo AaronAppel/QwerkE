@@ -30,10 +30,10 @@ namespace QwerkE {
 
     namespace Serialize {
 
-        void local_SerializePrimitive(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
-        void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
-        void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
-        void local_SerializePair(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
+        void local_SerializePrimitive(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
+        void local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson);
+        void local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
+        void local_SerializePair(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson);
 
         cJSON* CreateJsonObject(const char* key = nullptr);
 
@@ -88,7 +88,7 @@ namespace QwerkE {
                         return;
                     }
 
-                    const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType()->DerivedType(obj);
+                    const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType()->DerivedTypeFromPointer(obj);
                     ToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
                 }
                 break;
@@ -98,7 +98,7 @@ namespace QwerkE {
             }
         }
 
-        void local_SerializePrimitive(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
+        void local_SerializePrimitive(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -184,7 +184,7 @@ namespace QwerkE {
             }
         }
 
-        void local_SerializeClass(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        void local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson)
         {
             if (!obj || !objTypeInfo || !objJson || objTypeInfo->category != Mirror::TypeInfoCategory_Class)
             {
@@ -223,7 +223,7 @@ namespace QwerkE {
             }
         }
 
-        void local_SerializeCollection(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
+        void local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Collection != objTypeInfo->category)
             {
@@ -257,7 +257,7 @@ namespace QwerkE {
             }
         }
 
-        void local_SerializePair(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        void local_SerializePair(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson)
         {
             cJSON* pairJson = CreateJsonObject(objTypeInfo->stringName.c_str());
             cJSON_AddItemToArray(objJson, pairJson);
@@ -265,8 +265,8 @@ namespace QwerkE {
             const Mirror::TypeInfo* const objTypeInfoFirst = objTypeInfo->collectionTypeInfoFirst;
             const Mirror::TypeInfo* const objTypeInfoSecond = objTypeInfo->collectionTypeInfoSecond;
 
-            const void* firstAddress = objTypeInfo->collectionFirstSecondFunc(obj, true);
-            const void* secondAddress = objTypeInfo->collectionFirstSecondFunc(obj, false);
+            const void* const firstAddress = objTypeInfo->collectionFirstSecondFunc(obj, true);
+            const void* const secondAddress = objTypeInfo->collectionFirstSecondFunc(obj, false);
 
             if (objTypeInfo->collectionTypeInfoFirst->category == Mirror::TypeInfoCategory_Primitive)
             {
@@ -295,7 +295,7 @@ namespace QwerkE {
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
             {
-                const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType()->DerivedType(secondAddress);
+                const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType()->DerivedTypeFromPointer(secondAddress);
                 ToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
             }
             break;

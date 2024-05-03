@@ -96,6 +96,7 @@ namespace QwerkE {
 			virtual bool IsUnique() { return false; }
 
 			GUID Guid() { return m_Guid; }
+			GUID* GuidAddress() { return &m_Guid; }
 			EditorWindowTypes Type() { return m_EditorWindowType; }
 			EditorWindowFlags WindowFlags() { return m_WindowFlags; }
 
@@ -111,6 +112,11 @@ namespace QwerkE {
 					m_Guid(guid)
 			{
 				EditorWindowFlags avoidAppendingGuidToName = (EditorWindowFlags)(m_WindowFlags & ExactNameNoguid);
+				if (!m_Guid)
+				{
+					int bp = 0;
+				}
+
 				if (!avoidAppendingGuidToName)
 				{
 					m_WindowName += "##";
@@ -133,11 +139,12 @@ namespace QwerkE {
 			float m_MinimumWidth = m_StartingWidth;
 			float m_MinimumHeight = m_StartingHeight;
 
+			std::string m_WindowName = Constants::gc_DefaultStringValue;
+
 		private:
 			MIRROR_PRIVATE_MEMBERS
 
-			std::string m_WindowName = Constants::gc_DefaultStringValue;
-			GUID m_Guid; // #NOTE Singleton windows are static and have GUID dependency with init
+			GUID m_Guid = GUID::Invalid; // #NOTE Singleton windows are static and have GUID dependency with init
 
 			EditorWindowTypes m_EditorWindowType;
 		};

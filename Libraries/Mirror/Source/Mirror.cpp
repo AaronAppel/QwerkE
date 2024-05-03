@@ -40,4 +40,9 @@ MIRROR_TYPE(m_charPtr)
 MIRROR_TYPE(m_constCharPtr)
 
 typedef std::string m_string;
-MIRROR_PRIMITIVE_TYPE_STRING(m_string)
+MIRROR_GENERIC(m_string)
+	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) {
+		new(preallocatedMemoryAddress) std::string();
+	};
+	return &localStaticTypeInfo;
+}
