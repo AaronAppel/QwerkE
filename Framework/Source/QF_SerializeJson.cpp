@@ -45,9 +45,10 @@ namespace QwerkE {
         cJSON* CreateJsonString(const std::string& name, const void* obj);
 
         template<typename... Component>
-        void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray);
+        void SerializeComponent(const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
+
         template<typename... Component>
-        static void SerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray);
+        static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
 
         bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
@@ -354,74 +355,60 @@ namespace QwerkE {
             }(), ...);
         }
 
-        template <typename T>
-        void SerializeComponent(EntityHandle& handle, cJSON* entityComponentsJsonArray)
-        {
-            if (!handle.HasComponent<T>())
-                return;
-
-            T& component = handle.GetComponent<T>();
-            auto componentTypeInfo = Mirror::InfoForType<T>();
-            cJSON* newJsonObjectArray = CreateJsonObject(componentTypeInfo->stringName.c_str());
-            SerializeToJson(&component, componentTypeInfo, newJsonObjectArray, componentTypeInfo->stringName);
-            cJSON_AddItemToArray(entityComponentsJsonArray, newJsonObjectArray);
-        }
-
-        template<typename... Component>
-        static void SerializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, cJSON* entityComponentsJsonArray)
-        {
-            SerializeComponent<Component...>(handle, entityComponentsJsonArray);
-        }
-
         bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
             switch (objTypeInfo->enumType)
             {
-            case MirrorTypes::m_map_guid_entt:
+            case MirrorTypes::m_entt_registry:
                 {
-                    const std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
-
-                    s32 offSetOfEntitiesMap = -1;
-                    const Mirror::TypeInfo* sceneTypeInfo = Mirror::InfoForType<Scene>();
-                    for (size_t i = 0; i < sceneTypeInfo->fields.size(); i++)
-                    {
-                        const Mirror::Field& field = sceneTypeInfo->fields[i];
-                        if (strcmp(field.name.c_str(), "m_GuidsToEntts") == 0)
-                        {
-                            offSetOfEntitiesMap = field.offset;
-                            break;
-                        }
-                    }
-
-                    if (offSetOfEntitiesMap < 0)
-                    {
-                        LOG_ERROR("{0} Offset not found!", __FUNCTION__);
-                        return true;
-                    }
-                    Scene* scene = (Scene*)((char*)obj - offSetOfEntitiesMap);
-
-                    cJSON* entitiesJsonArray = CreateJsonObject("Entities");
+                    cJSON* entitiesJsonArray = CreateJsonObject("m_Registry"); // #TODO Improve hard coded member name
                     cJSON_AddItemToArray(objJson, entitiesJsonArray);
 
-                    for (auto& entityPair : *entitiesMap)
+                    entt::registry* registry = (entt::registry*)obj;
+                    registry->each([&](auto entityId)
                     {
-                        EntityHandle handle(scene, entityPair.second);
+                        if (registry->has<ComponentInfo>(entityId))
+                        {
+                            ComponentInfo& info = registry->get<ComponentInfo>(entityId);
 
-                        cJSON* entityGuidJson = CreateJsonObject(std::to_string(handle.EntityGuid()).c_str());
-                        cJSON_AddItemToArray(entitiesJsonArray, entityGuidJson);
+                            cJSON* componentListJsonArray = CreateJsonObject(info.m_EntityName.c_str());
+                            cJSON_AddItemToArray(entitiesJsonArray, componentListJsonArray);
 
-                        SerializeComponents(EntityComponentsList{}, handle, entityGuidJson);
-
-                        // SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentMesh>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentTransform>(handle, entityComponentsJsonArray);
-                        // SerializeComponent<ComponentScript>(handle, entityComponentsJsonArray);
-                    }
+                            SerializeComponents(EntityComponentsList{}, registry, entityId, componentListJsonArray);
+                        }
+                        else
+                        {
+                            LOG_ERROR("{0} Missing ComponentInfo!", __FUNCTION__);
+                        }
+                    });
                 }
                 return true;
             }
             return false;
+        }
+
+        template<typename... Component>
+        void SerializeComponent(const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray)
+        {
+            ([&]()
+            {
+                if (!registry->has<Component>(entityId))
+                    return;
+
+                const Component& component = registry->get<Component>(entityId);
+                const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
+
+                cJSON* componentJsonArray = CreateJsonObject(componentTypeInfo->stringName.c_str());
+                cJSON_AddItemToArray(componentListJsonArray, componentJsonArray);
+
+                local_SerializeClass(&component, componentTypeInfo, componentJsonArray);
+            }(), ...);
+        }
+
+        template<typename... Component>
+        static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray)
+        {
+            SerializeComponent<Component...>(registry, entityId, componentListJsonArray);
         }
 
     }

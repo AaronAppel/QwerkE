@@ -24,10 +24,10 @@ namespace QwerkE {
         bool TypeInfoHasDeserializeOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj);
 
         template<typename... Component>
-        void DeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray);
+        void DeserializeComponent(entt::registry* registry, const cJSON* entityComponentsJsonArray);
 
         template<typename... Component>
-        static void DeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray);
+        static void DeserializeComponents(TemplateArgumentList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray);
 
         void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
@@ -224,113 +224,58 @@ namespace QwerkE {
         {
             switch (objTypeInfo->enumType)
             {
-            case MirrorTypes::Scene:
-            {
-                Scene* scene = (Scene*)obj;
-                local_DeserializeClass(objJson, objTypeInfo, scene);
-
-                const cJSON* iteratorEntities = objJson->child; // objJson->child->next->child; // #TODO Improve. Find by string
-                while (iteratorEntities)
+            case MirrorTypes::m_entt_registry:
                 {
-                    if (strcmp(iteratorEntities->string, "Entities") == 0)
+                    entt::registry* registry = (entt::registry*)obj;
+
+                    const Mirror::TypeInfo* componentInfoTypeInfo = Mirror::InfoForType<ComponentInfo>();
+                    const cJSON* iterator = objJson->child;
+                    while (iterator)
                     {
-                        iteratorEntities = iteratorEntities->child;
-                        break;
+                        DeserializeComponents(EntityComponentsList{}, registry, iterator);
+                        iterator = iterator->next;
                     }
-                    iteratorEntities = iteratorEntities->next;
-                };
-
-                if (!iteratorEntities)
-                {
-                    LOG_ERROR("{0} Unable to deserialize scene entities!", __FUNCTION__);
-                    return true;
                 }
-
-                while (iteratorEntities)
-                {
-                    GUID guid;
-                    if (strcmp(iteratorEntities->string, "Entity") != 0)
-                    {
-                        guid = std::stoull(iteratorEntities->string);
-                    }
-
-                    EntityHandle handle = scene->CreateEntity(guid);
-
-                    const cJSON* iteratorComponents = iteratorEntities->child;
-
-                    DeserializeComponents(EntityComponentsList{}, handle, iteratorComponents);
-
-                    while (iteratorComponents)
-                    {   // #TODO Look at using component enum instead of strings
-                        // DeserializeComponent<ComponentTransform>(handle, iteratorComponents, false); // #NOTE Added to every entity on creation
-                        // DeserializeComponent<ComponentInfo>(handle, iteratorComponents, false);
-                        // DeserializeComponent<ComponentCamera>(handle, iteratorComponents, true); // #NOTE Need to be added only if in data
-                        // DeserializeComponent<ComponentMesh>(handle, iteratorComponents, true);
-                        // DeserializeComponent<ComponentScript>(handle, iteratorComponents, true); // #TODO Consider using ComponentScript.AddScript()
-
-                        iteratorComponents = iteratorComponents->next;
-                    }
-
-                    ASSERT(handle.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
-                    ASSERT(handle.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
-
-                    iteratorEntities = iteratorEntities->next;
-                }
-            }
-            return true;
+                return true;
             }
             return false;
         }
 
         template<typename... Component>
-        void DeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray)
+        void DeserializeComponent(entt::registry* registry, const cJSON* entityComponentsJsonArray)
         {
+            entt::entity newEntityId = registry->create();
             ([&]()
             {
-                const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
-
-                const cJSON* iterator = entityComponentsJsonArray;
-                while (iterator && strcmp(iterator->string, componentTypeInfo->stringName.c_str()) != 0)
+                const cJSON* iterator = entityComponentsJsonArray->child;
+                while (iterator)
                 {
+                    const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<Component>();
+                    if (strcmp(iterator->string, typeInfo->stringName.c_str()) != 0)
+                    {
+                        iterator = iterator->next;
+                        continue;
+                    }
+
+                    Component& component = registry->emplace<Component>(newEntityId);
+                    local_DeserializeClass(iterator, typeInfo, &component);
                     iterator = iterator->next;
-                }
-                if (!iterator)
-                    return;
 
-                // #TODO Add if doesn't already have?
-                bool addComponent = !std::is_same_v<Component, ComponentTransform> && !std::is_same_v<Component, ComponentInfo>;
-                if (addComponent)
-                {
-                    handle.AddComponent<Component>();
-                }
+                    if (std::is_same_v<Component, ComponentMesh>)
+                    {
+                        ComponentMesh* mesh = (ComponentMesh*)&component;
+                        mesh->Initialize();
+                    }
 
-                Component& component = handle.GetComponent<Component>();
-                GUID guid;
-                if (std::is_same_v<Component, ComponentInfo>)
-                {
-                    ComponentInfo* info = (ComponentInfo*)&component;
-                    guid = info->m_Guid;
-                }
-
-                FromJson(iterator, componentTypeInfo, (void*)&component);
-
-                if (std::is_same_v<Component, ComponentInfo>)
-                {
-                    ComponentInfo* info = (ComponentInfo*)&component;
-                    info->m_Guid = guid;
-                }
-                else if (std::is_same_v<Component, ComponentMesh>)
-                {
-                    ComponentMesh* mesh = (ComponentMesh*)&component;
-                    mesh->Initialize();
+                    break;
                 }
             }(), ...);
         }
 
         template<typename... Component>
-        static void DeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray)
+        static void DeserializeComponents(TemplateArgumentList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray)
         {
-            DeserializeComponent<Component...>(handle, entityComponentsJsonArray);
+            DeserializeComponent<Component...>(registry, entityComponentsJsonArray);
         }
 
     }

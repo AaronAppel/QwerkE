@@ -273,10 +273,10 @@ namespace QwerkE {
             script.Unbind();
         }
 
-        m_Registry.each([&](auto entityID)
-            {
-                m_Registry.destroy(entityID);
-            });
+        m_Registry.each([&](const auto entityID)
+        {
+            m_Registry.destroy(entityID);
+        });
 
         m_IsLoaded = false;
         m_IsDirty = false;
@@ -292,6 +292,12 @@ namespace QwerkE {
 
     void Scene::OnLoaded()
     {
+        m_GuidsToEntts.clear(); // #TODO Error if not empty?
+        m_Registry.each([&](const auto entityId) {
+            ComponentInfo& info = m_Registry.get<ComponentInfo>(entityId);
+            m_GuidsToEntts.insert({ info.m_Guid , entityId });
+        });
+
         // #TODO Remove camera component requirement or handle when no camera components exist
         auto viewCameras = m_Registry.view<ComponentCamera>();
         // ASSERT(!viewCameras.empty(), "No camera components found in scene!");

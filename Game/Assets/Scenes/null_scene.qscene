@@ -1,10 +1,13 @@
 {
 	"Scene":	{
 		"m_SceneFileName":	"null_scene.qscene",
-		"Entities":	{
-			"17082018286901305226":	{
+		"m_Registry":	{
+			"null":	{
 				"ComponentInfo":	{
-					"m_EntityName":	"Mesh",
+					"m_EntityName":	"null",
+					"m_Guid":	{
+						"m_Guid":	"15318540641823496003"
+					},
 					"m_Enabled":	false
 				},
 				"ComponentMesh":	{
@@ -36,39 +39,42 @@
 					}
 				}
 			},
-			"12368696176496572331":	{
+			"null":	{
 				"ComponentCamera":	{
 					"m_MoveSpeed":	5,
 					"m_LookAtPosition":	{
-						"x":	1.761481761932373,
-						"y":	-2.4609634876251221,
-						"z":	-10.17210578918457
+						"x":	3.4385976791381836,
+						"y":	-1.6227167844772339,
+						"z":	-6.6175975799560547
 					},
 					"m_Fov":	60,
 					"m_Near":	0.10000000149011612,
 					"m_Far":	100
 				},
 				"ComponentInfo":	{
-					"m_EntityName":	"Camera",
+					"m_EntityName":	"null",
+					"m_Guid":	{
+						"m_Guid":	"8186617831649296184"
+					},
 					"m_Enabled":	false
 				},
 				"ComponentTransform":	{
 					"m_Matrix":	{
-						"m_float":	0.99413895606994629,
+						"m_float":	0.84808117151260376,
 						"m_float":	0,
-						"m_float":	-0.10811012983322144,
+						"m_float":	-0.529866337776184,
 						"m_float":	0,
-						"m_float":	0.037239804863929749,
-						"m_float":	0.9388003945350647,
-						"m_float":	0.3424428403377533,
+						"m_float":	0.21689815819263458,
+						"m_float":	0.9123796820640564,
+						"m_float":	0.3471578061580658,
 						"m_float":	0,
-						"m_float":	0.10149383544921875,
-						"m_float":	-0.344461739063263,
-						"m_float":	0.93329805135726929,
+						"m_float":	0.48343926668167114,
+						"m_float":	-0.409345030784607,
+						"m_float":	0.77377200126647949,
 						"m_float":	0,
-						"m_float":	1.8695919513702393,
-						"m_float":	-2.8034062385559082,
-						"m_float":	-11.105403900146484,
+						"m_float":	3.9684641361236572,
+						"m_float":	-1.9698746204376221,
+						"m_float":	-7.3913698196411133,
 						"m_float":	1
 					}
 				},
