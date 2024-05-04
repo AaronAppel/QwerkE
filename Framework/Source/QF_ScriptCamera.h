@@ -20,6 +20,9 @@ namespace QwerkE {
 	class ScriptableCamera : public Scriptable
 	{
 	public:
+
+		ScriptableCamera() = default;
+
 		void OnCreate() override
 		{
 			HasRequiredComponents<ComponentTransform, ComponentCamera, ComponentScript>();

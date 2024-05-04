@@ -381,20 +381,36 @@ namespace QwerkE {
                 {
                     const std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
 
-                    Scene* scene = (Scene*)obj;
+                    s32 offSetOfEntitiesMap = -1;
+                    const Mirror::TypeInfo* sceneTypeInfo = Mirror::InfoForType<Scene>();
+                    for (size_t i = 0; i < sceneTypeInfo->fields.size(); i++)
+                    {
+                        const Mirror::Field& field = sceneTypeInfo->fields[i];
+                        if (strcmp(field.name.c_str(), "m_GuidsToEntts") == 0)
+                        {
+                            offSetOfEntitiesMap = field.offset;
+                            break;
+                        }
+                    }
+
+                    if (offSetOfEntitiesMap < 0)
+                    {
+                        LOG_ERROR("{0} Offset not found!", __FUNCTION__);
+                        return true;
+                    }
+                    Scene* scene = (Scene*)((char*)obj - offSetOfEntitiesMap);
+
+                    cJSON* entitiesJsonArray = CreateJsonObject("Entities");
+                    cJSON_AddItemToArray(objJson, entitiesJsonArray);
 
                     for (auto& entityPair : *entitiesMap)
                     {
                         EntityHandle handle(scene, entityPair.second);
 
-                        // cJSON* entityJsonArray = CreateArray("Entity");
-                        cJSON* entityJsonArray = CreateJsonObject(std::to_string(handle.EntityGuid()).c_str());
-                        cJSON_AddItemToArray(objJson, entityJsonArray);
+                        cJSON* entityGuidJson = CreateJsonObject(std::to_string(handle.EntityGuid()).c_str());
+                        cJSON_AddItemToArray(entitiesJsonArray, entityGuidJson);
 
-                        cJSON* entityComponentsJsonArray = CreateJsonObject("Components");
-                        cJSON_AddItemToArray(objJson, entityComponentsJsonArray);
-
-                        SerializeComponents(EntityComponentsList{}, handle, entityComponentsJsonArray);
+                        SerializeComponents(EntityComponentsList{}, handle, entityGuidJson);
 
                         // SerializeComponent<ComponentCamera>(handle, entityComponentsJsonArray);
                         // SerializeComponent<ComponentInfo>(handle, entityComponentsJsonArray);

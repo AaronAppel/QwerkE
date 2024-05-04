@@ -12,6 +12,8 @@ namespace QwerkE {
 	class ComponentScript
 	{
 	public:
+		ComponentScript() = default;
+
 		~ComponentScript()
 		{
 			// #TODO Find out why destructor is immediately called

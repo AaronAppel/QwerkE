@@ -21,107 +21,13 @@ namespace QwerkE {
         void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
         void local_DeserializePair(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
-        template<typename... Component>
-        void DeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray)
-        {
-            ([&]()
-            {
-                // #TODO Implement
-
-                // bool addComponent = !std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>;
-
-                const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
-                // #TODO Iterate over entityComponentsJsonArray
-                // if (strcmp(componentJson->string, componentTypeInfo->stringName.c_str()) != 0)
-                //     return;
-                //
-                // if (addComponent)
-                // {
-                //     handle.AddComponent<T>();
-                // }
-                //
-                // T& component = handle.GetComponent<T>();
-                // DeserializeFromJson(componentJson, componentTypeInfo, (void*)&component);
-                //
-                // if (std::is_same_v<T, ComponentMesh>)
-                // {
-                //     ComponentMesh* mesh = (ComponentMesh*)&component;
-                //     mesh->Initialize();
-                // }
-            }(), ...);
-        }
+        bool TypeInfoHasDeserializeOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj);
 
         template<typename... Component>
-        static void DeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray)
-        {
-            DeserializeComponent<Component...>(handle, entityComponentsJsonArray);
-        }
+        void DeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray);
 
-        s32 OffsetOfMember(const Mirror::TypeInfo* objTypeInfo, const char* memberName)
-        {
-            for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
-            {
-                const Mirror::Field& field = objTypeInfo->fields[i];
-                if (strcmp(field.name.c_str(), memberName) == 0)
-                {
-                    return field.offset;
-                }
-            }
-            return -1;
-        }
-
-        bool TypeInfoHasDeserializeOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj)
-        {
-            switch (objTypeInfo->enumType)
-            {
-            case MirrorTypes::m_map_guid_entt:
-                {
-                    // std::unordered_map<GUID, entt::entity>* entitiesMap = (std::unordered_map<GUID, entt::entity>*)obj;
-
-                    const s32 offSetOfEntitiesMap = OffsetOfMember(Mirror::InfoForType<Scene>(), "m_GuidsToEntts");
-                    if (offSetOfEntitiesMap < 0)
-                    {
-                        LOG_ERROR("{0} Offset not found!", __FUNCTION__);
-                        return true;
-                    }
-                    Scene* scene = (Scene*)((char*)obj - offSetOfEntitiesMap);
-
-                    const cJSON* iteratorEntities = objJson->child;
-                    while (iteratorEntities)
-                    {
-                        GUID guid;
-                        if (strcmp(iteratorEntities->string, "Entity") != 0)
-                        {
-                            guid = std::stoull(iteratorEntities->string);
-                        }
-
-                        EntityHandle handle = scene->CreateEntity(guid);
-
-                        const cJSON* iteratorComponents = iteratorEntities->child;
-
-                        DeserializeComponents(EntityComponentsList{}, handle, iteratorComponents);
-
-                        while (iteratorComponents)
-                        {   // #TODO Look at using component enum instead of strings
-                            // DeserializeComponent<ComponentTransform>(handle, iteratorComponents, false); // #NOTE Added to every entity on creation
-                            // DeserializeComponent<ComponentInfo>(handle, iteratorComponents, false);
-                            // DeserializeComponent<ComponentCamera>(handle, iteratorComponents, true); // #NOTE Need to be added only if in data
-                            // DeserializeComponent<ComponentMesh>(handle, iteratorComponents, true);
-                            // DeserializeComponent<ComponentScript>(handle, iteratorComponents, true); // #TODO Consider using ComponentScript.AddScript()
-
-                            iteratorComponents = iteratorComponents->next;
-                        }
-
-                        ASSERT(handle.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
-                        ASSERT(handle.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
-
-                        iteratorEntities = iteratorEntities->next;
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
+        template<typename... Component>
+        static void DeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray);
 
         void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
@@ -156,13 +62,16 @@ namespace QwerkE {
                     void* derefencedTypeObjAddress = *(void**)obj;
                     derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
                     *(void**)obj = derefencedTypeObjAddress;
-                    FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
 
-                    // #TODO Fix edtor window guids being 0
-                    Editor::EditorWindow* window = (Editor::EditorWindow*)derefencedTypeObjAddress;
-                    GUID guid = window->Guid();
+                    Editor::EditorWindowSceneView* sceneView = (Editor::EditorWindowSceneView*)derefencedTypeObjAddress;
+                    if (dereferencedTypeInfo->typeConstructorDependentFunc)
+                    {
+                        // #TODO Only serialize dependent member?
+                        FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
+                    }
                     dereferencedTypeInfo->Construct(derefencedTypeObjAddress);
-                    int bp = 0;
+
+                    FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
                 }
                 break;
 
@@ -296,20 +205,132 @@ namespace QwerkE {
 
             const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
-
-            const Mirror::TypeInfo* const elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
-            Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
-
             FromJson(objJson->child, elementFirstTypeInfo, elementFirstBuffer.As<void>());
+
+            const Mirror::TypeInfo* elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
+            Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
 
             const cJSON* secondJson = objJson->child->next;
             if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category)
             {   // #TODO Review handling primitives differently
-                secondJson = secondJson->child;
+                secondJson = secondJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
             }
             FromJson(secondJson, elementSecondInfo, elementSecondBuffer.As<void>());
 
             objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
+        }
+
+        bool TypeInfoHasDeserializeOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj)
+        {
+            switch (objTypeInfo->enumType)
+            {
+            case MirrorTypes::Scene:
+            {
+                Scene* scene = (Scene*)obj;
+                local_DeserializeClass(objJson, objTypeInfo, scene);
+
+                const cJSON* iteratorEntities = objJson->child; // objJson->child->next->child; // #TODO Improve. Find by string
+                while (iteratorEntities)
+                {
+                    if (strcmp(iteratorEntities->string, "Entities") == 0)
+                    {
+                        iteratorEntities = iteratorEntities->child;
+                        break;
+                    }
+                    iteratorEntities = iteratorEntities->next;
+                };
+
+                if (!iteratorEntities)
+                {
+                    LOG_ERROR("{0} Unable to deserialize scene entities!", __FUNCTION__);
+                    return true;
+                }
+
+                while (iteratorEntities)
+                {
+                    GUID guid;
+                    if (strcmp(iteratorEntities->string, "Entity") != 0)
+                    {
+                        guid = std::stoull(iteratorEntities->string);
+                    }
+
+                    EntityHandle handle = scene->CreateEntity(guid);
+
+                    const cJSON* iteratorComponents = iteratorEntities->child;
+
+                    DeserializeComponents(EntityComponentsList{}, handle, iteratorComponents);
+
+                    while (iteratorComponents)
+                    {   // #TODO Look at using component enum instead of strings
+                        // DeserializeComponent<ComponentTransform>(handle, iteratorComponents, false); // #NOTE Added to every entity on creation
+                        // DeserializeComponent<ComponentInfo>(handle, iteratorComponents, false);
+                        // DeserializeComponent<ComponentCamera>(handle, iteratorComponents, true); // #NOTE Need to be added only if in data
+                        // DeserializeComponent<ComponentMesh>(handle, iteratorComponents, true);
+                        // DeserializeComponent<ComponentScript>(handle, iteratorComponents, true); // #TODO Consider using ComponentScript.AddScript()
+
+                        iteratorComponents = iteratorComponents->next;
+                    }
+
+                    ASSERT(handle.HasComponent<ComponentTransform>(), "Entity must have ComponentTransform!");
+                    ASSERT(handle.HasComponent<ComponentInfo>(), "Entity must have ComponentInfo!");
+
+                    iteratorEntities = iteratorEntities->next;
+                }
+            }
+            return true;
+            }
+            return false;
+        }
+
+        template<typename... Component>
+        void DeserializeComponent(EntityHandle& handle, const cJSON* entityComponentsJsonArray)
+        {
+            ([&]()
+            {
+                const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
+
+                const cJSON* iterator = entityComponentsJsonArray;
+                while (iterator && strcmp(iterator->string, componentTypeInfo->stringName.c_str()) != 0)
+                {
+                    iterator = iterator->next;
+                }
+                if (!iterator)
+                    return;
+
+                // #TODO Add if doesn't already have?
+                bool addComponent = !std::is_same_v<Component, ComponentTransform> && !std::is_same_v<Component, ComponentInfo>;
+                if (addComponent)
+                {
+                    handle.AddComponent<Component>();
+                }
+
+                Component& component = handle.GetComponent<Component>();
+                GUID guid;
+                if (std::is_same_v<Component, ComponentInfo>)
+                {
+                    ComponentInfo* info = (ComponentInfo*)&component;
+                    guid = info->m_Guid;
+                }
+
+                FromJson(iterator, componentTypeInfo, (void*)&component);
+
+                if (std::is_same_v<Component, ComponentInfo>)
+                {
+                    ComponentInfo* info = (ComponentInfo*)&component;
+                    info->m_Guid = guid;
+                }
+                else if (std::is_same_v<Component, ComponentMesh>)
+                {
+                    ComponentMesh* mesh = (ComponentMesh*)&component;
+                    mesh->Initialize();
+                }
+            }(), ...);
+        }
+
+        template<typename... Component>
+        static void DeserializeComponents(TemplateArgumentList<Component...>, EntityHandle& handle, const cJSON* entityComponentsJsonArray)
+        {
+            DeserializeComponent<Component...>(handle, entityComponentsJsonArray);
         }
 
     }

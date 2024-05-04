@@ -146,13 +146,11 @@ namespace QwerkE {
         if (m_GuidsToEntts.find(existingGuid) != m_GuidsToEntts.end())
         {
             LOG_ERROR("{0} GUID already exists!", __FUNCTION__);
+            return EntityHandle(this, m_GuidsToEntts[existingGuid]);
         }
 
-        EntityHandle entity = EntityHandle(this, existingGuid);
-        const GUID guid = entity.GetComponent<ComponentInfo>().m_Guid;
-        m_GuidsToEntts[guid] = entity.m_EnttId;
-        return entity;
-        // return m_GuidsToEntts.insert(entity->GetComponent<ComponentInfo>().m_Guid, entity).second;
+        m_GuidsToEntts[existingGuid] = m_Registry.create();
+        return EntityHandle(this, existingGuid);
     }
 
     void Scene::DestroyEntity(EntityHandle& entity)
@@ -234,10 +232,6 @@ namespace QwerkE {
 
         m_IsLoaded = true;
         m_IsDirty = false;
-
-        // #TESTING
-        Serialize::ToFile(*this, "NewSerialization");
-        int bp = 0;
     }
 
     void Scene::LoadScene()

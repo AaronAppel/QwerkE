@@ -376,11 +376,6 @@ namespace QwerkE {
             bool missingMenuBarWindow = true;
             for (auto& pair : s_EditorWindows)
             {
-                if (pair.first != pair.second->Guid())
-                {
-                    int bp = 0;
-                }
-
                 if (EditorWindowTypes::MenuBar == (u32)pair.second->Type())
                 {
                     missingMenuBarWindow = false;
@@ -401,8 +396,6 @@ namespace QwerkE {
             auto it = s_EditorWindows.begin();
             while (it != s_EditorWindows.end())
             {
-                if (it->first != it->second->Guid())
-                { int bp = 0; }
                 it = s_EditorWindows.erase(it);
             }
             s_EditorWindows.clear();

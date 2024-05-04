@@ -21,7 +21,7 @@ namespace QwerkE {
 			m_Scene(scene)
 		{
 			ASSERT(m_Scene, "Null m_Scene reference!");
-			m_EnttId = m_Scene->m_Registry.create();
+			m_EnttId = m_Scene->m_Registry.create(); // #TODO Review if EntityHandle should create new scene entitites
 			if (!HasComponent<ComponentInfo>())
 			{
 				AddComponent<ComponentInfo>();
@@ -51,26 +51,24 @@ namespace QwerkE {
 		{
 			ASSERT(m_Scene, "Null m_Scene reference!");
 
-			// #TODO Define behaviour. When should a new entt entity be created?
 			EntityHandle handle = m_Scene->GetEntityByGuid(existingGuid);
 			if (handle)
 			{
 				m_EnttId = handle.m_EnttId;
+
+				if (!HasComponent<ComponentInfo>())
+				{
+					AddComponent<ComponentInfo>(existingGuid);
+				}
+
+				if (!HasComponent<ComponentTransform>())
+				{
+					AddComponent<ComponentTransform>();
+				}
 			}
 			else
 			{
-				EntityHandle newHandle = m_Scene->CreateEntity();
-				m_EnttId = newHandle.m_EnttId;
-			}
-
-			if (!HasComponent<ComponentInfo>())
-			{
-				AddComponent<ComponentInfo>(existingGuid);
-			}
-
-			if (!HasComponent<ComponentTransform>())
-			{
-				AddComponent<ComponentTransform>();
+				LOG_WARN("{0} Scene missing entity with guid {1}", __FUNCTION__, existingGuid);
 			}
 		}
 

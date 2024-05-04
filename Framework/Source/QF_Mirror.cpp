@@ -179,7 +179,8 @@ namespace QwerkE {
 
 #ifdef _QENTT
 	typedef entt::entity m_enTT_Entity;
-	MIRROR_TYPE(m_enTT_Entity)
+	// MIRROR_TYPE(m_enTT_Entity)
+	MIRROR_ENUM(m_enTT_Entity)
 #endif
 
 	// Enums
@@ -314,7 +315,9 @@ namespace QwerkE {
 
 	MIRROR_CLASS_START(ComponentInfo)
 	MIRROR_CLASS_MEMBER_FLAGS(m_EntityName, FieldSerializationFlags::_HideInInspector)
-	// MIRROR_CLASS_MEMBER(m_Guid)	// #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
+	// #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
+	// Assigned through EntityHandle constructor
+	// MIRROR_CLASS_MEMBER(m_Guid)
 	MIRROR_CLASS_MEMBER(m_Enabled)
 	MIRROR_CLASS_END(ComponentInfo)
 

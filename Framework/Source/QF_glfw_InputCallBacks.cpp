@@ -53,6 +53,12 @@ namespace QwerkE {
             const bool keyIsReleased = action == GLFW_RELEASE;
             const eKeys qwerkEeKey = GLFWToQwerkEKey(key);
 
+            if (eKeys::eKeys_MAX == qwerkEeKey)
+            {
+                LOG_WARN("{0} Unsupported key", __FUNCTION__);
+                return;
+            }
+
             OnKeyEvent(qwerkEeKey, (eKeyState)!keyIsReleased);
 
 #ifdef _QDEARIMGUI
