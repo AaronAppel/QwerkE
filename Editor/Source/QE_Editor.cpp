@@ -2,8 +2,8 @@
 
 #include <map>      // For std::map<std::string, const char*> pairs; and EditorWindows collection
 #include <string>   // For std::map<std::string, const char*> pairs;
-#include <vector>   // For s_EditorWindowsQueuedForDelete
 #include <typeinfo> // For typeid()
+#include <vector>   // For s_EditorWindowsQueuedForDelete
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QC_imgui.h"
@@ -47,9 +47,6 @@
 #include "QE_ProgramArgs.h"
 
 #include "QE_EditorWindowHelpers.h"
-
-// #TESTING
-#include "Libraries/Mirror/Source/MirrorTesting.h"
 
 namespace QwerkE {
 
@@ -120,67 +117,7 @@ namespace QwerkE {
 
 			Framework::Initialize();
 
-            if (const bool Serialize = false)
-            {
-                TestStruct testStructSerialize;
-                auto loc = &testStructSerialize.m_UmapStringInt32;
-
-                // Re-arrange default data
-                testStructSerialize.m_Base.baseX = 90;
-                testStructSerialize.m_Derived1.derivedZ = 80;
-                testStructSerialize.m_Derived1.baseX = 70;
-                if (testStructSerialize.m_Derived1Ptr)
-                {
-                    testStructSerialize.m_Derived1Ptr->baseX = 60;
-                    testStructSerialize.m_Derived1Ptr->derivedZ = 50;
-                }
-                for (size_t i = 0; i < 10; i++)
-                {
-                    testStructSerialize.m_FloatArray10[i] = i + (.1 * i);
-                }
-                for (size_t i = 0; i < 5; i++)
-                {
-                    testStructSerialize.m_CharVector.push_back(66 + i);
-                }
-                testStructSerialize.m_Bool = !testStructSerialize.m_Bool;
-                testStructSerialize.m_U8 += 1;
-                testStructSerialize.m_U16 += 1;
-                testStructSerialize.m_U32 += 1;
-                testStructSerialize.m_U64 += 1;
-                testStructSerialize.m_S8 += 1;
-                testStructSerialize.m_S16 += 1;
-                testStructSerialize.m_S32 += 1;
-                testStructSerialize.m_S64 += 1;
-                testStructSerialize.m_Float += 1.5;
-                testStructSerialize.m_Double += 1.5;
-                testStructSerialize.m_String = "test";
-                testStructSerialize.m_ConstCharPtr = "test";
-                testStructSerialize.m_UmapStringInt32.clear();
-                testStructSerialize.m_UmapStringInt32.insert( {"test", 890 });
-                auto loc2 = &testStructSerialize.m_UmapStringInt32;
-
-                testStructSerialize.m_Derived1Ptr = new Derived1();
-                testStructSerialize.m_Derived2Ptr = new Derived2();
-                if (false)
-                    testStructSerialize.m_BasePtrDerived = new Derived1();
-                else if (true)
-                    testStructSerialize.m_BasePtrDerived = new Derived2();
-                else
-                    testStructSerialize.m_BasePtrDerived = new Base();
-
-                testStructSerialize.m_EditorWindowPtr = new Editor::EditorWindowAssets(GUID());
-
-                Serialize::ToFile(testStructSerialize, "TestStruct");
-            }
-
-            if (const bool Deserialize = false)
-            {
-                TestStruct testStructDeserialize;
-                Serialize::FromFile("TestStruct", testStructDeserialize);
-                testStructDeserialize.m_BasePtrDerived;
-                signed long long num1 = 4755182615248502784;
-                signed long long num2 = 8000000000;
-            }
+            // Serialize::SerializeTest();
 
             // #TODO Move somewhere better
             std::string userSettingsFileName = pairs[key_UserName];
@@ -213,7 +150,7 @@ namespace QwerkE {
             }
             Settings::LoadEngineSettings(engineSettingsFileName.c_str());
 
-            {   // Load scenes
+            {   // Load scenes // #TODO Move somewhere else
                 const std::vector<std::string> sceneFileNames = project.sceneFileNames; // #NOTE Copied not referenced
 
                 for (size_t i = 0; i < sceneFileNames.size(); i++)

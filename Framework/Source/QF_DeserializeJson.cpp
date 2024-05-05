@@ -205,11 +205,15 @@ namespace QwerkE {
 
             const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
-            FromJson(objJson->child, elementFirstTypeInfo, elementFirstBuffer.As<void>());
+            const cJSON* firstJson = objJson->child;
+            if (Mirror::TypeInfoCategory_Primitive == elementFirstTypeInfo->category)
+            {   // #TODO Review handling primitives differently
+                firstJson = firstJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
+            }
+            FromJson(firstJson, elementFirstTypeInfo, elementFirstBuffer.As<void>());
 
             const Mirror::TypeInfo* elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
             Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
-
             const cJSON* secondJson = objJson->child->next;
             if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category)
             {   // #TODO Review handling primitives differently

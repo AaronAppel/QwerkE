@@ -70,7 +70,6 @@ namespace QwerkE {
         for (auto& entity : scripts)
         {
             auto& script = m_Registry.get<ComponentScript>(entity);
-            script.Bind(EntityHandle(this, entity)); // #TODO Review binding and when it should be done
             script.Update(deltaTime);
         }
 
@@ -111,7 +110,7 @@ namespace QwerkE {
         if (m_CameraEntityGuid)
         {
             EntityHandle cameraHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
-            if (cameraHandle)
+            if (cameraHandle && cameraHandle.HasComponent<ComponentCamera>())
             {
                 auto& camera = cameraHandle.GetComponent<ComponentCamera>();
                 auto& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
@@ -185,7 +184,7 @@ namespace QwerkE {
     {
         if (m_SceneFileName == Constants::gc_DefaultStringValue)
         {
-            LOG_ERROR("{0} Unable to save null scene file name!", __FUNCTION__);
+            LOG_ERROR("{0} Null scene file name!", __FUNCTION__);
             return;
         }
 
@@ -296,6 +295,12 @@ namespace QwerkE {
         m_Registry.each([&](const auto entityId) {
             ComponentInfo& info = m_Registry.get<ComponentInfo>(entityId);
             m_GuidsToEntts.insert({ info.m_Guid , entityId });
+
+            if (m_Registry.has<ComponentScript>(entityId))
+            {
+                ComponentScript& script = m_Registry.get<ComponentScript>(entityId);
+                script.Bind(EntityHandle(this, entityId));
+            }
         });
 
         // #TODO Remove camera component requirement or handle when no camera components exist
@@ -311,13 +316,6 @@ namespace QwerkE {
             }
         }
         // ASSERT(GUID::Invalid != m_CameraEntityGuid, "Could not find camera component!");
-
-        auto viewScripts = m_Registry.view<ComponentScript>();
-        for (auto& enttId : viewScripts)
-        {
-            ComponentScript& script = viewScripts.get<ComponentScript>(enttId);
-            script.Bind(EntityHandle(this, enttId));
-        }
     }
 
     EntityHandle Scene::GetCurrentCameraEntity()

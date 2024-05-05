@@ -30,6 +30,10 @@ namespace QwerkE {
 				{
 					AddScript(enumScriptablePair.first, entityHandle);
 				}
+				else
+				{
+					enumScriptablePair.second->SetEntity(entityHandle);
+				}
 			}
 		}
 
@@ -52,7 +56,7 @@ namespace QwerkE {
 			{
 				if (enumScriptablePair.second)
 				{
-					enumScriptablePair.second->OnUpdate(deltaTime);
+					enumScriptablePair.second->OnUpdate(deltaTime); // #TODO Fix Update() removes script from map
 				}
 			}
 		}

@@ -45,6 +45,14 @@ namespace QwerkE {
 			}
 		}
 
+		void Fill(const char byteToWrite)
+		{
+			if (m_SizeBytes > 0)
+			{
+				memset((char*)m_Data, byteToWrite, m_SizeBytes);
+			}
+		}
+
 		u8* Data() { return m_Data; }
 		u64 SizeInBytes() { return m_SizeBytes; }
 

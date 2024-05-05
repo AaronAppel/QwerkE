@@ -2,6 +2,7 @@
 
 #include "QE_EditorWindow.h"
 
+#include "QF_Buffer.h"
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Scene.h"
@@ -42,18 +43,18 @@ namespace QwerkE {
                     return;
                 }
 
-                // #TODO Nicer looking '+/-' buttons : https://youtu.be/oESRecjuLNY?t=1787
-                std::string nameBuffer = m_CurrentEntity.EntityName();
-                nameBuffer.reserve(INT8_MAX);
+                {   // Edit entity name
+                    Buffer buffer(INT8_MAX); // #TODO Could be re-used/persistent and updated on entity change
+                    buffer.Fill('\0');
+                    strcpy(buffer.As<char>(), m_CurrentEntity.EntityName().c_str());
 
-                constexpr float scalar = 1.6f; // #NOTE Aesthetic
-                ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x / scalar);
-                // #TODO Helper ImGui::InputText("Title", std::string&) Handle .data() and .capacity. Makybe even have a temp string to use as a buffer
-                if (ImGui::InputText(("##" + nameBuffer).c_str(), nameBuffer.data(), nameBuffer.capacity()))
-                {
-                    ComponentInfo& info = m_CurrentEntity.GetComponent<ComponentInfo>();
-                    info.m_EntityName = nameBuffer;
+                    ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x / 1.7f); // #NOTE Aesthetic scalar value
+                    if (ImGui::InputText(("##" + m_WindowName + "EntityName").c_str(), buffer.As<char>(), buffer.SizeInBytes()))
+                    {
+                        m_CurrentEntity.GetComponent<ComponentInfo>().m_EntityName = buffer.As<char>();
+                    }
                 }
+
                 ImGui::SameLine();
                 ImGui::Text(std::to_string(m_CurrentEntity.EntityGuid()).c_str());
                 ImGui::PopItemWidth();
@@ -77,6 +78,7 @@ namespace QwerkE {
                 }
                 if (ImGui::BeginPopup("ComponentList"))
                 {
+                    // #TODO Use EntityComponentsList
                     AddComponentEntry<ComponentCamera>(m_CurrentEntity);
                     AddComponentEntry<ComponentInfo>(m_CurrentEntity);
                     AddComponentEntry<ComponentLight>(m_CurrentEntity);
@@ -86,6 +88,7 @@ namespace QwerkE {
                     ImGui::EndPopup();
                 }
 
+                // #TODO Use EntityComponentsList
                 DrawEditComponent<ComponentInfo>(m_CurrentEntity); // Draw above
                 DrawEditComponent<ComponentTransform>(m_CurrentEntity);
 

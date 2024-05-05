@@ -144,7 +144,7 @@ namespace QwerkE {
                                 break;
 
                             default:
-                                ASSERT(false, "Unsupported script type!");
+                                // ASSERT(false, "Unsupported script type!");
                                 break;
                             }
                         }

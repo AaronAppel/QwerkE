@@ -99,8 +99,7 @@ namespace QwerkE {
 		u8 m_CurrentTransformTargetIndex = 0;
 		std::vector<EntityHandle> m_TransformHandles;
 
-		// Editor only
-		ScriptGuiButton m_Button;
+		ScriptGuiButton m_Button; // Editor only
 	};
 
 }

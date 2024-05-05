@@ -1,10 +1,10 @@
 {
 	"Project":	{
-		"projectName":	"Project1",
+		"projectName":	"null",
 		"assetsDirPath":	"null",
-		"m_vec_string":	{
-			"0":	"NewScene1.qscene",
-			"1":	"GameScene1.qscene"
+		"sceneFileNames":	{
+			"m_string":	"NewScene1.qscene",
+			"m_string":	"GameScene1.qscene"
 		}
 	}
 }

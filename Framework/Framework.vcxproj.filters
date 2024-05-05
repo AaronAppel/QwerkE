@@ -88,6 +88,9 @@
     <ClCompile Include="Source\QF_DeserializeJson.cpp">
       <Filter>Utils\FileIO\Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QF_SerializeTest.cpp">
+      <Filter>Utils\FileIO\Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
