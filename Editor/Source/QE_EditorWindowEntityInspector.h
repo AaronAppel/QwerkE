@@ -26,8 +26,10 @@ namespace QwerkE {
 			{
                 if (!m_CurrentEntity)
                 {
-                    Scene* currentScene = Scenes::GetCurrentScene();
-                    m_CurrentEntity = currentScene->GetCurrentCameraEntity();
+                    if (Scene* currentScene = Scenes::GetCurrentScene())
+                    {
+                        m_CurrentEntity = currentScene->GetCurrentCameraEntity();
+                    }
                 }
 
                 if (!m_CurrentEntity)

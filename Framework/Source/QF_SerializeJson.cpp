@@ -198,11 +198,6 @@ namespace QwerkE {
                 local_SerializeClass(obj, objTypeInfo->superTypeInfo, objJson);
             }
 
-            if (objTypeInfo->fields.empty())
-            {
-                LOG_WARN("{0} Class {1} has no serialized members", __FUNCTION__, objTypeInfo->stringName.c_str());
-            }
-
             for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objTypeInfo->fields[i];

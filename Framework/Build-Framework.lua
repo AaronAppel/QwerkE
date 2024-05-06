@@ -12,6 +12,17 @@ project "Framework"
 	{
 		-- #TODO Deprecate WorkspaceRootDir
 		"WorkspaceRootDir=\"" .. "%{wks.location}/" .. "\"",
+		
+		"EngineName=\"QwerkE\"",
+		
+		-- Command line arguments
+		"key_StartupDir=\"-startupDir\"",
+		"key_ApplicationFileName=\"-applicationFileName\"",
+		"key_ApplicationTitle=\"-applicationTitle\"",
+		"key_ProjectFileName=\"-projectFileName\"",
+		"key_UserName=\"-userName\"",
+		"key_AssetsDirPath=\"-assetsDirPath\"",
+		"key_NullAssetsDirPath=\"-nullAssetsDirPath\"",
 	}
 
 	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }

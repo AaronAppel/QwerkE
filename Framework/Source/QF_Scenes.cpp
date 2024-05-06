@@ -144,8 +144,8 @@ namespace QwerkE {
 		{
 			ASSERT(sceneFileName, "Null argument passed!");
 
-			Path uniqueSceneFilePath = Files::UniqueFilePath(Paths::ScenesDir().c_str(), sceneFileName);
-			Path uniqueFileNamePath = Files::FileName(uniqueSceneFilePath.string().c_str());
+			const Path uniqueSceneFilePath = Files::UniqueFilePath(Paths::ScenesDir().c_str(), sceneFileName);
+			const Path uniqueFileNamePath = Files::FileName(uniqueSceneFilePath.string().c_str());
 			std::string uniqueFileName = uniqueFileNamePath.string();
 
 			if (const Scene* existingScene = GetScene(uniqueFileName.c_str()))

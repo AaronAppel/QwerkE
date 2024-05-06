@@ -11,6 +11,7 @@ namespace QwerkE {
 
 		// #TODO Look at using std::strings or string views instead of const char*
 
+		void SetExePath(std::string newExePath);
 		void SetNullAssetsDir(std::string newRootDir);
 		void SetAssetsDir(std::string newAssetsDir);
 

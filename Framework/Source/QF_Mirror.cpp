@@ -60,51 +60,6 @@ namespace QwerkE {
 		MirrorSubClassUserType<Super, T...>(localStaticTypeInfo, enumStartOffset);
 	}
 
-	// Start Mirror testing
-	MIRROR_CLASS_START(Derived1)
-	// MIRROR_CONSTRUCTOR(float)
-	MIRROR_CLASS_MEMBER(derivedZ)
-	MIRROR_CLASS_END(Derived1)
-
-	MIRROR_CLASS_START(Derived2)
-	MIRROR_CLASS_MEMBER(derivedY)
-	MIRROR_CLASS_END(Derived2)
-
-	typedef Derived1* m_derived1Ptr;
-	MIRROR_POINTER(m_derived1Ptr)
-
-	typedef Derived2* m_derived2Ptr;
-	MIRROR_POINTER(m_derived2Ptr)
-
-	MIRROR_CLASS_START(Base)
-	MIRROR_CLASS_MEMBER(baseX)
-	MirrorSubClassUserTypes<Base>(TemplateArgumentList<Derived1, Derived2>{}, localStaticTypeInfo, 0);
-	MIRROR_CLASS_END(Base)
-
-	typedef Base* m_basePtr;
-	MIRROR_POINTER(m_basePtr)
-
-	// Add to MirrorTypes.h "m_arr_float10,"
-	using m_arr_float10 = float[10];
-	MIRROR_ARRAY(m_arr_float10, float)
-
-	// Add to MirrorTypes.h "m_vec_char,"
-	typedef std::vector<char> m_vec_char;
-	MIRROR_VECTOR(m_vec_char, char)
-
-	// Add to MirrorTypes.h "m_pair_string_int32,"
-	typedef std::pair<std::string, int32_t> m_pair_string_int32;
-	MIRROR_PAIR(m_pair_string_int32)
-
-	// Add to MirrorTypes.h "m_umap_string_s32,"
-	typedef std::unordered_map<std::string, int32_t> m_umap_string_int32;
-	MIRROR_MAP(m_umap_string_int32, m_pair_string_int32)
-
-	// Add to MirrorTypes.h "m_int32Ptr,"
-	typedef int32_t* m_int32Ptr;
-	MIRROR_POINTER(m_int32Ptr)
-	// End Mirror Testing
-
 #ifdef _QDEARIMGUI
 	MIRROR_CLASS_START(ImVec2)
 	MIRROR_CLASS_MEMBER(x)
@@ -118,11 +73,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(w)
 	MIRROR_CLASS_END(ImVec4)
 
-	// typedef ImVec4* m_imvec4_array; // #TODO try : using m_imvec4_array = ImVec4[4]; to see if it works any better
-	// typedef ImVec4* m_imvec4_array; // #TODO try : using m_imvec4_array = ImVec4[4]; to see if it works any better
-	// MIRROR_TYPE(m_imvec4_array)
-	// MIRROR_ARRAY(m_imvec4_array, ImVec4) // #NOTE MIRROR_ARRAY can determine size of array at compile time
-	// MIRROR_POINTER(m_imvec4_array)
 	using m_imvec4_array = ImVec4[ImGuiCol_COUNT];
 	MIRROR_ARRAY(m_imvec4_array, ImVec4)
 

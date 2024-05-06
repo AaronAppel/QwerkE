@@ -14,8 +14,8 @@ project "Editor"
 		
 		-- Command line arguments
 		"key_StartupDir=\"-startupDir\"",
-		"key_ApplicationFileName=\"-appName\"",
-		"key_ApplicationName=\"-applicationName\"",
+		"key_ApplicationFileName=\"-applicationFileName\"",
+		"key_ApplicationTitle=\"-applicationTitle\"",
 		"key_ProjectFileName=\"-projectFileName\"",
 		"key_UserName=\"-userName\"",
 		"key_AssetsDirPath=\"-assetsDirPath\"",
@@ -24,6 +24,7 @@ project "Editor"
 	
 	debugargs -- #NOTE User setting changes require VS reload
 	{
+		"-applicationTitle", "\"Qwerk Editor\"",
 		"-applicationName", "\"QwerkEditor\"",
 		"-projectFileName", "\"Project1\"",
 		"-userName", "\"User1\"",

@@ -78,101 +78,7 @@ namespace QwerkE {
 		{
             Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str());
 
-            std::map<std::string, const char*> pairs;
-            ProgramArgsToPairs(argc, argv, pairs);
-
-            // Set application directories
-            if (pairs.find(key_NullAssetsDirPath) != pairs.end())
-            {
-                Paths::SetNullAssetsDir(pairs[key_NullAssetsDirPath]);
-            }
-            if (pairs.find(key_AssetsDirPath) != pairs.end())
-            {
-                Paths::SetAssetsDir(pairs[key_AssetsDirPath]);
-            }
-
-            if (pairs.find(key_ApplicationName) == pairs.end())
-            {
-                pairs.insert(std::pair<const char*, const char*>(key_ApplicationName, EngineName));
-            }
-
-            if (pairs.find(key_ProjectFileName) == pairs.end())
-            {
-                pairs.insert(std::pair<const char*, const char*>(key_ProjectFileName, "Project1"));
-            }
-            else
-            {
-                // #TODO Load last opened project
-            }
-
-            if (pairs.find(key_UserName) == pairs.end())
-            {
-                std::string userName = System::UserName();
-                pairs.insert(std::pair<const char*, const char*>(key_UserName, strdup(userName.c_str())));
-            }
-
-            pairs.insert(std::pair<const char*, const char*>("WorkspaceRootDir", WorkspaceRootDir));
-
-            if (true) { OutputProgramPairsInfo(pairs); }
-
-			Framework::Initialize();
-
-            // Serialize::SerializeTest();
-
-            // #TODO Move somewhere better
-            std::string userSettingsFileName = pairs[key_UserName];
-            if (userSettingsFileName == Constants::gc_DefaultStringValue)
-            {
-                userSettingsFileName = "User1"; // Rename "DefaultUser"
-            }
-
-            userSettingsFileName += ".";
-            userSettingsFileName += preferences_ext;
-            if (!Files::Exists(Paths::Setting(userSettingsFileName.c_str()).c_str()))
-            {
-                UserSettings defaultUserSettings;
-                Serialize::ToFile(defaultUserSettings, userSettingsFileName.c_str());
-            }
-            Settings::LoadUserSettings(userSettingsFileName.c_str());
-
-            const UserSettings& userSettings = Settings::GetUserSettings();
-            std::string projectFileName = userSettings.lastOpenedProjectFileName;
-            if (projectFileName == Constants::gc_DefaultStringValue)
-            {
-                projectFileName = "Project1.qproj";
-            }
-            Projects::LoadProject(projectFileName.c_str());
-            const Project& project = Projects::CurrentProject();
-            std::string engineSettingsFileName = project.lastOpenedEngineSettingsFileName;
-            if (engineSettingsFileName == Constants::gc_DefaultStringValue)
-            {
-                engineSettingsFileName = null_config;
-            }
-            Settings::LoadEngineSettings(engineSettingsFileName.c_str());
-
-            {   // Load scenes // #TODO Move somewhere else
-                const std::vector<std::string> sceneFileNames = project.sceneFileNames; // #NOTE Copied not referenced
-
-                for (size_t i = 0; i < sceneFileNames.size(); i++)
-                {
-                    const char* sceneFileName = sceneFileNames[i].c_str();
-                    if (!Files::Exists(Paths::Scene(sceneFileName).c_str()))
-                    {
-                        LOG_WARN("Initialize(): File not found: {0}", sceneFileName);
-                        continue;
-                    }
-
-                    Scenes::CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), true);
-                }
-
-                if (Scenes::SceneCount() < 1)
-                {
-                    Scenes::CreateSceneFromFile(Paths::NullAsset(null_scene), true);
-                    LOG_WARN("Null scene loaded as no scene files found for project: {0}", project.projectName);
-                }
-            }
-
-            LoadImGuiStyleFromFile();
+			Framework::Initialize(argc, argv);
 
             local_Initialize();
 
@@ -301,8 +207,14 @@ namespace QwerkE {
             }
         }
 
+        void local_ProgramArguments();
+
 		void local_Initialize()
 		{
+            local_ProgramArguments();
+
+            LoadImGuiStyleFromFile();
+
             std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
             if (!Files::Exists(windowsDataFilePath.c_str()))
             {
@@ -325,6 +237,67 @@ namespace QwerkE {
                 OpenEditorWindow(EditorWindowTypes::MenuBar);
             }
 		}
+
+        void local_ProgramArguments()
+        {
+            return;
+
+            // Editor specific command line arguments
+            std::map<std::string, const char*>& pairs = Framework::GetProgramArgumentPairs();
+
+            // #TODO Move somewhere better
+            std::string userSettingsFileName = pairs[key_UserName];
+            if (userSettingsFileName == Constants::gc_DefaultStringValue)
+            {
+                userSettingsFileName = "User1"; // Rename "DefaultUser"
+            }
+
+            userSettingsFileName += ".";
+            userSettingsFileName += preferences_ext;
+            if (!Files::Exists(Paths::Setting(userSettingsFileName.c_str()).c_str()))
+            {
+                ;
+                Serialize::ToFile(UserSettings(), userSettingsFileName.c_str());
+            }
+            Settings::LoadUserSettings(userSettingsFileName.c_str());
+
+            const UserSettings& userSettings = Settings::GetUserSettings();
+            std::string projectFileName = userSettings.lastOpenedProjectFileName;
+            if (projectFileName == Constants::gc_DefaultStringValue)
+            {
+                projectFileName = "Project1.qproj";
+            }
+            Projects::LoadProject(projectFileName.c_str());
+            const Project& project = Projects::CurrentProject();
+            std::string engineSettingsFileName = project.lastOpenedEngineSettingsFileName;
+            if (engineSettingsFileName == Constants::gc_DefaultStringValue)
+            {
+                engineSettingsFileName = null_config;
+            }
+            Settings::LoadEngineSettings(engineSettingsFileName.c_str());
+
+            {   // Load scenes // #TODO Move somewhere else
+                const std::vector<std::string> sceneFileNames = project.sceneFileNames; // #NOTE Copied not referenced
+
+                for (size_t i = 0; i < sceneFileNames.size(); i++)
+                {
+                    const char* sceneFileName = sceneFileNames[i].c_str();
+                    if (!Files::Exists(Paths::Scene(sceneFileName).c_str()))
+                    {
+                        LOG_WARN("Initialize(): File not found: {0}", sceneFileName);
+                        continue;
+                    }
+
+                    Scenes::CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), true);
+                }
+
+                if (Scenes::SceneCount() < 1)
+                {
+                    Scenes::CreateSceneFromFile(Paths::NullAsset(null_scene), true);
+                    LOG_WARN("Null scene loaded as no scene files found for project: {0}", project.projectName);
+                }
+            }
+        }
 
 		void local_Shutdown()
 		{
@@ -380,8 +353,9 @@ namespace QwerkE {
         {
             if (!Window::IsMinimized())
             {
-                const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
                 {   // Debug drawer calls
+                    const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+                    bgfx::setState(BGFX_STATE_DEFAULT);
                     DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
                     debugDrawer.begin(viewIdFbo1, true);
 

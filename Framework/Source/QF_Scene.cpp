@@ -190,7 +190,7 @@ namespace QwerkE {
 
         std::string sceneFilePath = Paths::Scene(m_SceneFileName.c_str());
         Serialize::ToFile(*this, sceneFilePath.c_str());
-        LOG_INFO("{0} Scene file {1} saved", __FUNCTION__, sceneFilePath.c_str());
+        LOG_TRACE("{0} Scene file {1} saved", __FUNCTION__, sceneFilePath.c_str());
         m_IsDirty = false;
     }
 

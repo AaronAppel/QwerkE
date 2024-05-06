@@ -1,7 +1,9 @@
 #include "QF_Serialize.h"
 
 #ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Mirror.h"
 #include "Libraries/Mirror/Source/MirrorTesting.h"
+#include "Libraries/Mirror/Source/MirrorTypes.h"
 #endif
 
 namespace QwerkE {
@@ -65,5 +67,71 @@ namespace QwerkE {
         }
 
     }
+
+    template <typename Super, typename... SubClass>
+    void MirrorSubClassUserType(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+    {
+        uint16_t enumValue = enumStartOffset;
+        ([&]()
+            {
+                const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
+                localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
+                const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
+                const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
+                    [](const void* pointerToInstance) -> bool {
+                    SubClass* subClass = (SubClass*)pointerToInstance;
+                    return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
+                    };
+                ++enumValue;
+            }(), ...);
+    }
+
+    template<typename Super, typename... T>
+    static void MirrorSubClassUserTypes(MirrorTemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+    {
+        MirrorSubClassUserType<Super, T...>(localStaticTypeInfo, enumStartOffset);
+    }
+
+    MIRROR_CLASS_START(Derived1)
+    MIRROR_CLASS_MEMBER(derivedZ)
+    MIRROR_CLASS_END(Derived1)
+
+    MIRROR_CLASS_START(Derived2)
+    MIRROR_CLASS_MEMBER(derivedY)
+    MIRROR_CLASS_END(Derived2)
+
+    typedef Derived1* m_derived1Ptr;
+    MIRROR_POINTER(m_derived1Ptr)
+
+    typedef Derived2* m_derived2Ptr;
+    MIRROR_POINTER(m_derived2Ptr)
+
+    MIRROR_CLASS_START(Base)
+    MIRROR_CLASS_MEMBER(baseX)
+    MirrorSubClassUserTypes<Base>(MirrorTemplateArgumentList<Derived1, Derived2>{}, localStaticTypeInfo, 0);
+    MIRROR_CLASS_END(Base)
+
+    typedef Base* m_basePtr;
+    MIRROR_POINTER(m_basePtr)
+
+    // Add to MirrorTypes.h "m_arr_float10,"
+    using m_arr_float10 = float[10];
+    MIRROR_ARRAY(m_arr_float10, float)
+
+    // Add to MirrorTypes.h "m_vec_char,"
+    typedef std::vector<char> m_vec_char;
+    MIRROR_VECTOR(m_vec_char, char)
+
+    // Add to MirrorTypes.h "m_pair_string_int32,"
+    typedef std::pair<std::string, int32_t> m_pair_string_int32;
+    MIRROR_PAIR(m_pair_string_int32)
+
+    // Add to MirrorTypes.h "m_umap_string_s32,"
+    typedef std::unordered_map<std::string, int32_t> m_umap_string_int32;
+    MIRROR_MAP(m_umap_string_int32, m_pair_string_int32)
+
+    // Add to MirrorTypes.h "m_int32Ptr,"
+    typedef int32_t* m_int32Ptr;
+    MIRROR_POINTER(m_int32Ptr)
 
 }

@@ -3,7 +3,6 @@
 #include <cassert>
 #include <string>
 
-// https://stackoverflow.com/questions/9407367/determine-if-a-type-is-an-stl-container-at-compile-time/31105859#31105859
 #include <deque>
 #include <forward_list>
 #include <list>
@@ -19,41 +18,6 @@
 #include <vector>
 #include <type_traits>
 
-//specialize a type for all of the STL containers.
-namespace is_stl_container_impl {
-	template <typename T>       struct is_stl_container :std::false_type {};
-	template <typename T, std::size_t N> struct is_stl_container<std::array    <T, N>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::vector            <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::deque             <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::list              <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::forward_list      <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::set               <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::multiset          <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::map               <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::multimap          <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::unordered_set     <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::unordered_multiset<Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::unordered_map     <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::unordered_multimap<Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::stack             <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::queue             <Args...>> :std::true_type {};
-	template <typename... Args> struct is_stl_container<std::priority_queue    <Args...>> :std::true_type {};
-}
-
-namespace is_stl_pair_impl {
-	template <typename T>       struct is_stl_pair :std::false_type {};
-	template <typename... Args> struct is_stl_pair<std::pair <Args...>> :std::true_type {};
-}
-
-//type trait to utilize the implementation type traits as well as decay the type
-template <typename T> struct is_stl_container {
-	static constexpr bool const value = is_stl_container_impl::is_stl_container<std::decay_t<T>>::value;
-};
-template <typename T> struct is_stl_pair {
-	static constexpr bool const value = is_stl_pair_impl::is_stl_pair<std::decay_t<T>>::value;
-};
-//
-
 #include "MirrorTypes.h"
 
 #define MIRROR_TO_STR(x) #x
@@ -65,8 +29,7 @@ template <typename T> struct is_stl_pair {
 #define MIRROR_MEMBER_FIELDS_DEFAULT 3
 #define MIRROR_PRIVATE_MEMBERS friend struct Mirror;
 
-// #NOTE Experimental feature
-#define MIRROR_FIELD_FLAG_SIZE uint8_t
+#define MIRROR_FIELD_FLAG_SIZE uint8_t // #NOTE Experimental feature
 #define MIRROR_TYPE_INFO_CATEGORY_SIZE uint8_t
 #define MIRROR_TYPE_SIZE uint16_t
 #define MIRROR_TYPE_SIZE_MAX UINT16_MAX
@@ -160,14 +123,6 @@ namespace QwerkE {
 				{
 					typeConstructorFunc(instanceAddress);
 				}
-				else if (typeConstructorDependentFunc)
-				{
-					typeConstructorDependentFunc(instanceAddress);
-				}
-				else
-				{
-					// Warn/error
-				}
 			}
 
 			using Func_void_voidPtr_sizet_voidPtr_voidPtr = void (*)(void*, size_t, void*, void*);
@@ -183,9 +138,6 @@ namespace QwerkE {
 			Func_bool_constVoidPtr typeDynamicCastFunc = nullptr;
 
 			Func_void_voidPtr typeConstructorFunc = nullptr; // #TODO Look to hold only 1 construction lambda
-			Func_void_voidPtr typeConstructorDependentFunc = nullptr;
-			uint16_t sizeOfConstructorArgumentBuffer = 0;
-			std::string constructorDependentMemberName = "";
 		};
 
 		template <class T>
@@ -195,7 +147,71 @@ namespace QwerkE {
 		static const TypeInfo* InfoForType();
 	};
 
+	template<typename... T>
+	struct MirrorTemplateArgumentList { };
+
+	template <typename Super, typename... SubClass>
+	void todo_MirrorSubClassUserType(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+	{
+		uint16_t enumValue = enumStartOffset;
+		([&]()
+		{
+			const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
+			localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
+			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
+			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
+				[](const void* pointerToInstance) -> bool {
+				SubClass* subClass = (SubClass*)pointerToInstance;
+				return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
+				};
+			++enumValue;
+		}(), ...);
+	}
+
+	template<typename Super, typename... T>
+	static void todo_MirrorSubClassUserTypes(MirrorTemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+	{
+		MirrorSubClassUserType<Super, T...>(localStaticTypeInfo, enumStartOffset);
+	}
+
 }
+
+// Start STL type deduction
+// https://stackoverflow.com/questions/9407367/determine-if-a-type-is-an-stl-container-at-compile-time/31105859#31105859
+// Specialize a type for all of the STL containers.
+namespace is_stl_container_impl {
+	template <typename T>       struct is_stl_container :std::false_type {};
+	template <typename T, std::size_t N> struct is_stl_container<std::array    <T, N>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::vector            <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::deque             <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::list              <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::forward_list      <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::set               <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::multiset          <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::map               <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::multimap          <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::unordered_set     <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::unordered_multiset<Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::unordered_map     <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::unordered_multimap<Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::stack             <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::queue             <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::priority_queue    <Args...>> :std::true_type {};
+}
+
+namespace is_stl_pair_impl {
+	template <typename T>       struct is_stl_pair :std::false_type {};
+	template <typename... Args> struct is_stl_pair<std::pair <Args...>> :std::true_type {};
+}
+
+// Type trait to utilize the implementation type traits as well as decay the type
+template <typename T> struct is_stl_container {
+	static constexpr bool const value = is_stl_container_impl::is_stl_container<std::decay_t<T>>::value;
+};
+template <typename T> struct is_stl_pair {
+	static constexpr bool const value = is_stl_pair_impl::is_stl_pair<std::decay_t<T>>::value;
+};
+// End STL type deduction
 
 template <class TYPE>
 static const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType(const TYPE& typeObj)
@@ -252,12 +268,11 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 
 // #TODO Keep logic here. Check if this class needs it's own member to construct
 #define MIRROR_CONSTRUCT_USING_MEMBER(MEMBER_NAME)																				\
-	localStaticTypeInfo.typeConstructorDependentFunc = [](void* instanceAddress) {												\
+	localStaticTypeInfo.typeConstructorFunc = [](void* instanceAddress) {														\
 		using MemberType = decltype(ClassType::MEMBER_NAME);																	\
 		char* memberAddress = (char*)instanceAddress + offsetof(ClassType, MEMBER_NAME);										\
 		new(instanceAddress) ClassType(*(MemberType*)memberAddress);															\
-	};																															\
-	localStaticTypeInfo.constructorDependentMemberName = #MEMBER_NAME;
+	};
 
 #define MIRROR_CLASS_START(TYPE) MIRROR_CLASS_STARTN(TYPE, MIRROR_MEMBER_FIELDS_DEFAULT)
 #define MIRROR_CLASS_STARTN(TYPE, FIELDCOUNT)																					\

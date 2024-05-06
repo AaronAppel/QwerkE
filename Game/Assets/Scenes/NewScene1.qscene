@@ -2,111 +2,6 @@
 	"Scene":	{
 		"m_SceneFileName":	"NewScene1.qscene",
 		"m_Registry":	{
-			"Chaser":	{
-				"ComponentInfo":	{
-					"m_EntityName":	"Chaser",
-					"m_Guid":	{
-						"m_Guid":	"13298806619783215903"
-					},
-					"m_Enabled":	false
-				},
-				"ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"0"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"0"
-					}
-				},
-				"ComponentTransform":	{
-					"m_Matrix":	{
-						"m_float":	0.5,
-						"m_float":	0,
-						"m_float":	0,
-						"m_float":	0,
-						"m_float":	0,
-						"m_float":	0.5,
-						"m_float":	0,
-						"m_float":	0,
-						"m_float":	0,
-						"m_float":	0,
-						"m_float":	0.5,
-						"m_float":	0,
-						"m_float":	-6.1332192420959473,
-						"m_float":	-3.0759971141815186,
-						"m_float":	-9.50801086425781,
-						"m_float":	1
-					}
-				},
-				"ComponentScript":	{
-					"m_ScriptInstances":	{
-						"m_pair_eScriptTypes_ScriptablePtr":	{
-							"eScriptTypes":	{
-								"eScriptTypes":	4
-							},
-							"m_scriptablePtr":	{
-								"ScriptablePathFinder":	{
-									"m_MovementSpeed":	6.1999998092651367,
-									"m_DistanceToChangeTargets":	1
-								}
-							}
-						}
-					}
-				}
-			},
-			"Camera":	{
-				"ComponentCamera":	{
-					"m_MoveSpeed":	5,
-					"m_LookAtPosition":	{
-						"x":	-6.5897812843322754,
-						"y":	-3.2408046722412109,
-						"z":	-9.97109127044678
-					},
-					"m_Fov":	60,
-					"m_Near":	0.10000000149011612,
-					"m_Far":	100
-				},
-				"ComponentInfo":	{
-					"m_EntityName":	"Camera",
-					"m_Guid":	{
-						"m_Guid":	"8186617831649296184"
-					},
-					"m_Enabled":	false
-				},
-				"ComponentTransform":	{
-					"m_Matrix":	{
-						"m_float":	0.91844254732131958,
-						"m_float":	0,
-						"m_float":	0.395554393529892,
-						"m_float":	0,
-						"m_float":	-0.12067054957151413,
-						"m_float":	0.95233094692230225,
-						"m_float":	0.280186414718628,
-						"m_float":	0,
-						"m_float":	-0.37669870257377625,
-						"m_float":	-0.30506688356399536,
-						"m_float":	0.87466126680374146,
-						"m_float":	0,
-						"m_float":	-6.98533582687378,
-						"m_float":	-3.5209910869598389,
-						"m_float":	-10.845752716064453,
-						"m_float":	1
-					}
-				},
-				"ComponentScript":	{
-					"m_ScriptInstances":	{
-						"m_pair_eScriptTypes_ScriptablePtr":	{
-							"eScriptTypes":	{
-								"eScriptTypes":	1
-							},
-							"m_scriptablePtr":	{
-								"ScriptableCamera":	{
-								}
-							}
-						}
-					}
-				}
-			},
 			"Mesh":	{
 				"ComponentInfo":	{
 					"m_EntityName":	"Mesh",
@@ -141,6 +36,111 @@
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	1
+					}
+				}
+			},
+			"Camera":	{
+				"ComponentCamera":	{
+					"m_MoveSpeed":	5,
+					"m_LookAtPosition":	{
+						"x":	1.70314884185791,
+						"y":	-1.3482857942581177,
+						"z":	-3.8694515228271484
+					},
+					"m_Fov":	60,
+					"m_Near":	0.10000000149011612,
+					"m_Far":	100
+				},
+				"ComponentInfo":	{
+					"m_EntityName":	"Camera",
+					"m_Guid":	{
+						"m_Guid":	"8186617831649296184"
+					},
+					"m_Enabled":	false
+				},
+				"ComponentTransform":	{
+					"m_Matrix":	{
+						"m_float":	0.97366577386856079,
+						"m_float":	0,
+						"m_float":	-0.227980375289917,
+						"m_float":	0,
+						"m_float":	0.065920569002628326,
+						"m_float":	0.95728379487991333,
+						"m_float":	0.28153562545776367,
+						"m_float":	0,
+						"m_float":	0.21824191510677338,
+						"m_float":	-0.2891501784324646,
+						"m_float":	0.93207448720932,
+						"m_float":	0,
+						"m_float":	1.9311292171478271,
+						"m_float":	-1.6298214197158813,
+						"m_float":	-4.8015260696411133,
+						"m_float":	1
+					}
+				},
+				"ComponentScript":	{
+					"m_ScriptInstances":	{
+						"m_pair_eScriptTypes_ScriptablePtr":	{
+							"eScriptTypes":	{
+								"eScriptTypes":	1
+							},
+							"m_scriptablePtr":	{
+								"ScriptableCamera":	{
+								}
+							}
+						}
+					}
+				}
+			},
+			"Chaser":	{
+				"ComponentInfo":	{
+					"m_EntityName":	"Chaser",
+					"m_Guid":	{
+						"m_Guid":	"13298806619783215903"
+					},
+					"m_Enabled":	false
+				},
+				"ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"0"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					}
+				},
+				"ComponentTransform":	{
+					"m_Matrix":	{
+						"m_float":	0.5,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0.5,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0.5,
+						"m_float":	0,
+						"m_float":	-0.47805279493331909,
+						"m_float":	-0.74199998378753662,
+						"m_float":	2.0329999923706055,
+						"m_float":	1
+					}
+				},
+				"ComponentScript":	{
+					"m_ScriptInstances":	{
+						"m_pair_eScriptTypes_ScriptablePtr":	{
+							"eScriptTypes":	{
+								"eScriptTypes":	3
+							},
+							"m_scriptablePtr":	{
+								"ScriptablePatrol":	{
+									"m_Stride":	5,
+									"m_Speed":	1.8999999761581421
+								}
+							}
+						}
 					}
 				}
 			}

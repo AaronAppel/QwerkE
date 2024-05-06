@@ -7,7 +7,6 @@
 void ProgramArgsToPairs(unsigned int numArgs, char** argArr, std::map<std::string, const char*>& argumentPairs)
 {
 	argumentPairs.insert(std::pair<std::string, const char*>(key_StartupDir, argArr[0]));
-	argumentPairs.insert(std::pair<std::string, const char*>(key_ApplicationFileName, std::filesystem::path(argArr[0]).filename().string().c_str()));
 
 	for (size_t i = 1; i < numArgs; ++i)
 	{

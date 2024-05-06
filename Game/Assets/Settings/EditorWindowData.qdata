@@ -20,24 +20,6 @@
 		},
 		"m_pair_guid_editorWindowPtr":	{
 			"GUID":	{
-				"m_Guid":	"12539018069331544866"
-			},
-			"m_editorWindowPtr":	{
-				"EditorWindowSceneGraph":	{
-					"m_Guid":	{
-						"m_Guid":	"12539018069331544866"
-					},
-					"m_WindowName":	"Scene Graph##12539018069331544866",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	8
-				}
-			}
-		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
 				"m_Guid":	"15814122887568357250"
 			},
 			"m_editorWindowPtr":	{
@@ -56,19 +38,19 @@
 		},
 		"m_pair_guid_editorWindowPtr":	{
 			"GUID":	{
-				"m_Guid":	"9689900933082917293"
+				"m_Guid":	"12539018069331544866"
 			},
 			"m_editorWindowPtr":	{
-				"EditorWindowSettings":	{
+				"EditorWindowSceneGraph":	{
 					"m_Guid":	{
-						"m_Guid":	"9689900933082917293"
+						"m_Guid":	"12539018069331544866"
 					},
-					"m_WindowName":	"Settings##9689900933082917293",
+					"m_WindowName":	"Scene Graph##12539018069331544866",
 					"m_ImGuiFlags":	0,
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
-					"m_EditorWindowType":	10
+					"m_EditorWindowType":	8
 				}
 			}
 		},
@@ -87,6 +69,24 @@
 					"m_MinimumWidth":	100,
 					"m_MinimumHeight":	150,
 					"m_EditorWindowType":	4
+				}
+			}
+		},
+		"m_pair_guid_editorWindowPtr":	{
+			"GUID":	{
+				"m_Guid":	"9689900933082917293"
+			},
+			"m_editorWindowPtr":	{
+				"EditorWindowSettings":	{
+					"m_Guid":	{
+						"m_Guid":	"9689900933082917293"
+					},
+					"m_WindowName":	"Settings##9689900933082917293",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	0,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150,
+					"m_EditorWindowType":	10
 				}
 			}
 		},

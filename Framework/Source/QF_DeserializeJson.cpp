@@ -64,9 +64,8 @@ namespace QwerkE {
                     *(void**)obj = derefencedTypeObjAddress;
 
                     Editor::EditorWindowSceneView* sceneView = (Editor::EditorWindowSceneView*)derefencedTypeObjAddress;
-                    if (dereferencedTypeInfo->typeConstructorDependentFunc)
-                    {
-                        // #TODO Only serialize dependent member?
+                    if (dereferencedTypeInfo->typeConstructorFunc)
+                    {   // #TODO Only serialize dependent member(s)?
                         FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
                     }
                     dereferencedTypeInfo->Construct(derefencedTypeObjAddress);

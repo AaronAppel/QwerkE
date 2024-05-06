@@ -20,6 +20,7 @@ struct PosColorVertex
 	static bgfx::VertexLayout ms_layout;
 };
 
+
 static PosColorVertex s_cubeVertices[] =
 {
 	{-1.0f,  1.0f,  1.0f, 0xff000000 },
@@ -31,7 +32,25 @@ static PosColorVertex s_cubeVertices[] =
 	{-1.0f, -1.0f, -1.0f, 0xffffff00 },
 	{ 1.0f, -1.0f, -1.0f, 0xffffffff },
 };
-static const uint16_t s_cubeTriList[] = { 2, 1, 0, 2, 3, 1, 5, 6, 4, 7, 6, 5, 4, 2, 0, 6, 2, 4, 3, 5, 1, 3, 7, 5, 1, 4, 0, 1, 5, 4, 6, 3, 2, 7, 3, 6 };
+// static const uint16_t s_cubeTriList[] = { 2, 1, 0, 2, 3, 1, 5, 6, 4, 7, 6, 5, 4, 2, 0, 6, 2, 4, 3, 5, 1, 3, 7, 5, 1, 4, 0, 1, 5, 4, 6, 3, 2, 7, 3, 6 };
+
+// From bgfx example "Instancing"
+static const uint16_t s_cubeTriList[36] =
+{
+	0, 1, 2, // 0
+	1, 3, 2,
+	4, 6, 5, // 2
+	5, 6, 7,
+	0, 2, 4, // 4
+	4, 2, 6,
+	1, 5, 3, // 6
+	5, 7, 3,
+	0, 4, 1, // 8
+	4, 5, 1,
+	2, 3, 6, // 10
+	6, 3, 7,
+};
+// From bgfx example "Instancing"
 
 static const char* s_ptNames[]
 {
