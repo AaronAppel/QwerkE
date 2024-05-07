@@ -2,13 +2,20 @@
 
 namespace QwerkE {
 
+    struct ProjectsData
+    {
+        std::string LastOpenedProjectFileName = Constants::gc_DefaultStringValue;
+        std::vector<std::string> PreviousProjectFileNames;
+    };
+
+    // #TODO Project is an editor concept
     struct Project
     {
         bool isDirty = false; // #TODO isDirty should be an editor only state, so move to editor domain
         bool isLoaded = false;
 
-        const char* projectName = Constants::gc_DefaultStringValue;
-        const char* assetsDirPath = Constants::gc_DefaultStringValue;
+        std::string projectFileName = Constants::gc_DefaultStringValue;
+        std::string projectName = Constants::gc_DefaultStringValue;
 
         // Referenced Scenes
         std::vector<std::string> sceneFileNames;
@@ -23,11 +30,16 @@ namespace QwerkE {
 
     namespace Projects {
 
+        void Initialize();
+        void Shutdown();
+
+        ProjectsData& GetProjectsData();
         Project& CurrentProject();
 
         void LoadProject(const std::string& projectSettingsFilePath);
 
         void SaveProject();
+        void SaveProjectToFile(const std::string& projectSettingsFilePath);
     }
 
 }

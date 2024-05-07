@@ -13,10 +13,11 @@
 #include "QF_Debug.h"
 #include "QF_Files.h"
 #include "QF_Paths.h"
-#include "QF_Projects.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
-#include "QF_Settings.h"
+
+#include "../Editor/Source/QE_Projects.h" // #TODO Remove from QF_* domain
+#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
 
 const char* g_WindowTitle = "QwerkEngine";
 

@@ -1,6 +1,7 @@
 #include "QF_Files.h"
 
-#include <filesystem>
+#include <commdlg.h> // For file explorer dialogue
+#include <filesystem> // For general file I/O
 #include <stdio.h> // For fwrite, fclose, and general file I/O
 
 #ifdef _QLODEPNG
@@ -10,6 +11,7 @@
 #include "QC_StringHelpers.h" // NumberAppendOrIncrement
 
 #include "QF_Helpers.h" // NumberAppendOrIncrement
+#include "QF_Window.h" //
 
 namespace QwerkE {
 
@@ -116,6 +118,51 @@ namespace QwerkE {
 			{
 				LOG_ERROR("{0} Could not open file for write {1}", __FUNCTION__, filePath);
 			}
+		}
+
+		std::string FileExplorer(DWORD flags, LPCSTR filter, bool save)
+		{
+			OPENFILENAMEA ofn;
+			CHAR szFile[260] = { 0 };
+			CHAR currentDir[256] = { 0 };
+			ZeroMemory(&ofn, sizeof(OPENFILENAME));
+			ofn.lStructSize = sizeof(OPENFILENAME);
+			GLFWwindow* window = static_cast<GLFWwindow*>(Window::GetContext());
+			ofn.hwndOwner = glfwGetWin32Window(window);
+			ofn.lpstrFile = szFile;
+			ofn.nMaxFile = sizeof(szFile);
+			if (GetCurrentDirectoryA(256, currentDir))
+				ofn.lpstrInitialDir = currentDir;
+			ofn.lpstrFilter = filter;
+			ofn.nFilterIndex = 1;
+			ofn.Flags = flags;
+
+			// Sets the default extension by extracting it from the filter
+			ofn.lpstrDefExt = strchr(filter, '\0') + 1;
+
+			if (save)
+			{
+				if (GetSaveFileNameA(&ofn) == TRUE)
+					return ofn.lpstrFile;
+			}
+			else if (GetOpenFileNameA(&ofn) == TRUE)
+				return ofn.lpstrFile;
+
+			return std::string();
+		}
+
+		std::string ExplorerOpen(const char* filter)
+		{
+			// #TODO Add a starting directory argument to open up to a different directory than the current working directory
+			// #TODO Look at arguments File description ("QwerkE Project"), and filterFile ("qproj" instead of (*.hproj)\0*.hproj\0)
+			DWORD flags = OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR | OFN_FILEMUSTEXIST;
+			return FileExplorer(flags, filter, false);
+		}
+
+		std::string ExplorerSave(const char* filter)
+		{
+			DWORD flags = OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR | OFN_OVERWRITEPROMPT;
+			return FileExplorer(flags, filter, true);
 		}
 
 		Path UniqueFilePath(const char* const filePath)

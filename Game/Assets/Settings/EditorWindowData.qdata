@@ -147,6 +147,60 @@
 					"m_ViewId":	0
 				}
 			}
+		},
+		"m_pair_guid_editorWindowPtr":	{
+			"GUID":	{
+				"m_Guid":	"11960293188206635016"
+			},
+			"m_editorWindowPtr":	{
+				"EditorWindowDefaultDebug":	{
+					"m_Guid":	{
+						"m_Guid":	"11960293188206635016"
+					},
+					"m_WindowName":	"Default Debug Window",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	10,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150,
+					"m_EditorWindowType":	2
+				}
+			}
+		},
+		"m_pair_guid_editorWindowPtr":	{
+			"GUID":	{
+				"m_Guid":	"5567493061657037972"
+			},
+			"m_editorWindowPtr":	{
+				"EditorWindowImGuiDemo":	{
+					"m_Guid":	{
+						"m_Guid":	"5567493061657037972"
+					},
+					"m_WindowName":	"ImGui Demo##5567493061657037972",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	13,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150,
+					"m_EditorWindowType":	5
+				}
+			}
+		},
+		"m_pair_guid_editorWindowPtr":	{
+			"GUID":	{
+				"m_Guid":	"13856966934147751507"
+			},
+			"m_editorWindowPtr":	{
+				"EditorWindowFolderViewer":	{
+					"m_Guid":	{
+						"m_Guid":	"13856966934147751507"
+					},
+					"m_WindowName":	"Folder Viewer##13856966934147751507",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	0,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150,
+					"m_EditorWindowType":	13
+				}
+			}
 		}
 	}
 }

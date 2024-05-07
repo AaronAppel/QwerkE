@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Source\QC_Time.cpp" />
-    <ClCompile Include="Source\QF_Settings.cpp" />
     <ClCompile Include="Source\QF_Log.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
@@ -68,7 +67,6 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Paths.cpp" />
-    <ClCompile Include="Source\QF_Projects.cpp" />
     <ClCompile Include="Source\QC_Guid.cpp" />
     <ClCompile Include="Source\QF_Scripting.cpp">
       <Filter>Game Scripts</Filter>
@@ -91,6 +89,9 @@
     <ClCompile Include="Source\QF_SerializeTest.cpp">
       <Filter>Utils\FileIO\Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QC_ProgramArgs.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QC_CallbackFunction.h" />
@@ -98,7 +99,6 @@
     <ClInclude Include="Source\QC_TypeDefs.h" />
     <ClInclude Include="Source\QF_PathDefines.h" />
     <ClInclude Include="Source\QF_Enums.h" />
-    <ClInclude Include="Source\QF_Settings.h" />
     <ClInclude Include="Source\QF_Log.h">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -201,7 +201,6 @@
     <ClInclude Include="Source\QF_ComponentLight.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_Projects.h" />
     <ClInclude Include="Source\QC_Guid.h" />
     <ClInclude Include="Source\QF_ComponentInfo.h">
       <Filter>Components</Filter>
@@ -239,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="Source\QF_ScriptHelpers.h">
       <Filter>Game Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QC_ProgramArgs.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

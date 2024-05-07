@@ -1,9 +1,8 @@
-#include "QF_Settings.h"
+#include "QE_Settings.h"
 
 #include "QF_Files.h"
 #include "QF_Log.h"
 #include "QF_PathDefines.h"
-// #include "QF_Serialization.h"
 
 namespace QwerkE {
 

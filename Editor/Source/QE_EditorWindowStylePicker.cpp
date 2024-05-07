@@ -1,9 +1,9 @@
 #include "QE_EditorWindowStylePicker.h"
 
 #include "QF_Serialize.h"
-#include "QF_Settings.h"
 
 #include "QE_EditorWindow.h"
+#include "QE_Settings.h"
 
 namespace QwerkE {
 

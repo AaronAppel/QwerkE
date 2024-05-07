@@ -21,8 +21,8 @@ namespace QwerkE {
 
         void WriteStringToFile(const char* const fileData, const char* const filePath);
 
-        // std::string ExplorerOpen();
-        // std::string ExplorerSave();
+        std::string ExplorerOpen(const char* filter);
+        std::string ExplorerSave(const char* filter);
 
         Path UniqueFilePath(const char* const filePath);
         Path UniqueFilePath(const char* const dirPath, const char* const fileName);

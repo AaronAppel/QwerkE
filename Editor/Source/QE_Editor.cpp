@@ -24,6 +24,7 @@
 #endif // _QBGFX
 
 #include "QC_Guid.h"
+#include "QC_ProgramArgs.h"
 #include "QC_System.h"
 #include "QC_Time.h"
 
@@ -36,17 +37,15 @@
 #include "QF_Mesh.h"
 #include "QF_PathDefines.h"
 #include "QF_Paths.h"
-#include "QF_Projects.h"
 #include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
-#include "QF_Settings.h"
 #include "QF_Window.h"
 
-#include "QE_ProgramArgs.h"
-
 #include "QE_EditorWindowHelpers.h"
+#include "QE_Projects.h"
+#include "QE_Settings.h"
 
 namespace QwerkE {
 
@@ -60,7 +59,7 @@ namespace QwerkE {
 
         static bool s_ShowingEditorUI = true;
 
-        static EditorWindowDockingContext s_EditorWindowDockingContext(1 /*GUID::Invalid*/); // #NOTE Draw order dependency
+        static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid); // #NOTE Draw order dependency with other EditorWindows
 
         static std::unordered_map<GUID, EditorWindow*> s_EditorWindows;
         static std::vector<EditorWindow*> s_EditorWindowsQueuedForDelete;
@@ -82,8 +81,6 @@ namespace QwerkE {
 
             local_Initialize();
 
-            const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.defaultMaxFramesPerSecond);
             Time::WriteAppStartTime();
 
 			while (StillRunning())
@@ -174,10 +171,9 @@ namespace QwerkE {
                 }
             }
 
-            if (EditorWindow* newWindow = NewEditorWindowByType(editorWindowType))
+            if (EditorWindow* newWindow = NewEditorWindowByType(EditorWindowsList{}, editorWindowType))
             {
                 s_EditorWindows[newWindow->Guid()] = newWindow;
-                // #TODO Set editor UI state to dirty
             }
         }
 
@@ -207,15 +203,20 @@ namespace QwerkE {
             }
         }
 
-        void local_ProgramArguments();
-
 		void local_Initialize()
 		{
-            local_ProgramArguments();
+            Projects::Initialize();
+
+            ProjectsData& projectsData = Projects::GetProjectsData();
+            Projects::LoadProject(projectsData.LastOpenedProjectFileName);
+            if (!Projects::CurrentProject().isLoaded)
+            {
+                // #TODO Prompt to create a new (1st) project
+            }
 
             LoadImGuiStyleFromFile();
 
-            std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
+            const std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
             if (!Files::Exists(windowsDataFilePath.c_str()))
             {
                 Serialize::ToFile(s_EditorWindows, windowsDataFilePath.c_str());
@@ -236,71 +237,16 @@ namespace QwerkE {
             {
                 OpenEditorWindow(EditorWindowTypes::MenuBar);
             }
+
+            const EngineSettings& engineSettings = Settings::GetEngineSettings();
+            Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.defaultMaxFramesPerSecond);
 		}
-
-        void local_ProgramArguments()
-        {
-            return;
-
-            // Editor specific command line arguments
-            std::map<std::string, const char*>& pairs = Framework::GetProgramArgumentPairs();
-
-            // #TODO Move somewhere better
-            std::string userSettingsFileName = pairs[key_UserName];
-            if (userSettingsFileName == Constants::gc_DefaultStringValue)
-            {
-                userSettingsFileName = "User1"; // Rename "DefaultUser"
-            }
-
-            userSettingsFileName += ".";
-            userSettingsFileName += preferences_ext;
-            if (!Files::Exists(Paths::Setting(userSettingsFileName.c_str()).c_str()))
-            {
-                ;
-                Serialize::ToFile(UserSettings(), userSettingsFileName.c_str());
-            }
-            Settings::LoadUserSettings(userSettingsFileName.c_str());
-
-            const UserSettings& userSettings = Settings::GetUserSettings();
-            std::string projectFileName = userSettings.lastOpenedProjectFileName;
-            if (projectFileName == Constants::gc_DefaultStringValue)
-            {
-                projectFileName = "Project1.qproj";
-            }
-            Projects::LoadProject(projectFileName.c_str());
-            const Project& project = Projects::CurrentProject();
-            std::string engineSettingsFileName = project.lastOpenedEngineSettingsFileName;
-            if (engineSettingsFileName == Constants::gc_DefaultStringValue)
-            {
-                engineSettingsFileName = null_config;
-            }
-            Settings::LoadEngineSettings(engineSettingsFileName.c_str());
-
-            {   // Load scenes // #TODO Move somewhere else
-                const std::vector<std::string> sceneFileNames = project.sceneFileNames; // #NOTE Copied not referenced
-
-                for (size_t i = 0; i < sceneFileNames.size(); i++)
-                {
-                    const char* sceneFileName = sceneFileNames[i].c_str();
-                    if (!Files::Exists(Paths::Scene(sceneFileName).c_str()))
-                    {
-                        LOG_WARN("Initialize(): File not found: {0}", sceneFileName);
-                        continue;
-                    }
-
-                    Scenes::CreateSceneFromFile(Paths::Scene(sceneFileName).c_str(), true);
-                }
-
-                if (Scenes::SceneCount() < 1)
-                {
-                    Scenes::CreateSceneFromFile(Paths::NullAsset(null_scene), true);
-                    LOG_WARN("Null scene loaded as no scene files found for project: {0}", project.projectName);
-                }
-            }
-        }
 
 		void local_Shutdown()
 		{
+            Projects::Shutdown();
+            // #TODO Save loaded data information
+            // s_EditorLastOpenedData.LastUserSettingsFileName = Settings::GetUserSettings();
             Serialize::ToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
 
             auto it = s_EditorWindows.begin();

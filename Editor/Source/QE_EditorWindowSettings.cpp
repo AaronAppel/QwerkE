@@ -3,10 +3,10 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_Directory.h"
-#include "QF_Projects.h"
-#include "QF_Settings.h"
 
 #include "QE_EditorInspector.h"
+#include "QE_Projects.h"
+#include "QE_Settings.h"
 
 namespace QwerkE {
 

@@ -10,26 +10,12 @@ project "Editor"
 	{
 		"QWERKE_VERSION=0.01",
 		"EngineName=\"QwerkE\"",
-		"WorkspaceRootDir=\"%{wks.location}/\"",
 		
-		-- Command line arguments
-		"key_StartupDir=\"-startupDir\"",
-		"key_ApplicationFileName=\"-applicationFileName\"",
-		"key_ApplicationTitle=\"-applicationTitle\"",
-		"key_ProjectFileName=\"-projectFileName\"",
-		"key_UserName=\"-userName\"",
-		"key_AssetsDirPath=\"-assetsDirPath\"",
-		"key_NullAssetsDirPath=\"-nullAssetsDirPath\"",
+		-- Command line arguments :
+		"key_OverrideAssetsDirPath=\"-overrideAssetsDirPath\"",
+		"key_OverrideNullAssetsDirPath=\"-overrideNullAssetsDirPath\"",
 	}
 	
-	debugargs -- #NOTE User setting changes require VS reload
-	{
-		"-applicationTitle", "\"Qwerk Editor\"",
-		"-applicationName", "\"QwerkEditor\"",
-		"-projectFileName", "\"Project1\"",
-		"-userName", "\"User1\"",
-	}
-
 	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }
 
 	includedirs

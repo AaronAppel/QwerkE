@@ -22,11 +22,11 @@
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
-#include "QF_Settings.h"
 
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
 #include "QF_Scripting.h"
+#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
 
 namespace QwerkE {
 

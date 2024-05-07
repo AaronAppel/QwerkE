@@ -69,6 +69,10 @@ enum class MirrorTypes
     EditorWindowShaderEditor,
     EditorWindowPrefabScene,
 
+    EditorLastOpenedData,
+
+    ProjectsData,
+
     ScriptGuiButton,
     CallBackFunction,
 

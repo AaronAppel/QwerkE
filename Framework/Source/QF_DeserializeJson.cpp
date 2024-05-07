@@ -90,7 +90,7 @@ namespace QwerkE {
             switch (objTypeInfo->enumType)
             {
             case MirrorTypes::m_string: // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
-                objTypeInfo->typeConstructorFunc(obj); // #NOTE String must be constructed before assigned
+                objTypeInfo->typeConstructorFunc(obj); // #NOTE String must be constructed before assigned to
                 *(std::string*)obj = objJson->valuestring ? objJson->valuestring : objJson->string; break;
             case MirrorTypes::m_charPtr:
             case MirrorTypes::m_constCharPtr:
@@ -112,8 +112,9 @@ namespace QwerkE {
                     {
                         sourceAddress = (void*)&objJson->valuedouble;
                     }
+
                     if (MirrorTypes::m_char == objTypeInfo->enumType ||
-                        MirrorTypes::eKeys == objTypeInfo->enumType)
+                        MirrorTypes::eKeys  == objTypeInfo->enumType)
                     {
                         sourceAddress = (void*)&objJson->valuestring[0];
                     }
@@ -121,7 +122,7 @@ namespace QwerkE {
                 }
                 else
                 {
-                    LOG_WARN("{0} Unsupported Type!", __FUNCTION__);
+                    LOG_WARN("{0} Unsupported json object type!", __FUNCTION__);
                 }
                 break;
             }

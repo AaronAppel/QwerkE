@@ -13,7 +13,8 @@
 #include "QF_InputMouseDragTracker.h"
 #include "QF_Math.h"
 #include "QF_Scriptable.h"
-#include "QF_Settings.h"
+
+#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
 
 namespace QwerkE {
 

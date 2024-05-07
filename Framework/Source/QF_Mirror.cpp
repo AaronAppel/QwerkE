@@ -21,23 +21,24 @@
 #include "QF_eKeys.h"
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
-#include "QF_Projects.h"
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
-#include "QF_Settings.h"
 
 #include "QF_ComponentHelpers.h"
 
 #include "QF_ScriptHelpers.h"
 
 // Editor types
-// #TODO Move serialization code out of framework domain
+// #TODO Move editor serialization code out of framework domain
 #include "../Editor/Source/QE_EditorWindowHelpers.h"
+#include "../Editor/Source/QE_Editor.h"
+#include "../Editor/Source/QE_Projects.h"
+#include "../Editor/Source/QE_Settings.h"
 
 namespace QwerkE {
 
-	template <typename Super, typename... SubClass>
-	void MirrorSubClassUserType(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+	template <typename SuperClass, typename... SubClass>
+	void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
 	{
 		uint16_t enumValue = enumStartOffset;
 		([&]()
@@ -48,16 +49,16 @@ namespace QwerkE {
 			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
 				[](const void* pointerToInstance) -> bool {
 				SubClass* subClass = (SubClass*)pointerToInstance;
-				return dynamic_cast<SubClass*>(*(Super**)pointerToInstance) != nullptr;
+				return dynamic_cast<SubClass*>(*(SuperClass**)pointerToInstance) != nullptr;
 			};
 			++enumValue;
 		}(), ...);
 	}
 
-	template<typename Super, typename... T>
-	static void MirrorSubClassUserTypes(TemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+	template<typename SuperClass, typename... SubClass>
+	static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
 	{
-		MirrorSubClassUserType<Super, T...>(localStaticTypeInfo, enumStartOffset);
+		MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo, enumStartOffset);
 	}
 
 #ifdef _QDEARIMGUI
@@ -183,7 +184,7 @@ namespace QwerkE {
 	MIRROR_ABSTRACT_CLASS_START(Scriptable)
 	// #TODO Look at generating empty types or not yet declared types automatically as well.
 	// Would save a step when creating a new type and still allow exposing members for specific types
-	MirrorSubClassUserTypes<Scriptable>(ComponentScriptsList{}, localStaticTypeInfo);
+	MirrorSubClasses<Scriptable>(ComponentScriptsList{}, localStaticTypeInfo);
 	MIRROR_CLASS_END(Scriptable)
 
 	typedef Scriptable* m_scriptablePtr;
@@ -241,8 +242,8 @@ namespace QwerkE {
 	MIRROR_CLASS_END(UserSettings)
 
 	MIRROR_CLASS_START(Project)
+	MIRROR_CLASS_MEMBER(projectFileName)
 	MIRROR_CLASS_MEMBER(projectName)
-	MIRROR_CLASS_MEMBER(assetsDirPath)
 	MIRROR_CLASS_MEMBER(sceneFileNames)
 	MIRROR_CLASS_END(Project)
 
@@ -407,7 +408,10 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(m_MinimumHeight)
 	MIRROR_CLASS_MEMBER(m_EditorWindowType)
 
-	MirrorSubClassUserTypes<EditorWindow>(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
+	// #TODO Solve generic templated type list issue
+	// using WindowsList = MirrorTemplateArgumentList <EditorWindowAssets>;
+	// MirrorSubClasses<EditorWindow>(WindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
+	MirrorSubClasses<EditorWindow>(Editor::EditorWindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
 	MIRROR_CLASS_END(EditorWindow)
 
 	typedef Editor::EditorWindow* m_editorWindowPtr;
@@ -419,30 +423,9 @@ namespace QwerkE {
 	typedef std::unordered_map<GUID, m_editorWindowPtr> m_umap_guid_editorWindowPtr;
 	MIRROR_MAP(m_umap_guid_editorWindowPtr, m_pair_guid_editorWindowPtr)
 
-	MIRROR_CLASS_START(TestStruct)
-	MIRROR_CLASS_MEMBER(m_EditorWindowPtr)
-	MIRROR_CLASS_MEMBER(m_BasePtrDerived)
-	MIRROR_CLASS_MEMBER(m_Derived1Ptr)
-	MIRROR_CLASS_MEMBER(m_Derived2Ptr)
-	MIRROR_CLASS_MEMBER(m_Base)
-	MIRROR_CLASS_MEMBER(m_Derived1)
-	MIRROR_CLASS_MEMBER(m_Derived2)
-	MIRROR_CLASS_MEMBER(m_Bool)
-	MIRROR_CLASS_MEMBER(m_U8)
-	MIRROR_CLASS_MEMBER(m_U16)
-	MIRROR_CLASS_MEMBER(m_U32)
-	MIRROR_CLASS_MEMBER(m_U64)
-	MIRROR_CLASS_MEMBER(m_S8)
-	MIRROR_CLASS_MEMBER(m_S16)
-	MIRROR_CLASS_MEMBER(m_S32)
-	MIRROR_CLASS_MEMBER(m_S64)
-	MIRROR_CLASS_MEMBER(m_Float)
-	MIRROR_CLASS_MEMBER(m_Double)
-	MIRROR_CLASS_MEMBER(m_String)
-	MIRROR_CLASS_MEMBER(m_ConstCharPtr)
-	MIRROR_CLASS_MEMBER(m_FloatArray10)
-	MIRROR_CLASS_MEMBER(m_CharVector)
-	MIRROR_CLASS_MEMBER(m_UmapStringInt32)
-	MIRROR_CLASS_MEMBER(m_Int32Ptr)
-	MIRROR_CLASS_END(TestStruct);
+	MIRROR_CLASS_START(ProjectsData)
+	MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
+	MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
+	MIRROR_CLASS_END(ProjectsData)
+
 }

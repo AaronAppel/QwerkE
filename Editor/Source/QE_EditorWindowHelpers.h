@@ -22,8 +22,6 @@ namespace QwerkE {
 
 	namespace Editor {
 
-		EditorWindow* NewEditorWindowByType(EditorWindowTypes editorWindowType);
-
         using EditorWindowsList = TemplateArgumentList <
 			// #NOTE Order matters! Match enum EditorWindowTypes order
 			EditorWindowAssets,
@@ -43,6 +41,32 @@ namespace QwerkE {
 			EditorWindowStylePicker,
 			EditorWindowPrefabScene
         >;
+
+		template <typename... T>
+		EditorWindow* NewEditorWindowByType(EditorWindowTypes editorWindowType)
+		{
+			EditorWindow* returnPointer = nullptr;
+			([&]()
+			{
+				if (returnPointer)
+					return;
+
+				T stackInstance = T(GUID()); // #TODO Add a static Type() function to each EditorWindow type
+				if (stackInstance.Type() == editorWindowType)
+				{
+					returnPointer = new T(GUID());
+				}
+			}(), ...);
+			return returnPointer;
+		}
+
+		template <typename... T>
+		EditorWindow* NewEditorWindowByType(TemplateArgumentList<T...>, EditorWindowTypes editorWindowType)
+		{
+			if (EditorWindow* window = NewEditorWindowByType<T...>(editorWindowType))
+				return window;
+			return nullptr;
+		}
 
 	}
 

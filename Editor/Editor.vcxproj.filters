@@ -7,9 +7,6 @@
     <ClCompile Include="Source\QE_PCH.cpp">
       <Filter>Root Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QE_ProgramArgs.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QE_EditorWindowStylePicker.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
@@ -23,9 +20,8 @@
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
     <ClCompile Include="Source\QE_EditorInspector.cpp" />
-    <ClCompile Include="Source\QE_EditorWindowHelpers.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\QE_Projects.cpp" />
+    <ClCompile Include="Source\QE_Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QE_MaterialEditor.h">
@@ -39,9 +35,6 @@
     </ClInclude>
     <ClInclude Include="Source\QE_PCH.h">
       <Filter>Root Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QE_ProgramArgs.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\QE_EditorWindow.h">
       <Filter>Windows</Filter>
@@ -98,6 +91,8 @@
     <ClInclude Include="Source\QE_EditorWindowPrefabScene.h">
       <Filter>Windows\Instanced</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QE_Projects.h" />
+    <ClInclude Include="Source\QE_Settings.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -105,9 +100,6 @@
     </Filter>
     <Filter Include="Root Files">
       <UniqueIdentifier>{9684db7b-7a5d-4fe5-bddc-fde7ef1797a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{22e305f0-c945-4673-bcd5-c5dee96782a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Windows\Unique">
       <UniqueIdentifier>{93cb9dc8-1734-47b6-b174-b4dc83767fdc}</UniqueIdentifier>

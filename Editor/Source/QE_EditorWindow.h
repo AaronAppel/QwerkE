@@ -97,7 +97,7 @@ namespace QwerkE {
 
 			GUID Guid() { return m_Guid; }
 			GUID* GuidAddress() { return &m_Guid; }
-			EditorWindowTypes Type() { return m_EditorWindowType; }
+			EditorWindowTypes Type() { return m_EditorWindowType; } // #TODO Make static
 			EditorWindowFlags WindowFlags() { return m_WindowFlags; }
 
 			virtual void OnEntitySelected(const EntityHandle& entity) { }

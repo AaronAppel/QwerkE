@@ -17,12 +17,13 @@ namespace QwerkE {
 		public:
 			EditorWindowPrefabScene(GUID guid = GUID()) : EditorWindow("Prefab Scene", EditorWindowTypes::PrefabScene, guid)
 			{
-				m_PrefabScene = Scenes::CreateScene("PrefabScene_", false);
+				// #TODO Implement EditorWindowPrefabScene
+				// m_PrefabScene = Scenes::CreateScene("PrefabScene_", false);
 			}
 
 			~EditorWindowPrefabScene()
 			{
-				Scenes::DestroyScene(m_PrefabScene);
+				// Scenes::DestroyScene(m_PrefabScene);
 			}
 
 		private:

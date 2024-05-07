@@ -9,9 +9,10 @@
 #include "QF_Log.h"
 #include "QF_Paths.h"
 #include "QF_Profile.h"
-#include "QF_Projects.h"
 #include "QF_Scene.h"
-#include "QF_Settings.h"
+
+#include "../Editor/Source/QE_Projects.h" // #TODO Remove from QF_* domain
+#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
 
 namespace QwerkE {
 

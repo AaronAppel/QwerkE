@@ -4,26 +4,28 @@ namespace QwerkE {
 
 	namespace Paths {
 
+		static std::string s_ExePath = "..\\";
 		static std::string s_AssetsDir = "..\\";
 		static std::string s_NullAssetsDir = "..\\";
-
-		static std::string s_AssetsDirFromExe = "..\\Editor\\Assets";
-		static std::string s_NullAssetsDirFromExe = "..\\Assets";
-		static std::string s_ExePath = "..\\";
 
 		void SetExePath(std::string newExePath)
 		{
 			s_ExePath = newExePath;
-		}
 
-		void SetNullAssetsDir(std::string newRootDir)
-		{
-			s_NullAssetsDir = newRootDir;
+			Path exePath = s_ExePath; // #TODO Assume assets folder exists with .exe file
+			exePath = exePath.parent_path();
+			exePath = exePath / "Assets";
+			SetAssetsDir(exePath.string());
 		}
 
 		void SetAssetsDir(std::string newAssetsDir)
 		{
 			s_AssetsDir = newAssetsDir;
+		}
+
+		void SetNullAssetsDir(std::string newNullAssetsDir)
+		{
+			s_NullAssetsDir = newNullAssetsDir;
 		}
 
 		std::string AssetsDir()

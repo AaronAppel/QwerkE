@@ -41,7 +41,7 @@ namespace QwerkE {
 
         const char* lastOpenedProjectFileName = Constants::gc_DefaultStringValue;
 
-        // Interface: Window open, UI scaling, etc
+        // Interface: Window open, UI layout and scaling, etc
     };
 
     struct RendererSettings

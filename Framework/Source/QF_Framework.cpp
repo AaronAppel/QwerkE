@@ -1,6 +1,6 @@
 #include "QF_Framework.h"
 
-#include "QC_System.h"
+#include "QC_ProgramArgs.h"
 
 #include "QF_Assets.h"
 #include "QF_Events.h"
@@ -9,8 +9,6 @@
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Window.h"
-
-#include "../../Editor/Source/QE_ProgramArgs.h" // #TODO Move to framework domain
 
 namespace QwerkE {
 
@@ -84,37 +82,16 @@ namespace QwerkE {
 		{
 			ProgramArgsToPairs(argc, argv, s_ProgramArgumentPairs);
 
-			// Set application directories
-			if (s_ProgramArgumentPairs.find(key_NullAssetsDirPath) != s_ProgramArgumentPairs.end())
-			{
-				Paths::SetNullAssetsDir(s_ProgramArgumentPairs[key_NullAssetsDirPath]);
-			}
-			if (s_ProgramArgumentPairs.find(key_AssetsDirPath) != s_ProgramArgumentPairs.end())
-			{
-				Paths::SetAssetsDir(s_ProgramArgumentPairs[key_AssetsDirPath]);
-			}
+			Paths::SetExePath(s_ProgramArgumentPairs[key_ExePath]);
 
-			if (s_ProgramArgumentPairs.find(key_ApplicationTitle) == s_ProgramArgumentPairs.end())
+			if (s_ProgramArgumentPairs.find(key_OverrideNullAssetsDirPath) != s_ProgramArgumentPairs.end())
 			{
-				s_ProgramArgumentPairs.insert(std::pair<const char*, const char*>(key_ApplicationTitle, EngineName));
+				Paths::SetNullAssetsDir(s_ProgramArgumentPairs[key_OverrideNullAssetsDirPath]);
 			}
-
-			if (s_ProgramArgumentPairs.find(key_ProjectFileName) == s_ProgramArgumentPairs.end())
+			if (s_ProgramArgumentPairs.find(key_OverrideAssetsDirPath) != s_ProgramArgumentPairs.end())
 			{
-				s_ProgramArgumentPairs.insert(std::pair<const char*, const char*>(key_ProjectFileName, "Project1"));
+				Paths::SetAssetsDir(s_ProgramArgumentPairs[key_OverrideAssetsDirPath]);
 			}
-			else
-			{
-				// #TODO Load last opened project
-			}
-
-			if (s_ProgramArgumentPairs.find(key_UserName) == s_ProgramArgumentPairs.end())
-			{
-				std::string userName = System::UserName();
-				s_ProgramArgumentPairs.insert(std::pair<const char*, const char*>(key_UserName, strdup(userName.c_str())));
-			}
-
-			s_ProgramArgumentPairs.insert(std::pair<const char*, const char*>("WorkspaceRootDir", WorkspaceRootDir));
 
 			if (true) { OutputProgramPairsInfo(s_ProgramArgumentPairs); }
 		}

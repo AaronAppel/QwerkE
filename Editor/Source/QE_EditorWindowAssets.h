@@ -2,11 +2,11 @@
 
 #include "QF_Assets.h"
 #include "QF_Mesh.h"
-#include "QF_Settings.h"
 #include "QF_Shader.h"
 
 #include "QE_Editor.h"
 #include "QE_EditorWindow.h"
+#include "QE_Settings.h"
 
 namespace QwerkE {
 
