@@ -398,6 +398,11 @@ namespace QwerkE {
 	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 	MIRROR_CLASS_END(EditorWindowPrefabScene)
 
+	typedef Editor::EditorWindowPrompt EditorWindowPrompt;
+	MIRROR_DEPENDENT_CLASS_START(EditorWindowPrompt)
+	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIRROR_CLASS_END(EditorWindowPrompt)
+
 	typedef Editor::EditorWindow EditorWindow;
 	MIRROR_ABSTRACT_CLASS_START(EditorWindow)
 	MIRROR_CLASS_MEMBER(m_Guid) // Order dependency! 1st // #TODO Review dependency

@@ -93,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="Source\QE_Projects.h" />
     <ClInclude Include="Source\QE_Settings.h" />
+    <ClInclude Include="Source\QE_EditorWindowPrompt.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

@@ -68,6 +68,7 @@ enum class MirrorTypes
     EditorWindowNodeEditor,
     EditorWindowShaderEditor,
     EditorWindowPrefabScene,
+    EditorWindowPrompt,
 
     EditorLastOpenedData,
 

@@ -62,6 +62,7 @@ namespace QwerkE {
 				return;
 
 			Serialize::FromFile(projectFilePath.c_str(), s_CurrentProject);
+			s_CurrentProject.isLoaded = true;
 
 			s_CurrentProject.projectFileName = projectSettingsFileName;
 
@@ -82,21 +83,19 @@ namespace QwerkE {
 		{
 			// #TODO Review changing s_CurrentProject.projectFileName when creating a new file.
 			// What values and editor state should change?
-			if (s_CurrentProject.isLoaded)
+			if (!s_CurrentProject.isLoaded)
 			{
 				LOG_WARN("{0} Project {1} is not loaded", __FUNCTION__, s_CurrentProject.projectName);
-				return;
+				// return;
 			}
 
 			Path fileName = Files::FileName(projectSettingsFileName.c_str());
 			std::string projectFilePath = Paths::Project(fileName.string().c_str());
-			if (Files::Exists(projectFilePath.c_str()))
-			{
-				s_CurrentProject.projectFileName = fileName.string();
-				Serialize::ToFile(s_CurrentProject, projectFilePath.c_str());
-				s_CurrentProject.isDirty = false;
-				local_TryAddUniqueProjectFileName();
-			}
+
+			s_CurrentProject.projectFileName = fileName.string();
+			Serialize::ToFile(s_CurrentProject, projectFilePath.c_str());
+			s_CurrentProject.isDirty = false;
+			local_TryAddUniqueProjectFileName();
 		}
 
 		void local_TryAddUniqueProjectFileName()

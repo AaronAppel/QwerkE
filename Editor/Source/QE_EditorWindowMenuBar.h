@@ -121,7 +121,8 @@ namespace QwerkE {
                                 EditorWindowTypes::ImGuiDemo,
                                 // EditorWindowTypes::MenuBar, // Hidden
                                 EditorWindowTypes::Settings,
-                                EditorWindowTypes::FolderViewer
+                                EditorWindowTypes::FolderViewer,
+                                EditorWindowTypes::Prompt
                             }
                         );
                         ImGui::EndMenu();

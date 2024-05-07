@@ -33,6 +33,7 @@ namespace QwerkE {
 			ExactNameNoguid			= 1 << 1,
 			Hidden					= 1 << 2,
 			Singleton				= 1 << 3,
+			AlignCentered			= 1 << 4,
 		};
 
 		QC_ENUM(EditorWindowTypes, u32,
@@ -52,7 +53,8 @@ namespace QwerkE {
 			FolderViewer,
 			NodeEditor,
 			ShaderEditor,
-			PrefabScene
+			PrefabScene,
+			Prompt
 			// #NOTE Serialized, so don't change ordering
 		)
 
@@ -78,6 +80,15 @@ namespace QwerkE {
 				{
 					DrawInternal();
 					return;
+				}
+
+				if (m_WindowFlags & EditorWindowFlags::AlignCentered)
+				{
+					const vec2f& windowSize = Window::GetSize();
+					vec2f newWindowPosition = vec2f(windowSize.x / 2.f, windowSize.y / 2.f);
+					newWindowPosition.x -= m_MinimumWidth / 2.f;
+					newWindowPosition.y -= m_MinimumHeight / 2.f;
+					ImGui::SetNextWindowPos(ImVec2(newWindowPosition.x, newWindowPosition.y));
 				}
 
 				bool isOpen = true;

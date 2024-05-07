@@ -209,10 +209,7 @@ namespace QwerkE {
 
             ProjectsData& projectsData = Projects::GetProjectsData();
             Projects::LoadProject(projectsData.LastOpenedProjectFileName);
-            if (!Projects::CurrentProject().isLoaded)
-            {
-                // #TODO Prompt to create a new (1st) project
-            }
+            bool openPrompt = !Projects::CurrentProject().isLoaded;
 
             LoadImGuiStyleFromFile();
 
@@ -229,13 +226,20 @@ namespace QwerkE {
                 if (EditorWindowTypes::MenuBar == (u32)pair.second->Type())
                 {
                     missingMenuBarWindow = false;
-                    break;
+                }
+                if (EditorWindowTypes::Prompt == (u32)pair.second->Type())
+                {
+                    openPrompt = false;
                 }
             }
 
             if (missingMenuBarWindow)
             {
                 OpenEditorWindow(EditorWindowTypes::MenuBar);
+            }
+            if (openPrompt)
+            {
+                OpenEditorWindow(EditorWindowTypes::Prompt);
             }
 
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
