@@ -73,6 +73,9 @@ namespace QwerkE {
         void local_Update();
         void local_EndFrame();
 
+        bool s_ReloadRequested = false; // #TODO FEATURE
+
+        // #TODO Change to main(argc, argv) entry point function
 		void Run(unsigned int argc, char** argv)
 		{
             Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str());
@@ -207,10 +210,6 @@ namespace QwerkE {
 		{
             Projects::Initialize();
 
-            ProjectsData& projectsData = Projects::GetProjectsData();
-            Projects::LoadProject(projectsData.LastOpenedProjectFileName);
-            bool openPrompt = !Projects::CurrentProject().isLoaded;
-
             LoadImGuiStyleFromFile();
 
             const std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
@@ -227,21 +226,14 @@ namespace QwerkE {
                 {
                     missingMenuBarWindow = false;
                 }
-                if (EditorWindowTypes::Prompt == (u32)pair.second->Type())
-                {
-                    openPrompt = false;
-                }
             }
 
             if (missingMenuBarWindow)
             {
                 OpenEditorWindow(EditorWindowTypes::MenuBar);
             }
-            if (openPrompt)
-            {
-                OpenEditorWindow(EditorWindowTypes::Prompt);
-            }
 
+            // #TODO Move to Settings::Initialize()?
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
             Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.defaultMaxFramesPerSecond);
 		}

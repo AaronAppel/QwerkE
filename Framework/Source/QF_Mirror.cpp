@@ -148,6 +148,9 @@ namespace QwerkE {
 	typedef std::vector<std::string> m_vec_string;
 	MIRROR_VECTOR(m_vec_string, std::string)
 
+	typedef std::vector<std::string>* m_vec_string_ptr;
+	MIRROR_POINTER(m_vec_string_ptr)
+
 	// Arrays
 	using m_arr_float16 = float[16];
 	MIRROR_ARRAY(m_arr_float16, float)

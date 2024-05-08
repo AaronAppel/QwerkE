@@ -1,15 +1,27 @@
 
-#include "QE_Editor.h"
+#include "QC_Time.h"
+
+#include "QF_ForcedIncludes.h" // #TODO Review how to solve includes
+
+#include "QF_Framework.h"
+#include "QF_Renderer.h"
+#include "QF_Window.h"
 
 int main(unsigned int argc, char** argv)
 {
-	const bool supportingEditorReloading = false; // #FEATURE
-	const bool editorRequestedReload = false; // #FEATURE
+	QwerkE::Framework::Initialize(argc, argv);
 
-	do
+	while (!QwerkE::Window::CloseRequested())
 	{
-		QwerkE::Editor::Run(argc, argv);
-	} while (editorRequestedReload && supportingEditorReloading);
+		QwerkE::Time::StartFrame();
 
+		QwerkE::Framework::StartFrame();
+
+		QwerkE::Framework::Update((float)QwerkE::Time::PreviousFrameDuration());
+
+		QwerkE::Framework::EndFrame();
+	}
+
+	QwerkE::Framework::Shutdown();
 	return 0;
 }

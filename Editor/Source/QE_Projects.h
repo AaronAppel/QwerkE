@@ -37,9 +37,13 @@ namespace QwerkE {
         Project& CurrentProject();
 
         void LoadProject(const std::string& projectSettingsFilePath);
+        void LoadProjectFromExplorer();
+        void UnloadCurrentProject();
 
         void SaveProject();
         void SaveProjectToFile(const std::string& projectSettingsFilePath);
+        void SaveProjectFromExplorer();
+
     }
 
 }

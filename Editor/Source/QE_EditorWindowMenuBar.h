@@ -39,19 +39,12 @@ namespace QwerkE {
                     {
                         if (ImGui::MenuItem("New Project...", "Ctrl+N"))
                         {
-                            // #TODO Dialogue to choose new project name
+                            Editor::OpenEditorWindow(EditorWindowTypes::Prompt);
                         }
 
                         if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
                         {
-                            // #TODO File dialogue to choose existing project file
-                            std::string result = Files::ExplorerOpen("QwerkE Project (*.qproj)\0*.qproj\0");
-                            if (!result.empty())
-                            {
-                                // #TODO Handle full path
-                                Path fileName = Files::FileName(result.c_str());
-                                Projects::LoadProject(fileName.string().c_str());
-                            }
+                            Projects::LoadProjectFromExplorer();
                         }
 
                         if (ImGui::BeginMenu("Open Recent"))
@@ -76,12 +69,14 @@ namespace QwerkE {
 
                         if (ImGui::MenuItem("Save Project As...", "Ctrl+Shift+S"))
                         {
-                            // #TODO Change current project to point to new file?
-                            std::string result = Files::ExplorerSave("QwerkE Project (*.qproj)\0*.qproj\0");
-                            if (!result.empty())
-                            {
-                                Projects::SaveProjectToFile(result.c_str());
-                            }
+                            Projects::SaveProjectFromExplorer();
+                        }
+
+                        ImGui::Separator();
+
+                        if (ImGui::MenuItem("Unload Project", ""))
+                        {
+                            Projects::UnloadCurrentProject();
                         }
 
                         ImGui::Separator();
@@ -171,22 +166,25 @@ namespace QwerkE {
                 if (Input::FrameKeyAction(eKeys::eKeys_N, eKeyState::eKeyState_Press) &&
                     (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
                 {
-                    // #TODO Prompt to create a new project
-                    int bp = 0;
+                    Editor::OpenEditorWindow(EditorWindowTypes::Prompt);
+                }
+
+                if (Input::FrameKeyAction(eKeys::eKeys_O, eKeyState::eKeyState_Press) &&
+                    (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
+                {
+                    Projects::LoadProjectFromExplorer();
                 }
 
                 if (Input::FrameKeyAction(eKeys::eKeys_S, eKeyState::eKeyState_Press) &&
                     (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)) &&
                     (Input::IsKeyDown(eKeys::eKeys_LSHIFT) || Input::IsKeyDown(eKeys::eKeys_RSHIFT)))
                 {
-                    // #TODO Save (scene, project, etc?) as new file(s)?
-                    int bp = 0;
+                    Projects::SaveProject();
                 }
                 else if (Input::FrameKeyAction(eKeys::eKeys_S, eKeyState::eKeyState_Press) &&
                     (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
                 {
-                    // #TODO Save (scene, project, etc?)
-                    int bp = 0;
+                    Projects::SaveProjectFromExplorer();
                 }
             }
 

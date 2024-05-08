@@ -90,7 +90,7 @@ namespace QwerkE {
 				if (derivedTypes.empty()) return this;
 				for (const auto& derivedType : derivedTypes)
 				{
-					assert(derivedType->typeDynamicCastFunc, "Null typeDynamicCastFunc!");
+					assert(derivedType->typeDynamicCastFunc && "Null typeDynamicCastFunc!");
 					if (derivedType->typeDynamicCastFunc(instanceAddress))
 					{
 						return derivedType;
@@ -113,7 +113,7 @@ namespace QwerkE {
 
 			void CollectionAppend(void* collectionAddress, size_t index, void* first, void* second = nullptr) const
 			{
-				assert(collectionAddFunc, "Null collectionAddFunc!");
+				assert(collectionAddFunc && "Null collectionAddFunc!");
 				collectionAddFunc(collectionAddress, index, first, second);
 			}
 
@@ -293,10 +293,10 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	localStaticTypeInfo.fields.reserve(fieldsCount);																			\
 	enum { BASE = __COUNTER__ };
 
-#define MIRROR_DEPENDENT_CLASS_START(TYPE, DEPENDENT_MEMEBER_NAME) \
-MIRROR_DEPENDENT_CLASS_STARTN(TYPE, DEPENDENT_MEMEBER_NAME, MIRROR_MEMBER_FIELDS_DEFAULT)
+#define MIRROR_DEPENDENT_CLASS_START(TYPE) \
+MIRROR_DEPENDENT_CLASS_STARTN(TYPE, MIRROR_MEMBER_FIELDS_DEFAULT)
 
-#define MIRROR_DEPENDENT_CLASS_STARTN(TYPE, DEPENDENT_MEMEBER_NAME, FIELDCOUNT)													\
+#define MIRROR_DEPENDENT_CLASS_STARTN(TYPE, FIELDCOUNT)																			\
 	MIRROR_GENERIC(TYPE)																										\
 	static_assert(std::is_class_v<TYPE> && !std::is_abstract_v<TYPE>);															\
     if (localStaticTypeInfo.fields.size() > 0) { return &localStaticTypeInfo; }													\
@@ -304,7 +304,7 @@ MIRROR_DEPENDENT_CLASS_STARTN(TYPE, DEPENDENT_MEMEBER_NAME, MIRROR_MEMBER_FIELDS
 	localStaticTypeInfo.fields.reserve(fieldsCount);																			\
 	enum { BASE = __COUNTER__ };
 
-#define MIRROR_SUBCLASS(SUBCLASS_TYPE)																					\
+#define MIRROR_SUBCLASS(SUBCLASS_TYPE)																							\
 	const QwerkE::Mirror::TypeInfo* SUBCLASS_TYPE##Info = QwerkE::Mirror::InfoForType<SUBCLASS_TYPE>();							\
 	localStaticTypeInfo.derivedTypes.push_back(SUBCLASS_TYPE##Info);															\
 	const_cast<QwerkE::Mirror::TypeInfo*>(SUBCLASS_TYPE##Info)->superTypeInfo = &localStaticTypeInfo;							\

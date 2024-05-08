@@ -50,7 +50,7 @@ namespace QwerkE {
                     buffer.Fill('\0');
                     strcpy(buffer.As<char>(), m_CurrentEntity.EntityName().c_str());
 
-                    ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x / 1.7f); // #NOTE Aesthetic scalar value
+                    ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x / 1.8f); // #NOTE Aesthetic scalar value
                     if (ImGui::InputText(("##" + m_WindowName + "EntityName").c_str(), buffer.As<char>(), buffer.SizeInBytes()))
                     {
                         m_CurrentEntity.GetComponent<ComponentInfo>().m_EntityName = buffer.As<char>();

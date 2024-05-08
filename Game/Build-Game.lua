@@ -30,12 +30,15 @@ project "Game"
 
 	includedirs
 	{
-		"%{wks.location}/Editor/Source", -- Include Editor source
+		"%{wks.location}/Framework/Source",
+		"%{wks.location}/", -- Root for accessing library source
+		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
 	}
 
 	links
 	{
-		"Editor",
+		"Editor", -- #TODO Remove
+		"Framework",
 	}
 
 	-- Linker Additional Options "/NODEFAULTLIB:msvcrt.lib" to disable warning

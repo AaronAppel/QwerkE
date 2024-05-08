@@ -2,6 +2,43 @@
 	"Scene":	{
 		"m_SceneFileName":	"NewScene1.qscene",
 		"m_Registry":	{
+			"null":	{
+				"ComponentInfo":	{
+					"m_EntityName":	"null",
+					"m_Guid":	{
+						"m_Guid":	"12653664972659247131"
+					},
+					"m_Enabled":	false
+				},
+				"ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"0"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					}
+				},
+				"ComponentTransform":	{
+					"m_Matrix":	{
+						"m_float":	3,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	3,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	3,
+						"m_float":	0,
+						"m_float":	-4.4000000953674316,
+						"m_float":	-1.1000000238418579,
+						"m_float":	5,
+						"m_float":	1
+					}
+				}
+			},
 			"Mesh":	{
 				"ComponentInfo":	{
 					"m_EntityName":	"Mesh",
@@ -43,9 +80,9 @@
 				"ComponentCamera":	{
 					"m_MoveSpeed":	5,
 					"m_LookAtPosition":	{
-						"x":	1.70314884185791,
-						"y":	-1.3482857942581177,
-						"z":	-3.8694515228271484
+						"x":	1.8968791961669922,
+						"y":	-2.0910553932189941,
+						"z":	-5.1098933219909668
 					},
 					"m_Fov":	60,
 					"m_Near":	0.10000000149011612,
@@ -60,21 +97,21 @@
 				},
 				"ComponentTransform":	{
 					"m_Matrix":	{
-						"m_float":	0.97366577386856079,
+						"m_float":	0.95233249664306641,
 						"m_float":	0,
-						"m_float":	-0.227980375289917,
+						"m_float":	-0.30506181716918945,
 						"m_float":	0,
-						"m_float":	0.065920569002628326,
-						"m_float":	0.95728379487991333,
-						"m_float":	0.28153562545776367,
+						"m_float":	0.10173534601926804,
+						"m_float":	0.94275331497192383,
+						"m_float":	0.31759423017501831,
 						"m_float":	0,
-						"m_float":	0.21824191510677338,
-						"m_float":	-0.2891501784324646,
-						"m_float":	0.93207448720932,
+						"m_float":	0.287598043680191,
+						"m_float":	-0.33349090814590454,
+						"m_float":	0.89781463146209717,
 						"m_float":	0,
-						"m_float":	1.9311292171478271,
-						"m_float":	-1.6298214197158813,
-						"m_float":	-4.8015260696411133,
+						"m_float":	2.2019410133361816,
+						"m_float":	-2.4086496829986572,
+						"m_float":	-6.0077080726623535,
 						"m_float":	1
 					}
 				},
@@ -122,7 +159,7 @@
 						"m_float":	0,
 						"m_float":	0.5,
 						"m_float":	0,
-						"m_float":	-0.47805279493331909,
+						"m_float":	4.8258566856384277,
 						"m_float":	-0.74199998378753662,
 						"m_float":	2.0329999923706055,
 						"m_float":	1

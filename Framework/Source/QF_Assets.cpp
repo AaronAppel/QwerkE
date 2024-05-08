@@ -108,10 +108,17 @@ namespace QwerkE {
 		// #TODO ASSERT all assets were properly released
 	}
 
+	std::vector<std::pair<GUID, std::string>>& Assets::ViewRegistry()
+	{
+		return s_AssetGuidToFileRegistry;
+	}
+
+#ifndef _QRETAIL
 	void Assets::SaveRegistry()
 	{
-		Serialize::ToFile(s_AssetGuidToFileRegistry, "NewSerializationWindow");
+		Serialize::ToFile(s_AssetGuidToFileRegistry, "NewSerializationWindow"); // #TODO Improve hard coded file name
 	}
+#endif
 
 	void Assets::ExistsInRegistry(const GUID& guid, const std::string& fileName)
 	{
@@ -132,11 +139,6 @@ namespace QwerkE {
 			}
 		}
 		s_AssetGuidToFileRegistry.push_back({ guid, fileName });
-	}
-
-	std::vector<std::pair<GUID, std::string>>& Assets::ViewRegistry()
-	{
-		return s_AssetGuidToFileRegistry;
 	}
 
 }

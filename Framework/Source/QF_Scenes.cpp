@@ -65,6 +65,9 @@ namespace QwerkE {
 				}
 			}
 			s_Scenes.clear();
+			s_CurrentScene = nullptr;
+			s_CurrentSceneIndex = 0;
+			s_Initialized = false;
 		}
 
 		void PauseScene(std::string sceneName)

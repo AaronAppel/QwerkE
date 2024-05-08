@@ -11,9 +11,24 @@
             "id": "c315115b897a8c1c",
             "type": "leaf",
             "state": {
+              "type": "canvas",
+              "state": {
+                "file": "QwerkE File Domains.canvas",
+                "viewState": {
+                  "x": -50.63387619961435,
+                  "y": -2.3766526442517186,
+                  "zoom": -0.3125
+                }
+              }
+            }
+          },
+          {
+            "id": "7529e93c6d5d9fb3",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "Development/Features/ASSERT Expanded.md",
+                "file": "UI Library Idea.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Development/Features/ASSERT Expanded.md",
+                "file": "QwerkE File Domains.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +117,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Development/Features/ASSERT Expanded.md",
+                "file": "QwerkE File Domains.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +140,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Development/Features/ASSERT Expanded.md"
+                "file": "QwerkE File Domains.canvas"
               }
             }
           }
@@ -148,9 +163,11 @@
   },
   "active": "c315115b897a8c1c",
   "lastOpenFiles": [
+    "Development/Features/ASSERT Expanded.md",
+    "QwerkE File Domains.canvas",
+    "UI Library Idea.md",
     "Hashing Strings For Switch Statements.md",
     "typeId vs dynamic_cast.md",
-    "Development/Features/ASSERT Expanded.md",
     "Adding Entity Components.md",
     "Development/Features/0. Features List.md",
     "Development/Features/0. Features Kanban.md",

@@ -1,7 +1,7 @@
 include "Libraries.lua"
 
 project "Editor"
-	kind "StaticLib"
+	kind "StaticLib" -- #TODO Check for non-console app type
 	location ""
 	rtti "On" -- Enabled for Mirror serialization
 	debugargs { "-applicationName", "Test Game" }
@@ -14,6 +14,18 @@ project "Editor"
 		-- Command line arguments :
 		"key_OverrideAssetsDirPath=\"-overrideAssetsDirPath\"",
 		"key_OverrideNullAssetsDirPath=\"-overrideNullAssetsDirPath\"",
+	}
+	
+	debugargs -- #NOTE User setting changes require VS reload
+	{
+		"-overrideAssetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",
+		"-overrideNullAssetsDirPath", "\"%{wks.location}Editor\\Assets\"",
+	}
+	
+	postbuildcommands
+	{
+		-- Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
+		"call ../Scripts/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 	
 	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }

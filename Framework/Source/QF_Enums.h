@@ -1,14 +1,12 @@
 #pragma once
 
-#include <cstdint>
-
 #ifdef _QENUM
 #include "Libraries/enum/QC_enum.h"
 #endif
 
 namespace QwerkE {
 
-    QC_ENUM(eMaterialMaps, u8,
+    QC_ENUM(eMaterialMaps, uint8_t,
         MatMap_Ambient = 0,
         MatMap_Diffuse,
         MatMap_Specular,
@@ -30,14 +28,14 @@ namespace QwerkE {
         MatMap_Null
     );
 
-    enum eOperationResult : u8
+    enum eOperationResult : uint8_t
     {
         Undefined = 0,
         Success,
         Failure
     };
 
-    enum eComponentTags : u8
+    enum eComponentTags : uint8_t
     {
         Component_Null = 0,
         Component_Camera,
@@ -51,7 +49,7 @@ namespace QwerkE {
         Component_Max // #TODO Don't create values that shouldn't be serialized. Create a ENUM_SIZE() macro or something instead
     };
 
-    enum eRoutineTypes : u8
+    enum eRoutineTypes : uint8_t
     {
         // #TODO Enforce null/default values being the 1st (0) value, in all enums. Document rule as well!
         Routine_Null = 0, // #NOTE Value saved in data so can mess things up if deleted
@@ -63,7 +61,7 @@ namespace QwerkE {
     };
 
     // Light Types
-    enum eLightType : u8
+    enum eLightType : uint8_t
     {
         LightType_Point = 0,
         LightType_Area,

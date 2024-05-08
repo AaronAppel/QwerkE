@@ -83,7 +83,7 @@ enum class MirrorTypes
 
     m_CLASSES_END,
 
-    m_PAIRS_START,
+    m_PAIRS_START, // #TODO Deprecate category enum info
     m_pair_guid_string,
     m_pair_eScriptTypes_ScriptablePtr,
     m_pair_guid_enttEntity,
@@ -118,6 +118,7 @@ enum class MirrorTypes
     m_derived1Ptr, // #NOTE For use with MirrorTesting.h
     m_derived2Ptr, // #NOTE For use with MirrorTesting.h
     m_basePtr, // #NOTE For use with MirrorTesting.h
+    m_vec_string_ptr,
     m_POINTERS_END,
 
     // Primitive types. #NOTE A prefix is used to avoid naming collisions with standard type keywords

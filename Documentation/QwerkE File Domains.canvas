@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"22af79d7cd341073","type":"text","text":"Can't see QF\\* or QE\\* files","x":-400,"y":-150,"width":280,"height":90,"color":"2"},
+		{"id":"dd7a8ba8fade107f","type":"text","text":"Can't see QF\\* files","x":-60,"y":-150,"width":281,"height":90,"color":"6"},
+		{"id":"b5076328f9d34efe","type":"text","text":"Can access all code files","x":280,"y":-150,"width":280,"height":90,"color":"5"},
+		{"id":"66941d943fcd21b5","type":"text","text":"Core game functionality (renderer, input, window, scene + entities, etc)","x":-60,"y":-60,"width":281,"height":240,"color":"6"},
+		{"id":"324f96ede47bc4c3","type":"text","text":"Development only environment for manipulating game data and play testing","x":280,"y":-60,"width":280,"height":240,"color":"5"},
+		{"id":"1b7e1eb22160ac8f","type":"text","text":"Application agnostic code (file, string helpers, time management, etc)","x":-400,"y":-60,"width":280,"height":240,"color":"2"},
+		{"id":"f91d12ec4d66f8c9","type":"text","text":"QC_ = Common","x":-400,"y":-240,"width":280,"height":90,"color":"2"},
+		{"id":"1e3a924996fea20a","type":"text","text":"QF_ = Framework","x":-60,"y":-240,"width":281,"height":90,"color":"6"},
+		{"id":"7284cf449adb9bac","type":"text","text":"QE_ = Editor","x":280,"y":-240,"width":280,"height":90,"color":"5"},
+		{"id":"24f9dbec26cc3c86","type":"text","text":"  Description :","x":-660,"y":-60,"width":222,"height":50},
+		{"id":"4bd130d49d57ed71","type":"text","text":"Visibility :","x":-626,"y":-150,"width":188,"height":50},
+		{"id":"2f5e7b6e3546ed22","type":"text","text":"Domain :","x":-604,"y":-240,"width":166,"height":50},
+		{"id":"2dd0b93fc14811f0","type":"text","text":"QwerkE File Domains","x":-75,"y":-340,"width":311,"height":50}
+	],
+	"edges":[
+		{"id":"70a9b8b86c54f30c","fromNode":"dd7a8ba8fade107f","fromSide":"left","toNode":"22af79d7cd341073","toSide":"right"},
+		{"id":"d881dc8c7b653aca","fromNode":"b5076328f9d34efe","fromSide":"left","toNode":"dd7a8ba8fade107f","toSide":"right"}
+	]
+}

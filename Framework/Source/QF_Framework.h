@@ -13,7 +13,7 @@ namespace QwerkE {
 
 		void StartFrame();
 		void Update(float deltatime);
-		void RenderView(u16 viewId = 0);
+		void RenderView(uint16_t viewId = 0);
 		void EndFrame();
 
 		std::map<std::string, const char*>& GetProgramArgumentPairs();

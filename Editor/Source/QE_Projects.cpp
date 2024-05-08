@@ -6,6 +6,9 @@
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
 
+#include "QE_Editor.h"
+#include "QE_EditorWindowPrompt.h"
+
 namespace QwerkE {
 
     namespace Projects {
@@ -26,11 +29,22 @@ namespace QwerkE {
 				Serialize::ToFile(s_ProjectsData, Paths::Setting(ProjectsDataFileName).c_str());
 			}
 			Serialize::FromFile(lastOpenedDataFilePath.c_str(), s_ProjectsData);
+
+			ProjectsData& projectsData = Projects::GetProjectsData();
+			Projects::LoadProject(projectsData.LastOpenedProjectFileName);
+			if (!Projects::CurrentProject().isLoaded)
+			{
+				OpenEditorWindow(Editor::EditorWindowTypes::Prompt);
+			}
 		}
 
 		void Shutdown()
 		{
 			Serialize::ToFile(s_ProjectsData, Paths::Setting(ProjectsDataFileName).c_str());
+			if (s_CurrentProject.isLoaded)
+			{
+				Serialize::ToFile(s_CurrentProject, Paths::Project(s_CurrentProject.projectFileName.c_str()).c_str());
+			}
 		}
 
 		ProjectsData& GetProjectsData()
@@ -42,12 +56,6 @@ namespace QwerkE {
         {
             return s_CurrentProject;
         }
-
-		void UnloadCurrentProject() // #TODO Expose in header?
-		{
-			// #TODO Prompt to save unsaved changes before unloading
-			Scenes::Shutdown();
-		}
 
 		void LoadProject(const std::string& projectSettingsFileName)
 		{
@@ -63,6 +71,7 @@ namespace QwerkE {
 
 			Serialize::FromFile(projectFilePath.c_str(), s_CurrentProject);
 			s_CurrentProject.isLoaded = true;
+			s_CurrentProject.isDirty = false;
 
 			s_CurrentProject.projectFileName = projectSettingsFileName;
 
@@ -72,6 +81,27 @@ namespace QwerkE {
 			}
 			s_ProjectsData.LastOpenedProjectFileName = s_CurrentProject.projectFileName;
 			local_TryAddUniqueProjectFileName();
+		}
+
+		void LoadProjectFromExplorer()
+		{
+			std::string result = Files::ExplorerOpen("QwerkE Project (*.qproj)\0*.qproj\0");
+			if (!result.empty())
+			{
+				Path fileName = Files::FileName(result.c_str());
+				Projects::LoadProject(fileName.string().c_str());
+			}
+		}
+
+		void UnloadCurrentProject()
+		{
+			if (s_CurrentProject.isLoaded)
+			{
+				// #TODO Prompt to save unsaved changes before unloading
+				Scenes::Shutdown();
+				s_CurrentProject.isLoaded = false;
+				s_CurrentProject.isDirty = false;
+			}
 		}
 
 		void SaveProject()
@@ -98,6 +128,16 @@ namespace QwerkE {
 			local_TryAddUniqueProjectFileName();
 		}
 
+		void SaveProjectFromExplorer()
+		{
+			// #TODO Change current project to point to new file?
+			std::string result = Files::ExplorerSave("QwerkE Project (*.qproj)\0*.qproj\0");
+			if (!result.empty())
+			{
+				Projects::SaveProjectToFile(result.c_str());
+			}
+		}
+
 		void local_TryAddUniqueProjectFileName()
 		{
 			bool isUnique = true;
@@ -109,6 +149,7 @@ namespace QwerkE {
 					break;
 				}
 			}
+
 			if (isUnique)
 			{
 				s_ProjectsData.PreviousProjectFileNames.push_back(s_CurrentProject.projectFileName);

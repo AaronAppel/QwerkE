@@ -66,7 +66,7 @@ namespace QwerkE {
 				transformForward.z
 			};
 
-			const UserSettings& userSettings = Settings::GetUserSettings();
+			const UserSettings& userSettings = Settings::GetUserSettings(); // #TODO Review as UserSettings adds dependency between QF and QE
 			if (Input::IsKeyDown(userSettings.key_camera_MoveForward))
 			{
 				vec3f pos = transform.GetPosition();

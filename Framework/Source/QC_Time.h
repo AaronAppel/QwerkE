@@ -1,6 +1,6 @@
 #pragma once
 
-namespace QwerkE {
+namespace QwerkE { // #TODO Doesn't need to be in the QwerkE namespace
 
     namespace Time {
 
@@ -30,7 +30,7 @@ namespace QwerkE {
         void WriteAppStartTime();
         const double& AppStartTime();
 
-        void SetMaximumFramerate(u16 maximumFramerate);
+        void SetMaximumFramerate(uint16_t maximumFramerate);
 
         bool ShouldProcessNextFrame();
         void StartFrame();

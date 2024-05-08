@@ -54,11 +54,11 @@ namespace QwerkE {
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
 			return *assetMap;
 		}
+		static std::vector<std::pair<GUID, std::string>>& ViewRegistry();
 #endif
 		static void SaveRegistry();
 		static void ExistsInRegistry(const GUID& guid, const std::string& fileName);
 		static void AddToRegistry(const GUID& guid, const std::string& fileName);
-		static std::vector<std::pair<GUID, std::string>>& ViewRegistry();
 
 	private:
 		static std::unordered_map<MirrorTypes, AssetsMap> m_MapOfAssetMaps;

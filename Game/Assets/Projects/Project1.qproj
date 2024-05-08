@@ -1,5 +1,6 @@
 {
 	"Project":	{
+		"projectFileName":	"Project1.qproj",
 		"projectName":	"Project1",
 		"sceneFileNames":	{
 			"m_string":	"NewScene1.qscene",
