@@ -21,21 +21,13 @@ namespace QwerkE {
 		eOperationResult Initialize(unsigned int argc, char** argv)
 		{
 			local_ProgramArguments(argc, argv);
-
 			Log::Initialize();
-
 			Events::Initialize();
-
 			Window::Initialize();
-
 			Renderer::Initialize();
-
 			Input::Initialize();
-
 			Assets::Initialize();
-
 			Scenes::Initialize();
-
 			return eOperationResult::Success;
 		}
 

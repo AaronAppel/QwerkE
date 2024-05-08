@@ -66,15 +66,35 @@ namespace QwerkE {
 				transformForward.z
 			};
 
+			// #TODO Review how hotkeys are managed by framework and customized by game
+			eKeys key_camera_MoveForward = eKeys::eKeys_W;
+			eKeys key_camera_MoveBackward = eKeys::eKeys_S;
+			eKeys key_camera_MoveLeft = eKeys::eKeys_A;
+			eKeys key_camera_MoveRight = eKeys::eKeys_D;
+			eKeys key_camera_MoveUp = eKeys::eKeys_E;
+			eKeys key_camera_MoveDown = eKeys::eKeys_Q;
+			eKeys key_camera_RotateLeft = eKeys::eKeys_R;
+			eKeys key_camera_RotateRight = eKeys::eKeys_T;
+
+#if _QEDITOR // #TODO Review moving editor logic out of framework
 			const UserSettings& userSettings = Settings::GetUserSettings(); // #TODO Review as UserSettings adds dependency between QF and QE
-			if (Input::IsKeyDown(userSettings.key_camera_MoveForward))
+			eKeys key_camera_MoveForward = userSettings.key_camera_MoveForward;
+			eKeys key_camera_MoveBackward = userSettings.key_camera_MoveBackward;
+			eKeys key_camera_MoveLeft = userSettings.key_camera_MoveLeft;
+			eKeys key_camera_MoveRight = userSettings.key_camera_MoveRight;
+			eKeys key_camera_MoveUp = userSettings.key_camera_MoveUp;
+			eKeys key_camera_MoveDown = userSettings.key_camera_MoveDown;
+			eKeys key_camera_RotateLeft = userSettings.key_camera_RotateLeft;
+			eKeys key_camera_RotateRight = userSettings.key_camera_RotateRight;
+#endif
+			if (Input::IsKeyDown(key_camera_MoveForward))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(forward, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(userSettings.key_camera_MoveBackward))
+			if (Input::IsKeyDown(key_camera_MoveBackward))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(forward, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
@@ -89,14 +109,14 @@ namespace QwerkE {
 				transform.m_Matrix[8]
 			};
 
-			if (Input::IsKeyDown(userSettings.key_camera_MoveLeft))
+			if (Input::IsKeyDown(key_camera_MoveLeft))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(right, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[12] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(userSettings.key_camera_MoveRight))
+			if (Input::IsKeyDown(key_camera_MoveRight))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(right, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
@@ -106,19 +126,19 @@ namespace QwerkE {
 
 			const bx::Vec3 up = bx::cross(right, forward);
 
-			if (Input::IsKeyDown(userSettings.key_camera_MoveDown))
+			if (Input::IsKeyDown(key_camera_MoveDown))
 			{
 				transform.m_Matrix[13] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(userSettings.key_camera_MoveUp))
+			if (Input::IsKeyDown(key_camera_MoveUp))
 			{
 				transform.m_Matrix[13] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(userSettings.key_camera_RotateRight))
+			if (Input::IsKeyDown(key_camera_RotateRight))
 			{
 				LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
 			}
-			if (Input::IsKeyDown(userSettings.key_camera_RotateLeft))
+			if (Input::IsKeyDown(key_camera_RotateLeft))
 			{
 				constexpr float rotationSpeed = Math::PI_f();
 				bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
@@ -148,6 +168,7 @@ namespace QwerkE {
 
 			m_up = bx::cross(right, forward);
 
+#if _QEDITOR // #TODO This shouldn't be in the QC domain
 			ImGui::DefaultDebugWindow([&]()
 			{
 				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
@@ -158,6 +179,7 @@ namespace QwerkE {
 				vec3f forward = transformForward;
 				ImGui::DragFloat3("TransformForward", &forward.x, .05f);
 			});
+#endif
 		}
 
 		eScriptTypes ScriptType() override

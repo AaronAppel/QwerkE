@@ -74,6 +74,7 @@ namespace QwerkE {
         }
 
         {
+#if _QEDITOR // #TODO This shouldn't be in the QC domain
             ImGui::DefaultDebugWindow([&]() {
 
                 auto viewTransforms = ViewComponents<ComponentTransform>();
@@ -92,6 +93,7 @@ namespace QwerkE {
                     ++i;
                 }
             });
+#endif
         }
     }
 

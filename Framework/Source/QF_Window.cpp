@@ -107,13 +107,19 @@ namespace QwerkE {
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
+            u16 windowWidth = 1920; // #TODO Review how game project sets window size, or how window detects resolution and chooses window size
+            u16 windowHeight = 1080;
+#if _QEDITOR
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            s_window = glfwCreateWindow((int)engineSettings.windowWidthPixels, (int)engineSettings.windowHeightPixels, g_WindowTitle, NULL, NULL);
+            windowWidth = engineSettings.windowWidthPixels;
+            windowHeight = engineSettings.windowHeightPixels;
+#endif
+            s_window = glfwCreateWindow((int)windowWidth, (int)windowHeight, g_WindowTitle, NULL, NULL);
             if (!s_window)
             {
                 local_CheckGlfwErrors();
             }
-            s_aspectRatio = (float)engineSettings.windowWidthPixels / (float)engineSettings.windowHeightPixels;
+            s_aspectRatio = (float)windowHeight / (float)windowHeight;
 
             glfwSwapInterval(0); // #TODO Use engineSettings.vSyncEnabled
             glfwMakeContextCurrent(s_window);
@@ -225,6 +231,7 @@ namespace QwerkE {
                         Assets::AddToRegistry(GUID(), fileName.string());
                     }
                 }
+#ifdef _QEDITOR // #TODO Review drag and drop for Framework use. Might want a callback for editor use
                 else if (strcmp(fileExtension.string().c_str(), ".qproj"))
                 {
                     std::string projectFilePath = Paths::Project(fileName.string().c_str());
@@ -233,6 +240,7 @@ namespace QwerkE {
                         Projects::LoadProject(fileName.string());
                     }
                 }
+#endif
                 else
                 {
                     LOG_WARN("Drag file type unsupported: {0}", fileExtension.string().c_str());

@@ -116,7 +116,7 @@ namespace QwerkE {
 			}
 		}
 
-		Scene* CreateSceneFromFile(const std::string& sceneFilePath, bool addToProjectsSceneFiles)
+		Scene* CreateSceneFromFile(const std::string& sceneFilePath, bool addToProjectsSceneFiles) // #TODO Review editor only bool argument
 		{
 			Path sceneFileName = Files::FileName(sceneFilePath.c_str());
 
@@ -136,15 +136,17 @@ namespace QwerkE {
 				local_UpdateCurrentSceneIndex();
 			}
 
+#if _QEDITOR // #TODO Review moving editor logic out of framework
 			if (addToProjectsSceneFiles)
 			{
 				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
 			}
+#endif
 
 			return newScene;
 		}
 
-		Scene* CreateScene(const char* const sceneFileName, bool addToProjectsSceneFiles)
+		Scene* CreateScene(const char* const sceneFileName, bool addToProjectsSceneFiles) // #TODO Review editor only bool argument
 		{
 			ASSERT(sceneFileName, "Null argument passed!");
 
@@ -168,11 +170,13 @@ namespace QwerkE {
 			s_CurrentScene = newScene;
 			local_UpdateCurrentSceneIndex();
 
+#if _QEDITOR // #TODO Review moving editor logic out of framework
 			if (addToProjectsSceneFiles)
 			{
 				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
 				newScene->SetDirty();
 			}
+#endif
 
 			return newScene;
 		}
@@ -195,6 +199,7 @@ namespace QwerkE {
 				s_Scenes[i]->UnloadScene();
 				s_Scenes.erase(s_Scenes.begin() + i);
 
+#if _QEDITOR // #TODO Review moving editor logic out of framework
 				Project& project = Projects::CurrentProject();
 				for (size_t i = 0; i < project.sceneFileNames.size(); i++)
 				{
@@ -204,6 +209,7 @@ namespace QwerkE {
 						break;
 					}
 				}
+#endif
 				LOG_INFO("{0} Scene destroyed", __FUNCTION__);
 				break;
 			}

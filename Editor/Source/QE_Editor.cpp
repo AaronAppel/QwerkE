@@ -279,7 +279,6 @@ namespace QwerkE {
             auto it = s_EditorWindows.begin();
             while (it != s_EditorWindows.end())
             {
-                ImGuiStyle& style = ImGui::GetStyle();
                 it->second->Draw();
                 ++it;
             }

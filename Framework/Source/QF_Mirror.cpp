@@ -310,6 +310,7 @@ namespace QwerkE {
 	MIRROR_CLASS_START(Shader)
 	MIRROR_CLASS_END(Shader)
 
+#ifdef _QEDITOR // #TODO Look to declare types elsewhere
 	// Editor types
 	typedef Editor::EditorWindowFlags EditorWindowFlags;
 	MIRROR_ENUM(EditorWindowFlags)
@@ -435,5 +436,6 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
 	MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
 	MIRROR_CLASS_END(ProjectsData)
+#endif
 
 }

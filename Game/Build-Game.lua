@@ -37,7 +37,6 @@ project "Game"
 
 	links
 	{
-		"Editor", -- #TODO Remove
 		"Framework",
 	}
 
