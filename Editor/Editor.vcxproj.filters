@@ -22,6 +22,7 @@
     <ClCompile Include="Source\QE_EditorInspector.cpp" />
     <ClCompile Include="Source\QE_Projects.cpp" />
     <ClCompile Include="Source\QE_Settings.cpp" />
+    <ClCompile Include="Source\QE_Mirror.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\QE_MaterialEditor.h">

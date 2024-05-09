@@ -109,7 +109,7 @@ namespace QwerkE {
 
             u16 windowWidth = 1920; // #TODO Review how game project sets window size, or how window detects resolution and chooses window size
             u16 windowHeight = 1080;
-#if _QEDITOR
+#ifdef _QEDITOR
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
             windowWidth = engineSettings.windowWidthPixels;
             windowHeight = engineSettings.windowHeightPixels;

@@ -73,12 +73,19 @@ project "Framework"
 		links { "psapi", } -- bgfx requires psapi
 		systemversion "latest"
 
+	-- filter "configurations:*32"
+	-- 	architecture "x86"
+	--	defines { "_Q32BIT", }
+
+	-- filter "configurations:*64"
+	-- 	architecture "x86_64"
+	--	defines { "_Q64BIT", }
+
 	filter "configurations:Debug"
 		defines
 		{
 			"_QDEBUG",
-			"_Q32Bit",
-			"LibrariesDir=\"%{wks.location}/Libraries/\"",
+			"LibrariesDir=\"%{wks.location}/Libraries/\"", -- #TODO Remove
 			LibraryDefines, 
 			"BX_CONFIG_DEBUG=1", -- Required by bgfx
 		}
@@ -88,13 +95,13 @@ project "Framework"
 		debugargs { }
 
 	filter "configurations:Release"
-		defines { "_QRELEASE", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "_QRELEASE", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "On"
 
 	filter "configurations:Retail"
-		defines { "_QRETAIL", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "_QRETAIL", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

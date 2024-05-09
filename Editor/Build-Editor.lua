@@ -1,7 +1,7 @@
 include "Libraries.lua"
 
 project "Editor"
-	kind "StaticLib" -- #TODO Check for non-console app type
+	kind "ConsoleApp" -- #TODO Check for non-console app type
 	location ""
 	rtti "On" -- Enabled for Mirror serialization
 	debugargs { "-applicationName", "Test Game" }
@@ -15,13 +15,13 @@ project "Editor"
 		"key_OverrideAssetsDirPath=\"-overrideAssetsDirPath\"",
 		"key_OverrideNullAssetsDirPath=\"-overrideNullAssetsDirPath\"",
 		
-		"_QEDITOR=1",
+		"_QEDITOR=\"1\"",
 	}
 	
 	debugargs -- #NOTE User setting changes require VS reload
 	{
 		"-overrideAssetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",
-		"-overrideNullAssetsDirPath", "\"%{wks.location}Editor\\Assets\"",
+		"-overrideNullAssetsDirPath", "\"%{wks.location}%{prj.name}\\NullAssets\"",
 	}
 	
 	postbuildcommands
@@ -56,25 +56,33 @@ project "Editor"
 	
 	pchheader "QE_PCH.h"
 	pchsource "Source/QE_PCH.cpp"
+
+	-- filter "configurations:*32"
+	-- 	architecture "x86"
+	--	defines { "_Q32BIT", }
+
+	-- filter "configurations:*64"
+	-- 	architecture "x86_64"
+	--	defines { "_Q64BIT", }
 	
 	filter "system:windows"
 		systemversion "latest"
 		defines { }
 
 	filter "configurations:Debug"
-		defines { "BX_CONFIG_DEBUG=1", "_QDebug", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "BX_CONFIG_DEBUG=1", "_QDebug", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Debug"
 		optimize "Off"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines { "BX_CONFIG_DEBUG=0", "_QRelease", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "BX_CONFIG_DEBUG=0", "_QRelease", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "Off"
 		symbols "Off"
 
 	filter "configurations:Retail"
-		defines { "BX_CONFIG_DEBUG=0", "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "BX_CONFIG_DEBUG=0", "_QRetail", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

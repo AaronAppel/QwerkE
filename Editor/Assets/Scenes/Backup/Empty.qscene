@@ -1,0 +1,156 @@
+{
+	"Scene":	[{
+			"m_SceneFileName":	"Empty.qscene",
+			"m_IsPaused":	false,
+			"m_SceneIsActive":	false,
+			"m_CurrentCameraIndex":	0,
+			"m_CameraList":	[{
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Camera0",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0.416059,
+											"z":	-9.157461
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+							}],
+							"m_Components":	[{
+									"1":	[{
+											"m_ViewportSize":	[{
+													"x":	2048,
+													"y":	1152
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}]
+				}],
+			"m_LightList":	[{
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Light0",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	1,
+											"z":	0
+										}],
+									"s_Rotation":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+							}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"3":	[{
+									}],
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshFileName":	"LightBulb.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}]
+				}],
+			"m_SceneDrawList":	[{
+					"GameObject":	[{
+							"m_Enabled":	true,
+							"m_Name":	"Object0",
+							"m_Tag":	9,
+							"m_Transform":	[{
+									"s_Position":	[{
+											"x":	0,
+											"y":	0,
+											"z":	0
+										}],
+									"s_Rotation":	[{
+											"x":	192,
+											"y":	192,
+											"z":	0
+										}],
+									"s_Scale":	[{
+											"x":	1,
+											"y":	1,
+											"z":	1
+										}]
+								}],
+							"m_UpdateList":	[{
+									"4":	[{
+											"m_Enabled":	true,
+											"m_Speed":	0.500000,
+											"m_PositionOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
+												}],
+											"m_RotationOffset":	[{
+													"x":	0.750000,
+													"y":	0.750000,
+													"z":	0
+												}],
+											"m_ScaleOffset":	[{
+													"x":	0,
+													"y":	0,
+													"z":	0
+												}]
+										}]
+								}],
+							"m_DrawList":	[{
+									"1":	[{
+											"m_Enabled":	true
+										}]
+								}],
+							"m_Components":	[{
+									"5":	[{
+											"m_SchematicName":	"None",
+											"m_Renderables":	[{
+													"Renderable":	[{
+															"m_RenderableName":	"null",
+															"m_ShaderName":	"LitMaterial.ssch",
+															"m_MaterialName":	"brickwall.msch",
+															"m_MeshFileName":	"null_mesh.obj"
+														}]
+												}]
+										}]
+								}],
+							"m_RenderOrder":	100
+						}]
+				}]
+		}]
+}

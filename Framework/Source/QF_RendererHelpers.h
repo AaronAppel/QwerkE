@@ -12,7 +12,8 @@
 #include "Libraries/bx/include/bx/readerwriter.h"
 #include "Libraries/bx/include/bx/file.h"
 
-bgfx::ShaderHandle myLoadShader(const char* FILENAME);
+bgfx::ShaderHandle myLoadShaderName(const char* ShaderFileName);
+bgfx::ShaderHandle myLoadShaderPath(const char* ShaderFilePath);
 
 bgfx::ProgramHandle myLoadShaderProgram(const char* vertexShaderFilePath, const char* fragmentShaderFilePath);
 

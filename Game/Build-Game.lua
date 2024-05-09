@@ -49,18 +49,26 @@ project "Game"
 	pchheader "QG_PCH.h"
 	pchsource "Source/QG_PCH.cpp"
 
+	-- filter "configurations:*32"
+	-- 	architecture "x86"
+	--	defines { "_Q32BIT", }
+
+	-- filter "configurations:*64"
+	-- 	architecture "x86_64"
+	--	defines { "_Q64BIT", }
+	
 	filter "system:windows"
 	   systemversion "latest"
 	   defines { "WINDOWS" }
 
 	filter "configurations:Debug"
-	   defines { "_QDebug", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QDebug", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 
 	filter "configurations:Release"
-	   defines { "_QRelease", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QRelease", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 
 	filter "configurations:Retail"
-	   defines { "_QRetail", "_Q32Bit", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QRetail", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		symbols "off"
 		optimize "on"

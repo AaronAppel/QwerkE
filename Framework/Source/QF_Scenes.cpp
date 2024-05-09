@@ -136,7 +136,7 @@ namespace QwerkE {
 				local_UpdateCurrentSceneIndex();
 			}
 
-#if _QEDITOR // #TODO Review moving editor logic out of framework
+#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
 			if (addToProjectsSceneFiles)
 			{
 				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
@@ -170,7 +170,7 @@ namespace QwerkE {
 			s_CurrentScene = newScene;
 			local_UpdateCurrentSceneIndex();
 
-#if _QEDITOR // #TODO Review moving editor logic out of framework
+#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
 			if (addToProjectsSceneFiles)
 			{
 				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
@@ -199,7 +199,7 @@ namespace QwerkE {
 				s_Scenes[i]->UnloadScene();
 				s_Scenes.erase(s_Scenes.begin() + i);
 
-#if _QEDITOR // #TODO Review moving editor logic out of framework
+#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
 				Project& project = Projects::CurrentProject();
 				for (size_t i = 0; i < project.sceneFileNames.size(); i++)
 				{

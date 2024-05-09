@@ -1,13 +1,13 @@
 workspace "QwerkE Game"
 
 	-- Workspace specific settings
-	startproject "Game"
+	startproject "Editor"
 	location "../"
 
 	-- Solution wide shared settings
 	configurations { "Debug", "Release", "Retail" }
 	flags { "MultiProcessorCompile" }
-	rtti "Off"
+	rtti "Off" -- #NOTE Needed for Mirror projects (Editor, Framework)
 	staticruntime "off" -- https://premake.github.io/docs/staticruntime
 	language "C++"
 	cppdialect "C++17"
@@ -24,13 +24,13 @@ workspace "QwerkE Game"
 	targetdir ("%{wks.location}/bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("%{wks.location}/bin/int/" .. OutputDir .. "/%{prj.name}")
 
-	filter "system:windows"
+	filter "system:windows" -- #TODO Review moving defines lower, below Dependencies
 		buildoptions { "/Zc:__cplusplus" }
 		systemversion "latest"
 		defines { "_QWINDOWS", "WIN32_LEAN_AND_MEAN", }
 		
 	filter "configurations:Debug"
-		defines { "_QDEBUG", "WIN32_LEAN_AND_MEAN", } -- #TODO _QDEBUG should be all caps to match convention
+		defines { "_QDEBUG", "WIN32_LEAN_AND_MEAN", }
 		runtime "Debug"
 		symbols "on"
 		optimize "off"

@@ -38,7 +38,7 @@
 namespace QwerkE {
 
 	template <typename SuperClass, typename... SubClass>
-	void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+	static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
 	{
 		uint16_t enumValue = enumStartOffset;
 		([&]()

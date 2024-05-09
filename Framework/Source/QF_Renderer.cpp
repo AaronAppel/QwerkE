@@ -50,7 +50,7 @@ namespace QwerkE {
 
 		// #TODO static these
 		bgfx::FrameBufferHandle s_FrameBufferHandleFbo; // #TESTING
-		bgfx::TextureHandle s_FrameBufferTextureFBO; // #TODO Destroy
+		bgfx::TextureHandle s_FrameBufferTexturesFBO1[2]; // #TODO Destroy
 		bgfx::FrameBufferHandle s_FrameBufferHandleEditorCamera; // #TESTING
 		bgfx::TextureHandle s_FrameBufferTextureEditorCamera; // #TODO Destroy
 		// bgfx::TextureHandle s_ReadBackTexture; // #TODO Destroy
@@ -144,13 +144,21 @@ namespace QwerkE {
 			// ASSERT(bgfx::isValid(s_ReadBackTexture), "Error creating read back texture!");
 
 			{
-				s_FrameBufferTextureFBO = bgfx::createTexture2D(windowSize.x, windowSize.y,
+				s_FrameBufferTexturesFBO1[0] = bgfx::createTexture2D(windowSize.x, windowSize.y,
 					has_mips, num_layers,
 					bgfx::TextureFormat::BGRA8,
 					BGFX_TEXTURE_RT);
-				ASSERT(bgfx::isValid(s_FrameBufferTextureFBO), "Error creating frame buffer texture [0]!");
+				ASSERT(bgfx::isValid(s_FrameBufferTexturesFBO1[0]), "Error creating frame buffer texture [0]!");
+			}
 
-				s_FrameBufferHandleFbo = bgfx::createFrameBuffer(1, &s_FrameBufferTextureFBO); // #TESTING
+			{
+				s_FrameBufferTexturesFBO1[1] = bgfx::createTexture2D(windowSize.x, windowSize.y,
+					has_mips, num_layers,
+					bgfx::TextureFormat::D16,
+					BGFX_TEXTURE_RT_WRITE_ONLY);
+				ASSERT(bgfx::isValid(s_FrameBufferTexturesFBO1[1]), "Error creating frame buffer depth texture [1]!");
+
+				s_FrameBufferHandleFbo = bgfx::createFrameBuffer(2, s_FrameBufferTexturesFBO1); // #TESTING
 				ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandleFbo.idx, "Error creating frame buffer!");
 			}
 

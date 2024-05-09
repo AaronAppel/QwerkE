@@ -14,6 +14,7 @@
 
 #include "QF_Files.h"
 #include "QF_Mesh.h"
+#include "QF_Paths.h"
 #include "QF_RendererHelpers.h"
 #include "QF_Serialize.h"
 #include "QF_Shader.h"
@@ -59,7 +60,10 @@ namespace QwerkE {
 
 		{
 			Shader* nullShader = new Shader();
-			nullShader->m_Program = myLoadShaderProgram("vs_cubes.bin", "fs_cubes.bin");
+			nullShader->m_Program = myLoadShaderProgram(
+				Paths::Shader("vs_cubes.bin").c_str(),
+				Paths::Shader("fs_cubes.bin").c_str()
+			);
 			nullShader->m_GUID = GUID::Invalid;
 			m_MapOfAssetMaps[MirrorTypes::Shader][nullShader->m_GUID] = nullShader;
 		}

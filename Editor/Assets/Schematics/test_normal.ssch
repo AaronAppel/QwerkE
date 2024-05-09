@@ -1,0 +1,8 @@
+{
+	"ShaderProgram":	[{
+		"m_Name":	"test_normal.ssch",
+		"m_VertName":	"test_normal.vert",
+		"m_FragName":	"test_normal.frag",
+		"m_GeoName":	"null"
+	}]
+}

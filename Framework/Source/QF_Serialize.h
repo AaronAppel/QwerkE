@@ -44,7 +44,7 @@ namespace QwerkE {
         void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
 
         template <class T>
-        void FromFile(const char* absoluteFilePath, T& objectReference)
+        void FromFile(const char* absoluteFilePath, T& objectReference, bool createIfMissing = false)
         {
             if (!absoluteFilePath)
             {
@@ -78,7 +78,15 @@ namespace QwerkE {
             }
             else
             {
-                LOG_ERROR("{0} Error loading JSON file {1}!", __FUNCTION__, absoluteFilePath);
+                if (createIfMissing)
+                {
+                    ToFile(objectReference, absoluteFilePath);
+                    LOG_WARN("{0} File {1} missing so created", __FUNCTION__, absoluteFilePath);
+                }
+                else
+                {
+                    LOG_ERROR("{0} Error loading JSON file {1}!", __FUNCTION__, absoluteFilePath);
+                }
             }
         }
 

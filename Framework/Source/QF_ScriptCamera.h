@@ -58,7 +58,7 @@ namespace QwerkE {
 					translate.x, translate.y, translate.z);
 			}
 
-			const vec3f transformForward = transform.Forward();
+			const vec3f transformForward = transform.Forward(); // #TODO Calculate and use proper forward
 			const bx::Vec3 forward =
 			{
 				transformForward.x,
@@ -76,16 +76,16 @@ namespace QwerkE {
 			eKeys key_camera_RotateLeft = eKeys::eKeys_R;
 			eKeys key_camera_RotateRight = eKeys::eKeys_T;
 
-#if _QEDITOR // #TODO Review moving editor logic out of framework
+#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
 			const UserSettings& userSettings = Settings::GetUserSettings(); // #TODO Review as UserSettings adds dependency between QF and QE
-			eKeys key_camera_MoveForward = userSettings.key_camera_MoveForward;
-			eKeys key_camera_MoveBackward = userSettings.key_camera_MoveBackward;
-			eKeys key_camera_MoveLeft = userSettings.key_camera_MoveLeft;
-			eKeys key_camera_MoveRight = userSettings.key_camera_MoveRight;
-			eKeys key_camera_MoveUp = userSettings.key_camera_MoveUp;
-			eKeys key_camera_MoveDown = userSettings.key_camera_MoveDown;
-			eKeys key_camera_RotateLeft = userSettings.key_camera_RotateLeft;
-			eKeys key_camera_RotateRight = userSettings.key_camera_RotateRight;
+			key_camera_MoveForward = userSettings.key_camera_MoveForward;
+			key_camera_MoveBackward = userSettings.key_camera_MoveBackward;
+			key_camera_MoveLeft = userSettings.key_camera_MoveLeft;
+			key_camera_MoveRight = userSettings.key_camera_MoveRight;
+			key_camera_MoveUp = userSettings.key_camera_MoveUp;
+			key_camera_MoveDown = userSettings.key_camera_MoveDown;
+			key_camera_RotateLeft = userSettings.key_camera_RotateLeft;
+			key_camera_RotateRight = userSettings.key_camera_RotateRight;
 #endif
 			if (Input::IsKeyDown(key_camera_MoveForward))
 			{
@@ -168,7 +168,7 @@ namespace QwerkE {
 
 			m_up = bx::cross(right, forward);
 
-#if _QEDITOR // #TODO This shouldn't be in the QC domain
+#ifdef _QEDITOR // #TODO This shouldn't be in the QC domain
 			ImGui::DefaultDebugWindow([&]()
 			{
 				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);

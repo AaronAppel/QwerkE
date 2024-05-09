@@ -52,7 +52,7 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialize::FromFile(Settings::GetStyleFileName(), style);
+        Serialize::FromFile(Settings::GetStyleFileName(), style, true);
     }
 
 	namespace Editor {
@@ -295,15 +295,16 @@ namespace QwerkE {
             if (!Window::IsMinimized())
             {
                 {   // Debug drawer calls
-                    const bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+                    constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
                     bgfx::setState(BGFX_STATE_DEFAULT);
                     DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
                     debugDrawer.begin(viewIdFbo1, true);
 
-                    const bx::Vec3 normal = { .0f,  1.f, .0f };
-                    const bx::Vec3 pos = { .0f, .0f, .0f };
+                    constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
+                    constexpr bx::Vec3 pos = { .0f, .0f, .0f };
 
-                    debugDrawer.drawSphere(0.f, 0.f, 0.f, 3.f, Axis::X);
+                    // debugDrawer.drawSphere(0.f, 0.f, 0.f, 3.f, Axis::X);
+                    debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
 
                     bx::Plane plane(bx::InitNone);
                     bx::calcPlane(plane, normal, pos);
@@ -321,4 +322,9 @@ namespace QwerkE {
 
 	}
 
+}
+
+void main(unsigned int argc, char** argv)
+{
+    QwerkE::Editor::Run(argc, argv);
 }

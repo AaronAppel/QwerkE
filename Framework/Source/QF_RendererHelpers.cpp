@@ -8,7 +8,7 @@
 #include "Libraries/bx/include/bx/readerwriter.h"
 #include "Libraries/bx/include/bx/file.h"
 
-bgfx::ShaderHandle myLoadShader(const char* FILENAME)
+bgfx::ShaderHandle myLoadShaderName(const char* FILENAME)
 {
 	const char* shaderPath = "???";
 
@@ -47,10 +47,25 @@ bgfx::ShaderHandle myLoadShader(const char* FILENAME)
 	return bgfx::createShader(mem);
 }
 
+bgfx::ShaderHandle myLoadShaderPath(const char* filePath)
+{
+	FILE* fileHandle = fopen(filePath, "rb");
+	fseek(fileHandle, 0, SEEK_END);
+	long fileContentsSize = ftell(fileHandle);
+	fseek(fileHandle, 0, SEEK_SET);
+
+	const bgfx::Memory* mem = bgfx::alloc(fileContentsSize + 1);
+	fread(mem->data, 1, fileContentsSize, fileHandle);
+	mem->data[mem->size - 1] = '\0';
+	fclose(fileHandle);
+
+	return bgfx::createShader(mem);
+}
+
 bgfx::ProgramHandle myLoadShaderProgram(const char* vertexShaderFilePath, const char* fragmentShaderFilePath)
 {
-	const bgfx::ShaderHandle vertexShader = myLoadShader(vertexShaderFilePath);
-	const bgfx::ShaderHandle fragmentShader = myLoadShader(fragmentShaderFilePath);
+	const bgfx::ShaderHandle vertexShader = myLoadShaderPath(vertexShaderFilePath);
+	const bgfx::ShaderHandle fragmentShader = myLoadShaderPath(fragmentShaderFilePath);
 
 	return bgfx::createProgram(vertexShader, fragmentShader, true);
 }
