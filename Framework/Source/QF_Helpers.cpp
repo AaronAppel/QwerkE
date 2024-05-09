@@ -1,6 +1,6 @@
 #include "QC_StringHelpers.h"
 
-#include "QF_Math.h"
+#include "QC_Math.h"
 
 namespace QwerkE {
 

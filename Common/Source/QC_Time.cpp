@@ -9,7 +9,7 @@
 #error "Support non windows platform!"
 #endif
 
-#include "QF_Debug.h"
+#include <assert.h>
 
 namespace QwerkE {
 
@@ -24,14 +24,14 @@ namespace QwerkE {
 
         void WriteAppStartTime()
         {
-            ASSERT(!s_AppStartTime, "App start time has already been set");
+            assert(!s_AppStartTime && "App start time has already been set");
             s_AppStartTime = Now();
             s_LatestFrameStartTime = s_AppStartTime;
         }
 
-        void SetMaximumFramerate(u16 maximumFramerate)
+        void SetMaximumFramerate(unsigned short maximumFramerate)
         {
-            ASSERT(maximumFramerate > 0, "Maximum framerate must be greater than 0!");
+            assert(maximumFramerate > 0 && "Maximum framerate must be greater than 0!");
             s_MinimumtimeBetweenFrames = 1.0 / (double)maximumFramerate;
         }
 

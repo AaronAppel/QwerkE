@@ -6,7 +6,7 @@
 
 void ProgramArgsToPairs(unsigned int numArgs, char** argArr, std::map<std::string, const char*>& argumentPairs)
 {
-	argumentPairs.insert(std::pair<std::string, const char*>(key_ExePath, argArr[0]));
+	argumentPairs.insert(std::pair<std::string, const char*>(ProgramArgKey_ExePath, argArr[0]));
 
 	for (size_t i = 1; i < numArgs; ++i)
 	{
@@ -23,9 +23,9 @@ void ProgramArgsToPairs(unsigned int numArgs, char** argArr, std::map<std::strin
 
 void OutputProgramPairsInfo(const std::map<std::string, const char*>& argumentPairs)
 {
-	if (argumentPairs.find(key_ExePath) != argumentPairs.end())
+	if (argumentPairs.find(ProgramArgKey_ExePath) != argumentPairs.end())
 	{
-		printf("Program .exe path: %s\n", argumentPairs.find(key_ExePath)->second);
+		printf("Program .exe path: %s\n", argumentPairs.find(ProgramArgKey_ExePath)->second);
 	}
 
 	printf("\nNumber Of Arguments Passed: %d", argumentPairs.size());

@@ -57,6 +57,7 @@ workspace "QwerkE Game"
 	
 	-- buildoptions { "/EHsc", "/Zc:preprocessor", } -- bx doesn't like "/EHsc", "/Zc:preprocessor"
 
+	include "../Common/Build-Common.lua"
 	include "../Framework/Build-Framework.lua"
 	include "../Editor/Build-Editor.lua"
 	include "../Game/Build-Game.lua"

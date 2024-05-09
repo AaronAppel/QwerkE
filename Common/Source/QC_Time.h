@@ -1,6 +1,6 @@
 #pragma once
 
-namespace QwerkE { // #TODO Doesn't need to be in the QwerkE namespace
+namespace QwerkE {
 
     namespace Time {
 
@@ -8,9 +8,9 @@ namespace QwerkE { // #TODO Doesn't need to be in the QwerkE namespace
 
         double Now();
 
-		class Timer
-		{
-		public:
+        class Timer
+        {
+        public:
             Timer() = default;
             Timer(double duration) { m_Duration = duration; Start(); }
 
@@ -20,17 +20,17 @@ namespace QwerkE { // #TODO Doesn't need to be in the QwerkE namespace
 
             void SetDuration(double newDuration) { m_Duration = newDuration; }
 
-		private:
+        private:
             double m_StartTime = 0.;
             double m_Duration = 0.;
-		};
+        };
 
         // #TODO TrackGameTime differently, using OnGamePaused(bool paused = true/false). Allows lifetimes to be game time relative
 
         void WriteAppStartTime();
         const double& AppStartTime();
 
-        void SetMaximumFramerate(uint16_t maximumFramerate);
+        void SetMaximumFramerate(unsigned short maximumFramerate);
 
         bool ShouldProcessNextFrame();
         void StartFrame();
@@ -45,4 +45,3 @@ namespace QwerkE { // #TODO Doesn't need to be in the QwerkE namespace
     }
 
 }
-

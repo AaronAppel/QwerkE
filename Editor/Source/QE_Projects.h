@@ -17,9 +17,12 @@ namespace QwerkE {
         std::string projectFileName = Constants::gc_DefaultStringValue;
         std::string projectName = Constants::gc_DefaultStringValue;
 
+        std::string startUpSceneName = Constants::gc_DefaultStringValue;
+
         // Referenced Scenes
         std::vector<std::string> sceneFileNames;
 
+        // Settings for: Physics, Audio, Graphics, etc
         // struct ConfiguredGameKeys
         // {
         //     eKeys action1 = eKeys::eKeys_MAX; // eKeys::eKeys_K;

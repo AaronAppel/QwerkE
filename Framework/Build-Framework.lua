@@ -26,6 +26,8 @@ project "Framework"
 
 	includedirs
 	{
+		"%{wks.location}/Common/Source/",
+		
 		"%{wks.location}/%{prj.name}/Source", -- "Source/QF_PCH.h", -- For precompiled headers to work in VS
 		"%{wks.location}/", -- Root for #including "Libraries/..."
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
@@ -57,6 +59,8 @@ project "Framework"
 		"lodepng",
 		"Mirror",
 		"spdlog",
+		
+		"Common",
 		
 		-- Libraries .lib/.dll
 		"%{LibraryLib.glfw}",

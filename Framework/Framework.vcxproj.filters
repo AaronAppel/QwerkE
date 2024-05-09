@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\QC_Time.cpp" />
     <ClCompile Include="Source\QF_Log.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
@@ -22,9 +21,6 @@
     </ClCompile>
     <ClCompile Include="Source\QF_AssignWin32Keys.cpp">
       <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\QC_MathFunctions.cpp">
-      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_PrintFunctions.cpp">
       <Filter>Debug</Filter>
@@ -51,9 +47,6 @@
     <ClCompile Include="Source\QF_ComponentMesh.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QC_StringHelpers.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\QF_Files.cpp">
       <Filter>Utils\FileIO</Filter>
     </ClCompile>
@@ -67,15 +60,11 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_Paths.cpp" />
-    <ClCompile Include="Source\QC_Guid.cpp" />
     <ClCompile Include="Source\QF_Scripting.cpp">
       <Filter>Game Scripts</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_RendererHelpers.cpp">
       <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\QC_System.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\QF_ImGuiKeysCodex.cpp">
       <Filter>Input</Filter>
@@ -89,14 +78,8 @@
     <ClCompile Include="Source\QF_SerializeTest.cpp">
       <Filter>Utils\FileIO\Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QC_ProgramArgs.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\QC_CallbackFunction.h" />
-    <ClInclude Include="Source\QC_Time.h" />
-    <ClInclude Include="Source\QC_TypeDefs.h" />
     <ClInclude Include="Source\QF_PathDefines.h" />
     <ClInclude Include="Source\QF_Enums.h" />
     <ClInclude Include="Source\QF_Log.h">
@@ -122,9 +105,6 @@
     </ClInclude>
     <ClInclude Include="Source\QF_Instrumentor.h">
       <Filter>Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QC_MathFunctions.h">
-      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\QF_Math.h">
       <Filter>Math</Filter>
@@ -169,9 +149,6 @@
     <ClInclude Include="Source\QF_ComponentCamera.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QC_StringHelpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_Files.h">
       <Filter>Utils\FileIO</Filter>
     </ClInclude>
@@ -201,7 +178,6 @@
     <ClInclude Include="Source\QF_ComponentLight.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QC_Guid.h" />
     <ClInclude Include="Source\QF_ComponentInfo.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -227,9 +203,6 @@
     <ClInclude Include="Source\QF_InputMouseDragTracker.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QC_System.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_ScriptPathFinder.h">
       <Filter>Game Scripts</Filter>
     </ClInclude>
@@ -238,9 +211,6 @@
     </ClInclude>
     <ClInclude Include="Source\QF_ScriptHelpers.h">
       <Filter>Game Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\QC_ProgramArgs.h">
-      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,7 @@ project "Game"
 
 	includedirs
 	{
+		"%{wks.location}/Common/Source", -- #TODO Review if needed. Was at the time of adding
 		"%{wks.location}/Framework/Source",
 		"%{wks.location}/", -- Root for accessing library source
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries

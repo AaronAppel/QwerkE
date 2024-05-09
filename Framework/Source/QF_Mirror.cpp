@@ -247,6 +247,7 @@ namespace QwerkE {
 	MIRROR_CLASS_START(Project)
 	MIRROR_CLASS_MEMBER(projectFileName)
 	MIRROR_CLASS_MEMBER(projectName)
+	MIRROR_CLASS_MEMBER(startUpSceneName)
 	MIRROR_CLASS_MEMBER(sceneFileNames)
 	MIRROR_CLASS_END(Project)
 

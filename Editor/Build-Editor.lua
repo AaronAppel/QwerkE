@@ -20,7 +20,7 @@ project "Editor"
 	
 	debugargs -- #NOTE User setting changes require VS reload
 	{
-		"-overrideAssetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",
+		"-overrideAssetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",	
 		"-overrideNullAssetsDirPath", "\"%{wks.location}%{prj.name}\\NullAssets\"",
 	}
 	
@@ -34,8 +34,9 @@ project "Editor"
 
 	includedirs
 	{
-		"%{wks.location}/", -- Root for accessing library source
-		"%{wks.location}/Framework/Source/", -- Include Framework source
+		"%{wks.location}/", -- Repo root for accessing libraries
+		"%{wks.location}/Common/Source/",
+		"%{wks.location}/Framework/Source/",
 		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
 		
 		"%{wks.location}/Libraries/bgfxFramework/include", -- For bgfx helpers
@@ -49,6 +50,7 @@ project "Editor"
 	links
 	{
 		-- Projects
+		"Common",
 		"Framework",
 	}
 	
