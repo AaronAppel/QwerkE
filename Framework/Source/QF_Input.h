@@ -3,6 +3,7 @@
 // Reference: https://www.gamedev.net/blogs/entry/2250186-designing-a-robust-input-handling-system-for-games/
 
 #include "QF_eKeys.h"
+#include "QF_GameActions.h"
 #include "QF_PathDefines.h"
 
 #ifdef _QGLFW3
@@ -21,6 +22,8 @@ namespace QwerkE {
         void NewFrame(); // #Note Call before libraries each frame
 
         bool FrameKeyAction(eKeys key, eKeyState state);
+
+        GameActions& GetGameActions();
 
         const vec2f& MousePosition();
         vec2f MouseDragDelta();

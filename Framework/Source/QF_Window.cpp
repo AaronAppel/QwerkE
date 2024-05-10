@@ -81,7 +81,7 @@ namespace QwerkE {
         }
     #endif
 
-        void Window::Initialize()
+        void Window::Initialize(u16 windowWidth, u16 windowHeight)
         {
     #ifdef _QGLFW3
             const int glfwInitCode = glfwInit();
@@ -107,13 +107,6 @@ namespace QwerkE {
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
-            u16 windowWidth = 1920; // #TODO Review how game project sets window size, or how window detects resolution and chooses window size
-            u16 windowHeight = 1080;
-#ifdef _QEDITOR
-            const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            windowWidth = engineSettings.windowWidthPixels;
-            windowHeight = engineSettings.windowHeightPixels;
-#endif
             s_window = glfwCreateWindow((int)windowWidth, (int)windowHeight, g_WindowTitle, NULL, NULL);
             if (!s_window)
             {

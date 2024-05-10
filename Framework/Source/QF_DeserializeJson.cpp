@@ -102,6 +102,10 @@ namespace QwerkE {
             case MirrorTypes::m_float:
                 *(float*)obj = objJson->valuedouble; break;
 
+            case MirrorTypes::m_char:
+            case MirrorTypes::eKeys:
+                memcpy(obj, objJson->valuestring, 1); break;
+
             default:
                 if (objJson->type | cJSON_Number | cJSON_True | cJSON_False)
                 {   // #TODO Potential bug writing to fieldAddress with size less than objJson->valueint
@@ -111,12 +115,6 @@ namespace QwerkE {
                     if (objTypeInfo->size > 4)
                     {
                         sourceAddress = (void*)&objJson->valuedouble;
-                    }
-
-                    if (MirrorTypes::m_char == objTypeInfo->enumType ||
-                        MirrorTypes::eKeys  == objTypeInfo->enumType)
-                    {
-                        sourceAddress = (void*)&objJson->valuestring[0];
                     }
                     memcpy(fieldAddress, sourceAddress, objTypeInfo->size);
                 }

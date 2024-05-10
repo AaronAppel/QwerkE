@@ -11,7 +11,14 @@
 
 int main(unsigned int argc, char** argv)
 {
-	QwerkE::Framework::Initialize(argc, argv);
+	QwerkE::Framework::StartUpArguments startUpArgs(
+		argc,
+		argv,
+		1920,
+		1080
+	);
+
+	QwerkE::Framework::Initialize(startUpArgs);
 
 	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("GameScene1.qscene"), false);
 

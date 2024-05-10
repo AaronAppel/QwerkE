@@ -1,0 +1,10 @@
+{
+	"Project":	{
+		"projectFileName":	"Project2.qproj",
+		"projectName":	"Project2",
+		"sceneFileNames":	{
+			"m_string":	"GameScene1.qscene",
+			"m_string":	"ScenesNewScene.qscene"
+		}
+	}
+}

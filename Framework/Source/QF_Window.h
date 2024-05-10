@@ -6,7 +6,7 @@ namespace QwerkE {
 
     namespace Window {
 
-        void Initialize();
+        void Initialize(u16 windowWidth = 1920, u16 windowHeight = 1080);
         void Shutdown();
 
         void NewFrame();

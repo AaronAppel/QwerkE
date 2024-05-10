@@ -15,11 +15,16 @@
 
 #include "QF_Enums.h"
 #include "QF_Log.h"
+#include "QF_Paths.h"
+#include "QF_Serialize.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
 
     namespace Input {
+
+        constexpr char* s_GameActionsFileName = "GameActions.qdata";
+        static GameActions s_GameActions;
 
         std::vector<std::pair<eKeys, CallbackFunction<OnKeyEventCallback>>> s_OnKeyEventCallBacks;
 
@@ -103,6 +108,8 @@ namespace QwerkE {
 #else
 #error "Define input library!"
 #endif
+
+            Serialize::FromFile(Paths::Setting(s_GameActionsFileName).c_str(), s_GameActions, true);
 
             NewFrame();
         }
@@ -253,6 +260,11 @@ namespace QwerkE {
                 }
             }
             return false;
+        }
+
+        GameActions& GetGameActions()
+        {
+            return s_GameActions;
         }
 
     }

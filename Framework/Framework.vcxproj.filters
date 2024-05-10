@@ -106,9 +106,6 @@
     <ClInclude Include="Source\QF_Instrumentor.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QF_Math.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Source\QF_PrintFunctions.h">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -212,6 +209,7 @@
     <ClInclude Include="Source\QF_ScriptHelpers.h">
       <Filter>Game Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QF_GameActions.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

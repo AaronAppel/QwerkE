@@ -18,9 +18,10 @@ namespace QwerkE {
 
 		void local_ProgramArguments(unsigned int argc, char** argv);
 
-		eOperationResult Initialize(unsigned int argc, char** argv)
+		eOperationResult Initialize(const StartUpArguments& startUpArgs)
 		{
-			local_ProgramArguments(argc, argv);
+			assert(startUpArgs.argc > 0 && startUpArgs.argv);
+			local_ProgramArguments(startUpArgs.argc, startUpArgs.argv);
 			Log::Initialize();
 			Events::Initialize();
 			Window::Initialize();

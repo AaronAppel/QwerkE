@@ -3,6 +3,7 @@
 #include "QC_StringHelpers.h"
 
 #include "QF_Directory.h"
+#include "QF_Input.h"
 
 #include "QE_EditorInspector.h"
 #include "QE_Projects.h"
@@ -28,8 +29,8 @@ namespace QwerkE {
                     pushIsDirtyStyleColor = Settings::GetEngineSettings().isDirty;
                     break;
 
-                case eSettingsOptions::User:
-                    pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
+                case eSettingsOptions::GameActions:
+                    // pushIsDirtyStyleColor = Input::GetGameActions().isDirty;
                     break;
 
                 case eSettingsOptions::Renderer:
@@ -75,8 +76,8 @@ namespace QwerkE {
                         Settings::SaveEngineSettings();
                         break;
 
-                    case eSettingsOptions::User:
-                        Settings::SaveUserSettings();
+                    case eSettingsOptions::GameActions:
+                        // Save Input::GetGameActions();
                         break;
 
                     case eSettingsOptions::Renderer:
@@ -98,8 +99,8 @@ namespace QwerkE {
                         Settings::LoadEngineSettings("");
                         break;
 
-                    case eSettingsOptions::User:
-                        Settings::LoadUserSettings("User1.qproj");
+                    case eSettingsOptions::GameActions:
+                        // Load Input::GetGameActions();
                         break;
 
                     case eSettingsOptions::Renderer:
@@ -133,10 +134,11 @@ namespace QwerkE {
                 }
                 break;
 
-                case eSettingsOptions::User:
+                case eSettingsOptions::GameActions:
                 {
-                    UserSettings& userSettings = Settings::GetUserSettings();
-                    userSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<UserSettings>(), &userSettings, buffer);
+                    Input::GameActions& gameActions = Input::GetGameActions();
+                    // userSettings.isDirty |=
+                    Inspector::InspectFieldRecursive(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
                 }
                 break;
 

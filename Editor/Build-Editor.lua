@@ -14,8 +14,6 @@ project "Editor"
 		-- Command line arguments :
 		"key_OverrideAssetsDirPath=\"-overrideAssetsDirPath\"",
 		"key_OverrideNullAssetsDirPath=\"-overrideNullAssetsDirPath\"",
-		
-		"_QEDITOR=\"1\"",
 	}
 	
 	debugargs -- #NOTE User setting changes require VS reload

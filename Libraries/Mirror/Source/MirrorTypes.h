@@ -21,6 +21,7 @@ enum class MirrorTypes
     EngineSettings,
     RendererSettings,
     UserSettings,
+    GameActions,
 
     Project,
 

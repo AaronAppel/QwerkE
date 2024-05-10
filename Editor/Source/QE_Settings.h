@@ -9,7 +9,7 @@ namespace QwerkE {
 
     struct EngineSettings // #TODO Rename to FrameworkSettings
     {
-        bool isDirty = false; // #TODO Make editor state and remove from framework
+        bool isDirty = false; // #TODO Use Editor state flag
 
         u16 windowWidthPixels = 1920;
         u16 windowHeightPixels = 1080;
@@ -28,25 +28,12 @@ namespace QwerkE {
 
     struct UserSettings
     {
-        bool isDirty = false;
-
-        eKeys key_camera_MoveForward = eKeys::eKeys_W;
-        eKeys key_camera_MoveBackward = eKeys::eKeys_S;
-        eKeys key_camera_MoveLeft = eKeys::eKeys_A;
-        eKeys key_camera_MoveRight = eKeys::eKeys_D;
-        eKeys key_camera_MoveUp = eKeys::eKeys_E;
-        eKeys key_camera_MoveDown = eKeys::eKeys_Q;
-        eKeys key_camera_RotateLeft = eKeys::eKeys_R;
-        eKeys key_camera_RotateRight = eKeys::eKeys_T;
-
-        const char* lastOpenedProjectFileName = Constants::gc_DefaultStringValue;
-
         // Interface: Window open, UI layout and scaling, etc
     };
 
     struct RendererSettings
     {
-        bool isDirty = false;
+        bool isDirty = false; // #TODO Use Editor state flag
 
         u8 drawingPrimitiveType = 0; // GL_ZERO
     };
@@ -57,9 +44,6 @@ namespace QwerkE {
 
         void LoadEngineSettings(const std::string& engineSettingsFilePath); // #TODO Write and chain with above overloaded method
         void SaveEngineSettings();
-
-        void LoadUserSettings(const std::string& userSettingsFilePath);
-        void SaveUserSettings();
 
         void LoadRendererSettings(const std::string& rendererSettingsFilePath);
         void SaveRendererSettings();

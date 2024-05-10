@@ -80,7 +80,17 @@ namespace QwerkE {
 		{
             Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str());
 
-			Framework::Initialize(argc, argv);
+            // #TODO Note order dependency with framework paths needing initialization
+            const EngineSettings& engineSettings = Settings::GetEngineSettings();
+
+            Framework::StartUpArguments startUpArgs(
+                argc,
+                argv,
+                engineSettings.windowWidthPixels,
+                engineSettings.windowHeightPixels
+            );
+
+			Framework::Initialize(startUpArgs);
 
             local_Initialize();
 
