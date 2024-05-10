@@ -49,12 +49,26 @@ namespace QwerkE {
                 ImGui::SameLine();
                 if (ImGui::Button("+"))
                 {
+                    // #TODO Use a prefix or another way to generate unique scene names
                     const char* const newFileDefaultName = StringAppend("NewScene", ".", scene_ext); // #TODO constexpr
 
                     if (Scene* newScene = Scenes::CreateScene(newFileDefaultName))
                     {
                         Scenes::SetCurrentScene(newScene);
-                        Projects::CurrentProject().sceneFileNames.push_back(newScene->GetSceneName().c_str());
+
+                        // #TODO Move unique check logic into Projects::AddSceneToProjectScenesList() or something better
+                        Project& currentProject = Projects::CurrentProject();
+                        for (size_t i = 0; i < currentProject.sceneFileNames.size(); i++)
+                        {
+                            if (strcmp(currentProject.sceneFileNames[i].c_str(), newScene->GetSceneName().c_str()) == 0)
+                            {
+                                break;
+                            }
+                            else if (i == currentProject.sceneFileNames.size() - 1)
+                            {
+                                currentProject.sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
+                            }
+                        }
                     }
                 }
 
@@ -64,6 +78,16 @@ namespace QwerkE {
                     if (ImGui::Button("-"))
                     {
                         Scenes::DestroyScene(currentScene);
+
+                        Project& project = Projects::CurrentProject();
+                        for (size_t i = 0; i < project.sceneFileNames.size(); i++)
+                        {
+                            if (strcmp(project.sceneFileNames[i].c_str(), currentScene->GetSceneName().c_str()) == 0)
+                            {
+                                project.sceneFileNames.erase(project.sceneFileNames.begin() + i);
+                                break;
+                            }
+                        }
                         Editor::ResetEditorWindowReferences();
                     }
 

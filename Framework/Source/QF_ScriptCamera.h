@@ -152,7 +152,6 @@ namespace QwerkE {
 
 			m_up = bx::cross(right, forward);
 
-#ifdef _QEDITOR // #TODO This shouldn't be in the QC domain
 			ImGui::DefaultDebugWindow([&]()
 			{
 				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
@@ -163,7 +162,6 @@ namespace QwerkE {
 				vec3f forward = transformForward;
 				ImGui::DragFloat3("TransformForward", &forward.x, .05f);
 			});
-#endif
 		}
 
 		eScriptTypes ScriptType() override

@@ -183,18 +183,6 @@ namespace QwerkE {
 				s_Scenes[i]->UnloadScene();
 				s_Scenes.erase(s_Scenes.begin() + i);
 
-#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
-				// #TODO Call/move this line wherever editor calls this method
-				Project& project = Projects::CurrentProject();
-				for (size_t i = 0; i < project.sceneFileNames.size(); i++)
-				{
-					if (strcmp(project.sceneFileNames[i].c_str(), scene->GetSceneName().c_str()) == 0)
-					{
-						project.sceneFileNames.erase(project.sceneFileNames.begin() + i);
-						break;
-					}
-				}
-#endif
 				LOG_INFO("{0} Scene destroyed", __FUNCTION__);
 				break;
 			}

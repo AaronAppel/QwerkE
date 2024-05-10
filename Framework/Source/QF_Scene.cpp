@@ -73,28 +73,23 @@ namespace QwerkE {
             script.Update(deltaTime);
         }
 
-        {
-#ifdef _QEDITOR // #TODO This shouldn't be in the QC domain
-            ImGui::DefaultDebugWindow([&]() {
+        ImGui::DefaultDebugWindow([&]() {
+            auto viewTransforms = ViewComponents<ComponentTransform>();
+            int i = 0;
+            for (auto entity : viewTransforms)
+            {
+                ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
 
-                auto viewTransforms = ViewComponents<ComponentTransform>();
-                int i = 0;
-                for (auto entity : viewTransforms)
+                vec3f meshPosition = transform.GetPosition();
+
+                std::string meshName = "MeshPosition";
+                if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
                 {
-                    ComponentTransform& transform = viewTransforms.get<ComponentTransform>(entity);
-
-                    vec3f meshPosition = transform.GetPosition();
-
-                    std::string meshName = "MeshPosition";
-                    if (ImGui::DragFloat3((meshName + std::to_string(i)).c_str(), &meshPosition.x, .1f))
-                    {
-                        transform.SetPosition(meshPosition);
-                    }
-                    ++i;
+                    transform.SetPosition(meshPosition);
                 }
-            });
-#endif
-        }
+                ++i;
+            }
+        });
     }
 
     void Scene::Draw(u16 viewId)

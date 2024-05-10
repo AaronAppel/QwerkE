@@ -25,6 +25,10 @@ namespace QwerkE {
         void RegisterWindowResizedCallback(CallBacks::WindowResizedCallback* windowResizedCallback);
 
         void RegisterKeyCallback(CallBacks::KeyCallback* keyCallback);
+
+#if 1 // #TODO Omit from retail builds
+        void RegisterFileDropCallback(CallBacks::FileDropCallback* fileDropCallback);
+#endif
     }
 
 }

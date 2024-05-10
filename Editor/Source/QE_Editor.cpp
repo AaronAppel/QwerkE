@@ -73,6 +73,8 @@ namespace QwerkE {
         void local_Update();
         void local_EndFrame();
 
+        void local_FileDropCallback(const char* filePath);
+
         bool s_ReloadRequested = false; // #TODO FEATURE
 
         // #TODO Change to main(argc, argv) entry point function
@@ -220,6 +222,9 @@ namespace QwerkE {
 		{
             Projects::Initialize();
 
+            // #TODO Register file drop callback
+            // Window::RegisterFileDropCallback(&local_FileDropCallback);
+
             LoadImGuiStyleFromFile();
 
             const std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
@@ -328,6 +333,25 @@ namespace QwerkE {
                 // Framework::RenderView(viewIdFbo1);
             }
             Framework::EndFrame();
+        }
+
+        void local_FileDropCallback(const char* filePath)
+        {
+            const Path fileName = Files::FileName(filePath);
+            const Path fileExtension = Files::FileExtension(filePath);
+
+            if (strcmp(fileExtension.string().c_str(), ".qproj"))
+            {
+                std::string projectFilePath = Paths::Project(fileName.string().c_str());
+                if (Files::Exists(projectFilePath.c_str()))
+                {
+                    Projects::LoadProject(fileName.string());
+                }
+            }
+            else
+            {
+                LOG_WARN("Drag file type unsupported: {0}", fileExtension.string().c_str());
+            }
         }
 
 	}

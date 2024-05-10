@@ -109,7 +109,6 @@ namespace ImGui
 	void SameLineCentered(int16_t numberOfChars, float horizontalScaling = 1.f);
 	void SameLineCentered(const char* text, float horizontalScaling = 1.f);
 
-#ifdef _QEDITOR // #TODO This shouldn't be in the QC domain
 	template <typename Function>
 	void DefaultDebugWindow(Function function)
 	{
@@ -120,6 +119,5 @@ namespace ImGui
 		}
 		ImGui::End();
 	}
-#endif
 
 }
