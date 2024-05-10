@@ -116,7 +116,7 @@ namespace QwerkE {
 			}
 		}
 
-		Scene* CreateSceneFromFile(const std::string& sceneFilePath, bool addToProjectsSceneFiles) // #TODO Review editor only bool argument
+		Scene* CreateSceneFromFile(const std::string& sceneFilePath)
 		{
 			Path sceneFileName = Files::FileName(sceneFilePath.c_str());
 
@@ -135,19 +135,10 @@ namespace QwerkE {
 				s_CurrentScene = newScene;
 				local_UpdateCurrentSceneIndex();
 			}
-
-#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
-			if (addToProjectsSceneFiles)
-			{
-				// #TODO Call/move this line wherever editor calls this method
-				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-			}
-#endif
-
 			return newScene;
 		}
 
-		Scene* CreateScene(const char* const sceneFileName, bool addToProjectsSceneFiles) // #TODO Review editor only bool argument
+		Scene* CreateScene(const char* const sceneFileName)
 		{
 			ASSERT(sceneFileName, "Null argument passed!");
 
@@ -170,15 +161,6 @@ namespace QwerkE {
 
 			s_CurrentScene = newScene;
 			local_UpdateCurrentSceneIndex();
-
-#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
-			if (addToProjectsSceneFiles)
-			{
-				// #TODO Call/move this line wherever editor calls this method
-				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-				newScene->SetDirty();
-			}
-#endif
 
 			return newScene;
 		}

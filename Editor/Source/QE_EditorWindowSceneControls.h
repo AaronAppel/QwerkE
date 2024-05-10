@@ -50,9 +50,11 @@ namespace QwerkE {
                 if (ImGui::Button("+"))
                 {
                     const char* const newFileDefaultName = StringAppend("NewScene", ".", scene_ext); // #TODO constexpr
-                    if (Scene* newScene = Scenes::CreateScene(newFileDefaultName, true))
+
+                    if (Scene* newScene = Scenes::CreateScene(newFileDefaultName))
                     {
                         Scenes::SetCurrentScene(newScene);
+                        Projects::CurrentProject().sceneFileNames.push_back(newScene->GetSceneName().c_str());
                     }
                 }
 

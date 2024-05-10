@@ -7,6 +7,7 @@
 
 #include "QE_Editor.h"
 #include "QE_EditorWindow.h"
+#include "QE_Projects.h"
 
 namespace QwerkE {
 
@@ -18,7 +19,10 @@ namespace QwerkE {
 			EditorWindowPrefabScene(GUID guid = GUID()) : EditorWindow("Prefab Scene", EditorWindowTypes::PrefabScene, guid)
 			{
 				// #TODO Implement EditorWindowPrefabScene
-				// m_PrefabScene = Scenes::CreateScene("PrefabScene_", false);
+				// if (Scene* newScene = Scenes::CreateScene("PrefabScene_"))
+				// {
+				// 	Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
+				// }
 			}
 
 			~EditorWindowPrefabScene()

@@ -75,9 +75,13 @@ namespace QwerkE {
 
 			s_CurrentProject.projectFileName = projectSettingsFileName;
 
-			for (size_t i = 0; i < s_CurrentProject.sceneFileNames.size(); i++)
+			const u8 range = s_CurrentProject.sceneFileNames.size();
+			for (size_t i = 0; i < range; i++)
 			{
-				Scenes::CreateSceneFromFile(Paths::Scene(s_CurrentProject.sceneFileNames[i].c_str()), false);
+				if (Scene* newScene = Scenes::CreateSceneFromFile(Paths::Scene(s_CurrentProject.sceneFileNames[i].c_str())))
+				{
+					s_CurrentProject.sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
+				}
 			}
 			s_ProjectsData.LastOpenedProjectFileName = s_CurrentProject.projectFileName;
 			local_TryAddUniqueProjectFileName();

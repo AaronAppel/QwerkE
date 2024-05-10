@@ -20,7 +20,7 @@ int main(unsigned int argc, char** argv)
 
 	QwerkE::Framework::Initialize(startUpArgs);
 
-	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("GameScene1.qscene"), false);
+	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("GameScene1.qscene"));
 
 	QwerkE::Time::WriteAppStartTime();
 
