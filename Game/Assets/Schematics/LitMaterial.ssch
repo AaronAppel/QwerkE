@@ -1,8 +1,0 @@
-{
-	"ShaderProgram":	[{
-		"m_Name":	"LitMaterial.ssch",
-		"m_VertName":	"LitMaterial.vert",
-		"m_FragName":	"LitMaterial.frag",
-		"m_GeoName":	"null"
-	}]
-}

@@ -4,9 +4,9 @@ namespace QwerkE {
 
 	namespace Paths {
 
-		static std::string s_ExePath = "..\\";
-		static std::string s_AssetsDir = "..\\";
-		static std::string s_NullAssetsDir = "..\\";
+		static std::string s_ExePath = "";
+		static std::string s_AssetsDir = "Assets";
+		static std::string s_NullAssetsDir = "Assets";
 
 		void SetExePath(std::string newExePath)
 		{

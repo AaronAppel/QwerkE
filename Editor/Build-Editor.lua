@@ -18,8 +18,8 @@ project "Editor"
 	
 	debugargs -- #NOTE User setting changes require VS reload
 	{
-		"-overrideAssetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",	
-		"-overrideNullAssetsDirPath", "\"%{wks.location}%{prj.name}\\NullAssets\"",
+		"-overrideAssetsDirPath", "\"%{wks.location}Assets\"",
+		"-overrideNullAssetsDirPath", "\"%{wks.location}Assets\\NullAssets\"",
 	}
 	
 	postbuildcommands

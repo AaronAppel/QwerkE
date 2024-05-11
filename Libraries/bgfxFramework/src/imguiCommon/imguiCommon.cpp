@@ -326,21 +326,21 @@ struct OcornutImguiContext
 		io.IniFilename = "imgui.ini";
 
 		std::vector<std::string> fontFiles = {
-			"Assets/Fonts/OpenSans/OpenSans-Regular.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-Regular.ttf",
 
-			"Assets/Fonts/OpenSans/OpenSans-Bold.ttf",
-			"Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf",
-			"Assets/Fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf",
-			"Assets/Fonts/OpenSans/OpenSans-SemiBold.ttf",
-			"Assets/Fonts/OpenSans/OpenSans-SemiBoldItalic.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-Bold.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-SemiBold.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-SemiBoldItalic.ttf",
 
-			"Assets/Fonts/OpenSans/OpenSans-Italic.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-Italic.ttf",
 
-			"Assets/Fonts/OpenSans/OpenSans-Light.ttf",
-			"Assets/Fonts/OpenSans/OpenSans-LightItalic.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-Light.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-LightItalic.ttf",
 
-			"Assets/Fonts/OpenSans/OpenSans-Medium.ttf",
-			"Assets/Fonts/OpenSans/OpenSans-MediumItalic.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-Medium.ttf",
+			"../Assets/Fonts/OpenSans/OpenSans-MediumItalic.ttf",
 		};
 
 		for (size_t i = 0; i < fontFiles.size(); i++)
