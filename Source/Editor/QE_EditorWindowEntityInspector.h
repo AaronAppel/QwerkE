@@ -185,7 +185,7 @@ namespace QwerkE {
                 return false;
             }
 
-            void OnEntitySelected(const EntityHandle& entity) override { m_CurrentEntity = entity; }
+            void OnEntitySelected(EntityHandle& entity) override { m_CurrentEntity = entity; }
 
             EntityHandle m_CurrentEntity;
 		};

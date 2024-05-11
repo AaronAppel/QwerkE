@@ -9,7 +9,7 @@
 
 #include "Mirror.h"
 
-#include "../../../Editor/Source/QE_EditorWindowHelpers.h" // #TODO Remove
+#include "../../../Source/Editor/QE_EditorWindowHelpers.h" // #TODO Remove from Mirror testing code
 
 namespace QwerkE {
 

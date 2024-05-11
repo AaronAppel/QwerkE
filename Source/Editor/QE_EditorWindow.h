@@ -111,7 +111,7 @@ namespace QwerkE {
 			EditorWindowTypes Type() { return m_EditorWindowType; } // #TODO Make static
 			EditorWindowFlags WindowFlags() { return m_WindowFlags; }
 
-			virtual void OnEntitySelected(const EntityHandle& entity) { }
+			virtual void OnEntitySelected(EntityHandle& entity) { }
 
 			void ToggleHidden() { m_WindowFlags = (EditorWindowFlags)(m_WindowFlags ^ Hidden); }
 

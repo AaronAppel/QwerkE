@@ -11,8 +11,8 @@
 #include "QF_Profile.h"
 #include "QF_Scene.h"
 
-#include "../Editor/Source/QE_Projects.h" // #TODO Remove from QF_* domain
-#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Projects.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
 namespace QwerkE {
 

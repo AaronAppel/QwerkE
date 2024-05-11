@@ -41,8 +41,7 @@ namespace QwerkE {
 		void OpenEditorWindow(u32 editorWindowType);
 		void CloseEditorWindow(const GUID& guid);
 
-		void ResetEditorWindowReferences();
-		void OnEntitySelected(const EntityHandle& entity);
+		void OnEntitySelected(EntityHandle& entity);
 
 	}
 

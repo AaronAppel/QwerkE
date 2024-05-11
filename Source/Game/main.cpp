@@ -11,9 +11,16 @@
 
 int main(unsigned int argc, char** argv)
 {
-	QwerkE::Framework::Initialize(argc, argv);
+	QwerkE::Framework::StartUpArguments startUpArgs(
+		argc,
+		argv,
+		1920,
+		1080
+	);
 
-	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("GameScene1.qscene"), false);
+	QwerkE::Framework::Initialize(startUpArgs);
+
+	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("GameScene1.qscene"));
 
 	QwerkE::Time::WriteAppStartTime();
 
@@ -23,7 +30,11 @@ int main(unsigned int argc, char** argv)
 
 		QwerkE::Framework::StartFrame();
 
+		QwerkE::Renderer::StartImGui(); // #TODO Remove ImGui from Game code
+
 		QwerkE::Framework::Update((float)QwerkE::Time::PreviousFrameDuration());
+
+		QwerkE::Renderer::EndImGui(); // #TODO Remove ImGui from Game code
 
 		QwerkE::Framework::RenderView(1);
 

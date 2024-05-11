@@ -52,7 +52,7 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialize::FromFile(Settings::GetStyleFileName(), style, true);
+        Serialize::FromFile(Paths::Setting(Settings::GetStyleFileName()).c_str(), style, true);
     }
 
 	namespace Editor {
@@ -73,6 +73,8 @@ namespace QwerkE {
         void local_Update();
         void local_EndFrame();
 
+        void local_FileDropCallback(const char* filePath);
+
         bool s_ReloadRequested = false; // #TODO FEATURE
 
         // #TODO Change to main(argc, argv) entry point function
@@ -80,7 +82,17 @@ namespace QwerkE {
 		{
             Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str());
 
-			Framework::Initialize(argc, argv);
+            // #TODO Note order dependency with framework paths needing initialization
+            const EngineSettings& engineSettings = Settings::GetEngineSettings();
+
+            Framework::StartUpArguments startUpArgs(
+                argc,
+                argv,
+                engineSettings.windowWidthPixels,
+                engineSettings.windowHeightPixels
+            );
+
+			Framework::Initialize(startUpArgs);
 
             local_Initialize();
 
@@ -192,13 +204,7 @@ namespace QwerkE {
             }
         }
 
-        void ResetEditorWindowReferences()
-        {
-            // s_EntityEditor->ResetReferences();
-            // s_EditorWindows[guid]->ResetReferences();
-        }
-
-        void OnEntitySelected(const EntityHandle& entity)
+        void OnEntitySelected(EntityHandle& entity)
         {
             for (auto& it : s_EditorWindows)
             {
@@ -209,6 +215,9 @@ namespace QwerkE {
 		void local_Initialize()
 		{
             Projects::Initialize();
+
+            // #TODO Register file drop callback
+            // Window::RegisterFileDropCallback(&local_FileDropCallback);
 
             LoadImGuiStyleFromFile();
 
@@ -318,6 +327,25 @@ namespace QwerkE {
                 // Framework::RenderView(viewIdFbo1);
             }
             Framework::EndFrame();
+        }
+
+        void local_FileDropCallback(const char* filePath)
+        {
+            const Path fileName = Files::FileName(filePath);
+            const Path fileExtension = Files::FileExtension(filePath);
+
+            if (strcmp(fileExtension.string().c_str(), ".qproj"))
+            {
+                std::string projectFilePath = Paths::Project(fileName.string().c_str());
+                if (Files::Exists(projectFilePath.c_str()))
+                {
+                    Projects::LoadProject(fileName.string());
+                }
+            }
+            else
+            {
+                LOG_WARN("Drag file type unsupported: {0}", fileExtension.string().c_str());
+            }
         }
 
 	}

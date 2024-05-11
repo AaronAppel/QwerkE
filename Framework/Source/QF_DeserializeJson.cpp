@@ -10,7 +10,7 @@
 #include "QF_Scene.h"
 
 // Editor types
-#include "../Editor/Source/QE_EditorWindowHelpers.h"
+#include "../Source/Editor/QE_EditorWindowHelpers.h"
 
 namespace QwerkE {
 

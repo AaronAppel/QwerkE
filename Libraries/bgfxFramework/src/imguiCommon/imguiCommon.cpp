@@ -323,9 +323,10 @@ struct OcornutImguiContext
 		io.DisplaySize = ImVec2(1280.0f, 720.0f); // #TODO Get proper display size
 		io.DeltaTime   = 1.0f / 60.0f;
 
-		io.IniFilename = "imgui.ini";
+		io.IniFilename = "imgui.ini"; // #TODO Assign to a Paths::Setting(...) directory
 
 		std::vector<std::string> fontFiles = {
+			// #TODO Use Paths::Font()
 			"../Assets/Fonts/OpenSans/OpenSans-Regular.ttf",
 
 			"../Assets/Fonts/OpenSans/OpenSans-Bold.ttf",

@@ -31,10 +31,10 @@
 
 // Editor types
 // #TODO Move editor serialization code out of framework domain
-#include "../Editor/Source/QE_EditorWindowHelpers.h"
-#include "../Editor/Source/QE_Editor.h"
-#include "../Editor/Source/QE_Projects.h"
-#include "../Editor/Source/QE_Settings.h"
+#include "../Source/Editor/QE_EditorWindowHelpers.h"
+#include "../Source/Editor/QE_Editor.h"
+#include "../Source/Editor/QE_Projects.h"
+#include "../Source/Editor/QE_Settings.h"
 
 namespace QwerkE {
 

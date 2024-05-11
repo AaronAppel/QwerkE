@@ -179,12 +179,12 @@ namespace QwerkE {
                     (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)) &&
                     (Input::IsKeyDown(eKeys::eKeys_LSHIFT) || Input::IsKeyDown(eKeys::eKeys_RSHIFT)))
                 {
-                    Projects::SaveProject();
+                    Projects::SaveProjectFromExplorer();
                 }
                 else if (Input::FrameKeyAction(eKeys::eKeys_S, eKeyState::eKeyState_Press) &&
                     (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
                 {
-                    Projects::SaveProjectFromExplorer();
+                    Projects::SaveProject();
                 }
             }
 

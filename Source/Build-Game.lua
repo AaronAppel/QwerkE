@@ -16,17 +16,17 @@ project "Game"
 	
 	debugargs -- #NOTE User setting changes require VS reload
 	{
-		"-overrideAssetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",
-		"-overrideNullAssetsDirPath", "\"%{wks.location}Editor\\Assets\"",
+		"-overrideAssetsDirPath", "\"%{wks.location}Assets\"",
+		"-overrideNullAssetsDirPath", "\"%{wks.location}Assets\\NullAssets\"",
 	}
 	
 	postbuildcommands
 	{
 		-- Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
-		"call ../Scripts/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
+		"call ../Build/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 
-	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c", }
+	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c", }
 
 	includedirs
 	{
@@ -48,7 +48,7 @@ project "Game"
 	forceincludes { "QG_PCH.h" }
 	
 	pchheader "QG_PCH.h"
-	pchsource "Source/QG_PCH.cpp"
+	pchsource "%{prj.name}/QG_PCH.cpp"
 
 	-- filter "configurations:*32"
 	-- 	architecture "x86"

@@ -75,9 +75,24 @@ namespace QwerkE {
 
 			s_CurrentProject.projectFileName = projectSettingsFileName;
 
-			for (size_t i = 0; i < s_CurrentProject.sceneFileNames.size(); i++)
+			const u8 range = s_CurrentProject.sceneFileNames.size();
+			for (size_t i = 0; i < range; i++)
 			{
-				Scenes::CreateSceneFromFile(Paths::Scene(s_CurrentProject.sceneFileNames[i].c_str()), false);
+				if (Scene* newScene = Scenes::CreateSceneFromFile(Paths::Scene(s_CurrentProject.sceneFileNames[i].c_str())))
+				{
+					// #TODO Move unique check logic into Projects::AddSceneToProjectScenesList() or something better
+					for (size_t i = 0; i < s_CurrentProject.sceneFileNames.size(); i++)
+					{
+						if (strcmp(s_CurrentProject.sceneFileNames[i].c_str(), newScene->GetSceneName().c_str()) == 0)
+						{
+							break;
+						}
+						else if (i == s_CurrentProject.sceneFileNames.size() - 1)
+						{
+							s_CurrentProject.sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
+						}
+					}
+				}
 			}
 			s_ProjectsData.LastOpenedProjectFileName = s_CurrentProject.projectFileName;
 			local_TryAddUniqueProjectFileName();

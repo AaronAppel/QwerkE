@@ -19,6 +19,8 @@ namespace QwerkE {
 
         std::string startUpSceneName = Constants::gc_DefaultStringValue;
 
+        std::string projectImGuiIniFileName = "imgui.ini";
+
         // Referenced Scenes
         std::vector<std::string> sceneFileNames;
 

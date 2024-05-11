@@ -24,7 +24,7 @@ namespace QwerkE {
 
             if (ImGui::Button("Save Style"))
             {
-                Serialize::ToFile(style, Settings::GetStyleFileName());
+                Serialize::ToFile(style, Paths::Setting(Settings::GetStyleFileName()).c_str());
                 // Editor::SetEditorStateFlags(EditorStateFlags::StyleSettingsDirty);
                 if (m_Edited)
                 {

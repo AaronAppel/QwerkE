@@ -14,23 +14,21 @@ project "Editor"
 		-- Command line arguments :
 		"key_OverrideAssetsDirPath=\"-overrideAssetsDirPath\"",
 		"key_OverrideNullAssetsDirPath=\"-overrideNullAssetsDirPath\"",
-		
-		"_QEDITOR=\"1\"",
 	}
 	
 	debugargs -- #NOTE User setting changes require VS reload
 	{
-		"-overrideAssetsDirPath", "\"%{wks.location}%{prj.name}\\Assets\"",	
-		"-overrideNullAssetsDirPath", "\"%{wks.location}%{prj.name}\\NullAssets\"",
+		"-overrideAssetsDirPath", "\"%{wks.location}Assets\"",
+		"-overrideNullAssetsDirPath", "\"%{wks.location}Assets\\NullAssets\"",
 	}
 	
 	postbuildcommands
 	{
 		-- Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
-		"call ../Scripts/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
+		"call ../Build/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 	
-	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }
+	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c" }
 
 	includedirs
 	{
@@ -57,7 +55,7 @@ project "Editor"
 	forceincludes { "%{wks.location}/Framework/Source/QF_ForcedIncludes.h", "QE_PCH.h" }
 	
 	pchheader "QE_PCH.h"
-	pchsource "Source/QE_PCH.cpp"
+	pchsource "%{prj.name}/QE_PCH.cpp"
 
 	-- filter "configurations:*32"
 	-- 	architecture "x86"

@@ -59,5 +59,5 @@ workspace "QwerkE Game"
 
 	include "../Common/Build-Common.lua"
 	include "../Framework/Build-Framework.lua"
-	include "../Editor/Build-Editor.lua"
-	include "../Game/Build-Game.lua"
+	include "../Source/Build-Editor.lua"
+	include "../Source/Build-Game.lua"

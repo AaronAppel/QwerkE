@@ -29,8 +29,7 @@ namespace QwerkE {
 		MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo, enumStartOffset);
 	}
 
-#ifdef _QEDITOR // #TODO Look to declare types elsewhere
-	// Editor types
+	// Mirror Editor types
 	typedef Editor::EditorWindowFlags EditorWindowFlags;
 	MIRROR_ENUM(EditorWindowFlags)
 
@@ -155,6 +154,5 @@ namespace QwerkE {
 	MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
 	MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
 	MIRROR_CLASS_END(ProjectsData)
-#endif
 
 }

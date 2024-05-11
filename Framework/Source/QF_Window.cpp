@@ -16,8 +16,8 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 
-#include "../Editor/Source/QE_Projects.h" // #TODO Remove from QF_* domain
-#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Projects.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
 const char* g_WindowTitle = "QwerkEngine";
 
