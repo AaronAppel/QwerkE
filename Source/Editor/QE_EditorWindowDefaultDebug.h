@@ -21,7 +21,6 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
-				ImGui::Text("Testing123");
 			}
 		};
 
