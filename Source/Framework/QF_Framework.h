@@ -8,7 +8,20 @@ namespace QwerkE {
 
 	namespace Framework {
 
-		eOperationResult Initialize(unsigned int argc, char** argv);
+		struct StartUpArguments
+		{
+			StartUpArguments(unsigned int argc, char** argv, uint16_t windowWidth, uint16_t windowHeight) :
+				argc(argc), argv(argv), windowStartingWidth(windowWidth), windowStartingHeight(windowHeight)
+			{ }
+
+			unsigned int argc = 0; // Command line arguments
+			char** argv = nullptr;
+
+			uint16_t windowStartingWidth = 1920; // Window
+			uint16_t windowStartingHeight = 1080;
+		};
+
+		eOperationResult Initialize(const StartUpArguments& startUpArgs);
 		eOperationResult Shutdown();
 
 		void StartFrame();

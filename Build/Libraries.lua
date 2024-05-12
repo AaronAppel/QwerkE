@@ -20,4 +20,4 @@ LibraryDefines = {
 }
 
 LibraryLib = {}
-LibraryLib["glfw"] = "%{wks.location}/Libraries/glfw/glfw3.lib"
+LibraryLib["glfw"] = "%{wks.location}/Source/Libraries/glfw/glfw3.lib"

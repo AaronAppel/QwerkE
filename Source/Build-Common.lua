@@ -4,15 +4,11 @@ project "Common"
 	kind "StaticLib"
 	location ""
 	
-	files
-	{ 
-		"**.h",
-		"**.cpp",
-	}
+	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c" }
 
 	includedirs
 	{
-		"%{wks.location}/", -- Root for #including "Libraries/..."
+		"%{wks.location}/Source/", -- Root for #including "Libraries/..."
 	}
 
 	defines { LibraryDefines }

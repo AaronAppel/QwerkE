@@ -23,17 +23,17 @@ project "Game"
 	postbuildcommands
 	{
 		-- Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
-		"call ../Build/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
+		"call ../Build/CopyLibraryDLLs.bat \"../Source/Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 
 	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c", }
 
 	includedirs
 	{
-		"%{wks.location}/Common/Source", -- #TODO Review if needed. Was at the time of adding
-		"%{wks.location}/Framework/Source",
-		"%{wks.location}/", -- Root for accessing library source
-		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
+		"%{wks.location}/Source/Common", -- #TODO Review if needed. Was at the time of adding
+		"%{wks.location}/Source/Framework",
+		"%{wks.location}/Source", -- Root for accessing library source
+		"%{wks.location}/Source/Libraries/", -- Required by 3rd party libraries
 	}
 
 	links
@@ -62,7 +62,7 @@ project "Game"
 	   systemversion "latest"
 	   defines { "WINDOWS" }
 
-	filter "configurations:Debug"
+	filter "configurations:Debug" -- #TODO Remove LibrariesDir
 	   defines { "_QDebug", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 
 	filter "configurations:Release"

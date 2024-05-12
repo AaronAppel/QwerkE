@@ -73,7 +73,7 @@ namespace QwerkE {
 			}
 		}
 
-		const GUID& EntityGuid()
+		GUID& EntityGuid()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
 			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
@@ -81,7 +81,7 @@ namespace QwerkE {
 			return GetComponent<ComponentInfo>().m_Guid;
 		}
 
-		const std::string& EntityName()
+		std::string& EntityName()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
 			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");

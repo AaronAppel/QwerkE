@@ -312,8 +312,8 @@ namespace QwerkE {
                     constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
                     constexpr bx::Vec3 pos = { .0f, .0f, .0f };
 
-                    // debugDrawer.drawSphere(0.f, 0.f, 0.f, 3.f, Axis::X);
-                    debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
+                    debugDrawer.drawSphere(0.f, 0.f, 0.f, 1.f, Axis::X);
+                    // debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
 
                     bx::Plane plane(bx::InitNone);
                     bx::calcPlane(plane, normal, pos);

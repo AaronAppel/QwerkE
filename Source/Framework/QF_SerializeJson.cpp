@@ -24,8 +24,8 @@
 #include "QF_ScriptHelpers.h"
 
 // Editor types
-#include "../Editor/Source/QE_EditorWindowHelpers.h"
-#include "../Editor/Source/QE_Settings.h"
+#include "../Source/Editor/QE_EditorWindowHelpers.h"
+#include "../Source/Editor/QE_Settings.h"
 
 namespace QwerkE {
 

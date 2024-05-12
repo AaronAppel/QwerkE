@@ -8,7 +8,7 @@
 
 namespace QwerkE {
 
-    enum eKeyState
+    enum eKeyState : u8
     {
         eKeyState_Release = 0, // GLFW_RELEASE is 0
         eKeyState_Press, // GLFW_PRESS is 1
@@ -17,7 +17,7 @@ namespace QwerkE {
         eKeyState_Max
     };
 
-    enum eKeys // #TODO Review having values match an ASCII table. This makes config file key re-mapping easier to implement
+    enum eKeys : u8 // #TODO Review having values match an ASCII table. This makes config file key re-mapping easier to implement
     {
         eKeys_NULL_KEY = 0,
 

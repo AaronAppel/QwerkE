@@ -32,17 +32,17 @@ project "Editor"
 
 	includedirs
 	{
-		"%{wks.location}/", -- Repo root for accessing libraries
-		"%{wks.location}/Common/Source/",
-		"%{wks.location}/Framework/Source/",
-		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
+		"%{wks.location}/Source", -- Repo root for accessing libraries
+		"%{wks.location}/Source/Common/",
+		"%{wks.location}/Source/Framework/",
+		"%{wks.location}/Source/Libraries/", -- Required by 3rd party libraries
 		
-		"%{wks.location}/Libraries/bgfxFramework/include", -- For bgfx helpers
+		"%{wks.location}/Source/Libraries/bgfxFramework/include", -- For bgfx helpers
 		
-		"%{wks.location}/Libraries/bgfx/include", -- For testing calls to bgfx in editor code
+		"%{wks.location}/Source/Libraries/bgfx/include", -- For testing calls to bgfx in editor code
 		
-		"%{wks.location}/Libraries/bx/include", -- To support creating components that depend on bx
-		"%{wks.location}/Libraries/bx/include/compat/msvc",
+		"%{wks.location}/Source/Libraries/bx/include", -- To support creating components that depend on bx
+		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
 	}
 	
 	links
@@ -52,7 +52,7 @@ project "Editor"
 		"Framework",
 	}
 	
-	forceincludes { "%{wks.location}/Framework/Source/QF_ForcedIncludes.h", "QE_PCH.h" }
+	forceincludes { "QF_ForcedIncludes.h", "QE_PCH.h" }
 	
 	pchheader "QE_PCH.h"
 	pchsource "%{prj.name}/QE_PCH.cpp"

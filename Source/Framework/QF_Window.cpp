@@ -16,8 +16,8 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 
-#include "../Editor/Source/QE_Projects.h" // #TODO Remove from QF_* domain
-#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Projects.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
 const char* g_WindowTitle = "QwerkEngine";
 
@@ -33,10 +33,16 @@ namespace QwerkE {
         CallBacks::WindowResizedCallback* s_WindowResizedCallback = nullptr;
         CallBacks::KeyCallback* s_KeyCallback = nullptr;
 
+#if 1 // #TODO Omit from retail builds
+        CallBacks::FileDropCallback* s_FileDropCallback = nullptr;
+#endif
+
     #ifdef _QGLFW3
         GLFWwindow* s_window = nullptr;
 
+#if 1 // #TODO Omit from retail builds
         void local_file_drop_callback(GLFWwindow* window, int fileCount, const char** filePaths);
+#endif
         void local_CheckGlfwErrors();
 
         void local_error_callback(int error, const char* description)
@@ -81,7 +87,7 @@ namespace QwerkE {
         }
     #endif
 
-        void Window::Initialize()
+        void Window::Initialize(u16 windowWidth, u16 windowHeight)
         {
     #ifdef _QGLFW3
             const int glfwInitCode = glfwInit();
@@ -107,13 +113,6 @@ namespace QwerkE {
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
-            u16 windowWidth = 1920; // #TODO Review how game project sets window size, or how window detects resolution and chooses window size
-            u16 windowHeight = 1080;
-#ifdef _QEDITOR
-            const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            windowWidth = engineSettings.windowWidthPixels;
-            windowHeight = engineSettings.windowHeightPixels;
-#endif
             s_window = glfwCreateWindow((int)windowWidth, (int)windowHeight, g_WindowTitle, NULL, NULL);
             if (!s_window)
             {
@@ -202,11 +201,25 @@ namespace QwerkE {
             s_KeyCallback = keyCallback;
         }
 
+#if 1 // #TODO Omit from retail builds
+        void RegisterFileDropCallback(CallBacks::FileDropCallback* fileDropCallback)
+        {
+            s_FileDropCallback = fileDropCallback;
+        }
+#endif
+
+#if 1 // #TODO Omit from retail builds
         // #TODO Call editor or add an editor callback so window doesn't have file drop logic in release/non-editor build.
         void local_file_drop_callback(GLFWwindow* window, int fileCount, const char** filePaths)
         {
             for (int i = 0; i < fileCount; i++)
             {
+                if (s_FileDropCallback)
+                {
+                    (*s_FileDropCallback)(filePaths[i]);
+                }
+
+                // #TODO Deprecate or move code below
                 const Path fileName = Files::FileName(filePaths[i]);
                 const Path fileExtension = Files::FileExtension(filePaths[i]);
 
@@ -231,24 +244,15 @@ namespace QwerkE {
                         Assets::AddToRegistry(GUID(), fileName.string());
                     }
                 }
-#ifdef _QEDITOR // #TODO Review drag and drop for Framework use. Might want a callback for editor use
-                else if (strcmp(fileExtension.string().c_str(), ".qproj"))
-                {
-                    std::string projectFilePath = Paths::Project(fileName.string().c_str());
-                    if (Files::Exists(projectFilePath.c_str()))
-                    {
-                        Projects::LoadProject(fileName.string());
-                    }
-                }
-#endif
                 else
                 {
                     LOG_WARN("Drag file type unsupported: {0}", fileExtension.string().c_str());
                 }
             }
         }
+#endif
 
-#ifdef _QGLFW3
+#ifdef _QGLFW3 // #TODO Omit from retail builds
         void local_CheckGlfwErrors()
         {
             int glfwErrorCode = glfwGetError(NULL);

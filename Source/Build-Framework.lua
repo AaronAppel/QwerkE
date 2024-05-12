@@ -21,23 +21,23 @@ project "Framework"
 		"key_OverrideNullAssetsDirPath=\"-overrideNullAssetsDirPath\"",
 	}
 
-	files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.c" }
-	excludes { "Source/QF_RendererBgfxExample_minimal.cpp", }
+	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c" }
+	excludes { "%{prj.name}/QF_RendererBgfxExample_minimal.cpp", }
 
 	includedirs
 	{
-		"%{wks.location}/Common/Source/",
+		"%{wks.location}/Source/Common/",
 		
-		"%{wks.location}/%{prj.name}/Source", -- "Source/QF_PCH.h", -- For precompiled headers to work in VS
-		"%{wks.location}/", -- Root for #including "Libraries/..."
-		"%{wks.location}/Libraries/", -- Required by 3rd party libraries
+		"%{wks.location}/Source/%{prj.name}", -- "Source/QF_PCH.h", -- For precompiled headers to work in VS
+		"%{wks.location}/Source/", -- Root for #including "Libraries/..."
+		"%{wks.location}/Source/Libraries/", -- Required by 3rd party libraries
 		
-		"%{wks.location}/Libraries/bgfx/3rdparty",
-		"%{wks.location}/Libraries/bgfx/include",
-		"%{wks.location}/Libraries/bgfxFramework/include",
-		"%{wks.location}/Libraries/bimg/include",
-		"%{wks.location}/Libraries/bx/include",
-		"%{wks.location}/Libraries/bx/include/compat/msvc",
+		"%{wks.location}/Source/Libraries/bgfx/3rdparty",
+		"%{wks.location}/Source/Libraries/bgfx/include",
+		"%{wks.location}/Source/Libraries/bgfxFramework/include",
+		"%{wks.location}/Source/Libraries/bimg/include",
+		"%{wks.location}/Source/Libraries/bx/include",
+		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
 	}
 	
 	-- disablewarnings { "warnings" }
@@ -45,7 +45,7 @@ project "Framework"
 	forceincludes  { "QF_ForcedIncludes.h", "QF_PCH.h" }
 	
 	pchheader "QF_PCH.h"
-	pchsource "Source/QF_PCH.cpp"
+	pchsource "%{prj.name}/QF_PCH.cpp"
 
 	links
 	{
@@ -89,7 +89,7 @@ project "Framework"
 		defines
 		{
 			"_QDEBUG",
-			"LibrariesDir=\"%{wks.location}/Libraries/\"", -- #TODO Remove
+			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"", -- #TODO Remove
 			LibraryDefines, 
 			"BX_CONFIG_DEBUG=1", -- Required by bgfx
 		}
@@ -99,13 +99,13 @@ project "Framework"
 		debugargs { }
 
 	filter "configurations:Release"
-		defines { "_QRELEASE", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "_QRELEASE", "LibrariesDir=\"%{wks.location}/Source/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "On"
 
 	filter "configurations:Retail"
-		defines { "_QRETAIL", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines { "_QRETAIL", "LibrariesDir=\"%{wks.location}/Source/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

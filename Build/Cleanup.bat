@@ -3,6 +3,7 @@ cd ../
 rem del *.dll
 rem del *.vcxproj
 
+del /Q /F /S /AH .vs
 del *.sln
 
 del /Q /F /S /AH bin

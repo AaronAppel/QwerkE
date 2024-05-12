@@ -11,8 +11,8 @@
 #include "QF_Profile.h"
 #include "QF_Scene.h"
 
-#include "../Editor/Source/QE_Projects.h" // #TODO Remove from QF_* domain
-#include "../Editor/Source/QE_Settings.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Projects.h" // #TODO Remove from QF_* domain
+#include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
 namespace QwerkE {
 
@@ -116,7 +116,7 @@ namespace QwerkE {
 			}
 		}
 
-		Scene* CreateSceneFromFile(const std::string& sceneFilePath, bool addToProjectsSceneFiles) // #TODO Review editor only bool argument
+		Scene* CreateSceneFromFile(const std::string& sceneFilePath)
 		{
 			Path sceneFileName = Files::FileName(sceneFilePath.c_str());
 
@@ -135,18 +135,10 @@ namespace QwerkE {
 				s_CurrentScene = newScene;
 				local_UpdateCurrentSceneIndex();
 			}
-
-#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
-			if (addToProjectsSceneFiles)
-			{
-				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-			}
-#endif
-
 			return newScene;
 		}
 
-		Scene* CreateScene(const char* const sceneFileName, bool addToProjectsSceneFiles) // #TODO Review editor only bool argument
+		Scene* CreateScene(const char* const sceneFileName)
 		{
 			ASSERT(sceneFileName, "Null argument passed!");
 
@@ -170,14 +162,6 @@ namespace QwerkE {
 			s_CurrentScene = newScene;
 			local_UpdateCurrentSceneIndex();
 
-#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
-			if (addToProjectsSceneFiles)
-			{
-				Projects::CurrentProject().sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-				newScene->SetDirty();
-			}
-#endif
-
 			return newScene;
 		}
 
@@ -199,17 +183,6 @@ namespace QwerkE {
 				s_Scenes[i]->UnloadScene();
 				s_Scenes.erase(s_Scenes.begin() + i);
 
-#ifdef _QEDITOR // #TODO Review moving editor logic out of framework
-				Project& project = Projects::CurrentProject();
-				for (size_t i = 0; i < project.sceneFileNames.size(); i++)
-				{
-					if (strcmp(project.sceneFileNames[i].c_str(), scene->GetSceneName().c_str()) == 0)
-					{
-						project.sceneFileNames.erase(project.sceneFileNames.begin() + i);
-						break;
-					}
-				}
-#endif
 				LOG_INFO("{0} Scene destroyed", __FUNCTION__);
 				break;
 			}

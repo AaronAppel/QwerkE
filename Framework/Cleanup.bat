@@ -1,2 +1,0 @@
-del *.vcxproj
-del *.user
