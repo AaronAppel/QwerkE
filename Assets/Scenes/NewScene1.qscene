@@ -2,11 +2,48 @@
 	"Scene":	{
 		"m_SceneFileName":	"NewScene1.qscene",
 		"m_Registry":	{
-			"Chaser":	{
+			"Bunny":	{
 				"ComponentInfo":	{
-					"m_EntityName":	"Chaser",
+					"m_EntityName":	"Bunny",
 					"m_Guid":	{
-						"m_Guid":	"13298806619783215903"
+						"m_Guid":	"9197424376144239504"
+					},
+					"m_Enabled":	false
+				},
+				"ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"11140931355107737998"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					}
+				},
+				"ComponentTransform":	{
+					"m_Matrix":	{
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1,
+						"m_float":	0,
+						"m_float":	-4,
+						"m_float":	0,
+						"m_float":	0,
+						"m_float":	1
+					}
+				}
+			},
+			"BigCube":	{
+				"ComponentInfo":	{
+					"m_EntityName":	"BigCube",
+					"m_Guid":	{
+						"m_Guid":	"12653664972659247131"
 					},
 					"m_Enabled":	false
 				},
@@ -20,90 +57,22 @@
 				},
 				"ComponentTransform":	{
 					"m_Matrix":	{
-						"m_float":	0.5,
+						"m_float":	3,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
-						"m_float":	0.5,
+						"m_float":	3,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
-						"m_float":	0.5,
+						"m_float":	3,
 						"m_float":	0,
-						"m_float":	3.4400181770324707,
-						"m_float":	-0.74199998378753662,
-						"m_float":	2.0329999923706055,
+						"m_float":	-4.5,
+						"m_float":	-1,
+						"m_float":	5,
 						"m_float":	1
-					}
-				},
-				"ComponentScript":	{
-					"m_ScriptInstances":	{
-						"m_pair_eScriptTypes_ScriptablePtr":	{
-							"eScriptTypes":	{
-								"eScriptTypes":	3
-							},
-							"m_scriptablePtr":	{
-								"ScriptablePatrol":	{
-									"m_Stride":	5,
-									"m_Speed":	1.8999999761581421
-								}
-							}
-						}
-					}
-				}
-			},
-			"Camera":	{
-				"ComponentCamera":	{
-					"m_MoveSpeed":	5,
-					"m_LookAtPosition":	{
-						"x":	-4.0030841827392578,
-						"y":	-4.79638147354126,
-						"z":	-5.43935775756836
-					},
-					"m_Fov":	60,
-					"m_Near":	0.10000000149011612,
-					"m_Far":	100
-				},
-				"ComponentInfo":	{
-					"m_EntityName":	"Camera",
-					"m_Guid":	{
-						"m_Guid":	"8186617831649296184"
-					},
-					"m_Enabled":	false
-				},
-				"ComponentTransform":	{
-					"m_Matrix":	{
-						"m_float":	0.97365230321884155,
-						"m_float":	0,
-						"m_float":	0.22803767025470734,
-						"m_float":	0,
-						"m_float":	-0.0849733352661133,
-						"m_float":	0.927980601787567,
-						"m_float":	0.36281061172485352,
-						"m_float":	0,
-						"m_float":	-0.21161453425884247,
-						"m_float":	-0.37262850999832153,
-						"m_float":	0.903530478477478,
-						"m_float":	0,
-						"m_float":	-4.2311220169067383,
-						"m_float":	-5.1591920852661133,
-						"m_float":	-6.342888355255127,
-						"m_float":	1
-					}
-				},
-				"ComponentScript":	{
-					"m_ScriptInstances":	{
-						"m_pair_eScriptTypes_ScriptablePtr":	{
-							"eScriptTypes":	{
-								"eScriptTypes":	1
-							},
-							"m_scriptablePtr":	{
-								"ScriptableCamera":	{
-								}
-							}
-						}
 					}
 				}
 			},
@@ -144,11 +113,64 @@
 					}
 				}
 			},
-			"BigCube":	{
+			"Camera":	{
+				"ComponentCamera":	{
+					"m_MoveSpeed":	5,
+					"m_LookAtPosition":	{
+						"x":	-4.7588906288146973,
+						"y":	-4.35029697418213,
+						"z":	-6.368171215057373
+					},
+					"m_Fov":	60,
+					"m_Near":	0.10000000149011612,
+					"m_Far":	100
+				},
 				"ComponentInfo":	{
-					"m_EntityName":	"BigCube",
+					"m_EntityName":	"Camera",
 					"m_Guid":	{
-						"m_Guid":	"12653664972659247131"
+						"m_Guid":	"8186617831649296184"
+					},
+					"m_Enabled":	false
+				},
+				"ComponentTransform":	{
+					"m_Matrix":	{
+						"m_float":	0.934728503227234,
+						"m_float":	0,
+						"m_float":	0.355362743139267,
+						"m_float":	0,
+						"m_float":	-0.12961694598197937,
+						"m_float":	0.93110734224319458,
+						"m_float":	0.34093797206878662,
+						"m_float":	0,
+						"m_float":	-0.33088085055351257,
+						"m_float":	-0.36474543809890747,
+						"m_float":	0.87033259868621826,
+						"m_float":	0,
+						"m_float":	-5.1142535209655762,
+						"m_float":	-4.6912350654602051,
+						"m_float":	-7.23850393295288,
+						"m_float":	1
+					}
+				},
+				"ComponentScript":	{
+					"m_ScriptInstances":	{
+						"m_pair_eScriptTypes_ScriptablePtr":	{
+							"eScriptTypes":	{
+								"eScriptTypes":	1
+							},
+							"m_scriptablePtr":	{
+								"ScriptableCamera":	{
+								}
+							}
+						}
+					}
+				}
+			},
+			"Chaser":	{
+				"ComponentInfo":	{
+					"m_EntityName":	"Chaser",
+					"m_Guid":	{
+						"m_Guid":	"13298806619783215903"
 					},
 					"m_Enabled":	false
 				},
@@ -162,22 +184,37 @@
 				},
 				"ComponentTransform":	{
 					"m_Matrix":	{
-						"m_float":	3,
+						"m_float":	0.5,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
-						"m_float":	3,
+						"m_float":	0.5,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
 						"m_float":	0,
-						"m_float":	3,
+						"m_float":	0.5,
 						"m_float":	0,
-						"m_float":	-4.5,
-						"m_float":	-1,
-						"m_float":	5,
+						"m_float":	3.459028959274292,
+						"m_float":	-0.74199998378753662,
+						"m_float":	2.0329999923706055,
 						"m_float":	1
+					}
+				},
+				"ComponentScript":	{
+					"m_ScriptInstances":	{
+						"m_pair_eScriptTypes_ScriptablePtr":	{
+							"eScriptTypes":	{
+								"eScriptTypes":	3
+							},
+							"m_scriptablePtr":	{
+								"ScriptablePatrol":	{
+									"m_Stride":	5,
+									"m_Speed":	1.8999999761581421
+								}
+							}
+						}
 					}
 				}
 			}

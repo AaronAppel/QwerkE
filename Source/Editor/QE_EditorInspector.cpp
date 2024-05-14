@@ -24,199 +24,71 @@ namespace QwerkE {
 
     namespace Inspector {
 
-        static bool hasWarned = false;
-        bool InspectFieldRecursive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        bool local_InspectPrimitive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
+        bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
+        bool local_InspectCollection(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
+        bool local_InspectPair(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
+
+        // #TODO Consider adding a read only bool argument
+        // #TODO Look to make parentName a const&
+        bool InspectType(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
+            // #TODO Support drag/drop targets, context menus (copy/paste, save/load, etc), pop ups, etc
+            // if (ImGui::BeginDragDropTarget())
+            // {
+            //     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+            //     {
+            //         const wchar_t* path = (const wchar_t*)payload->Data;
+            //         std::filesystem::path texturePath(path);
+            //     }
+            //     ImGui::EndDragDropTarget();
+            // }
+
+            bool valueChanged = false;
+
+            switch (typeInfo->category)
+            {
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
+                    valueChanged |= local_InspectPrimitive(typeInfo, obj, parentName);
+                    break;
+
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
+                    valueChanged |= local_InspectClass(typeInfo, obj, parentName);
+                    break;
+
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
+                    valueChanged |= local_InspectCollection(typeInfo, obj, parentName);
+                    break;
+
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
+                    valueChanged |= local_InspectPair(typeInfo, obj, parentName);
+                    break;
+
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
+                    // #TODO Modify parentName?
+                    valueChanged |= InspectType(typeInfo->AbsoluteType(), *(void**)obj, parentName);
+                    break;
+            }
+
+            return valueChanged;
+        }
+
+        static bool hasWarned = false;
+        bool local_InspectPrimitive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        {
+            if (!hasWarned && Mirror::TypeInfoCategory_Primitive != typeInfo->category)
+            {
+                LOG_WARN("{0} Invalid type {1} {2}({3}) for primitive inspection", __FUNCTION__, parentName, typeInfo->stringName.c_str(), (int)typeInfo->enumType);
+                hasWarned = true;
+            }
+
             bool valueChanged = false;
 
 #ifdef _QDEARIMGUI
 
-            if (ImGui::BeginDragDropTarget())
-            {
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-                {
-                    const wchar_t* path = (const wchar_t*)payload->Data;
-                    std::filesystem::path texturePath(path);
-                }
-                ImGui::EndDragDropTarget();
-            }
-
-            const std::vector<Mirror::Field>& fields = typeInfo->fields;
-            for (size_t i = 0; i < fields.size(); i++)
-            {
-                const Mirror::Field field = fields[i];
-                if (field.serializationFlags & Mirror::FieldSerializationFlags::_HideInInspector)
-                    continue;
-
-                if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorViewOnly)
-                {
-                    // #TODO Show but prevent editing
-                }
-
-                std::string fieldName = field.name + "##" + parentName;
-                void* fieldAddress = (char*)obj + field.offset;
-                valueChanged |= InspectFieldRecursive(field.typeInfo, fieldAddress, fieldName);
-            }
-
             std::string elementName = parentName;
             switch (typeInfo->enumType)
             {
-            case MirrorTypes::m_vec_string_ptr:
-                {
-                    std::vector<std::string>* strings = *(std::vector<std::string>**)obj;
-                    for (size_t i = 0; i < strings->size(); i++)
-                    {
-                        const std::string* stringAddress = (const std::string*)strings->data() + i;
-                        elementName += "_" + std::to_string(i);
-
-                        valueChanged |= InspectFieldRecursive(Mirror::InfoForType<std::string>(), &strings->at(i), elementName);
-                    }
-                }
-                break;
-
-            case MirrorTypes::ScriptGuiButton:
-                {
-                    ScriptGuiButton* button = (ScriptGuiButton*)obj;
-
-                    std::string elementName = button->m_ButtonName + "##" + parentName;
-                    if (ImGui::Button(elementName.c_str()) && button->m_CallbackFunction)
-                    {
-                        button->m_CallbackFunction();
-                    }
-                }
-                break;
-
-            case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
-                {
-                    if (typeInfo->enumType != MirrorTypes::ComponentScript)
-                    {
-                        // LOG_ERROR("{0} Expected different parent type!", __FUNCTION__);
-                        // break;
-                    }
-
-                    std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)obj;
-
-                    if (ImGui::Button("+"))
-                    {
-                        ImGui::OpenPopup("ScriptList");
-                    }
-
-                    if (ImGui::BeginPopup("ScriptList"))
-                    {
-                        ComponentScript* script = (ComponentScript*)obj;
-
-                        const u8 start = (u8)eScriptTypes::Invalid + 1;
-                        const u8 range = (u8)eScriptTypes::COUNT;
-                        for (size_t i = start; i < range; i++)
-                        {
-                            eScriptTypes scriptType = (eScriptTypes)i;
-                            if (!script->HasScript(scriptType) && ImGui::Button(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)i))))
-                            {
-                                script->AddScript(scriptType, EntityHandle::InvalidHandle()); // #TODO Get proper entity handle
-                                valueChanged = true;
-                                ImGui::CloseCurrentPopup();
-                            }
-                        }
-                        ImGui::EndPopup();
-                    }
-
-                    eScriptTypes removedScriptType = eScriptTypes::Invalid;
-                    for (auto& pair : *scriptsMap)
-                    {
-                        ImGui::Text((std::to_string(pair.first) + " ").c_str());
-                        ImGui::SameLine();
-                        ImGui::Text(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)pair.first)));
-
-                        char minusButtonTitle[] = { '-', '#', '#', (char)pair.first, '\0' };
-                        ImGui::SameLineEnd(1);
-                        if (ImGui::Button(minusButtonTitle))
-                        {
-                            removedScriptType = pair.first;
-                        }
-
-                        switch (pair.first)
-                        {
-                        case eScriptTypes::Camera:
-                            break;
-
-                        case eScriptTypes::Patrol:
-                        {
-                            const Mirror::TypeInfo* scriptableTypeInfo = Mirror::InfoForType<ScriptablePatrol>();
-                            ScriptablePatrol* scr = (ScriptablePatrol*)pair.second;
-                            valueChanged |= InspectFieldRecursive(scriptableTypeInfo, (void*)pair.second, parentName);
-                        }
-                        break;
-
-                        case eScriptTypes::Testing:
-                            break;
-
-                        case eScriptTypes::PathFinder:
-                        {
-                            const Mirror::TypeInfo* scriptableTypeInfo = Mirror::InfoForType<ScriptablePathFinder>();
-                            ScriptablePathFinder* scr = (ScriptablePathFinder*)pair.second;
-                            valueChanged |= InspectFieldRecursive(scriptableTypeInfo, (void*)pair.second, parentName);
-                        }
-                        break;
-
-                        default:
-                            // ASSERT(false, "Unsupported script type!");
-                            break;
-                        }
-                    }
-
-                    if (removedScriptType != eScriptTypes::Invalid)
-                    {
-                        ComponentScript* script = (ComponentScript*)obj;
-                        script->RemoveScript(removedScriptType);
-                        // #TODO Look to remove script
-                        valueChanged = true;
-                    }
-                }
-                break;
-
-            case MirrorTypes::m_arr_float16:
-                {
-                    float* f16matrix = (float*)obj;
-                    valueChanged |= ImGui::DragFloat4(elementName.c_str(), f16matrix, .1f);
-                    valueChanged |= ImGui::DragFloat4("##1", &f16matrix[4], .1f);
-                    valueChanged |= ImGui::DragFloat4("##2", &f16matrix[8], .1f);
-                    valueChanged |= ImGui::DragFloat4("##3", &f16matrix[12], .1f);
-                }
-                break;
-
-            case MirrorTypes::m_vec_string: // #TODO Support vector manipulation
-                {
-                    std::vector<std::string>* strings = (std::vector<std::string>*)obj;
-                    for (size_t i = 0; i < strings->size(); i++)
-                    {
-                        const std::string* stringAddress = (const std::string*)strings->data() + i;
-                        elementName += std::to_string(i);
-
-                        valueChanged |= InspectFieldRecursive(Mirror::InfoForType<std::string>(), &strings->at(i), elementName);
-                    }
-                }
-                break;
-
-            case MirrorTypes::vec2f:
-                {
-                    float* vector2Address = (float*)obj;
-                    if (ImGui::DragFloat2(elementName.c_str(), vector2Address, .1f))
-                    {
-                        valueChanged = true;
-                    }
-                }
-                break;
-
-            case MirrorTypes::vec3f:
-                {
-                    float* vector3Address = (float*)obj;
-                    if (ImGui::DragFloat3(elementName.c_str(), vector3Address, .1f))
-                    {
-                        valueChanged = true;
-                    }
-                }
-                break;
-
             case MirrorTypes::m_string:
                 {
                     std::string* stringAddress = (std::string*)obj;
@@ -250,7 +122,7 @@ namespace QwerkE {
                         valueChanged |= strcmp(*constCharPtrAddress, result) != 0;
                         *constCharPtrAddress = result;
 
-                        //delete oldData; // #TODO Review memory leak. delete *constCharPtrAddress;
+                        // delete oldData; // #TODO Review memory leak. delete *constCharPtrAddress;
                     }
                 }
                 break;
@@ -273,25 +145,9 @@ namespace QwerkE {
                 break;
 
             case MirrorTypes::m_bool:
-                {
-                    bool* boolAddress = (bool*)obj;
-                    if (ImGui::Checkbox(elementName.c_str(), boolAddress))
-                    {
-                        valueChanged = true;
-                    }
-                }
-                break;
-
+                if (ImGui::Checkbox(elementName.c_str(), (bool*)obj)) { valueChanged = true; } break;
             case MirrorTypes::m_float:
-                {
-                    float* numberAddress = (float*)obj;
-                    if (ImGui::DragFloat(elementName.c_str(), numberAddress, .1f))
-                    {
-                        valueChanged = true;
-                    }
-                }
-                break;
-
+                if (ImGui::DragFloat(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
 
             case MirrorTypes::m_eSceneTypes:
             case MirrorTypes::m_uint8_t:
@@ -343,12 +199,14 @@ namespace QwerkE {
                         valueChanged = true;
                     }
 
+                    std::string popUpName = "CopyToClipboard";
+                    popUpName += "##" + elementName;
                     if (ImGui::IsItemClicked(ImGui::MouseRight))
                     {
-                        ImGui::OpenPopup("CopyToClipboard");
+                        ImGui::OpenPopup(popUpName.c_str());
                     }
 
-                    if (ImGui::BeginPopup("CopyToClipboard"))
+                    if (ImGui::BeginPopup(popUpName.c_str()))
                     {
                         if (ImGui::Button("Copy To Clipboard"))
                         {
@@ -392,16 +250,7 @@ namespace QwerkE {
                 break;
 
             case MirrorTypes::m_int32_t:
-            case MirrorTypes::m_int:
-                {
-                    int* numberAddress = (int*)obj;
-                    if (ImGui::DragInt(elementName.c_str(), numberAddress))
-                    {
-                        valueChanged = true;
-                    }
-                }
-                break;
-
+                if (ImGui::DragInt(elementName.c_str(), (int32_t*)obj)) { valueChanged = true; } break;
             case MirrorTypes::m_int64_t:
                 {
                     int64_t* numberAddress = (int64_t*)obj;
@@ -437,6 +286,185 @@ namespace QwerkE {
                 break;
             }
 #endif
+            return valueChanged;
+        }
+
+        bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        {
+            bool valueChanged = false;
+
+            std::string elementName = parentName;
+            switch (typeInfo->enumType)
+            {
+            case MirrorTypes::vec2f:
+                if (ImGui::DragFloat2(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
+            case MirrorTypes::vec3f:
+                if (ImGui::DragFloat3(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
+            case MirrorTypes::ScriptGuiButton:
+                {
+                    ScriptGuiButton* button = (ScriptGuiButton*)obj;
+
+                    std::string elementName = button->m_ButtonName + "##" + parentName;
+                    if (ImGui::Button(elementName.c_str()) && button->m_CallbackFunction)
+                    {
+                        button->m_CallbackFunction();
+                    }
+                }
+                break;
+
+            default:
+                for (size_t i = 0; i < typeInfo->fields.size(); i++)
+                {
+                    const Mirror::Field field = typeInfo->fields[i];
+                    if (field.serializationFlags & Mirror::FieldSerializationFlags::_HideInInspector)
+                        continue;
+
+                    if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorViewOnly)
+                    {
+                        // #TODO Show but prevent editing
+                    }
+
+                    std::string fieldName = field.name + "##" + parentName;
+                    void* fieldAddress = (char*)obj + field.offset;
+                    valueChanged |= InspectType(field.typeInfo, fieldAddress, fieldName);
+                }
+                break;
+            }
+            return valueChanged;
+        }
+
+        bool local_InspectCollection(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        {
+            bool valueChanged = false;
+
+            std::string elementName = parentName;
+            switch (typeInfo->enumType)
+            {
+                case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
+                {
+                    std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)obj;
+
+                    if (ImGui::Button("+"))
+                    {
+                        ImGui::OpenPopup("ScriptList");
+                    }
+
+                    if (ImGui::BeginPopup("ScriptList"))
+                    {
+                        ComponentScript* script = (ComponentScript*)obj;
+
+                        const u8 start = (u8)eScriptTypes::Invalid + 1;
+                        const u8 range = (u8)eScriptTypes::COUNT;
+                        for (size_t i = start; i < range; i++)
+                        {
+                            eScriptTypes scriptType = (eScriptTypes)i;
+                            if (!script->HasScript(scriptType) && ImGui::Button(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)i))))
+                            {
+                                script->AddScript(scriptType, EntityHandle::InvalidHandle()); // #TODO Get proper entity handle
+                                valueChanged = true;
+                                ImGui::CloseCurrentPopup();
+                            }
+                        }
+                        ImGui::EndPopup();
+                    }
+
+                    eScriptTypes removedScriptType = eScriptTypes::Invalid;
+                    for (auto& pair : *scriptsMap)
+                    {
+                        ImGui::Text((std::to_string(pair.first) + " ").c_str());
+                        ImGui::SameLine();
+                        ImGui::Text(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)pair.first)));
+
+                        char minusButtonTitle[] = { '-', '#', '#', (char)pair.first, '\0' };
+                        ImGui::SameLineEnd(1);
+                        if (ImGui::Button(minusButtonTitle)) // #TODO Review using parentName as well
+                        {
+                            removedScriptType = pair.first;
+                        }
+
+                        // #TODO See how ComponentScriptsList can help reduce future script creation steps
+                        const Mirror::TypeInfo* scriptableTypeInfo = nullptr;
+                        switch (pair.first)
+                        {
+                        case eScriptTypes::Patrol:
+                            scriptableTypeInfo = Mirror::InfoForType<ScriptablePatrol>(); break;
+                        case eScriptTypes::PathFinder:
+                            scriptableTypeInfo = Mirror::InfoForType<ScriptablePathFinder>(); break;
+                        case eScriptTypes::Camera:
+                            scriptableTypeInfo = Mirror::InfoForType<ScriptableCamera>(); break;
+                        case eScriptTypes::Testing:
+                            scriptableTypeInfo = Mirror::InfoForType<ScriptableTesting>(); break;
+                        }
+
+                        if (scriptableTypeInfo)
+                        {
+                            ScriptablePathFinder* scr = (ScriptablePathFinder*)pair.second;
+                            valueChanged |= InspectType(scriptableTypeInfo, (void*)pair.second, parentName);
+                        }
+                    }
+
+                    if (removedScriptType != eScriptTypes::Invalid)
+                    {
+                        ComponentScript* script = (ComponentScript*)obj;
+                        script->RemoveScript(removedScriptType);
+                        valueChanged = true;
+                    }
+                }
+                break;
+
+            case MirrorTypes::m_vec_string: // #TODO Support vector manipulation
+                {
+                    std::vector<std::string>* strings = (std::vector<std::string>*)obj;
+                    for (size_t i = 0; i < strings->size(); i++)
+                    {
+                        const std::string* stringAddress = (const std::string*)strings->data() + i;
+                        elementName += std::to_string(i);
+
+                        valueChanged |= InspectType(Mirror::InfoForType<std::string>(), &strings->at(i), elementName);
+                    }
+                }
+                break;
+
+            case MirrorTypes::m_arr_float16:
+                {
+                    float* f16matrix = (float*)obj;
+                    valueChanged |= ImGui::DragFloat4(elementName.c_str(), f16matrix, .1f);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_1", &f16matrix[4], .1f);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_2", &f16matrix[8], .1f);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_3", &f16matrix[12], .1f);
+                }
+                break;
+
+            case MirrorTypes::m_vec_string_ptr:
+                {
+                    std::vector<std::string>* strings = *(std::vector<std::string>**)obj;
+                    for (size_t i = 0; i < strings->size(); i++)
+                    {
+                        const std::string* stringAddress = (const std::string*)strings->data() + i;
+                        elementName += "_" + std::to_string(i);
+
+                        valueChanged |= InspectType(Mirror::InfoForType<std::string>(), &strings->at(i), elementName);
+                    }
+                }
+                break;
+            default:
+                // #TODO Inspect collection elements
+
+                break;
+            }
+            return valueChanged;
+        }
+
+        bool local_InspectPair(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        {
+            bool valueChanged = false;
+
+            std::string elementName = parentName;
+            switch (typeInfo->enumType)
+            {
+            default:
+                break;
+            }
             return valueChanged;
         }
 

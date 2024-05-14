@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Mirror.h"
+#endif
+
 #include <filesystem>
 
 #include "QF_Paths.h"
@@ -21,14 +25,19 @@ namespace QwerkE {
 			{
 				ImGui::Text(m_CurrentDirectory.string().c_str());
 
-				ImGui::SameLineEnd();
-				if (ImGui::Button("<-"))
+				ImGui::SameLineEnd(20);
+				ImGui::PushItemWidth(100);
+				ImGui::SliderFloat("##ScalarSlider", &m_UiScalar, 0.3f, 3.f, "Scale", ImGuiSliderFlags_::ImGuiSliderFlags_AlwaysClamp);
+				ImGui::PopItemWidth();
+
+				ImGui::SameLineEnd((u16)0);
+				if (ImGui::Button(" <- "))
 				{
 					m_CurrentDirectory = m_CurrentDirectory.parent_path();
 				}
 
-				static float padding = 16.0f;
-				static float thumbnailSize = 128.0f;
+				constexpr float padding = 5.f;
+				float thumbnailSize = 128.f * m_UiScalar;
 				float cellSize = thumbnailSize + padding;
 
 				float panelWidth = ImGui::GetContentRegionAvail().x;
@@ -54,6 +63,9 @@ namespace QwerkE {
 				}
 			}
 
+			MIRROR_PRIVATE_MEMBERS
+
+			float m_UiScalar = 1.f;
 			Path m_CurrentDirectory = Paths::AssetsDir();
 		};
 

@@ -90,7 +90,7 @@ namespace QwerkE {
                     ImGui::DragFloat2(("##" + field.name).c_str(), (float*)((char*)&style + field.offset), 0.1f);
                     break;
 
-                case MirrorTypes::m_int:
+                case MirrorTypes::m_int32_t:
                     ImGui::Text(field.name.c_str());
                     break;
 

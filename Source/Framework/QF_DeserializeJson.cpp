@@ -21,7 +21,7 @@ namespace QwerkE {
         void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
         void local_DeserializePair(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
-        bool TypeInfoHasDeserializeOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj);
+        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj);
 
         template<typename... Component>
         void DeserializeComponent(entt::registry* registry, const cJSON* entityComponentsJsonArray);
@@ -37,7 +37,7 @@ namespace QwerkE {
                 return;
             }
 
-            if (TypeInfoHasDeserializeOverride(objJson, objTypeInfo, obj))
+            if (local_TypeInfoHasOverride(objJson, objTypeInfo, obj))
                 return;
 
             switch (objTypeInfo->category)
@@ -222,7 +222,7 @@ namespace QwerkE {
             objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
         }
 
-        bool TypeInfoHasDeserializeOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj)
+        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj)
         {
             switch (objTypeInfo->enumType)
             {

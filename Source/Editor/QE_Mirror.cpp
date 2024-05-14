@@ -103,6 +103,7 @@ namespace QwerkE {
 	typedef Editor::EditorWindowFolderViewer EditorWindowFolderViewer;
 	MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
 	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIRROR_CLASS_MEMBER(m_UiScalar)
 	MIRROR_CLASS_END(EditorWindowFolderViewer)
 
 	typedef Editor::EditorWindowNodeEditor EditorWindowNodeEditor;

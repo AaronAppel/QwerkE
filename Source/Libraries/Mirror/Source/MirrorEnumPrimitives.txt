@@ -12,7 +12,6 @@ m_uint16_t,
 m_uint32_t,
 m_uint64_t,
 
-m_int, // #TODO Consider removing in favour of above (explicit) int types
 m_bool,
 m_char,
 m_float,

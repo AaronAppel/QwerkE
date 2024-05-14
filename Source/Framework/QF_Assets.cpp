@@ -3,9 +3,14 @@
 #include <string>
 #include <unordered_map>
 
+#ifdef _QBGFX
+// #include <bgfx/examples/common/bgfx_utils.h>
+#endif
+
 #ifdef _QBGFXFRAMEWORK
 #include <bgfxFramework/SampleRenderData.h>
 #include <bgfxFramework/LoadShader.h>
+// #include <bgfxFramework/bgfx_utils.h>
 #endif
 
 #ifdef _QMIRROR
@@ -37,12 +42,18 @@ namespace QwerkE {
 			// #TODO Load asset
 			Mesh* newMesh = new Mesh();
 			std::string filePath = Paths::Mesh(s_AssetGuidToFileRegistry[i].second.c_str()).c_str();
-			auto wrongMeshClass = myMeshLoad(filePath.c_str());
+			bgfxFramework::Mesh* wrongMeshClass = myMeshLoad(filePath.c_str());
 			s_WrongMeshAssets.push_back(wrongMeshClass);
 			newMesh->m_ibh = wrongMeshClass->m_groups[0].m_ibh;
 			newMesh->m_vbh = wrongMeshClass->m_groups[0].m_vbh;
 			newMesh->m_GUID = s_AssetGuidToFileRegistry[i].first;
 			m_MapOfAssetMaps[MirrorTypes::Mesh][newMesh->m_GUID] = newMesh;
+		}
+
+		{
+			// bgfxFramework::Mesh* mesh = nullptr;
+			// loadMesh(mesh, Paths::Mesh("bunny.bin").c_str(), false);
+			// meshLoad();
 		}
 
 		{

@@ -103,10 +103,10 @@ namespace ImGui
 	void PushFontQw(Fonts font);
 	void PopFontQw();
 
-	void SameLineEnd(int16_t numberOfChars= 0 , float horizontalScaling = 1.f);
+	void SameLineEnd(uint16_t numberOfChars= 0 , float horizontalScaling = 1.f);
 	void SameLineEnd(const char* text, float horizontalScaling = 1.f);
 
-	void SameLineCentered(int16_t numberOfChars, float horizontalScaling = 1.f);
+	void SameLineCentered(uint16_t numberOfChars, float horizontalScaling = 1.f);
 	void SameLineCentered(const char* text, float horizontalScaling = 1.f);
 
 	template <typename Function>

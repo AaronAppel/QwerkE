@@ -130,7 +130,7 @@ namespace QwerkE {
                     ImGui::SameLine();
                     ImGui::Text("          Changes require engine restart");
                     EngineSettings& engineSettings = Settings::GetEngineSettings();
-                    engineSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
+                    engineSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
                 }
                 break;
 
@@ -138,21 +138,21 @@ namespace QwerkE {
                 {
                     Input::GameActions& gameActions = Input::GetGameActions();
                     // userSettings.isDirty |=
-                    Inspector::InspectFieldRecursive(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
+                    Inspector::InspectType(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
                 }
                 break;
 
                 case eSettingsOptions::Renderer:
                 {
                     RendererSettings& rendererSettings = Settings::GetRendererSettings();
-                    rendererSettings.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
+                    rendererSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
                 }
                 break;
 
                 case eSettingsOptions::Project:
                 {
                     Project& project = Projects::CurrentProject();
-                    project.isDirty |= Inspector::InspectFieldRecursive(Mirror::InfoForType<Project>(), &project, buffer);
+                    project.isDirty |= Inspector::InspectType(Mirror::InfoForType<Project>(), &project, buffer);
                 }
                 break;
                 }

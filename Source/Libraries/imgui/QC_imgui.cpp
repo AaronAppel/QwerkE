@@ -23,7 +23,7 @@ namespace ImGui
 		ImGui::PopFont();
 	}
 
-	void SameLineEnd(int16_t numberOfChars, float horizontalScaling)
+	void SameLineEnd(uint16_t numberOfChars, float horizontalScaling)
 	{
 		constexpr float pixelsPerCharacter = 6.f;
 
@@ -39,7 +39,7 @@ namespace ImGui
 		SameLineEnd(strlen(text), horizontalScaling);
 	}
 
-	void SameLineCentered(int16_t numberOfChars, float horizontalScaling)
+	void SameLineCentered(uint16_t numberOfChars, float horizontalScaling)
 	{
 		constexpr float pixelsPerCharacter = 6.f;
 

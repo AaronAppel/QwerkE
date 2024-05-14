@@ -51,7 +51,7 @@ namespace QwerkE {
         template<typename... Component>
         static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
 
-        bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
+        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
         void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
@@ -61,7 +61,7 @@ namespace QwerkE {
                 return;
             }
 
-            if (TypeInfoHasSerializeOverride(obj, objTypeInfo, objJson))
+            if (local_TypeInfoHasOverride(obj, objTypeInfo, objJson))
                 return;
 
             switch (objTypeInfo->category)
@@ -147,7 +147,6 @@ namespace QwerkE {
                 cJsonItem = CreateJsonNumber<int8_t>(name, obj); break;
             case MirrorTypes::m_int16_t:
                 cJsonItem = CreateJsonNumber<int16_t>(name, obj); break;
-            case MirrorTypes::m_int:
             case MirrorTypes::m_int32_t:
                 cJsonItem = CreateJsonNumber<int32_t>(name, obj); break;
             case MirrorTypes::m_int64_t: // #NOTE Special case of conversion on 64 bit types
@@ -351,7 +350,7 @@ namespace QwerkE {
             }(), ...);
         }
 
-        bool TypeInfoHasSerializeOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
             switch (objTypeInfo->enumType)
             {
