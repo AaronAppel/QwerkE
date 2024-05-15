@@ -183,9 +183,12 @@ namespace QwerkE {
 
             const cJSON* iterator = objJson->child;
             size_t index = 0; // #TODO Scrap index for non-contiguous collections if possible
+
+            // #NOTE Collection constructor should be called
+            objTypeInfo->Construct(obj);
+
             while (iterator)
             {
-                std::unordered_map<GUID, Editor::EditorWindow*>* window = (std::unordered_map<GUID, Editor::EditorWindow*>*)obj;
                 FromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
                 objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
                 iterator = iterator->next;
@@ -219,6 +222,7 @@ namespace QwerkE {
             }
             FromJson(secondJson, elementSecondInfo, elementSecondBuffer.As<void>());
 
+            objTypeInfo->Construct(obj);
             objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
         }
 

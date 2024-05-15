@@ -8,12 +8,16 @@
 #include "Libraries/Mirror/Source/MirrorTesting.h"
 #include "Libraries/Mirror/Source/MirrorTypes.h"
 
-#ifdef _QENTT
-#include "Libraries/entt/entt.hpp"
+#ifdef _QBGFXFRAMEWORK
+#include <bgfxFramework/bgfx_utils.h>
 #endif
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/imgui.h"
+#endif
+
+#ifdef _QENTT
+#include "Libraries/entt/entt.hpp"
 #endif
 
 #include "QC_Guid.h"
@@ -37,6 +41,8 @@
 #include "../Source/Editor/QE_Settings.h"
 
 namespace QwerkE {
+
+	MIRROR_ENUM(MirrorTypes)
 
 	template <typename SuperClass, typename... SubClass>
 	static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
@@ -135,6 +141,12 @@ namespace QwerkE {
 
 	typedef entt::entity m_enTT_Entity;
 	MIRROR_ENUM(m_enTT_Entity)
+#endif
+
+#ifdef _QBGFXFRAMEWORK
+	typedef bgfxFramework::Mesh BgfxMesh;
+	MIRROR_CLASS_START(BgfxMesh)
+	MIRROR_CLASS_END(BgfxMesh)
 #endif
 
 	// Enums
@@ -295,7 +307,13 @@ namespace QwerkE {
 	MIRROR_PAIR(m_pair_guid_string)
 
 	typedef std::vector<m_pair_guid_string> m_vec_pair_guid_string;
-	MIRROR_VECTOR(m_vec_pair_guid_string, m_pair_guid_string);
+	MIRROR_VECTOR(m_vec_pair_guid_string, m_pair_guid_string)
+
+	typedef std::pair<MirrorTypes, m_vec_pair_guid_string> m_pair_mirrorTypes_vec_pair_guid_string;
+	MIRROR_PAIR(m_pair_mirrorTypes_vec_pair_guid_string)
+
+	typedef std::unordered_map<MirrorTypes, m_vec_pair_guid_string> m_map_mirrorTypes_vec_pair_guid_string;
+	MIRROR_MAP(m_map_mirrorTypes_vec_pair_guid_string, m_pair_mirrorTypes_vec_pair_guid_string);
 
 	MIRROR_CLASS_START(Mesh)
 	MIRROR_CLASS_END(Mesh)

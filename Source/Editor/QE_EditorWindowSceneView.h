@@ -105,7 +105,7 @@ namespace QwerkE {
 				}
 
 				ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-				ImGui::Image(ImTextureID(m_TextureId), ImVec2(contentRegionAvailable.x, contentRegionAvailable.y), ImVec2(0, 1), ImVec2(1, 0));
+				ImGui::Image(ImTextureID(m_TextureId), ImVec2(contentRegionAvailable.x, contentRegionAvailable.y), ImVec2(0, 0), ImVec2(1, 1));
 			}
 
 			MIRROR_PRIVATE_MEMBERS

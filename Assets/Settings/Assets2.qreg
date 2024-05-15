@@ -12,7 +12,14 @@
 					"m_string":	{
 						"m_string":	"cube.bin"
 					}
-				},
+				}
+			}
+		},
+		"m_pair_mirrorTypes_vec_pair_guid_string":	{
+			"MirrorTypes":	{
+				"MirrorTypes":	6
+			},
+			"m_vec_pair_guid_string":	{
 				"m_pair_guid_string":	{
 					"GUID":	{
 						"m_Guid":	"11140931355107737998"
@@ -20,7 +27,14 @@
 					"m_string":	{
 						"m_string":	"bunny.bin"
 					}
-				},
+				}
+			}
+		},
+		"m_pair_mirrorTypes_vec_pair_guid_string":	{
+			"MirrorTypes":	{
+				"MirrorTypes":	6
+			},
+			"m_vec_pair_guid_string":	{
 				"m_pair_guid_string":	{
 					"GUID":	{
 						"m_Guid":	"8229536646138328776"

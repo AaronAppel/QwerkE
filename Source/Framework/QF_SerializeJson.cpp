@@ -133,6 +133,7 @@ namespace QwerkE {
                 cJsonItem = CreateJsonString<const char>(name, *(void**)obj); break;
             case MirrorTypes::m_bool:
                 cJsonItem = CreateJsonBool<bool>(name, obj); break;
+            case MirrorTypes::MirrorTypes:
             case MirrorTypes::EditorWindowFlags:
             case MirrorTypes::EditorWindowTypes:
             case MirrorTypes::eScriptTypes: // #TODO Add a case for all enums by default
@@ -276,7 +277,10 @@ namespace QwerkE {
             }
 
             cJSON* pairSecondJson = CreateJsonObject(objTypeInfoSecond->stringName.c_str());
-            cJSON_AddItemToArray(pairJson, pairSecondJson);
+            if (Mirror::TypeInfoCategories::TypeInfoCategory_Collection != objTypeInfoSecond->category)
+            {
+                cJSON_AddItemToArray(pairJson, pairSecondJson);
+            }
 
             switch (objTypeInfoSecond->category)
             {
@@ -287,7 +291,8 @@ namespace QwerkE {
                 local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson); break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
-                local_SerializeCollection(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
+                // #NOTE Can't add because collection already adds
+                local_SerializeCollection(secondAddress, objTypeInfoSecond, pairJson, objTypeInfoSecond->stringName); break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
             {

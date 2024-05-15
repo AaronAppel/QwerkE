@@ -48,12 +48,10 @@ namespace QwerkE {
 		static const bgfx::ViewId s_ViewIdImGui = 1;
 		static const bgfx::ViewId s_ViewIdFbo1 = 2;
 
-		// #TODO static these
-		bgfx::FrameBufferHandle s_FrameBufferHandleFbo; // #TESTING
-		bgfx::TextureHandle s_FrameBufferTexturesFBO1[2]; // #TODO Destroy
-		bgfx::FrameBufferHandle s_FrameBufferHandleEditorCamera; // #TESTING
-		bgfx::TextureHandle s_FrameBufferTextureEditorCamera; // #TODO Destroy
-		// bgfx::TextureHandle s_ReadBackTexture; // #TODO Destroy
+		static bgfx::FrameBufferHandle s_FrameBufferHandleFbo; // #TESTING
+		static bgfx::TextureHandle s_FrameBufferTexturesFBO1[2];
+		static bgfx::FrameBufferHandle s_FrameBufferHandleEditorCamera; // #TESTING
+		static bgfx::TextureHandle s_FrameBufferTextureEditorCamera;
 
 #ifdef _QDEBUG
 		static DebugDrawEncoder* s_DebugDrawer = nullptr;
@@ -87,7 +85,13 @@ namespace QwerkE {
 			init.platformData.nwh = glfwGetCocoaWindow(window);
 #elif BX_PLATFORM_WINDOWS
 			init.platformData.nwh = glfwGetWin32Window(window);
+			// init.type = bgfx::RendererType::Direct3D11;
 #endif
+			const vec2f& windowSize = Window::GetSize();
+			init.resolution.width = windowSize.x;
+			init.resolution.height = windowSize.y;
+			init.resolution.reset = BGFX_RESET_VSYNC;
+
 			if (!bgfx::init(init))
 				return eOperationResult::Failure;
 
@@ -104,20 +108,6 @@ namespace QwerkE {
 				, 1.0f
 				, 0
 			);
-
-			uint64_t state = 0
-				| BGFX_STATE_WRITE_R
-				| BGFX_STATE_WRITE_G
-				| BGFX_STATE_WRITE_B
-				| BGFX_STATE_WRITE_A
-				| BGFX_STATE_WRITE_Z
-				| BGFX_STATE_DEPTH_TEST_LESS
-				| BGFX_STATE_CULL_CW
-				| BGFX_STATE_MSAA
-				| 0 // #REVIEW
-				;
-			// bgfx::setState(state);
-			bgfx::setState(BGFX_STATE_DEFAULT);
 #endif
 			const vec2f& size = Window::GetSize();
 			OnWindowResize(size.x, size.y);
@@ -133,8 +123,6 @@ namespace QwerkE {
 			ddInit();
 #endif
 #endif
-			// the regular image texture
-			const vec2f& windowSize = Window::GetSize();
 			const bool has_mips = false;
 			const uint16_t num_layers = 1;
 
@@ -260,6 +248,10 @@ namespace QwerkE {
 #endif
 			bgfx::destroy(s_FrameBufferHandleFbo);
 			bgfx::destroy(s_FrameBufferHandleEditorCamera);
+
+			bgfx::destroy(s_FrameBufferTexturesFBO1[0]);
+			bgfx::destroy(s_FrameBufferTexturesFBO1[1]);
+			bgfx::destroy(s_FrameBufferTextureEditorCamera);
 
 			ddShutdown();
 

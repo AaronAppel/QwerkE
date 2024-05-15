@@ -372,6 +372,8 @@ static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForT
 	[](void* collectionAddress, size_t /*index*/, void* elementFirst, void* /*elementSecond*/) {								\
 		((VECTOR_TYPE*)collectionAddress)->push_back(*(COLLECTION_TYPE*)elementFirst);											\
 	};																															\
+	localStaticTypeInfo.typeConstructorFunc =																					\
+		[](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) VECTOR_TYPE; };									\
 	localStaticTypeInfo.typeIterateCurrentFunc =																				\
 		[](const void* collectionAddress, size_t aIndex) -> char* {																\
 		static size_t index = 0;																								\
@@ -391,6 +393,8 @@ static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForT
 		[](void* collectionAddress, size_t /*index*/, void* elementFirst, void* /*elementSecond*/) {							\
 		((MAP_TYPE*)collectionAddress)->insert( *(PAIR_TYPE*)elementFirst );													\
 	};																															\
+	localStaticTypeInfo.typeConstructorFunc =																					\
+		[](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) MAP_TYPE; };										\
 	localStaticTypeInfo.typeIterateCurrentFunc =																				\
 		[](const void* collectionAddress, size_t aIndex) -> char* {																\
 		static size_t index = 0;																								\

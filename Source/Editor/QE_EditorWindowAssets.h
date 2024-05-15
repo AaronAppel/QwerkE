@@ -60,15 +60,21 @@ namespace QwerkE {
                 if (ImGui::CollapsingHeader("Assets Registry"))
                 {
                     auto assetRegistry = Assets::ViewRegistry();
-                    for (size_t i = 0; i < assetRegistry.size(); i++)
+
+                    for (auto& pairMirrorTypesVector : assetRegistry)
                     {
-                        ImGui::Text("GUID: ");
-                        ImGui::SameLine();
-                        ImGui::Text(std::to_string(assetRegistry[i].first).c_str());
-                        ImGui::SameLine();
-                        ImGui::Text(" File: ");
-                        ImGui::SameLine();
-                        ImGui::Text(assetRegistry[i].second.c_str());
+                        MirrorTypes type = pairMirrorTypesVector.first;
+                        for (size_t i = 0; i < pairMirrorTypesVector.second.size(); i++)
+                        {
+                            auto pairGuidString = pairMirrorTypesVector.second[i];
+                            ImGui::Text("GUID: ");
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(pairGuidString.first).c_str());
+                            ImGui::SameLine();
+                            ImGui::Text(" File: ");
+                            ImGui::SameLine();
+                            ImGui::Text(pairGuidString.second.c_str());
+                        }
                     }
                 }
 			}

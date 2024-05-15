@@ -88,6 +88,7 @@ namespace QwerkE {
 		{
 			return AssetsDir() + "\\Settings";
 		}
+
 		std::string Setting(const char* settingsFileName)
 		{
 			return SettingsDir() + "\\" + settingsFileName;

@@ -112,11 +112,11 @@ namespace QwerkE {
 
 			if (Input::IsKeyDown(gameActions.Camera_MoveDown))
 			{
-				transform.m_Matrix[13] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[13] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::IsKeyDown(gameActions.Camera_MoveUp))
 			{
-				transform.m_Matrix[13] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				transform.m_Matrix[13] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::IsKeyDown(gameActions.Camera_RotateRight))
 			{

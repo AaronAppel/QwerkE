@@ -3,6 +3,7 @@
 // #NOTE Maintain order in-dependence by avoiding writing enum values to data, or relying on their static values (0,1...etc) in code
 enum class MirrorTypes
 {
+    // #TODO Deprecate categories like m_PAIRS_START. Not needed anymore
     m_Invalid = 0,
 
     m_CLASSES_START,
@@ -11,6 +12,9 @@ enum class MirrorTypes
     Base, // #NOTE For use with MirrorTesting.h
     Derived1, // #NOTE For use with MirrorTesting.h
     Derived2, // #NOTE For use with MirrorTesting.h
+
+    // BGFX Framework
+    BgfxMesh,
 
     // ImGui
     ImGuiStyle,
@@ -85,6 +89,7 @@ enum class MirrorTypes
     m_CLASSES_END,
 
     m_PAIRS_START, // #TODO Deprecate category enum info
+    m_pair_mirrorTypes_vec_pair_guid_string,
     m_pair_guid_string,
     m_pair_eScriptTypes_ScriptablePtr,
     m_pair_guid_enttEntity,
@@ -106,6 +111,7 @@ enum class MirrorTypes
     m_VECTORS_END,
 
     m_MAPS_START,
+    m_map_mirrorTypes_vec_pair_guid_string,
     m_map_eScriptTypes_ScriptablePtr,
     m_map_guid_entt,
     m_umap_guid_editorWindowPtr,
@@ -138,4 +144,6 @@ enum class MirrorTypes
     m_PRIMITIVE_TYPES,
 #include "MirrorEnumPrimitives.txt"
     m_PRIMITIVES_END,
+
+    MirrorTypes,
 };
