@@ -28,18 +28,18 @@ namespace QwerkE {
 	const char* const s_AssetsRegistryFileName = "Assets.qreg";
 	static std::unordered_map<MirrorTypes, AssetsList> s_AssetGuidToFileRegistry;
 
-	using FontsList = std::vector<GUID, std::string>;
+	using ListFontPairs = std::vector<std::pair<GUID, std::string>>;
 	constexpr u16 materialsListSize = 11;
-	using MaterialsList = std::vector<GUID, std::array<std::string, materialsListSize>>;
-	using MeshesList = std::vector<GUID, std::string>;
-	using ShadersList = std::vector<GUID, std::pair<std::string, std::string>>;
-	using TexturesList = std::vector<GUID, std::string>;
+	using ListMaterialPairs = std::vector<std::pair<GUID, std::array<std::string, materialsListSize>>>;
+	using ListMeshPairs = std::vector<std::pair<GUID, std::string>>;
+	using ListShaders = std::vector<std::pair<GUID, std::pair<std::string, std::string>>>;
+	using ListTextures = std::vector<std::pair<GUID, std::string>>;
 
-	// static FontsList s_Fonts;
-	// static MaterialsList s_Materials;
-	// static MeshesList s_Meshes;
-	// static ShadersList s_Shaders;
-	// static TexturesList s_Textures;
+	static ListFontPairs s_Fonts;
+	static ListMaterialPairs s_Materials;
+	static ListMeshPairs s_Meshes;
+	static ListShaders s_Shaders;
+	static ListTextures s_Textures;
 
 	void local_Load(const MirrorTypes mirrorType, const char* filePath, const GUID& guid, std::unordered_map<MirrorTypes, AssetsMap>& mapOfAssetMaps);
 

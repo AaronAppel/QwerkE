@@ -142,6 +142,7 @@ namespace QwerkE {
                     ImGui::CloseCurrentPopup();
                     return &component;
                 }
+
                 return nullptr;
             }
 
@@ -159,6 +160,24 @@ namespace QwerkE {
 
                     const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
                     const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, typeInfo->stringName.c_str());
+
+                    if (std::is_same_v<T, ComponentMesh>)
+                    {
+                        std::string popUpName = "Context " + typeInfo->stringName;
+                        if (ImGui::IsItemClicked(ImGui::MouseRight))
+                        {
+                            ImGui::OpenPopup(popUpName.c_str());
+                        }
+
+                        if (ImGui::BeginPopup(popUpName.c_str()))
+                        {
+                            if (ImGui::Button("Reload"))
+                            {
+                                entity.GetComponent<ComponentMesh>().Initialize();
+                            }
+                            ImGui::EndPopup();
+                        }
+                    }
 
                     if (!std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>)
                     {

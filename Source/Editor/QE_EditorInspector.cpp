@@ -8,6 +8,7 @@
 #include "Libraries/Mirror/Source/Mirror.h"
 #endif
 
+#include "QF_Buffer.h"
 #include "QF_ComponentScript.h"
 #include "QF_Enums.h"
 #include "QF_Log.h"
@@ -191,16 +192,22 @@ namespace QwerkE {
                 {
                     uint64_t* numberAddress = (uint64_t*)obj;
 
-                    std::string numberAsString = std::to_string(*numberAddress);
-                    if (ImGui::InputText(elementName.c_str(), numberAsString.data(), numberAsString.size(), ImGuiInputTextFlags_ReadOnly))
+                    // Edit entity name
+                    Buffer buffer(INT8_MAX); // #TODO Could be re-used/persistent and updated on entity change
+                    buffer.Fill('\0');
+                    strcpy(buffer.As<char>(), std::to_string(*numberAddress).c_str());
+
+                    ImGui::PushItemWidth(165);
+                    if (ImGui::InputText(elementName.c_str(), buffer.As<char>(), buffer.SizeInBytes()))
                     {
-                        // #TODO Fix when cursor selects text box, the last character is deleted
-                        *numberAddress = std::stoull(numberAsString.c_str());
+                        // #TODO Crash when clearing (delete/backspace) text contents to be empty
+                        *numberAddress = std::stoull(buffer.As<char>());
                         valueChanged = true;
                     }
+                    ImGui::PopItemWidth();
 
-                    std::string popUpName = "CopyToClipboard";
-                    popUpName += "##" + elementName;
+                    std::string popUpName = "Context ";
+                    popUpName += elementName;
                     if (ImGui::IsItemClicked(ImGui::MouseRight))
                     {
                         ImGui::OpenPopup(popUpName.c_str());
@@ -208,8 +215,16 @@ namespace QwerkE {
 
                     if (ImGui::BeginPopup(popUpName.c_str()))
                     {
-                        if (ImGui::Button("Copy To Clipboard"))
+                        if (ImGui::Button(("Paste From Clipboard##" + elementName).c_str()))
                         {
+                            std::string clipBoardText = ImGui::GetClipboardText();
+                            LOG_INFO("{0} Pasting from clipboard: {1}", __FUNCTION__, clipBoardText.c_str());
+                            *numberAddress = std::stoull(clipBoardText.c_str());
+                            valueChanged = true;
+                        }
+                        if (ImGui::Button(("Copy To Clipboard##" + elementName).c_str()))
+                        {
+                            std::string numberAsString = buffer.As<char>();
                             ImGui::SetClipboardText(numberAsString.c_str());
                             LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
                         }
@@ -324,7 +339,7 @@ namespace QwerkE {
                         // #TODO Show but prevent editing
                     }
 
-                    std::string fieldName = field.name + "##" + parentName;
+                    std::string fieldName = parentName + field.name + "##";
                     void* fieldAddress = (char*)obj + field.offset;
                     valueChanged |= InspectType(field.typeInfo, fieldAddress, fieldName);
                 }
