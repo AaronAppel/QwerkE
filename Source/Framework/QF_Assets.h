@@ -81,6 +81,8 @@ namespace QwerkE {
 	private:
 		static std::unordered_map<MirrorTypes, AssetsMap> m_MapOfAssetMaps;
 
+		static std::unordered_map<MirrorTypes, AssetsMap> m_RegistryFilePathsMapStructure;
+
 		// Registry
 		using ListFontPairs = std::vector<std::pair<GUID, std::string>>;
 		// constexpr u16 materialsListSize = 11;

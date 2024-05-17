@@ -3,9 +3,11 @@
 
 #include "QF_ForcedIncludes.h" // #TODO Review how to solve includes
 
+#include "QF_EntityHandle.h"
 #include "QF_Framework.h"
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
+#include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Window.h"
 
@@ -23,6 +25,11 @@ int main(unsigned int argc, char** argv)
 	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("NewScene1.qscene"));
 
 	QwerkE::Time::WriteAppStartTime();
+
+	// #TODO Explore code created scenes
+	// QwerkE::Scene* newScene = QwerkE::Scenes::CreateScene();
+	// QwerkE::EntityHandle handle = newScene->CreateEntity();
+	// handle.AddComponent<>();
 
 	while (!QwerkE::Window::CloseRequested())
 	{

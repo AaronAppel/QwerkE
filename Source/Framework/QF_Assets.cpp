@@ -23,7 +23,10 @@
 
 namespace QwerkE {
 
+	// #TODO How does the registry work without the editor, for the Game solution?
+
 	std::unordered_map<MirrorTypes, AssetsMap> Assets::m_MapOfAssetMaps;
+	std::unordered_map<MirrorTypes, AssetsMap> Assets::m_RegistryFilePathsMapStructure;
 
 	Assets::ListFontPairs Assets::m_Fonts;
 	Assets::ListMaterialPairs Assets::m_Materials;
@@ -38,6 +41,10 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
+		m_RegistryFilePathsMapStructure[MirrorTypes::Mesh][GUID()] = new std::string("");
+		m_RegistryFilePathsMapStructure[MirrorTypes::Shader][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
+		// m_RegistryFilePathsMapStructure[MirrorTypes::Material][GUID()] = new std::array<std::string, 11>( { "albedo", "diffuse", "normal", "specular", ...});
+
 		// std::vector<std::pair<GUID, std::string>> vec = { { GUID(0), "cube.bin" }, { GUID(11140931355107737998), "bunny.bin" }, { GUID(8229536646138328776), "column.bin" } };
 		// s_AssetGuidToFileRegistry[MirrorTypes::BgfxMesh] = vec;
 
