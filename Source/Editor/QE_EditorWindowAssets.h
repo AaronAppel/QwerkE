@@ -51,14 +51,18 @@ namespace QwerkE {
 
                 if (ImGui::CollapsingHeader("Textures"))
                 {
+                    // #TODO Assets::ViewAssets<Textures>();
                 }
 
                 if (ImGui::CollapsingHeader("Materials"))
                 {
+                    // #TODO Assets::ViewAssets<Material>();
                 }
 
+                ImGui::Separator();
                 if (ImGui::CollapsingHeader("Assets Registry"))
                 {
+                    // auto materialAssetRegistry = Assets::ViewRegistry<Material>();
                     auto assetRegistry = Assets::ViewRegistry();
 
                     for (auto& pairMirrorTypesVector : assetRegistry)

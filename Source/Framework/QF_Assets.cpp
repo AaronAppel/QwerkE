@@ -25,21 +25,14 @@ namespace QwerkE {
 
 	std::unordered_map<MirrorTypes, AssetsMap> Assets::m_MapOfAssetMaps;
 
+	Assets::ListFontPairs Assets::m_Fonts;
+	Assets::ListMaterialPairs Assets::m_Materials;
+	Assets::ListMeshPairs Assets::m_Meshes;
+	Assets::ListShaders Assets::m_Shaders;
+	Assets::ListTextures Assets::m_Textures;
+
 	const char* const s_AssetsRegistryFileName = "Assets.qreg";
 	static std::unordered_map<MirrorTypes, AssetsList> s_AssetGuidToFileRegistry;
-
-	using ListFontPairs = std::vector<std::pair<GUID, std::string>>;
-	constexpr u16 materialsListSize = 11;
-	using ListMaterialPairs = std::vector<std::pair<GUID, std::array<std::string, materialsListSize>>>;
-	using ListMeshPairs = std::vector<std::pair<GUID, std::string>>;
-	using ListShaders = std::vector<std::pair<GUID, std::pair<std::string, std::string>>>;
-	using ListTextures = std::vector<std::pair<GUID, std::string>>;
-
-	static ListFontPairs s_Fonts;
-	static ListMaterialPairs s_Materials;
-	static ListMeshPairs s_Meshes;
-	static ListShaders s_Shaders;
-	static ListTextures s_Textures;
 
 	void local_Load(const MirrorTypes mirrorType, const char* filePath, const GUID& guid, std::unordered_map<MirrorTypes, AssetsMap>& mapOfAssetMaps);
 
@@ -54,6 +47,15 @@ namespace QwerkE {
 		// Serialize::ToFile(s_AssetGuidToFileRegistry, Paths::Setting(s_AssetsRegistryFileName).c_str());
 
 		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
+
+		if (const bool serialize = false)
+		{
+			Serialize::FromFile(Paths::Setting("Fonts.qreg").c_str(), m_Fonts);
+			// Serialize::FromFile(Paths::Setting("Materials.qreg").c_str(), s_Materials);
+			Serialize::FromFile(Paths::Setting("Meshes.qreg").c_str(), m_Meshes);
+			// Serialize::FromFile(Paths::Setting("Shaders.qreg").c_str(), s_Shaders);
+			Serialize::FromFile(Paths::Setting("Textures.qreg").c_str(), m_Textures);
+		}
 
 		for (auto& mirrorTypeVec : s_AssetGuidToFileRegistry)
 		{

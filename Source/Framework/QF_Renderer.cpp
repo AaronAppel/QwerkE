@@ -8,6 +8,7 @@
 #include <bgfx/../../src/bgfx_p.h> // bgfx::setGraphicsDebuggerPresent
 #include <bx/math.h> // #TODO Remove testing bgfx logo
 #include <bgfx/logo.h> // #TODO Remove testing bgfx logo
+#include <bx/rng.h> // #TODO Picking
 
 #ifndef BX_CONFIG_DEBUG // From bx/config.h
 #	error "BX_CONFIG_DEBUG must be defined in build script!"
@@ -35,6 +36,7 @@
 #endif
 
 #include "QF_Enums.h"
+#include "QF_Shader.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
@@ -44,6 +46,35 @@ namespace QwerkE {
 		static bool s_showRendererDebugStats = false;
 
 #ifdef _QBGFX
+		// Object picking
+// #define RENDER_PASS_SHADING 0  // Default forward rendered geo with simple shading
+// #define RENDER_PASS_ID      1  // ID buffer for picking
+// #define RENDER_PASS_BLIT    2  // Blit GPU render target to CPU texture
+
+#define ID_DIM 8  // Size of the ID buffer
+
+		bgfxFramework::Mesh* m_meshes[12];
+		float m_meshScale[12];
+		float m_idsF[12][4];
+		uint32_t m_idsU[12];
+		uint32_t m_highlighted;
+
+		// Resource handles
+		Shader* m_shadingProgram = nullptr;
+		Shader* m_idProgram = nullptr;
+		bgfx::UniformHandle u_tint;
+		bgfx::UniformHandle u_id;
+		bgfx::TextureHandle m_pickingRT;
+		bgfx::TextureHandle m_pickingRTDepth;
+		bgfx::TextureHandle m_blitTex;
+		bgfx::FrameBufferHandle m_pickingFB;
+
+		uint8_t m_blitData[ID_DIM * ID_DIM * 4]; // Read blit into this
+
+		uint32_t m_reading;
+		uint32_t m_currFrame;
+		static const bgfx::ViewId s_ViewIdPicking = 3;
+		//
 		static const bgfx::ViewId s_ViewIdMain = 0;
 		static const bgfx::ViewId s_ViewIdImGui = 1;
 		static const bgfx::ViewId s_ViewIdFbo1 = 2;
@@ -181,6 +212,95 @@ namespace QwerkE {
 					, 1.0f
 					, 0
 				);
+			}
+
+			{	// Object picking
+				bgfx::setViewName(s_ViewIdPicking, "Picking");
+				bgfx::setViewFrameBuffer(s_ViewIdPicking, m_pickingFB);
+				bgfx::setViewClear(s_ViewIdPicking
+					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
+					, 0x000000ff
+					, 1.0f
+					, 0
+				);
+
+				// Create uniforms
+				u_tint = bgfx::createUniform("u_tint", bgfx::UniformType::Vec4); // Tint for when you click on items
+				u_id = bgfx::createUniform("u_id", bgfx::UniformType::Vec4); // ID for drawing into ID buffer
+
+				// Create program from shaders.
+				m_shadingProgram = new Shader();
+				m_shadingProgram->m_Program = myLoadShaderProgram( // Blinn shading
+					Paths::Shader("vs_picking_shaded.bin").c_str(),
+					Paths::Shader("fs_picking_shaded.bin").c_str()
+				);
+				m_idProgram = new Shader();
+				m_idProgram->m_Program = myLoadShaderProgram( // Shader for drawing into ID buffer
+					Paths::Shader("vs_picking_shaded.bin").c_str(),
+					Paths::Shader("fs_picking_id.bin").c_str()
+				);
+
+				m_highlighted = UINT32_MAX;
+				m_reading = 0;
+				m_currFrame = UINT32_MAX;
+
+				bx::RngMwc mwc;  // Random number generator
+				for (uint32_t ii = 0; ii < 12; ++ii)
+				{
+					// #TODO See how m_meshes is used in bgfx example
+					// m_meshes[ii] = meshLoad(meshPaths[ii % BX_COUNTOF(meshPaths)]);
+					// m_meshScale[ii] = meshScale[ii % BX_COUNTOF(meshPaths)];
+
+					// For the sake of this example, we'll give each mesh a random color,  so the debug output looks colorful.
+					// In an actual app, you'd probably just want to count starting from 1
+					uint32_t rr = mwc.gen() % 256;
+					uint32_t gg = mwc.gen() % 256;
+					uint32_t bb = mwc.gen() % 256;
+					m_idsF[ii][0] = rr / 255.0f;
+					m_idsF[ii][1] = gg / 255.0f;
+					m_idsF[ii][2] = bb / 255.0f;
+					m_idsF[ii][3] = 1.0f;
+					m_idsU[ii] = rr + (gg << 8) + (bb << 16) + (255u << 24);
+				}
+
+				// Set up ID buffer, which has a color target and depth buffer
+				m_pickingRT = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
+					| BGFX_TEXTURE_RT
+					| BGFX_SAMPLER_MIN_POINT
+					| BGFX_SAMPLER_MAG_POINT
+					| BGFX_SAMPLER_MIP_POINT
+					| BGFX_SAMPLER_U_CLAMP
+					| BGFX_SAMPLER_V_CLAMP
+				);
+				m_pickingRTDepth = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::D32F, 0
+					| BGFX_TEXTURE_RT
+					| BGFX_SAMPLER_MIN_POINT
+					| BGFX_SAMPLER_MAG_POINT
+					| BGFX_SAMPLER_MIP_POINT
+					| BGFX_SAMPLER_U_CLAMP
+					| BGFX_SAMPLER_V_CLAMP
+				);
+
+				// CPU texture for blitting to and reading ID buffer so we can see what was clicked on.
+				// Impossible to read directly from a render target, you *must* blit to a CPU texture
+				// first. Algorithm Overview: Render on GPU -> Blit to CPU texture -> Read from CPU
+				// texture.
+				m_blitTex = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
+					| BGFX_TEXTURE_BLIT_DST
+					| BGFX_TEXTURE_READ_BACK
+					| BGFX_SAMPLER_MIN_POINT
+					| BGFX_SAMPLER_MAG_POINT
+					| BGFX_SAMPLER_MIP_POINT
+					| BGFX_SAMPLER_U_CLAMP
+					| BGFX_SAMPLER_V_CLAMP
+				);
+
+				bgfx::TextureHandle rt[2] =
+				{
+					m_pickingRT,
+					m_pickingRTDepth
+				};
+				m_pickingFB = bgfx::createFrameBuffer(BX_COUNTOF(rt), rt, true);
 			}
 
 			bgfx::touch(s_ViewIdMain); // Render main view 1st frame

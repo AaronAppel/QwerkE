@@ -101,6 +101,7 @@ namespace QwerkE {
 
 		std::string Shader(const char* shaderFileName)
 		{
+			// #TODO Should the RendererType be used to find a shader sub directory (dx11/, openGL/, etc?
 			return ShadersDir() + "\\" + shaderFileName;
 		}
 

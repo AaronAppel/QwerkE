@@ -102,10 +102,13 @@ namespace QwerkE {
 				{	// Draw scene using camera
 					m_EditorCamera.PreDrawSetup(m_ViewId);
 					currentScene->Draw(m_ViewId);
+
+					// bgfx::setViewFrameBuffer(m_ViewId, { 2 });
+					// currentScene->Draw(m_ViewId);
 				}
 
 				ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-				ImGui::Image(ImTextureID(m_TextureId), ImVec2(contentRegionAvailable.x, contentRegionAvailable.y), ImVec2(0, 0), ImVec2(1, 1));
+				ImGui::Image(ImTextureID(m_TextureId), contentRegionAvailable, ImVec2(0, 0), ImVec2(1, 1));
 			}
 
 			MIRROR_PRIVATE_MEMBERS

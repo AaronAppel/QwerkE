@@ -55,6 +55,23 @@ namespace QwerkE {
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
 			return *assetMap;
 		}
+
+		template <typename T>
+		static std::unordered_map<MirrorTypes, AssetsList>& ViewRegistry()
+		{
+			const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+			switch (typeInfo)
+			{
+			case MirrorTypes::Mesh:
+				// #TODO Can't return 1 type as each list is a different type
+				// m_Meshes;
+				break;
+			default:
+				// #TODO Error unsupported type
+				break;
+			}
+		}
+
 		static std::unordered_map<MirrorTypes, AssetsList>& ViewRegistry();
 		static void SaveRegistry();
 		static void ExistsInRegistry(const GUID& guid, const std::string& fileName);
@@ -63,6 +80,20 @@ namespace QwerkE {
 
 	private:
 		static std::unordered_map<MirrorTypes, AssetsMap> m_MapOfAssetMaps;
+
+		// Registry
+		using ListFontPairs = std::vector<std::pair<GUID, std::string>>;
+		// constexpr u16 materialsListSize = 11;
+		using ListMaterialPairs = std::vector<std::pair<GUID, std::array<std::string, 11>>>;
+		using ListMeshPairs = std::vector<std::pair<GUID, std::string>>;
+		using ListShaders = std::vector<std::pair<GUID, std::pair<std::string, std::string>>>;
+		using ListTextures = std::vector<std::pair<GUID, std::string>>;
+
+		static ListFontPairs m_Fonts;
+		static ListMaterialPairs m_Materials;
+		static ListMeshPairs m_Meshes;
+		static ListShaders m_Shaders;
+		static ListTextures m_Textures;
 	};
 
 }

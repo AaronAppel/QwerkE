@@ -47,7 +47,7 @@ namespace QwerkE {
 
 				// Pitch transform.m_Matrix[6];
 				static float pitch = 0.f;
-				pitch -= m_MouseDragTracker.MouseFrameDelta().y / pixelRatio * deltaTime;
+				pitch += m_MouseDragTracker.MouseFrameDelta().y / pixelRatio * deltaTime;
 
 				constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
 				bx::Vec3 rotate = { pitch, yaw, 0.f };
