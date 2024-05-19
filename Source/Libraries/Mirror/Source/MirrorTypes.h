@@ -6,8 +6,6 @@ enum class MirrorTypes
     // #TODO Deprecate categories like m_PAIRS_START. Not needed anymore
     m_Invalid = 0,
 
-    m_CLASSES_START,
-
     TestStruct, // #NOTE For use with MirrorTesting.h
     Base, // #NOTE For use with MirrorTesting.h
     Derived1, // #NOTE For use with MirrorTesting.h
@@ -86,39 +84,28 @@ enum class MirrorTypes
     m_enTT_Entity,
     m_entt_registry,
 
-    m_CLASSES_END,
-
-    m_PAIRS_START, // #TODO Deprecate category enum info
     m_pair_mirrorTypes_vec_pair_guid_string,
     m_pair_guid_string,
     m_pair_eScriptTypes_ScriptablePtr,
     m_pair_guid_enttEntity,
     m_pair_guid_editorWindowPtr, // Editor only
     m_pair_string_int32, // #NOTE For use with MirrorTesting.h
-    m_PAIRS_END,
 
-    m_ARRAYS_START,
     m_imvec4_array,
     m_arr_float16,
     m_arr_float10, // #NOTE For use with MirrorTesting.h
-    m_ARRAYS_END,
 
-    m_VECTORS_START,
     m_vec_pair_guid_string,
     m_vec_string,
     m_vector_entt_entities,
     m_vec_char, // #NOTE For use with MirrorTesting.h
-    m_VECTORS_END,
 
-    m_MAPS_START,
     m_map_mirrorTypes_vec_pair_guid_string,
     m_map_eScriptTypes_ScriptablePtr,
     m_map_guid_entt,
     m_umap_guid_editorWindowPtr,
     m_umap_string_int32, // #NOTE For use with MirrorTesting.h
-    m_MAPS_END,
 
-    m_POINTERS_START, // #TODO Deprecate using std::is_pointer
     m_scriptablePtr,
     m_editorWindowPtr, // Editor only
     m_int32Ptr, // #NOTE For use with MirrorTesting.h
@@ -126,12 +113,7 @@ enum class MirrorTypes
     m_derived2Ptr, // #NOTE For use with MirrorTesting.h
     m_basePtr, // #NOTE For use with MirrorTesting.h
     m_vec_string_ptr,
-    m_POINTERS_END,
 
-    // Primitive types. #NOTE A prefix is used to avoid naming collisions with standard type keywords
-    m_PRIMITIVES_START,
-
-    m_ENUMS_START,
     eKeys,
     eSceneStates, // #TODO Review deprecating
     eScriptTypes,
@@ -139,11 +121,24 @@ enum class MirrorTypes
     eComponentTags,
     EditorWindowTypes, // Editor only
     EditorWindowFlags, // Editor only
-    m_ENUMS_END,
-
-    m_PRIMITIVE_TYPES,
-#include "MirrorEnumPrimitives.txt"
-    m_PRIMITIVES_END,
 
     MirrorTypes,
+    // #NOTE A prefix is used to avoid naming collisions with standard type keywords
+    m_int8_t,
+    m_int16_t,
+    m_int32_t,
+    m_int64_t,
+
+    m_uint8_t,
+    m_uint16_t,
+    m_uint32_t,
+    m_uint64_t,
+
+    m_bool,
+    m_char,
+    m_float,
+    m_double,
+    m_charPtr,
+    m_constCharPtr,
+    m_string,
 };
