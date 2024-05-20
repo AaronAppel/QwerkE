@@ -86,6 +86,8 @@ enum class MirrorTypes
 
     m_pair_mirrorTypes_vec_pair_guid_string,
     m_pair_guid_string,
+    m_pair_guid_stringPtr,
+    m_pair_guid_voidPtr,
     m_pair_eScriptTypes_ScriptablePtr,
     m_pair_guid_enttEntity,
     m_pair_guid_editorWindowPtr, // Editor only
@@ -100,7 +102,9 @@ enum class MirrorTypes
     m_vector_entt_entities,
     m_vec_char, // #NOTE For use with MirrorTesting.h
 
-    m_map_mirrorTypes_vec_pair_guid_string,
+    m_map_mirrorTypes_vec_pair_guid_string, // #TODO Review umaps vs non-umap
+    m_map_guid_voidPtr,
+    m_map_guid_stringPtr,
     m_map_eScriptTypes_ScriptablePtr,
     m_map_guid_entt,
     m_umap_guid_editorWindowPtr,
@@ -140,5 +144,10 @@ enum class MirrorTypes
     m_double,
     m_charPtr,
     m_constCharPtr,
+
     m_string,
+    m_stringPtr,
+
+    m_void,
+    m_voidPtr,
 };

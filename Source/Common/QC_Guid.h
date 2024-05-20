@@ -25,6 +25,7 @@ namespace QwerkE {
 	private:
 		MIRROR_PRIVATE_MEMBERS
 		unsigned long long m_Guid = Invalid;
+		// #TODO Consider having a std::string name for debugging. Can be set to somthing helpful like "file.ext", "Player", etc
 	};
 
 }

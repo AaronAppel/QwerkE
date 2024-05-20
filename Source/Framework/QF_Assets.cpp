@@ -41,7 +41,13 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
-		m_RegistryFilePathsMapStructure[MirrorTypes::Mesh][GUID()] = new std::string("");
+		std::unordered_map<GUID, std::string*>* meshes = (std::unordered_map<GUID, std::string*>*) & m_RegistryFilePathsMapStructure[MirrorTypes::Mesh];
+		u16 guidCounter = 1;
+		meshes[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
+		meshes[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
+
+		Serialize::ToFile(*meshes, "NewRegistryMeshes.qreg");
+
 		m_RegistryFilePathsMapStructure[MirrorTypes::Shader][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
 		// m_RegistryFilePathsMapStructure[MirrorTypes::Material][GUID()] = new std::array<std::string, 11>( { "albedo", "diffuse", "normal", "specular", ...});
 

@@ -1,0 +1,20 @@
+{
+	"m_map_guid_stringPtr":	{
+		"m_pair_guid_stringPtr":	{
+			"GUID":	{
+				"m_Guid":	"1"
+			},
+			"m_stringPtr":	{
+				"m_string":	"MeshFile.qmesh"
+			}
+		},
+		"m_pair_guid_stringPtr":	{
+			"GUID":	{
+				"m_Guid":	"2"
+			},
+			"m_stringPtr":	{
+				"m_string":	"MeshFile.qmesh"
+			}
+		}
+	}
+}

@@ -315,6 +315,40 @@ namespace QwerkE {
 	typedef std::unordered_map<MirrorTypes, m_vec_pair_guid_string> m_map_mirrorTypes_vec_pair_guid_string;
 	MIRROR_MAP(m_map_mirrorTypes_vec_pair_guid_string, m_pair_mirrorTypes_vec_pair_guid_string);
 
+	typedef void m_void;
+	template<> const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<m_void>() {
+		// #TODO Resolve size of C2070 compile error
+		// static_assert(sizeof(m_void) <= 0xffffui16, "Size is larger than member can hold!");
+		static QwerkE::Mirror::TypeInfo localStaticTypeInfo;
+		if (localStaticTypeInfo.enumType != MirrorTypes::m_Invalid) {
+			return &localStaticTypeInfo;
+		}
+		localStaticTypeInfo.category = SetCategory<m_void>();
+		localStaticTypeInfo.enumType = MirrorTypes::m_void;
+		localStaticTypeInfo.stringName = "m_void";
+		// localStaticTypeInfo.size = sizeof(m_void); // #TODO Resolve size of C2070 compile error
+		using ClassType = m_void;
+		return &localStaticTypeInfo;
+	}
+
+	typedef void* m_voidPtr;
+	MIRROR_POINTER(m_voidPtr)
+
+	typedef std::pair<GUID, m_voidPtr> m_pair_guid_voidPtr;
+	MIRROR_PAIR(m_pair_guid_voidPtr)
+
+	typedef std::unordered_map<GUID, m_voidPtr> m_map_guid_voidPtr;
+	MIRROR_MAP(m_map_guid_voidPtr, m_pair_guid_voidPtr);
+
+	typedef std::string* m_stringPtr;
+	MIRROR_POINTER(m_stringPtr)
+
+	typedef std::pair<GUID, m_stringPtr> m_pair_guid_stringPtr;
+	MIRROR_PAIR(m_pair_guid_stringPtr)
+
+	typedef std::unordered_map<GUID, m_stringPtr> m_map_guid_stringPtr;
+	MIRROR_MAP(m_map_guid_stringPtr, m_pair_guid_stringPtr);
+
 	MIRROR_CLASS_START(Mesh)
 	MIRROR_CLASS_END(Mesh)
 
