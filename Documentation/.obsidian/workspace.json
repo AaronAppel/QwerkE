@@ -28,7 +28,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Reading For Reflection System.md",
+                "file": "UI Library Idea.md",
                 "mode": "source",
                 "source": false
               }
@@ -76,7 +76,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "wordle",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,7 +93,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -113,7 +114,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Reading For Reflection System.md",
+                "file": "UI Library Idea.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Reading For Reflection System.md",
+                "file": "UI Library Idea.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,7 +154,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Reading For Reflection System.md"
+                "file": "UI Library Idea.md"
               }
             }
           }
@@ -176,8 +177,8 @@
   },
   "active": "811f62c5290b16e9",
   "lastOpenFiles": [
-    "QwerkE File Domains.canvas",
     "Reading For Reflection System.md",
+    "QwerkE File Domains.canvas",
     "README.md",
     "LICENSE",
     "Development/Features/ASSERT Expanded.md",

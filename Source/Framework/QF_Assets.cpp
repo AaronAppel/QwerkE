@@ -38,13 +38,39 @@ namespace QwerkE {
 	static std::unordered_map<MirrorTypes, AssetsList> s_AssetGuidToFileRegistry;
 
 	void local_Load(const MirrorTypes mirrorType, const char* filePath, const GUID& guid, std::unordered_map<MirrorTypes, AssetsMap>& mapOfAssetMaps);
+	auto a = typeid(int).name();
+	template <typename T>
+	void Func()
+	{
+		const Mirror::TypeInfo* typeInfo = Mirror::InfoForType2<T>();
+		switch (typeInfo->id)
+		{
+		case MIRROR_TYPE_ID(int):
+			{
+				int bp = 0;
+			}
+			break;
+		case MIRROR_TYPE_ID(float):
+			break;
+		default:
+			break;
+		}
+	}
 
 	void Assets::Initialize()
 	{
+		const Mirror::TypeInfo* typeInfo = nullptr;
+		typeInfo = Mirror::InfoForType2<int>();
+		typeInfo = Mirror::InfoForType2<uint8_t>(); // "Unsigned char"
+		typeInfo = Mirror::InfoForType2<float>();
+
 		std::unordered_map<GUID, std::string*>* meshes = (std::unordered_map<GUID, std::string*>*) & m_RegistryFilePathsMapStructure[MirrorTypes::Mesh];
 		u16 guidCounter = 1;
-		meshes[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
-		meshes[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
+		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
+		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
+
+		auto result = MIRROR_TYPE_ID(int);
+		Func<int>();
 
 		Serialize::ToFile(*meshes, "NewRegistryMeshes.qreg");
 

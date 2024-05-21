@@ -334,6 +334,22 @@ namespace QwerkE {
 	typedef void* m_voidPtr;
 	MIRROR_POINTER(m_voidPtr)
 
+	// MIRROR_POINTER(void*)
+	// 	template<> const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<void*>() {
+	// 	static_assert(sizeof(void*) <= 0xffffui16, "Size is larger than member can hold!");
+	// 	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;
+	// 	if (!localStaticTypeInfo.stringName.empty()) {
+	// 		return &localStaticTypeInfo;
+	// 	}
+	// 	localStaticTypeInfo.category = SetCategory<void*>();
+	// 	localStaticTypeInfo.stringName = "void*";
+	// 	localStaticTypeInfo.size = sizeof(void*);
+	// 	localStaticTypeInfo.id = HashFromString("\"void*\"");
+	// 	using ClassType = void*; static_assert(std::is_pointer_v<void*>);
+	// 	localStaticTypeInfo.pointerDereferencedTypeInfo = QwerkE::Mirror::InfoForType<std::remove_pointer_t<void*>>();
+	// 	return &localStaticTypeInfo;
+	// }
+
 	typedef std::pair<GUID, m_voidPtr> m_pair_guid_voidPtr;
 	MIRROR_PAIR(m_pair_guid_voidPtr)
 

@@ -36,6 +36,36 @@
 
 namespace QwerkE {
 
+	// Taken from: https://stackoverflow.com/questions/42258608/c-constexpr-values-for-types
+	template <std::size_t SIZE>
+	constexpr std::size_t HashFromString(const char(&type_name)[SIZE])
+	{
+		std::size_t result{ 0xf };
+		for (const auto& c : type_name)
+		{
+			result <<= 1;
+			result |= c;
+		}
+
+		return result;
+	}
+
+	constexpr std::size_t HashFromString(const char* type_name)
+	{
+		std::size_t result{ 0xf };
+		const char* charPtr = type_name;
+		while (*charPtr != '\0')
+		{
+			result <<= 1;
+			result |= *charPtr;
+			charPtr += 1;
+		}
+
+		return result;
+	}
+
+#define MIRROR_TYPE_ID(x) HashFromString(#x)
+
 	struct Mirror
 	{
 		struct TypeInfo;
@@ -73,6 +103,7 @@ namespace QwerkE {
 
 			std::string stringName = "";
 			MirrorTypes enumType = MirrorTypes::m_Invalid;
+			size_t id = 0;
 			MIRROR_TYPE_SIZE size = 0;
 			TypeInfoCategories category = TypeInfoCategories::TypeInfoCategory_Primitive;
 
@@ -145,6 +176,9 @@ namespace QwerkE {
 
 		template<typename T>
 		static const TypeInfo* InfoForType();
+
+		template<typename TYPE>
+		static const TypeInfo* InfoForType2();
 	};
 
 	template<typename... T>
@@ -235,6 +269,19 @@ constexpr QwerkE::Mirror::TypeInfoCategories SetCategory()
 	else return QwerkE::Mirror::TypeInfoCategory_Primitive;
 }
 
+template <typename TYPE>
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType2()
+{
+	static_assert(sizeof(TYPE) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");
+	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;
+	if (!localStaticTypeInfo.stringName.empty()) { return &localStaticTypeInfo; }
+	localStaticTypeInfo.category = SetCategory<TYPE>();
+	localStaticTypeInfo.stringName = typeid(TYPE).name();
+	localStaticTypeInfo.size = sizeof(TYPE);
+	localStaticTypeInfo.id = HashFromString(localStaticTypeInfo.stringName.c_str());
+	return &localStaticTypeInfo;
+}
+
 #define MIRROR_GENERIC(TYPE)																									\
 template<>																														\
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {															\
@@ -245,6 +292,7 @@ const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<TYPE>() {											
 	localStaticTypeInfo.enumType = MirrorTypes::TYPE;																			\
 	localStaticTypeInfo.stringName = #TYPE;																						\
 	localStaticTypeInfo.size = sizeof(TYPE);																					\
+	localStaticTypeInfo.id = MIRROR_TYPE_ID(#TYPE);																				\
 	using ClassType = TYPE;	/* For use by other macros */
 
 #define MIRROR_TYPE(TYPE)																										\
@@ -325,17 +373,6 @@ MIRROR_DEPENDENT_CLASS_STARTN(TYPE, MIRROR_MEMBER_FIELDS_DEFAULT)
 	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME);																\
 	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME));															\
 	MEMBER_NAME##field.serializationFlags = FLAGS;																				\
-	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
-
-// #TODO Deprecate. Currently used for m_imvec4_array
-#define MIRROR_CLASS_MEMBER_TYPE_OVERRIDE(MEMBER_NAME, OVERRIDE_TYPE)															\
-	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 };																		\
-	QwerkE::Mirror::Field MEMBER_NAME##field;																					\
-	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<OVERRIDE_TYPE>();													\
-	MEMBER_NAME##field.name = #MEMBER_NAME;																						\
-	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME);																\
-	static_assert(sizeof(decltype(ClassType::MEMBER_NAME)) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");	\
-	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME));															\
 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
 
 #define MIRROR_CLASS_END(TYPE)																									\
