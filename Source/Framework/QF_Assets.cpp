@@ -11,7 +11,7 @@
 #endif
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "QF_Mirror.h"
 #endif
 
 #include "QF_Files.h"
@@ -60,9 +60,14 @@ namespace QwerkE {
 	void Assets::Initialize()
 	{
 		const Mirror::TypeInfo* typeInfo = nullptr;
+		typeInfo = Mirror::InfoForType2<Mesh>();
+
 		typeInfo = Mirror::InfoForType2<int>();
 		typeInfo = Mirror::InfoForType2<uint8_t>(); // "Unsigned char"
 		typeInfo = Mirror::InfoForType2<float>();
+		typeInfo = Mirror::InfoForType2<GUID>();
+
+		typeInfo = Mirror::InfoForType2<ImVec2>();
 
 		std::unordered_map<GUID, std::string*>* meshes = (std::unordered_map<GUID, std::string*>*) & m_RegistryFilePathsMapStructure[MirrorTypes::Mesh];
 		u16 guidCounter = 1;
@@ -70,7 +75,7 @@ namespace QwerkE {
 		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
 
 		auto result = MIRROR_TYPE_ID(int);
-		Func<int>();
+		// Func<int>();
 
 		Serialize::ToFile(*meshes, "NewRegistryMeshes.qreg");
 

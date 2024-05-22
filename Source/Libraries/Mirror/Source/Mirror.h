@@ -177,7 +177,7 @@ namespace QwerkE {
 		template<typename T>
 		static const TypeInfo* InfoForType();
 
-		template<typename TYPE>
+		template<typename T>
 		static const TypeInfo* InfoForType2();
 	};
 
@@ -205,7 +205,7 @@ namespace QwerkE {
 	template<typename Super, typename... T>
 	static void todo_MirrorSubClassUserTypes(MirrorTemplateArgumentList<T...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
 	{
-		MirrorSubClassUserType<Super, T...>(localStaticTypeInfo, enumStartOffset);
+		todo_MirrorSubClassUserType<Super, T...>(localStaticTypeInfo, enumStartOffset);
 	}
 
 }
@@ -269,17 +269,106 @@ constexpr QwerkE::Mirror::TypeInfoCategories SetCategory()
 	else return QwerkE::Mirror::TypeInfoCategory_Primitive;
 }
 
+// For generic types
 template <typename TYPE>
 const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType2()
 {
+	// #NOTE For classes, see if std::is_empty can be useful (true if no non-static members exist)
+	// Maybe add to member macro
 	static_assert(sizeof(TYPE) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");
 	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;
 	if (!localStaticTypeInfo.stringName.empty()) { return &localStaticTypeInfo; }
+	localStaticTypeInfo.stringName = typeid(TYPE).name(); // #NOTE Finds underlying type (not typedef/using/overriden type)
 	localStaticTypeInfo.category = SetCategory<TYPE>();
-	localStaticTypeInfo.stringName = typeid(TYPE).name();
+	size_t index = localStaticTypeInfo.stringName.find_last_of(':');
+	if (index != localStaticTypeInfo.stringName.npos)
+	{
+		localStaticTypeInfo.stringName = localStaticTypeInfo.stringName.substr(index + 1); // "class QwerkE::Mesh" -> "Mesh"
+	}
 	localStaticTypeInfo.size = sizeof(TYPE);
+	// #TODO Unique id check
 	localStaticTypeInfo.id = HashFromString(localStaticTypeInfo.stringName.c_str());
 	return &localStaticTypeInfo;
+}
+
+// For classes
+// #NOTE typeid finds underlying type (not typedef/using/overriden type)
+// substr() used to "class QwerkE::Mesh" -> "Mesh"
+#define MIRROR_CLASS_START2(TYPE)																								\
+template<>																														\
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType2<TYPE>() {															\
+	static_assert(std::is_class_v<TYPE> && !std::is_abstract_v<TYPE>);															\
+																																\
+	static_assert(sizeof(TYPE) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");								\
+	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;																		\
+	if (!localStaticTypeInfo.stringName.empty()) { return &localStaticTypeInfo; }												\
+	localStaticTypeInfo.stringName = typeid(TYPE).name();																		\
+	size_t index = localStaticTypeInfo.stringName.find_last_of(':');															\
+	if (index != localStaticTypeInfo.stringName.npos)																			\
+	{																															\
+		localStaticTypeInfo.stringName = localStaticTypeInfo.stringName.substr(index + 1);										\
+	}																															\
+	localStaticTypeInfo.category = SetCategory<TYPE>();																			\
+	localStaticTypeInfo.size = sizeof(TYPE);																					\
+	localStaticTypeInfo.id = HashFromString(localStaticTypeInfo.stringName.c_str());											\
+																																\
+	localStaticTypeInfo.typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) TYPE(); };	\
+	enum { BASE = __COUNTER__ };																								\
+	using ClassType = TYPE;	/* For use by other macros */
+
+#define MIRROR_CLASS_ABSTRACT_START2(TYPE)																								\
+template<>																														\
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType2<TYPE>() {															\
+	static_assert(std::is_class_v<TYPE> && !std::is_abstract_v<TYPE>);															\
+																																\
+	static_assert(sizeof(TYPE) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");								\
+	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;																		\
+	if (!localStaticTypeInfo.stringName.empty()) { return &localStaticTypeInfo; }												\
+	localStaticTypeInfo.stringName = typeid(TYPE).name();																		\
+	size_t index = localStaticTypeInfo.stringName.find_last_of(':');															\
+	if (index != localStaticTypeInfo.stringName.npos)																			\
+	{																															\
+		localStaticTypeInfo.stringName = localStaticTypeInfo.stringName.substr(index + 1);										\
+	}																															\
+	localStaticTypeInfo.category = SetCategory<TYPE>();																			\
+	localStaticTypeInfo.size = sizeof(TYPE);																					\
+	localStaticTypeInfo.id = HashFromString(localStaticTypeInfo.stringName.c_str());											\
+	enum { BASE = __COUNTER__ };																								\
+	using ClassType = TYPE;	/* For use by other macros */
+
+#define MIRROR_ABSTRACT_CLASS_START2(TYPE)																						\
+template<>																														\
+const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType2<TYPE>() {															\
+	static_assert(std::is_class_v<TYPE> && std::is_abstract_v<TYPE>);															\
+	static_assert(sizeof(TYPE) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");								\
+	static QwerkE::Mirror::TypeInfo localStaticTypeInfo;																		\
+	if (!localStaticTypeInfo.stringName.empty()) { return &localStaticTypeInfo; }												\
+	localStaticTypeInfo.stringName = typeid(TYPE).name();																		\
+	size_t index = localStaticTypeInfo.stringName.find_last_of(':');															\
+	if (index != localStaticTypeInfo.stringName.npos)																			\
+	{																															\
+		localStaticTypeInfo.stringName = localStaticTypeInfo.stringName.substr(index + 1);										\
+	}																															\
+	localStaticTypeInfo.category = SetCategory<TYPE>();																			\
+	localStaticTypeInfo.size = sizeof(TYPE);																					\
+	localStaticTypeInfo.id = HashFromString(localStaticTypeInfo.stringName.c_str());											\
+																																\
+	enum { BASE = __COUNTER__ };																								\
+	using ClassType = TYPE;	/* For use by other macros */
+
+#define MIRROR_CLASS_MEMBER_FLAGS2(MEMBER_NAME, FLAGS)																			\
+	static_assert(sizeof(decltype(ClassType::MEMBER_NAME)) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");	\
+	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 };																		\
+	QwerkE::Mirror::Field MEMBER_NAME##field;																					\
+	MEMBER_NAME##field.typeInfo = QwerkE::Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>();								\
+	MEMBER_NAME##field.name = #MEMBER_NAME;																						\
+	MEMBER_NAME##field.offset = offsetof(ClassType, MEMBER_NAME);																\
+	MEMBER_NAME##field.size = sizeof(decltype(ClassType::MEMBER_NAME));															\
+	MEMBER_NAME##field.serializationFlags = FLAGS;																				\
+	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);
+
+#define MIRROR_CLASS_END2																										\
+	return &localStaticTypeInfo;																								\
 }
 
 #define MIRROR_GENERIC(TYPE)																									\
@@ -380,9 +469,8 @@ MIRROR_DEPENDENT_CLASS_STARTN(TYPE, MIRROR_MEMBER_FIELDS_DEFAULT)
 	return &localStaticTypeInfo;																								\
 }																																\
 static const QwerkE::Mirror::TypeInfo* TYPE##typeInfo = QwerkE::Mirror::InfoForType<TYPE>();									\
-// Instance above used for intialization. Ideally, remove it and find better alternative
+// Instance above used for intialization. Ideally, remove it and find a better alternative
 
-// Could use std::is_array_v<ARRAY_TYPE>
 #define MIRROR_ARRAY(ARRAY_TYPE, COLLECTION_TYPE)																				\
 	MIRROR_GENERIC(ARRAY_TYPE)																									\
 	static_assert(std::is_array_v<ARRAY_TYPE>);																					\
