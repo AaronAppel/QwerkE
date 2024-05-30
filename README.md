@@ -36,6 +36,7 @@ Libraries or external code I utilize to deliver features (may be outdated) :
 - glm: www.github.com/g-truc/glm
 - imgui: www.github.com/ocornut/imgui
 - lodepng: www.github.com/lvandeve/lodepng
+- Mirror: www.github.com/AaronAppel/Mirror
 - OpenAL: www.openal.org
 - pthreads: www.github.com/coapp-packages/pthreads
 - RakNet: www.github.com/facebookarchive/RakNet
