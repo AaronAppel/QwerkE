@@ -3,7 +3,7 @@
 I use this project to develop a simple game engine for hobby.
 Ideally QwerkE can be useful for making my own games, and for those who might brave the challenge of using it as well.
 
-The name QwerkE is simply endearing to me as it's a play on the "QWER" keyboard layout, with the later 'E', which stands for Engine or Editor.
+The name QwerkE is simply endearing to me as it's a play on the "QWER" keyboard layout, with an added 'E' that stands for Engine or Editor.
 
 \**This project is continually in development and should be considered unstable, until proven otherwise!*
 ## Getting Started
