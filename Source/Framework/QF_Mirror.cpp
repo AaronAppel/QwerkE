@@ -38,17 +38,17 @@ static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumS
 {
 	uint16_t enumValue = enumStartOffset;
 	([&]()
-		{
-			const Mirror::TypeInfo* subclassTypeInfo = Mirror::InfoForType<SubClass>();
-			localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
-			const_cast<Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
-			const_cast<Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
-				[](const void* pointerToInstance) -> bool {
-				SubClass* subClass = (SubClass*)pointerToInstance;
-				return dynamic_cast<SubClass*>(*(SuperClass**)pointerToInstance) != nullptr;
-				};
-			++enumValue;
-		}(), ...);
+	{
+		const Mirror::TypeInfo* subclassTypeInfo = Mirror::InfoForType<SubClass>();
+		localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
+		const_cast<Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
+		const_cast<Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
+			[](const void* pointerToInstance) -> bool {
+			SubClass* subClass = (SubClass*)pointerToInstance;
+			return dynamic_cast<SubClass*>(*(SuperClass**)pointerToInstance) != nullptr;
+		};
+		++enumValue;
+	}(), ...);
 }
 
 template<typename SuperClass, typename... SubClass>
