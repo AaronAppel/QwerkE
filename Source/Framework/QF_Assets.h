@@ -8,8 +8,6 @@
 
 #include "QC_Guid.h"
 
-enum class MirrorTypes;
-
 namespace QwerkE {
 
 	using AssetsMap = std::unordered_map<GUID, void*>; // #NOTE Smart pointers require compile time types. Could look at another solution
@@ -26,7 +24,7 @@ namespace QwerkE {
 		template <typename T>
 		static bool Has(GUID guid)
 		{
-			const MirrorTypes typeEnum = Mirror::InfoForType<T>()->enumType;
+			const size_t typeEnum = Mirror::InfoForType<T>()->id;
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
 
 			return assetMap->find(guid) != assetMap->end();
@@ -35,7 +33,7 @@ namespace QwerkE {
 		template <typename T>
 		static T* Get(GUID guid)
 		{
-			const MirrorTypes typeEnum = Mirror::InfoForType<T>()->enumType;
+			const size_t typeEnum = Mirror::InfoForType<T>()->id;
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
 
 			if (!Has<T>(guid))
@@ -51,18 +49,18 @@ namespace QwerkE {
 		template <typename T>
 		static const std::unordered_map<GUID, T*>& ViewAssets()
 		{
-			const MirrorTypes typeEnum = Mirror::InfoForType<T>()->enumType;
+			const size_t typeEnum = Mirror::InfoForType<T>()->id;
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
 			return *assetMap;
 		}
 
 		template <typename T>
-		static std::unordered_map<MirrorTypes, AssetsList>& ViewRegistry()
+		static std::unordered_map<size_t, AssetsList>& ViewRegistry()
 		{
 			const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
 			switch (typeInfo)
 			{
-			case MirrorTypes::Mesh:
+			case Mirror::TypeId<Mesh>():
 				// #TODO Can't return 1 type as each list is a different type
 				// m_Meshes;
 				break;
@@ -72,16 +70,16 @@ namespace QwerkE {
 			}
 		}
 
-		static std::unordered_map<MirrorTypes, AssetsList>& ViewRegistry();
+		static std::unordered_map<size_t, AssetsList>& ViewRegistry();
 		static void SaveRegistry();
 		static void ExistsInRegistry(const GUID& guid, const std::string& fileName);
-		static void AddToRegistry(const MirrorTypes mirrorType, const GUID& guid, const std::string& fileName);
+		static void AddToRegistry(const size_t mirrorType, const GUID& guid, const std::string& fileName);
 #endif
 
 	private:
-		static std::unordered_map<MirrorTypes, AssetsMap> m_MapOfAssetMaps;
+		static std::unordered_map<size_t, AssetsMap> m_MapOfAssetMaps;
 
-		static std::unordered_map<MirrorTypes, AssetsMap> m_RegistryFilePathsMapStructure;
+		static std::unordered_map<size_t, AssetsMap> m_RegistryFilePathsMapStructure;
 
 		// Registry
 		using ListFontPairs = std::vector<std::pair<GUID, std::string>>;

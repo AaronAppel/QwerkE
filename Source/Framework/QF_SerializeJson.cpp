@@ -11,10 +11,6 @@
 #include "Libraries/entt/entt.hpp"
 #endif
 
-#ifdef _QMIRROR
-#include "Libraries/Mirror/Source/MirrorTesting.h"
-#endif
-
 #include "QC_Guid.h"
 
 #include "QF_ComponentHelpers.h"
@@ -23,9 +19,15 @@
 #include "QF_Scene.h"
 #include "QF_ScriptHelpers.h"
 
+// #if Framework
+// #include "QF_Mirror.h"
+
 // Editor types
+// #TODO Review removing
+// #if Editor
 #include "../Source/Editor/QE_EditorWindowHelpers.h"
 #include "../Source/Editor/QE_Settings.h"
+#include "../Source/Editor/QE_Mirror.h"
 
 namespace QwerkE {
 
@@ -110,17 +112,19 @@ namespace QwerkE {
 
             cJSON* cJsonItem = nullptr;
 
-            switch (objTypeInfo->enumType)
+            switch (objTypeInfo->id)
             {
-            case MirrorTypes::m_string:
+            case Mirror::TypeId<const std::string>():
+            case Mirror::TypeId<std::string>():
                 {
                     const std::string* fieldAddress = (std::string*)obj;
                     cJsonItem = CreateJsonString<const char>(name, fieldAddress->data()); // #TODO Requires ->data() so can't work with CreateJsonString()
                 }
                 break;
 
-            case MirrorTypes::eKeys:
-            case MirrorTypes::m_char:
+            case Mirror::TypeId<eKeys>():
+            case Mirror::TypeId<const char>():
+            case Mirror::TypeId<char>():
                 {
                     char charArr[2] = { '\0', '\0'};
                     charArr[0] = *(char*)obj;
@@ -128,29 +132,37 @@ namespace QwerkE {
                     cJsonItem->string = _strdup(name.c_str());
                 }
                 break;
-            case MirrorTypes::m_charPtr:
-            case MirrorTypes::m_constCharPtr:
+            case Mirror::TypeId<const char*>():
+            case Mirror::TypeId<char*>():
                 cJsonItem = CreateJsonString<const char>(name, *(void**)obj); break;
-            case MirrorTypes::m_bool:
+            case Mirror::TypeId<const bool>():
+            case Mirror::TypeId<bool>():
                 cJsonItem = CreateJsonBool<bool>(name, obj); break;
-            case MirrorTypes::MirrorTypes:
-            case MirrorTypes::EditorWindowFlags:
-            case MirrorTypes::EditorWindowTypes:
-            case MirrorTypes::eScriptTypes: // #TODO Add a case for all enums by default
-            case MirrorTypes::m_eSceneTypes:
-            case MirrorTypes::m_uint8_t:
+            case Mirror::TypeId<Editor::EditorWindowTypes>():
+            case Mirror::TypeId<Editor::EditorWindowFlags>():
+            case Mirror::TypeId<const eScriptTypes>():
+            case Mirror::TypeId<eScriptTypes>(): // #TODO Add a case for all enums by default
+            // #TODO Review deprecation case MirrorTypes::m_eSceneTypes:
+            case Mirror::TypeId<const uint8_t>():
+            case Mirror::TypeId<uint8_t>():
                 cJsonItem = CreateJsonNumber<uint8_t>(name, obj); break;
-            case MirrorTypes::m_uint16_t:
+            case Mirror::TypeId<const uint16_t>():
+            case Mirror::TypeId<uint16_t>():
                 cJsonItem = CreateJsonNumber<uint16_t>(name, obj); break;
-            case MirrorTypes::m_uint32_t:
+            case Mirror::TypeId<const uint32_t>():
+            case Mirror::TypeId<uint32_t>():
                 cJsonItem = CreateJsonNumber<uint32_t>(name, obj); break;
-            case MirrorTypes::m_int8_t:
+            case Mirror::TypeId<const int8_t>():
+            case Mirror::TypeId<int8_t>():
                 cJsonItem = CreateJsonNumber<int8_t>(name, obj); break;
-            case MirrorTypes::m_int16_t:
+            case Mirror::TypeId<const int16_t>():
+            case Mirror::TypeId<int16_t>():
                 cJsonItem = CreateJsonNumber<int16_t>(name, obj); break;
-            case MirrorTypes::m_int32_t:
+            case Mirror::TypeId<const int32_t>():
+            case Mirror::TypeId<int32_t>():
                 cJsonItem = CreateJsonNumber<int32_t>(name, obj); break;
-            case MirrorTypes::m_int64_t: // #NOTE Special case of conversion on 64 bit types
+            case Mirror::TypeId<const int64_t>():
+            case Mirror::TypeId<int64_t>(): // #NOTE Special case of conversion on 64 bit types
             {
                 // Use string instead of a double to avoid conversion issues
                 int64_t* numberAddress = (int64_t*)obj;
@@ -160,7 +172,9 @@ namespace QwerkE {
             // cJsonItem = CreateJsonNumber<int64_t>(name, obj); break;
             break;
 
-            case MirrorTypes::m_uint64_t: // #NOTE Special case of conversion on 64 bit types
+            case Mirror::TypeId<QwerkE::GUID>(): // #TODO Mirror check how underlying types are being handled
+            case Mirror::TypeId<const uint64_t>():
+            case Mirror::TypeId<uint64_t>(): // #NOTE Special case of conversion on 64 bit types
                 {
                     // Use string instead of a double to avoid conversion issues
                     uint64_t* numberAddress = (uint64_t*)obj;
@@ -170,13 +184,15 @@ namespace QwerkE {
                 // cJsonItem = CreateJsonNumber<uint64_t>(name, obj);
                 break;
 
-            case MirrorTypes::m_float: // #TODO write with decimals
+            case Mirror::TypeId<const float>():
+            case Mirror::TypeId<float>(): // #TODO write with decimals
                 cJsonItem = CreateJsonNumber<float>(name, obj); break;
-            case MirrorTypes::m_double:
+            case Mirror::TypeId<const double>():
+            case Mirror::TypeId<double>():
                 cJsonItem = CreateJsonNumber<double>(name, obj); break;
 
             default:
-                LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, name.c_str(), objTypeInfo->stringName.c_str(), (int)objTypeInfo->enumType);
+                LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, name.c_str(), objTypeInfo->stringName.c_str(), (int)objTypeInfo->id);
                 break;
             }
 
@@ -203,7 +219,7 @@ namespace QwerkE {
             {
                 const Mirror::Field& field = objTypeInfo->fields[i];
 
-                if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
+                if (field.flags & FieldSerializationFlags::_InspectorOnly)
                     continue;
 
                 const void* fieldAddress = (char*)obj + field.offset;
@@ -238,7 +254,7 @@ namespace QwerkE {
             cJSON_AddItemToArray(objJson, collectionJsonContainer);
 
             size_t counter = 0;
-            void* elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
+            void* elementAddress = (void*)objTypeInfo->collectionIterateCurrentFunc(obj, counter);
             while (elementAddress)
             {
                 if (auto firstTypeInfo = objTypeInfo->collectionTypeInfoFirst)
@@ -250,7 +266,7 @@ namespace QwerkE {
                     LOG_WARN("{0} First info is null!", __FUNCTION__);
                 }
                 ++counter;
-                elementAddress = (void*)objTypeInfo->typeIterateCurrentFunc(obj, counter);
+                elementAddress = (void*)objTypeInfo->collectionIterateCurrentFunc(obj, counter);
             }
         }
 
@@ -262,8 +278,8 @@ namespace QwerkE {
             const Mirror::TypeInfo* const objTypeInfoFirst = objTypeInfo->collectionTypeInfoFirst;
             const Mirror::TypeInfo* const objTypeInfoSecond = objTypeInfo->collectionTypeInfoSecond;
 
-            const void* const firstAddress = objTypeInfo->collectionFirstSecondFunc(obj, true);
-            const void* const secondAddress = objTypeInfo->collectionFirstSecondFunc(obj, false);
+            const void* const firstAddress = objTypeInfo->collectionAddressOfPairObjectFunc(obj, true);
+            const void* const secondAddress = objTypeInfo->collectionAddressOfPairObjectFunc(obj, false);
 
             if (objTypeInfo->collectionTypeInfoFirst->category == Mirror::TypeInfoCategory_Primitive)
             {
@@ -295,11 +311,11 @@ namespace QwerkE {
                 local_SerializeCollection(secondAddress, objTypeInfoSecond, pairJson, objTypeInfoSecond->stringName); break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
-            {
-                const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType()->DerivedTypeFromPointer(secondAddress);
-                ToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
-            }
-            break;
+                {
+                    const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType()->DerivedTypeFromPointer(secondAddress);
+                    ToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
+                }
+                break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
                 local_SerializePair(secondAddress, objTypeInfoSecond, pairSecondJson); break;
@@ -357,9 +373,9 @@ namespace QwerkE {
 
         bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
         {
-            switch (objTypeInfo->enumType)
+            switch (objTypeInfo->id)
             {
-            case MirrorTypes::m_entt_registry:
+            case Mirror::TypeId<entt::registry>():
                 {
                     cJSON* entitiesJsonArray = CreateJsonObject("m_Registry"); // #TODO Improve hard coded member name
                     cJSON_AddItemToArray(objJson, entitiesJsonArray);

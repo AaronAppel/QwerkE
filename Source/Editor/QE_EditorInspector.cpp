@@ -21,6 +21,8 @@
 #include "QF_ScriptTesting.h"
 #include "QE_Settings.h"
 
+#include "QE_Mirror.h"
+
 namespace QwerkE {
 
     namespace Inspector {
@@ -79,7 +81,7 @@ namespace QwerkE {
         {
             if (!hasWarned && Mirror::TypeInfoCategory_Primitive != typeInfo->category)
             {
-                LOG_WARN("{0} Invalid type {1} {2}({3}) for primitive inspection", __FUNCTION__, parentName, typeInfo->stringName.c_str(), (int)typeInfo->enumType);
+                LOG_WARN("{0} Invalid type {1} {2}({3}) for primitive inspection", __FUNCTION__, parentName, typeInfo->stringName.c_str(), (int)typeInfo->id);
                 hasWarned = true;
             }
 
@@ -88,9 +90,9 @@ namespace QwerkE {
 #ifdef _QDEARIMGUI
 
             std::string elementName = parentName;
-            switch (typeInfo->enumType)
+            switch (typeInfo->id)
             {
-            case MirrorTypes::m_string:
+            case Mirror::TypeId<std::string>():
                 {
                     std::string* stringAddress = (std::string*)obj;
 
@@ -106,8 +108,8 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_charPtr:
-            case MirrorTypes::m_constCharPtr:
+            case Mirror::TypeId<char*>():
+            case Mirror::TypeId<const char*>():
                 {
                     const char** constCharPtrAddress = (const char**)obj;
 
@@ -128,8 +130,8 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_char:
-            case MirrorTypes::eKeys:
+            case Mirror::TypeId<char>():
+            case Mirror::TypeId<eKeys>():
                 {
                     char* charPtrAddress = (char*)obj;
                     char charEscaped[2] = { *charPtrAddress, '\0' };
@@ -145,13 +147,13 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_bool:
+            case Mirror::TypeId<bool>():
                 if (ImGui::Checkbox(elementName.c_str(), (bool*)obj)) { valueChanged = true; } break;
-            case MirrorTypes::m_float:
+            case Mirror::TypeId<float>():
                 if (ImGui::DragFloat(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
 
-            case MirrorTypes::m_eSceneTypes:
-            case MirrorTypes::m_uint8_t:
+            case Mirror::TypeId<uint8_t>():
+            // case MirrorTypes::m_eSceneTypes:
                 {
                     u8* numberAddress = (u8*)obj;
                     int temp = (int)*numberAddress;
@@ -163,7 +165,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_uint16_t:
+            case Mirror::TypeId<uint16_t>():
                 {
                     u16* numberAddress = (u16*)obj;
                     int temp = (int)*numberAddress;
@@ -175,7 +177,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_uint32_t:
+            case Mirror::TypeId<uint32_t>():
                 {
                     uint32_t* numberAddress = (uint32_t*)obj;
                     int temp = (int)*numberAddress;
@@ -188,7 +190,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_uint64_t:
+            case Mirror::TypeId<uint64_t>():
                 {
                     uint64_t* numberAddress = (uint64_t*)obj;
 
@@ -240,7 +242,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_int8_t:
+            case Mirror::TypeId<int8_t>():
                 {
                     s8* numberAddress = (s8*)obj;
                     int temp = (int)*numberAddress;
@@ -252,7 +254,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_int16_t:
+            case Mirror::TypeId<int16_t>():
                 {
                     s16* numberAddress = (s16*)obj;
                     int temp = (int)*numberAddress;
@@ -264,9 +266,9 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_int32_t:
+            case Mirror::TypeId<int32_t>():
                 if (ImGui::DragInt(elementName.c_str(), (int32_t*)obj)) { valueChanged = true; } break;
-            case MirrorTypes::m_int64_t:
+            case Mirror::TypeId<int64_t>():
                 {
                     int64_t* numberAddress = (int64_t*)obj;
                     int temp = (int)*numberAddress;
@@ -279,7 +281,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_double:
+            case Mirror::TypeId<double>():
                 {
                     double* numberAddress = (double*)obj;
                     float temp = (float)*numberAddress;
@@ -295,7 +297,7 @@ namespace QwerkE {
             default:
                 if (!hasWarned)
                 {
-                    LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, elementName, typeInfo->stringName.c_str(), (int)typeInfo->enumType);
+                    LOG_WARN("{0} Unsupported field type {1} {2}({3}) for inspection", __FUNCTION__, elementName, typeInfo->stringName.c_str(), (int)typeInfo->id);
                     hasWarned = true;
                 }
                 break;
@@ -309,13 +311,13 @@ namespace QwerkE {
             bool valueChanged = false;
 
             std::string elementName = parentName;
-            switch (typeInfo->enumType)
+            switch (typeInfo->id)
             {
-            case MirrorTypes::vec2f:
+            case Mirror::TypeId<vec2f>():
                 if (ImGui::DragFloat2(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
-            case MirrorTypes::vec3f:
+            case Mirror::TypeId<vec3f>():
                 if (ImGui::DragFloat3(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
-            case MirrorTypes::ScriptGuiButton:
+            case Mirror::TypeId<QwerkE::ScriptGuiButton>():
                 {
                     ScriptGuiButton* button = (ScriptGuiButton*)obj;
 
@@ -331,10 +333,10 @@ namespace QwerkE {
                 for (size_t i = 0; i < typeInfo->fields.size(); i++)
                 {
                     const Mirror::Field field = typeInfo->fields[i];
-                    if (field.serializationFlags & Mirror::FieldSerializationFlags::_HideInInspector)
+                    if (field.flags & FieldSerializationFlags::_HideInInspector)
                         continue;
 
-                    if (field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorViewOnly)
+                    if (field.flags & FieldSerializationFlags::_InspectorViewOnly)
                     {
                         // #TODO Show but prevent editing
                     }
@@ -353,9 +355,9 @@ namespace QwerkE {
             bool valueChanged = false;
 
             std::string elementName = parentName;
-            switch (typeInfo->enumType)
+            switch (typeInfo->id)
             {
-                case MirrorTypes::m_map_eScriptTypes_ScriptablePtr:
+            case Mirror::TypeId<std::unordered_map<eScriptTypes, Scriptable*>>():
                 {
                     std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)obj;
 
@@ -427,7 +429,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_vec_string: // #TODO Support vector manipulation
+            case Mirror::TypeId<std::vector<std::string>>(): // #TODO Support vector manipulation
                 {
                     std::vector<std::string>* strings = (std::vector<std::string>*)obj;
                     for (size_t i = 0; i < strings->size(); i++)
@@ -440,17 +442,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case MirrorTypes::m_arr_float16:
-                {
-                    float* f16matrix = (float*)obj;
-                    valueChanged |= ImGui::DragFloat4(elementName.c_str(), f16matrix, .1f);
-                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_1", &f16matrix[4], .1f);
-                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_2", &f16matrix[8], .1f);
-                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_3", &f16matrix[12], .1f);
-                }
-                break;
-
-            case MirrorTypes::m_vec_string_ptr:
+            case Mirror::TypeId<std::vector<std::string*>>():
                 {
                     std::vector<std::string>* strings = *(std::vector<std::string>**)obj;
                     for (size_t i = 0; i < strings->size(); i++)
@@ -462,6 +454,17 @@ namespace QwerkE {
                     }
                 }
                 break;
+
+            case Mirror::TypeId<float[16]>():
+                {
+                    float* f16matrix = (float*)obj;
+                    valueChanged |= ImGui::DragFloat4(elementName.c_str(), f16matrix, .1f);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_1", &f16matrix[4], .1f);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_2", &f16matrix[8], .1f);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_3", &f16matrix[12], .1f);
+                }
+                break;
+
             default:
                 // #TODO Inspect collection elements
 
@@ -475,7 +478,7 @@ namespace QwerkE {
             bool valueChanged = false;
 
             std::string elementName = parentName;
-            switch (typeInfo->enumType)
+            switch (typeInfo->id)
             {
             default:
                 break;

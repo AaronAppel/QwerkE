@@ -6,9 +6,5 @@ project "Mirror"
 	{ 
 		"**.h",
 		"**.cpp",
-		"**MirrorEnumPrimitives.txt",
 	}
-
-	includedirs	{ }
-
-	defines { }
+	

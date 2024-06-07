@@ -231,7 +231,7 @@ namespace QwerkE {
                         if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
                         {
                             Scenes::SetCurrentScene(newScene);
-                            Assets::AddToRegistry(Mirror::InfoForType<Scene>()->enumType, newScene->GetGuid(), newScene->GetSceneName());
+                            Assets::AddToRegistry(Mirror::InfoForType<Scene>()->id, newScene->GetGuid(), newScene->GetSceneName());
                         }
                     }
                 }
@@ -241,7 +241,7 @@ namespace QwerkE {
                     std::string meshFilePath = Paths::Mesh(fileName.string().c_str());
                     if (Files::Exists(meshFilePath.c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::InfoForType<Scene>()->enumType, GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::InfoForType<Scene>()->id, GUID(), fileName.string());
                     }
                 }
                 else

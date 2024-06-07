@@ -1,11 +1,11 @@
 {
-	"m_umap_guid_editorWindowPtr":	{
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+	"std::unordered_map<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"12539018069331544866"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowSceneGraph":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowSceneGraph":	{
 					"m_Guid":	{
 						"m_Guid":	"12539018069331544866"
 					},
@@ -18,12 +18,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"15814122887568357250"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowAssets":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowAssets":	{
 					"m_Guid":	{
 						"m_Guid":	"15814122887568357250"
 					},
@@ -36,12 +36,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"11960293188206635016"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowDefaultDebug":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowDefaultDebug":	{
 					"m_Guid":	{
 						"m_Guid":	"11960293188206635016"
 					},
@@ -54,12 +54,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"5567493061657037972"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowImGuiDemo":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowImGuiDemo":	{
 					"m_Guid":	{
 						"m_Guid":	"5567493061657037972"
 					},
@@ -72,12 +72,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"17199913734939944444"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowSceneView":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowSceneView":	{
 					"m_Guid":	{
 						"m_Guid":	"17199913734939944444"
 					},
@@ -92,12 +92,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"15051586132195663523"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowMenuBar":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowMenuBar":	{
 					"m_Guid":	{
 						"m_Guid":	"15051586132195663523"
 					},
@@ -110,12 +110,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"9689900933082917293"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowSettings":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowSettings":	{
 					"m_Guid":	{
 						"m_Guid":	"9689900933082917293"
 					},
@@ -128,12 +128,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"567582532353716773"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowEntityInspector":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowEntityInspector":	{
 					"m_Guid":	{
 						"m_Guid":	"567582532353716773"
 					},
@@ -146,12 +146,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"7664722301008991640"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowSceneControls":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowSceneControls":	{
 					"m_Guid":	{
 						"m_Guid":	"7664722301008991640"
 					},
@@ -164,12 +164,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"17492868554862150391"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowSceneView":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowSceneView":	{
 					"m_Guid":	{
 						"m_Guid":	"17492868554862150391"
 					},
@@ -184,12 +184,12 @@
 				}
 			}
 		},
-		"m_pair_guid_editorWindowPtr":	{
-			"GUID":	{
+		"std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"QwerkE::GUID":	{
 				"m_Guid":	"13856966934147751507"
 			},
-			"m_editorWindowPtr":	{
-				"EditorWindowFolderViewer":	{
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowFolderViewer":	{
 					"m_Guid":	{
 						"m_Guid":	"13856966934147751507"
 					},

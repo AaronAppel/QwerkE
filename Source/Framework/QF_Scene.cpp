@@ -226,8 +226,6 @@ namespace QwerkE {
             return;
         }
 
-        Serialize::FromFile("NewSerialization", *this);
-
         OnLoaded();
 
         LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());

@@ -67,7 +67,7 @@ namespace QwerkE {
 
                     for (auto& pairMirrorTypesVector : assetRegistry)
                     {
-                        MirrorTypes type = pairMirrorTypesVector.first;
+                        size_t type = pairMirrorTypesVector.first;
                         for (size_t i = 0; i < pairMirrorTypesVector.second.size(); i++)
                         {
                             auto pairGuidString = pairMirrorTypesVector.second[i];

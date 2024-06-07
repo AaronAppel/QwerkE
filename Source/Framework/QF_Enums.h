@@ -35,6 +35,7 @@ namespace QwerkE {
         Failure
     };
 
+    // #TODO Review for deprecation
     enum eComponentTags : uint8_t
     {
         Component_Null = 0,

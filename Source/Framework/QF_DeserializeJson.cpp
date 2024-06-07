@@ -9,8 +9,13 @@
 #include "QF_EntityHandle.h"
 #include "QF_Scene.h"
 
-// Editor types
+// #if Framework
+// #include "QF_Mirror.h"
+
+// Editor
+// #if Editor
 #include "../Source/Editor/QE_EditorWindowHelpers.h"
+#include "../Source/Editor/QE_Mirror.h"
 
 namespace QwerkE {
 
@@ -59,23 +64,30 @@ namespace QwerkE {
 
                     const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo->DerivedTypeFromTypeName(objJson->child->string);
 
-                    void* derefencedTypeObjAddress = *(void**)obj;
-                    derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
+                    void* derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
                     *(void**)obj = derefencedTypeObjAddress;
 
-                    Editor::EditorWindowSceneView* sceneView = (Editor::EditorWindowSceneView*)derefencedTypeObjAddress;
-                    if (dereferencedTypeInfo->typeConstructorFunc)
-                    {   // #TODO Only serialize dependent member(s)?
-                        FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
-                    }
-                    dereferencedTypeInfo->Construct(derefencedTypeObjAddress);
+                    ScriptableCamera* camera = (ScriptableCamera*)derefencedTypeObjAddress;
+                    ScriptablePatrol* script = (ScriptablePatrol*)derefencedTypeObjAddress;
 
                     FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
+                    dereferencedTypeInfo->Construct(derefencedTypeObjAddress);
+                    int bp = 1;
                 }
                 break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
-                local_DeserializePair(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
+                {
+                    std::pair<QwerkE::GUID, std::string>* pair = (std::pair<QwerkE::GUID, std::string>*)obj;
+                    if (Mirror::TypeId<std::pair<QwerkE::GUID, std::string>>() == objTypeInfo->id)
+                    {
+                        int bp = 0;
+                    }
+                    local_DeserializePair(objJson, objTypeInfo, obj, objTypeInfo->stringName);
+                    int bp = 0;
+                }
+                break;
+
             }
         }
 
@@ -87,23 +99,30 @@ namespace QwerkE {
                 return;
             }
 
-            switch (objTypeInfo->enumType)
+            switch (objTypeInfo->id)
             {
-            case MirrorTypes::m_string: // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
+            case Mirror::TypeId<const std::string>():
+            case Mirror::TypeId<std::string>(): // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
                 objTypeInfo->typeConstructorFunc(obj); // #NOTE String must be constructed before assigned to
                 *(std::string*)obj = objJson->valuestring ? objJson->valuestring : objJson->string; break;
-            case MirrorTypes::m_charPtr:
-            case MirrorTypes::m_constCharPtr:
+            case Mirror::TypeId<const char*>():
+            case Mirror::TypeId<char*>():
                 *(const char**)obj = _strdup(objJson->valuestring); break;
-            case MirrorTypes::m_uint64_t: // #NOTE Storing uint64 as string
-                *(uint64_t*)obj = std::stoull(objJson->valuestring); break;
-            case MirrorTypes::m_int64_t: // #NOTE Storing int64 as string
-                *(int64_t*)obj = std::stoll(objJson->valuestring); break;
-            case MirrorTypes::m_float:
-                *(float*)obj = objJson->valuedouble; break;
 
-            case MirrorTypes::m_char:
-            case MirrorTypes::eKeys:
+            case Mirror::TypeId<QwerkE::GUID>(): // #TODO Mirror check how underlying types are being handled
+            case Mirror::TypeId<const uint64_t>():
+            case Mirror::TypeId<uint64_t>(): // #NOTE Storing uint64 as string
+                *(uint64_t*)obj = std::stoull(objJson->valuestring); break;
+            case Mirror::TypeId<const int64_t>():
+            case Mirror::TypeId<int64_t>(): // #NOTE Storing int64 as string
+                *(int64_t*)obj = std::stoll(objJson->valuestring); break;
+            case Mirror::TypeId<const float>():
+            case Mirror::TypeId<float>():
+                *(float*)obj = (float)objJson->valuedouble; break;
+
+            case Mirror::TypeId<eKeys>():
+            case Mirror::TypeId<const char>():
+            case Mirror::TypeId<char>():
                 memcpy(obj, objJson->valuestring, 1); break;
 
             default:
@@ -150,7 +169,7 @@ namespace QwerkE {
                     const Mirror::Field& field = objTypeInfo->fields[i];
 
                     if (strcmp(field.name.c_str(), iterator->string) != 0 ||
-                        field.serializationFlags & Mirror::FieldSerializationFlags::_InspectorOnly)
+                        field.flags & FieldSerializationFlags::_InspectorOnly)
                         continue;
 
                     void* fieldAddress = (char*)obj + field.offset;
@@ -181,14 +200,20 @@ namespace QwerkE {
             const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
 
+            auto vecLower = (std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)elementFirstBuffer.As<void>();
+
             const cJSON* iterator = objJson->child;
             size_t index = 0; // #TODO Scrap index for non-contiguous collections if possible
 
             // #NOTE Collection constructor should be called
             objTypeInfo->Construct(obj);
 
+            std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>* map = (std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)obj;
+
             while (iterator)
             {
+                std::vector<std::pair<QwerkE::GUID, std::string>>* vec = (std::vector<std::pair<QwerkE::GUID, std::string>>*)obj;
+                std::pair<QwerkE::GUID, std::string>* pair = (std::pair<QwerkE::GUID, std::string>*)elementFirstBuffer.As<void>();
                 FromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
                 objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
                 iterator = iterator->next;
@@ -228,9 +253,13 @@ namespace QwerkE {
 
         bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj)
         {
-            switch (objTypeInfo->enumType)
+            auto result = Mirror::TypeId<entt::registry>();
+            auto result1 = Mirror::TypeId<QwerkE::Editor::EditorWindow*>();
+            auto result2 = Mirror::TypeId<QwerkE::Editor::EditorWindowFlags>();
+
+            switch (objTypeInfo->id)
             {
-            case MirrorTypes::m_entt_registry:
+            case Mirror::TypeId<entt::registry>():
                 {
                     entt::registry* registry = (entt::registry*)obj;
 

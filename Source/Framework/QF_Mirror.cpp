@@ -1,3 +1,4 @@
+#include "QF_Mirror.h"
 
 #include <stdint.h>
 #include <string>
@@ -5,8 +6,6 @@
 #include <vector>
 
 #include "Libraries/Mirror/Source/Mirror.h"
-#include "Libraries/Mirror/Source/MirrorTesting.h"
-#include "Libraries/Mirror/Source/MirrorTypes.h"
 
 #ifdef _QBGFXFRAMEWORK
 #include <bgfxFramework/bgfx_utils.h>
@@ -26,6 +25,7 @@
 #include "QF_GameActions.h"
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
+#include "QF_Input.h"
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
 
@@ -33,338 +33,289 @@
 
 #include "QF_ScriptHelpers.h"
 
-// Editor types
-// #TODO Move editor serialization code out of framework domain
-#include "../Source/Editor/QE_EditorWindowHelpers.h"
-#include "../Source/Editor/QE_Editor.h"
-#include "../Source/Editor/QE_Projects.h"
-#include "../Source/Editor/QE_Settings.h"
-
-namespace QwerkE {
-
-	MIRROR_ENUM(MirrorTypes)
-
-	template <typename SuperClass, typename... SubClass>
-	static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
-	{
-		uint16_t enumValue = enumStartOffset;
-		([&]()
+template <typename SuperClass, typename... SubClass>
+static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+{
+	uint16_t enumValue = enumStartOffset;
+	([&]()
 		{
-			const QwerkE::Mirror::TypeInfo* subclassTypeInfo = QwerkE::Mirror::InfoForType<SubClass>();
+			const Mirror::TypeInfo* subclassTypeInfo = Mirror::InfoForType<SubClass>();
 			localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
-			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
-			const_cast<QwerkE::Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
+			const_cast<Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
+			const_cast<Mirror::TypeInfo*>(subclassTypeInfo)->typeDynamicCastFunc =
 				[](const void* pointerToInstance) -> bool {
 				SubClass* subClass = (SubClass*)pointerToInstance;
 				return dynamic_cast<SubClass*>(*(SuperClass**)pointerToInstance) != nullptr;
-			};
+				};
 			++enumValue;
 		}(), ...);
-	}
+}
 
-	template<typename SuperClass, typename... SubClass>
-	static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
-	{
-		MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo, enumStartOffset);
-	}
+template<typename SuperClass, typename... SubClass>
+static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+{
+	MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo, enumStartOffset);
+}
 
 #ifdef _QDEARIMGUI
-	MIRROR_CLASS_START(ImVec2)
-	MIRROR_CLASS_MEMBER(x)
-	MIRROR_CLASS_MEMBER(y)
-	MIRROR_CLASS_END(ImVec2)
+MIRROR_CLASS_START(ImVec2)
+MIRROR_CLASS_MEMBER(x)
+MIRROR_CLASS_MEMBER(y)
+MIRROR_CLASS_END
 
-	MIRROR_CLASS_START(ImVec4)
-	MIRROR_CLASS_MEMBER(x)
-	MIRROR_CLASS_MEMBER(y)
-	MIRROR_CLASS_MEMBER(z)
-	MIRROR_CLASS_MEMBER(w)
-	MIRROR_CLASS_END(ImVec4)
+MIRROR_CLASS_START(ImVec4)
+MIRROR_CLASS_MEMBER(x)
+MIRROR_CLASS_MEMBER(y)
+MIRROR_CLASS_MEMBER(z)
+MIRROR_CLASS_MEMBER(w)
+MIRROR_CLASS_END
 
-	using m_imvec4_array = ImVec4[ImGuiCol_COUNT];
-	MIRROR_ARRAY(m_imvec4_array, ImVec4)
+MIRROR_INFO_FOR_TYPE(ImVec4[ImGuiCol_COUNT])
 
-	MIRROR_CLASS_START(ImGuiStyle)
-	MIRROR_CLASS_MEMBER(Alpha)
-	MIRROR_CLASS_MEMBER(DisabledAlpha)
-	MIRROR_CLASS_MEMBER(WindowPadding)
-	MIRROR_CLASS_MEMBER(WindowRounding)
-	MIRROR_CLASS_MEMBER(WindowBorderSize)
-	MIRROR_CLASS_MEMBER(WindowMinSize)
-	MIRROR_CLASS_MEMBER(WindowTitleAlign)
-	MIRROR_CLASS_MEMBER(WindowMenuButtonPosition)
-	MIRROR_CLASS_MEMBER(ChildRounding)
-	MIRROR_CLASS_MEMBER(ChildBorderSize)
-	MIRROR_CLASS_MEMBER(PopupRounding)
-	MIRROR_CLASS_MEMBER(PopupBorderSize)
-	MIRROR_CLASS_MEMBER(FramePadding)
-	MIRROR_CLASS_MEMBER(FrameRounding)
-	MIRROR_CLASS_MEMBER(FrameBorderSize)
-	MIRROR_CLASS_MEMBER(ItemSpacing)
-	MIRROR_CLASS_MEMBER(ItemInnerSpacing)
-	MIRROR_CLASS_MEMBER(CellPadding)
-	MIRROR_CLASS_MEMBER(TouchExtraPadding)
-	MIRROR_CLASS_MEMBER(IndentSpacing)
-	MIRROR_CLASS_MEMBER(ColumnsMinSpacing)
-	MIRROR_CLASS_MEMBER(ScrollbarSize)
-	MIRROR_CLASS_MEMBER(ScrollbarRounding)
-	MIRROR_CLASS_MEMBER(GrabMinSize)
-	MIRROR_CLASS_MEMBER(GrabRounding)
-	MIRROR_CLASS_MEMBER(LogSliderDeadzone)
-	MIRROR_CLASS_MEMBER(TabRounding)
-	MIRROR_CLASS_MEMBER(TabBorderSize)
-	MIRROR_CLASS_MEMBER(TabMinWidthForCloseButton)
-	MIRROR_CLASS_MEMBER(TabBarBorderSize)
-	MIRROR_CLASS_MEMBER(TableAngledHeadersAngle)
-	MIRROR_CLASS_MEMBER(ColorButtonPosition)
-	MIRROR_CLASS_MEMBER(ButtonTextAlign)
-	MIRROR_CLASS_MEMBER(SelectableTextAlign)
-	MIRROR_CLASS_MEMBER(SeparatorTextBorderSize)
-	MIRROR_CLASS_MEMBER(SeparatorTextAlign)
-	MIRROR_CLASS_MEMBER(SeparatorTextPadding)
-	MIRROR_CLASS_MEMBER(DisplayWindowPadding)
-	MIRROR_CLASS_MEMBER(DisplaySafeAreaPadding)
-	MIRROR_CLASS_MEMBER(DockingSeparatorSize)
-	MIRROR_CLASS_MEMBER(MouseCursorScale)
-	MIRROR_CLASS_MEMBER(AntiAliasedLines)
-	MIRROR_CLASS_MEMBER(AntiAliasedLinesUseTex)
-	MIRROR_CLASS_MEMBER(AntiAliasedFill)
-	MIRROR_CLASS_MEMBER(CurveTessellationTol)
-	MIRROR_CLASS_MEMBER(CircleTessellationMaxError)
-	MIRROR_CLASS_MEMBER(Colors)
-	MIRROR_CLASS_END(ImGuiStyle)
+MIRROR_CLASS_START(ImGuiStyle)
+MIRROR_CLASS_MEMBER(Alpha)
+MIRROR_CLASS_MEMBER(DisabledAlpha)
+MIRROR_CLASS_MEMBER(WindowPadding)
+MIRROR_CLASS_MEMBER(WindowRounding)
+MIRROR_CLASS_MEMBER(WindowBorderSize)
+MIRROR_CLASS_MEMBER(WindowMinSize)
+MIRROR_CLASS_MEMBER(WindowTitleAlign)
+MIRROR_CLASS_MEMBER(WindowMenuButtonPosition)
+MIRROR_CLASS_MEMBER(ChildRounding)
+MIRROR_CLASS_MEMBER(ChildBorderSize)
+MIRROR_CLASS_MEMBER(PopupRounding)
+MIRROR_CLASS_MEMBER(PopupBorderSize)
+MIRROR_CLASS_MEMBER(FramePadding)
+MIRROR_CLASS_MEMBER(FrameRounding)
+MIRROR_CLASS_MEMBER(FrameBorderSize)
+MIRROR_CLASS_MEMBER(ItemSpacing)
+MIRROR_CLASS_MEMBER(ItemInnerSpacing)
+MIRROR_CLASS_MEMBER(CellPadding)
+MIRROR_CLASS_MEMBER(TouchExtraPadding)
+MIRROR_CLASS_MEMBER(IndentSpacing)
+MIRROR_CLASS_MEMBER(ColumnsMinSpacing)
+MIRROR_CLASS_MEMBER(ScrollbarSize)
+MIRROR_CLASS_MEMBER(ScrollbarRounding)
+MIRROR_CLASS_MEMBER(GrabMinSize)
+MIRROR_CLASS_MEMBER(GrabRounding)
+MIRROR_CLASS_MEMBER(LogSliderDeadzone)
+MIRROR_CLASS_MEMBER(TabRounding)
+MIRROR_CLASS_MEMBER(TabBorderSize)
+MIRROR_CLASS_MEMBER(TabMinWidthForCloseButton)
+MIRROR_CLASS_MEMBER(TabBarBorderSize)
+MIRROR_CLASS_MEMBER(TableAngledHeadersAngle)
+MIRROR_CLASS_MEMBER(ColorButtonPosition)
+MIRROR_CLASS_MEMBER(ButtonTextAlign)
+MIRROR_CLASS_MEMBER(SelectableTextAlign)
+MIRROR_CLASS_MEMBER(SeparatorTextBorderSize)
+MIRROR_CLASS_MEMBER(SeparatorTextAlign)
+MIRROR_CLASS_MEMBER(SeparatorTextPadding)
+MIRROR_CLASS_MEMBER(DisplayWindowPadding)
+MIRROR_CLASS_MEMBER(DisplaySafeAreaPadding)
+MIRROR_CLASS_MEMBER(DockingSeparatorSize)
+MIRROR_CLASS_MEMBER(MouseCursorScale)
+MIRROR_CLASS_MEMBER(AntiAliasedLines)
+MIRROR_CLASS_MEMBER(AntiAliasedLinesUseTex)
+MIRROR_CLASS_MEMBER(AntiAliasedFill)
+MIRROR_CLASS_MEMBER(CurveTessellationTol)
+MIRROR_CLASS_MEMBER(CircleTessellationMaxError)
+MIRROR_CLASS_MEMBER(Colors)
+MIRROR_CLASS_END
 #endif
 
 #ifdef _QENTT
-	typedef entt::registry m_entt_registry;
-	MIRROR_TYPE(m_entt_registry)
-
-	typedef entt::entity m_enTT_Entity;
-	MIRROR_ENUM(m_enTT_Entity)
+MIRROR_TYPE(entt::registry) // #TODO Deprecate MIRROR_TYPE
+MIRROR_INFO_FOR_TYPE(entt::entity)
 #endif
 
 #ifdef _QBGFXFRAMEWORK
-	typedef bgfxFramework::Mesh BgfxMesh;
-	MIRROR_CLASS_START(BgfxMesh)
-	MIRROR_CLASS_END(BgfxMesh)
+typedef bgfxFramework::Mesh BgfxMesh;
+MIRROR_CLASS_START(BgfxMesh)
+MIRROR_CLASS_END
 #endif
 
-	// Enums
-	MIRROR_ENUM(eScriptTypes)
-	MIRROR_ENUM(eComponentTags)
-	MIRROR_ENUM(eKeys)
+// Misc
+MIRROR_CLASS_START(QwerkE::GUID)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_MEMBER(m_Guid)
+MIRROR_CLASS_END
 
-	// Vectors
-	typedef std::vector<entt::entity> m_vector_entt_entities;
-	MIRROR_VECTOR(m_vector_entt_entities, entt::entity)
+MIRROR_CLASS_START(const QwerkE::GUID)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_MEMBER(m_Guid)
+MIRROR_CLASS_END
 
-	typedef std::vector<std::string> m_vec_string;
-	MIRROR_VECTOR(m_vec_string, std::string)
+// Enums
+MIRROR_INFO_FOR_TYPE(QwerkE::eScriptTypes)
+MIRROR_INFO_FOR_TYPE(const QwerkE::eScriptTypes)
+MIRROR_INFO_FOR_TYPE(QwerkE::eComponentTags)
+MIRROR_INFO_FOR_TYPE(QwerkE::eKeys)
 
-	typedef std::vector<std::string>* m_vec_string_ptr;
-	MIRROR_POINTER(m_vec_string_ptr)
+// Arrays
+MIRROR_INFO_FOR_TYPE(float[16])
 
-	// Arrays
-	using m_arr_float16 = float[16];
-	MIRROR_ARRAY(m_arr_float16, float)
+// Pairs
+MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_INFO_FOR_TYPE(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, entt::entity>)
+MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, std::string>)
+MIRROR_INFO_FOR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_INFO_FOR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, void*>)
+MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, std::string*>)
+MIRROR_INFO_FOR_TYPE(std::pair<const QwerkE::GUID, std::string*>)
 
-	// Maps
-	// #TODO Move collections to bottom
+// Vectors
+MIRROR_INFO_FOR_TYPE(std::vector<entt::entity>)
+MIRROR_INFO_FOR_TYPE(std::vector<std::string>)
+MIRROR_INFO_FOR_TYPE(std::vector<std::string*>)
+MIRROR_INFO_FOR_TYPE(std::vector<std::pair<QwerkE::GUID, std::string>>)
 
-	// Scripts
-	using CallBackFunction = void(*)(void);
-	MIRROR_TYPE(CallBackFunction)
+// Maps
+MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+// MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::GUID, entt::entity>)
+MIRROR_INFO_FOR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+// MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::GUID, void*>)
 
-	MIRROR_CLASS_START(ScriptGuiButton)
-	MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
-	MIRROR_CLASS_END(ScriptGuiButton)
+// #TODO SetCollectionLambdasMap needs const implementation for some reason??
+// MIRROR_INFO_FOR_TYPE(std::unordered_map<const QwerkE::GUID, void*>)
+MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::GUID, std::string*>)
+// #TODO SetCollectionLambdasMap needs const implementation for some reason??
+// MIRROR_INFO_FOR_TYPE(std::unordered_map<const QwerkE::GUID, std::string*>)
 
-	MIRROR_CLASS_START(ScriptableCamera)
-	MIRROR_CLASS_END(ScriptableCamera)
-
-	MIRROR_CLASS_START(ScriptablePatrol)
-	MIRROR_CLASS_MEMBER(m_Stride)
-	MIRROR_CLASS_MEMBER(m_Speed)
-	MIRROR_CLASS_END(ScriptablePatrol)
-
-	MIRROR_CLASS_START(ScriptablePathFinder)
-	MIRROR_CLASS_MEMBER(m_MovementSpeed)
-	MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
-	MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
-	MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
-	MIRROR_CLASS_END(ScriptablePathFinder)
-
-	MIRROR_CLASS_START(ScriptableTesting)
-	MIRROR_CLASS_END(ScriptableTesting)
-
-	MIRROR_ABSTRACT_CLASS_START(Scriptable)
-	// #TODO Look at generating empty types or not yet declared types automatically as well.
-	// Would save a step when creating a new type and still allow exposing members for specific types
-	MirrorSubClasses<Scriptable>(ComponentScriptsList{}, localStaticTypeInfo);
-	MIRROR_CLASS_END(Scriptable)
-
-	typedef Scriptable* m_scriptablePtr;
-	MIRROR_POINTER(m_scriptablePtr)
-
-	typedef	std::pair<eScriptTypes, Scriptable*> m_pair_eScriptTypes_ScriptablePtr;
-	MIRROR_PAIR(m_pair_eScriptTypes_ScriptablePtr)
-
-	typedef std::unordered_map<eScriptTypes, Scriptable*> m_map_eScriptTypes_ScriptablePtr;
-	MIRROR_MAP(m_map_eScriptTypes_ScriptablePtr, m_pair_eScriptTypes_ScriptablePtr)
-
-	MIRROR_CLASS_START(GUID)
-	MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-	MIRROR_CLASS_MEMBER(m_Guid)
-	MIRROR_CLASS_END(GUID)
-
-	typedef	std::pair<GUID, entt::entity> m_pair_guid_enttEntity;
-	MIRROR_PAIR(m_pair_guid_enttEntity)
-
-	typedef std::unordered_map<GUID, entt::entity> m_map_guid_entt;
-	MIRROR_MAP(m_map_guid_entt, m_pair_guid_enttEntity)
-
-	// Structs
-	MIRROR_CLASS_START(vec2f)
-	MIRROR_CLASS_MEMBER(x)
-	MIRROR_CLASS_MEMBER(y)
-	MIRROR_CLASS_END(vec2f)
-
-	MIRROR_CLASS_START(vec3f)
-	MIRROR_CLASS_MEMBER(x)
-	MIRROR_CLASS_MEMBER(y)
-	MIRROR_CLASS_MEMBER(z)
-	MIRROR_CLASS_END(vec3f)
-
-	MIRROR_CLASS_START(EngineSettings)
-	MIRROR_CLASS_MEMBER(windowWidthPixels)
-	MIRROR_CLASS_MEMBER(windowHeightPixels)
-	MIRROR_CLASS_MEMBER(limitFramerate)
-	MIRROR_CLASS_MEMBER(maxFramesPerSecond)
-	MIRROR_CLASS_MEMBER(maxEnabledScenes)
-	MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
-	MIRROR_CLASS_MEMBER(consoleOutputWindowEnabled)
-	MIRROR_CLASS_END(EngineSettings)
-
-	MIRROR_CLASS_START(UserSettings)
-	MIRROR_CLASS_END(UserSettings)
-
-	MIRROR_CLASS_START(Project)
-	MIRROR_CLASS_MEMBER(projectFileName)
-	MIRROR_CLASS_MEMBER(projectName)
-	MIRROR_CLASS_MEMBER(startUpSceneName)
-	MIRROR_CLASS_MEMBER(sceneFileNames)
-	MIRROR_CLASS_END(Project)
-
-	MIRROR_CLASS_START(RendererSettings)
-	MIRROR_CLASS_MEMBER(drawingPrimitiveType)
-	MIRROR_CLASS_END(RendererSettings)
-
-	MIRROR_DEPENDENT_CLASS_START(Scene)
-	MIRROR_CLASS_MEMBER(m_SceneFileName)
-	MIRROR_CLASS_MEMBER(m_Registry)
-	MIRROR_CLASS_END(Scene)
-
-	// Components
-	MIRROR_CLASS_START(ComponentCamera)
-	MIRROR_CLASS_MEMBER_FLAGS(m_ShowSphere, FieldSerializationFlags::_InspectorOnly)
-	MIRROR_CLASS_MEMBER(m_MoveSpeed)
-	MIRROR_CLASS_MEMBER(m_LookAtPosition)
-	MIRROR_CLASS_MEMBER(m_Fov)
-	MIRROR_CLASS_MEMBER(m_Near)
-	MIRROR_CLASS_MEMBER(m_Far)
-	MIRROR_CLASS_END(ComponentCamera)
-
-	MIRROR_CLASS_START(ComponentInfo)
-	MIRROR_CLASS_MEMBER_FLAGS(m_EntityName, FieldSerializationFlags::_HideInInspector)
-	// #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
-	// Assigned through EntityHandle constructor
-	MIRROR_CLASS_MEMBER(m_Guid)
-	MIRROR_CLASS_MEMBER(m_Enabled)
-	MIRROR_CLASS_END(ComponentInfo)
-
-	MIRROR_CLASS_START(ComponentLight)
-	MIRROR_CLASS_END(ComponentLight)
-
-	MIRROR_CLASS_START(ComponentMesh)
-	MIRROR_CLASS_MEMBER(m_MeshGuid)
-	MIRROR_CLASS_MEMBER(m_ShaderGuid)
-	MIRROR_CLASS_END(ComponentMesh)
-
-	MIRROR_CLASS_START(ComponentTransform)
-	MIRROR_CLASS_MEMBER(m_Matrix)
-	MIRROR_CLASS_END(ComponentTransform)
-
-	MIRROR_CLASS_START(ComponentScript)
-	MIRROR_CLASS_MEMBER(m_ScriptInstances)
-	MIRROR_CLASS_END(ComponentScript)
-
-	// Misc
-	MIRROR_CLASS_START(EntityHandle)
-	MIRROR_CLASS_END(EntityHandle)
-
-	// Assets
-	typedef std::pair<GUID, std::string> m_pair_guid_string;
-	MIRROR_PAIR(m_pair_guid_string)
-
-	typedef std::vector<m_pair_guid_string> m_vec_pair_guid_string;
-	MIRROR_VECTOR(m_vec_pair_guid_string, m_pair_guid_string)
-
-	typedef std::pair<MirrorTypes, m_vec_pair_guid_string> m_pair_mirrorTypes_vec_pair_guid_string;
-	MIRROR_PAIR(m_pair_mirrorTypes_vec_pair_guid_string)
-
-	typedef std::unordered_map<MirrorTypes, m_vec_pair_guid_string> m_map_mirrorTypes_vec_pair_guid_string;
-	MIRROR_MAP(m_map_mirrorTypes_vec_pair_guid_string, m_pair_mirrorTypes_vec_pair_guid_string);
-
-	typedef void m_void;
-	template<> const QwerkE::Mirror::TypeInfo* QwerkE::Mirror::InfoForType<m_void>() {
-		// #TODO Resolve size of C2070 compile error
-		// static_assert(sizeof(m_void) <= 0xffffui16, "Size is larger than member can hold!");
-		static QwerkE::Mirror::TypeInfo localStaticTypeInfo;
-		if (localStaticTypeInfo.enumType != MirrorTypes::m_Invalid) {
-			return &localStaticTypeInfo;
-		}
-		localStaticTypeInfo.category = SetCategory<m_void>();
-		localStaticTypeInfo.enumType = MirrorTypes::m_void;
-		localStaticTypeInfo.stringName = "m_void";
-		// localStaticTypeInfo.size = sizeof(m_void); // #TODO Resolve size of C2070 compile error
-		using ClassType = m_void;
+// Function pointers
+template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
+	static_assert(sizeof(void(*)(void)) <= 0xffffui16, "Size is larger than member can hold!"); static Mirror::TypeInfo localStaticTypeInfo; if (!localStaticTypeInfo.stringName.empty()) {
 		return &localStaticTypeInfo;
 	}
-
-	typedef void* m_voidPtr;
-	MIRROR_POINTER(m_voidPtr)
-
-	typedef std::pair<GUID, m_voidPtr> m_pair_guid_voidPtr;
-	MIRROR_PAIR(m_pair_guid_voidPtr)
-
-	typedef std::unordered_map<GUID, m_voidPtr> m_map_guid_voidPtr;
-	MIRROR_MAP(m_map_guid_voidPtr, m_pair_guid_voidPtr);
-
-	typedef std::string* m_stringPtr;
-	MIRROR_POINTER(m_stringPtr)
-
-	typedef std::pair<GUID, m_stringPtr> m_pair_guid_stringPtr;
-	MIRROR_PAIR(m_pair_guid_stringPtr)
-
-	typedef std::unordered_map<GUID, m_stringPtr> m_map_guid_stringPtr;
-	MIRROR_MAP(m_map_guid_stringPtr, m_pair_guid_stringPtr);
-
-	MIRROR_CLASS_START(Mesh)
-	MIRROR_CLASS_END(Mesh)
-
-	MIRROR_CLASS_START(Shader)
-	MIRROR_CLASS_END(Shader)
-
-	typedef Input::GameActions GameActions;
-	MIRROR_CLASS_START(GameActions)
-	MIRROR_CLASS_MEMBER(Camera_MoveForward)
-	MIRROR_CLASS_MEMBER(Camera_MoveBackward)
-	MIRROR_CLASS_MEMBER(Camera_MoveLeft)
-	MIRROR_CLASS_MEMBER(Camera_MoveRight)
-	MIRROR_CLASS_MEMBER(Camera_MoveUp)
-	MIRROR_CLASS_MEMBER(Camera_MoveDown)
-	MIRROR_CLASS_MEMBER(Camera_RotateLeft)
-	MIRROR_CLASS_MEMBER(Camera_RotateRight)
-	MIRROR_CLASS_END(GameActions)
-
+	localStaticTypeInfo.category = GetCategory<void(*)(void)>();
+	localStaticTypeInfo.id = Mirror::TypeId<void(*)(void)>();
+	localStaticTypeInfo.stringName = typeid(void(*)(void)).name();
+	localStaticTypeInfo.size = sizeof(void(*)(void)); switch (localStaticTypeInfo.category) {
+	case TypeInfoCategory_Collection: case TypeInfoCategory_Pair:
+		SetCollectionLambdas<void(*)(void)>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<void(*)(void)>::type());
+	case TypeInfoCategory_Class: SetConstructionLambda<void(*)(void)>(&localStaticTypeInfo, std::is_class<void(*)(void)>::type()); break;
+	// #TODO Don't remove pointer if the type is a function pointer. Maybe use is_function<std::remove_pointer_t<void(*)(void)>>::type
+	// case TypeInfoCategory_Pointer: localStaticTypeInfo.pointerDereferencedTypeInfo = Mirror::InfoForType<std::remove_pointer_t<void(*)(void)>>();
+	break; case TypeInfoCategory_Primitive: SetConstructionLambda<void(*)(void)>(&localStaticTypeInfo, std::is_same<void(*)(void), std::string>::type()); break;
+	} return &localStaticTypeInfo;
 }
+
+// Scripts
+MIRROR_CLASS_START(QwerkE::ScriptableCamera)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ScriptGuiButton)
+MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ScriptablePatrol)
+MIRROR_CLASS_MEMBER(m_Stride)
+MIRROR_CLASS_MEMBER(m_Speed)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ScriptablePathFinder)
+MIRROR_CLASS_MEMBER(m_MovementSpeed)
+MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
+MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
+MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ScriptableTesting)
+MIRROR_CLASS_END
+
+// MIRROR_ABSTRACT_CLASS_START(QwerkE::Scriptable)
+MIRROR_CLASS_START(QwerkE::Scriptable)
+// #TODO Look at generating empty types or not yet declared types automatically as well.
+// Would save a step when creating a new type and still allow exposing members for specific types
+MirrorSubClasses<QwerkE::Scriptable>(QwerkE::ComponentScriptsList{}, localStaticTypeInfo);
+MIRROR_CLASS_END
+MIRROR_INFO_FOR_TYPE(QwerkE::Scriptable*)
+
+// Structs
+MIRROR_CLASS_START(vec2f)
+MIRROR_CLASS_MEMBER(x)
+MIRROR_CLASS_MEMBER(y)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(vec3f)
+MIRROR_CLASS_MEMBER(x)
+MIRROR_CLASS_MEMBER(y)
+MIRROR_CLASS_MEMBER(z)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::EngineSettings)
+MIRROR_CLASS_MEMBER(windowWidthPixels)
+MIRROR_CLASS_MEMBER(windowHeightPixels)
+MIRROR_CLASS_MEMBER(limitFramerate)
+MIRROR_CLASS_MEMBER(maxFramesPerSecond)
+MIRROR_CLASS_MEMBER(maxEnabledScenes)
+MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
+MIRROR_CLASS_MEMBER(consoleOutputWindowEnabled)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::RendererSettings)
+MIRROR_CLASS_MEMBER(drawingPrimitiveType)
+MIRROR_CLASS_END
+
+// MIRROR_DEPENDENT_CLASS_START(QwerkE::Scene)
+MIRROR_CLASS_START(QwerkE::Scene)
+MIRROR_CLASS_MEMBER(m_SceneFileName)
+MIRROR_CLASS_MEMBER(m_Registry)
+MIRROR_CLASS_END
+
+// Components
+MIRROR_CLASS_START(QwerkE::ComponentCamera)
+MIRROR_CLASS_MEMBER_FLAGS(m_ShowSphere, FieldSerializationFlags::_InspectorOnly)
+MIRROR_CLASS_MEMBER(m_MoveSpeed)
+MIRROR_CLASS_MEMBER(m_LookAtPosition)
+MIRROR_CLASS_MEMBER(m_Fov)
+MIRROR_CLASS_MEMBER(m_Near)
+MIRROR_CLASS_MEMBER(m_Far)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ComponentInfo)
+MIRROR_CLASS_MEMBER_FLAGS(m_EntityName, FieldSerializationFlags::_HideInInspector)
+// #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
+// Assigned through EntityHandle constructor
+MIRROR_CLASS_MEMBER(m_Guid)
+MIRROR_CLASS_MEMBER(m_Enabled)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ComponentLight)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ComponentMesh)
+MIRROR_CLASS_MEMBER(m_MeshGuid)
+MIRROR_CLASS_MEMBER(m_ShaderGuid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ComponentTransform)
+MIRROR_CLASS_MEMBER(m_Matrix)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::ComponentScript)
+MIRROR_CLASS_MEMBER(m_ScriptInstances)
+MIRROR_CLASS_END
+
+// Misc
+MIRROR_CLASS_START(QwerkE::EntityHandle)
+MIRROR_CLASS_END
+
+// Assets
+MIRROR_CLASS_START(QwerkE::Mesh)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::Shader)
+MIRROR_CLASS_END
+
+MIRROR_CLASS_START(QwerkE::Input::GameActions)
+MIRROR_CLASS_MEMBER(Camera_MoveForward)
+MIRROR_CLASS_MEMBER(Camera_MoveBackward)
+MIRROR_CLASS_MEMBER(Camera_MoveLeft)
+MIRROR_CLASS_MEMBER(Camera_MoveRight)
+MIRROR_CLASS_MEMBER(Camera_MoveUp)
+MIRROR_CLASS_MEMBER(Camera_MoveDown)
+MIRROR_CLASS_MEMBER(Camera_RotateLeft)
+MIRROR_CLASS_MEMBER(Camera_RotateRight)
+MIRROR_CLASS_END

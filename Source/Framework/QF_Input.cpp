@@ -109,6 +109,7 @@ namespace QwerkE {
 #error "Define input library!"
 #endif
 
+            // Serialize::ToFile(s_GameActions, Paths::Setting(s_GameActionsFileName).c_str());
             Serialize::FromFile(Paths::Setting(s_GameActionsFileName).c_str(), s_GameActions, true);
 
             NewFrame();
@@ -207,7 +208,7 @@ namespace QwerkE {
 
         void CheckOnKeyEventCallBacks(eKeys key, eKeyState state)
         {
-            for (int i = s_OnKeyEventCallBacks.size() - 1; i >= 0; i--)
+            for (int i = (int)s_OnKeyEventCallBacks.size() - 1; i >= 0; i--)
             {
                 if (s_OnKeyEventCallBacks[i].first)
                 {

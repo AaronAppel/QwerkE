@@ -1,5 +1,5 @@
 {
-	"GameActions":	{
+	"QwerkE::Input::GameActions":	{
 		"Camera_MoveForward":	"W",
 		"Camera_MoveBackward":	"S",
 		"Camera_MoveLeft":	"A",

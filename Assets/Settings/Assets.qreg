@@ -1,32 +1,32 @@
 {
-	"m_map_mirrorTypes_vec_pair_guid_string":	{
-		"m_pair_mirrorTypes_vec_pair_guid_string":	{
-			"MirrorTypes":	{
-				"MirrorTypes":	6
+	"std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>":	{
+		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>":	{
+			"const unsigned long long":	{
+				"const unsigned long long":	"65"
 			},
-			"m_vec_pair_guid_string":	{
-				"m_pair_guid_string":	{
-					"GUID":	{
+			"std::vector<std::pair<QwerkE::GUID, std::string>>":	{
+				"std::pair<QwerkE::GUID, std::string>":	{
+					"QwerkE::GUID":	{
 						"m_Guid":	"0"
 					},
-					"m_string":	{
-						"m_string":	"cube.bin"
+					"std::string":	{
+						"std::string":	"cube.bin"
 					}
 				},
-				"m_pair_guid_string":	{
-					"GUID":	{
+				"std::pair<QwerkE::GUID, std::string>":	{
+					"QwerkE::GUID":	{
 						"m_Guid":	"11140931355107737998"
 					},
-					"m_string":	{
-						"m_string":	"bunny.bin"
+					"std::string":	{
+						"std::string":	"bunny.bin"
 					}
 				},
-				"m_pair_guid_string":	{
-					"GUID":	{
+				"std::pair<QwerkE::GUID, std::string>":	{
+					"QwerkE::GUID":	{
 						"m_Guid":	"8229536646138328776"
 					},
-					"m_string":	{
-						"m_string":	"column.bin"
+					"std::string":	{
+						"std::string":	"column.bin"
 					}
 				}
 			}

@@ -56,7 +56,8 @@ namespace QwerkE {
 			{
 				if (enumScriptablePair.second)
 				{
-					enumScriptablePair.second->OnUpdate(deltaTime); // #TODO Fix Update() removes script from map
+					// #TODO Fix crash "Exception thrown: read access violation. enumScriptablePair.second->was 0xFFFFFFFFFFFFFFE7"
+					// enumScriptablePair.second->OnUpdate(deltaTime); // #TODO Fix Update() removes script from map
 				}
 			}
 		}

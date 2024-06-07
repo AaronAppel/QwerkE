@@ -132,7 +132,7 @@ namespace QwerkE {
                     }
                     else
                     {
-                        ImGui::SameLineCentered(currentProject.projectName.size());
+                        ImGui::SameLineCentered((u16)currentProject.projectName.size());
                         ImGui::Text(currentProject.projectName.c_str());
                     }
 

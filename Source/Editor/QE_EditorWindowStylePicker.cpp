@@ -5,6 +5,8 @@
 #include "QE_EditorWindow.h"
 #include "QE_Settings.h"
 
+#include "QE_Mirror.h"
+
 namespace QwerkE {
 
 	namespace Editor {
@@ -65,7 +67,7 @@ namespace QwerkE {
 
                 const Mirror::Field& field = styleTypeInfo->fields[i];
 
-                if (field.typeInfo->enumType == MirrorTypes::m_float &&
+                if (field.typeInfo->id == Mirror::TypeId<float>() &&
                     strcmp(styleTypeInfo->fields[i].name.c_str(), "Alpha") == 0)
                 {
                     ImGui::Text("Alpha");
@@ -76,25 +78,25 @@ namespace QwerkE {
 
                 // #TODO Edit save if () { edited = true; }
 
-                switch (field.typeInfo->enumType)
+                switch (field.typeInfo->id)
                 {
-                case MirrorTypes::m_float:
+                case Mirror::TypeId<float>():
                     ImGui::Text(field.name.c_str());
                     ImGui::SameLine();
                     ImGui::DragFloat(("##" + field.name).c_str(), (float*)((char*)&style + field.offset), 0.1f);
                     break;
 
-                case MirrorTypes::ImVec2:
+                case Mirror::TypeId<ImVec2>():
                     ImGui::Text(field.name.c_str());
                     ImGui::SameLine();
                     ImGui::DragFloat2(("##" + field.name).c_str(), (float*)((char*)&style + field.offset), 0.1f);
                     break;
 
-                case MirrorTypes::m_int32_t:
+                case Mirror::TypeId<int>():
                     ImGui::Text(field.name.c_str());
                     break;
 
-                case MirrorTypes::m_imvec4_array:
+                case Mirror::TypeId<ImVec4[ImGuiCol_COUNT]>():
                     if (ImGui::CollapsingHeader(styleTypeInfo->fields[i].name.c_str(), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_SpanAvailWidth))
                     {
                         ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * (m_UiScaling + .05f));

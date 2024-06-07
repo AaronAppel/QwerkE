@@ -1,19 +1,19 @@
 {
-	"m_map_guid_stringPtr":	{
-		"m_pair_guid_stringPtr":	{
-			"GUID":	{
+	"std::unordered_map<QwerkE::GUID, std::string*>":	{
+		"std::pair<const QwerkE::GUID, std::string*>":	{
+			"const QwerkE::GUID":	{
 				"m_Guid":	"1"
 			},
-			"m_stringPtr":	{
-				"m_string":	"MeshFile.qmesh"
+			"std::string*":	{
+				"std::string":	"MeshFile.qmesh"
 			}
 		},
-		"m_pair_guid_stringPtr":	{
-			"GUID":	{
+		"std::pair<const QwerkE::GUID, std::string*>":	{
+			"const QwerkE::GUID":	{
 				"m_Guid":	"2"
 			},
-			"m_stringPtr":	{
-				"m_string":	"MeshFile.qmesh"
+			"std::string*":	{
+				"std::string":	"MeshFile.qmesh"
 			}
 		}
 	}

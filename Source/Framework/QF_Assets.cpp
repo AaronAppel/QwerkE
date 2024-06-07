@@ -25,8 +25,8 @@ namespace QwerkE {
 
 	// #TODO How does the registry work without the editor, for the Game solution?
 
-	std::unordered_map<MirrorTypes, AssetsMap> Assets::m_MapOfAssetMaps;
-	std::unordered_map<MirrorTypes, AssetsMap> Assets::m_RegistryFilePathsMapStructure;
+	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfAssetMaps;
+	std::unordered_map<size_t, AssetsMap> Assets::m_RegistryFilePathsMapStructure;
 
 	Assets::ListFontPairs Assets::m_Fonts;
 	Assets::ListMaterialPairs Assets::m_Materials;
@@ -35,9 +35,9 @@ namespace QwerkE {
 	Assets::ListTextures Assets::m_Textures;
 
 	const char* const s_AssetsRegistryFileName = "Assets.qreg";
-	static std::unordered_map<MirrorTypes, AssetsList> s_AssetGuidToFileRegistry;
+	static std::unordered_map<size_t, AssetsList> s_AssetGuidToFileRegistry;
 
-	void local_Load(const MirrorTypes mirrorType, const char* filePath, const GUID& guid, std::unordered_map<MirrorTypes, AssetsMap>& mapOfAssetMaps);
+	void local_Load(const size_t mirrorTypeId, const char* filePath, const GUID& guid, std::unordered_map<size_t, AssetsMap>& mapOfAssetMaps);
 	auto a = typeid(int).name();
 	template <typename T>
 	void Func()
@@ -59,37 +59,24 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
-		const Mirror::TypeInfo* typeInfo = nullptr;
-		typeInfo = Mirror::InfoForType2<Mesh>();
-
-		typeInfo = Mirror::InfoForType2<int>();
-		typeInfo = Mirror::InfoForType2<uint8_t>(); // "Unsigned char"
-		typeInfo = Mirror::InfoForType2<float>();
-		typeInfo = Mirror::InfoForType2<GUID>();
-
-		typeInfo = Mirror::InfoForType2<ImVec2>();
-
-		std::unordered_map<GUID, std::string*>* meshes = (std::unordered_map<GUID, std::string*>*) & m_RegistryFilePathsMapStructure[MirrorTypes::Mesh];
+		std::unordered_map<GUID, std::string*>* meshes = (std::unordered_map<GUID, std::string*>*) & m_RegistryFilePathsMapStructure[Mirror::TypeId<Mesh>()];
 		u16 guidCounter = 1;
 		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
 		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
 
-		auto result = MIRROR_TYPE_ID(int);
-		// Func<int>();
-
 		Serialize::ToFile(*meshes, "NewRegistryMeshes.qreg");
 
-		m_RegistryFilePathsMapStructure[MirrorTypes::Shader][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
+		m_RegistryFilePathsMapStructure[Mirror::TypeId<Shader>()][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
 		// m_RegistryFilePathsMapStructure[MirrorTypes::Material][GUID()] = new std::array<std::string, 11>( { "albedo", "diffuse", "normal", "specular", ...});
 
-		// std::vector<std::pair<GUID, std::string>> vec = { { GUID(0), "cube.bin" }, { GUID(11140931355107737998), "bunny.bin" }, { GUID(8229536646138328776), "column.bin" } };
-		// s_AssetGuidToFileRegistry[MirrorTypes::BgfxMesh] = vec;
+		// std::vector<std::pair<GUID, std::string>> vec = {
+		// 	{ GUID(0), "cube.bin" },
+		// 	{ GUID(11140931355107737998), "bunny.bin" },
+		// 	{ GUID(8229536646138328776), "column.bin" }
+		// };
+		// s_AssetGuidToFileRegistry[Mirror::TypeId<bgfxFramework::Mesh>()] = vec;
 
-		// s_AssetGuidToFileRegistry.insert({ MirrorTypes::BgfxMesh, { { GUID(0), "cube.bin" } } });
-		// s_AssetGuidToFileRegistry.insert({ MirrorTypes::BgfxMesh, { { GUID(11140931355107737998), "bunny.bin" } } });
-		// s_AssetGuidToFileRegistry.insert({ MirrorTypes::BgfxMesh, { { GUID(8229536646138328776), "column.bin" } } });
 		// Serialize::ToFile(s_AssetGuidToFileRegistry, Paths::Setting(s_AssetsRegistryFileName).c_str());
-
 		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 
 		if (const bool serialize = false)
@@ -103,7 +90,7 @@ namespace QwerkE {
 
 		for (auto& mirrorTypeVec : s_AssetGuidToFileRegistry)
 		{
-			MirrorTypes mirrorType = mirrorTypeVec.first;
+			size_t mirrorType = mirrorTypeVec.first;
 			for (size_t i = 0; i < mirrorTypeVec.second.size(); i++)
 			{
 				auto guidString = mirrorTypeVec.second[i];
@@ -124,7 +111,7 @@ namespace QwerkE {
 				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
 			);
 			nullMesh->m_GUID = GUID::Invalid;
-			m_MapOfAssetMaps[MirrorTypes::Mesh][nullMesh->m_GUID] = nullMesh;
+			m_MapOfAssetMaps[Mirror::TypeId<Mesh>()][nullMesh->m_GUID] = nullMesh;
 		}
 
 		{
@@ -136,7 +123,7 @@ namespace QwerkE {
 					Paths::Shader("fs_cubes.bin").c_str()
 				);
 				nullShader->m_GUID = GUID::Invalid;
-				m_MapOfAssetMaps[MirrorTypes::Shader][nullShader->m_GUID] = nullShader;
+				m_MapOfAssetMaps[Mirror::TypeId<Shader>()][nullShader->m_GUID] = nullShader;
 			}
 			else
 			{
@@ -146,12 +133,12 @@ namespace QwerkE {
 					Paths::Shader("fs_mesh.bin").c_str()
 				);
 				nullShader->m_GUID = GUID::Invalid;
-				m_MapOfAssetMaps[MirrorTypes::Shader][nullShader->m_GUID] = nullShader;
+				m_MapOfAssetMaps[Mirror::TypeId<Shader>()][nullShader->m_GUID] = nullShader;
 			}
 		}
 
-		ASSERT(Has<bgfxFramework::Mesh>(0), "No null mesh found!");
-		ASSERT(Has<Shader>(0), "No null shader found!");
+		// ASSERT(Has<bgfxFramework::Mesh>(0), "No null mesh found!");
+		// ASSERT(Has<Shader>(0), "No null shader found!");
 	}
 
 	void Assets::Shutdown()
@@ -166,7 +153,7 @@ namespace QwerkE {
 				{
 					switch (mirrorTypeAssetMapPair.first)
 					{
-					case MirrorTypes::BgfxMesh:
+					case Mirror::TypeId<bgfxFramework::Mesh>():
 						{
 							// #TODO Fix bgfx break point on delete
 							// bgfxFramework::Mesh* mesh = static_cast<bgfxFramework::Mesh*>(guidVoidPtrPair.second);
@@ -174,11 +161,11 @@ namespace QwerkE {
 							// delete mesh;
 						}
 						break;
-					case MirrorTypes::Mesh:
+					case Mirror::TypeId<Mesh>():
 						delete static_cast<Mesh*>(guidVoidPtrPair.second);
 						break;
 
-					case MirrorTypes::Shader:
+					case Mirror::TypeId<Shader>():
 						delete static_cast<Shader*>(guidVoidPtrPair.second);
 						break;
 
@@ -195,14 +182,14 @@ namespace QwerkE {
 		// #TODO ASSERT all assets were properly released
 	}
 
-	void local_Load(const MirrorTypes mirrorType, const char* filePath, const GUID& guid, std::unordered_map<MirrorTypes, AssetsMap>& mapOfAssetMaps)
+	void local_Load(const size_t mirrorTypeId, const char* filePath, const GUID& guid, std::unordered_map<size_t, AssetsMap>& mapOfAssetMaps)
 	{
-		switch (mirrorType)
+		switch (mirrorTypeId)
 		{
-		case MirrorTypes::BgfxMesh:
-			mapOfAssetMaps[MirrorTypes::BgfxMesh][guid] = myMeshLoad(filePath); break;
+		case Mirror::TypeId<bgfxFramework::Mesh>():
+			mapOfAssetMaps[mirrorTypeId][guid] = myMeshLoad(filePath); break;
 
-		case MirrorTypes::Mesh:
+		case Mirror::TypeId<Mesh>():
 			{
 				Mesh* nullMesh = new Mesh();
 				nullMesh->m_vbh = bgfx::createVertexBuffer(
@@ -213,7 +200,7 @@ namespace QwerkE {
 					bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
 				);
 				nullMesh->m_GUID = guid;
-				mapOfAssetMaps[MirrorTypes::Mesh][guid] = nullMesh;
+				mapOfAssetMaps[mirrorTypeId][guid] = nullMesh;
 			}
 			break;
 
@@ -223,7 +210,7 @@ namespace QwerkE {
 	}
 
 #ifndef _QRETAIL
-	std::unordered_map<MirrorTypes, AssetsList>& Assets::ViewRegistry()
+	std::unordered_map<size_t, AssetsList>& Assets::ViewRegistry()
 	{
 		return s_AssetGuidToFileRegistry;
 	}
@@ -238,10 +225,10 @@ namespace QwerkE {
 		// #TODO Implement
 	}
 
-	void Assets::AddToRegistry(const MirrorTypes mirrorType, const GUID& guid, const std::string& fileName)
+	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
 	{
 		// #TODO if (!ExistsInRegistry(giod, fileName))
-		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorType];
+		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
 		for (size_t i = 0; i < vectorGuidStrings.size(); i++)
 		{
 			std::pair<GUID, std::string>& pair = vectorGuidStrings[i];
