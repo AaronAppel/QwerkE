@@ -67,27 +67,13 @@ namespace QwerkE {
                     void* derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
                     *(void**)obj = derefencedTypeObjAddress;
 
-                    ScriptableCamera* camera = (ScriptableCamera*)derefencedTypeObjAddress;
-                    ScriptablePatrol* script = (ScriptablePatrol*)derefencedTypeObjAddress;
-
                     FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
                     dereferencedTypeInfo->Construct(derefencedTypeObjAddress);
-                    int bp = 1;
                 }
                 break;
 
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
-                {
-                    std::pair<QwerkE::GUID, std::string>* pair = (std::pair<QwerkE::GUID, std::string>*)obj;
-                    if (Mirror::TypeId<std::pair<QwerkE::GUID, std::string>>() == objTypeInfo->id)
-                    {
-                        int bp = 0;
-                    }
-                    local_DeserializePair(objJson, objTypeInfo, obj, objTypeInfo->stringName);
-                    int bp = 0;
-                }
-                break;
-
+                local_DeserializePair(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             }
         }
 
@@ -253,10 +239,6 @@ namespace QwerkE {
 
         bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj)
         {
-            auto result = Mirror::TypeId<entt::registry>();
-            auto result1 = Mirror::TypeId<QwerkE::Editor::EditorWindow*>();
-            auto result2 = Mirror::TypeId<QwerkE::Editor::EditorWindowFlags>();
-
             switch (objTypeInfo->id)
             {
             case Mirror::TypeId<entt::registry>():
@@ -293,16 +275,26 @@ namespace QwerkE {
                     }
 
                     Component& component = registry->emplace<Component>(newEntityId);
+
                     local_DeserializeClass(iterator, typeInfo, &component);
                     iterator = iterator->next;
+
+                    if (std::is_same_v<Component, ComponentScript>)
+                    {
+                        // #TODO Ensure Scriptable* is null to trigger instantiation later
+                        // #TODO Review nullifying pointers during deserialization
+                        ComponentScript* scriptPtr = (ComponentScript*)&component;
+                        for (auto& pair : scriptPtr->m_ScriptInstances)
+                        {
+                            pair.second = nullptr;
+                        }
+                    }
 
                     if (std::is_same_v<Component, ComponentMesh>)
                     {
                         ComponentMesh* mesh = (ComponentMesh*)&component;
                         mesh->Initialize();
                     }
-
-                    break;
                 }
             }(), ...);
         }

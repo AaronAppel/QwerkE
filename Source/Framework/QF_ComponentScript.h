@@ -57,7 +57,7 @@ namespace QwerkE {
 				if (enumScriptablePair.second)
 				{
 					// #TODO Fix crash "Exception thrown: read access violation. enumScriptablePair.second->was 0xFFFFFFFFFFFFFFE7"
-					// enumScriptablePair.second->OnUpdate(deltaTime); // #TODO Fix Update() removes script from map
+					enumScriptablePair.second->OnUpdate(deltaTime); // #TODO Fix Update() removes script from map
 				}
 			}
 		}
@@ -71,6 +71,7 @@ namespace QwerkE {
 		{
 			Scriptable* newScript = Scripting::InstantiateScript(scriptType);
 			newScript->SetEntity(entityHandle);
+			newScript->OnCreate();
 			m_ScriptInstances[scriptType] = newScript;
 		}
 

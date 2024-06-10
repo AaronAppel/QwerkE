@@ -101,6 +101,7 @@ namespace QwerkE {
                 {
                     ComponentScript& script = m_CurrentEntity.GetComponent<ComponentScript>();
 
+                    // #TODO Review script.AddScript(pair.first) use rather than below logic
                     for (auto& pair : script.m_ScriptInstances)
                     {
                         if (pair.second && !pair.second->GetEntity())
