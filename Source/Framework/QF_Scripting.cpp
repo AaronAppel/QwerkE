@@ -2,6 +2,9 @@
 
 #include "QF_ScriptHelpers.h"
 
+// #TODO Fix test code
+#include "../Game/QG_ScriptGameEntity.h"
+
 namespace QwerkE {
 
 	namespace Scripting {
@@ -21,6 +24,15 @@ namespace QwerkE {
 
             case eScriptTypes::PathFinder:
                 return new ScriptablePathFinder();
+
+            // #TODO Improve architecture for user generated types
+            case eScriptTypes::UserScript1:
+                return new ScriptGameEntity();
+
+            // case eScriptTypes::UserScript1:
+            //     return new ScriptablePathFinder();
+            // case eScriptTypes::UserScript1:
+            //     return new ScriptablePathFinder();
 
             default:
                 ASSERT(false, "Unsupported script type!");

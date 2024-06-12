@@ -370,18 +370,41 @@ namespace QwerkE {
                     {
                         ComponentScript* script = (ComponentScript*)obj;
 
-                        const u8 start = (u8)eScriptTypes::Invalid + 1;
-                        const u8 range = (u8)eScriptTypes::COUNT;
-                        for (size_t i = start; i < range; i++)
+                        Scene* scene = Scenes::GetCurrentScene();
+
+                        EntityHandle entity = EntityHandle::InvalidHandle();
+                        for (auto& pair : scene->EntitiesMap())
                         {
-                            eScriptTypes scriptType = (eScriptTypes)i;
-                            if (!script->HasScript(scriptType) && ImGui::Button(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)i))))
+                            EntityHandle tempEntity = EntityHandle(scene, pair.first);
+
+                            if (tempEntity.HasComponent<ComponentScript>() &&
+                                &tempEntity.GetComponent<ComponentScript>() == script)
                             {
-                                script->AddScript(scriptType, EntityHandle::InvalidHandle()); // #TODO Get proper entity handle
-                                valueChanged = true;
-                                ImGui::CloseCurrentPopup();
+                                entity = tempEntity;
+                                break;
                             }
                         }
+
+                        if (entity)
+                        {
+                            const u8 start = (u8)eScriptTypes::Invalid + 1;
+                            const u8 range = (u8)eScriptTypes::COUNT;
+                            for (size_t i = start; i < range; i++)
+                            {
+                                eScriptTypes scriptType = (eScriptTypes)i;
+                                if (!script->HasScript(scriptType) && ImGui::Button(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)i))))
+                                {
+                                    script->AddScript(scriptType, entity);
+                                    valueChanged = true;
+                                    ImGui::CloseCurrentPopup();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // #TODO Error
+                        }
+
                         ImGui::EndPopup();
                     }
 

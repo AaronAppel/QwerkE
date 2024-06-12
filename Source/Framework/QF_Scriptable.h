@@ -8,7 +8,19 @@
 
 namespace QwerkE {
 
-	QC_ENUM(eScriptTypesStr, u8, Invalid = 0, Camera, Testing, Patrol, PathFinder, COUNT)
+	QC_ENUM(eScriptTypesStr, u8,
+		Invalid = 0,
+		Camera,
+		Testing,
+		Patrol,
+		PathFinder,
+
+		// User scripts
+		// #TODO Improve architecture for user generated types
+		UserScript1, // ScriptGameEntity
+
+		COUNT)
+
 	enum eScriptTypes : u8
 	{
 		Invalid = 0,
@@ -16,6 +28,10 @@ namespace QwerkE {
 		Testing,
 		Patrol,
 		PathFinder,
+
+		// User scripts
+		// #TODO Improve architecture for user generated types
+		UserScript1, // ScriptGameEntity
 
 		// #NOTE These values are serialized so value changes matter
 		COUNT,
