@@ -24,12 +24,12 @@ int main(unsigned int argc, char** argv)
 
 	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("NewScene1.qscene"));
 
-	QwerkE::Time::WriteAppStartTime();
-
 	// #TODO Explore code created scenes
 	// QwerkE::Scene* newScene = QwerkE::Scenes::CreateScene();
 	// QwerkE::EntityHandle handle = newScene->CreateEntity();
 	// handle.AddComponent<>();
+
+	QwerkE::Time::WriteAppStartTime();
 
 	while (!QwerkE::Window::CloseRequested())
 	{
