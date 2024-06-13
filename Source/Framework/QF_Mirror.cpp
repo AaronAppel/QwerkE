@@ -58,21 +58,21 @@ static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo
 }
 
 #ifdef _QDEARIMGUI
-MIRROR_CLASS_START(ImVec2)
+MIRROR_CLASS(ImVec2)
 MIRROR_CLASS_MEMBER(x)
 MIRROR_CLASS_MEMBER(y)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(ImVec4)
+MIRROR_CLASS(ImVec4)
 MIRROR_CLASS_MEMBER(x)
 MIRROR_CLASS_MEMBER(y)
 MIRROR_CLASS_MEMBER(z)
 MIRROR_CLASS_MEMBER(w)
 MIRROR_CLASS_END
 
-MIRROR_INFO_FOR_TYPE(ImVec4[ImGuiCol_COUNT])
+MIRROR_TYPE(ImVec4[ImGuiCol_COUNT])
 
-MIRROR_CLASS_START(ImGuiStyle)
+MIRROR_CLASS(ImGuiStyle)
 MIRROR_CLASS_MEMBER(Alpha)
 MIRROR_CLASS_MEMBER(DisabledAlpha)
 MIRROR_CLASS_MEMBER(WindowPadding)
@@ -125,63 +125,63 @@ MIRROR_CLASS_END
 
 #ifdef _QENTT
 MIRROR_TYPE(entt::registry) // #TODO Deprecate MIRROR_TYPE
-MIRROR_INFO_FOR_TYPE(entt::entity)
+MIRROR_TYPE(entt::entity)
 #endif
 
 #ifdef _QBGFXFRAMEWORK
 typedef bgfxFramework::Mesh BgfxMesh;
-MIRROR_CLASS_START(BgfxMesh)
+MIRROR_CLASS(BgfxMesh)
 MIRROR_CLASS_END
 #endif
 
 // Misc
-MIRROR_CLASS_START(QwerkE::GUID)
+MIRROR_CLASS(QwerkE::GUID)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(const QwerkE::GUID)
+MIRROR_CLASS(const QwerkE::GUID)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
 // Enums
-MIRROR_INFO_FOR_TYPE(QwerkE::eScriptTypes)
-MIRROR_INFO_FOR_TYPE(const QwerkE::eScriptTypes)
-MIRROR_INFO_FOR_TYPE(QwerkE::eComponentTags)
-MIRROR_INFO_FOR_TYPE(QwerkE::eKeys)
+MIRROR_TYPE(QwerkE::eScriptTypes)
+MIRROR_TYPE(const QwerkE::eScriptTypes)
+MIRROR_TYPE(QwerkE::eComponentTags)
+MIRROR_TYPE(QwerkE::eKeys)
 
 // Arrays
-MIRROR_INFO_FOR_TYPE(float[16])
+MIRROR_TYPE(float[16])
 
 // Pairs
-MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_INFO_FOR_TYPE(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, entt::entity>)
-MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, std::string>)
-MIRROR_INFO_FOR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_INFO_FOR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, void*>)
-MIRROR_INFO_FOR_TYPE(std::pair<QwerkE::GUID, std::string*>)
-MIRROR_INFO_FOR_TYPE(std::pair<const QwerkE::GUID, std::string*>)
+MIRROR_TYPE(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_TYPE(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_TYPE(std::pair<QwerkE::GUID, entt::entity>)
+MIRROR_TYPE(std::pair<QwerkE::GUID, std::string>)
+MIRROR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_TYPE(std::pair<QwerkE::GUID, void*>)
+MIRROR_TYPE(std::pair<QwerkE::GUID, std::string*>)
+MIRROR_TYPE(std::pair<const QwerkE::GUID, std::string*>)
 
 // Vectors
-MIRROR_INFO_FOR_TYPE(std::vector<entt::entity>)
-MIRROR_INFO_FOR_TYPE(std::vector<std::string>)
-MIRROR_INFO_FOR_TYPE(std::vector<std::string*>)
-MIRROR_INFO_FOR_TYPE(std::vector<std::pair<QwerkE::GUID, std::string>>)
+MIRROR_TYPE(std::vector<entt::entity>)
+MIRROR_TYPE(std::vector<std::string>)
+MIRROR_TYPE(std::vector<std::string*>)
+MIRROR_TYPE(std::vector<std::pair<QwerkE::GUID, std::string>>)
 
 // Maps
-MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-// MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::GUID, entt::entity>)
-MIRROR_INFO_FOR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-// MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::GUID, void*>)
+MIRROR_TYPE(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+// MIRROR_TYPE(std::unordered_map<QwerkE::GUID, entt::entity>)
+MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+// MIRROR_TYPE(std::unordered_map<QwerkE::GUID, void*>)
 
 // #TODO SetCollectionLambdasMap needs const implementation for some reason??
-// MIRROR_INFO_FOR_TYPE(std::unordered_map<const QwerkE::GUID, void*>)
-MIRROR_INFO_FOR_TYPE(std::unordered_map<QwerkE::GUID, std::string*>)
+// MIRROR_TYPE(std::unordered_map<const QwerkE::GUID, void*>)
+MIRROR_TYPE(std::unordered_map<QwerkE::GUID, std::string*>)
 // #TODO SetCollectionLambdasMap needs const implementation for some reason??
-// MIRROR_INFO_FOR_TYPE(std::unordered_map<const QwerkE::GUID, std::string*>)
+// MIRROR_TYPE(std::unordered_map<const QwerkE::GUID, std::string*>)
 
 // Function pointers
 template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
@@ -202,49 +202,49 @@ template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
 }
 
 // Scripts
-MIRROR_CLASS_START(QwerkE::ScriptableCamera)
+MIRROR_CLASS(QwerkE::ScriptableCamera)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ScriptGuiButton)
+MIRROR_CLASS(QwerkE::ScriptGuiButton)
 MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ScriptablePatrol)
+MIRROR_CLASS(QwerkE::ScriptablePatrol)
 MIRROR_CLASS_MEMBER(m_Stride)
 MIRROR_CLASS_MEMBER(m_Speed)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ScriptablePathFinder)
+MIRROR_CLASS(QwerkE::ScriptablePathFinder)
 MIRROR_CLASS_MEMBER(m_MovementSpeed)
 MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
 MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ScriptableTesting)
+MIRROR_CLASS(QwerkE::ScriptableTesting)
 MIRROR_CLASS_END
 
 // MIRROR_ABSTRACT_CLASS_START(QwerkE::Scriptable)
-MIRROR_CLASS_START(QwerkE::Scriptable)
+MIRROR_CLASS(QwerkE::Scriptable)
 // #TODO Look at generating empty types or not yet declared types automatically as well.
 // Would save a step when creating a new type and still allow exposing members for specific types
 MirrorSubClasses<QwerkE::Scriptable>(QwerkE::ComponentScriptsList{}, localStaticTypeInfo);
 MIRROR_CLASS_END
-MIRROR_INFO_FOR_TYPE(QwerkE::Scriptable*)
+MIRROR_TYPE(QwerkE::Scriptable*)
 
 // Structs
-MIRROR_CLASS_START(vec2f)
+MIRROR_CLASS(vec2f)
 MIRROR_CLASS_MEMBER(x)
 MIRROR_CLASS_MEMBER(y)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(vec3f)
+MIRROR_CLASS(vec3f)
 MIRROR_CLASS_MEMBER(x)
 MIRROR_CLASS_MEMBER(y)
 MIRROR_CLASS_MEMBER(z)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::EngineSettings)
+MIRROR_CLASS(QwerkE::EngineSettings)
 MIRROR_CLASS_MEMBER(windowWidthPixels)
 MIRROR_CLASS_MEMBER(windowHeightPixels)
 MIRROR_CLASS_MEMBER(limitFramerate)
@@ -254,18 +254,18 @@ MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
 MIRROR_CLASS_MEMBER(consoleOutputWindowEnabled)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::RendererSettings)
+MIRROR_CLASS(QwerkE::RendererSettings)
 MIRROR_CLASS_MEMBER(drawingPrimitiveType)
 MIRROR_CLASS_END
 
 // MIRROR_DEPENDENT_CLASS_START(QwerkE::Scene)
-MIRROR_CLASS_START(QwerkE::Scene)
+MIRROR_CLASS(QwerkE::Scene)
 MIRROR_CLASS_MEMBER(m_SceneFileName)
 MIRROR_CLASS_MEMBER(m_Registry)
 MIRROR_CLASS_END
 
 // Components
-MIRROR_CLASS_START(QwerkE::ComponentCamera)
+MIRROR_CLASS(QwerkE::ComponentCamera)
 MIRROR_CLASS_MEMBER_FLAGS(m_ShowSphere, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_MEMBER(m_MoveSpeed)
 MIRROR_CLASS_MEMBER(m_LookAtPosition)
@@ -274,7 +274,7 @@ MIRROR_CLASS_MEMBER(m_Near)
 MIRROR_CLASS_MEMBER(m_Far)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ComponentInfo)
+MIRROR_CLASS(QwerkE::ComponentInfo)
 MIRROR_CLASS_MEMBER_FLAGS(m_EntityName, FieldSerializationFlags::_HideInInspector)
 // #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
 // Assigned through EntityHandle constructor
@@ -282,34 +282,34 @@ MIRROR_CLASS_MEMBER(m_Guid)
 MIRROR_CLASS_MEMBER(m_Enabled)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ComponentLight)
+MIRROR_CLASS(QwerkE::ComponentLight)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ComponentMesh)
+MIRROR_CLASS(QwerkE::ComponentMesh)
 MIRROR_CLASS_MEMBER(m_MeshGuid)
 MIRROR_CLASS_MEMBER(m_ShaderGuid)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ComponentTransform)
+MIRROR_CLASS(QwerkE::ComponentTransform)
 MIRROR_CLASS_MEMBER(m_Matrix)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::ComponentScript)
+MIRROR_CLASS(QwerkE::ComponentScript)
 MIRROR_CLASS_MEMBER(m_ScriptInstances)
 MIRROR_CLASS_END
 
 // Misc
-MIRROR_CLASS_START(QwerkE::EntityHandle)
+MIRROR_CLASS(QwerkE::EntityHandle)
 MIRROR_CLASS_END
 
 // Assets
-MIRROR_CLASS_START(QwerkE::Mesh)
+MIRROR_CLASS(QwerkE::Mesh)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::Shader)
+MIRROR_CLASS(QwerkE::Shader)
 MIRROR_CLASS_END
 
-MIRROR_CLASS_START(QwerkE::Input::GameActions)
+MIRROR_CLASS(QwerkE::Input::GameActions)
 MIRROR_CLASS_MEMBER(Camera_MoveForward)
 MIRROR_CLASS_MEMBER(Camera_MoveBackward)
 MIRROR_CLASS_MEMBER(Camera_MoveLeft)

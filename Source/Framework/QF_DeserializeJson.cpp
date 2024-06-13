@@ -2,18 +2,12 @@
 
 #include <unordered_map>
 
-#include "QC_Guid.h"
-
 #include "QF_Buffer.h"
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
-#include "QF_Scene.h"
-
-// #if Framework
-// #include "QF_Mirror.h"
 
 // Editor
-// #if Editor
+// #TODO #if Editor
 #include "../Source/Editor/QE_EditorWindowHelpers.h"
 #include "../Source/Editor/QE_Mirror.h"
 
@@ -68,7 +62,6 @@ namespace QwerkE {
                     *(void**)obj = derefencedTypeObjAddress;
 
                     FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
-                    dereferencedTypeInfo->Construct(derefencedTypeObjAddress);
                 }
                 break;
 
@@ -95,7 +88,6 @@ namespace QwerkE {
             case Mirror::TypeId<char*>():
                 *(const char**)obj = _strdup(objJson->valuestring); break;
 
-            case Mirror::TypeId<QwerkE::GUID>(): // #TODO Mirror check how underlying types are being handled
             case Mirror::TypeId<const uint64_t>():
             case Mirror::TypeId<uint64_t>(): // #NOTE Storing uint64 as string
                 *(uint64_t*)obj = std::stoull(objJson->valuestring); break;
@@ -155,6 +147,7 @@ namespace QwerkE {
                     const Mirror::Field& field = objTypeInfo->fields[i];
 
                     if (strcmp(field.name.c_str(), iterator->string) != 0 ||
+                        // #TODO #if Editor
                         field.flags & FieldSerializationFlags::_InspectorOnly)
                         continue;
 

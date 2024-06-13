@@ -3,14 +3,6 @@
 #include <string>
 #include <vector>
 
-#define MIRROR_PRIVATE_MEMBERS friend struct Mirror;
-
-#define MIRROR_FIELD_FLAG_SIZE uint8_t
-#define MIRROR_TYPE_INFO_CATEGORY_SIZE uint8_t
-#define MIRROR_TYPE_SIZE uint16_t
-#define MIRROR_FIELD_ID_SIZE std::size_t
-#define MIRROR_TYPE_SIZE_MAX UINT16_MAX
-
 #ifdef MIRROR_TESTING
 #include <cassert>
 #define MIRROR_ASSERT(x) assert(x)
@@ -24,11 +16,17 @@ int constexpr NextTypeId(int R = writer<C + N>::value) {
 	return R;
 }
 
+#define MIRROR_PRIVATE_MEMBERS friend struct Mirror;
+
+#define MIRROR_FIELD_FLAG_SIZE uint8_t
+#define MIRROR_TYPE_CATEGORY_SIZE uint8_t
+#define MIRROR_TYPE_SIZE uint16_t
+#define MIRROR_FIELD_ID_SIZE std::size_t
+#define MIRROR_TYPE_SIZE_MAX UINT16_MAX
+
 struct Mirror
 {
-	struct TypeInfo;
-
-	enum TypeInfoCategories : MIRROR_TYPE_INFO_CATEGORY_SIZE
+	enum TypeInfoCategories : MIRROR_TYPE_CATEGORY_SIZE
 	{
 		TypeInfoCategory_Primitive = 0,
 		TypeInfoCategory_Class,
@@ -36,6 +34,8 @@ struct Mirror
 		TypeInfoCategory_Pair,
 		TypeInfoCategory_Pointer,
 	};
+
+	struct TypeInfo;
 
 	struct Field
 	{
@@ -60,6 +60,9 @@ struct Mirror
 
 	struct TypeInfo
 	{
+		// #TODO Review accessibility of members. Should this be a class, or at least use a private scope for some/all data members?
+		// #TODO Review memory usage for each type. There are opportunities for reducing the memory usage for some types, and re-using data member memory using unions
+
 		std::string stringName = "";
 		MIRROR_FIELD_ID_SIZE id = 0;
 
@@ -68,8 +71,8 @@ struct Mirror
 #endif
 		TypeInfoCategories category = TypeInfoCategories::TypeInfoCategory_Primitive;
 
-		std::vector<Field> fields = { }; // #TODO Hide/private non-constants
-		std::vector<const TypeInfo*> derivedTypes; // #TODO Utilize memory for non-derived types
+		std::vector<Field> fields = { };
+		std::vector<const TypeInfo*> derivedTypes; // #TODO Only required for base classes (with declared derived types)
 
 		const TypeInfo* AbsoluteType() const {
 			return pointerDereferencedTypeInfo ? pointerDereferencedTypeInfo : this;
@@ -110,9 +113,6 @@ struct Mirror
 
 		void Construct(void* instanceAddress) const {
 			MIRROR_ASSERT(collectionAddFunc && "Null typeConstructorFunc!");
-			// #TODO Could check category and pointerDereferencedTypeInfo to call
-			// Construct() on type that pointer is pointing to, instead of handling that
-			// logic elsewhere
 			if (typeConstructorFunc)
 			{
 				typeConstructorFunc(instanceAddress);
@@ -127,18 +127,18 @@ struct Mirror
 			}
 		}
 
-		const TypeInfo* collectionTypeInfoFirst = nullptr; // #TODO Utilize memory for non-collections
-		const TypeInfo* collectionTypeInfoSecond = nullptr;
-		const TypeInfo* superTypeInfo = nullptr;
-		const TypeInfo* pointerDereferencedTypeInfo = nullptr;
+		const TypeInfo* collectionTypeInfoFirst = nullptr; // #TODO Only used for collections
+		const TypeInfo* collectionTypeInfoSecond = nullptr; // #TODO Only used for collections
+		const TypeInfo* superTypeInfo = nullptr; // #TODO Only used for derived types
+		const TypeInfo* pointerDereferencedTypeInfo = nullptr; // #TODO Only used for pointers
 
 		Func_void_voidPtr_sizet_constvoidPtr_constvoidPtr collectionAddFunc = nullptr;
 		Func_voidPtr_constVoidPtr_bool collectionAddressOfPairObjectFunc = nullptr;
 		Func_void_voidPtr collectionClearFunction = nullptr;
 		Func_charPtr_constVoidPtr_sizet collectionIterateCurrentFunc = nullptr;
 
-		Func_void_voidPtr typeConstructorFunc = nullptr; // #TODO Utilize memory for non-classes
-		Func_bool_constVoidPtr typeDynamicCastFunc = nullptr; // #TODO Utilize memory for non-classes
+		Func_void_voidPtr typeConstructorFunc = nullptr; // #TODO Only used for classes
+		Func_bool_constVoidPtr typeDynamicCastFunc = nullptr; // #TODO Only used for classes in inheritance hierarchy
 	};
 
 	template <class T>
@@ -151,7 +151,7 @@ struct Mirror
 	static constexpr size_t TypeId();
 
 	// #NOTE Defining type ids through templated functions aims to avoid id collisions with generated class ids
-	// #NOTE TypeIds are defined in headers so all compile units have the same id value
+	// #NOTE TypeIds are defined in headers so all compile units have matching type ids for each type
 #define MIRROR_TYPE_ID_IMPL(TYPE) \
 	template <> constexpr std::size_t Mirror::TypeId<TYPE>() { return NextTypeId(); }
 #define MIRROR_TYPE_ID(...) MIRROR_TYPE_ID_IMPL(__VA_ARGS__)

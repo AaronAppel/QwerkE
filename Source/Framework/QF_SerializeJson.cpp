@@ -11,13 +11,11 @@
 #include "Libraries/entt/entt.hpp"
 #endif
 
-#include "QC_Guid.h"
+//#include "QC_Guid.h"
 
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Log.h"
-#include "QF_Scene.h"
-#include "QF_ScriptHelpers.h"
 
 // #if Framework
 // #include "QF_Mirror.h"
@@ -25,8 +23,6 @@
 // Editor types
 // #TODO Review removing
 // #if Editor
-#include "../Source/Editor/QE_EditorWindowHelpers.h"
-#include "../Source/Editor/QE_Settings.h"
 #include "../Source/Editor/QE_Mirror.h"
 
 namespace QwerkE {
@@ -141,8 +137,7 @@ namespace QwerkE {
             case Mirror::TypeId<Editor::EditorWindowTypes>():
             case Mirror::TypeId<Editor::EditorWindowFlags>():
             case Mirror::TypeId<const eScriptTypes>():
-            case Mirror::TypeId<eScriptTypes>(): // #TODO Add a case for all enums by default
-            // #TODO Review deprecation case MirrorTypes::m_eSceneTypes:
+            case Mirror::TypeId<eScriptTypes>():
             case Mirror::TypeId<const uint8_t>():
             case Mirror::TypeId<uint8_t>():
                 cJsonItem = CreateJsonNumber<uint8_t>(name, obj); break;
@@ -164,24 +159,19 @@ namespace QwerkE {
             case Mirror::TypeId<const int64_t>():
             case Mirror::TypeId<int64_t>(): // #NOTE Special case of conversion on 64 bit types
             {
-                // Use string instead of a double to avoid conversion issues
                 int64_t* numberAddress = (int64_t*)obj;
                 cJsonItem = CreateJsonString<const char>(name, std::to_string(*numberAddress).c_str());
                 // #TODO Try using objJson->valuedouble and a memcpy to see if that works
             }
-            // cJsonItem = CreateJsonNumber<int64_t>(name, obj); break;
             break;
 
-            case Mirror::TypeId<QwerkE::GUID>(): // #TODO Mirror check how underlying types are being handled
             case Mirror::TypeId<const uint64_t>():
             case Mirror::TypeId<uint64_t>(): // #NOTE Special case of conversion on 64 bit types
                 {
-                    // Use string instead of a double to avoid conversion issues
                     uint64_t* numberAddress = (uint64_t*)obj;
                     cJsonItem = CreateJsonString<const char>(name, std::to_string(*numberAddress).c_str());
                     // #TODO Try using objJson->valuedouble and a memcpy to see if that works
                 }
-                // cJsonItem = CreateJsonNumber<uint64_t>(name, obj);
                 break;
 
             case Mirror::TypeId<const float>():

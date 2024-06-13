@@ -2,8 +2,6 @@
 
 #include "Structs.h"
 
-// #NOTE Ids are sequential, so changing the order of id declarations, will change the value of one or many type ids
-
 // Void
 MIRROR_TYPE_ID(void)
 MIRROR_TYPE_ID(void*)

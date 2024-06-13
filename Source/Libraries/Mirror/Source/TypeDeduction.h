@@ -1,5 +1,7 @@
 #pragma once
 
+// From: https://stackoverflow.com/questions/9407367/determine-if-a-type-is-an-stl-container-at-compile-time/31105859#31105859
+
 #include <deque>
 #include <forward_list>
 #include <list>
@@ -15,7 +17,6 @@
 #include <vector>
 #include <type_traits>
 
-// https://stackoverflow.com/questions/9407367/determine-if-a-type-is-an-stl-container-at-compile-time/31105859#31105859
 // Specialize a type for all of the STL containers.
 namespace is_stl_container_impl {
 	template <typename T>       struct is_stl_container :std::false_type {};
