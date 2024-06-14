@@ -59,6 +59,8 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
+		// #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
+
 		std::unordered_map<GUID, std::string*>* meshes = (std::unordered_map<GUID, std::string*>*) & m_RegistryFilePathsMapStructure[Mirror::TypeId<Mesh>()];
 		u16 guidCounter = 1;
 		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
@@ -217,17 +219,17 @@ namespace QwerkE {
 
 	void Assets::SaveRegistry()
 	{
-		Serialize::ToFile(s_AssetGuidToFileRegistry, s_AssetsRegistryFileName); // #TODO Improve hard coded file name
+		Serialize::ToFile(s_AssetGuidToFileRegistry, Paths::Setting(s_AssetsRegistryFileName).c_str());
 	}
 
 	void Assets::ExistsInRegistry(const GUID& guid, const std::string& fileName)
 	{
-		// #TODO Implement
+		// #TODO Implement. Already partly written in AddToRegistry
 	}
 
 	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
 	{
-		// #TODO if (!ExistsInRegistry(giod, fileName))
+		// #TODO if (!ExistsInRegistry(guid, fileName))
 		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
 		for (size_t i = 0; i < vectorGuidStrings.size(); i++)
 		{

@@ -12,6 +12,7 @@
 #include "QF_Assets.h"
 #include "QF_Debug.h"
 #include "QF_Files.h"
+#include "QF_Mesh.h"
 #include "QF_Paths.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
@@ -235,14 +236,17 @@ namespace QwerkE {
                         }
                     }
                 }
-                else if (strcmp(fileExtension.string().c_str(), ".bin") == 0 ||
-                         strcmp(fileExtension.string().c_str(), ".obj") == 0)
+                else if (strcmp(fileExtension.string().c_str(), ".obj") == 0)
                 {
                     std::string meshFilePath = Paths::Mesh(fileName.string().c_str());
                     if (Files::Exists(meshFilePath.c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::InfoForType<Scene>()->id, GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::InfoForType<Mesh>()->id, GUID(), fileName.string());
                     }
+                }
+                else if (strcmp(fileExtension.string().c_str(), ".bin") == 0)
+                {
+                    // #TODO Determine if mesh, shader, or any other form of binary data
                 }
                 else
                 {
