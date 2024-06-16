@@ -6,6 +6,10 @@
 #include <bgfx/bgfx.h>
 #endif
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/Structs.h"
+#endif
+
 #include "QC_Guid.h"
 
 namespace QwerkE {
@@ -72,7 +76,14 @@ namespace QwerkE {
 
 		static std::unordered_map<size_t, AssetsList>& ViewRegistry();
 		static void SaveRegistry();
-		static void ExistsInRegistry(const GUID& guid, const std::string& fileName);
+
+		static bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName);
+		template <typename T>
+		static bool ExistsInRegistry(const GUID& guid, const std::string& fileName)
+		{
+			return ExistsInRegistry(Mirror::TypeId<T>, guid, fileName);
+		}
+
 		static void AddToRegistry(const size_t mirrorType, const GUID& guid, const std::string& fileName);
 #endif
 

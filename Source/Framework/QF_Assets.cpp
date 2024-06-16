@@ -222,14 +222,8 @@ namespace QwerkE {
 		Serialize::ToFile(s_AssetGuidToFileRegistry, Paths::Setting(s_AssetsRegistryFileName).c_str());
 	}
 
-	void Assets::ExistsInRegistry(const GUID& guid, const std::string& fileName)
+	bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
 	{
-		// #TODO Implement. Already partly written in AddToRegistry
-	}
-
-	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
-	{
-		// #TODO if (!ExistsInRegistry(guid, fileName))
 		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
 		for (size_t i = 0; i < vectorGuidStrings.size(); i++)
 		{
@@ -237,10 +231,19 @@ namespace QwerkE {
 			if (pair.first == guid || pair.second == fileName)
 			{
 				LOG_WARN("{0} Asset exists in registry ({1}, {2})", __FUNCTION__, std::to_string(pair.first).c_str(), pair.second.c_str());
-				return;
+				return true;
 			}
 		}
-		vectorGuidStrings.push_back({ guid, fileName });
+		return false;
+	}
+
+	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
+	{
+		if (!ExistsInRegistry(mirrorTypeId, guid, fileName))
+		{
+			auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
+			vectorGuidStrings.push_back({ guid, fileName });
+		}
 	}
 #endif
 
