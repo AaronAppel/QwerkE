@@ -245,6 +245,16 @@ namespace QwerkE {
 			vectorGuidStrings.push_back({ guid, fileName });
 		}
 	}
+
+	AssetsList& GetRegistryAssetList(const size_t assetListTypeId)
+	{
+		if (s_AssetGuidToFileRegistry.find(assetListTypeId) != s_AssetGuidToFileRegistry.end())
+		{
+			return s_AssetGuidToFileRegistry[assetListTypeId];
+		}
+		ASSERT(false, "Cannot return reference for registry asset list!");
+		return s_AssetGuidToFileRegistry[assetListTypeId];
+	}
 #endif
 
 }

@@ -59,19 +59,9 @@ namespace QwerkE {
 		}
 
 		template <typename T>
-		static std::unordered_map<size_t, AssetsList>& ViewRegistry()
+		static const AssetsList& ViewRegistryAssetsList(const size_t assetListTypeId)
 		{
-			const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-			switch (typeInfo)
-			{
-			case Mirror::TypeId<Mesh>():
-				// #TODO Can't return 1 type as each list is a different type
-				// m_Meshes;
-				break;
-			default:
-				// #TODO Error unsupported type
-				break;
-			}
+			return GetRegistryAssetList(assetListTypeId);
 		}
 
 		static std::unordered_map<size_t, AssetsList>& ViewRegistry();
@@ -88,6 +78,8 @@ namespace QwerkE {
 #endif
 
 	private:
+		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
+
 		static std::unordered_map<size_t, AssetsMap> m_MapOfAssetMaps;
 
 		static std::unordered_map<size_t, AssetsMap> m_RegistryFilePathsMapStructure;
