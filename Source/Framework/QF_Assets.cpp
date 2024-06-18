@@ -19,7 +19,6 @@
 #include "QF_Paths.h"
 #include "QF_RendererHelpers.h"
 #include "QF_Serialize.h"
-#include "QF_Shader.h"
 
 namespace QwerkE {
 
@@ -38,57 +37,16 @@ namespace QwerkE {
 	static std::unordered_map<size_t, AssetsList> s_AssetGuidToFileRegistry;
 
 	void local_Load(const size_t mirrorTypeId, const char* filePath, const GUID& guid, std::unordered_map<size_t, AssetsMap>& mapOfAssetMaps);
-	auto a = typeid(int).name();
-	template <typename T>
-	void Func()
-	{
-		const Mirror::TypeInfo* typeInfo = Mirror::InfoForType2<T>();
-		switch (typeInfo->id)
-		{
-		case MIRROR_TYPE_ID(int):
-			{
-				int bp = 0;
-			}
-			break;
-		case MIRROR_TYPE_ID(float):
-			break;
-		default:
-			break;
-		}
-	}
 
 	void Assets::Initialize()
 	{
 		// #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
 
-		std::unordered_map<GUID, std::string*>* meshes = (std::unordered_map<GUID, std::string*>*) & m_RegistryFilePathsMapStructure[Mirror::TypeId<Mesh>()];
-		u16 guidCounter = 1;
-		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
-		(*meshes)[GUID(guidCounter++)] = new std::string("MeshFile.qmesh");
-
-		// Serialize::ToFile(*meshes, "NewRegistryMeshes.qreg");
-
-		m_RegistryFilePathsMapStructure[Mirror::TypeId<Shader>()][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
+		// #TODO Handle types that have multiple components, like shaders and materials
+		// m_RegistryFilePathsMapStructure[Mirror::TypeId<Shader>()][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
 		// m_RegistryFilePathsMapStructure[MirrorTypes::Material][GUID()] = new std::array<std::string, 11>( { "albedo", "diffuse", "normal", "specular", ...});
 
-		// std::vector<std::pair<GUID, std::string>> vec = {
-		// 	{ GUID(0), "cube.bin" },
-		// 	{ GUID(11140931355107737998), "bunny.bin" },
-		// 	{ GUID(8229536646138328776), "column.bin" }
-		// };
-		// s_AssetGuidToFileRegistry[Mirror::TypeId<bgfxFramework::Mesh>()] = vec;
-
-		// Serialize::ToFile(s_AssetGuidToFileRegistry, Paths::Setting(s_AssetsRegistryFileName).c_str());
 		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
-
-		if (const bool serialize = false)
-		{
-			Serialize::FromFile(Paths::Setting("Fonts.qreg").c_str(), m_Fonts);
-			// Serialize::FromFile(Paths::Setting("Materials.qreg").c_str(), s_Materials);
-			Serialize::FromFile(Paths::Setting("Meshes.qreg").c_str(), m_Meshes);
-			// Serialize::FromFile(Paths::Setting("Shaders.qreg").c_str(), s_Shaders);
-			Serialize::FromFile(Paths::Setting("Textures.qreg").c_str(), m_Textures);
-		}
 
 		for (auto& mirrorTypeVec : s_AssetGuidToFileRegistry)
 		{
@@ -139,8 +97,8 @@ namespace QwerkE {
 			}
 		}
 
-		// ASSERT(Has<bgfxFramework::Mesh>(0), "No null mesh found!");
-		// ASSERT(Has<Shader>(0), "No null shader found!");
+		ASSERT(Has<bgfxFramework::Mesh>(0), "No null mesh found!");
+		ASSERT(Has<Shader>(0), "No null shader found!");
 	}
 
 	void Assets::Shutdown()

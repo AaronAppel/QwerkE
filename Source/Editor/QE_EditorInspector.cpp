@@ -14,6 +14,8 @@
 #include "QF_Log.h"
 #include "QF_Scenes.h"
 
+#include "QF_ComponentMesh.h"
+
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
 #include "QF_ScriptPathFinder.h"
@@ -306,11 +308,32 @@ namespace QwerkE {
             return valueChanged;
         }
 
+        bool local_InspectClassFields(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        {
+            bool valueChanged = false;
+            for (size_t i = 0; i < typeInfo->fields.size(); i++)
+            {
+                const Mirror::Field field = typeInfo->fields[i];
+                if (field.flags & FieldSerializationFlags::_HideInInspector)
+                    continue;
+
+                if (field.flags & FieldSerializationFlags::_InspectorViewOnly)
+                {
+                    // #TODO Show but prevent editing
+                }
+
+                std::string fieldName = parentName + field.name + "##";
+                void* fieldAddress = (char*)obj + field.offset;
+                valueChanged |= InspectType(field.typeInfo, fieldAddress, fieldName);
+            }
+            return valueChanged;
+        }
+
         bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
             bool valueChanged = false;
-
             std::string elementName = parentName;
+
             switch (typeInfo->id)
             {
             case Mirror::TypeId<vec2f>():
@@ -329,24 +352,33 @@ namespace QwerkE {
                 }
                 break;
 
-            default:
-                for (size_t i = 0; i < typeInfo->fields.size(); i++)
+            // Overrides for on change callback
+            case Mirror::TypeId<ComponentMesh>():
                 {
-                    const Mirror::Field field = typeInfo->fields[i];
-                    if (field.flags & FieldSerializationFlags::_HideInInspector)
-                        continue;
-
-                    if (field.flags & FieldSerializationFlags::_InspectorViewOnly)
+                    // #TODO Address redundancy and safety of automatic mesh data re-intialization
+                    if (ImGui::Button("Initialize"))
                     {
-                        // #TODO Show but prevent editing
+                        ComponentMesh* mesh = (ComponentMesh*)obj;
+                        mesh->Initialize();
                     }
 
-                    std::string fieldName = parentName + field.name + "##";
-                    void* fieldAddress = (char*)obj + field.offset;
-                    valueChanged |= InspectType(field.typeInfo, fieldAddress, fieldName);
+                    bool result = local_InspectClassFields(typeInfo, obj, parentName);
+                    if (result)
+                    {
+                        ComponentMesh* mesh = (ComponentMesh*)obj;
+                        mesh->Initialize();
+                    }
+                    valueChanged |= result;
                 }
                 break;
+
+            // Fall through statements (no break)
+
+            default:
+                valueChanged |= local_InspectClassFields(typeInfo, obj, parentName);
+                break;
             }
+
             return valueChanged;
         }
 

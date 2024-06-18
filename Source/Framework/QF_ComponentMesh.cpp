@@ -39,7 +39,7 @@ namespace QwerkE {
             // m_BgfxMesh->m_groups[0].m_vbh;
             // m_BgfxMesh->m_groups[0].m_ibh;
             m_BgfxMesh->submit(viewId, m_Shader->m_Program, transform.GetMatrix(), BGFX_STATE_DEFAULT);
-            if (const bool pickingEnabled = true)
+            if (const bool pickingEnabled = false)
             {
                 m_BgfxMesh->submit(3, m_Shader->m_Program, transform.GetMatrix(), BGFX_STATE_DEFAULT);
             }

@@ -69,7 +69,6 @@ namespace QwerkE {
 			void SetViewId(u8 viewId) { m_ViewId = viewId; }
 
 		private:
-
 			void DrawInternal()
 			{
 				Scene* currentScene = Scenes::GetCurrentScene();
@@ -99,16 +98,28 @@ namespace QwerkE {
 				}
 				ImGui::PopItemWidth();
 
-				{	// Draw scene using camera
-					m_EditorCamera.PreDrawSetup(m_ViewId);
-					currentScene->Draw(m_ViewId);
+				// #TODO Camera selection drop down
+				std::vector<const char*> cameraEntityNames;
+				static int currentCameraIndex = 0;
 
-					// bgfx::setViewFrameBuffer(m_ViewId, { 2 });
-					// currentScene->Draw(m_ViewId);
+				auto viewCameras = currentScene->ViewComponents<ComponentCamera>();
+				for (auto& entity : viewCameras)
+				{
+					EntityHandle handle(currentScene, entity);
+					cameraEntityNames.push_back(handle.EntityName().c_str());
 				}
 
-				ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-				ImGui::Image(ImTextureID(m_TextureId), contentRegionAvailable, ImVec2(0, 0), ImVec2(1, 1));
+				ImGui::SameLine();
+				if (ImGui::Combo("Camera:", &currentCameraIndex, cameraEntityNames.data(), cameraEntityNames.size()))
+				{
+					// #TODO Change camera. Can use name or entity GUID to find camera, for now
+				}
+
+				// #TODO Draw scene using camera selected from Camera combo drop down
+				m_EditorCamera.PreDrawSetup(m_ViewId);
+				currentScene->Draw(m_ViewId);
+
+				ImGui::Image(ImTextureID(m_TextureId), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
 			}
 
 			MIRROR_PRIVATE_MEMBERS

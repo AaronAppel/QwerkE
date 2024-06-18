@@ -12,6 +12,7 @@
 #include "QE_Projects.h"
 
 // Specialize TypeId to support additional types
+// #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
 
 // Enums
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowFlags)

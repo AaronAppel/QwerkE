@@ -30,6 +30,7 @@ enum FieldSerializationFlags : MIRROR_FIELD_FLAG_SIZE
 };
 
 // Specialize TypeId to support additional types
+// #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
 
 MIRROR_TYPE_ID(ImVec2)
 MIRROR_TYPE_ID(ImVec4)

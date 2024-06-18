@@ -157,7 +157,7 @@ namespace QwerkE {
 
                     const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
 
-                    const float minusButtonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
+                    const float buttonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
 
                     const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
                     const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, typeInfo->stringName.c_str());
@@ -165,6 +165,13 @@ namespace QwerkE {
                     if (std::is_same_v<T, ComponentMesh>)
                     {
                         std::string popUpName = "Context " + typeInfo->stringName;
+
+                        // ImGui::SameLine(buttonWidth * 2);
+                        // if (ImGui::Button("&", ImVec2{ lineHeight, lineHeight }))
+                        // {
+                        //     ImGui::OpenPopup(popUpName.c_str());
+                        // }
+
                         if (ImGui::IsItemClicked(ImGui::MouseRight))
                         {
                             ImGui::OpenPopup(popUpName.c_str());
@@ -172,7 +179,7 @@ namespace QwerkE {
 
                         if (ImGui::BeginPopup(popUpName.c_str()))
                         {
-                            if (ImGui::Button("Reload"))
+                            if (ImGui::Button("Initialize"))
                             {
                                 entity.GetComponent<ComponentMesh>().Initialize();
                             }
@@ -182,7 +189,7 @@ namespace QwerkE {
 
                     if (!std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>)
                     {
-                        ImGui::SameLine(minusButtonWidth);
+                        ImGui::SameLine(buttonWidth);
                         if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
                         {
                             entity.RemoveComponent<T>();

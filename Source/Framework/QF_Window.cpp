@@ -1,5 +1,9 @@
 #include "QF_Window.h"
 
+#ifdef _QBGFXFRAMEWORK
+#include <bgfxFramework/bgfx_utils.h>
+#endif
+
 #ifdef _QGLFW3
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "Libraries/glfw/glfw3.h"
@@ -16,6 +20,7 @@
 #include "QF_Paths.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
+#include "QF_Shader.h"
 
 #include "../Source/Editor/QE_Projects.h" // #TODO Remove from QF_* domain
 #include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
@@ -246,7 +251,15 @@ namespace QwerkE {
                 }
                 else if (strcmp(fileExtension.string().c_str(), ".bin") == 0)
                 {
-                    // #TODO Determine if mesh, shader, or any other form of binary data
+                    // #NOTE Binary mesh files starts with "VB", and binry shaders start with "FSH", "VSH"
+                    if (Files::Exists(Paths::Mesh(fileName.string().c_str()).c_str()))
+                    {
+                        Assets::AddToRegistry(Mirror::InfoForType<bgfxFramework::Mesh>()->id, GUID(), fileName.string());
+                    }
+                    else if (Files::Exists(Paths::Shader(fileName.string().c_str()).c_str()))
+                    {
+                        Assets::AddToRegistry(Mirror::InfoForType<Shader>()->id, GUID(), fileName.string());
+                    }
                 }
                 else
                 {

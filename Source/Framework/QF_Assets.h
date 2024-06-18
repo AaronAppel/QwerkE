@@ -28,8 +28,8 @@ namespace QwerkE {
 		template <typename T>
 		static bool Has(GUID guid)
 		{
-			const size_t typeEnum = Mirror::InfoForType<T>()->id;
-			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
+			const size_t typeId = Mirror::InfoForType<T>()->id;
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeId];
 
 			return assetMap->find(guid) != assetMap->end();
 		}
