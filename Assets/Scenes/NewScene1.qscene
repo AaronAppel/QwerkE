@@ -117,11 +117,11 @@
 				"QwerkE::ComponentCamera":	{
 					"m_MoveSpeed":	5,
 					"m_LookAtPosition":	{
-						"x":	-7.37958526611328,
-						"y":	5.879420280456543,
-						"z":	-4.8864336013793945
+						"x":	-3.9876358509063721,
+						"y":	6.63853931427002,
+						"z":	-7.7586812973022461
 					},
-					"m_Fov":	60,
+					"m_Fov":	61,
 					"m_Near":	0.10000000149011612,
 					"m_Far":	100
 				},
@@ -134,29 +134,29 @@
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
-						"float":	0.76154160499572754,
+						"float":	0.97173213958740234,
 						"float":	0,
-						"float":	0.64811599254608154,
+						"float":	0.23608618974685669,
 						"float":	0,
-						"float":	0.28271842002868652,
-						"float":	0.899842083454132,
-						"float":	-0.33219647407531738,
+						"float":	0.06675565242767334,
+						"float":	0.95919078588485718,
+						"float":	-0.27476665377616882,
 						"float":	0,
-						"float":	-0.583202064037323,
-						"float":	0.43621578812599182,
-						"float":	0.685267210006714,
+						"float":	-0.22645169496536255,
+						"float":	0.28275966644287109,
+						"float":	0.93207651376724243,
 						"float":	0,
-						"float":	-8.02770137786865,
-						"float":	6.21161651611328,
-						"float":	-5.57170057296753,
+						"float":	-4.223721981048584,
+						"float":	6.9133057594299316,
+						"float":	-8.6907577514648438,
 						"float":	1
 					}
 				},
 				"QwerkE::ComponentScript":	{
 					"m_ScriptInstances":	{
-						"std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"QwerkE::eScriptTypes":	{
-								"QwerkE::eScriptTypes":	1
+						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
+							"const QwerkE::eScriptTypes":	{
+								"const QwerkE::eScriptTypes":	1
 							},
 							"QwerkE::Scriptable*":	{
 								"QwerkE::ScriptableCamera":	{
@@ -176,7 +176,7 @@
 				},
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{
-						"m_Guid":	"8503462518171528690"
+						"m_Guid":	"17511105768294075930"
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"0"
@@ -196,7 +196,7 @@
 						"float":	0,
 						"float":	0.5,
 						"float":	0,
-						"float":	-1.1047269105911255,
+						"float":	4.9545698165893555,
 						"float":	1,
 						"float":	1.2330000400543213,
 						"float":	1
@@ -204,14 +204,14 @@
 				},
 				"QwerkE::ComponentScript":	{
 					"m_ScriptInstances":	{
-						"std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"QwerkE::eScriptTypes":	{
-								"QwerkE::eScriptTypes":	3
+						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
+							"const QwerkE::eScriptTypes":	{
+								"const QwerkE::eScriptTypes":	3
 							},
 							"QwerkE::Scriptable*":	{
 								"QwerkE::ScriptablePatrol":	{
 									"m_Stride":	5,
-									"m_Speed":	1.8999999761581421
+									"m_Speed":	1
 								}
 							}
 						}

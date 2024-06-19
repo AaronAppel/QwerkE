@@ -29,7 +29,14 @@ namespace QwerkE {
 
     namespace Inspector {
 
+        // #TESTING
+        struct InspectFieldReturn
+        {
+            std::string selectedFieldName;
+        };
+
         bool local_InspectPrimitive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
+        InspectFieldReturn local_InspectClassFields(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectCollection(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectPair(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
@@ -308,9 +315,10 @@ namespace QwerkE {
             return valueChanged;
         }
 
-        bool local_InspectClassFields(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        InspectFieldReturn local_InspectClassFields(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
-            bool valueChanged = false;
+            InspectFieldReturn returnValue;
+            // bool valueChanged = false;
             for (size_t i = 0; i < typeInfo->fields.size(); i++)
             {
                 const Mirror::Field field = typeInfo->fields[i];
@@ -319,14 +327,22 @@ namespace QwerkE {
 
                 if (field.flags & FieldSerializationFlags::_InspectorViewOnly)
                 {
-                    // #TODO Show but prevent editing
+                    // #TODO Show but prevent editing. Might need to pass to InspectType(..., flags)
                 }
 
                 std::string fieldName = parentName + field.name + "##";
                 void* fieldAddress = (char*)obj + field.offset;
-                valueChanged |= InspectType(field.typeInfo, fieldAddress, fieldName);
+                // valueChanged |= InspectType(field.typeInfo, fieldAddress, fieldName);
+                if (InspectType(field.typeInfo, fieldAddress, fieldName))
+                {
+                    returnValue.selectedFieldName = field.name;
+                }
+                else if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                {
+                    returnValue.selectedFieldName = field.name;
+                }
             }
-            return valueChanged;
+            return returnValue;
         }
 
         bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
@@ -352,9 +368,12 @@ namespace QwerkE {
                 }
                 break;
 
-            // Overrides for on change callback
+            // Overrides for on change callback or on interaction special behaviour
             case Mirror::TypeId<ComponentMesh>():
                 {
+                    const char* popUpNameMeshes = "ComponentMeshPopUpMeshSelection";
+                    const char* popUpNameShaders = "ComponentMeshPopUpShaderSelection";
+
                     // #TODO Address redundancy and safety of automatic mesh data re-intialization
                     if (ImGui::Button("Initialize"))
                     {
@@ -362,20 +381,147 @@ namespace QwerkE {
                         mesh->Initialize();
                     }
 
-                    bool result = local_InspectClassFields(typeInfo, obj, parentName);
-                    if (result)
+                    InspectFieldReturn result = local_InspectClassFields(typeInfo, obj, parentName);
+                    if (!result.selectedFieldName.empty())
                     {
-                        ComponentMesh* mesh = (ComponentMesh*)obj;
-                        mesh->Initialize();
+                        // #TODO Detect member field selection (pop up)
+                        if (result.selectedFieldName == "m_MeshGuid")
+                        {
+                            ImGui::OpenPopup(popUpNameMeshes);
+                        }
+                        else if (result.selectedFieldName == "m_ShaderGuid")
+                        {
+                            ImGui::OpenPopup(popUpNameShaders);
+                        }
                     }
-                    valueChanged |= result;
+
+                    if (ImGui::BeginPopup(popUpNameMeshes))
+                    {
+                        // const std::unordered_map<GUID, bgfxFramework::Mesh*>& meshes = Assets::ViewAssets<bgfxFramework::Mesh>();
+                        // for (auto& guidMeshPair : meshes)
+                        // {
+                        //     bool clicked = false;
+                        //     ImGui::Text("GUID: ");
+                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                        //     {
+                        //         clicked = true;
+                        //     }
+                        //     ImGui::SameLine();
+                        //     ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                        //     {
+                        //         clicked = true;
+                        //     }
+                        //
+                        //     if (clicked)
+                        //     {
+                        //         ComponentMesh* mesh = (ComponentMesh*)obj;
+                        //         mesh->SetMeshGuid(guidMeshPair.first);
+                        //         mesh->Initialize();
+                        //         break;
+                        //     }
+                        // }
+
+                        std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
+                        if (assetRegistry.find(Mirror::TypeId<bgfxFramework::Mesh>()) != assetRegistry.end())
+                        {
+                            auto meshes = assetRegistry[Mirror::TypeId<bgfxFramework::Mesh>()];
+
+                            for (auto& guidMeshPair : meshes)
+                            {
+                                bool clicked = false;
+                                ImGui::Text("GUID: ");
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                                {
+                                    clicked = true;
+                                }
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                                {
+                                    clicked = true;
+                                }
+
+                                if (clicked)
+                                {
+                                    ComponentMesh* meshComp = (ComponentMesh*)obj;
+                                    meshComp->SetMeshGuid(guidMeshPair.first);
+                                    meshComp->Initialize();
+                                    break;
+                                }
+                            }
+                        }
+
+                        ImGui::EndPopup();
+                    }
+                    else if (ImGui::BeginPopup(popUpNameShaders))
+                    {
+                        // const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
+                        // for (auto& guidShaderPair : shaders)
+                        // {
+                        //     bool clicked = false;
+                        //     ImGui::Text("GUID: ");
+                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                        //     {
+                        //         clicked = true;
+                        //     }
+                        //     ImGui::SameLine();
+                        //     ImGui::Text(std::to_string(guidShaderPair.first).c_str());
+                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                        //     {
+                        //         clicked = true;
+                        //     }
+                        //
+                        //     if (clicked)
+                        //     {
+                        //         ComponentMesh* meshComp = (ComponentMesh*)obj;
+                        //         meshComp->SetShaderGuid(guidShaderPair.first);
+                        //         meshComp->Initialize();
+                        //         break;
+                        //     }
+                        // }
+
+                        std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
+                        if (assetRegistry.find(Mirror::TypeId<Shader>()) != assetRegistry.end())
+                        {
+                            auto shaders = assetRegistry[Mirror::TypeId<Shader>()];
+
+                            for (auto& guidShaderPair : shaders)
+                            {
+                                bool clicked = false;
+                                ImGui::Text("GUID: ");
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                                {
+                                    clicked = true;
+                                }
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidShaderPair.first).c_str());
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                                {
+                                    clicked = true;
+                                }
+
+                                if (clicked)
+                                {
+                                    ComponentMesh* meshComp = (ComponentMesh*)obj;
+                                    meshComp->SetShaderGuid(guidShaderPair.first);
+                                    meshComp->Initialize();
+                                    break;
+                                }
+                            }
+                        }
+
+                        ImGui::EndPopup();
+                    }
+
+                    valueChanged |= !result.selectedFieldName.empty();
                 }
                 break;
 
             // Fall through statements (no break)
 
             default:
-                valueChanged |= local_InspectClassFields(typeInfo, obj, parentName);
+                valueChanged |= !local_InspectClassFields(typeInfo, obj, parentName).selectedFieldName.empty();
                 break;
             }
 

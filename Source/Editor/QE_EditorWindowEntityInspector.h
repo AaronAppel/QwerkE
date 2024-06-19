@@ -71,6 +71,8 @@ namespace QwerkE {
                 if (ImGui::Button("Destroy"))
                 {
                     entityScene->DestroyEntity(m_CurrentEntity);
+                    m_CurrentEntity.Invalidate();
+                    return;
                 }
 
                 ImGui::SameLineEnd("Add Component");
@@ -166,6 +168,7 @@ namespace QwerkE {
                     {
                         std::string popUpName = "Context " + typeInfo->stringName;
 
+                        // #TODO Fix context menu button
                         // ImGui::SameLine(buttonWidth * 2);
                         // if (ImGui::Button("&", ImVec2{ lineHeight, lineHeight }))
                         // {

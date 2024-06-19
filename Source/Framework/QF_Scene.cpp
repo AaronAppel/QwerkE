@@ -225,6 +225,10 @@ namespace QwerkE {
             LOG_ERROR("Unable to load null scene! sceneFileName value is \"{0}\"", Constants::gc_DefaultStringValue);
             return;
         }
+        else
+        {
+            Serialize::FromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
+        }
 
         OnLoaded();
 
@@ -253,6 +257,8 @@ namespace QwerkE {
         {
             m_Registry.destroy(entityID);
         });
+
+        m_CameraEntityGuid = GUID::Invalid;
 
         m_IsLoaded = false;
         m_IsDirty = false;

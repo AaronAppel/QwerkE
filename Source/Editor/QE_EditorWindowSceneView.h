@@ -109,11 +109,13 @@ namespace QwerkE {
 					cameraEntityNames.push_back(handle.EntityName().c_str());
 				}
 
-				ImGui::SameLine();
+				ImGui::PushItemWidth(120.f);
+				ImGui::SameLineEnd(15);
 				if (ImGui::Combo("Camera:", &currentCameraIndex, cameraEntityNames.data(), cameraEntityNames.size()))
 				{
 					// #TODO Change camera. Can use name or entity GUID to find camera, for now
 				}
+				ImGui::PopItemWidth();
 
 				// #TODO Draw scene using camera selected from Camera combo drop down
 				m_EditorCamera.PreDrawSetup(m_ViewId);

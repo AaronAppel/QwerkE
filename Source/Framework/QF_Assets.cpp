@@ -24,8 +24,7 @@ namespace QwerkE {
 
 	// #TODO How does the registry work without the editor, for the Game solution?
 
-	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfAssetMaps;
-	std::unordered_map<size_t, AssetsMap> Assets::m_RegistryFilePathsMapStructure;
+	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfLoadedAssetMaps;
 
 	Assets::ListFontPairs Assets::m_Fonts;
 	Assets::ListMaterialPairs Assets::m_Materials;
@@ -36,32 +35,43 @@ namespace QwerkE {
 	const char* const s_AssetsRegistryFileName = "Assets.qreg";
 	static std::unordered_map<size_t, AssetsList> s_AssetGuidToFileRegistry;
 
-	void local_Load(const size_t mirrorTypeId, const char* filePath, const GUID& guid, std::unordered_map<size_t, AssetsMap>& mapOfAssetMaps);
+	bool local_Load(const size_t mirrorTypeId, const char* filePath, const GUID& guid, std::unordered_map<size_t, AssetsMap>& mapOfAssetMaps);
+
+	GUID Assets::LoadAsset(const size_t type, const GUID& guid)
+	{
+		AssetsList assetsForTypeInRegistry = s_AssetGuidToFileRegistry[type];
+		for (size_t i = 0; i < assetsForTypeInRegistry.size(); i++)
+		{
+			std::pair<GUID, std::string> currentAssetListPair = assetsForTypeInRegistry[i];
+			if (guid == currentAssetListPair.first)
+			{
+				std::string fileName = currentAssetListPair.second;
+				std::string fileExtension = Files::FileExtension(fileName.c_str()).string();
+
+				if (local_Load(type, Paths::Mesh(fileName.c_str()).c_str(), currentAssetListPair.first, m_MapOfLoadedAssetMaps))
+				{
+					return currentAssetListPair.first;
+				}
+				break;
+			}
+		}
+		return GUID::Invalid;
+	}
 
 	void Assets::Initialize()
 	{
 		// #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
 
 		// #TODO Handle types that have multiple components, like shaders and materials
-		// m_RegistryFilePathsMapStructure[Mirror::TypeId<Shader>()][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
-		// m_RegistryFilePathsMapStructure[MirrorTypes::Material][GUID()] = new std::array<std::string, 11>( { "albedo", "diffuse", "normal", "specular", ...});
+		// m_MapOfLoadedAssetMaps[Mirror::TypeId<Shader>()][GUID()] = new std::pair<std::string, std::string>("vertex", "fragment");
+		// m_MapOfLoadedAssetMaps[MirrorTypes::Material][GUID()] = new std::array<std::string, 11>( { "albedo", "diffuse", "normal", "specular", ...});
 
 		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 
-		for (auto& mirrorTypeVec : s_AssetGuidToFileRegistry)
-		{
-			size_t mirrorType = mirrorTypeVec.first;
-			for (size_t i = 0; i < mirrorTypeVec.second.size(); i++)
-			{
-				auto guidString = mirrorTypeVec.second[i];
-				std::string fileName = guidString.second;
-				std::string fileExtension = Files::FileExtension(fileName.c_str()).string();
+		LoadAsset(Mirror::TypeId<bgfxFramework::Mesh>(), GUID::Invalid);
+		ASSERT(Has<bgfxFramework::Mesh>(GUID::Invalid), "No null bgfxFramework::Mesh found!");
 
-				local_Load(mirrorType, Paths::Mesh(fileName.c_str()).c_str(), guidString.first, m_MapOfAssetMaps);
-			}
-		}
-
-		{
+		{	// Default QwerkE::Mesh entry
 			Mesh* nullMesh = new Mesh();
 			nullMesh->m_vbh = bgfx::createVertexBuffer(
 				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)), // Static data can be passed with bgfx::makeRef
@@ -71,39 +81,34 @@ namespace QwerkE {
 				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
 			);
 			nullMesh->m_GUID = GUID::Invalid;
-			m_MapOfAssetMaps[Mirror::TypeId<Mesh>()][nullMesh->m_GUID] = nullMesh;
+			m_MapOfLoadedAssetMaps[Mirror::TypeId<Mesh>()][nullMesh->m_GUID] = nullMesh;
 		}
+		ASSERT(Has<Mesh>(GUID::Invalid), "No null QwerkE::Mesh found!");
 
-		{
-			if (true)
-			{
-				Shader* nullShader = new Shader();
-				nullShader->m_Program = myLoadShaderProgram(
-					Paths::Shader("vs_cubes.bin").c_str(),
-					Paths::Shader("fs_cubes.bin").c_str()
-				);
-				nullShader->m_GUID = GUID::Invalid;
-				m_MapOfAssetMaps[Mirror::TypeId<Shader>()][nullShader->m_GUID] = nullShader;
-			}
-			else
-			{
-				Shader* nullShader = new Shader();
-				nullShader->m_Program = myLoadShaderProgram(
-					Paths::Shader("vs_mesh.bin").c_str(),
-					Paths::Shader("fs_mesh.bin").c_str()
-				);
-				nullShader->m_GUID = GUID::Invalid;
-				m_MapOfAssetMaps[Mirror::TypeId<Shader>()][nullShader->m_GUID] = nullShader;
-			}
+		{	// Default Shader entry
+			Shader* nullShader = new Shader();
+			nullShader->m_Program = myLoadShaderProgram(
+				Paths::Shader("vs_cubes.bin").c_str(),
+				Paths::Shader("fs_cubes.bin").c_str()
+			);
+			nullShader->m_GUID = GUID::Invalid;
+			m_MapOfLoadedAssetMaps[Mirror::TypeId<Shader>()][nullShader->m_GUID] = nullShader;
+
+			Shader* shader1 = new Shader();
+			shader1->m_Program = myLoadShaderProgram(
+				Paths::Shader("vs_mesh.bin").c_str(),
+				Paths::Shader("fs_mesh.bin").c_str()
+			);
+			m_MapOfLoadedAssetMaps[Mirror::TypeId<Shader>()][shader1->m_GUID] = shader1;
+
+			// m_MapOfLoadedAssetMaps[Mirror::TypeId<Shader>()][1] = new std::pair<"vs_mesh.bin", "fs_mesh.bin">();
 		}
-
-		ASSERT(Has<bgfxFramework::Mesh>(0), "No null mesh found!");
-		ASSERT(Has<Shader>(0), "No null shader found!");
+		ASSERT(Has<Shader>(GUID::Invalid), "No null shader found!");
 	}
 
 	void Assets::Shutdown()
 	{
-		for (auto& mirrorTypeAssetMapPair : m_MapOfAssetMaps)
+		for (auto& mirrorTypeAssetMapPair : m_MapOfLoadedAssetMaps)
 		{
 			AssetsMap assetsMap = mirrorTypeAssetMapPair.second;
 
@@ -137,12 +142,12 @@ namespace QwerkE {
 			}
 			assetsMap.clear();
 		}
-		m_MapOfAssetMaps.clear();
+		m_MapOfLoadedAssetMaps.clear();
 
 		// #TODO ASSERT all assets were properly released
 	}
 
-	void local_Load(const size_t mirrorTypeId, const char* filePath, const GUID& guid, std::unordered_map<size_t, AssetsMap>& mapOfAssetMaps)
+	bool local_Load(const size_t mirrorTypeId, const char* filePath, const GUID& guid, std::unordered_map<size_t, AssetsMap>& mapOfAssetMaps)
 	{
 		switch (mirrorTypeId)
 		{
@@ -165,8 +170,9 @@ namespace QwerkE {
 			break;
 
 		default:
-			break;
+			return false;
 		}
+		return true;
 	}
 
 #ifndef _QRETAIL

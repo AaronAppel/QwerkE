@@ -22,6 +22,9 @@ namespace QwerkE {
         void Initialize();
         void Draw(u16 viewId, const ComponentTransform& transform);
 
+        void SetMeshGuid(const GUID& newMeshGuid) { m_MeshGuid = newMeshGuid; }
+        void SetShaderGuid(const GUID& newShaderGuid) { m_ShaderGuid = newShaderGuid; }
+
     private:
         MIRROR_PRIVATE_MEMBERS
 

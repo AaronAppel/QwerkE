@@ -29,7 +29,7 @@ namespace QwerkE {
 		static bool Has(GUID guid)
 		{
 			const size_t typeId = Mirror::InfoForType<T>()->id;
-			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeId];
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeId];
 
 			return assetMap->find(guid) != assetMap->end();
 		}
@@ -38,14 +38,14 @@ namespace QwerkE {
 		static T* Get(GUID guid)
 		{
 			const size_t typeEnum = Mirror::InfoForType<T>()->id;
-			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeEnum];
 
 			if (!Has<T>(guid))
 			{
-				guid = GUID::Invalid;
+				guid = LoadAsset(Mirror::TypeId<T>(), guid);
 			}
 
-			void* assetPtr = m_MapOfAssetMaps[typeEnum][guid];
+			void* assetPtr = m_MapOfLoadedAssetMaps[typeEnum][guid];
 			return static_cast<T*>(assetPtr);
 		}
 
@@ -54,7 +54,7 @@ namespace QwerkE {
 		static const std::unordered_map<GUID, T*>& ViewAssets()
 		{
 			const size_t typeEnum = Mirror::InfoForType<T>()->id;
-			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfAssetMaps[typeEnum];
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeEnum];
 			return *assetMap;
 		}
 
@@ -78,9 +78,10 @@ namespace QwerkE {
 #endif
 
 	private:
+		static GUID LoadAsset(const size_t type, const GUID& guid);
 		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
 
-		static std::unordered_map<size_t, AssetsMap> m_MapOfAssetMaps;
+		static std::unordered_map<size_t, AssetsMap> m_MapOfLoadedAssetMaps;
 
 		static std::unordered_map<size_t, AssetsMap> m_RegistryFilePathsMapStructure;
 

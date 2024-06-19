@@ -143,7 +143,7 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::false_typ
 		mutableTypeInfo->collectionIterateCurrentFunc = [](const void* collectionAddress, size_t aIndex) -> char* {
 			static size_t index = 0;
 			if (aIndex < index) index = aIndex;
-			if (index >= sizeof(ArrayElementType) / sizeof(ArrayElementType)) { index = 0; return nullptr; }
+			if (index >= sizeof(T) / sizeof(ArrayElementType)) { index = 0; return nullptr; }
 			return (char*)collectionAddress + (sizeof(ArrayElementType) * index++);
 			};
 	}

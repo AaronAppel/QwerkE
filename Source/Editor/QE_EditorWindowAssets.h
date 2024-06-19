@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef _QBGFXFRAMEWORK
+namespace bgfxFramework { struct Mesh; }
+#endif
+
 #include "QF_Assets.h"
 #include "QF_Mesh.h"
 #include "QF_Shader.h"
@@ -20,48 +24,76 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
-                if (ImGui::Button("Save Asset Registry"))
-                {
-                    Assets::SaveRegistry();
-                }
+                static bool viewLoadedAssets = true;
 
-                if (ImGui::CollapsingHeader("Meshes"))
+                if (viewLoadedAssets)
                 {
-                    const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
-                    for (auto& guidMeshPair : meshes)
+                    ImGui::Text("Loaded Assets");
+                    ImGui::SameLine();
+                    if (ImGui::Button("View Registry"))
                     {
-                        Mesh* mesh = guidMeshPair.second;
-                        ImGui::Text("GUID: ");
-                        ImGui::SameLine();
-                        ImGui::Text(std::to_string(mesh->m_GUID).c_str());
+                        viewLoadedAssets = false;
+                    }
+
+                    if (ImGui::CollapsingHeader("bgfxFramework::Mesh"))
+                    {
+                        const std::unordered_map<GUID, bgfxFramework::Mesh*>& meshes = Assets::ViewAssets<bgfxFramework::Mesh>();
+                        for (auto& guidMeshPair : meshes)
+                        {
+                            ImGui::Text("GUID: ");
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                        }
+                    }
+
+                    if (ImGui::CollapsingHeader("QwerkE::Mesh"))
+                    {
+                        const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
+                        for (auto& guidMeshPair : meshes)
+                        {
+                            Mesh* mesh = guidMeshPair.second;
+                            ImGui::Text("GUID: ");
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(mesh->m_GUID).c_str());
+                        }
+                    }
+
+                    if (ImGui::CollapsingHeader("Shaders"))
+                    {
+                        const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
+                        for (auto& guidShaderPair : shaders)
+                        {
+                            Shader* shader = guidShaderPair.second;
+                            ImGui::Text("GUID: ");
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(shader->m_GUID).c_str());
+                        }
+                    }
+
+                    if (ImGui::CollapsingHeader("Textures"))
+                    {
+                        // #TODO Assets::ViewAssets<Textures>();
+                    }
+
+                    if (ImGui::CollapsingHeader("Materials"))
+                    {
+                        // #TODO Assets::ViewAssets<Material>();
                     }
                 }
-
-                if (ImGui::CollapsingHeader("Shaders"))
+                else
                 {
-                    const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
-                    for (auto& guidShaderPair : shaders)
+                    ImGui::Text("Assets Registry");
+                    ImGui::SameLine();
+                    if (ImGui::Button("View Loaded Assets"))
                     {
-                        Shader* shader = guidShaderPair.second;
-                        ImGui::Text("GUID: ");
-                        ImGui::SameLine();
-                        ImGui::Text(std::to_string(shader->m_GUID).c_str());
+                        viewLoadedAssets = true;
                     }
-                }
 
-                if (ImGui::CollapsingHeader("Textures"))
-                {
-                    // #TODO Assets::ViewAssets<Textures>();
-                }
+                    if (ImGui::Button("Save Asset Registry"))
+                    {
+                        Assets::SaveRegistry();
+                    }
 
-                if (ImGui::CollapsingHeader("Materials"))
-                {
-                    // #TODO Assets::ViewAssets<Material>();
-                }
-
-                ImGui::Separator();
-                if (ImGui::CollapsingHeader("Assets Registry"))
-                {
                     // auto materialAssetRegistry = Assets::ViewRegistry<Material>();
                     auto assetRegistry = Assets::ViewRegistry();
 
