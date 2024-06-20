@@ -41,6 +41,8 @@ namespace QwerkE {
             cJSON_Delete(jsonRootObject);
         }
 
+        void ToFile(std::vector<std::pair<const Mirror::TypeInfo*, const void*>> list, const char* absoluteFilePath);
+
         void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
 
         template <class T>

@@ -52,13 +52,30 @@ namespace QwerkE {
 
 		void Update(float deltaTime)
 		{
-			for (auto& enumScriptablePair : m_ScriptInstances)
+			// #NOTE Used to detect removed scripts from Update() calls
+			size_t mapSize = m_ScriptInstances.size();
+
+			for (auto it = m_ScriptInstances.begin(); it != m_ScriptInstances.end(); )
 			{
-				if (enumScriptablePair.second)
+				if (it->second)
 				{
-					// #TODO Fix crash "Exception thrown: read access violation. enumScriptablePair.second->was 0xFFFFFFFFFFFFFFE7"
-					enumScriptablePair.second->OnUpdate(deltaTime); // #TODO Fix Update() removes script from map
+					it->second->OnUpdate(deltaTime);
+
+					if (mapSize != m_ScriptInstances.size())
+					{
+						// #TODO Avoid skipping or duplicating Update() calls on remaining scripts
+						it = m_ScriptInstances.end();
+						continue;
+					}
 				}
+				// #ifdef _QDEBUG
+				else
+				{
+					// #TODO Test
+					// LOG_ERROR();
+					// RemoveScript(it->first);
+				}
+				it++;
 			}
 		}
 
@@ -82,6 +99,7 @@ namespace QwerkE {
 			{
 				if (Scriptable* scriptable = m_ScriptInstances[scriptType])
 				{
+					scriptable->OnDestroy();
 					delete scriptable;
 				}
 				m_ScriptInstances.erase(scriptType);

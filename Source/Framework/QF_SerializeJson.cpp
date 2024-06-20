@@ -51,6 +51,29 @@ namespace QwerkE {
 
         bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
 
+        void ToFile(std::vector<std::pair<const Mirror::TypeInfo*, const void*>> list, const char* absoluteFilePath)
+        {
+            if (!absoluteFilePath)
+            {
+                LOG_ERROR("{0} Null file path given!", __FUNCTION__);
+                return;
+            }
+
+            cJSON* jsonRootObject = cJSON_CreateObject();
+
+            for (size_t i = 0; i < list.size(); i++)
+            {
+                std::pair<const Mirror::TypeInfo*, const void*> pair = list[i];
+                ToJson((const void*)&pair.second, pair.first, jsonRootObject, pair.first->stringName);
+            }
+
+            const char* jsonStructureString = cJSON_Print(jsonRootObject);
+            Files::WriteStringToFile(jsonStructureString, absoluteFilePath);
+            free((char*)jsonStructureString);
+
+            cJSON_Delete(jsonRootObject);
+        }
+
         void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson)

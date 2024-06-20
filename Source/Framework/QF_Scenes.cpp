@@ -2,6 +2,9 @@
 
 #include <vector>
 
+#include "QF_Mirror.h" // For Mirror::TypeId<x>()
+
+#include "QF_Assets.h"
 #include "QF_PathDefines.h"
 #include "QF_Enums.h"
 #include "QF_Files.h"
@@ -70,37 +73,11 @@ namespace QwerkE {
 			s_Initialized = false;
 		}
 
-		void PauseScene(std::string sceneName)
+		void SetScenePaused(const GUID& sceneGuid, const bool isPaused)
 		{
-			if (Scene* scene = GetScene(sceneName))
+			if (Scene* scene = GetScene(sceneGuid))
 			{
-				scene->SetIsPaused(true);
-			}
-		}
-
-		void UnpauseScene(std::string sceneName)
-		{
-			if (Scene* scene = GetScene(sceneName))
-			{
-				scene->SetIsPaused(false);
-			}
-		}
-
-		void SetCurrentScene(std::string sceneName)
-		{
-			if (Scene* scene = GetScene(sceneName))
-			{
-				s_CurrentScene = scene;
-				local_UpdateCurrentSceneIndex();
-			}
-		}
-
-		void SetCurrentScene(int index)
-		{
-			if (index >= 0 && index < (int)s_Scenes.size())
-			{
-				s_CurrentScene = s_Scenes[index];
-				local_UpdateCurrentSceneIndex();
+				scene->SetIsPaused(isPaused);
 			}
 		}
 
@@ -113,6 +90,15 @@ namespace QwerkE {
 					s_CurrentScene = s_Scenes[i];
 					return;
 				}
+			}
+		}
+
+		void SetCurrentScene(const GUID& sceneGuid)
+		{
+			if (Scene* scene = GetScene(sceneGuid))
+			{
+				s_CurrentScene = scene;
+				local_UpdateCurrentSceneIndex();
 			}
 		}
 
@@ -163,6 +149,22 @@ namespace QwerkE {
 			local_UpdateCurrentSceneIndex();
 
 			return newScene;
+		}
+
+		Scene* CreateScene(const GUID& sceneGuid)
+		{
+			const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::TypeId<Scene>());
+			std::string sceneFileName;
+			for (size_t i = 0; i < scenesRegistry.size(); i++)
+			{
+				auto guidStringPair = scenesRegistry[i];
+				if (sceneGuid == guidStringPair.first)
+				{
+					sceneFileName = guidStringPair.second;
+					break;
+				}
+			}
+			return CreateSceneFromFile(Paths::Scene(sceneFileName.c_str()));
 		}
 
 		void DestroyScene(const Scene* const scene)

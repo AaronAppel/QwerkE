@@ -16,17 +16,15 @@ namespace QwerkE {
         void Initialize();
         void Shutdown();
 
-        void ActivateScene(std::string sceneName);
-
-        void SetCurrentScene(std::string sceneName);
-        void SetCurrentScene(int index);
         void SetCurrentScene(Scene* scene);
+        void SetCurrentScene(const GUID& sceneGuid);
 
-        void PauseScene(std::string sceneName);
-        void UnpauseScene(std::string sceneName); // #TODO Could probably use a SetScenePaused(bool isPaused) method
+        void SetScenePaused(const GUID& sceneGuid, const bool isPaused);
 
+        // #TODO Replace scene references with GUIDS instead of strings
         Scene* CreateSceneFromFile(const std::string& sceneFilePath);
         Scene* CreateScene(const char* const sceneFileNamePrefix);
+        Scene* CreateScene(const GUID& sceneGuid);
 
         void DestroyScene(const Scene* const scene);
 

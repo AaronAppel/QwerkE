@@ -17,10 +17,6 @@
 #include "QF_ComponentMesh.h"
 
 #include "QF_Scriptable.h"
-#include "QF_ScriptCamera.h"
-#include "QF_ScriptPathFinder.h"
-#include "QF_ScriptPatrol.h"
-#include "QF_ScriptTesting.h"
 #include "QE_Settings.h"
 
 #include "QE_Mirror.h"
@@ -612,6 +608,8 @@ namespace QwerkE {
                             scriptableTypeInfo = Mirror::InfoForType<ScriptableCamera>(); break;
                         case eScriptTypes::Testing:
                             scriptableTypeInfo = Mirror::InfoForType<ScriptableTesting>(); break;
+                        case eScriptTypes::SceneTransition:
+                            scriptableTypeInfo = Mirror::InfoForType<ScriptableSceneTransition>(); break;
                         }
 
                         if (scriptableTypeInfo)

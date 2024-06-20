@@ -51,10 +51,9 @@ namespace QwerkE {
                         const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
                         for (auto& guidMeshPair : meshes)
                         {
-                            Mesh* mesh = guidMeshPair.second;
                             ImGui::Text("GUID: ");
                             ImGui::SameLine();
-                            ImGui::Text(std::to_string(mesh->m_GUID).c_str());
+                            ImGui::Text(std::to_string(guidMeshPair.first).c_str());
                         }
                     }
 
@@ -63,10 +62,9 @@ namespace QwerkE {
                         const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
                         for (auto& guidShaderPair : shaders)
                         {
-                            Shader* shader = guidShaderPair.second;
                             ImGui::Text("GUID: ");
                             ImGui::SameLine();
-                            ImGui::Text(std::to_string(shader->m_GUID).c_str());
+                            ImGui::Text(std::to_string(guidShaderPair.first).c_str());
                         }
                     }
 
@@ -78,6 +76,19 @@ namespace QwerkE {
                     if (ImGui::CollapsingHeader("Materials"))
                     {
                         // #TODO Assets::ViewAssets<Material>();
+                    }
+
+                    if (ImGui::CollapsingHeader("Scenes"))
+                    {
+                        const std::unordered_map<GUID, Scene*>& scenes = Assets::ViewAssets<Scene>();
+                        for (auto& guidScenePair : scenes)
+                        {
+                            ImGui::Text("GUID: ");
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(guidScenePair.first).c_str());
+                            ImGui::SameLine();
+                            ImGui::Text(guidScenePair.second->GetSceneName().c_str());
+                        }
                     }
                 }
                 else

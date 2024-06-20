@@ -134,6 +134,11 @@ MIRROR_CLASS(BgfxMesh)
 MIRROR_CLASS_END
 #endif
 
+// QC Types
+MIRROR_CLASS(QwerkE::Time::Timer)
+// MIRROR_CLASS_MEMBER(m_Duration)
+MIRROR_CLASS_END
+
 // Misc
 MIRROR_CLASS(QwerkE::GUID)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
@@ -222,6 +227,10 @@ MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ScriptableTesting)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::ScriptableSceneTransition)
+MIRROR_CLASS_MEMBER(m_SceneToTransitionToGuid)
 MIRROR_CLASS_END
 
 // MIRROR_ABSTRACT_CLASS_START(QwerkE::Scriptable)

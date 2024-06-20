@@ -14,6 +14,7 @@ namespace QwerkE {
 		Testing,
 		Patrol,
 		PathFinder,
+		SceneTransition,
 
 		// User scripts
 		// #TODO Improve architecture for user generated types
@@ -23,17 +24,18 @@ namespace QwerkE {
 
 	enum eScriptTypes : u8
 	{
+		// #NOTE These values are serialized so value changes matter
 		Invalid = 0,
 		Camera,
 		Testing,
 		Patrol,
 		PathFinder,
+		SceneTransition,
 
 		// User scripts
 		// #TODO Improve architecture for user generated types
 		UserScript1, // ScriptGameEntity
 
-		// #NOTE These values are serialized so value changes matter
 		COUNT,
 	};
 

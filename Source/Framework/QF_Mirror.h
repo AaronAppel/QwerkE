@@ -42,6 +42,9 @@ MIRROR_TYPE_ID(entt::entity)
 
 MIRROR_TYPE_ID(bgfxFramework::Mesh)
 
+// QC Types
+MIRROR_TYPE_ID_CLASS(QwerkE::Time::Timer)
+
 MIRROR_TYPE_ID_CLASS(vec3f)
 MIRROR_TYPE_ID_CLASS(vec2f)
 
@@ -104,3 +107,4 @@ MIRROR_TYPE_ID_CLASS(QwerkE::ScriptablePatrol)
 MIRROR_TYPE_ID_CLASS(QwerkE::GUID)
 MIRROR_TYPE_ID_CLASS(const QwerkE::GUID)
 MIRROR_TYPE_ID_CLASS(QwerkE::ScriptableCamera)
+MIRROR_TYPE_ID_CLASS(QwerkE::ScriptableSceneTransition)

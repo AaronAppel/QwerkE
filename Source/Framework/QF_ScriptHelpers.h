@@ -9,6 +9,7 @@
 #include "QF_ScriptPathFinder.h"
 #include "QF_ScriptPatrol.h"
 #include "QF_ScriptTesting.h"
+#include "QF_ScriptSceneTransition.h"
 
 namespace QwerkE {
 
@@ -17,7 +18,8 @@ namespace QwerkE {
         ScriptableCamera,
         ScriptablePathFinder,
         ScriptablePatrol,
-        ScriptableTesting
+        ScriptableTesting,
+        ScriptableSceneTransition
     >;
 
 

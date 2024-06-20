@@ -25,6 +25,9 @@ namespace QwerkE {
             case eScriptTypes::PathFinder:
                 return new ScriptablePathFinder();
 
+            case eScriptTypes::SceneTransition:
+                return new ScriptableSceneTransition();
+
             // #TODO Improve architecture for user generated types
             case eScriptTypes::UserScript1:
                 return new ScriptGameEntity();

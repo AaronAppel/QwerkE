@@ -237,7 +237,7 @@ namespace QwerkE {
                         if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
                         {
                             Scenes::SetCurrentScene(newScene);
-                            Assets::AddToRegistry(Mirror::InfoForType<Scene>()->id, newScene->GetGuid(), newScene->GetSceneName());
+                            Assets::AddToRegistry(Mirror::TypeId<Scene>(), newScene->GetGuid(), newScene->GetSceneName());
                         }
                     }
                 }
@@ -246,7 +246,7 @@ namespace QwerkE {
                     std::string meshFilePath = Paths::Mesh(fileName.string().c_str());
                     if (Files::Exists(meshFilePath.c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::InfoForType<Mesh>()->id, GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::TypeId<Mesh>(), GUID(), fileName.string());
                     }
                 }
                 else if (strcmp(fileExtension.string().c_str(), ".bin") == 0)
@@ -254,11 +254,11 @@ namespace QwerkE {
                     // #NOTE Binary mesh files starts with "VB", and binry shaders start with "FSH", "VSH"
                     if (Files::Exists(Paths::Mesh(fileName.string().c_str()).c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::InfoForType<bgfxFramework::Mesh>()->id, GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::TypeId<bgfxFramework::Mesh>(), GUID(), fileName.string());
                     }
                     else if (Files::Exists(Paths::Shader(fileName.string().c_str()).c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::InfoForType<Shader>()->id, GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::TypeId<Shader>(), GUID(), fileName.string());
                     }
                 }
                 else

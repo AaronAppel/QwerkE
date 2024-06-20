@@ -80,6 +80,7 @@ namespace QwerkE {
                 {
                     ImGui::OpenPopup("ComponentList");
                 }
+
                 if (ImGui::BeginPopup("ComponentList"))
                 {
                     // #TODO Use EntityComponentsList

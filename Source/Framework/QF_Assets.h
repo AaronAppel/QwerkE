@@ -28,7 +28,7 @@ namespace QwerkE {
 		template <typename T>
 		static bool Has(GUID guid)
 		{
-			const size_t typeId = Mirror::InfoForType<T>()->id;
+			const size_t typeId = Mirror::TypeId<T>();
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeId];
 
 			return assetMap->find(guid) != assetMap->end();
@@ -37,12 +37,18 @@ namespace QwerkE {
 		template <typename T>
 		static T* Get(GUID guid)
 		{
-			const size_t typeEnum = Mirror::InfoForType<T>()->id;
+			const size_t typeEnum = Mirror::TypeId<T>();
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeEnum];
 
 			if (!Has<T>(guid))
 			{
 				guid = LoadAsset(Mirror::TypeId<T>(), guid);
+			}
+
+			if (m_MapOfLoadedAssetMaps.find(typeEnum) == m_MapOfLoadedAssetMaps.end() ||
+				m_MapOfLoadedAssetMaps[typeEnum].find(guid) == m_MapOfLoadedAssetMaps[typeEnum].end())
+			{
+				ASSERT(Has<T>(GUID::Invalid), "No null asset found!");
 			}
 
 			void* assetPtr = m_MapOfLoadedAssetMaps[typeEnum][guid];
@@ -53,16 +59,12 @@ namespace QwerkE {
 		template <typename T>
 		static const std::unordered_map<GUID, T*>& ViewAssets()
 		{
-			const size_t typeEnum = Mirror::InfoForType<T>()->id;
+			const size_t typeEnum = Mirror::TypeId<T>();
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeEnum];
 			return *assetMap;
 		}
 
-		template <typename T>
-		static const AssetsList& ViewRegistryAssetsList(const size_t assetListTypeId)
-		{
-			return GetRegistryAssetList(assetListTypeId);
-		}
+		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
 
 		static std::unordered_map<size_t, AssetsList>& ViewRegistry();
 		static void SaveRegistry();
@@ -79,7 +81,6 @@ namespace QwerkE {
 
 	private:
 		static GUID LoadAsset(const size_t type, const GUID& guid);
-		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
 
 		static std::unordered_map<size_t, AssetsMap> m_MapOfLoadedAssetMaps;
 
