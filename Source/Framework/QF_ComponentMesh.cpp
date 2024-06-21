@@ -15,10 +15,18 @@
 
 namespace QwerkE {
 
+    static constexpr bool s_UsingQwerkEMesh = false;
+
     void ComponentMesh::Initialize()
     {
-        m_BgfxMesh = Assets::Get<bgfxFramework::Mesh>(m_MeshGuid);
-        m_Mesh = Assets::Get<Mesh>(m_MeshGuid);
+        if (s_UsingQwerkEMesh)
+        {
+            m_Mesh = Assets::Get<Mesh>(m_MeshGuid);
+        }
+        else
+        {
+            m_BgfxMesh = Assets::Get<bgfxFramework::Mesh>(m_MeshGuid);
+        }
         m_Shader = Assets::Get<Shader>(m_ShaderGuid);
     }
 
@@ -26,7 +34,7 @@ namespace QwerkE {
     {
 #ifdef _QDEBUG // #TESTING
 
-        if (false)
+        if (s_UsingQwerkEMesh)
         {
             bgfx::setTransform(transform.GetMatrix());
             bgfx::setVertexBuffer(0, m_Mesh->m_vbh);

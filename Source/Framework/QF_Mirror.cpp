@@ -164,29 +164,31 @@ MIRROR_TYPE(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
 MIRROR_TYPE(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
 MIRROR_TYPE(std::pair<QwerkE::GUID, entt::entity>)
 MIRROR_TYPE(std::pair<QwerkE::GUID, std::string>)
+MIRROR_TYPE(std::pair<const QwerkE::GUID, std::string>)
 MIRROR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
 MIRROR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
 MIRROR_TYPE(std::pair<QwerkE::GUID, void*>)
 MIRROR_TYPE(std::pair<QwerkE::GUID, std::string*>)
 MIRROR_TYPE(std::pair<const QwerkE::GUID, std::string*>)
+MIRROR_TYPE(std::pair<std::string, std::string>)
+MIRROR_TYPE(std::pair<QwerkE::GUID, std::pair<std::string, std::string>>)
+MIRROR_TYPE(std::pair<QwerkE::GUID, std::vector<std::string>>)
+MIRROR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
 
 // Vectors
 MIRROR_TYPE(std::vector<entt::entity>)
 MIRROR_TYPE(std::vector<std::string>)
 MIRROR_TYPE(std::vector<std::string*>)
 MIRROR_TYPE(std::vector<std::pair<QwerkE::GUID, std::string>>)
+MIRROR_TYPE(std::vector<std::pair<QwerkE::GUID, std::pair<std::string, std::string>>>)
+MIRROR_TYPE(std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>)
 
 // Maps
 MIRROR_TYPE(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-// MIRROR_TYPE(std::unordered_map<QwerkE::GUID, entt::entity>)
-MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-// MIRROR_TYPE(std::unordered_map<QwerkE::GUID, void*>)
-
-// #TODO SetCollectionLambdasMap needs const implementation for some reason??
-// MIRROR_TYPE(std::unordered_map<const QwerkE::GUID, void*>)
 MIRROR_TYPE(std::unordered_map<QwerkE::GUID, std::string*>)
-// #TODO SetCollectionLambdasMap needs const implementation for some reason??
-// MIRROR_TYPE(std::unordered_map<const QwerkE::GUID, std::string*>)
+MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
 
 // Function pointers
 template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {

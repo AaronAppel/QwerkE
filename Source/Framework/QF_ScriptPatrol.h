@@ -19,7 +19,7 @@ namespace QwerkE {
 
 		void OnUpdate(float deltaTime) override
 		{
-			if (!HasRequiredComponents<ComponentTransform, ComponentScript>())
+			if (!m_Entity.IsEnabled() || !HasRequiredComponents<ComponentTransform, ComponentScript>())
 				return;
 
 			ComponentTransform& transform = m_Entity.GetComponent<ComponentTransform>();

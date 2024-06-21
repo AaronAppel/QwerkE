@@ -35,6 +35,8 @@ namespace QwerkE {
                         viewLoadedAssets = false;
                     }
 
+                    // #TODO Consider a button to unload an asset from RAM
+
                     if (ImGui::CollapsingHeader("bgfxFramework::Mesh"))
                     {
                         const std::unordered_map<GUID, bgfxFramework::Mesh*>& meshes = Assets::ViewAssets<bgfxFramework::Mesh>();
@@ -68,16 +70,6 @@ namespace QwerkE {
                         }
                     }
 
-                    if (ImGui::CollapsingHeader("Textures"))
-                    {
-                        // #TODO Assets::ViewAssets<Textures>();
-                    }
-
-                    if (ImGui::CollapsingHeader("Materials"))
-                    {
-                        // #TODO Assets::ViewAssets<Material>();
-                    }
-
                     if (ImGui::CollapsingHeader("Scenes"))
                     {
                         const std::unordered_map<GUID, Scene*>& scenes = Assets::ViewAssets<Scene>();
@@ -104,6 +96,8 @@ namespace QwerkE {
                     {
                         Assets::SaveRegistry();
                     }
+
+                    // #TODO Consider a button to remove an asset entry from the registry
 
                     // auto materialAssetRegistry = Assets::ViewRegistry<Material>();
                     auto assetRegistry = Assets::ViewRegistry();
@@ -138,11 +132,14 @@ namespace QwerkE {
                             ImGui::SameLine();
                             ImGui::Text(" File: ");
                             ImGui::SameLine();
-                            ImGui::Text(pairGuidString.second.c_str());
+                            // #TODO Decide how to search for shader and materials that have more than 1 string in vector
+                            ImGui::Text(pairGuidString.second[0].c_str());
                         }
                     }
                 }
 			}
+
+            bool m_AutoSaveRegistryOnFileDrop = true;
 		};
 
 	}

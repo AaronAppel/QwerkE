@@ -172,7 +172,7 @@
 					"m_Guid":	{
 						"m_Guid":	"13298806619783215903"
 					},
-					"m_Enabled":	false
+					"m_Enabled":	true
 				},
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{

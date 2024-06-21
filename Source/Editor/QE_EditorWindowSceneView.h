@@ -111,9 +111,17 @@ namespace QwerkE {
 
 				ImGui::PushItemWidth(120.f);
 				ImGui::SameLineEnd(15);
-				if (ImGui::Combo("Camera:", &currentCameraIndex, cameraEntityNames.data(), cameraEntityNames.size()))
+				if (ImGui::Combo("Camera:", &currentCameraIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
 				{
 					// #TODO Change camera. Can use name or entity GUID to find camera, for now
+					for (auto& entity : viewCameras)
+					{
+						EntityHandle handle(currentScene, entity);
+						if (handle.EntityName() == cameraEntityNames[currentCameraIndex])
+						{
+							Scenes::GetCurrentScene()->SetCurrentCameraEntity(handle);
+						}
+					}
 				}
 				ImGui::PopItemWidth();
 

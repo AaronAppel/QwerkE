@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <vector>
 
 #ifdef _QBGFX
@@ -15,7 +16,7 @@
 namespace QwerkE {
 
 	using AssetsMap = std::unordered_map<GUID, void*>; // #NOTE Smart pointers require compile time types. Could look at another solution
-	using AssetsList = std::vector<std::pair<GUID, std::string>>;
+	using AssetsList = std::vector<std::pair<GUID, std::vector<std::string>>>;
 
 	class Assets
 	{
@@ -83,22 +84,6 @@ namespace QwerkE {
 		static GUID LoadAsset(const size_t type, const GUID& guid);
 
 		static std::unordered_map<size_t, AssetsMap> m_MapOfLoadedAssetMaps;
-
-		static std::unordered_map<size_t, AssetsMap> m_RegistryFilePathsMapStructure;
-
-		// Registry
-		using ListFontPairs = std::vector<std::pair<GUID, std::string>>;
-		// constexpr u16 materialsListSize = 11;
-		using ListMaterialPairs = std::vector<std::pair<GUID, std::array<std::string, 11>>>;
-		using ListMeshPairs = std::vector<std::pair<GUID, std::string>>;
-		using ListShaders = std::vector<std::pair<GUID, std::pair<std::string, std::string>>>;
-		using ListTextures = std::vector<std::pair<GUID, std::string>>;
-
-		static ListFontPairs m_Fonts;
-		static ListMaterialPairs m_Materials;
-		static ListMeshPairs m_Meshes;
-		static ListShaders m_Shaders;
-		static ListTextures m_Textures;
 	};
 
 }

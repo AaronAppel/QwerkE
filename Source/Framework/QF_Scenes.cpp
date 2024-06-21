@@ -160,7 +160,8 @@ namespace QwerkE {
 				auto guidStringPair = scenesRegistry[i];
 				if (sceneGuid == guidStringPair.first)
 				{
-					sceneFileName = guidStringPair.second;
+					// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+					sceneFileName = guidStringPair.second[0];
 					break;
 				}
 			}

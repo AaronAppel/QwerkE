@@ -517,6 +517,8 @@ namespace QwerkE {
             // Fall through statements (no break)
 
             default:
+                // #TODO ComponentScript fields for scripts like ScriptablePatrol are not unique
+                // Look at why the string is incorrect
                 valueChanged |= !local_InspectClassFields(typeInfo, obj, parentName).selectedFieldName.empty();
                 break;
             }

@@ -14,10 +14,13 @@
 #include "QF_Mirror.h"
 #endif
 
+#include "QC_Guid.h"
+
 #include "QF_Files.h"
 #include "QF_Mesh.h"
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
+#include "QF_Shader.h"
 #include "QF_RendererHelpers.h"
 // #include "QF_Scene.h" #TODO Add scenes to asset registry
 #include "QF_Serialize.h"
@@ -28,24 +31,20 @@ namespace QwerkE {
 
 	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfLoadedAssetMaps;
 
-	Assets::ListFontPairs Assets::m_Fonts;
-	Assets::ListMaterialPairs Assets::m_Materials;
-	Assets::ListMeshPairs Assets::m_Meshes;
-	Assets::ListShaders Assets::m_Shaders;
-	Assets::ListTextures Assets::m_Textures;
-
 	const char* const s_AssetsRegistryFileName = "Assets.qreg";
 	static std::unordered_map<size_t, AssetsList> s_AssetGuidToFileRegistry;
 
 	GUID Assets::LoadAsset(const size_t typeId, const GUID& guid)
 	{
-		AssetsList assetsForTypeInRegistry = s_AssetGuidToFileRegistry[typeId];
+		AssetsList assetsForTypeInRegistry = GetRegistryAssetList(typeId);
 		for (size_t i = 0; i < assetsForTypeInRegistry.size(); i++)
 		{
-			std::pair<GUID, std::string> currentAssetListPair = assetsForTypeInRegistry[i];
+			std::pair<GUID, std::vector<std::string>> currentAssetListPair = assetsForTypeInRegistry[i];
 			if (guid == currentAssetListPair.first)
 			{
-				const std::string& fileName = currentAssetListPair.second;
+				// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+				constexpr int index = 0;
+				const std::string& fileName = currentAssetListPair.second[index];
 				const std::string fileExtension = Files::FileExtension(fileName.c_str()).string();
 
 				// #TODO Handle loading errors (return GUID::Invalid;)
@@ -77,8 +76,8 @@ namespace QwerkE {
 					return GUID::Invalid;
 				}
 
-				AddToRegistry(typeId, guid, fileName);
-				return currentAssetListPair.first;
+				AddToRegistry(typeId, guid, fileName); // #TODO Should always try to add to registry?
+				return guid;
 			}
 		}
 		return GUID::Invalid;
@@ -179,35 +178,6 @@ namespace QwerkE {
 	void Assets::SaveRegistry()
 	{
 		Serialize::ToFile(s_AssetGuidToFileRegistry, Paths::Setting(s_AssetsRegistryFileName).c_str());
-
-		if (false)
-		{
-			cJSON* jsonRootObject = cJSON_CreateObject();
-
-			const Mirror::TypeInfo* typeInfo = Mirror::InfoForType(s_AssetGuidToFileRegistry);
-			Serialize::ToJson(&s_AssetGuidToFileRegistry, typeInfo, jsonRootObject, typeInfo->stringName);
-
-			const Mirror::TypeInfo* typeInfo2 = Mirror::InfoForType(s_AssetGuidToFileRegistry);
-			Serialize::ToJson(&s_AssetGuidToFileRegistry, typeInfo2, jsonRootObject, typeInfo->stringName);
-
-			const char* jsonStructureString = cJSON_Print(jsonRootObject);
-			Files::WriteStringToFile(jsonStructureString, Paths::Setting(s_AssetsRegistryFileName).c_str());
-			free((char*)jsonStructureString);
-
-			cJSON_Delete(jsonRootObject);
-		}
-		else if (true)
-		{
-			std::vector<std::pair<GUID, std::string>> listA = { { 0, "ABC" } };
-			std::vector<std::pair<GUID, std::string>> listB = { { 1, "XYZ" } };
-
-			std::vector<std::pair<const Mirror::TypeInfo*, const void*>> list = {
-				{ Mirror::InfoForType(listA), &listA },
-				{ Mirror::InfoForType(listB), &listB }
-			};
-
-			Serialize::ToFile(list, Paths::Setting("TestRegistry.qreg").c_str());
-		}
 	}
 
 	bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
@@ -215,10 +185,12 @@ namespace QwerkE {
 		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
 		for (size_t i = 0; i < vectorGuidStrings.size(); i++)
 		{
-			std::pair<GUID, std::string>& pair = vectorGuidStrings[i];
-			if (pair.first == guid || pair.second == fileName)
+			std::pair<GUID, std::vector<std::string>>& pair = vectorGuidStrings[i];
+			// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+			constexpr int index = 0;
+			if (pair.first == guid || pair.second[index] == fileName)
 			{
-				LOG_WARN("{0} Asset exists in registry ({1}, {2})", __FUNCTION__, std::to_string(pair.first).c_str(), pair.second.c_str());
+				LOG_WARN("{0} Asset exists in registry ({1}, {2})", __FUNCTION__, std::to_string(pair.first).c_str(), pair.second[index].c_str());
 				return true;
 			}
 		}
@@ -230,18 +202,15 @@ namespace QwerkE {
 		if (!ExistsInRegistry(mirrorTypeId, guid, fileName))
 		{
 			auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
-			vectorGuidStrings.push_back({ guid, fileName });
+			// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+			vectorGuidStrings.push_back({ guid, { fileName } });
 		}
 	}
 
 	AssetsList& Assets::GetRegistryAssetList(const size_t assetListTypeId)
 	{
-		if (s_AssetGuidToFileRegistry.find(assetListTypeId) != s_AssetGuidToFileRegistry.end())
-		{
-			return s_AssetGuidToFileRegistry[assetListTypeId];
-		}
-		LOG_ERROR("Cannot return reference for registry asset list!");
-		return AssetsList();
+		ASSERT(s_AssetGuidToFileRegistry.find(assetListTypeId) != s_AssetGuidToFileRegistry.end(), "Cannot return reference for registry asset list!");
+		return s_AssetGuidToFileRegistry[assetListTypeId];
 	}
 #endif
 

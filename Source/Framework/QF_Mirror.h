@@ -1,4 +1,9 @@
 
+#include <array>
+#include <unordered_map>
+#include <string>
+#include <vector>
+
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QC_imgui.h"
 #endif
@@ -63,21 +68,31 @@ MIRROR_TYPE_ID(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string
 MIRROR_TYPE_ID(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
 MIRROR_TYPE_ID(std::pair<QwerkE::GUID, void*>)
 MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::string*>)
+MIRROR_TYPE_ID(std::pair<const QwerkE::GUID, std::string>)
 MIRROR_TYPE_ID(std::pair<const QwerkE::GUID, std::string*>)
 MIRROR_TYPE_ID(std::pair<QwerkE::GUID, entt::entity>)
 MIRROR_TYPE_ID(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
 MIRROR_TYPE_ID(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_TYPE_ID(std::pair<std::string, std::string>);
+MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::pair<std::string, std::string>>);
+MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::string[11]>)
+MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::vector<std::string>>)
+MIRROR_TYPE_ID(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE_ID(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
 
 MIRROR_TYPE_ID(std::vector<std::string>)
 MIRROR_TYPE_ID(std::vector<std::string*>)
 MIRROR_TYPE_ID(std::vector<std::pair<QwerkE::GUID, std::string>>)
 MIRROR_TYPE_ID(std::vector<entt::entity>)
+MIRROR_TYPE_ID(std::vector<std::pair<QwerkE::GUID, std::pair<std::string, std::string>>>)
+MIRROR_TYPE_ID(std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>)
 
 MIRROR_TYPE_ID(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, void*>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, std::string*>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, entt::entity>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_TYPE_ID(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
 
 MIRROR_TYPE_ID_CLASS(QwerkE::Input::GameActions)
 MIRROR_TYPE_ID_CLASS(QwerkE::Shader)

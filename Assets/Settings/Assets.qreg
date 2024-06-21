@@ -1,85 +1,78 @@
 {
-	"std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>":	{
-		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>":	{
+	"std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
+		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 			"const unsigned long long":	{
 				"const unsigned long long":	"65"
 			},
-			"std::vector<std::pair<QwerkE::GUID, std::string>>":	{
-				"std::pair<QwerkE::GUID, std::string>":	{
+			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"0"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"cube.bin"
 					}
 				},
-				"std::pair<QwerkE::GUID, std::string>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"11140931355107737998"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"bunny.bin"
 					}
 				},
-				"std::pair<QwerkE::GUID, std::string>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"8229536646138328776"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"column.bin"
 					}
 				},
-				"std::pair<QwerkE::GUID, std::string>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"8336785007513777702"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"hollowcube.bin"
 					}
 				},
-				"std::pair<QwerkE::GUID, std::string>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"14640707050536380072"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"orb.bin"
 					}
 				},
-				"std::pair<QwerkE::GUID, std::string>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"17511105768294075930"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"platform.bin"
 					}
 				},
-				"std::pair<QwerkE::GUID, std::string>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"8503462518171528690"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"tree.bin"
 					}
 				}
 			}
 		},
-		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>":	{
-			"const unsigned long long":	{
-				"const unsigned long long":	"1233"
-			},
-			"std::vector<std::pair<QwerkE::GUID, std::string>>":	{
-			}
-		},
-		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>":	{
+		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 			"const unsigned long long":	{
 				"const unsigned long long":	"1330"
 			},
-			"std::vector<std::pair<QwerkE::GUID, std::string>>":	{
-				"std::pair<QwerkE::GUID, std::string>":	{
+			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"5515617290093115200"
 					},
-					"std::string":	{
+					"std::vector<std::string>":	{
 						"std::string":	"NewScene1.qscene"
 					}
 				}
