@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 #ifdef _QBGFX

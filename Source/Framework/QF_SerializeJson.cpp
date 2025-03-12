@@ -84,7 +84,7 @@ namespace QwerkE {
                     {
                         LOG_ERROR("{0} Pointer is null!", __FUNCTION__);
                         uint8_t pointerValue = 0;
-                        local_SerializePrimitive(&pointerValue, Mirror::InfoForType<uint8_t>(), pointerJson, MIRROR_TO_STR(nullptr));
+                        local_SerializePrimitive(&pointerValue, Mirror::InfoForType<uint8_t>(), pointerJson, "nullptr");
                         return;
                     }
 
@@ -134,8 +134,8 @@ namespace QwerkE {
             case Mirror::TypeId<const bool>():
             case Mirror::TypeId<bool>():
                 cJsonItem = CreateJsonBool<bool>(name, obj); break;
-            case Mirror::TypeId<Editor::EditorWindowTypes>():
-            case Mirror::TypeId<Editor::EditorWindowFlags>():
+            case Mirror::TypeId<Editor::EditorWindowTypes>(): // #TODO Remove editor types from framework files
+            case Mirror::TypeId<Editor::EditorWindowFlags>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<const eScriptTypes>():
             case Mirror::TypeId<eScriptTypes>():
             case Mirror::TypeId<const uint8_t>():

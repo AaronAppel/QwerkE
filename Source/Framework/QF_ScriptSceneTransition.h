@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 #include "QC_Time.h"
@@ -16,6 +16,12 @@ namespace QwerkE {
 		void OnDestroy() override
 		{
 			Scenes::SetCurrentScene(m_SceneToTransitionToGuid);
+
+			if (Scene* scene = Scenes::GetScene(m_SceneToTransitionToGuid))
+			{
+				// #TODO SetActive(true) instead?
+				scene->ToggleIsPaused();
+			}
 		}
 
 		eScriptTypes ScriptType() override

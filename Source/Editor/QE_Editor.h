@@ -6,6 +6,12 @@ namespace QwerkE {
 
 	class EntityHandle;
 
+	// #TESTING
+	struct FixMatrixSerialize
+	{
+		float m_Matrix[16];
+	};
+
 	namespace Editor {
 
 		typedef unsigned int u32;

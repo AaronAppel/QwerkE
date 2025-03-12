@@ -16,6 +16,9 @@ namespace QwerkE {
 
 		static std::map<std::string, const char*> s_ProgramArgumentPairs;
 
+		// #TODO Review moving scenes to framework, deprecating QF_Scenes.h/cpp
+		// static std::vector<Scene*> s_ActiveScenes;
+
 		void local_ProgramArguments(unsigned int argc, char** argv);
 
 		eOperationResult Initialize(const StartUpArguments& startUpArgs)

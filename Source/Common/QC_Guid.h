@@ -3,7 +3,7 @@
 // Sourced from : UUID.h -> https://github.com/TheCherno/Hazel/tree/master/Hazel/src/Hazel/Core
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 namespace QwerkE {

@@ -7,7 +7,7 @@
 #endif
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 #include "QF_ComponentTransform.h"

@@ -5,6 +5,7 @@
 
 #include "QF_EntityHandle.h"
 #include "QF_Framework.h"
+#include "QF_Input.h"
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
 #include "QF_Scene.h"
@@ -40,6 +41,11 @@ int main(unsigned int argc, char** argv)
 		QwerkE::Renderer::StartImGui(); // #TODO Remove ImGui from Game code
 
 		QwerkE::Framework::Update((float)QwerkE::Time::PreviousFrameDuration());
+
+		if (QwerkE::Input::FrameKeyAction(QwerkE::eKeys::eKeys_Escape, QwerkE::eKeyState::eKeyState_Press))
+		{
+			QwerkE::Window::RequestClose(); // #TODO For convenience during development
+		}
 
 		QwerkE::Renderer::EndImGui(); // #TODO Remove ImGui from Game code
 

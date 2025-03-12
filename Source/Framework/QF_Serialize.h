@@ -4,7 +4,7 @@
 #endif
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 #include "QF_Files.h"
@@ -16,7 +16,7 @@ namespace QwerkE {
 
     class Scene;
 
-    namespace Serialize {
+    namespace Serialize { // #TODO Rename to Serialization
 
         void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 

@@ -20,14 +20,15 @@
 namespace QwerkE {
 
 	static bool s_Initialized = false;
-	static Scene* s_CurrentScene = nullptr;
-	static u32 s_CurrentSceneIndex = 0;
+	static Scene* s_CurrentScene = nullptr; // #NOTE Scene transition changes removes line
+	static u32 s_CurrentSceneIndex = 0; // #NOTE Scene transition changes removes line
 	static std::vector<Scene*> s_Scenes;
 	// static std::vector<sPtr<Scene>> s_ScenesSmart; // #TODO Use smart pointers. Deprecate Shutdown
 
 	namespace Scenes
 	{
-
+		// #NOTE Scene transition changes removes:
+		// void local_UpdateCurrentSceneIndex(), void local_UpdateCurrentScene(), and void Initialize()
 		void local_UpdateCurrentSceneIndex()
 		{
 			for (u32 i = 0; i < s_Scenes.size(); i++)
@@ -68,11 +69,12 @@ namespace QwerkE {
 				}
 			}
 			s_Scenes.clear();
-			s_CurrentScene = nullptr;
-			s_CurrentSceneIndex = 0;
+			s_CurrentScene = nullptr; // #NOTE Scene transition changes removes line
+			s_CurrentSceneIndex = 0; // #NOTE Scene transition changes removes line
 			s_Initialized = false;
 		}
 
+		// #NOTE Scene transition changes removes SetScenePaused(), SetCurrentScene(Scene* scene), void SetCurrentScene(const GUID& sceneGuid)
 		void SetScenePaused(const GUID& sceneGuid, const bool isPaused)
 		{
 			if (Scene* scene = GetScene(sceneGuid))
@@ -85,10 +87,17 @@ namespace QwerkE {
 		{
 			for (size_t i = 0; i < s_Scenes.size(); i++)
 			{
+				// #NOTE Scene transition changes
+				// if (s_Scenes[i]->GetSceneName() == sceneFileName)
+
 				if (s_Scenes[i] == scene)
 				{
 					s_CurrentScene = s_Scenes[i];
 					return;
+
+					// #NOTE Scene transition changes
+					// LOG_ERROR("{0} Scene already exists with name {1}", __FUNCTION__, sceneFileName.string().c_str());
+					// return nullptr;
 				}
 			}
 		}
@@ -104,6 +113,15 @@ namespace QwerkE {
 
 		Scene* CreateSceneFromFile(const std::string& sceneFilePath)
 		{
+			// #NOTE Scene transition change
+			// Path sceneFileName = Files::FileName(Paths::Scene(sceneFilePath.c_str()).c_str());
+
+			// Scene* newScene = new Scene(sceneFileName.string().c_str());
+			// newScene->LoadSceneFromFilePath(sceneFilePath.c_str());
+			// s_Scenes.push_back(newScene);
+
+			// return newScene;
+
 			Path sceneFileName = Files::FileName(sceneFilePath.c_str());
 
 			if (const Scene* existingScene = GetScene(sceneFileName.string().c_str()))
@@ -132,6 +150,20 @@ namespace QwerkE {
 			const Path uniqueFileNamePath = Files::FileName(uniqueSceneFilePath.string().c_str());
 			std::string uniqueFileName = uniqueFileNamePath.string();
 
+			// #NOTE Scene transition change
+			// const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::TypeId<Scene>());
+			// for (size_t i = 0; i < s_Scenes.size(); i++)
+			// {
+			// 	if (s_Scenes[i]->GetSceneName() == sceneFileName)
+			// 	{
+			// 		LOG_ERROR("{0} Scene exists with same name {1}", __FUNCTION__, uniqueFileName.c_str());
+			// 		// #TODO Decide how to handle case where file was deleted, but scene with same name is still loaded.
+			// 		// Can find a new and more valid scene name, guaranteeing a valid scene is created and a pointer returned.
+			// 		// while(GetScene(uniqueFileName.c_str()) uniqueFileName = NumberAppendOrIncrement(uniqueFileName.c_str());
+			// 		return nullptr;
+			// 	}
+			// }
+
 			if (const Scene* existingScene = GetScene(uniqueFileName.c_str()))
 			{
 				LOG_ERROR("{0} Scene exists with same name {1}", __FUNCTION__, uniqueFileName.c_str());
@@ -145,17 +177,17 @@ namespace QwerkE {
 			newScene->LoadSceneFromFilePath(Paths::NullAsset(null_scene).c_str());
 			s_Scenes.push_back(newScene);
 
-			s_CurrentScene = newScene;
-			local_UpdateCurrentSceneIndex();
+			s_CurrentScene = newScene; // #NOTE Scene transition changes removed line
+			local_UpdateCurrentSceneIndex(); // #NOTE Scene transition changes removed line
 
 			return newScene;
 		}
 
 		Scene* CreateScene(const GUID& sceneGuid)
 		{
-			const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::TypeId<Scene>());
-			std::string sceneFileName;
-			for (size_t i = 0; i < scenesRegistry.size(); i++)
+			const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::TypeId<Scene>()); // #NOTE Scene transition changes removed line
+			std::string sceneFileName; // #NOTE Scene transition changes removed line
+			for (size_t i = 0; i < scenesRegistry.size(); i++) // #NOTE Scene transition changes removed line
 			{
 				auto guidStringPair = scenesRegistry[i];
 				if (sceneGuid == guidStringPair.first)
@@ -165,6 +197,12 @@ namespace QwerkE {
 					break;
 				}
 			}
+
+			// #NOTE Scene transition changes
+			// #TODO Check if exists? Duplicate GUIDs is not allowed, but creating a new scene from an existing scene is valid
+			// std::string sceneFileName = Assets::GetRegistryAssetFileName<Scene>(sceneGuid);
+			// if (!sceneFileName.empty())
+
 			return CreateSceneFromFile(Paths::Scene(sceneFileName.c_str()));
 		}
 
@@ -192,6 +230,7 @@ namespace QwerkE {
 			local_UpdateCurrentScene();
 		}
 
+		// #NOTE Scene transition removes void Update(float deltatime), void DrawCurrentScene(u16 viewId), void DrawScene(std::string sceneName)
 		void Update(float deltatime)
 		{
 			PROFILE_SCOPE("Scene Manager Update");
@@ -218,6 +257,24 @@ namespace QwerkE {
 				scene->Draw();
 			}
 		}
+
+		// #NOTE Scene transition changes
+		// void UpdateScenes(float deltatime)
+		// {
+		// 	PROFILE_SCOPE("Scenes Update");
+		// 	for (size_t i = 0; i < s_Scenes.size(); i++)
+		// 	{
+		// 		s_Scenes[i]->Update(deltatime);
+		// 	}
+		// }
+		// void DrawScenes(u16 viewId)
+		// {
+		// 	PROFILE_SCOPE("Scene Render");
+		// 	for (size_t i = 0; i < s_Scenes.size(); i++)
+		// 	{
+		// 		s_Scenes[i]->Draw(viewId);
+		// 	}
+		// }
 
 		Scene* GetScene(const GUID& guid)
 		{
@@ -258,6 +315,7 @@ namespace QwerkE {
 			return nullptr;
 		}
 
+		// #NOTE Scene transition change removes GetCurrentScene()
 		Scene* GetCurrentScene()
 		{
 			return s_CurrentScene;
@@ -267,6 +325,12 @@ namespace QwerkE {
 		{
 			return s_CurrentSceneIndex;
 		}
+
+		// #NOTE Scene transition change
+		// bool HasScene(const Scene* scene)
+		// {
+		// 	return GetScene(scene->GetGuid()) != nullptr;
+		// }
 
 		int SceneCount()
 		{
@@ -278,6 +342,7 @@ namespace QwerkE {
 			return s_Scenes;
 		}
 
+		// #NOTE Scene transition change removes SetCurrentSceneDirty()
 		void SetCurrentSceneDirty()
 		{
 			if (s_CurrentScene)

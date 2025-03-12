@@ -49,7 +49,7 @@ namespace QwerkE {
                 local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
                 {
-                    if (strcmp(objJson->child->string, MIRROR_TO_STR(nullptr)) == 0)
+                    if (strcmp(objJson->child->string, "nullptr") == 0)
                     {
                         LOG_WARN("{0} Null pointer!", __FUNCTION__);
                         *(void**)obj = nullptr;

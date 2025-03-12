@@ -5,7 +5,7 @@
 #endif
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 #include "QF_Buffer.h"
@@ -314,21 +314,17 @@ namespace QwerkE {
         InspectFieldReturn local_InspectClassFields(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
             InspectFieldReturn returnValue;
-            // bool valueChanged = false;
+
             for (size_t i = 0; i < typeInfo->fields.size(); i++)
             {
                 const Mirror::Field field = typeInfo->fields[i];
                 if (field.flags & FieldSerializationFlags::_HideInInspector)
                     continue;
 
-                if (field.flags & FieldSerializationFlags::_InspectorViewOnly)
-                {
-                    // #TODO Show but prevent editing. Might need to pass to InspectType(..., flags)
-                }
+                ImGui::BeginDisabled(field.flags & FieldSerializationFlags::_InspectorViewOnly);
 
                 std::string fieldName = parentName + field.name + "##";
                 void* fieldAddress = (char*)obj + field.offset;
-                // valueChanged |= InspectType(field.typeInfo, fieldAddress, fieldName);
                 if (InspectType(field.typeInfo, fieldAddress, fieldName))
                 {
                     returnValue.selectedFieldName = field.name;
@@ -337,6 +333,8 @@ namespace QwerkE {
                 {
                     returnValue.selectedFieldName = field.name;
                 }
+
+                ImGui::EndDisabled();
             }
             return returnValue;
         }
@@ -679,11 +677,11 @@ namespace QwerkE {
             bool valueChanged = false;
 
             std::string elementName = parentName;
-            switch (typeInfo->id)
-            {
-            default:
-                break;
-            }
+            // switch (typeInfo->id)
+            // {
+            // default:
+            //     break;
+            // }
             return valueChanged;
         }
 

@@ -81,6 +81,17 @@ namespace QwerkE {
                             ImGui::SameLine();
                             ImGui::Text(guidScenePair.second->GetSceneName().c_str());
                         }
+
+                        // #NOTE Scene transition change
+                        // std::vector<Scene*> scenes = Scenes::LookAtScenes();
+                        // for (size_t i = 0; i < scenes.size(); i++)
+                        // {
+                        //     ImGui::Text("GUID: ");
+                        //     ImGui::SameLine();
+                        //     ImGui::Text(std::to_string(scenes[i]->GetGuid()).c_str());
+                        //     ImGui::SameLine();
+                        //     ImGui::Text(scenes[i]->GetSceneName().c_str());
+                        // }
                     }
                 }
                 else

@@ -22,24 +22,18 @@ int main()
 
 ## 3rd Party Libraries
 Libraries or external code I utilize to deliver features (may be outdated) :
-- assimp: www.github.com/assimp/assimp
 - better-enums: https://github.com/aantron/better-enums
 - bgfx, bimg, bx: https://github.com/bkaradzic/bgfx
 - Bullet3: https://github.com/bulletphysics/bullet3
 - cJSON: https://github.com/DaveGamble/cJSON
-- CPPList.h: Dave 'Redbeard' Eccleston
 - enTT: https://github.com/skypjack/entt
 - FlatHead Games: https://github.com/JimmyLord
-- freetype2: www.freetype.org/index.html
-- glew: www.github.com/nigels-com/glew
 - glfw: www.github.com/glfw/glfw
 - glm: www.github.com/g-truc/glm
 - imgui: www.github.com/ocornut/imgui
+- Jolt: https://github.com/jrouwe/JoltPhysics
 - lodepng: www.github.com/lvandeve/lodepng
 - Mirror: www.github.com/AaronAppel/Mirror
-- OpenAL: www.openal.org
-- pthreads: www.github.com/coapp-packages/pthreads
-- RakNet: www.github.com/facebookarchive/RakNet
 - spdlog: https://github.com/gabime/spdlog
 - stb_image: www.github.com/nothings/stb
 
@@ -62,7 +56,7 @@ Tools and other software I used throughout development.
 
 ## Acknowledgments and Appreciation
 In no particular order :
-- Jimmy Lord : [FlatheadGames](http://www.flatheadgames.com)  https://github.com/jimmylord
+- Jimmy Lord
 - Eric Bibeau
 - Aurelien Simoni
 - Antonio Santamaria

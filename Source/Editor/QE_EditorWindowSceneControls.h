@@ -55,6 +55,9 @@ namespace QwerkE {
                     if (Scene* newScene = Scenes::CreateScene(newFileDefaultName))
                     {
                         Scenes::SetCurrentScene(newScene);
+                        // #NOTE Scene transition changes removes above lines for below
+                        // #TODO SetActive(newScene) call
+                        // Scenes::SetCurrentScene(newScene);
 
                         // #TODO Move unique check logic into Projects::AddSceneToProjectScenesList() or something better
                         Project& currentProject = Projects::CurrentProject();
@@ -126,6 +129,9 @@ namespace QwerkE {
                     if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), (s32)scenes.size()))
                     {
                         Scenes::SetCurrentScene(index);
+                        // #NOTE Scene transition changes removes above lines for below
+                        // #TODO SetActive(true/false) ?
+                        // Scenes::SetCurrentScene(index);
                     }
                     ImGui::PopItemWidth();
                 }

@@ -5,7 +5,7 @@
 
 #include "QC_Guid.h"
 
-#include "QF_Enums.h"
+#include "QF_Enums.h" // #NOTE Scene transition changes removes line
 
 namespace QwerkE {
 
@@ -13,34 +13,39 @@ namespace QwerkE {
 
     namespace Scenes {
 
-        void Initialize();
+        void Initialize(); // #NOTE Scene transition changes removes line
         void Shutdown();
 
-        void SetCurrentScene(Scene* scene);
-        void SetCurrentScene(const GUID& sceneGuid);
+        void SetCurrentScene(Scene* scene); // #NOTE Scene transition changes removes line
+        void SetCurrentScene(const GUID& sceneGuid); // #NOTE Scene transition changes removes line
 
-        void SetScenePaused(const GUID& sceneGuid, const bool isPaused);
+        void SetScenePaused(const GUID& sceneGuid, const bool isPaused); // #NOTE Scene transition changes removes line
 
         // #TODO Replace scene references with GUIDS instead of strings
         Scene* CreateSceneFromFile(const std::string& sceneFilePath);
-        Scene* CreateScene(const char* const sceneFileNamePrefix);
+        Scene* CreateScene(const char* const sceneFileNamePrefix); // #NOTE Scene transition changes removes line
         Scene* CreateScene(const GUID& sceneGuid);
+        // #NOTE Scene transition changes Scene* CreateScene(const std::string& sceneFileName);
 
         void DestroyScene(const Scene* const scene);
 
-        void Update(float deltatime);
-        void DrawCurrentScene(u16 viewId = 0);
-        void DrawScene(std::string sceneName);
+        // #NOTE Scene transition changes rename to UpdateScenes()
+        void Update(float deltatime); // #NOTE Scene transition changes removes line
+        void DrawCurrentScene(u16 viewId = 0); // #NOTE Scene transition changes removes line
+        void DrawScene(std::string sceneName); // #NOTE Scene transition changes removes line
+        // #NOTE Scene transition changes void UpdateScenes(float deltatime);
+        // #NOTE Scene transition changes void DrawScenes(u16 viewId = 0);
 
-        Scene* GetCurrentScene();
-        int GetCurrentSceneIndex();
+        Scene* GetCurrentScene(); // #NOTE Scene transition changes removes line
+        int GetCurrentSceneIndex(); // #NOTE Scene transition changes removes line
         int SceneCount();
         Scene* GetScene(const GUID& guid);
-        Scene* GetScene(std::string sceneName);
-        Scene* GetScene(const Scene* const scene);
+        Scene* GetScene(std::string sceneName); // #NOTE Scene transition changes removes line
+        Scene* GetScene(const Scene* const scene); // #NOTE Scene transition changes removes line
+        // #NOTE Scene transition changes bool HasScene(const Scene* scene);
         const std::vector<Scene*>& LookAtScenes();
 
-        void SetCurrentSceneDirty();
+        void SetCurrentSceneDirty(); // #NOTE Scene transition changes removes line
     }
 
 }

@@ -5,7 +5,7 @@
 #include <map>
 #include <vector>
 
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 
 #ifdef _QBGFXFRAMEWORK
 #include <bgfxFramework/bgfx_utils.h>
@@ -279,7 +279,7 @@ MIRROR_CLASS_END
 MIRROR_CLASS(QwerkE::ComponentCamera)
 MIRROR_CLASS_MEMBER_FLAGS(m_ShowSphere, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_MEMBER(m_MoveSpeed)
-MIRROR_CLASS_MEMBER(m_LookAtPosition)
+MIRROR_CLASS_MEMBER_FLAGS(m_LookAtPosition, FieldSerializationFlags::_InspectorViewOnly)
 MIRROR_CLASS_MEMBER(m_Fov)
 MIRROR_CLASS_MEMBER(m_Near)
 MIRROR_CLASS_MEMBER(m_Far)

@@ -45,6 +45,8 @@ namespace QwerkE {
 				// #TODO Decide how to search for shader and materials that have more than 1 string in vector
 				constexpr int index = 0;
 				const std::string& fileName = currentAssetListPair.second[index];
+
+				// #NOTE Scene transition changes removes below line
 				const std::string fileExtension = Files::FileExtension(fileName.c_str()).string();
 
 				// #TODO Handle loading errors (return GUID::Invalid;)
@@ -69,6 +71,7 @@ namespace QwerkE {
 					break;
 
 				case Mirror::TypeId<Scene>():
+					// #NOTE Scene transition changes to Scenes::CreateSceneFromFile(fileName)
 					m_MapOfLoadedAssetMaps[typeId][guid] = Scenes::CreateSceneFromFile(Paths::Scene(fileName.c_str())); break;
 
 				default:
@@ -182,6 +185,7 @@ namespace QwerkE {
 
 	bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
 	{
+		// #TODO Review using type name strings instead of id values as are considered unstable ids should not be written to data
 		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
 		for (size_t i = 0; i < vectorGuidStrings.size(); i++)
 		{

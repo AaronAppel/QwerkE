@@ -1,10 +1,13 @@
 #include "QE_Mirror.h"
 
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
 #include "QE_Settings.h"
+
+// #TESTING
+#include "QE_Editor.h"
 
 // Enums
 MIRROR_TYPE(QwerkE::Editor::EditorWindowFlags)
@@ -156,4 +159,9 @@ MIRROR_TYPE(QwerkE::Editor::EditorWindow*)
 MIRROR_CLASS(QwerkE::ProjectsData)
 MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
 MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
+MIRROR_CLASS_END
+
+// #TESTING
+MIRROR_CLASS(QwerkE::FixMatrixSerialize)
+MIRROR_CLASS_MEMBER(m_Matrix)
 MIRROR_CLASS_END

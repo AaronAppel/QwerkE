@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 #include "QF_Scenes.h"
@@ -71,9 +71,58 @@ namespace QwerkE {
 		private:
 			void DrawInternal()
 			{
+				// #NOTE Scene transition changes removed 2 lines below
 				Scene* currentScene = Scenes::GetCurrentScene();
 				if (!currentScene)
+
+				// #NOTE Scene transition changes
+				// constexpr u32 s_CharacterPixelSize = 10;
+				// constexpr u32 s_DropDownArrowSize = 20;
+				//
+				// const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
+				// if (!scenes.empty())
+				// {
+				// 	std::vector<const char*> sceneNames;
+				// 	sceneNames.reserve(3);
+				//
+				// 	int index = 0;
+				// 	for (size_t i = 0; i < scenes.size(); i++)
+				// 	{
+				// 		sceneNames.push_back(scenes[i]->GetSceneName().c_str());
+				// 		if (scenes[i]->GetGuid() == m_SelectedSceneGuid)
+				// 		{
+				// 			index = i;
+				// 		}
+				// 	}
+				//
+				// 	const u32 sceneFileNameWidth = (u32)strlen(sceneNames[index]) * s_CharacterPixelSize;
+				//
+				// 	ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
+				//
+				// 	char s_ScenesCombobuffer[] = "Scenes:    ";
+				// 	snprintf(s_ScenesCombobuffer, strlen(s_ScenesCombobuffer), "Scenes: %i", (int)sceneNames.size());
+				//
+				// 	// #TODO Use ImGui::SameLineEnd();
+				// 	ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesCombobuffer) * s_CharacterPixelSize));
+				// 	if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), (s32)scenes.size()))
+				// 	{
+				// 		// #TODO SetActive(true/false) ?
+				// 		m_SelectedSceneGuid = index;
+				// 	}
+				// 	ImGui::PopItemWidth();
+				// }
+				// else
+				// {
+				// 	ImGui::SameLineEnd("Scenes : 0");
+				// 	ImGui::Text("Scenes : 0");
+				// }
+				//
+				// Scene* sceneToView = Scenes::GetScene(m_SelectedSceneGuid);
+				// if (!sceneToView)
 					return;
+
+				// #NOTE Scene transition changes removed 2 lines below
+
 
 				// #TODO Buttons are squares, so maybe width = (lineheight * 3) + (padding * 2)
 				// x3 for the 2 buttons and field, plus the 2 spaces in between the 3 buttons
@@ -125,6 +174,31 @@ namespace QwerkE {
 				}
 				ImGui::PopItemWidth();
 
+				// #NOTE Scene transition changes
+				// #TODO Draw grid
+				// if (!Window::IsMinimized())
+				// {
+				// 	// Debug drawer calls
+				// 	constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+				// 	bgfx::setState(BGFX_STATE_DEFAULT);
+				// 	DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
+				// 	debugDrawer.begin(viewIdFbo1, true);
+				//
+				// 	constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
+				// 	constexpr bx::Vec3 pos = { .0f, .0f, .0f };
+				//
+				// 	debugDrawer.drawSphere(0.f, 0.f, 0.f, 1.f, Axis::X);
+				// 	// debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
+				//
+				// 	// #TODO Move grid draw to QE_EditorWindowSceneView draw call
+				// 	bx::Plane plane(bx::InitNone);
+				// 	bx::calcPlane(plane, normal, pos);
+				//
+				// 	debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
+				//
+				// 	debugDrawer.end();
+				// }
+
 				// #TODO Draw scene using camera selected from Camera combo drop down
 				m_EditorCamera.PreDrawSetup(m_ViewId);
 				currentScene->Draw(m_ViewId);
@@ -135,6 +209,9 @@ namespace QwerkE {
 			MIRROR_PRIVATE_MEMBERS
 
 			EditorCamera m_EditorCamera;
+
+			// #TODO Scene transition changes
+			// GUID m_SelectedSceneGuid;
 
 			u8 m_TextureId = 3;
 			u8 m_ViewId = 0;

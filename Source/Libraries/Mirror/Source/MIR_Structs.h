@@ -3,6 +3,17 @@
 #include <string>
 #include <vector>
 
+// #NOTE Functionality macros. See Macros section in README.md for more info.
+// #define MIRROR_TESTING
+// #define MIRROR_NONCONFORMING // #NOTE See "Known Working Compiler Versions" section in README.md
+// #define MIRROR_GENERATE_TYPE_IDS
+// #define MIRROR_TYPE_SIZE_UNUSED
+// #define MIRROR_FIELD_FLAGS_UNUSED
+
+#if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
+#include "MIR_ConstexprCounter.h"
+#endif
+
 #ifdef MIRROR_TESTING
 #include <cassert>
 #define MIRROR_ASSERT(x) assert(x)
@@ -10,23 +21,20 @@
 #define MIRROR_ASSERT(x)
 #endif
 
-#include "ConstexprCounter.h"
-template<int N = 1, int C = reader(0, flag<128>())> // #NOTE 0 reserved for invalid value, up to max value of 128(+1)
-int constexpr NextTypeId(int R = writer<C + N>::value) {
-	return R;
-}
-
 #define MIRROR_PRIVATE_MEMBERS friend struct Mirror;
 
 #define MIRROR_FIELD_FLAG_SIZE uint8_t
-#define MIRROR_TYPE_CATEGORY_SIZE uint8_t
+#define MIRROR_FIELD_FLAG_SIZE_MAX UINT8_MAX
+#define MIRROR_FIELD_ID_SIZE uint16_t
+#define MIRROR_FIELD_ID_SIZE_MAX UINT16_MAX
 #define MIRROR_TYPE_SIZE uint16_t
-#define MIRROR_FIELD_ID_SIZE std::size_t
 #define MIRROR_TYPE_SIZE_MAX UINT16_MAX
+#define MIRROR_TYPE_CATEGORY_SIZE uint8_t
+#define MIRROR_TYPE_CATEGORY_SIZE_MAX UINT8_MAX
 
 struct Mirror
 {
-	enum TypeInfoCategories : MIRROR_TYPE_CATEGORY_SIZE
+	enum TypeInfoCategories : uint8_t
 	{
 		TypeInfoCategory_Primitive = 0,
 		TypeInfoCategory_Class,
@@ -52,17 +60,8 @@ struct Mirror
 #endif
 	};
 
-	using Func_void_voidPtr_sizet_constvoidPtr_constvoidPtr = void (*)(void*, size_t, const void*, const void*);
-	using Func_void_voidPtr = void (*)(void*);
-	using Func_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
-	using Func_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
-	using Func_bool_constVoidPtr = bool (*)(const void*);
-
 	struct TypeInfo
 	{
-		// #TODO Review accessibility of members. Should this be a class, or at least use a private scope for some/all data members?
-		// #TODO Review memory usage for each type. There are opportunities for reducing the memory usage for some types, and re-using data member memory using unions
-
 		std::string stringName = "";
 		MIRROR_FIELD_ID_SIZE id = 0;
 
@@ -72,7 +71,26 @@ struct Mirror
 		TypeInfoCategories category = TypeInfoCategories::TypeInfoCategory_Primitive;
 
 		std::vector<Field> fields = { };
-		std::vector<const TypeInfo*> derivedTypes; // #TODO Only required for base classes (with declared derived types)
+		std::vector<const TypeInfo*> derivedTypes;
+
+		const TypeInfo* collectionTypeInfoFirst = nullptr;
+		const TypeInfo* collectionTypeInfoSecond = nullptr;
+		const TypeInfo* superTypeInfo;
+		const TypeInfo* pointerDereferencedTypeInfo;
+
+		using FuncPtr_void_voidPtr_sizet_constvoidPtr_constvoidPtr = void (*)(void*, size_t, const void*, const void*);
+		using FuncPtr_void_voidPtr = void (*)(void*);
+		using FuncPtr_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
+		using FuncPtr_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
+		using FuncPtr_bool_constVoidPtr = bool (*)(const void*);
+
+		FuncPtr_void_voidPtr_sizet_constvoidPtr_constvoidPtr collectionAddFunc = nullptr;
+		FuncPtr_voidPtr_constVoidPtr_bool collectionAddressOfPairObjectFunc = nullptr;
+		FuncPtr_void_voidPtr collectionClearFunction = nullptr;
+		FuncPtr_charPtr_constVoidPtr_sizet collectionIterateCurrentFunc = nullptr;
+
+		FuncPtr_void_voidPtr typeConstructorFunc = nullptr;
+		FuncPtr_bool_constVoidPtr typeDynamicCastFunc = nullptr;
 
 		const TypeInfo* AbsoluteType() const {
 			return pointerDereferencedTypeInfo ? pointerDereferencedTypeInfo : this;
@@ -126,19 +144,6 @@ struct Mirror
 				collectionClearFunction(collectionAddress);
 			}
 		}
-
-		const TypeInfo* collectionTypeInfoFirst = nullptr; // #TODO Only used for collections
-		const TypeInfo* collectionTypeInfoSecond = nullptr; // #TODO Only used for collections
-		const TypeInfo* superTypeInfo = nullptr; // #TODO Only used for derived types
-		const TypeInfo* pointerDereferencedTypeInfo = nullptr; // #TODO Only used for pointers
-
-		Func_void_voidPtr_sizet_constvoidPtr_constvoidPtr collectionAddFunc = nullptr;
-		Func_voidPtr_constVoidPtr_bool collectionAddressOfPairObjectFunc = nullptr;
-		Func_void_voidPtr collectionClearFunction = nullptr;
-		Func_charPtr_constVoidPtr_sizet collectionIterateCurrentFunc = nullptr;
-
-		Func_void_voidPtr typeConstructorFunc = nullptr; // #TODO Only used for classes
-		Func_bool_constVoidPtr typeDynamicCastFunc = nullptr; // #TODO Only used for classes in inheritance hierarchy
 	};
 
 	template <class T>
@@ -148,22 +153,22 @@ struct Mirror
 	static const TypeInfo* InfoForType();
 
 	template<typename T>
-	static constexpr size_t TypeId();
+	static constexpr MIRROR_FIELD_ID_SIZE TypeId();
 
-	// #NOTE Defining type ids through templated functions aims to avoid id collisions with generated class ids
-	// #NOTE TypeIds are defined in headers so all compile units have matching type ids for each type
+#if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
+	template<int N = 1, int C = ConstexprCounter::reader(0, ConstexprCounter::flag<128>())> // #NOTE 0 reserved for invalid value, up to max value of 128(+1)
+	static int constexpr NextTypeId(int R = ConstexprCounter::writer<C + N>::value) { return R; }
+
 #define MIRROR_TYPE_ID_IMPL(TYPE) \
-	template <> constexpr std::size_t Mirror::TypeId<TYPE>() { return NextTypeId(); }
+	template <> constexpr MIRROR_FIELD_ID_SIZE Mirror::TypeId<TYPE>() { return NextTypeId(); }
 #define MIRROR_TYPE_ID(...) MIRROR_TYPE_ID_IMPL(__VA_ARGS__)
 
-#define MIRROR_TYPE_ID_CLASS(...) MIRROR_TYPE_ID_CLASS_IMPL(__VA_ARGS__)
-#define MIRROR_TYPE_ID_CLASS_IMPL(TYPE) \
-	template <> \
-	static constexpr size_t Mirror::TypeId<TYPE>() { \
-		auto result = HashFromString(#TYPE); \
-		assert(result > PREDEFINED_ID_MAX); \
-		return result; \
-	}
+#else
+#define MIRROR_TYPE_ID_IMPL(ID, TYPE) \
+	template <> constexpr MIRROR_FIELD_ID_SIZE Mirror::TypeId<TYPE>() { return ID; }
+#define MIRROR_TYPE_ID(ID, ...) MIRROR_TYPE_ID_IMPL(ID, __VA_ARGS__)
+
+#endif
 
 	template<typename... T>
 	struct MirrorTemplateArgumentList { };

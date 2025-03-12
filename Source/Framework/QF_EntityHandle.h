@@ -170,7 +170,7 @@ namespace QwerkE {
 			bool result =
 				m_EnttId != entt::null &&
 				m_Scene &&
-				Scenes::GetScene(m_Scene) &&
+				Scenes::GetScene(m_Scene) && // #NOTE Scene transition changes removes this line
 				m_Scene->m_Registry.valid(m_EnttId);
 				// #TODO Look at adding another case to verify GUID or enttId for object in m_Scene
 				// && m_Scene->GetEntityByGuid(EntityGuid()).EntityGuid() != GUID::Invalid;

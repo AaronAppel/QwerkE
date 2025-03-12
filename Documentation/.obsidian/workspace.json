@@ -8,30 +8,45 @@
         "type": "tabs",
         "children": [
           {
-            "id": "c315115b897a8c1c",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "QwerkE File Domains.canvas",
-                "viewState": {
-                  "x": -50.63387619961435,
-                  "y": -2.3766526442517204,
-                  "zoom": -0.3125
-                }
-              }
-            }
-          },
-          {
             "id": "811f62c5290b16e9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "UI Library Idea.md",
+                "file": "Development/Resolved/F0001 - Reflection.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "F0001 - Reflection"
+            }
+          },
+          {
+            "id": "daba389fd88d2f21",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Mirror Library.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Mirror Library"
+            }
+          },
+          {
+            "id": "77656a405a251270",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "QwerkE Initial Commit.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "QwerkE Initial Commit"
             }
           },
           {
@@ -43,11 +58,13 @@
                 "file": "UI Library Idea.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "UI Library Idea"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -66,8 +83,11 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
-              }
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -76,13 +96,15 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "wordle",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -90,11 +112,12 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -114,7 +137,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "UI Library Idea.md",
+                "file": "Hashing Strings For Switch Statements.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +145,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Hashing Strings For Switch Statements"
             }
           },
           {
@@ -131,10 +156,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "UI Library Idea.md",
+                "file": "Hashing Strings For Switch Statements.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Hashing Strings For Switch Statements"
             }
           },
           {
@@ -145,7 +172,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -154,8 +183,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "UI Library Idea.md"
-              }
+                "file": "Hashing Strings For Switch Statements.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Hashing Strings For Switch Statements"
             }
           }
         ]
@@ -175,16 +206,30 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "811f62c5290b16e9",
+  "active": "77656a405a251270",
   "lastOpenFiles": [
+    "Mirror Library.md",
+    "QwerkE Initial Commit.md",
+    "Development/Resolved/F0001 - Reflection.md",
+    "Hashing Strings For Switch Statements.md",
+    "ImGui Input vs Application.md",
+    "JSON.md",
+    "Kohi Engine.md",
+    "QwerkE Versioning.md",
+    "Raknet Example.md",
     "Reading For Reflection System.md",
+    "Saving and Loading.md",
+    "Serialization (JSON).md",
+    "Serializer.md",
+    "Shader Building.md",
+    "typeId vs dynamic_cast.md",
+    "UI Library Idea.md",
+    "2025-01-26.md",
+    "Untitled.canvas",
     "QwerkE File Domains.canvas",
     "README.md",
     "LICENSE",
     "Development/Features/ASSERT Expanded.md",
-    "UI Library Idea.md",
-    "Hashing Strings For Switch Statements.md",
-    "typeId vs dynamic_cast.md",
     "Adding Entity Components.md",
     "Development/Features/0. Features List.md",
     "Development/Features/0. Features Kanban.md",

@@ -32,11 +32,6 @@ namespace QwerkE {
             case eScriptTypes::UserScript1:
                 return new ScriptGameEntity();
 
-            // case eScriptTypes::UserScript1:
-            //     return new ScriptablePathFinder();
-            // case eScriptTypes::UserScript1:
-            //     return new ScriptablePathFinder();
-
             default:
                 ASSERT(false, "Unsupported script type!");
                 break;

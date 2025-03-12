@@ -96,6 +96,9 @@ namespace QwerkE {
 
             local_Initialize();
 
+            FixMatrixSerialize matrix;
+            Serialize::ToFile(matrix, Paths::Setting("test_matrix.json").c_str());
+
             Time::WriteAppStartTime();
 
 			while (StillRunning())
@@ -120,6 +123,7 @@ namespace QwerkE {
                     Renderer::EndImGui();
 
                     local_EndFrame();
+                    // #TODO Review Framework::EndFrame();
 				}
 				else
 				{
@@ -281,6 +285,9 @@ namespace QwerkE {
                 if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))
                 {
                     Scenes::SetCurrentScene((int)i);
+                    // #NOTE Scene transition changes
+                    // #TODO SetActive(true/false)
+                    // Scenes::SetCurrentScene((int)i);
                     break;
                 }
             }
@@ -312,7 +319,7 @@ namespace QwerkE {
                     constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
                     constexpr bx::Vec3 pos = { .0f, .0f, .0f };
 
-                    debugDrawer.drawSphere(0.f, 0.f, 0.f, 1.f, Axis::X);
+                    debugDrawer.drawSphere(0.f, 0.f, 0.f, 0.1f, Axis::X);
                     // debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
 
                     bx::Plane plane(bx::InitNone);

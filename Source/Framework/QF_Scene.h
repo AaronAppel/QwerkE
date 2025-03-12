@@ -9,7 +9,7 @@
 #endif
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Mirror.h"
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
 #include "QC_Guid.h"
@@ -54,6 +54,10 @@ namespace QwerkE {
         void SetDirty() { m_IsDirty = true; }
         bool IsDirty() { return m_IsDirty; }
 
+        // #NOTE Scene transition changes
+        // bool IsActive() { return m_IsActive; }
+        // void SetIsActive(bool isActive) { m_IsActive = isActive; }
+
         template<typename... Components>
         auto ViewComponents()
         {
@@ -66,6 +70,12 @@ namespace QwerkE {
         void SetCurrentCameraEntity(EntityHandle newCameraEntity);
 
         const GUID& GetGuid() { return m_SceneGuid; }
+
+        // #NOTE Scene transition changes
+        // const GUID& GetGuid() const { return m_SceneGuid; }
+
+        // void SetDirty() { m_IsDirty = true; } // #TODO Editor only state. Move out of here and into some QE_ file domain
+        // bool IsDirty() { return m_IsDirty; } // #TODO Editor only state. Move out of here and into some QE_ file domain
 
     private:
         MIRROR_PRIVATE_MEMBERS

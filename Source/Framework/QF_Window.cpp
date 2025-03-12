@@ -22,6 +22,8 @@
 #include "QF_Scenes.h"
 #include "QF_Shader.h"
 
+#include "QF_Mirror.h" // #TODO Review how to include reflection. Needs basis or forced include precompiled header?
+
 #include "../Source/Editor/QE_Projects.h" // #TODO Remove from QF_* domain
 #include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
@@ -236,6 +238,7 @@ namespace QwerkE {
                     {
                         if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
                         {
+                            // #NOTE Scene transition change removes next line
                             Scenes::SetCurrentScene(newScene);
                             Assets::AddToRegistry(Mirror::TypeId<Scene>(), newScene->GetGuid(), newScene->GetSceneName());
                         }
@@ -251,7 +254,7 @@ namespace QwerkE {
                 }
                 else if (strcmp(fileExtension.string().c_str(), ".bin") == 0)
                 {
-                    // #NOTE Binary mesh files starts with "VB", and binry shaders start with "FSH", "VSH"
+                    // #NOTE Binary mesh files starts with "VB", and binry shaders start with "FSH" or "VSH"
                     if (Files::Exists(Paths::Mesh(fileName.string().c_str()).c_str()))
                     {
                         Assets::AddToRegistry(Mirror::TypeId<bgfxFramework::Mesh>(), GUID(), fileName.string());

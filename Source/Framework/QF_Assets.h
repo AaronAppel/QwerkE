@@ -8,7 +8,7 @@
 #endif
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/Structs.h"
+#include "Libraries/Mirror/Source/MIR_Structs.h"
 #endif
 
 #include "QC_Guid.h"
@@ -66,6 +66,23 @@ namespace QwerkE {
 		}
 
 		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
+
+		template <typename T>
+		static std::string GetRegistryAssetFileName(const GUID guid)
+		{
+			const size_t typeEnum = Mirror::TypeId<T>();
+			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeEnum);
+			for (size_t i = 0; i < assetsRegistry.size(); i++)
+			{
+				auto guidStringPair = assetsRegistry[i];
+				if (guid == guidStringPair.first)
+				{
+					// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+					return guidStringPair.second[0];
+				}
+			}
+			return std::string("");
+		}
 
 		static std::unordered_map<size_t, AssetsList>& ViewRegistry();
 		static void SaveRegistry();
