@@ -1,0 +1,11 @@
+{
+	"QwerkE::EngineSettings":	{
+		"windowWidthPixels":	1920,
+		"windowHeightPixels":	1080,
+		"limitFramerate":	true,
+		"maxFramesPerSecond":	120,
+		"maxEnabledScenes":	1,
+		"maxJobsAdditionalThreadCount":	1,
+		"consoleOutputWindowEnabled":	true
+	}
+}

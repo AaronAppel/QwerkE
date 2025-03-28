@@ -19,7 +19,7 @@ namespace QwerkE {
 
         void Initialize();
 
-        void NewFrame(); // #Note Call before libraries each frame
+        void NewFrame(); // #NOTE Call before libraries each frame
 
         bool FrameKeyAction(eKeys key, eKeyState state);
 

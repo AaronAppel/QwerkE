@@ -3,7 +3,12 @@ rem https://learn.microsoft.com/en-us/windows-server/administration/windows-comm
 rem https://ss64.com/nt/xcopy.html
 
 rem xcopy s:\ z:\* /S /Y /D
-rem S will copy all subfolders and files within them Y prevents any overwrite prompts D essentially copies anything newer than what is already in the destination
+rem /S will copy all subfolders and files within them Y prevents any overwrite prompts D essentially copies anything newer than what is already in the destination
+
+rem Microsoft Documentation
+rem Copies directories and subdirectories, unless they're empty. If you omit /s, xcopy works within a single directory.
+rem /Y Suppresses prompting to confirm that you want to overwrite an existing destination file.
+rem /D Copies source files changed on or after the specified date only. If you don't include a MM-DD-YYYY value, xcopy copies all source files that are newer than existing destination files. This command-line option allows you to update files that have changed.
 rem '*' at the end of the destination to surpress directory/file prompt
 
 @echo on

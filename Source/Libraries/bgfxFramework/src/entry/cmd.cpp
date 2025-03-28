@@ -53,18 +53,18 @@ struct CmdContext
 		{
 			char commandLine[1024];
 			uint32_t size = sizeof(commandLine);
-			int argc;
-			char* argv[64];
-			next = bx::tokenizeCommandLine(_cmd, commandLine, size, argc, argv, BX_COUNTOF(argv), '\n');
-			if (argc > 0)
+			int numberOfArguments;
+			char* commandLineArguments[64];
+			next = bx::tokenizeCommandLine(_cmd, commandLine, size, numberOfArguments, commandLineArguments, BX_COUNTOF(commandLineArguments), '\n');
+			if (numberOfArguments > 0)
 			{
 				int err = -1;
-				uint32_t cmd = bx::hash<bx::HashMurmur2A>(argv[0], (uint32_t)bx::strLen(argv[0]) );
+				uint32_t cmd = bx::hash<bx::HashMurmur2A>(commandLineArguments[0], (uint32_t)bx::strLen(commandLineArguments[0]) );
 				CmdLookup::iterator it = m_lookup.find(cmd);
 				if (it != m_lookup.end() )
 				{
 					Func& fn = it->second;
-					err = fn.m_fn(this, fn.m_userData, argc, argv);
+					err = fn.m_fn(this, fn.m_userData, numberOfArguments, commandLineArguments);
 				}
 
 				switch (err)

@@ -73,35 +73,29 @@ namespace QwerkE {
         void local_Update();
         void local_EndFrame();
 
+        bool local_StillRunning();
+        void local_Stop();
+
         void local_FileDropCallback(const char* filePath);
 
         bool s_ReloadRequested = false; // #TODO FEATURE
 
-        // #TODO Change to main(argc, argv) entry point function
-		void Run(unsigned int argc, char** argv)
+        // #TODO Change to main(numberOfArguments, commandLineArguments) entry point function
+		void Run(unsigned int numberOfArguments, char** commandLineArguments)
 		{
             Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str());
 
-            // #TODO Note order dependency with framework paths needing initialization
+            Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments); // #TODO Improve name
+
+            Settings::LoadEngineSettings("Editor.qsetting");
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
-
-            Framework::StartUpArguments startUpArgs(
-                argc,
-                argv,
-                engineSettings.windowWidthPixels,
-                engineSettings.windowHeightPixels
-            );
-
-			Framework::Initialize(startUpArgs);
+			Framework::Initialize(engineSettings.windowWidthPixels, engineSettings.windowHeightPixels);
 
             local_Initialize();
 
-            FixMatrixSerialize matrix;
-            Serialize::ToFile(matrix, Paths::Setting("test_matrix.json").c_str());
-
             Time::WriteAppStartTime();
 
-			while (StillRunning())
+			while (local_StillRunning())
 			{
 				if (Time::ShouldProcessNextFrame())
 				{
@@ -137,16 +131,6 @@ namespace QwerkE {
 
 			Framework::Shutdown();
             local_Shutdown();
-		}
-
-		void Stop()
-		{
-			Window::RequestClose();
-		}
-
-		bool StillRunning()
-		{
-			return !Window::CloseRequested();
 		}
 
         const EditorStateFlags& GetEditorStateFlags()
@@ -270,7 +254,7 @@ namespace QwerkE {
         {
             if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
             {
-                Stop();
+                local_Stop();
             }
 
             if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press) &&
@@ -336,6 +320,16 @@ namespace QwerkE {
             Framework::EndFrame();
         }
 
+        bool local_StillRunning()
+        {
+            return !Window::CloseRequested();
+        }
+
+        void local_Stop()
+        {
+            Window::RequestClose();
+        }
+
         void local_FileDropCallback(const char* filePath)
         {
             const Path fileName = Files::FileName(filePath);
@@ -359,7 +353,7 @@ namespace QwerkE {
 
 }
 
-void main(unsigned int argc, char** argv)
+void main(unsigned int numberOfArguments, char** commandLineArguments)
 {
-    QwerkE::Editor::Run(argc, argv);
+    QwerkE::Editor::Run(numberOfArguments, commandLineArguments);
 }

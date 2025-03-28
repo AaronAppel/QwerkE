@@ -29,7 +29,6 @@ namespace QwerkE {
 
         // https://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 #include <memory>
-#include <string>
 #include <stdexcept>
 
         template<typename ... Args>

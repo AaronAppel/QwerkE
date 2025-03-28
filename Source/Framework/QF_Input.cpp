@@ -47,7 +47,7 @@ namespace QwerkE {
         static const u16 s_GlfwKeyCodexSize = GLFW_KEY_LAST + 1;
         static u16* s_GlfwKeyCodex = new unsigned short[s_GlfwKeyCodexSize];
 #endif
-
+        
 #ifdef _QDEARIMGUI
         static u16* s_ImGuiKeyCodex = new unsigned short[eKeys_MAX];
 #endif

@@ -6,12 +6,6 @@ namespace QwerkE {
 
 	class EntityHandle;
 
-	// #TESTING
-	struct FixMatrixSerialize
-	{
-		float m_Matrix[16];
-	};
-
 	namespace Editor {
 
 		typedef unsigned int u32;
@@ -32,10 +26,6 @@ namespace QwerkE {
 
 			Placeholder2					= 1 << 30,
 		};
-
-		void Stop();
-
-		bool StillRunning();
 
 		const EditorStateFlags& GetEditorStateFlags();
 		void SetEditorStateFlags(const EditorStateFlags& flags);

@@ -38,10 +38,10 @@ namespace QwerkE {
         return;
 
         // #TESTING Code below is for testing mesh generation
-        const u8 rows = 11;
-        const u8 columns = 11;
-        const float spacingScalar = 3.f;
-        const float offset = 15.f;
+        constexpr u8 rows = 11;
+        constexpr u8 columns = 11;
+        constexpr float spacingScalar = 3.f;
+        constexpr float offset = 15.f;
 
         for (uint32_t yy = 0; yy < columns; ++yy)
         {

@@ -37,6 +37,7 @@ namespace QwerkE {
 		};
 
 		QC_ENUM(EditorWindowTypes, u32,
+			// #NOTE Order matters! Match enum EditorWindowsList order
 			EditorWindowTypesInvalid = 0,
 			Assets,
 			DefaultDebug,

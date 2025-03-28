@@ -31,7 +31,8 @@ namespace QwerkE {
 
 	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfLoadedAssetMaps;
 
-	const char* const s_AssetsRegistryFileName = "Assets.qreg";
+	// #TODO https://stackoverflow.com/questions/38955940/how-to-concatenate-static-strings-at-compile-time
+	const char* const s_AssetsRegistryFileName = "Assets.qreg"; // Files::Extensions::Registry
 	static std::unordered_map<size_t, AssetsList> s_AssetGuidToFileRegistry;
 
 	GUID Assets::LoadAsset(const size_t typeId, const GUID& guid)
@@ -73,6 +74,30 @@ namespace QwerkE {
 				case Mirror::TypeId<Scene>():
 					// #NOTE Scene transition changes to Scenes::CreateSceneFromFile(fileName)
 					m_MapOfLoadedAssetMaps[typeId][guid] = Scenes::CreateSceneFromFile(Paths::Scene(fileName.c_str())); break;
+
+				case Mirror::TypeId<Shader>():
+					{
+						// #TODO Loading hard coded shader for now to test.
+						// Need to setup shaders to have both vertex and fragment files linked together.
+						// Might need to create shader component struct with 2 pointers and shaders just reference shader components.
+						Shader* newShader = new Shader();
+						newShader->m_Program = myLoadShaderProgram( // Blinn shading
+							Paths::Shader("vs_mesh.bin").c_str(),
+							Paths::Shader("fs_mesh.bin").c_str()
+						);
+
+						const bool error = false; // #TODO Catch shader creation error
+						// newShader->m_Program != 0?
+						if (error)
+						{
+							delete newShader;
+						}
+						else
+						{
+							m_MapOfLoadedAssetMaps[typeId][guid] = newShader;
+						}
+					}
+					break;
 
 				default:
 					// #TODO LOG_ERROR("Unsupported asset type!");
@@ -189,8 +214,9 @@ namespace QwerkE {
 		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
 		for (size_t i = 0; i < vectorGuidStrings.size(); i++)
 		{
-			std::pair<GUID, std::vector<std::string>>& pair = vectorGuidStrings[i];
+			const std::pair<GUID, std::vector<std::string>>& pair = vectorGuidStrings[i];
 			// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+			// #TODO ShaderComponenent should solve this issue
 			constexpr int index = 0;
 			if (pair.first == guid || pair.second[index] == fileName)
 			{

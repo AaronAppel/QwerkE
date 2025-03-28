@@ -35,7 +35,9 @@
 #include "Libraries/glfw/glfw3native.h"
 #endif
 
+#include "QF_Assets.h"
 #include "QF_Enums.h"
+#include "QF_RendererHelpers.h"
 #include "QF_Shader.h"
 #include "QF_Window.h"
 
@@ -230,15 +232,21 @@ namespace QwerkE {
 
 				// Create program from shaders.
 				m_shadingProgram = new Shader();
+				// #TODO Consider moving below shader creation code to utility or renderer
 				m_shadingProgram->m_Program = myLoadShaderProgram( // Blinn shading
 					Paths::Shader("vs_picking_shaded.bin").c_str(),
 					Paths::Shader("fs_picking_shaded.bin").c_str()
 				);
+
 				m_idProgram = new Shader();
 				m_idProgram->m_Program = myLoadShaderProgram( // Shader for drawing into ID buffer
 					Paths::Shader("vs_picking_shaded.bin").c_str(),
 					Paths::Shader("fs_picking_id.bin").c_str()
 				);
+
+				// #TODO Call Assets to find and create shaders (Assets calling utility load function)
+				// m_shadingProgram = Assets::Get<Shader>( );
+				// m_idProgram = Assets::Get<Shader>( );
 
 				m_highlighted = UINT32_MAX;
 				m_reading = 0;

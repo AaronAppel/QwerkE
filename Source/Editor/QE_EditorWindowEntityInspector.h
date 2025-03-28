@@ -45,6 +45,23 @@ namespace QwerkE {
                     return;
                 }
 
+                if (!m_CurrentEntity.HasComponent<ComponentCamera>() ||
+                    m_CurrentEntity != m_CurrentEntity.GetScene()->GetCurrentCameraEntity())
+                {
+                    ComponentTransform& transform = m_CurrentEntity.GetComponent<ComponentTransform>();
+                    const auto& position = transform.GetPosition();
+
+                    {   // Debug drawer call
+                        constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+                        bgfx::setState(BGFX_STATE_DEFAULT);
+                        DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
+                        debugDrawer.begin(viewIdFbo1, true);
+
+                        debugDrawer.drawOrb(position.x, position.y, position.z, 2.f, Axis::X);
+                        debugDrawer.end();
+                    }
+                }
+
                 {   // Edit entity name
                     Buffer buffer(INT8_MAX); // #TODO Could be re-used/persistent and updated on entity change
                     buffer.Fill('\0');

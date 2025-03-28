@@ -12,23 +12,12 @@
 #include "QF_Scenes.h"
 #include "QF_Window.h"
 
-int main(unsigned int argc, char** argv)
+int main(unsigned int numberOfArguments, char** commandLineArguments)
 {
-	QwerkE::Framework::StartUpArguments startUpArgs(
-		argc,
-		argv,
-		1920,
-		1080
-	);
-
-	QwerkE::Framework::Initialize(startUpArgs);
+	QwerkE::Framework::SetCommandLineArgs( numberOfArguments, commandLineArguments);
+	QwerkE::Framework::Initialize();
 
 	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("NewScene1.qscene"));
-
-	// #TODO Explore code created scenes
-	// QwerkE::Scene* newScene = QwerkE::Scenes::CreateScene();
-	// QwerkE::EntityHandle handle = newScene->CreateEntity();
-	// handle.AddComponent<>();
 
 	QwerkE::Time::WriteAppStartTime();
 

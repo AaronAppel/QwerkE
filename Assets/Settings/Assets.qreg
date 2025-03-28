@@ -77,6 +77,37 @@
 					}
 				}
 			}
+		},
+		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
+			"const unsigned long long":	{
+				"const unsigned long long":	"202"
+			},
+			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"6900853547483118241"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"fs_picking_id.bin"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"18015078069625190773"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"vs_picking_shaded.bin"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"1030711180692038478"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"fs_picking_shaded.bin"
+					}
+				}
+			}
 		}
 	}
 }

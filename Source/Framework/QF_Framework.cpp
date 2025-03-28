@@ -19,15 +19,19 @@ namespace QwerkE {
 		// #TODO Review moving scenes to framework, deprecating QF_Scenes.h/cpp
 		// static std::vector<Scene*> s_ActiveScenes;
 
-		void local_ProgramArguments(unsigned int argc, char** argv);
+		void local_ProgramArguments(unsigned int numberOfArguments, char** commandLineArguments);
 
-		eOperationResult Initialize(const StartUpArguments& startUpArgs)
+		void SetCommandLineArgs(unsigned int numberOfArguments, char** commandLineArguments)
 		{
-			assert(startUpArgs.argc > 0 && startUpArgs.argv);
-			local_ProgramArguments(startUpArgs.argc, startUpArgs.argv);
+			assert(numberOfArguments > 0 && commandLineArguments);
+			local_ProgramArguments(numberOfArguments, commandLineArguments);
+		}
+
+		eOperationResult Initialize(uint16_t windowWidth, uint16_t windowHeight)
+		{
 			Log::Initialize();
 			Events::Initialize();
-			Window::Initialize();
+			Window::Initialize(windowWidth, windowHeight);
 			Renderer::Initialize();
 			Input::Initialize();
 			Assets::Initialize();
@@ -74,9 +78,9 @@ namespace QwerkE {
 			return s_ProgramArgumentPairs;
 		}
 
-		void local_ProgramArguments(unsigned int argc, char** argv)
+		void local_ProgramArguments(unsigned int numberOfArguments, char** commandLineArguments)
 		{
-			ProgramArgsToPairs(argc, argv, s_ProgramArgumentPairs);
+			ProgramArgsToPairs(numberOfArguments, commandLineArguments, s_ProgramArgumentPairs);
 
 			Paths::SetExePath(s_ProgramArgumentPairs[key_ExePath]);
 

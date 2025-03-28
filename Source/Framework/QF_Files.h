@@ -2,13 +2,23 @@
 
 #include <filesystem>
 
-typedef std::filesystem::path Path;
-
 #include "QF_Buffer.h"
 
 namespace QwerkE {
 
+    typedef std::filesystem::path Path;
+
     namespace Files {
+
+        struct Extensions
+        {
+            // #TODO QF_PathDefines.h
+            // For safety and convenience
+            const char* const Preference = ".qpref";
+            const char* const Registry = ".qreg";
+            const char* const Scene = ".qscene";
+            const char* const Setting = ".qsetting";
+        };
 
         bool Exists(const char* filePath);
 

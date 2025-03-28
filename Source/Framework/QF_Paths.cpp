@@ -38,10 +38,10 @@ namespace QwerkE {
 			return s_NullAssetsDir;
 		}
 
-		std::string NullAsset(const char* sceneFileName)
+		std::string NullAsset(const char* nullFileName)
 		{
 			// #TODO Null directory is in build settings. Should be improved
-			return s_NullAssetsDir + "\\" + sceneFileName;
+			return s_NullAssetsDir + "\\" + nullFileName;
 		}
 
 		std::string ProjectsDir()

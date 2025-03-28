@@ -15,6 +15,7 @@
 // Specialize TypeId to support additional types
 // #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
 
+// #TODO See if PCH files can be used to reduce compiler load and heap requirements to generate type ids again
 #if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
 
 // Enums
@@ -52,7 +53,7 @@ MIRROR_TYPE_ID(QwerkE::Editor::EditorWindow*)
 
 #else
 
-// Enums                              #NOTE Editor Ids start at +200
+// Enums                                      #NOTE Editor Ids start at +500
 // MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 501,)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 502, QwerkE::Editor::EditorWindowFlags)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 503, QwerkE::Editor::EditorWindowTypes)
@@ -85,8 +86,5 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 525, QwerkE::Editor::EditorWindowPref
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 526, QwerkE::Editor::EditorWindowPrompt)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 527, QwerkE::Editor::EditorWindow)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 528, QwerkE::Editor::EditorWindow*)
-
-// #TESTING
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 529, QwerkE::FixMatrixSerialize)
 
 #endif // DEBUG

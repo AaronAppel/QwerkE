@@ -28,7 +28,7 @@ namespace QwerkE {
             case eScriptTypes::SceneTransition:
                 return new ScriptableSceneTransition();
 
-            // #TODO Improve architecture for user generated types
+            // #TODO Improve architecture for user generated types. Ideally don't modify framework files
             case eScriptTypes::UserScript1:
                 return new ScriptGameEntity();
 

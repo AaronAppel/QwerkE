@@ -49,6 +49,7 @@ bgfx::ShaderHandle myLoadShaderName(const char* FILENAME)
 
 bgfx::ShaderHandle myLoadShaderPath(const char* filePath)
 {
+	// #TODO Exception if file doesn't exist
 	FILE* fileHandle = fopen(filePath, "rb");
 	fseek(fileHandle, 0, SEEK_END);
 	long fileContentsSize = ftell(fileHandle);

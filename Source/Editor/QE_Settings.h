@@ -43,6 +43,7 @@ namespace QwerkE {
         const char* GetStyleFileName();
 
         void LoadEngineSettings(const std::string& engineSettingsFilePath); // #TODO Write and chain with above overloaded method
+        void SaveEngineSettings(const std::string& engineSettingsFileName);
         void SaveEngineSettings();
 
         void LoadRendererSettings(const std::string& rendererSettingsFilePath);

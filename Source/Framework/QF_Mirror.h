@@ -193,8 +193,8 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 141, std::unordered_map<QwerkE::eScri
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 142, std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
 
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 143, QwerkE::Input::GameActions)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 144, QwerkE::Shader)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 145, QwerkE::Mesh)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 144, QwerkE::Shader) // #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 145, QwerkE::Mesh) // #TODO Fix value dependency in Assets registry
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 146, QwerkE::EntityHandle)
 
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 147, QwerkE::ComponentScript)

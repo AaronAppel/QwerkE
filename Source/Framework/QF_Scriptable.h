@@ -9,6 +9,7 @@
 namespace QwerkE {
 
 	QC_ENUM(eScriptTypesStr, u8,
+		// #NOTE These values are serialized so value changes matter
 		Invalid = 0,
 		Camera,
 		Testing,
@@ -17,10 +18,11 @@ namespace QwerkE {
 		SceneTransition,
 
 		// User scripts
-		// #TODO Improve architecture for user generated types
+		// #TODO Improve architecture for user generated types. Ideally don't modify framework files
 		UserScript1, // ScriptGameEntity
 
-		COUNT)
+		COUNT
+	)
 
 	enum eScriptTypes : u8
 	{
@@ -33,10 +35,10 @@ namespace QwerkE {
 		SceneTransition,
 
 		// User scripts
-		// #TODO Improve architecture for user generated types
+		// #TODO Improve architecture for user generated types. Ideally don't modify framework files
 		UserScript1, // ScriptGameEntity
 
-		COUNT,
+		COUNT
 	};
 
 	struct ScriptGuiButton

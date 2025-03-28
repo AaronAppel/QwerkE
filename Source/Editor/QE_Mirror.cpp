@@ -160,8 +160,3 @@ MIRROR_CLASS(QwerkE::ProjectsData)
 MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
 MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
 MIRROR_CLASS_END
-
-// #TESTING
-MIRROR_CLASS(QwerkE::FixMatrixSerialize)
-MIRROR_CLASS_MEMBER(m_Matrix)
-MIRROR_CLASS_END
