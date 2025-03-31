@@ -1,7 +1,10 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <vector>
+
+#include "QC_Guid.h"
 
 namespace QwerkE {
 
@@ -25,7 +28,8 @@ namespace QwerkE {
         std::string projectImGuiIniFileName = "imgui.ini";
 
         // Referenced Scenes
-        std::vector<std::string> sceneFileNames;
+        std::vector<std::string> sceneFileNames; // #TODO Deprecate for scenesList
+        std::unordered_map<GUID, std::string> scenesList; // #TODO Review if scene name strings are really needed
 
         // Settings for: Physics, Audio, Graphics, etc
         // struct ConfiguredGameKeys

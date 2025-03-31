@@ -37,28 +37,29 @@ namespace QwerkE {
         bool s_closeRequested = false;
         float s_aspectRatio = 16.f / 9.f;
 
-        CallBacks::FramebufferResizedCallback* s_FramebufferResizedCallback = nullptr;
-        CallBacks::WindowResizedCallback* s_WindowResizedCallback = nullptr;
-        CallBacks::KeyCallback* s_KeyCallback = nullptr;
+        Callbacks::FramebufferResizedCallback* s_FramebufferResizedCallback = nullptr;
+        Callbacks::WindowResizedCallback* s_WindowResizedCallback = nullptr;
+        Callbacks::KeyCallback* s_KeyCallback = nullptr;
 
 #if 1 // #TODO Omit from retail builds
-        CallBacks::FileDropCallback* s_FileDropCallback = nullptr;
+        Callbacks::FileDropCallback* s_FileDropCallback = nullptr;
 #endif
 
     #ifdef _QGLFW3
         GLFWwindow* s_window = nullptr;
 
 #if 1 // #TODO Omit from retail builds
-        void local_file_drop_callback(GLFWwindow* window, int fileCount, const char** filePaths);
+        void local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths);
 #endif
         void local_CheckGlfwErrors();
 
-        void local_error_callback(int error, const char* description)
+        // #TODO Consistent naming for events, like local_OnError maybe? Match with other callbacks like in Input::
+        void local_ErrorCallback(int error, const char* description)
         {
             // LOG_ERROR(description);
         }
 
-        void local_framebuffer_size_callback(GLFWwindow* window, int width, int height)
+        void local_FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
         {
             // Renderer::OnFramebufferResized( vec2(width, height) );
             if (s_FramebufferResizedCallback)
@@ -67,7 +68,7 @@ namespace QwerkE {
             }
         }
 
-        void local_window_resized_callback(GLFWwindow* window, int width, int height)
+        void local_WindowResizedCallback(GLFWwindow* window, int width, int height)
         {
             // Renderer::OnWindowResized(vec2(width, height));
             if (s_WindowResizedCallback)
@@ -76,7 +77,7 @@ namespace QwerkE {
             }
         }
 
-        void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+        void local_KeyEventCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
         {
             if (s_KeyCallback)
             {
@@ -84,12 +85,12 @@ namespace QwerkE {
             }
         }
 
-        void local_close_callback(GLFWwindow* window)
+        void local_CloseCallback(GLFWwindow* window)
         {
             s_closeRequested = true;
         }
 
-        void local_window_iconify_callback(GLFWwindow* window, int iconified)
+        void local_WindowIconifyCallback(GLFWwindow* window, int iconified)
         {
             s_windowIsMinimized = iconified == 1;
         }
@@ -136,14 +137,14 @@ namespace QwerkE {
                 glfwFocusWindow(s_window);
             }
 
-            glfwSetErrorCallback(local_error_callback);
-            glfwSetFramebufferSizeCallback(s_window, local_framebuffer_size_callback);
-            glfwSetWindowCloseCallback(s_window, local_close_callback);
-            glfwSetWindowSizeCallback(s_window, local_window_resized_callback);
-            glfwSetWindowIconifyCallback(s_window, local_window_iconify_callback);
-            glfwSetDropCallback(s_window, local_file_drop_callback);
+            glfwSetErrorCallback(local_ErrorCallback);
+            glfwSetFramebufferSizeCallback(s_window, local_FrameBufferSizeCallback);
+            glfwSetWindowCloseCallback(s_window, local_CloseCallback);
+            glfwSetWindowSizeCallback(s_window, local_WindowResizedCallback);
+            glfwSetWindowIconifyCallback(s_window, local_WindowIconifyCallback);
+            glfwSetDropCallback(s_window, local_FileDropCallback);
 
-            glfwSetKeyCallback(s_window, key_callback);
+            glfwSetKeyCallback(s_window, local_KeyEventCallback);
     #endif
         }
 
@@ -194,23 +195,23 @@ namespace QwerkE {
             return s_windowIsMinimized;
         }
 
-        void RegisterFramebufferResizedCallback(CallBacks::FramebufferResizedCallback* framebufferResizedCallback)
+        void RegisterFramebufferResizedCallback(Callbacks::FramebufferResizedCallback* framebufferResizedCallback)
         {
             s_FramebufferResizedCallback = framebufferResizedCallback;
         }
 
-        void RegisterWindowResizedCallback(CallBacks::WindowResizedCallback* windowResizedCallback)
+        void RegisterWindowResizedCallback(Callbacks::WindowResizedCallback* windowResizedCallback)
         {
             s_WindowResizedCallback = windowResizedCallback;
         }
 
-        void RegisterKeyCallback(CallBacks::KeyCallback* keyCallback)
+        void RegisterKeyCallback(Callbacks::KeyCallback* keyCallback)
         {
             s_KeyCallback = keyCallback;
         }
 
 #if 1 // #TODO Omit from retail builds
-        void RegisterFileDropCallback(CallBacks::FileDropCallback* fileDropCallback)
+        void RegisterFileDropCallback(Callbacks::FileDropCallback* fileDropCallback)
         {
             s_FileDropCallback = fileDropCallback;
         }
@@ -218,7 +219,7 @@ namespace QwerkE {
 
 #if 1 // #TODO Omit from retail builds
         // #TODO Call editor or add an editor callback so window doesn't have file drop logic in release/non-editor build.
-        void local_file_drop_callback(GLFWwindow* window, int fileCount, const char** filePaths)
+        void local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths)
         {
             for (int i = 0; i < fileCount; i++)
             {
@@ -236,7 +237,11 @@ namespace QwerkE {
                     std::string scenefilePath = Paths::Scene(fileName.string().c_str());
                     if (Files::Exists(scenefilePath.c_str()))
                     {
-                        if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
+                        if (Scene* existingScene = Scenes::GetScene(fileName.u8string()))
+                        {
+                            Assets::AddToRegistry(Mirror::TypeId<Scene>(), existingScene->GetGuid(), existingScene->GetSceneName());
+                        }
+                        else if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
                         {
                             // #NOTE Scene transition change removes next line
                             Scenes::SetCurrentScene(newScene);

@@ -52,6 +52,7 @@ namespace QwerkE {
                     // #TODO Use a prefix or another way to generate unique scene names
                     const char* const newFileDefaultName = StringAppend("NewScene", ".", scene_ext); // #TODO constexpr
 
+                    // #TODO Prevent access to load scenes from files and use Assets. Create a new scene file instead
                     if (Scene* newScene = Scenes::CreateScene(newFileDefaultName))
                     {
                         Scenes::SetCurrentScene(newScene);
@@ -128,7 +129,8 @@ namespace QwerkE {
                     ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesCombobuffer) * s_CharacterPixelSize));
                     if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), (s32)scenes.size()))
                     {
-                        Scenes::SetCurrentScene(index);
+                        Scenes::SetCurrentScene(scenes[index]->GetGuid());
+
                         // #NOTE Scene transition changes removes above lines for below
                         // #TODO SetActive(true/false) ?
                         // Scenes::SetCurrentScene(index);

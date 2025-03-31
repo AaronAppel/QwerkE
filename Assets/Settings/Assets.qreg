@@ -2,7 +2,7 @@
 	"std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 			"const unsigned long long":	{
-				"const unsigned long long":	"165"
+				"const unsigned long long":	"158"
 			},
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
@@ -65,7 +65,7 @@
 		},
 		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 			"const unsigned long long":	{
-				"const unsigned long long":	"211"
+				"const unsigned long long":	"161"
 			},
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
@@ -75,12 +75,20 @@
 					"std::vector<std::string>":	{
 						"std::string":	"NewScene1.qscene"
 					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"18264920608085666888"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"GameScene1.qscene"
+					}
 				}
 			}
 		},
 		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 			"const unsigned long long":	{
-				"const unsigned long long":	"202"
+				"const unsigned long long":	"159"
 			},
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{

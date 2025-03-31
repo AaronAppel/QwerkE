@@ -30,39 +30,53 @@ namespace QwerkE {
 		static bool Has(GUID guid)
 		{
 			const size_t typeId = Mirror::TypeId<T>();
-			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeId];
+			if (m_MapOfLoadedAssetMaps.find(typeId) == m_MapOfLoadedAssetMaps.end())
+				return false;
 
+			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeId];
 			return assetMap->find(guid) != assetMap->end();
 		}
 
 		template <typename T>
-		static T* Get(GUID guid)
+		[[nodiscard]] static T* Get(GUID guid)
 		{
-			const size_t typeEnum = Mirror::TypeId<T>();
-			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeEnum];
+			Load<T>(guid);
 
-			if (!Has<T>(guid))
-			{
-				guid = LoadAsset(Mirror::TypeId<T>(), guid);
-			}
-
-			if (m_MapOfLoadedAssetMaps.find(typeEnum) == m_MapOfLoadedAssetMaps.end() ||
-				m_MapOfLoadedAssetMaps[typeEnum].find(guid) == m_MapOfLoadedAssetMaps[typeEnum].end())
+			const size_t typeId = Mirror::TypeId<T>();
+			if (m_MapOfLoadedAssetMaps.find(typeId) == m_MapOfLoadedAssetMaps.end() ||
+				m_MapOfLoadedAssetMaps[typeId].find(guid) == m_MapOfLoadedAssetMaps[typeId].end())
 			{
 				ASSERT(Has<T>(GUID::Invalid), "No null asset found!");
 			}
 
-			void* assetPtr = m_MapOfLoadedAssetMaps[typeEnum][guid];
+			void* assetPtr = m_MapOfLoadedAssetMaps[typeId][guid];
 			return static_cast<T*>(assetPtr);
+		}
+
+		template <typename T>
+		static void Load(GUID guid)
+		{
+			const size_t typeId = Mirror::TypeId<T>();
+
+			if (!Has<T>(guid))
+			{
+				guid = LoadAsset(typeId, guid);
+			}
 		}
 
 #ifndef _QRETAIL
 		template <typename T>
-		static const std::unordered_map<GUID, T*>& ViewAssets()
+		static const std::unordered_map<GUID, T*>* ViewAssets()
 		{
-			const size_t typeEnum = Mirror::TypeId<T>();
-			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeEnum];
-			return *assetMap;
+			const size_t typeId = Mirror::TypeId<T>();
+			std::unordered_map<GUID, T*>* assetMap = nullptr;
+			if (m_MapOfLoadedAssetMaps.find(typeId) != m_MapOfLoadedAssetMaps.end())
+			{
+				// #TODO Avoid below C-style cast
+				// assetMap = static_cast<std::unordered_map<GUID, T*>*>(&m_MapOfLoadedAssetMaps[typeId]);
+				assetMap = (std::unordered_map<GUID, T*>*) & m_MapOfLoadedAssetMaps[typeId];
+			}
+			return assetMap;
 		}
 
 		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
@@ -70,8 +84,8 @@ namespace QwerkE {
 		template <typename T>
 		static std::string GetRegistryAssetFileName(const GUID guid)
 		{
-			const size_t typeEnum = Mirror::TypeId<T>();
-			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeEnum);
+			const size_t typeId = Mirror::TypeId<T>();
+			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeId);
 			for (size_t i = 0; i < assetsRegistry.size(); i++)
 			{
 				auto guidStringPair = assetsRegistry[i];
@@ -88,6 +102,8 @@ namespace QwerkE {
 		static void SaveRegistry();
 
 		static bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName);
+
+		// #TODO Unable to use currently. Compiler error on argument conversion
 		template <typename T>
 		static bool ExistsInRegistry(const GUID& guid, const std::string& fileName)
 		{

@@ -22,10 +22,15 @@ namespace QwerkE {
         void SetScenePaused(const GUID& sceneGuid, const bool isPaused); // #NOTE Scene transition changes removes line
 
         // #TODO Replace scene references with GUIDS instead of strings
-        Scene* CreateSceneFromFile(const std::string& sceneFilePath);
+        // #TODO Review scene creation. Maybe scenes can only be created from scene files using file paths,
+        // or Assets need to check the registry for existing file names and/or GUIDs
+        Scene* CreateSceneFromFile(const std::string& sceneFilePath); // #TODO Could only expose to Assets.
         Scene* CreateScene(const char* const sceneFileNamePrefix); // #NOTE Scene transition changes removes line
         Scene* CreateScene(const GUID& sceneGuid);
         // #NOTE Scene transition changes Scene* CreateScene(const std::string& sceneFileName);
+
+        // #TODO Need to specify argument as file path vs file name
+        bool SceneExists(const char* const sceneFileName);
 
         void DestroyScene(const Scene* const scene);
 
@@ -40,6 +45,8 @@ namespace QwerkE {
         int GetCurrentSceneIndex(); // #NOTE Scene transition changes removes line
         int SceneCount();
         Scene* GetScene(const GUID& guid);
+
+        // #TODO Need to specify argument as file path vs file name
         Scene* GetScene(std::string sceneName); // #NOTE Scene transition changes removes line
         Scene* GetScene(const Scene* const scene); // #NOTE Scene transition changes removes line
         // #NOTE Scene transition changes bool HasScene(const Scene* scene);

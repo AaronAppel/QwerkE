@@ -12,6 +12,43 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
+// String
+#include <string>
+typedef std::string string;
+
+// Collections // #TODO Review value of aliasing std:: collections
+#include <vector>
+template <typename T>
+using vector = std::vector<T>;
+
+#include <array>
+template <typename T, u64 size>
+using array = std::array<T, size>;
+
+#include <unordered_map>
+template <typename T, typename U>
+using uMap = std::unordered_map<T, U>;
+
+#include <map>
+template <typename T, typename U>
+using oMap = std::map<T, U>;
+
+#include <unordered_set>
+template <typename T, typename U>
+using uSet = std::unordered_set<T, U>;
+
+#include <set>
+template <typename T, typename U>
+using oSet = std::set<T, U>;
+
+#include <stack>
+template <typename T>
+using stack = std::stack<T>;
+
+#include <queue>
+template <typename T>
+using queue = std::queue<T>;
+
 // Memory
 #include <memory>
 template<typename T>

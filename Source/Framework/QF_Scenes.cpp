@@ -122,6 +122,7 @@ namespace QwerkE {
 
 			// return newScene;
 
+			// #TODO Validate result
 			Path sceneFileName = Files::FileName(sceneFilePath.c_str());
 
 			if (const Scene* existingScene = GetScene(sceneFileName.string().c_str()))
@@ -204,6 +205,15 @@ namespace QwerkE {
 			// if (!sceneFileName.empty())
 
 			return CreateSceneFromFile(Paths::Scene(sceneFileName.c_str()));
+		}
+
+		bool SceneExists(const char* const sceneFileName)
+		{
+			if (!sceneFileName)
+			{
+				return false;
+			}
+			return nullptr != GetScene(sceneFileName);
 		}
 
 		void DestroyScene(const Scene* const scene)
@@ -300,6 +310,7 @@ namespace QwerkE {
 			return nullptr;
 		}
 
+		// #TODO This really just checks if the scene is still in s_Scenes, so could return a bool and name IsSceneInList or something
 		Scene* GetScene(const Scene* const scene)
 		{
 			NULL_ARG_CHECK_RETURN(scene, nullptr)

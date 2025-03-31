@@ -73,7 +73,8 @@ namespace QwerkE {
 
 				case Mirror::TypeId<Scene>():
 					// #NOTE Scene transition changes to Scenes::CreateSceneFromFile(fileName)
-					m_MapOfLoadedAssetMaps[typeId][guid] = Scenes::CreateSceneFromFile(Paths::Scene(fileName.c_str())); break;
+					m_MapOfLoadedAssetMaps[typeId][guid] = Scenes::CreateSceneFromFile(Paths::Scene(fileName.c_str()));
+					break;
 
 				case Mirror::TypeId<Shader>():
 					{

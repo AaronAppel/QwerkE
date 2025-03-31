@@ -40,9 +40,11 @@ enum FieldSerializationFlags : MIRROR_FIELD_FLAG_SIZE
 };
 
 // Specialize TypeId to support additional types
-// #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
+// #NOTE TypeIds shouldn't be stored in data as they can change in code over time
 
 #if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
+
+// #TODO Review having serialized types at the top in static order to avoid serialization mis-match issues
 
 MIRROR_TYPE_ID(ImVec2)
 MIRROR_TYPE_ID(ImVec4)
@@ -100,6 +102,7 @@ MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, std::string*>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, entt::entity>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
 MIRROR_TYPE_ID(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE_ID(std::unordered_map<GUID, std::string>)
 
 MIRROR_TYPE_ID(QwerkE::Input::GameActions)
 MIRROR_TYPE_ID(QwerkE::Shader)
@@ -134,76 +137,78 @@ MIRROR_TYPE_ID(QwerkE::ScriptableSceneTransition)
 #else
 
 // #NOTE Framework Ids start at +100
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 101, ImVec2)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 102, ImVec4)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 103, ImVec4[55])
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 104, ImGuiStyle)
 
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 105, entt::registry)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 106, entt::entity)
+// Value dependent (serialized IDs)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 100, bgfxFramework::Mesh) // #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 101, QwerkE::Shader) // #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 102, QwerkE::Mesh) // #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 103, QwerkE::Scene)
 
-// Value dependent
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 107, bgfxFramework::Mesh) // #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 104, ImVec2)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 105, ImVec4)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 106, ImVec4[55])
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 107, ImGuiStyle)
+
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 108, entt::registry)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 109, entt::entity)
 
 // QC Types
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 108, QwerkE::Time::Timer)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 110, QwerkE::Time::Timer)
 
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 109, vec3f)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 110, vec2f)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 111, vec3f)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 112, vec2f)
 
 // Function pointers
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 111, void(*)(void))
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 113, void(*)(void))
 
 // Enums
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 112, QwerkE::eKeys)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 113, QwerkE::eComponentTags)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 114, QwerkE::eKeys)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 115, QwerkE::eComponentTags)
 
 // Collections
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 114, float[16])
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 116, float[16])
 
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 115, std::pair<QwerkE::GUID, std::string>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 116, std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 117, std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 118, std::pair<QwerkE::GUID, void*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 119, std::pair<QwerkE::GUID, std::string*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 120, std::pair<const QwerkE::GUID, std::string>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 121, std::pair<const QwerkE::GUID, std::string*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 122, std::pair<QwerkE::GUID, entt::entity>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 123, std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 124, std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 125, std::pair<std::string, std::string>);
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 126, std::pair<QwerkE::GUID, std::pair<std::string, std::string>>);
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 127, std::pair<QwerkE::GUID, std::string[11]>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 128, std::pair<QwerkE::GUID, std::vector<std::string>>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 129, std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 130, std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 117, std::pair<QwerkE::GUID, std::string>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 118, std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 119, std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 120, std::pair<QwerkE::GUID, void*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 121, std::pair<QwerkE::GUID, std::string*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 122, std::pair<const QwerkE::GUID, std::string>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 123, std::pair<const QwerkE::GUID, std::string*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 124, std::pair<QwerkE::GUID, entt::entity>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 125, std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 126, std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 127, std::pair<std::string, std::string>);
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 128, std::pair<QwerkE::GUID, std::pair<std::string, std::string>>);
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 129, std::pair<QwerkE::GUID, std::string[11]>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 130, std::pair<QwerkE::GUID, std::vector<std::string>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 131, std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 132, std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
 
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 131, std::vector<std::string>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 132, std::vector<std::string*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 133, std::vector<std::pair<QwerkE::GUID, std::string>>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 134, std::vector<entt::entity>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 135, std::vector<std::pair<QwerkE::GUID, std::pair<std::string, std::string>>>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 136, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 133, std::vector<std::string>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 134, std::vector<std::string*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 135, std::vector<std::pair<QwerkE::GUID, std::string>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 136, std::vector<entt::entity>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 137, std::vector<std::pair<QwerkE::GUID, std::pair<std::string, std::string>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 138, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>)
 
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 137, std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 138, std::unordered_map<QwerkE::GUID, void*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 139, std::unordered_map<QwerkE::GUID, std::string*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 140, std::unordered_map<QwerkE::GUID, entt::entity>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 141, std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 142, std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 139, std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 140, std::unordered_map<QwerkE::GUID, void*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 141, std::unordered_map<QwerkE::GUID, std::string*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 142, std::unordered_map<QwerkE::GUID, entt::entity>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 143, std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 144, std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 145, std::unordered_map<QwerkE::GUID, std::string>)
 
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 143, QwerkE::Input::GameActions)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 144, QwerkE::Shader) // #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 145, QwerkE::Mesh) // #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 146, QwerkE::EntityHandle)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 146, QwerkE::Input::GameActions)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 147, QwerkE::EntityHandle)
 
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 147, QwerkE::ComponentScript)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 148, QwerkE::ComponentTransform)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 149, QwerkE::ComponentMesh)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 150, QwerkE::ComponentLight)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 151, QwerkE::ComponentInfo)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 152, QwerkE::ComponentCamera)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 153, QwerkE::Scene)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 148, QwerkE::ComponentScript)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 149, QwerkE::ComponentTransform)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 150, QwerkE::ComponentMesh)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 151, QwerkE::ComponentLight)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 152, QwerkE::ComponentInfo)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 153, QwerkE::ComponentCamera)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 154, QwerkE::RendererSettings)
 
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 155, QwerkE::EngineSettings)

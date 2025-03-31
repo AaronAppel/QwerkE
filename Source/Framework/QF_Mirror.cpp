@@ -189,6 +189,7 @@ MIRROR_TYPE(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
 MIRROR_TYPE(std::unordered_map<QwerkE::GUID, std::string*>)
 MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
 MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIRROR_TYPE(std::unordered_map<QwerkE::GUID, std::string>)
 
 // Function pointers
 template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {

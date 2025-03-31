@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 
-#include "QF_Scenes.h"
+#include "QF_Assets.h"
+#include "QF_Scenes.h" // #TODO Remove
 #include "QF_Serialize.h"
 
 #include "QE_Editor.h"
@@ -76,10 +77,16 @@ namespace QwerkE {
 			s_CurrentProject.projectFileName = projectSettingsFileName;
 
 			const u8 range = s_CurrentProject.sceneFileNames.size();
-			for (size_t i = 0; i < range; i++)
+
+			for (const auto& guidSceneNamePairs : s_CurrentProject.scenesList)
 			{
-				if (Scene* newScene = Scenes::CreateSceneFromFile(Paths::Scene(s_CurrentProject.sceneFileNames[i].c_str())))
+				if (Scene* newScene = Assets::Get<Scene>(guidSceneNamePairs.first))
 				{
+					if (newScene->GetSceneName() == s_CurrentProject.startUpSceneName)
+					{
+						Scenes::SetCurrentScene(newScene->GetGuid());
+					}
+
 					// #TODO Move unique check logic into Projects::AddSceneToProjectScenesList() or something better
 					for (size_t i = 0; i < s_CurrentProject.sceneFileNames.size(); i++)
 					{
@@ -94,6 +101,7 @@ namespace QwerkE {
 					}
 				}
 			}
+
 			s_ProjectsData.LastOpenedProjectFileName = s_CurrentProject.projectFileName;
 			local_TryAddUniqueProjectFileName();
 		}

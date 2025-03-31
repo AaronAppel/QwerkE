@@ -204,9 +204,6 @@ namespace QwerkE {
 		{
             Projects::Initialize();
 
-            // #TODO Register file drop callback
-            // Window::RegisterFileDropCallback(&local_FileDropCallback);
-
             LoadImGuiStyleFromFile();
 
             const std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);

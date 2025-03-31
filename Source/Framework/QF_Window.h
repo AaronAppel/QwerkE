@@ -21,13 +21,13 @@ namespace QwerkE {
 
         bool IsMinimized();
 
-        void RegisterFramebufferResizedCallback(CallBacks::FramebufferResizedCallback* framebufferResizedCallback);
-        void RegisterWindowResizedCallback(CallBacks::WindowResizedCallback* windowResizedCallback);
+        void RegisterFramebufferResizedCallback(Callbacks::FramebufferResizedCallback* framebufferResizedCallback);
+        void RegisterWindowResizedCallback(Callbacks::WindowResizedCallback* windowResizedCallback);
 
-        void RegisterKeyCallback(CallBacks::KeyCallback* keyCallback);
+        void RegisterKeyCallback(Callbacks::KeyCallback* keyCallback);
 
 #if 1 // #TODO Omit from retail builds
-        void RegisterFileDropCallback(CallBacks::FileDropCallback* fileDropCallback);
+        void RegisterFileDropCallback(Callbacks::FileDropCallback* fileDropCallback);
 #endif
     }
 

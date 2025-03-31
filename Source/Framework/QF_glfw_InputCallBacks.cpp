@@ -17,7 +17,7 @@ namespace QwerkE {
     namespace Input {
 
 #ifdef _QGLFW3
-        static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+        static void local_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
         static void char_callback(GLFWwindow* window, unsigned int codePoint);
         static void char_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods) { }
         static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
@@ -27,7 +27,7 @@ namespace QwerkE {
 
         void SetupCallbacks(GLFWwindow* window)
         {
-            glfwSetKeyCallback(window, key_callback);
+            glfwSetKeyCallback(window, local_KeyCallback);
             glfwSetScrollCallback(window, scroll_callback);
             glfwSetCharCallback(window, char_callback);
             glfwSetCharModsCallback(window, char_mods_callback);
@@ -35,7 +35,7 @@ namespace QwerkE {
             glfwSetMouseButtonCallback(window, mouse_button_callback);
         }
 
-        void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+        void local_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
         {
             if (key == -1)
             {

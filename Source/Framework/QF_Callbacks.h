@@ -2,9 +2,9 @@
 
 namespace QwerkE {
 
-	namespace CallBacks { // #TODO Capital B?
+	namespace Callbacks {
 
-		// #TODO Review name starting with "CallBack"
+		// #TODO Review names starting with "CallBack"
 		using FramebufferResizedCallback = std::function<void(int width, int height)>;
 		using WindowResizedCallback = std::function<void(int width, int height)>;
 		using KeyCallback = std::function<void(int key, int scancode, int action, int mode)>;

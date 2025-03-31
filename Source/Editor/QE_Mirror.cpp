@@ -51,6 +51,7 @@ MIRROR_CLASS_MEMBER(projectFileName)
 MIRROR_CLASS_MEMBER(projectName)
 MIRROR_CLASS_MEMBER(startUpSceneName)
 MIRROR_CLASS_MEMBER(sceneFileNames)
+MIRROR_CLASS_MEMBER(scenesList)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowAssets)

@@ -39,47 +39,55 @@ namespace QwerkE {
 
                     if (ImGui::CollapsingHeader("bgfxFramework::Mesh"))
                     {
-                        const std::unordered_map<GUID, bgfxFramework::Mesh*>& meshes = Assets::ViewAssets<bgfxFramework::Mesh>();
-                        for (auto& guidMeshPair : meshes)
+                        if (const std::unordered_map<GUID, bgfxFramework::Mesh*>* meshes = Assets::ViewAssets<bgfxFramework::Mesh>())
                         {
-                            ImGui::Text("GUID: ");
-                            ImGui::SameLine();
-                            ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                            for (auto& guidMeshPair : *meshes)
+                            {
+                                ImGui::Text("GUID: ");
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                            }
                         }
                     }
 
                     if (ImGui::CollapsingHeader("QwerkE::Mesh"))
                     {
-                        const std::unordered_map<GUID, Mesh*>& meshes = Assets::ViewAssets<Mesh>();
-                        for (auto& guidMeshPair : meshes)
+                        if (const std::unordered_map<GUID, Mesh*>* meshes = Assets::ViewAssets<Mesh>())
                         {
-                            ImGui::Text("GUID: ");
-                            ImGui::SameLine();
-                            ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                            for (auto& guidMeshPair : *meshes)
+                            {
+                                ImGui::Text("GUID: ");
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                            }
                         }
                     }
 
                     if (ImGui::CollapsingHeader("Shaders"))
                     {
-                        const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
-                        for (auto& guidShaderPair : shaders)
+                        if (const std::unordered_map<GUID, Shader*>* shaders = Assets::ViewAssets<Shader>())
                         {
-                            ImGui::Text("GUID: ");
-                            ImGui::SameLine();
-                            ImGui::Text(std::to_string(guidShaderPair.first).c_str());
+                            for (auto& guidShaderPair : *shaders)
+                            {
+                                ImGui::Text("GUID: ");
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidShaderPair.first).c_str());
+                            }
                         }
                     }
 
                     if (ImGui::CollapsingHeader("Scenes"))
                     {
-                        const std::unordered_map<GUID, Scene*>& scenes = Assets::ViewAssets<Scene>();
-                        for (auto& guidScenePair : scenes)
+                        if (const std::unordered_map<GUID, Scene*>* scenes = Assets::ViewAssets<Scene>())
                         {
-                            ImGui::Text("GUID: ");
-                            ImGui::SameLine();
-                            ImGui::Text(std::to_string(guidScenePair.first).c_str());
-                            ImGui::SameLine();
-                            ImGui::Text(guidScenePair.second->GetSceneName().c_str());
+                            for (auto& guidScenePair : *scenes)
+                            {
+                                ImGui::Text("GUID: ");
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidScenePair.first).c_str());
+                                ImGui::SameLine();
+                                ImGui::Text(guidScenePair.second->GetSceneName().c_str());
+                            }
                         }
 
                         // #NOTE Scene transition change
