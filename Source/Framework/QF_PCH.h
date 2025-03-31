@@ -60,4 +60,4 @@
 #pragma warning( default : 6285 )
 #endif
 
-// NOTE: Add additional .h files below, if they rarely change
+// #NOTE: Add additional .h files below, if they rarely change

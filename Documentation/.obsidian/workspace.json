@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Scene Loading.md",
+                "file": "Solution Configuration/Precompiled Headers.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Scene Loading"
+              "title": "Precompiled Headers"
             }
           },
           {
@@ -110,7 +110,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "pch",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -131,7 +131,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -222,8 +223,11 @@
   },
   "active": "4efafad35c837a61",
   "lastOpenFiles": [
-    "QwerkE Initial 1st Commit.md",
+    "{CFA9FE16-39A2-4331-A8C3-40F7805AB956}.png",
+    "{868F4BCD-34FB-415B-9070-0CAB845B8A96}.png",
+    "{AF01BB18-5095-48E5-80BE-AC95CEEAD802}.png",
     "Scene Loading.md",
+    "QwerkE Initial 1st Commit.md",
     "Untitled.canvas",
     "Development/Bug Tickets/B0001 - Allow 0 Lights.md",
     "Mirror Library.md",
@@ -249,7 +253,6 @@
     "Adding Entity Components.md",
     "Development/Features/0. Features List.md",
     "Development/Features/0. Features Kanban.md",
-    "Adding EditorWindows.md",
-    "Adding Entity Component Scripts.md"
+    "Adding EditorWindows.md"
   ]
 }

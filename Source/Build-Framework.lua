@@ -39,17 +39,14 @@ project "Framework"
 		"%{wks.location}/Source/Libraries/bx/include",
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
 	}
-	
-	-- disablewarnings { "warnings" }
 
-	forceincludes  { "QF_ForcedIncludes.h", "QF_PCH.h" }
+	forceincludes  { "QF_PCH.h", "QF_ForcedIncludes.h"  }
 	
 	pchheader "QF_PCH.h"
 	pchsource "%{prj.name}/QF_PCH.cpp"
 
-	links
+	links -- Project references
 	{
-		-- Projects
 		"cJSON",
 		"bgfxFramework",
 		"FlatHeadGames",

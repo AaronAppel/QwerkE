@@ -1,7 +1,7 @@
 
 #include "QC_Time.h"
 
-#include "QF_ForcedIncludes.h" // #TODO Review how to solve includes
+#include "QF_ForcedIncludes.h"
 
 #include "QF_EntityHandle.h"
 #include "QF_Framework.h"
@@ -38,7 +38,7 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 
 		QwerkE::Renderer::EndImGui(); // #TODO Remove ImGui from Game code
 
-		QwerkE::Framework::RenderView(1);
+		QwerkE::Framework::RenderView(1); // #TODO Review hard coded 1
 
 		QwerkE::Framework::EndFrame();
 	}

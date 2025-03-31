@@ -11,6 +11,7 @@
 #include "QC_Math.h"
 #include "QC_TypeDefs.h"
 
+#include "QF_Constants.h"
 #include "QF_Debug.h"
 #include "QF_Log.h"
 #include "QF_Paths.h"
@@ -26,13 +27,3 @@ typedef glm::vec4		vec4f;
 typedef glm::mat4		mat4;
 typedef glm::quat		quat;
 #endif
-
-namespace QwerkE {
-
-	namespace Constants {
-
-		static constexpr char* gc_DefaultStringValue = "null";
-
-	}
-
-}

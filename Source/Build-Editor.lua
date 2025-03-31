@@ -3,7 +3,7 @@ include "Libraries.lua"
 project "Editor"
 	kind "ConsoleApp" -- #TODO Check for non-console app type
 	location ""
-	rtti "On" -- Enabled for Mirror serialization
+	rtti "On" -- #NOTE Enabled for Mirror serialization
 	debugargs { "-applicationName", "Test Game" }
 	
 	defines
@@ -11,7 +11,7 @@ project "Editor"
 		"QWERKE_VERSION=0.01",
 		"EngineName=\"QwerkE\"",
 		
-		-- Command line arguments :
+		-- #NOTE Command line arguments :
 		"key_OverrideAssetsDirPath=\"-overrideAssetsDirPath\"",
 		"key_OverrideNullAssetsDirPath=\"-overrideNullAssetsDirPath\"",
 	}
@@ -24,7 +24,7 @@ project "Editor"
 	
 	postbuildcommands
 	{
-		-- Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
+		-- #NOTE Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
 		"call ../Build/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 	
@@ -32,27 +32,26 @@ project "Editor"
 
 	includedirs
 	{
-		"%{wks.location}/Source", -- Repo root for accessing libraries
+		"%{wks.location}/Source", -- #NOTE Repo root for accessing libraries
 		"%{wks.location}/Source/Common/",
 		"%{wks.location}/Source/Framework/",
-		"%{wks.location}/Source/Libraries/", -- Required by 3rd party libraries
+		"%{wks.location}/Source/Libraries/", -- #NOTE Required by 3rd party libraries
 		
-		"%{wks.location}/Source/Libraries/bgfxFramework/include", -- For bgfx helpers
+		"%{wks.location}/Source/Libraries/bgfxFramework/include", -- #NOTE For bgfx helpers
 		
-		"%{wks.location}/Source/Libraries/bgfx/include", -- For testing calls to bgfx in editor code
+		"%{wks.location}/Source/Libraries/bgfx/include", -- #NOTE For testing calls to bgfx in editor code
 		
-		"%{wks.location}/Source/Libraries/bx/include", -- To support creating components that depend on bx
+		"%{wks.location}/Source/Libraries/bx/include", -- #NOTE To support creating components that depend on bx
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
 	}
 	
-	links
+	links -- Project references
 	{
-		-- Projects
 		"Common",
 		"Framework",
 	}
 	
-	forceincludes { "QF_ForcedIncludes.h", "QE_PCH.h" }
+	forceincludes { "QE_PCH.h", "QF_ForcedIncludes.h" }
 	
 	pchheader "QE_PCH.h"
 	pchsource "%{prj.name}/QE_PCH.cpp"

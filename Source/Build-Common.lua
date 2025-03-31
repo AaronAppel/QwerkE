@@ -12,3 +12,9 @@ project "Common"
 	}
 
 	defines { LibraryDefines }
+
+	forceincludes { "QC_PCH.h", }
+	
+	pchheader "QC_PCH.h"
+	pchsource "%{prj.name}/QC_PCH.cpp"
+	

@@ -32,11 +32,11 @@ project "Game"
 	{
 		"%{wks.location}/Source/Common", -- #TODO Review if needed. Was at the time of adding
 		"%{wks.location}/Source/Framework",
-		"%{wks.location}/Source", -- Root for accessing library source
-		"%{wks.location}/Source/Libraries/", -- Required by 3rd party libraries
+		"%{wks.location}/Source", -- #NOTE Root for accessing library source
+		"%{wks.location}/Source/Libraries/", -- #NOTE Required by 3rd party libraries
 	}
 
-	links
+	links -- Project references
 	{
 		"Framework",
 	}
@@ -44,11 +44,6 @@ project "Game"
 	-- Linker Additional Options "/NODEFAULTLIB:msvcrt.lib" to disable warning
 	-- ignoredefaultlibraries { "msvcrt" }
 	-- Also warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32d.lib(glew32d.dll); second definition ignored
-
-	forceincludes { "QG_PCH.h" }
-	
-	pchheader "QG_PCH.h"
-	pchsource "%{prj.name}/QG_PCH.cpp"
 
 	-- filter "configurations:*32"
 	-- 	architecture "x86"
