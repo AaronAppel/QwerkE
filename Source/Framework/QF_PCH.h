@@ -44,6 +44,10 @@
 #include "Libraries/Jolt/Jolt.h"
 #endif
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
+#endif
+
 #ifdef _QSPDLOG
 #pragma warning( disable : 26437 ) // #TODO Switch to use push and pop
 #pragma warning( disable : 26451 )

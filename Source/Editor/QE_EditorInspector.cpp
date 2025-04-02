@@ -84,6 +84,10 @@ namespace QwerkE {
 #ifdef _QDEARIMGUI
 
             std::string elementName = parentName;
+
+            // #TODO Try to use isDraggingPayload to avoid extra value changes when using a slider as a payload source
+            const bool isDraggingPayload = nullptr != ImGui::GetDragDropPayload();
+
             switch (typeInfo->id)
             {
             case Mirror::TypeId<std::string>():
@@ -200,19 +204,6 @@ namespace QwerkE {
                         *numberAddress = std::stoull(buffer.As<char>());
                         valueChanged = true;
                     }
-
-                    // #TODO Get field flags to know if drag target/source and drop is supported
-                    // typeInfo->field[i].flags
-                    // #TODO Testing drag and drop behaviour
-                    if (ImGui::BeginDragDropTarget())
-                    {
-                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GUID"))
-                        {
-                            GUID payloadGUID = *(GUID*)payload->Data;
-                            *numberAddress = payloadGUID;
-                        }
-                        ImGui::EndDragDropTarget();
-                    }
                     ImGui::PopItemWidth();
 
                     std::string popUpName = "Context ";
@@ -309,7 +300,30 @@ namespace QwerkE {
                 }
                 break;
             }
-#endif
+
+            // #TODO Consider moving to a new function to keep this function smaller and specific to interactable elements
+            // Drag and drop behaviour
+            if (ImGui::BeginDragDropSource())
+            {
+                ImGui::SetDragDropPayload(typeInfo->stringName.c_str(), obj, typeInfo->size);
+                ImGui::EndDragDropSource();
+            }
+
+            // #TODO Get field flags to know if drag target/source and drop is supported
+            // typeInfo->field[i].flags
+
+            const int fieldFlag = 1;
+            if (fieldFlag | FieldSerializationFlags::_InspectorDisableDragAndDropTarget &&
+                ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(typeInfo->stringName.c_str()))
+                {
+                    memcpy(obj, payload->Data, typeInfo->size);
+                }
+                ImGui::EndDragDropTarget();
+            }
+
+#endif // #if _QDEARIMGUI
             return valueChanged;
         }
 
@@ -327,6 +341,8 @@ namespace QwerkE {
 
                 std::string fieldName = parentName + field.name + "##";
                 void* fieldAddress = (char*)obj + field.offset;
+
+                // #TODO May need to pass flags from here, at least for drag and drop payloads
                 if (InspectType(field.typeInfo, fieldAddress, fieldName))
                 {
                     returnValue.selectedFieldName = field.name;

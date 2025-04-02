@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "QF_Assets.h"
+#include "QF_Paths.h"
 #include "QF_Scenes.h" // #TODO Remove
 #include "QF_Serialize.h"
 

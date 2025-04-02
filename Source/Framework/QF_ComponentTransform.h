@@ -6,9 +6,8 @@
 
 namespace QwerkE {
 
-	class ComponentTransform
+	struct ComponentTransform
 	{
-	public:
 		ComponentTransform();
 		ComponentTransform(const ComponentTransform& other) = default;
 		ComponentTransform(const vec3f& other);
@@ -21,6 +20,7 @@ namespace QwerkE {
 
 		const float* const GetMatrix() const { return m_Matrix; }
 
+		// #TODO Consider changing to private and using a class if direct matrix access is improper
 		float m_Matrix[16];
 	};
 

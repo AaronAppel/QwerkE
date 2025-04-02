@@ -17,8 +17,6 @@
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Files.h"
-#include "QF_Input.h"
-#include "QF_Log.h"
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"

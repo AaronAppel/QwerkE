@@ -277,7 +277,7 @@ namespace QwerkE {
                         // #TODO Ensure Scriptable* is null to trigger instantiation later
                         // #TODO Review nullifying pointers during deserialization
                         ComponentScript* scriptPtr = (ComponentScript*)&component;
-                        for (auto& pair : scriptPtr->m_ScriptInstances)
+                        for (auto& pair : scriptPtr->ScriptInstances())
                         {
                             pair.second = nullptr;
                         }

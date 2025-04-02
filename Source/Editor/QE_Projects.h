@@ -6,6 +6,8 @@
 
 #include "QC_Guid.h"
 
+#include "QF_Constants.h"
+
 namespace QwerkE {
 
     struct ProjectsData

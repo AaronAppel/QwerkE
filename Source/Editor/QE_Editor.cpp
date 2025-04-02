@@ -206,33 +206,6 @@ namespace QwerkE {
 
             LoadImGuiStyleFromFile();
 
-            // #TODO Clean up test code
-            if (false) // #TODO Try to load icon font
-            {
-                // https://github.com/ocornut/imgui/blob/master/docs/FONTS.md
-                // https://github.com/juliettef/IconFontCppHeaders
-
-                ImGuiIO& io = ImGui::GetIO();
-                // io.Fonts->AddFontDefault();
-                float baseFontSize = 13.0f; // 13.0f is the size of the default font. Change to the font size you use.
-                float iconFontSize = baseFontSize * 2.0f / 3.0f; // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
-
-                // merge in icons from Font Awesome
-                static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_16_FA, 0 };
-                ImFontConfig icons_config;
-                icons_config.MergeMode = true;
-                icons_config.PixelSnapH = true;
-                icons_config.GlyphMinAdvanceX = iconFontSize;
-                ImFont* font = io.Fonts->AddFontFromFileTTF(Paths::Font(FONT_ICON_FILE_NAME_FAS).c_str(), iconFontSize, &icons_config, icons_ranges);
-                IM_ASSERT(font != NULL);
-                // #NOTE Use FONT_ICON_FILE_NAME_FAR if you want regular instead of solid
-                // io.Fonts->GetTexDataAsRGBA32();
-                io.Fonts->Build();
-
-                // #TODO Then can call this in folder viewer with file icons
-                // ImGui::Text(ICON_FA_PAINT_BRUSH "  Paint");
-            }
-
             const std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
             if (!Files::Exists(windowsDataFilePath.c_str()))
             {

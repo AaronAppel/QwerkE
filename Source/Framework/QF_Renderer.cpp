@@ -37,6 +37,7 @@
 
 #include "QF_Assets.h"
 #include "QF_Enums.h"
+#include "QF_Paths.h"
 #include "QF_RendererHelpers.h"
 #include "QF_Shader.h"
 #include "QF_Window.h"

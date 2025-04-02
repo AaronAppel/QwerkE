@@ -20,8 +20,6 @@ namespace QwerkE {
 			// Unbind();
 		}
 
-		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
-
 		void Bind(const EntityHandle& entityHandle)
 		{
 			for (auto& enumScriptablePair : m_ScriptInstances)
@@ -109,6 +107,12 @@ namespace QwerkE {
 			return false;
 		}
 
+		std::unordered_map<eScriptTypes, Scriptable*>& ScriptInstances() { return m_ScriptInstances; }
+
+	private:
+		MIRROR_PRIVATE_MEMBERS
+
+		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
 	};
 
 }

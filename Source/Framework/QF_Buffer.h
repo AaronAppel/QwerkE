@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string> // #TODO Review removing
-
 namespace QwerkE {
 
 	class Buffer final
@@ -57,16 +55,6 @@ namespace QwerkE {
 			if (m_SizeBytes > 0)
 			{
 				memset((char*)m_Data, byteToWrite, m_SizeBytes);
-			}
-		}
-
-		void Write(std::string s)
-		{
-			// #TODO Account for null terminating char
-			if (s.size() + 1 <= m_SizeBytes)
-			{
-				memcpy((char*)m_Data, s.data(), s.size());
-				m_Data[s.size()] = '\0';
 			}
 		}
 

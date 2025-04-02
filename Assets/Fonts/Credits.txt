@@ -10,3 +10,8 @@ License: Unknown
 FREESCPT.TTF
 https://fontzone.net/font-details/freestyle-script
 License: Unknown
+
+fa-solid-900.ttf
+https://github.com/FortAwesome/Font-Awesome/blob/5.x/webfonts/fa-solid-900.ttf
+License: SIL OFL 1.1 License
+Copyright (c) 2024 Fonticons, Inc. (https://fontawesome.com)

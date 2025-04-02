@@ -3,6 +3,7 @@
 #include "QF_Files.h"
 #include "QF_Log.h"
 #include "QF_PathDefines.h"
+#include "QF_Paths.h"
 #include "QF_Serialize.h"
 
 namespace QwerkE {

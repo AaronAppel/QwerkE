@@ -34,10 +34,16 @@
 enum FieldSerializationFlags : MIRROR_FIELD_FLAG_SIZE
 {
 	_None = 0,
-	_HideInInspector = 1 << 0, // Serialize but don't show in editor UI
-	_InspectorOnly = 1 << 1, // Do not serialize the value
-	_InspectorViewOnly = 1 << 1, // Do not serialize the value or allow changes
-	// #TODO Drag and drop not/supported flag and matching logic
+
+	// View, read, and write functionality is enabled by default (inclusive) for all types
+	_HideInInspector = 1 << 0,						// Serialize but don't show in editor UI
+	_InspectorOnly = 1 << 1,						// Do not serialize the value
+	_InspectorViewOnly = 1 << 2,					// Do not allow changes using editor UI
+
+	// Drag and drop functionality is enabled by default (inclusive) for all types
+	// #TODO Payload disabled not yet supported/checked
+	_InspectorDisableDragAndDropTarget = 1 << 3,	// Cannot be modified by drag and drop payload
+	// _InSpectorDisableDragAndDropSource = 1 << 4,	// Cannot be used to provide/create a drag and drop payload
 };
 
 // Specialize TypeId to support additional types
@@ -45,17 +51,21 @@ enum FieldSerializationFlags : MIRROR_FIELD_FLAG_SIZE
 
 #if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
 
-// #TODO Review having serialized types at the top in static order to avoid serialization mis-match issues
+// #NOTE Serialized type IDs 1st to avoid re-ordering issues
+MIRROR_TYPE_ID(QwerkE::Shader)			// #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(QwerkE::Mesh)			// #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(bgfxFramework::Mesh)		// #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(QwerkE::Scene)			// #TODO Fix value dependency in Assets registry
 
+// dear imgui
 MIRROR_TYPE_ID(ImVec2)
 MIRROR_TYPE_ID(ImVec4)
 MIRROR_TYPE_ID(ImVec4[55])
 MIRROR_TYPE_ID(ImGuiStyle)
 
+// entt
 MIRROR_TYPE_ID(entt::registry)
 MIRROR_TYPE_ID(entt::entity)
-
-MIRROR_TYPE_ID(bgfxFramework::Mesh)
 
 // QC Types
 MIRROR_TYPE_ID(QwerkE::Time::Timer)
@@ -103,11 +113,9 @@ MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, std::string*>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, entt::entity>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
 MIRROR_TYPE_ID(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
-MIRROR_TYPE_ID(std::unordered_map<GUID, std::string>)
+MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, std::string>)
 
 MIRROR_TYPE_ID(QwerkE::Input::GameActions)
-MIRROR_TYPE_ID(QwerkE::Shader)
-MIRROR_TYPE_ID(QwerkE::Mesh)
 MIRROR_TYPE_ID(QwerkE::EntityHandle)
 
 MIRROR_TYPE_ID(QwerkE::ComponentScript)
@@ -116,7 +124,6 @@ MIRROR_TYPE_ID(QwerkE::ComponentMesh)
 MIRROR_TYPE_ID(QwerkE::ComponentLight)
 MIRROR_TYPE_ID(QwerkE::ComponentInfo)
 MIRROR_TYPE_ID(QwerkE::ComponentCamera)
-MIRROR_TYPE_ID(QwerkE::Scene)
 MIRROR_TYPE_ID(QwerkE::RendererSettings)
 
 MIRROR_TYPE_ID(QwerkE::EngineSettings)
@@ -140,10 +147,10 @@ MIRROR_TYPE_ID(QwerkE::ScriptableSceneTransition)
 // #NOTE Framework Ids start at +100
 
 // Value dependent (serialized IDs)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 100, bgfxFramework::Mesh) // #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 101, QwerkE::Shader) // #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 102, QwerkE::Mesh) // #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 103, QwerkE::Scene)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 100, bgfxFramework::Mesh)	// #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 101, QwerkE::Shader)			// #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 102, QwerkE::Mesh)			// #TODO Fix value dependency in Assets registry
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 103, QwerkE::Scene)			// #TODO Fix value dependency in Assets registry
 
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 104, ImVec2)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 105, ImVec4)

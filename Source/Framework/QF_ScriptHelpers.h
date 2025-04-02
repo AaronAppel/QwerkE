@@ -20,6 +20,7 @@ namespace QwerkE {
         ScriptablePatrol,
         ScriptableTesting,
         ScriptableSceneTransition
+        // #NOTE Add new Scriptable classes here
     >;
 
 

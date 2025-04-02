@@ -21,6 +21,7 @@ namespace QwerkE {
 
 	namespace Editor {
 
+		// #TODO Consider re-naming ...DirectoryViewer
 		class EditorWindowFolderViewer : public EditorWindow
 		{
 		public:

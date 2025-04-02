@@ -38,7 +38,6 @@ namespace QwerkE {
 			return eScriptTypes::Testing;
 		}
 
-		GUID m_TestGuidReference = 0;
 	};
 
 }

@@ -5,14 +5,10 @@
 
 // #NOTE Functionality macros. See Macros section in README.md for more info.
 // #define MIRROR_TESTING
-// #define MIRROR_NONCONFORMING // #NOTE See "Known Working Compiler Versions" section in README.md
-// #define MIRROR_GENERATE_TYPE_IDS
 // #define MIRROR_TYPE_SIZE_UNUSED
 // #define MIRROR_FIELD_FLAGS_UNUSED
 
-#if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
 #include "MIR_ConstexprCounter.h"
-#endif
 
 #ifdef MIRROR_TESTING
 #include <cassert>

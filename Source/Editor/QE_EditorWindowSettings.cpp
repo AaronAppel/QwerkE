@@ -6,6 +6,7 @@
 #include "QF_Input.h"
 
 #include "QE_EditorInspector.h"
+#include "QF_Paths.h"
 #include "QE_Projects.h"
 #include "QE_Settings.h"
 
@@ -164,11 +165,14 @@ namespace QwerkE {
             if (false && ImGui::Begin("Schematics Inspector", NULL))
             {
                 // #TODO Cache result to avoid constant directory info fetching
-                const std::vector<std::string> dirFileNames = Directory::ListDir(StringAppend(Paths::AssetsDir().c_str(), "Schematics/"));
 
-                for (size_t i = 0; i < dirFileNames.size(); i++)
+                for (auto& directoryEntry : Directory::ListDir(StringAppend(Paths::AssetsDir().c_str(), "Schematics/")))
                 {
-                    ImGui::Button(dirFileNames.at(i).c_str());
+                    // #NOTE Crashes when viewing file names containing emojis
+                    const auto& path = directoryEntry.path();
+                    std::string filenameString = path.filename().string();
+
+                    ImGui::Button(filenameString.c_str());
                 }
 
                 ImGui::End();

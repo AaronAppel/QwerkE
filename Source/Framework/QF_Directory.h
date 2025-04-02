@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include <filesystem> // For std::filesystem::directory_iterator #TODO Review smaller include
 
 namespace QwerkE {
 
@@ -9,7 +8,7 @@ namespace QwerkE {
 
         bool Exists(const char* dirPath);
 
-        std::vector<std::string> ListDir(const char* directoryPath);
+        std::filesystem::directory_iterator ListDir(const char* directoryPath);
 
     }
 

@@ -11,10 +11,8 @@
 #include "QC_Math.h"
 #include "QC_TypeDefs.h"
 
-#include "QF_Constants.h"
 #include "QF_Debug.h"
 #include "QF_Log.h"
-#include "QF_Paths.h"
 
 #ifdef _QGLM
 #include "Libraries/glm/glm.hpp"

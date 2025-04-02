@@ -38,18 +38,13 @@ namespace QwerkE {
                     return;
                 }
 
-                Scene* entityScene = m_CurrentEntity.GetScene();
-                if (!m_CurrentEntity)
-                {
-                    ImGui::Text("Null entity scene");
-                    return;
-                }
+                const bool drawSelectedEntityGizmo = !m_CurrentEntity.HasComponent<ComponentCamera>() ||
+                    m_CurrentEntity != m_CurrentEntity.GetScene()->GetCurrentCameraEntity();
 
-                if (!m_CurrentEntity.HasComponent<ComponentCamera>() ||
-                    m_CurrentEntity != m_CurrentEntity.GetScene()->GetCurrentCameraEntity())
+                if (drawSelectedEntityGizmo)
                 {
                     ComponentTransform& transform = m_CurrentEntity.GetComponent<ComponentTransform>();
-                    const auto& position = transform.GetPosition();
+                    const vec3f& position = transform.GetPosition();
 
                     {   // Debug drawer call
                         constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
@@ -87,8 +82,15 @@ namespace QwerkE {
                 ImGui::SameLine();
                 if (ImGui::Button("Destroy"))
                 {
-                    entityScene->DestroyEntity(m_CurrentEntity);
-                    m_CurrentEntity.Invalidate();
+                    if (Scene* entityScene = m_CurrentEntity.GetScene())
+                    {
+                        entityScene->DestroyEntity(m_CurrentEntity);
+                        m_CurrentEntity.Invalidate();
+                    }
+                    else
+                    {
+                        ImGui::Text("Null entity scene");
+                    }
                     return;
                 }
 
@@ -100,138 +102,139 @@ namespace QwerkE {
 
                 if (ImGui::BeginPopup("ComponentList"))
                 {
-                    // #TODO Use EntityComponentsList
-                    AddComponentEntry<ComponentCamera>(m_CurrentEntity);
-                    AddComponentEntry<ComponentInfo>(m_CurrentEntity);
-                    AddComponentEntry<ComponentLight>(m_CurrentEntity);
-                    AddComponentEntry<ComponentMesh>(m_CurrentEntity);
-                    AddComponentEntry<ComponentScript>(m_CurrentEntity);
-                    AddComponentEntry<ComponentTransform>(m_CurrentEntity);
+                    priv_AddComponentEntries(EntityComponentsList{}, m_CurrentEntity);
                     ImGui::EndPopup();
                 }
 
-                // #TODO Use EntityComponentsList
-                DrawEditComponent<ComponentInfo>(m_CurrentEntity); // Draw above
-                DrawEditComponent<ComponentTransform>(m_CurrentEntity);
-
-                DrawEditComponent<ComponentCamera>(m_CurrentEntity);
-                DrawEditComponent<ComponentLight>(m_CurrentEntity);
-                DrawEditComponent<ComponentMesh>(m_CurrentEntity);
-                if (DrawEditComponent<ComponentScript>(m_CurrentEntity))
-                {
-                    ComponentScript& script = m_CurrentEntity.GetComponent<ComponentScript>();
-
-                    // #TODO Review script.AddScript(pair.first) use rather than below logic
-                    for (auto& pair : script.m_ScriptInstances)
-                    {
-                        if (pair.second && !pair.second->GetEntity())
-                        {
-                            pair.second->SetEntity(EntityHandle(m_CurrentEntity.GetScene(), m_CurrentEntity.EntityGuid()));
-                            pair.second->OnCreate(); // #TODO Can remove component and break iterator
-                            break;
-                        }
-                    }
-                    script.Bind(m_CurrentEntity);
-                }
+                priv_EditComponentEntries(EntityComponentsList{}, m_CurrentEntity);
 			}
 
-            template <typename T>
-            T* AddComponentEntry(EntityHandle& entity)
+            template <typename... Component>
+            void priv_AddComponentEntry(EntityHandle entityHandle)
             {
-                const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
-                if (!entity.HasComponent<T>() && ImGui::MenuItem(typeInfo->stringName.c_str()))
-                {
-                    T& component = entity.AddComponent<T>();
-                    if (std::is_same_v<T, ComponentScript>)
+                ([&]() {
+                    const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<Component>();
+                    if (!entityHandle.HasComponent<Component>() && ImGui::MenuItem(typeInfo->stringName.c_str()))
                     {
-                        ComponentScript* script = (ComponentScript*)&component;
-
-                        for (auto& pair : script->m_ScriptInstances)
+                        Component& component = entityHandle.AddComponent<Component>();
+                        if (std::is_same_v<Component, ComponentScript>)
                         {
-                            if (pair.second && !pair.second->GetEntity())
+                            ComponentScript* script = (ComponentScript*)&component;
+
+                            for (auto& pair : script->ScriptInstances())
                             {
-                                pair.second->SetEntity(entity);
+                                if (pair.second && !pair.second->GetEntity())
+                                {
+                                    pair.second->SetEntity(entityHandle);
+                                }
                             }
                         }
-                    }
-                    else if (std::is_same_v<T, ComponentMesh>)
-                    {
-                        ComponentMesh* mesh = (ComponentMesh*)&component;
-                        mesh->Initialize();
-                    }
+                        else if (std::is_same_v<Component, ComponentMesh>)
+                        {
+                            ComponentMesh* mesh = (ComponentMesh*)&component;
+                            mesh->Initialize();
+                        }
 
-                    ImGui::CloseCurrentPopup();
-                    return &component;
-                }
-
-                return nullptr;
+                        ImGui::CloseCurrentPopup();
+                    }
+                    }(), ...);
             }
 
-            template <typename T>
-            bool DrawEditComponent(EntityHandle& entity)
+            template<typename... Components>
+            void priv_AddComponentEntries(TemplateArgumentList<Components...>, EntityHandle entityHandle)
             {
-                if (!entity.HasComponent<T>())
-                    return false;
+                priv_AddComponentEntry<Components...>(entityHandle);
+            }
 
-                const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
-                T& component = entity.GetComponent<T>();
+            template <typename... Component>
+            void priv_EditComponentEntry(EntityHandle entityHandle)
+            {
+                ([&]() {
+                    if (!entityHandle.HasComponent<Component>())
+                        return;
 
-                const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+                    const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
+                    Component& component = entityHandle.GetComponent<Component>();
 
-                const float buttonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
+                    const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<Component>();
 
-                const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
-                const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, typeInfo->stringName.c_str());
+                    const float buttonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
 
-                if (std::is_same_v<T, ComponentMesh>)
-                {
-                    std::string popUpName = "Context " + typeInfo->stringName;
+                    const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+                    const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(Component).hash_code(), treeNodeFlags, typeInfo->stringName.c_str());
 
-                    // #TODO Fix context menu button
-                    // ImGui::SameLine(buttonWidth * 2);
-                    // if (ImGui::Button("&", ImVec2{ lineHeight, lineHeight }))
-                    // {
-                    //     ImGui::OpenPopup(popUpName.c_str());
-                    // }
-
-                    if (ImGui::IsItemClicked(ImGui::MouseRight))
+                    if (std::is_same_v<Component, ComponentMesh>)
                     {
-                        ImGui::OpenPopup(popUpName.c_str());
-                    }
+                        std::string popUpName = "Context " + typeInfo->stringName;
 
-                    if (ImGui::BeginPopup(popUpName.c_str()))
-                    {
-                        if (ImGui::Button("Initialize"))
+                        // #TODO Fix context menu button
+                        // ImGui::SameLineEnd(1, 0.5f);
+                        ImGui::SameLine(ImGui::GetContentRegionAvail().x - lineHeight);
+                        if (ImGui::Button(":", ImVec2{ lineHeight, lineHeight }))
                         {
-                            entity.GetComponent<ComponentMesh>().Initialize();
+                            ImGui::OpenPopup(popUpName.c_str());
                         }
-                        ImGui::EndPopup();
-                    }
-                }
 
-                if (!std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>)
-                {
-                    ImGui::SameLine(buttonWidth);
-                    if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
+                        if (ImGui::IsItemClicked(ImGui::MouseRight))
+                        {
+                            ImGui::OpenPopup(popUpName.c_str());
+                        }
+
+                        if (ImGui::BeginPopup(popUpName.c_str()))
+                        {
+                            if (ImGui::Button("Initialize"))
+                            {
+                                entityHandle.GetComponent<ComponentMesh>().Initialize();
+                            }
+                            ImGui::EndPopup();
+                        }
+                    }
+
+                    if (!std::is_same_v<Component, ComponentTransform> && !std::is_same_v<Component, ComponentInfo>)
                     {
-                        entity.RemoveComponent<T>();
+                        ImGui::SameLine(buttonWidth);
+                        if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
+                        {
+                            entityHandle.RemoveComponent<Component>();
+                        }
                     }
-                }
 
-                if (nodeOpen)
-                {
-                    ImGui::TreePop();
-
-                    if (std::is_same_v<T, ComponentCamera> &&
-                        entity.HasComponent<ComponentCamera>() &&
-                        ImGui::Button("Switch To"))
+                    if (nodeOpen)
                     {
-                        Scenes::GetCurrentScene()->SetCurrentCameraEntity(entity);
-                    }
-                    return Inspector::InspectObject(component);
-                }
+                        ImGui::TreePop();
 
-                return false;
+                        if (std::is_same_v<Component, ComponentCamera> &&
+                            entityHandle.HasComponent<ComponentCamera>() &&
+                            ImGui::Button("Switch To"))
+                        {
+                            Scenes::GetCurrentScene()->SetCurrentCameraEntity(entityHandle);
+                        }
+
+                        if (Inspector::InspectObject(component) &&
+                            std::is_same_v<Component, ComponentScript>)
+                        {
+                            ComponentScript& script = m_CurrentEntity.GetComponent<ComponentScript>();
+
+                            // #TODO Review script.AddScript(pair.first) use rather than below logic
+                            for (auto& pair : script.ScriptInstances())
+                            {
+                                if (pair.second && !pair.second->GetEntity())
+                                {
+                                    pair.second->SetEntity(EntityHandle(m_CurrentEntity.GetScene(), m_CurrentEntity.EntityGuid()));
+                                    pair.second->OnCreate(); // #TODO OnCreate() nested calls can remove component and break pair iterator
+                                    break;
+                                }
+                            }
+                            script.Bind(m_CurrentEntity);
+                        }
+                    }
+                }(), ...);
+            }
+
+            template<typename... Components>
+            void priv_EditComponentEntries(TemplateArgumentList<Components...>, EntityHandle entityHandle)
+            {
+                priv_EditComponentEntry<Components...>(entityHandle);
             }
 
             void OnEntitySelected(EntityHandle& entity) override { m_CurrentEntity = entity; }

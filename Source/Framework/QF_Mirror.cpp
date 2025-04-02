@@ -34,9 +34,8 @@
 #include "QF_ScriptHelpers.h"
 
 template <typename SuperClass, typename... SubClass>
-static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
+static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo)
 {
-	uint16_t enumValue = enumStartOffset;
 	([&]()
 	{
 		const Mirror::TypeInfo* subclassTypeInfo = Mirror::InfoForType<SubClass>();
@@ -47,14 +46,13 @@ static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumS
 			SubClass* subClass = (SubClass*)pointerToInstance;
 			return dynamic_cast<SubClass*>(*(SuperClass**)pointerToInstance) != nullptr;
 		};
-		++enumValue;
 	}(), ...);
 }
 
 template<typename SuperClass, typename... SubClass>
-static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo)
 {
-	MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo, enumStartOffset);
+	MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo);
 }
 
 #ifdef _QDEARIMGUI
@@ -230,7 +228,6 @@ MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ScriptableTesting)
-MIRROR_CLASS_MEMBER(m_TestGuidReference)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ScriptableSceneTransition)

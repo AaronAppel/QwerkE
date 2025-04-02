@@ -69,12 +69,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Git Ignore.md",
+                "file": "ZZ Shared Vault Files ❗/Visual Studio.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Git Ignore"
+              "title": "Visual Studio"
             }
           },
           {
@@ -124,7 +124,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "spell",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -145,7 +145,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -236,8 +237,8 @@
   },
   "active": "06b8e696632d93cb",
   "lastOpenFiles": [
-    "README.md",
     "Git Ignore.md",
+    "README.md",
     "Solution Configuration/Precompiled Headers.md",
     "{CFA9FE16-39A2-4331-A8C3-40F7805AB956}.png",
     "{868F4BCD-34FB-415B-9070-0CAB845B8A96}.png",

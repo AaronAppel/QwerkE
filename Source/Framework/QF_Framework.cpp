@@ -6,6 +6,7 @@
 #include "QF_Events.h"
 #include "QF_Input.h"
 #include "QF_Log.h"
+#include "QF_Paths.h"
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Window.h"

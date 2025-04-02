@@ -10,11 +10,16 @@
 namespace QwerkE {
 
     using EntityComponentsList = TemplateArgumentList <
-        ComponentCamera,
+
+        // In order as they appear in Editor entity inspector window
         ComponentInfo,
-        ComponentMesh,
         ComponentTransform,
+
+        ComponentCamera,
+        ComponentLight,
+        ComponentMesh,
         ComponentScript
+        // #NOTE Add new Component/Components here
     >;
 
 }
