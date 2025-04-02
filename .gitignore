@@ -65,10 +65,10 @@ Documentation/.obsidian/workspace.json
 !Source/Libraries/glfw/glfw3.lib
 
 # Executables
-*.exe
-!Premake5.exe
 *.out
 *.app
+*.exe
+!Premake5.exe
 
 # Visual Studio
 .vs/
@@ -97,6 +97,14 @@ Documentation/.obsidian/workspace.json
 *.suo
 *.opendb
 *.lnk
+
+*.bat
+!START HERE.bat
+!CleanupBuildFiles.bat
+!Setup-Windows-Vs2022.bat
+!CopyLibraryDLLs.bat
+!Cleanup.bat
+!SetupSymlinks.bat
 
 # Local only
 /Game/Assets/Scenes/Backup
