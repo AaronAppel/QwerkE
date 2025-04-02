@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Solution Configuration/Precompiled Headers.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Precompiled Headers"
+              "title": "README"
             }
           },
           {
@@ -110,7 +110,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "pch",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -131,8 +131,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -223,6 +222,7 @@
   },
   "active": "4efafad35c837a61",
   "lastOpenFiles": [
+    "Solution Configuration/Precompiled Headers.md",
     "{CFA9FE16-39A2-4331-A8C3-40F7805AB956}.png",
     "{868F4BCD-34FB-415B-9070-0CAB845B8A96}.png",
     "{AF01BB18-5095-48E5-80BE-AC95CEEAD802}.png",

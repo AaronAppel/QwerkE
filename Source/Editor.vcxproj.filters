@@ -90,9 +90,6 @@
     <Filter Include="Windows">
       <UniqueIdentifier>{b65493ab-9efd-43bf-a216-f10b7f09c065}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Root Files">
-      <UniqueIdentifier>{9684db7b-7a5d-4fe5-bddc-fde7ef1797a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Windows\Instanced">
       <UniqueIdentifier>{ad298d2d-2571-4e2d-80dc-09536052f26d}</UniqueIdentifier>
     </Filter>

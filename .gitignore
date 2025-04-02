@@ -71,6 +71,7 @@ Documentation/.obsidian/workspace.json
 !Premake5.exe
 
 # Visual Studio
+// *.filters // Useful to share
 .vs/
 *x64
 *x86
@@ -80,7 +81,6 @@ Documentation/.obsidian/workspace.json
 *.enc
 *.sln
 *.vcxproj
-// *.filters // Useful to share
 *.user
 
 # Local only special exclude
@@ -98,8 +98,9 @@ Documentation/.obsidian/workspace.json
 *.opendb
 *.lnk
 
+# .bat files
+START HERE.bat
 *.bat
-!START HERE.bat
 !CleanupBuildFiles.bat
 !Setup-Windows-Vs2022.bat
 !CopyLibraryDLLs.bat

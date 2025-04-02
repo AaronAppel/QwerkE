@@ -3,10 +3,12 @@
 I use this project to develop a simple game engine for hobby.
 Ideally QwerkE can be useful for making my own games, and for those who might brave the challenge of using it as well.
 
-The name QwerkE is simply endearing to me as it's a play on the "QWER" keyboard layout, with an added 'E' that stands for Engine or Editor.
+The name QwerkE is simply endearing to me as it's a play on the "QWER" keyboard layout, with the later 'E', which stands for Engine or Editor.
 
 \**This project is continually in development and should be considered unstable, until proven otherwise!*
 ## Getting Started
+Run "START HERE.bat" in repo root directory to generate and launch Visual Studio 2022 solution
+
 GitHub : [Getting Started Page](https://github.com/AaronAppel/QwerkE/tree/master/Documentation/0.%20Getting%20Started%20With%20QwerkE)
 Local Repo Obsidian : [[Getting Started With QwerkE]]
 
@@ -22,12 +24,16 @@ int main()
 
 ## 3rd Party Libraries
 Libraries or external code I utilize to deliver features (may be outdated) :
+- assimp: www.github.com/assimp/assimp
 - better-enums: https://github.com/aantron/better-enums
 - bgfx, bimg, bx: https://github.com/bkaradzic/bgfx
 - Bullet3: https://github.com/bulletphysics/bullet3
 - cJSON: https://github.com/DaveGamble/cJSON
+- CPPList.h: Dave 'Redbeard' Eccleston
 - enTT: https://github.com/skypjack/entt
 - FlatHead Games: https://github.com/JimmyLord
+- freetype2: www.freetype.org/index.html
+- glew: www.github.com/nigels-com/glew
 - glfw: www.github.com/glfw/glfw
 - glm: www.github.com/g-truc/glm
 - imgui: www.github.com/ocornut/imgui
@@ -47,16 +53,18 @@ Thin Matrix : [YouTube](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ
 [Game engine Architecture](https://www.gameenginebook.com/), Third Edition by Jason Gregory
 
 ## Resources and Tools
-Tools and other software I used throughout development.
 - [Visual Studio](https://visualstudio.microsoft.com/vs/) 2017, 2019, 2022
-- [GitHub](https://desktop.github.com/)
+- [GitHub](https://github.com/), [GitHubDesktop](https://desktop.github.com/)
 - [Obsidian](https://obsidian.md/)
 - [YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D)
-- [Google](https://www.google.ca/)
+- [Google](https://trex-runner.com/)
+- [StackOverflow](https://stackoverflow.com/questions?sort=votes
+- [Entrian Source Search](https://entrian.com/source-search/)
+- [Notepad++](https://notepad-plus-plus.org/downloads/)
 
 ## Acknowledgments and Appreciation
 In no particular order :
-- Jimmy Lord
+- Jimmy Lord : [FlatheadGames](http://www.flatheadgames.com)  https://github.com/jimmylord
 - Eric Bibeau
 - Aurelien Simoni
 - Antonio Santamaria
