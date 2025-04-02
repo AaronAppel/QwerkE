@@ -20,11 +20,14 @@ namespace QwerkE {
 		bool Exists(const char* filePath)
 		{
 			ASSERT(filePath, "Invalid filePath!");
-			return std::filesystem::exists(filePath);
+			return std::filesystem::status(filePath).type() == std::filesystem::file_type::regular;
 		}
 
 		Buffer LoadFile(const char* filePath)
 		{
+			// #TODO Validate adding null terminating character
+			constexpr u8 addNullTerminatingChar = 1;
+
 			Buffer buffer;
 
 			if (!filePath)
@@ -36,15 +39,22 @@ namespace QwerkE {
 			if (filehandle)
 			{
 				fseek(filehandle, 0, SEEK_END);
-				const long fileSizeBytes = ftell(filehandle);
+				const u32 fileSizeBytes = ftell(filehandle);
 				rewind(filehandle);
 
-				buffer.Allocate(fileSizeBytes);
+				buffer.Allocate(fileSizeBytes + addNullTerminatingChar);
 				fread(buffer.Data(), fileSizeBytes, 1, filehandle);
 				fclose(filehandle);
 			}
 
-			return buffer; // #TODO Buffer memory is released in destructor
+			if (addNullTerminatingChar)
+			{
+				buffer.Data()[buffer.SizeInBytes() - addNullTerminatingChar] = '\0';
+			}
+
+			// #TODO Buffer memory is released in destructor
+			// #TODO Assignment of return value copies to a new value using operator=() constructor
+			return buffer;
 		}
 
 		Buffer LoadPng(const char* filePath, unsigned int* imageWidth, unsigned int* imageHeight, u16& channels)
@@ -80,6 +90,9 @@ namespace QwerkE {
 #ifdef _QOPENAL
 			buffer.Allocate();
 			soundFile.s_Data = (char*)LoadWavFileData(filePath, soundFile.s_Size, soundFile.s_Channels, soundFile.s_Frequency, soundFile.s_BitsPerSample);
+#else
+			// #TODO Add checks if no supported audio library is loaded and asserts
+			// error
 #endif
 
 			if (!buffer)
@@ -175,7 +188,7 @@ namespace QwerkE {
 
 			std::string fileNameNoExt = filePath;
 			const u64 size = fullFileExtension - filePath; // Subtract pointer addresses
-			const u8 extensionWithPeriodLength = strlen(filePath) - size;
+			const u8 extensionWithPeriodLength = static_cast<u8>(strlen(filePath) - size);
 			fileNameNoExt.resize(size);
 
 			// #TODO Loop until confirmed unique

@@ -44,7 +44,12 @@ project "Framework"
 	
 	pchheader "QF_PCH.h"
 	pchsource "%{prj.name}/QF_PCH.cpp"
-
+	
+	-- #TODO Setup warning and error levels to a useful standard and clean through all issues
+	-- warnings "Extra"
+	-- filter { "toolset:msc" }
+		-- fatalwarnings { "2001" }
+	
 	links -- Project references
 	{
 		"cJSON",

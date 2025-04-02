@@ -41,17 +41,6 @@ namespace QwerkE {
         // #TODO Look to make parentName a const&
         bool InspectType(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
-            // #TODO Support drag/drop targets, context menus (copy/paste, save/load, etc), pop ups, etc
-            // if (ImGui::BeginDragDropTarget())
-            // {
-            //     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-            //     {
-            //         const wchar_t* path = (const wchar_t*)payload->Data;
-            //         std::filesystem::path texturePath(path);
-            //     }
-            //     ImGui::EndDragDropTarget();
-            // }
-
             bool valueChanged = false;
 
             switch (typeInfo->category)
@@ -210,6 +199,19 @@ namespace QwerkE {
                         // #TODO Crash when clearing (delete/backspace) text contents to be empty
                         *numberAddress = std::stoull(buffer.As<char>());
                         valueChanged = true;
+                    }
+
+                    // #TODO Get field flags to know if drag target/source and drop is supported
+                    // typeInfo->field[i].flags
+                    // #TODO Testing drag and drop behaviour
+                    if (ImGui::BeginDragDropTarget())
+                    {
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GUID"))
+                        {
+                            GUID payloadGUID = *(GUID*)payload->Data;
+                            *numberAddress = payloadGUID;
+                        }
+                        ImGui::EndDragDropTarget();
                     }
                     ImGui::PopItemWidth();
 
@@ -561,8 +563,9 @@ namespace QwerkE {
 
                         if (entity)
                         {
-                            const u8 start = (u8)eScriptTypes::Invalid + 1;
-                            const u8 range = (u8)eScriptTypes::COUNT;
+                            constexpr u8 start = (u8)eScriptTypes::Invalid + 1;
+                            constexpr u8 range = (u8)eScriptTypes::COUNT;
+
                             for (size_t i = start; i < range; i++)
                             {
                                 eScriptTypes scriptType = (eScriptTypes)i;

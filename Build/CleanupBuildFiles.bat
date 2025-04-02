@@ -1,16 +1,13 @@
-rem pushd ..
+rem Start in repo root dir
 cd ../
-rem del *.dll
-rem del *.vcxproj
 
 del /Q /F /S /AH .vs
-del *.sln
+rmdir /Q /S ".vs"
 
 del /Q /F /S /AH bin
 rmdir /Q /S bin
 
-del /Q /F /S /AH .vs
-rmdir /Q /S ".vs"
+del *.sln
 
 pushd Source
 call Cleanup.bat

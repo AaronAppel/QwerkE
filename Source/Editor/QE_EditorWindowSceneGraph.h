@@ -5,6 +5,7 @@
 #endif
 
 #include "QF_ComponentHelpers.h"
+#include "QF_Scene.h"
 
 #include "QE_EditorWindow.h"
 
@@ -23,11 +24,58 @@ namespace QwerkE {
 
 			void DrawInternal()
 			{
-				Scene* currentScene = Scenes::GetCurrentScene();
-				if (currentScene == nullptr)
-					return;
+				// #TODO A scene list dropdown seems pretty useful and repeated in many places.
+				// Create a helper struct for it to reduce duplicated code and ease usage.
+				const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
+				if (!scenes.empty())
+				{
+					std::vector<const char*> sceneNames;
+					sceneNames.reserve(3);
 
-				ImGui::Text((currentScene->GetSceneName() + ":").c_str());
+					for (size_t i = 0; i < scenes.size(); i++)
+					{
+						sceneNames.push_back(scenes[i]->GetSceneName().c_str());
+					}
+
+					constexpr u32 s_CharacterPixelSize = 10;
+					constexpr u32 s_DropDownArrowSize = 20;
+
+					// #TODO
+					if (m_LastSceneIndex >= scenes.size())
+					{
+						int b = 0;
+					}
+
+					const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * s_CharacterPixelSize;
+
+					ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
+
+					snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
+
+					// #TODO Use ImGui::SameLineEnd();
+					ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesCombobuffer) * s_CharacterPixelSize));
+					if (ImGui::Combo(m_ScenesCombobuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
+					{
+						m_CurrentScene = scenes[m_LastSceneIndex];
+						// #NOTE Scene transition changes removes above lines for below
+						// #TODO SetActive(true/false) ?
+						// Scenes::SetCurrentScene(index);
+					}
+					ImGui::PopItemWidth();
+				}
+
+				if (nullptr == m_CurrentScene)
+				{
+					m_CurrentScene = Scenes::GetCurrentScene();
+				}
+
+				if (m_CurrentScene == nullptr)
+				{
+					ImGui::Text("No scene selected");
+					return;
+				}
+
+				ImGui::Text((m_CurrentScene->GetSceneName() + ":").c_str());
 				ImGui::SameLineEnd(1, 1.f);
 				if (ImGui::Button("+"))
 				{
@@ -49,23 +97,23 @@ namespace QwerkE {
 							switch (i)
 							{
 							case eSceneGraphCreateTypes::Empty:
-								currentScene->CreateEntity();
+								m_CurrentScene->CreateEntity();
 								break;
 
 							case eSceneGraphCreateTypes::Light:
-								currentScene->CreateEntity().AddComponent<ComponentLight>();
+								m_CurrentScene->CreateEntity().AddComponent<ComponentLight>();
 								break;
 
 							case eSceneGraphCreateTypes::Camera:
-								currentScene->CreateEntity().AddComponent<ComponentCamera>();
+								m_CurrentScene->CreateEntity().AddComponent<ComponentCamera>();
 								break;
 
 							case eSceneGraphCreateTypes::Script:
-								currentScene->CreateEntity().AddComponent<ComponentScript>();
+								m_CurrentScene->CreateEntity().AddComponent<ComponentScript>();
 								break;
 
 							case eSceneGraphCreateTypes::Mesh:
-								currentScene->CreateEntity().AddComponent<ComponentMesh>().Initialize();
+								m_CurrentScene->CreateEntity().AddComponent<ComponentMesh>().Initialize();
 								break;
 							}
 						}
@@ -73,18 +121,31 @@ namespace QwerkE {
 					ImGui::EndPopup();
 				}
 
-				auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
+				auto viewTransforms = m_CurrentScene->ViewComponents<ComponentTransform>();
 				for (auto& entity : viewTransforms)
 				{
-					EntityHandle handle(currentScene, entity);
+					EntityHandle handle(m_CurrentScene, entity);
 					ComponentInfo& info = handle.GetComponent<ComponentInfo>();
+
 					if (ImGui::Button((info.m_EntityName + "##" + std::to_string(info.m_Guid)).c_str()))
 					{
 						Editor::OnEntitySelected(handle);
 						break;
 					}
+
+					// #TODO Testing drag and drop behaviour
+					if (ImGui::BeginDragDropSource())
+					{
+						ImGui::SetDragDropPayload("GUID", (void*)&info.m_Guid, sizeof(GUID));
+						ImGui::EndDragDropSource();
+					}
 				}
 			}
+
+			Scene* m_CurrentScene = nullptr;
+			const int digitsOfGuid = 19; // #TODO Document
+			char m_ScenesCombobuffer[33] = "Scenes:    ##0000000000000000000";
+			s32 m_LastSceneIndex = 0;
 		};
 
 	}

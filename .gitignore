@@ -6,7 +6,6 @@
 *.pdb
 *.idb
 *.ilk
-*.exe
 *.ipch
 *.pch
 *.VC.db
@@ -63,9 +62,11 @@ Documentation/.obsidian/workspace.json
 *.la
 *.a
 *.lib
+!Source/Libraries/glfw/glfw3.lib
 
 # Executables
 *.exe
+!Premake5.exe
 *.out
 *.app
 
@@ -79,7 +80,7 @@ Documentation/.obsidian/workspace.json
 *.enc
 *.sln
 *.vcxproj
-*.filters
+// *.filters // Useful to share
 *.user
 
 # Local only special exclude
@@ -95,6 +96,7 @@ Documentation/.obsidian/workspace.json
 *.VC.db
 *.suo
 *.opendb
+*.lnk
 
 # Local only
 /Game/Assets/Scenes/Backup

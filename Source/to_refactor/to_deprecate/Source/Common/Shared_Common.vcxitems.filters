@@ -1,0 +1,1157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Strings">
+      <UniqueIdentifier>{424ada68-8e44-4c91-8d0a-afd72af8b71c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{6af886e0-a4b4-4c70-bc86-cea022f9fafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries">
+      <UniqueIdentifier>{dbe8ea80-0bc5-4b13-88bc-8d1b4264546b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\assimp">
+      <UniqueIdentifier>{5022d11c-abb2-4177-9650-105de492d440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\freetype2">
+      <UniqueIdentifier>{2af68161-766f-43a9-b4ea-0be58d4ea5e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\glew">
+      <UniqueIdentifier>{91b957d6-0e69-4ffc-b994-4597c6acaaf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\glfw">
+      <UniqueIdentifier>{018135e5-967b-4a28-8895-20f3ee173a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\glm">
+      <UniqueIdentifier>{07559975-7186-41f2-8682-7eb6c616f889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\imgui">
+      <UniqueIdentifier>{d618ea4d-30fb-4c37-aa9c-a8021bb79c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\lodepng">
+      <UniqueIdentifier>{f93dce3c-061c-4211-8193-a9f66528fae3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\OpenAL">
+      <UniqueIdentifier>{d5c6e64d-0634-42f9-9b66-138a08277fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\pThreads">
+      <UniqueIdentifier>{92b5b94f-75df-4d59-bcaf-f47615e5f693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\spdlog">
+      <UniqueIdentifier>{90f891d5-38c1-4bb5-a55d-28a0af905500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{0a0da428-2d8a-423b-b0a6-7e25cb427d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\cJSON">
+      <UniqueIdentifier>{edc2d593-ce8e-4027-8c5c-e8c8022b52bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\enum">
+      <UniqueIdentifier>{9b847343-6ce7-4ea5-8e98-6a9854637915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\FlatheadGames">
+      <UniqueIdentifier>{ec1481a5-8a58-4764-a150-d7f2158af9b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\Mirror">
+      <UniqueIdentifier>{35a8dc74-6409-4ff1-802c-6fc610802586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\entt">
+      <UniqueIdentifier>{3a4010d8-dfbf-4a9f-a661-ac417b57945b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_StringHelpers.cpp">
+      <Filter>Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_HelpersTime.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.cpp">
+      <Filter>Libraries\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QC_MathFunctions.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.cpp">
+      <Filter>Libraries\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.cpp">
+      <Filter>Libraries\Mirror</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Framework\QF_Mirror.cpp">
+      <Filter>Libraries\Mirror</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.cpp">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)QF_Memory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_tables.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_widgets.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_demo.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_draw.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_glfw.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.cpp">
+      <Filter>Libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.cpp">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.cpp">
+      <Filter>Libraries\cJSON</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_StringHelpers.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_HelpersTime.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\ai_assert.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\port\AndroidJNI\AndroidJNIIOSystem.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\anim.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\BaseImporter.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Bitmap.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\BlobIOSystem.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\ByteSwapper.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\camera.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\cexport.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\cfileio.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\cimport.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\config.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\CreateAnimMesh.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\DefaultIOStream.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\DefaultIOSystem.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\DefaultLogger.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Defines.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\defs.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Exceptional.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Exporter.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\fast_atof.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\GenericProperty.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Hash.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Importer.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\importerdesc.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\IOStream.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\IOStreamBuffer.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\IOSystem.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\irrXMLWrapper.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\light.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\LineSplitter.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\LogAux.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Logger.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\LogStream.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Macros.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\material.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\MathFunctions.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\matrix3x3.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\matrix4x4.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\MemoryIOWrapper.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\mesh.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\metadata.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\NullLogger.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\ParsingUtils.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\pbrmaterial.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Compiler\poppack1.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\postprocess.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Profiler.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\ProgressHandler.hpp">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Compiler\pstdint.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Compiler\pushpack1.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\qnan.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\quaternion.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\RemoveComments.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\scene.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\SceneCombiner.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\SGSpatialSort.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\SkeletonMeshBuilder.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\SmoothingGroups.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\SpatialSort.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\StandardShapes.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\StreamReader.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\StreamWriter.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\StringComparison.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\StringUtils.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Subdivision.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\texture.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\TinyFormatter.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\types.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\vector2.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\vector3.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\version.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\Vertex.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\XMLTools.h">
+      <Filter>Libraries\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftconfig.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftheader.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftmodule.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftoption.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\config\ftstdlib.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\freetype.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftadvanc.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftbbox.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftbdf.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftbitmap.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftbzip2.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftcache.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftchapters.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftcid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftdriver.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\fterrdef.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\fterrors.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftfntfmt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftgasp.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftglyph.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftgxval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftgzip.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftimage.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftincrem.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftlcdfil.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftlist.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftlzw.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftmac.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftmm.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftmodapi.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftmoderr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftotval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftoutln.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftparams.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftpfr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftrender.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftsizes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftsnames.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftstroke.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftsynth.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftsystem.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\fttrigon.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\fttypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ftwinfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\autohint.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\cffotypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\cfftypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftcalc.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftdebug.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftdrv.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftgloadr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\fthash.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftmemory.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftobjs.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftpic.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftpsprop.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftrfork.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftserv.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftstream.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\fttrace.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\ftvalid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\internal.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\psaux.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\pshints.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svbdf.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svcfftl.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svcid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svfntfmt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svgldict.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svgxval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svkern.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svmetric.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svmm.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svotval.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svpfr.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svpostnm.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svprop.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svpscmap.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svpsinfo.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svsfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svttcmap.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svtteng.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svttglyf.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\services\svwinfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\sfnt.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\t1types.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\internal\tttypes.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\t1tables.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\ttnameid.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\tttables.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\freetype\tttags.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\freetype2\ft2build.h">
+      <Filter>Libraries\freetype2</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glew\eglew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glew\GL\glew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glew\GL\wglew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glew\glxew.h">
+      <Filter>Libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\lodepng\lodepng.h">
+      <Filter>Libraries\lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\al.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\alc.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\efx-creative.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\EFX-Util.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\efx.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\OpenAL\include\xram.h">
+      <Filter>Libraries\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\pThreads\pthread.h">
+      <Filter>Libraries\pThreads</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\pThreads\sched.h">
+      <Filter>Libraries\pThreads</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\pThreads\semaphore.h">
+      <Filter>Libraries\pThreads</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\async.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\async_logger-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\async_logger.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\cfg\argv.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\cfg\env.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\cfg\helpers-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\cfg\helpers.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\common-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\common.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\backtracer-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\backtracer.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\circular_q.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\console_globals.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\file_helper-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\file_helper.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\fmt_helper.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\log_msg-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\log_msg.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\log_msg_buffer-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\log_msg_buffer.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\mpmc_blocking_q.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\null_mutex.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\os-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\os.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\periodic_worker-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\periodic_worker.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\registry-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\registry.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\synchronous_factory.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\tcp_client-windows.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\tcp_client.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\thread_pool-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\thread_pool.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\udp_client-windows.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\udp_client.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\details\windows_include.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bin_to_hex.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\args.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\chrono.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\color.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\compile.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\core.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\format-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\format.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\locale.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\os.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\ostream.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\printf.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\ranges.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\std.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\bundled\xchar.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\chrono.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\compile.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\fmt.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\ostr.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\ranges.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\std.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fmt\xchar.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\formatter.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\fwd.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\logger-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\logger.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\pattern_formatter-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\pattern_formatter.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\android_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\ansicolor_sink-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\ansicolor_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\base_sink-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\base_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\basic_file_sink-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\basic_file_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\callback_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\daily_file_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\dist_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\dup_filter_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\hourly_file_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\kafka_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\mongo_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\msvc_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\null_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\ostream_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\qt_sinks.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\ringbuffer_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\rotating_file_sink-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\rotating_file_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\sink-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\stdout_color_sinks-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\stdout_color_sinks.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\stdout_sinks-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\stdout_sinks.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\syslog_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\systemd_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\tcp_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\udp_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\wincolor_sink-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\wincolor_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\sinks\win_eventlog_sink.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\spdlog-inl.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\spdlog.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\stopwatch.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\tweakme.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\spdlog\version.h">
+      <Filter>Libraries\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\stb_image.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3native.h">
+      <Filter>Libraries\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\GLFW\glfw3.h">
+      <Filter>Libraries\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\CPPList.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathConstants.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_MathFunctions.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_TypeDefs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_PCH.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Macros.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_Timer.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\QC_cJSON.h">
+      <Filter>Libraries\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\QC_enum.h">
+      <Filter>Libraries\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\enum\enum.h">
+      <Filter>Libraries\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MathHelpers.h">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\QC_imgui.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\MirrorTypes.h">
+      <Filter>Libraries\Mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\Mirror.h">
+      <Filter>Libraries\Mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\ImageHelpers.h">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\Mirror\Source\MirrorEnumPrimitives.h">
+      <Filter>Libraries\Mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QF_Memory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_glfw.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_impl_opengl3.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui_internal.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_rectpack.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_textedit.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imstb_truetype.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imconfig.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\imgui\imgui.h">
+      <Filter>Libraries\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\common.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\simd\exponential.h">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\exponential.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\geometric.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\integer.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat2x2.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat2x3.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat2x4.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat3x2.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat3x3.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat3x4.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat4x2.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat4x3.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\mat4x4.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\matrix.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\packing.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\trigonometric.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\vec2.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\vec3.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\vec4.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glm\glm\vector_relational.hpp">
+      <Filter>Libraries\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\FlatheadGames\MyMemory.h">
+      <Filter>Libraries\FlatheadGames</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\cJSON\cJSON.h">
+      <Filter>Libraries\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\entt\entt.hpp">
+      <Filter>Libraries\entt</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Libraries\glfw\QC_glfw3.h">
+      <Filter>Libraries\glfw</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QC_CallbackFunction.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\color4.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\material.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\matrix3x3.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\matrix4x4.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\quaternion.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\SmoothingGroups.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\vector2.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\Libraries\assimp\vector3.inl">
+      <Filter>Libraries\assimp</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -230,6 +230,7 @@ MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ScriptableTesting)
+MIRROR_CLASS_MEMBER(m_TestGuidReference)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ScriptableSceneTransition)

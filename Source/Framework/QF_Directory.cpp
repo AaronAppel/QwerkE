@@ -8,7 +8,8 @@ namespace QwerkE {
 
         bool Exists(const char* dirPath)
         {
-            return false;
+            ASSERT(false, "Not implemented!");
+            return std::filesystem::status(dirPath).type() == std::filesystem::file_type::directory;
         }
 
         std::vector<std::string> ListDir(const char* directoryPath)

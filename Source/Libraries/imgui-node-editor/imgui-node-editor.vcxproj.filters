@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="utilities">
+      <UniqueIdentifier>{212A0ED3-8D94-C249-D6D2-73EF427CA09E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="crude_json.h" />
+    <ClInclude Include="imgui_bezier_math.h" />
+    <ClInclude Include="imgui_bezier_math.inl" />
+    <ClInclude Include="imgui_canvas.h" />
+    <ClInclude Include="imgui_extended.h" />
+    <ClInclude Include="imgui_extra_math.h" />
+    <ClInclude Include="imgui_extra_math.inl" />
+    <ClInclude Include="imgui_node_editor.h" />
+    <ClInclude Include="imgui_node_editor_internal.h" />
+    <ClInclude Include="imgui_node_editor_internal.inl" />
+    <ClInclude Include="utilities\builders.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\drawing.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\widgets.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="crude_json.cpp" />
+    <ClCompile Include="imgui_canvas.cpp" />
+    <ClCompile Include="imgui_extended.cpp" />
+    <ClCompile Include="imgui_node_editor.cpp" />
+    <ClCompile Include="imgui_node_editor_api.cpp" />
+    <ClCompile Include="utilities\builders.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\drawing.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\widgets.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -37,6 +37,7 @@ enum FieldSerializationFlags : MIRROR_FIELD_FLAG_SIZE
 	_HideInInspector = 1 << 0, // Serialize but don't show in editor UI
 	_InspectorOnly = 1 << 1, // Do not serialize the value
 	_InspectorViewOnly = 1 << 1, // Do not serialize the value or allow changes
+	// #TODO Drag and drop not/supported flag and matching logic
 };
 
 // Specialize TypeId to support additional types

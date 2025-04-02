@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string> // #TODO Review removing
+
 namespace QwerkE {
 
 	class Buffer final
@@ -7,8 +9,12 @@ namespace QwerkE {
 	public:
 
 		Buffer() = default;
+
 		Buffer(const Buffer& other)
 		{
+			if (this == &other)
+				return;
+
 			this->m_Data = other.m_Data;
 			this->m_SizeBytes = other.m_SizeBytes;
 
@@ -42,6 +48,7 @@ namespace QwerkE {
 			{
 				delete[] m_Data;
 				m_SizeBytes = 0;
+				m_OwnershipTransferred = false;
 			}
 		}
 
@@ -53,6 +60,26 @@ namespace QwerkE {
 			}
 		}
 
+		void Write(std::string s)
+		{
+			// #TODO Account for null terminating char
+			if (s.size() + 1 <= m_SizeBytes)
+			{
+				memcpy((char*)m_Data, s.data(), s.size());
+				m_Data[s.size()] = '\0';
+			}
+		}
+
+		void Write(Buffer other)
+		{
+			u64 bytesToWrite = m_SizeBytes;
+			if (other.m_SizeBytes < bytesToWrite)
+			{
+				bytesToWrite = other.m_SizeBytes;
+			}
+			memcpy((char*)m_Data, other.Data(), bytesToWrite);
+		}
+
 		u8* Data() { return m_Data; }
 		u64 SizeInBytes() { return m_SizeBytes; }
 
@@ -61,6 +88,23 @@ namespace QwerkE {
 		{
 			// #TODO Expirment with: return static_cast<T*>(m_Data);
 			return (T*)m_Data;
+		}
+
+		Buffer& operator=(const Buffer& other)
+		{
+			if (this == &other)
+				return *this;
+
+			Release();
+
+			this->m_Data = other.m_Data;
+			this->m_SizeBytes = other.m_SizeBytes;
+
+			// #TODO Investigate proper way to copy buffer references, or smart pointer usage
+			other.m_OwnershipTransferred = true;
+			this->m_OwnershipTransferred = false;
+
+			return *this;
 		}
 
 		operator bool() const

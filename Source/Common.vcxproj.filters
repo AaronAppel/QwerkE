@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Common\QC_CallbackFunction.h" />
+    <ClInclude Include="Common\QC_Guid.h" />
+    <ClInclude Include="Common\QC_Math.h" />
+    <ClInclude Include="Common\QC_MathFunctions.h" />
+    <ClInclude Include="Common\QC_ProgramArgs.h" />
+    <ClInclude Include="Common\QC_StringHelpers.h" />
+    <ClInclude Include="Common\QC_System.h" />
+    <ClInclude Include="Common\QC_Time.h" />
+    <ClInclude Include="Common\QC_TypeDefs.h" />
+    <ClInclude Include="Common\QC_PCH.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Common\QC_Guid.cpp" />
+    <ClCompile Include="Common\QC_MathFunctions.cpp" />
+    <ClCompile Include="Common\QC_ProgramArgs.cpp" />
+    <ClCompile Include="Common\QC_StringHelpers.cpp" />
+    <ClCompile Include="Common\QC_System.cpp" />
+    <ClCompile Include="Common\QC_Time.cpp" />
+    <ClCompile Include="Common\QC_PCH.cpp" />
+  </ItemGroup>
+</Project>

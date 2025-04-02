@@ -1,5 +1,11 @@
 #pragma once
 
+// #TODO Clean up test code
+#define _QICONFONT
+#ifdef _QICONFONT
+#include "Libraries/IconFont/IconsFontAwesome5.h"
+#endif
+
 #ifdef _QMIRROR
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
@@ -7,6 +13,7 @@
 #include <filesystem>
 
 #include "QF_Paths.h"
+#include "QF_Log.h"
 
 #include "QE_EditorWindow.h"
 
@@ -18,7 +25,11 @@ namespace QwerkE {
 		{
 		public:
 			EditorWindowFolderViewer::EditorWindowFolderViewer(GUID guid = GUID()) :
-				EditorWindow("Folder Viewer", EditorWindowTypes::FolderViewer, guid) { }
+				EditorWindow("Folder Viewer", EditorWindowTypes::FolderViewer, guid)
+			{
+				// #TODO Clean up test code
+
+			}
 
 		private:
 			void DrawInternal() override
@@ -53,12 +64,48 @@ namespace QwerkE {
 					const auto& path = directoryEntry.path();
 					std::string filenameString = path.filename().string();
 
-					if (ImGui::Button(filenameString.c_str(), { thumbnailSize, thumbnailSize }))
+					if (directoryEntry.is_directory())
 					{
-						if (directoryEntry.is_directory())
-							m_CurrentDirectory /= path.filename();
+						ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+					}
+					else
+					{
+						ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27));
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27f));
 					}
 
+					if (ImGui::Button(filenameString.c_str(), { thumbnailSize, thumbnailSize }))
+					{
+						// #TODO Use images or icon fonts from: https://github.com/juliettef/IconFontCppHeaders
+						if (directoryEntry.is_directory())
+						{
+							m_CurrentDirectory /= path.filename();
+						}
+						else
+						{
+							// #TODO Try to open file
+						}
+					}
+
+					if (ImGui::BeginDragDropSource())
+					{
+						ImGui::SetDragDropPayload("Any", filenameString.c_str(), filenameString.size() + 1);
+						ImGui::EndDragDropSource();
+					}
+
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Any"))
+						{
+							LOG_INFO("{0}", (char*)payload->Data);
+						}
+						ImGui::EndDragDropTarget();
+					}
+
+					ImGui::PopStyleColor(3);
 					ImGui::NextColumn();
 				}
 			}

@@ -2,6 +2,7 @@
 
 namespace ImGui
 {
+	constexpr float g_pixelsPerCharacter = 6.f; // #TODO Consider a Constants namespace or organization
 
 	ImGuiKey KeyCodeToImGuiKey(int keyCode)
 	{
@@ -25,11 +26,9 @@ namespace ImGui
 
 	void SameLineEnd(uint16_t numberOfChars, float horizontalScaling)
 	{
-		constexpr float pixelsPerCharacter = 6.f;
-
 		const float padding = ImGui::GetStyle().FramePadding.x;
 		const float lineHeight = ImGui::GetFontSize() + padding * 2.0f;
-		const float contentWidth = lineHeight + (numberOfChars * pixelsPerCharacter * horizontalScaling);
+		const float contentWidth = lineHeight + (numberOfChars * g_pixelsPerCharacter * horizontalScaling);
 		const float offset = ImGui::GetContentRegionAvail().x - contentWidth + padding;
 		ImGui::SameLine(offset);
 	}
@@ -41,11 +40,9 @@ namespace ImGui
 
 	void SameLineCentered(uint16_t numberOfChars, float horizontalScaling)
 	{
-		constexpr float pixelsPerCharacter = 6.f;
-
 		const float padding = ImGui::GetStyle().FramePadding.x;
 		const float lineHeight = ImGui::GetFontSize() + padding * 2.0f;
-		const float contentWidth = lineHeight + (numberOfChars * pixelsPerCharacter * horizontalScaling);
+		const float contentWidth = lineHeight + (numberOfChars * g_pixelsPerCharacter * horizontalScaling);
 		const float offset = (ImGui::GetWindowWidth() / 2.f) - contentWidth;
 		ImGui::SameLine(offset);
 	}

@@ -170,66 +170,67 @@ namespace QwerkE {
             template <typename T>
             bool DrawEditComponent(EntityHandle& entity)
             {
-                if (entity.HasComponent<T>())
+                if (!entity.HasComponent<T>())
+                    return false;
+
+                const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
+                T& component = entity.GetComponent<T>();
+
+                const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+
+                const float buttonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
+
+                const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+                const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, typeInfo->stringName.c_str());
+
+                if (std::is_same_v<T, ComponentMesh>)
                 {
-                    const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
-                    T& component = entity.GetComponent<T>();
+                    std::string popUpName = "Context " + typeInfo->stringName;
 
-                    const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<T>();
+                    // #TODO Fix context menu button
+                    // ImGui::SameLine(buttonWidth * 2);
+                    // if (ImGui::Button("&", ImVec2{ lineHeight, lineHeight }))
+                    // {
+                    //     ImGui::OpenPopup(popUpName.c_str());
+                    // }
 
-                    const float buttonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
-
-                    const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
-                    const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, typeInfo->stringName.c_str());
-
-                    if (std::is_same_v<T, ComponentMesh>)
+                    if (ImGui::IsItemClicked(ImGui::MouseRight))
                     {
-                        std::string popUpName = "Context " + typeInfo->stringName;
-
-                        // #TODO Fix context menu button
-                        // ImGui::SameLine(buttonWidth * 2);
-                        // if (ImGui::Button("&", ImVec2{ lineHeight, lineHeight }))
-                        // {
-                        //     ImGui::OpenPopup(popUpName.c_str());
-                        // }
-
-                        if (ImGui::IsItemClicked(ImGui::MouseRight))
-                        {
-                            ImGui::OpenPopup(popUpName.c_str());
-                        }
-
-                        if (ImGui::BeginPopup(popUpName.c_str()))
-                        {
-                            if (ImGui::Button("Initialize"))
-                            {
-                                entity.GetComponent<ComponentMesh>().Initialize();
-                            }
-                            ImGui::EndPopup();
-                        }
+                        ImGui::OpenPopup(popUpName.c_str());
                     }
 
-                    if (!std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>)
+                    if (ImGui::BeginPopup(popUpName.c_str()))
                     {
-                        ImGui::SameLine(buttonWidth);
-                        if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
+                        if (ImGui::Button("Initialize"))
                         {
-                            entity.RemoveComponent<T>();
+                            entity.GetComponent<ComponentMesh>().Initialize();
                         }
-                    }
-
-                    if (nodeOpen)
-                    {
-                        ImGui::TreePop();
-
-                        if (std::is_same_v<T, ComponentCamera> &&
-                            entity.HasComponent<ComponentCamera>() &&
-                            ImGui::Button("Switch To"))
-                        {
-                            Scenes::GetCurrentScene()->SetCurrentCameraEntity(entity);
-                        }
-                        return Inspector::InspectObject(component);
+                        ImGui::EndPopup();
                     }
                 }
+
+                if (!std::is_same_v<T, ComponentTransform> && !std::is_same_v<T, ComponentInfo>)
+                {
+                    ImGui::SameLine(buttonWidth);
+                    if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
+                    {
+                        entity.RemoveComponent<T>();
+                    }
+                }
+
+                if (nodeOpen)
+                {
+                    ImGui::TreePop();
+
+                    if (std::is_same_v<T, ComponentCamera> &&
+                        entity.HasComponent<ComponentCamera>() &&
+                        ImGui::Button("Switch To"))
+                    {
+                        Scenes::GetCurrentScene()->SetCurrentCameraEntity(entity);
+                    }
+                    return Inspector::InspectObject(component);
+                }
+
                 return false;
             }
 

@@ -68,6 +68,9 @@ QC_ENUM(ImGuiCol_qw, int, // For stringification
 
 namespace ImGui
 {
+	constexpr float g_pixelsBorderWidth = 8.f; // #TODO Consider a Constants namespace or organization
+	constexpr float g_pixelsScrollBarWidth = 25.f; // #TODO Consider a Constants namespace or organization
+
 	enum Buttons
 	{
 		MouseLeft = 0,

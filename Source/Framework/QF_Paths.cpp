@@ -33,6 +33,26 @@ namespace QwerkE {
 			return s_AssetsDir;
 		}
 
+		std::string FontsDir()
+		{
+			return AssetsDir() + "\\Fonts";
+		}
+
+		std::string Font(const char* fontFileName)
+		{
+			return FontsDir() + "\\" + fontFileName;
+		}
+
+		std::string MeshesDir()
+		{
+			return AssetsDir() + "\\Meshes";
+		}
+
+		std::string Mesh(const char* meshFileName)
+		{
+			return MeshesDir() + "\\" + meshFileName;
+		}
+
 		std::string NullAssetsDir()
 		{
 			return s_NullAssetsDir;
@@ -52,16 +72,6 @@ namespace QwerkE {
 		std::string Project(const char* projectFileName)
 		{
 			return ProjectsDir() + "\\" + projectFileName;
-		}
-
-		std::string MeshesDir()
-		{
-			return AssetsDir() + "\\Meshes";
-		}
-
-		std::string Mesh(const char* meshFileName)
-		{
-			return MeshesDir() + "\\" + meshFileName;
 		}
 
 		std::string ScenesDir()

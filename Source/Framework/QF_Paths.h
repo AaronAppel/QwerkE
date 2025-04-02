@@ -19,14 +19,17 @@ namespace QwerkE {
 
 		std::string AssetsDir();
 
+		std::string FontsDir();
+		std::string Font(const char* fontFileName);
+
+		std::string MeshesDir();
+		std::string Mesh(const char* meshFileName);
+
 		std::string NullAssetsDir();
 		std::string NullAsset(const char* sceneFileName);
 
 		std::string ProjectsDir();
 		std::string Project(const char* projectFileName);
-
-		std::string MeshesDir();
-		std::string Mesh(const char* meshFileName);
 
 		std::string ScenesDir();
 		std::string Scene(const char* sceneFileName);
