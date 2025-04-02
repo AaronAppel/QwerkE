@@ -35,6 +35,9 @@ IF EXIST QwerkE.sln (
 	
 	START QwerkE.sln
 	
+	rem Ignore changes to this file in git
+	git update-index --assume-unchanged "%~f0"
+	
 	rem Delete this bat file as it's no longer needed
 	start /b "" cmd /c del "%~f0"&exit /b
 	
