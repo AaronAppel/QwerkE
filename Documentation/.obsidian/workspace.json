@@ -69,12 +69,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ZZ Shared Vault Files ❗/Visual Studio.md",
+                "file": "ZZ Shared Vault Files ❗/To Watch.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Visual Studio"
+              "title": "To Watch"
             }
           },
           {
@@ -124,7 +124,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "spell",
+                "query": "shortcut",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -237,6 +237,8 @@
   },
   "active": "06b8e696632d93cb",
   "lastOpenFiles": [
+    "ZZ Shared Vault Files ❗/Visual Studio.md",
+    "UI Library Idea.md",
     "Git Ignore.md",
     "README.md",
     "Solution Configuration/Precompiled Headers.md",
@@ -261,13 +263,11 @@
     "Serializer.md",
     "Shader Building.md",
     "typeId vs dynamic_cast.md",
-    "UI Library Idea.md",
     "2025-01-26.md",
     "QwerkE File Domains.canvas",
     "LICENSE",
     "Development/Features/ASSERT Expanded.md",
     "Adding Entity Components.md",
-    "Development/Features/0. Features List.md",
-    "Development/Features/0. Features Kanban.md"
+    "Development/Features/0. Features List.md"
   ]
 }

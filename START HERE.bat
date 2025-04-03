@@ -4,6 +4,7 @@ set TARGET='Build\Setup-Windows-Vs2022.bat'
 set SHORTCUT='Build Project Windows Vs 2022.lnk'
 set PWS=powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile
 
+rem #TODO Verify shortcut creation
 %PWS% -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut(%SHORTCUT%); $S.TargetPath = %TARGET%; $S.Save()"
 
 rem Build solution files
@@ -22,7 +23,7 @@ IF EXIST QwerkE.sln (
 	ping -n 2 127.0.0.1 >nul
 	echo This file will now self destruct in...
 
-	FOR %%A IN (5, 4, 3, 2, 1) DO (
+	FOR %%A IN (4, 3, 2, 1) DO (
 		ping -n 2 127.0.0.1 >nul
 		call echo %%A...
 	)

@@ -43,6 +43,7 @@ namespace QwerkE {
                     {
                         Editor::OnEntitySelected(EntityHandle());
                         currentScene->ReloadScene();
+                        Editor::OnSceneReloaded();
                     }
                 }
 
@@ -62,16 +63,20 @@ namespace QwerkE {
 
                         // #TODO Move unique check logic into Projects::AddSceneToProjectScenesList() or something better
                         Project& currentProject = Projects::CurrentProject();
-                        for (size_t i = 0; i < currentProject.sceneFileNames.size(); i++)
+
+                        bool isUnique = true;
+                        for (const auto& sceneListEntry : currentProject.scenesList)
                         {
-                            if (strcmp(currentProject.sceneFileNames[i].c_str(), newScene->GetSceneName().c_str()) == 0)
+                            if (sceneListEntry.first == newScene->GetGuid())
                             {
+                                isUnique = false;
                                 break;
                             }
-                            else if (i == currentProject.sceneFileNames.size() - 1)
-                            {
-                                currentProject.sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-                            }
+                        }
+
+                        if (isUnique)
+                        {
+                            currentProject.scenesList.insert({ newScene->GetGuid(), newScene->GetSceneName() });
                         }
                     }
                 }
@@ -83,15 +88,12 @@ namespace QwerkE {
                     {
                         Scenes::DestroyScene(currentScene);
 
-                        Project& project = Projects::CurrentProject();
-                        for (size_t i = 0; i < project.sceneFileNames.size(); i++)
+                        Project& currentProject = Projects::CurrentProject();
+                        if (currentProject.scenesList.find(currentScene->GetGuid()) != currentProject.scenesList.end())
                         {
-                            if (strcmp(project.sceneFileNames[i].c_str(), currentScene->GetSceneName().c_str()) == 0)
-                            {
-                                project.sceneFileNames.erase(project.sceneFileNames.begin() + i);
-                                break;
-                            }
+                            currentProject.scenesList.erase(currentScene->GetGuid());
                         }
+
                         Editor::OnEntitySelected(EntityHandle());
                     }
 

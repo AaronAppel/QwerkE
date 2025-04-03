@@ -56,11 +56,15 @@ namespace QwerkE {
 
 		void Initialize()
 		{
-			//#NOTE Kept for consistent API with other systems. Currently unused
+			// #NOTE Kept for consistent API with other systems
+			s_Initialized = true;
 		}
 
 		void Shutdown()
 		{
+			// #TODO Handle loaded scenes in Assets
+			// Assets::
+
 			for (size_t i = 0; i < s_Scenes.size(); i++)
 			{
 				if (s_Scenes[i])

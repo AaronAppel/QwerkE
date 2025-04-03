@@ -113,6 +113,7 @@ namespace QwerkE {
 			EditorWindowFlags WindowFlags() { return m_WindowFlags; }
 
 			virtual void OnEntitySelected(EntityHandle& entity) { }
+			virtual void OnSceneReload() { }
 
 			void ToggleHidden() { m_WindowFlags = (EditorWindowFlags)(m_WindowFlags ^ Hidden); }
 

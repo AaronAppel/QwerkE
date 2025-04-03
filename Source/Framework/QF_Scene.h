@@ -71,7 +71,7 @@ namespace QwerkE {
         EntityHandle GetCurrentCameraEntity();
         void SetCurrentCameraEntity(EntityHandle newCameraEntity);
 
-        const GUID& GetGuid() { return m_SceneGuid; }
+        const GUID& GetGuid() const { return m_SceneGuid; }
 
         // #NOTE Scene transition changes
         // const GUID& GetGuid() const { return m_SceneGuid; }

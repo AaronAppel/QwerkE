@@ -185,6 +185,10 @@ namespace QwerkE {
 						delete static_cast<Shader*>(guidVoidPtrPair.second);
 						break;
 
+					case Mirror::TypeId<Scene>():
+						// Scenes::Shutdown(); should already be called
+						break;
+
 					default:
 						LOG_CRITICAL("{0} Unsupported type!", __FUNCTION__);
 						break;

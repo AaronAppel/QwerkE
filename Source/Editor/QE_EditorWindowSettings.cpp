@@ -110,6 +110,7 @@ namespace QwerkE {
 
                     case eSettingsOptions::Project:
                         Projects::LoadProject("Project1.qproj"); // #TODO Load proper project file
+                        Editor::OnSceneReloaded();
                         break;
                     }
                 }

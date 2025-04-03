@@ -38,6 +38,7 @@ namespace QwerkE {
 		void CloseEditorWindow(const GUID& guid);
 
 		void OnEntitySelected(EntityHandle& entity);
+		void OnSceneReloaded();
 
 	}
 

@@ -25,12 +25,11 @@ namespace QwerkE {
         std::string projectFileName = Constants::gc_DefaultStringValue;
         std::string projectName = Constants::gc_DefaultStringValue;
 
-        std::string startUpSceneName = Constants::gc_DefaultStringValue;
+        std::string startUpSceneName = Constants::gc_DefaultStringValue; // #TODO Could replace with GUID, or pair for human readability
 
         std::string projectImGuiIniFileName = "imgui.ini";
 
         // Referenced Scenes
-        std::vector<std::string> sceneFileNames; // #TODO Deprecate for scenesList
         std::unordered_map<GUID, std::string> scenesList; // #TODO Review if scene name strings are really needed
 
         // Settings for: Physics, Audio, Graphics, etc

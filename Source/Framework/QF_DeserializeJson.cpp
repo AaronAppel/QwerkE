@@ -20,7 +20,7 @@ namespace QwerkE {
         void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
         void local_DeserializePair(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
-        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj);
+        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
         template<typename... Component>
         void DeserializeComponent(entt::registry* registry, const cJSON* entityComponentsJsonArray);
@@ -34,6 +34,11 @@ namespace QwerkE {
             {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
+            }
+
+            if (Mirror::TypeId<std::string>() == objTypeInfo->id)
+            {
+                int bp = 0;
             }
 
             if (local_TypeInfoHasOverride(objJson, objTypeInfo, obj))
@@ -78,12 +83,16 @@ namespace QwerkE {
                 return;
             }
 
+            std::string* str = (std::string*)obj;
             switch (objTypeInfo->id)
             {
             case Mirror::TypeId<const std::string>():
             case Mirror::TypeId<std::string>(): // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
-                objTypeInfo->typeConstructorFunc(obj); // #NOTE String must be constructed before assigned to
-                *(std::string*)obj = objJson->valuestring ? objJson->valuestring : objJson->string; break;
+                {
+                    objTypeInfo->typeConstructorFunc(obj); // #NOTE String must be constructed before assigned to
+                    *(std::string*)obj = objJson->valuestring ? objJson->valuestring : objJson->string; break;
+                    int bp = 0;
+                }
             case Mirror::TypeId<const char*>():
             case Mirror::TypeId<char*>():
                 *(const char**)obj = _strdup(objJson->valuestring); break;
@@ -94,6 +103,7 @@ namespace QwerkE {
             case Mirror::TypeId<const int64_t>():
             case Mirror::TypeId<int64_t>(): // #NOTE Storing int64 as string
                 *(int64_t*)obj = std::stoll(objJson->valuestring); break;
+
             case Mirror::TypeId<const float>():
             case Mirror::TypeId<float>():
                 *(float*)obj = (float)objJson->valuedouble; break;
@@ -147,7 +157,7 @@ namespace QwerkE {
                     const Mirror::Field& field = objTypeInfo->fields[i];
 
                     if (strcmp(field.name.c_str(), iterator->string) != 0 ||
-                        // #TODO #if Editor
+                        // #TODO Wrap editor only logic in #if Editor
                         field.flags & FieldSerializationFlags::_InspectorOnly)
                         continue;
 
@@ -220,7 +230,10 @@ namespace QwerkE {
             const Mirror::TypeInfo* elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
             Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
             const cJSON* secondJson = objJson->child->next;
-            if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category)
+            if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category || // #TODO Fix std::string override
+                // #TODO Test const char*
+                Mirror::TypeId<std::string>() == elementSecondInfo->id ||
+                Mirror::TypeId<const char*>() == elementSecondInfo->id)
             {   // #TODO Review handling primitives differently
                 secondJson = secondJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
             }
@@ -230,7 +243,7 @@ namespace QwerkE {
             objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
         }
 
-        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, const void* obj)
+        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
         {
             switch (objTypeInfo->id)
             {
@@ -246,6 +259,12 @@ namespace QwerkE {
                         iterator = iterator->next;
                     }
                 }
+                return true;
+
+            // #NOTE Treat some types as primitives
+            case Mirror::TypeId<std::string>():
+            case Mirror::TypeId<const char*>():
+                local_DeserializePrimitive(objJson, objTypeInfo, obj);
                 return true;
             }
             return false;

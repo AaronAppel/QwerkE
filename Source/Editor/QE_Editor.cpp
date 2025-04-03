@@ -200,6 +200,14 @@ namespace QwerkE {
             }
         }
 
+        void OnSceneReloaded()
+        {
+            for (auto& it : s_EditorWindows)
+            {
+                it.second->OnSceneReload();
+            }
+        }
+
 		void local_Initialize()
 		{
             Projects::Initialize();

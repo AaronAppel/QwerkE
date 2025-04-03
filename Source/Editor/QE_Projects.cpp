@@ -77,28 +77,20 @@ namespace QwerkE {
 
 			s_CurrentProject.projectFileName = projectSettingsFileName;
 
-			const u8 range = s_CurrentProject.sceneFileNames.size();
+			const u8 range = s_CurrentProject.scenesList.size();
 
 			for (const auto& guidSceneNamePairs : s_CurrentProject.scenesList)
 			{
-				if (Scene* newScene = Assets::Get<Scene>(guidSceneNamePairs.first))
+				if (const Scene* newScene = Assets::Get<Scene>(guidSceneNamePairs.first))
 				{
+					// if (!Scenes::HasScene(newScene))
+					{
+						// #TODO Add scene? Scenes can be empty on reload but assets still exist in Assets::
+					}
+
 					if (newScene->GetSceneName() == s_CurrentProject.startUpSceneName)
 					{
 						Scenes::SetCurrentScene(newScene->GetGuid());
-					}
-
-					// #TODO Move unique check logic into Projects::AddSceneToProjectScenesList() or something better
-					for (size_t i = 0; i < s_CurrentProject.sceneFileNames.size(); i++)
-					{
-						if (strcmp(s_CurrentProject.sceneFileNames[i].c_str(), newScene->GetSceneName().c_str()) == 0)
-						{
-							break;
-						}
-						else if (i == s_CurrentProject.sceneFileNames.size() - 1)
-						{
-							s_CurrentProject.sceneFileNames.emplace_back(newScene->GetSceneName().c_str());
-						}
 					}
 				}
 			}

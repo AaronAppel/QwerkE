@@ -49,7 +49,7 @@ namespace QwerkE {
         template<typename... Component>
         static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
 
-        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson);
+        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 
         void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
@@ -59,7 +59,12 @@ namespace QwerkE {
                 return;
             }
 
-            if (local_TypeInfoHasOverride(obj, objTypeInfo, objJson))
+            if (Mirror::TypeId<std::string>() == objTypeInfo->id)
+            {
+                int bp = 0;
+            }
+
+            if (local_TypeInfoHasOverride(obj, objTypeInfo, objJson, name))
                 return;
 
             switch (objTypeInfo->category)
@@ -110,6 +115,7 @@ namespace QwerkE {
 
             switch (objTypeInfo->id)
             {
+                // #TODO std::string is not a true primitive. Need a better way to handle this logic
             case Mirror::TypeId<const std::string>():
             case Mirror::TypeId<std::string>():
                 {
@@ -214,6 +220,7 @@ namespace QwerkE {
 
                 const void* fieldAddress = (char*)obj + field.offset;
 
+                // #TODO Ensure local_TypeInfoHasOverride() handles override logic
                 // #TODO No if check needed?
                 if (Mirror::TypeInfoCategory_Primitive == field.typeInfo->category)
                 {   // #TODO Review handling primitive here (dependent on field name)
@@ -288,6 +295,17 @@ namespace QwerkE {
                 cJSON_AddItemToArray(pairJson, pairSecondJson);
             }
 
+            // #TODO Fix std::string exception. Test const char*
+            // #TODO Call ToJson to use ensure local_TypeInfoHasOverride() override logic
+            // #TODO std::string has no fields so the value will never be written in local_SerializeClass()
+            if (Mirror::TypeId<std::string>() == objTypeInfoSecond->id ||
+                Mirror::TypeId<const char*>() == objTypeInfoSecond->id)
+            {
+                local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
+                return;
+            }
+
+            // #TODO Try to deprecate switch below with if/else above, or refactor switch
             switch (objTypeInfoSecond->category)
             {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
@@ -361,7 +379,7 @@ namespace QwerkE {
             }(), ...);
         }
 
-        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson)
+        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
             switch (objTypeInfo->id)
             {
@@ -388,6 +406,12 @@ namespace QwerkE {
                         }
                     });
                 }
+                return true;
+
+            // #NOTE Treat some types as primitives
+            case Mirror::TypeId<std::string>():
+            case Mirror::TypeId<const char*>():
+                local_SerializePrimitive(obj, objTypeInfo, objJson, name);
                 return true;
             }
             return false;

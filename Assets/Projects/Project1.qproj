@@ -3,10 +3,6 @@
 		"projectFileName":	"Project1.qproj",
 		"projectName":	"Project1",
 		"startUpSceneName":	"NewScene1.qscene",
-		"sceneFileNames":	{
-			"std::string":	"NewScene1.qscene",
-			"std::string":	"GameScene1.qscene"
-		},
 		"scenesList":	{
 			"std::pair<const QwerkE::GUID, std::string>":	{
 				"const QwerkE::GUID":	{
