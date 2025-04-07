@@ -11,13 +11,18 @@ namespace QwerkE {
 
 		// #TODO Look at using std::strings or string views instead of const char*
 
-		void SetExePath(std::string newExePath);
-		void SetAssetsDir(std::string newAssetsDir);
-		void SetNullAssetsDir(std::string newRootDir);
+		void SetExePath(const std::string& newExePath);
+		void SetAssetsDir(const std::string& newAssetsDir);
+		void SetNullAssetsDir(const std::string& newRootDir);
 
-		std::string RootDir();
+#ifdef _QDEBUG
+		void SetRepoRootDir(const std::string&);
+		const std::string& RepoRootDir();
+#endif // _QDEBUG
 
-		std::string AssetsDir();
+		const std::string& ExeDir();
+
+		const std::string& AssetsDir();
 
 		std::string FontsDir();
 		std::string Font(const char* fontFileName);
@@ -25,7 +30,7 @@ namespace QwerkE {
 		std::string MeshesDir();
 		std::string Mesh(const char* meshFileName);
 
-		std::string NullAssetsDir();
+		const std::string& NullAssetsDir();
 		std::string NullAsset(const char* sceneFileName);
 
 		std::string ProjectsDir();

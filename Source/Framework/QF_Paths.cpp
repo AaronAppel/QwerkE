@@ -8,27 +8,62 @@ namespace QwerkE {
 		static std::string s_AssetsDir = "Assets";
 		static std::string s_NullAssetsDir = "Assets";
 
-		void SetExePath(std::string newExePath)
+		void SetExePath(const std::string& newExePath)
 		{
+			// #TODO Validation
 			s_ExePath = newExePath;
 
-			Path exePath = s_ExePath; // #TODO Assume assets folder exists with .exe file
-			exePath = exePath.parent_path();
-			exePath = exePath / "Assets";
-			SetAssetsDir(exePath.string());
+			Path assetsPath = s_ExePath; // #TODO Assume assets folder exists with .exe file
+			assetsPath = assetsPath.parent_path();
+			assetsPath = assetsPath / "Assets";
+			SetAssetsDir(assetsPath.string());
+
+#ifdef _QDEBUG
+			Path repoRootDirPath = s_ExePath; // #TODO Assume repor root is named EngineName
+			while (!repoRootDirPath.empty())
+			{
+				repoRootDirPath = repoRootDirPath.parent_path();
+				if (repoRootDirPath.filename() == EngineName)
+				{
+					SetRepoRootDir(repoRootDirPath.generic_string());
+					break;
+				}
+			}
+#endif // _QDEBUG
 		}
 
-		void SetAssetsDir(std::string newAssetsDir)
+		void SetAssetsDir(const std::string& newAssetsDir)
 		{
+			// #TODO Validation
 			s_AssetsDir = newAssetsDir;
 		}
 
-		void SetNullAssetsDir(std::string newNullAssetsDir)
+		void SetNullAssetsDir(const std::string& newNullAssetsDir)
 		{
+			// #TODO Validation
 			s_NullAssetsDir = newNullAssetsDir;
 		}
 
-		std::string AssetsDir()
+#ifdef _QDEBUG
+		static std::string s_RepoRootDir = "";
+		void SetRepoRootDir(const std::string& newRepoRootDir)
+		{
+			// #TODO Validation
+			s_RepoRootDir = newRepoRootDir;
+		}
+
+		const std::string& RepoRootDir()
+		{
+			return s_RepoRootDir;
+		}
+#endif // _QDEBUG
+
+		const std::string& ExeDir()
+		{
+			return s_ExePath;
+		}
+
+		const std::string& AssetsDir()
 		{
 			return s_AssetsDir;
 		}
@@ -53,7 +88,7 @@ namespace QwerkE {
 			return MeshesDir() + "\\" + meshFileName;
 		}
 
-		std::string NullAssetsDir()
+		const std::string& NullAssetsDir()
 		{
 			return s_NullAssetsDir;
 		}

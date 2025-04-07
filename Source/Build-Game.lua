@@ -34,11 +34,20 @@ project "Game"
 		"%{wks.location}/Source/Framework",
 		"%{wks.location}/Source", -- #NOTE Root for accessing library source
 		"%{wks.location}/Source/Libraries/", -- #NOTE Required by 3rd party libraries
+		
+		-- #NOTE Experimental for RCCpp
+		"%{wks.location}/Source/Libraries/RCCppRuntimeCompiler/RuntimeCompiler/",
+		"%{wks.location}/Source/Libraries/RCCppRuntimeObjectSystem/RuntimeObjectSystem/",
 	}
 
 	links -- Project references
 	{
 		"Framework",
+		
+		-- #NOTE Experimental for RCCpp
+		"RCCppRuntimeCompiler",
+		"RCCppRuntimeObjectSystem",
+		"RCCppQwerkE",
 	}
 
 	-- Linker Additional Options "/NODEFAULTLIB:msvcrt.lib" to disable warning

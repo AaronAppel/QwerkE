@@ -110,3 +110,6 @@ START HERE.bat
 # Local only
 /Game/Assets/Scenes/Backup
 /Editor/Assets/Backup
+
+# RCCpp
+/Source/Runtime
