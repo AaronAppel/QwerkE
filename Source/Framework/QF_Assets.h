@@ -4,7 +4,7 @@
 #include <vector>
 
 #ifdef _QBGFX
-#include <bgfx/bgfx.h>
+#include "Libraries/bgfx/include/bgfx/bgfx.h"
 #endif
 
 #ifdef _QMIRROR

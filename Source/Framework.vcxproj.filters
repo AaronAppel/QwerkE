@@ -19,10 +19,10 @@
       <Filter>Events</Filter>
     </ClCompile>
     <ClCompile Include="Framework\QF_ComponentMesh.cpp">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClCompile>
     <ClCompile Include="Framework\QF_ComponentTransform.cpp">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClCompile>
     <ClCompile Include="Framework\QF_ImGuiKeysCodex.cpp">
       <Filter>Input</Filter>
@@ -103,25 +103,25 @@
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentCamera.h">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentHelpers.h">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentInfo.h">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentLight.h">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentMesh.h">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentScript.h">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentTransform.h">
-      <Filter>Components</Filter>
+      <Filter>Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_eKeys.h">
       <Filter>Input</Filter>
@@ -180,9 +180,6 @@
     <ClInclude Include="Framework\QF_Colours.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\QF_EntityHandle.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\QF_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -220,6 +217,9 @@
       <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_Constants.h" />
+    <ClInclude Include="Framework\QF_EntityHandle.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
@@ -233,9 +233,6 @@
     </Filter>
     <Filter Include="Events">
       <UniqueIdentifier>{80743b01-b609-4acc-a99d-5043ababe16e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{96c480e2-99c4-4a6f-b574-fa45682e4b6a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{59332054-2f7b-47ee-ac59-7ed08c2e0a30}</UniqueIdentifier>
@@ -266,6 +263,12 @@
     </Filter>
     <Filter Include="Scripting">
       <UniqueIdentifier>{5b33b51b-906a-4c60-acb7-99eb685eb3db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{7e4fd862-0d49-4321-9e63-cca837ede13d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Components">
+      <UniqueIdentifier>{96c480e2-99c4-4a6f-b574-fa45682e4b6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

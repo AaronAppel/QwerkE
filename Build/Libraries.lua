@@ -15,7 +15,7 @@ LibraryDefines = {
 "_QLODEPNG",
 "_QMIRROR",
 "_QSPDLOG",
-"_QSTBIMAGE",
+"_QSTB_IMAGE",
 }
 
 LibraryLib = {}

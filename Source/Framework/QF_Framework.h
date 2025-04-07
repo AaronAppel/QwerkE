@@ -20,7 +20,7 @@ namespace QwerkE {
 		void RenderView(uint16_t viewId = 0);
 		void EndFrame();
 
-		std::map<std::string, const char*>& GetProgramArgumentPairs();
+		const std::map<std::string, const char*>& GetProgramArgumentPairs();
 
 	}
 

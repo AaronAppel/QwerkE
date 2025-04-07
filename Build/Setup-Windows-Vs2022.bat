@@ -1,13 +1,19 @@
 @echo off
 
-premake5.exe --file="premake.lua" vs2022
+set PREMAKE_EXE="premake5.exe"
+set PREMAKE_FILE="premake.lua"
+
+ IF EXIST "Build\" (
+	set PREMAKE_EXE="Build\premake5.exe"
+	set PREMAKE_FILE="Build\premake.lua"
+ )
+ 
+%PREMAKE_EXE% --file=%PREMAKE_FILE% vs2022
 
 IF NOT %errorlevel%==0 (
 	echo Encountered error!
 	pause
-)
-ELSE
-(
+) ELSE (
 	cd ../
 	tasklist /FI "IMAGENAME eq devenv.exe" | find /i "devenv.exe"
 	

@@ -30,6 +30,11 @@ namespace QwerkE {
 
 		eOperationResult Initialize(uint16_t windowWidth, uint16_t windowHeight)
 		{
+			ASSERT(!s_ProgramArgumentPairs.empty(), "Initialize() called before SetCommandLineArgs()!");
+
+			// #TODO Review return values. Could chain successful calls together using return value like
+			// if (Log::Initialize() && Events::Initialize() && ... etc) { return eOperationResult::Success }
+
 			Log::Initialize();
 			Events::Initialize();
 			Window::Initialize(windowWidth, windowHeight);
@@ -74,7 +79,7 @@ namespace QwerkE {
 			Renderer::EndFrame();
 		}
 
-		std::map<std::string, const char*>& GetProgramArgumentPairs()
+		const std::map<std::string, const char*>& GetProgramArgumentPairs()
 		{
 			return s_ProgramArgumentPairs;
 		}
