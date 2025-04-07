@@ -20,6 +20,7 @@ namespace QwerkE {
 
         void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 
+        // #TODO Look at returning a value (eOperationResult?) to know if there were errors. [[nodiscard]]?
         template <class T>
         void ToFile(const T& objectReference, const char* absoluteFilePath)
         {
@@ -43,6 +44,7 @@ namespace QwerkE {
 
         void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
 
+        // #TODO Look at returning a value (eOperationResult?) to know if there were errors. [[nodiscard]]?
         template <class T>
         void FromFile(const char* absoluteFilePath, T& objectReference, bool createIfMissing = false)
         {
