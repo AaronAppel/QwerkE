@@ -6,18 +6,18 @@
 		"scenesList":	{
 			"std::pair<const QwerkE::GUID, std::string>":	{
 				"const QwerkE::GUID":	{
-					"m_Guid":	"18264920608085666888"
-				},
-				"std::string":	{
-					"std::string":	"GameScene1.qscene"
-				}
-			},
-			"std::pair<const QwerkE::GUID, std::string>":	{
-				"const QwerkE::GUID":	{
 					"m_Guid":	"5515617290093115200"
 				},
 				"std::string":	{
 					"std::string":	"NewScene1.qscene"
+				}
+			},
+			"std::pair<const QwerkE::GUID, std::string>":	{
+				"const QwerkE::GUID":	{
+					"m_Guid":	"18264920608085666888"
+				},
+				"std::string":	{
+					"std::string":	"GameScene1.qscene"
 				}
 			}
 		}

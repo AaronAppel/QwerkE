@@ -10,11 +10,14 @@ set PREMAKE_FILE="premake.lua"
  
 %PREMAKE_EXE% --file=%PREMAKE_FILE% vs2022
 
+IF EXIST "Build\" (
+	cd ../
+)
+
 IF NOT %errorlevel%==0 (
 	echo Encountered error!
 	pause
 ) ELSE (
-	cd ../
 	tasklist /FI "IMAGENAME eq devenv.exe" | find /i "devenv.exe"
 	
 	rem Only open solution automatically for me

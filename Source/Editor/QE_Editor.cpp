@@ -255,8 +255,17 @@ namespace QwerkE {
             s_EditorWindows.clear();
 		}
 
+        static u16 shorty = 0;
         void local_Update()
         {
+            ImGui::DefaultDebugWindow([]() {
+                s32 stackInt = shorty;
+                if (ImGui::DragInt("Shorty", &stackInt, 1))
+                {
+                    shorty = stackInt;
+                }
+            });
+
             if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
             {
                 local_Stop();

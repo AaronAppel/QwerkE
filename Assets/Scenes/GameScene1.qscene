@@ -2,22 +2,48 @@
 	"QwerkE::Scene":	{
 		"m_SceneFileName":	"GameScene1.qscene",
 		"m_Registry":	{
-			"Camera":	{
-				"QwerkE::ComponentCamera":	{
-					"m_MoveSpeed":	5,
-					"m_LookAtPosition":	{
-						"x":	-6.5897812843322754,
-						"y":	-3.2408046722412109,
-						"z":	-9.97109127044678
+			"Mesh":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Mesh",
+					"m_Guid":	{
+						"m_Guid":	"15318540641823496003"
 					},
-					"m_Fov":	60,
-					"m_Near":	0.10000000149011612,
-					"m_Far":	100
+					"m_Enabled":	false
 				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"0"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					}
+				}
+			},
+			"Camera":	{
 				"QwerkE::ComponentInfo":	{
 					"m_EntityName":	"Camera",
 					"m_Guid":	{
-						"m_Guid":	"8186617831649296184"
+						"m_Guid":	"1323974269615536856"
 					},
 					"m_Enabled":	false
 				},
@@ -41,54 +67,28 @@
 						"float":	1
 					}
 				},
+				"QwerkE::ComponentCamera":	{
+					"m_MoveSpeed":	5,
+					"m_LookAtPosition":	{
+						"x":	-6.5897812843322754,
+						"y":	-3.2408046722412109,
+						"z":	-9.97109127044678
+					},
+					"m_Fov":	60,
+					"m_Near":	0.10000000149011612,
+					"m_Far":	100
+				},
 				"QwerkE::ComponentScript":	{
 					"m_ScriptInstances":	{
-						"std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"QwerkE::eScriptTypes":	{
-								"QwerkE::eScriptTypes":	1
+						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
+							"const QwerkE::eScriptTypes":	{
+								"const QwerkE::eScriptTypes":	1
 							},
 							"QwerkE::Scriptable*":	{
 								"QwerkE::ScriptableCamera":	{
 								}
 							}
 						}
-					}
-				}
-			},
-			"Mesh":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Mesh",
-					"m_Guid":	{
-						"m_Guid":	"15318540641823496003"
-					},
-					"m_Enabled":	false
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"0"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"0"
-					}
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1
 					}
 				}
 			}

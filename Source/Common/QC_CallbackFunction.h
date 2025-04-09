@@ -18,7 +18,7 @@ public:
 private:
     uint16_t GetNextId()
     {
-        static uint16_t s_IdCounter = 0; // #TODO Review making a .cpp file for this
+        static uint16_t s_IdCounter = 0;
         return ++s_IdCounter;
     }
     T m_Callback = nullptr;

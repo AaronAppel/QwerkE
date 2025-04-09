@@ -54,8 +54,6 @@ workspace "QwerkE"
 	include "../Source/Libraries/Mirror/Build-Mirror.lua"
 	include "../Source/Libraries/spdlog/Build-spdlog.lua"
 	include "../Source/Libraries/stb_image/Build-stb_image.lua"
-	include "../Source/Libraries/RCCppRuntimeCompiler/Build-RCCppRuntimeCompiler.lua"
-	include "../Source/Libraries/RCCppRuntimeObjectSystem/Build-RCCppRuntimeObjectSystem.lua"
 	group ""
 	
 	-- buildoptions { "/EHsc", "/Zc:preprocessor", } -- bx doesn't like "/EHsc", "/Zc:preprocessor"

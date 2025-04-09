@@ -2,140 +2,40 @@
 	"QwerkE::Scene":	{
 		"m_SceneFileName":	"NewScene1.qscene",
 		"m_Registry":	{
-			"Chaser":	{
+			"Bunny":	{
 				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Chaser",
+					"m_EntityName":	"Bunny",
 					"m_Guid":	{
-						"m_Guid":	"13298806619783215903"
-					},
-					"m_Enabled":	true
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"17511105768294075930"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"0"
-					}
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	0.5,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0.5,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0.5,
-						"float":	0,
-						"float":	13.0654296875,
-						"float":	1,
-						"float":	1.2330000400543213,
-						"float":	1
-					}
-				},
-				"QwerkE::ComponentScript":	{
-					"m_ScriptInstances":	{
-						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"const QwerkE::eScriptTypes":	{
-								"const QwerkE::eScriptTypes":	3
-							},
-							"QwerkE::Scriptable*":	{
-								"QwerkE::ScriptablePatrol":	{
-									"m_Stride":	5,
-									"m_Speed":	1
-								}
-							}
-						}
-					}
-				}
-			},
-			"Camera":	{
-				"QwerkE::ComponentCamera":	{
-					"m_MoveSpeed":	5,
-					"m_Fov":	61,
-					"m_Near":	0.10000000149011612,
-					"m_Far":	100
-				},
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Camera",
-					"m_Guid":	{
-						"m_Guid":	"8186617831649296184"
+						"m_Guid":	"9197424376144239504"
 					},
 					"m_Enabled":	false
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
-						"float":	0.959682047367096,
+						"float":	1,
 						"float":	0,
-						"float":	0.281087875366211,
 						"float":	0,
-						"float":	0.0672716572880745,
-						"float":	0.97093921899795532,
-						"float":	-0.22967691719532013,
 						"float":	0,
-						"float":	-0.272919237613678,
-						"float":	0.23932605981826782,
-						"float":	0.931792914867401,
 						"float":	0,
-						"float":	-4.401646614074707,
-						"float":	3.784186840057373,
-						"float":	-6.67338514328003,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	-4,
+						"float":	0,
+						"float":	0,
 						"float":	1
 					}
-				},
-				"QwerkE::ComponentScript":	{
-					"m_ScriptInstances":	{
-						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"const QwerkE::eScriptTypes":	{
-								"const QwerkE::eScriptTypes":	1
-							},
-							"QwerkE::Scriptable*":	{
-								"QwerkE::ScriptableCamera":	{
-								}
-							}
-						}
-					}
-				}
-			},
-			"Small Cube":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Small Cube",
-					"m_Guid":	{
-						"m_Guid":	"15318540641823496003"
-					},
-					"m_Enabled":	false
 				},
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{
-						"m_Guid":	"0"
+						"m_Guid":	"11140931355107737998"
 					},
 					"m_ShaderGuid":	{
-						"m_Guid":	"0"
-					}
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	-2.5,
-						"float":	7,
-						"float":	3,
-						"float":	1
+						"m_Guid":	"18015078069625190773"
 					}
 				}
 			},
@@ -146,14 +46,6 @@
 						"m_Guid":	"12653664972659247131"
 					},
 					"m_Enabled":	false
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"0"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"0"
-					}
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
@@ -174,23 +66,23 @@
 						"float":	5,
 						"float":	1
 					}
-				}
-			},
-			"Bunny":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Bunny",
-					"m_Guid":	{
-						"m_Guid":	"9197424376144239504"
-					},
-					"m_Enabled":	false
 				},
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{
-						"m_Guid":	"11140931355107737998"
+						"m_Guid":	"0"
 					},
 					"m_ShaderGuid":	{
-						"m_Guid":	"18015078069625190773"
+						"m_Guid":	"0"
 					}
+				}
+			},
+			"Small Cube":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Small Cube",
+					"m_Guid":	{
+						"m_Guid":	"15318540641823496003"
+					},
+					"m_Enabled":	false
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
@@ -206,10 +98,123 @@
 						"float":	0,
 						"float":	1,
 						"float":	0,
-						"float":	-4,
-						"float":	0,
-						"float":	0,
+						"float":	-2.5,
+						"float":	7,
+						"float":	3,
 						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"0"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					}
+				}
+			},
+			"Camera":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Camera",
+					"m_Guid":	{
+						"m_Guid":	"8186617831649296184"
+					},
+					"m_Enabled":	false
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	0.99999862909317,
+						"float":	0,
+						"float":	-0.0016666054725646973,
+						"float":	0,
+						"float":	2.7775738544733031e-06,
+						"float":	0.99999862909317,
+						"float":	0.0016666031442582607,
+						"float":	0,
+						"float":	0.0016666031442582607,
+						"float":	-0.0016666054725646973,
+						"float":	0.99999725818634033,
+						"float":	0,
+						"float":	-4.401646614074707,
+						"float":	3.784186840057373,
+						"float":	-6.67338514328003,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentCamera":	{
+					"m_MoveSpeed":	5,
+					"m_LookAtPosition":	{
+						"x":	-4.403313159942627,
+						"y":	3.785853385925293,
+						"z":	-5.6733880043029785
+					},
+					"m_Fov":	61,
+					"m_Near":	0.10000000149011612,
+					"m_Far":	100
+				},
+				"QwerkE::ComponentScript":	{
+					"m_ScriptInstances":	{
+						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
+							"const QwerkE::eScriptTypes":	{
+								"const QwerkE::eScriptTypes":	1
+							},
+							"QwerkE::Scriptable*":	{
+								"QwerkE::ScriptableCamera":	{
+								}
+							}
+						}
+					}
+				}
+			},
+			"Chaser":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Chaser",
+					"m_Guid":	{
+						"m_Guid":	"13298806619783215903"
+					},
+					"m_Enabled":	true
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	0.5,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0.5,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0.5,
+						"float":	0,
+						"float":	15.86351203918457,
+						"float":	1,
+						"float":	1.2330000400543213,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"17511105768294075930"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					}
+				},
+				"QwerkE::ComponentScript":	{
+					"m_ScriptInstances":	{
+						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
+							"const QwerkE::eScriptTypes":	{
+								"const QwerkE::eScriptTypes":	3
+							},
+							"QwerkE::Scriptable*":	{
+								"QwerkE::ScriptablePatrol":	{
+									"m_Stride":	5,
+									"m_Speed":	1
+								}
+							}
+						}
 					}
 				}
 			}

@@ -135,6 +135,7 @@ namespace QwerkE {
                     char charEscaped[2] = { *charPtrAddress, '\0' };
                     if (ImGui::InputText(elementName.c_str(), charEscaped, 2))
                     {
+                        // #TODO Create constants or use isAlpha, isDigit helpers
                         if (charEscaped[0] >= 97 && charEscaped[0] <= 122)
                         {
                             charEscaped[0] -= 32;
@@ -150,12 +151,24 @@ namespace QwerkE {
             case Mirror::TypeId<float>():
                 if (ImGui::DragFloat(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
 
-            case Mirror::TypeId<uint8_t>():
-            // case MirrorTypes::m_eSceneTypes:
+            case Mirror::TypeId<double>():
+            {
+                double* numberAddress = (double*)obj;
+                float temp = (float)*numberAddress;
+
+                if (ImGui::DragFloat(elementName.c_str(), &temp)) // #NOTE Loss of precision
+                {
+                    valueChanged |= *numberAddress != (double)temp;
+                    *numberAddress = (double)temp;
+                }
+            }
+            break;
+
+            case Mirror::TypeId<u8>():
                 {
                     u8* numberAddress = (u8*)obj;
                     int temp = (int)*numberAddress;
-                    if (ImGui::DragInt(elementName.c_str(), &temp))
+                    if (ImGui::DragInt(elementName.c_str(), &temp), U8_MIN, U8_MAX)
                     {
                         valueChanged |= *numberAddress != (u8)temp;
                         *numberAddress = (u8)temp;
@@ -163,11 +176,11 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<uint16_t>():
+            case Mirror::TypeId<u16>():
                 {
                     u16* numberAddress = (u16*)obj;
                     int temp = (int)*numberAddress;
-                    if (ImGui::DragInt(elementName.c_str(), &temp))
+                    if (ImGui::DragInt(elementName.c_str(), &temp), U16_MIN, U16_MAX)
                     {
                         valueChanged |= *numberAddress != (u16)temp;
                         *numberAddress = (u16)temp;
@@ -175,33 +188,38 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<uint32_t>():
+            case Mirror::TypeId<u32>():
                 {
-                    uint32_t* numberAddress = (uint32_t*)obj;
-                    int temp = (int)*numberAddress;
+                    u32* numberAddress = (u32*)obj;
+                    s32 temp = (s32)*numberAddress;
 
-                    if (ImGui::DragInt(elementName.c_str(), &temp))
+                    // #TODO Change u64 solution of using a string for a larger value range
+                    if (ImGui::DragInt(elementName.c_str(), &temp), U32_MIN, U32_MAX)
                     {
-                        valueChanged |= *numberAddress != (uint32_t)temp;
-                        *numberAddress = (uint32_t)temp;
+                        valueChanged |= *numberAddress != (u32)temp; // #NOTE Signed to unsigned conversion
+                        *numberAddress = (u32)temp;
                     }
                 }
                 break;
 
-            case Mirror::TypeId<uint64_t>():
+            case Mirror::TypeId<u64>():
                 {
-                    uint64_t* numberAddress = (uint64_t*)obj;
+                    u64* numberAddress = (u64*)obj;
 
-                    // Edit entity name
-                    Buffer buffer(INT8_MAX); // #TODO Could be re-used/persistent and updated on entity change
-                    buffer.Fill('\0');
-                    strcpy(buffer.As<char>(), std::to_string(*numberAddress).c_str());
+                    char buffer[U64_MAX_DIGITS] = { '\0' };
+                    strcpy(buffer, std::to_string(*numberAddress).c_str());
 
                     ImGui::PushItemWidth(165);
-                    if (ImGui::InputText(elementName.c_str(), buffer.As<char>(), buffer.SizeInBytes()))
+                    if (ImGui::InputText(elementName.c_str(), buffer, U64_MAX_DIGITS))
                     {
-                        // #TODO Crash when clearing (delete/backspace) text contents to be empty
-                        *numberAddress = std::stoull(buffer.As<char>());
+                        if (buffer[0] != '\0')
+                        {
+                            *numberAddress = std::stoull(buffer); // #NOTE stoull crashes on empty string
+                        }
+                        else
+                        {
+                            *numberAddress = '\0';
+                        }
                         valueChanged = true;
                     }
                     ImGui::PopItemWidth();
@@ -224,27 +242,26 @@ namespace QwerkE {
                         }
                         if (ImGui::Button(("Copy To Clipboard##" + elementName).c_str()))
                         {
-                            std::string numberAsString = buffer.As<char>();
+                            std::string numberAsString = buffer;
                             ImGui::SetClipboardText(numberAsString.c_str());
                             LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
                         }
+                        if (ImGui::Button(("Regenerate GUID##" + elementName).c_str()))
+                        {
+                            *numberAddress = GUID();
+                            valueChanged = true;
+                            LOG_INFO("{0} Regenerated GUID: {1}", __FUNCTION__, *numberAddress);
+                        }
                         ImGui::EndPopup();
-                    }
-
-                    int temp = (int)*numberAddress;
-                    if (false && ImGui::DragInt(elementName.c_str(), &temp))
-                    {
-                        valueChanged |= *numberAddress != (uint64_t)temp;
-                        *numberAddress = (uint64_t)temp;
                     }
                 }
                 break;
 
-            case Mirror::TypeId<int8_t>():
+            case Mirror::TypeId<s8>():
                 {
                     s8* numberAddress = (s8*)obj;
-                    int temp = (int)*numberAddress;
-                    if (ImGui::DragInt(elementName.c_str(), &temp))
+                    s32 temp = (s32)*numberAddress;
+                    if (ImGui::DragInt(elementName.c_str(), &temp), 0, S8_MAX)
                     {
                         valueChanged |= *numberAddress != (s8)temp;
                         *numberAddress = (s8)temp;
@@ -252,11 +269,11 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<int16_t>():
+            case Mirror::TypeId<s16>():
                 {
                     s16* numberAddress = (s16*)obj;
-                    int temp = (int)*numberAddress;
-                    if (ImGui::DragInt(elementName.c_str(), &temp))
+                    s32 temp = (s32)*numberAddress;
+                    if (ImGui::DragInt(elementName.c_str(), &temp), 0, S16_MAX)
                     {
                         valueChanged |= *numberAddress != (s16)temp;
                         *numberAddress = (s16)temp;
@@ -264,30 +281,18 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<int32_t>():
-                if (ImGui::DragInt(elementName.c_str(), (int32_t*)obj)) { valueChanged = true; } break;
-            case Mirror::TypeId<int64_t>():
+            case Mirror::TypeId<s32>():
+                if (ImGui::DragInt(elementName.c_str(), (s32*)obj), S32_MIN, S32_MAX) { valueChanged = true; } break;
+            case Mirror::TypeId<s64>():
                 {
-                    int64_t* numberAddress = (int64_t*)obj;
-                    int temp = (int)*numberAddress;
+                    // #TODO Change u64 solution of using a string for a larger value range
+                    s64* numberAddress = (s64*)obj;
+                    s32 temp = (s32)*numberAddress;
 
-                    if (ImGui::DragInt(elementName.c_str(), &temp))
+                    if (ImGui::DragInt(elementName.c_str(), &temp), S64_MIN, S64_MAX)
                     {
-                        valueChanged |= *numberAddress != (int64_t)temp;
-                        *numberAddress = (int64_t)temp;
-                    }
-                }
-                break;
-
-            case Mirror::TypeId<double>():
-                {
-                    double* numberAddress = (double*)obj;
-                    float temp = (float)*numberAddress;
-
-                    if (ImGui::DragFloat(elementName.c_str(), &temp)) // #TODO Review need for precision
-                    {
-                        valueChanged |= *numberAddress != (double)temp;
-                        *numberAddress = (double)temp;
+                        valueChanged |= *numberAddress != (s64)temp; // #TODO Fix 32 bit to 64 bit conversion
+                        *numberAddress = (s64)temp;
                     }
                 }
                 break;
