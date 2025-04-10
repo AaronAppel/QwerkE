@@ -9,7 +9,7 @@
 
 namespace QwerkE {
 
-    using EntityComponentsList = TemplateArgumentList <
+    using EntityComponentsList = TypesList <
 
         // In order as they appear in Editor entity inspector window
         ComponentInfo,

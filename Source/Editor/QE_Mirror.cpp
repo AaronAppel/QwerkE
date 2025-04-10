@@ -38,7 +38,7 @@ static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumS
 }
 
 template<typename SuperClass, typename... SubClass>
-static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
+static void MirrorSubClasses(TypesList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset = 0)
 {
 	MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo, enumStartOffset);
 }

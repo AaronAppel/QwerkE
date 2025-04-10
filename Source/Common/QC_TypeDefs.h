@@ -46,7 +46,7 @@ typedef uint64_t u64;
 #include <string>
 typedef std::string string;
 
-// Collections // #TODO Review value of aliasing std:: collections
+// Collections
 #include <vector>
 template <typename T>
 using vector = std::vector<T>;
@@ -92,4 +92,4 @@ using wPtr = std::weak_ptr<T>;
 
 // Templating
 template<typename... T>
-struct TemplateArgumentList { };
+struct TypesList { };

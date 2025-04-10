@@ -26,7 +26,7 @@ namespace QwerkE {
         void DeserializeComponent(entt::registry* registry, const cJSON* entityComponentsJsonArray);
 
         template<typename... Component>
-        static void DeserializeComponents(TemplateArgumentList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray);
+        static void DeserializeComponents(TypesList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray);
 
         void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
@@ -312,7 +312,7 @@ namespace QwerkE {
         }
 
         template<typename... Component>
-        static void DeserializeComponents(TemplateArgumentList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray)
+        static void DeserializeComponents(TypesList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray)
         {
             DeserializeComponent<Component...>(registry, entityComponentsJsonArray);
         }

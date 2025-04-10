@@ -23,7 +23,7 @@ namespace QwerkE {
 
 	namespace Editor {
 
-        using EditorWindowsList = TemplateArgumentList <
+        using EditorWindowsList = TypesList <
 			// #NOTE Order matters! Match enum EditorWindowTypes order
 			EditorWindowAssets,
 			EditorWindowDefaultDebug,
@@ -63,7 +63,7 @@ namespace QwerkE {
 		}
 
 		template <typename... T>
-		EditorWindow* NewEditorWindowByType(TemplateArgumentList<T...>, EditorWindowTypes editorWindowType)
+		EditorWindow* NewEditorWindowByType(TypesList<T...>, EditorWindowTypes editorWindowType)
 		{
 			if (EditorWindow* window = NewEditorWindowByType<T...>(editorWindowType))
 				return window;

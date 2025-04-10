@@ -16,6 +16,14 @@ namespace QwerkE {
             return InspectType(Mirror::InfoForType<T>(), &obj, parentName);
         }
 
+        bool InspectType(const Mirror::TypeInfo* childTypeInfo, void* childInstance);
+
+        template <class T>
+        bool InspectType(T& obj)
+        {
+            return InspectType(Mirror::InfoForType<T>(), &obj);
+        }
+
         template <class T>
         bool InspectObject(T& object)
         {

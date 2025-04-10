@@ -141,7 +141,7 @@ namespace QwerkE {
             }
 
             template<typename... Components>
-            void priv_AddComponentEntries(TemplateArgumentList<Components...>, EntityHandle entityHandle)
+            void priv_AddComponentEntries(TypesList<Components...>, EntityHandle entityHandle)
             {
                 priv_AddComponentEntry<Components...>(entityHandle);
             }
@@ -232,7 +232,7 @@ namespace QwerkE {
             }
 
             template<typename... Components>
-            void priv_EditComponentEntries(TemplateArgumentList<Components...>, EntityHandle entityHandle)
+            void priv_EditComponentEntries(TypesList<Components...>, EntityHandle entityHandle)
             {
                 priv_EditComponentEntry<Components...>(entityHandle);
             }

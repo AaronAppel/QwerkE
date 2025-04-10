@@ -47,7 +47,7 @@ namespace QwerkE {
         void SerializeComponent(const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
 
         template<typename... Component>
-        static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
+        static void SerializeComponents(TypesList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
 
         bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 
@@ -436,7 +436,7 @@ namespace QwerkE {
         }
 
         template<typename... Component>
-        static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray)
+        static void SerializeComponents(TypesList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray)
         {
             SerializeComponent<Component...>(registry, entityId, componentListJsonArray);
         }

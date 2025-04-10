@@ -29,6 +29,8 @@ std::string wstrtostr(const std::wstring& wstr);
 
 // #TODO FormatString(const char* string) // For formatting, inserting, or replacing, variable argument strings
 
+// #TODO stoull() function that doesn't crash on empty or null string. Maybe StoullOrValue("String", 12346) U64_MAX if out of range?
+
 // https://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
 #include <memory>
 #include <string>

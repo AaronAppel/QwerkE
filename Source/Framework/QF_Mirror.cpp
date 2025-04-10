@@ -50,7 +50,7 @@ static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo)
 }
 
 template<typename SuperClass, typename... SubClass>
-static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo)
+static void MirrorSubClasses(TypesList<SubClass...>, Mirror::TypeInfo& localStaticTypeInfo)
 {
 	MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo);
 }
