@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Editor\QE_Editor.cpp" />
-    <ClCompile Include="Editor\QE_EditorInspector.cpp" />
     <ClCompile Include="Editor\QE_Mirror.cpp" />
     <ClCompile Include="Editor\QE_PCH.cpp" />
     <ClCompile Include="Editor\QE_Projects.cpp" />
@@ -19,10 +18,15 @@
     <ClCompile Include="Editor\QE_EditorWindowNodeEditorBlueprints.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorInspector.cpp">
+      <Filter>Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\QE_EditorInspectorContextMenu.cpp">
+      <Filter>Inspector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />
-    <ClInclude Include="Editor\QE_EditorInspector.h" />
     <ClInclude Include="Editor\QE_MaterialEditor.h" />
     <ClInclude Include="Editor\QE_PCH.h" />
     <ClInclude Include="Editor\QE_Projects.h" />
@@ -85,6 +89,9 @@
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="Editor\QE_Mirror.h" />
+    <ClInclude Include="Editor\QE_EditorInspector.h">
+      <Filter>Inspector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -95,6 +102,9 @@
     </Filter>
     <Filter Include="Windows\Singleton">
       <UniqueIdentifier>{93cb9dc8-1734-47b6-b174-b4dc83767fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inspector">
+      <UniqueIdentifier>{8695c4e6-3b98-45e5-8026-ddb8a4233414}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

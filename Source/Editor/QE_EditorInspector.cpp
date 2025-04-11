@@ -37,7 +37,8 @@ namespace QwerkE {
         bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectCollection(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectPair(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
-        bool local_ContextMenu(const Mirror::TypeInfo* typeInfo, void* obj, const std::string& parentName);
+        // #TODO bool local_InspectPointer(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
+        extern bool priv_ContextMenu(const Mirror::TypeInfo* typeInfo, void* obj, const std::string& elementName);
 
         // #TODO Consider adding a read only bool argument
         // #TODO Look to make parentName a const&
@@ -73,7 +74,7 @@ namespace QwerkE {
         }
 
         // #TODO Iterate and find a better way of providing more info down the stack (parent type, field flags, etc)
-        bool InspectType(const Mirror::TypeInfo* childTypeInfo, void* childInstance)
+        bool InspectType(const Mirror::TypeInfo* childTypeInfo, void* childInstance, const Mirror::TypeInfo* parentTypeInfo)
         {
             bool valueChanged = false;
 
@@ -98,7 +99,7 @@ namespace QwerkE {
             // #TODO Consider separating read/displaying and writing values into different steps/functions.
             // Might make reacting to imgui events easier.
 
-            std::string elementName = parentName;
+            const std::string& elementName = parentName;
 
             const bool isDraggingPayload = nullptr != ImGui::GetDragDropPayload();
 
@@ -223,7 +224,7 @@ namespace QwerkE {
                     char buffer[U64_MAX_DIGITS + 1] = { '\0' };
                     strcpy(buffer, std::to_string(*numberAddress).c_str());
 
-                    ImGui::PushItemWidth(165);
+                    ImGui::PushItemWidth(165); // #TODO Look at layout options for all types
                     if (ImGui::InputText(elementName.c_str(), buffer, U64_MAX_DIGITS + 1))
                     {
                         if (buffer[0] != '\0')
@@ -237,38 +238,6 @@ namespace QwerkE {
                         valueChanged = true;
                     }
                     ImGui::PopItemWidth();
-
-                    // #TODO Make context menu generic for all types
-                    // std::string popUpName = "Context ";
-                    // popUpName += elementName;
-                    // if (ImGui::IsItemClicked(ImGui::MouseRight))
-                    // {
-                    //     ImGui::OpenPopup(popUpName.c_str());
-                    // }
-                    //
-                    // if (ImGui::BeginPopup(popUpName.c_str()))
-                    // {
-                    //     if (ImGui::Button(("Paste From Clipboard##" + elementName).c_str()))
-                    //     {
-                    //         std::string clipBoardText = ImGui::GetClipboardText();
-                    //         LOG_INFO("{0} Pasting from clipboard: {1}", __FUNCTION__, clipBoardText.c_str());
-                    //         *numberAddress = std::stoull(clipBoardText.c_str());
-                    //         valueChanged = true;
-                    //     }
-                    //     if (ImGui::Button(("Copy To Clipboard##" + elementName).c_str()))
-                    //     {
-                    //         std::string numberAsString = buffer;
-                    //         ImGui::SetClipboardText(numberAsString.c_str());
-                    //         LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
-                    //     }
-                    //     if (ImGui::Button(("Regenerate GUID##" + elementName).c_str()))
-                    //     {
-                    //         *numberAddress = GUID();
-                    //         valueChanged = true;
-                    //         LOG_INFO("{0} Regenerated GUID: {1}", __FUNCTION__, *numberAddress);
-                    //     }
-                    //     ImGui::EndPopup();
-                    // }
                 }
                 break;
 
@@ -321,7 +290,7 @@ namespace QwerkE {
                 break;
             }
 
-            valueChanged |= local_ContextMenu(typeInfo, obj, elementName);
+            valueChanged |= priv_ContextMenu(typeInfo, obj, elementName);
 
             // #TODO Consider moving to a new function to keep this function smaller and specific to interactable elements
             // Drag and drop behaviour
@@ -723,81 +692,6 @@ namespace QwerkE {
             // default:
             //     break;
             // }
-            return valueChanged;
-        }
-
-        // #TODO Review creating a new QE_EditorInspectorContextMenu.cpp for this
-        bool local_ContextMenu(const Mirror::TypeInfo* typeInfo, void* obj, const std::string& elementName)
-        {
-            bool valueChanged = false;
-            std::string popUpName = "Context ##EditorInspector";
-            u64* valueAddress = (u64*)obj;
-
-            popUpName += elementName;
-            if (ImGui::IsItemClicked(ImGui::MouseRight))
-            {
-                ImGui::OpenPopup(popUpName.c_str());
-            }
-
-            if (ImGui::BeginPopup(popUpName.c_str()))
-            {
-                if (ImGui::Button(("Paste From Clipboard##" + elementName).c_str()))
-                {
-                    // #TODO Make generic for all types
-                    switch (typeInfo->id)
-                    {
-                    case Mirror::TypeId<u64>():
-                        {
-                            std::string clipBoardText = ImGui::GetClipboardText();
-                            LOG_INFO("{0} Pasting from clipboard: {1}", __FUNCTION__, clipBoardText.c_str());
-                            *valueAddress = std::stoull(clipBoardText.c_str());
-                            valueChanged = true;
-                        }
-                        break;
-                    default:
-                        break;
-                    }
-                }
-
-                if (ImGui::Button(("Copy To Clipboard##" + elementName).c_str()))
-                {
-                    // #TODO Make generic for all types
-                    switch (typeInfo->id)
-                    {
-                    case Mirror::TypeId<u64>():
-                        {
-                            char buffer[U64_MAX_DIGITS + 1] = { '\0' };
-                            strcpy(buffer, std::to_string(*valueAddress).c_str());
-
-                            std::string numberAsString = buffer;
-                            ImGui::SetClipboardText(numberAsString.c_str());
-                            LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
-                        }
-                        break;
-                    default:
-                        break;
-                    }
-                }
-
-                // Additional type specific options
-                switch (typeInfo->id)
-                {
-                case Mirror::TypeId<u64>():
-                case Mirror::TypeId<GUID>():
-                    if (ImGui::Button(("Regenerate GUID##" + elementName).c_str()))
-                    {
-                        // #TODO Verify u64 is of type GUID
-                        *valueAddress = GUID();
-                        valueChanged = true;
-                        LOG_INFO("{0} Regenerated GUID: {1}", __FUNCTION__, *valueAddress);
-                    }
-                    break;
-                default:
-                    break;
-                }
-                ImGui::EndPopup();
-            }
-
             return valueChanged;
         }
 

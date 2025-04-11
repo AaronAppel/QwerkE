@@ -223,29 +223,27 @@ namespace QwerkE {
 				ImGui::PopItemWidth();
 
 				// #NOTE Scene transition changes
-				// #TODO Draw grid
-				// if (!Window::IsMinimized())
-				// {
-				// 	// Debug drawer calls
-				// 	constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-				// 	bgfx::setState(BGFX_STATE_DEFAULT);
-				// 	DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-				// 	debugDrawer.begin(viewIdFbo1, true);
-				//
-				// 	constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
-				// 	constexpr bx::Vec3 pos = { .0f, .0f, .0f };
-				//
-				// 	debugDrawer.drawSphere(0.f, 0.f, 0.f, 1.f, Axis::X);
-				// 	// debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
-				//
-				// 	// #TODO Move grid draw to QE_EditorWindowSceneView draw call
-				// 	bx::Plane plane(bx::InitNone);
-				// 	bx::calcPlane(plane, normal, pos);
-				//
-				// 	debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
-				//
-				// 	debugDrawer.end();
-				// }
+				// #TODO Draw grid here instead of QE_Editor.cpp
+				{	// Debug drawer calls
+					constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+					bgfx::setState(BGFX_STATE_DEFAULT);
+					DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
+					debugDrawer.begin(viewIdFbo1, true);
+
+					constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
+					constexpr bx::Vec3 pos = { .0f, .0f, .0f };
+
+					debugDrawer.drawSphere(0.f, 0.f, 0.f, .1f, Axis::X);
+					// debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
+
+					// #TODO Move grid draw to QE_EditorWindowSceneView draw call
+					bx::Plane plane(bx::InitNone);
+					bx::calcPlane(plane, normal, pos);
+
+					debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
+
+					debugDrawer.end();
+				}
 
 				// #TODO Draw scene using camera selected from Camera combo drop down
 				m_EditorCamera.PreDrawSetup(m_ViewId);

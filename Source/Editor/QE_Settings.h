@@ -21,7 +21,7 @@ namespace QwerkE {
         u8 maxEnabledScenes = 1;
         u8 maxJobsAdditionalThreadCount = 1;
 
-        bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
+        bool consoleOutputWindowStartOpen = true;
 
         bool vSyncEnabled = false;
     };

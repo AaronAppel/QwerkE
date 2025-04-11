@@ -48,9 +48,9 @@ namespace QwerkE {
     #ifdef _QGLFW3
         GLFWwindow* s_window = nullptr;
 
-#if 1 // #TODO Omit from retail builds
+#if _QDEBUG
         void local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths);
-#endif
+#endif // _QDEBUG
         void local_CheckGlfwErrors();
 
         // #TODO Consistent naming for events, like local_OnError maybe? Match with other callbacks like in Input::
@@ -210,14 +210,26 @@ namespace QwerkE {
             s_KeyCallback = keyCallback;
         }
 
-#if 1 // #TODO Omit from retail builds
+#if _QDEBUG
         void RegisterFileDropCallback(Callbacks::FileDropCallback* fileDropCallback)
         {
             s_FileDropCallback = fileDropCallback;
         }
-#endif
 
-#if 1 // #TODO Omit from retail builds
+#include <Windows.h> // #CREDIT https://stackoverflow.com/questions/18260508/c-how-do-i-hide-a-console-window-on-startup
+        void ToggleConsoleWindow()
+        {
+            // #TODO Doesn't open until called at least 1 additional time, or ignores first SW_SHOW request
+            ::ShowWindow(::GetConsoleWindow(), IsConsoleWindowShowing() ? SW_HIDE : SW_SHOW);
+        }
+
+        bool IsConsoleWindowShowing()
+        {
+            return ::IsWindowVisible(::GetConsoleWindow());
+        }
+#endif // _QDEBUG
+
+#if _QDEBUG
         // #TODO Call editor or add an editor callback so window doesn't have file drop logic in release/non-editor build.
         void local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths)
         {
@@ -275,9 +287,9 @@ namespace QwerkE {
                 }
             }
         }
-#endif
+#endif // _QDEBUG
 
-#ifdef _QGLFW3 // #TODO Omit from retail builds
+#if defined(_QGLFW3) && defined(_QDEBUG)
         void local_CheckGlfwErrors()
         {
             int glfwErrorCode = glfwGetError(NULL);
@@ -320,7 +332,7 @@ namespace QwerkE {
             }
             ASSERT(false, "Error loading GLFW!");
         }
-    #endif
+#endif // defined(_QGLFW3) && defined(_QDEBUG)
 
     }
 

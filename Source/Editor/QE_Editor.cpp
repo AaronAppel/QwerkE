@@ -91,6 +91,11 @@ namespace QwerkE {
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
 			Framework::Initialize(engineSettings.windowWidthPixels, engineSettings.windowHeightPixels);
 
+            if (!Settings::GetEngineSettings().consoleOutputWindowStartOpen)
+            {
+                Window::ToggleConsoleWindow();
+            }
+
             local_Initialize();
 
             Time::WriteAppStartTime();
@@ -271,6 +276,12 @@ namespace QwerkE {
                 local_Stop();
             }
 
+            if (Input::FrameKeyAction(eKeys::eKeys_Tilde, eKeyState::eKeyState_Press) &&
+                (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
+            {
+                Window::ToggleConsoleWindow();
+            }
+
             if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press) &&
                 (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
             {
@@ -306,31 +317,6 @@ namespace QwerkE {
 
         void local_EndFrame()
         {
-            if (!Window::IsMinimized())
-            {
-                {   // Debug drawer calls
-                    constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-                    bgfx::setState(BGFX_STATE_DEFAULT);
-                    DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-                    debugDrawer.begin(viewIdFbo1, true);
-
-                    constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
-                    constexpr bx::Vec3 pos = { .0f, .0f, .0f };
-
-                    debugDrawer.drawSphere(0.f, 0.f, 0.f, 0.1f, Axis::X);
-                    // debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
-
-                    bx::Plane plane(bx::InitNone);
-                    bx::calcPlane(plane, normal, pos);
-
-                    debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
-
-                    debugDrawer.end();
-                }
-
-                // #TODO Replace draws by moving to EditorWindowSceneView class
-                // Framework::RenderView(viewIdFbo1);
-            }
             Framework::EndFrame();
         }
 

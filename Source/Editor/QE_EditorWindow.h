@@ -66,12 +66,13 @@ namespace QwerkE {
 
 			void EditorWindow::Draw()
 			{
+				// #TODO Check if windows render 1st frame on app open, even if they are not opened
 				if (!Editor::ShowingEditorUI() || Window::IsMinimized() ||
 					m_WindowFlags & EditorWindowFlags::Hidden)
 					return;
 
 				// #TODO Find why new windows are still too small, and if this check does anything
-				if ((m_WindowFlags & EditorWindowFlags::Hidden) == 0)
+				if (!(m_WindowFlags & EditorWindowFlags::Hidden))
 				{
 					ImGui::SetNextWindowSizeConstraints({ m_MinimumWidth , m_MinimumHeight }, { FLT_MAX, FLT_MAX });
 				}

@@ -18,13 +18,13 @@ namespace QwerkE {
         {
             EngineSettings& engineSettings = Settings::GetEngineSettings();
 
-            for (size_t i = 1; i < eSettingsOptions::_size_constant; i++)
+            for (size_t index = 1; index < eSettingsOptions::_size_constant; index++)
             {
-                if (i > 1) ImGui::SameLine();
+                if (index > 1) ImGui::SameLine();
 
                 bool pushIsDirtyStyleColor = false;
 
-                switch (i)
+                switch (index)
                 {
                 case eSettingsOptions::Engine:
                     pushIsDirtyStyleColor = Settings::GetEngineSettings().isDirty;
@@ -50,14 +50,14 @@ namespace QwerkE {
                     ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
                 }
 
-                if (ImGui::Button(ENUM_TO_STR(eSettingsOptions::_from_index(i))))
+                if (ImGui::Button(ENUM_TO_STR(eSettingsOptions::_from_index(index))))
                 {
-                    m_SettingsEditorOption = eSettingsOptions::_from_index(i);
+                    m_SettingsEditorOption = eSettingsOptions::_from_index(index);
                 }
 
                 if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
                 {
-                    m_LastPopUpIndex = (s8)i;
+                    m_LastPopUpIndex = (s8)index;
                     ImGui::OpenPopup("Settings Context Pop Up");
                 }
 
@@ -139,7 +139,7 @@ namespace QwerkE {
                 case eSettingsOptions::GameActions:
                 {
                     Input::GameActions& gameActions = Input::GetGameActions();
-                    // userSettings.isDirty |=
+                    // #TODO userSettings.isDirty |=
                     Inspector::InspectType(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
                 }
                 break;

@@ -1,5 +1,5 @@
 project "Game"
-	kind "ConsoleApp"
+	kind "ConsoleApp" -- #TODO "WindowedApp"
 	location ""
 	
 	defines

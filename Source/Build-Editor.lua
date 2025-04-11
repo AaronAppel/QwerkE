@@ -1,7 +1,7 @@
 include "Libraries.lua"
 
 project "Editor"
-	kind "ConsoleApp" -- #TODO Check for non-console app type
+	kind "ConsoleApp" -- #TODO "WindowedApp"
 	location ""
 	rtti "On" -- #NOTE Enabled for Mirror serialization
 	debugargs { "-applicationName", "Test Game" }
@@ -10,6 +10,7 @@ project "Editor"
 	{
 		"QWERKE_VERSION=0.01",
 		"EngineName=\"QwerkE\"",
+		"QWERKE_EDITOR=1",
 		
 		-- #NOTE Command line arguments :
 		"key_OverrideAssetsDirPath=\"-overrideAssetsDirPath\"",

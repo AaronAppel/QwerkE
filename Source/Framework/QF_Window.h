@@ -26,9 +26,12 @@ namespace QwerkE {
 
         void RegisterKeyCallback(Callbacks::KeyCallback* keyCallback);
 
-#if 1 // #TODO Omit from retail builds
+#if _QDEBUG // #TODO Omit from retail builds
         void RegisterFileDropCallback(Callbacks::FileDropCallback* fileDropCallback);
-#endif
+
+        void ToggleConsoleWindow(); // #TODO Consider moving to Debug:: Namespace
+        bool IsConsoleWindowShowing(); // #TODO Consider moving to Debug:: Namespace
+#endif // _QDEBUG
     }
 
 }
