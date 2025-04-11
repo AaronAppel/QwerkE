@@ -37,10 +37,10 @@ namespace QwerkE {
 
 			Log::Initialize();
 			Events::Initialize();
-			Window::Initialize(windowWidth, windowHeight);
+			Window::Initialize(windowWidth, windowHeight); // #TODO Try to remove window size arguments dependency
 			Renderer::Initialize();
 			Input::Initialize();
-			Assets::Initialize();
+			Assets::Initialize(); // #TODO bgfx init order dependency for mesh creation
 			Scenes::Initialize();
 			return eOperationResult::Success;
 		}
@@ -48,10 +48,10 @@ namespace QwerkE {
 		eOperationResult Shutdown()
 		{
 			Scenes::Shutdown();
-			Assets::Shutdown();
-			Events::Shutdown();
-			Renderer::Shutdown();
 			Window::Shutdown();
+			Assets::Shutdown(); // #TODO bgfx shutdown order dependency pthread_mutex_unlock(_mutex) in bx/mutex.cpp line 95
+			Renderer::Shutdown();
+			Events::Shutdown();
 			Log::Shutdown();
 			return eOperationResult::Success;
 		}

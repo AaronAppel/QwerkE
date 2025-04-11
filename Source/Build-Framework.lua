@@ -38,6 +38,8 @@ project "Framework"
 		"%{wks.location}/Source/Libraries/bimg/include",
 		"%{wks.location}/Source/Libraries/bx/include",
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
+		
+		"%{wks.location}/Source/Libraries/imgui",
 	}
 
 	forceincludes  { "QF_PCH.h", "QF_ForcedIncludes.h"  }
@@ -56,6 +58,7 @@ project "Framework"
 		"bgfxFramework",
 		"FlatHeadGames",
 		"imgui",
+		"imgui-console",
 		"imgui-node-editor",
 		"Jolt",
 		"lodepng",
