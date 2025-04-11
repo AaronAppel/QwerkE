@@ -93,19 +93,12 @@ namespace QwerkE {
 					constexpr u32 s_CharacterPixelSize = 10;
 					constexpr u32 s_DropDownArrowSize = 20;
 
-					// #TODO
-					if (m_LastSceneIndex >= scenes.size())
-					{
-						int b = 0;
-					}
-
 					const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * s_CharacterPixelSize;
 
 					ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
 
 					snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
 
-					// #TODO Use ImGui::SameLineEnd();
 					ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesCombobuffer) * s_CharacterPixelSize));
 					if (ImGui::Combo(m_ScenesCombobuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
 					{
@@ -261,7 +254,6 @@ namespace QwerkE {
 			void OnSceneReload() override { m_CurrentScene = nullptr; }
 
 			Scene* m_CurrentScene = nullptr;
-			const int digitsOfGuid = 19; // #TODO Document
 			char m_ScenesCombobuffer[33] = "Scenes:    ##0000000000000000000";
 			s32 m_LastSceneIndex = 0;
 

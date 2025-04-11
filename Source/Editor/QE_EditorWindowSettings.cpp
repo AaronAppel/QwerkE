@@ -93,7 +93,7 @@ namespace QwerkE {
 
                 if (ImGui::MenuItem("Reload"))
                 {
-                    // #TODO Load user settings instead of default
+                    // #TODO Load local user settings instead of default
                     switch (m_LastPopUpIndex)
                     {
                     case eSettingsOptions::Engine:
@@ -104,7 +104,7 @@ namespace QwerkE {
                         // Load Input::GetGameActions();
                         break;
 
-                    case eSettingsOptions::Renderer:
+                    case eSettingsOptions::Renderer: // #TODO Load proper renderer settings
                         Settings::LoadRendererSettings("RendererSettings1.qren");
                         break;
 

@@ -145,7 +145,6 @@ namespace QwerkE {
 			void OnSceneReload() override { m_CurrentScene = nullptr; }
 
 			Scene* m_CurrentScene = nullptr;
-			const int digitsOfGuid = 19; // #TODO Document
 			char m_ScenesCombobuffer[33] = "Scenes:    ##0000000000000000000";
 			s32 m_LastSceneIndex = 0;
 		};
