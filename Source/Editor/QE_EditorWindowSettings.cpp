@@ -1,3 +1,6 @@
+
+#include <filesystem>
+
 #include "QE_EditorWindowSettings.h"
 
 #include "QC_StringHelpers.h"
@@ -163,15 +166,19 @@ namespace QwerkE {
             }
 
             // #TODO Move to a new Schematics/Prefab Inspector EditorWindow
-            if (false && ImGui::Begin("Schematics Inspector", NULL))
+            if (ImGui::Begin("Schematics Inspector", NULL))
             {
-                // #TODO Cache result to avoid constant directory info fetching
-
-                for (auto& directoryEntry : Directory::ListDir(StringAppend(Paths::AssetsDir().c_str(), "Schematics/")))
+                static std::filesystem::directory_iterator s_lastDirectoryIterator;
+                if (std::filesystem::begin(s_lastDirectoryIterator) == std::filesystem::end(s_lastDirectoryIterator) ||
+                    ImGui::Button("Reload##WindowsSettings"))
                 {
-                    // #NOTE Crashes when viewing file names containing emojis
+                    s_lastDirectoryIterator = Directory::ListDir(Paths::SchematicsDir().c_str());
+                }
+
+                for (const auto& directoryEntry : s_lastDirectoryIterator)
+                {
                     const auto& path = directoryEntry.path();
-                    std::string filenameString = path.filename().string();
+                    std::string filenameString = path.filename().u8string();
 
                     ImGui::Button(filenameString.c_str());
                 }
