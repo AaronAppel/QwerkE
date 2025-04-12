@@ -29,6 +29,8 @@ project "bgfx"
 		"%{wks.location}/Source/Libraries/bx/include",
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
 		"%{wks.location}/Source/Libraries/bimg/include",
+		
+		"%{wks.location}/Source/Libraries/imgui",
 	}
 	
 	links

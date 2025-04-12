@@ -7,7 +7,7 @@
 #define IMGUI_H_HEADER_GUARD
 
 #include <bgfx/bgfx.h>
-#include <dear-imgui/imgui.h>
+#include <imgui.h> // Modified by Aaron Appel Apr 12th 2025
 #include <iconfontheaders/icons_kenney.h>
 #include <iconfontheaders/icons_font_awesome.h>
 

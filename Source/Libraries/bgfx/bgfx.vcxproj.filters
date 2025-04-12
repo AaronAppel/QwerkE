@@ -27,28 +27,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3rdparty\dear-imgui\imconfig.h">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\dear-imgui\imgui.h">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\dear-imgui\imgui_internal.h">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
     <ClInclude Include="3rdparty\dear-imgui\imgui_user.h">
       <Filter>3rdparty\dear-imgui</Filter>
     </ClInclude>
     <ClInclude Include="3rdparty\dear-imgui\imgui_user.inl">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\dear-imgui\imstb_rectpack.h">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\dear-imgui\imstb_textedit.h">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\dear-imgui\imstb_truetype.h">
       <Filter>3rdparty\dear-imgui</Filter>
     </ClInclude>
     <ClInclude Include="include\bgfx\bgfx.h">
@@ -173,21 +155,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3rdparty\dear-imgui\imgui.cpp">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\dear-imgui\imgui_demo.cpp">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\dear-imgui\imgui_draw.cpp">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\dear-imgui\imgui_tables.cpp">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\dear-imgui\imgui_widgets.cpp">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClCompile>
     <ClCompile Include="3rdparty\meshoptimizer\src\indexcodec.cpp">
       <Filter>3rdparty\meshoptimizer\src</Filter>
     </ClCompile>
