@@ -57,6 +57,7 @@ ImGuiConsole::ImGuiConsole(std::string c_name, size_t inputBufferSize) : m_Conso
 {
     // Set input buffer size.
     m_Buffer.resize(inputBufferSize);
+    m_HintBuffer.resize(inputBufferSize);
     m_HistoryIndex = std::numeric_limits<size_t>::min();
 
     // Specify custom data to be store/loaded from imgui.ini
@@ -275,6 +276,8 @@ void ImGuiConsole::InputBar()
 
     // Input widget. (Width an always fixed width)
     ImGui::PushItemWidth(-ImGui::GetStyle().ItemSpacing.x * 7);
+
+    // if (ImGui::InputTextWithHint("Input", "  hint", m_Buffer.data(), m_Buffer.size(), inputTextFlags, InputCallback, this))
     if (ImGui::InputText("Input", &m_Buffer, inputTextFlags, InputCallback, this))
     {
         // Validate.
@@ -430,6 +433,99 @@ void ImGuiConsole::HelpMaker(const char *desc)
     }
 }
 
+csys::AutoComplete* ImGuiConsole::ShowSuggestions(ImGuiInputTextCallbackData* data, ImGuiConsole* console, std::string trim_str, bool writeToConsole)
+{
+    // Find last word.
+    size_t startSubtrPos = trim_str.find_last_of(' ');
+    csys::AutoComplete* console_autocomplete;
+
+    // Command line is an entire word/string (No whitespace)
+    // Determine which autocomplete tree to use.
+    if (startSubtrPos == std::string::npos)
+    {
+        startSubtrPos = 0;
+        console_autocomplete = &console->m_ConsoleSystem.CmdAutocomplete();
+    }
+    else
+    {
+        startSubtrPos += 1;
+        console_autocomplete = &console->m_ConsoleSystem.VarAutocomplete();
+    }
+
+    if (!writeToConsole)
+    {
+        size_t endPos = console->m_Buffer.find_last_not_of(' ');
+        std::string trim_back = trim_str.substr(startSubtrPos, endPos + 1);
+        std::string partial = console_autocomplete->Suggestions(trim_back, console->m_CmdSuggestions);
+        if (!console->m_CmdSuggestions.empty() && console->m_CmdSuggestions.size() == 1)
+        {
+            // console->m_HintBuffer = "   " + console->m_CmdSuggestions[0];
+            console->m_CmdSuggestions.clear();
+        }
+    }
+
+    // #TODO
+    if (loggedSuggestionsCount > 0)
+    {
+        for (size_t i = 0; i < loggedSuggestionsCount + 1; i++)
+        {
+            console->System().Items().pop_back();
+        }
+    }
+    loggedSuggestionsCount = 0;
+
+    // Display suggestions on console.
+    if (!console->m_CmdSuggestions.empty())
+    {
+        console->m_ConsoleSystem.Log(csys::COMMAND) << "Suggestions: " << csys::endl;
+
+        int counter = 0;
+        const int maxIterations = 5;
+
+        for (const auto& suggestion : console->m_CmdSuggestions)
+        {
+            if (counter >= maxIterations)
+            {
+                break;
+            }
+            console->m_ConsoleSystem.Log(csys::LOG) << suggestion << csys::endl;
+            // #TODO Also include arguments in suggestion
+            ++counter;
+        }
+        loggedSuggestionsCount = counter;
+
+        console->m_CmdSuggestions.clear();
+    }
+
+    const bool allowComandComplete = false;
+    const bool isCommand = startSubtrPos == 0;
+
+    if (!erasedChar && (allowComandComplete || !isCommand))
+    {
+        // Get partial completion and suggestions.
+        size_t endPos = console->m_Buffer.find_last_not_of(' ');
+        std::string partial = console_autocomplete->Suggestions(trim_str.substr(startSubtrPos, endPos + 1), console->m_CmdSuggestions);
+
+        // Autocomplete only when one work is available.
+        if (!console->m_CmdSuggestions.empty() && console->m_CmdSuggestions.size() == 1)
+        {
+            data->DeleteChars(static_cast<int>(startSubtrPos), static_cast<int>(data->BufTextLen - startSubtrPos));
+            data->InsertChars(static_cast<int>(startSubtrPos), console->m_CmdSuggestions[0].data());
+            console->m_CmdSuggestions.clear();
+        }
+        else if (writeToConsole)
+        {   // Partially complete word.
+            if (!partial.empty())
+            {
+                data->DeleteChars(static_cast<int>(startSubtrPos), static_cast<int>(data->BufTextLen - startSubtrPos));
+                data->InsertChars(static_cast<int>(startSubtrPos), partial.data());
+            }
+        }
+    }
+
+    return console_autocomplete;
+}
+
 int ImGuiConsole::InputCallback(ImGuiInputTextCallbackData *data)
 {
     // Exit if no buffer.
@@ -452,60 +548,25 @@ int ImGuiConsole::InputCallback(ImGuiInputTextCallbackData *data)
     else
         trim_str = console->m_Buffer;
 
+    if (lastInputSize != input_str.length())
+    {
+        erasedChar = lastInputSize > input_str.length();
+        ShowSuggestions(data, console, trim_str, false);
+        lastInputSize = input_str.length();
+    }
+
     switch (data->EventFlag)
     {
+        case ImGuiInputTextFlags_CallbackEdit:
+            console->System().Log() << "message";
+            break;
+
         case ImGuiInputTextFlags_CallbackCompletion:
         {
-            // Find last word.
-            size_t startSubtrPos = trim_str.find_last_of(' ');
-            csys::AutoComplete *console_autocomplete;
-
-            // Command line is an entire word/string (No whitespace)
-            // Determine which autocomplete tree to use.
-            if (startSubtrPos == std::string::npos)
-            {
-                startSubtrPos = 0;
-                console_autocomplete = &console->m_ConsoleSystem.CmdAutocomplete();
-            }
-            else
-            {
-                startSubtrPos += 1;
-                console_autocomplete = &console->m_ConsoleSystem.VarAutocomplete();
-            }
-
             // Validate str
             if (!trim_str.empty())
             {
-                // Display suggestions on console.
-                if (!console->m_CmdSuggestions.empty())
-                {
-                    console->m_ConsoleSystem.Log(csys::COMMAND) << "Suggestions: " << csys::endl;
-
-                    for (const auto &suggestion : console->m_CmdSuggestions)
-                        console->m_ConsoleSystem.Log(csys::LOG) << suggestion << csys::endl;
-
-                    console->m_CmdSuggestions.clear();
-                }
-
-                // Get partial completion and suggestions.
-                std::string partial = console_autocomplete->Suggestions(trim_str.substr(startSubtrPos, endPos + 1), console->m_CmdSuggestions);
-
-                // Autocomplete only when one work is available.
-                if (!console->m_CmdSuggestions.empty() && console->m_CmdSuggestions.size() == 1)
-                {
-                    data->DeleteChars(static_cast<int>(startSubtrPos), static_cast<int>(data->BufTextLen - startSubtrPos));
-                    data->InsertChars(static_cast<int>(startSubtrPos), console->m_CmdSuggestions[0].data());
-                    console->m_CmdSuggestions.clear();
-                }
-                else
-                {
-                    // Partially complete word.
-                    if (!partial.empty())
-                    {
-                        data->DeleteChars(static_cast<int>(startSubtrPos), static_cast<int>(data->BufTextLen - startSubtrPos));
-                        data->InsertChars(static_cast<int>(startSubtrPos), partial.data());
-                    }
-                }
+                ShowSuggestions(data, console, trim_str, true);
             }
 
             // We have performed the completion event.

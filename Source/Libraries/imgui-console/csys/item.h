@@ -157,6 +157,11 @@ namespace csys
         std::vector<Item> &Items();
 
         /*!
+         * \brief Delete console item from end
+         */
+        void PopBack();
+
+        /*!
          * \brief Delete console item log history
          */
         void Clear();
