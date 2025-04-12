@@ -262,6 +262,8 @@ MIRROR_CLASS_MEMBER(maxFramesPerSecond)
 MIRROR_CLASS_MEMBER(maxEnabledScenes)
 MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
 MIRROR_CLASS_MEMBER(consoleOutputWindowEnabled)
+MIRROR_CLASS_MEMBER(windowOpenPositionX)
+MIRROR_CLASS_MEMBER(windowOpenPositionY)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::RendererSettings)

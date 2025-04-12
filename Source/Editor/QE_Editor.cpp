@@ -42,11 +42,11 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
+#include "QF_Settings.h"
 #include "QF_Window.h"
 
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
-#include "QE_Settings.h"
 
 // ImGui Console
 csys::ItemLog& operator<<(csys::ItemLog& log, ImVec4& vec)
