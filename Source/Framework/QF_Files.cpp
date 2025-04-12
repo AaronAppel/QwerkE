@@ -11,7 +11,7 @@
 #include "QC_StringHelpers.h" // NumberAppendOrIncrement
 
 #include "QF_Helpers.h" // NumberAppendOrIncrement
-#include "QF_Window.h" //
+#include "QF_Window.h" // For Window::GetContext()
 
 namespace QwerkE {
 
@@ -155,11 +155,15 @@ namespace QwerkE {
 
 			if (save)
 			{
-				if (GetSaveFileNameA(&ofn) == TRUE)
+				if (TRUE == GetSaveFileNameA(&ofn))
+				{
 					return ofn.lpstrFile;
+				}
 			}
-			else if (GetOpenFileNameA(&ofn) == TRUE)
+			else if (TRUE == GetOpenFileNameA(&ofn))
+			{
 				return ofn.lpstrFile;
+			}
 
 			return std::string();
 		}

@@ -44,6 +44,8 @@ project "Editor"
 		
 		"%{wks.location}/Source/Libraries/bx/include", -- #NOTE To support creating components that depend on bx
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
+		
+		"%{wks.location}/Source/Libraries/imgui",
 	}
 	
 	links -- Project references

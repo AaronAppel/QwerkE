@@ -9,10 +9,14 @@ namespace QwerkE {
             return std::filesystem::status(dirPath).type() == std::filesystem::file_type::directory;
         }
 
-        std::filesystem::directory_iterator ListDir(const char* directoryPath)
+        std::filesystem::directory_iterator ListDir(const char* dirPath)
         {
             // #TODO Test with bad directory path
-            return std::filesystem::directory_iterator(directoryPath);
+            if (!Exists(dirPath))
+            {
+                return std::filesystem::directory_iterator();
+            }
+            return std::filesystem::directory_iterator(dirPath);
         }
 
     }

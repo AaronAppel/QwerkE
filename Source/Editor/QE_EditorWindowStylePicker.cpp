@@ -125,6 +125,22 @@ namespace QwerkE {
             ImGui::PopItemWidth();
         }
 
+        void local_LoadCodedImGuiStyle() // #NOTE Kept for future convenience
+        {
+            Log::Console("local_LoadCodedImGuiStyle() not implemented! ");
+            return;
+
+            ImGuiStyle* style = &ImGui::GetStyle();
+
+            style->WindowRounding = 0;
+            style->FrameRounding = 2.5f;
+            style->ScrollbarRounding = 0;
+
+            ImVec4* colors = style->Colors;
+            // colors[ImGuiCol_Text] = ImVec4(0.86f, 0.93f, 0.89f, 0.78f);
+            // ... Adjust other values here
+        }
+
 	}
 
 }

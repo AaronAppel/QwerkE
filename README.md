@@ -37,6 +37,8 @@ Libraries or external code I utilize to deliver features (may be outdated) :
 - glfw: www.github.com/glfw/glfw
 - glm: www.github.com/g-truc/glm
 - imgui: www.github.com/ocornut/imgui
+- imgui-console: https://github.com/rmxbalanque/imgui-console
+- imgui-node-editor: https://github.com/thedmd/imgui-node-editor
 - Jolt: https://github.com/jrouwe/JoltPhysics
 - lodepng: www.github.com/lvandeve/lodepng
 - Mirror: www.github.com/AaronAppel/Mirror
