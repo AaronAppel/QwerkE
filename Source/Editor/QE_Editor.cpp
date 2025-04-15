@@ -74,7 +74,7 @@ namespace QwerkE {
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialize::FromFile(Paths::Setting(Settings::GetStyleFileName()).c_str(), style, true);
+        Serialize::FromFile(Paths::Style(Settings::GetStyleFileName()).c_str(), style, true);
     }
 
 	namespace Editor {
