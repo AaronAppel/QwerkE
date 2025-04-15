@@ -85,6 +85,9 @@
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="Editor\QE_Mirror.h" />
+    <ClInclude Include="Editor\QE_EditorWindowConsole.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

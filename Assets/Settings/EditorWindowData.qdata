@@ -190,6 +190,40 @@
 					"m_MinimumHeight":	150
 				}
 			}
+		},
+		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"const QwerkE::GUID":	{
+				"m_Guid":	"11157082921222012908"
+			},
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowConsole":	{
+					"m_Guid":	{
+						"m_Guid":	"11157082921222012908"
+					},
+					"m_WindowName":	"Console##11157082921222012908",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	9,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150
+				}
+			}
+		},
+		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"const QwerkE::GUID":	{
+				"m_Guid":	"2045226856109020958"
+			},
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowStylePicker":	{
+					"m_Guid":	{
+						"m_Guid":	"2045226856109020958"
+					},
+					"m_WindowName":	"Style Picker##2045226856109020958",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	0,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150
+				}
+			}
 		}
 	}
 }

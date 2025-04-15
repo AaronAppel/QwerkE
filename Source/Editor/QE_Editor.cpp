@@ -5,11 +5,6 @@
 #include <typeinfo> // For typeid()
 #include <vector>   // For s_EditorWindowsQueuedForDelete
 
-#ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
-#include "Libraries/imgui-console/imgui_console.h"
-#endif
-
 #ifdef _QBGFX
 #include <bgfx/bgfx.h>
 #include <bx/bx.h>
@@ -23,6 +18,12 @@
 #endif // _QDEBUG
 #endif // _QBGFXFRAMEWORK
 #endif // _QBGFX
+
+#ifdef _QDEARIMGUI
+#include "Libraries/imgui/QwerkE_imgui.h"
+#include "Libraries/imgui-console/imgui_console.h"
+#include "Libraries/imgui-node-editor/imgui_node_editor.h"
+#endif
 
 #include "QC_Guid.h"
 #include "QC_ProgramArgs.h"
@@ -48,6 +49,7 @@
 #include "QE_Projects.h"
 #include "QE_Settings.h"
 
+#ifdef _QDEARIMGUI
 // ImGui Console
 csys::ItemLog& operator<<(csys::ItemLog& log, ImVec4& vec)
 {
@@ -68,13 +70,14 @@ static void imvec4_setter(ImVec4& my_type, std::vector<int> vec)
     my_type.w = vec[3] / 255.f;
 }
 //
+#endif
 
 namespace QwerkE {
 
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
         ImGuiStyle& style = ImGui::GetStyle();
-        Serialize::FromFile(Paths::Setting(Settings::GetStyleFileName()).c_str(), style, true);
+        Serialize::FromFile(Paths::Style(Settings::GetStyleFileName()).c_str(), style, true);
     }
 
 	namespace Editor {
@@ -115,6 +118,7 @@ namespace QwerkE {
 
             local_Initialize();
 
+#ifdef _QDEARIMGUI
             ///////////////////////////////////////////////////////////////////////////
             // IMGUI CONSOLE //////////////////////////////////////////////////////////
             ///////////////////////////////////////////////////////////////////////////
@@ -126,6 +130,8 @@ namespace QwerkE {
             ImGuiConsole console;
 
             // Register variables
+            console.System().RegisterVariable("cat", clear_color, imvec4_setter);
+
             console.System().RegisterVariable("background_colox", clear_color, imvec4_setter);
             console.System().RegisterVariable("back", clear_color, imvec4_setter);
             console.System().RegisterVariable("back1234", clear_color, imvec4_setter);
@@ -138,7 +144,7 @@ namespace QwerkE {
             console.System().RegisterVariable("background_color5", clear_color, imvec4_setter);
 
             // Register scripts
-            const std::string path = "A:/GitHub/QwerkE/Source/Libraries/imgui-console/console.script";
+            const std::string path = "B:/QwerkE/Source/Libraries/imgui-console/console.script";
             console.System().RegisterScript("test_script", path);
 
             // Register custom commands
@@ -157,13 +163,10 @@ namespace QwerkE {
                 });
 
             // Log example information:
-            console.System().Log(csys::ItemType::INFO) << "Welcome to the imgui-console example!" << csys::endl;
-            console.System().Log(csys::ItemType::INFO) << "The following variables have been exposed to the console:" << csys::endl << csys::endl;
-            console.System().Log(csys::ItemType::INFO) << "\tbackground_color - set: [int int int int]" << csys::endl;
-            console.System().Log(csys::ItemType::INFO) << csys::endl << "Try running the following command:" << csys::endl;
-            console.System().Log(csys::ItemType::INFO) << "\tset background_color [255 0 0 255]" << csys::endl << csys::endl;
+            console.System().Log(csys::ItemType::INFO) << "Welcome to imgui-console!" << csys::endl;
 
             ///////////////////////////////////////////////////////////////////////////
+#endif
 
             Time::WriteAppStartTime();
 
@@ -177,8 +180,34 @@ namespace QwerkE {
 
                     Renderer::StartImGui();
 
+#ifdef _QDEARIMGUI
+                    if (ImGui::Button("COMMAND"))
+                    {
+                        console.System().Log(csys::ItemType::COMMAND) << "COMMAND";
+                    }
+                    if (ImGui::Button("LOG"))
+                    {
+                        console.System().Log(csys::ItemType::LOG) << "LOG";
+                    }
+                    if (ImGui::Button("WARNING"))
+                    {
+                        console.System().Log(csys::ItemType::WARNING) << "WARNING";
+                    }
+                    if (ImGui::Button("SEVERE"))
+                    {
+                        console.System().Log(csys::ItemType::SEVERE) << "SEVERE";
+                    }
+                    if (ImGui::Button("INFO"))
+                    {
+                        console.System().Log(csys::ItemType::LOG) << "INFO";
+                    }
+                    if (ImGui::Button("NONE"))
+                    {
+                        console.System().Log(csys::ItemType::LOG) << "NONE";
+                    }
                     // ImGui Console
-                    console.Draw();
+                    // console.Draw();
+#endif
 
                     if (s_ShowingEditorUI)
                     {
@@ -330,17 +359,8 @@ namespace QwerkE {
             s_EditorWindows.clear();
 		}
 
-        static u16 shorty = 0;
         void local_Update()
         {
-            ImGui::DefaultDebugWindow([]() {
-                s32 stackInt = shorty;
-                if (ImGui::DragInt("Shorty", &stackInt, 1))
-                {
-                    shorty = stackInt;
-                }
-            });
-
             if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
             {
                 local_Stop();

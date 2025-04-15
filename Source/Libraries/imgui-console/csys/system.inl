@@ -22,6 +22,9 @@ namespace csys
     static const std::string_view s_ErrorNoVar = "No variable provided";
     static const std::string_view s_ErrorSetGetNotFound = "Command doesn't exist and/or variable is not registered";
 
+    // Script strings.
+    static const std::string_view s_Comment = "//";
+
     CSYS_INLINE System::System()
     {
         // Register help command.
@@ -121,7 +124,7 @@ namespace csys
         // Exit if not found.
         if (script_pair == m_Scripts.end())
         {
-            m_ItemLog.log(_ERROR) << "Script \"" << script_name << "\" not found" << csys::endl;
+            m_ItemLog.log(SEVERE) << "Script \"" << script_name << "\" not found" << csys::endl;
             return;
         }
 
@@ -137,7 +140,7 @@ namespace csys
             }
             catch (csys::Exception &e)
             {
-                Log(_ERROR) << e.what() << csys::endl;
+                Log(SEVERE) << e.what() << csys::endl;
             }
         }
 
@@ -253,12 +256,9 @@ namespace csys
         // Get name of command.
         std::string command_name = line.m_String.substr(range.first, range.second - range.first);
 
-        static const std::string_view s_Comment = "//";
         bool is_cmd_comment = command_name._Starts_with(s_Comment);
         if (is_cmd_comment)
-        {
-            return; // #TODO Return here?
-        }
+            return;
 
         // Set or get
         bool is_cmd_set = command_name == s_Set; // #aappel Ad more commands?
@@ -279,7 +279,7 @@ namespace csys
             // Try to get variable name
             if ((range = line.NextPoi(line_index)).first == line.End())
             {
-                Log(_ERROR) << s_ErrorNoVar << endl;
+                Log(SEVERE) << s_ErrorNoVar << endl;
                 return;
             } else
                 // Append variable name.
@@ -289,7 +289,7 @@ namespace csys
         // Get runnable command
         auto command = m_Commands.find(command_name);
         if (command == m_Commands.end())
-            Log(_ERROR) << s_ErrorSetGetNotFound << endl;
+            Log(SEVERE) << s_ErrorSetGetNotFound << endl;
             // Run the command
         else
         {

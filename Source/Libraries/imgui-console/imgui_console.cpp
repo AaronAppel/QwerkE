@@ -73,7 +73,7 @@ ImGuiConsole::ImGuiConsole(std::string c_name, size_t inputBufferSize) : m_Conso
     RegisterConsoleCommands();
 }
 
-void ImGuiConsole::Draw()
+void ImGuiConsole::Draw(bool* p_open)
 {
     ///////////////////////////////////////////////////////////////////////////
     // Window and Settings ////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ void ImGuiConsole::Draw()
 
     // Begin Console Window.
     ImGui::PushStyleVar(ImGuiStyleVar_Alpha, m_WindowAlpha);
-    if (!ImGui::Begin(m_ConsoleName.data(), nullptr, ImGuiWindowFlags_MenuBar))
+    if (!ImGui::Begin(m_ConsoleName.data(), p_open, ImGuiWindowFlags_MenuBar))
     {
         ImGui::PopStyleVar();
         ImGui::End();

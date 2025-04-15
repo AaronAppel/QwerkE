@@ -13,10 +13,10 @@
 #include <bx/allocator.h>
 #include <bx/math.h>
 #include <bx/timer.h>
-#include <dear-imgui/imgui.h>
-#include <dear-imgui/imgui_internal.h>
+#include <imgui.h> // Modified by Aaron Appel
+#include <imgui_internal.h> // Modified by Aaron Appel
 
-#include <imguiCommon/imguiCommon.h> // Modified by Aaron Appel. Revert to original
+#include <imguiCommon/imguiCommon.h> // Modified by Aaron Appel
 #include <bgfx_utils.h>
 #include <dear-imgui/imgui_user.h>
 

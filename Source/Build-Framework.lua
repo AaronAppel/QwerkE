@@ -38,8 +38,7 @@ project "Framework"
 		"%{wks.location}/Source/Libraries/bimg/include",
 		"%{wks.location}/Source/Libraries/bx/include",
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
-		
-		"%{wks.location}/Source/Libraries/imgui",
+		"%{wks.location}/Source/Libraries/imgui", -- Required by bgfx
 	}
 
 	forceincludes  { "QF_PCH.h", "QF_ForcedIncludes.h"  }
