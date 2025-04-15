@@ -20,6 +20,8 @@ namespace QwerkE {
                 m_StyleFiles.reserve(30);
             }
 
+            ~EditorWindowStylePicker();
+
         private:
             void DrawInternal() override;
 
