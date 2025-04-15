@@ -1,0 +1,37 @@
+// AdobeInspired style by nexacopic from ImThemes
+// Windark style by DestroyerDarkNess from ImThemes
+// Visual Studio style by MomoDeve from ImThemes
+// "UnrealEngine" Unreal style by dev0-1 from ImThemes
+// Sonic Riders style by Sewer56 from ImThemes
+// Rounded Visual Studio style by RedNicStone from ImThemes
+// Rest style by AaronBeardless from ImThemes
+// Quick minimal look style by 90th from ImThemes
+// Purple Comfy style by RegularLunar from ImThemes
+// Photoshop style by Derydoca from ImThemes
+// Moonlight style by Madam-Herta from ImThemes
+// Modern style by LousyBook-01 from ImThemes
+// Microsoft style by usernameiwantedwasalreadytaken from ImThemes
+// Material Flat style by ImJC1C from ImThemes
+// Light style by dougbinks from ImThemes
+// Hazy Dark style by kaitabuchi314 from ImThemes
+// Green Leaf style by Fizub from ImThemes
+// Green Font style by aiekick from ImThemes
+// Gold style by CookiePLMonster from ImThemes
+// Future Dark style by rewrking from ImThemes
+// Everforest style by DestroyerDarkNess from ImThemes
+// Enemymouse style by enemymouse from ImThemes
+// Discord (Dark) style by BttrDrgn from ImThemes
+// Deep Dark style by janekb04 from ImThemes
+// Darky style by 90th from ImThemes
+// Dark Ruda style by Raikiri from ImThemes
+// Dark style by dougbinks from ImThemes
+// Darcula style by ice1000 from ImThemes
+// DUCK RED nope! is DARK RED style by for40255 from ImThemes
+// Comfy style by Giuseppe from ImThemes
+// Comfortable Light Orange style by SouthCraftX from ImThemes
+// Comfortable Dark Cyan style by SouthCraftX from ImThemes
+// Clean Dark/Red style by ImBritish from ImThemes
+// Classic Steam style by metasprite from ImThemes
+// Classic style by ocornut from ImThemes
+// Cherry style by r-lyeh from ImThemes
+// Bootstrap Dark style by Madam-Herta from ImThemes

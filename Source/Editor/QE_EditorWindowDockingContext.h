@@ -23,11 +23,7 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
-                if (Window::IsMinimized())
-                    return;
-
-                // #NOTE Contents copied from imgui docking example
-
+                // #NOTE Copied from imgui docking example
                 static ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 
                 static bool opt_fullscreen = true;

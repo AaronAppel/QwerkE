@@ -10,3 +10,6 @@ License: Unknown
 FREESCPT.TTF
 https://fontzone.net/font-details/freestyle-script
 License: Unknown
+
+ImGui styles
+https://github.com/Vekor64/imgui-dock - Black and red theme copied from StyleColorsImguiDock()

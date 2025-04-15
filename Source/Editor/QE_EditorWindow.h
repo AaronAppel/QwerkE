@@ -37,7 +37,7 @@ namespace QwerkE {
 		};
 
 		QC_ENUM(EditorWindowTypes, u32,
-			// #NOTE Order matters! Match enum EditorWindowsList order
+			// #NOTE Order matters! Serialized! Match enum EditorWindowsList order
 			EditorWindowTypesInvalid = 0,
 			Assets,
 			DefaultDebug,
@@ -48,14 +48,15 @@ namespace QwerkE {
 			SceneControls,
 			SceneGraph,
 			SceneView,
-			Settings = 10,
+			Settings,
 			StylePicker,
 			MaterialEditor,
 			FolderViewer,
 			NodeEditor,
 			ShaderEditor,
 			PrefabScene,
-			Prompt
+			Prompt,
+			Console
 			// #NOTE Serialized, so don't change ordering
 		)
 

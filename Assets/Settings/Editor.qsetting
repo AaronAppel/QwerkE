@@ -6,6 +6,8 @@
 		"maxFramesPerSecond":	120,
 		"maxEnabledScenes":	1,
 		"maxJobsAdditionalThreadCount":	1,
-		"consoleOutputWindowEnabled":	true
+		"consoleOutputWindowEnabled":	true,
+		"windowOpenPositionX":	1,
+		"windowOpenPositionY":	38
 	}
 }

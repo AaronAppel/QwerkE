@@ -7,6 +7,7 @@
 
 #include "QF_Directory.h"
 #include "QF_Input.h"
+#include "QF_Settings.h"
 
 #include "QE_EditorInspector.h"
 #include "QF_Paths.h"
@@ -166,25 +167,26 @@ namespace QwerkE {
             }
 
             // #TODO Move to a new Schematics/Prefab Inspector EditorWindow
-            if (ImGui::Begin("Schematics Inspector", NULL))
-            {
-                static std::filesystem::directory_iterator s_lastDirectoryIterator;
-                if (std::filesystem::begin(s_lastDirectoryIterator) == std::filesystem::end(s_lastDirectoryIterator) ||
-                    ImGui::Button("Reload##WindowsSettings"))
-                {
-                    s_lastDirectoryIterator = Directory::ListDir(Paths::SchematicsDir().c_str());
-                }
-
-                for (const auto& directoryEntry : s_lastDirectoryIterator)
-                {
-                    const auto& path = directoryEntry.path();
-                    std::string filenameString = path.filename().u8string();
-
-                    ImGui::Button(filenameString.c_str());
-                }
-
-                ImGui::End();
-            }
+            // #TODO Support schematics
+            // if (ImGui::Begin("Schematics Inspector", NULL))
+            // {
+            //     static std::filesystem::directory_iterator s_lastDirectoryIterator;
+            //     if (std::filesystem::begin(s_lastDirectoryIterator) == std::filesystem::end(s_lastDirectoryIterator) ||
+            //         ImGui::Button("Reload##WindowsSettings"))
+            //     {
+            //         s_lastDirectoryIterator = Directory::ListDir(Paths::SchematicsDir().c_str());
+            //     }
+            //
+            //     for (const auto& directoryEntry : s_lastDirectoryIterator)
+            //     {
+            //         const auto& path = directoryEntry.path();
+            //         std::string filenameString = path.filename().u8string();
+            //
+            //         ImGui::Button(filenameString.c_str());
+            //     }
+            //
+            //     ImGui::End();
+            // }
         }
 
 	}
