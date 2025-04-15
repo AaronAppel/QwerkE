@@ -75,6 +75,7 @@
     <ClCompile Include="Framework\QF_GlfwKeysCodex.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\QF_Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Framework\QF_EntityHandle.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\QF_Settings.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

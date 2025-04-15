@@ -7,6 +7,7 @@
 
 #include "QF_Directory.h"
 #include "QF_Input.h"
+#include "QF_Settings.h"
 
 #include "QE_EditorInspector.h"
 #include "QF_Paths.h"
