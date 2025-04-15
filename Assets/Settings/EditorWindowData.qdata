@@ -2,14 +2,14 @@
 	"std::unordered_map<QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
 		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
 			"const QwerkE::GUID":	{
-				"m_Guid":	"12539018069331544866"
+				"m_Guid":	"15814122887568357250"
 			},
 			"QwerkE::Editor::EditorWindow*":	{
-				"QwerkE::Editor::EditorWindowSceneGraph":	{
+				"QwerkE::Editor::EditorWindowAssets":	{
 					"m_Guid":	{
-						"m_Guid":	"12539018069331544866"
+						"m_Guid":	"15814122887568357250"
 					},
-					"m_WindowName":	"Scene Graph##12539018069331544866",
+					"m_WindowName":	"Assets##15814122887568357250",
 					"m_ImGuiFlags":	0,
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
@@ -19,14 +19,14 @@
 		},
 		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
 			"const QwerkE::GUID":	{
-				"m_Guid":	"15814122887568357250"
+				"m_Guid":	"12539018069331544866"
 			},
 			"QwerkE::Editor::EditorWindow*":	{
-				"QwerkE::Editor::EditorWindowAssets":	{
+				"QwerkE::Editor::EditorWindowSceneGraph":	{
 					"m_Guid":	{
-						"m_Guid":	"15814122887568357250"
+						"m_Guid":	"12539018069331544866"
 					},
-					"m_WindowName":	"Assets##15814122887568357250",
+					"m_WindowName":	"Scene Graph##12539018069331544866",
 					"m_ImGuiFlags":	0,
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
@@ -53,23 +53,6 @@
 		},
 		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
 			"const QwerkE::GUID":	{
-				"m_Guid":	"5567493061657037972"
-			},
-			"QwerkE::Editor::EditorWindow*":	{
-				"QwerkE::Editor::EditorWindowImGuiDemo":	{
-					"m_Guid":	{
-						"m_Guid":	"5567493061657037972"
-					},
-					"m_WindowName":	"ImGui Demo##5567493061657037972",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	13,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150
-				}
-			}
-		},
-		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
-			"const QwerkE::GUID":	{
 				"m_Guid":	"17199913734939944444"
 			},
 			"QwerkE::Editor::EditorWindow*":	{
@@ -84,6 +67,23 @@
 					"m_MinimumHeight":	150,
 					"m_TextureId":	3,
 					"m_ViewId":	2
+				}
+			}
+		},
+		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
+			"const QwerkE::GUID":	{
+				"m_Guid":	"5567493061657037972"
+			},
+			"QwerkE::Editor::EditorWindow*":	{
+				"QwerkE::Editor::EditorWindowImGuiDemo":	{
+					"m_Guid":	{
+						"m_Guid":	"5567493061657037972"
+					},
+					"m_WindowName":	"ImGui Demo##5567493061657037972",
+					"m_ImGuiFlags":	0,
+					"m_WindowFlags":	13,
+					"m_MinimumWidth":	100,
+					"m_MinimumHeight":	150
 				}
 			}
 		},
@@ -106,14 +106,14 @@
 		},
 		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
 			"const QwerkE::GUID":	{
-				"m_Guid":	"567582532353716773"
+				"m_Guid":	"9689900933082917293"
 			},
 			"QwerkE::Editor::EditorWindow*":	{
-				"QwerkE::Editor::EditorWindowEntityInspector":	{
+				"QwerkE::Editor::EditorWindowSettings":	{
 					"m_Guid":	{
-						"m_Guid":	"567582532353716773"
+						"m_Guid":	"9689900933082917293"
 					},
-					"m_WindowName":	"Entity Inspector##567582532353716773",
+					"m_WindowName":	"Settings##9689900933082917293",
 					"m_ImGuiFlags":	0,
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
@@ -123,14 +123,14 @@
 		},
 		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
 			"const QwerkE::GUID":	{
-				"m_Guid":	"9689900933082917293"
+				"m_Guid":	"567582532353716773"
 			},
 			"QwerkE::Editor::EditorWindow*":	{
-				"QwerkE::Editor::EditorWindowSettings":	{
+				"QwerkE::Editor::EditorWindowEntityInspector":	{
 					"m_Guid":	{
-						"m_Guid":	"9689900933082917293"
+						"m_Guid":	"567582532353716773"
 					},
-					"m_WindowName":	"Settings##9689900933082917293",
+					"m_WindowName":	"Entity Inspector##567582532353716773",
 					"m_ImGuiFlags":	0,
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,
@@ -218,23 +218,6 @@
 						"m_Guid":	"2045226856109020958"
 					},
 					"m_WindowName":	"Style Picker##2045226856109020958",
-					"m_ImGuiFlags":	0,
-					"m_WindowFlags":	0,
-					"m_MinimumWidth":	100,
-					"m_MinimumHeight":	150
-				}
-			}
-		},
-		"std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>":	{
-			"const QwerkE::GUID":	{
-				"m_Guid":	"18104105026169431083"
-			},
-			"QwerkE::Editor::EditorWindow*":	{
-				"QwerkE::Editor::EditorWindowSettings":	{
-					"m_Guid":	{
-						"m_Guid":	"18104105026169431083"
-					},
-					"m_WindowName":	"Settings##18104105026169431083",
 					"m_ImGuiFlags":	0,
 					"m_WindowFlags":	0,
 					"m_MinimumWidth":	100,

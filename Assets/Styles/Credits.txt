@@ -1,3 +1,4 @@
+https://github.com/Patitotective/ImThemes
 // AdobeInspired style by nexacopic from ImThemes
 // Windark style by DestroyerDarkNess from ImThemes
 // Visual Studio style by MomoDeve from ImThemes
@@ -35,3 +36,14 @@
 // Classic style by ocornut from ImThemes
 // Cherry style by r-lyeh from ImThemes
 // Bootstrap Dark style by Madam-Herta from ImThemes
+
+https://github.com/GraphicsProgramming/dear-imgui-styles
+simongeilfus/Cinder-ImGui
+adobe/imgui-spectrum by 
+
+olekristensen/ledSynthmaster
+OpenSans fonts
+https://github.com/GraphicsProgramming/dear-imgui-styles?tab=readme-ov-file#olekristensenledsynthmaster
+
+dougblinks
+https://github.com/GraphicsProgramming/dear-imgui-styles?tab=readme-ov-file#dougblinks

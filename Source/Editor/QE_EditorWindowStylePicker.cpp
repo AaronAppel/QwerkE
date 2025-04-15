@@ -11,7 +11,7 @@ namespace QwerkE {
 
 	namespace Editor {
 
-        // void local_LoadCodedImGuiStyle(); // #NOTE Kept for future convenience
+        void local_LoadCodedImGuiStyle(); // #NOTE Kept for future convenience
 
         static void local_CleanUpStyleFiles(std::vector<const char*>& styleFiles)
         {
@@ -60,6 +60,13 @@ namespace QwerkE {
             {
                 const std::string styleFileName = Files::ExplorerOpen("Style file (*.style)\0*.style\0", Paths::StylesDir().c_str());
                 Serialize::FromFile(styleFileName.c_str(), style);
+                m_Edited = false;
+            }
+
+            ImGui::SameLine();
+            if (ImGui::Button("Load Style From Code"))
+            {
+                local_LoadCodedImGuiStyle();
                 m_Edited = false;
             }
 
@@ -286,16 +293,13 @@ namespace QwerkE {
 
         void local_LoadCodedImGuiStyle() // #NOTE Kept for future convenience
         {
-            Log::Console("local_LoadCodedImGuiStyle() not implemented! ");
-            return;
+            ImGuiStyle& style = ImGui::GetStyle();
 
-            ImGuiStyle* style = &ImGui::GetStyle();
+            style.WindowRounding = 0;
+            style.FrameRounding = 2.5f;
+            style.ScrollbarRounding = 0;
 
-            style->WindowRounding = 0;
-            style->FrameRounding = 2.5f;
-            style->ScrollbarRounding = 0;
-
-            ImVec4* colors = style->Colors;
+            ImVec4* colors = style.Colors;
             // colors[ImGuiCol_Text] = ImVec4(0.86f, 0.93f, 0.89f, 0.78f);
             // ... Adjust other values here
         }
