@@ -10,7 +10,7 @@ namespace QwerkE {
 
 	namespace Settings {
 
-		constexpr char* s_ImGuiStyleFileName = "imguiStyle.style";
+		constexpr char* s_ImGuiStyleFileName = "Default.style"; // #TODO Review default settings files list
 
 		// #TODO Should this be framework settings? Or maybe just game and editor have settings to pass to the framework?
 		EngineSettings s_engineSettings;

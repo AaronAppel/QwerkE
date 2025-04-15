@@ -115,6 +115,16 @@ namespace QwerkE {
 			return ShadersDir() + "\\" + shaderFileName;
 		}
 
+		std::string StylesDir()
+		{
+			return AssetsDir() + "\\Styles";
+		}
+
+		std::string Style(const char* stylesFileName)
+		{
+			return StylesDir() + "\\" + stylesFileName;
+		}
+
 	}
 
 }

@@ -217,7 +217,6 @@ namespace QwerkE {
 
 				// #NOTE Scene transition changes
 				// #TODO Draw grid
-				// if (!Window::IsMinimized())
 				// {
 				// 	// Debug drawer calls
 				// 	constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
