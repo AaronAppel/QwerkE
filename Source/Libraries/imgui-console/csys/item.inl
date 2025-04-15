@@ -45,7 +45,7 @@ namespace csys
                 return '\t' + m_Data;
             case WARNING:
                 return s_Warning.data() + m_Data;
-            case _ERROR:
+            case SEVERE:
                 return s_Error.data() + m_Data;
             case INFO:
                 return m_Data;

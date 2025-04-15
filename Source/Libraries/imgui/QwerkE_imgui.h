@@ -6,7 +6,7 @@
 #define IMGUI_IMPL_OPENGL_LOADER_CUSTOM
 #include "imgui.h"
 
-#include "../enum/QC_enum.h"
+#include "../enum/QC_enum.h" // #TODO Review better enums dependency
 QC_ENUM(ImGuiCol_qw, int, // For stringification
 	ImGuiCol_Text,
 	ImGuiCol_TextDisabled,

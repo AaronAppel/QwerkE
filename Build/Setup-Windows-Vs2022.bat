@@ -1,18 +1,14 @@
 @echo off
 
-set PREMAKE_EXE="premake5.exe"
-set PREMAKE_FILE="premake.lua"
+IF EXIST "Build\" (
+	cd Build
+)
 
- IF EXIST "Build\" (
-	set PREMAKE_EXE="Build\premake5.exe"
-	set PREMAKE_FILE="Build\premake.lua"
- )
+set PREMAKE_EXE=premake5.exe
+set PREMAKE_FILE="premake.lua"
  
 %PREMAKE_EXE% --file=%PREMAKE_FILE% vs2022
 
-IF EXIST "Build\" (
-	cd ../
-)
 
 IF NOT %errorlevel%==0 (
 	echo Encountered error!
@@ -24,7 +20,7 @@ IF NOT %errorlevel%==0 (
 	IF Aaron==%username% (
 		IF ERRORLEVEL 1 (
 			rem Only open solution if no instances of visual studio are open
-			START QwerkE.sln
+			START ../QwerkE.sln
 		)
 	)
 )

@@ -24,7 +24,7 @@ public:
     /*!
      * \brief Render the Dear ImGui Console
      */
-    void Draw();
+    void Draw(bool* p_open = NULL);
 
     /*!
      * \brief Console system which handles the console functionality (Logging, Commands, History, Scripts, etc).

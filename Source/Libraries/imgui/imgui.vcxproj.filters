@@ -6,7 +6,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="QC_imgui.h" />
+    <ClInclude Include="QwerkE_imgui.h" />
     <ClInclude Include="backends\imgui_impl_glfw.h">
       <Filter>backends</Filter>
     </ClInclude>
@@ -18,7 +18,7 @@
     <ClInclude Include="imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="QC_imgui.cpp" />
+    <ClCompile Include="QwerkE_imgui.cpp" />
     <ClCompile Include="backends\imgui_impl_glfw.cpp">
       <Filter>backends</Filter>
     </ClCompile>

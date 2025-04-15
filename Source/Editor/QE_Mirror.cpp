@@ -58,6 +58,11 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowAssets)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
+MIRROR_CLASS(QwerkE::Editor::EditorWindowConsole)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowDefaultDebug)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDefaultDebug)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
@@ -151,8 +156,7 @@ MIRROR_CLASS_MEMBER(m_MinimumHeight)
 // MIRROR_CLASS_MEMBER(m_EditorWindowType)
 // #TODO Solve generic templated type list issue
 // using WindowsList = MirrorTemplateArgumentList <EditorWindowAssets>;
-// MirrorSubClasses<EditorWindow>(WindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
-MirrorSubClasses<QwerkE::Editor::EditorWindow>(QwerkE::Editor::EditorWindowsList{}, localStaticTypeInfo, QwerkE::Editor::EditorWindowTypes::Assets);
+MirrorSubClasses<QwerkE::Editor::EditorWindow>(QwerkE::Editor::EditorWindowsList{}, localStaticTypeInfo, QwerkE::Editor::EditorWindowTypes::EditorWindowTypesInvalid + 1);
 MIRROR_CLASS_END
 MIRROR_TYPE(QwerkE::Editor::EditorWindow*)
 

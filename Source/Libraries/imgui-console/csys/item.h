@@ -28,7 +28,7 @@ namespace csys
         COMMAND = 0,
         LOG,
         WARNING,
-        _ERROR, // ERROR conflicts with wingdi.h ERROR 0 macro
+        SEVERE, // ERROR conflicts with wingdi.h ERROR 0 macro
         INFO,
         NONE
     };
