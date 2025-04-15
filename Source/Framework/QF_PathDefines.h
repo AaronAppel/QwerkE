@@ -49,6 +49,7 @@
 #define sound_file_ext "wav"
 #define texture_file_ext "png"
 #define settings_file_ext "qsetting"
+#define style_file_ext "style"
 
 // Define "hard coded" file names for handling null objects for ease of use
 // but also to ensure consistency and prevent unintended changes.
@@ -65,6 +66,7 @@
 #define null_texture StringAppend("null_texture.", texture_file_ext)
 #define null_project StringAppend("null_project.", projects_file_ext)
 #define null_setting StringAppend("null_setting.", settings_file_ext)
+#define null_style StringAppend("null_style.", style_file_ext)
 
 #define null_material_schematic StringAppend("null_material.", material_schematic_ext)
 #define null_object_schematic StringAppend("null_object.", object_schematic_ext)

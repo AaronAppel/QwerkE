@@ -78,6 +78,14 @@ namespace csys
         return m_Items;
     }
 
+    CSYS_INLINE void ItemLog::PopBack()
+    {
+        if (!m_Items.empty())
+        {
+            m_Items.erase(m_Items.end()-1);
+        }
+    }
+
     CSYS_INLINE void ItemLog::Clear()
     {
         m_Items.clear();

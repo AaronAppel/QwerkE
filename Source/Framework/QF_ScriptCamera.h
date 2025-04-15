@@ -120,13 +120,13 @@ namespace QwerkE {
 			}
 			if (Input::IsKeyDown(gameActions.Camera_RotateRight))
 			{
-				LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
+				// LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
 			}
 			if (Input::IsKeyDown(gameActions.Camera_RotateLeft))
 			{
 				constexpr float rotationSpeed = Math::PI_f();
 				bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
-				LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
+				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
 
 			const vec2f& mouseScroll = Input::MouseScrollDelta();

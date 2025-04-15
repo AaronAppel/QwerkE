@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="csys">
+      <UniqueIdentifier>{4752957C-3389-960D-DC75-7C10C88B120F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="csys\api.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\argument_parser.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\arguments.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\autocomplete.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\autocomplete.inl">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\command.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\csys.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\exceptions.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\history.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\history.inl">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\item.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\item.inl">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\script.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\script.inl">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\string.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\system.h">
+      <Filter>csys</Filter>
+    </ClInclude>
+    <ClInclude Include="csys\system.inl">
+      <Filter>csys</Filter>
+    </ClInclude>
     <ClInclude Include="imgui_console.h" />
   </ItemGroup>
   <ItemGroup>

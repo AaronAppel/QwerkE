@@ -2,6 +2,7 @@
 
 #include "QE_EditorWindow.h"
 #include "QE_EditorWindowAssets.h"
+#include "QE_EditorWindowConsole.h"
 #include "QE_EditorWindowDefaultDebug.h"
 #include "QE_EditorWindowDockingContext.h"
 #include "QE_EditorWindowEntityInspector.h"
@@ -41,7 +42,8 @@ namespace QwerkE {
 			EditorWindowShaderEditor,
 			EditorWindowStylePicker,
 			EditorWindowPrefabScene,
-			EditorWindowPrompt
+			EditorWindowPrompt,
+			EditorWindowConsole
         >;
 
 		template <typename... T>

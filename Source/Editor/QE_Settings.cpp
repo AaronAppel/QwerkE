@@ -10,7 +10,7 @@ namespace QwerkE {
 
 	namespace Settings {
 
-		constexpr char* s_ImGuiStyleFileName = "imguiStyle.style";
+		constexpr char* s_ImGuiStyleFileName = "Default.style"; // #TODO Review default settings files list
 
 		UserSettings s_userSettings;
 		RendererSettings s_rendererSettings;

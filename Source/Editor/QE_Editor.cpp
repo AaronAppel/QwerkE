@@ -126,6 +126,10 @@ namespace QwerkE {
             ImGuiConsole console;
 
             // Register variables
+            console.System().RegisterVariable("background_colox", clear_color, imvec4_setter);
+            console.System().RegisterVariable("back", clear_color, imvec4_setter);
+            console.System().RegisterVariable("back1234", clear_color, imvec4_setter);
+
             console.System().RegisterVariable("background_color", clear_color, imvec4_setter);
             console.System().RegisterVariable("background_color1", clear_color, imvec4_setter);
             console.System().RegisterVariable("background_color2", clear_color, imvec4_setter);

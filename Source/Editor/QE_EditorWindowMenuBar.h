@@ -29,99 +29,20 @@ namespace QwerkE {
             bool IsUnique() override { return true; }
 
 		private:
+
 			void DrawInternal() override
 			{
                 CheckHotkeys();
 
+                ImGui::SetNextWindowSize({ 2160 , 50});
                 if (ImGui::BeginMainMenuBar())
                 {
-                    if (ImGui::BeginMenu("File"))
-                    {
-                        if (ImGui::MenuItem("New Project...", "Ctrl+N"))
-                        {
-                            Editor::OpenEditorWindow(EditorWindowTypes::Prompt);
-                        }
+                    ImGui::SetWindowFontScale(m_TextScale);
 
-                        if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
-                        {
-                            Projects::LoadProjectFromExplorer();
-                        }
-
-                        if (ImGui::BeginMenu("Open Recent"))
-                        {
-                            const ProjectsData& projectsData = Projects::GetProjectsData();
-                            for (size_t i = 0; i < projectsData.PreviousProjectFileNames.size(); i++)
-                            {
-                                if (ImGui::MenuItem(projectsData.PreviousProjectFileNames[i].c_str()))
-                                {
-                                    Projects::LoadProject(projectsData.PreviousProjectFileNames[i]);
-                                }
-                            }
-                            ImGui::EndMenu();
-                        }
-
-                        ImGui::Separator();
-
-                        if (ImGui::MenuItem("Save Project", "Ctrl+S"))
-                        {
-                            Projects::SaveProject();
-                        }
-
-                        if (ImGui::MenuItem("Save Project As...", "Ctrl+Shift+S"))
-                        {
-                            Projects::SaveProjectFromExplorer();
-                        }
-
-                        ImGui::Separator();
-
-                        if (ImGui::MenuItem("Unload Project", ""))
-                        {
-                            Projects::UnloadCurrentProject();
-                        }
-
-                        ImGui::Separator();
-
-                        if (ImGui::MenuItem("Exit", "Esc"))
-                        {
-                            Window::RequestClose();
-                        }
-
-                        ImGui::EndMenu();
-                    }
-
-                    if (ImGui::BeginMenu("Windows"))
-                    {
-                        DrawMenu("Scene", {
-                                EditorWindowTypes::SceneControls,
-                                EditorWindowTypes::SceneGraph,
-                                EditorWindowTypes::SceneView,
-                                EditorWindowTypes::PrefabScene
-                            }
-                        );
-                        DrawMenu("Theme", {
-                                EditorWindowTypes::StylePicker
-                            }
-                        );
-                        DrawMenu("Editing", {
-                                EditorWindowTypes::MaterialEditor,
-                                EditorWindowTypes::NodeEditor,
-                                EditorWindowTypes::ShaderEditor
-                            }
-                        );
-                        DrawMenu("Other", {
-                                EditorWindowTypes::Assets,
-                                EditorWindowTypes::DefaultDebug,
-                                // EditorWindowTypes::DockingContext, // Hidden
-                                EditorWindowTypes::EntityInspector,
-                                EditorWindowTypes::ImGuiDemo,
-                                // EditorWindowTypes::MenuBar, // Hidden
-                                EditorWindowTypes::Settings,
-                                EditorWindowTypes::FolderViewer,
-                                EditorWindowTypes::Prompt
-                            }
-                        );
-                        ImGui::EndMenu();
-                    }
+                    DrawFileMenu();
+                    DrawEditMenu();
+                    DrawStyleMenu();
+                    DrawWindowsMenu();
 
                     const Project& currentProject = Projects::CurrentProject();
                     if (strcmp(currentProject.projectFileName.c_str(), Constants::gc_DefaultStringValue) == 0)
@@ -136,27 +57,9 @@ namespace QwerkE {
                         ImGui::Text(currentProject.projectName.c_str());
                     }
 
-                    {   // FPS
-                        const float offset = ImGui::GetWindowWidth() - 40.f;
-                        ImGui::SameLine(offset);
-                        char buffer[] = { 'F', 'P', 'S', '\0' };
-                        if (m_CalculateFps)
-                        {
-                            float deltaTime = (float)Time::PreviousFrameDuration();
-                            const char* format = "%1.1f";
-                            if (deltaTime != .0f)
-                            {
-                                format = "%3.2f";
-                                deltaTime = 1.f / deltaTime;
-                            }
-                            snprintf(buffer, sizeof(buffer) / sizeof(char), format, deltaTime);
-                        }
+                    DrawFps();
 
-                        if (ImGui::Button(buffer))
-                        {
-                            m_CalculateFps = !m_CalculateFps;
-                        }
-                    }
+                    ImGui::SetWindowFontScale(1.f);
                 }
                 ImGui::EndMainMenuBar();
 			}
@@ -188,7 +91,149 @@ namespace QwerkE {
                 }
             }
 
-            void DrawMenu(const char* name, std::vector<EditorWindowTypes> types)
+            void DrawFileMenu()
+            {
+                if (!ImGui::BeginMenu("File"))
+                    return;
+
+                if (ImGui::MenuItem("New Project...", "Ctrl+N"))
+                {
+                    Editor::OpenEditorWindow(EditorWindowTypes::Prompt);
+                }
+
+                if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
+                {
+                    Projects::LoadProjectFromExplorer();
+                }
+
+                if (ImGui::BeginMenu("Open Recent"))
+                {
+                    const ProjectsData& projectsData = Projects::GetProjectsData();
+                    for (size_t i = 0; i < projectsData.PreviousProjectFileNames.size(); i++)
+                    {
+                        if (ImGui::MenuItem(projectsData.PreviousProjectFileNames[i].c_str()))
+                        {
+                            Projects::LoadProject(projectsData.PreviousProjectFileNames[i]);
+                        }
+                    }
+                    ImGui::EndMenu();
+                }
+
+                ImGui::Separator();
+
+                if (ImGui::MenuItem("Save Project", "Ctrl+S"))
+                {
+                    Projects::SaveProject();
+                }
+
+                if (ImGui::MenuItem("Save Project As...", "Ctrl+Shift+S"))
+                {
+                    Projects::SaveProjectFromExplorer();
+                }
+
+                ImGui::Separator();
+
+                if (ImGui::MenuItem("Unload Project", ""))
+                {
+                    Projects::UnloadCurrentProject();
+                }
+
+                ImGui::Separator();
+
+                if (ImGui::MenuItem("Exit", "Esc"))
+                {
+                    Window::RequestClose();
+                }
+
+                ImGui::EndMenu();
+            }
+
+            void DrawEditMenu()
+            {
+                if (!ImGui::BeginMenu("Edit"))
+                    return;
+
+                ImGui::Text("Coming Soon!");
+
+                ImGui::EndMenu();
+            }
+
+            void DrawStyleMenu()
+            {
+                if (!ImGui::BeginMenu("Style"))
+                    return;
+
+                if (ImGui::MenuItem("Style Picker"))
+                {
+                    Editor::OpenEditorWindow(EditorWindowTypes::StylePicker);
+                }
+
+                ImGui::EndMenu();
+            }
+
+            void DrawWindowsMenu()
+            {
+                if (!ImGui::BeginMenu("Windows"))
+                    return;
+
+                DrawWindowsList("Scene", {
+                        EditorWindowTypes::SceneControls,
+                        EditorWindowTypes::SceneGraph,
+                        EditorWindowTypes::SceneView,
+                        EditorWindowTypes::PrefabScene
+                    }
+                );
+                DrawWindowsList("Theme", {
+                        EditorWindowTypes::StylePicker
+                    }
+                );
+                DrawWindowsList("Editing", {
+                        EditorWindowTypes::EntityInspector,
+                        EditorWindowTypes::MaterialEditor,
+                        EditorWindowTypes::NodeEditor,
+                        EditorWindowTypes::ShaderEditor
+                    }
+                );
+                DrawWindowsList("Other", {
+                        EditorWindowTypes::Assets,
+                        EditorWindowTypes::Console,
+                        EditorWindowTypes::DefaultDebug,
+                        // EditorWindowTypes::DockingContext, // Hidden
+                        EditorWindowTypes::ImGuiDemo,
+                        // EditorWindowTypes::MenuBar, // Hidden
+                        EditorWindowTypes::Settings,
+                        EditorWindowTypes::FolderViewer,
+                        EditorWindowTypes::Prompt
+                    }
+                );
+
+                ImGui::EndMenu();
+            }
+
+            void DrawFps()
+            {
+                const float offset = ImGui::GetWindowWidth() - (40.f * m_TextScale);
+                ImGui::SameLine(offset);
+                char buffer[] = { 'F', 'P', 'S', '\0' };
+                if (m_CalculateFps)
+                {
+                    float deltaTime = (float)Time::PreviousFrameDuration();
+                    const char* format = "%1.1f";
+                    if (deltaTime != .0f)
+                    {
+                        format = "%3.2f";
+                        deltaTime = 1.f / deltaTime;
+                    }
+                    snprintf(buffer, sizeof(buffer) / sizeof(char), format, deltaTime);
+                }
+
+                if (ImGui::Button(buffer))
+                {
+                    m_CalculateFps = !m_CalculateFps;
+                }
+            }
+
+            void DrawWindowsList(const char* name, std::vector<EditorWindowTypes> types)
             {
                 if (ImGui::BeginMenu(name))
                 {
@@ -203,6 +248,7 @@ namespace QwerkE {
                 }
             }
 
+            float m_TextScale = 1.20f;
             bool m_CalculateFps = true;
 		};
 

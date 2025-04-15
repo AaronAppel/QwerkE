@@ -44,6 +44,7 @@ protected:
     // Main
 
     std::string m_Buffer;            //!< Input buffer.
+    std::string m_HintBuffer;        //!< Input post buffer for autocomplete hints.
     std::string m_ConsoleName;       //!< Console name string buffer.
     ImGuiTextFilter m_TextFilter;    //!< Logging filer.
     bool m_AutoScroll;               //!< Auto scroll flag.
@@ -85,6 +86,11 @@ protected:
     std::array<ImVec4, COL_COUNT> m_ColorPalette;                //!< Container for all available colors
 
     // ImGui Console Window.
+
+    static csys::AutoComplete* ShowSuggestions(ImGuiInputTextCallbackData* data, ImGuiConsole* console, std::string trim_str, bool writeToConsole);
+    inline static unsigned int lastInputSize = 0;
+    inline static unsigned int loggedSuggestionsCount = 0;
+    inline static bool erasedChar = false;
 
     static int InputCallback(ImGuiInputTextCallbackData *data);    //!< Console input callback
     bool m_WasPrevFrameTabCompletion = false;                    //!< Flag to determine if previous input was a tab completion
