@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <utility>
 
+#define IMUI_EXTENDED_WIP
 #ifdef IMUI_EXTENDED_WIP
 #ifdef _QIMGUINODEEDITOR
 #include "Libraries/imgui/imgui_internal.h"
@@ -22,7 +23,22 @@ namespace QwerkE {
 
         void EditorWindowNodeEditor::DrawBluePrintsExample()
         {
-
+            ed::SetCurrentEditor(m_Context);
+            ed::Begin("My Editor", ImVec2(0.0, 0.0f));
+            int uniqueId = 1;
+            // Start drawing nodes.
+            ed::BeginNode(uniqueId++);
+            ImGui::Text("Node A");
+            ed::BeginPin(uniqueId++, ed::PinKind::Input);
+            ImGui::Text("-> In");
+            ed::EndPin();
+            ImGui::SameLine();
+            ed::BeginPin(uniqueId++, ed::PinKind::Output);
+            ImGui::Text("Out ->");
+            ed::EndPin();
+            ed::EndNode();
+            ed::End();
+            ed::SetCurrentEditor(nullptr);
         }
 
 	}

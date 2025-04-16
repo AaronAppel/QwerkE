@@ -45,11 +45,11 @@ namespace QwerkE {
         void local_WidgetsNodeEditor(ax::NodeEditor::EditorContext* context);
         void EditorWindowNodeEditor::DrawInternal()
         {
-            if (const bool simpleExample = true)
+            if (const bool simpleExample = false)
             {
                 local_SimpleNodeEditor(m_Context, m_WindowName);
             }
-            else if (const bool widgetsExample = true)
+            else if (const bool widgetsExample = false)
             {
                 // #TODO Fix deallocation crash
                 local_WidgetsNodeEditor(m_Context);
