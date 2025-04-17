@@ -11,6 +11,8 @@
     <ClInclude Include="imgui_node_editor.h" />
     <ClInclude Include="imgui_node_editor_internal.h" />
     <ClInclude Include="imgui_node_editor_internal.inl" />
+    <ClInclude Include="blueprints-example.h" />
+    <ClInclude Include="blueprints-example-types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="crude_json.cpp" />
@@ -18,5 +20,6 @@
     <ClCompile Include="imgui_extended.cpp" />
     <ClCompile Include="imgui_node_editor.cpp" />
     <ClCompile Include="imgui_node_editor_api.cpp" />
+    <ClCompile Include="blueprints-example.cpp" />
   </ItemGroup>
 </Project>

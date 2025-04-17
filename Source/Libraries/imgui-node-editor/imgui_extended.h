@@ -19,7 +19,8 @@ namespace ImGui
 	IMGUI_API void Spring(float weight = 1.0f, float spacing = -1.0f);
 
 	// Stack Layout
-	static void             AddLayoutSpring(ImGuiLayout& layout, float weight, float spacing);
+	// #TODO Support legacy imgui calls
+	// static void AddLayoutSpring(ImGuiLayout& layout, float weight, float spacing);
 }
 
 #endif

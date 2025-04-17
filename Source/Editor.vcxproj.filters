@@ -19,6 +19,7 @@
     <ClCompile Include="Editor\QE_EditorWindowNodeEditorBlueprints.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorWindowMenuBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />
@@ -86,7 +87,7 @@
     </ClInclude>
     <ClInclude Include="Editor\QE_Mirror.h" />
     <ClInclude Include="Editor\QE_EditorWindowConsole.h">
-      <Filter>Windows</Filter>
+      <Filter>Windows\Singleton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -45,18 +45,21 @@ namespace QwerkE {
         void local_WidgetsNodeEditor(ax::NodeEditor::EditorContext* context);
         void EditorWindowNodeEditor::DrawInternal()
         {
-            if (const bool simpleExample = false)
+            if (ImGui::Combo("Style: ", &m_EditorStyle, "Simple\0Widgets\0Blueprints"))
             {
-                local_SimpleNodeEditor(m_Context, m_WindowName);
-            }
-            else if (const bool widgetsExample = false)
-            {
-                // #TODO Fix deallocation crash
-                local_WidgetsNodeEditor(m_Context);
-            }
-            else
-            {
-                DrawBluePrintsExample();
+                switch (m_EditorStyle)
+                {
+                case 0:
+                    local_SimpleNodeEditor(m_Context, m_WindowName);
+                    break;
+                case 1:
+                    // #TODO Fix deallocation crash
+                    local_WidgetsNodeEditor(m_Context);
+                    break;
+                case 2:
+                    // DrawBluePrintsExample();
+                    break;
+                }
             }
         }
 
