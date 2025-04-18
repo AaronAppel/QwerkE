@@ -99,6 +99,7 @@ namespace ImGui
 		Count,
 	};
 
+	int PiePopupSelectMenu(const ImVec2& center, const char* popup_id, const char** items, int items_count, int* p_selected);
 	void ToggleButton(const char* str_id, bool* v);
 
 	constexpr ImGuiID InvalidId() { return 0; }

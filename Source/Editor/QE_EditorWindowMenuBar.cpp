@@ -25,6 +25,8 @@ namespace QwerkE {
 
         void local_DrawWindowsList(const char* name, std::vector<EditorWindowTypes> types);
 
+        static constexpr float s_SubMenuWidth = 125.f;
+
         static void local_CleanUpStyleFiles(std::vector<const char*>& styleFiles)
         {
             for (size_t i = 0; i < styleFiles.size(); i++)
@@ -195,26 +197,27 @@ namespace QwerkE {
 
         void local_DrawStyleMenu(std::vector<const char*>& styleFiles, int& currentStyleFileIndex)
         {
-            if (!ImGui::BeginMenu("Style"))
+            if (!ImGui::BeginMenu("Styles"))
                 return;
 
-            if (ImGui::BeginMenu("Select Style##MenuBarStyleSelect"))
-            {
-                if (styleFiles.empty())
-                {
-                    local_UpdateStyleFilesList(styleFiles, currentStyleFileIndex);
-                }
-                if (ImGui::Combo("Styles##StylePickerCombo", &currentStyleFileIndex, styleFiles.data(), (int)styleFiles.size()))
-                {
-                    ImGuiStyle& style = ImGui::GetStyle();
-                    Serialize::FromFile(Paths::Style(styleFiles[currentStyleFileIndex]).c_str(), style);
-                }
-                ImGui::EndMenu();
-            }
-            if (ImGui::MenuItem("Style Window"))
+            ImGui::PushItemWidth(s_SubMenuWidth);
+            if (ImGui::MenuItem("Style Picker"))
             {
                 Editor::OpenEditorWindow(EditorWindowTypes::StylePicker);
             }
+
+            ImGui::Separator();
+            if (styleFiles.empty())
+            {
+                local_UpdateStyleFilesList(styleFiles, currentStyleFileIndex);
+            }
+
+            if (ImGui::ListBox("##StylesListBox", &currentStyleFileIndex, styleFiles.data(), styleFiles.size(), 5))
+            {
+                ImGuiStyle& style = ImGui::GetStyle();
+                Serialize::FromFile(Paths::Style(styleFiles[currentStyleFileIndex]).c_str(), style);
+            }
+            ImGui::PopItemWidth();
 
             ImGui::EndMenu();
         }

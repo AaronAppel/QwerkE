@@ -26,6 +26,8 @@
 #include "Libraries/imgui-console/imgui_console.h"
 #include "Libraries/imgui-node-editor/imgui_node_editor.h"
 #include "Libraries/imgui-notify/imgui_notify.h"
+#include "Libraries/im-neo-sequencer/imgui_neo_sequencer.h"
+#include "Libraries/ImGuizmo/ImGuizmo.h"
 #define IMSPINNER_DEMO
 #include "Libraries/imspinner/imspinner.h"
 #endif
@@ -77,10 +79,18 @@ static void imvec4_setter(ImVec4& my_type, std::vector<int> vec)
 //
 #endif
 
-static void imgui_toggle_example();
+static void imgui_toggle_example(); // Toggles
 static void imgui_toggle_simple();
 static void imgui_toggle_custom();
 static void imgui_toggle_state(const ImGuiToggleConfig& config, ImGuiToggleStateConfig& state);
+
+// From: https://gitlab.com/GroGy/im-neo-sequencer
+int32_t currentFrame = 0; // Sequencer
+int32_t startFrame = -10;
+int32_t endFrame = 64;
+bool transformOpen = false;
+std::vector<ImGui::FrameIndexType> keys = { 0, 10, 24 };
+bool doDelete = false;
 
 namespace QwerkE {
 
@@ -116,6 +126,7 @@ namespace QwerkE {
         bool s_ReloadRequested = false; // #TODO FEATURE
 
         void DrawNotifyWindow();
+        static bool temp = true;
 
         // #TODO Change to main(numberOfArguments, commandLineArguments) entry point function
 		void Run(unsigned int numberOfArguments, char** commandLineArguments)
@@ -222,7 +233,7 @@ namespace QwerkE {
                     // console.Draw();
 #endif
 
-                    if (s_ShowingEditorUI)
+                    if (s_ShowingEditorUI && temp)
                     {
                         s_EditorWindowDockingContext.Draw();
                     }
@@ -231,21 +242,103 @@ namespace QwerkE {
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    static bool isOn = true;
-                    ImGui::ToggleButton("ToggleMe", &isOn);
+                    if (false)
+                    {
+                        ImGui::Begin("Sequencer");
+                        const bool deleteKeyframe = ImGui::Button("Delete");
+                        if (ImGui::BeginNeoSequencer("Sequencer1", &currentFrame, &startFrame, &endFrame, { 0, 0 },
+                            ImGuiNeoSequencerFlags_EnableSelection |
+                            ImGuiNeoSequencerFlags_Selection_EnableDragging |
+                            ImGuiNeoSequencerFlags_Selection_EnableDeletion))
+                        {
+                            if (ImGui::BeginNeoGroup("Transform", &transformOpen))
+                            {
 
-                    ImGui::Begin("Spinners");
-                    ImSpinner::demoSpinners();
-                    ImGui::End();
+                                if (ImGui::BeginNeoTimelineEx("Position"))
+                                {
+                                    for (auto&& v : keys)
+                                    {
+                                        ImGui::NeoKeyframe(&v);
+                                        // Per keyframe code here
+                                    }
 
-                    ImGui::Begin("Toggles");
-                    imgui_toggle_example();
-                    imgui_toggle_simple();
-                    imgui_toggle_custom();
-                    // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
-                    ImGui::End();
+                                    if (deleteKeyframe)
+                                    {
+                                        uint32_t count = ImGui::GetNeoKeyframeSelectionSize();
 
-                    DrawNotifyWindow();
+                                        ImGui::FrameIndexType* toRemove = new ImGui::FrameIndexType[count];
+
+                                        ImGui::GetNeoKeyframeSelection(toRemove);
+
+                                        //Delete keyframes from your structure
+                                    }
+                                    ImGui::EndNeoTimeLine();
+                                }
+                                ImGui::EndNeoGroup();
+                            }
+
+                            ImGui::EndNeoSequencer();
+                        }
+                        ImGui::End();
+                    }
+
+                    if (false)
+                    {
+                        ImGui::Begin("Pie");
+                        {
+                            static const char* test_data = "Menu";
+                            const char* items[] = { "Orange", "Blue", "Purple", "Gray", "Yellow", "Las Vegas" };
+                            int items_count = sizeof(items) / sizeof(*items);
+
+                            static int selected = -1;
+
+                            ImGui::Button(selected >= 0 ? items[selected] : "Menu", ImVec2(50, 50));
+                            if (ImGui::IsItemActive())          // Don't wait for button release to activate the pie menu
+                                ImGui::OpenPopup("##piepopup");
+
+                            ImVec2 pie_menu_center = ImGui::GetIO().MouseClickedPos[0];
+                            int n = ImGui::PiePopupSelectMenu(pie_menu_center, "##piepopup", items, items_count, &selected);
+                            if (n >= 0)
+                                printf("returned %d\n", n);
+                        }
+                        ImGui::End();
+                    }
+
+                    if (false)
+                    {
+                        static bool isOn = true;
+                        ImGui::ToggleButton("ToggleMe", &isOn);
+                    }
+
+                    if (false)
+                    {
+                        ImGui::Begin("Spinners");
+                        ImSpinner::demoSpinners();
+                        ImGui::End();
+                    }
+
+                    if (true)
+                    {
+                        // ImGui::SameLine();
+                        // ImGui::PushID(18);
+                        // ImZoomSlider::ImZoomSlider(0.f, 1.f, vMin, vMax, 0.01f, ImZoomSlider::ImGuiZoomSliderFlags_Vertical);
+                        // ImGui::PopID();
+                    }
+
+                    if (false)
+                    {
+                        ImGui::Begin("Toggles");
+                        imgui_toggle_example();
+                        imgui_toggle_simple();
+                        imgui_toggle_custom();
+                        // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
+                        ImGui::End();
+                    }
+
+                    if (true)
+                    {
+                        DrawNotifyWindow();
+                    }
 
                     Renderer::EndImGui();
 
@@ -591,6 +684,7 @@ namespace QwerkE {
 
 }
 
+// From: https://github.com/cmdwtf/imgui_toggle/blob/main/EXAMPLE.md
 static void imgui_toggle_example()
 {
     // use some lovely gray backgrounds for "off" toggles

@@ -223,6 +223,9 @@ public:
 	ImGuiToast(ImGuiToastType type, int dismiss_time, const char* format, ...) : ImGuiToast(type, dismiss_time) { NOTIFY_FORMAT(this->set_content, format); }
 };
 
+// For ImHashStr()
+#include "imgui_internal.h"
+
 namespace ImGui
 {
 	NOTIFY_INLINE std::vector<ImGuiToast> notifications;
@@ -278,6 +281,13 @@ namespace ImGui
 			// Generate new unique name for this toast
 			char window_name[50]{};
 			snprintf(window_name, sizeof(window_name), "##TOAST%d", i);
+
+			// From: https://github.com/ocornut/imgui/issues/6408
+			// Trying to force rendering over docking context and other windows
+			// ImGuiWindowClass topmost;
+			// topmost.ClassId = ImHashStr("TopMost");
+			// topmost.ViewportFlagsOverrideSet = ImGuiViewportFlags_TopMost;
+			// ImGui::SetNextWindowClass(&topmost);
 
 			//PushStyleColor(ImGuiCol_Text, text_color);
 			SetNextWindowBgAlpha(opacity);

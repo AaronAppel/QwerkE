@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Libraries/imgui/imgui_internal.h"
+
 #include "QF_Window.h"
 
 #include "QE_EditorWindow.h"
