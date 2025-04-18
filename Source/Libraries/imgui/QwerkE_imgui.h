@@ -99,9 +99,9 @@ namespace ImGui
 		Count,
 	};
 
-	constexpr ImGuiID InvalidId() { return 0; }
+	void ToggleButton(const char* str_id, bool* v);
 
-	ImGuiKey KeyCodeToImGuiKey(int keyCode);
+	constexpr ImGuiID InvalidId() { return 0; }
 
 	void PushFontQw(Fonts font);
 	void PopFontQw();

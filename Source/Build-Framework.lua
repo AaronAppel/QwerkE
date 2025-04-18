@@ -56,6 +56,7 @@ project "Framework"
 		"cJSON",
 		"bgfxFramework",
 		"FlatHeadGames",
+		"imgui_toggle",
 		"imgui",
 		"imgui-console",
 		"imgui-node-editor",
