@@ -5,7 +5,7 @@ IF EXIST "Build\" (
 )
 
 set PREMAKE_EXE=premake5.exe
-set PREMAKE_FILE="premake.lua"
+set PREMAKE_FILE="Build-QwerkE.lua"
  
 %PREMAKE_EXE% --file=%PREMAKE_FILE% vs2022
 
