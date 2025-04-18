@@ -60,7 +60,7 @@ Thin Matrix : [YouTube](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ
 - [Obsidian](https://obsidian.md/)
 - [YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D)
 - [Google](https://trex-runner.com/)
-- [StackOverflow](https://stackoverflow.com/questions?sort=votes
+- [StackOverflow](https://stackoverflow.com/questions?sort=votes)
 - [Entrian Source Search](https://entrian.com/source-search/)
 - [Notepad++](https://notepad-plus-plus.org/downloads/)
 
