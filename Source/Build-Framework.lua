@@ -57,6 +57,7 @@ project "Framework"
 		"bgfxFramework",
 		"FlatHeadGames",
 		"ImFileDialog",
+		"ImCoolBar",
 		"imgui",
 		"imgui_toggle",
 		"imgui-console",

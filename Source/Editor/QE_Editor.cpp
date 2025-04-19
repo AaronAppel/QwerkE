@@ -21,6 +21,7 @@
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
+#include "Libraries/ImCoolBar/ImCoolBar.h"
 #include "Libraries/ImFileDialog/ImFileDialog.h"
 #include "Libraries/imgui_toggle/imgui_toggle.h"
 #include "Libraries/imgui_toggle/imgui_toggle_presets.h"
@@ -92,6 +93,17 @@ int32_t endFrame = 64;
 bool transformOpen = false;
 std::vector<ImGui::FrameIndexType> keys = { 0, 10, 24 };
 bool doDelete = false;
+
+// ImCoolBar
+auto coolbar_button = [](const char* label) -> bool {
+    float w = ImGui::GetCoolBarItemWidth();
+    auto font_ptr = ImGui::GetIO().Fonts->Fonts[0];
+    font_ptr->Scale = ImGui::GetCoolBarItemScale();
+    ImGui::PushFont(font_ptr);
+    bool res = ImGui::Button(label, ImVec2(w, w));
+    ImGui::PopFont();
+    return res;
+};
 
 namespace QwerkE {
 
@@ -242,6 +254,78 @@ namespace QwerkE {
                     local_Update();
 
 					Framework::Update((float)Time::PreviousFrameDuration());
+
+                    if (true)
+                    {
+                        if (ImGui::BeginCoolBar("##CoolBarMain", ImCoolBarFlags_::ImCoolBarFlags_Horizontal, ImVec2(0.5f, 1.0f))) {
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("A")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("B")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("C")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("D")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("E")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("F")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("G")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("H")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("I")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("J")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("K")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("L")) {
+
+                                }
+                            }
+                            if (ImGui::CoolBarItem()) {
+                                if (coolbar_button("M")) {
+
+                                }
+                            }
+                            ImGui::EndCoolBar();
+                        }
+                    }
 
                     if (false)
                     {
