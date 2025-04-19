@@ -56,6 +56,7 @@ project "Framework"
 		"cJSON",
 		"bgfxFramework",
 		"FlatHeadGames",
+		"ImFileDialog",
 		"imgui",
 		"imgui_toggle",
 		"imgui-console",
