@@ -61,6 +61,7 @@ project "Framework"
 		"imgui",
 		"imgui_toggle",
 		"imgui-console",
+		"imgui-knobs",
 		"imgui-node-editor",
 		"ImGuizmo",
 		"im-neo-sequencer",
