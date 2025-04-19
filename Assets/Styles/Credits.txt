@@ -1,3 +1,5 @@
+Vekor64 style grabbed out of StyleColorsCustom() in imgui_draw.cpp(181) from repo: https://github.com/Vekor64/imgui-dock
+
 https://github.com/Patitotective/ImThemes
 // AdobeInspired style by nexacopic from ImThemes
 // Windark style by DestroyerDarkNess from ImThemes
