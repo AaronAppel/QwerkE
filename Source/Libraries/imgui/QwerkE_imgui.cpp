@@ -2,6 +2,8 @@
 
 #include "imgui_internal.h"
 
+#include "../imgui-spin-value/imgui_spin_value.h" // For SpinInt(), SpinFloat(), SpinDouble(), and SpinScalar()
+
 namespace ImGui
 {
 	constexpr float g_pixelsPerCharacter = 6.f; // #TODO Consider a Constants namespace or organization
@@ -130,6 +132,38 @@ namespace ImGui
 				draw_list->AddRectFilled(p, ImVec2(p.x + width, p.y + height), ImGui::GetColorU32(*v ? colors[ImGuiCol_Button] : ImVec4(0.85f, 0.85f, 0.85f, 1.0f)), height * 0.50f);
 			draw_list->AddCircleFilled(ImVec2(p.x + radius + (*v ? 1 : 0) * (width - radius * 2.0f), p.y + radius), radius - 1.5f, IM_COL32(255, 255, 255, 255));
 		}
+	}
+
+	bool SpinnerInt(const char* label, int* v, int step, int step_fast, ImGuiInputTextFlags flags)
+	{
+		const bool result = SpinInt("SpinInt", v);
+		if (IsItemHovered())
+		{
+			*v += GetIO().MouseWheel;
+		}
+		return result;
+	}
+
+	bool SpinnerFloat(const char* label, float* v, float step, float step_fast, const char* format, ImGuiInputTextFlags flags)
+	{
+		const bool result = SpinFloat("SpinFloat", v);
+		if (IsItemHovered())
+		{
+			constexpr float stepSize = 0.25;
+			*v += GetIO().MouseWheel * stepSize;
+		}
+		return result;
+	}
+
+	bool SpinnerDouble(const char* label, double* v, double step, double step_fast, const char* format, ImGuiInputTextFlags flags)
+	{
+		const bool result = SpinDouble("SpinDouble", v);
+		if (IsItemHovered())
+		{
+			constexpr double stepSize = 0.25;
+			*v += GetIO().MouseWheel * stepSize;
+		}
+		return result;
 	}
 
 	void PushFontQw(Fonts font)

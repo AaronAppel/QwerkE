@@ -183,9 +183,12 @@ namespace QwerkE {
         bool IsJoystickButtonDown(eKeys key)
         {
             int count;
-            const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &count);
+            if (const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &count))
+            {
+                return GLFW_PRESS && buttons[GLFW_GAMEPAD_BUTTON_A];
+            }
 
-            return GLFW_PRESS && buttons[GLFW_GAMEPAD_BUTTON_A];
+            return false;
         }
 
         const vec2f& MouseFrameDelta()

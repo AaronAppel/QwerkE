@@ -60,6 +60,12 @@
 #include "QE_Projects.h"
 
 #ifdef _QDEARIMGUI
+
+// Spin value
+int spinInt = 0;
+float spinFloat = 0.f;
+double spinDouble = 0;
+
 // ImGui Console
 csys::ItemLog& operator<<(csys::ItemLog& log, ImVec4& vec)
 {
@@ -255,6 +261,19 @@ namespace QwerkE {
                     local_Update();
 
 					Framework::Update((float)Time::PreviousFrameDuration());
+
+                    if (true)
+                    {
+                        if (ImGui::Begin("Spin Values"))
+                        {
+                            ImGui::PushItemWidth(150.f);
+                            ImGui::SpinnerInt("Spin Int", &spinInt);
+                            ImGui::SpinnerFloat("Spin Float", &spinFloat);
+                            ImGui::SpinnerDouble("Spin Double", &spinDouble);
+                            ImGui::PopItemWidth();
+                        }
+                        ImGui::End();
+                    }
 
                     if (true)
                     {
