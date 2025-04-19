@@ -776,6 +776,12 @@ namespace QwerkE {
                 }
 
                 ImGui::SameLine();
+                if (ImGui::Button("Loading"))
+                {
+                    ImGui::InsertNotification({ ImGuiToastType_Loading, 3000, "Loading asset: Dummy.txt!" });
+                }
+
+                ImGui::SameLine();
                 if (ImGui::Button("Info"))
                 {
                     ImGui::InsertNotification({ ImGuiToastType_Info, 3000, "Hello World! This is an info!" });
@@ -800,7 +806,7 @@ namespace QwerkE {
                 ImGui::InputInt("Duration (ms)", &duration, 100);
                 if (duration < 0) duration = 0; // Shouldn't be negative
 
-                static char* type_str[] = { "None", "Success", "Warning", "Error", "Info" };
+                static char* type_str[] = { "None", "Success", "Warning", "Error", "Info", "Loading"};
                 static ImGuiToastType type = ImGuiToastType_Success;
                 IM_ASSERT(type < ImGuiToastType_COUNT);
 

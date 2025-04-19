@@ -37,6 +37,7 @@ enum ImGuiToastType_
 	ImGuiToastType_Warning,
 	ImGuiToastType_Error,
 	ImGuiToastType_Info,
+	ImGuiToastType_Loading,
 	ImGuiToastType_COUNT
 };
 
@@ -106,6 +107,8 @@ public:
 				return "Error";
 			case ImGuiToastType_Info:
 				return "Info";
+			case ImGuiToastType_Loading:
+				return "Loading";
 			default:
 				return NULL;
 			}
@@ -130,6 +133,8 @@ public:
 			return { 255, 0, 0, 255 }; // Error
 		case ImGuiToastType_Info:
 			return { 0, 157, 255, 255 }; // Blue
+		case ImGuiToastType_Loading:
+			return { 0, 157, 255, 255 }; // Blue
 		default:
 			return { 255, 255, 255, 255 }; // White
 		}
@@ -149,6 +154,8 @@ public:
 			return ICON_FA_TIMES_CIRCLE;
 		case ImGuiToastType_Info:
 			return ICON_FA_INFO_CIRCLE;
+		case ImGuiToastType_Loading:
+			return ICON_FA_INFO_CIRCLE; // #TODO Swap icon
 		default:
 			return NULL;
 		}
@@ -300,8 +307,14 @@ namespace ImGui
 
 				bool was_title_rendered = false;
 
+				if (ImGuiToastType_Loading == current_toast->get_type())
+				{
+					const ImU32 col = ImGui::GetColorU32(ImGuiCol_ButtonHovered);
+					const float radius = ImGui::GetFontSize() / 2;
+					ImGui::Spinner("##spinner", radius, 3, col); // #NOTE Dependency on QwerkE_imgui.h
+				}
 				// If an icon is set
-				if (!NOTIFY_NULL_OR_EMPTY(icon))
+				else if (!NOTIFY_NULL_OR_EMPTY(icon))
 				{
 					//Text(icon); // Render icon text
 					TextColored(text_color, icon);
@@ -311,9 +324,9 @@ namespace ImGui
 				// If a title is set
 				if (!NOTIFY_NULL_OR_EMPTY(title))
 				{
-					// If a title and an icon is set, we want to render on same line
+					// If a title and an icon or spinner is set, we want to render on same line
 					if (!NOTIFY_NULL_OR_EMPTY(icon))
-						SameLine();
+						SameLine(0.f, 10.f);
 
 					Text(title); // Render title text
 					was_title_rendered = true;
@@ -321,7 +334,7 @@ namespace ImGui
 				else if (!NOTIFY_NULL_OR_EMPTY(default_title))
 				{
 					if (!NOTIFY_NULL_OR_EMPTY(icon))
-						SameLine();
+						SameLine(0.f, 10.f);
 
 					Text(default_title); // Render default title text (ImGuiToastType_Success -> "Success", etc...)
 					was_title_rendered = true;
@@ -342,7 +355,6 @@ namespace ImGui
 						Separator();
 #endif
 					}
-
 					Text(content); // Render content text
 				}
 
