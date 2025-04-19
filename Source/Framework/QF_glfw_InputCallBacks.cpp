@@ -23,16 +23,18 @@ namespace QwerkE {
         static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
         static void cursor_enter_callback(GLFWwindow* window, int entered) { }
         static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+        static void joystick_callback(int joystickId, int eventId);
         static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
         void SetupCallbacks(GLFWwindow* window)
         {
             glfwSetKeyCallback(window, local_KeyCallback);
-            glfwSetScrollCallback(window, scroll_callback);
             glfwSetCharCallback(window, char_callback);
             glfwSetCharModsCallback(window, char_mods_callback);
             glfwSetCursorPosCallback(window, cursor_position_callback);
             glfwSetMouseButtonCallback(window, mouse_button_callback);
+            glfwSetJoystickCallback(joystick_callback);
+            glfwSetScrollCallback(window, scroll_callback);
         }
 
         void local_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -110,6 +112,11 @@ namespace QwerkE {
                 io.AddMouseButtonEvent(button, false);
 #endif
             }
+        }
+
+        void joystick_callback(int joystickId, int eventId)
+        {
+            OnJoystickEvent(joystickId, eventId);
         }
 
         void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

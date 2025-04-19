@@ -71,7 +71,8 @@ namespace QwerkE {
 
 			const Input::GameActions& gameActions = Input::GetGameActions();
 
-			if (Input::IsKeyDown(gameActions.Camera_MoveForward))
+			if (Input::IsKeyDown(gameActions.Camera_MoveForward) ||
+				Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(forward, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));

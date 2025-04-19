@@ -301,7 +301,7 @@ namespace QwerkE {
         eKeys_F22,
         eKeys_F23,
         eKeys_F24,
-        eKeys_F25,
+        eKeys_F25, // 141
 
         // System Keys
         eKeys_System, // Window key, Command Key, etc
@@ -309,6 +309,8 @@ namespace QwerkE {
         // Media Keys? // Play/pause, previous, next, volume, mute/unmute
 
         // Macro Keys?
+
+        eKeys_JoystickA,
 
         eKeys_MAX
     };

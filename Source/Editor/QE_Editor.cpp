@@ -283,8 +283,16 @@ namespace QwerkE {
                         ImGui::End();
                     }
 
-                    if (false) // #TODO Fix m_getIcon->CreateTexture() runtime crash
+                    if (Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
                     {
+                        int bp = 0;
+                    }
+
+                    if (false)
+                    {
+                        // #TODO Fix m_getIcon->CreateTexture() runtime crash
+                        // Review: https://github.com/dfranx/ImFileDialog#usage
+
                         // Simple window
                         ImGui::Begin("Control Panel");
                         if (ImGui::Button("Open file"))

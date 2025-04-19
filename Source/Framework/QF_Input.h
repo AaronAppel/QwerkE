@@ -37,6 +37,10 @@ namespace QwerkE {
         void OnMouseClick(eKeys key, eKeyState state);
         void OnMouseScroll(float x, float y);
 
+        void OnJoystickEvent(int joystickId, int eventId);
+
+        bool IsJoystickButtonDown(eKeys key);
+
         void OnKeyEvent(eKeys key, eKeyState state);
 
         u16 RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);

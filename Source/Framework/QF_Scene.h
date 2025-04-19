@@ -20,12 +20,18 @@ class PhysicsSystem;
 
 namespace QwerkE {
 
+    class Scene;
+    namespace Scenes
+    {
+        Scene* CreateSceneFromFile(const std::string& sceneFilePath);
+        Scene* CreateScene(const char* const sceneFileNamePrefix);
+    }
+
     class EntityHandle;
 
     class Scene final
     {
     public:
-        Scene(const std::string& sceneFileName);
         ~Scene();
 
         void Update(float deltatime);
@@ -80,6 +86,12 @@ namespace QwerkE {
         // bool IsDirty() { return m_IsDirty; } // #TODO Editor only state. Move out of here and into some QE_ file domain
 
     private:
+        friend Scene* Scenes::CreateSceneFromFile(const std::string& sceneFilePath);
+        friend Scene* Scenes::CreateScene(const char* const sceneFileNamePrefix);
+        Scene(const std::string& sceneFileName) :
+            m_SceneFileName(sceneFileName)
+        { }
+
         MIRROR_PRIVATE_MEMBERS
         friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
         friend class SceneCreator;

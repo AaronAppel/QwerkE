@@ -47,7 +47,7 @@ namespace QwerkE {
         static const u16 s_GlfwKeyCodexSize = GLFW_KEY_LAST + 1;
         static u16* s_GlfwKeyCodex = new unsigned short[s_GlfwKeyCodexSize];
 #endif
-        
+
 #ifdef _QDEARIMGUI
         static u16* s_ImGuiKeyCodex = new unsigned short[eKeys_MAX];
 #endif
@@ -108,8 +108,6 @@ namespace QwerkE {
 #else
 #error "Define input library!"
 #endif
-
-            // Serialize::ToFile(s_GameActions, Paths::Setting(s_GameActionsFileName).c_str());
             Serialize::FromFile(Paths::Setting(s_GameActionsFileName).c_str(), s_GameActions, true);
 
             NewFrame();
@@ -168,6 +166,26 @@ namespace QwerkE {
         {
             s_FrameMouseScrollOffsets.x = x;
             s_FrameMouseScrollOffsets.y = y;
+        }
+
+        void OnJoystickEvent(int joystickId, int eventId)
+        {
+            if (GLFW_CONNECTED == eventId)
+            {
+                // The joystick was connected
+            }
+            else if (GLFW_DISCONNECTED == eventId)
+            {
+                // The joystick was disconnected
+            }
+        }
+
+        bool IsJoystickButtonDown(eKeys key)
+        {
+            int count;
+            const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &count);
+
+            return GLFW_PRESS && buttons[GLFW_GAMEPAD_BUTTON_A];
         }
 
         const vec2f& MouseFrameDelta()
