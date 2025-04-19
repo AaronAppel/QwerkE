@@ -59,6 +59,7 @@ project "Framework"
 		"ImFileDialog",
 		"ImCoolBar",
 		"imgui",
+		"imgui_hex_editor",
 		"imgui_toggle",
 		"imgui-console",
 		"imgui-spin-value",
