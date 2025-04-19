@@ -67,6 +67,7 @@ project "Framework"
 		"imgui-node-editor",
 		"ImGuizmo",
 		"im-neo-sequencer",
+		"ImNodeFlow",
 		"Jolt",
 		"lodepng",
 		"Mirror",

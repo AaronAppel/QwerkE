@@ -32,6 +32,7 @@
 #include "Libraries/imgui-notify/imgui_notify.h"
 #include "Libraries/im-neo-sequencer/imgui_neo_sequencer.h"
 #include "Libraries/ImGuizmo/ImGuizmo.h"
+#include "Libraries/ImNodeFlow/ImNodeFlow.h"
 #define IMSPINNER_DEMO
 #include "Libraries/imspinner/imspinner.h"
 #endif
@@ -112,6 +113,61 @@ auto coolbar_button = [](const char* label) -> bool {
     ImGui::PopFont();
     return res;
 };
+
+// ImNodeFlow
+using namespace ImFlow;
+
+class SimpleSum : public BaseNode
+{
+
+public:
+    SimpleSum()
+    {
+        setTitle("Simple sum");
+        setStyle(NodeStyle::green());
+        BaseNode::addIN<int>("In", 0, ConnectionFilter::SameType());
+        BaseNode::addOUT<int>("Out", nullptr)->behaviour([this]() { return getInVal<int>("In") + m_valB; });
+    }
+
+    void draw() override
+    {
+        if (BaseNode::isSelected()) {
+            ImGui::SetNextItemWidth(100.f);
+            ImGui::InputInt("##ValB", &m_valB);
+            ImGui::Button("Hello");
+        }
+    }
+
+private:
+    int m_valB = 0;
+};
+
+struct NodeEditor : ImFlow::BaseNode
+{
+    ImFlow::ImNodeFlow mINF;
+    NodeEditor(float d, std::size_t r)
+        : BaseNode()
+    {
+        setTitle("glhf");
+        mINF.setSize({ d,d });
+        if (r > 0) {
+            mINF.addNode<SimpleSum>({ 0,0 });
+            mINF.addNode<SimpleSum>({ 10,10 });
+        }
+    }
+
+    void set_size(ImVec2 d)
+    {
+        mINF.setSize(d);
+    }
+
+    void draw() override
+    {
+        mINF.update();
+    }
+};
+
+NodeEditor neditor(500, 1500);
 
 namespace QwerkE {
 
@@ -345,6 +401,11 @@ namespace QwerkE {
 
                     if (true)
                     {
+
+                    }
+
+                    if (true)
+                    {
                         ImGui::Begin("Knob knob");
 
                         static float val1 = 0;
@@ -411,6 +472,20 @@ namespace QwerkE {
                             // value was changed
                         }
 
+                        ImGui::End();
+                    }
+
+                    if (false) // #TODO bx de-allocation null pointer exception
+                    {
+                        // ImGuiIO& io = ImGui::GetIO(); // (void)io;?
+                        // const ImVec2 window_size = io.DisplaySize - ImVec2(1, 1);
+                        // const ImVec2 window_pos = ImVec2(1, 1);
+                        // const ImVec2 node_editor_size = window_size - ImVec2(16, 16);
+                        // neditor.set_size(node_editor_size);
+
+                        ImGui::Begin("Node Editor", nullptr, 0); // ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+                        neditor.set_size(ImGui::GetContentRegionAvail());
+                        neditor.draw();
                         ImGui::End();
                     }
 
@@ -484,6 +559,33 @@ namespace QwerkE {
                             }
                             ImGui::EndCoolBar();
                         }
+                    }
+
+                    if (true)
+                    {
+                        ImGui::Begin("Progress Indicators");
+
+                        const ImU32 col = ImGui::GetColorU32(ImGuiCol_ButtonHovered);
+                        const ImU32 bg = ImGui::GetColorU32(ImGuiCol_Button);
+
+                        const float indicator_radius = 45.f;
+                        const ImVec4 main_color = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);
+                        const ImVec4 backdrop_color = ImVec4(0.25f, .75f, 1.0f, 1.0f);
+
+                        const int circle_count = 12;
+                        static float speed = ImGui::GetTime() * 1.f;
+
+                        ImGuiKnobs::Knob("IndicatorSpeedKnob", &speed, 0.f, 2.f, .05f);
+                        ImGui::SameLine();
+                        ImGui::LoadingIndicatorCircle("##LoadingCirclesIndicator", indicator_radius,
+                            main_color, backdrop_color,
+                            circle_count, speed);
+
+                        ImGui::Spinner("##spinner", 15, 6, col);
+                        ImGui::SameLine();
+                        ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
+                        ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
+                        ImGui::End();
                     }
 
                     if (false)

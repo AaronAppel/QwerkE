@@ -110,3 +110,12 @@ START HERE.bat
 # Local only
 /Game/Assets/Scenes/Backup
 /Editor/Assets/Backup
+
+# Forced add commit files (git add -f "file.txt")
+*.ini
+Assets/Projects/Project1.qproj
+Assets/Settings/EditorWindowData.qdata
+
+# Ignored files: git update-index --skip-worktree <file path>
+# IGNORED FILES HERE
+# To Resume: git update-index --no-skip-worktree <file path>
