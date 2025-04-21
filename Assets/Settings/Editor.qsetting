@@ -3,7 +3,7 @@
 		"windowWidthPixels":	2160,
 		"windowHeightPixels":	1440,
 		"limitFramerate":	true,
-		"maxFramesPerSecond":	120,
+		"maxFramesPerSecond":	60,
 		"maxEnabledScenes":	1,
 		"maxJobsAdditionalThreadCount":	1,
 		"consoleOutputWindowEnabled":	true,

@@ -1,6 +1,7 @@
 #include "QE_EditorWindowNodeEditor.h"
 
 #ifdef _QIMGUINODEEDITOR
+#include "Libraries/imgui/imgui.h"
 #include "Libraries/imgui/imgui_internal.h"
 #include "Libraries/imgui-node-editor/imgui_node_editor.h"
 # ifdef _MSC_VER
@@ -45,18 +46,26 @@ namespace QwerkE {
         void local_WidgetsNodeEditor(ax::NodeEditor::EditorContext* context);
         void EditorWindowNodeEditor::DrawInternal()
         {
-            if (const bool simpleExample = true)
+            char buffer[5];
+            if (ImGui::Combo("Node Editor Style", &m_NodeExample,
+                    "Simple\0"
+                    "Widget\0"
+                    "BluePrint\0"
+                ))
             {
-                local_SimpleNodeEditor(m_Context, m_WindowName);
             }
-            else if (const bool widgetsExample = true)
+            switch (m_NodeExample)
             {
+            case 0:
+                local_SimpleNodeEditor(m_Context, m_WindowName);
+                break;
+            case 1:
                 // #TODO Fix deallocation crash
                 local_WidgetsNodeEditor(m_Context);
-            }
-            else
-            {
+                break;
+            case 2:
                 DrawBluePrintsExample();
+                break;
             }
         }
 

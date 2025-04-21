@@ -68,6 +68,7 @@ QC_ENUM(ImGuiCol_qw, int, // For stringification
 
 namespace ImGui
 {
+	constexpr float g_pixelsPerCharacter = 6.5f; // #TODO Consider a Constants namespace or organization
 	constexpr float g_pixelsBorderWidth = 8.f; // #TODO Consider a Constants namespace or organization
 	constexpr float g_pixelsScrollBarWidth = 25.f; // #TODO Consider a Constants namespace or organization
 
@@ -102,6 +103,7 @@ namespace ImGui
 	int PiePopupSelectMenu(const ImVec2& center, const char* popup_id, const char** items, int items_count, int* p_selected);
 	void ToggleButton(const char* str_id, bool* v);
 
+	// #TODO Rename ScrollerInt()?
 	bool SpinnerInt(const char* label, int* v, int step = 1, int step_fast = 100, ImGuiInputTextFlags flags = 0);
 	bool SpinnerFloat(const char* label, float* v, float step = 0.0f, float step_fast = 0.0f, const char* format = "%.3f", ImGuiInputTextFlags flags = 0);
 	bool SpinnerDouble(const char* label, double* v, double step = 0.0, double step_fast = 0.0, const char* format = "%.6f", ImGuiInputTextFlags flags = 0);
@@ -122,10 +124,11 @@ namespace ImGui
 	void SameLineCentered(uint16_t numberOfChars, float horizontalScaling = 1.f);
 	void SameLineCentered(const char* text, float horizontalScaling = 1.f);
 
+	const char* const g_DefaultDebugWindowName = "Default Debug##EditorWindow";
 	template <typename Function>
 	void DefaultDebugWindow(Function function)
 	{
-		if (ImGui::Begin("Default Debug Window"))
+		if (ImGui::Begin(g_DefaultDebugWindowName))
 		{
 			ImGui::Separator();
 			function();

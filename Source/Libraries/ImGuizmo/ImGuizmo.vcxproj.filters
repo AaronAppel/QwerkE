@@ -15,27 +15,6 @@
     <ClInclude Include="example\ImApp.h">
       <Filter>example</Filter>
     </ClInclude>
-    <ClInclude Include="example\imconfig.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="example\imgui.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="example\imgui_internal.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="example\imstb_rectpack.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="example\imstb_textedit.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="example\imstb_truetype.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="example\stb_image.h">
-      <Filter>example</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphEditor.cpp" />
@@ -43,21 +22,6 @@
     <ClCompile Include="ImGradient.cpp" />
     <ClCompile Include="ImGuizmo.cpp" />
     <ClCompile Include="ImSequencer.cpp" />
-    <ClCompile Include="example\imgui.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="example\imgui_demo.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="example\imgui_draw.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="example\imgui_tables.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="example\imgui_widgets.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
     <ClCompile Include="example\main.cpp">
       <Filter>example</Filter>
     </ClCompile>

@@ -36,7 +36,7 @@ namespace QwerkE {
 			Projects::LoadProject(projectsData.LastOpenedProjectFileName);
 			if (!Projects::CurrentProject().isLoaded)
 			{
-				OpenEditorWindow(Editor::EditorWindowTypes::Prompt);
+				NewEditorWindow(Editor::EditorWindowTypes::Prompt);
 			}
 		}
 

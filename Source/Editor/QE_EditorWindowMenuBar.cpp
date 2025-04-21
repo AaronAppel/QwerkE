@@ -64,7 +64,7 @@ namespace QwerkE {
             if (Input::FrameKeyAction(eKeys::eKeys_N, eKeyState::eKeyState_Press) &&
                 (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
             {
-                Editor::OpenEditorWindow(EditorWindowTypes::Prompt);
+                Editor::NewEditorWindow(EditorWindowTypes::Prompt);
             }
 
             if (Input::FrameKeyAction(eKeys::eKeys_O, eKeyState::eKeyState_Press) &&
@@ -118,6 +118,12 @@ namespace QwerkE {
                     ImGui::Text(currentProject.projectName.c_str());
                 }
 
+                ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x - 100.f);
+                if (ImGui::SmallButton("Restart"))
+                {
+                    Editor::RequestRestart();
+                }
+
                 local_DrawFps(m_CalculateFps, m_TextScale);
 
                 ImGui::SetWindowFontScale(1.f);
@@ -132,7 +138,7 @@ namespace QwerkE {
 
             if (ImGui::MenuItem("New Project...", "Ctrl+N"))
             {
-                Editor::OpenEditorWindow(EditorWindowTypes::Prompt);
+                Editor::NewEditorWindow(EditorWindowTypes::Prompt);
             }
 
             if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
@@ -189,7 +195,7 @@ namespace QwerkE {
 
             if (ImGui::MenuItem("Settings"))
             {
-                Editor::OpenEditorWindow(EditorWindowTypes::Settings);
+                Editor::NewEditorWindow(EditorWindowTypes::Settings);
             }
 
             ImGui::EndMenu();
@@ -200,10 +206,12 @@ namespace QwerkE {
             if (!ImGui::BeginMenu("Styles"))
                 return;
 
+            // #TODO
+
             ImGui::PushItemWidth(s_SubMenuWidth);
             if (ImGui::MenuItem("Style Picker"))
             {
-                Editor::OpenEditorWindow(EditorWindowTypes::StylePicker);
+                Editor::NewEditorWindow(EditorWindowTypes::StylePicker);
             }
 
             ImGui::Separator();
@@ -226,6 +234,21 @@ namespace QwerkE {
         {
             if (!ImGui::BeginMenu("Windows"))
                 return;
+
+            if (ImGui::BeginMenu("Open"))
+            {
+                const auto& windows = Editor::GetOpenWindows();
+                for (const auto& guidWindowPtrPair : windows)
+                {
+                    if (ImGui::MenuItem(ENUM_TO_STR(guidWindowPtrPair.second->Type())))
+                    {
+                        guidWindowPtrPair.second->Focus();
+                        break;
+                    }
+                }
+                ImGui::EndMenu();
+            }
+            ImGui::Separator();
 
             local_DrawWindowsList("Scene", {
                     EditorWindowTypes::SceneControls,
@@ -287,7 +310,7 @@ namespace QwerkE {
                 {
                     if (ImGui::MenuItem(ENUM_TO_STR(types[i])))
                     {
-                        Editor::OpenEditorWindow((u32)types[i]);
+                        Editor::NewEditorWindow((u32)types[i]);
                     }
                 }
                 ImGui::EndMenu();

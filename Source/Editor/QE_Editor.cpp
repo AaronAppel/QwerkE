@@ -181,8 +181,14 @@ namespace QwerkE {
 
         static bool s_ShowingEditorUI = true;
 
+        // #TODO Think of creating a WindowManager, or EditorWindows:: class to manage all window access, update, create/destroy,
+        // and it can manage the stack of recently selected windows.
+        static bool s_ShowingWindowStackPanel = false;
+        static EditorWindow* s_WindowStackPanelLastSelected = nullptr;
+
         static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid); // #NOTE Draw order dependency with other EditorWindows
 
+        // #TODO Editor overlays(notifications), pop ups(cycle windows, load/save project), prompts(save unsaved change before quitting/closing scene/window)
         static std::unordered_map<GUID, EditorWindow*> s_EditorWindows;
         static std::vector<EditorWindow*> s_EditorWindowsQueuedForDelete;
 
@@ -205,10 +211,24 @@ namespace QwerkE {
         void DrawNotifyWindow();
         static bool temp = true;
 
-        // #TODO Change to main(numberOfArguments, commandLineArguments) entry point function
-		void Run(unsigned int numberOfArguments, char** commandLineArguments)
+        void RunReloadable(unsigned int numberOfArguments, char** commandLineArguments);
+
+        void Run(unsigned int numberOfArguments, char** commandLineArguments)
+        {
+            do
+            {
+                if (s_ReloadRequested)
+                {
+                    Log::Console("\n-- Reloading Editor --\n\n");
+                }
+                s_ReloadRequested = false;
+                RunReloadable(numberOfArguments, commandLineArguments);
+            } while (s_ReloadRequested);
+        }
+
+		void RunReloadable(unsigned int numberOfArguments, char** commandLineArguments)
 		{
-            Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str());
+            Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str()); // #TODO Review QWERKE_VERSION as const char*
 
             Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments); // #TODO Improve name
 
@@ -376,7 +396,7 @@ namespace QwerkE {
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    if (true)
+                    if (false)
                     {
                         if (ImGui::Begin("Spin Values"))
                         {
@@ -399,12 +419,7 @@ namespace QwerkE {
                         ImGui::End();
                     }
 
-                    if (true)
-                    {
-
-                    }
-
-                    if (true)
+                    if (false)
                     {
                         ImGui::Begin("Knob knob");
 
@@ -489,7 +504,7 @@ namespace QwerkE {
                         ImGui::End();
                     }
 
-                    if (true)
+                    if (false)
                     {
                         if (ImGui::BeginCoolBar("##CoolBarMain", ImCoolBarFlags_::ImCoolBarFlags_Horizontal, ImVec2(0.5f, 1.0f))) {
                             if (ImGui::CoolBarItem()) {
@@ -561,7 +576,7 @@ namespace QwerkE {
                         }
                     }
 
-                    if (true)
+                    if (false)
                     {
                         ImGui::Begin("Progress Indicators");
 
@@ -572,10 +587,10 @@ namespace QwerkE {
                         const ImVec4 main_color = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);
                         const ImVec4 backdrop_color = ImVec4(0.25f, .75f, 1.0f, 1.0f);
 
-                        const int circle_count = 12;
-                        static float speed = ImGui::GetTime() * 1.f;
+                        const int circle_count = 25;
+                        static float speed = ImGui::GetTime() * 10.f;
 
-                        ImGuiKnobs::Knob("IndicatorSpeedKnob", &speed, 0.f, 2.f, .05f);
+                        ImGuiKnobs::Knob("IndicatorSpeedKnob", &speed, 0.f, 10.f, .05f);
                         ImGui::SameLine();
                         ImGui::LoadingIndicatorCircle("##LoadingCirclesIndicator", indicator_radius,
                             main_color, backdrop_color,
@@ -630,7 +645,7 @@ namespace QwerkE {
 
                     if (Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
                     {
-                        int bp = 0;
+                        int bp = 0; // #TODO Refactor Input::
                     }
 
                     if (false)
@@ -648,7 +663,7 @@ namespace QwerkE {
                             ifd::FileDialog::Instance().Save("ShaderSaveDialog", "Save a shader", "*.sprj {.sprj}");
                         ImGui::End();
 
-                        // file dialogs
+                        // File dialogs
                         if (ifd::FileDialog::Instance().IsDone("ShaderOpenDialog")) {
                             if (ifd::FileDialog::Instance().HasResult()) {
                                 const std::vector<std::filesystem::path>& res = ifd::FileDialog::Instance().GetResults();
@@ -708,7 +723,7 @@ namespace QwerkE {
                         ImGui::End();
                     }
 
-                    if (true)
+                    if (false)
                     {
                         // ImGui::SameLine();
                         // ImGui::PushID(18);
@@ -778,7 +793,7 @@ namespace QwerkE {
                 ImGui::SameLine();
                 if (ImGui::Button("Loading"))
                 {
-                    ImGui::InsertNotification({ ImGuiToastType_Loading, 3000, "Loading asset: Dummy.txt!" });
+                    ImGui::InsertNotification({ ImGuiToastType_Loading, 3000, "Texture: Dummy.txt" });
                 }
 
                 ImGui::SameLine();
@@ -871,12 +886,18 @@ namespace QwerkE {
             s_EditorStateFlags = (EditorStateFlags)(s_EditorStateFlags ^ flags);
         }
 
+        void RequestRestart()
+        {
+            s_ReloadRequested = true;
+            Window::RequestClose();
+        }
+
         bool ShowingEditorUI()
         {
             return s_ShowingEditorUI;
         }
 
-        void OpenEditorWindow(u32 enumToInt)
+        void NewEditorWindow(u32 enumToInt)
         {
             EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(enumToInt);
 
@@ -903,6 +924,11 @@ namespace QwerkE {
             }
         }
 
+        void FocusEditorWindow(const GUID& guid)
+        {
+            // ImGui::FocusWindow();
+        }
+
         void CloseEditorWindow(const GUID& guid)
         {
             if (s_EditorWindows.find(guid) != s_EditorWindows.end())
@@ -913,6 +939,11 @@ namespace QwerkE {
             {
                 LOG_WARN("{0} Could not close editor window with GUID {1}", __FUNCTION__, guid);
             }
+        }
+
+        const std::unordered_map<GUID, EditorWindow*>& GetOpenWindows()
+        {
+            return s_EditorWindows;
         }
 
         void OnEntitySelected(EntityHandle& entity)
@@ -955,7 +986,7 @@ namespace QwerkE {
 
             if (missingMenuBarWindow)
             {
-                OpenEditorWindow(EditorWindowTypes::MenuBar);
+                NewEditorWindow(EditorWindowTypes::MenuBar);
             }
 
             // #TODO Move to Settings::Initialize()?
@@ -985,8 +1016,133 @@ namespace QwerkE {
                 local_Stop();
             }
 
+            if (!s_ShowingWindowStackPanel)
+            {
+                if (Input::FrameKeyAction(eKeys::eKeys_Tab, eKeyState::eKeyState_Press) &&
+                    Input::IsKeyDown(eKeys::eKeys_LCTRL))
+                {
+                    s_ShowingWindowStackPanel = true;
+                }
+            }
+            else if (s_ShowingWindowStackPanel = Input::IsKeyDown(eKeys::eKeys_LCTRL))
+            {
+                // #TODO Look into newer Tables API
+                // if (ImGui::BeginTable("Window Stacks Table", 2, ImGuiTableFlags_None))
+                // {
+                //     ImGui::TableSetupColumn("Window Stack", ImGuiTableColumnFlags_None);
+                //     ImGui::TableSetupColumn("Open Windows", ImGuiTableColumnFlags_None);
+                //     ImGui::TableHeadersRow();
+                //
+                //     ImGui::TableSetColumnIndex(0);
+                //     for (const auto& guidWindowPtrPairs : s_EditorWindows)
+                //     {
+                //         ImGui::TableNextRow();
+                //         if (!s_WindowStackPanelLastSelected)
+                //         {
+                //             s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
+                //         }
+                //
+                //         if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
+                //         {
+                //             bool selected = false;
+                //             if (ImGui::Selectable((guidWindowPtrPairs.second->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, 25.f)))
+                //             {
+                //                 s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
+                //             }
+                //         }
+                //     }
+                //
+                //     ImGui::TableSetColumnIndex(1);
+                //     for (const auto& guidWindowPtrPairs : s_EditorWindows)
+                //     {
+                //         ImGui::TableNextRow();
+                //         if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
+                //         {
+                //             if (ImGui::ButtonEx((guidWindowPtrPairs.second->Name() + "##Button").data(), ImVec2(ImGui::GetContentRegionAvail().x, 25.f), ImGuiButtonFlags_NoNavFocus | ImGuiButtonFlags_NoHoveredOnFocus))
+                //             {
+                //                 guidWindowPtrPairs.second->Focus();
+                //                 s_ShowingWindowStackPanel = false;
+                //             }
+                //         }
+                //     }
+                //
+                //     ImGui::EndTable();
+                // }
+
+                const vec2f& size = Window::GetSize();
+                ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
+
+                bool isOpen = true;
+                if (!ImGui::Begin("Editor Window Stack Panel", &isOpen,
+                    ImGuiWindowFlags_NoCollapse |
+                    ImGuiWindowFlags_NoDocking |
+                    ImGuiWindowFlags_NoDecoration |
+                    ImGuiWindowFlags_NoMove |
+                    ImGuiWindowFlags_NoTitleBar |
+                    ImGuiWindowFlags_AlwaysAutoResize |
+                    (s_EditorWindows.size() > 25 ? ImGuiWindowFlags_AlwaysVerticalScrollbar : 0)
+                ))
+                {
+                    ImGui::End();
+                }
+
+                float spacing = ImGui::GetWindowWidth() / 4 - (strlen("Windows Stacks") / 2 * ImGui::g_pixelsPerCharacter);
+                ImGui::SameLine(0.f, spacing);
+                ImGui::TextUnformatted("Windows Stack");
+
+                spacing = ImGui::GetWindowWidth() / 2 - (strlen("Open Windows") / 2 * ImGui::g_pixelsPerCharacter);
+                ImGui::SameLine(ImGui::GetWindowWidth() - spacing * 1.1f, 0);
+                ImGui::TextUnformatted("Open Windows");
+
+                ImGui::Columns(2, "Windows Stack##Columns");
+                ImGui::Separator(); // "Windows Stack"
+                for (const auto& guidWindowPtrPairs : s_EditorWindows)
+                {
+                    if (!s_WindowStackPanelLastSelected)
+                    {
+                        s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
+                    }
+
+                    if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
+                    {
+                        bool selected = false;
+                        if (ImGui::Selectable((guidWindowPtrPairs.second->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, 25.f)))
+                        {
+                            s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
+                        }
+                    }
+                }
+
+                ImGui::NextColumn(); // "Open Windows"
+                for (const auto& guidWindowPtrPairs : s_EditorWindows)
+                {
+                    if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
+                    {
+                        if (ImGui::ButtonEx((guidWindowPtrPairs.second->Name() + "##Button").data(), ImVec2(ImGui::GetContentRegionAvail().x, 25.f), ImGuiButtonFlags_NoNavFocus | ImGuiButtonFlags_NoHoveredOnFocus))
+                        {
+                            guidWindowPtrPairs.second->Focus();
+                            s_ShowingWindowStackPanel = false;
+                        }
+                    }
+                }
+                ImGui::End();
+            }
+            else // Changed since last frame (CTRL released this frame)
+            {
+                if (s_WindowStackPanelLastSelected)
+                {
+                    s_WindowStackPanelLastSelected->Focus();
+                }
+            }
+
+            if (Input::FrameKeyAction(eKeys::eKeys_R, eKeyState::eKeyState_Press) &&
+                Input::IsKeyDown(eKeys::eKeys_LCTRL))
+            {
+                RequestRestart();
+            }
+
             if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press) &&
-                (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
+                Input::IsKeyDown(eKeys::eKeys_LCTRL))
             {
                 s_ShowingEditorUI = !s_ShowingEditorUI;
             }

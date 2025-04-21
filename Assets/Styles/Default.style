@@ -54,7 +54,7 @@
 		"TabBorderSize":	0,
 		"TabMinWidthForCloseButton":	0,
 		"TabBarBorderSize":	1,
-		"TableAngledHeadersAngle":	0.61086523532867432,
+		"TableAngledHeadersAngle":	0.610865294933319,
 		"ColorButtonPosition":	1,
 		"ButtonTextAlign":	{
 			"x":	0.5,
@@ -81,7 +81,7 @@
 			"x":	3,
 			"y":	3
 		},
-		"DockingSeparatorSize":	2,
+		"DockingSeparatorSize":	1,
 		"MouseCursorScale":	1,
 		"AntiAliasedLines":	true,
 		"AntiAliasedLinesUseTex":	true,
@@ -222,15 +222,15 @@
 				"w":	0.54901963472366333
 			},
 			"ImVec4":	{
-				"x":	0.501960813999176,
-				"y":	0.30196079611778259,
-				"z":	1,
+				"x":	0.42292532324790955,
+				"y":	0.2499956339597702,
+				"z":	0.853556513786316,
 				"w":	0.54901963472366333
 			},
 			"ImVec4":	{
-				"x":	0.501960813999176,
-				"y":	0.30196079611778259,
-				"z":	1,
+				"x":	0.574228584766388,
+				"y":	0.40661054849624634,
+				"z":	0.991631805896759,
 				"w":	0.54901963472366333
 			},
 			"ImVec4":	{

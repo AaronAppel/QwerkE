@@ -328,6 +328,11 @@ namespace QwerkE {
                 ImGui::EndDragDropTarget();
             }
 
+            if (ImGui::IsItemClicked())
+            {
+                int bp = 0;
+            }
+
 #endif // #if _QDEARIMGUI
             return valueChanged;
         }

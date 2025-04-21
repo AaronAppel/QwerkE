@@ -8,8 +8,6 @@
 
 namespace ImGui
 {
-	constexpr float g_pixelsPerCharacter = 6.f; // #TODO Consider a Constants namespace or organization
-
 	// From: https://github.com/ocornut/imgui/issues/434
 	// Return >= 0 on mouse release
 	// Optional int* p_selected display and update a currently selected item
@@ -138,32 +136,30 @@ namespace ImGui
 
 	bool SpinnerInt(const char* label, int* v, int step, int step_fast, ImGuiInputTextFlags flags)
 	{
-		const bool result = SpinInt("SpinInt", v);
+		const bool result = SpinInt("##SpinInt", v, step, step_fast, flags); // #TODO Generate unique label/ID
 		if (IsItemHovered())
 		{
-			*v += GetIO().MouseWheel;
+			*v += GetIO().MouseWheel * step;
 		}
 		return result;
 	}
 
 	bool SpinnerFloat(const char* label, float* v, float step, float step_fast, const char* format, ImGuiInputTextFlags flags)
 	{
-		const bool result = SpinFloat("SpinFloat", v);
+		const bool result = SpinFloat("##SpinFloat", v, step, step_fast, format, flags); // #TODO Generate unique label/ID
 		if (IsItemHovered())
 		{
-			constexpr float stepSize = 0.25;
-			*v += GetIO().MouseWheel * stepSize;
+			*v += GetIO().MouseWheel * step;
 		}
 		return result;
 	}
 
 	bool SpinnerDouble(const char* label, double* v, double step, double step_fast, const char* format, ImGuiInputTextFlags flags)
 	{
-		const bool result = SpinDouble("SpinDouble", v);
+		const bool result = SpinDouble("##SpinDouble", v, step, step_fast, format, flags); // #TODO Generate unique label/ID
 		if (IsItemHovered())
 		{
-			constexpr double stepSize = 0.25;
-			*v += GetIO().MouseWheel * stepSize;
+			*v += GetIO().MouseWheel * step;
 		}
 		return result;
 	}
@@ -320,7 +316,7 @@ namespace ImGui
 		const float padding = ImGui::GetStyle().FramePadding.x;
 		const float lineHeight = ImGui::GetFontSize() + padding * 2.0f;
 		const float contentWidth = lineHeight + (numberOfChars * g_pixelsPerCharacter * horizontalScaling);
-		const float offset = (ImGui::GetWindowWidth() / 2.f) - contentWidth;
+		const float offset = (ImGui::GetWindowWidth() / 2.f) - contentWidth; // #TODO Try GetContentRegionAvail().x
 		ImGui::SameLine(offset);
 	}
 

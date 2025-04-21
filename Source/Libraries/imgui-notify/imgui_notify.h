@@ -299,6 +299,7 @@ namespace ImGui
 			//PushStyleColor(ImGuiCol_Text, text_color);
 			SetNextWindowBgAlpha(opacity);
 			SetNextWindowPos(ImVec2(vp_size.x - NOTIFY_PADDING_X, vp_size.y - NOTIFY_PADDING_Y - height), ImGuiCond_Always, ImVec2(1.0f, 1.0f));
+			// SetNextWindowFocus(); // #TODO Render over other windows and docket context window
 			Begin(window_name, NULL, NOTIFY_TOAST_FLAGS);
 
 			// Here we render the toast content
