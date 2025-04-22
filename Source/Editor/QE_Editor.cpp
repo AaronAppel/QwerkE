@@ -3,7 +3,7 @@
 #include <map>      // For std::map<std::string, const char*> pairs; and EditorWindows collection
 #include <string>   // For std::map<std::string, const char*> pairs;
 #include <typeinfo> // For typeid()
-#include <vector>   // For s_EditorWindowsQueuedForDelete
+#include <vector>   // For s_EditorWindows
 
 #ifdef _QBGFX
 #include <bgfx/bgfx.h>
@@ -185,13 +185,12 @@ namespace QwerkE {
         // and it can manage the stack of recently selected windows.
         static bool s_ShowingWindowStackPanel = false;
         static EditorWindow* s_WindowStackPanelLastSelected = nullptr;
-        static std::vector<EditorWindow*> s_FocusedWindowsStack = std::vector<EditorWindow*>(); // #TODO Serialize list for next run. Maybe drop map for this vector
-
-        static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid); // #NOTE Draw order dependency with other EditorWindows
 
         // #TODO Editor overlays(notifications), pop ups(cycle windows, load/save project), prompts(save unsaved change before quitting/closing scene/window)
-        static std::unordered_map<GUID, EditorWindow*> s_EditorWindows; // #TODO Deprecate for focused vector stack
-        static std::vector<EditorWindow*> s_EditorWindowsQueuedForDelete;
+        // #TODO Replace with ring buffer or better container to avoid "bubbling"/swapping all elements
+        static std::vector<EditorWindow*> s_FocusedWindowsStack = std::vector<EditorWindow*>();
+
+        static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid); // #NOTE Draw order dependency with other EditorWindows
 
         constexpr char* s_EditorWindowDataFileName = "EditorWindowData.qdata";
 
@@ -908,12 +907,12 @@ namespace QwerkE {
                 return;
             }
 
-            for (auto& pair : s_EditorWindows)
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                if (pair.second->WindowFlags() & EditorWindowFlags::Singleton &&
-                    pair.second->Type() == enumToInt)
+                if (s_FocusedWindowsStack[i]->WindowFlags() & EditorWindowFlags::Singleton &&
+                    s_FocusedWindowsStack[i]->Type() == enumToInt)
                 {
-                    pair.second->ToggleHidden();
+                    s_FocusedWindowsStack[i]->ToggleHidden();
                     // #TODO Set editor UI state to dirty
                     return;
                 }
@@ -921,30 +920,37 @@ namespace QwerkE {
 
             if (EditorWindow* newWindow = NewEditorWindowByType(EditorWindowsList{}, editorWindowType))
             {
-                s_EditorWindows[newWindow->Guid()] = newWindow;
+                s_FocusedWindowsStack.insert(s_FocusedWindowsStack.begin(), newWindow);
+                OnEditorWindowFocused(newWindow);
             }
-        }
-
-        void FocusEditorWindow(const GUID& guid)
-        {
-            // ImGui::FocusWindow();
         }
 
         void CloseEditorWindow(const GUID& guid)
         {
-            if (s_EditorWindows.find(guid) != s_EditorWindows.end())
+            bool closed = false;
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                s_EditorWindowsQueuedForDelete.push_back(s_EditorWindows[guid]);
+                if (guid == s_FocusedWindowsStack[i]->Guid())
+                {
+                    if (EditorWindowTypes::Console == (s8)s_FocusedWindowsStack[i]->Type() ||
+                        EditorWindowTypes::MenuBar == (s8)s_FocusedWindowsStack[i]->Type())
+                    {
+                        // #TODO Handle deleting console window properly
+                        // #TODO Decide what windows can be closed, or just hidden (menu bar, docking, etc)
+                        return;
+                    }
+                    delete s_FocusedWindowsStack[i];
+                    s_FocusedWindowsStack.erase(s_FocusedWindowsStack.begin() + i);
+                    return;
+                }
             }
-            else
-            {
-                LOG_WARN("{0} Could not close editor window with GUID {1}", __FUNCTION__, guid);
-            }
+
+            LOG_WARN("{0} Could not close editor window with GUID {1}", __FUNCTION__, guid);
         }
 
-        const std::unordered_map<GUID, EditorWindow*>& GetOpenWindows()
+        const std::vector<EditorWindow*>& GetOpenWindows()
         {
-            return s_EditorWindows;
+            return s_FocusedWindowsStack;
         }
 
         void OnEditorWindowFocused(const EditorWindow* const focusedWindow)
@@ -979,17 +985,17 @@ namespace QwerkE {
 
         void OnEntitySelected(EntityHandle& entity)
         {
-            for (auto& it : s_EditorWindows)
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                it.second->OnEntitySelected(entity);
+                s_FocusedWindowsStack[i]->OnEntitySelected(entity);
             }
         }
 
         void OnSceneReloaded()
         {
-            for (auto& it : s_EditorWindows)
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                it.second->OnSceneReload();
+                s_FocusedWindowsStack[i]->OnSceneReload();
             }
         }
 
@@ -1002,20 +1008,18 @@ namespace QwerkE {
             const std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
             if (!Files::Exists(windowsDataFilePath.c_str()))
             {
-                Serialize::ToFile(s_EditorWindows, windowsDataFilePath.c_str());
-                Serialize::ToFile(s_FocusedWindowsStack, Paths::Setting("TestStack.qdata").c_str());
+                Serialize::ToFile(s_FocusedWindowsStack, Paths::Setting(s_EditorWindowDataFileName).c_str());
             }
             s_FocusedWindowsStack.reserve(40);
-            s_EditorWindows.reserve(40);
-            Serialize::FromFile(windowsDataFilePath.c_str(), s_EditorWindows);
-            Serialize::FromFile(Paths::Setting("TestStack.qdata").c_str(), s_FocusedWindowsStack);
+            Serialize::FromFile(Paths::Setting(s_EditorWindowDataFileName).c_str(), s_FocusedWindowsStack);
 
             bool missingMenuBarWindow = true;
-            for (auto& pair : s_EditorWindows)
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                if (EditorWindowTypes::MenuBar == (u32)pair.second->Type())
+                if (EditorWindowTypes::MenuBar == (u32)s_FocusedWindowsStack[i]->Type())
                 {
                     missingMenuBarWindow = false;
+                    break;
                 }
             }
 
@@ -1034,16 +1038,13 @@ namespace QwerkE {
             Projects::Shutdown();
             // #TODO Save loaded data information
             // s_EditorLastOpenedData.LastUserSettingsFileName = Settings::GetUserSettings();
-            Serialize::ToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
-            Serialize::ToFile(s_FocusedWindowsStack, Paths::Setting("TestStack.qdata").c_str());
+            Serialize::ToFile(s_FocusedWindowsStack, Paths::Setting(s_EditorWindowDataFileName).c_str()); // #TODO s_EditorWindowDataFileName everywhere
 
-            auto it = s_EditorWindows.begin();
-            while (it != s_EditorWindows.end())
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                it = s_EditorWindows.erase(it);
+                delete s_FocusedWindowsStack[i];
             }
             s_FocusedWindowsStack.clear();
-            s_EditorWindows.clear();
 		}
 
         void local_Update()
@@ -1117,21 +1118,16 @@ namespace QwerkE {
                     ImGuiWindowFlags_NoMove |
                     ImGuiWindowFlags_NoTitleBar |
                     ImGuiWindowFlags_AlwaysAutoResize |
-                    (s_EditorWindows.size() > 25 ? ImGuiWindowFlags_AlwaysVerticalScrollbar : 0)
+                    (s_FocusedWindowsStack.size() > 25 ? ImGuiWindowFlags_AlwaysVerticalScrollbar : 0)
                 ))
                 {
                     ImGui::End();
                 }
 
-                float spacing = ImGui::GetWindowWidth() / 4 - (strlen("Windows Stacks") / 2 * ImGui::g_pixelsPerCharacter);
+                float spacing = ImGui::GetWindowWidth() / 2 - (strlen("Windows Stacks") / 2 * ImGui::g_pixelsPerCharacter);
                 ImGui::SameLine(0.f, spacing);
                 ImGui::TextUnformatted("Windows Stack");
 
-                spacing = ImGui::GetWindowWidth() / 2 - (strlen("Open Windows") / 2 * ImGui::g_pixelsPerCharacter);
-                ImGui::SameLine(ImGui::GetWindowWidth() - spacing * 1.1f, 0);
-                ImGui::TextUnformatted("Open Windows");
-
-                ImGui::Columns(2, "Windows Stack##Columns");
                 ImGui::Separator(); // "Windows Stack"
                 for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
                 {
@@ -1143,22 +1139,19 @@ namespace QwerkE {
                     if (s_FocusedWindowsStack[i]->WindowFlags() ^ EditorWindowFlags::Hidden)
                     {
                         bool selected = false;
+
+                        // if (ImGui::ButtonEx((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), ImVec2(ImGui::GetContentRegionAvail().x, 25.f), imguibutton))
+                        // {
+                        //     s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                        // }
                         if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, 25.f)))
                         {
                             s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
                         }
-                    }
-                }
-
-                ImGui::NextColumn(); // "Open Windows"
-                for (const auto& guidWindowPtrPairs : s_EditorWindows)
-                {
-                    if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
-                    {
-                        if (ImGui::ButtonEx((guidWindowPtrPairs.second->Name() + "##Button").data(), ImVec2(ImGui::GetContentRegionAvail().x, 25.f), ImGuiButtonFlags_NoNavFocus | ImGuiButtonFlags_NoHoveredOnFocus))
+                        else if (ImGui::IsItemClicked())
                         {
-                            guidWindowPtrPairs.second->Focus();
-                            s_ShowingWindowStackPanel = false;
+                            s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                            s_WindowStackPanelLastSelected->Focus();
                         }
                     }
                 }
@@ -1197,23 +1190,10 @@ namespace QwerkE {
                 }
             }
 
-            auto it = s_EditorWindows.begin();
-            while (it != s_EditorWindows.end())
-            {
-                // it->second->Draw();
-                ++it;
-            }
-
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
                 s_FocusedWindowsStack[i]->Draw();
             }
-
-            for (size_t i = 0; i < s_EditorWindowsQueuedForDelete.size(); i++)
-            {
-                s_EditorWindows.erase(s_EditorWindowsQueuedForDelete[i]->Guid());
-            }
-            s_EditorWindowsQueuedForDelete.clear();
         }
 
         void local_EndFrame()

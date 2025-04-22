@@ -18,11 +18,9 @@
 // #TODO See if PCH files can be used to reduce compiler load and heap requirements to generate type ids again
 #if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
 
-// Enums
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowFlags)
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowTypes)
 
-// Pointers
 MIRROR_TYPE_ID(std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
 MIRROR_TYPE_ID(std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
 MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
@@ -54,15 +52,14 @@ MIRROR_TYPE_ID(QwerkE::Editor::EditorWindow*)
 
 #else
 
-// Enums                                      #NOTE Editor Ids start at +500
+// #NOTE Editor Ids start at +500
 // MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 501,)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 502, QwerkE::Editor::EditorWindowFlags)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 503, QwerkE::Editor::EditorWindowTypes)
 
-// Pointers
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 504, std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 505, std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 506, std::unordered_map<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
+/// MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 504, )
+/// MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 505, )
+/// MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 506, )
 
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 507, QwerkE::ProjectsData)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 508, QwerkE::UserSettings)

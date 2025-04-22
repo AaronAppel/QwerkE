@@ -9,15 +9,9 @@
 // #TESTING
 #include "QE_Editor.h"
 
-// Enums
 MIRROR_TYPE(QwerkE::Editor::EditorWindowFlags)
 MIRROR_CLASS(QwerkE::Editor::EditorWindowTypes)
 MIRROR_CLASS_END
-
-// Pointers
-MIRROR_TYPE(std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
-MIRROR_TYPE(std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
-MIRROR_TYPE(std::unordered_map<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
 
 template <typename SuperClass, typename... SubClass>
 static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)

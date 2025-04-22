@@ -238,11 +238,11 @@ namespace QwerkE {
             if (ImGui::BeginMenu("Open"))
             {
                 const auto& windows = Editor::GetOpenWindows();
-                for (const auto& guidWindowPtrPair : windows)
+                for (size_t i = 0; i < windows.size(); i++)
                 {
-                    if (ImGui::MenuItem(ENUM_TO_STR(guidWindowPtrPair.second->Type())))
+                    if (ImGui::MenuItem(ENUM_TO_STR(windows[i]->Type())))
                     {
-                        guidWindowPtrPair.second->Focus();
+                        windows[i]->Focus();
                         break;
                     }
                 }
@@ -275,6 +275,31 @@ namespace QwerkE {
                     EditorWindowTypes::StylePicker
                 }
             );
+            ImGui::Separator();
+
+            if (ImGui::Button("Close All"))
+            {
+                ImGui::OpenPopup("CloseAllPrompt");
+            }
+            if (ImGui::BeginPopup("CloseAllPrompt"))
+            {
+                ImGui::Text("Are you sure?");
+                if (ImGui::Button("Yes"))
+                {
+                    const auto& windows = Editor::GetOpenWindows();
+                    for (int i = windows.size() - 1; i >= 0; i--)
+                    {
+                        Editor::CloseEditorWindow(windows[i]->Guid());
+                    }
+                    ImGui::CloseCurrentPopup();
+                }
+                if (ImGui::Button("Cancel"))
+                {
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::EndPopup();
+            }
+
 
             ImGui::EndMenu();
         }
