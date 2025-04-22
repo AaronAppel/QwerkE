@@ -60,15 +60,6 @@
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
 
-#ifdef _QDEARIMGUI
-
-// Spin value
-int spinInt = 0;
-float spinFloat = 0.f;
-double spinDouble = 0;
-
-#endif
-
 static void imgui_toggle_example(); // Toggles
 static void imgui_toggle_simple();
 static void imgui_toggle_custom();
@@ -277,6 +268,10 @@ namespace QwerkE {
 
             Time::WriteAppStartTime();
 
+            int spinInt = 0;
+            float spinFloat = 0.f;
+            double spinDouble = 0;
+
 			while (local_StillRunning())
 			{
 				if (Time::ShouldProcessNextFrame())
@@ -296,14 +291,14 @@ namespace QwerkE {
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    if (false)
+                    if (true)
                     {
                         if (ImGui::Begin("Spin Values"))
                         {
                             ImGui::PushItemWidth(150.f);
-                            ImGui::SpinnerInt("Spin Int", &spinInt);
-                            ImGui::SpinnerFloat("Spin Float", &spinFloat);
-                            ImGui::SpinnerDouble("Spin Double", &spinDouble);
+                            ImGui::ScrollerInt("Spin Int", &spinInt);
+                            ImGui::ScrollerFloat("Spin Float", &spinFloat);
+                            ImGui::ScrollerDouble("Spin Double", &spinDouble);
                             ImGui::PopItemWidth();
                         }
                         ImGui::End();

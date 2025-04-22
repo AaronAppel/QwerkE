@@ -3,6 +3,7 @@
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
 #include "Libraries/imgui_toggle/imgui_toggle.h"
+#include "Libraries/imgui/imgui_extended.h"
 #endif
 
 #ifdef _QENUM
@@ -86,17 +87,17 @@ namespace QwerkE {
 					ImGui::SameLine();
 					ImGui::Text("Width");
 
-					ImGui::SpinnerFloat("##WidthMinimum", &m_WidthMinimum, 10, 100);
+					ImGui::ScrollerFloat("##WidthMinimum", &m_WidthMinimum, 10, 100);
 					ImGui::SameLine();
 					ImGui::Text("Min");
 					ImGui::SameLine();
-					ImGui::SpinnerFloat("##HeightMinimum", &m_HeightMinimum, 10, 100);
+					ImGui::ScrollerFloat("##HeightMinimum", &m_HeightMinimum, 10, 100);
 
-					ImGui::SpinnerFloat("##WidthMaximum", &m_WidthMaximum, 10, 100);
+					ImGui::ScrollerFloat("##WidthMaximum", &m_WidthMaximum, 10, 100);
 					ImGui::SameLine();
 					ImGui::Text("Max");
 					ImGui::SameLine();
-					ImGui::SpinnerFloat("##HeightMaximum", &m_HeightMaximum, 10, 100);
+					ImGui::ScrollerFloat("##HeightMaximum", &m_HeightMaximum, 10, 100);
 
 					ImGui::Toggle("##LockWidth", &m_LockWidth, ImGuiToggleFlags_Animated | ImGuiToggleFlags_A11y);
 					ImGui::SameLine();
@@ -104,17 +105,17 @@ namespace QwerkE {
 					ImGui::SameLine();
 					ImGui::Toggle("##LockHeight", &m_LockHeight, ImGuiToggleFlags_Animated | ImGuiToggleFlags_A11y);
 
-					ImGui::SpinnerInt("##RatioWidth", &m_RatioWidth, 1, 10);
+					ImGui::ScrollerInt("##RatioWidth", &m_RatioWidth, 1, 10);
 					ImGui::SameLine();
 					ImGui::Text("Ratio");
 					ImGui::SameLine();
-					ImGui::SpinnerInt("##RatioHeight", &m_RatioHeight, 1, 10);
+					ImGui::ScrollerInt("##RatioHeight", &m_RatioHeight, 1, 10);
 
-					ImGui::SpinnerInt("##IncrementWidth", &m_IncrementHeight, 10, 100);
+					ImGui::ScrollerInt("##IncrementWidth", &m_IncrementHeight, 10, 100);
 					ImGui::SameLine();
 					ImGui::Text("Step");
 					ImGui::SameLine();
-					ImGui::SpinnerInt("##IncrementHeight", &m_IncrementWidth, 10, 100);
+					ImGui::ScrollerInt("##IncrementHeight", &m_IncrementWidth, 10, 100);
 
 					ImGui::PopItemWidth();
 

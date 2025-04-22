@@ -16,6 +16,7 @@
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
+    <ClInclude Include="imgui_extended.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QwerkE_imgui.cpp" />
@@ -27,5 +28,6 @@
     <ClCompile Include="imgui_draw.cpp" />
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
+    <ClCompile Include="imgui_extended.cpp" />
   </ItemGroup>
 </Project>

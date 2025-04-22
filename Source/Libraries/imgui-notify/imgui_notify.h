@@ -11,6 +11,8 @@
 #include "font_awesome_5.h"
 #include "fa_solid_900.h"
 
+#include "imgui_extended.h" // For ImGui::Spinner
+
 #define NOTIFY_MAX_MSG_LENGTH			4096		// Max message content length
 #define NOTIFY_PADDING_X				20.f		// Bottom-left X padding
 #define NOTIFY_PADDING_Y				20.f		// Bottom-left Y padding
@@ -312,7 +314,7 @@ namespace ImGui
 				{
 					const ImU32 col = ImGui::GetColorU32(ImGuiCol_ButtonHovered);
 					const float radius = ImGui::GetFontSize() / 2;
-					ImGui::Spinner("##spinner", radius, 3, col); // #NOTE Dependency on QwerkE_imgui.h
+					ImGui::Spinner("##spinner", radius, 3, col); // #NOTE Dependency on imgui_extended.h
 				}
 				// If an icon is set
 				else if (!NOTIFY_NULL_OR_EMPTY(icon))
