@@ -152,7 +152,8 @@ namespace QwerkE {
 			ShaderEditor,
 			PrefabScene,
 			Prompt,
-			Console
+			Console,
+			HexEditor
 			// #NOTE Serialized, so don't change ordering
 		)
 

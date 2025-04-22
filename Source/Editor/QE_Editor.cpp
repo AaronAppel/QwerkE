@@ -21,7 +21,6 @@
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
-#include "Libraries/imgui_hex_editor/imgui_hex.h"
 #include "Libraries/ImCoolBar/ImCoolBar.h"
 #include "Libraries/ImFileDialog/ImFileDialog.h"
 #include "Libraries/imgui_toggle/imgui_toggle.h"
@@ -208,64 +207,6 @@ namespace QwerkE {
 
             local_Initialize();
 
-            // Hex Editor
-            static ImGuiHexEditorState hex_state;
-            ImColor user_highlight_color;
-
-            const bool hexEditorEnabled = false; // #TODO Fix null pointer when imgui de-allocates
-            if (hexEditorEnabled)
-            {
-                hex_state.ReadCallback = [](ImGuiHexEditorState* state, int offset, void* buf, int size) -> int {
-                    SIZE_T read;
-                    ReadProcessMemory(GetCurrentProcess(), (char*)state->Bytes + offset, buf, size, &read);
-                    return read;
-                    };
-
-                hex_state.WriteCallback = [](ImGuiHexEditorState* state, int offset, void* buf, int size) -> int {
-                    SIZE_T write;
-                    WriteProcessMemory(GetCurrentProcess(), (char*)state->Bytes + offset, buf, size, &write);
-                    return write;
-                    };
-
-                hex_state.GetAddressNameCallback = [](ImGuiHexEditorState* state, int offset, char* buf, int size) -> bool
-                    {
-                        if (offset >= 0 && offset < sizeof(ImGuiIO))
-                        {
-                            snprintf(buf, size, "io+%0.*zX", 4, offset);
-                            return true;
-                        }
-
-                        return false;
-                    };
-
-                hex_state.SingleHighlightCallback = [](ImGuiHexEditorState* state, int offset, ImColor* color, ImColor* text_color, ImColor* border_color) -> ImGuiHexEditorHighlightFlags
-                    {
-                        if (offset >= 100 && offset <= 150)
-                        {
-                            *color = ImColor(); // Could not pass user_highlight_color into lambda by reference
-                            return ImGuiHexEditorHighlightFlags_Apply | ImGuiHexEditorHighlightFlags_TextAutomaticContrast | ImGuiHexEditorHighlightFlags_Ascii
-                                | ImGuiHexEditorHighlightFlags_BorderAutomaticContrast;
-                        }
-
-                        return ImGuiHexEditorHighlightFlags_None;
-                    };
-
-                hex_state.HighlightRanges.clear();
-
-                {
-                    ImGuiHexEditorHighlightRange range;
-                    range.From = 200;
-                    range.To = 250;
-                    range.Color = ImColor(user_highlight_color);
-                    range.Flags = ImGuiHexEditorHighlightFlags_TextAutomaticContrast | ImGuiHexEditorHighlightFlags_FullSized
-                        | ImGuiHexEditorHighlightFlags_Ascii | ImGuiHexEditorHighlightFlags_Border | ImGuiHexEditorHighlightFlags_BorderAutomaticContrast;
-                    hex_state.HighlightRanges.push_back(range);
-                }
-
-                hex_state.Bytes = (void*)&ImGui::GetIO();
-                hex_state.MaxBytes = sizeof(ImGuiIO) + 0x1000;
-            }
-
             Time::WriteAppStartTime();
 
             int spinInt = 0;
@@ -300,16 +241,6 @@ namespace QwerkE {
                             ImGui::ScrollerFloat("Spin Float", &spinFloat);
                             ImGui::ScrollerDouble("Spin Double", &spinDouble);
                             ImGui::PopItemWidth();
-                        }
-                        ImGui::End();
-                    }
-
-                    if (hexEditorEnabled)
-                    {
-                        if (ImGui::Begin("Hex Editor##Window"))
-                        {
-                            ImGui::BeginHexEditor("Hex Editor", &hex_state);
-                            ImGui::EndHexEditor();
                         }
                         ImGui::End();
                     }

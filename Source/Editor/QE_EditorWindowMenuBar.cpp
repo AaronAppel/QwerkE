@@ -261,7 +261,8 @@ namespace QwerkE {
                     EditorWindowTypes::EntityInspector,
                     EditorWindowTypes::MaterialEditor,
                     EditorWindowTypes::NodeEditor,
-                    EditorWindowTypes::ShaderEditor
+                    EditorWindowTypes::ShaderEditor,
+                    EditorWindowTypes::HexEditor
                 }
             );
             local_DrawWindowsList("Other", {
