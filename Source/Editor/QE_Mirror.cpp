@@ -164,3 +164,5 @@ MIRROR_CLASS(QwerkE::ProjectsData)
 MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
 MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
 MIRROR_CLASS_END
+
+MIRROR_TYPE(std::vector<QwerkE::Editor::EditorWindow*>)

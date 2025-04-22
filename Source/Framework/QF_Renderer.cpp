@@ -322,6 +322,7 @@ namespace QwerkE {
 			return eOperationResult::Success;
 		}
 
+#if _QDEARIMGUI
 		void StartImGui()
 		{
 			GLFWwindow* window = static_cast<GLFWwindow*>(Window::GetContext());
@@ -350,6 +351,7 @@ namespace QwerkE {
 		{
 			imguiEndFrame();
 		}
+#endif // _QDEARIMGUI
 
 		void EndFrame()
 		{
@@ -400,6 +402,7 @@ namespace QwerkE {
 
 		DebugDrawEncoder& DebugDrawer()
 		{
+			ASSERT(s_DebugDrawer, "Debug Drawer is null!");
 			return *s_DebugDrawer;
 		}
 

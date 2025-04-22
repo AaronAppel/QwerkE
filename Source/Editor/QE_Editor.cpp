@@ -185,11 +185,12 @@ namespace QwerkE {
         // and it can manage the stack of recently selected windows.
         static bool s_ShowingWindowStackPanel = false;
         static EditorWindow* s_WindowStackPanelLastSelected = nullptr;
+        static std::vector<EditorWindow*> s_FocusedWindowsStack = std::vector<EditorWindow*>(); // #TODO Serialize list for next run. Maybe drop map for this vector
 
         static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid); // #NOTE Draw order dependency with other EditorWindows
 
         // #TODO Editor overlays(notifications), pop ups(cycle windows, load/save project), prompts(save unsaved change before quitting/closing scene/window)
-        static std::unordered_map<GUID, EditorWindow*> s_EditorWindows;
+        static std::unordered_map<GUID, EditorWindow*> s_EditorWindows; // #TODO Deprecate for focused vector stack
         static std::vector<EditorWindow*> s_EditorWindowsQueuedForDelete;
 
         constexpr char* s_EditorWindowDataFileName = "EditorWindowData.qdata";
@@ -946,6 +947,36 @@ namespace QwerkE {
             return s_EditorWindows;
         }
 
+        void OnEditorWindowFocused(const EditorWindow* const focusedWindow)
+        {
+            ASSERT(focusedWindow, "Null focusedWindow pointer!");
+
+            s16 index = -1;
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+            {
+                if (focusedWindow == s_FocusedWindowsStack[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            // Update stack
+            if (0 == index)
+            {
+                return;
+            }
+            else if (index >= 0)
+            {
+                for (size_t i = index; i > 0; --i)
+                {
+                    EditorWindow* cache = s_FocusedWindowsStack[i];
+                    s_FocusedWindowsStack[i] = s_FocusedWindowsStack[i - 1];
+                    s_FocusedWindowsStack[i - 1] = cache;
+                }
+            }
+        }
+
         void OnEntitySelected(EntityHandle& entity)
         {
             for (auto& it : s_EditorWindows)
@@ -972,8 +1003,12 @@ namespace QwerkE {
             if (!Files::Exists(windowsDataFilePath.c_str()))
             {
                 Serialize::ToFile(s_EditorWindows, windowsDataFilePath.c_str());
+                Serialize::ToFile(s_FocusedWindowsStack, Paths::Setting("TestStack.qdata").c_str());
             }
+            s_FocusedWindowsStack.reserve(40);
+            s_EditorWindows.reserve(40);
             Serialize::FromFile(windowsDataFilePath.c_str(), s_EditorWindows);
+            Serialize::FromFile(Paths::Setting("TestStack.qdata").c_str(), s_FocusedWindowsStack);
 
             bool missingMenuBarWindow = true;
             for (auto& pair : s_EditorWindows)
@@ -1000,12 +1035,14 @@ namespace QwerkE {
             // #TODO Save loaded data information
             // s_EditorLastOpenedData.LastUserSettingsFileName = Settings::GetUserSettings();
             Serialize::ToFile(s_EditorWindows, Paths::Setting(s_EditorWindowDataFileName).c_str());
+            Serialize::ToFile(s_FocusedWindowsStack, Paths::Setting("TestStack.qdata").c_str());
 
             auto it = s_EditorWindows.begin();
             while (it != s_EditorWindows.end())
             {
                 it = s_EditorWindows.erase(it);
             }
+            s_FocusedWindowsStack.clear();
             s_EditorWindows.clear();
 		}
 
@@ -1096,19 +1133,19 @@ namespace QwerkE {
 
                 ImGui::Columns(2, "Windows Stack##Columns");
                 ImGui::Separator(); // "Windows Stack"
-                for (const auto& guidWindowPtrPairs : s_EditorWindows)
+                for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
                 {
                     if (!s_WindowStackPanelLastSelected)
                     {
-                        s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
+                        s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
                     }
 
-                    if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
+                    if (s_FocusedWindowsStack[i]->WindowFlags() ^ EditorWindowFlags::Hidden)
                     {
                         bool selected = false;
-                        if (ImGui::Selectable((guidWindowPtrPairs.second->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, 25.f)))
+                        if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, 25.f)))
                         {
-                            s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
+                            s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
                         }
                     }
                 }
@@ -1163,8 +1200,13 @@ namespace QwerkE {
             auto it = s_EditorWindows.begin();
             while (it != s_EditorWindows.end())
             {
-                it->second->Draw();
+                // it->second->Draw();
                 ++it;
+            }
+
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+            {
+                s_FocusedWindowsStack[i]->Draw();
             }
 
             for (size_t i = 0; i < s_EditorWindowsQueuedForDelete.size(); i++)
@@ -1178,27 +1220,9 @@ namespace QwerkE {
         {
             if (!Window::IsMinimized())
             {
-                {   // Debug drawer calls
-                    constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-                    bgfx::setState(BGFX_STATE_DEFAULT);
-                    DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-                    debugDrawer.begin(viewIdFbo1, true);
-
-                    constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
-                    constexpr bx::Vec3 pos = { .0f, .0f, .0f };
-
-                    debugDrawer.drawSphere(0.f, 0.f, 0.f, 0.1f, Axis::X);
-                    // debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
-
-                    bx::Plane plane(bx::InitNone);
-                    bx::calcPlane(plane, normal, pos);
-
-                    debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
-
-                    debugDrawer.end();
-                }
-
-                // #TODO Replace draws by moving to EditorWindowSceneView class
+                // #TODO Replace editor draws by moving to EditorWindowSceneView class
+                Debug::DrawSphere(vec3f(.0f, .0f, .0f), 0.1f);
+                Debug::DrawGrid(vec3f(.0f, .0f, .0f), 50);
                 // Framework::RenderView(viewIdFbo1);
             }
             Framework::EndFrame();

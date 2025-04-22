@@ -88,5 +88,6 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 526, QwerkE::Editor::EditorWindowPref
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 527, QwerkE::Editor::EditorWindowPrompt)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 529, QwerkE::Editor::EditorWindow)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 530, QwerkE::Editor::EditorWindow*)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 531, std::vector<QwerkE::Editor::EditorWindow*>)
 
 #endif // DEBUG

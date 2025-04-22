@@ -9,10 +9,14 @@ namespace QwerkE {
 	namespace Renderer {
 
 		eOperationResult Initialize();
+		void Shutdown();
+
+#if _QDEARIMGUI
 		void StartImGui();
 		void EndImGui();
+#endif // _QDEARIMGUI
+
 		void EndFrame();
-		void Shutdown();
 
 		void ToggleDebugStats();
 

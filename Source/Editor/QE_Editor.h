@@ -44,6 +44,7 @@ namespace QwerkE {
 		void CloseEditorWindow(const GUID& guid);
 		const std::unordered_map<GUID, EditorWindow*>& GetOpenWindows();
 
+		void OnEditorWindowFocused(const EditorWindow* const focusedWindow);
 		void OnEntitySelected(EntityHandle& entity);
 		void OnSceneReloaded();
 
