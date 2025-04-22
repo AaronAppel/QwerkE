@@ -11,14 +11,7 @@ namespace QwerkE {
 		class EditorWindowConsole : public EditorWindow
 		{
 		public:
-			EditorWindowConsole(GUID guid) :
-				EditorWindow("Console",
-					EditorWindowTypes::Console,
-					guid,
-					// #TODO Avoid constructing already serialized data
-					// m_WindowFlags)
-					(EditorWindowFlags)(EditorWindowFlags::Headless | EditorWindowFlags::Singleton))
-			{ }
+			EditorWindowConsole(GUID guid);
 
 		private:
 			void DrawInternal() override
@@ -36,6 +29,7 @@ namespace QwerkE {
 			}
 
 			ImGuiConsole m_Console;
+			ImVec4 m_ClearColor = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
 		};
 
 	}

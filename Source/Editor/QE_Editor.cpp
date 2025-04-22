@@ -26,7 +26,6 @@
 #include "Libraries/ImFileDialog/ImFileDialog.h"
 #include "Libraries/imgui_toggle/imgui_toggle.h"
 #include "Libraries/imgui_toggle/imgui_toggle_presets.h"
-#include "Libraries/imgui-console/imgui_console.h"
 #include "Libraries/imgui-knobs/imgui-knobs.h"
 #include "Libraries/imgui-node-editor/imgui_node_editor.h"
 #include "Libraries/imgui-notify/imgui_notify.h"
@@ -68,26 +67,6 @@ int spinInt = 0;
 float spinFloat = 0.f;
 double spinDouble = 0;
 
-// ImGui Console
-csys::ItemLog& operator<<(csys::ItemLog& log, ImVec4& vec)
-{
-    log << "ImVec4: [" << vec.x << ", "
-        << vec.y << ", "
-        << vec.z << ", "
-        << vec.w << "]";
-    return log;
-}
-
-static void imvec4_setter(ImVec4& my_type, std::vector<int> vec)
-{
-    if (vec.size() < 4) return;
-
-    my_type.x = vec[0] / 255.f;
-    my_type.y = vec[1] / 255.f;
-    my_type.z = vec[2] / 255.f;
-    my_type.w = vec[3] / 255.f;
-}
-//
 #endif
 
 static void imgui_toggle_example(); // Toggles
@@ -238,55 +217,6 @@ namespace QwerkE {
 
             local_Initialize();
 
-#ifdef _QDEARIMGUI
-            ///////////////////////////////////////////////////////////////////////////
-            // IMGUI CONSOLE //////////////////////////////////////////////////////////
-            ///////////////////////////////////////////////////////////////////////////
-
-            // Our state
-            ImVec4 clear_color = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
-
-            // Create ImGui Console
-            ImGuiConsole console;
-
-            // Register variables
-            console.System().RegisterVariable("cat", clear_color, imvec4_setter);
-
-            console.System().RegisterVariable("background_colox", clear_color, imvec4_setter);
-            console.System().RegisterVariable("back", clear_color, imvec4_setter);
-            console.System().RegisterVariable("back1234", clear_color, imvec4_setter);
-
-            console.System().RegisterVariable("background_color", clear_color, imvec4_setter);
-            console.System().RegisterVariable("background_color1", clear_color, imvec4_setter);
-            console.System().RegisterVariable("background_color2", clear_color, imvec4_setter);
-            console.System().RegisterVariable("background_color3", clear_color, imvec4_setter);
-            console.System().RegisterVariable("background_color4", clear_color, imvec4_setter);
-            console.System().RegisterVariable("background_color5", clear_color, imvec4_setter);
-
-            // Register scripts
-            const std::string path = "B:/QwerkE/Source/Libraries/imgui-console/console.script";
-            console.System().RegisterScript("test_script", path);
-
-            // Register custom commands
-            console.System().RegisterCommand("random_background_color", "Assigns a random color to the background application",
-                [&clear_color]()
-                {
-                    clear_color.x = (rand() % 256) / 256.f;
-                    clear_color.y = (rand() % 256) / 256.f;
-                    clear_color.z = (rand() % 256) / 256.f;
-                    clear_color.w = (rand() % 256) / 256.f;
-                });
-            console.System().RegisterCommand("reset_background_color", "Reset background color to its original value",
-                [&clear_color, val = clear_color]()
-                {
-                    clear_color = val;
-                });
-
-            // Log example information:
-            console.System().Log(csys::ItemType::INFO) << "Welcome to imgui-console!" << csys::endl;
-
-            ///////////////////////////////////////////////////////////////////////////
-#endif
             // Hex Editor
             static ImGuiHexEditorState hex_state;
             ImColor user_highlight_color;
@@ -356,36 +286,6 @@ namespace QwerkE {
 					Framework::StartFrame();
 
                     Renderer::StartImGui();
-
-#ifdef _QDEARIMGUI
-                    // if (ImGui::Button("COMMAND"))
-                    // {
-                    //     console.System().Log(csys::ItemType::COMMAND) << "COMMAND";
-                    // }
-                    // if (ImGui::Button("LOG"))
-                    // {
-                    //     console.System().Log(csys::ItemType::LOG) << "LOG";
-                    // }
-                    // if (ImGui::Button("WARNING"))
-                    // {
-                    //     console.System().Log(csys::ItemType::WARNING) << "WARNING";
-                    // }
-                    // if (ImGui::Button("SEVERE"))
-                    // {
-                    //     console.System().Log(csys::ItemType::SEVERE) << "SEVERE";
-                    // }
-                    // if (ImGui::Button("INFO"))
-                    // {
-                    //     console.System().Log(csys::ItemType::LOG) << "INFO";
-                    // }
-                    // if (ImGui::Button("NONE"))
-                    // {
-                    //     console.System().Log(csys::ItemType::LOG) << "NONE";
-                    // }
-
-                    // ImGui Console
-                    // console.Draw();
-#endif
 
                     if (s_ShowingEditorUI && temp)
                     {
