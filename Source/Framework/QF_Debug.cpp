@@ -20,49 +20,51 @@ namespace QwerkE {
 
 	namespace Debug {
 
-		void DrawLine(const vec3f a_Start, const vec3f a_End, uint32_t a_Color)
-		{
-			// #TODO Check out from bgfx example solution:
-			// dde.setStipple(true, 1.0f, time * 0.1f);
-			// dde.setSpin(time * 0.3f);
-			// dde.setLod(0);
-			// intersect(&dde, ray, aabb);
-			// dde.setTransform(bunny);
-			// dde.drawFrustum(mtxVp);
-			// dde.push();
-			// dde.pop();
+		// #TODO Check out from bgfx example solution:
+		// dde.setStipple(true, 1.0f, time * 0.1f);
+		// dde.setSpin(time * 0.3f);
+		// dde.setLod(0);
+		// intersect(&dde, ray, aabb);
+		// dde.setTransform(bunny);
+		// dde.drawFrustum(mtxVp);
+		// dde.push();
+		// dde.pop();
 
+		void DrawArc(const uint32_t a_Color = g_White)
+		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
 				return;
-
-			constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded view ID
-			bgfx::setState(BGFX_STATE_DEFAULT); // #TODO Remove?
-
-			DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-			debugDrawer.begin(viewIdFbo1, true);
-
-			const bx::Vec3 start = { a_Start.x, a_Start.y, a_Start.z };
-			const bx::Vec3 end = { a_End.x, a_End.y, a_End.z };
-			debugDrawer.setColor(a_Color);
-			debugDrawer.drawLine(start, end);
-			debugDrawer.end();
 		}
 
-		void DrawSphere(const vec3f a_Position, const float a_Scale, uint32_t a_Color)
+		void DrawAxis(const uint32_t a_Color = g_White)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
+		}
+
+		void DrawCapsule(const uint32_t a_Color = g_White)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
+		}
+
+		void DrawCircle(const uint32_t a_Color = g_White)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
+		}
+
+		void DrawCone(uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
 				return;
 
-			constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded view ID
-			bgfx::setState(BGFX_STATE_DEFAULT); // #TODO Remove?
-
-			DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-			debugDrawer.begin(viewIdFbo1, true);
-			debugDrawer.setColor(a_Color);
-			debugDrawer.drawSphere(a_Position.x, a_Position.y, a_Position.z, a_Scale, Axis::X);
-			debugDrawer.end();
+			// #TODO Implement
 		}
 
 		void DrawCube(const vec3f a_Position, const float a_Size, const bool a_Wireframe, uint32_t a_Color)
@@ -98,6 +100,15 @@ namespace QwerkE {
 			// #TODO Implement
 		}
 
+		void DrawFrustum(const uint32_t a_Color = g_White)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
+
+			// #TODO Implement
+		}
+
 		void DrawGrid(const vec3f a_Position, u16 a_Size, uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
@@ -121,6 +132,32 @@ namespace QwerkE {
 			debugDrawer.end();
 		}
 
+		void DrawLine(const vec3f a_Start, const vec3f a_End, uint32_t a_Color)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
+
+			constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded view ID
+			bgfx::setState(BGFX_STATE_DEFAULT); // #TODO Remove?
+
+			DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
+			debugDrawer.begin(viewIdFbo1, true);
+
+			const bx::Vec3 start = { a_Start.x, a_Start.y, a_Start.z };
+			const bx::Vec3 end = { a_End.x, a_End.y, a_End.z };
+			debugDrawer.setColor(a_Color);
+			debugDrawer.drawLine(start, end);
+			debugDrawer.end();
+		}
+
+		void DrawLineList(const uint32_t a_Color = g_White)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
+		}
+
 		void DrawOrb(uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
@@ -130,13 +167,36 @@ namespace QwerkE {
 			// #TODO Implement
 		}
 
-		void DrawCone(uint32_t a_Color)
+		void DrawQuad(const uint32_t a_Color = g_White)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
 				return;
 
 			// #TODO Implement
+		}
+
+		void DrawSphere(const vec3f a_Position, const float a_Scale, uint32_t a_Color)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
+
+			constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded view ID
+			bgfx::setState(BGFX_STATE_DEFAULT); // #TODO Remove?
+
+			DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
+			debugDrawer.begin(viewIdFbo1, true);
+			debugDrawer.setColor(a_Color);
+			debugDrawer.drawSphere(a_Position.x, a_Position.y, a_Position.z, a_Scale, Axis::X);
+			debugDrawer.end();
+		}
+
+		void DrawTriList(const uint32_t a_Color = g_White)
+		{
+			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
+			if (!rendererInitialized)
+				return;
 		}
 
 	}

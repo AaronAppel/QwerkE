@@ -43,13 +43,22 @@ namespace QwerkE {
 
 		// #TODO Add a_Wireframe argument to more shape functions
 		// #TODO Take larger arguments in by reference, but also keep convenience of r values
-		void DrawLine(const vec3f a_Start, const vec3f a_End, const uint32_t a_Color = g_White);
-		void DrawSphere(const vec3f a_Position, const float a_Scale = 1.f, const uint32_t a_Color = g_White);
+
+		void DrawArc(const uint32_t a_Color = g_White);
+		void DrawAxis(const uint32_t a_Color = g_White);
+		void DrawCapsule(const uint32_t a_Color = g_White);
+		void DrawCircle(const uint32_t a_Color = g_White);
+		void DrawCone(const uint32_t a_Color = g_White);
 		void DrawCube(const vec3f a_Position, const float a_Size = 1.f, const bool a_Wireframe = false, const uint32_t a_Color = g_White);
 		void DrawCylinder(const uint32_t a_Color = g_White);
+		void DrawFrustum(const uint32_t a_Color = g_White);
 		void DrawGrid(const vec3f a_Position, const u16 a_Size, const uint32_t a_Color = g_White);
+
+		void DrawLine(const vec3f a_Start, const vec3f a_End, const uint32_t a_Color = g_White);
+
 		void DrawOrb(const uint32_t a_Color = g_White);
-		void DrawCone(const uint32_t a_Color = g_White);
+
+		void DrawSphere(const vec3f a_Position, const float a_Scale = 1.f, const uint32_t a_Color = g_White);
 
 	}
 

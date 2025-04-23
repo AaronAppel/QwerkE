@@ -214,7 +214,7 @@ namespace QwerkE {
 				}
 			}
 
-			virtual bool IsUnique() { return false; }
+			virtual bool IsUnique() { return false; } // #TODO Can EditorWindowFlags::Singleton flag replace method or true/false?
 
 			GUID Guid() { return m_Guid; }
 			GUID* GuidAddress() { return &m_Guid; }
