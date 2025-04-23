@@ -36,6 +36,9 @@ namespace QwerkE {
 			Hidden					= 1 << 2,
 			Singleton				= 1 << 3,
 			AlignCentered			= 1 << 4,
+			// #TODO DefaultDebugWindow should minimize or hide but never really close as
+			// debug calls will still render in a default window.
+			HideInsteadOfClose		= 1 << 5,
 		};
 
 		typedef unsigned char u8;

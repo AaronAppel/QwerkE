@@ -117,8 +117,13 @@ namespace QwerkE {
                     ImGui::SameLineCentered((u16)currentProject.projectName.size());
                     ImGui::Text(currentProject.projectName.c_str());
                 }
+                ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x - 150.f);
+                if (ImGui::SmallButton("16:9"))
+                {
+                    // #TODO Open window size options like aspect ratio lock, min/max resolution, etc
+                }
 
-                ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x - 100.f);
+                ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x - 105.f);
                 if (ImGui::SmallButton("Restart"))
                 {
                     Editor::RequestRestart();

@@ -858,6 +858,8 @@ namespace QwerkE {
 
         void local_Update()
         {
+            Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
+
             if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
             {
                 local_Stop();
@@ -873,49 +875,6 @@ namespace QwerkE {
             }
             else if (s_ShowingWindowStackPanel = Input::IsKeyDown(eKeys::eKeys_LCTRL))
             {
-                // #TODO Look into newer Tables API
-                // if (ImGui::BeginTable("Window Stacks Table", 2, ImGuiTableFlags_None))
-                // {
-                //     ImGui::TableSetupColumn("Window Stack", ImGuiTableColumnFlags_None);
-                //     ImGui::TableSetupColumn("Open Windows", ImGuiTableColumnFlags_None);
-                //     ImGui::TableHeadersRow();
-                //
-                //     ImGui::TableSetColumnIndex(0);
-                //     for (const auto& guidWindowPtrPairs : s_EditorWindows)
-                //     {
-                //         ImGui::TableNextRow();
-                //         if (!s_WindowStackPanelLastSelected)
-                //         {
-                //             s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
-                //         }
-                //
-                //         if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
-                //         {
-                //             bool selected = false;
-                //             if (ImGui::Selectable((guidWindowPtrPairs.second->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, 25.f)))
-                //             {
-                //                 s_WindowStackPanelLastSelected = guidWindowPtrPairs.second;
-                //             }
-                //         }
-                //     }
-                //
-                //     ImGui::TableSetColumnIndex(1);
-                //     for (const auto& guidWindowPtrPairs : s_EditorWindows)
-                //     {
-                //         ImGui::TableNextRow();
-                //         if (guidWindowPtrPairs.second->WindowFlags() ^ EditorWindowFlags::Hidden)
-                //         {
-                //             if (ImGui::ButtonEx((guidWindowPtrPairs.second->Name() + "##Button").data(), ImVec2(ImGui::GetContentRegionAvail().x, 25.f), ImGuiButtonFlags_NoNavFocus | ImGuiButtonFlags_NoHoveredOnFocus))
-                //             {
-                //                 guidWindowPtrPairs.second->Focus();
-                //                 s_ShowingWindowStackPanel = false;
-                //             }
-                //         }
-                //     }
-                //
-                //     ImGui::EndTable();
-                // }
-
                 const vec2f& size = Window::GetSize();
                 ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
 
@@ -942,6 +901,7 @@ namespace QwerkE {
 
                         if (s_FocusedWindowsStack[i]->WindowFlags() ^ EditorWindowFlags::Hidden)
                         {
+                            // u32 selectedIndex = 1; // #TODO Select 2nd element on open
                             static bool selected = false; // #TODO Since making static, assert has not been triggered, but focusing every 2nd item
                             // causes every selectable item to be focused
 
@@ -951,6 +911,7 @@ namespace QwerkE {
                             if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, itemHeight)))
                             {
                                 s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                                // selectedIndex = i;
                             }
                             else if (ImGui::IsItemClicked())
                             {
