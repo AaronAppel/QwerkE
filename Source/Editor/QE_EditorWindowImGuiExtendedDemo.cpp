@@ -1,5 +1,7 @@
 #include "QE_EditorWindowImGuiExtendedDemo.h"
 
+#include "Libraries/imgui-knobs/imgui-knobs.h"
+
 #include "Libraries/imgui_toggle/imgui_toggle.h"
 #include "Libraries/imgui_toggle/imgui_toggle_presets.h"
 
@@ -7,23 +9,47 @@ namespace QwerkE {
 
 	namespace Editor {
 
+        static void local_DrawKnobs();
+        static bool s_IsShowingKnobs = true;
+
 		static void imgui_toggle_example(); // Toggles
 		static void imgui_toggle_simple();
 		static void imgui_toggle_custom();
 		static void imgui_toggle_state(const ImGuiToggleConfig& config, ImGuiToggleStateConfig& state);
+        static bool s_IsShowingToggles = true;
 
 		void EditorWindowImGuiExtendedDemo::DrawInternal()
 		{
 			bool isShowingDemo = m_WindowFlags ^ EditorWindowFlags::Hidden;
 			if (isShowingDemo)
 			{
-                // Toggles
-                ImGui::Begin("Toggles");
-                imgui_toggle_example();
-                imgui_toggle_simple();
-                imgui_toggle_custom();
-                // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
-                ImGui::End();
+                ImGui::Checkbox("Knobs", &s_IsShowingKnobs);
+                ImGui::SameLine();
+                ImGui::Checkbox("Toggles", &s_IsShowingToggles);
+                ImGui::Separator();
+
+                if (s_IsShowingKnobs)
+                {
+                    local_DrawKnobs();
+                    ImGui::Separator();
+                }
+                if (s_IsShowingToggles)
+                {
+                    if (ImGui::CollapsingHeader("Example"))
+                    {
+                        imgui_toggle_example();
+                    }
+                    if (ImGui::CollapsingHeader("Simple"))
+                    {
+                        imgui_toggle_simple();
+                    }
+                    if (ImGui::CollapsingHeader("Custom"))
+                    {
+                        imgui_toggle_custom();
+                    }
+                    // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
+                    ImGui::Separator();
+                }
 
 				if (!isShowingDemo)
 				{
@@ -31,6 +57,73 @@ namespace QwerkE {
 				}
 			}
 		}
+
+        void local_DrawKnobs()
+        {
+            static float val1 = 0;
+            if (ImGuiKnobs::Knob("Gain", &val1, -6.0f, 6.0f, 0.1f, "%.1fdB", ImGuiKnobVariant_Tick)) {
+                // value was changed
+            }
+
+            ImGui::SameLine();
+
+            static float val2 = 0;
+            if (ImGuiKnobs::Knob("Mix", &val2, -1.0f, 1.0f, 0.1f, "%.1f", ImGuiKnobVariant_Stepped)) {
+                // value was changed
+            }
+
+            // Double click to reset
+            if (ImGui::IsItemActive() && ImGui::IsMouseDoubleClicked(0)) {
+                val2 = 0;
+            }
+
+            ImGui::SameLine();
+
+            static float val3 = 0;
+
+            // Custom colors
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(255.f, 0, 0, 0.7f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(255.f, 0, 0, 1));
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 255.f, 0, 1));
+            // Push/PopStyleColor() for each colors used (namely ImGuiCol_ButtonActive and ImGuiCol_ButtonHovered for primary and ImGuiCol_Framebg for Track)
+            if (ImGuiKnobs::Knob("Pitch", &val3, -6.0f, 6.0f, 0.1f, "%.1f", ImGuiKnobVariant_WiperOnly)) {
+                // value was changed
+            }
+
+            ImGui::PopStyleColor(3);
+
+
+            ImGui::SameLine();
+
+            // Custom min/max angle
+            static float val4 = 0;
+            if (ImGuiKnobs::Knob("Dry", &val4, -6.0f, 6.0f, 0.1f, "%.1f", ImGuiKnobVariant_Stepped, 0, 0, 10, 1.570796f, 3.141592f)) {
+                // value was changed
+            }
+
+            ImGui::SameLine();
+
+            // Int value
+            static int val5 = 1;
+            if (ImGuiKnobs::KnobInt("Wet", &val5, 1, 10, 0.1f, "%i", ImGuiKnobVariant_Stepped, 0, 0, 10)) {
+                // value was changed
+            }
+
+            ImGui::SameLine();
+
+            // Vertical drag only
+            static float val6 = 1;
+            if (ImGuiKnobs::Knob("Vertical", &val6, 0.f, 10.f, 0.1f, "%.1f", ImGuiKnobVariant_Space, 0, ImGuiKnobFlags_DragVertical)) {
+                // value was changed
+            }
+
+            ImGui::SameLine();
+
+            static float val7 = 500.0f;
+            if (ImGuiKnobs::Knob("Logarithmic", &val7, 20, 20000, 20.0f, "%.1f", ImGuiKnobVariant_WiperOnly, 0, ImGuiKnobFlags_Logarithmic | ImGuiKnobFlags_AlwaysClamp)) {
+                // value was changed
+            }
+        }
 
         // From: https://github.com/cmdwtf/imgui_toggle/blob/main/EXAMPLE.md
         static void imgui_toggle_example()

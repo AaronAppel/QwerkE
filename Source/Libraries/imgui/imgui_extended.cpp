@@ -1,9 +1,11 @@
-#include "QwerkE_imgui.h"
+#include "imgui_extended.h"
 
-#include <cmath> // For LoadingIndicatorCircle
+#include <algorithm> // For std::max, for LoadingIndicatorCircle
+#include <cmath> // For std::sin, std::cos, for LoadingIndicatorCircle
 
 #include "imgui_internal.h" // For various internal ImGui::
 
+#include "../imgui-knobs/imgui-knobs.h" // For Knob() and KnobInt()
 #include "../imgui-spin-value/imgui_spin_value.h" // For SpinInt(), SpinFloat(), SpinDouble(), and SpinScalar()
 
 namespace ImGui {
@@ -287,6 +289,24 @@ namespace ImGui {
 				pos.y + indicator_radius - y),
 				circle_radius + growth * circle_radius, GetColorU32(color));
 		}
+	}
+
+	bool Knob(const char* label, float* p_value, float v_min, float v_max, float speed,
+		const char* format, ImGuiKnobVariant variant, float size,
+		ImGuiKnobFlags flags, int steps, float angle_min, float angle_max)
+	{
+		return ImGuiKnobs::Knob(label, p_value, v_min, v_max, speed,
+			format, variant, size,
+			flags, steps, angle_min, angle_max);
+	}
+
+	bool KnobInt(const char* label, int* p_value, int v_min, int v_max, float speed,
+		const char* format, ImGuiKnobVariant variant, float size,
+		ImGuiKnobFlags flags, int steps, float angle_min, float angle_max)
+	{
+		return ImGuiKnobs::KnobInt(label, p_value, v_min, v_max, speed,
+			format, variant, size,
+			flags, steps, angle_min, angle_max);
 	}
 
 }
