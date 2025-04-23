@@ -55,10 +55,12 @@ namespace QwerkE {
 		void DrawGrid(const vec3f a_Position, const u16 a_Size, const uint32_t a_Color = g_White);
 
 		void DrawLine(const vec3f a_Start, const vec3f a_End, const uint32_t a_Color = g_White);
+		void DrawLineList(const uint32_t a_Color = g_White);
 
 		void DrawOrb(const uint32_t a_Color = g_White);
-
+		void DrawQuad(const uint32_t a_Color = g_White);
 		void DrawSphere(const vec3f a_Position, const float a_Scale = 1.f, const uint32_t a_Color = g_White);
+		void DrawTriList(const uint32_t a_Color = g_White);
 
 	}
 
