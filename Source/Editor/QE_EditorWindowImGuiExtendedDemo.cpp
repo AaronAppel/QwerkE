@@ -2,8 +2,12 @@
 
 #include "Libraries/imgui-knobs/imgui-knobs.h"
 
+#include "Libraries/ImCoolBar/ImCoolBar.h"
 #include "Libraries/imgui_toggle/imgui_toggle.h"
 #include "Libraries/imgui_toggle/imgui_toggle_presets.h"
+
+#define IMSPINNER_DEMO
+#include "Libraries/imspinner/imspinner.h"
 
 namespace QwerkE {
 
@@ -18,6 +22,12 @@ namespace QwerkE {
 		static void imgui_toggle_state(const ImGuiToggleConfig& config, ImGuiToggleStateConfig& state);
         static bool s_IsShowingToggles = true;
 
+        static void local_DrawImCoolBar();
+        static bool s_IsShowingCoolBar = true;
+
+        static bool s_IsShowingSpinnersDemo = true;
+        static bool m_IsShowingPieSelector = true;
+
 		void EditorWindowImGuiExtendedDemo::DrawInternal()
 		{
 			bool isShowingDemo = m_WindowFlags ^ EditorWindowFlags::Hidden;
@@ -26,8 +36,17 @@ namespace QwerkE {
                 ImGui::Checkbox("Knobs", &s_IsShowingKnobs);
                 ImGui::SameLine();
                 ImGui::Checkbox("Toggles", &s_IsShowingToggles);
+                ImGui::SameLine();
+                ImGui::Checkbox("Cool Bar", &s_IsShowingCoolBar);
+                ImGui::SameLine();
+                ImGui::Checkbox("Pie Select", &m_IsShowingPieSelector);
                 ImGui::Separator();
 
+                if (ImGui::CollapsingHeader("Spinners"))
+                {
+                    ImSpinner::demoSpinners();
+                    ImGui::Separator();
+                }
                 if (s_IsShowingKnobs)
                 {
                     local_DrawKnobs();
@@ -35,6 +54,7 @@ namespace QwerkE {
                 }
                 if (s_IsShowingToggles)
                 {
+                    ImGui::Text("Toggles");
                     if (ImGui::CollapsingHeader("Example"))
                     {
                         imgui_toggle_example();
@@ -49,6 +69,28 @@ namespace QwerkE {
                     }
                     // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
                     ImGui::Separator();
+                }
+                if (s_IsShowingCoolBar)
+                {
+                    local_DrawImCoolBar();
+                }
+                if (m_IsShowingPieSelector)
+                {
+                    // From: https://github.com/ocornut/imgui/issues/434
+                    static const char* test_data = "Menu";
+                    const char* items[] = { "Orange", "Blue", "Purple", "Gray", "Yellow", "Las Vegas" };
+                    int items_count = sizeof(items) / sizeof(*items);
+
+                    static int selected = -1;
+
+                    ImGui::Button(selected >= 0 ? items[selected] : "Menu", ImVec2(50, 50));
+                    if (ImGui::IsItemActive())          // Don't wait for button release to activate the pie menu
+                        ImGui::OpenPopup("##piepopup");
+
+                    ImVec2 pie_menu_center = ImGui::GetIO().MouseClickedPos[0];
+                    int n = ImGui::PiePopupSelectMenu(pie_menu_center, "##piepopup", items, items_count, &selected);
+                    // if (n >= 0)
+                    //     printf("returned %d\n", n);
                 }
 
 				if (!isShowingDemo)
@@ -364,6 +406,90 @@ namespace QwerkE {
 
             // how thick should the knob border be (if enabled)
             ImGui::SliderFloat("Knob Border Thickness (px)", &state.KnobBorderThickness, 0.0f, border_thickness_max_pixels);
+        }
+
+        // From: https://github.com/aiekick/ImCoolBar
+        auto coolbar_button = [](const char* label) -> bool {
+            float w = ImGui::GetCoolBarItemWidth();
+            auto font_ptr = ImGui::GetIO().Fonts->Fonts[0];
+            font_ptr->Scale = ImGui::GetCoolBarItemScale();
+            ImGui::PushFont(font_ptr);
+            bool res = ImGui::Button(label, ImVec2(w, w));
+            ImGui::PopFont();
+            return res;
+            };
+
+        // From: https://github.com/aiekick/ImCoolBar
+        static void local_DrawImCoolBar()
+        {
+            if (ImGui::BeginCoolBar("##CoolBarMain", ImCoolBarFlags_::ImCoolBarFlags_Horizontal, ImVec2(0.5f, 1.0f))) {
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("A")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("B")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("C")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("D")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("E")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("F")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("G")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("H")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("I")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("J")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("K")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("L")) {
+
+                    }
+                }
+                if (ImGui::CoolBarItem()) {
+                    if (coolbar_button("M")) {
+
+                    }
+                }
+                ImGui::EndCoolBar();
+            }
         }
 
 	}

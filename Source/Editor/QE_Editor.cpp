@@ -21,14 +21,11 @@
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
-#include "Libraries/ImCoolBar/ImCoolBar.h"
 #include "Libraries/imgui-node-editor/imgui_node_editor.h"
 #include "Libraries/imgui-notify/imgui_notify.h"
 #include "Libraries/im-neo-sequencer/imgui_neo_sequencer.h"
 #include "Libraries/ImGuizmo/ImGuizmo.h"
 #include "Libraries/ImNodeFlow/ImNodeFlow.h"
-#define IMSPINNER_DEMO
-#include "Libraries/imspinner/imspinner.h"
 #endif
 
 #include "QC_Guid.h"
@@ -62,17 +59,6 @@ int32_t endFrame = 64;
 bool transformOpen = false;
 std::vector<ImGui::FrameIndexType> keys = { 0, 10, 24 };
 bool doDelete = false;
-
-// ImCoolBar
-auto coolbar_button = [](const char* label) -> bool {
-    float w = ImGui::GetCoolBarItemWidth();
-    auto font_ptr = ImGui::GetIO().Fonts->Fonts[0];
-    font_ptr->Scale = ImGui::GetCoolBarItemScale();
-    ImGui::PushFont(font_ptr);
-    bool res = ImGui::Button(label, ImVec2(w, w));
-    ImGui::PopFont();
-    return res;
-};
 
 // ImNodeFlow
 using namespace ImFlow;
@@ -250,77 +236,6 @@ namespace QwerkE {
                         ImGui::End();
                     }
 
-                    if (false)
-                    {
-                        if (ImGui::BeginCoolBar("##CoolBarMain", ImCoolBarFlags_::ImCoolBarFlags_Horizontal, ImVec2(0.5f, 1.0f))) {
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("A")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("B")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("C")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("D")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("E")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("F")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("G")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("H")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("I")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("J")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("K")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("L")) {
-
-                                }
-                            }
-                            if (ImGui::CoolBarItem()) {
-                                if (coolbar_button("M")) {
-
-                                }
-                            }
-                            ImGui::EndCoolBar();
-                        }
-                    }
 
                     if (false)
                     {
@@ -392,41 +307,6 @@ namespace QwerkE {
                     if (Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
                     {
                         int bp = 0; // #TODO Refactor Input::
-                    }
-
-                    if (false)
-                    {
-                        ImGui::Begin("Pie");
-                        {
-                            static const char* test_data = "Menu";
-                            const char* items[] = { "Orange", "Blue", "Purple", "Gray", "Yellow", "Las Vegas" };
-                            int items_count = sizeof(items) / sizeof(*items);
-
-                            static int selected = -1;
-
-                            ImGui::Button(selected >= 0 ? items[selected] : "Menu", ImVec2(50, 50));
-                            if (ImGui::IsItemActive())          // Don't wait for button release to activate the pie menu
-                                ImGui::OpenPopup("##piepopup");
-
-                            ImVec2 pie_menu_center = ImGui::GetIO().MouseClickedPos[0];
-                            int n = ImGui::PiePopupSelectMenu(pie_menu_center, "##piepopup", items, items_count, &selected);
-                            if (n >= 0)
-                                printf("returned %d\n", n);
-                        }
-                        ImGui::End();
-                    }
-
-                    if (false)
-                    {
-                        static bool isOn = true;
-                        ImGui::ToggleButton("ToggleMe", &isOn);
-                    }
-
-                    if (false)
-                    {
-                        ImGui::Begin("Spinners");
-                        ImSpinner::demoSpinners();
-                        ImGui::End();
                     }
 
                     if (false)
