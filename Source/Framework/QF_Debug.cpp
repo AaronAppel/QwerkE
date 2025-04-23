@@ -30,28 +30,28 @@ namespace QwerkE {
 		// dde.push();
 		// dde.pop();
 
-		void DrawArc(const uint32_t a_Color = g_White)
+		void DrawArc(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
 				return;
 		}
 
-		void DrawAxis(const uint32_t a_Color = g_White)
+		void DrawAxis(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
 				return;
 		}
 
-		void DrawCapsule(const uint32_t a_Color = g_White)
+		void DrawCapsule(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
 				return;
 		}
 
-		void DrawCircle(const uint32_t a_Color = g_White)
+		void DrawCircle(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
@@ -100,7 +100,7 @@ namespace QwerkE {
 			// #TODO Implement
 		}
 
-		void DrawFrustum(const uint32_t a_Color = g_White)
+		void DrawFrustum(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
@@ -151,7 +151,7 @@ namespace QwerkE {
 			debugDrawer.end();
 		}
 
-		void DrawLineList(const uint32_t a_Color = g_White)
+		void DrawLineList(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
@@ -167,7 +167,7 @@ namespace QwerkE {
 			// #TODO Implement
 		}
 
-		void DrawQuad(const uint32_t a_Color = g_White)
+		void DrawQuad(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
@@ -192,7 +192,7 @@ namespace QwerkE {
 			debugDrawer.end();
 		}
 
-		void DrawTriList(const uint32_t a_Color = g_White)
+		void DrawTriList(const uint32_t a_Color)
 		{
 			const bool rendererInitialized = true; // #TODO Renderer should have a state bool or enum
 			if (!rendererInitialized)
