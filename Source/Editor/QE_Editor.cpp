@@ -22,7 +22,6 @@
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
 #include "Libraries/ImCoolBar/ImCoolBar.h"
-#include "Libraries/ImFileDialog/ImFileDialog.h"
 #include "Libraries/imgui-knobs/imgui-knobs.h"
 #include "Libraries/imgui-node-editor/imgui_node_editor.h"
 #include "Libraries/imgui-notify/imgui_notify.h"
@@ -465,46 +464,6 @@ namespace QwerkE {
                     if (Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
                     {
                         int bp = 0; // #TODO Refactor Input::
-                    }
-
-                    if (false)
-                    {
-                        // #TODO Fix m_getIcon->CreateTexture() runtime crash
-                        // Review: https://github.com/dfranx/ImFileDialog#usage
-
-                        // Simple window
-                        ImGui::Begin("Control Panel");
-                        if (ImGui::Button("Open file"))
-                            ifd::FileDialog::Instance().Open("ShaderOpenDialog", "Open a shader", "Image file (*.png;*.jpg;*.jpeg;*.bmp;*.tga){.png,.jpg,.jpeg,.bmp,.tga},.*", true);
-                        if (ImGui::Button("Open directory"))
-                            ifd::FileDialog::Instance().Open("DirectoryOpenDialog", "Open a directory", "");
-                        if (ImGui::Button("Save file"))
-                            ifd::FileDialog::Instance().Save("ShaderSaveDialog", "Save a shader", "*.sprj {.sprj}");
-                        ImGui::End();
-
-                        // File dialogs
-                        if (ifd::FileDialog::Instance().IsDone("ShaderOpenDialog")) {
-                            if (ifd::FileDialog::Instance().HasResult()) {
-                                const std::vector<std::filesystem::path>& res = ifd::FileDialog::Instance().GetResults();
-                                for (const auto& r : res) // ShaderOpenDialog supports multiselection
-                                    printf("OPEN[%s]\n", r.u8string().c_str());
-                            }
-                            ifd::FileDialog::Instance().Close();
-                        }
-                        if (ifd::FileDialog::Instance().IsDone("DirectoryOpenDialog")) {
-                            if (ifd::FileDialog::Instance().HasResult()) {
-                                std::string res = ifd::FileDialog::Instance().GetResult().u8string();
-                                printf("DIRECTORY[%s]\n", res.c_str());
-                            }
-                            ifd::FileDialog::Instance().Close();
-                        }
-                        if (ifd::FileDialog::Instance().IsDone("ShaderSaveDialog")) {
-                            if (ifd::FileDialog::Instance().HasResult()) {
-                                std::string res = ifd::FileDialog::Instance().GetResult().u8string();
-                                printf("SAVE[%s]\n", res.c_str());
-                            }
-                            ifd::FileDialog::Instance().Close();
-                        }
                     }
 
                     if (false)

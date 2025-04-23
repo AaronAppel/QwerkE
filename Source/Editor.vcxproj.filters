@@ -29,6 +29,9 @@
     <ClCompile Include="Editor\QE_EditorWindowImGuiExtendedDemo.cpp">
       <Filter>Windows\Singleton</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorWindowFolderViewer.cpp">
+      <Filter>Windows\Instanced</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />
