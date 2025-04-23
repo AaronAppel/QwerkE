@@ -9,6 +9,7 @@
 #include "QE_EditorWindowFolderViewer.h"
 #include "QE_EditorWindowHexEditor.h"
 #include "QE_EditorWindowImGuiDemo.h"
+#include "QE_EditorWindowImGuiExtendedDemo.h"
 #include "QE_EditorWindowMaterialEditor.h"
 #include "QE_EditorWindowMenuBar.h"
 #include "QE_EditorWindowNodeEditor.h"
@@ -45,7 +46,8 @@ namespace QwerkE {
 			EditorWindowPrefabScene,
 			EditorWindowPrompt,
 			EditorWindowConsole,
-			EditorWindowHexEditor
+			EditorWindowHexEditor,
+			EditorWindowImGuiExtendedDemo
         >;
 
 		template <typename... T>

@@ -153,7 +153,8 @@ namespace QwerkE {
 			PrefabScene,
 			Prompt,
 			Console,
-			HexEditor
+			HexEditor,
+			ImGuiExtendedDemo
 			// #NOTE Serialized, so don't change ordering
 		)
 

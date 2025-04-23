@@ -270,6 +270,7 @@ namespace QwerkE {
                     EditorWindowTypes::Console,
                     EditorWindowTypes::DefaultDebug,
                     EditorWindowTypes::ImGuiDemo,
+                    EditorWindowTypes::ImGuiExtendedDemo,
                     EditorWindowTypes::Settings,
                     EditorWindowTypes::FolderViewer,
                     EditorWindowTypes::Prompt,
