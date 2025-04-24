@@ -32,6 +32,9 @@
     <ClCompile Include="Editor\QE_EditorWindowFolderViewer.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorWindowTimeline.cpp">
+      <Filter>Windows\Instanced</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="Editor\QE_EditorWindowNotifications.h">
       <Filter>Windows\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowTimeline.h">
+      <Filter>Windows\Instanced</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@
 #include "QE_EditorWindowSettings.h"
 #include "QE_EditorWindowShaderEditor.h"
 #include "QE_EditorWindowStylePicker.h"
+#include "QE_EditorWindowTimeline.h"
 
 namespace QwerkE {
 
@@ -49,7 +50,8 @@ namespace QwerkE {
 			EditorWindowConsole,
 			EditorWindowHexEditor,
 			EditorWindowImGuiExtendedDemo,
-			EditorWindowNotifications
+			EditorWindowNotifications,
+			EditorWindowTimeline
         >;
 
 		template <typename... T>

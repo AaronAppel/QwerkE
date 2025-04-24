@@ -21,7 +21,6 @@
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
-#include "Libraries/im-neo-sequencer/imgui_neo_sequencer.h"
 #include "Libraries/ImGuizmo/ImGuizmo.h"
 
 #include "Libraries/imgui-notify/imgui_notify.h" // For RenderNotifications()
@@ -50,14 +49,6 @@
 
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
-
-// From: https://gitlab.com/GroGy/im-neo-sequencer
-int32_t currentFrame = 0; // Sequencer
-int32_t startFrame = -10;
-int32_t endFrame = 64;
-bool transformOpen = false;
-std::vector<ImGui::FrameIndexType> keys = { 0, 10, 24 };
-bool doDelete = false;
 
 namespace QwerkE {
 
@@ -187,46 +178,6 @@ namespace QwerkE {
                         ImGui::SameLine();
                         ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
                         ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
-                        ImGui::End();
-                    }
-
-                    if (false)
-                    {
-                        ImGui::Begin("Sequencer");
-                        const bool deleteKeyframe = ImGui::Button("Delete");
-                        if (ImGui::BeginNeoSequencer("Sequencer1", &currentFrame, &startFrame, &endFrame, { 0, 0 },
-                            ImGuiNeoSequencerFlags_EnableSelection |
-                            ImGuiNeoSequencerFlags_Selection_EnableDragging |
-                            ImGuiNeoSequencerFlags_Selection_EnableDeletion))
-                        {
-                            if (ImGui::BeginNeoGroup("Transform", &transformOpen))
-                            {
-
-                                if (ImGui::BeginNeoTimelineEx("Position"))
-                                {
-                                    for (auto&& v : keys)
-                                    {
-                                        ImGui::NeoKeyframe(&v);
-                                        // Per keyframe code here
-                                    }
-
-                                    if (deleteKeyframe)
-                                    {
-                                        uint32_t count = ImGui::GetNeoKeyframeSelectionSize();
-
-                                        ImGui::FrameIndexType* toRemove = new ImGui::FrameIndexType[count];
-
-                                        ImGui::GetNeoKeyframeSelection(toRemove);
-
-                                        //Delete keyframes from your structure
-                                    }
-                                    ImGui::EndNeoTimeLine();
-                                }
-                                ImGui::EndNeoGroup();
-                            }
-
-                            ImGui::EndNeoSequencer();
-                        }
                         ImGui::End();
                     }
 

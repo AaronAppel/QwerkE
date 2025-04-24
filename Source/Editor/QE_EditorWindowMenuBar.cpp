@@ -267,7 +267,10 @@ namespace QwerkE {
                     EditorWindowTypes::MaterialEditor,
                     EditorWindowTypes::NodeEditor,
                     EditorWindowTypes::ShaderEditor,
-                    EditorWindowTypes::HexEditor
+                    EditorWindowTypes::HexEditor,
+                    EditorWindowTypes::Settings,
+                    EditorWindowTypes::Timeline,
+                    EditorWindowTypes::StylePicker
                 }
             );
             local_DrawWindowsList("Other", {
@@ -276,10 +279,8 @@ namespace QwerkE {
                     EditorWindowTypes::DefaultDebug,
                     EditorWindowTypes::ImGuiDemo,
                     EditorWindowTypes::ImGuiExtendedDemo,
-                    EditorWindowTypes::Settings,
                     EditorWindowTypes::FolderViewer,
                     EditorWindowTypes::Prompt,
-                    EditorWindowTypes::StylePicker,
                     EditorWindowTypes::Notifications
                 }
             );
