@@ -10,7 +10,7 @@ namespace QwerkE {
 
 	namespace Editor {
 
-        QC_ENUM(eSettingsOptions, u8, Null, Engine, GameActions, Renderer, Project); // #TODO Project isn't settings anymore. Could be reviewed to move
+        QC_ENUM(eSettingsOptions, u8, Null, Engine, GameActions, UserSettings, Renderer, Project); // #TODO Project isn't settings anymore. Could be reviewed to move
         // #TODO Physics can be another add. Editing collision between layers, global gravity, etc.
 
         class EditorWindowSettings : public EditorWindow

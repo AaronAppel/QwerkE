@@ -11,6 +11,7 @@ namespace QwerkE {
 	namespace Settings {
 
 		constexpr char* s_ImGuiStyleFileName = "Default.style"; // #TODO Review default settings files list
+		constexpr char* s_ImGuiStyleFileName2 = "Vekor64.style"; // #TODO Move to QE_Settings.h::UserSettings
 
 		UserSettings s_userSettings;
 		RendererSettings s_rendererSettings;
@@ -28,6 +29,28 @@ namespace QwerkE {
 		const char* GetStyleFileName()
 		{
 			return s_ImGuiStyleFileName;
+		}
+
+		const char* GetStyleFileName2()
+		{
+			return s_ImGuiStyleFileName2;
+		}
+
+		void LoadUserSettings(const std::string& userSettingsFileName)
+		{
+			std::string userSettingsFilePath = Paths::Setting(userSettingsFileName.c_str());
+			if (userSettingsFileName.empty() || userSettingsFilePath.empty() ||
+				!Files::Exists(userSettingsFilePath.c_str()))
+			{
+				userSettingsFilePath = Paths::NullAsset("UserSettings.qpref"); // #TODO Add to path/file defines
+			}
+			Serialize::FromFile(userSettingsFilePath.c_str(), s_userSettings);
+			s_userSettings.isDirty = false;
+		}
+
+		void SaveUserSettings()
+		{
+			Serialize::ToFile(s_userSettings, Paths::Setting("Aaron.qpref").c_str());
 		}
 
 		void LoadRendererSettings(const std::string& rendererSettingsFileName)

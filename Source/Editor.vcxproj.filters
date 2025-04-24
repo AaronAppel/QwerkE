@@ -35,6 +35,9 @@
     <ClCompile Include="Editor\QE_EditorWindowTimeline.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorWindowSceneControls.cpp">
+      <Filter>Windows\Instanced</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />

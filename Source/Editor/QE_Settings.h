@@ -9,7 +9,11 @@ namespace QwerkE {
 
     struct UserSettings
     {
-        // Interface: Window open, UI layout and scaling, etc
+        // Interface: Window open, UI layout and scaling, styles, etc
+        bool isDirty = false; // #TODO Use Editor state flag
+        bool startInPlayMode = true; // #TODO Serialize value
+
+        // #TODO Key bindings
     };
 
     struct RendererSettings
@@ -22,8 +26,12 @@ namespace QwerkE {
     namespace Settings
     {
         const char* GetStyleFileName();
+        const char* GetStyleFileName2();
 
-        void LoadRendererSettings(const std::string& rendererSettingsFilePath);
+        void LoadUserSettings(const std::string& userSettingsFileName);
+        void SaveUserSettings();
+
+        void LoadRendererSettings(const std::string& rendererSettingsFileName);
         void SaveRendererSettings();
 
         UserSettings& GetUserSettings();

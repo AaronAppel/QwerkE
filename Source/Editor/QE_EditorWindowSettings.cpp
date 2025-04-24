@@ -45,6 +45,10 @@ namespace QwerkE {
                 case eSettingsOptions::Project:
                     pushIsDirtyStyleColor = Projects::CurrentProject().isDirty;
                     break;
+
+                case eSettingsOptions::UserSettings:
+                    pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
+                    break;
                 }
 
                 if (pushIsDirtyStyleColor)
@@ -92,6 +96,10 @@ namespace QwerkE {
                     case eSettingsOptions::Project:
                         Projects::SaveProject();
                         break;
+
+                    case eSettingsOptions::UserSettings:
+                        Settings::SaveUserSettings();
+                        break;
                     }
                 }
 
@@ -113,8 +121,12 @@ namespace QwerkE {
                         break;
 
                     case eSettingsOptions::Project:
-                        Projects::LoadProject("Project1.qproj"); // #TODO Load proper project file
+                        Projects::LoadProject("Project1.qproj"); // #TODO Load proper file
                         Editor::OnSceneReloaded();
+                        break;
+
+                    case eSettingsOptions::UserSettings:
+                        Settings::LoadUserSettings("Aaron.qproj"); // #TODO Load proper file
                         break;
                     }
                 }
@@ -132,35 +144,42 @@ namespace QwerkE {
                 switch (m_SettingsEditorOption)
                 {
                 case eSettingsOptions::Engine:
-                {
-                    ImGui::SameLine();
-                    ImGui::Text("          Changes require engine restart");
-                    EngineSettings& engineSettings = Settings::GetEngineSettings();
-                    engineSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
-                }
-                break;
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("          Changes require engine restart");
+                        EngineSettings& engineSettings = Settings::GetEngineSettings();
+                        engineSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
+                    }
+                    break;
 
                 case eSettingsOptions::GameActions:
-                {
-                    Input::GameActions& gameActions = Input::GetGameActions();
-                    // userSettings.isDirty |=
-                    Inspector::InspectType(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
-                }
-                break;
+                    {
+                        Input::GameActions& gameActions = Input::GetGameActions();
+                        // userSettings.isDirty |=
+                        Inspector::InspectType(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
+                    }
+                    break;
 
                 case eSettingsOptions::Renderer:
-                {
-                    RendererSettings& rendererSettings = Settings::GetRendererSettings();
-                    rendererSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
-                }
-                break;
+                    {
+                        RendererSettings& rendererSettings = Settings::GetRendererSettings();
+                        rendererSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
+                    }
+                    break;
 
                 case eSettingsOptions::Project:
-                {
-                    Project& project = Projects::CurrentProject();
-                    project.isDirty |= Inspector::InspectType(Mirror::InfoForType<Project>(), &project, buffer);
-                }
-                break;
+                    {
+                        Project& project = Projects::CurrentProject();
+                        project.isDirty |= Inspector::InspectType(Mirror::InfoForType<Project>(), &project, buffer);
+                    }
+                    break;
+
+                case eSettingsOptions::UserSettings:
+                    {
+                        UserSettings& userSettings = Settings::GetUserSettings();
+                        userSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<UserSettings>(), &userSettings, buffer);
+                    }
+                    break;
                 }
 
                 ImGui::PopItemWidth();

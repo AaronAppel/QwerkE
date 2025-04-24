@@ -116,6 +116,14 @@ namespace QwerkE {
 
             local_Initialize();
 
+            Settings::LoadUserSettings("Aaron.qpref"); // #TODO Testing user settings. Move somewhere better
+            const UserSettings& userSettings = Settings::GetUserSettings();
+            const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
+            for (size_t i = 0; i < scenes.size(); i++)
+            {
+                scenes[i]->SetIsPaused(!userSettings.startInPlayMode);
+            }
+
             Time::WriteAppStartTime();
 
             int spinInt = 0;

@@ -17,7 +17,8 @@ namespace QwerkE {
 
 		operator unsigned long long() const { return m_Guid; }
 
-		static const unsigned long long Invalid = 0;
+		static constexpr unsigned long long Invalid = 0;
+		static constexpr unsigned long long Max = UINT64_MAX;
 
 		bool operator ==(const GUID& other) const { return m_Guid == other.m_Guid; }
 		// #NOTE Spdlog doesn't like this : operator bool() const { return m_Guid != Invalid; }

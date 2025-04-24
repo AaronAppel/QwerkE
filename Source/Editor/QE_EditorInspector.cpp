@@ -208,7 +208,7 @@ namespace QwerkE {
 
                     char buffer[U64_MAX_DIGITS] = { '\0' };
                     strcpy(buffer, std::to_string(*numberAddress).c_str());
-
+                    // #TODO Test GUID::Max;
                     ImGui::PushItemWidth(165);
                     if (ImGui::InputText(elementName.c_str(), buffer, U64_MAX_DIGITS))
                     {

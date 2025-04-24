@@ -107,6 +107,7 @@ namespace QwerkE {
 #endif
 
 #ifdef _QBGFX
+			// #TODO Crash here on (re)loading engine a 2nd time
 			bgfx::renderFrame(); // Prevent bgfx from creating a separate render thread
 			bgfx::Init init;
 

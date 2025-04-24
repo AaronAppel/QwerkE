@@ -1,0 +1,165 @@
+#include "QE_EditorWindowSceneControls.h"
+
+#include "QC_StringHelpers.h"
+
+#include "QF_PathDefines.h"
+#include "QF_Paths.h"
+#include "QF_Scene.h"
+#include "QF_Scenes.h"
+#include "QF_Serialize.h"
+
+#include "QE_Projects.h"
+#include "QE_Settings.h"
+
+namespace QwerkE {
+
+	namespace Editor {
+
+		void EditorWindowSceneControls::DrawInternal()
+		{
+            // #TODO Current scene from Scenes:: works, but maybe more than 1 scene can be active.
+            // Might need to connect scene controls to a scene viewer, or combine windows
+            if (Scene* currentScene = Scenes::GetCurrentScene())
+            {
+                bool sceneWasDirty = currentScene->IsDirty();
+                if (sceneWasDirty)
+                {
+                    ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                    ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+                }
+                if (ImGui::Button("Save")) currentScene->SaveScene();
+                if (sceneWasDirty)
+                {
+                    ImGui::PopStyleColor(3);
+                }
+
+                ImGui::SameLine();
+                if (ImGui::Button("Reload"))
+                {
+                    Editor::OnEntitySelected(EntityHandle());
+                    currentScene->ReloadScene();
+                    Editor::OnSceneReloaded();
+                }
+            }
+
+            ImGui::SameLine();
+            if (ImGui::Button("+"))
+            {
+                // #TODO Use a prefix or another way to generate unique scene names
+                const char* const newFileDefaultName = StringAppend("NewScene", ".", scene_ext); // #TODO constexpr
+
+                // #TODO Prevent access to load scenes from files and use Assets. Create a new scene file instead
+                if (Scene* newScene = Scenes::CreateScene(newFileDefaultName))
+                {
+                    Scenes::SetCurrentScene(newScene);
+                    // #NOTE Scene transition changes removes above lines for below
+                    // #TODO SetActive(newScene) call
+                    // Scenes::SetCurrentScene(newScene);
+
+                    // #TODO Move unique check logic into Projects::AddSceneToProjectScenesList() or something better
+                    Project& currentProject = Projects::CurrentProject();
+
+                    bool isUnique = true;
+                    for (const auto& sceneListEntry : currentProject.scenesList)
+                    {
+                        if (sceneListEntry.first == newScene->GetGuid())
+                        {
+                            isUnique = false;
+                            break;
+                        }
+                    }
+
+                    if (isUnique)
+                    {
+                        currentProject.scenesList.insert({ newScene->GetGuid(), newScene->GetSceneName() });
+                    }
+                }
+            }
+
+            if (Scene* currentScene = Scenes::GetCurrentScene())
+            {
+                ImGui::SameLine();
+                if (ImGui::Button("-"))
+                {
+                    Scenes::DestroyScene(currentScene);
+
+                    Project& currentProject = Projects::CurrentProject();
+                    if (currentProject.scenesList.find(currentScene->GetGuid()) != currentProject.scenesList.end())
+                    {
+                        currentProject.scenesList.erase(currentScene->GetGuid());
+                    }
+
+                    Editor::OnEntitySelected(EntityHandle());
+                }
+
+                const bool isPaused = currentScene->GetIsPaused();
+                const char* const buttonText = isPaused ? ">" : "||";
+
+                if (m_LastFramePaused != isPaused)
+                {
+                    if (isPaused)
+                    {
+                        // #TODO Create style setter helper somewhere better
+                        ImGuiStyle& style = ImGui::GetStyle();
+                        Serialize::FromFile(Paths::Style(Settings::GetStyleFileName2()).c_str(), style, true);
+                    }
+                    else
+                    {
+                        ImGuiStyle& style = ImGui::GetStyle();
+                        Serialize::FromFile(Paths::Style(Settings::GetStyleFileName()).c_str(), style, true);
+                    }
+                }
+                m_LastFramePaused = isPaused;
+
+                ImGui::SameLineCentered(buttonText);
+                if (ImGui::Button(buttonText))
+                {
+                    currentScene->SetIsPaused(!currentScene->GetIsPaused());
+                }
+            }
+
+            constexpr u32 s_CharacterPixelSize = 10;
+            constexpr u32 s_DropDownArrowSize = 20;
+
+            const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
+            if (!scenes.empty())
+            {
+                std::vector<const char*> sceneNames;
+                sceneNames.reserve(3);
+
+                for (size_t i = 0; i < scenes.size(); i++)
+                {
+                    sceneNames.push_back(scenes[i]->GetSceneName().c_str());
+                }
+                int index = Scenes::GetCurrentSceneIndex();
+
+                const u32 sceneFileNameWidth = (u32)strlen(sceneNames[index]) * s_CharacterPixelSize;
+
+                ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
+
+                char s_ScenesCombobuffer[] = "Scenes:    ";
+                snprintf(s_ScenesCombobuffer, strlen(s_ScenesCombobuffer), "Scenes: %i", (int)sceneNames.size());
+
+                // #TODO Use ImGui::SameLineEnd();
+                ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesCombobuffer) * s_CharacterPixelSize));
+                if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), (s32)scenes.size()))
+                {
+                    Scenes::SetCurrentScene(scenes[index]->GetGuid());
+
+                    // #NOTE Scene transition changes removes above lines for below
+                    // #TODO SetActive(true/false) ?
+                    // Scenes::SetCurrentScene(index);
+                }
+                ImGui::PopItemWidth();
+            }
+            else
+            {
+                ImGui::SameLineEnd("Scenes : 0");
+                ImGui::Text("Scenes : 0");
+            }
+		}
+
+	}
+
+}

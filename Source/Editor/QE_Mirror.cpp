@@ -38,6 +38,7 @@ static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo
 }
 
 MIRROR_CLASS(QwerkE::UserSettings)
+MIRROR_CLASS_MEMBER(startInPlayMode)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Project)
