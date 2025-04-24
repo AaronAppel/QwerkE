@@ -107,6 +107,9 @@
     <ClInclude Include="Editor\QE_EditorWindowImGuiExtendedDemo.h">
       <Filter>Windows\Singleton</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowNotifications.h">
+      <Filter>Windows\Singleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

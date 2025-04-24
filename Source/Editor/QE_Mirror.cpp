@@ -134,6 +134,11 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowNodeEditor)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
+MIRROR_CLASS(QwerkE::Editor::EditorWindowNotifications)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNotifications)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowShaderEditor)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowShaderEditor)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)

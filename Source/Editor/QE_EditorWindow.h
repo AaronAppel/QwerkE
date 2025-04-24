@@ -157,7 +157,8 @@ namespace QwerkE {
 			Prompt,
 			Console,
 			HexEditor,
-			ImGuiExtendedDemo
+			ImGuiExtendedDemo,
+			Notifications
 			// #NOTE Serialized, so don't change ordering
 		)
 
