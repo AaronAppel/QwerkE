@@ -21,10 +21,8 @@
 
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
-#include "Libraries/imgui-node-editor/imgui_node_editor.h"
 #include "Libraries/im-neo-sequencer/imgui_neo_sequencer.h"
 #include "Libraries/ImGuizmo/ImGuizmo.h"
-#include "Libraries/ImNodeFlow/ImNodeFlow.h"
 
 #include "Libraries/imgui-notify/imgui_notify.h" // For RenderNotifications()
 #endif
@@ -60,61 +58,6 @@ int32_t endFrame = 64;
 bool transformOpen = false;
 std::vector<ImGui::FrameIndexType> keys = { 0, 10, 24 };
 bool doDelete = false;
-
-// ImNodeFlow
-using namespace ImFlow;
-
-class SimpleSum : public BaseNode
-{
-
-public:
-    SimpleSum()
-    {
-        setTitle("Simple sum");
-        setStyle(NodeStyle::green());
-        BaseNode::addIN<int>("In", 0, ConnectionFilter::SameType());
-        BaseNode::addOUT<int>("Out", nullptr)->behaviour([this]() { return getInVal<int>("In") + m_valB; });
-    }
-
-    void draw() override
-    {
-        if (BaseNode::isSelected()) {
-            ImGui::SetNextItemWidth(100.f);
-            ImGui::InputInt("##ValB", &m_valB);
-            ImGui::Button("Hello");
-        }
-    }
-
-private:
-    int m_valB = 0;
-};
-
-struct NodeEditor : ImFlow::BaseNode
-{
-    ImFlow::ImNodeFlow mINF;
-    NodeEditor(float d, std::size_t r)
-        : BaseNode()
-    {
-        setTitle("glhf");
-        mINF.setSize({ d,d });
-        if (r > 0) {
-            mINF.addNode<SimpleSum>({ 0,0 });
-            mINF.addNode<SimpleSum>({ 10,10 });
-        }
-    }
-
-    void set_size(ImVec2 d)
-    {
-        mINF.setSize(d);
-    }
-
-    void draw() override
-    {
-        mINF.update();
-    }
-};
-
-NodeEditor neditor(500, 1500);
 
 namespace QwerkE {
 
@@ -219,21 +162,6 @@ namespace QwerkE {
                         }
                         ImGui::End();
                     }
-
-                    if (false) // #TODO bx de-allocation null pointer exception
-                    {
-                        // ImGuiIO& io = ImGui::GetIO(); // (void)io;?
-                        // const ImVec2 window_size = io.DisplaySize - ImVec2(1, 1);
-                        // const ImVec2 window_pos = ImVec2(1, 1);
-                        // const ImVec2 node_editor_size = window_size - ImVec2(16, 16);
-                        // neditor.set_size(node_editor_size);
-
-                        ImGui::Begin("Node Editor", nullptr, 0); // ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-                        neditor.set_size(ImGui::GetContentRegionAvail());
-                        neditor.draw();
-                        ImGui::End();
-                    }
-
 
                     if (false)
                     {
