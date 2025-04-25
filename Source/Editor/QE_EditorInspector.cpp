@@ -206,7 +206,7 @@ namespace QwerkE {
                 {
                     u64* numberAddress = (u64*)obj;
 
-                    char buffer[U64_MAX_DIGITS] = { '\0' };
+                    char buffer[U64_MAX_DIGITS + 1] = { '\0' };
                     strcpy(buffer, std::to_string(*numberAddress).c_str());
                     // #TODO Test GUID::Max;
                     ImGui::PushItemWidth(165);
