@@ -79,6 +79,12 @@
     <ClCompile Include="Framework\QF_Debug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\QF_InputNew.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\QF_InputNewGlfw.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />
@@ -225,6 +231,9 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_Settings.h" />
+    <ClInclude Include="Framework\QF_InputNew.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

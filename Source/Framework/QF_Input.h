@@ -41,21 +41,10 @@ namespace QwerkE {
 
         bool IsJoystickButtonDown(eKeys key);
 
-        void OnKeyEvent(eKeys key, eKeyState state);
-
-        u16 RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
+        [[nodiscard]] u16 RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
         void UnregisterOnKeyEvent(eKeys key, u16 id);
 
         void ToggleLogKeyEvents();
-
-#ifdef _QGLFW3
-        eKeys GLFWToQwerkEKey(int key);
-
-        ImGuiKey QwerkEKeyToImGui(eKeys key);
-        void SetupCallbacks(GLFWwindow* window);
-#else
-#error "Define window/input library!"
-#endif
 
     }
 

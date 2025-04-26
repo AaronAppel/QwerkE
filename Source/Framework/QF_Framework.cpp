@@ -4,7 +4,10 @@
 
 #include "QF_Assets.h"
 #include "QF_Events.h"
+
 #include "QF_Input.h"
+#include "QF_InputNew.h"
+
 #include "QF_Log.h"
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
@@ -67,6 +70,7 @@ namespace QwerkE {
 		void StartFrame()
 		{
 			Input::NewFrame();
+			Input::NewFrame_New();
 			Events::ProcessEvents();
 			// Jobs::ProcessTasks();
 			Window::NewFrame();

@@ -7,13 +7,15 @@
 
 #define _QIGNORED(x) (static_cast<void>(x))
 
-#include "QC_CallbackFunction.h"
+#include "QC_CallbackFunction.h" // #TODO Force include? Seems more niche and should be included on a needs basis
 #include "QC_Math.h"
 #include "QC_TypeDefs.h"
 
 #include "QF_Debug.h"
 #include "QF_Log.h"
 
+// #TODO This file should probably not define anything and just list other files to include in all other files
+// #TODO Move GLM type aliasing to another/better file/place
 #ifdef _QGLM
 #include "Libraries/glm/glm.hpp"
 

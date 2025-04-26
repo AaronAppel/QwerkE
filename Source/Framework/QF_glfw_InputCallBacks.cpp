@@ -17,6 +17,10 @@ namespace QwerkE {
     namespace Input {
 
 #ifdef _QGLFW3
+        extern eKeys GLFWToQwerkEKey(int key);
+        extern ImGuiKey QwerkEKeyToImGui(eKeys key);
+        extern void OnKeyEvent(eKeys key, eKeyState state);
+
         static void local_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
         static void char_callback(GLFWwindow* window, unsigned int codePoint);
         static void char_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods) { }
@@ -51,7 +55,7 @@ namespace QwerkE {
                 }
             }
 
-            const bool keyIsRepeating = action == GLFW_REPEAT;
+            const bool keyIsRepeating = action == GLFW_REPEAT; // #TODO Checkout Windows key repeat logic
             const bool keyIsReleased = action == GLFW_RELEASE;
             const eKeys qwerkEeKey = GLFWToQwerkEKey(key);
 
@@ -64,6 +68,7 @@ namespace QwerkE {
             OnKeyEvent(qwerkEeKey, (eKeyState)!keyIsReleased);
 
 #ifdef _QDEARIMGUI
+            // #TODO Update to use new imgui input API: https://github.com/ocornut/imgui/issues/4858
             ImGuiKey imguiKey = QwerkEKeyToImGui(qwerkEeKey);
             ImGui::GetIO().AddKeyEvent(imguiKey, !keyIsReleased);
 

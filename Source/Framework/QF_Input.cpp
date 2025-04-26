@@ -23,6 +23,8 @@ namespace QwerkE {
 
     namespace Input {
 
+        extern void SetupCallbacks(GLFWwindow* window);
+
         constexpr char* s_GameActionsFileName = "GameActions.qdata";
         static GameActions s_GameActions;
 

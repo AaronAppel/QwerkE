@@ -31,6 +31,12 @@ const char* g_WindowTitle = "QwerkEngine";
 
 namespace QwerkE {
 
+#ifdef _QGLFW3
+    namespace Input {
+        extern void Input_GlfwCallbacks(GLFWwindow* window);
+    }
+#endif
+
     namespace Window {
 
         bool s_windowIsMinimized = false;
@@ -46,6 +52,7 @@ namespace QwerkE {
 #endif
 
     #ifdef _QGLFW3
+
         GLFWwindow* s_window = nullptr;
 
 #if 1 // #TODO Omit from retail builds
@@ -146,6 +153,10 @@ namespace QwerkE {
                 glfwFocusWindow(s_window);
             }
 
+#if _QGLFW3
+            Input::Input_GlfwCallbacks(s_window);
+#endif // _QGLFW3
+
             glfwSetErrorCallback(local_ErrorCallback);
             glfwSetFramebufferSizeCallback(s_window, local_FrameBufferSizeCallback);
             glfwSetWindowCloseCallback(s_window, local_CloseCallback);
@@ -154,7 +165,8 @@ namespace QwerkE {
             glfwSetWindowPosCallback(s_window, local_window_pos_callback);
             glfwSetDropCallback(s_window, local_FileDropCallback);
 
-            glfwSetKeyCallback(s_window, local_KeyEventCallback);
+            // #NOTE Overridden in QF_glfw_InputCallBacks.cpp::SetupCallbacks(41)
+            // glfwSetKeyCallback(s_window, local_KeyEventCallback);
     #endif
         }
 
