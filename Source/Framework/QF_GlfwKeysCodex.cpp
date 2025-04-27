@@ -50,7 +50,7 @@ namespace QwerkE {
             keysCodex[GLFW_KEY_KP_ADD] = eKeys_Pad_Plus;
             keysCodex[GLFW_KEY_KP_SUBTRACT] = eKeys_Pad_Minus;
             keysCodex[GLFW_KEY_KP_DIVIDE] = eKeys_Pad_Division;
-            keysCodex[GLFW_KEY_KP_MULTIPLY] = eKeys_Pad_Multiplication;
+            keysCodex[GLFW_KEY_KP_MULTIPLY] = eKeys_Pad_Multiply;
             keysCodex[GLFW_KEY_KP_EQUAL] = eKeys_Pad_Equal;
 
             keysCodex[GLFW_KEY_KP_0] = eKeys_Pad_0;

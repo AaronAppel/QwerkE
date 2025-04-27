@@ -143,7 +143,7 @@ namespace QwerkE {
 
             keysCodex[eKeys_Pad_Decimal] = ImGuiKey_KeypadDecimal;
             keysCodex[eKeys_Pad_Division] = ImGuiKey_KeypadDivide;
-            keysCodex[eKeys_Pad_Multiplication] = ImGuiKey_KeypadMultiply;
+            keysCodex[eKeys_Pad_Multiply] = ImGuiKey_KeypadMultiply;
             keysCodex[eKeys_Pad_Minus] = ImGuiKey_KeypadSubtract;
             keysCodex[eKeys_Pad_Plus] = ImGuiKey_KeypadAdd;
             keysCodex[eKeys_Pad_Return] = ImGuiKey_KeypadEnter;

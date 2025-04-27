@@ -207,7 +207,7 @@ namespace QwerkE {
         eKeys_Pad_Plus,
         eKeys_Pad_Minus,
         eKeys_Pad_Division,
-        eKeys_Pad_Multiplication,
+        eKeys_Pad_Multiply,
         eKeys_Pad_Equal, // 46
         // 47
         eKeys_0 = 48, // #TODO Move to better ordering
