@@ -35,7 +35,10 @@
 #include "QF_Directory.h"
 #include "QF_Files.h"
 #include "QF_Framework.h"
+
 #include "QF_Input.h"
+#include "QF_InputNew.h"
+
 #include "QF_Log.h"
 #include "QF_Mesh.h"
 #include "QF_PathDefines.h"
@@ -399,6 +402,43 @@ namespace QwerkE {
 
         void local_Update()
         {
+            // if (Input::KeyDown(eKeys::eKeys_A))
+            {
+                // LOG_INFO(Log::eLogLevel::Info, "KeyState");
+            }
+            if (Input::KeyPressed(eKeys::eKeys_A))
+            {
+                LOG_WARN("KeyDown()");
+            }
+            if (Input::KeyReleased(eKeys::eKeys_A))
+            {
+                LOG_ERROR("KeyUp()");
+            }
+            if (Input::KeyPressed(eKeys::eKeys_S))
+            {
+                LOG_WARN("KeyDown()");
+            }
+            if (Input::KeyReleased(eKeys::eKeys_S))
+            {
+                LOG_ERROR("KeyUp()");
+            }
+            if (Input::KeyPressed(eKeys::eKeys_D))
+            {
+                LOG_WARN("KeyDown()");
+            }
+            if (Input::KeyReleased(eKeys::eKeys_D))
+            {
+                LOG_ERROR("KeyUp()");
+            }
+            if (Input::KeyPressed(eKeys::eKeys_F))
+            {
+                LOG_WARN("KeyDown()");
+            }
+            if (Input::KeyReleased(eKeys::eKeys_F))
+            {
+                LOG_ERROR("KeyUp()");
+            }
+
             Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
 
             if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))

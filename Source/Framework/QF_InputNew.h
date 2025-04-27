@@ -20,9 +20,9 @@ namespace QwerkE {
             C
         };
 
-        bool KeyDown(const eKeys a_Key); // const #TODO KeyPress/KeyPressed?
-        bool KeyUp(const eKeys a_Key); // #TODO KeyRelease/KeyReleased?
-        bool KeyState(const eKeys a_Key);  // #TODO IsKeyDown/KeyDown?
+        bool KeyPressed(const eKeys a_Key); // const #TODO KeyPress/KeyPressed?
+        bool KeyReleased(const eKeys a_Key); // #TODO KeyRelease/KeyReleased?
+        bool KeyDown(const eKeys a_Key);  // #TODO IsKeyDown/KeyDown?
 
         void NewFrame_New();
 

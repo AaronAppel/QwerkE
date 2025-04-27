@@ -1,6 +1,7 @@
 #pragma once
 
 // Primitive types
+// Integers
 #include <stdint.h>
 typedef int8_t s8;
 #define S8_MIN INT8_MIN
@@ -41,6 +42,77 @@ typedef uint64_t u64;
 #define U64_MIN 0
 #define U64_MAX UINT64_MAX
 #define U64_MAX_DIGITS 20
+
+// Bits (#TODO Experimental)
+struct bits1
+{
+    bits1(unsigned char value)
+    {
+        bits = value;
+    }
+    unsigned char bits : 1; // x bit unsigned integer
+    static constexpr u8 max = 1;
+};
+
+struct bits2
+{
+    bits2(unsigned char value)
+    {
+        bits = value;
+    }
+    unsigned char bits : 2; // x bit unsigned integer
+    static constexpr u8 max = 3;
+};
+
+struct bits3
+{
+    bits3(unsigned char value)
+    {
+        bits = value;
+    }
+    unsigned char bits : 3; // x bit unsigned integer
+    static constexpr u8 max = 7;
+};
+
+struct bits4
+{
+    bits4(unsigned char value)
+    {
+        bits = value;
+    }
+    unsigned char bits : 4; // x bit unsigned integer
+    static constexpr u8 max = 15;
+};
+
+struct bits5
+{
+    bits5(unsigned char value)
+    {
+        bits = value;
+    }
+    unsigned char bits : 5; // x bit unsigned integer
+    static constexpr u8 max = 31;
+};
+
+struct bits6
+{
+    bits6(unsigned char value)
+    {
+        bits = value;
+    }
+    unsigned char bits : 6; // x bit unsigned integer
+    static constexpr u8 max = 63;
+};
+
+struct bits7
+{
+    bits7(unsigned char value)
+    {
+        bits = value;
+    }
+    unsigned char bits : 7; // x bit unsigned integer
+    static constexpr u8 max = 127;
+};
 
 // String
 #include <string>
