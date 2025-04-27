@@ -234,6 +234,9 @@
     <ClInclude Include="Framework\QF_InputNew.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\QF_QKey.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

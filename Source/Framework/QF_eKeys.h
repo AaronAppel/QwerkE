@@ -81,77 +81,36 @@ namespace QwerkE {
         7	    37	00110111	55
         8	    38	00111000	56
         9	    39	00111001	57
-        :	    3A	00111010	58
+
         ;	    3B	00111011	59
-        <	    3C	00111100	60
+
         =	    3D	00111101	61
-        >	    3E	00111110	62
-        ?	    3F	00111111	63
-        @	    40	01000000	64
-        A	    41	01000001	65
-        B	    42	01000010	66
-        C	    43	01000011	67
-        D	    44	01000100	68
-        E	    45	01000101	69
-        F	    46	01000110	70
-        G	    47	01000111	71
-        H	    48	01001000	72
-        I	    49	01001001	73
-        J	    4A	01001010	74
-        K	    4B	01001011	75
-        L	    4C	01001100	76
-        M	    4D	01001101	77
-        N	    4E	01001110	78
-        O	    4F	01001111	79
-        P	    50	01010000	80
-        Q	    51	01010001	81
-        R	    52	01010010	82
-        S	    53	01010011	83
-        T	    54	01010100	84
-        U	    55	01010101	85
-        V	    56	01010110	86
-        W	    57	01010111	87
-        X	    58	01011000	88
-        Y	    59	01011001	89
-        Z	    5A	01011010	90
+
         [	    5B	01011011	91
         \	    5C	01011100	92
         ]	    5D	01011101	93
         ^	    5E	01011110	94
         _	    5F	01011111	95
         `	    60	01100000	96
-        a	    61	01100001	97
-        b	    62	01100010	98
-        c	    63	01100011	99
-        d	    64	01100100	100
-        e	    65	01100101	101
-        f	    66	01100110	102
-        g	    67	01100111	103
-        h	    68	01101000	104
-        i	    69	01101001	105
-        j	    6A	01101010	106
-        k	    6B	01101011	107
-        l	    6C	01101100	108
-        m	    6D	01101101	109
-        n	    6E	01101110	110
-        o	    6F	01101111	111
-        p	    70	01110000	112
-        q	    71	01110001	113
-        r	    72	01110010	114
-        s	    73	01110011	115
-        t	    74	01110100	116
-        u	    75	01110101	117
-        v	    76	01110110	118
-        w	    77	01110111	119
-        x	    78	01111000	120
-        y	    79	01111001	121
-        z	    7A	01111010	122
         {	    7B	01111011	123
         |	    7C	01111100	124
         }	    7D	01111101	125
         ~	    7E	01111110	126
         DEL	    7F	01111111	127
         */
+
+#define GLFW_MOUSE_BUTTON_1         0
+#define GLFW_MOUSE_BUTTON_2         1
+#define GLFW_MOUSE_BUTTON_3         2
+#define GLFW_MOUSE_BUTTON_4         3
+#define GLFW_MOUSE_BUTTON_5         4
+#define GLFW_MOUSE_BUTTON_6         5
+#define GLFW_MOUSE_BUTTON_7         6
+#define GLFW_MOUSE_BUTTON_8         7
+#define GLFW_MOUSE_BUTTON_LAST      GLFW_MOUSE_BUTTON_8
+#define GLFW_MOUSE_BUTTON_LEFT      GLFW_MOUSE_BUTTON_1
+#define GLFW_MOUSE_BUTTON_RIGHT     GLFW_MOUSE_BUTTON_2
+#define GLFW_MOUSE_BUTTON_MIDDLE    GLFW_MOUSE_BUTTON_3
 
         // Mouse
         eKeys_LeftClick,
@@ -166,8 +125,6 @@ namespace QwerkE {
         eKeys_MouseButton6,
         eKeys_MouseButton7,
         eKeys_MouseButton8,
-
-        // #define 	GLFW_MOD_SHIFT   0x0001
 
         eKeys_CTRL,
         eKeys_SHIFT,
@@ -259,17 +216,17 @@ namespace QwerkE {
         eKeys_Pad_8,
         eKeys_Pad_9,
 
-        eKeys_Space,
-        eKeys_Apostrophe,
-        eKeys_Comma,
-        eKeys_Period,
-        eKeys_ForwardSlash,
+        eKeys_Space, // #TODO 32
+        eKeys_Apostrophe, // #TODO 39
+        eKeys_Comma, // #TODO 44
+        eKeys_Period, // #TODO 46
+        eKeys_ForwardSlash, // #TODO 47
         eKeys_BackSlash,
-        eKeys_SemiColon,
+        eKeys_SemiColon, // #TODO 59
         eKeys_LeftBracket,
         eKeys_RightBracket,
         eKeys_Tilde, // 96
-        eKeys_Minus,
+        eKeys_Minus, // #TODO 45
         eKeys_Equal,
 
         eKeys_Up,

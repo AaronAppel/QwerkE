@@ -1,5 +1,7 @@
 #include "QF_Input.h"
 
+#include "QF_QKey.h"
+
 namespace QwerkE {
 
     namespace Input {
@@ -12,17 +14,9 @@ namespace QwerkE {
         // Stage 1 //
         // Minimal (MVP)
         // Polling API
-        enum KeyCodes : unsigned char
-        {
-            None = 0,
-            A,
-            B,
-            C
-        };
-
-        bool KeyPressed(const eKeys a_Key); // const #TODO KeyPress/KeyPressed?
-        bool KeyReleased(const eKeys a_Key); // #TODO KeyRelease/KeyReleased?
-        bool KeyDown(const eKeys a_Key);  // #TODO IsKeyDown/KeyDown?
+        bool KeyPressed(const QKey a_Key); // const #TODO KeyPress/KeyPressed?
+        bool KeyReleased(const QKey a_Key); // #TODO KeyRelease/KeyReleased?
+        bool KeyDown(const QKey a_Key);  // #TODO IsKeyDown/KeyDown?
 
         void NewFrame_New();
 
@@ -49,6 +43,8 @@ namespace QwerkE {
 
             bool enabled = true; // Disable for cinematics, UI input, window/UI loses focus
         };
+
+        // GLFW_JOYSTICK_1 to GLFW_JOYSTICK_16 or GLFW_JOYSTICK_LAST
 
         // Already defined
         // bool IsMouseDragging() { return false; }

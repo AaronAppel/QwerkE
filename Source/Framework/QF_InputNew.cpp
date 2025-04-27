@@ -1,7 +1,5 @@
 #include "QF_InputNew.h"
 
-#include "QF_eKeys.h"
-
 namespace QwerkE {
 
     namespace Input {
@@ -9,12 +7,14 @@ namespace QwerkE {
         using RollingIndex = bits4; // #NOTE Utilize rollover
         constexpr u16 s_HistoryBufferSize = RollingIndex::max + 1;
 
-        eKeys s_HistoryBufferKeys[s_HistoryBufferSize];
-        eKeyState s_HistoryBufferStates[s_HistoryBufferSize];
+        QKey s_HistoryBufferKeys[s_HistoryBufferSize];
+        bool s_HistoryBufferStates[s_HistoryBufferSize];
 
         RollingIndex s_NextToWriteIndex = 0;
         RollingIndex s_LastFrameStartIndex = 0;
         RollingIndex s_LastFrameEndIndex = 0;
+
+        u8 s_KeysCurrentlyDown = 0;
 
 #ifdef _QDEBUG
         static u16 s_InputsThisFrame = 0; // #TODO Review 16 bit value
@@ -52,7 +52,7 @@ namespace QwerkE {
         }
 #endif // _QDEBUG
 
-        void OnKeyEvent_New(eKeys a_Key, eKeyState a_KeyState)
+        void OnKeyEvent_New(const QKey a_Key, const bool a_KeyState)
         {
 #ifdef _QDEBUG
             ++s_InputsThisFrame;
@@ -63,10 +63,19 @@ namespace QwerkE {
             s_HistoryBufferKeys[s_NextToWriteIndex.bits] = a_Key;
             s_HistoryBufferStates[s_NextToWriteIndex.bits] = a_KeyState;
 
+            if (KeyStateDown == a_KeyState)
+            {
+                ++s_KeysCurrentlyDown;
+            }
+            else
+            {
+                --s_KeysCurrentlyDown;
+            }
+
             ++s_NextToWriteIndex.bits;
         }
 
-        bool KeyHistoryCheck(const eKeys a_Key, const eKeyState a_KeyState)
+        bool KeyHistoryCheck(const QKey a_Key, const bool a_KeyState)
         {
             RollingIndex index = s_NextToWriteIndex.bits - 1;
             ASSERT(U8_MAX >= s_HistoryBufferSize, "u8 too small for range!");
@@ -74,7 +83,7 @@ namespace QwerkE {
 
             while (inputEventsThisFrame > 0)
             {
-                if (a_Key == s_HistoryBufferKeys[index.bits] &&
+                if ((a_Key == s_HistoryBufferKeys[index.bits] || e_Any == a_Key) &&
                     a_KeyState == s_HistoryBufferStates[index.bits])
                 {
                     return true;
@@ -86,14 +95,14 @@ namespace QwerkE {
             return false;
         }
 
-        bool KeyPressed(const eKeys a_Key)
+        bool KeyPressed(const QKey a_Key)
         {
-            return KeyHistoryCheck(a_Key, eKeyState::eKeyState_Press);
+            return KeyHistoryCheck(a_Key, KeyStateDown);
         }
 
-        bool KeyReleased(const eKeys a_Key)
+        bool KeyReleased(const QKey a_Key)
         {
-            return KeyHistoryCheck(a_Key, eKeyState::eKeyState_Release);
+            return KeyHistoryCheck(a_Key, KeyStateUp);
         }
 
 #ifdef _QDEBUG
@@ -115,6 +124,7 @@ namespace QwerkE {
 
             ImGui::Text("Inputs this frame: %i", s_InputsThisFrame);
             ImGui::Text("Inputs since reset: %i", s_InputsSinceReset);
+            ImGui::Text("Keys currently down: %i", s_KeysCurrentlyDown);
 
             ImGui::Text("Rolling index max: %i", RollingIndex::max);
             ImGui::Text("History buffer size: %i", s_HistoryBufferSize);
