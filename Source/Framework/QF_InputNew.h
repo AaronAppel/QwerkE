@@ -26,6 +26,10 @@ namespace QwerkE {
 
         void NewFrame_New();
 
+#ifdef _QDEBUG
+        void DrawDebugWindow();
+#endif // _QDEBUG
+
         // Stage 2 //
         // Callbacks and events
         // void OnKeyStateChange(int key, void* callback) {} // Register
