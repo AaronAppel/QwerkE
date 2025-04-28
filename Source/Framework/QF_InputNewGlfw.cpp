@@ -8,17 +8,20 @@ namespace QwerkE {
 
     namespace Input {
 
-        extern void OnKeyEvent_New(const QKey a_Key, const bool a_KeyState);
         extern u8 s_KeysCurrentlyDown;
+        extern void OnKeyEvent_New(const QKey a_Key, const bool a_KeyState);
+        extern void OnMouseMove_New(const double xpos, const double ypos);
+        extern void OnMouseButton_New(const int button, const int action, const int mods);
+        extern void OnMouseScroll_New(const double xoffset, const double yoffset);
 
-        constexpr QKey GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
+        constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
+        constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
 
-        void Local_GlfwKeyCallback(GLFWwindow* a_Window, int a_Key, int a_Scancode, int a_Action, int a_Mode)
+        static void Local_GlfwKeyCallback(GLFWwindow* a_Window, int a_Key, int a_Scancode, int a_Action, int a_Mode)
         {
-            // #TODO Check values on media key presses. What is scan code?
             if (GLFW_REPEAT != a_Action) // #TODO Review GLFW_REPEAT
             {
-                const QKey qwerkEeKey = GlfwToQwerkE(a_Key, a_Scancode);
+                const QKey qwerkEeKey = Local_GlfwToQwerkE(a_Key, a_Scancode);
                 if (QKey::e_MAX != qwerkEeKey)
                 {
                     OnKeyEvent_New(qwerkEeKey, GLFW_PRESS == a_Action);
@@ -26,16 +29,41 @@ namespace QwerkE {
             }
         }
 
+        static void Local_GlfwChar_callback(GLFWwindow* window, unsigned int codePoint) {}
+        static void Local_GlfwChar_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods) {}
+        static void Local_GlfwJoystick_callback(int joystickId, int eventId) {}
+
+        static void Local_GlfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+        {
+            OnMouseMove_New(xpos, ypos);
+        }
+
+        static void Local_GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+        {
+            OnMouseButton_New(button, action, mods);
+        }
+
+        static void Local_GlfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+        {
+            OnMouseScroll_New(xoffset, yoffset);
+        }
+
+        static void Local_GlfwCursor_enter_callback(GLFWwindow* window, int entered) {} // #TODO Window callback?
+
         // #TODO extern and call in Window::
         void Input_GlfwCallbacks(GLFWwindow* window)
         {
             glfwSetKeyCallback(window, Local_GlfwKeyCallback);
             // glfwSetCharCallback(window, char_callback);
             // glfwSetCharModsCallback(window, char_mods_callback);
-            // glfwSetCursorPosCallback(window, cursor_position_callback);
-            // glfwSetMouseButtonCallback(window, mouse_button_callback);
+
             // glfwSetJoystickCallback(joystick_callback);
-            // glfwSetScrollCallback(window, scroll_callback);
+
+            // #TODO cursor entered?
+
+            glfwSetMouseButtonCallback(window, Local_GlfwMouseButtonCallback);
+            // glfwSetCursorPosCallback(window, cursor_position_callback);
+            glfwSetScrollCallback(window, Local_GlfwScrollCallback);
         }
 
         bool KeyDown(const QKey a_Key)
@@ -44,35 +72,218 @@ namespace QwerkE {
             {
                 return s_KeysCurrentlyDown > 0;
             }
-            // #TODO Support e_Any
             // #TODO GLFWindow* reference. Remember to test multi-window input
-            const int scancode = 0; // #TODO Look at switching to scan codes
-            return GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), GlfwToQwerkE(a_Key, scancode));
+            return GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
         }
 
-        constexpr int QwerkEToGlfw(const QKey a_QwerkEKey)
+        constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey)
         {
-            // #TODO Implement
-            switch (a_QwerkEKey)
+            switch (a_QwerkEKey) // GLFW keys defined in glfw3.h, or https://www.glfw.org/docs/latest/group__keys.html
             {
-            case -1: return -1;
-            case QKey::e_MAX: return GLFW_KEY_LAST;
+                case e_MouseButton1: return GLFW_MOUSE_BUTTON_1;                // Mouse device button 1
+                case e_MouseButton2: return GLFW_MOUSE_BUTTON_2;                // Mouse device button 2
+                case e_MouseButton3: return GLFW_MOUSE_BUTTON_3;                // Mouse device button 3
+                case e_MouseButton4: return GLFW_MOUSE_BUTTON_4;                // Mouse device button 4
+                case e_MouseButton5: return GLFW_MOUSE_BUTTON_5;                // Mouse device button 5
+                case e_MouseButton6: return GLFW_MOUSE_BUTTON_6;                // Mouse device button 6
+                case e_MouseButton7: return GLFW_MOUSE_BUTTON_7;                // Mouse device button 7
+                case e_MouseButton8: return GLFW_MOUSE_BUTTON_8;                // Mouse device button 8
 
-            default:
-                break;
+                case e_Gamepad0: return GLFW_GAMEPAD_BUTTON_A;                  // Gamepad device button 0
+                case e_Gamepad1: return GLFW_GAMEPAD_BUTTON_B;                  // Gamepad device button 1
+                case e_Gamepad2: return GLFW_GAMEPAD_BUTTON_X;                  // Gamepad device button 2
+                case e_Gamepad3: return GLFW_GAMEPAD_BUTTON_Y;                  // Gamepad device button 3
+                case e_Gamepad4: return GLFW_GAMEPAD_BUTTON_LEFT_BUMPER;        // Gamepad device button 4
+                case e_Gamepad5: return GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER;       // Gamepad device button 5
+                case e_Gamepad6: return GLFW_GAMEPAD_BUTTON_BACK;               // Gamepad device button 6
+                case e_Gamepad7: return GLFW_GAMEPAD_BUTTON_START;              // Gamepad device button 7
+                case e_Gamepad8: return GLFW_GAMEPAD_BUTTON_GUIDE;              // Gamepad device button 8
+                case e_Gamepad9: return GLFW_GAMEPAD_BUTTON_LEFT_THUMB;         // Gamepad device button 9
+                case e_Gamepad10: return GLFW_GAMEPAD_BUTTON_RIGHT_THUMB;       // Gamepad device button 10
+                case e_Gamepad11: return GLFW_GAMEPAD_BUTTON_DPAD_UP;           // Gamepad device button 11
+                case e_Gamepad12: return GLFW_GAMEPAD_BUTTON_DPAD_RIGHT;        // Gamepad device button 12
+                case e_Gamepad13: return GLFW_GAMEPAD_BUTTON_DPAD_DOWN;         // Gamepad device button 13
+                case e_Gamepad14: return GLFW_GAMEPAD_BUTTON_DPAD_LEFT;         // Gamepad device button 14
+                 // #TODO case e_Gamepad15: return GLFW_GAMEPAD_BUTTON_A;       // Gamepad device button 15
+
+                case e_ShiftL: return GLFW_KEY_LEFT_SHIFT;                      // Left Shift key
+                case e_CtrlL: return GLFW_KEY_LEFT_CONTROL;                     // Left CTRL or Control key
+                case e_AltL: return GLFW_KEY_LEFT_ALT;                          // Left ALT or Alt key
+                case e_SystemL: return GLFW_KEY_LEFT_SUPER;                     // Left System key, like Windows or Win (Microsoft), command or cmd (Apple)
+                case e_ShiftR: return GLFW_KEY_RIGHT_SHIFT;                     // Right Shift key
+                case e_CtrlR: return GLFW_KEY_RIGHT_CONTROL;                    // Right CTRL or Control key
+                case e_AltR: return GLFW_KEY_RIGHT_ALT;                         // Right ALT or Alt key
+                case e_SystemR: return GLFW_KEY_RIGHT_SUPER;                    // Right System key, like Windows or Win (Microsoft), command or cmd (Apple)
+
+                case e_Space: return GLFW_KEY_SPACE;                            // Spacebar key
+
+                // #TODO Scancode support
+                case e_MediaPlay: return 290;                                   // Play or pause media key
+                // #TODO case e_MediaNext: return ;                             // Next or skip forward media key
+                // #TODO case e_MediaPrevious: return ;                         // Previous or skip back media key
+                case e_MediaVolumeUp: return 304;                               // Volume up media key
+                case e_MediaVolumeDown: return 302;                             // Volume down media key
+                // #TODO case e_MediaVolumeMute: return ;                       // Volume mute media key
+                // #TODO case e_Function: return ;                              // Function or Fn key
+
+                case e_Apostrophe: return GLFW_KEY_APOSTROPHE;                  // ''' or '"' key
+
+                case e_Right: return GLFW_KEY_RIGHT;                            // Right arrow key
+                case e_Left: return GLFW_KEY_LEFT;                              // Left arrow key
+                case e_Down: return GLFW_KEY_DOWN;                              // Down arrow key
+                case e_Up: return GLFW_KEY_UP;                                  // Up arrow key
+
+                case e_Comma: return GLFW_KEY_COMMA;                            // ',' or '<' key
+                case e_Minus: return GLFW_KEY_MINUS;                            // '-' or '_' key
+                case e_Period: return GLFW_KEY_PERIOD;                          // '.' or '>' key
+                case e_SlashForward: return GLFW_KEY_SLASH;                     // '/' or '?' key
+
+                case e_0: return GLFW_KEY_0;                                    // '0' or ')' key
+                case e_1: return GLFW_KEY_1;                                    // '1' or '!' key
+                case e_2: return GLFW_KEY_2;                                    // '2' or '@' key
+                case e_3: return GLFW_KEY_3;                                    // '3' or '#' key
+                case e_4: return GLFW_KEY_4;                                    // '4' or '$' key
+                case e_5: return GLFW_KEY_5;                                    // '5' or '%' key
+                case e_6: return GLFW_KEY_6;                                    // '6' or '^' key
+                case e_7: return GLFW_KEY_7;                                    // '7' or '&' key
+                case e_8: return GLFW_KEY_8;                                    // '8' or '*' key
+                case e_9: return GLFW_KEY_9;                                    // '9' or '(' key
+
+                // #TODO Any return value, or blocked/disabled?
+                case e_Any: return GLFW_KEY_A;                                  // Any key. Used in functions to return true for any key event
+                case e_CtrlAny: return GLFW_KEY_LEFT_CONTROL;                   // Left or right CTRL or control key
+                case e_ShiftAny: return GLFW_KEY_LEFT_SHIFT;                    // Left or right Shift key
+                case e_AltAny: return GLFW_KEY_LEFT_ALT;                        // Left or right Alt or alt key
+
+                case e_SemiColon: return GLFW_KEY_SEMICOLON;                    // ';' or ':' key
+
+                case e_Equal: return GLFW_KEY_EQUAL;                            // '=' or '+' key
+
+                case e_A: return GLFW_KEY_A;                                    // 'A' or 'a' key
+                case e_B: return GLFW_KEY_B;                                    // 'B' or 'b' key
+                case e_C: return GLFW_KEY_C;                                    // 'C' or 'c' key
+                case e_D: return GLFW_KEY_D;                                    // 'D' or 'd' key
+                case e_E: return GLFW_KEY_E;                                    // 'E' or 'e' key
+                case e_F: return GLFW_KEY_F;                                    // 'F' or 'f' key
+                case e_G: return GLFW_KEY_G;                                    // 'G' or 'g' key
+                case e_H: return GLFW_KEY_H;                                    // 'H' or 'h' key
+                case e_I: return GLFW_KEY_I;                                    // 'I' or 'i' key
+                case e_J: return GLFW_KEY_J;                                    // 'J' or 'j' key
+                case e_K: return GLFW_KEY_K;                                    // 'K' or 'k' key
+                case e_L: return GLFW_KEY_L;                                    // 'L' or 'l' key
+                case e_M: return GLFW_KEY_M;                                    // 'M' or 'm' key
+                case e_N: return GLFW_KEY_N;                                    // 'N' or 'n' key
+                case e_O: return GLFW_KEY_O;                                    // 'O' or 'o' key
+                case e_P: return GLFW_KEY_P;                                    // 'P' or 'p' key
+                case e_Q: return GLFW_KEY_Q;                                    // 'Q' or 'q' key
+                case e_R: return GLFW_KEY_R;                                    // 'R' or 'r' key
+                case e_S: return GLFW_KEY_S;                                    // 'S' or 's' key
+                case e_T: return GLFW_KEY_T;                                    // 'T' or 't' key
+                case e_U: return GLFW_KEY_U;                                    // 'U' or 'u' key
+                case e_V: return GLFW_KEY_V;                                    // 'V' or 'v' key
+                case e_W: return GLFW_KEY_W;                                    // 'W' or 'w' key
+                case e_X: return GLFW_KEY_X;                                    // 'X' or 'x' key
+                case e_Y: return GLFW_KEY_Y;                                    // 'Y' or 'y' key
+                case e_Z: return GLFW_KEY_Z;                                    // 'Z' or 'z' key
+
+                case e_BracketLeft: return GLFW_KEY_LEFT_BRACKET;               // '[' or '{' key
+                case e_BackSlash: return GLFW_KEY_BACKSLASH;                    // '\' or '|' key
+                case e_BracketRight: return GLFW_KEY_RIGHT_BRACKET;             // ']' or '}' key
+
+                case e_Menu: return GLFW_KEY_MENU;                              // Menu or context or right click key
+
+                case e_Escape: return GLFW_KEY_ESCAPE;                          // Escape key
+
+                case e_Tilde: return GLFW_KEY_GRAVE_ACCENT;                     // '`' or '~' key
+
+                case e_Enter: return GLFW_KEY_ENTER;                            // Enter or Return key
+                case e_Tab: return GLFW_KEY_TAB;                                // Tab key
+                case e_Backspace: return GLFW_KEY_BACKSPACE;                    // Backspace key
+                case e_Insert: return GLFW_KEY_INSERT;                          // Insert key
+                case e_Delete: return GLFW_KEY_DELETE;                          // Delete key
+
+                case e_PageUp: return GLFW_KEY_PAGE_UP;                         // Page Up or PgUp key
+                case e_PageDown: return GLFW_KEY_PAGE_DOWN;                     // Page Down or PgDn key
+                case e_Home: return GLFW_KEY_HOME;                              // Home key
+                case e_End: return GLFW_KEY_END;                                // End key
+
+                case e_CapsLock: return GLFW_KEY_CAPS_LOCK;                     // Caps Lock or Caps key
+                case e_ScrollLock: return GLFW_KEY_SCROLL_LOCK;                 // Scroll Lock or ScrLk key
+                case e_NumLock: return GLFW_KEY_NUM_LOCK;                       // Number Lock or NumLock key
+                case e_PrintScreen: return GLFW_KEY_PRINT_SCREEN;               // Print Screen or PrtSc key
+                case e_Pause: return GLFW_KEY_PAUSE;                            // Pause key
+
+                case e_F1: return GLFW_KEY_F1;                                  // F1 function key
+                case e_F2: return GLFW_KEY_F2;                                  // F2 function key
+                case e_F3: return GLFW_KEY_F3;                                  // F3 function key
+                case e_F4: return GLFW_KEY_F4;                                  // F4 function key
+                case e_F5: return GLFW_KEY_F5;                                  // F5 function key
+                case e_F6: return GLFW_KEY_F6;                                  // F6 function key
+                case e_F7: return GLFW_KEY_F7;                                  // F7 function key
+                case e_F8: return GLFW_KEY_F8;                                  // F8 function key
+                case e_F9: return GLFW_KEY_F9;                                  // F9 function key
+                case e_F10: return GLFW_KEY_F10;                                // F10 function key
+                case e_F11: return GLFW_KEY_F11;                                // F11 function key
+                case e_F12: return GLFW_KEY_F12;                                // F12 function key
+                case e_F13: return GLFW_KEY_F13;                                // F13 function key
+                case e_F14: return GLFW_KEY_F14;                                // F14 function key
+                case e_F15: return GLFW_KEY_F15;                                // F15 function key
+                case e_F16: return GLFW_KEY_F16;                                // F16 function key
+                case e_F17: return GLFW_KEY_F17;                                // F17 function key
+                case e_F18: return GLFW_KEY_F18;                                // F18 function key
+                case e_F19: return GLFW_KEY_F19;                                // F19 function key
+                case e_F20: return GLFW_KEY_F20;                                // F20 function key
+                case e_F21: return GLFW_KEY_F21;                                // F21 function key
+                case e_F22: return GLFW_KEY_F22;                                // F22 function key
+                case e_F23: return GLFW_KEY_F23;                                // F23 function key
+                case e_F24: return GLFW_KEY_F24;                                // F24 function key
+                case e_F25: return GLFW_KEY_F25;                                // F25 function key
+
+                case e_Pad_0: return GLFW_KEY_KP_0;                             // '0' or Ins number pad key
+                case e_Pad_1: return GLFW_KEY_KP_1;                             // '1' or End number pad key
+                case e_Pad_2: return GLFW_KEY_KP_2;                             // '2' or Down number pad key
+                case e_Pad_3: return GLFW_KEY_KP_3;                             // '3' or PgDn number pad key
+                case e_Pad_4: return GLFW_KEY_KP_4;                             // '4' or Left number pad key
+                case e_Pad_5: return GLFW_KEY_KP_5;                             // '5' number pad key
+                case e_Pad_6: return GLFW_KEY_KP_6;                             // '6' or Right number pad key
+                case e_Pad_7: return GLFW_KEY_KP_7;                             // '7' or Home number pad key
+                case e_Pad_8: return GLFW_KEY_KP_8;                             // '8' or Up number pad key
+                case e_Pad_9: return GLFW_KEY_KP_9;                             // '9' or PgUp number pad key
+                case e_Pad_Decimal: return GLFW_KEY_KP_DECIMAL;                 // '.' or Del number pad key
+                case e_Pad_Division: return GLFW_KEY_KP_DIVIDE;                 // '/' number pad key
+                case e_Pad_Multiply: return GLFW_KEY_KP_MULTIPLY;               // '*' number pad key
+                case e_Pad_Minus: return GLFW_KEY_KP_SUBTRACT;                  // '-' number pad key
+                case e_Pad_Plus: return GLFW_KEY_KP_ADD;                        // '+' number pad key
+                case e_Pad_Return: return GLFW_KEY_KP_ENTER;                    // Enter or Return number pad key
+                case e_Pad_Equal: return GLFW_KEY_KP_EQUAL;                     // '=' number pad key
+
+                // #TODO Need QKey entry case ?: return GLFW_KEY_WORLD_1; // 161 non-US #1
+                // #TODO Need QKey entry case ?: return GLFW_KEY_WORLD_2; // 162 non-US #2
+
+                // e_MAX,                          // Invalid entry and end of enum
             }
 
-            ASSERT(false, "Unsupported QwerkE key!");
-            return GLFW_KEY_LAST;
+            LOG_CRITICAL("Unsupported QKey {0}!", a_QwerkEKey);
+            // ASSERT(false, "Unsupported QKey key!");
+            return QKey::e_MAX;
         }
 
-        constexpr QKey GlfwToQwerkE(const int a_GlfwKey, int a_Scancode)
+        constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode)
         {
             switch (a_GlfwKey) // GLFW keys defined in glfw3.h, or https://www.glfw.org/docs/latest/group__keys.html
             {
-                case GLFW_KEY_SPACE:            return QKey::e_Space;          // 32 ' '
+                case GLFW_MOUSE_BUTTON_1: return e_MouseButton1;                // Mouse device button 1
+                case GLFW_MOUSE_BUTTON_2: return e_MouseButton2;                // Mouse device button 2
+                case GLFW_MOUSE_BUTTON_3: return e_MouseButton3;                // Mouse device button 3
+                case GLFW_MOUSE_BUTTON_4: return e_MouseButton4;                // Mouse device button 4
+                case GLFW_MOUSE_BUTTON_5: return e_MouseButton5;                // Mouse device button 5
+                case GLFW_MOUSE_BUTTON_6: return e_MouseButton6;                // Mouse device button 6
+                case GLFW_MOUSE_BUTTON_7: return e_MouseButton7;                // Mouse device button 7
+                case GLFW_MOUSE_BUTTON_8: return e_MouseButton8;                // Mouse device button 8
 
-                case GLFW_KEY_APOSTROPHE:       return QKey::e_Apostrophe;     // 39 '''
+                case GLFW_KEY_SPACE:            return QKey::e_Space;           // 32 ' '
+
+                case GLFW_KEY_APOSTROPHE:       return QKey::e_Apostrophe;      // 39 '''
 
                 case GLFW_KEY_COMMA:            return QKey::e_Comma;           // 44 ','
                 case GLFW_KEY_MINUS:            return QKey::e_Minus;           // 45 '-'
@@ -217,8 +428,7 @@ namespace QwerkE {
                 break;
             }
 
-            // Media play/pause, media volume up and down keys are not supported by GLFW
-            LOG_CRITICAL("Unsupported GLFW key {0}!", a_GlfwKey);
+            LOG_CRITICAL("Unsupported GLFW key {0} or scancode {1}!", a_GlfwKey, a_Scancode);
             // ASSERT(false, "Unsupported GLFW key!");
             return QKey::e_MAX;
         }

@@ -14,7 +14,7 @@ namespace QwerkE {
         RollingIndex s_LastFrameStartIndex = 0;
         RollingIndex s_LastFrameEndIndex = 0;
 
-        u8 s_KeysCurrentlyDown = 0;
+        u8 s_KeysCurrentlyDown = 0; // Supports e_Any
 
 #ifdef _QDEBUG
         static u16 s_InputsThisFrame = 0; // #TODO Review 16 bit value
@@ -73,6 +73,42 @@ namespace QwerkE {
             }
 
             ++s_NextToWriteIndex.bits;
+        }
+
+        void OnMouseMove_New(const double xpos, const double ypos)
+        {
+            // #TODO Handle:
+            // - Mouse drag
+        }
+
+        void OnMouseButton_New(const int button, const int action, const int mods)
+        {
+            // #TODO Handle:
+            // - Mouse key/button up/down
+        }
+
+        void OnMouseScroll_New(const double xoffset, const double yoffset)
+        {
+            // #TODO Handle:
+            // - Scroll button up/down
+
+            if (-1.f == xoffset)
+            {
+                // #TODO Add scroll event to history?
+            }
+            else if (1.f == xoffset)
+            {
+                // #TODO Add scroll event to history?
+            }
+
+            if (-1.f == yoffset)
+            {
+                // #TODO Add scroll event to history?
+            }
+            else if (1.f == yoffset)
+            {
+                // #TODO Add scroll event to history?
+            }
         }
 
         bool KeyHistoryCheck(const QKey a_Key, const bool a_KeyState)

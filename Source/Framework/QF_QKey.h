@@ -190,6 +190,11 @@ namespace QwerkE {
         e_Pad_Return,                   // Enter or Return number pad key
         e_Pad_Equal,                    // '=' number pad key
 
+        e_ScrollUp,                     // Navigate up like a mouse scroll up
+        e_ScrollDown,                   // Navigate down like a mouse scroll down
+        e_ScrollLeft,                   // Navigate left like a mouse scroll left
+        e_ScrollRight,                  // Navigate right like a mouse scroll right
+
         e_MAX,                          // Invalid entry and end of enum
 
         // Aliases
