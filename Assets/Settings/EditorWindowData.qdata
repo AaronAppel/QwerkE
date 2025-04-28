@@ -9,7 +9,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -21,7 +35,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -33,7 +61,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	13,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -46,6 +88,20 @@
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				},
 				"m_TextureId":	3,
 				"m_ViewId":	2
 			}
@@ -59,7 +115,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	9,
 				"m_MinimumWidth":	0,
-				"m_MinimumHeight":	0
+				"m_MinimumHeight":	0,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -71,7 +141,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -83,7 +167,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -95,7 +193,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -108,6 +220,20 @@
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				},
 				"m_TextureId":	3,
 				"m_ViewId":	1
 			}
@@ -121,7 +247,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	10,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -133,7 +273,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -145,7 +299,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	9,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -157,7 +325,21 @@
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
 			}
 		}
 	}

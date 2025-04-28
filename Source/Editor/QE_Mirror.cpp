@@ -48,6 +48,26 @@ MIRROR_CLASS_MEMBER(startUpSceneName)
 MIRROR_CLASS_MEMBER(scenesList)
 MIRROR_CLASS_END
 
+MIRROR_TYPE(QwerkE::Editor::EditorWindowSizingFlags)
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowOptions)
+MIRROR_CLASS_MEMBER(m_SizingFlags)
+MIRROR_CLASS_MEMBER(m_WidthMinimum)
+MIRROR_CLASS_MEMBER(m_WidthMaximum)
+MIRROR_CLASS_MEMBER(m_HeightMinimum)
+MIRROR_CLASS_MEMBER(m_HeightMaximum)
+MIRROR_CLASS_MEMBER(m_LockWidth)
+MIRROR_CLASS_MEMBER(m_LockHeight)
+MIRROR_CLASS_MEMBER(m_RatioWidth)
+MIRROR_CLASS_MEMBER(m_RatioHeight)
+MIRROR_CLASS_MEMBER(m_IncrementWidth)
+MIRROR_CLASS_MEMBER(m_IncrementHeight)
+MIRROR_CLASS_MEMBER(m_ItemScaling)
+MIRROR_CLASS_MEMBER(m_FontScaling)
+// #TODO ImGuiStyle m_Style;
+// #TODO ImFont m_Font;
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowAssets)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
@@ -168,6 +188,7 @@ MIRROR_CLASS_MEMBER(m_ImGuiFlags)
 MIRROR_CLASS_MEMBER(m_WindowFlags)
 MIRROR_CLASS_MEMBER(m_MinimumWidth)
 MIRROR_CLASS_MEMBER(m_MinimumHeight)
+MIRROR_CLASS_MEMBER(m_WindowOptions)
 // MIRROR_CLASS_MEMBER(m_EditorWindowType)
 // #TODO Solve generic templated type list issue
 // using WindowsList = MirrorTemplateArgumentList <EditorWindowAssets>;

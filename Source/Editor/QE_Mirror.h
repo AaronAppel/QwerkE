@@ -90,5 +90,7 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 532, QwerkE::Editor::EditorWindowHexE
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 533, QwerkE::Editor::EditorWindowImGuiExtendedDemo)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 534, QwerkE::Editor::EditorWindowNotifications)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 535, QwerkE::Editor::EditorWindowTimeline)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 536, QwerkE::Editor::EditorWindowOptions)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 537, QwerkE::Editor::EditorWindowSizingFlags)
 
 #endif // DEBUG
