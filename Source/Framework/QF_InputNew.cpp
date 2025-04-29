@@ -17,11 +17,12 @@ namespace QwerkE {
         u8 s_KeysCurrentlyDown = 0; // Supports e_Any
 
 #ifdef _QDEBUG
-        static u16 s_InputsThisFrame = 0; // #TODO Review 16 bit value
+        static u8 s_InputsThisFrame = 0;
+        static u8 s_Most1FrameInputs = 0;
         static u64 s_InputsSinceReset = 0;
 #endif // _QDEBUG
 
-        void NewFrame_New()
+        void NewFrame_Internal()
         {
             s_InputsThisFrame = 0;
             s_LastFrameStartIndex = s_LastFrameEndIndex;
@@ -58,6 +59,10 @@ namespace QwerkE {
             ++s_InputsThisFrame;
             ++s_InputsSinceReset;
             ASSERT(0 < RemainingWritesThisFrame(), "Writing over last/this frame state!");
+            if (s_InputsThisFrame > s_Most1FrameInputs)
+            {
+                s_Most1FrameInputs = s_InputsThisFrame;
+            }
 #endif // _QDEBUG
 
             s_HistoryBufferKeys[s_NextToWriteIndex.bits] = a_Key;
@@ -111,6 +116,11 @@ namespace QwerkE {
             }
         }
 
+        void OnJoystickEvent()
+        {
+            // #TODO: Joystick buttons
+        }
+
         bool KeyHistoryCheck(const QKey a_Key, const bool a_KeyState)
         {
             RollingIndex index = s_NextToWriteIndex.bits - 1;
@@ -159,6 +169,7 @@ namespace QwerkE {
             }
 
             ImGui::Text("Inputs this frame: %i", s_InputsThisFrame);
+            ImGui::Text("Most 1 frame inputs: %i", s_Most1FrameInputs);
             ImGui::Text("Inputs since reset: %i", s_InputsSinceReset);
             ImGui::Text("Keys currently down: %i", s_KeysCurrentlyDown);
 

@@ -33,7 +33,7 @@ namespace QwerkE {
 
 #ifdef _QGLFW3
     namespace Input {
-        extern void Input_GlfwCallbacks(GLFWwindow* window);
+        extern void Input_RegisterGlfwCallbacks(GLFWwindow* window);
     }
 #endif
 
@@ -154,7 +154,7 @@ namespace QwerkE {
             }
 
 #if _QGLFW3
-            Input::Input_GlfwCallbacks(s_window);
+            Input::Input_RegisterGlfwCallbacks(s_window);
 #endif // _QGLFW3
 
             glfwSetErrorCallback(local_ErrorCallback);
@@ -164,6 +164,13 @@ namespace QwerkE {
             glfwSetWindowIconifyCallback(s_window, local_WindowIconifyCallback);
             glfwSetWindowPosCallback(s_window, local_window_pos_callback);
             glfwSetDropCallback(s_window, local_FileDropCallback);
+
+            // #TODO glfwSetWindowRefreshCallback();
+            // #TODO glfwSetWindowMaximizeCallback();
+            // #TODO glfwSetWindowContentScaleCallback();
+            // #TODO glfwSetWindowFocusCallback();
+            // #TODO glfwSetMonitorCallback();
+            // #TODO glfwSetCursorEnterCallback();
 
             // #NOTE Overridden in QF_glfw_InputCallBacks.cpp::SetupCallbacks(41)
             // glfwSetKeyCallback(s_window, local_KeyEventCallback);

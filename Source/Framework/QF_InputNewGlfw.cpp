@@ -1,4 +1,6 @@
 #ifdef _QGLFW3
+#include <vector>
+
 #include "Libraries/glfw/glfw3.h"
 
 #include "QF_QKey.h"
@@ -9,6 +11,7 @@ namespace QwerkE {
     namespace Input {
 
         extern u8 s_KeysCurrentlyDown;
+        extern void NewFrame_Internal();
         extern void OnKeyEvent_New(const QKey a_Key, const bool a_KeyState);
         extern void OnMouseMove_New(const double xpos, const double ypos);
         extern void OnMouseButton_New(const int button, const int action, const int mods);
@@ -16,6 +19,49 @@ namespace QwerkE {
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
         constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
+
+        static std::vector<int> s_DeviceIds; // glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
+        static std::vector<int> s_DeviceStates;
+
+        void NewFrame_New()
+        {
+            NewFrame_Internal();
+
+            for (size_t i = 0; i < s_DeviceIds.size(); i++)
+            {
+                ASSERT(GLFW_TRUE == glfwJoystickPresent(s_DeviceIds[i]), "Device not present!");
+
+                // GLFW_JOYSTICK_1 == id;
+                int hatStatesCount;
+                const unsigned char* const buttons = glfwGetJoystickButtons(s_DeviceIds[i], &hatStatesCount);
+                // glfwGetJoystickHats
+                // glfwGetJoystickAxes
+
+                ASSERT(buttons, "Null device buttons!");
+
+                if (*buttons != s_DeviceStates[i]) // #TODO compare all buttons, not just A
+                {
+                    for (size_t i = 0; i < hatStatesCount; i++)
+                    {
+
+                    }
+                    // Raise event
+
+                    // Maybe poll and compare every button state?
+                    // buttons[GLFW_GAMEPAD_BUTTON_A];
+                }
+
+                s_DeviceStates[i] = *buttons; // #TODO Save all buttons, not just A
+            }
+
+            // #TODO Poll joystick states
+            // OnJoystickEvent(connect/disconnect, button up/down, stick moved?);
+            // for (connected joysticks)
+            //  get updated joystick[i] state
+            //  compare previous and current states
+            //  raise events
+            //  set previous state to current
+        }
 
         static void Local_GlfwKeyCallback(GLFWwindow* a_Window, int a_Key, int a_Scancode, int a_Action, int a_Mode)
         {
@@ -29,9 +75,61 @@ namespace QwerkE {
             }
         }
 
-        static void Local_GlfwChar_callback(GLFWwindow* window, unsigned int codePoint) {}
-        static void Local_GlfwChar_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods) {}
-        static void Local_GlfwJoystick_callback(int joystickId, int eventId) {}
+        static void Local_GlfwCharCallback(GLFWwindow* window, unsigned int codePoint)
+        {
+            int bp = 0; // For keys as char values: 'a'=97, 'A'=65
+        }
+
+        static void Local_GlfwCharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods)
+        {
+            int bp = 0; // For keys as char values: 'a'=97, 'A'=65, mod shift=1 or GLFW_MOD_SHIFT
+        }
+
+        static void Local_GlfwJoystickCallback(const int a_JoystickId, const int eventId)
+        {
+            // #TODO void glfwSetJoystickUserPointer(int jid, void* pointer);
+            // or void* glfwGetJoystickUserPointer(int jid);
+
+            switch (eventId)
+            {
+            case GLFW_CONNECTED: // 262145
+                for (size_t i = 0; i < s_DeviceIds.size(); i++)
+                {
+                    if (a_JoystickId == s_DeviceIds[i])
+                    {
+                        ASSERT(false, "Device already registered!");
+                        return;
+                    }
+                }
+
+                {
+                    s_DeviceIds.emplace_back(a_JoystickId);
+                    int count;
+                    const unsigned char* buttons = glfwGetJoystickButtons(a_JoystickId, &count);
+                    s_DeviceStates.emplace_back(0);
+                }
+                // glfwGetJoystickName
+                // glfwGetJoystickGUID
+                // glfwJoystickIsGamepad
+                break;
+
+            case GLFW_DISCONNECTED: // 262146
+                for (size_t i = 0; i < s_DeviceIds.size(); i++)
+                {
+                    if (a_JoystickId == s_DeviceIds[i])
+                    {
+                        s_DeviceIds.erase(s_DeviceIds.begin() + i);
+                        return;
+                    }
+                }
+                ASSERT(false, "Device not registered!");
+                break;
+
+            default:
+                ASSERT(false, "Unhandled joystick event!");
+                break;
+            }
+        }
 
         static void Local_GlfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
         {
@@ -48,21 +146,16 @@ namespace QwerkE {
             OnMouseScroll_New(xoffset, yoffset);
         }
 
-        static void Local_GlfwCursor_enter_callback(GLFWwindow* window, int entered) {} // #TODO Window callback?
-
-        // #TODO extern and call in Window::
-        void Input_GlfwCallbacks(GLFWwindow* window)
+        void Input_RegisterGlfwCallbacks(GLFWwindow* window)
         {
             glfwSetKeyCallback(window, Local_GlfwKeyCallback);
-            // glfwSetCharCallback(window, char_callback);
-            // glfwSetCharModsCallback(window, char_mods_callback);
+            glfwSetCharCallback(window, Local_GlfwCharCallback);
+            glfwSetCharModsCallback(window, Local_GlfwCharModsCallback);
 
-            // glfwSetJoystickCallback(joystick_callback);
+            glfwSetJoystickCallback(Local_GlfwJoystickCallback);
 
-            // #TODO cursor entered?
-
+            glfwSetCursorPosCallback(window, Local_GlfwCursorPositionCallback);
             glfwSetMouseButtonCallback(window, Local_GlfwMouseButtonCallback);
-            // glfwSetCursorPosCallback(window, cursor_position_callback);
             glfwSetScrollCallback(window, Local_GlfwScrollCallback);
         }
 
