@@ -317,7 +317,7 @@ namespace QwerkE {
 		// #TODO This really just checks if the scene is still in s_Scenes, so could return a bool and name IsSceneInList or something
 		Scene* GetScene(const Scene* const scene)
 		{
-			NULL_ARG_CHECK_RETURN(scene, nullptr)
+			NULL_ARG_CHECK_RETURN(scene, nullptr);
 
 			for (size_t i = 0; i < s_Scenes.size(); i++)
 			{

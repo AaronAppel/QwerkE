@@ -1,5 +1,6 @@
 // #TODO Update .gitignore data
 .vs/
+/bin
 
 *.tlog
 *.log
@@ -16,8 +17,6 @@
 *.dll
 !QwerkE_Framework/Libraries/**/*.dll
 
-// Symlink of root README.md file
-Documentation/README.md
 
 // Profiler log file
 instrumentor_log.json
@@ -25,16 +24,11 @@ instrumentor_log.json
 // imgui config file can stay for convenience purposes
 // imgui.ini
 
-// Development branches
-// rem Try to make a subdirectory delete for all Debug/* sub directories
-Development/RenderingEnv/.vs/
-Development/RenderingEnv/Debug/*
-Development/RenderingEnv/Release/*
-Development/Games/Test_Game1/Debug/
-Development/Games/Test_Game1/Release/
+# Documentation
 Documentation/.obsidian/workspace.json
+// Symlink of root README.md file
+Documentation/README.md
 
-/////////////////////
 # Prerequisites
 *.d
 
@@ -119,3 +113,6 @@ Assets/Settings/EditorWindowData.qdata
 # Ignored files: git update-index --skip-worktree <file path>
 # IGNORED FILES HERE
 # To Resume: git update-index --no-skip-worktree <file path>
+
+# Recovery files
+/QwerkE

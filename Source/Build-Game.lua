@@ -58,13 +58,13 @@ project "Game"
 	   defines { "WINDOWS" }
 
 	filter "configurations:Debug" -- #TODO Remove LibrariesDir
-	   defines { "_QDebug", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QDEBUG", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 
 	filter "configurations:Release"
-	   defines { "_QRelease", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QRELEASE", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 
 	filter "configurations:Retail"
-	   defines { "_QRetail", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QRETAIL", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		symbols "off"
 		optimize "on"

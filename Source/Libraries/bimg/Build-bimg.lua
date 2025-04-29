@@ -37,3 +37,6 @@ project "bimg"
 		
 	filter "configurations:Release"
 		defines { "BX_CONFIG_DEBUG=0", }
+		
+	filter "configurations:Retail"
+		defines { "BX_CONFIG_DEBUG=0", }

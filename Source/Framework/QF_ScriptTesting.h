@@ -15,22 +15,13 @@ namespace QwerkE {
 				LOG_INFO("{0} Key \"H\" is pressed", __FUNCTION__);
 			}
 
-			// Debug drawing
-			constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-			bgfx::setState(BGFX_STATE_DEFAULT);
-			DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-			debugDrawer.begin(viewIdFbo1, true);
-
+#ifdef _QDEBUG
 			ComponentTransform& myTransform = m_Entity.GetComponent<ComponentTransform>();
-			vec3f position = myTransform.GetPosition();
-			bx::Vec3 adjustedTransform = bx::Vec3(position.x, position.y, position.z);
-			adjustedTransform.y += 1.f;
-
-			const bx::Vec3 bxPosition = bx::Vec3(position.x, position.y, position.z);
-			debugDrawer.drawLine(bxPosition, adjustedTransform);
-			debugDrawer.drawCylinder(bxPosition, adjustedTransform, 0.1f);
-
-			debugDrawer.end();
+			vec3f endPosition = myTransform.GetPosition();
+			endPosition += 1.f;
+			Debug::DrawLine(myTransform.GetPosition(), endPosition);
+			// Debug::DrawCylinder(myTransform.GetPosition(), adjustedTransform, 0.1f);
+#endif
 		}
 
 		eScriptTypes ScriptType() override

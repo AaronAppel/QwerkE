@@ -112,13 +112,25 @@ project "Framework"
 		debugargs { }
 
 	filter "configurations:Release"
-		defines { "_QRELEASE", "LibrariesDir=\"%{wks.location}/Source/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QRELEASE",
+			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"",
+			LibraryDefines,
+			"BX_CONFIG_DEBUG=0", -- Required by bgfx
+		}
 		runtime "Release"
 		optimize "On"
 		symbols "On"
 
 	filter "configurations:Retail"
-		defines { "_QRETAIL", "LibrariesDir=\"%{wks.location}/Source/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QRETAIL",
+			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"",
+			LibraryDefines,
+			"BX_CONFIG_DEBUG=0", -- Required by bgfx
+		}
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

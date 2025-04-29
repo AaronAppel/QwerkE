@@ -410,40 +410,66 @@ namespace QwerkE {
             {
                 // LOG_INFO(Log::eLogLevel::Info, "KeyState");
             }
-            if (Input::KeyPressed(eKeys::eKeys_A))
+            if (Input::KeyPressed(QKey::e_Any))
             {
-                LOG_WARN("KeyDown()");
+                LOG_WARN("AnyPressed()");
             }
-            if (Input::KeyReleased(eKeys::eKeys_A))
+            if (Input::KeyReleased(QKey::e_Any))
             {
-                LOG_ERROR("KeyUp()");
+                LOG_WARN("AnyReleased()");
             }
-            if (Input::KeyPressed(eKeys::eKeys_S))
+            if (Input::KeyDown(QKey::e_Any))
             {
-                LOG_WARN("KeyDown()");
-            }
-            if (Input::KeyReleased(eKeys::eKeys_S))
-            {
-                LOG_ERROR("KeyUp()");
-            }
-            if (Input::KeyPressed(eKeys::eKeys_D))
-            {
-                LOG_WARN("KeyDown()");
-            }
-            if (Input::KeyReleased(eKeys::eKeys_D))
-            {
-                LOG_ERROR("KeyUp()");
-            }
-            if (Input::KeyPressed(eKeys::eKeys_F))
-            {
-                LOG_WARN("KeyDown()");
-            }
-            if (Input::KeyReleased(eKeys::eKeys_F))
-            {
-                LOG_ERROR("KeyUp()");
+                // LOG_WARN("AnyDown()");
             }
 
+            // #TODO How to handle scrolling?
+            // Expose mouse specific input, and should scrolling be abstracted away from just mice?
+            if (Input::KeyPressed(QKey::e_ScrollDown))
+            {
+                LOG_WARN("e_ScrollDownPressed()");
+            }
+            if (Input::KeyReleased(QKey::e_ScrollDown))
+            {
+                LOG_WARN("e_ScrollDownReleased()");
+            }
+
+            // if (Input::KeyPressed(QKey::e_A))
+            // {
+            //     LOG_WARN("KeyDown()");
+            // }
+            // if (Input::KeyReleased(QKey::e_A))
+            // {
+            //     LOG_ERROR("KeyUp()");
+            // }
+            // if (Input::KeyPressed(QKey::e_S))
+            // {
+            //     LOG_WARN("KeyDown()");
+            // }
+            // if (Input::KeyReleased(QKey::e_S))
+            // {
+            //     LOG_ERROR("KeyUp()");
+            // }
+            // if (Input::KeyPressed(QKey::e_D))
+            // {
+            //     LOG_WARN("KeyDown()");
+            // }
+            // if (Input::KeyReleased(QKey::e_D))
+            // {
+            //     LOG_ERROR("KeyUp()");
+            // }
+            // if (Input::KeyPressed(QKey::e_F))
+            // {
+            //     LOG_WARN("KeyDown()");
+            // }
+            // if (Input::KeyReleased(QKey::e_F))
+            // {
+            //     LOG_ERROR("KeyUp()");
+            // }
+
+#ifdef _QDEBUG
             Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
+#endif // _QDEBUG
 
             if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
             {
@@ -561,6 +587,7 @@ namespace QwerkE {
 
         void local_EndFrame()
         {
+#ifdef _QDEBUG
             if (!Window::IsMinimized())
             {
                 // #TODO Replace editor draws by moving to EditorWindowSceneView class
@@ -568,6 +595,7 @@ namespace QwerkE {
                 Debug::DrawGrid(vec3f(.0f, .0f, .0f), 50);
                 // Framework::RenderView(viewIdFbo1);
             }
+#endif // _QDEBUG
             Framework::EndFrame();
         }
 

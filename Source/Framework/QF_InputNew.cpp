@@ -24,7 +24,9 @@ namespace QwerkE {
 
         void NewFrame_Internal()
         {
+#ifdef _QDEBUG
             s_InputsThisFrame = 0;
+#endif // _QDEBUG
             s_LastFrameStartIndex = s_LastFrameEndIndex;
             s_LastFrameEndIndex = s_NextToWriteIndex;
         }

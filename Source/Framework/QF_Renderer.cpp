@@ -401,11 +401,13 @@ namespace QwerkE {
 			s_showRendererDebugStats = !s_showRendererDebugStats;
 		}
 
+#ifdef _QDEBUG
 		DebugDrawEncoder& DebugDrawer()
 		{
 			ASSERT(s_DebugDrawer, "Debug Drawer is null!");
 			return *s_DebugDrawer;
 		}
+#endif
 
 	}
 

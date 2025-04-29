@@ -28,6 +28,7 @@ namespace QwerkE {
 				bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
 				bgfx::setViewTransform(viewId, m_View, m_Proj);
 
+#ifdef _QDEBUG
 				if (m_ShowSphere)
 				{
 					DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
@@ -35,9 +36,10 @@ namespace QwerkE {
 					debugDrawer.drawSphere(m_LookAtTarget.x, m_LookAtTarget.y, m_LookAtTarget.z, 3.f);
 					debugDrawer.end();
 				}
+#endif
 			}
 
-			bool m_ShowSphere = false;
+			bool m_ShowSphere = false; // #TODO Mark debug only but Mirror supported
 			bx::Vec3 m_Eye = bx::Vec3(0.f);
 			bx::Vec3 m_LookAtTarget = bx::Vec3(0.f);;
 

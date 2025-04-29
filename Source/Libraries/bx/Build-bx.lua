@@ -40,3 +40,11 @@ project "bx"
 			"_HAS_EXCEPTIONS=0",
 			"BX_CONFIG_DEBUG=0",
 		}
+		
+	filter "configurations:Retail"
+		defines
+		{
+			"__STDC_FORMAT_MACROS",
+			"_HAS_EXCEPTIONS=0",
+			"BX_CONFIG_DEBUG=0",
+		}

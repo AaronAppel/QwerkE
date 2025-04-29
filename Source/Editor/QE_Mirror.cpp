@@ -2,12 +2,10 @@
 
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 
+#include "QE_Editor.h"
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
 #include "QE_Settings.h"
-
-// #TESTING
-#include "QE_Editor.h"
 
 MIRROR_TYPE(QwerkE::Editor::EditorWindowFlags)
 MIRROR_CLASS(QwerkE::Editor::EditorWindowTypes)

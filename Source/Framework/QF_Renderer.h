@@ -20,7 +20,9 @@ namespace QwerkE {
 
 		void ToggleDebugStats();
 
+#ifdef _QDEBUG
 		DebugDrawEncoder& DebugDrawer();
+#endif
 
 	}
 

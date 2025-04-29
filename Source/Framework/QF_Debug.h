@@ -44,6 +44,7 @@ namespace QwerkE {
 		// #TODO Add a_Wireframe argument to more shape functions
 		// #TODO Take larger arguments in by reference, but also keep convenience of r values
 
+		// #TODO Pass values by reference
 		void DrawArc(const uint32_t a_Color = g_White);
 		void DrawAxis(const uint32_t a_Color = g_White);
 		void DrawCapsule(const uint32_t a_Color = g_White);
@@ -67,6 +68,8 @@ namespace QwerkE {
 }
 
 #else
-#define BREAK			(void)0
-#define ASSERT(x, msg)	(void)0
+#define BREAK								(void)0
+#define ASSERT(x, msg)						(void)0
+#define NULL_ARG_CHECK_RETURN(x, y)			(void)0
+#define NULL_ARG_CHECK_RETURN2(x, y, z)		(void)0
 #endif

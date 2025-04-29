@@ -104,7 +104,7 @@ namespace QwerkE {
 
 #ifdef _QGLFW3
             memset(s_GlfwKeyCodex, 0, s_GlfwKeyCodexSize);
-            SetupCallbacks((GLFWwindow*)Window::GetContext());
+            // SetupCallbacks((GLFWwindow*)Window::GetContext());
             local_GlfwKeysCodex(s_GlfwKeyCodex);
             local_ImGuiKeysCodex(s_ImGuiKeyCodex);
 #else
