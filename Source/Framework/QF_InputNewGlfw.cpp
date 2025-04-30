@@ -3,6 +3,8 @@
 
 #include "Libraries/glfw/glfw3.h"
 
+#include "QC_BitIndexRingBuffer.h"
+
 #include "QF_QKey.h"
 #include "QF_Window.h"
 
@@ -16,6 +18,7 @@ namespace QwerkE {
         extern void OnMouseMove_New(const double xpos, const double ypos);
         extern void OnMouseButton_New(const int button, const int action, const int mods);
         extern void OnMouseScroll_New(const double xoffset, const double yoffset);
+        extern bool KeyDown_Internal(const QKey a_Key);
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
         constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
@@ -23,8 +26,30 @@ namespace QwerkE {
         static std::vector<int> s_DeviceIds; // glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
         static std::vector<int> s_DeviceStates;
 
+        BitIndexRingBuffer<QKey, bits4> s_TempBit4Buffer;
+        QKey s_TempQKey;
+
         void Update() // #TESTING For input system refactor only
         {
+            if (ImGui::Begin("IndexBitBuffer"))
+            {
+                ImGui::Text("[0]: %i", s_TempBit4Buffer.ReadMarker(0));
+                ImGui::InputInt("TempKey", (int*)&s_TempQKey);
+
+                if (ImGui::Button("Write"))
+                {
+                    s_TempBit4Buffer.Write(s_TempQKey);
+                }
+                if (ImGui::Button("Advance"))
+                {
+                    s_TempBit4Buffer.AdvanceMarker(0);
+                }
+
+                ImGui::End();
+            }
+
+            ////////////////
+
             if (!ImGui::Begin("Gamepad"))
             {
                 ImGui::End();
@@ -32,8 +57,9 @@ namespace QwerkE {
 
             for (size_t i = 0; i < s_DeviceIds.size(); i++)
             {
-                if (ImGui::CollapsingHeader(std::to_string(s_DeviceIds[i]).c_str()))
+                if (ImGui::CollapsingHeader((glfwGetJoystickName(s_DeviceIds[i]) + std::string(" ") + std::to_string(s_DeviceIds[i])).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
                 {
+                    // #TODO React to non-present joystick (disconnected)
                     ASSERT(GLFW_TRUE == glfwJoystickPresent(s_DeviceIds[i]), "Device not present!");
 
                     // #TODO glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
@@ -110,6 +136,10 @@ namespace QwerkE {
 
         void Initialize_New()
         {
+            s_TempBit4Buffer.Write(QKey::e_A);
+            s_TempBit4Buffer.AddMarker(0);
+            s_TempBit4Buffer.AddMarker(0);
+
             for (size_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
             {
                 int present = glfwJoystickPresent(i);
@@ -225,6 +255,8 @@ namespace QwerkE {
 
         bool KeyDown(const QKey a_Key)
         {
+            const bool result = KeyDown_Internal(a_Key); // #TODO Consider return value
+
             if (e_Any == a_Key)
             {
                 return s_KeysCurrentlyDown > 0;

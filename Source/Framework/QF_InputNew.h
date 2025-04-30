@@ -15,12 +15,22 @@ namespace QwerkE {
         // Minimal (MVP)
         // Polling API
         void Initialize_New();
+        void NewFrame_New();
 
         bool KeyPressed(const QKey a_Key);
         bool KeyReleased(const QKey a_Key);
         bool KeyDown(const QKey a_Key);
 
-        void NewFrame_New();
+        bool MousePressed(const QKey a_Key);
+        bool MouseReleased(const QKey a_Key);
+        bool MouseDown(const QKey a_Key);
+        vec2u16 MousePos();
+        vec2f MouseDelta();
+
+        bool GamepadPressed(const QKey a_Key);
+        bool GamepadReleased(const QKey a_Key);
+        bool GamepadDown(const QKey a_Key);
+        vec2f GamepadAxis(const int a_AxisIndex);
 
 #ifdef _QDEBUG
         void Update(); // #TESTING For input system refactor only
@@ -49,6 +59,11 @@ namespace QwerkE {
 
             bool enabled = true; // Disable for cinematics, UI input, window/UI loses focus
         };
+
+        // u8 DeviceCount();
+        // u8 KeyboardCount();
+        // u8 MouseCount();
+        // u8 GamepadCount();
 
         // GLFW_JOYSTICK_1 to GLFW_JOYSTICK_16 or GLFW_JOYSTICK_LAST
 
@@ -83,6 +98,10 @@ namespace QwerkE {
             int id;
             char keys[5];
         };
+
+        // bool ActionPressed(const InputAction a_Action);
+        // bool ActionReleased(const InputAction a_Action);
+        // bool ActionDown(const InputAction a_Action);
 
         // Maybe fun to have but really just extra. Behaves like registering and unregistering plus counting.
         // Really just to avoid user from managing state, but at what cost?

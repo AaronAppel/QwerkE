@@ -1,8 +1,12 @@
+// #include "QC_BitIndexRingBuffer.h"
+
 #include "QF_InputNew.h"
 
 namespace QwerkE {
 
     namespace Input {
+
+        // BitIndexRingBuffer<QKey, bits4> bit4Buffer;
 
         using RollingIndex = bits4; // #NOTE Utilize rollover
         constexpr u16 s_HistoryBufferSize = RollingIndex::max + 1;
@@ -151,6 +155,62 @@ namespace QwerkE {
         bool KeyReleased(const QKey a_Key)
         {
             return KeyHistoryCheck(a_Key, KeyStateUp);
+        }
+
+        bool KeyDown_Internal(const QKey a_Key) { return false; }
+
+        bool MousePressed(const QKey a_Key)
+        {
+            // #TODO Implement
+            return false;
+        }
+
+        bool MouseReleased(const QKey a_Key)
+        {
+            // #TODO Implement
+            return false;
+        }
+
+        bool MouseDown(const QKey a_Key)
+        {
+            // #TODO Implement
+            return false;
+        }
+
+        vec2u16 MousePos()
+        {
+            // #TODO Implement
+            return vec2f(0.f, 0.f);
+        }
+
+        vec2f MouseDelta()
+        {
+            // #TODO Implement
+            return vec2f(0.f, 0.f);
+        }
+
+        bool GamepadPressed(const QKey a_Key)
+        {
+            // #TODO Implement
+            return false;
+        }
+
+        bool GamepadReleased(const QKey a_Key)
+        {
+            // #TODO Implement
+            return false;
+        }
+
+        bool GamepadDown(const QKey a_Key)
+        {
+            // #TODO Implement
+            return false;
+        }
+
+        vec2f GamepadAxis(const int a_AxisIndex)
+        {
+            // #TODO Implement
+            return vec2f(0.f, 0.f);
         }
 
 #ifdef _QDEBUG
