@@ -44,6 +44,7 @@ namespace QwerkE {
 			Window::Initialize(windowWidth, windowHeight); // #TODO Try to remove window size arguments dependency
 			Renderer::Initialize();
 			Input::Initialize();
+			Input::Initialize_New();
 			Assets::Initialize(); // #TODO bgfx init order dependency for mesh creation
 			Scenes::Initialize();
 			return eOperationResult::Success;

@@ -23,35 +23,78 @@ namespace QwerkE {
         static std::vector<int> s_DeviceIds; // glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
         static std::vector<int> s_DeviceStates;
 
-        void NewFrame_New()
+        void Update() // #TESTING For input system refactor only
         {
-            NewFrame_Internal();
+            if (!ImGui::Begin("Gamepad"))
+            {
+                ImGui::End();
+            }
 
             for (size_t i = 0; i < s_DeviceIds.size(); i++)
             {
-                ASSERT(GLFW_TRUE == glfwJoystickPresent(s_DeviceIds[i]), "Device not present!");
-
-                // GLFW_JOYSTICK_1 == id;
-                int hatStatesCount;
-                const unsigned char* const buttons = glfwGetJoystickButtons(s_DeviceIds[i], &hatStatesCount);
-                // glfwGetJoystickHats
-                // glfwGetJoystickAxes
-
-                ASSERT(buttons, "Null device buttons!");
-
-                if (*buttons != s_DeviceStates[i]) // #TODO compare all buttons, not just A
+                if (ImGui::CollapsingHeader(std::to_string(s_DeviceIds[i]).c_str()))
                 {
+                    ASSERT(GLFW_TRUE == glfwJoystickPresent(s_DeviceIds[i]), "Device not present!");
+
+                    // #TODO glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
+
+                    int axesCount;
+                    const float* axes = glfwGetJoystickAxes(s_DeviceIds[i], &axesCount);
+
+                    ImGui::Text("AxesCount: %i", axesCount);
+                    for (size_t i = 0; i < axesCount; i++)
+                    {
+                        ImGui::Text("Axes[%i]: %f", i, axes[i]);
+                        // Left stick X [0]
+                        // Left stick Y [1]
+                        // Right stick X [2]
+                        // Right stick Y [3]
+                        // L trigger [4]
+                        // R trigger [5]
+                    }
+
+                    // glfwGetJoystickHats
+
+                    int hatStatesCount;
+                    const unsigned char* const buttons = glfwGetJoystickButtons(s_DeviceIds[i], &hatStatesCount);
+
+                    ASSERT(buttons, "Null device buttons!");
+                    ImGui::Text("ButtonCount: %i%", hatStatesCount);
+
                     for (size_t i = 0; i < hatStatesCount; i++)
                     {
+                        ImGui::Text("Buttons[%i]: %i", i, buttons[i]);
 
+                        // [0] A
+                        // [1] B
+                        // [2] X
+                        // [3] Y
+                        // [4] L Bumper
+                        // [5] R Bumper
+                        // [6] Select
+                        // [7] Start
+                        // [8] Left Stick Click
+                        // [9] Right Stick Click
+                        // [10] D pad up
+                        // [11] D pad right
+                        // [12] D pad down
+                        // [13] D pad left
                     }
-                    // Raise event
 
-                    // Maybe poll and compare every button state?
-                    // buttons[GLFW_GAMEPAD_BUTTON_A];
+                    if (*buttons != s_DeviceStates[i]) // #TODO compare all buttons, not just A
+                    {
+                        for (size_t i = 0; i < hatStatesCount; i++)
+                        {
+
+                        }
+                        // Raise event
+
+                        // Maybe poll and compare every button state?
+                        // buttons[GLFW_GAMEPAD_BUTTON_A];
+                    }
+
+                    s_DeviceStates[i] = *buttons; // #TODO Save all buttons, not just A
                 }
-
-                s_DeviceStates[i] = *buttons; // #TODO Save all buttons, not just A
             }
 
             // #TODO Poll joystick states
@@ -61,6 +104,26 @@ namespace QwerkE {
             //  compare previous and current states
             //  raise events
             //  set previous state to current
+
+            ImGui::End();
+        }
+
+        void Initialize_New()
+        {
+            for (size_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
+            {
+                int present = glfwJoystickPresent(i);
+                if (present)
+                {
+                    s_DeviceIds.emplace_back(i);
+                    s_DeviceStates.emplace_back(0);
+                }
+            }
+        }
+
+        void NewFrame_New()
+        {
+            NewFrame_Internal();
         }
 
         static void Local_GlfwKeyCallback(GLFWwindow* a_Window, int a_Key, int a_Scancode, int a_Action, int a_Mode)
@@ -148,6 +211,7 @@ namespace QwerkE {
 
         void Input_RegisterGlfwCallbacks(GLFWwindow* window)
         {
+            // #TODO Set GLFW_JOYSTICK_HAT_BUTTONS at int
             glfwSetKeyCallback(window, Local_GlfwKeyCallback);
             glfwSetCharCallback(window, Local_GlfwCharCallback);
             glfwSetCharModsCallback(window, Local_GlfwCharModsCallback);

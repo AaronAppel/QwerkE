@@ -403,6 +403,7 @@ namespace QwerkE {
         void local_Update()
         {
 #ifdef _QDEBUG // #TODO Maybe change to QE_DEBUG?
+            Input::Update();
             Input::DrawDebugWindow();
 #endif // _QDEBUG
 

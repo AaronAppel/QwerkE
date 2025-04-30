@@ -157,7 +157,10 @@ namespace QwerkE {
         void DrawDebugWindow()
         {
             if (!ImGui::Begin("Input System"))
+            {
+                ImGui::End();
                 return;
+            }
 
             if (ImGui::Button("Reset"))
             {

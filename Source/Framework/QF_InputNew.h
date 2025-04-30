@@ -14,11 +14,17 @@ namespace QwerkE {
         // Stage 1 //
         // Minimal (MVP)
         // Polling API
-        bool KeyPressed(const QKey a_Key); // const #TODO KeyPress/KeyPressed?
-        bool KeyReleased(const QKey a_Key); // #TODO KeyRelease/KeyReleased?
-        bool KeyDown(const QKey a_Key);  // #TODO IsKeyDown/KeyDown?
+        void Initialize_New();
+
+        bool KeyPressed(const QKey a_Key);
+        bool KeyReleased(const QKey a_Key);
+        bool KeyDown(const QKey a_Key);
 
         void NewFrame_New();
+
+#ifdef _QDEBUG
+        void Update(); // #TESTING For input system refactor only
+#endif // _QDEBUG
 
 #ifdef _QDEBUG
         void DrawDebugWindow();
