@@ -82,41 +82,17 @@ namespace QwerkE {
 				}
 
 				const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
-				if (!scenes.empty())
-				{
-					std::vector<const char*> sceneNames;
-					sceneNames.reserve(3);
-
-					for (size_t i = 0; i < scenes.size(); i++)
-					{
-						sceneNames.push_back(scenes[i]->GetSceneName().c_str());
-					}
-
-					constexpr u32 s_CharacterPixelSize = 10;
-					constexpr u32 s_DropDownArrowSize = 20;
-
-					const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * s_CharacterPixelSize;
-
-					ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
-
-					snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
-
-					ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesCombobuffer) * s_CharacterPixelSize));
-					if (ImGui::Combo(m_ScenesCombobuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
-					{
-						m_CurrentScene = scenes[m_LastSceneIndex];
-						// #NOTE Scene transition changes removes above lines for below
-						// #TODO SetActive(true/false) ?
-						// Scenes::SetCurrentScene(index);
-					}
-					ImGui::PopItemWidth();
-				}
-				else
+				if (scenes.empty())
 				{
 					ImGui::Text("No scene selected");
+					return;
 				}
 
 				if (!m_CurrentScene)
+				{
+					ImGui::Text("Null scene selected");
+					return;
+				}
 
 				// #NOTE Scene transition changes
 				// constexpr u32 s_CharacterPixelSize = 10;
@@ -162,10 +138,9 @@ namespace QwerkE {
 				//
 				// Scene* sceneToView = Scenes::GetScene(m_SelectedSceneGuid);
 				// if (!sceneToView)
-					return;
+				//	 return;
 
 				// #NOTE Scene transition changes removed 2 lines below
-
 
 				// #TODO Buttons are squares, so maybe width = (lineheight * 3) + (padding * 2)
 				// x3 for the 2 buttons and field, plus the 2 spaces in between the 3 buttons
@@ -190,9 +165,38 @@ namespace QwerkE {
 				}
 				ImGui::PopItemWidth();
 
+				std::vector<const char*> sceneNames;
+				sceneNames.reserve(3);
+
+				for (size_t i = 0; i < scenes.size(); i++)
+				{
+					sceneNames.push_back(scenes[i]->GetSceneName().c_str());
+				}
+
+				constexpr u32 s_CharacterPixelSize = 10;
+				constexpr u32 s_DropDownArrowSize = 20;
+
+				const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * s_CharacterPixelSize;
+
+				ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
+
+				snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
+
+				// ImGui::Dummy(ImVec2(0, 0));
+				// ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesCombobuffer) * s_CharacterPixelSize));
+				ImGui::SameLine();
+				if (ImGui::Combo(m_ScenesCombobuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
+				{
+					m_CurrentScene = scenes[m_LastSceneIndex];
+					// #NOTE Scene transition changes removes above lines for below
+					// #TODO SetActive(true/false) ?
+					// Scenes::SetCurrentScene(index);
+				}
+				ImGui::PopItemWidth();
+
 				// #TODO Camera selection drop down
 				std::vector<const char*> cameraEntityNames;
-				static int currentCameraIndex = 0;
+				static int currentCameraIndex = 0; // #TODO needs to persist and adjust for newly added camera(s)
 
 				auto viewCameras = m_CurrentScene->ViewComponents<ComponentCamera>();
 				for (auto& entity : viewCameras)
@@ -201,9 +205,11 @@ namespace QwerkE {
 					cameraEntityNames.push_back(handle.EntityName().c_str());
 				}
 
-				ImGui::PushItemWidth(120.f);
-				ImGui::SameLineEnd(15);
-				if (ImGui::Combo("Camera:", &currentCameraIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
+				ImGui::SameLineEnd(22);
+				ImGui::Text("Camera");
+				ImGui::SameLine();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+				if (ImGui::Combo("##Camera:", &currentCameraIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
 				{
 					// #TODO Change camera. Can use name or entity GUID to find camera, for now
 					for (auto& entity : viewCameras)

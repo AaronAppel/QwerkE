@@ -201,10 +201,14 @@ namespace QwerkE {
 				{
 					m_WindowOptions.NewFrame();
 				}
+
 				if (ImGui::Begin(m_WindowName.c_str(), &isOpen, m_ImGuiFlags))
 				{
 					ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x / 2 - (10 * 7.f));
-					if (ImGui::SmallButton("Edit Window Options")) { ImGui::OpenPopup("##EditorWindowOptionsEdit"); };
+					if (ImGui::SmallButton("Edit Window Options"))
+					{
+						ImGui::OpenPopup("##EditorWindowOptionsEdit");
+					}
 					m_WindowOptions.Edit();
 					DrawInternal();
 				}
