@@ -60,7 +60,7 @@ namespace QwerkE {
 				m_ViewId(viewId)
 			{
 				m_ImGuiFlags = ImGuiWindowFlags_NoScrollbar;
-				snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "Scenes: %i##%llu", 0, GetGuid());
+				snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "Scenes: %i##%llu", 0, GetGuid());
 			}
 
 			EditorWindowSceneView::EditorWindowSceneView(GUID guid = GUID()) :
@@ -180,17 +180,33 @@ namespace QwerkE {
 
 				ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
 
-				snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
+				snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
 
 				// ImGui::Dummy(ImVec2(0, 0));
-				// ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesCombobuffer) * s_CharacterPixelSize));
+				// ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesComboLabelBuffer) * s_CharacterPixelSize));
 				ImGui::SameLine();
-				if (ImGui::Combo(m_ScenesCombobuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
+				if (ImGui::Combo(m_ScenesComboLabelBuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
 				{
 					m_CurrentScene = scenes[m_LastSceneIndex];
 					// #NOTE Scene transition changes removes above lines for below
 					// #TODO SetActive(true/false) ?
 					// Scenes::SetCurrentScene(index);
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::SameLine();
+				ImGui::PushItemWidth(11 * ImGui::g_pixelsPerCharacter);
+				// #TODO Game window (texture) scaling options
+				int listIndex = 0;
+				if (ImGui::Combo("Scaling", &listIndex,
+					"Ratio\0"
+					"Size\0"
+					"Fit Window\0"
+					"Pixel\0"
+					))
+				{
+					// #TODO: Make Menu Ratios -> [16:9, 3:4, etc...]
+					// #TODO: Make Menu Size -> [1024×576, 1280×720, etc..., Custom]
 				}
 				ImGui::PopItemWidth();
 
@@ -205,8 +221,8 @@ namespace QwerkE {
 					cameraEntityNames.push_back(handle.EntityName().c_str());
 				}
 
-				ImGui::SameLineEnd(22);
-				ImGui::Text("Camera");
+				// ImGui::SameLineEnd(22);
+				// ImGui::Text("Camera");
 				ImGui::SameLine();
 				ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
 				if (ImGui::Combo("##Camera:", &currentCameraIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
@@ -261,7 +277,7 @@ namespace QwerkE {
 			void OnSceneReload() override { m_CurrentScene = nullptr; }
 
 			Scene* m_CurrentScene = nullptr;
-			char m_ScenesCombobuffer[33] = "Scenes:    ##0000000000000000000";
+			char m_ScenesComboLabelBuffer[33] = "Scenes:    ##0000000000000000000";
 			s32 m_LastSceneIndex = 0;
 
 			// #TODO Scene transition changes

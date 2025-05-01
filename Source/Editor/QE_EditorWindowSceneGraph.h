@@ -53,9 +53,9 @@ namespace QwerkE {
 				constexpr u32 s_DropDownArrowSize = 45;
 				ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
 
-				snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
+				snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
 
-				if (ImGui::Combo(m_ScenesCombobuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
+				if (ImGui::Combo(m_ScenesComboLabelBuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
 				{
 					m_CurrentScene = scenes[m_LastSceneIndex];
 					// #NOTE Scene transition changes removes above lines for below
@@ -145,7 +145,7 @@ namespace QwerkE {
 			void OnSceneReload() override { m_CurrentScene = nullptr; }
 
 			Scene* m_CurrentScene = nullptr;
-			char m_ScenesCombobuffer[33] = "Scenes:    ##0000000000000000000";
+			char m_ScenesComboLabelBuffer[33] = "Scenes:    ##0000000000000000000";
 			s32 m_LastSceneIndex = 0;
 		};
 
