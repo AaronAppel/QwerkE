@@ -1,4 +1,4 @@
-// #include "QC_BitIndexRingBuffer.h"
+#include "QC_BitIndexRingBuffer.h"
 
 #include "QF_InputNew.h"
 
@@ -6,7 +6,8 @@ namespace QwerkE {
 
     namespace Input {
 
-        // BitIndexRingBuffer<QKey, bits4> bit4Buffer;
+        BitIndexRingBuffer<QKey, bits4> s_TempBit4Buffer;
+        QKey s_TempQKey;
 
         using RollingIndex = bits4; // #NOTE Utilize rollover
         constexpr u16 s_HistoryBufferSize = RollingIndex::max + 1;
@@ -26,6 +27,13 @@ namespace QwerkE {
         static u64 s_InputsSinceReset = 0;
 #endif // _QDEBUG
 
+        void Initialize_Internal()
+        {
+            s_TempBit4Buffer.Write(QKey::e_A);
+            s_TempBit4Buffer.AddMarker(0);
+            s_TempBit4Buffer.AddMarker(0);
+        }
+
         void NewFrame_Internal()
         {
 #ifdef _QDEBUG
@@ -33,6 +41,49 @@ namespace QwerkE {
 #endif // _QDEBUG
             s_LastFrameStartIndex = s_LastFrameEndIndex;
             s_LastFrameEndIndex = s_NextToWriteIndex;
+        }
+
+        void Update_Internal()
+        {
+            if (ImGui::Begin("IndexBitBuffer"))
+            {
+                ImGui::PushItemWidth(100);
+                ImGui::InputInt("TempKey", (int*)&s_TempQKey);
+                ImGui::PopItemWidth();
+
+                if (ImGui::Button("Write"))
+                {
+                    s_TempBit4Buffer.Write(s_TempQKey);
+                }
+                if (ImGui::Button("Advance"))
+                {
+                    // s_TempBit4Buffer.AdvanceAllMarkers();
+
+                    s_TempBit4Buffer.SetMarkerPosition(1, s_TempBit4Buffer.MarkerPosition(0));
+                    s_TempBit4Buffer.SetMarkerPosition(0, s_TempBit4Buffer.HeadPosition());
+                }
+                ImGui::Separator();
+                for (size_t i = 0; i < s_TempBit4Buffer.Size(); i++)
+                {
+                    ImGui::Text("[%i] %i", i, s_TempBit4Buffer.ReadRandom(i));
+                    if (i == s_TempBit4Buffer.HeadPosition())
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("<- H");
+                    }
+                    if (i == s_TempBit4Buffer.MarkerPosition(0))
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("<- E");
+                    }
+                    if (i == s_TempBit4Buffer.MarkerPosition(1))
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("<- S");
+                    }
+                }
+                ImGui::End();
+            }
         }
 
         u8 InputEventsThisFrame()
@@ -251,6 +302,8 @@ namespace QwerkE {
                 for (size_t i = 0; i < s_HistoryBufferSize; i++)
                 {
                     ImGui::Text("%i", s_HistoryBufferKeys[i]);
+                    ImGui::SameLine();
+                    ImGui::Text(" %c", s_HistoryBufferKeys[i]);
                     if (i == s_NextToWriteIndex.bits)
                     {
                         ImGui::SameLine();

@@ -16,7 +16,7 @@ namespace QwerkE {
         static void local_DrawKnobs();
         static bool s_IsShowingKnobs = true;
 
-		static void imgui_toggle_example(); // Toggles
+		static void imgui_toggle_example();
 		static void imgui_toggle_simple();
 		static void imgui_toggle_custom();
 		static void imgui_toggle_state(const ImGuiToggleConfig& config, ImGuiToggleStateConfig& state);

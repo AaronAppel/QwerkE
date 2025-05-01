@@ -28,22 +28,35 @@ public:
 		return m_Values[m_Markers[a_Index].bits];
 	}
 
-	const char AddMarker(const unsigned char a_StartingIndex)
+	char AddMarker(const unsigned char a_StartingIndex)
 	{
 		m_Markers.push_back(a_StartingIndex);
 		return m_Markers.size() - 1;
 	}
 
-	const unsigned char MarkerPosition(const unsigned char a_MarkerIndex)
+	unsigned char HeadPosition()
 	{
-		assert(m_Markers.size() > a_MarkerIndex);
-		return m_Markers[a_MarkerIndex];
+		return m_Head.bits;
 	}
 
-	void AdvanceMarker(const unsigned char a_MarkerIndex)
+	unsigned char MarkerPosition(const unsigned char a_MarkerIndex)
 	{
 		assert(m_Markers.size() > a_MarkerIndex);
-		m_Markers[a_MarkerIndex] = m_Head;
+		return m_Markers[a_MarkerIndex].bits;
+	}
+
+	void SetMarkerPosition(const unsigned char a_MarkerIndex, const unsigned char a_MarkerPosition)
+	{
+		assert(m_Markers.size() > a_MarkerIndex);
+		m_Markers[a_MarkerIndex] = a_MarkerPosition;
+	}
+
+	void AdvanceAllMarkers()
+	{
+		for (size_t i = 0; i < m_Markers.size(); i++)
+		{
+			m_Markers[i] = m_Head;
+		}
 	}
 
 	void RemoveMarker(const unsigned char a_MarkerIndex)
@@ -56,6 +69,12 @@ public:
 	{
 		return 255; // #TODO Implement
 	}
+
+	unsigned char Size()
+	{
+		return Bits::max + 1;
+	}
+
 
 private:
 	Bits m_Head = 0;
