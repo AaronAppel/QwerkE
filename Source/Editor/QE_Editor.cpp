@@ -129,10 +129,6 @@ namespace QwerkE {
 
             Time::WriteAppStartTime();
 
-            int spinInt = 0;
-            float spinFloat = 0.f;
-            double spinDouble = 0;
-
 			while (local_StillRunning())
 			{
 				if (Time::ShouldProcessNextFrame())
@@ -151,46 +147,6 @@ namespace QwerkE {
                     local_Update();
 
 					Framework::Update((float)Time::PreviousFrameDuration());
-
-                    if (true)
-                    {
-                        if (ImGui::Begin("Spin Values"))
-                        {
-                            ImGui::PushItemWidth(150.f);
-                            ImGui::ScrollerInt("Spin Int", &spinInt);
-                            ImGui::ScrollerFloat("Spin Float", &spinFloat);
-                            ImGui::ScrollerDouble("Spin Double", &spinDouble);
-                            ImGui::PopItemWidth();
-                        }
-                        ImGui::End();
-                    }
-
-                    if (false)
-                    {
-                        ImGui::Begin("Progress Indicators");
-
-                        const ImU32 col = ImGui::GetColorU32(ImGuiCol_ButtonHovered);
-                        const ImU32 bg = ImGui::GetColorU32(ImGuiCol_Button);
-
-                        const float indicator_radius = 45.f;
-                        const ImVec4 main_color = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);
-                        const ImVec4 backdrop_color = ImVec4(0.25f, .75f, 1.0f, 1.0f);
-
-                        const int circle_count = 25;
-                        static float speed = ImGui::GetTime() * 10.f;
-
-                        ImGui::Knob("IndicatorSpeedKnob", &speed, 0.f, 10.f, .05f);
-                        ImGui::SameLine();
-                        ImGui::LoadingIndicatorCircle("##LoadingCirclesIndicator", indicator_radius,
-                            main_color, backdrop_color,
-                            circle_count, speed);
-
-                        ImGui::Spinner("##spinner", 15, 6, col);
-                        ImGui::SameLine();
-                        ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
-                        ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
-                        ImGui::End();
-                    }
 
                     if (Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
                     {

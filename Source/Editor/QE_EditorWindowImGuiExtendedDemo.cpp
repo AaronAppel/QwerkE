@@ -27,6 +27,8 @@ namespace QwerkE {
 
         static bool s_IsShowingSpinnersDemo = true;
         static bool m_IsShowingPieSelector = true;
+        static bool m_IsShowingScrollers = true;
+        static bool m_IsShowingProgressIndicators = true;
 
 		void EditorWindowImGuiExtendedDemo::DrawInternal()
 		{
@@ -40,6 +42,10 @@ namespace QwerkE {
                 ImGui::Checkbox("Cool Bar", &s_IsShowingCoolBar);
                 ImGui::SameLine();
                 ImGui::Checkbox("Pie Select", &m_IsShowingPieSelector);
+                ImGui::SameLine();
+                ImGui::Checkbox("Scrollers", &m_IsShowingScrollers);
+                ImGui::SameLine();
+                ImGui::Checkbox("Progress", &m_IsShowingProgressIndicators);
                 ImGui::Separator();
 
                 if (ImGui::CollapsingHeader("Spinners"))
@@ -47,13 +53,18 @@ namespace QwerkE {
                     ImSpinner::demoSpinners();
                     ImGui::Separator();
                 }
+
                 if (s_IsShowingKnobs)
                 {
                     local_DrawKnobs();
                     ImGui::Separator();
                 }
+
                 if (s_IsShowingToggles)
                 {
+                    static bool toggleExample = false;
+                    ImGui::Toggle("##AnimatedToggle", &toggleExample, ImGuiToggleFlags_Animated);
+                    ImGui::SameLine();
                     ImGui::Text("Toggles");
                     if (ImGui::CollapsingHeader("Example"))
                     {
@@ -70,10 +81,12 @@ namespace QwerkE {
                     // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
                     ImGui::Separator();
                 }
+
                 if (s_IsShowingCoolBar)
                 {
                     local_DrawImCoolBar();
                 }
+
                 if (m_IsShowingPieSelector)
                 {
                     // From: https://github.com/ocornut/imgui/issues/434
@@ -91,6 +104,48 @@ namespace QwerkE {
                     int n = ImGui::PiePopupSelectMenu(pie_menu_center, "##piepopup", items, items_count, &selected);
                     // if (n >= 0)
                     //     printf("returned %d\n", n);
+                    ImGui::Separator();
+                }
+
+                if (m_IsShowingScrollers)
+                {
+                    static int spinInt = 0;
+                    static float spinFloat = 0.f;
+                    static double spinDouble = 0;
+
+                    ImGui::PushItemWidth(150.f);
+                    ImGui::ScrollerInt("Spin Int", &spinInt);
+                    ImGui::ScrollerFloat("Spin Float", &spinFloat);
+                    ImGui::ScrollerDouble("Spin Double", &spinDouble);
+                    ImGui::PopItemWidth();
+                    ImGui::Separator();
+                }
+
+                if (m_IsShowingProgressIndicators)
+                {
+                    const ImU32 col = ImGui::GetColorU32(ImGuiCol_ButtonHovered);
+                    const ImU32 bg = ImGui::GetColorU32(ImGuiCol_Button);
+
+                    const float indicator_radius = 45.f;
+                    const ImVec4 main_color = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);
+                    const ImVec4 backdrop_color = ImVec4(0.25f, .75f, 1.0f, 1.0f);
+
+                    const int circle_count = 25;
+                    static float speed = 5.f;
+
+                    ImGui::Knob("IndicatorSpeedKnob", &speed, 0.f, 10.f, .05f);
+                    ImGui::SameLine();
+                    ImGui::LoadingIndicatorCircle("##LoadingCirclesIndicator",
+                        indicator_radius,
+                        main_color,
+                        backdrop_color,
+                        circle_count, speed
+                    );
+
+                    ImGui::Spinner("##spinner", 15, 6, col);
+                    ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
+                    ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
+                    ImGui::Separator();
                 }
 
 				if (!isShowingDemo)
