@@ -60,7 +60,7 @@ struct bits2
     {
         bits = value;
     }
-    unsigned char bits : 2; // 2 bits unsigned integer
+    unsigned char bits : 2; // 2 value unsigned integer
     static constexpr u8 max = 3;
 };
 
@@ -70,18 +70,20 @@ struct bits3
     {
         bits = value;
     }
-    unsigned char bits : 3; // 3 bits unsigned integer
+    unsigned char bits : 3; // 3 value unsigned integer
     static constexpr u8 max = 7;
 };
 
 struct bits4
 {
-    bits4(unsigned char value)
+    bits4(unsigned char a_Value)
     {
-        bits = value;
+        value = a_Value;
     }
-    unsigned char bits : 4; // 4 bits unsigned integer
-    static constexpr u8 max = 15;
+
+    unsigned char value : 4; // 4 value unsigned integer
+    static constexpr char BITS = 4;
+    static constexpr u8 MAX = 15;
 };
 
 struct bits5
@@ -90,7 +92,7 @@ struct bits5
     {
         bits = value;
     }
-    unsigned char bits : 5; // 5 bits unsigned integer
+    unsigned char bits : 5; // 5 value unsigned integer
     static constexpr u8 max = 31;
 };
 
@@ -100,7 +102,7 @@ struct bits6
     {
         bits = value;
     }
-    unsigned char bits : 6; // 6 bits unsigned integer
+    unsigned char bits : 6; // 6 value unsigned integer
     static constexpr u8 max = 63;
 };
 
@@ -110,7 +112,7 @@ struct bits7
     {
         bits = value;
     }
-    unsigned char bits : 7; // 7 bits unsigned integer
+    unsigned char bits : 7; // 7 value unsigned integer
     static constexpr u8 max = 127;
 };
 

@@ -11,16 +11,19 @@ namespace QwerkE {
     namespace Input {
 
         extern u8 s_KeysCurrentlyDown;
+        extern u8 s_MouseButtonsCurrentlyDown;
 
         extern void Initialize_Internal();
         extern void NewFrame_Internal();
         extern void Update_Internal();
 
         extern void OnKeyEvent_New(const QKey a_Key, const bool a_KeyState);
-        extern void OnMouseMove_New(const double xpos, const double ypos);
-        extern void OnMouseButton_New(const int button, const int action, const int mods);
-        extern void OnMouseScroll_New(const double xoffset, const double yoffset);
         extern bool KeyDown_Internal(const QKey a_Key);
+        extern bool MouseDown_Internal(const QKey a_Key);
+
+        extern void OnMouseMove_New(const double xpos, const double ypos);
+        extern void OnMouseButton_New(const QKey a_Key, const bool a_KeyState);
+        extern void OnMouseScroll_New(const double xoffset, const double yoffset);
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
         constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
@@ -176,12 +179,10 @@ namespace QwerkE {
                     }
                 }
 
-                {
-                    s_DeviceIds.emplace_back(a_JoystickId);
-                    int count;
-                    const unsigned char* buttons = glfwGetJoystickButtons(a_JoystickId, &count);
-                    s_DeviceStates.emplace_back(0);
-                }
+                s_DeviceIds.emplace_back(a_JoystickId);
+                s_DeviceStates.emplace_back(0);
+
+                // #TODO Support device objects
                 // glfwGetJoystickName
                 // glfwGetJoystickGUID
                 // glfwJoystickIsGamepad
@@ -212,7 +213,9 @@ namespace QwerkE {
 
         static void Local_GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
         {
-            OnMouseButton_New(button, action, mods);
+            const QKey qKey = Local_GlfwToQwerkE(button, 0);
+            MouseDown_Internal(qKey);
+            OnMouseButton_New(qKey, GLFW_PRESS == action); // #TODO Invalid scancode?
         }
 
         static void Local_GlfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
@@ -222,6 +225,11 @@ namespace QwerkE {
 
         void Input_RegisterGlfwCallbacks(GLFWwindow* window)
         {
+            // #TODO Consider moving into Initialize() or otherwise combining the two functions
+            // #TODO Handle multiple GLFW windows
+
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
             // #TODO Set GLFW_JOYSTICK_HAT_BUTTONS at int
             glfwSetKeyCallback(window, Local_GlfwKeyCallback);
             glfwSetCharCallback(window, Local_GlfwCharCallback);
@@ -244,6 +252,18 @@ namespace QwerkE {
             }
             // #TODO GLFWindow* reference. Remember to test multi-window input
             return GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
+        }
+
+        bool MouseDown(const QKey a_Key)
+        {
+            const bool result = MouseDown_Internal(a_Key); // #TODO Consider return value
+
+            if (e_Any == a_Key)
+            {
+                return s_MouseButtonsCurrentlyDown > 0; // #TODO Check mouse buttons down
+            }
+            // #TODO GLFWindow* reference. Remember to test multi-window input
+            return GLFW_PRESS == glfwGetMouseButton(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
         }
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey)

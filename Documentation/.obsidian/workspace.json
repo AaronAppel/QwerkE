@@ -139,12 +139,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Imgui App Example UI.md",
+                "file": "Shared Vault Files ❗/Toggle Block Comments.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Imgui App Example UI"
+              "title": "Toggle Block Comments"
             }
           },
           {
@@ -306,8 +306,10 @@
   },
   "active": "f1205b3efba50f82",
   "lastOpenFiles": [
-    "Shared Vault Files ❗/Visual Studio.md",
     "Imgui App Example UI.md",
+    "Toggle Block Comments.md",
+    "Shared Vault Files ❗/Toggle Block Comments.md",
+    "Shared Vault Files ❗/Visual Studio.md",
     "Editor Config Files.md",
     "Shared Vault Files ❗/Obsidian/VisualStudioShowMiniMap.png",
     "Shared Vault Files ❗/Obsidian/VisualStudioHideProblemDetailsWindow.png",
@@ -337,11 +339,9 @@
     "cJSON.md",
     "Mirror Library.md",
     "{CFA9FE16-39A2-4331-A8C3-40F7805AB956}.png",
-    "Toggle Block Comments.md",
     "Solution Configuration/Library Configuration.md",
     "QwerkE Standards/Including.md",
     "QwerkE Standards/Commenting.md",
-    "Return Value Optimization.md",
     "{868F4BCD-34FB-415B-9070-0CAB845B8A96}.png",
     "{AF01BB18-5095-48E5-80BE-AC95CEEAD802}.png",
     "Untitled.canvas",

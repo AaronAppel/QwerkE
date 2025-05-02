@@ -85,6 +85,9 @@
     <ClCompile Include="Framework\QF_InputNewGlfw.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\QF_InputDebugWindow.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />
@@ -235,6 +238,9 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_QKey.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_InputStatesBitRingBuffer.h">
       <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,12 +8,10 @@ template <typename T, typename Bits>
 class BitIndexRingBuffer
 {
 public:
-	BitIndexRingBuffer() = default;
-
 	void Write(T a_Value)
 	{
-		m_Values[m_Head.bits] = a_Value;
-		m_Head.bits += 1;
+		m_Values[m_Head.value] = a_Value;
+		m_Head.value += 1;
 	}
 
 	T ReadRandom(const unsigned char a_Index)
@@ -25,7 +23,7 @@ public:
 	T ReadMarker(const unsigned char a_Index)
 	{
 		assert(m_Markers.size() > a_Index);
-		return m_Values[m_Markers[a_Index].bits];
+		return m_Values[m_Markers[a_Index].value];
 	}
 
 	char AddMarker(const unsigned char a_StartingIndex)
@@ -34,15 +32,15 @@ public:
 		return m_Markers.size() - 1;
 	}
 
-	unsigned char HeadPosition()
+	unsigned char HeadIndex()
 	{
-		return m_Head.bits;
+		return m_Head.value;
 	}
 
 	unsigned char MarkerPosition(const unsigned char a_MarkerIndex)
 	{
 		assert(m_Markers.size() > a_MarkerIndex);
-		return m_Markers[a_MarkerIndex].bits;
+		return m_Markers[a_MarkerIndex].value;
 	}
 
 	void SetMarkerPosition(const unsigned char a_MarkerIndex, const unsigned char a_MarkerPosition)
@@ -70,15 +68,15 @@ public:
 		return 255; // #TODO Implement
 	}
 
-	unsigned char Size()
+	constexpr unsigned char Size()
 	{
-		return Bits::max + 1;
+		return Bits::MAX + 1;
 	}
 
 
 private:
 	Bits m_Head = 0;
-	std::array<T, Bits::max + 1> m_Values;
+	std::array<T, Bits::MAX + 1> m_Values;
 	std::vector<Bits> m_Markers;
 	// #TODO Could simplify by making this class specific. Use 3 pointers and always advance [1] and [2] to match [0]
 	// Rename to something like TwoStateRingBuffer, or TwoWindowRingBuffer, etc.

@@ -24,7 +24,9 @@ namespace QwerkE {
         bool MousePressed(const QKey a_Key);
         bool MouseReleased(const QKey a_Key);
         bool MouseDown(const QKey a_Key);
+
         vec2u16 MousePos();
+        bool MouseMoved();
         vec2f MouseDelta();
 
         bool GamepadPressed(const QKey a_Key);

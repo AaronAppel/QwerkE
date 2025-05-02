@@ -1,37 +1,50 @@
 #include "QC_BitIndexRingBuffer.h"
 
 #include "QF_InputNew.h"
+#include "QF_InputStatesBitRingBuffer.h"
 
 namespace QwerkE {
 
     namespace Input {
 
-        BitIndexRingBuffer<QKey, bits4> s_TempBit4Buffer;
+        ///////////// #TODO Implement
+        InputStatesBitRingBuffer<bits4> s_Keys; // #TODO Implement
+
         QKey s_TempQKey;
+        BitIndexRingBuffer<QKey, bits4> s_KeysBuffer;
+        BitIndexRingBuffer<QKey, bits4> s_KeyStatesBuffer;
+        BitIndexRingBuffer<u32, bits4> s_CharsBuffer;
+
+        BitIndexRingBuffer<QKey, bits4> s_MouseButtonsBuffer;
+        bool s_MouseButtonsStatesBuffer[bits4::MAX + 1]; // #TODO Shrink bools from byte to bit
+        BitIndexRingBuffer<vec2f, bits4> s_MousePositionsBuffer;
+
+        BitIndexRingBuffer<QKey, bits4> s_GamepadsBuffer; // #TODO Any gamepad?
+        ///////////// #TODO Implement
 
         using RollingIndex = bits4; // #NOTE Utilize rollover
-        constexpr u16 s_HistoryBufferSize = RollingIndex::max + 1;
+        constexpr u16 s_HistoryBufferSize = RollingIndex::MAX + 1;
 
         QKey s_HistoryBufferKeys[s_HistoryBufferSize];
-        bool s_HistoryBufferStates[s_HistoryBufferSize];
+        bool s_HistoryBufferStates[s_HistoryBufferSize]; // #TODO Shrink bools from byte to bit
 
         RollingIndex s_NextToWriteIndex = 0;
         RollingIndex s_LastFrameStartIndex = 0;
         RollingIndex s_LastFrameEndIndex = 0;
 
         u8 s_KeysCurrentlyDown = 0; // Supports e_Any
+        u8 s_MouseButtonsCurrentlyDown = 0; // Supports e_Any
 
 #ifdef _QDEBUG
-        static u8 s_InputsThisFrame = 0;
-        static u8 s_Most1FrameInputs = 0;
-        static u64 s_InputsSinceReset = 0;
+        u8 s_InputsThisFrame = 0;
+        u8 s_Most1FrameInputs = 0;
+        u64 s_InputsSinceReset = 0;
 #endif // _QDEBUG
 
         void Initialize_Internal()
         {
-            s_TempBit4Buffer.Write(QKey::e_A);
-            s_TempBit4Buffer.AddMarker(0);
-            s_TempBit4Buffer.AddMarker(0);
+            s_KeysBuffer.AddMarker(0); // End last frame
+            s_KeysBuffer.AddMarker(0); // Start last frame
         }
 
         void NewFrame_Internal()
@@ -48,35 +61,39 @@ namespace QwerkE {
             if (ImGui::Begin("IndexBitBuffer"))
             {
                 ImGui::PushItemWidth(100);
-                ImGui::InputInt("TempKey", (int*)&s_TempQKey);
+                int temp = s_TempQKey;
+                if (ImGui::InputInt("TempKey", (int*)&temp))
+                {
+                    s_TempQKey = static_cast<QKey>(temp);
+                }
                 ImGui::PopItemWidth();
 
                 if (ImGui::Button("Write"))
                 {
-                    s_TempBit4Buffer.Write(s_TempQKey);
+                    s_KeysBuffer.Write(s_TempQKey);
                 }
                 if (ImGui::Button("Advance"))
                 {
-                    // s_TempBit4Buffer.AdvanceAllMarkers();
+                    // s_KeysBuffer.AdvanceAllMarkers();
 
-                    s_TempBit4Buffer.SetMarkerPosition(1, s_TempBit4Buffer.MarkerPosition(0));
-                    s_TempBit4Buffer.SetMarkerPosition(0, s_TempBit4Buffer.HeadPosition());
+                    s_KeysBuffer.SetMarkerPosition(1, s_KeysBuffer.MarkerPosition(0));
+                    s_KeysBuffer.SetMarkerPosition(0, s_KeysBuffer.HeadIndex());
                 }
                 ImGui::Separator();
-                for (size_t i = 0; i < s_TempBit4Buffer.Size(); i++)
+                for (size_t i = 0; i < s_KeysBuffer.Size(); i++)
                 {
-                    ImGui::Text("[%i] %i", i, s_TempBit4Buffer.ReadRandom(i));
-                    if (i == s_TempBit4Buffer.HeadPosition())
+                    ImGui::Text("[%i] %i", i, s_KeysBuffer.ReadRandom(i));
+                    if (i == s_KeysBuffer.HeadIndex())
                     {
                         ImGui::SameLine();
                         ImGui::Text("<- H");
                     }
-                    if (i == s_TempBit4Buffer.MarkerPosition(0))
+                    if (i == s_KeysBuffer.MarkerPosition(0))
                     {
                         ImGui::SameLine();
                         ImGui::Text("<- E");
                     }
-                    if (i == s_TempBit4Buffer.MarkerPosition(1))
+                    if (i == s_KeysBuffer.MarkerPosition(1))
                     {
                         ImGui::SameLine();
                         ImGui::Text("<- S");
@@ -88,9 +105,9 @@ namespace QwerkE {
 
         u8 InputEventsThisFrame()
         {
-            const u8 eventsThisFrame = s_NextToWriteIndex.bits >= s_LastFrameEndIndex.bits ?
-                s_NextToWriteIndex.bits - s_LastFrameEndIndex.bits :
-                s_HistoryBufferSize - s_LastFrameEndIndex.bits + s_NextToWriteIndex.bits;
+            const u8 eventsThisFrame = s_NextToWriteIndex.value >= s_LastFrameEndIndex.value ?
+                s_NextToWriteIndex.value - s_LastFrameEndIndex.value :
+                s_HistoryBufferSize - s_LastFrameEndIndex.value + s_NextToWriteIndex.value;
 #ifdef _QDEBUG
             // #TODO Update assert and add more debugging
             // ASSERT(s_InputsThisFrame == eventsThisFrame, "Error calculating input events this frame!");
@@ -103,9 +120,9 @@ namespace QwerkE {
         {
             // #TODO Add assert and test logic more thoroughly
             const u8 remainingWritesThisFrame =
-                s_NextToWriteIndex.bits >= s_LastFrameStartIndex.bits ?
-                s_HistoryBufferSize - (s_NextToWriteIndex.bits - s_LastFrameStartIndex.bits) :
-                s_LastFrameStartIndex.bits - s_NextToWriteIndex.bits;
+                s_NextToWriteIndex.value >= s_LastFrameStartIndex.value ?
+                s_HistoryBufferSize - (s_NextToWriteIndex.value - s_LastFrameStartIndex.value) :
+                s_LastFrameStartIndex.value - s_NextToWriteIndex.value;
             return remainingWritesThisFrame;
         }
 #endif // _QDEBUG
@@ -122,8 +139,21 @@ namespace QwerkE {
             }
 #endif // _QDEBUG
 
-            s_HistoryBufferKeys[s_NextToWriteIndex.bits] = a_Key;
-            s_HistoryBufferStates[s_NextToWriteIndex.bits] = a_KeyState;
+            {
+                // Newest
+                s_Keys.Write(a_Key, a_KeyState);
+            }
+            {
+                // Newer
+                // #TODO Maybe create a collection that holds QKeys and matching booleans in 1 collection. Move even more code out of here.
+                s_HistoryBufferStates[s_KeysBuffer.HeadIndex()] = a_KeyState;
+                s_KeysBuffer.Write(a_Key);
+            }
+            {
+                // Old
+                s_HistoryBufferKeys[s_NextToWriteIndex.value] = a_Key;
+                s_HistoryBufferStates[s_NextToWriteIndex.value] = a_KeyState;
+            }
 
             if (KeyStateDown == a_KeyState)
             {
@@ -134,7 +164,7 @@ namespace QwerkE {
                 --s_KeysCurrentlyDown;
             }
 
-            ++s_NextToWriteIndex.bits;
+            ++s_NextToWriteIndex.value;
         }
 
         void OnMouseMove_New(const double xpos, const double ypos)
@@ -143,10 +173,19 @@ namespace QwerkE {
             // - Mouse drag
         }
 
-        void OnMouseButton_New(const int button, const int action, const int mods)
+        void OnMouseButton_New(const QKey a_Key, const bool a_KeyState)
         {
-            // #TODO Handle:
-            // - Mouse key/button up/down
+            s_MouseButtonsStatesBuffer[s_MouseButtonsBuffer.HeadIndex()] = a_KeyState;
+            s_MouseButtonsBuffer.Write(a_Key);
+
+            if (KeyStateDown == a_KeyState)
+            {
+                ++s_MouseButtonsCurrentlyDown;
+            }
+            else
+            {
+                --s_MouseButtonsCurrentlyDown;
+            }
         }
 
         void OnMouseScroll_New(const double xoffset, const double yoffset)
@@ -180,18 +219,18 @@ namespace QwerkE {
 
         bool KeyHistoryCheck(const QKey a_Key, const bool a_KeyState)
         {
-            RollingIndex index = s_NextToWriteIndex.bits - 1;
+            RollingIndex index = s_NextToWriteIndex.value - 1;
             ASSERT(U8_MAX >= s_HistoryBufferSize, "u8 too small for range!");
             u8 inputEventsThisFrame = InputEventsThisFrame();
 
             while (inputEventsThisFrame > 0)
             {
-                if ((a_Key == s_HistoryBufferKeys[index.bits] || e_Any == a_Key) &&
-                    a_KeyState == s_HistoryBufferStates[index.bits])
+                if ((a_Key == s_HistoryBufferKeys[index.value] || e_Any == a_Key) &&
+                    a_KeyState == s_HistoryBufferStates[index.value])
                 {
                     return true;
                 }
-                --index.bits;
+                --index.value;
                 --inputEventsThisFrame;
             }
 
@@ -213,30 +252,44 @@ namespace QwerkE {
         bool MousePressed(const QKey a_Key)
         {
             // #TODO Implement
+            s_MouseButtonsBuffer;
             return false;
         }
 
         bool MouseReleased(const QKey a_Key)
         {
             // #TODO Implement
+            s_MouseButtonsBuffer;
             return false;
         }
 
-        bool MouseDown(const QKey a_Key)
+        bool MouseDown_Internal(const QKey a_Key) { return false; }
+
+        bool MouseScrolled() // #TODO Or force MousePressed?
         {
             // #TODO Implement
+            s_MouseButtonsBuffer;
             return false;
         }
 
         vec2u16 MousePos()
         {
             // #TODO Implement
+            s_MousePositionsBuffer;
             return vec2f(0.f, 0.f);
+        }
+
+        bool MouseMoved()
+        {
+            // #TODO Implement
+            s_MousePositionsBuffer;
+            return false;
         }
 
         vec2f MouseDelta()
         {
             // #TODO Implement
+            s_MousePositionsBuffer;
             return vec2f(0.f, 0.f);
         }
 
@@ -263,70 +316,6 @@ namespace QwerkE {
             // #TODO Implement
             return vec2f(0.f, 0.f);
         }
-
-#ifdef _QDEBUG
-        void DrawDebugWindow()
-        {
-            if (!ImGui::Begin("Input System"))
-            {
-                ImGui::End();
-                return;
-            }
-
-            if (ImGui::Button("Reset"))
-            {
-                s_InputsSinceReset = 0;
-                s_NextToWriteIndex.bits = 0;
-                s_LastFrameEndIndex.bits = 0;
-                s_LastFrameStartIndex.bits = 0;
-
-                memset(s_HistoryBufferKeys, 0, s_HistoryBufferSize);
-                memset(s_HistoryBufferStates, 0, s_HistoryBufferSize);
-            }
-
-            ImGui::Text("Inputs this frame: %i", s_InputsThisFrame);
-            ImGui::Text("Most 1 frame inputs: %i", s_Most1FrameInputs);
-            ImGui::Text("Inputs since reset: %i", s_InputsSinceReset);
-            ImGui::Text("Keys currently down: %i", s_KeysCurrentlyDown);
-
-            ImGui::Text("Rolling index max: %i", RollingIndex::max);
-            ImGui::Text("History buffer size: %i", s_HistoryBufferSize);
-
-            ImGui::Text("Indices");
-            ImGui::Text("Next: %i", s_NextToWriteIndex.bits);
-            ImGui::Text("LastEnd: %i", s_LastFrameEndIndex.bits);
-            ImGui::Text("LastStart: %i", s_LastFrameStartIndex.bits);
-
-            if (ImGui::CollapsingHeader("Keys"))
-            {
-                for (size_t i = 0; i < s_HistoryBufferSize; i++)
-                {
-                    ImGui::Text("%i", s_HistoryBufferKeys[i]);
-                    ImGui::SameLine();
-                    ImGui::Text(" %c", s_HistoryBufferKeys[i]);
-                    if (i == s_NextToWriteIndex.bits)
-                    {
-                        ImGui::SameLine();
-                        ImGui::Text("<-");
-                    }
-                }
-            }
-            if (ImGui::CollapsingHeader("States"))
-            {
-                for (size_t i = 0; i < s_HistoryBufferSize; i++)
-                {
-                    ImGui::Text("%i", s_HistoryBufferStates[i]);
-                    if (i == s_NextToWriteIndex.bits)
-                    {
-                        ImGui::SameLine();
-                        ImGui::Text("<-");
-                    }
-                }
-            }
-
-            ImGui::End();
-        }
-#endif // _QDEBUG
 
     }
 
