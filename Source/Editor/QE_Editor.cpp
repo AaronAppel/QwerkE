@@ -264,6 +264,7 @@ namespace QwerkE {
 
         void OnEditorWindowFocused(const EditorWindow* const focusedWindow)
         {
+            // #TODO Consider moving to a static function in EditorWindow.h
             ASSERT(focusedWindow, "Null focusedWindow pointer!");
 
             s16 index = -1;
@@ -359,7 +360,7 @@ namespace QwerkE {
         void local_Update()
         {
 #ifdef _QDEBUG // #TODO Maybe change to QE_DEBUG?
-            Input::Update();
+            Input::PollInput(); // #TODO Move to Framework, maybe in NewFrame()
             Input::DrawDebugWindow();
 #endif // _QDEBUG
 
@@ -373,11 +374,23 @@ namespace QwerkE {
             }
             if (Input::KeyReleased(QKey::e_Any))
             {
-                LOG_WARN("AnyReleased()");
+                LOG_INFO("AnyReleased()");
             }
             if (Input::KeyDown(QKey::e_Any))
             {
                 // LOG_WARN("AnyDown()");
+            }
+            if (Input::GamepadPressed(QKey::e_Gamepad0))
+            {
+                LOG_ERROR("Gamepad0 Pressed()");
+            }
+            if (Input::GamepadPressed(QKey::e_Any))
+            {
+                LOG_ERROR("Gamepad Any Pressed()");
+            }
+            if (Input::GamepadDown(QKey::e_Any))
+            {
+                LOG_ERROR("Gamepad Any Down()");
             }
 
             // #TODO How to handle scrolling?

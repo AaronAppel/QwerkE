@@ -35,7 +35,7 @@ namespace QwerkE {
         vec2f GamepadAxis(const int a_AxisIndex);
 
 #ifdef _QDEBUG
-        void Update(); // #TESTING For input system refactor only
+        void PollInput(); // #TESTING For input system refactor only
 #endif // _QDEBUG
 
 #ifdef _QDEBUG

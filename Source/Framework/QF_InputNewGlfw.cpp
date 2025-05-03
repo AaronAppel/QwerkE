@@ -4,37 +4,39 @@
 #include "Libraries/glfw/glfw3.h"
 
 #include "QF_QKey.h"
+#include "QF_InputStatesBitRingBuffer.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
 
     namespace Input {
 
-        extern u8 s_KeysCurrentlyDown;
-        extern u8 s_MouseButtonsCurrentlyDown;
+        extern InputStatesBitRingBuffer<bits5> s_Keys;
+        extern InputStatesBitRingBuffer<bits3> s_MouseButtons;
+        extern InputStatesBitRingBuffer<bits4> s_GamepadButtons;
 
-        extern void Initialize_Internal();
         extern void NewFrame_Internal();
-        extern void Update_Internal();
 
-        extern void OnKeyEvent_New(const QKey a_Key, const bool a_KeyState);
+        extern void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState);
         extern bool KeyDown_Internal(const QKey a_Key);
         extern bool MouseDown_Internal(const QKey a_Key);
 
         extern void OnMouseMove_New(const double xpos, const double ypos);
-        extern void OnMouseButton_New(const QKey a_Key, const bool a_KeyState);
+        extern void OnMouseButton_New(const QKey a_Key, const QKeyState a_KeyState);
         extern void OnMouseScroll_New(const double xoffset, const double yoffset);
+
+        extern void OnGamepadButtonEvent(const QKey a_Key, const QKeyState a_KeyState);
+        extern void OnGamepadAxisEvent(const unsigned char a_AxisId, const float a_AxisValue);
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
         constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
 
         static std::vector<int> s_DeviceIds; // glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
-        static std::vector<int> s_DeviceStates;
+        static std::vector<std::vector<float>> s_DeviceAxesStates;
+        static std::vector<std::vector<int>> s_DeviceButtonsStates;
 
-        void Update() // #TESTING For input system refactor only
+        void PollInput() // #TESTING For input system refactor only
         {
-            Update_Internal();
-
             if (!ImGui::Begin("Gamepad"))
             {
                 ImGui::End();
@@ -54,15 +56,20 @@ namespace QwerkE {
                     const float* axes = glfwGetJoystickAxes(s_DeviceIds[i], &axesCount);
 
                     ImGui::Text("AxesCount: %i", axesCount);
-                    for (size_t i = 0; i < axesCount; i++)
+                    for (size_t j = 0; j < axesCount; j++)
                     {
-                        ImGui::Text("Axes[%i]: %f", i, axes[i]);
+                        ImGui::Text("Axes[%i]: %f", j, axes[j]);
                         // Left stick X [0]
                         // Left stick Y [1]
                         // Right stick X [2]
                         // Right stick Y [3]
                         // L trigger [4]
                         // R trigger [5]
+                        if (s_DeviceAxesStates[i][j] != axes[j])
+                        {
+                            OnGamepadAxisEvent(j, axes[j]);
+                        }
+                        s_DeviceAxesStates[i][j] = axes[j];
                     }
 
                     // glfwGetJoystickHats
@@ -73,9 +80,9 @@ namespace QwerkE {
                     ASSERT(buttons, "Null device buttons!");
                     ImGui::Text("ButtonCount: %i%", hatStatesCount);
 
-                    for (size_t i = 0; i < hatStatesCount; i++)
+                    for (size_t j = 0; j < hatStatesCount; j++)
                     {
-                        ImGui::Text("Buttons[%i]: %i", i, buttons[i]);
+                        ImGui::Text("Buttons[%i]: %i", j, buttons[j]);
 
                         // [0] A
                         // [1] B
@@ -91,21 +98,13 @@ namespace QwerkE {
                         // [11] D pad right
                         // [12] D pad down
                         // [13] D pad left
-                    }
 
-                    if (*buttons != s_DeviceStates[i]) // #TODO compare all buttons, not just A
-                    {
-                        for (size_t i = 0; i < hatStatesCount; i++)
+                        if (s_DeviceButtonsStates[i][j] != buttons[j])
                         {
-
+                            OnGamepadButtonEvent(static_cast<QKey>(QKey::e_Gamepad0 + j), static_cast<QKeyState>(QKeyState::e_KeyStateDown == buttons[j]));
                         }
-                        // Raise event
-
-                        // Maybe poll and compare every button state?
-                        // buttons[GLFW_GAMEPAD_BUTTON_A];
+                        s_DeviceButtonsStates[i][j] = buttons[j];
                     }
-
-                    s_DeviceStates[i] = *buttons; // #TODO Save all buttons, not just A
                 }
             }
 
@@ -122,15 +121,27 @@ namespace QwerkE {
 
         void Initialize_New()
         {
-            Initialize_Internal();
-
             for (size_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
             {
                 int present = glfwJoystickPresent(i);
                 if (present)
                 {
+                    int hatStatesCount;
+                    const unsigned char* const buttons = glfwGetJoystickButtons(i, &hatStatesCount);
                     s_DeviceIds.emplace_back(i);
-                    s_DeviceStates.emplace_back(0);
+                    s_DeviceButtonsStates.emplace_back(0);
+                    for (size_t j = 0; j < hatStatesCount; j++)
+                    {
+                        s_DeviceButtonsStates[s_DeviceButtonsStates.size() - 1].emplace_back(0);
+                    }
+
+                    int axesCount;
+                    const float* axes = glfwGetJoystickAxes(i, &axesCount);
+                    s_DeviceAxesStates.emplace_back(0.f);
+                    for (size_t i = 0; i < axesCount; i++)
+                    {
+                        s_DeviceAxesStates[s_DeviceAxesStates.size() - 1].emplace_back(0.f);
+                    }
                 }
             }
         }
@@ -147,7 +158,7 @@ namespace QwerkE {
                 const QKey qwerkEeKey = Local_GlfwToQwerkE(a_Key, a_Scancode);
                 if (QKey::e_MAX != qwerkEeKey)
                 {
-                    OnKeyEvent_New(qwerkEeKey, GLFW_PRESS == a_Action);
+                    OnKeyEvent_New(qwerkEeKey, static_cast<QKeyState>(GLFW_PRESS == a_Action));
                 }
             }
         }
@@ -179,8 +190,24 @@ namespace QwerkE {
                     }
                 }
 
-                s_DeviceIds.emplace_back(a_JoystickId);
-                s_DeviceStates.emplace_back(0);
+                {
+                    int hatStatesCount;
+                    const unsigned char* const buttons = glfwGetJoystickButtons(a_JoystickId, &hatStatesCount);
+                    s_DeviceIds.emplace_back(a_JoystickId);
+                    s_DeviceButtonsStates.emplace_back(0);
+                    for (size_t i = 0; i < hatStatesCount; i++)
+                    {
+                        s_DeviceButtonsStates[s_DeviceButtonsStates.size() - 1].emplace_back(0);
+                    }
+
+                    int axesCount;
+                    const float* axes = glfwGetJoystickAxes(a_JoystickId, &axesCount);
+                    s_DeviceAxesStates.emplace_back(0.f);
+                    for (size_t i = 0; i < axesCount; i++)
+                    {
+                        s_DeviceAxesStates[s_DeviceAxesStates.size() - 1].emplace_back(0.f);
+                    }
+                }
 
                 // #TODO Support device objects
                 // glfwGetJoystickName
@@ -215,7 +242,7 @@ namespace QwerkE {
         {
             const QKey qKey = Local_GlfwToQwerkE(button, 0);
             MouseDown_Internal(qKey);
-            OnMouseButton_New(qKey, GLFW_PRESS == action); // #TODO Invalid scancode?
+            OnMouseButton_New(qKey, static_cast<QKeyState>(GLFW_PRESS == action)); // #TODO Invalid scancode?
         }
 
         static void Local_GlfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
@@ -248,7 +275,7 @@ namespace QwerkE {
 
             if (e_Any == a_Key)
             {
-                return s_KeysCurrentlyDown > 0;
+                return s_Keys.DownKeys() > 0;
             }
             // #TODO GLFWindow* reference. Remember to test multi-window input
             return GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
@@ -260,10 +287,25 @@ namespace QwerkE {
 
             if (e_Any == a_Key)
             {
-                return s_MouseButtonsCurrentlyDown > 0; // #TODO Check mouse buttons down
+                return s_MouseButtons.DownKeys() > 0;
             }
             // #TODO GLFWindow* reference. Remember to test multi-window input
+            // #TODO Handle invalid key. Maybe move mouse and joystick buttons into their own enum
             return GLFW_PRESS == glfwGetMouseButton(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
+        }
+
+        bool GamepadDown(const QKey a_Key)
+        {
+            const bool result = MouseDown_Internal(a_Key); // #TODO Consider return value
+
+            if (e_Any == a_Key)
+            {
+                return s_GamepadButtons.DownKeys() > 0;
+            }
+            // #TODO GLFWindow* reference. Remember to test multi-window input
+            int jid = GLFW_JOYSTICK_1; // #TODO Require id from caller
+            ASSERT(a_Key <= e_Gamepad15 && a_Key >= e_Gamepad0, "Invalid Gamepad key!");
+            return e_KeyStateDown == s_DeviceButtonsStates[jid][a_Key];
         }
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey)

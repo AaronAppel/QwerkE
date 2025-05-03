@@ -2,9 +2,23 @@
 
 namespace QwerkE {
 
-    constexpr u8 KeyStateUp = 0;
-    constexpr u8 KeyStateDown = 1;
+    enum QKeyState : u8
+    {
+        e_KeyStateUp = 0,
+        e_KeyStateDown,
+        e_KeyStateAny
+    };
 
+    enum QMouseButton : u8
+    {
+		// #TODO Force use for mouse related calls?
+    };
+	
+    enum QGamepadButton : u8
+    {
+		// #TODO Force use for gamepad related calls?
+    };
+	
     enum QKey : u8
     {
         // #NOTE
