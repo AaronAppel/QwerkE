@@ -11,7 +11,6 @@ namespace QwerkE {
 
         ///////////// #TODO Implement
         BitIndexRingBuffer<u32, bits4> s_CharsBuffer; // #TODO Review handling char input
-        BitIndexRingBuffer<vec2f, bits4> s_MousePositionsBuffer;
         ///////////// #TODO Implement
 
         InputStatesBitRingBuffer<bits5> s_Keys;
@@ -19,15 +18,40 @@ namespace QwerkE {
         InputStatesBitRingBuffer<bits3> s_MouseScroll; // #TODO Implement mouse scroll
         InputStatesBitRingBuffer<bits4> s_GamepadButtons;
 
+        BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        // #NOTE Triggers might be better as separate float buffers
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+
 #ifdef _QDEBUG
         u64 s_InputsSinceReset = 0;
 #endif // _QDEBUG
+
+        void Initialize_Internal()
+        {
+            s_MousePositionsBuffer.AddMarker(0);
+            s_MousePositionsBuffer.AddMarker(1);
+
+            s_GamepadAxisLeftStickBuffer.AddMarker(0);
+            s_GamepadAxisLeftStickBuffer.AddMarker(1);
+            s_GamepadAxisRightStickBuffer.AddMarker(0);
+            s_GamepadAxisRightStickBuffer.AddMarker(1);
+            s_GamepadAxisTriggersBuffer.AddMarker(0);
+            s_GamepadAxisTriggersBuffer.AddMarker(1);
+        }
 
         void NewFrame_Internal()
         {
             s_Keys.Advance();
             s_MouseButtons.Advance();
             s_GamepadButtons.Advance();
+
+            s_MousePositionsBuffer.AdvanceAllMarkers();
+
+            s_GamepadAxisLeftStickBuffer.AdvanceAllMarkers();
+            s_GamepadAxisRightStickBuffer.AdvanceAllMarkers();
+            s_GamepadAxisTriggersBuffer.AdvanceAllMarkers();
         }
 
         void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState)
@@ -35,14 +59,15 @@ namespace QwerkE {
 #ifdef _QDEBUG
             ++s_InputsSinceReset;
 #endif // _QDEBUG
-
             s_Keys.Write(a_Key, a_KeyState);
         }
 
-        void OnMouseMove_New(const double xpos, const double ypos)
+        void OnMouseMove_New(const vec2f& a_NewPosition)
         {
             // #TODO Handle:
             // - Mouse drag
+            // if (mouse button down)
+            s_MousePositionsBuffer.Write(a_NewPosition);
         }
 
         void OnMouseButton_New(const QKey a_Key, const QKeyState a_KeyState)
@@ -74,9 +99,23 @@ namespace QwerkE {
             }
         }
 
-        void OnGamepadAxisEvent(const unsigned char a_AxisId, const float a_AxisValue)
+        void OnGamepadAxisEvent(const unsigned char a_AxisId, const vec2f a_AxisValue)
         {
-            // s_GamepadAxes.Write();
+            switch (a_AxisId)
+            {
+            case 0:
+            case 1:
+                s_GamepadAxisLeftStickBuffer.Write(a_AxisValue);
+                break;
+            case 2:
+            case 3:
+                s_GamepadAxisRightStickBuffer.Write(a_AxisValue);
+                break;
+            case 4:
+            case 5:
+                s_GamepadAxisTriggersBuffer.Write(a_AxisValue);
+                break;
+            }
         }
 
         void OnGamepadButtonEvent(const QKey a_Key, const QKeyState a_KeyState)
@@ -115,18 +154,14 @@ namespace QwerkE {
             return false;
         }
 
-        vec2u16 MousePos()
+        vec2f MousePos()
         {
-            // #TODO Implement
-            s_MousePositionsBuffer;
-            return vec2f(0.f, 0.f);
+            return s_MousePositionsBuffer.ReadTop();
         }
 
         bool MouseMoved()
         {
-            // #TODO Implement
-            s_MousePositionsBuffer;
-            return false;
+            return s_MousePositionsBuffer.HeadIndex() != s_MousePositionsBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
         }
 
         vec2f MouseDelta()
@@ -148,8 +183,37 @@ namespace QwerkE {
 
         vec2f GamepadAxis(const int a_AxisIndex)
         {
-            // #TODO Implement
+            // #TODO What is more intuitive, always returning a vec2f, or individual floats? Do users want that?
+            switch (a_AxisIndex)
+            {
+            case 0:
+            case 1:
+                return s_GamepadAxisLeftStickBuffer.ReadTop();
+            case 2:
+            case 3:
+                return s_GamepadAxisRightStickBuffer.ReadTop();
+            case 4:
+            case 5:
+                return s_GamepadAxisTriggersBuffer.ReadTop();
+            }
             return vec2f(0.f, 0.f);
+        }
+
+        bool GamepadAxisMoved(const int a_AxisIndex)
+        {
+            switch (a_AxisIndex)
+            {
+            case 0:
+            case 1:
+                return s_GamepadAxisLeftStickBuffer.HeadIndex() != s_GamepadAxisLeftStickBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
+            case 2:
+            case 3:
+                return s_GamepadAxisRightStickBuffer.HeadIndex() != s_GamepadAxisRightStickBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
+            case 4:
+            case 5:
+                return s_GamepadAxisTriggersBuffer.HeadIndex() != s_GamepadAxisTriggersBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
+            }
+            return false;
         }
 
     }

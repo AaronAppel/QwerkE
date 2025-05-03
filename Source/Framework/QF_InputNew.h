@@ -25,14 +25,16 @@ namespace QwerkE {
         bool MouseReleased(const QKey a_Key);
         bool MouseDown(const QKey a_Key);
 
-        vec2u16 MousePos();
+        vec2f MousePos();
         bool MouseMoved();
         vec2f MouseDelta();
 
         bool GamepadPressed(const QKey a_Key);
         bool GamepadReleased(const QKey a_Key);
         bool GamepadDown(const QKey a_Key);
+
         vec2f GamepadAxis(const int a_AxisIndex);
+        bool GamepadAxisMoved(const int a_AxisIndex);
 
 #ifdef _QDEBUG
         void PollInput(); // #TESTING For input system refactor only

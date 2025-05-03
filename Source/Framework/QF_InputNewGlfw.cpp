@@ -15,18 +15,19 @@ namespace QwerkE {
         extern InputStatesBitRingBuffer<bits3> s_MouseButtons;
         extern InputStatesBitRingBuffer<bits4> s_GamepadButtons;
 
+        extern void Initialize_Internal();
         extern void NewFrame_Internal();
 
         extern void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState);
         extern bool KeyDown_Internal(const QKey a_Key);
         extern bool MouseDown_Internal(const QKey a_Key);
 
-        extern void OnMouseMove_New(const double xpos, const double ypos);
+        extern void OnMouseMove_New(const vec2f& a_NewPosition);
         extern void OnMouseButton_New(const QKey a_Key, const QKeyState a_KeyState);
         extern void OnMouseScroll_New(const double xoffset, const double yoffset);
 
         extern void OnGamepadButtonEvent(const QKey a_Key, const QKeyState a_KeyState);
-        extern void OnGamepadAxisEvent(const unsigned char a_AxisId, const float a_AxisValue);
+        extern void OnGamepadAxisEvent(const unsigned char a_AxisId, const vec2f a_AxisValue);
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
         constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
@@ -56,6 +57,11 @@ namespace QwerkE {
                     const float* axes = glfwGetJoystickAxes(s_DeviceIds[i], &axesCount);
 
                     ImGui::Text("AxesCount: %i", axesCount);
+
+                    vec2f leftStickAxes;
+                    vec2f rightStickAxes;
+                    vec2f triggersAxes;
+
                     for (size_t j = 0; j < axesCount; j++)
                     {
                         ImGui::Text("Axes[%i]: %f", j, axes[j]);
@@ -65,12 +71,50 @@ namespace QwerkE {
                         // Right stick Y [3]
                         // L trigger [4]
                         // R trigger [5]
-                        if (s_DeviceAxesStates[i][j] != axes[j])
+
+                        switch (j)
                         {
-                            OnGamepadAxisEvent(j, axes[j]);
+                        case 0:
+                            leftStickAxes.x = axes[j];
+                            break;
+                        case 1:
+                            leftStickAxes.y = axes[j];
+                            if (s_DeviceAxesStates[i][0] != leftStickAxes.x || s_DeviceAxesStates[i][1] != leftStickAxes.y)
+                            {
+                                OnGamepadAxisEvent(j, leftStickAxes);
+                            }
+                            break;
+                        case 2:
+                            rightStickAxes.x = axes[j];
+                            break;
+                        case 3:
+                            rightStickAxes.y = axes[j];
+                            if (s_DeviceAxesStates[i][2] != rightStickAxes.x || s_DeviceAxesStates[i][3] != rightStickAxes.y)
+                            {
+                                OnGamepadAxisEvent(j, rightStickAxes);
+                            }
+                            break;
+                        case 4:
+                            triggersAxes.x = axes[j];
+                            break;
+                        case 5:
+                            triggersAxes.y = axes[j];
+                            if (s_DeviceAxesStates[i][4] != triggersAxes.x || s_DeviceAxesStates[i][5] != triggersAxes.y)
+                            {
+                                OnGamepadAxisEvent(j, triggersAxes);
+                            }
+                            break;
                         }
-                        s_DeviceAxesStates[i][j] = axes[j];
                     }
+
+                    s_DeviceAxesStates[i][0] = leftStickAxes.x;
+                    s_DeviceAxesStates[i][1] = leftStickAxes.y;
+
+                    s_DeviceAxesStates[i][2] = rightStickAxes.x;
+                    s_DeviceAxesStates[i][3] = rightStickAxes.y;
+
+                    s_DeviceAxesStates[i][4] = triggersAxes.x;
+                    s_DeviceAxesStates[i][5] = triggersAxes.y;
 
                     // glfwGetJoystickHats
 
@@ -119,8 +163,10 @@ namespace QwerkE {
             ImGui::End();
         }
 
-        void Initialize_New()
+        void Initialize_New() // #NOTE Initialize is only for joysticks (maybe register callbacks?) so could look to improve
         {
+            Initialize_Internal();
+
             for (size_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
             {
                 int present = glfwJoystickPresent(i);
@@ -235,7 +281,7 @@ namespace QwerkE {
 
         static void Local_GlfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
         {
-            OnMouseMove_New(xpos, ypos);
+            OnMouseMove_New({ xpos, ypos });
         }
 
         static void Local_GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)

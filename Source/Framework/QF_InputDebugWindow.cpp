@@ -9,12 +9,16 @@ namespace QwerkE {
 
         ///////////// #TODO Implement
         extern BitIndexRingBuffer<u32, bits4> s_CharsBuffer; // #TODO Review handling char input
-        extern BitIndexRingBuffer<vec2f, bits4> s_MousePositionsBuffer;
+        extern BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer;
         ///////////// #TODO Implement
 
         extern InputStatesBitRingBuffer<bits5> s_Keys;
         extern InputStatesBitRingBuffer<bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input) or is just my mouse limited to 3
         extern InputStatesBitRingBuffer<bits4> s_GamepadButtons;
+        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        // #NOTE Triggers might be better as separate float buffers
+        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
 
         u8 s_Most1FrameKeyInputs;
 
@@ -39,8 +43,10 @@ namespace QwerkE {
             ImGui::Text("Inputs since reset: %i", s_InputsSinceReset);
             ImGui::Text("Keys currently down: %i", s_Keys.DownKeys());
             ImGui::Text("Mouse buttons currently down: %i", s_MouseButtons.DownKeys());
+            ImGui::Text("Mouse pos: %f, %f", Input::MousePos().x, Input::MousePos().y);
 
-            if (ImGui::CollapsingHeader("Keys"))
+            ImGui::SeparatorText("Keys");
+            if (ImGui::CollapsingHeader("Keys QKeys + Key QKeyStates"))
             {
                 for (size_t i = 0; i < s_Keys.Size(); i++)
                 {
@@ -55,7 +61,8 @@ namespace QwerkE {
                 }
             }
 
-            if (ImGui::CollapsingHeader("Mouse Buttons"))
+            ImGui::SeparatorText("Mouse");
+            if (ImGui::CollapsingHeader("Mouse Buttons + Button QKeyStates"))
             {
                 for (size_t i = 0; i < s_MouseButtons.Size(); i++)
                 {
@@ -69,8 +76,22 @@ namespace QwerkE {
                     }
                 }
             }
+            if (ImGui::CollapsingHeader("Mouse Positions"))
+            {
+                for (size_t i = 0; i < s_MousePositionsBuffer.Size(); i++)
+                {
+                    ImGui::Text("%f, %f", s_MousePositionsBuffer.ReadRandom(i).x, s_MousePositionsBuffer.ReadRandom(i).y);
+                    if (i == s_MousePositionsBuffer.HeadIndex())
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("<-");
+                    }
+                }
+            }
 
-            if (ImGui::CollapsingHeader("Gamepad"))
+            ImGui::SeparatorText("Gamepad");
+            // #TODO Get number of gamepads and names, ids, etc
+            if (ImGui::CollapsingHeader("Gamepad Buttons + Button States"))
             {
                 for (size_t i = 0; i < s_GamepadButtons.Size(); i++)
                 {
@@ -78,6 +99,42 @@ namespace QwerkE {
                     ImGui::SameLine();
                     ImGui::Text(" %i", s_GamepadButtons.ReadKeyState(i));
                     if (i == s_GamepadButtons.Head())
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("<-");
+                    }
+                }
+            }
+            if (ImGui::CollapsingHeader("Gamepad Axes"))
+            {
+                ImGui::SeparatorText("Left Stick");
+                for (size_t i = 0; i < s_GamepadAxisLeftStickBuffer.Size(); i++)
+                {
+                    vec2f axis = s_GamepadAxisLeftStickBuffer.ReadRandom(i);
+                    ImGui::Text("%f, %f", axis.x, axis.y);
+                    if (i == s_GamepadAxisLeftStickBuffer.HeadIndex())
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("<-");
+                    }
+                }
+                ImGui::SeparatorText("Right Stick");
+                for (size_t i = 0; i < s_GamepadAxisRightStickBuffer.Size(); i++)
+                {
+                    vec2f axis = s_GamepadAxisRightStickBuffer.ReadRandom(i);
+                    ImGui::Text("%f, %f", axis.x, axis.y);
+                    if (i == s_GamepadAxisRightStickBuffer.HeadIndex())
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("<-");
+                    }
+                }
+                ImGui::SeparatorText("Triggers");
+                for (size_t i = 0; i < s_GamepadAxisTriggersBuffer.Size(); i++)
+                {
+                    vec2f axis = s_GamepadAxisTriggersBuffer.ReadRandom(i);
+                    ImGui::Text("%f, %f", axis.x, axis.y);
+                    if (i == s_GamepadAxisTriggersBuffer.HeadIndex())
                     {
                         ImGui::SameLine();
                         ImGui::Text("<-");

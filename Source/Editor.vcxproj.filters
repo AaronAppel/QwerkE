@@ -2,11 +2,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Editor\QE_Editor.cpp" />
-    <ClCompile Include="Editor\QE_EditorInspector.cpp" />
     <ClCompile Include="Editor\QE_Mirror.cpp" />
     <ClCompile Include="Editor\QE_PCH.cpp" />
-    <ClCompile Include="Editor\QE_Projects.cpp" />
-    <ClCompile Include="Editor\QE_Settings.cpp" />
     <ClCompile Include="Editor\QE_EditorWindowSettings.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
@@ -19,7 +16,6 @@
     <ClCompile Include="Editor\QE_EditorWindowNodeEditorBlueprints.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\QE_EditorWindowMenuBar.cpp" />
     <ClCompile Include="Editor\QE_EditorWindowConsole.cpp">
       <Filter>Windows\Singleton</Filter>
     </ClCompile>
@@ -38,14 +34,23 @@
     <ClCompile Include="Editor\QE_EditorWindowSceneControls.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorInspector.cpp">
+      <Filter>Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\QE_EditorWindowMenuBar.cpp">
+      <Filter>Windows\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\QE_Projects.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\QE_Settings.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />
-    <ClInclude Include="Editor\QE_EditorInspector.h" />
     <ClInclude Include="Editor\QE_MaterialEditor.h" />
     <ClInclude Include="Editor\QE_PCH.h" />
-    <ClInclude Include="Editor\QE_Projects.h" />
-    <ClInclude Include="Editor\QE_Settings.h" />
     <ClInclude Include="Editor\QE_EditorWindowAssets.h">
       <Filter>Windows\Instanced</Filter>
     </ClInclude>
@@ -119,6 +124,15 @@
     <ClInclude Include="Editor\QE_EditorWindowTimeline.h">
       <Filter>Windows\Instanced</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\QE_EditorInspector.h">
+      <Filter>Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_Settings.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_Projects.h">
+      <Filter>Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -129,6 +143,12 @@
     </Filter>
     <Filter Include="Windows\Singleton">
       <UniqueIdentifier>{93cb9dc8-1734-47b6-b174-b4dc83767fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inspector">
+      <UniqueIdentifier>{1af45cbf-bfe9-47ec-bcb5-260fe99c683a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{ff5b99ba-7c9f-4494-b404-e9c12315e54f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

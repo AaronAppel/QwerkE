@@ -21,8 +21,8 @@ namespace QwerkE {
 
 		void Advance()
 		{
-			m_KeysBuffer.SetMarkerPosition(1, m_KeysBuffer.MarkerPosition(0));
-			m_KeysBuffer.SetMarkerPosition(0, m_KeysBuffer.HeadIndex());
+			m_KeysBuffer.SetMarkerPosition(m_LastFrameStartMarkerIndex, m_KeysBuffer.MarkerPosition(m_LastFrameEndMarkerIndex));
+			m_KeysBuffer.SetMarkerPosition(m_LastFrameEndMarkerIndex, m_KeysBuffer.HeadIndex());
 		}
 
 		void Write(const QKey a_Key, const QKeyState a_KeyState)
@@ -58,7 +58,7 @@ namespace QwerkE {
 
 		bool KeyThisFrame(const QKey a_Key, const QKeyState a_KeyState)
 		{
-			if (m_KeysBuffer.HeadIndex() == m_KeysBuffer.MarkerPosition(0))
+			if (m_KeysBuffer.HeadIndex() == m_KeysBuffer.MarkerPosition(m_LastFrameEndMarkerIndex))
 			{
 				return false;
 			}
@@ -91,7 +91,7 @@ namespace QwerkE {
 
 		unsigned char LastFrameEnd()
 		{
-			return m_KeysBuffer.MarkerPosition(0);
+			return m_KeysBuffer.MarkerPosition(m_LastFrameEndMarkerIndex);
 		}
 
 		unsigned char LastFrameStart()
@@ -101,12 +101,12 @@ namespace QwerkE {
 
 		unsigned char InputThisFrame()
 		{
-			return WritesUntilCollision(m_KeysBuffer.HeadIndex(), m_KeysBuffer.MarkerPosition(0));
+			return WritesUntilCollision(m_KeysBuffer.HeadIndex(), m_KeysBuffer.MarkerPosition(m_LastFrameEndMarkerIndex));
 		}
 
 		unsigned char InputLastFrame()
 		{
-			return WritesUntilCollision(m_KeysBuffer.MarkerPosition(0), m_KeysBuffer.MarkerPosition(1));
+			return WritesUntilCollision(m_KeysBuffer.MarkerPosition(m_LastFrameEndMarkerIndex), m_KeysBuffer.MarkerPosition(1));
 		}
 
 		unsigned char DownKeys()
@@ -130,6 +130,9 @@ namespace QwerkE {
 		}
 
 		unsigned char m_DownCount = 0;
+		const unsigned char m_LastFrameEndMarkerIndex = 0;
+		const unsigned char m_LastFrameStartMarkerIndex = 1;
+
 		BitIndexRingBuffer<QKey, Bits> m_KeysBuffer;
 		std::bitset<Bits::SIZE> m_KeysStates;
 	};

@@ -380,17 +380,47 @@ namespace QwerkE {
             {
                 // LOG_WARN("AnyDown()");
             }
-            if (Input::GamepadPressed(QKey::e_Gamepad0))
-            {
-                LOG_ERROR("Gamepad0 Pressed()");
-            }
-            if (Input::GamepadPressed(QKey::e_Any))
-            {
-                LOG_ERROR("Gamepad Any Pressed()");
-            }
             if (Input::GamepadDown(QKey::e_Any))
             {
-                LOG_ERROR("Gamepad Any Down()");
+                // LOG_ERROR("Gamepad Any Down()");
+            }
+
+            vec2f axis;
+            int axisIndex = 0;
+            if (Input::GamepadAxisMoved(axisIndex))
+            {
+                axis = Input::GamepadAxis(axisIndex);
+                LOG_INFO("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
+            }
+            axisIndex += 2;
+            if (Input::GamepadAxisMoved(axisIndex))
+            {
+                axis = Input::GamepadAxis(axisIndex);
+                LOG_WARN("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
+            }
+            axisIndex += 2;
+            if (Input::GamepadAxisMoved(axisIndex))
+            {
+                axis = Input::GamepadAxis(axisIndex);
+                LOG_ERROR("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
+            }
+
+            if (false && Input::MouseMoved())
+            {
+                const vec2f mousePos = Input::MousePos();
+                LOG_INFO("Mouse pos: {0},{1}", mousePos.x, mousePos.y);
+            }
+
+            for (size_t i = 0; i < 14; i++)
+            {
+                if (Input::GamepadPressed(static_cast<QKey>(QKey::e_Gamepad0 + i)))
+                {
+                    LOG_WARN("Pressed: {0}", i);
+                }
+                if (Input::GamepadReleased(static_cast<QKey>(QKey::e_Gamepad0 + i)))
+                {
+                    LOG_ERROR("Released: {0}", i);
+                }
             }
 
             // #TODO How to handle scrolling?

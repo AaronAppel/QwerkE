@@ -14,6 +14,12 @@ public:
 		m_Head.value += 1;
 	}
 
+	T ReadTop()
+	{
+		Bits topIndex = m_Head.value - 1;
+		return m_Values[topIndex.value];
+	}
+
 	T ReadRandom(const unsigned char a_Index)
 	{
 		assert(m_Values.size() > a_Index);
@@ -70,13 +76,13 @@ public:
 
 	constexpr unsigned char Size()
 	{
-		return Bits::MAX + 1;
+		return Bits::SIZE;
 	}
 
 
 private:
 	Bits m_Head = 0;
-	std::array<T, Bits::MAX + 1> m_Values;
+	std::array<T, Bits::SIZE> m_Values;
 	std::vector<Bits> m_Markers;
 	// #TODO Could simplify by making this class specific. Use 3 pointers and always advance [1] and [2] to match [0]
 	// Rename to something like TwoStateRingBuffer, or TwoWindowRingBuffer, etc.
