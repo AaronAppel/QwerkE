@@ -513,6 +513,12 @@ namespace QwerkE {
                 }
             }
 
+            if (Input::FrameKeyAction(eKeys::eKeys_Tilde, eKeyState::eKeyState_Press) &&
+                (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
+            {
+                Window::ToggleConsoleWindow();
+            }
+
             if (Input::FrameKeyAction(eKeys::eKeys_R, eKeyState::eKeyState_Press) &&
                 Input::IsKeyDown(eKeys::eKeys_LCTRL))
             {

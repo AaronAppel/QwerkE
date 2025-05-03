@@ -28,11 +28,6 @@ namespace QwerkE {
         bool vSyncEnabled = false;
     };
 
-    struct UserSettings
-    {
-        // Interface: Window open, UI layout and scaling, etc
-    };
-
     struct RendererSettings
     {
         bool isDirty = false; // #TODO Use Editor state flag
