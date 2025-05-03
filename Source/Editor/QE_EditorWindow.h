@@ -1,7 +1,9 @@
 #pragma once
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
+#include "Libraries/imgui_toggle/imgui_toggle.h"
+#include "Libraries/imgui/imgui_extended.h"
 #endif
 
 #ifdef _QENUM
@@ -26,7 +28,7 @@ namespace QwerkE {
 	namespace Editor {
 
 		typedef unsigned int u32;
-		enum EditorWindowFlags : u32
+		enum EditorWindowFlags : u32 // #TODO Refactor to short or byte
 		{
 			EditorWindowFlagsNone	= 0,
 			Headless				= 1 << 0,
@@ -34,10 +36,107 @@ namespace QwerkE {
 			Hidden					= 1 << 2,
 			Singleton				= 1 << 3,
 			AlignCentered			= 1 << 4,
+			// #TODO DefaultDebugWindow should minimize or hide but never really close as
+			// debug calls will still render in a default window.
+			HideInsteadOfClose		= 1 << 5,
+		};
+
+		typedef unsigned char u8;
+		enum EditorWindowSizingFlags : u8
+		{
+			EditorWindowSizingFlagsNone = 0,
+			// #TODO Reference imgui_demo.cpp(7840) ShowExampleAppConstrainedResize()
+
+			// Considerations:
+			// - Height and Width handled separately, with options to lock or relate (scale) with each other
+			// - Between (min + max)
+		};
+
+		struct EditorWindowOptions
+		{
+			// Sizing
+			EditorWindowSizingFlags m_SizingFlags = EditorWindowSizingFlagsNone;
+			float m_WidthMinimum = 0;
+			float m_WidthMaximum = FLT_MAX;
+
+			float m_HeightMinimum = 0;
+			float m_HeightMaximum = FLT_MAX;
+
+			bool m_LockWidth = false;
+			bool m_LockHeight = false;
+
+			s32 m_RatioWidth = 1;
+			s32 m_RatioHeight = 1;
+
+			s32 m_IncrementWidth = 1;
+			s32 m_IncrementHeight = 1;
+
+			// Style
+			float m_ItemScaling = 1.f;
+			float m_FontScaling = 1.f;
+			ImGuiStyle m_Style;
+			ImFont m_Font;
+
+			void Edit()
+			{
+				if (ImGui::BeginPopup("##EditorWindowOptionsEdit", ImGuiPopupFlags_NoReopen))
+				{
+					constexpr float itemWidth = 100.f;
+					ImGui::PushItemWidth(itemWidth);
+
+					ImGui::Text("Height");
+					ImGui::SameLine();
+					ImGui::Text("   ");
+					ImGui::SameLine();
+					ImGui::Text("Width");
+
+					ImGui::ScrollerFloat("##WidthMinimum", &m_WidthMinimum, 10, 100);
+					ImGui::SameLine();
+					ImGui::Text("Min");
+					ImGui::SameLine();
+					ImGui::ScrollerFloat("##HeightMinimum", &m_HeightMinimum, 10, 100);
+
+					ImGui::ScrollerFloat("##WidthMaximum", &m_WidthMaximum, 10, 100);
+					ImGui::SameLine();
+					ImGui::Text("Max");
+					ImGui::SameLine();
+					ImGui::ScrollerFloat("##HeightMaximum", &m_HeightMaximum, 10, 100);
+
+					ImGui::Toggle("##LockWidth", &m_LockWidth, ImGuiToggleFlags_Animated | ImGuiToggleFlags_A11y);
+					ImGui::SameLine();
+					ImGui::Text("Lock");
+					ImGui::SameLine();
+					ImGui::Toggle("##LockHeight", &m_LockHeight, ImGuiToggleFlags_Animated | ImGuiToggleFlags_A11y);
+
+					ImGui::ScrollerInt("##RatioWidth", &m_RatioWidth, 1, 10);
+					ImGui::SameLine();
+					ImGui::Text("Ratio");
+					ImGui::SameLine();
+					ImGui::ScrollerInt("##RatioHeight", &m_RatioHeight, 1, 10);
+
+					ImGui::ScrollerInt("##IncrementWidth", &m_IncrementHeight, 10, 100);
+					ImGui::SameLine();
+					ImGui::Text("Step");
+					ImGui::SameLine();
+					ImGui::ScrollerInt("##IncrementHeight", &m_IncrementWidth, 10, 100);
+
+					ImGui::PopItemWidth();
+
+					ImGui::EndPopup();
+				}
+			}
+
+			void NewFrame()
+			{
+				// Set options
+				ImGui::SetNextWindowSizeConstraints(ImVec2(m_WidthMinimum, m_HeightMinimum), ImVec2(m_WidthMaximum, m_HeightMaximum));
+			}
+
+			// #TODO Add options to each window, set them, serialize, load, and save/edit using a button pop up that is added to all inherited windows
 		};
 
 		QC_ENUM(EditorWindowTypes, u32,
-			// #NOTE Order matters! Match enum EditorWindowsList order
+			// #NOTE Order matters! Serialized! Match enum EditorWindowsList order
 			EditorWindowTypesInvalid = 0,
 			Assets,
 			DefaultDebug,
@@ -48,14 +147,19 @@ namespace QwerkE {
 			SceneControls,
 			SceneGraph,
 			SceneView,
-			Settings = 10,
+			Settings,
 			StylePicker,
 			MaterialEditor,
 			FolderViewer,
 			NodeEditor,
 			ShaderEditor,
 			PrefabScene,
-			Prompt
+			Prompt,
+			Console,
+			HexEditor,
+			ImGuiExtendedDemo,
+			Notifications,
+			Timeline
 			// #NOTE Serialized, so don't change ordering
 		)
 
@@ -93,9 +197,20 @@ namespace QwerkE {
 					ImGui::SetNextWindowPos(ImVec2(newWindowPosition.x, newWindowPosition.y));
 				}
 
-				bool isOpen = true;
+				bool isOpen = true; // #TODO Use window state for open/close? If window exists, it is either hidden or open
+				if (isOpen)
+				{
+					m_WindowOptions.NewFrame();
+				}
+
 				if (ImGui::Begin(m_WindowName.c_str(), &isOpen, m_ImGuiFlags))
 				{
+					ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x / 2 - (10 * 7.f));
+					if (ImGui::SmallButton("Edit Window Options"))
+					{
+						ImGui::OpenPopup("##EditorWindowOptionsEdit");
+					}
+					m_WindowOptions.Edit();
 					DrawInternal();
 				}
 				ImGui::End();
@@ -106,17 +221,19 @@ namespace QwerkE {
 				}
 			}
 
-			virtual bool IsUnique() { return false; }
+			virtual bool IsUnique() { return false; } // #TODO Can EditorWindowFlags::Singleton flag replace method or true/false?
 
 			GUID Guid() { return m_Guid; }
 			GUID* GuidAddress() { return &m_Guid; }
 			EditorWindowTypes Type() { return m_EditorWindowType; } // #TODO Make static
 			EditorWindowFlags WindowFlags() { return m_WindowFlags; }
+			const std::string& Name() { return m_WindowName; };
 
 			virtual void OnEntitySelected(EntityHandle& entity) { }
 			virtual void OnSceneReload() { }
 
 			void ToggleHidden() { m_WindowFlags = (EditorWindowFlags)(m_WindowFlags ^ Hidden); }
+			void Focus() { ImGui::SetWindowFocus(m_WindowName.data()); Editor::OnEditorWindowFocused(this); }
 
 		protected:
 			EditorWindow(std::string windowName, EditorWindowTypes editorWindowType, GUID guid = GUID(), EditorWindowFlags flags = EditorWindowFlags::EditorWindowFlagsNone)
@@ -144,6 +261,8 @@ namespace QwerkE {
 
 			ImGuiWindowFlags m_ImGuiFlags = ImGuiWindowFlags_::ImGuiWindowFlags_None;
 			EditorWindowFlags m_WindowFlags = EditorWindowFlags::EditorWindowFlagsNone;
+
+			EditorWindowOptions m_WindowOptions;
 
 			const GUID& GetGuid() { return m_Guid; }
 

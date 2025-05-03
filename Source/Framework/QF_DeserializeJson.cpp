@@ -197,6 +197,8 @@ namespace QwerkE {
             // #NOTE Collection constructor should be called
             objTypeInfo->Construct(obj);
 
+            // #TODO Reserve size for appending items to avoid extra dynamic allocation, moves, and copies
+
             std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>* map = (std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)obj;
 
             while (iterator)

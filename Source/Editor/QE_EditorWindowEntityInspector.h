@@ -46,7 +46,9 @@ namespace QwerkE {
                     ComponentTransform& transform = m_CurrentEntity.GetComponent<ComponentTransform>();
                     const vec3f& position = transform.GetPosition();
 
+#ifdef _QDEBUG
                     {   // Debug drawer call
+                        // #TODO Debug::DrawOrb();
                         constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
                         bgfx::setState(BGFX_STATE_DEFAULT);
                         DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
@@ -55,6 +57,7 @@ namespace QwerkE {
                         debugDrawer.drawOrb(position.x, position.y, position.z, 2.f, Axis::X);
                         debugDrawer.end();
                     }
+#endif
                 }
 
                 {   // Edit entity name

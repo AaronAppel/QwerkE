@@ -44,6 +44,8 @@ project "Editor"
 		
 		"%{wks.location}/Source/Libraries/bx/include", -- #NOTE To support creating components that depend on bx
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
+		
+		"%{wks.location}/Source/Libraries/imgui",
 	}
 	
 	links -- Project references
@@ -70,19 +72,37 @@ project "Editor"
 		defines { }
 
 	filter "configurations:Debug"
-		defines { "BX_CONFIG_DEBUG=1", "_QDebug", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QDebug",
+			"LibrariesDir=\"%{wks.location}/Libraries/\"",
+			LibraryDefines,
+			"BX_CONFIG_DEBUG=1", -- Required by bgfx
+		}
 		runtime "Debug"
 		optimize "Off"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines { "BX_CONFIG_DEBUG=0", "_QRelease", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QRelease",
+			"LibrariesDir=\"%{wks.location}/Libraries/\"",
+			LibraryDefines,
+			"BX_CONFIG_DEBUG=0", -- Required by bgfx
+		}
 		runtime "Release"
 		optimize "Off"
 		symbols "Off"
 
 	filter "configurations:Retail"
-		defines { "BX_CONFIG_DEBUG=0", "_QRetail", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QRetail",
+			"LibrariesDir=\"%{wks.location}/Libraries/\"",
+			LibraryDefines,
+			"BX_CONFIG_DEBUG=0", -- Required by bgfx
+		}
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

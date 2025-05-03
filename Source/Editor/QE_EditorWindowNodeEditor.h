@@ -15,8 +15,8 @@ namespace QwerkE {
 		class EditorWindowNodeEditor : public EditorWindow
 		{
 		public:
-            EditorWindowNodeEditor::EditorWindowNodeEditor(GUID guid = GUID());
-            EditorWindowNodeEditor::~EditorWindowNodeEditor();
+            EditorWindowNodeEditor(GUID guid = GUID());
+            ~EditorWindowNodeEditor();
 
 		private:
 			void DrawInternal() override;
@@ -24,6 +24,7 @@ namespace QwerkE {
 
             ax::NodeEditor::EditorContext* m_Context = nullptr;
             const char* m_SettingsFileName = "NodeEditorWidgets.json";
+			s32 m_NodeExample = 0;
 		};
 
 	}

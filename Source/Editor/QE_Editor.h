@@ -1,12 +1,15 @@
 #pragma once
 
+#include <unordered_map>
+
 namespace QwerkE {
 
 	class GUID;
-
 	class EntityHandle;
 
 	namespace Editor {
+
+		class EditorWindow;
 
 		typedef unsigned int u32;
 		enum EditorStateFlags : u32
@@ -31,12 +34,16 @@ namespace QwerkE {
 		void SetEditorStateFlags(const EditorStateFlags& flags);
 		void ToggleEditorStateFlags(const EditorStateFlags& flags);
 
+		void RequestRestart();
+
 		bool ShowingEditorUI();
 
 		// Editor windows
-		void OpenEditorWindow(u32 editorWindowType);
+		void NewEditorWindow(u32 editorWindowType);
 		void CloseEditorWindow(const GUID& guid);
+		const std::vector<EditorWindow*>& GetOpenWindows();
 
+		void OnEditorWindowFocused(const EditorWindow* const focusedWindow);
 		void OnEntitySelected(EntityHandle& entity);
 		void OnSceneReloaded();
 

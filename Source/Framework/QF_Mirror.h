@@ -10,7 +10,7 @@
 #endif
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
 #endif
 
 #ifdef _QMIRROR
@@ -26,6 +26,7 @@
 #include "QF_Input.h"
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
+#include "QF_Settings.h"
 
 #include "QF_ComponentHelpers.h"
 

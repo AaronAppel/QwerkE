@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Libraries/imgui/QwerkE_imgui.h"
+
 #include "QE_EditorWindow.h"
 
 namespace QwerkE {
@@ -10,7 +12,7 @@ namespace QwerkE {
 		{
 		public:
 			EditorWindowDefaultDebug::EditorWindowDefaultDebug(GUID guid) :
-				EditorWindow("Default Debug Window",
+				EditorWindow(ImGui::g_DefaultDebugWindowName,
 					EditorWindowTypes::DefaultDebug,
 					guid,
 					(EditorWindowFlags)(EditorWindowFlags::ExactNameNoguid | EditorWindowFlags::Singleton))

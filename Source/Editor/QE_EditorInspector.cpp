@@ -1,7 +1,7 @@
 #include "QE_EditorInspector.h"
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
 #endif
 
 #ifdef _QMIRROR
@@ -312,6 +312,11 @@ namespace QwerkE {
                     memcpy(obj, payload->Data, typeInfo->size);
                 }
                 ImGui::EndDragDropTarget();
+            }
+
+            if (ImGui::IsItemClicked())
+            {
+                int bp = 0;
             }
 
 #endif // #if _QDEARIMGUI

@@ -1,8 +1,11 @@
 #include "QE_EditorWindowNodeEditor.h"
 
+#undef _QIMGUINODEEDITOR
 #ifdef _QIMGUINODEEDITOR
+#include "Libraries/imgui/imgui.h"
 #include "Libraries/imgui/imgui_internal.h"
 #include "Libraries/imgui-node-editor/imgui_node_editor.h"
+
 # ifdef _MSC_VER
 # define portable_strcpy    strcpy_s
 # define portable_sprintf   sprintf_s
@@ -13,10 +16,75 @@
 namespace ed = ax::NodeEditor;
 #endif
 
+// #define _QIMNODEFLOW
+#ifdef _QIMNODEFLOW
+#include "Libraries/imgui/imgui.h"
+#include "Libraries/ImNodeFlow/ImNodeFlow.h"
+#endif // _QIMNODEFLOW
+
+#ifdef _QIMNODEFLOW
+// ImNodeFlow start
+using namespace ImFlow;
+
+class SimpleSum : public BaseNode
+{
+
+public:
+    SimpleSum()
+    {
+        setTitle("Simple sum");
+        setStyle(NodeStyle::green());
+        BaseNode::addIN<int>("In", 0, ConnectionFilter::SameType());
+        BaseNode::addOUT<int>("Out", nullptr)->behaviour([this]() { return getInVal<int>("In") + m_valB; });
+    }
+
+    void draw() override
+    {
+        if (BaseNode::isSelected()) {
+            ImGui::SetNextItemWidth(100.f);
+            ImGui::InputInt("##ValB", &m_valB);
+            ImGui::Button("Hello");
+        }
+    }
+
+private:
+    int m_valB = 0;
+};
+
+struct NodeEditor : ImFlow::BaseNode
+{
+    ImFlow::ImNodeFlow mINF;
+    NodeEditor(float d, std::size_t r)
+        : BaseNode()
+    {
+        setTitle("glhf");
+        mINF.setSize({ d,d });
+        if (r > 0) {
+            mINF.addNode<SimpleSum>({ 0,0 });
+            mINF.addNode<SimpleSum>({ 10,10 });
+        }
+    }
+
+    void set_size(ImVec2 d)
+    {
+        mINF.setSize(d);
+    }
+
+    void draw() override
+    {
+        mINF.update();
+    }
+};
+
+NodeEditor neditor(500, 1500);
+// ImNodeFlow end
+#endif // _QIMNODEFLOW
+
 namespace QwerkE {
 
 	namespace Editor {
 
+#ifdef _QIMGUINODEEDITOR
         struct LinkInfo
         {
             ed::LinkId Id;
@@ -27,41 +95,80 @@ namespace QwerkE {
         // #TODO Avoid static
         static ImVector<LinkInfo> m_Links; // List of live links. It is dynamic unless you want to create read-only view over nodes.
         static int m_NextLinkId = 100; // Counter to help generate link ids. In real application this will probably based on pointer to user data structure.
+#endif // _QIMGUINODEEDITOR
 
         EditorWindowNodeEditor::EditorWindowNodeEditor(GUID guid) :
             EditorWindow("Node Editor", EditorWindowTypes::NodeEditor, guid)
         {
+#ifdef _QIMGUINODEEDITOR
             ax::NodeEditor::Config config;
             config.SettingsFile = m_SettingsFileName;
             m_Context = ax::NodeEditor::CreateEditor(&config);
+#endif // _QIMGUINODEEDITOR
         }
 
         EditorWindowNodeEditor::~EditorWindowNodeEditor()
         {
+#ifdef _QIMGUINODEEDITOR
             ax::NodeEditor::DestroyEditor(m_Context);
+#endif // _QIMGUINODEEDITOR
         }
 
+        void local_ImNodeFlow();
         void local_SimpleNodeEditor(ax::NodeEditor::EditorContext* context, const std::string& nodeEditorName);
         void local_WidgetsNodeEditor(ax::NodeEditor::EditorContext* context);
+
         void EditorWindowNodeEditor::DrawInternal()
         {
-            if (const bool simpleExample = true)
+            char buffer[5];
+            if (ImGui::Combo("Node Editor Style", &m_NodeExample,
+                    "Simple\0"
+                    "Widget\0"
+                    "BluePrint\0"
+                    "ImNodeFlow\0"
+                ))
             {
-                local_SimpleNodeEditor(m_Context, m_WindowName);
             }
-            else if (const bool widgetsExample = true)
+            switch (m_NodeExample)
             {
+            case 0:
+                local_SimpleNodeEditor(m_Context, m_WindowName);
+                break;
+            case 1:
                 // #TODO Fix deallocation crash
                 local_WidgetsNodeEditor(m_Context);
-            }
-            else
-            {
+                break;
+            case 2:
                 DrawBluePrintsExample();
+                break;
+            case 3:
+                local_ImNodeFlow();
+                break;
+            }
+        }
+
+        void local_ImNodeFlow()
+        {
+            if (true) // #TODO bx de-allocation null pointer exception
+            {
+#ifdef _QIMNODEFLOW
+                // ImGuiIO& io = ImGui::GetIO(); // (void)io;?
+                // const ImVec2 window_size = io.DisplaySize - ImVec2(1, 1);
+                // const ImVec2 window_pos = ImVec2(1, 1);
+                // const ImVec2 node_editor_size = window_size - ImVec2(16, 16);
+                // neditor.set_size(node_editor_size);
+
+                // ImGui::Begin("Node Editor", nullptr, 0); // ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+                neditor.set_size(ImGui::GetContentRegionAvail());
+                neditor.draw();
+                // ImGui::End();
+#endif // _QIMNODEFLOW
             }
         }
 
         void local_SimpleNodeEditor(ax::NodeEditor::EditorContext* context, const std::string& nodeEditorName)
         {
+#ifdef _QIMGUINODEEDITOR
             auto& io = ImGui::GetIO();
 
             ImGui::Text("FPS: %.2f (%.2gms)", io.Framerate, io.Framerate ? 1000.0f / io.Framerate : 0.0f);
@@ -91,10 +198,12 @@ namespace QwerkE {
 
             ax::NodeEditor::End();
             ax::NodeEditor::SetCurrentEditor(nullptr);
+#endif // _QIMGUINODEEDITOR
         }
 
         void local_WidgetsNodeEditor(ax::NodeEditor::EditorContext* context)
         {
+#ifdef _QIMGUINODEEDITOR
             static bool firstframe = true; // Used to position the nodes on startup
             auto& io = ImGui::GetIO();
 
@@ -444,6 +553,7 @@ namespace QwerkE {
             ed::End();
             ed::SetCurrentEditor(nullptr);
             firstframe = false;
+#endif // _QIMGUINODEEDITOR
         }
 
 	}

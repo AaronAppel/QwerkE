@@ -38,6 +38,7 @@ project "Framework"
 		"%{wks.location}/Source/Libraries/bimg/include",
 		"%{wks.location}/Source/Libraries/bx/include",
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
+		"%{wks.location}/Source/Libraries/imgui", -- Required by bgfx
 	}
 
 	forceincludes  { "QF_PCH.h", "QF_ForcedIncludes.h"  }
@@ -55,8 +56,18 @@ project "Framework"
 		"cJSON",
 		"bgfxFramework",
 		"FlatHeadGames",
+		"ImFileDialog",
+		"ImCoolBar",
 		"imgui",
+		"imgui_hex_editor",
+		"imgui_toggle",
+		"imgui-console",
+		"imgui-spin-value",
+		"imgui-knobs",
 		"imgui-node-editor",
+		"ImGuizmo",
+		"im-neo-sequencer",
+		"ImNodeFlow",
 		"Jolt",
 		"lodepng",
 		"Mirror",
@@ -101,13 +112,25 @@ project "Framework"
 		debugargs { }
 
 	filter "configurations:Release"
-		defines { "_QRELEASE", "LibrariesDir=\"%{wks.location}/Source/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QRELEASE",
+			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"",
+			LibraryDefines,
+			"BX_CONFIG_DEBUG=0", -- Required by bgfx
+		}
 		runtime "Release"
 		optimize "On"
 		symbols "On"
 
 	filter "configurations:Retail"
-		defines { "_QRETAIL", "LibrariesDir=\"%{wks.location}/Source/Libraries/\"", LibraryDefines }
+		defines
+		{
+			"_QRETAIL",
+			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"",
+			LibraryDefines,
+			"BX_CONFIG_DEBUG=0", -- Required by bgfx
+		}
 		runtime "Release"
 		optimize "On"
 		symbols "Off"

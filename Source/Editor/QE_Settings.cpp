@@ -10,18 +10,11 @@ namespace QwerkE {
 
 	namespace Settings {
 
-		constexpr char* s_ImGuiStyleFileName = "imguiStyle.style";
-
-		// #TODO Should this be framework settings? Or maybe just game and editor have settings to pass to the framework?
-		EngineSettings s_engineSettings;
+		constexpr char* s_ImGuiStyleFileName = "Default.style"; // #TODO Review default settings files list
+		constexpr char* s_ImGuiStyleFileName2 = "Vekor64.style"; // #TODO Move to QE_Settings.h::UserSettings
 
 		UserSettings s_userSettings;
 		RendererSettings s_rendererSettings;
-
-		EngineSettings& GetEngineSettings()
-		{
-			return s_engineSettings;
-		}
 
 		UserSettings& GetUserSettings()
 		{
@@ -38,26 +31,26 @@ namespace QwerkE {
 			return s_ImGuiStyleFileName;
 		}
 
-		void LoadEngineSettings(const std::string& engineSettingsFileName)
+		const char* GetStyleFileName2()
 		{
-			std::string engineSettingsFilePath = Paths::Setting(engineSettingsFileName.c_str());
-			if (!Files::Exists(engineSettingsFilePath.c_str()))
-				return;
-
-			Serialize::FromFile(engineSettingsFilePath.c_str(), s_engineSettings);
-			s_engineSettings.isDirty = false;
+			return s_ImGuiStyleFileName2;
 		}
 
-		void SaveEngineSettings(const std::string& engineSettingsFileName)
+		void LoadUserSettings(const std::string& userSettingsFileName)
 		{
-			const std::string engineSettingsFilePath = Paths::Setting(engineSettingsFileName.c_str());
-			Serialize::ToFile(s_engineSettings, engineSettingsFileName.c_str());
-			s_engineSettings.isDirty = false;
+			std::string userSettingsFilePath = Paths::Setting(userSettingsFileName.c_str());
+			if (userSettingsFileName.empty() || userSettingsFilePath.empty() ||
+				!Files::Exists(userSettingsFilePath.c_str()))
+			{
+				userSettingsFilePath = Paths::NullAsset("UserSettings.qpref"); // #TODO Add to path/file defines
+			}
+			Serialize::FromFile(userSettingsFilePath.c_str(), s_userSettings);
+			s_userSettings.isDirty = false;
 		}
 
-		void SaveEngineSettings()
+		void SaveUserSettings()
 		{
-			// #TODO Store current/latest engine settings file and serialize to that file?
+			Serialize::ToFile(s_userSettings, Paths::Setting("Aaron.qpref").c_str());
 		}
 
 		void LoadRendererSettings(const std::string& rendererSettingsFileName)

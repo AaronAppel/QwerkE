@@ -11,7 +11,7 @@
 #include "QC_StringHelpers.h" // NumberAppendOrIncrement
 
 #include "QF_Helpers.h" // NumberAppendOrIncrement
-#include "QF_Window.h" //
+#include "QF_Window.h" // For Window::GetContext()
 
 namespace QwerkE {
 
@@ -45,11 +45,11 @@ namespace QwerkE {
 				buffer.Allocate(fileSizeBytes + addNullTerminatingChar);
 				fread(buffer.Data(), fileSizeBytes, 1, filehandle);
 				fclose(filehandle);
-			}
 
-			if (addNullTerminatingChar)
-			{
-				buffer.Data()[buffer.SizeInBytes() - addNullTerminatingChar] = '\0';
+				if (addNullTerminatingChar)
+				{
+					buffer.Data()[buffer.SizeInBytes() - addNullTerminatingChar] = '\0';
+				}
 			}
 
 			// #TODO Buffer memory is released in destructor
@@ -112,6 +112,23 @@ namespace QwerkE {
 			return Path(filePath).extension();
 		}
 
+		void CreateEmptyFile(const char* const filePath)
+		{
+			if (!Exists(filePath))
+			{
+				FILE* filehandle;
+				errno_t error = fopen_s(&filehandle, filePath, "w");
+				if (!error && filehandle)
+				{
+					fclose(filehandle);
+				}
+				else
+				{
+					LOG_ERROR("{0} Could not create empty file {1}", __FUNCTION__, filePath);
+				}
+			}
+		}
+
 		void WriteStringToFile(const char* const fileData, const char* const filePath)
 		{
 			if (!filePath)
@@ -133,19 +150,28 @@ namespace QwerkE {
 			}
 		}
 
-		std::string FileExplorer(DWORD flags, LPCSTR filter, bool save)
+		std::string FileExplorer(DWORD flags, LPCSTR filter, bool save, const char* relativeDirPath = nullptr)
 		{
 			OPENFILENAMEA ofn;
 			CHAR szFile[260] = { 0 };
-			CHAR currentDir[256] = { 0 };
+			CHAR currentDir[256] = { 0 }; // #TODO Optional argument to starting directory
 			ZeroMemory(&ofn, sizeof(OPENFILENAME));
 			ofn.lStructSize = sizeof(OPENFILENAME);
 			GLFWwindow* window = static_cast<GLFWwindow*>(Window::GetContext());
 			ofn.hwndOwner = glfwGetWin32Window(window);
 			ofn.lpstrFile = szFile;
 			ofn.nMaxFile = sizeof(szFile);
-			if (GetCurrentDirectoryA(256, currentDir))
-				ofn.lpstrInitialDir = currentDir;
+
+			if (relativeDirPath &&
+				std::filesystem::status(relativeDirPath).type() == std::filesystem::file_type::directory)
+			{
+				ofn.lpstrInitialDir = relativeDirPath;
+			}
+			else
+			{
+				if (GetCurrentDirectoryA(256, currentDir))
+					ofn.lpstrInitialDir = currentDir;
+			}
 			ofn.lpstrFilter = filter;
 			ofn.nFilterIndex = 1;
 			ofn.Flags = flags;
@@ -155,27 +181,31 @@ namespace QwerkE {
 
 			if (save)
 			{
-				if (GetSaveFileNameA(&ofn) == TRUE)
+				if (TRUE == GetSaveFileNameA(&ofn))
+				{
 					return ofn.lpstrFile;
+				}
 			}
-			else if (GetOpenFileNameA(&ofn) == TRUE)
+			else if (TRUE == GetOpenFileNameA(&ofn))
+			{
 				return ofn.lpstrFile;
+			}
 
 			return std::string();
 		}
 
-		std::string ExplorerOpen(const char* filter)
+		std::string ExplorerOpen(const char* filter, const char* dirPath) // #TODO Supports both relative and absolute paths?
 		{
 			// #TODO Add a starting directory argument to open up to a different directory than the current working directory
 			// #TODO Look at arguments File description ("QwerkE Project"), and filterFile ("qproj" instead of (*.hproj)\0*.hproj\0)
 			DWORD flags = OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR | OFN_FILEMUSTEXIST;
-			return FileExplorer(flags, filter, false);
+			return FileExplorer(flags, filter, false, dirPath);
 		}
 
-		std::string ExplorerSave(const char* filter)
+		std::string ExplorerSave(const char* filter, const char* dirPath) // #TODO Supports both relative and absolute paths?
 		{
 			DWORD flags = OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR | OFN_OVERWRITEPROMPT;
-			return FileExplorer(flags, filter, true);
+			return FileExplorer(flags, filter, true, dirPath);
 		}
 
 		Path UniqueFilePath(const char* const filePath)

@@ -7,9 +7,11 @@
 
 namespace QwerkE {
 
-    struct EngineSettings // #TODO Rename to FrameworkSettings
+    struct UserSettings
     {
+        // Interface: Window open, UI layout and scaling, styles, etc
         bool isDirty = false; // #TODO Use Editor state flag
+        bool startInPlayMode = true; // #TODO Serialize value
 
         u16 windowWidthPixels = 1920;
         u16 windowHeightPixels = 1080;
@@ -21,7 +23,7 @@ namespace QwerkE {
         u8 maxEnabledScenes = 1;
         u8 maxJobsAdditionalThreadCount = 1;
 
-        bool consoleOutputWindowStartOpen = true;
+        bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
 
         bool vSyncEnabled = false;
     };
@@ -41,15 +43,14 @@ namespace QwerkE {
     namespace Settings
     {
         const char* GetStyleFileName();
+        const char* GetStyleFileName2();
 
-        void LoadEngineSettings(const std::string& engineSettingsFilePath); // #TODO Write and chain with above overloaded method
-        void SaveEngineSettings(const std::string& engineSettingsFileName);
-        void SaveEngineSettings();
+        void LoadUserSettings(const std::string& userSettingsFileName);
+        void SaveUserSettings();
 
-        void LoadRendererSettings(const std::string& rendererSettingsFilePath);
+        void LoadRendererSettings(const std::string& rendererSettingsFileName);
         void SaveRendererSettings();
 
-        EngineSettings& GetEngineSettings();
         UserSettings& GetUserSettings();
         RendererSettings& GetRendererSettings();
 

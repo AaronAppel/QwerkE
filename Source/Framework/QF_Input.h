@@ -37,21 +37,14 @@ namespace QwerkE {
         void OnMouseClick(eKeys key, eKeyState state);
         void OnMouseScroll(float x, float y);
 
-        void OnKeyEvent(eKeys key, eKeyState state);
+        void OnJoystickEvent(int joystickId, int eventId);
 
-        u16 RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
+        bool IsJoystickButtonDown(eKeys key);
+
+        [[nodiscard]] u16 RegisterOnKeyEvent(eKeys key, OnKeyEventCallback callback);
         void UnregisterOnKeyEvent(eKeys key, u16 id);
 
         void ToggleLogKeyEvents();
-
-#ifdef _QGLFW3
-        eKeys GLFWToQwerkEKey(int key);
-
-        ImGuiKey QwerkEKeyToImGui(eKeys key);
-        void SetupCallbacks(GLFWwindow* window);
-#else
-#error "Define window/input library!"
-#endif
 
     }
 

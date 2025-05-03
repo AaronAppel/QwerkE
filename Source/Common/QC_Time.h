@@ -27,6 +27,9 @@ namespace QwerkE {
 
         // #TODO TrackGameTime differently, using OnGamePaused(bool paused = true/false). Allows lifetimes to be game time relative
 
+        // void TimeScale() {} // #NOTE Engine's like Unity allow scaling time to control delta time and gameplay speed
+        // void UnscaledDeltaTime() {} // #NOTE And unscaled delta time
+
         void WriteAppStartTime();
         const double& AppStartTime();
 

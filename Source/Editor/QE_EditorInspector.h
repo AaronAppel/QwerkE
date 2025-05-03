@@ -8,6 +8,7 @@ namespace QwerkE {
 
     namespace Inspector {
 
+        // #TODO Template so caller doesn't need to provide <T>
         bool InspectType(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
 
         template <class T>

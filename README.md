@@ -1,3 +1,4 @@
+⚠️ Refactor in progress. Documentation out of date ⚠️
 # Qwerk Engine (QwerkE)
 ### About
 I use this project to develop a simple game engine for hobby.
@@ -37,6 +38,8 @@ Libraries or external code I utilize to deliver features (may be outdated) :
 - glfw: www.github.com/glfw/glfw
 - glm: www.github.com/g-truc/glm
 - imgui: www.github.com/ocornut/imgui
+- imgui-console: https://github.com/rmxbalanque/imgui-console
+- imgui-node-editor: https://github.com/thedmd/imgui-node-editor
 - Jolt: https://github.com/jrouwe/JoltPhysics
 - lodepng: www.github.com/lvandeve/lodepng
 - Mirror: www.github.com/AaronAppel/Mirror
@@ -58,7 +61,7 @@ Thin Matrix : [YouTube](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ
 - [Obsidian](https://obsidian.md/)
 - [YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D)
 - [Google](https://trex-runner.com/)
-- [StackOverflow](https://stackoverflow.com/questions?sort=votes
+- [StackOverflow](https://stackoverflow.com/questions?sort=votes)
 - [Entrian Source Search](https://entrian.com/source-search/)
 - [Notepad++](https://notepad-plus-plus.org/downloads/)
 

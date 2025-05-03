@@ -4,11 +4,15 @@
 
 #include "QF_Assets.h"
 #include "QF_Events.h"
+
 #include "QF_Input.h"
+#include "QF_InputNew.h"
+
 #include "QF_Log.h"
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
+#include "QF_Settings.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
@@ -37,28 +41,37 @@ namespace QwerkE {
 
 			Log::Initialize();
 			Events::Initialize();
-			Window::Initialize(windowWidth, windowHeight);
+			Window::Initialize(windowWidth, windowHeight); // #TODO Try to remove window size arguments dependency
 			Renderer::Initialize();
 			Input::Initialize();
-			Assets::Initialize();
+			Input::Initialize_New();
+			Assets::Initialize(); // #TODO bgfx init order dependency for mesh creation
 			Scenes::Initialize();
 			return eOperationResult::Success;
 		}
 
 		eOperationResult Shutdown()
 		{
+			vec2f position = Window::GetPosition(); // #TODO Decide where else to put this
+			EngineSettings& engineSettings = Settings::GetEngineSettings();
+			engineSettings.windowOpenPositionX = position.x;
+			engineSettings.windowOpenPositionY = position.y;
+			Settings::SaveEngineSettings();
+
 			Scenes::Shutdown();
-			Assets::Shutdown();
-			Events::Shutdown();
-			Renderer::Shutdown();
 			Window::Shutdown();
+			Assets::Shutdown(); // #TODO bgfx shutdown order dependency pthread_mutex_unlock(_mutex) in bx/mutex.cpp line 95
+			Renderer::Shutdown();
+			Events::Shutdown();
 			Log::Shutdown();
+
 			return eOperationResult::Success;
 		}
 
 		void StartFrame()
 		{
 			Input::NewFrame();
+			Input::NewFrame_New();
 			Events::ProcessEvents();
 			// Jobs::ProcessTasks();
 			Window::NewFrame();

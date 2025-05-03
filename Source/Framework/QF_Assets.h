@@ -64,7 +64,8 @@ namespace QwerkE {
 			}
 		}
 
-#ifndef _QRETAIL
+// #TODO Decide how Release and Retail builds should work, in Game and Editor projects
+// #ifndef _QRETAIL
 		template <typename T>
 		static const std::unordered_map<GUID, T*>* ViewAssets()
 		{
@@ -111,7 +112,7 @@ namespace QwerkE {
 		}
 
 		static void AddToRegistry(const size_t mirrorType, const GUID& guid, const std::string& fileName);
-#endif
+// #endif // _QRETAIL
 
 	private:
 		static GUID LoadAsset(const size_t type, const GUID& guid);

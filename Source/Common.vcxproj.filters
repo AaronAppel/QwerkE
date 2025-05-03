@@ -11,6 +11,7 @@
     <ClInclude Include="Common\QC_Time.h" />
     <ClInclude Include="Common\QC_TypeDefs.h" />
     <ClInclude Include="Common\QC_PCH.h" />
+    <ClInclude Include="Common\QC_BitIndexRingBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\QC_Guid.cpp" />

@@ -1,7 +1,7 @@
 #include "QF_Input.h"
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
 #endif
 
 #ifdef _QGLFW3
@@ -17,22 +17,28 @@ namespace QwerkE {
     namespace Input {
 
 #ifdef _QGLFW3
+        extern eKeys GLFWToQwerkEKey(int key);
+        extern ImGuiKey QwerkEKeyToImGui(eKeys key);
+        extern void OnKeyEvent(eKeys key, eKeyState state);
+
         static void local_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
         static void char_callback(GLFWwindow* window, unsigned int codePoint);
         static void char_mods_callback(GLFWwindow* window, unsigned int codepoint, int mods) { }
         static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
         static void cursor_enter_callback(GLFWwindow* window, int entered) { }
         static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+        static void joystick_callback(int joystickId, int eventId);
         static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
         void SetupCallbacks(GLFWwindow* window)
         {
             glfwSetKeyCallback(window, local_KeyCallback);
-            glfwSetScrollCallback(window, scroll_callback);
             glfwSetCharCallback(window, char_callback);
             glfwSetCharModsCallback(window, char_mods_callback);
             glfwSetCursorPosCallback(window, cursor_position_callback);
             glfwSetMouseButtonCallback(window, mouse_button_callback);
+            glfwSetJoystickCallback(joystick_callback);
+            glfwSetScrollCallback(window, scroll_callback);
         }
 
         void local_KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -49,7 +55,7 @@ namespace QwerkE {
                 }
             }
 
-            const bool keyIsRepeating = action == GLFW_REPEAT;
+            const bool keyIsRepeating = action == GLFW_REPEAT; // #TODO Checkout Windows key repeat logic
             const bool keyIsReleased = action == GLFW_RELEASE;
             const eKeys qwerkEeKey = GLFWToQwerkEKey(key);
 
@@ -62,6 +68,7 @@ namespace QwerkE {
             OnKeyEvent(qwerkEeKey, (eKeyState)!keyIsReleased);
 
 #ifdef _QDEARIMGUI
+            // #TODO Update to use new imgui input API: https://github.com/ocornut/imgui/issues/4858
             ImGuiKey imguiKey = QwerkEKeyToImGui(qwerkEeKey);
             ImGui::GetIO().AddKeyEvent(imguiKey, !keyIsReleased);
 
@@ -110,6 +117,11 @@ namespace QwerkE {
                 io.AddMouseButtonEvent(button, false);
 #endif
             }
+        }
+
+        void joystick_callback(int joystickId, int eventId)
+        {
+            OnJoystickEvent(joystickId, eventId);
         }
 
         void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

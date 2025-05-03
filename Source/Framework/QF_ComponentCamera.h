@@ -36,6 +36,7 @@ namespace QwerkE {
             bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
             bgfx::setViewTransform(viewId, m_View, m_Proj);
 
+#ifdef _QDEBUG
             if (m_ShowSphere)
             {
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
@@ -43,8 +44,10 @@ namespace QwerkE {
                 debugDrawer.drawSphere(m_LookAtPosition.x, m_LookAtPosition.y, m_LookAtPosition.z, 3.f);
                 debugDrawer.end();
             }
+#endif
         }
 
+        // #TODO How will Mirror handle undefined types? May need to handle with warning or special #define macro
         bool m_ShowSphere = true;
 
         float m_MoveSpeed = 5.f;

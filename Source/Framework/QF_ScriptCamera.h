@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
 #endif
 
 #include "QC_Math.h"
@@ -71,7 +71,8 @@ namespace QwerkE {
 
 			const Input::GameActions& gameActions = Input::GetGameActions();
 
-			if (Input::IsKeyDown(gameActions.Camera_MoveForward))
+			if (Input::IsKeyDown(gameActions.Camera_MoveForward) ||
+				Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(forward, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
@@ -120,13 +121,13 @@ namespace QwerkE {
 			}
 			if (Input::IsKeyDown(gameActions.Camera_RotateRight))
 			{
-				LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
+				// LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
 			}
 			if (Input::IsKeyDown(gameActions.Camera_RotateLeft))
 			{
 				constexpr float rotationSpeed = Math::PI_f();
 				bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
-				LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
+				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
 
 			const vec2f& mouseScroll = Input::MouseScrollDelta();

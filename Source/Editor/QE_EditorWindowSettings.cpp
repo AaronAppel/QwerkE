@@ -1,9 +1,13 @@
+
+#include <filesystem>
+
 #include "QE_EditorWindowSettings.h"
 
 #include "QC_StringHelpers.h"
 
 #include "QF_Directory.h"
 #include "QF_Input.h"
+#include "QF_Settings.h"
 
 #include "QE_EditorInspector.h"
 #include "QF_Paths.h"
@@ -40,6 +44,10 @@ namespace QwerkE {
 
                 case eSettingsOptions::Project:
                     pushIsDirtyStyleColor = Projects::CurrentProject().isDirty;
+                    break;
+
+                case eSettingsOptions::UserSettings:
+                    pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
                     break;
                 }
 
@@ -88,12 +96,16 @@ namespace QwerkE {
                     case eSettingsOptions::Project:
                         Projects::SaveProject();
                         break;
+
+                    case eSettingsOptions::UserSettings:
+                        Settings::SaveUserSettings();
+                        break;
                     }
                 }
 
                 if (ImGui::MenuItem("Reload"))
                 {
-                    // #TODO Load user settings instead of default
+                    // #TODO Load local user settings instead of default
                     switch (m_LastPopUpIndex)
                     {
                     case eSettingsOptions::Engine:
@@ -104,13 +116,17 @@ namespace QwerkE {
                         // Load Input::GetGameActions();
                         break;
 
-                    case eSettingsOptions::Renderer:
+                    case eSettingsOptions::Renderer: // #TODO Load proper renderer settings
                         Settings::LoadRendererSettings("RendererSettings1.qren");
                         break;
 
                     case eSettingsOptions::Project:
-                        Projects::LoadProject("Project1.qproj"); // #TODO Load proper project file
+                        Projects::LoadProject("Project1.qproj"); // #TODO Load proper file
                         Editor::OnSceneReloaded();
+                        break;
+
+                    case eSettingsOptions::UserSettings:
+                        Settings::LoadUserSettings("Aaron.qproj"); // #TODO Load proper file
                         break;
                     }
                 }
@@ -128,56 +144,68 @@ namespace QwerkE {
                 switch (m_SettingsEditorOption)
                 {
                 case eSettingsOptions::Engine:
-                {
-                    ImGui::SameLine();
-                    ImGui::Text("          Changes require engine restart");
-                    EngineSettings& engineSettings = Settings::GetEngineSettings();
-                    engineSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
-                }
-                break;
+                    {
+                        ImGui::SameLine();
+                        ImGui::Text("          Changes require engine restart");
+                        EngineSettings& engineSettings = Settings::GetEngineSettings();
+                        engineSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
+                    }
+                    break;
 
                 case eSettingsOptions::GameActions:
-                {
-                    Input::GameActions& gameActions = Input::GetGameActions();
-                    // #TODO userSettings.isDirty |=
-                    Inspector::InspectType(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
-                }
-                break;
+                    {
+                        Input::GameActions& gameActions = Input::GetGameActions();
+                        // userSettings.isDirty |=
+                        Inspector::InspectType(Mirror::InfoForType<Input::GameActions>(), &gameActions, buffer);
+                    }
+                    break;
 
                 case eSettingsOptions::Renderer:
-                {
-                    RendererSettings& rendererSettings = Settings::GetRendererSettings();
-                    rendererSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
-                }
-                break;
+                    {
+                        RendererSettings& rendererSettings = Settings::GetRendererSettings();
+                        rendererSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<RendererSettings>(), &rendererSettings, buffer);
+                    }
+                    break;
 
                 case eSettingsOptions::Project:
-                {
-                    Project& project = Projects::CurrentProject();
-                    project.isDirty |= Inspector::InspectType(Mirror::InfoForType<Project>(), &project, buffer);
-                }
-                break;
+                    {
+                        Project& project = Projects::CurrentProject();
+                        project.isDirty |= Inspector::InspectType(Mirror::InfoForType<Project>(), &project, buffer);
+                    }
+                    break;
+
+                case eSettingsOptions::UserSettings:
+                    {
+                        UserSettings& userSettings = Settings::GetUserSettings();
+                        userSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<UserSettings>(), &userSettings, buffer);
+                    }
+                    break;
                 }
 
                 ImGui::PopItemWidth();
             }
 
             // #TODO Move to a new Schematics/Prefab Inspector EditorWindow
-            if (false && ImGui::Begin("Schematics Inspector", NULL))
-            {
-                // #TODO Cache result to avoid constant directory info fetching
-
-                for (auto& directoryEntry : Directory::ListDir(StringAppend(Paths::AssetsDir().c_str(), "Schematics/")))
-                {
-                    // #NOTE Crashes when viewing file names containing emojis
-                    const auto& path = directoryEntry.path();
-                    std::string filenameString = path.filename().string();
-
-                    ImGui::Button(filenameString.c_str());
-                }
-
-                ImGui::End();
-            }
+            // #TODO Support schematics
+            // if (ImGui::Begin("Schematics Inspector", NULL))
+            // {
+            //     static std::filesystem::directory_iterator s_lastDirectoryIterator;
+            //     if (std::filesystem::begin(s_lastDirectoryIterator) == std::filesystem::end(s_lastDirectoryIterator) ||
+            //         ImGui::Button("Reload##WindowsSettings"))
+            //     {
+            //         s_lastDirectoryIterator = Directory::ListDir(Paths::SchematicsDir().c_str());
+            //     }
+            //
+            //     for (const auto& directoryEntry : s_lastDirectoryIterator)
+            //     {
+            //         const auto& path = directoryEntry.path();
+            //         std::string filenameString = path.filename().u8string();
+            //
+            //         ImGui::Button(filenameString.c_str());
+            //     }
+            //
+            //     ImGui::End();
+            // }
         }
 
 	}

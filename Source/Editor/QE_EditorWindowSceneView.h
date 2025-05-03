@@ -28,6 +28,7 @@ namespace QwerkE {
 				bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
 				bgfx::setViewTransform(viewId, m_View, m_Proj);
 
+#ifdef _QDEBUG
 				if (m_ShowSphere)
 				{
 					DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
@@ -35,9 +36,10 @@ namespace QwerkE {
 					debugDrawer.drawSphere(m_LookAtTarget.x, m_LookAtTarget.y, m_LookAtTarget.z, 3.f);
 					debugDrawer.end();
 				}
+#endif
 			}
 
-			bool m_ShowSphere = false;
+			bool m_ShowSphere = false; // #TODO Mark debug only but Mirror supported
 			bx::Vec3 m_Eye = bx::Vec3(0.f);
 			bx::Vec3 m_LookAtTarget = bx::Vec3(0.f);;
 
@@ -58,7 +60,7 @@ namespace QwerkE {
 				m_ViewId(viewId)
 			{
 				m_ImGuiFlags = ImGuiWindowFlags_NoScrollbar;
-				snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "Scenes: %i##%llu", 0, GetGuid());
+				snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "Scenes: %i##%llu", 0, GetGuid());
 			}
 
 			EditorWindowSceneView::EditorWindowSceneView(GUID guid = GUID()) :
@@ -80,48 +82,17 @@ namespace QwerkE {
 				}
 
 				const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
-				if (!scenes.empty())
-				{
-					std::vector<const char*> sceneNames;
-					sceneNames.reserve(3);
-
-					for (size_t i = 0; i < scenes.size(); i++)
-					{
-						sceneNames.push_back(scenes[i]->GetSceneName().c_str());
-					}
-
-					constexpr u32 s_CharacterPixelSize = 10;
-					constexpr u32 s_DropDownArrowSize = 20;
-
-					// #TODO
-					if (m_LastSceneIndex >= scenes.size())
-					{
-						int b = 0;
-					}
-
-					const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * s_CharacterPixelSize;
-
-					ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
-
-					snprintf(m_ScenesCombobuffer, sizeof(m_ScenesCombobuffer), "Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
-
-					// #TODO Use ImGui::SameLineEnd();
-					ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesCombobuffer) * s_CharacterPixelSize));
-					if (ImGui::Combo(m_ScenesCombobuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
-					{
-						m_CurrentScene = scenes[m_LastSceneIndex];
-						// #NOTE Scene transition changes removes above lines for below
-						// #TODO SetActive(true/false) ?
-						// Scenes::SetCurrentScene(index);
-					}
-					ImGui::PopItemWidth();
-				}
-				else
+				if (scenes.empty())
 				{
 					ImGui::Text("No scene selected");
+					return;
 				}
 
 				if (!m_CurrentScene)
+				{
+					ImGui::Text("Null scene selected");
+					return;
+				}
 
 				// #NOTE Scene transition changes
 				// constexpr u32 s_CharacterPixelSize = 10;
@@ -167,10 +138,9 @@ namespace QwerkE {
 				//
 				// Scene* sceneToView = Scenes::GetScene(m_SelectedSceneGuid);
 				// if (!sceneToView)
-					return;
+				//	 return;
 
 				// #NOTE Scene transition changes removed 2 lines below
-
 
 				// #TODO Buttons are squares, so maybe width = (lineheight * 3) + (padding * 2)
 				// x3 for the 2 buttons and field, plus the 2 spaces in between the 3 buttons
@@ -195,9 +165,54 @@ namespace QwerkE {
 				}
 				ImGui::PopItemWidth();
 
+				std::vector<const char*> sceneNames;
+				sceneNames.reserve(3);
+
+				for (size_t i = 0; i < scenes.size(); i++)
+				{
+					sceneNames.push_back(scenes[i]->GetSceneName().c_str());
+				}
+
+				constexpr u32 s_CharacterPixelSize = 10;
+				constexpr u32 s_DropDownArrowSize = 20;
+
+				const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * s_CharacterPixelSize;
+
+				ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
+
+				snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
+
+				// ImGui::Dummy(ImVec2(0, 0));
+				// ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesComboLabelBuffer) * s_CharacterPixelSize));
+				ImGui::SameLine();
+				if (ImGui::Combo(m_ScenesComboLabelBuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
+				{
+					m_CurrentScene = scenes[m_LastSceneIndex];
+					// #NOTE Scene transition changes removes above lines for below
+					// #TODO SetActive(true/false) ?
+					// Scenes::SetCurrentScene(index);
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::SameLine();
+				ImGui::PushItemWidth(11 * ImGui::g_pixelsPerCharacter);
+				// #TODO Game window (texture) scaling options
+				int listIndex = 0;
+				if (ImGui::Combo("Scaling", &listIndex,
+					"Ratio\0"
+					"Size\0"
+					"Fit Window\0"
+					"Pixel\0"
+					))
+				{
+					// #TODO: Make Menu Ratios -> [16:9, 3:4, etc...]
+					// #TODO: Make Menu Size -> [1024×576, 1280×720, etc..., Custom]
+				}
+				ImGui::PopItemWidth();
+
 				// #TODO Camera selection drop down
 				std::vector<const char*> cameraEntityNames;
-				static int currentCameraIndex = 0;
+				static int currentCameraIndex = 0; // #TODO needs to persist and adjust for newly added camera(s)
 
 				auto viewCameras = m_CurrentScene->ViewComponents<ComponentCamera>();
 				for (auto& entity : viewCameras)
@@ -206,9 +221,11 @@ namespace QwerkE {
 					cameraEntityNames.push_back(handle.EntityName().c_str());
 				}
 
-				ImGui::PushItemWidth(120.f);
-				ImGui::SameLineEnd(15);
-				if (ImGui::Combo("Camera:", &currentCameraIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
+				// ImGui::SameLineEnd(22);
+				// ImGui::Text("Camera");
+				ImGui::SameLine();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+				if (ImGui::Combo("##Camera:", &currentCameraIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
 				{
 					// #TODO Change camera. Can use name or entity GUID to find camera, for now
 					for (auto& entity : viewCameras)
@@ -223,27 +240,28 @@ namespace QwerkE {
 				ImGui::PopItemWidth();
 
 				// #NOTE Scene transition changes
-				// #TODO Draw grid here instead of QE_Editor.cpp
-				{	// Debug drawer calls
-					constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-					bgfx::setState(BGFX_STATE_DEFAULT);
-					DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-					debugDrawer.begin(viewIdFbo1, true);
-
-					constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
-					constexpr bx::Vec3 pos = { .0f, .0f, .0f };
-
-					debugDrawer.drawSphere(0.f, 0.f, 0.f, .1f, Axis::X);
-					// debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
-
-					// #TODO Move grid draw to QE_EditorWindowSceneView draw call
-					bx::Plane plane(bx::InitNone);
-					bx::calcPlane(plane, normal, pos);
-
-					debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
-
-					debugDrawer.end();
-				}
+				// #TODO Draw grid
+				// {
+				// 	// Debug drawer calls
+				// 	constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+				// 	bgfx::setState(BGFX_STATE_DEFAULT);
+				// 	DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
+				// 	debugDrawer.begin(viewIdFbo1, true);
+				//
+				// 	constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
+				// 	constexpr bx::Vec3 pos = { .0f, .0f, .0f };
+				//
+				// 	debugDrawer.drawSphere(0.f, 0.f, 0.f, 1.f, Axis::X);
+				// 	// debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
+				//
+				// 	// #TODO Move grid draw to QE_EditorWindowSceneView draw call
+				// 	bx::Plane plane(bx::InitNone);
+				// 	bx::calcPlane(plane, normal, pos);
+				//
+				// 	debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
+				//
+				// 	debugDrawer.end();
+				// }
 
 				// #TODO Draw scene using camera selected from Camera combo drop down
 				m_EditorCamera.PreDrawSetup(m_ViewId);
@@ -259,8 +277,7 @@ namespace QwerkE {
 			void OnSceneReload() override { m_CurrentScene = nullptr; }
 
 			Scene* m_CurrentScene = nullptr;
-			const int digitsOfGuid = 19; // #TODO Document
-			char m_ScenesCombobuffer[33] = "Scenes:    ##0000000000000000000";
+			char m_ScenesComboLabelBuffer[33] = "Scenes:    ##0000000000000000000";
 			s32 m_LastSceneIndex = 0;
 
 			// #TODO Scene transition changes

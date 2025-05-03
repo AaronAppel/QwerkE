@@ -107,6 +107,7 @@ namespace QwerkE {
 #endif
 
 #ifdef _QBGFX
+			// #TODO Crash here on (re)loading engine a 2nd time
 			bgfx::renderFrame(); // Prevent bgfx from creating a separate render thread
 			bgfx::Init init;
 
@@ -322,6 +323,7 @@ namespace QwerkE {
 			return eOperationResult::Success;
 		}
 
+#if _QDEARIMGUI
 		void StartImGui()
 		{
 			GLFWwindow* window = static_cast<GLFWwindow*>(Window::GetContext());
@@ -350,6 +352,7 @@ namespace QwerkE {
 		{
 			imguiEndFrame();
 		}
+#endif // _QDEARIMGUI
 
 		void EndFrame()
 		{
@@ -398,10 +401,13 @@ namespace QwerkE {
 			s_showRendererDebugStats = !s_showRendererDebugStats;
 		}
 
+#ifdef _QDEBUG
 		DebugDrawEncoder& DebugDrawer()
 		{
+			ASSERT(s_DebugDrawer, "Debug Drawer is null!");
 			return *s_DebugDrawer;
 		}
+#endif
 
 	}
 

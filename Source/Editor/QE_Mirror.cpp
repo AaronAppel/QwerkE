@@ -2,22 +2,14 @@
 
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 
+#include "QE_Editor.h"
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
 #include "QE_Settings.h"
 
-// #TESTING
-#include "QE_Editor.h"
-
-// Enums
 MIRROR_TYPE(QwerkE::Editor::EditorWindowFlags)
 MIRROR_CLASS(QwerkE::Editor::EditorWindowTypes)
 MIRROR_CLASS_END
-
-// Pointers
-MIRROR_TYPE(std::pair<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
-MIRROR_TYPE(std::pair<const QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
-MIRROR_TYPE(std::unordered_map<QwerkE::GUID, QwerkE::Editor::EditorWindow*>)
 
 template <typename SuperClass, typename... SubClass>
 static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumStartOffset)
@@ -44,6 +36,7 @@ static void MirrorSubClasses(TypesList<SubClass...>, Mirror::TypeInfo& localStat
 }
 
 MIRROR_CLASS(QwerkE::UserSettings)
+MIRROR_CLASS_MEMBER(startInPlayMode)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Project)
@@ -53,7 +46,32 @@ MIRROR_CLASS_MEMBER(startUpSceneName)
 MIRROR_CLASS_MEMBER(scenesList)
 MIRROR_CLASS_END
 
+MIRROR_TYPE(QwerkE::Editor::EditorWindowSizingFlags)
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowOptions)
+MIRROR_CLASS_MEMBER(m_SizingFlags)
+MIRROR_CLASS_MEMBER(m_WidthMinimum)
+MIRROR_CLASS_MEMBER(m_WidthMaximum)
+MIRROR_CLASS_MEMBER(m_HeightMinimum)
+MIRROR_CLASS_MEMBER(m_HeightMaximum)
+MIRROR_CLASS_MEMBER(m_LockWidth)
+MIRROR_CLASS_MEMBER(m_LockHeight)
+MIRROR_CLASS_MEMBER(m_RatioWidth)
+MIRROR_CLASS_MEMBER(m_RatioHeight)
+MIRROR_CLASS_MEMBER(m_IncrementWidth)
+MIRROR_CLASS_MEMBER(m_IncrementHeight)
+MIRROR_CLASS_MEMBER(m_ItemScaling)
+MIRROR_CLASS_MEMBER(m_FontScaling)
+// #TODO ImGuiStyle m_Style;
+// #TODO ImFont m_Font;
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowAssets)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowConsole)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
@@ -73,8 +91,23 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowEntityInspector)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
+MIRROR_CLASS(QwerkE::Editor::EditorWindowFolderViewer)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowHexEditor)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowHexEditor)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowImGuiDemo)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiDemo)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowImGuiExtendedDemo)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiExtendedDemo)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
@@ -115,13 +148,13 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowMaterialEditor)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowFolderViewer)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
+MIRROR_CLASS(QwerkE::Editor::EditorWindowNodeEditor)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNodeEditor)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowNodeEditor)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNodeEditor)
+MIRROR_CLASS(QwerkE::Editor::EditorWindowNotifications)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNotifications)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
@@ -140,6 +173,11 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowPrompt)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
+MIRROR_CLASS(QwerkE::Editor::EditorWindowTimeline)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowTimeline)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindow)
 // #TODO Review MIRROR_ABSTRACT_CLASS_START(EditorWindow)
 MIRROR_CLASS_MEMBER(m_Guid) // Order dependency! 1st // #TODO Review dependency
@@ -148,11 +186,11 @@ MIRROR_CLASS_MEMBER(m_ImGuiFlags)
 MIRROR_CLASS_MEMBER(m_WindowFlags)
 MIRROR_CLASS_MEMBER(m_MinimumWidth)
 MIRROR_CLASS_MEMBER(m_MinimumHeight)
+MIRROR_CLASS_MEMBER(m_WindowOptions)
 // MIRROR_CLASS_MEMBER(m_EditorWindowType)
 // #TODO Solve generic templated type list issue
 // using WindowsList = MirrorTemplateArgumentList <EditorWindowAssets>;
-// MirrorSubClasses<EditorWindow>(WindowsList{}, localStaticTypeInfo, Editor::EditorWindowTypes::Assets);
-MirrorSubClasses<QwerkE::Editor::EditorWindow>(QwerkE::Editor::EditorWindowsList{}, localStaticTypeInfo, QwerkE::Editor::EditorWindowTypes::Assets);
+MirrorSubClasses<QwerkE::Editor::EditorWindow>(QwerkE::Editor::EditorWindowsList{}, localStaticTypeInfo, QwerkE::Editor::EditorWindowTypes::EditorWindowTypesInvalid + 1);
 MIRROR_CLASS_END
 MIRROR_TYPE(QwerkE::Editor::EditorWindow*)
 
@@ -160,3 +198,5 @@ MIRROR_CLASS(QwerkE::ProjectsData)
 MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
 MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
 MIRROR_CLASS_END
+
+MIRROR_TYPE(std::vector<QwerkE::Editor::EditorWindow*>)

@@ -1,7 +1,7 @@
 #include "QF_Scene.h"
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
 #endif
 
 #ifdef _QENTT
@@ -27,32 +27,6 @@
 #include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
 namespace QwerkE {
-
-    Scene::Scene(const std::string& sceneFileName) :
-        m_SceneFileName(sceneFileName)
-    {
-        // m_PhysicsSystem = new PhysicsSystem();
-
-        return;
-
-        // #TESTING Code below is for testing mesh generation
-        constexpr u8 rows = 11;
-        constexpr u8 columns = 11;
-        constexpr float spacingScalar = 3.f;
-        constexpr float offset = 15.f;
-
-        for (uint32_t yy = 0; yy < columns; ++yy)
-        {
-            for (uint32_t xx = 0; xx < rows; ++xx)
-            {
-                entt::entity entityId = m_Registry.create();
-                ComponentTransform& transform = m_Registry.emplace<ComponentTransform>(entityId);
-                transform.SetPosition({ float(xx) * spacingScalar - offset, float(yy) * spacingScalar - offset, .0f });
-
-                ComponentMesh& mesh = m_Registry.emplace<ComponentMesh>(entityId);
-            }
-        }
-    }
 
     Scene::~Scene()
     {
@@ -272,7 +246,8 @@ namespace QwerkE {
 
     void Scene::OnLoaded()
     {
-        m_GuidsToEntts.clear(); // #TODO Error if not empty?
+        ASSERT(m_GuidsToEntts.empty(), "Leftover data from Scene::Unload()!");
+
         m_Registry.each([&](const auto entityId) {
             ComponentInfo& info = m_Registry.get<ComponentInfo>(entityId);
             m_GuidsToEntts.insert({ info.m_Guid , entityId });

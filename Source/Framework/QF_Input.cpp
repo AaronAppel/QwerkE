@@ -8,7 +8,7 @@
 #endif
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
 #endif
 
 #include "QC_CallbackFunction.h"
@@ -22,6 +22,8 @@
 namespace QwerkE {
 
     namespace Input {
+
+        extern void SetupCallbacks(GLFWwindow* window);
 
         constexpr char* s_GameActionsFileName = "GameActions.qdata";
         static GameActions s_GameActions;
@@ -47,7 +49,7 @@ namespace QwerkE {
         static const u16 s_GlfwKeyCodexSize = GLFW_KEY_LAST + 1;
         static u16* s_GlfwKeyCodex = new unsigned short[s_GlfwKeyCodexSize];
 #endif
-        
+
 #ifdef _QDEARIMGUI
         static u16* s_ImGuiKeyCodex = new unsigned short[eKeys_MAX];
 #endif
@@ -102,14 +104,12 @@ namespace QwerkE {
 
 #ifdef _QGLFW3
             memset(s_GlfwKeyCodex, 0, s_GlfwKeyCodexSize);
-            SetupCallbacks((GLFWwindow*)Window::GetContext());
+            // SetupCallbacks((GLFWwindow*)Window::GetContext());
             local_GlfwKeysCodex(s_GlfwKeyCodex);
             local_ImGuiKeysCodex(s_ImGuiKeyCodex);
 #else
 #error "Define input library!"
 #endif
-
-            // Serialize::ToFile(s_GameActions, Paths::Setting(s_GameActionsFileName).c_str());
             Serialize::FromFile(Paths::Setting(s_GameActionsFileName).c_str(), s_GameActions, true);
 
             NewFrame();
@@ -168,6 +168,29 @@ namespace QwerkE {
         {
             s_FrameMouseScrollOffsets.x = x;
             s_FrameMouseScrollOffsets.y = y;
+        }
+
+        void OnJoystickEvent(int joystickId, int eventId)
+        {
+            if (GLFW_CONNECTED == eventId)
+            {
+                // The joystick was connected
+            }
+            else if (GLFW_DISCONNECTED == eventId)
+            {
+                // The joystick was disconnected
+            }
+        }
+
+        bool IsJoystickButtonDown(eKeys key)
+        {
+            int count;
+            if (const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &count))
+            {
+                return GLFW_PRESS && buttons[GLFW_GAMEPAD_BUTTON_A];
+            }
+
+            return false;
         }
 
         const vec2f& MouseFrameDelta()

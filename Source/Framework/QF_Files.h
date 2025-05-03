@@ -29,10 +29,12 @@ namespace QwerkE {
         Path FileName(const char* filePath);
         Path FileExtension(const char* filePath);
 
+        void CreateEmptyFile(const char* const filePath);
+
         void WriteStringToFile(const char* const fileData, const char* const filePath);
 
-        std::string ExplorerOpen(const char* filter);
-        std::string ExplorerSave(const char* filter);
+        std::string ExplorerOpen(const char* filter, const char* dirPath = nullptr);
+        std::string ExplorerSave(const char* filter, const char* dirPath = nullptr);
 
         Path UniqueFilePath(const char* const filePath);
         Path UniqueFilePath(const char* const dirPath, const char* const fileName);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Libraries/imgui/imgui_internal.h"
+
 #include "QF_Window.h"
 
 #include "QE_EditorWindow.h"
@@ -23,8 +25,10 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
-                // #NOTE Contents copied from imgui docking example
+                // #TODO Checkout: https://github.com/ocornut/imgui/issues/6779#issuecomment-1704863221
+                // ImGui::DockSpaceOverViewport();
 
+                // #NOTE Copied from imgui docking example
                 static ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 
                 static bool opt_fullscreen = true;
@@ -45,7 +49,6 @@ namespace QwerkE {
                 ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
                 ImGui::Begin("DockSpace Demo", &open, window_flags);
                 ImGui::PopStyleVar();
-
                 if (opt_fullscreen)
                 {
                     ImGui::PopStyleVar(2);

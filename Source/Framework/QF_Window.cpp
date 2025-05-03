@@ -10,7 +10,7 @@
 #endif
 
 #ifdef _QDEARIMGUI
-#include "Libraries/imgui/QC_imgui.h"
+#include "Libraries/imgui/QwerkE_imgui.h"
 #endif
 
 #include "QF_Assets.h"
@@ -31,6 +31,12 @@ const char* g_WindowTitle = "QwerkEngine";
 
 namespace QwerkE {
 
+#ifdef _QGLFW3
+    namespace Input {
+        extern void Input_RegisterGlfwCallbacks(GLFWwindow* window);
+    }
+#endif
+
     namespace Window {
 
         bool s_windowIsMinimized = false;
@@ -46,6 +52,7 @@ namespace QwerkE {
 #endif
 
     #ifdef _QGLFW3
+
         GLFWwindow* s_window = nullptr;
 
 #if _QDEBUG
@@ -94,6 +101,10 @@ namespace QwerkE {
         {
             s_windowIsMinimized = iconified == 1;
         }
+
+        void local_window_pos_callback(GLFWwindow* window, int xpos, int ypos)
+        {
+        }
     #endif
 
         void Window::Initialize(u16 windowWidth, u16 windowHeight)
@@ -109,7 +120,7 @@ namespace QwerkE {
             glfwWindowHint(GLFW_SAMPLES, 8);
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 #elif defined(_QBGFX)
-            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Create future GLFW windows without a OpenGL contexts
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Create future GLFW windows without OpenGL contexts
 #else
 #error Define graphics library!
 #endif
@@ -119,6 +130,11 @@ namespace QwerkE {
             glfwWindowHint(GLFW_ALPHA_BITS, 8);
             glfwWindowHint(GLFW_DEPTH_BITS, 0);
             glfwWindowHint(GLFW_STENCIL_BITS, 8);
+
+            auto engineSettings = Settings::GetEngineSettings();
+            glfwWindowHint(GLFW_POSITION_X, engineSettings.windowOpenPositionX);
+            glfwWindowHint(GLFW_POSITION_Y, engineSettings.windowOpenPositionY);
+            //glfwSetWindowPos(window, 100, 100);
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
@@ -137,14 +153,27 @@ namespace QwerkE {
                 glfwFocusWindow(s_window);
             }
 
+#if _QGLFW3
+            Input::Input_RegisterGlfwCallbacks(s_window);
+#endif // _QGLFW3
+
             glfwSetErrorCallback(local_ErrorCallback);
             glfwSetFramebufferSizeCallback(s_window, local_FrameBufferSizeCallback);
             glfwSetWindowCloseCallback(s_window, local_CloseCallback);
             glfwSetWindowSizeCallback(s_window, local_WindowResizedCallback);
             glfwSetWindowIconifyCallback(s_window, local_WindowIconifyCallback);
+            glfwSetWindowPosCallback(s_window, local_window_pos_callback);
             glfwSetDropCallback(s_window, local_FileDropCallback);
 
-            glfwSetKeyCallback(s_window, local_KeyEventCallback);
+            // #TODO glfwSetWindowRefreshCallback();
+            // #TODO glfwSetWindowMaximizeCallback();
+            // #TODO glfwSetWindowContentScaleCallback();
+            // #TODO glfwSetWindowFocusCallback();
+            // #TODO glfwSetMonitorCallback();
+            // #TODO glfwSetCursorEnterCallback();
+
+            // #NOTE Overridden in QF_glfw_InputCallBacks.cpp::SetupCallbacks(41)
+            // glfwSetKeyCallback(s_window, local_KeyEventCallback);
     #endif
         }
 
@@ -178,6 +207,13 @@ namespace QwerkE {
             int width, height;
             glfwGetWindowSize(s_window, &width, &height);
             return vec2f(width, height);
+        }
+
+        const vec2f Window::GetPosition()
+        {
+            int xpos, ypos;
+            glfwGetWindowPos(s_window, &xpos, &ypos);
+            return vec2f(xpos, ypos);
         }
 
         float Window::GetAspectRatio()

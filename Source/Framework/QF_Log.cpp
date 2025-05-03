@@ -90,12 +90,12 @@ namespace QwerkE {
 
         void Log(eLogLevel logLevel, ...)
         {
-            // const char* message; // #TODO Fix logging
+            // const char* message; // #TODO Implement logging methods versus macros
         }
 
         void Log(eLogLevel logLevel, const char* message, ...)
         {
-            // #TODO Fix logging
+            // #TODO Implement logging methods versus macros
             std::string formattedString = string_format(message);
 
             switch (logLevel)
