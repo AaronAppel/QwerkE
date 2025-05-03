@@ -23,6 +23,8 @@ namespace QwerkE {
 
         bool MousePressed(const QKey a_Key);
         bool MouseReleased(const QKey a_Key);
+        bool MouseScrolled(); // #TODO QKey::e_Any, or key argument?
+        float MouseScrollDelta_New();
         bool MouseDown(const QKey a_Key);
 
         vec2f MousePos();

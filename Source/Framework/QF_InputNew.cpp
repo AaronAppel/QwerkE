@@ -14,22 +14,25 @@ namespace QwerkE {
         ///////////// #TODO Implement
 
         InputStatesBitRingBuffer<bits5> s_Keys;
-        InputStatesBitRingBuffer<bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
-        InputStatesBitRingBuffer<bits3> s_MouseScroll; // #TODO Implement mouse scroll
-        InputStatesBitRingBuffer<bits4> s_GamepadButtons;
 
+        InputStatesBitRingBuffer<bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
+        BitIndexRingBuffer<float, bits2> s_MouseScrolls;
         BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+
+        InputStatesBitRingBuffer<bits4> s_GamepadButtons;
         BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
         BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
         // #NOTE Triggers might be better as separate float buffers
         BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
 
 #ifdef _QDEBUG
-        u64 s_InputsSinceReset = 0;
+        u64 s_InputsCount = 0;
 #endif // _QDEBUG
 
         void Initialize_Internal()
         {
+            s_MouseScrolls.AddMarker(0);
+            s_MouseScrolls.AddMarker(1);
             s_MousePositionsBuffer.AddMarker(0);
             s_MousePositionsBuffer.AddMarker(1);
 
@@ -44,11 +47,12 @@ namespace QwerkE {
         void NewFrame_Internal()
         {
             s_Keys.Advance();
-            s_MouseButtons.Advance();
-            s_GamepadButtons.Advance();
 
+            s_MouseButtons.Advance();
+            s_MouseScrolls.AdvanceAllMarkers();
             s_MousePositionsBuffer.AdvanceAllMarkers();
 
+            s_GamepadButtons.Advance();
             s_GamepadAxisLeftStickBuffer.AdvanceAllMarkers();
             s_GamepadAxisRightStickBuffer.AdvanceAllMarkers();
             s_GamepadAxisTriggersBuffer.AdvanceAllMarkers();
@@ -57,13 +61,16 @@ namespace QwerkE {
         void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState)
         {
 #ifdef _QDEBUG
-            ++s_InputsSinceReset;
+            ++s_InputsCount;
 #endif // _QDEBUG
             s_Keys.Write(a_Key, a_KeyState);
         }
 
         void OnMouseMove_New(const vec2f& a_NewPosition)
         {
+#ifdef _QDEBUG
+            ++s_InputsCount;
+#endif // _QDEBUG
             // #TODO Handle:
             // - Mouse drag
             // if (mouse button down)
@@ -72,11 +79,20 @@ namespace QwerkE {
 
         void OnMouseButton_New(const QKey a_Key, const QKeyState a_KeyState)
         {
+#ifdef _QDEBUG
+            ++s_InputsCount;
+#endif // _QDEBUG
             s_MouseButtons.Write(a_Key, a_KeyState);
         }
 
         void OnMouseScroll_New(const double xoffset, const double yoffset)
         {
+#ifdef _QDEBUG
+            ++s_InputsCount;
+#endif // _QDEBUG
+            // #TODO Look at how to use the xoffset
+            s_MouseScrolls.Write(yoffset);
+
             // #TODO Handle:
             // - Scroll button up/down
 
@@ -101,6 +117,9 @@ namespace QwerkE {
 
         void OnGamepadAxisEvent(const unsigned char a_AxisId, const vec2f a_AxisValue)
         {
+#ifdef _QDEBUG
+            ++s_InputsCount;
+#endif // _QDEBUG
             switch (a_AxisId)
             {
             case 0:
@@ -120,6 +139,9 @@ namespace QwerkE {
 
         void OnGamepadButtonEvent(const QKey a_Key, const QKeyState a_KeyState)
         {
+#ifdef _QDEBUG
+            ++s_InputsCount;
+#endif // _QDEBUG
             s_GamepadButtons.Write(a_Key, a_KeyState);
         }
 
@@ -147,11 +169,14 @@ namespace QwerkE {
 
         bool MouseDown_Internal(const QKey a_Key) { return false; }
 
-        bool MouseScrolled() // #TODO Or force MousePressed?
+        bool MouseScrolled()
         {
-            // #TODO Implement
-            s_MouseScroll;
-            return false;
+            return s_MouseScrolls.HeadIndex() != s_MouseScrolls.MarkerPosition(0); // #TODO Improve hard coded marker index
+        }
+
+        float MouseScrollDelta_New()
+        {
+            return s_MouseScrolls.ReadTop();
         }
 
         vec2f MousePos()
@@ -166,8 +191,14 @@ namespace QwerkE {
 
         vec2f MouseDelta()
         {
-            // #TODO Implement
-            s_MousePositionsBuffer;
+            if (MouseMoved())
+            {
+                bits2 index = s_MousePositionsBuffer.HeadIndex();
+                index.value -= 1;
+                vec2f thisFrame = s_MousePositionsBuffer.ReadRandom(index.value);
+                index.value -= 1;
+                return thisFrame - s_MousePositionsBuffer.ReadRandom(index.value);
+            }
             return vec2f(0.f, 0.f);
         }
 

@@ -405,10 +405,19 @@ namespace QwerkE {
                 LOG_ERROR("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
             }
 
-            if (false && Input::MouseMoved())
+            if (Input::MouseScrolled())
             {
-                const vec2f mousePos = Input::MousePos();
-                LOG_INFO("Mouse pos: {0},{1}", mousePos.x, mousePos.y);
+                float delta = Input::MouseScrollDelta_New();
+                LOG_ERROR("Mouse Scrolled: {0}", delta);
+            }
+
+            if (Input::MouseMoved())
+            {
+                // const vec2f mousePos = Input::MousePos();
+                // LOG_INFO("Mouse pos: {0},{1}", mousePos.x, mousePos.y);
+
+                const vec2f delta = Input::MouseDelta();
+                LOG_INFO("Mouse delta: {0},{1}", delta.x, delta.y);
             }
 
             for (size_t i = 0; i < 14; i++)
