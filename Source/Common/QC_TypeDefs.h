@@ -179,3 +179,19 @@ using wPtr = std::weak_ptr<T>;
 // Templating
 template<typename... T>
 struct TemplateArgumentList { };
+
+// #TODO This file should probably not define anything and just list other files to include in all other files
+// #TODO Move GLM type aliasing to another/better file/place
+#ifdef _QGLM
+#include "Libraries/glm/glm.hpp"
+
+typedef glm::vec2		vec2f;
+
+typedef glm::u16vec2	vec2u16; // #TODO Review aliasing and it's usefulness and clarity
+
+typedef glm::vec3		vec3f;
+typedef glm::vec4		vec4f;
+typedef glm::mat3		mat3;
+typedef glm::mat4		mat4;
+typedef glm::quat		quat;
+#endif

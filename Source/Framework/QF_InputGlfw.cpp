@@ -12,12 +12,13 @@ namespace QwerkE {
 
     namespace Input {
 
-        extern InputStatesBitRingBuffer<bits5> s_Keys;
-        extern InputStatesBitRingBuffer<bits3> s_MouseButtons;
-        extern InputStatesBitRingBuffer<bits4> s_GamepadButtons;
+        extern InputStatesBitRingBuffer<QKey, bits5> s_Keys;
+        extern InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons;
+        extern InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
 
         extern void Initialize_Internal();
         extern void NewFrame_Internal();
+        extern void Shutdown_Internal();
 
         extern void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState);
         extern bool KeyDown_Internal(const QKey a_Key);
@@ -27,7 +28,7 @@ namespace QwerkE {
         extern void OnMouseButton_New(const QKey a_Key, const QKeyState a_KeyState);
         extern void OnMouseScroll_New(const double xoffset, const double yoffset);
 
-        extern void OnGamepadButtonEvent(const QKey a_Key, const QKeyState a_KeyState);
+        extern void OnGamepadButtonEvent(const QGamepad a_Key, const QKeyState a_KeyState);
         extern void OnGamepadAxisEvent(const unsigned char a_AxisId, const vec2f a_AxisValue);
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
@@ -42,112 +43,95 @@ namespace QwerkE {
 
         void PollInput() // #TESTING For input system refactor only
         {
-            // #TODO Move ImGui debug window logic to QF_InputDebugWindow.cpp
-            if (!ImGui::Begin("Gamepad"))
-            {
-                ImGui::End();
-                return;
-            }
-
             // #TODO Test with 2+ gamepads. See if all devices are polled after id 0 is checked. May need to handle in below loop with --i; continue;
             glfwJoystickPresent(0); // #NOTE Triggers GLFW to poll joystick disconnect event
 
             for (size_t i = 0; i < s_DeviceIds.size(); i++)
             {
-                if (ImGui::CollapsingHeader((glfwGetJoystickName(s_DeviceIds[i]) + std::string(" ") + std::to_string(s_DeviceIds[i])).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+                // #TODO glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
+
+                int axesCount;
+                const float* axes = glfwGetJoystickAxes(s_DeviceIds[i], &axesCount);
+
+                vec2f leftStickAxes;
+                vec2f rightStickAxes;
+                vec2f triggersAxes;
+
+                for (size_t j = 0; j < axesCount; j++)
                 {
-                    // #TODO glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
-
-                    int axesCount;
-                    const float* axes = glfwGetJoystickAxes(s_DeviceIds[i], &axesCount);
-
-                    ImGui::Text("AxesCount: %i", axesCount);
-
-                    vec2f leftStickAxes;
-                    vec2f rightStickAxes;
-                    vec2f triggersAxes;
-
-                    for (size_t j = 0; j < axesCount; j++)
+                    switch (j)
                     {
-                        ImGui::Text("Axes[%i]: %f", j, axes[j]);
-
-                        switch (j)
+                    case 0: // Left stick X [0]
+                        leftStickAxes.x = axes[j];
+                        break;
+                    case 1: // Left stick Y [1]
+                        leftStickAxes.y = axes[j];
+                        if (s_DeviceAxesStates[i][0] != leftStickAxes.x || s_DeviceAxesStates[i][1] != leftStickAxes.y)
                         {
-                        case 0: // Left stick X [0]
-                            leftStickAxes.x = axes[j];
-                            break;
-                        case 1: // Left stick Y [1]
-                            leftStickAxes.y = axes[j];
-                            if (s_DeviceAxesStates[i][0] != leftStickAxes.x || s_DeviceAxesStates[i][1] != leftStickAxes.y)
-                            {
-                                OnGamepadAxisEvent(j, leftStickAxes);
-                            }
-                            break;
-                        case 2: // Right stick X [2]
-                            rightStickAxes.x = axes[j];
-                            break;
-                        case 3: // Right stick Y [3]
-                            rightStickAxes.y = axes[j];
-                            if (s_DeviceAxesStates[i][2] != rightStickAxes.x || s_DeviceAxesStates[i][3] != rightStickAxes.y)
-                            {
-                                OnGamepadAxisEvent(j, rightStickAxes);
-                            }
-                            break;
-                        case 4: // L trigger [4]
-                            triggersAxes.x = axes[j];
-                            break;
-                        case 5: // R trigger [5]
-                            triggersAxes.y = axes[j];
-                            if (s_DeviceAxesStates[i][4] != triggersAxes.x || s_DeviceAxesStates[i][5] != triggersAxes.y)
-                            {
-                                OnGamepadAxisEvent(j, triggersAxes);
-                            }
-                            break;
+                            OnGamepadAxisEvent(j, leftStickAxes);
                         }
+                        break;
+                    case 2: // Right stick X [2]
+                        rightStickAxes.x = axes[j];
+                        break;
+                    case 3: // Right stick Y [3]
+                        rightStickAxes.y = axes[j];
+                        if (s_DeviceAxesStates[i][2] != rightStickAxes.x || s_DeviceAxesStates[i][3] != rightStickAxes.y)
+                        {
+                            OnGamepadAxisEvent(j, rightStickAxes);
+                        }
+                        break;
+                    case 4: // L trigger [4]
+                        triggersAxes.x = axes[j];
+                        break;
+                    case 5: // R trigger [5]
+                        triggersAxes.y = axes[j];
+                        if (s_DeviceAxesStates[i][4] != triggersAxes.x || s_DeviceAxesStates[i][5] != triggersAxes.y)
+                        {
+                            OnGamepadAxisEvent(j, triggersAxes);
+                        }
+                        break;
                     }
+                }
 
-                    s_DeviceAxesStates[i][0] = leftStickAxes.x;
-                    s_DeviceAxesStates[i][1] = leftStickAxes.y;
+                s_DeviceAxesStates[i][0] = leftStickAxes.x;
+                s_DeviceAxesStates[i][1] = leftStickAxes.y;
 
-                    s_DeviceAxesStates[i][2] = rightStickAxes.x;
-                    s_DeviceAxesStates[i][3] = rightStickAxes.y;
+                s_DeviceAxesStates[i][2] = rightStickAxes.x;
+                s_DeviceAxesStates[i][3] = rightStickAxes.y;
 
-                    s_DeviceAxesStates[i][4] = triggersAxes.x;
-                    s_DeviceAxesStates[i][5] = triggersAxes.y;
+                s_DeviceAxesStates[i][4] = triggersAxes.x;
+                s_DeviceAxesStates[i][5] = triggersAxes.y;
 
-                    // glfwGetJoystickHats
+                // glfwGetJoystickHats
 
-                    int hatStatesCount;
-                    const unsigned char* const buttons = glfwGetJoystickButtons(s_DeviceIds[i], &hatStatesCount);
+                int hatStatesCount;
+                const unsigned char* const buttons = glfwGetJoystickButtons(s_DeviceIds[i], &hatStatesCount);
 
-                    ASSERT(buttons, "Null device buttons!");
-                    ImGui::Text("ButtonCount: %i%", hatStatesCount);
+                ASSERT(buttons, "Null device buttons!");
 
-                    for (size_t j = 0; j < hatStatesCount; j++)
+                for (size_t j = 0; j < hatStatesCount; j++)
+                {
+                    // [0] A
+                    // [1] B
+                    // [2] X
+                    // [3] Y
+                    // [4] L Bumper
+                    // [5] R Bumper
+                    // [6] Select
+                    // [7] Start
+                    // [8] Left Stick Click
+                    // [9] Right Stick Click
+                    // [10] D pad up
+                    // [11] D pad right
+                    // [12] D pad down
+                    // [13] D pad left
+
+                    if (s_DeviceButtonsStates[i][j] != buttons[j])
                     {
-                        ImGui::Text("Buttons[%i]: %i", j, buttons[j]);
-
-                        // [0] A
-                        // [1] B
-                        // [2] X
-                        // [3] Y
-                        // [4] L Bumper
-                        // [5] R Bumper
-                        // [6] Select
-                        // [7] Start
-                        // [8] Left Stick Click
-                        // [9] Right Stick Click
-                        // [10] D pad up
-                        // [11] D pad right
-                        // [12] D pad down
-                        // [13] D pad left
-
-                        if (s_DeviceButtonsStates[i][j] != buttons[j])
-                        {
-                            OnGamepadButtonEvent(static_cast<QKey>(QKey::e_Gamepad0 + j), static_cast<QKeyState>(QKeyState::e_KeyStateDown == buttons[j]));
-                        }
-                        s_DeviceButtonsStates[i][j] = buttons[j];
+                        OnGamepadButtonEvent(static_cast<QGamepad>(QGamepad::e_Gamepad0 + j), static_cast<QKeyState>(QKeyState::e_KeyStateDown == buttons[j]));
                     }
+                    s_DeviceButtonsStates[i][j] = buttons[j];
                 }
             }
 
@@ -158,8 +142,6 @@ namespace QwerkE {
             //  compare previous and current states
             //  raise events
             //  set previous state to current
-
-            ImGui::End();
         }
 
         void Initialize() // #NOTE Initialize is only for joysticks (maybe register callbacks?) so could look to improve
@@ -194,6 +176,15 @@ namespace QwerkE {
         void NewFrame()
         {
             NewFrame_Internal();
+        }
+
+        void Shutdown()
+        {
+            Shutdown_Internal();
+
+            s_DeviceIds.clear();
+            s_DeviceButtonsStates.clear();
+            s_DeviceAxesStates.clear();
         }
 
 #ifdef _QDEARIMGUI
@@ -397,21 +388,62 @@ namespace QwerkE {
             return GLFW_PRESS == glfwGetMouseButton(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
         }
 
-        bool GamepadDown(const QKey a_Key)
+        bool GamepadDown(const QGamepad a_Key)
         {
+            // #TODO Support QGamepad::e_GamepadAny
+
             if (s_DeviceButtonsStates.empty())
             {
                 return false;
             }
 
-            if (e_Any == a_Key)
+            if (e_GamepadAny == a_Key)
             {
                 return s_GamepadButtons.DownKeys() > 0;
             }
             // #TODO GLFWindow* reference. Remember to test multi-window input
             int jid = GLFW_JOYSTICK_1; // #TODO Require id from caller
-            ASSERT(a_Key <= e_Gamepad15 && a_Key >= e_Gamepad0, "Invalid Gamepad key!");
+            ASSERT(QGamepad::e_GamepadAny == a_Key || QGamepad::e_GamepadButtonMax >= a_Key && QGamepad::e_Gamepad0 <= a_Key, "Invalid Gamepad key!");
             return e_KeyStateDown == s_DeviceButtonsStates[jid][a_Key];
+        }
+
+        const char* const GamepadName(const QGamepad a_Key)
+        {
+            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_GamepadIdMax > a_Key)
+            {
+                u8 deviceId = static_cast<u8>(a_Key);
+                return glfwGetJoystickName(deviceId);
+            }
+            return nullptr;
+        }
+
+        u8 GamepadsCount()
+        {
+            return s_DeviceIds.size();
+        }
+
+        u8 GamepadButtonCount(const QGamepad a_Key)
+        {
+            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_GamepadIdMax > a_Key)
+            {
+                u8 deviceId = static_cast<u8>(a_Key);
+                int buttonCount;
+                const unsigned char* const buttons = glfwGetJoystickButtons(deviceId, &buttonCount);
+                return buttonCount;
+            }
+            return 0;
+        }
+
+        u8 GamepadAxesCount(const QGamepad a_Key)
+        {
+            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_GamepadIdMax > a_Key)
+            {
+                u8 deviceId = static_cast<u8>(a_Key);
+                int axesCount;
+                const float* axes = glfwGetJoystickAxes(deviceId, &axesCount);
+                return axesCount;
+            }
+            return 0;
         }
 
 #ifdef _QDEARIMGUI
@@ -553,19 +585,10 @@ namespace QwerkE {
         }
 #endif // _QDEARIMGUI
 
-        constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey)
+        constexpr int Local_QwerkEToGlfw(const QGamepad a_QwerkEKey)
         {
             switch (a_QwerkEKey) // GLFW keys defined in glfw3.h, or https://www.glfw.org/docs/latest/group__keys.html
             {
-                case e_MouseButton1: return GLFW_MOUSE_BUTTON_1;                // Mouse device button 1
-                case e_MouseButton2: return GLFW_MOUSE_BUTTON_2;                // Mouse device button 2
-                case e_MouseButton3: return GLFW_MOUSE_BUTTON_3;                // Mouse device button 3
-                case e_MouseButton4: return GLFW_MOUSE_BUTTON_4;                // Mouse device button 4
-                case e_MouseButton5: return GLFW_MOUSE_BUTTON_5;                // Mouse device button 5
-                case e_MouseButton6: return GLFW_MOUSE_BUTTON_6;                // Mouse device button 6
-                case e_MouseButton7: return GLFW_MOUSE_BUTTON_7;                // Mouse device button 7
-                case e_MouseButton8: return GLFW_MOUSE_BUTTON_8;                // Mouse device button 8
-
                 case e_Gamepad0: return GLFW_GAMEPAD_BUTTON_A;                  // Gamepad device button 0
                 case e_Gamepad1: return GLFW_GAMEPAD_BUTTON_B;                  // Gamepad device button 1
                 case e_Gamepad2: return GLFW_GAMEPAD_BUTTON_X;                  // Gamepad device button 2
@@ -581,7 +604,23 @@ namespace QwerkE {
                 case e_Gamepad12: return GLFW_GAMEPAD_BUTTON_DPAD_RIGHT;        // Gamepad device button 12
                 case e_Gamepad13: return GLFW_GAMEPAD_BUTTON_DPAD_DOWN;         // Gamepad device button 13
                 case e_Gamepad14: return GLFW_GAMEPAD_BUTTON_DPAD_LEFT;         // Gamepad device button 14
-                 // #TODO case e_Gamepad15: return GLFW_GAMEPAD_BUTTON_A;       // Gamepad device button 15
+            }
+
+            return QGamepad::e_GamepadButtonMax;
+        }
+
+        constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey)
+        {
+            switch (a_QwerkEKey) // GLFW keys defined in glfw3.h, or https://www.glfw.org/docs/latest/group__keys.html
+            {
+                case e_MouseButton1: return GLFW_MOUSE_BUTTON_1;                // Mouse device button 1
+                case e_MouseButton2: return GLFW_MOUSE_BUTTON_2;                // Mouse device button 2
+                case e_MouseButton3: return GLFW_MOUSE_BUTTON_3;                // Mouse device button 3
+                case e_MouseButton4: return GLFW_MOUSE_BUTTON_4;                // Mouse device button 4
+                case e_MouseButton5: return GLFW_MOUSE_BUTTON_5;                // Mouse device button 5
+                case e_MouseButton6: return GLFW_MOUSE_BUTTON_6;                // Mouse device button 6
+                case e_MouseButton7: return GLFW_MOUSE_BUTTON_7;                // Mouse device button 7
+                case e_MouseButton8: return GLFW_MOUSE_BUTTON_8;                // Mouse device button 8
 
                 case e_ShiftL: return GLFW_KEY_LEFT_SHIFT;                      // Left Shift key
                 case e_CtrlL: return GLFW_KEY_LEFT_CONTROL;                     // Left CTRL or Control key

@@ -372,7 +372,7 @@ namespace QwerkE {
             {
                 // LOG_WARN("AnyDown()");
             }
-            if (Input::GamepadDown(QKey::e_Any))
+            if (Input::GamepadDown(QGamepad::e_GamepadAny))
             {
                 // LOG_ERROR("Gamepad Any Down()");
             }
@@ -390,25 +390,25 @@ namespace QwerkE {
             if (Input::GamepadAxisMoved(axisIndex))
             {
                 axis = Input::GamepadAxis(axisIndex);
-                LOG_INFO("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
+                // LOG_INFO("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
             }
             axisIndex += 2;
             if (Input::GamepadAxisMoved(axisIndex))
             {
                 axis = Input::GamepadAxis(axisIndex);
-                LOG_WARN("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
+                // LOG_WARN("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
             }
             axisIndex += 2;
             if (Input::GamepadAxisMoved(axisIndex))
             {
                 axis = Input::GamepadAxis(axisIndex);
-                LOG_ERROR("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
+                // LOG_ERROR("Gamepad Axis[{0}]: {1},{2}", axisIndex, axis.x, axis.y);
             }
 
             if (Input::MouseScrolled())
             {
                 float delta = Input::MouseScrollDelta();
-                LOG_ERROR("Mouse Scrolled: {0}", delta);
+                // LOG_ERROR("Mouse Scrolled: {0}", delta);
             }
 
             if (Input::MouseMoved())
@@ -422,14 +422,14 @@ namespace QwerkE {
 
             for (u8 i = 0; i < 14; i++)
             {
-                if (Input::GamepadPressed(static_cast<QKey>(QKey::e_Gamepad0 + i)))
+                if (Input::GamepadPressed(static_cast<QGamepad>(QGamepad::e_Gamepad0 + i)))
                 // if (Input::GamepadPressed(QKey::e_Gamepad0 + i))
                 {
-                    LOG_WARN("Pressed: {0}", i);
+                    // LOG_WARN("Pressed: {0}", i);
                 }
-                if (Input::GamepadReleased(static_cast<QKey>(QKey::e_Gamepad0 + i)))
+                if (Input::GamepadReleased(static_cast<QGamepad>(QGamepad::e_Gamepad0 + i)))
                 {
-                    LOG_ERROR("Released: {0}", i);
+                    // LOG_ERROR("Released: {0}", i);
                 }
             }
 
@@ -437,45 +437,12 @@ namespace QwerkE {
             // Expose mouse specific input, and should scrolling be abstracted away from just mice?
             if (Input::KeyPressed(QKey::e_ScrollDown))
             {
-                LOG_WARN("e_ScrollDownPressed()");
+                // LOG_WARN("e_ScrollDownPressed()");
             }
             if (Input::KeyReleased(QKey::e_ScrollDown))
             {
-                LOG_WARN("e_ScrollDownReleased()");
+                // LOG_WARN("e_ScrollDownReleased()");
             }
-
-            // if (Input::KeyPressed(QKey::e_A))
-            // {
-            //     LOG_WARN("KeyDown()");
-            // }
-            // if (Input::KeyReleased(QKey::e_A))
-            // {
-            //     LOG_ERROR("KeyUp()");
-            // }
-            // if (Input::KeyPressed(QKey::e_S))
-            // {
-            //     LOG_WARN("KeyDown()");
-            // }
-            // if (Input::KeyReleased(QKey::e_S))
-            // {
-            //     LOG_ERROR("KeyUp()");
-            // }
-            // if (Input::KeyPressed(QKey::e_D))
-            // {
-            //     LOG_WARN("KeyDown()");
-            // }
-            // if (Input::KeyReleased(QKey::e_D))
-            // {
-            //     LOG_ERROR("KeyUp()");
-            // }
-            // if (Input::KeyPressed(QKey::e_F))
-            // {
-            //     LOG_WARN("KeyDown()");
-            // }
-            // if (Input::KeyReleased(QKey::e_F))
-            // {
-            //     LOG_ERROR("KeyUp()");
-            // }
 
 #ifdef _QDEBUG
             Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
@@ -566,7 +533,8 @@ namespace QwerkE {
             constexpr size_t numberOfHotkeyedScenes = QKey::e_F12 - QKey::e_F1 + 1;
             for (u8 i = 0; i < numberOfHotkeyedScenes; i++)
             {
-                if (Input::KeyPressed(static_cast<QKey>(QKey::e_F1 + i)))
+                QKey qKey = static_cast<QKey>(QKey::e_F1 + i);
+                if (Input::KeyPressed(qKey))
                 {
                     Scenes::SetCurrentScene((int)i);
                     // #NOTE Scene transition changes

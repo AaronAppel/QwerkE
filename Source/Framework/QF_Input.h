@@ -21,7 +21,7 @@ namespace QwerkE {
 
         void Initialize();
         void NewFrame();
-        // #TODO Shutdown()?
+        void Shutdown();
 
         bool KeyPressed(const QKey a_Key);
         bool KeyReleased(const QKey a_Key);
@@ -37,12 +37,17 @@ namespace QwerkE {
         bool MouseMoved();
         vec2f MouseDelta();
 
-        bool GamepadPressed(const QKey a_Key);
-        bool GamepadReleased(const QKey a_Key);
-        bool GamepadDown(const QKey a_Key);
+        bool GamepadPressed(const QGamepad a_Key);
+        bool GamepadReleased(const QGamepad a_Key);
+        bool GamepadDown(const QGamepad a_Key);
 
         vec2f GamepadAxis(const int a_AxisIndex);
         bool GamepadAxisMoved(const int a_AxisIndex);
+        const char* const GamepadName(const QGamepad a_Key);
+
+        u8 GamepadsCount();
+        u8 GamepadButtonCount(const QGamepad a_Key);
+        u8 GamepadAxesCount(const QGamepad a_Key);
 
 #ifdef _QDEBUG
         void PollInput(); // #TESTING For input system refactor only

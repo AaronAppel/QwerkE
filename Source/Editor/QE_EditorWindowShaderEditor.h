@@ -31,7 +31,20 @@ namespace QwerkE {
 
 				if (ImGui::Button("Load file from explorer"))
 				{
-					const std::string returnValue = Files::ExplorerOpen("Text file (*.txt)\0*.txt\0");
+					std::string returnValue;
+					if (Directory::Exists(m_CurrentShaderFilePath.string().c_str()))
+					{
+						returnValue = Files::ExplorerOpen("Text file (*.txt)\0*.txt\0", m_CurrentShaderFilePath.string().c_str());
+					}
+					else if (Files::Exists(m_CurrentShaderFilePath.string().c_str()))
+					{
+						returnValue = Files::ExplorerOpen("Text file (*.txt)\0*.txt\0", m_CurrentShaderFilePath.parent_path().string().c_str());
+					}
+					else
+					{
+						returnValue = Files::ExplorerOpen("Text file (*.txt)\0*.txt\0", Paths::ShadersDir().c_str());
+					}
+
 					if (m_LatestFilePathExists = Files::Exists(returnValue.c_str()))
 					{
 						m_CurrentShaderFilePath = returnValue;

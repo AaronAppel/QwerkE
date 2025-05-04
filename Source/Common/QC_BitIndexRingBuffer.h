@@ -14,19 +14,19 @@ public:
 		m_Head.value += 1;
 	}
 
-	T ReadTop()
+	const T& ReadTop()
 	{
 		Bits topIndex = m_Head.value - 1;
 		return m_Values[topIndex.value];
 	}
 
-	T ReadRandom(const unsigned char a_Index)
+	const T& ReadRandom(const unsigned char a_Index)
 	{
 		assert(m_Values.size() > a_Index);
 		return m_Values[a_Index];
 	}
 
-	T ReadMarker(const unsigned char a_Index)
+	const T& ReadMarker(const unsigned char a_Index)
 	{
 		assert(m_Markers.size() > a_Index);
 		return m_Values[m_Markers[a_Index].value];
@@ -79,6 +79,20 @@ public:
 		return Bits::SIZE;
 	}
 
+	void Reset()
+	{
+		m_Head = 0;
+
+		for (size_t i = 0; i < m_Values.size(); i++)
+		{
+			m_Values[i] = {};
+		}
+
+		for (size_t i = 0; i < m_Markers.size(); i++)
+		{
+			m_Markers[i] = 0;
+		}
+	}
 
 private:
 	Bits m_Head = 0;

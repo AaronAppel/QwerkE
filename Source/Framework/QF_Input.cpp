@@ -15,17 +15,17 @@ namespace QwerkE {
         BitIndexRingBuffer<u32, bits4> s_CharsBuffer; // #TODO Review handling char input
         ///////////// #TODO Implement
 
-        InputStatesBitRingBuffer<bits5> s_Keys;
+        InputStatesBitRingBuffer<QKey, bits5> s_Keys;
 
-        InputStatesBitRingBuffer<bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
+        InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
         BitIndexRingBuffer<float, bits2> s_MouseScrolls;
-        BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer;
 
-        InputStatesBitRingBuffer<bits4> s_GamepadButtons;
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer;
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer;
         // #NOTE Triggers might be better as separate float buffers
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer;
 
         constexpr char* s_GameActionsFileName = "GameActions.qdata";
         static GameActions s_GameActions;
@@ -64,6 +64,25 @@ namespace QwerkE {
             s_GamepadAxisLeftStickBuffer.AdvanceAllMarkers();
             s_GamepadAxisRightStickBuffer.AdvanceAllMarkers();
             s_GamepadAxisTriggersBuffer.AdvanceAllMarkers();
+        }
+
+        void Shutdown_Internal()
+        {
+            // #TODO Reset all static state
+            // s_CharsBuffer;
+            // s_GameActions;
+
+            s_Keys.Clear();
+
+            s_MouseButtons.Clear();
+            s_MouseScrolls.Reset();
+            s_MousePositionsBuffer.Reset();
+
+            s_GamepadButtons.Clear();
+            s_GamepadAxisLeftStickBuffer.Reset();
+            s_GamepadAxisRightStickBuffer.Reset();
+
+            s_GamepadAxisTriggersBuffer.Reset();
         }
 
         void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState)
@@ -145,7 +164,7 @@ namespace QwerkE {
             }
         }
 
-        void OnGamepadButtonEvent(const QKey a_Key, const QKeyState a_KeyState)
+        void OnGamepadButtonEvent(const QGamepad a_Key, const QKeyState a_KeyState)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
@@ -153,26 +172,50 @@ namespace QwerkE {
             s_GamepadButtons.Write(a_Key, a_KeyState);
         }
 
+        template <typename T>
+        bool Local_Key(T a_BitRingBuffer, const QKey a_Key, const QKeyState e_KeyState)
+        {
+            ASSERT(QKey::e_MAX > a_Key, "Invalid QKey!");
+
+            switch (a_Key)
+            {
+            case QKey::e_MAX: // Invalid entry
+                return false;
+
+            case QKey::e_Any: // Support QKey::e_Any
+                return a_BitRingBuffer.KeyThisFrame(a_Key, e_KeyState, true);
+
+                // Support e_CtrlAny, e_ShiftAny, and e_AltAny
+            case QKey::e_CtrlAny:
+                return a_BitRingBuffer.KeyThisFrame(QKey::e_CtrlL, e_KeyState) || a_BitRingBuffer.KeyThisFrame(QKey::e_CtrlR, e_KeyState);
+            case QKey::e_ShiftAny:
+                return a_BitRingBuffer.KeyThisFrame(QKey::e_ShiftL, e_KeyState) || a_BitRingBuffer.KeyThisFrame(QKey::e_ShiftR, e_KeyState);
+            case QKey::e_AltAny:
+                return a_BitRingBuffer.KeyThisFrame(QKey::e_AltL, e_KeyState) || a_BitRingBuffer.KeyThisFrame(QKey::e_AltR, e_KeyState);
+            }
+            return a_BitRingBuffer.KeyThisFrame(a_Key, e_KeyState);
+        }
+
         bool KeyPressed(const QKey a_Key)
         {
-            return s_Keys.KeyThisFrame(a_Key, QKeyState::e_KeyStateDown);
+            return Local_Key(s_Keys, a_Key, e_KeyStateDown);
         }
 
         bool KeyReleased(const QKey a_Key)
         {
-            return s_Keys.KeyThisFrame(a_Key, QKeyState::e_KeyStateUp);
+            return Local_Key(s_Keys, a_Key, e_KeyStateUp);
         }
 
         bool KeyDown_Internal(const QKey a_Key) { return false; }
 
         bool MousePressed(const QKey a_Key)
         {
-            return s_MouseButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateDown);
+            return Local_Key(s_MouseButtons, a_Key, e_KeyStateDown);
         }
 
         bool MouseReleased(const QKey a_Key)
         {
-            return s_MouseButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateUp);
+            return Local_Key(s_MouseButtons, a_Key, e_KeyStateDown);
         }
 
         bool MouseDown_Internal(const QKey a_Key) { return false; }
@@ -214,14 +257,14 @@ namespace QwerkE {
             return vec2f(0.f, 0.f);
         }
 
-        bool GamepadPressed(const QKey a_Key)
+        bool GamepadPressed(const QGamepad a_Key)
         {
-            return s_GamepadButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateDown);
+            return s_GamepadButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateDown, QGamepad::e_GamepadAny == a_Key);
         }
 
-        bool GamepadReleased(const QKey a_Key)
+        bool GamepadReleased(const QGamepad a_Key)
         {
-            return s_GamepadButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateUp);
+            return s_GamepadButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateUp, QGamepad::e_GamepadAny == a_Key);
         }
 
         vec2f GamepadAxis(const int a_AxisIndex)

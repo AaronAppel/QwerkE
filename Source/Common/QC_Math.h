@@ -1,5 +1,7 @@
 #pragma once
 
+#include "QC_TypeDefs.h"
+
 namespace QwerkE {
 
 	namespace Math
@@ -62,6 +64,10 @@ namespace QwerkE {
 			}
 			return result;
 		}
+
+#ifdef _QGLM
+		inline float Magnitude(const vec2f& a_Other) { return glm::length(a_Other); }
+#endif // _QGLM
 
 	}
 

@@ -6,7 +6,7 @@ namespace QwerkE {
     {
         e_KeyStateUp = 0,
         e_KeyStateDown,
-        e_KeyStateAny
+        // e_KeyStateAny
     };
 
     enum QMouseButton : u8
@@ -14,9 +14,71 @@ namespace QwerkE {
 		// #TODO Force use for mouse related calls?
     };
 
-    enum QGamepadButton : u8
+    enum QGamepad : u8
     {
-		// #TODO Force use for gamepad related calls?
+        // Gamepad buttons
+        e_Gamepad0 = 0,                 // Gamepad device button 0
+        e_Gamepad1,                     // Gamepad device button 1
+        e_Gamepad2,                     // Gamepad device button 2
+        e_Gamepad3,                     // Gamepad device button 3
+        e_Gamepad4,                     // Gamepad device button 4
+        e_Gamepad5,                     // Gamepad device button 5
+        e_Gamepad6,                     // Gamepad device button 6
+        e_Gamepad7,                     // Gamepad device button 7
+        e_Gamepad8,                     // Gamepad device button 8
+        e_Gamepad9,                     // Gamepad device button 9
+        e_Gamepad10,                    // Gamepad device button 10
+        e_Gamepad11,                    // Gamepad device button 11
+        e_Gamepad12,                    // Gamepad device button 12
+        e_Gamepad13,                    // Gamepad device button 13
+        e_Gamepad14,                    // Gamepad device button 14
+        e_GamepadButtonMax,             // Null or invalid gamepad button entry
+
+        e_GamepadAny,                   // Any gamepad button
+
+        // Gamepad device IDs
+        e_GamepadId0 = 0,               // 1st controller ID // #TODO By id, because index is volatile
+        e_GamepadId1,                   // 2nd controller ID
+        e_GamepadId2,                   // ... etc
+        e_GamepadId3,                   //
+        e_GamepadId4,                   //
+        e_GamepadId5,                   //
+        e_GamepadId6,                   //
+        e_GamepadId7,                   //
+        e_GamepadId8,                   //
+        e_GamepadId9,                   //
+        e_GamepadId10,                  //
+        e_GamepadId11,                  //
+        e_GamepadId12,                  //
+        e_GamepadId13,                  //
+        e_GamepadId14,                  //
+        e_GamepadId15,                  // 16th and max or last gamepad ID
+        e_GamepadIdMax,                 // Null or invalid gamepad ID entry
+
+        // Gamepad device ID alias
+        e_GamepadIdAny = e_GamepadId0,  // Any or 1st gamepad ID
+
+        // Button aliases
+        e_GamepadA = e_Gamepad0,        // A controller button
+        e_GamepadB,                     // B controller button
+        e_GamepadX,                     // X controller button
+        e_GamepadY,                     // Y controller button
+        e_GamepadYBumperLeft,           // Left shoulder controller button
+        e_GamepadYBumperRight,          // Right shoulder controller button
+        e_GamepadBack,                  // Back controller button
+        e_GamepadStart,                 // Start controller button
+        e_GamepadGuide,                 // Guide or center or branded controller button
+        e_GamepadStickLeft,             // Left thumb stick controller click or button
+        e_GamepadStickRight,            // Right thumb stick controller click or button
+        e_GamepadPadUp,                 // Up directional pad controller button
+        e_GamepadPadRight,              // Right directional pad controller button
+        e_GamepadPadDown,               // Down directional pad controller button
+        e_GamepadPadLeft,               // Left directional pad controller button
+
+        e_GamepadCross = e_Gamepad0,    // Cross or X Playstation controller button
+        e_GamepadCircle,                // Circle or O Playstation controller button
+        e_GamepadSquare,                // Square Playstation controller button
+        e_GamepadTriangle,              // Triangle Playstation controller button
     };
 
     enum QKey : u8
@@ -35,23 +97,6 @@ namespace QwerkE {
         e_MouseButton6,                 // Mouse device button 6
         e_MouseButton7,                 // Mouse device button 7
         e_MouseButton8,                 // Mouse device button 8
-
-        e_Gamepad0,                     // Gamepad device button 0
-        e_Gamepad1,                     // Gamepad device button 1
-        e_Gamepad2,                     // Gamepad device button 2
-        e_Gamepad3,                     // Gamepad device button 3
-        e_Gamepad4,                     // Gamepad device button 4
-        e_Gamepad5,                     // Gamepad device button 5
-        e_Gamepad6,                     // Gamepad device button 6
-        e_Gamepad7,                     // Gamepad device button 7
-        e_Gamepad8,                     // Gamepad device button 8
-        e_Gamepad9,                     // Gamepad device button 9
-        e_Gamepad10,                    // Gamepad device button 10
-        e_Gamepad11,                    // Gamepad device button 11
-        e_Gamepad12,                    // Gamepad device button 12
-        e_Gamepad13,                    // Gamepad device button 13
-        e_Gamepad14,                    // Gamepad device button 14
-        e_Gamepad15,                    // Gamepad device button 15
 
         e_ShiftL,                       // Left Shift key
         e_CtrlL,                        // Left CTRL or Control key
@@ -215,27 +260,6 @@ namespace QwerkE {
         e_MouseLeft = e_MouseButton1,   // Left mouse button
         e_MouseRight = e_MouseButton2,  // Right mouse button
         e_MouseMiddle = e_MouseButton3, // Middle mouse button
-
-        e_GamepadA = e_Gamepad0,        // A controller button
-        e_GamepadB,                     // B controller button
-        e_GamepadX,                     // X controller button
-        e_GamepadY,                     // Y controller button
-        e_GamepadYBumperLeft,           // Left shoulder controller button
-        e_GamepadYBumperRight,          // Right shoulder controller button
-        e_GamepadBack,                  // Back controller button
-        e_GamepadStart,                 // Start controller button
-        e_GamepadGuide,                 // Guide or center or branded controller button
-        e_GamepadStickLeft,             // Left thumb stick controller click or button
-        e_GamepadStickRight,            // Right thumb stick controller click or button
-        e_GamepadPadUp,                 // Up directional pad controller button
-        e_GamepadPadRight,              // Right directional pad controller button
-        e_GamepadPadDown,               // Down directional pad controller button
-        e_GamepadPadLeft,               // Left directional pad controller button
-
-        e_GamepadCross = e_Gamepad0,    // Cross or X Playstation controller button
-        e_GamepadCircle,                // Circle or O Playstation controller button
-        e_GamepadSquare,                // Square Playstation controller button
-        e_GamepadTriangle,              // Triangle Playstation controller button
     };
 
     // #TODO Override math operators so QKey+int doesn't convert to an int and require static_cast<QKey>(key + int) everywhere

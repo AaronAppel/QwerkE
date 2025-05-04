@@ -8,21 +8,17 @@ namespace QwerkE {
 
     namespace Input {
 
-        ///////////// #TODO Implement
-        extern BitIndexRingBuffer<u32, bits4> s_CharsBuffer; // #TODO Review handling char input
-        ///////////// #TODO Implement
+        extern InputStatesBitRingBuffer<QKey, bits5> s_Keys;
 
-        extern InputStatesBitRingBuffer<bits5> s_Keys;
-
-        extern InputStatesBitRingBuffer<bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
+        extern InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons;
         extern BitIndexRingBuffer<float, bits2> s_MouseScrolls;
-        extern BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        extern BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer;
 
-        extern InputStatesBitRingBuffer<bits4> s_GamepadButtons;
-        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
-        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
-        // #NOTE Triggers might be better as separate float buffers
-        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
+        extern InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
+        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer;
+        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer;
+
+        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer;
 
         extern u64 s_InputsCount;
         extern std::vector<int> s_DeviceIds;
@@ -32,6 +28,7 @@ namespace QwerkE {
 
         void DrawDebugWindow()
         {
+#if _QDEARIMGUI
             if (!ImGui::Begin("Input System"))
             {
                 ImGui::End();
@@ -39,6 +36,11 @@ namespace QwerkE {
             }
 
             constexpr float lineHeight = 22.f;
+
+            if (ImGui::SmallButton("Reset"))
+            {
+                Shutdown();
+            }
 
             if (ImGui::BeginChild("##Misc", { ImGui::GetContentRegionAvail().x - ( strlen("Gamepad down: 00   ") * ImGui::g_pixelsPerCharacter ), 3 * lineHeight}))
             {
@@ -68,7 +70,7 @@ namespace QwerkE {
             ImGui::Text("Mouse pos: %.0f, %.0f", Input::MousePos().x, Input::MousePos().y);
             const vec2f newMouseDelta = Input::MouseDelta();
             ImGui::Text("Mouse delta: %.0f, %.0f", newMouseDelta.x, newMouseDelta.y);
-            if (glm::length(newMouseDelta) > 1.0f) // #TODO Abstract glm call
+            if (Math::Magnitude(newMouseDelta) > 1.0f)
             {
                 s_LastNonZeroMouseDelta = newMouseDelta;
             }
@@ -212,6 +214,49 @@ namespace QwerkE {
                 ImGui::EndChild();
             }
             ImGui::End();
+
+            if (!ImGui::Begin("Gamepad"))
+            {
+                ImGui::End();
+                return;
+            }
+
+            // Separate Gamepad(s) window
+            const u8 count = GamepadsCount();
+            for (u8 i = 0; i < count; i++)
+            {
+                u8 deviceId = i;
+                QGamepad deviceQKeyId = static_cast<QGamepad>(i);
+
+                if (ImGui::CollapsingHeader((GamepadName(deviceQKeyId) + std::string(" ") + std::to_string(s_DeviceIds[i])).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    const int axesCount = GamepadAxesCount(deviceQKeyId);
+                    ImGui::Text("AxesCount: %i", axesCount);
+
+                    for (size_t j = 0; j < axesCount; j++)
+                    {
+                        if (i % 2)
+                        {
+                            ImGui::Text("Axes[%i]: %f", j, GamepadAxis(j).x);
+                        }
+                        else
+                        {
+                            ImGui::Text("Axes[%i]: %f", j, GamepadAxis(j).y);
+                        }
+                    }
+
+                    int buttonCount = GamepadButtonCount(deviceQKeyId);
+                    ImGui::Text("ButtonCount: %i%", buttonCount);
+
+                    for (u8 j = 0; j < buttonCount; j++)
+                    {
+                        QGamepad buttonQKey = static_cast<QGamepad>(j);
+                        ImGui::Text("Buttons[%i]: %i", j, GamepadDown(buttonQKey));
+                    }
+                }
+            }
+            ImGui::End();
+#endif // _QDEARIMGUI
         }
 
     }

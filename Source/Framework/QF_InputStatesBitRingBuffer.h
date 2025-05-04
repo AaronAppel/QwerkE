@@ -9,7 +9,7 @@
 
 namespace QwerkE {
 
-	template <typename Bits>
+	template <typename T, typename Bits>
 	class InputStatesBitRingBuffer
 	{
 	public:
@@ -25,7 +25,7 @@ namespace QwerkE {
 			m_KeysBuffer.SetMarkerPosition(m_LastFrameEndMarkerIndex, m_KeysBuffer.HeadIndex());
 		}
 
-		void Write(const QKey a_Key, const QKeyState a_KeyState)
+		void Write(const T a_Key, const QKeyState a_KeyState)
 		{
 			unsigned char thisFrame = InputThisFrame();
 			unsigned char lastframe = InputLastFrame();
@@ -45,7 +45,7 @@ namespace QwerkE {
 			}
 		}
 
-		QKey ReadKey(unsigned char a_Index)
+		T ReadKey(unsigned char a_Index)
 		{
 			return m_KeysBuffer.ReadRandom(a_Index);
 		}
@@ -56,30 +56,27 @@ namespace QwerkE {
 			return m_KeysStates[a_Index];
 		}
 
-		bool KeyThisFrame(const QKey a_Key, const QKeyState a_KeyState)
+		bool KeyThisFrame(const T a_Key, const QKeyState a_KeyState, const bool a_Any = false)
 		{
 			if (m_KeysBuffer.HeadIndex() == m_KeysBuffer.MarkerPosition(m_LastFrameEndMarkerIndex))
 			{
 				return false;
 			}
-			else if (QKey::e_Any == a_Key && QKeyState::e_KeyStateAny == a_KeyState)
-			{
-				return true;
-			}
 
 			unsigned char thisFrame = InputThisFrame();
 			Bits index = m_KeysBuffer.HeadIndex() - 1;
+
+			// #TODO Read left to write? Would that be more CPU cache efficient?
+			// Bits index = m_KeysBuffer.MarkerPosition(0);
+			// ++index.value;
+			// ++thisFrame;
+
 			while (thisFrame > 0)
 			{
-				const QKey currentIndexQKey = m_KeysBuffer.ReadRandom(index.value);
-				if (a_Key == currentIndexQKey ||
-					QKey::e_Any == a_Key || // Support QKey::e_Any
-					// Support e_CtrlAny, e_ShiftAny, and e_AltAny
-					QKey::e_CtrlAny == a_Key && (QKey::e_CtrlL == currentIndexQKey || QKey::e_CtrlR == currentIndexQKey) ||
-					QKey::e_ShiftAny == a_Key && (QKey::e_ShiftL == currentIndexQKey || QKey::e_ShiftR == currentIndexQKey) ||
-					QKey::e_AltAny == a_Key && (QKey::e_AltL == currentIndexQKey || QKey::e_AltR == currentIndexQKey))
+				const T currentIndexAsEnum = m_KeysBuffer.ReadRandom(index.value);
+				if (a_Any || currentIndexAsEnum == a_Key)
 				{
-					if (QKeyState::e_KeyStateAny == a_KeyState || a_KeyState == m_KeysStates[index.value])
+					if (a_KeyState == m_KeysStates[index.value])
 					{
 						return true;
 					}
@@ -125,6 +122,12 @@ namespace QwerkE {
 			return Bits::SIZE;
 		}
 
+		void Clear()
+		{
+			m_KeysBuffer.Reset();
+			m_KeysStates.reset();
+		}
+
 	private:
 		unsigned char WritesUntilCollision(const unsigned char a_LeadingIndex, const unsigned char a_TrailingIndex)
 		{
@@ -137,9 +140,9 @@ namespace QwerkE {
 
 		unsigned char m_DownCount = 0;
 		const unsigned char m_LastFrameEndMarkerIndex = 0;
-		const unsigned char m_LastFrameStartMarkerIndex = 1;
+		const unsigned char m_LastFrameStartMarkerIndex = 1; // #TODO Review need for last frame start index. Could simplify collection without it. Depends on future feature needs
 
-		BitIndexRingBuffer<QKey, Bits> m_KeysBuffer;
+		BitIndexRingBuffer<T, Bits> m_KeysBuffer;
 		std::bitset<Bits::SIZE> m_KeysStates;
 	};
 
