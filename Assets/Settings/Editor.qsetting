@@ -8,6 +8,8 @@
 		"maxJobsAdditionalThreadCount":	1,
 		"consoleOutputWindowEnabled":	true,
 		"windowOpenPositionX":	1,
-		"windowOpenPositionY":	40
+		"windowOpenPositionY":	40,
+		"vSyncEnabled":	false,
+		"windowAutoFocusOnStart":	false
 	}
 }

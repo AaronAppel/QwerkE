@@ -303,8 +303,6 @@ struct OcornutImguiContext
 
 		m_imgui = ImGui::CreateContext();
 
-		m_imgui->IO.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
 		// #TODO Setup viewports for ImGui and bgfx
 		ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
 		// platform_io.Renderer_CreateWindow = renderer_create_window;
@@ -458,11 +456,14 @@ struct OcornutImguiContext
 		const double freq = double(bx::getHPFrequency() );
 		io.DeltaTime = float(frameTime/freq);
 
-		io.AddMousePosEvent( (float)_mx, (float)_my);
-		io.AddMouseButtonEvent(ImGuiMouseButton_Left,   0 != (_button & IMGUI_MBUT_LEFT  ) );
-		io.AddMouseButtonEvent(ImGuiMouseButton_Right,  0 != (_button & IMGUI_MBUT_RIGHT ) );
-		io.AddMouseButtonEvent(ImGuiMouseButton_Middle, 0 != (_button & IMGUI_MBUT_MIDDLE) );
-		io.AddMouseWheelEvent(0.0f, (float)(_scroll - m_lastScroll) );
+		if (constexpr bool bgfxHandleImguiInput = false)
+		{
+			io.AddMousePosEvent((float)_mx, (float)_my);
+			io.AddMouseButtonEvent(ImGuiMouseButton_Left, 0 != (_button & IMGUI_MBUT_LEFT));
+			io.AddMouseButtonEvent(ImGuiMouseButton_Right, 0 != (_button & IMGUI_MBUT_RIGHT));
+			io.AddMouseButtonEvent(ImGuiMouseButton_Middle, 0 != (_button & IMGUI_MBUT_MIDDLE));
+			io.AddMouseWheelEvent(0.0f, (float)(_scroll - m_lastScroll));
+		}
 		m_lastScroll = _scroll;
 
 #if USE_ENTRY

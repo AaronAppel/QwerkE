@@ -229,6 +229,8 @@ namespace QwerkE {
 
             if (EditorWindow* newWindow = NewEditorWindowByType(EditorWindowsList{}, editorWindowType))
             {
+                // #TODO Consider reversing direction and storing recently interacted windows at the back of the vector.
+                // This would avoid swapping the entire list for new windows (just push instead) and deleted windows probably had focus anyways (just pop the top).
                 s_FocusedWindowsStack.insert(s_FocusedWindowsStack.begin(), newWindow);
                 OnEditorWindowFocused(newWindow);
             }
@@ -340,7 +342,7 @@ namespace QwerkE {
 
             // #TODO Move to Settings::Initialize()?
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.defaultMaxFramesPerSecond);
+            Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.maxAllowedFramesPerSecond);
 		}
 
 		void local_Shutdown()
@@ -370,11 +372,11 @@ namespace QwerkE {
             }
             if (Input::KeyPressed(QKey::e_Any))
             {
-                LOG_WARN("AnyPressed()");
+                // LOG_WARN("AnyPressed()");
             }
             if (Input::KeyReleased(QKey::e_Any))
             {
-                LOG_INFO("AnyReleased()");
+                // LOG_INFO("AnyReleased()");
             }
             if (Input::KeyDown(QKey::e_Any))
             {
@@ -383,6 +385,14 @@ namespace QwerkE {
             if (Input::GamepadDown(QKey::e_Any))
             {
                 // LOG_ERROR("Gamepad Any Down()");
+            }
+            if (Input::KeyPressed(QKey::e_AltAny))
+            {
+                // LOG_WARN("Any mod pressed");
+            }
+            if (Input::KeyReleased(QKey::e_AltAny))
+            {
+                // LOG_WARN("Any mod released");
             }
 
             vec2f axis;

@@ -71,7 +71,13 @@ namespace QwerkE {
 			Bits index = m_KeysBuffer.HeadIndex() - 1;
 			while (thisFrame > 0)
 			{
-				if (QKey::e_Any == a_Key || a_Key == m_KeysBuffer.ReadRandom(index.value))
+				const QKey currentIndexQKey = m_KeysBuffer.ReadRandom(index.value);
+				if (a_Key == currentIndexQKey ||
+					QKey::e_Any == a_Key || // Support QKey::e_Any
+					// Support e_CtrlAny, e_ShiftAny, and e_AltAny
+					QKey::e_CtrlAny == a_Key && (QKey::e_CtrlL == currentIndexQKey || QKey::e_CtrlR == currentIndexQKey) ||
+					QKey::e_ShiftAny == a_Key && (QKey::e_ShiftL == currentIndexQKey || QKey::e_ShiftR == currentIndexQKey) ||
+					QKey::e_AltAny == a_Key && (QKey::e_AltL == currentIndexQKey || QKey::e_AltR == currentIndexQKey))
 				{
 					if (QKeyState::e_KeyStateAny == a_KeyState || a_KeyState == m_KeysStates[index.value])
 					{

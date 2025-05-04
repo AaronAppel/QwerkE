@@ -14,6 +14,12 @@ namespace QwerkE {
         // Stage 1 //
         // Minimal (MVP)
         // Polling API
+
+        // #TODO Remaining for stage 1
+        // - [X] Review ImGui callbacks and propagating input to ImGui
+        // - [ ] Replacing all existing calls to old Input system
+        // - [ ] Deprecating old input system calls (if currently possible)
+
         void Initialize_New();
         void NewFrame_New();
 

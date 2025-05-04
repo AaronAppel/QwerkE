@@ -24,10 +24,11 @@ namespace QwerkE {
         // #NOTE Triggers might be better as separate float buffers
         extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Recent write can be used to get current position (no library specific get state)
 
+        extern u64 s_InputsCount;
+        extern std::vector<int> s_DeviceIds;
+
         u8 s_Most1FrameKeyInputs;
         vec2f s_LastNonZeroMouseDelta;
-
-        extern u64 s_InputsCount;
 
         void DrawDebugWindow()
         {
@@ -74,7 +75,7 @@ namespace QwerkE {
             ImGui::Text("Last non-zero mouse delta: %.0f, %.0f", s_LastNonZeroMouseDelta.x, s_LastNonZeroMouseDelta.y);
             ImGui::Dummy({ 0.f, 2.f });
 
-            if (ImGui::CollapsingHeader("Keys"))
+            if (ImGui::CollapsingHeader("Keyboard"))
             {
                 ImGui::Text("QKeys + Key QKeyStates");
                 for (size_t i = 0; i < s_Keys.Size(); i++)
@@ -143,6 +144,11 @@ namespace QwerkE {
             // #TODO Get number of gamepads and names, ids, etc
             if (ImGui::CollapsingHeader("Gamepad"))
             {
+                if (s_DeviceIds.empty())
+                {
+                    ImGui::Text("No gamepad detected");
+                }
+
                 if (ImGui::BeginChild("Gamepad Buttons + Button States", { ImGui::g_pixelsPerCharacter * 10, s_GamepadButtons.Size() * lineHeight + lineHeight }))
                 {
                     ImGui::Text("Buttons");

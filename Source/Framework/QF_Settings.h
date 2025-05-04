@@ -14,7 +14,7 @@ namespace QwerkE {
 
         bool limitFramerate = true;
         u16 maxFramesPerSecond = 120;
-        u16 defaultMaxFramesPerSecond = 360;
+        u16 maxAllowedFramesPerSecond = 360;
 
         u8 maxEnabledScenes = 1;
         u8 maxJobsAdditionalThreadCount = 1;
@@ -22,6 +22,10 @@ namespace QwerkE {
         bool consoleOutputWindowEnabled = true; // #TODO Prevent console from opening if ConsoleOutputWindowEnabled is false
 
         bool vSyncEnabled = false;
+        bool windowAutoFocusOnStart = false;
+
+        // #TODO Support
+        // bool windowStartFullScreen = false;
     };
 
     namespace Settings

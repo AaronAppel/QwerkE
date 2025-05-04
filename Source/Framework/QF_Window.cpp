@@ -51,9 +51,8 @@ namespace QwerkE {
         Callbacks::FileDropCallback* s_FileDropCallback = nullptr;
 #endif
 
-    #ifdef _QGLFW3
-
-        GLFWwindow* s_window = nullptr;
+#ifdef _QGLFW3
+        GLFWwindow* s_GlfwWindow = nullptr;
 
 #if 1 // #TODO Omit from retail builds
         void local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths);
@@ -131,57 +130,60 @@ namespace QwerkE {
             glfwWindowHint(GLFW_DEPTH_BITS, 0);
             glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
-            auto engineSettings = Settings::GetEngineSettings();
+            const EngineSettings& engineSettings = Settings::GetEngineSettings();
             glfwWindowHint(GLFW_POSITION_X, engineSettings.windowOpenPositionX);
             glfwWindowHint(GLFW_POSITION_Y, engineSettings.windowOpenPositionY);
-            //glfwSetWindowPos(window, 100, 100);
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
-            s_window = glfwCreateWindow((int)windowWidth, (int)windowHeight, g_WindowTitle, NULL, NULL);
-            if (!s_window)
+            s_GlfwWindow = glfwCreateWindow((int)windowWidth, (int)windowHeight, g_WindowTitle, NULL, NULL);
+            ASSERT(s_GlfwWindow, "Critical error creating GLFWWindow*!");
+            if (!s_GlfwWindow)
             {
                 local_CheckGlfwErrors();
+                // #TODO Exit app properly
             }
             s_aspectRatio = (float)windowHeight / (float)windowHeight;
 
-            glfwSwapInterval(0); // #TODO Use engineSettings.vSyncEnabled
-            glfwMakeContextCurrent(s_window);
-            const bool wantWindowFocus = false; // #TODO Add option for window focus (I don't like auto focus)
-            if (wantWindowFocus)
+            glfwSwapInterval(engineSettings.vSyncEnabled);
+            glfwMakeContextCurrent(s_GlfwWindow);
+
+            if (engineSettings.windowAutoFocusOnStart)
             {
-                glfwFocusWindow(s_window);
+                glfwFocusWindow(s_GlfwWindow);
             }
 
 #if _QGLFW3
-            Input::Input_RegisterGlfwCallbacks(s_window);
+            Input::Input_RegisterGlfwCallbacks(s_GlfwWindow);
 #endif // _QGLFW3
 
             glfwSetErrorCallback(local_ErrorCallback);
-            glfwSetFramebufferSizeCallback(s_window, local_FrameBufferSizeCallback);
-            glfwSetWindowCloseCallback(s_window, local_CloseCallback);
-            glfwSetWindowSizeCallback(s_window, local_WindowResizedCallback);
-            glfwSetWindowIconifyCallback(s_window, local_WindowIconifyCallback);
-            glfwSetWindowPosCallback(s_window, local_window_pos_callback);
-            glfwSetDropCallback(s_window, local_FileDropCallback);
+            glfwSetFramebufferSizeCallback(s_GlfwWindow, local_FrameBufferSizeCallback);
+            glfwSetWindowCloseCallback(s_GlfwWindow, local_CloseCallback);
+            glfwSetWindowSizeCallback(s_GlfwWindow, local_WindowResizedCallback);
+            glfwSetWindowIconifyCallback(s_GlfwWindow, local_WindowIconifyCallback);
+            glfwSetWindowPosCallback(s_GlfwWindow, local_window_pos_callback);
+            glfwSetDropCallback(s_GlfwWindow, local_FileDropCallback);
 
             // #TODO glfwSetWindowRefreshCallback();
             // #TODO glfwSetWindowMaximizeCallback();
             // #TODO glfwSetWindowContentScaleCallback();
-            // #TODO glfwSetWindowFocusCallback();
+            // #TODO glfwSetWindowFocusCallback(); // Also add io.AddFocusEvent(focused != 0); from: https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_glfw.cpp#L422
             // #TODO glfwSetMonitorCallback();
-            // #TODO glfwSetCursorEnterCallback();
+            // #TODO glfwSetCursorEnterCallback(); // Also add io.AddMousePosEvent(-FLT_MAX, -FLT_MAX); from: https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_glfw.cpp#L445
 
             // #NOTE Overridden in QF_glfw_InputCallBacks.cpp::SetupCallbacks(41)
             // glfwSetKeyCallback(s_window, local_KeyEventCallback);
+
+            // #TODO Also checkout ImGui_ImplGlfw_UpdateMonitors() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L931
     #endif
         }
 
         void Window::Shutdown()
         {
     #ifdef _QGLFW3
-            glfwWindowShouldClose(s_window);
-            glfwDestroyWindow(s_window);
+            glfwWindowShouldClose(s_GlfwWindow);
+            glfwDestroyWindow(s_GlfwWindow);
 
             glfwTerminate();
     #endif
@@ -205,14 +207,14 @@ namespace QwerkE {
         const vec2f Window::GetSize()
         {
             int width, height;
-            glfwGetWindowSize(s_window, &width, &height);
+            glfwGetWindowSize(s_GlfwWindow, &width, &height);
             return vec2f(width, height);
         }
 
         const vec2f Window::GetPosition()
         {
             int xpos, ypos;
-            glfwGetWindowPos(s_window, &xpos, &ypos);
+            glfwGetWindowPos(s_GlfwWindow, &xpos, &ypos);
             return vec2f(xpos, ypos);
         }
 
@@ -223,7 +225,7 @@ namespace QwerkE {
 
         void* Window::GetContext()
         {
-            return s_window;
+            return s_GlfwWindow;
         }
 
         bool IsMinimized()

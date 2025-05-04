@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "Libraries/glfw/glfw3.h"
+#include "Libraries/imgui/imgui.h"
 
 #include "QF_QKey.h"
 #include "QF_InputStatesBitRingBuffer.h"
@@ -32,25 +33,29 @@ namespace QwerkE {
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
         constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
 
-        static std::vector<int> s_DeviceIds; // glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
+        std::vector<int> s_DeviceIds; // glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
         static std::vector<std::vector<float>> s_DeviceAxesStates;
         static std::vector<std::vector<int>> s_DeviceButtonsStates;
 
+        // #TODO Consider using extern to access GLFW window* in Window::
+        // extern GLFWwindow* s_GlfwWindow;
+
         void PollInput() // #TESTING For input system refactor only
         {
+            // #TODO Move ImGui debug window logic to QF_InputDebugWindow.cpp
             if (!ImGui::Begin("Gamepad"))
             {
                 ImGui::End();
                 return;
             }
 
+            // #TODO Test with 2+ gamepads. See if all devices are polled after id 0 is checked. May need to handle in below loop with --i; continue;
+            glfwJoystickPresent(0); // #NOTE Triggers GLFW to poll joystick disconnect event
+
             for (size_t i = 0; i < s_DeviceIds.size(); i++)
             {
                 if (ImGui::CollapsingHeader((glfwGetJoystickName(s_DeviceIds[i]) + std::string(" ") + std::to_string(s_DeviceIds[i])).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
                 {
-                    // #TODO React to non-present joystick (disconnected)
-                    ASSERT(GLFW_TRUE == glfwJoystickPresent(s_DeviceIds[i]), "Device not present!");
-
                     // #TODO glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
 
                     int axesCount;
@@ -65,39 +70,33 @@ namespace QwerkE {
                     for (size_t j = 0; j < axesCount; j++)
                     {
                         ImGui::Text("Axes[%i]: %f", j, axes[j]);
-                        // Left stick X [0]
-                        // Left stick Y [1]
-                        // Right stick X [2]
-                        // Right stick Y [3]
-                        // L trigger [4]
-                        // R trigger [5]
 
                         switch (j)
                         {
-                        case 0:
+                        case 0: // Left stick X [0]
                             leftStickAxes.x = axes[j];
                             break;
-                        case 1:
+                        case 1: // Left stick Y [1]
                             leftStickAxes.y = axes[j];
                             if (s_DeviceAxesStates[i][0] != leftStickAxes.x || s_DeviceAxesStates[i][1] != leftStickAxes.y)
                             {
                                 OnGamepadAxisEvent(j, leftStickAxes);
                             }
                             break;
-                        case 2:
+                        case 2: // Right stick X [2]
                             rightStickAxes.x = axes[j];
                             break;
-                        case 3:
+                        case 3: // Right stick Y [3]
                             rightStickAxes.y = axes[j];
                             if (s_DeviceAxesStates[i][2] != rightStickAxes.x || s_DeviceAxesStates[i][3] != rightStickAxes.y)
                             {
                                 OnGamepadAxisEvent(j, rightStickAxes);
                             }
                             break;
-                        case 4:
+                        case 4: // L trigger [4]
                             triggersAxes.x = axes[j];
                             break;
-                        case 5:
+                        case 5: // R trigger [5]
                             triggersAxes.y = axes[j];
                             if (s_DeviceAxesStates[i][4] != triggersAxes.x || s_DeviceAxesStates[i][5] != triggersAxes.y)
                             {
@@ -197,26 +196,86 @@ namespace QwerkE {
             NewFrame_Internal();
         }
 
-        static void Local_GlfwKeyCallback(GLFWwindow* a_Window, int a_Key, int a_Scancode, int a_Action, int a_Mode)
+#ifdef _QDEARIMGUI
+        // #NOTE Implementing using demo from: https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_glfw.cpp
+        // #TODO See ImGui_ImplGlfw_UpdateMouseCursor() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L851
+        // Also see ImGui_ImplGlfw_UpdateMouseData() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L780
+        // Also see ImGui_ImplGlfw_UpdateGamepads() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L880
+        static void ImGui_ImplGlfw_UpdateKeyModifiers(GLFWwindow* window);
+        static ImGuiKey ImGui_ImplGlfw_KeyToImGuiKey(int keycode, int scancode);
+#endif // _QDEARIMGUI
+
+        static void Local_GlfwKeyCallback(GLFWwindow* a_Window, const int a_KeyCode, const int a_Scancode, const int a_Action, const int a_Mode)
         {
             if (GLFW_REPEAT != a_Action) // #TODO Review GLFW_REPEAT
             {
-                const QKey qwerkEeKey = Local_GlfwToQwerkE(a_Key, a_Scancode);
+                const QKey qwerkEeKey = Local_GlfwToQwerkE(a_KeyCode, a_Scancode);
                 if (QKey::e_MAX != qwerkEeKey)
                 {
                     OnKeyEvent_New(qwerkEeKey, static_cast<QKeyState>(GLFW_PRESS == a_Action));
                 }
+
+#ifdef _QDEARIMGUI
+                ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
+                // #NOTE ImGui_ImplGlfw_TranslateUntranslatedKey() contents were stripped by #ifs so removed entirely
+
+                ImGuiIO& io = ImGui::GetIO();
+                ImGuiKey imgui_key = ImGui_ImplGlfw_KeyToImGuiKey(a_KeyCode, a_Scancode);
+                io.AddKeyEvent(imgui_key, (a_Action == GLFW_PRESS));
+#endif
             }
         }
 
         static void Local_GlfwCharCallback(GLFWwindow* window, unsigned int codePoint)
         {
-            int bp = 0; // For keys as char values: 'a'=97, 'A'=65
+#ifdef _QDEARIMGUI
+            if (codePoint > 0 && codePoint < 0x10000)
+            {
+                ImGui::GetIO().AddInputCharacter(codePoint);
+            }
+#endif
         }
 
         static void Local_GlfwCharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods)
         {
             int bp = 0; // For keys as char values: 'a'=97, 'A'=65, mod shift=1 or GLFW_MOD_SHIFT
+        }
+
+        static void Local_GlfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+        {
+            OnMouseMove_New({ xpos, ypos });
+
+#ifdef _QDEARIMGUI
+            ImGuiIO& io = ImGui::GetIO();
+            io.AddMousePosEvent((float)xpos, (float)ypos);
+#endif // _QDEARIMGUI
+        }
+
+        static void Local_GlfwMouseButtonCallback(GLFWwindow* a_Window, const int a_Button, const int a_Action, const int a_Mods)
+        {
+            const QKey qKey = Local_GlfwToQwerkE(a_Button, 0);
+            MouseDown_Internal(qKey);
+            OnMouseButton_New(qKey, static_cast<QKeyState>(GLFW_PRESS == a_Action));
+
+#ifdef _QDEARIMGUI
+            ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
+
+            ImGuiIO& io = ImGui::GetIO();
+            if (a_Button >= 0 && a_Button < ImGuiMouseButton_COUNT)
+            {
+                io.AddMouseButtonEvent(a_Button, a_Action == GLFW_PRESS);
+            }
+#endif // _QDEARIMGUI
+        }
+
+        static void Local_GlfwScrollCallback(GLFWwindow* a_Window, const double a_OffsetX, const double a_OffsetY)
+        {
+            OnMouseScroll_New(a_OffsetX, a_OffsetY);
+
+#ifdef _QDEARIMGUI
+            ImGuiIO& io = ImGui::GetIO();
+            io.AddMouseWheelEvent(static_cast<float>(a_OffsetX), static_cast<float>(a_OffsetY));
+#endif // _QDEARIMGUI
         }
 
         static void Local_GlfwJoystickCallback(const int a_JoystickId, const int eventId)
@@ -279,23 +338,6 @@ namespace QwerkE {
             }
         }
 
-        static void Local_GlfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
-        {
-            OnMouseMove_New({ xpos, ypos });
-        }
-
-        static void Local_GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
-        {
-            const QKey qKey = Local_GlfwToQwerkE(button, 0);
-            MouseDown_Internal(qKey);
-            OnMouseButton_New(qKey, static_cast<QKeyState>(GLFW_PRESS == action)); // #TODO Invalid scancode?
-        }
-
-        static void Local_GlfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
-        {
-            OnMouseScroll_New(xoffset, yoffset);
-        }
-
         void Input_RegisterGlfwCallbacks(GLFWwindow* window)
         {
             // #TODO Consider moving into Initialize() or otherwise combining the two functions
@@ -308,11 +350,26 @@ namespace QwerkE {
             glfwSetCharCallback(window, Local_GlfwCharCallback);
             glfwSetCharModsCallback(window, Local_GlfwCharModsCallback);
 
-            glfwSetJoystickCallback(Local_GlfwJoystickCallback);
-
             glfwSetCursorPosCallback(window, Local_GlfwCursorPositionCallback);
             glfwSetMouseButtonCallback(window, Local_GlfwMouseButtonCallback);
             glfwSetScrollCallback(window, Local_GlfwScrollCallback);
+
+            glfwSetJoystickCallback(Local_GlfwJoystickCallback);
+        }
+
+        void Input_UnregisterGlfwCallbacks(GLFWwindow* window)
+        {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+            glfwSetKeyCallback(window, NULL);
+            glfwSetCharCallback(window, NULL);
+            glfwSetCharModsCallback(window, NULL);
+
+            glfwSetCursorPosCallback(window, NULL);
+            glfwSetMouseButtonCallback(window, NULL);
+            glfwSetScrollCallback(window, NULL);
+
+            glfwSetJoystickCallback(NULL);
         }
 
         bool KeyDown(const QKey a_Key)
@@ -353,6 +410,145 @@ namespace QwerkE {
             ASSERT(a_Key <= e_Gamepad15 && a_Key >= e_Gamepad0, "Invalid Gamepad key!");
             return e_KeyStateDown == s_DeviceButtonsStates[jid][a_Key];
         }
+
+#ifdef _QDEARIMGUI
+        static void ImGui_ImplGlfw_UpdateKeyModifiers(GLFWwindow * window)
+        {
+            ImGuiIO& io = ImGui::GetIO();
+            io.AddKeyEvent(ImGuiMod_Ctrl, (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS));
+            io.AddKeyEvent(ImGuiMod_Shift, (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS));
+            io.AddKeyEvent(ImGuiMod_Alt, (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS));
+            io.AddKeyEvent(ImGuiMod_Super, (glfwGetKey(window, GLFW_KEY_LEFT_SUPER) == GLFW_PRESS) || (glfwGetKey(window, GLFW_KEY_RIGHT_SUPER) == GLFW_PRESS));
+        }
+
+        static ImGuiKey ImGui_ImplGlfw_KeyToImGuiKey(int keycode, int scancode)
+        {
+            IM_UNUSED(scancode);
+            switch (keycode)
+            {
+            case GLFW_KEY_TAB: return ImGuiKey_Tab;
+            case GLFW_KEY_LEFT: return ImGuiKey_LeftArrow;
+            case GLFW_KEY_RIGHT: return ImGuiKey_RightArrow;
+            case GLFW_KEY_UP: return ImGuiKey_UpArrow;
+            case GLFW_KEY_DOWN: return ImGuiKey_DownArrow;
+            case GLFW_KEY_PAGE_UP: return ImGuiKey_PageUp;
+            case GLFW_KEY_PAGE_DOWN: return ImGuiKey_PageDown;
+            case GLFW_KEY_HOME: return ImGuiKey_Home;
+            case GLFW_KEY_END: return ImGuiKey_End;
+            case GLFW_KEY_INSERT: return ImGuiKey_Insert;
+            case GLFW_KEY_DELETE: return ImGuiKey_Delete;
+            case GLFW_KEY_BACKSPACE: return ImGuiKey_Backspace;
+            case GLFW_KEY_SPACE: return ImGuiKey_Space;
+            case GLFW_KEY_ENTER: return ImGuiKey_Enter;
+            case GLFW_KEY_ESCAPE: return ImGuiKey_Escape;
+            case GLFW_KEY_APOSTROPHE: return ImGuiKey_Apostrophe;
+            case GLFW_KEY_COMMA: return ImGuiKey_Comma;
+            case GLFW_KEY_MINUS: return ImGuiKey_Minus;
+            case GLFW_KEY_PERIOD: return ImGuiKey_Period;
+            case GLFW_KEY_SLASH: return ImGuiKey_Slash;
+            case GLFW_KEY_SEMICOLON: return ImGuiKey_Semicolon;
+            case GLFW_KEY_EQUAL: return ImGuiKey_Equal;
+            case GLFW_KEY_LEFT_BRACKET: return ImGuiKey_LeftBracket;
+            case GLFW_KEY_BACKSLASH: return ImGuiKey_Backslash;
+            // case GLFW_KEY_WORLD_1: return ImGuiKey_Oem102;
+            // case GLFW_KEY_WORLD_2: return ImGuiKey_Oem102;
+            case GLFW_KEY_RIGHT_BRACKET: return ImGuiKey_RightBracket;
+            case GLFW_KEY_GRAVE_ACCENT: return ImGuiKey_GraveAccent;
+            case GLFW_KEY_CAPS_LOCK: return ImGuiKey_CapsLock;
+            case GLFW_KEY_SCROLL_LOCK: return ImGuiKey_ScrollLock;
+            case GLFW_KEY_NUM_LOCK: return ImGuiKey_NumLock;
+            case GLFW_KEY_PRINT_SCREEN: return ImGuiKey_PrintScreen;
+            case GLFW_KEY_PAUSE: return ImGuiKey_Pause;
+            case GLFW_KEY_KP_0: return ImGuiKey_Keypad0;
+            case GLFW_KEY_KP_1: return ImGuiKey_Keypad1;
+            case GLFW_KEY_KP_2: return ImGuiKey_Keypad2;
+            case GLFW_KEY_KP_3: return ImGuiKey_Keypad3;
+            case GLFW_KEY_KP_4: return ImGuiKey_Keypad4;
+            case GLFW_KEY_KP_5: return ImGuiKey_Keypad5;
+            case GLFW_KEY_KP_6: return ImGuiKey_Keypad6;
+            case GLFW_KEY_KP_7: return ImGuiKey_Keypad7;
+            case GLFW_KEY_KP_8: return ImGuiKey_Keypad8;
+            case GLFW_KEY_KP_9: return ImGuiKey_Keypad9;
+            case GLFW_KEY_KP_DECIMAL: return ImGuiKey_KeypadDecimal;
+            case GLFW_KEY_KP_DIVIDE: return ImGuiKey_KeypadDivide;
+            case GLFW_KEY_KP_MULTIPLY: return ImGuiKey_KeypadMultiply;
+            case GLFW_KEY_KP_SUBTRACT: return ImGuiKey_KeypadSubtract;
+            case GLFW_KEY_KP_ADD: return ImGuiKey_KeypadAdd;
+            case GLFW_KEY_KP_ENTER: return ImGuiKey_KeypadEnter;
+            case GLFW_KEY_KP_EQUAL: return ImGuiKey_KeypadEqual;
+            case GLFW_KEY_LEFT_SHIFT: return ImGuiKey_LeftShift;
+            case GLFW_KEY_LEFT_CONTROL: return ImGuiKey_LeftCtrl;
+            case GLFW_KEY_LEFT_ALT: return ImGuiKey_LeftAlt;
+            case GLFW_KEY_LEFT_SUPER: return ImGuiKey_LeftSuper;
+            case GLFW_KEY_RIGHT_SHIFT: return ImGuiKey_RightShift;
+            case GLFW_KEY_RIGHT_CONTROL: return ImGuiKey_RightCtrl;
+            case GLFW_KEY_RIGHT_ALT: return ImGuiKey_RightAlt;
+            case GLFW_KEY_RIGHT_SUPER: return ImGuiKey_RightSuper;
+            case GLFW_KEY_MENU: return ImGuiKey_Menu;
+            case GLFW_KEY_0: return ImGuiKey_0;
+            case GLFW_KEY_1: return ImGuiKey_1;
+            case GLFW_KEY_2: return ImGuiKey_2;
+            case GLFW_KEY_3: return ImGuiKey_3;
+            case GLFW_KEY_4: return ImGuiKey_4;
+            case GLFW_KEY_5: return ImGuiKey_5;
+            case GLFW_KEY_6: return ImGuiKey_6;
+            case GLFW_KEY_7: return ImGuiKey_7;
+            case GLFW_KEY_8: return ImGuiKey_8;
+            case GLFW_KEY_9: return ImGuiKey_9;
+            case GLFW_KEY_A: return ImGuiKey_A;
+            case GLFW_KEY_B: return ImGuiKey_B;
+            case GLFW_KEY_C: return ImGuiKey_C;
+            case GLFW_KEY_D: return ImGuiKey_D;
+            case GLFW_KEY_E: return ImGuiKey_E;
+            case GLFW_KEY_F: return ImGuiKey_F;
+            case GLFW_KEY_G: return ImGuiKey_G;
+            case GLFW_KEY_H: return ImGuiKey_H;
+            case GLFW_KEY_I: return ImGuiKey_I;
+            case GLFW_KEY_J: return ImGuiKey_J;
+            case GLFW_KEY_K: return ImGuiKey_K;
+            case GLFW_KEY_L: return ImGuiKey_L;
+            case GLFW_KEY_M: return ImGuiKey_M;
+            case GLFW_KEY_N: return ImGuiKey_N;
+            case GLFW_KEY_O: return ImGuiKey_O;
+            case GLFW_KEY_P: return ImGuiKey_P;
+            case GLFW_KEY_Q: return ImGuiKey_Q;
+            case GLFW_KEY_R: return ImGuiKey_R;
+            case GLFW_KEY_S: return ImGuiKey_S;
+            case GLFW_KEY_T: return ImGuiKey_T;
+            case GLFW_KEY_U: return ImGuiKey_U;
+            case GLFW_KEY_V: return ImGuiKey_V;
+            case GLFW_KEY_W: return ImGuiKey_W;
+            case GLFW_KEY_X: return ImGuiKey_X;
+            case GLFW_KEY_Y: return ImGuiKey_Y;
+            case GLFW_KEY_Z: return ImGuiKey_Z;
+            case GLFW_KEY_F1: return ImGuiKey_F1;
+            case GLFW_KEY_F2: return ImGuiKey_F2;
+            case GLFW_KEY_F3: return ImGuiKey_F3;
+            case GLFW_KEY_F4: return ImGuiKey_F4;
+            case GLFW_KEY_F5: return ImGuiKey_F5;
+            case GLFW_KEY_F6: return ImGuiKey_F6;
+            case GLFW_KEY_F7: return ImGuiKey_F7;
+            case GLFW_KEY_F8: return ImGuiKey_F8;
+            case GLFW_KEY_F9: return ImGuiKey_F9;
+            case GLFW_KEY_F10: return ImGuiKey_F10;
+            case GLFW_KEY_F11: return ImGuiKey_F11;
+            case GLFW_KEY_F12: return ImGuiKey_F12;
+            case GLFW_KEY_F13: return ImGuiKey_F13;
+            case GLFW_KEY_F14: return ImGuiKey_F14;
+            case GLFW_KEY_F15: return ImGuiKey_F15;
+            case GLFW_KEY_F16: return ImGuiKey_F16;
+            case GLFW_KEY_F17: return ImGuiKey_F17;
+            case GLFW_KEY_F18: return ImGuiKey_F18;
+            case GLFW_KEY_F19: return ImGuiKey_F19;
+            case GLFW_KEY_F20: return ImGuiKey_F20;
+            case GLFW_KEY_F21: return ImGuiKey_F21;
+            case GLFW_KEY_F22: return ImGuiKey_F22;
+            case GLFW_KEY_F23: return ImGuiKey_F23;
+            case GLFW_KEY_F24: return ImGuiKey_F24;
+            default: return ImGuiKey_None;
+            }
+        }
+#endif // _QDEARIMGUI
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey)
         {

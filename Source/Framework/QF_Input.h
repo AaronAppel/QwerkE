@@ -10,7 +10,6 @@
 struct GLFWwindow;
 #endif
 
-enum ImGuiKey : int;
 namespace QwerkE {
 
     namespace Input {

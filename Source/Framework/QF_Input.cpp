@@ -213,7 +213,7 @@ namespace QwerkE {
         {
             for (size_t i = 0; i < s_OnKeyEventCallBacks.size(); i++)
             {
-                auto pair = s_OnKeyEventCallBacks[i];
+                auto& pair = s_OnKeyEventCallBacks[i];
                 if (pair.first == key && pair.second.Id() == id)
                 {
                     s_OnKeyEventCallBacks.erase(s_OnKeyEventCallBacks.begin() + i);
