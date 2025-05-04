@@ -19,7 +19,7 @@
 
 #include "QC_Guid.h"
 
-#include "QF_eKeys.h"
+#include "QF_QKey.h"
 #include "QF_GameActions.h"
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
@@ -78,7 +78,7 @@ MIRROR_TYPE_ID(vec2f)
 MIRROR_TYPE_ID(void(*)(void))
 
 // Enums
-MIRROR_TYPE_ID(QwerkE::eKeys)
+MIRROR_TYPE_ID(QwerkE::QKey)
 MIRROR_TYPE_ID(QwerkE::eComponentTags)
 
 // Collections
@@ -171,7 +171,7 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 112, vec2f)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 113, void(*)(void))
 
 // Enums
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 114, QwerkE::eKeys)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 114, QwerkE::QKey)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 115, QwerkE::eComponentTags)
 
 // Collections

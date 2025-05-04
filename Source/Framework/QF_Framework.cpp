@@ -6,7 +6,6 @@
 #include "QF_Events.h"
 
 #include "QF_Input.h"
-#include "QF_InputNew.h"
 
 #include "QF_Log.h"
 #include "QF_Paths.h"
@@ -44,7 +43,6 @@ namespace QwerkE {
 			Window::Initialize(windowWidth, windowHeight); // #TODO Try to remove window size arguments dependency
 			Renderer::Initialize();
 			Input::Initialize();
-			Input::Initialize_New();
 			Assets::Initialize(); // #TODO bgfx init order dependency for mesh creation
 			Scenes::Initialize();
 			return eOperationResult::Success;
@@ -71,7 +69,6 @@ namespace QwerkE {
 		void StartFrame()
 		{
 			Input::NewFrame();
-			Input::NewFrame_New();
 			Events::ProcessEvents();
 			// Jobs::ProcessTasks();
 			Window::NewFrame();

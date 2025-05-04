@@ -1,7 +1,7 @@
 #ifdef _QDEBUG
 #include "QC_BitIndexRingBuffer.h"
 
-#include "QF_InputNew.h"
+#include "QF_Input.h"
 #include "QF_InputStatesBitRingBuffer.h"
 
 namespace QwerkE {

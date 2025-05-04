@@ -129,7 +129,7 @@ namespace QwerkE {
                 break;
 
             case Mirror::TypeId<char>():
-            case Mirror::TypeId<eKeys>():
+            case Mirror::TypeId<QKey>():
                 {
                     char* charPtrAddress = (char*)obj;
                     char charEscaped[2] = { *charPtrAddress, '\0' };

@@ -124,7 +124,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<eKeys>():
+            case Mirror::TypeId<QKey>():
             case Mirror::TypeId<const char>():
             case Mirror::TypeId<char>():
                 {

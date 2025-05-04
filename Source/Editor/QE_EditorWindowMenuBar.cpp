@@ -61,28 +61,24 @@ namespace QwerkE {
 
         void local_CheckHotkeys()
         {
-            if (Input::FrameKeyAction(eKeys::eKeys_N, eKeyState::eKeyState_Press) &&
-                (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
+            if (Input::KeyPressed(QKey::e_N) && Input::KeyDown(QKey::e_CtrlAny))
             {
                 Editor::NewEditorWindow(EditorWindowTypes::Prompt);
             }
-
-            if (Input::FrameKeyAction(eKeys::eKeys_O, eKeyState::eKeyState_Press) &&
-                (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
+            else if (Input::KeyPressed(QKey::e_O) && Input::KeyDown(QKey::e_CtrlAny))
             {
                 Projects::LoadProjectFromExplorer();
             }
-
-            if (Input::FrameKeyAction(eKeys::eKeys_S, eKeyState::eKeyState_Press) &&
-                (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)) &&
-                (Input::IsKeyDown(eKeys::eKeys_LSHIFT) || Input::IsKeyDown(eKeys::eKeys_RSHIFT)))
+            else if (Input::KeyPressed(QKey::e_S) && Input::KeyDown(QKey::e_CtrlAny))
             {
-                Projects::SaveProjectFromExplorer();
-            }
-            else if (Input::FrameKeyAction(eKeys::eKeys_S, eKeyState::eKeyState_Press) &&
-                (Input::IsKeyDown(eKeys::eKeys_LCTRL) || Input::IsKeyDown(eKeys::eKeys_RCTRL)))
-            {
-                Projects::SaveProject();
+                if (Input::KeyDown(QKey::e_ShiftAny))
+                {
+                    Projects::SaveProjectFromExplorer();
+                }
+                else
+                {
+                    Projects::SaveProject();
+                }
             }
         }
 

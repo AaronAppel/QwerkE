@@ -71,15 +71,15 @@ namespace QwerkE {
 
 			const Input::GameActions& gameActions = Input::GetGameActions();
 
-			if (Input::IsKeyDown(gameActions.Camera_MoveForward) ||
-				Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
+			if (Input::KeyDown(gameActions.Camera_MoveForward) ||
+				Input::GamepadDown(QKey::e_GamepadA))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(forward, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(gameActions.Camera_MoveBackward))
+			if (Input::KeyDown(gameActions.Camera_MoveBackward))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(forward, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
@@ -94,14 +94,14 @@ namespace QwerkE {
 				transform.m_Matrix[8]
 			};
 
-			if (Input::IsKeyDown(gameActions.Camera_MoveLeft))
+			if (Input::KeyDown(gameActions.Camera_MoveLeft))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(right, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[12] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(gameActions.Camera_MoveRight))
+			if (Input::KeyDown(gameActions.Camera_MoveRight))
 			{
 				vec3f pos = transform.GetPosition();
 				bx::Vec3 eye = bx::mad(right, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
@@ -111,29 +111,29 @@ namespace QwerkE {
 
 			const bx::Vec3 up = bx::cross(right, forward);
 
-			if (Input::IsKeyDown(gameActions.Camera_MoveDown))
+			if (Input::KeyDown(gameActions.Camera_MoveDown))
 			{
 				transform.m_Matrix[13] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(gameActions.Camera_MoveUp))
+			if (Input::KeyDown(gameActions.Camera_MoveUp))
 			{
 				transform.m_Matrix[13] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
-			if (Input::IsKeyDown(gameActions.Camera_RotateRight))
+			if (Input::KeyDown(gameActions.Camera_RotateRight))
 			{
 				// LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
 			}
-			if (Input::IsKeyDown(gameActions.Camera_RotateLeft))
+			if (Input::KeyDown(gameActions.Camera_RotateLeft))
 			{
 				constexpr float rotationSpeed = Math::PI_f();
 				bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
 				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
 
-			const vec2f& mouseScroll = Input::MouseScrollDelta();
-			if (mouseScroll.y != 0.f)
+			const float mouseScroll = Input::MouseScrollDelta();
+			if (mouseScroll != 0.f)
 			{
-				camera.m_Fov -= mouseScroll.y;
+				camera.m_Fov -= mouseScroll;
 			}
 
 			if (const bool useTargetLookAt = false)
@@ -170,7 +170,7 @@ namespace QwerkE {
 			return eScriptTypes::Camera;
 		}
 
-		Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(eKeys::eKeys_MouseButton2);
+		Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseButton2);
 
 		enum RotationMode
 		{

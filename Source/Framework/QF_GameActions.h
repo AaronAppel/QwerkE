@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QF_eKeys.h"
+#include "QF_QKey.h"
 
 namespace QwerkE {
 
@@ -8,14 +8,14 @@ namespace QwerkE {
 
 		struct GameActions
 		{
-			eKeys Camera_MoveForward = eKeys::eKeys_W;
-			eKeys Camera_MoveBackward = eKeys::eKeys_S;
-			eKeys Camera_MoveLeft = eKeys::eKeys_A;
-			eKeys Camera_MoveRight = eKeys::eKeys_D;
-			eKeys Camera_MoveUp = eKeys::eKeys_E;
-			eKeys Camera_MoveDown = eKeys::eKeys_Q;
-			eKeys Camera_RotateLeft = eKeys::eKeys_R;
-			eKeys Camera_RotateRight = eKeys::eKeys_T;
+			QKey Camera_MoveForward = QKey::e_W;
+			QKey Camera_MoveBackward = QKey::e_S;
+			QKey Camera_MoveLeft = QKey::e_A;
+			QKey Camera_MoveRight = QKey::e_D;
+			QKey Camera_MoveUp = QKey::e_E;
+			QKey Camera_MoveDown = QKey::e_Q;
+			QKey Camera_RotateLeft = QKey::e_R;
+			QKey Camera_RotateRight = QKey::e_T;
 		};
 
 	}

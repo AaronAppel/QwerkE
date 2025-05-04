@@ -24,9 +24,6 @@
     <ClCompile Include="Framework\QF_ComponentTransform.cpp">
       <Filter>Entities\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QF_ImGuiKeysCodex.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\QF_Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
@@ -69,25 +66,14 @@
     <ClCompile Include="Framework\QF_Directory.cpp">
       <Filter>Utils\Directory</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QF_glfw_InputCallBacks.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\QF_GlfwKeysCodex.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\QF_Settings.cpp" />
     <ClCompile Include="Framework\QF_Debug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QF_InputNew.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\QF_InputNewGlfw.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\QF_InputDebugWindow.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\QF_InputGlfw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />
@@ -135,9 +121,6 @@
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentTransform.h">
       <Filter>Entities\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\QF_eKeys.h">
-      <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_InputMouseDragTracker.h">
       <Filter>Input</Filter>
@@ -234,9 +217,6 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_Settings.h" />
-    <ClInclude Include="Framework\QF_InputNew.h">
-      <Filter>Input</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\QF_QKey.h">
       <Filter>Input</Filter>
     </ClInclude>

@@ -2,7 +2,7 @@
 
 // Reference: https://www.gamedev.net/blogs/entry/2250186-designing-a-robust-input-handling-system-for-games/
 
-#include "QF_eKeys.h"
+#include "QF_QKey.h"
 #include "QF_Input.h"
 
 namespace QwerkE {
@@ -12,14 +12,14 @@ namespace QwerkE {
         struct MouseDragTracker
         {
             MouseDragTracker() = default;
-            MouseDragTracker(eKeys keyToTrack) { m_keyToTrack = keyToTrack; }
+            MouseDragTracker(QKey keyToTrack) { m_KeyToTrack = keyToTrack; }
 
             void Update()
             {
                 if (IsActive())
                 {
                     m_FrameDelta = m_LatestPosition;
-                    m_LatestPosition = Input::MousePosition();
+                    m_LatestPosition = Input::MousePos();
                     m_FrameDelta = m_FrameDelta - m_LatestPosition;
 
                     if (!m_IsActive)
@@ -40,9 +40,9 @@ namespace QwerkE {
             const vec2f& MouseFrameDelta() const { return m_FrameDelta; }
 
             bool m_IsActive = false;
-            bool IsActive() { return Input::IsKeyDown(m_keyToTrack); }
+            bool IsActive() { return Input::MouseDown(m_KeyToTrack); }
 
-            eKeys m_keyToTrack = eKeys::eKeys_MouseButton1;
+            QKey m_KeyToTrack = QKey::e_MouseButton1;
 
             vec2f m_StartingPosition;
             vec2f m_LatestPosition;

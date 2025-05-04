@@ -233,6 +233,7 @@ namespace QwerkE {
 
 			void ToggleHidden() { m_WindowFlags = (EditorWindowFlags)(m_WindowFlags ^ Hidden); }
 			void Focus() { ImGui::SetWindowFocus(m_WindowName.data()); Editor::OnEditorWindowFocused(this); }
+			// #TODO void Highlight() { ImGui::NavUpdateWindowingHighlightWindow(); }
 
 		protected:
 			EditorWindow(std::string windowName, EditorWindowTypes editorWindowType, GUID guid = GUID(), EditorWindowFlags flags = EditorWindowFlags::EditorWindowFlagsNone)

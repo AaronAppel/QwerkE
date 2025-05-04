@@ -6,6 +6,8 @@
 #include "Libraries/imgui_toggle/imgui_toggle.h"
 #include "Libraries/imgui_toggle/imgui_toggle_presets.h"
 
+#include "Libraries/ImGuizmo/ImZoomSlider.h"
+
 #define IMSPINNER_DEMO
 #include "Libraries/imspinner/imspinner.h"
 
@@ -29,6 +31,7 @@ namespace QwerkE {
         static bool m_IsShowingPieSelector = true;
         static bool m_IsShowingScrollers = true;
         static bool m_IsShowingProgressIndicators = true;
+        static bool m_IsShowingImZoomSlider = false; // Not sure how it's supposed to work
 
 		void EditorWindowImGuiExtendedDemo::DrawInternal()
 		{
@@ -46,6 +49,8 @@ namespace QwerkE {
                 ImGui::Checkbox("Scrollers", &m_IsShowingScrollers);
                 ImGui::SameLine();
                 ImGui::Checkbox("Progress", &m_IsShowingProgressIndicators);
+                ImGui::SameLine();
+                ImGui::Checkbox("ZoomSlider", &m_IsShowingImZoomSlider);
                 ImGui::Separator();
 
                 if (ImGui::CollapsingHeader("Spinners"))
@@ -146,6 +151,16 @@ namespace QwerkE {
                     ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
                     ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
                     ImGui::Separator();
+                }
+
+                if (m_IsShowingImZoomSlider)
+                {
+                    ImGui::SameLine();
+                    ImGui::PushID(18);
+                    static float viewLower = 1.0f;
+                    static float viewHigher = 100.0f;
+                    ImZoomSlider::ImZoomSlider(0.f, 1.f, viewLower, viewHigher, 0.01f, ImZoomSlider::ImGuiZoomSliderFlags_Vertical);
+                    ImGui::PopID();
                 }
 
 				if (!isShowingDemo)

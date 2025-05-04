@@ -162,7 +162,7 @@ namespace QwerkE {
             ImGui::End();
         }
 
-        void Initialize_New() // #NOTE Initialize is only for joysticks (maybe register callbacks?) so could look to improve
+        void Initialize() // #NOTE Initialize is only for joysticks (maybe register callbacks?) so could look to improve
         {
             Initialize_Internal();
 
@@ -191,7 +191,7 @@ namespace QwerkE {
             }
         }
 
-        void NewFrame_New()
+        void NewFrame()
         {
             NewFrame_Internal();
         }
@@ -399,7 +399,10 @@ namespace QwerkE {
 
         bool GamepadDown(const QKey a_Key)
         {
-            const bool result = MouseDown_Internal(a_Key); // #TODO Consider return value
+            if (s_DeviceButtonsStates.empty())
+            {
+                return false;
+            }
 
             if (e_Any == a_Key)
             {

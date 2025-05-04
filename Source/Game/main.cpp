@@ -33,7 +33,7 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 
 		QwerkE::Framework::Update(static_cast<float>(QwerkE::Time::PreviousFrameDuration()));
 
-		if (QwerkE::Input::FrameKeyAction(QwerkE::eKeys::eKeys_Escape, QwerkE::eKeyState::eKeyState_Press))
+		if (QwerkE::Input::KeyPressed(QwerkE::QKey::e_Escape))
 		{
 			QwerkE::Window::RequestClose(); // #TODO For convenience during development
 		}

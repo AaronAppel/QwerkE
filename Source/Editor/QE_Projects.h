@@ -35,7 +35,7 @@ namespace QwerkE {
         // Settings for: Physics, Audio, Graphics, etc
         // struct ConfiguredGameKeys
         // {
-        //     eKeys action1 = eKeys::eKeys_MAX; // eKeys::eKeys_K;
+        //     eKeys action1 = QKey::eKeys_MAX; // QKey::eKeys_K;
         //     const char* resetScene = gc_DefaultStringValue;
         // };
         const char* lastOpenedEngineSettingsFileName = Constants::gc_DefaultStringValue;

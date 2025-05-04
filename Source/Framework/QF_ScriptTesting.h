@@ -10,7 +10,7 @@ namespace QwerkE {
 	public:
 		void OnUpdate(float deltaTime) override
 		{
-			if (Input::IsKeyDown(eKeys::eKeys_H))
+			if (Input::KeyDown(QKey::e_H))
 			{
 				LOG_INFO("{0} Key \"H\" is pressed", __FUNCTION__);
 			}

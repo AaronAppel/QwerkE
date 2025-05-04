@@ -13,12 +13,12 @@ namespace QwerkE {
     {
 		// #TODO Force use for mouse related calls?
     };
-	
+
     enum QGamepadButton : u8
     {
 		// #TODO Force use for gamepad related calls?
     };
-	
+
     enum QKey : u8
     {
         // #NOTE
@@ -237,5 +237,12 @@ namespace QwerkE {
         e_GamepadSquare,                // Square Playstation controller button
         e_GamepadTriangle,              // Triangle Playstation controller button
     };
+
+    // #TODO Override math operators so QKey+int doesn't convert to an int and require static_cast<QKey>(key + int) everywhere
+    // #TODO QKey operator+(QKey g, int t) { g = static_cast<QKey>(g + t); return g; }
+    // #TODO QKey operator+(int t, QKey g) { return g + t; }
+    // #TODO Refactor standard naming
+    // QKey operator++(QKey g) { g = static_cast<QKey>(g + 1); return g; }
+    // QKey operator++(QKey g, int t) { g = static_cast<QKey>(g + t); return g; }
 
 }

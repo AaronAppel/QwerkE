@@ -108,7 +108,7 @@ namespace QwerkE {
             case Mirror::TypeId<float>():
                 *(float*)obj = (float)objJson->valuedouble; break;
 
-            case Mirror::TypeId<eKeys>():
+            case Mirror::TypeId<QKey>():
             case Mirror::TypeId<const char>():
             case Mirror::TypeId<char>():
                 memcpy(obj, objJson->valuestring, 1); break;

@@ -21,7 +21,7 @@
 
 #include "QC_Guid.h"
 
-#include "QF_eKeys.h"
+#include "QF_QKey.h"
 #include "QF_GameActions.h"
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
@@ -152,7 +152,7 @@ MIRROR_CLASS_END
 MIRROR_TYPE(QwerkE::eScriptTypes)
 MIRROR_TYPE(const QwerkE::eScriptTypes)
 MIRROR_TYPE(QwerkE::eComponentTags)
-MIRROR_TYPE(QwerkE::eKeys)
+MIRROR_TYPE(QwerkE::QKey)
 
 // Arrays
 MIRROR_TYPE(float[16])

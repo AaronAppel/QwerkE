@@ -37,7 +37,6 @@
 #include "QF_Framework.h"
 
 #include "QF_Input.h"
-#include "QF_InputNew.h"
 
 #include "QF_Log.h"
 #include "QF_Mesh.h"
@@ -67,7 +66,7 @@ namespace QwerkE {
 
         // #TODO Think of creating a WindowManager, or EditorWindows:: class to manage all window access, update, create/destroy,
         // and it can manage the stack of recently selected windows.
-        static bool s_ShowingWindowStackPanel = false;
+        static bool s_ShowingWindowStackPanel = false; // #TODO Move logic to its own window or editor file
         static EditorWindow* s_WindowStackPanelLastSelected = nullptr;
 
         // #TODO Editor overlays(notifications), pop ups(cycle windows, load/save project), prompts(save unsaved change before quitting/closing scene/window)
@@ -84,9 +83,6 @@ namespace QwerkE {
         void local_Shutdown();
         void local_Update();
         void local_EndFrame();
-
-        bool local_StillRunning();
-        void local_Stop();
 
         void local_FileDropCallback(const char* filePath);
 
@@ -129,7 +125,7 @@ namespace QwerkE {
 
             Time::WriteAppStartTime();
 
-			while (local_StillRunning())
+			while (!Window::CloseRequested())
 			{
 				if (Time::ShouldProcessNextFrame())
 				{
@@ -148,19 +144,6 @@ namespace QwerkE {
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
-                    if (Input::IsJoystickButtonDown(eKeys::eKeys_JoystickA))
-                    {
-                        int bp = 0; // #TODO Refactor Input::
-                    }
-
-                    if (false)
-                    {
-                        // ImGui::SameLine();
-                        // ImGui::PushID(18);
-                        // ImZoomSlider::ImZoomSlider(0.f, 1.f, vMin, vMax, 0.01f, ImZoomSlider::ImGuiZoomSliderFlags_Vertical);
-                        // ImGui::PopID();
-                    }
-
                     Renderer::EndImGui();
 
                     local_EndFrame();
@@ -168,7 +151,14 @@ namespace QwerkE {
 				}
 				else
 				{
+                    // #TODO Review sleep function
+                    // From: https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L1006
+#ifdef _WIN32
 					YieldProcessor();
+                    // ::Sleep(milliseconds);
+#else
+                    usleep(milliseconds * 1000);
+#endif
 				}
 			}
 
@@ -366,7 +356,7 @@ namespace QwerkE {
             Input::DrawDebugWindow();
 #endif // _QDEBUG
 
-            // if (Input::KeyDown(eKeys::eKeys_A))
+            // if (Input::KeyDown(QKey::eKeys_A))
             {
                 // LOG_INFO(Log::eLogLevel::Info, "KeyState");
             }
@@ -417,7 +407,7 @@ namespace QwerkE {
 
             if (Input::MouseScrolled())
             {
-                float delta = Input::MouseScrollDelta_New();
+                float delta = Input::MouseScrollDelta();
                 LOG_ERROR("Mouse Scrolled: {0}", delta);
             }
 
@@ -426,13 +416,14 @@ namespace QwerkE {
                 // const vec2f mousePos = Input::MousePos();
                 // LOG_INFO("Mouse pos: {0},{1}", mousePos.x, mousePos.y);
 
-                const vec2f delta = Input::MouseDelta();
-                LOG_INFO("Mouse delta: {0},{1}", delta.x, delta.y);
+                // const vec2f delta = Input::MouseDelta();
+                // LOG_INFO("Mouse delta: {0},{1}", delta.x, delta.y);
             }
 
-            for (size_t i = 0; i < 14; i++)
+            for (u8 i = 0; i < 14; i++)
             {
                 if (Input::GamepadPressed(static_cast<QKey>(QKey::e_Gamepad0 + i)))
+                // if (Input::GamepadPressed(QKey::e_Gamepad0 + i))
                 {
                     LOG_WARN("Pressed: {0}", i);
                 }
@@ -490,20 +481,19 @@ namespace QwerkE {
             Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
 #endif // _QDEBUG
 
-            if (Input::FrameKeyAction(eKeys::eKeys_Escape, eKeyState::eKeyState_Press))
+            if (Input::KeyPressed(QKey::e_Escape))
             {
-                local_Stop();
+                Window::RequestClose();
             }
 
             if (!s_ShowingWindowStackPanel)
             {
-                if (Input::FrameKeyAction(eKeys::eKeys_Tab, eKeyState::eKeyState_Press) &&
-                    Input::IsKeyDown(eKeys::eKeys_LCTRL))
+                if (Input::KeyPressed(QKey::e_Tab) && Input::KeyDown(QKey::e_CtrlL))
                 {
                     s_ShowingWindowStackPanel = true;
                 }
             }
-            else if (s_ShowingWindowStackPanel = Input::IsKeyDown(eKeys::eKeys_LCTRL))
+            else if (s_ShowingWindowStackPanel = Input::KeyDown(QKey::e_CtrlL)) // #NOTE Assignment intentional
             {
                 const vec2f& size = Window::GetSize();
                 ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
@@ -541,7 +531,8 @@ namespace QwerkE {
                             if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, itemHeight)))
                             {
                                 s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
-                                // selectedIndex = i;
+                                // #TODO s_WindowStackPanelLastSelected->Highlight();
+                                // NavUpdateWindowingHighlightWindow()
                             }
                             else if (ImGui::IsItemClicked())
                             {
@@ -562,22 +553,20 @@ namespace QwerkE {
                 }
             }
 
-            if (Input::FrameKeyAction(eKeys::eKeys_R, eKeyState::eKeyState_Press) &&
-                Input::IsKeyDown(eKeys::eKeys_LCTRL))
+            if (Input::KeyPressed(QKey::e_R) && Input::KeyDown(QKey::e_CtrlL))
             {
                 RequestRestart();
             }
 
-            if (Input::FrameKeyAction(eKeys::eKeys_U, eKeyState::eKeyState_Press) &&
-                Input::IsKeyDown(eKeys::eKeys_LCTRL))
+            if (Input::KeyPressed(QKey::e_U) && Input::KeyDown(QKey::e_CtrlL))
             {
                 s_ShowingEditorUI = !s_ShowingEditorUI;
             }
 
-            constexpr size_t numberOfHotkeyedScenes = eKeys::eKeys_F12 - eKeys::eKeys_F1 + 1;
-            for (size_t i = 0; i < numberOfHotkeyedScenes; i++)
+            constexpr size_t numberOfHotkeyedScenes = QKey::e_F12 - QKey::e_F1 + 1;
+            for (u8 i = 0; i < numberOfHotkeyedScenes; i++)
             {
-                if (Input::FrameKeyAction((eKeys)(eKeys::eKeys_F1 + i), eKeyState::eKeyState_Press))
+                if (Input::KeyPressed(static_cast<QKey>(QKey::e_F1 + i)))
                 {
                     Scenes::SetCurrentScene((int)i);
                     // #NOTE Scene transition changes
@@ -612,20 +601,9 @@ namespace QwerkE {
                 // #TODO Replace editor draws by moving to EditorWindowSceneView class
                 Debug::DrawSphere(vec3f(.0f, .0f, .0f), 0.1f);
                 Debug::DrawGrid(vec3f(.0f, .0f, .0f), 50);
-                // Framework::RenderView(viewIdFbo1);
             }
 #endif // _QDEBUG
             Framework::EndFrame();
-        }
-
-        bool local_StillRunning()
-        {
-            return !Window::CloseRequested();
-        }
-
-        void local_Stop()
-        {
-            Window::RequestClose();
         }
 
         void local_FileDropCallback(const char* filePath)
