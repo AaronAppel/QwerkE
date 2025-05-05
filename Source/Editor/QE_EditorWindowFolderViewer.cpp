@@ -21,20 +21,100 @@ namespace QwerkE {
 
 		void EditorWindowFolderViewer::DrawInternal()
 		{
-			// local_FileDialog();
+			// local_FileDialog(); // #TODO Fix ImFileDialog bugs
 
-			ImGui::Text(m_CurrentDirectory.string().c_str());
+			std::string path = m_CurrentDirectory.string();
+			u16 index = 0;
+			for (size_t i = 0; i < path.size(); i++)
+			{
+				if ('\\' == path[i])
+				{
+					++i;
+					std::string temp = path.substr(index, i - index);
+					index = i;
+					if (ImGui::Button(temp.c_str()))
+					{
+						m_CurrentDirectory = path.substr(0, index);
+					}
+					if (i < path.size() - 1)
+					{
+						ImGui::SameLine();
+					}
+				}
+				else if (i == path.size() - 1)
+				{
+					std::string temp = path.substr(index, i - index + 1);
+					ImGui::Button(temp.c_str());
+				}
+			}
 
-			ImGui::SameLineEnd(20);
+			ImGui::SameLineEnd(55.f);
+			ImGui::PushItemWidth(150.f);
+			// #TODO Add search or filter feature
+			ImGui::InputText("##SearchOrFilter", m_SearchOrFilterBuffer.data(), m_SearchOrFilterBuffer.capacity(), ImGuiInputTextFlags_::ImGuiInputTextFlags_None);
+			ImGui::PopItemWidth();
+
+			ImGui::SameLineEnd(27.f);
+			const bool excludingDirs = m_Filtering & e_ExcludeDirectories;
+			if (excludingDirs)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27));
+				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27f));
+			}
+			else
+			{
+				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+			}
+			if (ImGui::SmallButton("Dirs"))
+			{
+				if (m_Filtering & e_ExcludeDirectories)
+				{
+					m_Filtering = (FolderViewerFiltering)(m_Filtering ^ e_ExcludeDirectories);
+				}
+				else
+				{
+					m_Filtering = (FolderViewerFiltering)(m_Filtering | e_ExcludeDirectories);
+				}
+			}
+			ImGui::PopStyleColor(3);
+
+			ImGui::SameLine();
+			ImGui::Text("|");
+			ImGui::SameLine();
+			const bool excludingFiles = m_Filtering & e_ExcludeFiles;
+			if (excludingFiles)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27));
+				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27f));
+			}
+			else
+			{
+				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
+			}
+			// #TODO Push style vars
+			if (ImGui::SmallButton("Files"))
+			{
+				if (m_Filtering & e_ExcludeFiles)
+				{
+					m_Filtering = (FolderViewerFiltering)(m_Filtering ^ e_ExcludeFiles);
+				}
+				else
+				{
+					m_Filtering = (FolderViewerFiltering)(m_Filtering | e_ExcludeFiles);
+				}
+			}
+			ImGui::PopStyleColor(3);
+
+			ImGui::SameLineEnd(11.f);
 			ImGui::PushItemWidth(100);
 			ImGui::SliderFloat("##ScalarSlider", &m_UiScalar, 0.3f, 3.f, "Scale", ImGuiSliderFlags_::ImGuiSliderFlags_AlwaysClamp);
 			ImGui::PopItemWidth();
-
-			ImGui::SameLineEnd((u16)0);
-			if (ImGui::Button(" <- "))
-			{
-				m_CurrentDirectory = m_CurrentDirectory.parent_path();
-			}
 
 			constexpr float padding = 5.f;
 			float thumbnailSize = 128.f * m_UiScalar;
@@ -55,12 +135,20 @@ namespace QwerkE {
 
 				if (directoryEntry.is_directory())
 				{
+					if (excludingDirs)
+					{
+						continue;
+					}
 					ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
 					ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
 					ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
 				}
 				else
 				{
+					if (excludingFiles)
+					{
+						continue;
+					}
 					ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
 					ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27));
 					ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(21.f, 68.05f, 66.27f));

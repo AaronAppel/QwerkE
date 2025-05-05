@@ -4,6 +4,7 @@
 #include "QE_EditorWindowAssets.h"
 #include "QE_EditorWindowConsole.h"
 #include "QE_EditorWindowDefaultDebug.h"
+#include "QE_EditorWindowDebugInput.h"
 #include "QE_EditorWindowDockingContext.h"
 #include "QE_EditorWindowEntityInspector.h"
 #include "QE_EditorWindowFolderViewer.h"
@@ -31,7 +32,7 @@ namespace QwerkE {
         using EditorWindowsList = TemplateArgumentList <
 			// #NOTE Order matters! Match enum EditorWindowTypes order
 			EditorWindowAssets,
-			EditorWindowDefaultDebug,
+			EditorWindowDebugDefault,
 			EditorWindowDockingContext,
 			EditorWindowEntityInspector,
 			EditorWindowFolderViewer,
@@ -51,7 +52,8 @@ namespace QwerkE {
 			EditorWindowHexEditor,
 			EditorWindowImGuiExtendedDemo,
 			EditorWindowNotifications,
-			EditorWindowTimeline
+			EditorWindowTimeline,
+			EditorWindowDebugInput
         >;
 
 		template <typename... T>

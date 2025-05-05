@@ -351,11 +351,6 @@ namespace QwerkE {
 
         void local_Update()
         {
-#ifdef _QDEBUG // #TODO Maybe change to QE_DEBUG?
-            Input::PollInput(); // #TODO Move to Framework, maybe in NewFrame()
-            Input::DrawDebugWindow();
-#endif // _QDEBUG
-
             // if (Input::KeyDown(QKey::eKeys_A))
             {
                 // LOG_INFO(Log::eLogLevel::Info, "KeyState");

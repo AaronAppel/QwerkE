@@ -142,6 +142,7 @@ namespace QwerkE {
                 cJsonItem = CreateJsonBool<bool>(name, obj); break;
             case Mirror::TypeId<Editor::EditorWindowTypes>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<Editor::EditorWindowFlags>(): // #TODO Remove editor types from framework files
+            case Mirror::TypeId<Editor::EditorWindowSizingFlags>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<const eScriptTypes>():
             case Mirror::TypeId<eScriptTypes>():
             case Mirror::TypeId<const uint8_t>():

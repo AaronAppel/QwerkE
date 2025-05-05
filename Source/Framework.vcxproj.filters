@@ -70,9 +70,6 @@
     <ClCompile Include="Framework\QF_Debug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QF_InputDebugWindow.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\QF_InputGlfw.cpp" />
   </ItemGroup>
   <ItemGroup>

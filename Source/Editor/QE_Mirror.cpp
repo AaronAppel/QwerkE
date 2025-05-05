@@ -76,8 +76,13 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowConsole)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDefaultDebug)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDefaultDebug)
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugDefault)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugDefault)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugInput)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugInput)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 

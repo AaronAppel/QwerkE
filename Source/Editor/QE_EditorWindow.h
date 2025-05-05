@@ -159,7 +159,8 @@ namespace QwerkE {
 			HexEditor,
 			ImGuiExtendedDemo,
 			Notifications,
-			Timeline
+			Timeline,
+			DebugInput
 			// #NOTE Serialized, so don't change ordering
 		)
 

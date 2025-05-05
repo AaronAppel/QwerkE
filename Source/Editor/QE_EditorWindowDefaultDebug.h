@@ -8,10 +8,10 @@ namespace QwerkE {
 
 	namespace Editor {
 
-		class EditorWindowDefaultDebug : public EditorWindow
+		class EditorWindowDebugDefault : public EditorWindow
 		{
 		public:
-			EditorWindowDefaultDebug::EditorWindowDefaultDebug(GUID guid) :
+			EditorWindowDebugDefault::EditorWindowDebugDefault(GUID guid) :
 				EditorWindow(ImGui::g_DefaultDebugWindowName,
 					EditorWindowTypes::DefaultDebug,
 					guid,

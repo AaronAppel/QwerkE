@@ -57,9 +57,6 @@
     <ClInclude Include="Editor\QE_EditorWindowDockingContext.h">
       <Filter>Windows\Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\QE_EditorWindowDefaultDebug.h">
-      <Filter>Windows\Singleton</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\QE_EditorWindowMenuBar.h">
       <Filter>Windows\Singleton</Filter>
     </ClInclude>
@@ -133,6 +130,12 @@
     <ClInclude Include="Editor\QE_Projects.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDebugInput.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDefaultDebug.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -149,6 +152,9 @@
     </Filter>
     <Filter Include="Data">
       <UniqueIdentifier>{ff5b99ba-7c9f-4494-b404-e9c12315e54f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Singleton\Debug">
+      <UniqueIdentifier>{4c9b09f6-8685-48b2-9a72-fb7bf6fe69ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

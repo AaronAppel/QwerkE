@@ -7,8 +7,8 @@
 		"maxEnabledScenes":	1,
 		"maxJobsAdditionalThreadCount":	1,
 		"consoleOutputWindowEnabled":	true,
-		"windowOpenPositionX":	1,
-		"windowOpenPositionY":	40,
+		"windowOpenPositionX":	2899,
+		"windowOpenPositionY":	348,
 		"vSyncEnabled":	false,
 		"windowAutoFocusOnStart":	false
 	}

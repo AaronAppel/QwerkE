@@ -41,8 +41,39 @@ namespace QwerkE {
         // #TODO Consider using extern to access GLFW window* in Window::
         // extern GLFWwindow* s_GlfwWindow;
 
-        void PollInput() // #TESTING For input system refactor only
+        void Initialize() // #NOTE Initialize is only for joysticks (maybe register callbacks?) so could look to improve
         {
+            Initialize_Internal();
+
+            for (size_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
+            {
+                int present = glfwJoystickPresent(i);
+                if (present)
+                {
+                    int hatStatesCount;
+                    const unsigned char* const buttons = glfwGetJoystickButtons(i, &hatStatesCount);
+                    s_DeviceIds.emplace_back(i);
+                    s_DeviceButtonsStates.emplace_back(0);
+                    for (size_t j = 0; j < hatStatesCount; j++)
+                    {
+                        s_DeviceButtonsStates[s_DeviceButtonsStates.size() - 1].emplace_back(0);
+                    }
+
+                    int axesCount;
+                    const float* axes = glfwGetJoystickAxes(i, &axesCount);
+                    s_DeviceAxesStates.emplace_back(0.f);
+                    for (size_t i = 0; i < axesCount; i++)
+                    {
+                        s_DeviceAxesStates[s_DeviceAxesStates.size() - 1].emplace_back(0.f);
+                    }
+                }
+            }
+        }
+
+        void NewFrame()
+        {
+            NewFrame_Internal();
+
             // #TODO Test with 2+ gamepads. See if all devices are polled after id 0 is checked. May need to handle in below loop with --i; continue;
             glfwJoystickPresent(0); // #NOTE Triggers GLFW to poll joystick disconnect event
 
@@ -142,40 +173,6 @@ namespace QwerkE {
             //  compare previous and current states
             //  raise events
             //  set previous state to current
-        }
-
-        void Initialize() // #NOTE Initialize is only for joysticks (maybe register callbacks?) so could look to improve
-        {
-            Initialize_Internal();
-
-            for (size_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
-            {
-                int present = glfwJoystickPresent(i);
-                if (present)
-                {
-                    int hatStatesCount;
-                    const unsigned char* const buttons = glfwGetJoystickButtons(i, &hatStatesCount);
-                    s_DeviceIds.emplace_back(i);
-                    s_DeviceButtonsStates.emplace_back(0);
-                    for (size_t j = 0; j < hatStatesCount; j++)
-                    {
-                        s_DeviceButtonsStates[s_DeviceButtonsStates.size() - 1].emplace_back(0);
-                    }
-
-                    int axesCount;
-                    const float* axes = glfwGetJoystickAxes(i, &axesCount);
-                    s_DeviceAxesStates.emplace_back(0.f);
-                    for (size_t i = 0; i < axesCount; i++)
-                    {
-                        s_DeviceAxesStates[s_DeviceAxesStates.size() - 1].emplace_back(0.f);
-                    }
-                }
-            }
-        }
-
-        void NewFrame()
-        {
-            NewFrame_Internal();
         }
 
         void Shutdown()

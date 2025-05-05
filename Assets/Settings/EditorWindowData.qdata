@@ -11,6 +11,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -37,6 +38,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -63,6 +65,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -89,6 +92,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -117,6 +121,7 @@
 				"m_MinimumWidth":	0,
 				"m_MinimumHeight":	0,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -143,6 +148,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -169,6 +175,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -195,6 +202,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -221,6 +229,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -239,16 +248,17 @@
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowDefaultDebug":	{
+			"QwerkE::Editor::EditorWindowDebugDefault":	{
 				"m_Guid":	{
 					"m_Guid":	"10713593537024778871"
 				},
-				"m_WindowName":	"Default Debug##EditorWindow",
+				"m_WindowName":	"Debug Default##EditorWindow",
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	10,
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -275,6 +285,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -301,6 +312,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,
@@ -327,6 +339,7 @@
 				"m_MinimumWidth":	100,
 				"m_MinimumHeight":	150,
 				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
 					"m_WidthMinimum":	0,
 					"m_WidthMaximum":	3.4028234663852886e+38,
 					"m_HeightMinimum":	0,

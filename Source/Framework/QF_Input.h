@@ -50,10 +50,6 @@ namespace QwerkE {
         u8 GamepadAxesCount(const QGamepad a_Key);
 
 #ifdef _QDEBUG
-        void PollInput(); // #TESTING For input system refactor only
-#endif // _QDEBUG
-
-#ifdef _QDEBUG
         void DrawDebugWindow();
 #endif // _QDEBUG
 

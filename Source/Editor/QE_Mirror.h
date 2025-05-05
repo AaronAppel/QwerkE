@@ -31,7 +31,7 @@ MIRROR_TYPE_ID(QwerkE::Project)
 
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowAssets)
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowConsole)
-MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowDefaultDebug)
+MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowDebugDefault)
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowDockingContext)
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowEntityInspector)
 MIRROR_TYPE_ID(QwerkE::Editor::EditorWindowImGuiDemo)
@@ -67,7 +67,7 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 509, QwerkE::Project)
 
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 510, QwerkE::Editor::EditorWindowAssets)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 511, QwerkE::Editor::EditorWindowConsole)
-MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 512, QwerkE::Editor::EditorWindowDefaultDebug)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 512, QwerkE::Editor::EditorWindowDebugDefault)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 513, QwerkE::Editor::EditorWindowDockingContext)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 514, QwerkE::Editor::EditorWindowEntityInspector)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 515, QwerkE::Editor::EditorWindowImGuiDemo)
@@ -92,5 +92,6 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 534, QwerkE::Editor::EditorWindowNoti
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 535, QwerkE::Editor::EditorWindowTimeline)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 536, QwerkE::Editor::EditorWindowOptions)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 537, QwerkE::Editor::EditorWindowSizingFlags)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 538, QwerkE::Editor::EditorWindowDebugInput)
 
 #endif // DEBUG
