@@ -47,4 +47,33 @@ namespace ImGui {
 		SameLineCentered(strlen(text), horizontalScaling);
 	}
 
+	std::string DirectoryPathAsSameLineButtons(const std::string& directory)
+	{
+		uint16_t index = 0;
+		std::string returnString = "";
+		for (size_t i = 0; i < directory.size(); i++)
+		{
+			if ('\\' == directory[i])
+			{
+				++i;
+				std::string temp = directory.substr(index, i - index);
+				index = i;
+				if (ImGui::Button(temp.c_str()))
+				{
+					returnString = directory.substr(0, index);
+				}
+				if (i < directory.size() - 1)
+				{
+					ImGui::SameLine();
+				}
+			}
+			else if (i == directory.size() - 1)
+			{
+				std::string temp = directory.substr(index, i - index + 1);
+				ImGui::Button(temp.c_str());
+			}
+		}
+		return returnString;
+	}
+
 }

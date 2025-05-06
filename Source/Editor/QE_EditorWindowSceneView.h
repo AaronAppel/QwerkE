@@ -54,7 +54,7 @@ namespace QwerkE {
 		class EditorWindowSceneView : public EditorWindow
 		{
 		public:
-			EditorWindowSceneView::EditorWindowSceneView(u8 textureId, u8 viewId) :
+			EditorWindowSceneView(u8 textureId, u8 viewId) :
 				EditorWindow("Scene View", EditorWindowTypes::SceneView),
 				m_TextureId(textureId),
 				m_ViewId(viewId)

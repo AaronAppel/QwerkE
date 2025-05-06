@@ -9,7 +9,7 @@ namespace QwerkE {
 		class EditorWindowMaterialEditor : public EditorWindow
 		{
 		public:
-			EditorWindowMaterialEditor::EditorWindowMaterialEditor(GUID guid = GUID()) :
+			EditorWindowMaterialEditor(GUID guid = GUID()) :
 				EditorWindow("Material Editor", EditorWindowTypes::MaterialEditor, guid) { }
 
 		private:

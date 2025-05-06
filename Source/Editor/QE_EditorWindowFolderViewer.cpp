@@ -23,29 +23,10 @@ namespace QwerkE {
 		{
 			// local_FileDialog(); // #TODO Fix ImFileDialog bugs
 
-			std::string path = m_CurrentDirectory.string();
-			u16 index = 0;
-			for (size_t i = 0; i < path.size(); i++)
+			const std::string result = ImGui::DirectoryPathAsSameLineButtons(m_CurrentDirectory.string());
+			if (!result.empty())
 			{
-				if ('\\' == path[i])
-				{
-					++i;
-					std::string temp = path.substr(index, i - index);
-					index = i;
-					if (ImGui::Button(temp.c_str()))
-					{
-						m_CurrentDirectory = path.substr(0, index);
-					}
-					if (i < path.size() - 1)
-					{
-						ImGui::SameLine();
-					}
-				}
-				else if (i == path.size() - 1)
-				{
-					std::string temp = path.substr(index, i - index + 1);
-					ImGui::Button(temp.c_str());
-				}
+				m_CurrentDirectory = result;
 			}
 
 			ImGui::SameLineEnd(55.f);
@@ -127,6 +108,7 @@ namespace QwerkE {
 
 			ImGui::Columns(columnCount, 0, false);
 
+			// #TODO Review empty or non-existent directory
 			for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 			{
 				// #NOTE Crashes when viewing file names containing emojis

@@ -160,7 +160,15 @@ namespace QwerkE {
 			ImGuiExtendedDemo,
 			Notifications,
 			Timeline,
-			DebugInput
+			DebugInput,
+			DebugRenderer,
+			DebugEvents,
+			DebugWindows,
+			DebugPhysics,
+			DebugMemory,
+			DebugProfiler,
+			InputMapping,
+			FileEditor
 			// #NOTE Serialized, so don't change ordering
 		)
 

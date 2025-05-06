@@ -9,7 +9,7 @@ namespace QwerkE {
 		class EditorWindowSceneControls : public EditorWindow
 		{
 		public:
-			EditorWindowSceneControls::EditorWindowSceneControls(GUID guid = GUID()) :
+			EditorWindowSceneControls(GUID guid = GUID()) :
 				EditorWindow("Scene Controls", EditorWindowTypes::SceneControls, guid)
 			{ }
 

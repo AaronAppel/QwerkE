@@ -260,8 +260,10 @@ namespace QwerkE {
             );
             local_DrawWindowsList("Editing", {
                     EditorWindowTypes::Assets,
+                    EditorWindowTypes::FileEditor,
                     EditorWindowTypes::FolderViewer,
                     EditorWindowTypes::EntityInspector,
+                    EditorWindowTypes::InputMapping,
                     EditorWindowTypes::MaterialEditor,
                     EditorWindowTypes::NodeEditor,
                     EditorWindowTypes::ShaderEditor,
@@ -271,10 +273,16 @@ namespace QwerkE {
                     EditorWindowTypes::StylePicker
                 }
             );
-            local_DrawWindowsList("Debug", {
+            local_DrawWindowsList("Debug##WindowsList", {
                     EditorWindowTypes::Console,
                     EditorWindowTypes::DefaultDebug,
+                    EditorWindowTypes::DebugEvents,
                     EditorWindowTypes::DebugInput,
+                    EditorWindowTypes::DebugMemory,
+                    EditorWindowTypes::DebugProfiler,
+                    EditorWindowTypes::DebugPhysics,
+                    EditorWindowTypes::DebugRenderer,
+                    EditorWindowTypes::DebugWindows
                 }
             );
             local_DrawWindowsList("Other", {

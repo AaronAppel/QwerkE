@@ -93,5 +93,13 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 535, QwerkE::Editor::EditorWindowTime
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 536, QwerkE::Editor::EditorWindowOptions)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 537, QwerkE::Editor::EditorWindowSizingFlags)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 538, QwerkE::Editor::EditorWindowDebugInput)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 539, QwerkE::Editor::EditorWindowDebugRenderer)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 540, QwerkE::Editor::EditorWindowDebugEvents)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 541, QwerkE::Editor::EditorWindowDebugWindows)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 542, QwerkE::Editor::EditorWindowDebugPhysics)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 543, QwerkE::Editor::EditorWindowDebugMemory)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 544, QwerkE::Editor::EditorWindowDebugProfiler)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 545, QwerkE::Editor::EditorWindowInputMapping)
+MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 546, QwerkE::Editor::EditorWindowFileEditor)
 
 #endif // DEBUG

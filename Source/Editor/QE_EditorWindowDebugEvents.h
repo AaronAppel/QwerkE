@@ -1,19 +1,17 @@
 #pragma once
 
-#include "QF_Input.h"
-
 #include "QE_EditorWindow.h"
 
 namespace QwerkE {
 
 	namespace Editor {
 
-		class EditorWindowDebugInput : public EditorWindow
+		class EditorWindowDebugEvents : public EditorWindow
 		{
 		public:
-			EditorWindowDebugInput(GUID guid) :
-				EditorWindow("Debug Input",
-					EditorWindowTypes::DebugInput,
+			EditorWindowDebugEvents(GUID guid) :
+				EditorWindow("Debug Events",
+					EditorWindowTypes::DebugEvents,
 					guid,
 					(EditorWindowFlags)(EditorWindowFlags::ExactNameNoguid | EditorWindowFlags::Singleton))
 			{ }
@@ -23,7 +21,6 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
-				Input::DrawDebugWindow();
 			}
 		};
 

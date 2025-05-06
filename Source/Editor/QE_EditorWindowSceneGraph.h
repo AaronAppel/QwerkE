@@ -18,7 +18,7 @@ namespace QwerkE {
 		class EditorWindowSceneGraph : public EditorWindow
 		{
 		public:
-			EditorWindowSceneGraph::EditorWindowSceneGraph(GUID guid = GUID()) : EditorWindow("Scene Graph", EditorWindowTypes::SceneGraph, guid) { }
+			EditorWindowSceneGraph(GUID guid = GUID()) : EditorWindow("Scene Graph", EditorWindowTypes::SceneGraph, guid) { }
 
 		private:
 

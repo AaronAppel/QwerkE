@@ -18,7 +18,7 @@ namespace QwerkE {
 		class EditorWindowEntityInspector : public EditorWindow
 		{
 		public:
-			EditorWindowEntityInspector::EditorWindowEntityInspector(GUID guid = GUID()) : EditorWindow("Entity Inspector", EditorWindowTypes::EntityInspector, guid) { }
+			EditorWindowEntityInspector(GUID guid = GUID()) : EditorWindow("Entity Inspector", EditorWindowTypes::EntityInspector, guid) { }
 
 		private:
 

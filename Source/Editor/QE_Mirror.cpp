@@ -81,8 +81,38 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugDefault)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugEvents)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugEvents)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugInput)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugInput)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugMemory)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugMemory)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugPhysics)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugPhysics)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugProfiler)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugProfiler)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugRenderer)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugRenderer)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugWindows)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugWindows)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
@@ -96,6 +126,11 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowEntityInspector)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
+MIRROR_CLASS(QwerkE::Editor::EditorWindowFileEditor)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFileEditor)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowFolderViewer)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
@@ -103,6 +138,11 @@ MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowHexEditor)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowHexEditor)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowInputMapping)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowInputMapping)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 

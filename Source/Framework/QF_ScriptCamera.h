@@ -153,7 +153,7 @@ namespace QwerkE {
 
 			m_up = bx::cross(right, forward);
 
-			ImGui::DefaultDebugWindow([&]()
+			ImGui::DefaultWindow([&]()
 			{
 				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
 

@@ -11,6 +11,7 @@
 #include "QF_Buffer.h"
 #include "QF_ComponentScript.h"
 #include "QF_Enums.h"
+#include "QF_Files.h"
 #include "QF_Log.h"
 #include "QF_Scenes.h"
 

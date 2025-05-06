@@ -11,7 +11,7 @@ namespace QwerkE {
 		class EditorWindowDebugDefault : public EditorWindow
 		{
 		public:
-			EditorWindowDebugDefault::EditorWindowDebugDefault(GUID guid) :
+			EditorWindowDebugDefault(GUID guid) :
 				EditorWindow(ImGui::g_DefaultDebugWindowName,
 					EditorWindowTypes::DefaultDebug,
 					guid,

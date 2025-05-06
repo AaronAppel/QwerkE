@@ -46,6 +46,9 @@
     <ClCompile Include="Editor\QE_Settings.cpp">
       <Filter>Data</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorInspectorJson.cpp">
+      <Filter>Inspector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />
@@ -135,6 +138,30 @@
     </ClInclude>
     <ClInclude Include="Editor\QE_EditorWindowDefaultDebug.h">
       <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDebugRenderer.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDebugEvents.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDebugWindows.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDebugPhysics.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDebugMemory.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowDebugProfiler.h">
+      <Filter>Windows\Singleton\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowInputMapping.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowFileEditor.h">
+      <Filter>Windows\Instanced</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

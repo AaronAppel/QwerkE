@@ -16,7 +16,7 @@ namespace QwerkE {
 		class EditorWindowFolderViewer : public EditorWindow
 		{
 		public:
-			EditorWindowFolderViewer::EditorWindowFolderViewer(GUID guid = GUID()) :
+			EditorWindowFolderViewer(GUID guid = GUID()) :
 				EditorWindow("Folder Viewer", EditorWindowTypes::FolderViewer, guid)
 			{
 				m_SearchOrFilterBuffer.reserve(250);

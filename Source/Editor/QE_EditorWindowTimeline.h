@@ -16,7 +16,7 @@ namespace QwerkE {
 		class EditorWindowTimeline : public EditorWindow
 		{
 		public:
-			EditorWindowTimeline::EditorWindowTimeline(GUID guid = GUID()) :
+			EditorWindowTimeline(GUID guid = GUID()) :
 				EditorWindow("Timeline", EditorWindowTypes::Timeline, guid)
 			{ }
 

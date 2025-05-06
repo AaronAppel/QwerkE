@@ -14,7 +14,7 @@ namespace QwerkE {
 		class EditorWindowShaderEditor : public EditorWindow
 		{
 		public:
-			EditorWindowShaderEditor::EditorWindowShaderEditor(GUID guid = GUID()) :
+			EditorWindowShaderEditor(GUID guid = GUID()) :
 				EditorWindow("Shader Editor", EditorWindowTypes::ShaderEditor, guid)
 			{
 				m_FileBuffer.Allocate(m_StartingBufferSize);
@@ -26,8 +26,11 @@ namespace QwerkE {
 			{
 				// #TODO Path validation
 				ImGui::Text("Shader file path:");
-				ImGui::SameLine();
-				ImGui::Text(m_CurrentShaderFilePath.string().c_str());
+				const std::string result = ImGui::DirectoryPathAsSameLineButtons(m_CurrentShaderFilePath.string());
+				if (!result.empty())
+				{
+					m_CurrentShaderFilePath = result;
+				}
 
 				if (ImGui::Button("Load file from explorer"))
 				{

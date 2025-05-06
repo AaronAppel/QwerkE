@@ -112,7 +112,7 @@ namespace ImGui
 
 	const char* const g_DefaultDebugWindowName = "Debug Default##EditorWindow";
 	template <typename Function>
-	void DefaultDebugWindow(Function function)
+	void DefaultWindow(Function function)
 	{
 		if (ImGui::Begin(g_DefaultDebugWindowName))
 		{
@@ -121,5 +121,7 @@ namespace ImGui
 		}
 		ImGui::End();
 	}
+
+	std::string DirectoryPathAsSameLineButtons(const std::string& directory);
 
 }

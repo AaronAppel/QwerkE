@@ -4,6 +4,8 @@
 
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 
+struct cJSON;
+
 namespace QwerkE {
 
     namespace Inspector {
@@ -29,6 +31,8 @@ namespace QwerkE {
 
             return valueChanged;
         }
+
+        void InspectJsonFile(cJSON* jsonStructure, bool raw);
 
     }
 
