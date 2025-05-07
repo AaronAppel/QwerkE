@@ -12,77 +12,63 @@ namespace QwerkE {
 
     namespace Input {
 
+        // #TODO Consider using extern to access GLFW window* in Window::
+        // extern GLFWwindow* s_GlfwWindow;
+
         extern InputStatesBitRingBuffer<QKey, bits5> s_Keys;
         extern InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons;
         extern InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
 
-        extern void Initialize_Internal();
-        extern void NewFrame_Internal();
-        extern void Shutdown_Internal();
+        extern void Internal_Initialize();
+        extern void Internal_NewFrame();
+        extern void Internal_Shutdown();
 
-        extern void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState);
-        extern bool KeyDown_Internal(const QKey a_Key);
-        extern bool MouseDown_Internal(const QKey a_Key);
+        extern void Internal_KeyChanged(const QKey a_Key, const QKeyState a_KeyState);
 
-        extern void OnMouseMove_New(const vec2f& a_NewPosition);
-        extern void OnMouseButton_New(const QKey a_Key, const QKeyState a_KeyState);
-        extern void OnMouseScroll_New(const double xoffset, const double yoffset);
+        extern void Internal_MouseMove(const vec2f& a_NewPosition);
+        extern void Internal_MouseButton(const QKey a_Key, const QKeyState a_KeyState);
+        extern void Internal_MouseScroll(const double xoffset, const double yoffset);
 
-        extern void OnGamepadButtonEvent(const QGamepad a_Key, const QKeyState a_KeyState);
-        extern void OnGamepadAxisEvent(const unsigned char a_AxisId, const vec2f a_AxisValue);
+        extern void Internal_GamepadButton(const QGamepad a_Key, const QKeyState a_KeyState);
+        extern void Internal_GamepadAxis(const unsigned char a_AxisId, const vec2f a_AxisValue);
 
-        constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
-        constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
-
-        std::vector<int> s_DeviceIds; // glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
+        std::vector<int> s_GamepadIds; // #TODO glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
         static std::vector<std::vector<float>> s_DeviceAxesStates;
         static std::vector<std::vector<int>> s_DeviceButtonsStates;
 
-        // #TODO Consider using extern to access GLFW window* in Window::
-        // extern GLFWwindow* s_GlfwWindow;
+        static void Local_AddGamepad(const u8 a_GamepadId);
+        constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey);
+        constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode);
 
-        void Initialize() // #NOTE Initialize is only for joysticks (maybe register callbacks?) so could look to improve
+        void Initialize()
         {
-            Initialize_Internal();
+            Internal_Initialize();
 
             for (size_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
             {
                 int present = glfwJoystickPresent(i);
                 if (present)
                 {
-                    int hatStatesCount;
-                    const unsigned char* const buttons = glfwGetJoystickButtons(i, &hatStatesCount);
-                    s_DeviceIds.emplace_back(i);
-                    s_DeviceButtonsStates.emplace_back(0);
-                    for (size_t j = 0; j < hatStatesCount; j++)
-                    {
-                        s_DeviceButtonsStates[s_DeviceButtonsStates.size() - 1].emplace_back(0);
-                    }
-
-                    int axesCount;
-                    const float* axes = glfwGetJoystickAxes(i, &axesCount);
-                    s_DeviceAxesStates.emplace_back(0.f);
-                    for (size_t i = 0; i < axesCount; i++)
-                    {
-                        s_DeviceAxesStates[s_DeviceAxesStates.size() - 1].emplace_back(0.f);
-                    }
+                    Local_AddGamepad(i);
                 }
             }
         }
 
         void NewFrame()
         {
-            NewFrame_Internal();
+            Internal_NewFrame();
 
-            // #TODO Test with 2+ gamepads. See if all devices are polled after id 0 is checked. May need to handle in below loop with --i; continue;
-            glfwJoystickPresent(0); // #NOTE Triggers GLFW to poll joystick disconnect event
+            glfwJoystickPresent(QGamepad::e_Gamepad0); // #NOTE Triggers GLFW to poll joystick disconnect event(s)
 
-            for (size_t i = 0; i < s_DeviceIds.size(); i++)
+            for (size_t i = 0; i < s_GamepadIds.size(); i++)
             {
-                // #TODO glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
+                // #TODO Review glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
+
+                ASSERT(glfwJoystickPresent(i), "Device no longer present!");
 
                 int axesCount;
-                const float* axes = glfwGetJoystickAxes(s_DeviceIds[i], &axesCount);
+                const float* axes = glfwGetJoystickAxes(s_GamepadIds[i], &axesCount);
+                ASSERT(axes, "Null device axes!");
 
                 vec2f leftStickAxes;
                 vec2f rightStickAxes;
@@ -99,7 +85,7 @@ namespace QwerkE {
                         leftStickAxes.y = axes[j];
                         if (s_DeviceAxesStates[i][0] != leftStickAxes.x || s_DeviceAxesStates[i][1] != leftStickAxes.y)
                         {
-                            OnGamepadAxisEvent(j, leftStickAxes);
+                            Internal_GamepadAxis(j, leftStickAxes);
                         }
                         break;
                     case 2: // Right stick X [2]
@@ -109,7 +95,7 @@ namespace QwerkE {
                         rightStickAxes.y = axes[j];
                         if (s_DeviceAxesStates[i][2] != rightStickAxes.x || s_DeviceAxesStates[i][3] != rightStickAxes.y)
                         {
-                            OnGamepadAxisEvent(j, rightStickAxes);
+                            Internal_GamepadAxis(j, rightStickAxes);
                         }
                         break;
                     case 4: // L trigger [4]
@@ -119,7 +105,7 @@ namespace QwerkE {
                         triggersAxes.y = axes[j];
                         if (s_DeviceAxesStates[i][4] != triggersAxes.x || s_DeviceAxesStates[i][5] != triggersAxes.y)
                         {
-                            OnGamepadAxisEvent(j, triggersAxes);
+                            Internal_GamepadAxis(j, triggersAxes);
                         }
                         break;
                     }
@@ -134,236 +120,34 @@ namespace QwerkE {
                 s_DeviceAxesStates[i][4] = triggersAxes.x;
                 s_DeviceAxesStates[i][5] = triggersAxes.y;
 
-                // glfwGetJoystickHats
+                // #TODO Checkout glfwGetJoystickHats
 
                 int hatStatesCount;
-                const unsigned char* const buttons = glfwGetJoystickButtons(s_DeviceIds[i], &hatStatesCount);
-
+                const unsigned char* const buttons = glfwGetJoystickButtons(s_GamepadIds[i], &hatStatesCount);
                 ASSERT(buttons, "Null device buttons!");
 
                 for (size_t j = 0; j < hatStatesCount; j++)
                 {
-                    // [0] A
-                    // [1] B
-                    // [2] X
-                    // [3] Y
-                    // [4] L Bumper
-                    // [5] R Bumper
-                    // [6] Select
-                    // [7] Start
-                    // [8] Left Stick Click
-                    // [9] Right Stick Click
-                    // [10] D pad up
-                    // [11] D pad right
-                    // [12] D pad down
-                    // [13] D pad left
-
                     if (s_DeviceButtonsStates[i][j] != buttons[j])
                     {
-                        OnGamepadButtonEvent(static_cast<QGamepad>(QGamepad::e_Gamepad0 + j), static_cast<QKeyState>(QKeyState::e_KeyStateDown == buttons[j]));
+                        Internal_GamepadButton(static_cast<QGamepad>(QGamepad::e_Gamepad0 + j), static_cast<QKeyState>(QKeyState::e_KeyStateDown == buttons[j]));
                     }
                     s_DeviceButtonsStates[i][j] = buttons[j];
                 }
             }
-
-            // #TODO Poll joystick states
-            // OnJoystickEvent(connect/disconnect, button up/down, stick moved?);
-            // for (connected joysticks)
-            //  get updated joystick[i] state
-            //  compare previous and current states
-            //  raise events
-            //  set previous state to current
         }
 
         void Shutdown()
         {
-            Shutdown_Internal();
+            Internal_Shutdown();
 
-            s_DeviceIds.clear();
+            s_GamepadIds.clear();
             s_DeviceButtonsStates.clear();
             s_DeviceAxesStates.clear();
         }
 
-#ifdef _QDEARIMGUI
-        // #NOTE Implementing using demo from: https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_glfw.cpp
-        // #TODO See ImGui_ImplGlfw_UpdateMouseCursor() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L851
-        // Also see ImGui_ImplGlfw_UpdateMouseData() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L780
-        // Also see ImGui_ImplGlfw_UpdateGamepads() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L880
-        static void ImGui_ImplGlfw_UpdateKeyModifiers(GLFWwindow* window);
-        static ImGuiKey ImGui_ImplGlfw_KeyToImGuiKey(int keycode, int scancode);
-#endif // _QDEARIMGUI
-
-        static void Local_GlfwKeyCallback(GLFWwindow* a_Window, const int a_KeyCode, const int a_Scancode, const int a_Action, const int a_Mode)
-        {
-            if (GLFW_REPEAT != a_Action) // #TODO Review GLFW_REPEAT
-            {
-                const QKey qwerkEeKey = Local_GlfwToQwerkE(a_KeyCode, a_Scancode);
-                if (QKey::e_MAX != qwerkEeKey)
-                {
-                    OnKeyEvent_New(qwerkEeKey, static_cast<QKeyState>(GLFW_PRESS == a_Action));
-                }
-
-#ifdef _QDEARIMGUI
-                ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
-                // #NOTE ImGui_ImplGlfw_TranslateUntranslatedKey() contents were stripped by #ifs so removed entirely
-
-                ImGuiIO& io = ImGui::GetIO();
-                ImGuiKey imgui_key = ImGui_ImplGlfw_KeyToImGuiKey(a_KeyCode, a_Scancode);
-                io.AddKeyEvent(imgui_key, (a_Action == GLFW_PRESS));
-#endif
-            }
-        }
-
-        static void Local_GlfwCharCallback(GLFWwindow* window, unsigned int codePoint)
-        {
-#ifdef _QDEARIMGUI
-            if (codePoint > 0 && codePoint < 0x10000)
-            {
-                ImGui::GetIO().AddInputCharacter(codePoint);
-            }
-#endif
-        }
-
-        static void Local_GlfwCharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods)
-        {
-            int bp = 0; // For keys as char values: 'a'=97, 'A'=65, mod shift=1 or GLFW_MOD_SHIFT
-        }
-
-        static void Local_GlfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
-        {
-            OnMouseMove_New({ xpos, ypos });
-
-#ifdef _QDEARIMGUI
-            ImGuiIO& io = ImGui::GetIO();
-            io.AddMousePosEvent((float)xpos, (float)ypos);
-#endif // _QDEARIMGUI
-        }
-
-        static void Local_GlfwMouseButtonCallback(GLFWwindow* a_Window, const int a_Button, const int a_Action, const int a_Mods)
-        {
-            const QKey qKey = Local_GlfwToQwerkE(a_Button, 0);
-            MouseDown_Internal(qKey);
-            OnMouseButton_New(qKey, static_cast<QKeyState>(GLFW_PRESS == a_Action));
-
-#ifdef _QDEARIMGUI
-            ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
-
-            ImGuiIO& io = ImGui::GetIO();
-            if (a_Button >= 0 && a_Button < ImGuiMouseButton_COUNT)
-            {
-                io.AddMouseButtonEvent(a_Button, a_Action == GLFW_PRESS);
-            }
-#endif // _QDEARIMGUI
-        }
-
-        static void Local_GlfwScrollCallback(GLFWwindow* a_Window, const double a_OffsetX, const double a_OffsetY)
-        {
-            OnMouseScroll_New(a_OffsetX, a_OffsetY);
-
-#ifdef _QDEARIMGUI
-            ImGuiIO& io = ImGui::GetIO();
-            io.AddMouseWheelEvent(static_cast<float>(a_OffsetX), static_cast<float>(a_OffsetY));
-#endif // _QDEARIMGUI
-        }
-
-        static void Local_GlfwJoystickCallback(const int a_JoystickId, const int eventId)
-        {
-            // #TODO void glfwSetJoystickUserPointer(int jid, void* pointer);
-            // or void* glfwGetJoystickUserPointer(int jid);
-
-            switch (eventId)
-            {
-            case GLFW_CONNECTED: // 262145
-                for (size_t i = 0; i < s_DeviceIds.size(); i++)
-                {
-                    if (a_JoystickId == s_DeviceIds[i])
-                    {
-                        ASSERT(false, "Device already registered!");
-                        return;
-                    }
-                }
-
-                {
-                    int hatStatesCount;
-                    const unsigned char* const buttons = glfwGetJoystickButtons(a_JoystickId, &hatStatesCount);
-                    s_DeviceIds.emplace_back(a_JoystickId);
-                    s_DeviceButtonsStates.emplace_back(0);
-                    for (size_t i = 0; i < hatStatesCount; i++)
-                    {
-                        s_DeviceButtonsStates[s_DeviceButtonsStates.size() - 1].emplace_back(0);
-                    }
-
-                    int axesCount;
-                    const float* axes = glfwGetJoystickAxes(a_JoystickId, &axesCount);
-                    s_DeviceAxesStates.emplace_back(0.f);
-                    for (size_t i = 0; i < axesCount; i++)
-                    {
-                        s_DeviceAxesStates[s_DeviceAxesStates.size() - 1].emplace_back(0.f);
-                    }
-                }
-
-                // #TODO Support device objects
-                // glfwGetJoystickName
-                // glfwGetJoystickGUID
-                // glfwJoystickIsGamepad
-                break;
-
-            case GLFW_DISCONNECTED: // 262146
-                for (size_t i = 0; i < s_DeviceIds.size(); i++)
-                {
-                    if (a_JoystickId == s_DeviceIds[i])
-                    {
-                        s_DeviceIds.erase(s_DeviceIds.begin() + i);
-                        return;
-                    }
-                }
-                ASSERT(false, "Device not registered!");
-                break;
-
-            default:
-                ASSERT(false, "Unhandled joystick event!");
-                break;
-            }
-        }
-
-        void Input_RegisterGlfwCallbacks(GLFWwindow* window)
-        {
-            // #TODO Consider moving into Initialize() or otherwise combining the two functions
-            // #TODO Handle multiple GLFW windows
-
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
-            // #TODO Set GLFW_JOYSTICK_HAT_BUTTONS at int
-            glfwSetKeyCallback(window, Local_GlfwKeyCallback);
-            glfwSetCharCallback(window, Local_GlfwCharCallback);
-            glfwSetCharModsCallback(window, Local_GlfwCharModsCallback);
-
-            glfwSetCursorPosCallback(window, Local_GlfwCursorPositionCallback);
-            glfwSetMouseButtonCallback(window, Local_GlfwMouseButtonCallback);
-            glfwSetScrollCallback(window, Local_GlfwScrollCallback);
-
-            glfwSetJoystickCallback(Local_GlfwJoystickCallback);
-        }
-
-        void Input_UnregisterGlfwCallbacks(GLFWwindow* window)
-        {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
-            glfwSetKeyCallback(window, NULL);
-            glfwSetCharCallback(window, NULL);
-            glfwSetCharModsCallback(window, NULL);
-
-            glfwSetCursorPosCallback(window, NULL);
-            glfwSetMouseButtonCallback(window, NULL);
-            glfwSetScrollCallback(window, NULL);
-
-            glfwSetJoystickCallback(NULL);
-        }
-
         bool KeyDown(const QKey a_Key)
         {
-            const bool result = KeyDown_Internal(a_Key); // #TODO Consider return value
-
             if (e_Any == a_Key)
             {
                 return s_Keys.DownKeys() > 0;
@@ -374,8 +158,6 @@ namespace QwerkE {
 
         bool MouseDown(const QKey a_Key)
         {
-            const bool result = MouseDown_Internal(a_Key); // #TODO Consider return value
-
             if (e_Any == a_Key)
             {
                 return s_MouseButtons.DownKeys() > 0;
@@ -400,13 +182,13 @@ namespace QwerkE {
             }
             // #TODO GLFWindow* reference. Remember to test multi-window input
             int jid = GLFW_JOYSTICK_1; // #TODO Require id from caller
-            ASSERT(QGamepad::e_GamepadAny == a_Key || QGamepad::e_GamepadButtonMax >= a_Key && QGamepad::e_Gamepad0 <= a_Key, "Invalid Gamepad key!");
+            ASSERT(QGamepad::e_GamepadAny == a_Key || QGamepad::e_QGamepadInputMax >= a_Key && QGamepad::e_Gamepad0 <= a_Key, "Invalid Gamepad key!");
             return e_KeyStateDown == s_DeviceButtonsStates[jid][a_Key];
         }
 
         const char* const GamepadName(const QGamepad a_Key)
         {
-            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_GamepadIdMax > a_Key)
+            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
             {
                 u8 deviceId = static_cast<u8>(a_Key);
                 return glfwGetJoystickName(deviceId);
@@ -416,12 +198,12 @@ namespace QwerkE {
 
         u8 GamepadsCount()
         {
-            return s_DeviceIds.size();
+            return s_GamepadIds.size();
         }
 
         u8 GamepadButtonCount(const QGamepad a_Key)
         {
-            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_GamepadIdMax > a_Key)
+            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
             {
                 u8 deviceId = static_cast<u8>(a_Key);
                 int buttonCount;
@@ -433,7 +215,7 @@ namespace QwerkE {
 
         u8 GamepadAxesCount(const QGamepad a_Key)
         {
-            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_GamepadIdMax > a_Key)
+            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
             {
                 u8 deviceId = static_cast<u8>(a_Key);
                 int axesCount;
@@ -441,6 +223,182 @@ namespace QwerkE {
                 return axesCount;
             }
             return 0;
+        }
+
+        static void Local_AddGamepad(const u8 a_GamepadId)
+        {
+            for (size_t i = 0; i < s_GamepadIds.size(); i++)
+            {
+                if (a_GamepadId == s_GamepadIds[i])
+                {
+                    ASSERT(false, "Device already registered!");
+                    return;
+                }
+            }
+
+            s_GamepadIds.emplace_back(a_GamepadId);
+
+            int hatStatesCount;
+            const unsigned char* const buttons = glfwGetJoystickButtons(a_GamepadId, &hatStatesCount);
+            s_DeviceButtonsStates.emplace_back(0);
+            for (size_t i = 0; i < hatStatesCount; i++)
+            {
+                s_DeviceButtonsStates[s_DeviceButtonsStates.size() - 1].emplace_back(buttons[i]);
+            }
+
+            int axesCount;
+            const float* axes = glfwGetJoystickAxes(a_GamepadId, &axesCount);
+            s_DeviceAxesStates.emplace_back(0.f);
+            for (size_t i = 0; i < axesCount; i++)
+            {
+                s_DeviceAxesStates[s_DeviceAxesStates.size() - 1].emplace_back(axes[i]);
+            }
+
+            // #TODO Look at saving more gamepad data
+            // glfwGetJoystickName
+            // glfwGetJoystickGUID
+            // glfwJoystickIsGamepad
+        }
+
+#ifdef _QDEARIMGUI
+        // #NOTE Implementing using demo from: https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_glfw.cpp
+        // #TODO See ImGui_ImplGlfw_UpdateMouseCursor() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L851
+        // Also see ImGui_ImplGlfw_UpdateMouseData() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L780
+        // Also see ImGui_ImplGlfw_UpdateGamepads() in https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L880
+        static void ImGui_ImplGlfw_UpdateKeyModifiers(GLFWwindow* window);
+        static ImGuiKey ImGui_ImplGlfw_KeyToImGuiKey(int keycode, int scancode);
+#endif // _QDEARIMGUI
+
+        static void Local_GlfwKeyCallback(GLFWwindow* a_Window, const int a_KeyCode, const int a_Scancode, const int a_Action, const int a_Mode)
+        {
+            if (GLFW_REPEAT != a_Action) // #TODO Review GLFW_REPEAT
+            {
+                const QKey qwerkEeKey = Local_GlfwToQwerkE(a_KeyCode, a_Scancode);
+                if (QKey::e_QKeyMax != qwerkEeKey)
+                {
+                    Internal_KeyChanged(qwerkEeKey, static_cast<QKeyState>(GLFW_PRESS == a_Action));
+                }
+
+#ifdef _QDEARIMGUI
+                ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
+                // #NOTE ImGui_ImplGlfw_TranslateUntranslatedKey() contents were stripped by #ifs so removed entirely
+
+                ImGuiIO& io = ImGui::GetIO();
+                ImGuiKey imgui_key = ImGui_ImplGlfw_KeyToImGuiKey(a_KeyCode, a_Scancode);
+                io.AddKeyEvent(imgui_key, (a_Action == GLFW_PRESS));
+#endif // _QDEARIMGUI
+            }
+        }
+
+        static void Local_GlfwCharCallback(GLFWwindow* window, unsigned int codePoint)
+        {
+#ifdef _QDEARIMGUI
+            if (codePoint > 0 && codePoint < 0x10000)
+            {
+                ImGui::GetIO().AddInputCharacter(codePoint);
+            }
+#endif // _QDEARIMGUI
+        }
+
+        static void Local_GlfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+        {
+            Internal_MouseMove({ xpos, ypos });
+
+#ifdef _QDEARIMGUI
+            ImGuiIO& io = ImGui::GetIO();
+            io.AddMousePosEvent((float)xpos, (float)ypos);
+#endif // _QDEARIMGUI
+        }
+
+        static void Local_GlfwMouseButtonCallback(GLFWwindow* a_Window, const int a_Button, const int a_Action, const int a_Mods)
+        {
+            const QKey qKey = Local_GlfwToQwerkE(a_Button, 0);
+            Internal_MouseButton(qKey, static_cast<QKeyState>(GLFW_PRESS == a_Action));
+
+#ifdef _QDEARIMGUI
+            ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
+
+            ImGuiIO& io = ImGui::GetIO();
+            if (a_Button >= 0 && a_Button < ImGuiMouseButton_COUNT)
+            {
+                io.AddMouseButtonEvent(a_Button, a_Action == GLFW_PRESS);
+            }
+#endif // _QDEARIMGUI
+        }
+
+        static void Local_GlfwScrollCallback(GLFWwindow* a_Window, const double a_OffsetX, const double a_OffsetY)
+        {
+            Internal_MouseScroll(a_OffsetX, a_OffsetY);
+
+#ifdef _QDEARIMGUI
+            ImGuiIO& io = ImGui::GetIO();
+            io.AddMouseWheelEvent(static_cast<float>(a_OffsetX), static_cast<float>(a_OffsetY));
+#endif // _QDEARIMGUI
+        }
+
+        static void Local_GlfwJoystickCallback(const int a_JoystickId, const int eventId)
+        {
+            // #TODO void glfwSetJoystickUserPointer(int jid, void* pointer);
+            // or void* glfwGetJoystickUserPointer(int jid);
+
+            switch (eventId)
+            {
+            case GLFW_CONNECTED: // 262145
+                Local_AddGamepad(a_JoystickId);
+                break;
+
+            case GLFW_DISCONNECTED: // 262146
+                for (size_t i = 0; i < s_GamepadIds.size(); i++)
+                {
+                    if (a_JoystickId == s_GamepadIds[i])
+                    {
+                        s_GamepadIds.erase(s_GamepadIds.begin() + i);
+                        return;
+                    }
+                }
+                ASSERT(false, "Device disconnected but not registered!");
+                break;
+
+            default:
+                ASSERT(false, "Unhandled joystick event!");
+                break;
+            }
+        }
+
+        void Input_RegisterGlfwCallbacks(GLFWwindow* window)
+        {
+            // #TODO Consider moving into Initialize() or otherwise combining the two functions
+            // #TODO Handle multiple GLFW windows
+
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+            // #TODO Set GLFW_JOYSTICK_HAT_BUTTONS at int
+            glfwSetKeyCallback(window, Local_GlfwKeyCallback);
+            glfwSetCharCallback(window, Local_GlfwCharCallback);
+
+            // For keys as char values: 'a'=97, 'A'=65, mod shift=1 or GLFW_MOD_SHIFT
+            // glfwSetCharModsCallback(window, Local_GlfwCharModsCallback);
+
+            glfwSetCursorPosCallback(window, Local_GlfwCursorPositionCallback);
+            glfwSetMouseButtonCallback(window, Local_GlfwMouseButtonCallback);
+            glfwSetScrollCallback(window, Local_GlfwScrollCallback);
+
+            glfwSetJoystickCallback(Local_GlfwJoystickCallback);
+        }
+
+        void Input_UnregisterGlfwCallbacks(GLFWwindow* window)
+        {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+            glfwSetKeyCallback(window, NULL);
+            glfwSetCharCallback(window, NULL);
+            // glfwSetCharModsCallback(window, NULL);
+
+            glfwSetCursorPosCallback(window, NULL);
+            glfwSetMouseButtonCallback(window, NULL);
+            glfwSetScrollCallback(window, NULL);
+
+            glfwSetJoystickCallback(NULL);
         }
 
 #ifdef _QDEARIMGUI
@@ -603,7 +561,7 @@ namespace QwerkE {
                 case e_Gamepad14: return GLFW_GAMEPAD_BUTTON_DPAD_LEFT;         // Gamepad device button 14
             }
 
-            return QGamepad::e_GamepadButtonMax;
+            return QGamepad::e_QGamepadInputMax;
         }
 
         constexpr int Local_QwerkEToGlfw(const QKey a_QwerkEKey)
@@ -778,7 +736,7 @@ namespace QwerkE {
 
             LOG_CRITICAL("Unsupported QKey {0}!", a_QwerkEKey);
             // ASSERT(false, "Unsupported QKey key!");
-            return QKey::e_MAX;
+            return QKey::e_QKeyMax;
         }
 
         constexpr QKey Local_GlfwToQwerkE(const int a_GlfwKey, int a_Scancode)
@@ -943,7 +901,7 @@ namespace QwerkE {
 
             LOG_CRITICAL("Unsupported GLFW key {0} or scancode {1}!", a_GlfwKey, a_Scancode);
             // ASSERT(false, "Unsupported GLFW key!");
-            return QKey::e_MAX;
+            return QKey::e_QKeyMax;
         }
 
     }

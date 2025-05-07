@@ -32,7 +32,12 @@ namespace QwerkE {
         e_Gamepad12,                    // Gamepad device button 12
         e_Gamepad13,                    // Gamepad device button 13
         e_Gamepad14,                    // Gamepad device button 14
-        e_GamepadButtonMax,             // Null or invalid gamepad button entry
+
+        e_GamepadAxis01,                // For OnGamepad() event axis
+        e_GamepadAxis23,                //
+        e_GamepadAxis45,                //
+
+        e_QGamepadInputMax,             // Null or invalid gamepad button entry
 
         e_GamepadAny,                   // Any gamepad button
 
@@ -53,7 +58,7 @@ namespace QwerkE {
         e_GamepadId13,                  //
         e_GamepadId14,                  //
         e_GamepadId15,                  // 16th and max or last gamepad ID
-        e_GamepadIdMax,                 // Null or invalid gamepad ID entry
+        e_QGamepadIdMax,                // Null or invalid gamepad ID entry
 
         // Gamepad device ID alias
         e_GamepadIdAny = e_GamepadId0,  // Any or 1st gamepad ID
@@ -89,6 +94,7 @@ namespace QwerkE {
         // Macro keys currently unsupported.
         // Entries assigned using char/ASCII values are order dependent.
 
+        // #TODO Gamepad buttons start at 0
         e_MouseButton1 = 0,             // Mouse device button 1
         e_MouseButton2,                 // Mouse device button 2
         e_MouseButton3,                 // Mouse device button 3
@@ -254,7 +260,9 @@ namespace QwerkE {
         e_ScrollLeft,                   // Navigate left like a mouse scroll left
         e_ScrollRight,                  // Navigate right like a mouse scroll right
 
-        e_MAX,                          // Invalid entry and end of enum
+        e_MouseMove,                    // For OnMouse() event
+
+        e_QKeyMax,                      // Invalid entry and end of enum
 
         // Aliases
         e_MouseLeft = e_MouseButton1,   // Left mouse button

@@ -301,8 +301,72 @@ namespace QwerkE {
             }
         }
 
+        GUID s_OnKeyGuid = 0;
+        void OnKey(QKey a_Key, QKeyState a_State)
+        {
+            if (QKey::e_1 == a_Key)
+            {
+                LOG_INFO("OnKey(): {0}, {1}", a_Key, a_State);
+                Input::OnKeyStop(s_OnKeyGuid);
+            }
+        }
+
+        GUID s_OnMouseGuid = 0;
+        void OnMouse(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_Delta)
+        {
+            switch (a_Key)
+            {
+            case QwerkE::e_MouseLeft:
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                Input::OnMouseStop(s_OnMouseGuid);
+                break;
+            case QwerkE::e_MouseRight:
+                break;
+            case QwerkE::e_MouseMiddle:
+                break;
+            case QwerkE::e_MouseButton4:
+                break;
+            case QwerkE::e_MouseButton5:
+                break;
+            case QwerkE::e_MouseButton6:
+                break;
+            case QwerkE::e_MouseButton7:
+                break;
+            case QwerkE::e_MouseButton8:
+                break;
+            case QwerkE::e_ScrollUp:
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                break;
+            case QwerkE::e_ScrollDown:
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                break;
+            case QwerkE::e_MouseMove:
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                break;
+            }
+        }
+
+        GUID s_OnGamepadGuid = 0;
+        void OnGamepad(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56)
+        {
+            switch (a_Input)
+            {
+            case QwerkE::e_GamepadA:
+                LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y);
+                Input::OnGamepadStop(s_OnGamepadGuid);
+                break;
+            case QwerkE::e_GamepadAxis01:
+                LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y);
+                break;
+            }
+        }
+
 		void local_Initialize()
 		{
+            s_OnKeyGuid = Input::OnKey(OnKey);
+            s_OnMouseGuid = Input::OnMouse(OnMouse);
+            s_OnGamepadGuid = Input::OnGamepad(OnGamepad);
+
             Projects::Initialize();
 
             LoadImGuiStyleFromFile();
@@ -450,12 +514,12 @@ namespace QwerkE {
 
             if (!s_ShowingWindowStackPanel)
             {
-                if (Input::KeyPressed(QKey::e_Tab) && Input::KeyDown(QKey::e_CtrlL))
+                if (Input::KeyPressed(QKey::e_Tab) && Input::KeyDown(QKey::e_CtrlAny))
                 {
                     s_ShowingWindowStackPanel = true;
                 }
             }
-            else if (s_ShowingWindowStackPanel = Input::KeyDown(QKey::e_CtrlL)) // #NOTE Assignment intentional
+            else if (s_ShowingWindowStackPanel = Input::KeyDown(QKey::e_CtrlAny)) // #NOTE Assignment intentional
             {
                 const vec2f& size = Window::GetSize();
                 ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
@@ -515,12 +579,12 @@ namespace QwerkE {
                 }
             }
 
-            if (Input::KeyPressed(QKey::e_R) && Input::KeyDown(QKey::e_CtrlL))
+            if (Input::KeyPressed(QKey::e_R) && Input::KeyDown(QKey::e_CtrlAny))
             {
                 RequestRestart();
             }
 
-            if (Input::KeyPressed(QKey::e_U) && Input::KeyDown(QKey::e_CtrlL))
+            if (Input::KeyPressed(QKey::e_U) && Input::KeyDown(QKey::e_CtrlAny))
             {
                 s_ShowingEditorUI = !s_ShowingEditorUI;
             }

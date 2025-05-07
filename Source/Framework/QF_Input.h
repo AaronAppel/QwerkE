@@ -1,23 +1,13 @@
 #include "QF_GameActions.h"
 #include "QF_QKey.h"
 
+#include "QC_Guid.h"
+
+#include <functional>
+
 namespace QwerkE {
 
     namespace Input {
-
-        // #NOTE Example/demo mock up of new input system API
-
-        // Considerations //
-        // Input layering, consumption, or otherwise avoiding/ignoring input based on context such as focused windows and gameplay state(s)
-
-        // Stage 1 //
-        // Minimal (MVP)
-        // Polling API
-
-        // #TODO Remaining for stage 1
-        // - [X] Review ImGui callbacks and propagating input to ImGui
-        // - [X] Replacing all existing calls to old Input system
-        // - [X] Deprecating old input system calls (if currently possible)
 
         void Initialize();
         void NewFrame();
@@ -29,7 +19,7 @@ namespace QwerkE {
 
         bool MousePressed(const QKey a_Key);
         bool MouseReleased(const QKey a_Key);
-        bool MouseScrolled(); // #TODO QKey::e_Any, or key argument?
+        bool MouseScrolled();
         float MouseScrollDelta();
         bool MouseDown(const QKey a_Key);
 
@@ -54,15 +44,23 @@ namespace QwerkE {
 #endif // _QDEBUG
 
         // Stage 2 //
-        // using OnKeyEventCallback = std::function<void(eKeys key, eKeyState state)>;
         // Callbacks and events
-        // void OnKeyStateChange(int key, void* callback) {} // Register
-        // void OnKeyStateChangeStop(int key, void* callback) {} // Unregister
-        // or
-        // void OnKey(int callback) {} // Any key register
-        // void OnKey(int key, void* callback) {} // Specific key register
-        // void OnKeyStop(int key) {} // Any key unregister
-        // void OnKeyStop(int key, void* callback) {} // Specific key unregister
+        using KeyCallback = std::function<void(QKey a_Key, QKeyState a_State)>;
+        GUID OnKey(KeyCallback a_Callback); // Any key register
+        // GUID OnKey(QKey a_Key, void* a_Callback) {} // Specific key register
+        void OnKeyStop(const GUID& a_FuncId); // Unregister
+
+        using MouseCallback = std::function<void(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_Position)>;
+        GUID OnMouse(MouseCallback a_Callback);
+        // GUID OnMouseButton(void* a_Callback) {} // Any mouse button register
+        // GUID OnMouseScrolled(QKey a_Key, void* a_Callback) {} // Any mouse scroll register
+        // GUID OnMouseMoved(const GUID& a_FuncId) {} // Any mouse move register
+        void OnMouseStop(const GUID& a_FuncId); // Unregister
+
+        using GamepadCallback = std::function<void(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56 )>;
+        GUID OnGamepad(GamepadCallback a_Callback); // Any key register
+        // GUID OnGamepad(QGamepad a_Key, void* a_Callback); // Specific gamepad button register
+        void OnGamepadStop(const GUID& a_FuncId); // Unregister
 
         // Stage 3 //
         // Devices and non-global or per-device input
@@ -123,6 +121,9 @@ namespace QwerkE {
         // void StartPressCounter(int key) { }
         // u16 GetPressCounter(int key) { return 0; }
         // void StopPressCounter(int key) { }
+
+        // Additional considerations //
+        // Input layering, consumption, or otherwise avoiding/ignoring input based on context such as focused windows and gameplay state(s)
 
     }
 

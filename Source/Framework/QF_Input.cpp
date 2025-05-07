@@ -31,11 +31,15 @@ namespace QwerkE {
         static GameActions s_GameActions;
         GameActions& GetGameActions() { return s_GameActions; }
 
+        std::vector<std::pair<GUID, KeyCallback>> s_KeyCallbacks;
+        std::vector<std::pair<GUID, MouseCallback>> s_MouseCallbacks;
+        std::vector<std::pair<GUID, GamepadCallback>> s_GamepadCallbacks;
+
 #ifdef _QDEBUG
         u64 s_InputsCount = 0;
 #endif // _QDEBUG
 
-        void Initialize_Internal()
+        void Internal_Initialize()
         {
             Serialize::FromFile(Paths::Setting(s_GameActionsFileName).c_str(), s_GameActions, true);
 
@@ -52,7 +56,7 @@ namespace QwerkE {
             s_GamepadAxisTriggersBuffer.AddMarker(1);
         }
 
-        void NewFrame_Internal()
+        void Internal_NewFrame()
         {
             s_Keys.Advance();
 
@@ -66,7 +70,7 @@ namespace QwerkE {
             s_GamepadAxisTriggersBuffer.AdvanceAllMarkers();
         }
 
-        void Shutdown_Internal()
+        void Internal_Shutdown()
         {
             // #TODO Reset all static state
             // s_CharsBuffer;
@@ -81,19 +85,23 @@ namespace QwerkE {
             s_GamepadButtons.Clear();
             s_GamepadAxisLeftStickBuffer.Reset();
             s_GamepadAxisRightStickBuffer.Reset();
-
             s_GamepadAxisTriggersBuffer.Reset();
         }
 
-        void OnKeyEvent_New(const QKey a_Key, const QKeyState a_KeyState)
+        void Internal_KeyChanged(const QKey a_Key, const QKeyState a_KeyState)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
 #endif // _QDEBUG
             s_Keys.Write(a_Key, a_KeyState);
+
+            for (size_t i = 0; i < s_KeyCallbacks.size(); i++)
+            {
+                s_KeyCallbacks[i].second(a_Key, a_KeyState);
+            }
         }
 
-        void OnMouseMove_New(const vec2f& a_NewPosition)
+        void Internal_MouseMove(const vec2f& a_NewPosition)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
@@ -102,17 +110,27 @@ namespace QwerkE {
             // - Mouse drag
             // if (mouse button down)
             s_MousePositionsBuffer.Write(a_NewPosition);
+
+            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            {
+                s_MouseCallbacks[i].second(e_MouseMove, QKeyState::e_KeyStateDown, 0.f, a_NewPosition);
+            }
         }
 
-        void OnMouseButton_New(const QKey a_Key, const QKeyState a_KeyState)
+        void Internal_MouseButton(const QKey a_Key, const QKeyState a_KeyState)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
 #endif // _QDEBUG
             s_MouseButtons.Write(a_Key, a_KeyState);
+
+            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            {
+                s_MouseCallbacks[i].second(a_Key, a_KeyState, 0.f, {});
+            }
         }
 
-        void OnMouseScroll_New(const double xoffset, const double yoffset)
+        void Internal_MouseScroll(const double xoffset, const double yoffset)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
@@ -140,9 +158,15 @@ namespace QwerkE {
             {
                 // #TODO Add scroll event to history?
             }
+
+            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            {
+                const QKey scrollKey = yoffset >= 0.f ? QKey::e_ScrollUp : QKey::e_ScrollDown;
+                s_MouseCallbacks[i].second(scrollKey, QKeyState::e_KeyStateDown, yoffset, {});
+            }
         }
 
-        void OnGamepadAxisEvent(const unsigned char a_AxisId, const vec2f a_AxisValue)
+        void Internal_GamepadAxis(const unsigned char a_AxisId, const vec2f a_AxisValue)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
@@ -152,34 +176,54 @@ namespace QwerkE {
             case 0:
             case 1:
                 s_GamepadAxisLeftStickBuffer.Write(a_AxisValue);
+
+                for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+                {
+                    s_GamepadCallbacks[i].second(QGamepad::e_GamepadAxis01, QKeyState::e_KeyStateDown, s_GamepadAxisLeftStickBuffer.ReadTop(), {}, {});
+                }
                 break;
             case 2:
             case 3:
                 s_GamepadAxisRightStickBuffer.Write(a_AxisValue);
+
+                for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+                {
+                    s_GamepadCallbacks[i].second(QGamepad::e_GamepadAxis23, QKeyState::e_KeyStateDown, {}, s_GamepadAxisRightStickBuffer.ReadTop(), {});
+                }
                 break;
             case 4:
             case 5:
                 s_GamepadAxisTriggersBuffer.Write(a_AxisValue);
+
+                for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+                {
+                    s_GamepadCallbacks[i].second(QGamepad::e_GamepadAxis45, QKeyState::e_KeyStateDown, {}, {}, s_GamepadAxisTriggersBuffer.ReadTop());
+                }
                 break;
             }
         }
 
-        void OnGamepadButtonEvent(const QGamepad a_Key, const QKeyState a_KeyState)
+        void Internal_GamepadButton(const QGamepad a_Key, const QKeyState a_KeyState)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
 #endif // _QDEBUG
             s_GamepadButtons.Write(a_Key, a_KeyState);
+
+            for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+            {
+                s_GamepadCallbacks[i].second(a_Key, a_KeyState, {}, {}, {});
+            }
         }
 
         template <typename T>
-        bool Local_Key(T a_BitRingBuffer, const QKey a_Key, const QKeyState e_KeyState)
+        bool Local_KeyChanged(T a_BitRingBuffer, const QKey a_Key, const QKeyState e_KeyState)
         {
-            ASSERT(QKey::e_MAX > a_Key, "Invalid QKey!");
+            ASSERT(QKey::e_QKeyMax > a_Key, "Invalid QKey!");
 
             switch (a_Key)
             {
-            case QKey::e_MAX: // Invalid entry
+            case QKey::e_QKeyMax: // Invalid entry
                 return false;
 
             case QKey::e_Any: // Support QKey::e_Any
@@ -198,27 +242,23 @@ namespace QwerkE {
 
         bool KeyPressed(const QKey a_Key)
         {
-            return Local_Key(s_Keys, a_Key, e_KeyStateDown);
+            return Local_KeyChanged(s_Keys, a_Key, e_KeyStateDown);
         }
 
         bool KeyReleased(const QKey a_Key)
         {
-            return Local_Key(s_Keys, a_Key, e_KeyStateUp);
+            return Local_KeyChanged(s_Keys, a_Key, e_KeyStateUp);
         }
-
-        bool KeyDown_Internal(const QKey a_Key) { return false; }
 
         bool MousePressed(const QKey a_Key)
         {
-            return Local_Key(s_MouseButtons, a_Key, e_KeyStateDown);
+            return Local_KeyChanged(s_MouseButtons, a_Key, e_KeyStateDown);
         }
 
         bool MouseReleased(const QKey a_Key)
         {
-            return Local_Key(s_MouseButtons, a_Key, e_KeyStateDown);
+            return Local_KeyChanged(s_MouseButtons, a_Key, e_KeyStateDown);
         }
-
-        bool MouseDown_Internal(const QKey a_Key) { return false; }
 
         bool MouseScrolled()
         {
@@ -300,6 +340,66 @@ namespace QwerkE {
                 return s_GamepadAxisTriggersBuffer.HeadIndex() != s_GamepadAxisTriggersBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
             }
             return false;
+        }
+
+        GUID OnKey(KeyCallback a_Callback)
+        {
+            GUID callbackGuid;
+            s_KeyCallbacks.push_back({ callbackGuid, a_Callback });
+            return callbackGuid;
+        }
+
+        void OnKeyStop(const GUID& a_FuncId)
+        {
+            for (size_t i = 0; i < s_KeyCallbacks.size(); i++)
+            {
+                if (a_FuncId == s_KeyCallbacks[i].first)
+                {
+                    s_KeyCallbacks.erase(s_KeyCallbacks.begin() + i);
+                    return;
+                }
+            }
+            LOG_WARN("Could not remove KeyCallback event with GUID {0}", a_FuncId);
+        }
+
+        GUID OnMouse(MouseCallback a_Callback)
+        {
+            GUID callbackGuid;
+            s_MouseCallbacks.push_back({ callbackGuid, a_Callback });
+            return callbackGuid;
+        }
+
+        void OnMouseStop(const GUID& a_FuncId)
+        {
+            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            {
+                if (a_FuncId == s_MouseCallbacks[i].first)
+                {
+                    s_MouseCallbacks.erase(s_MouseCallbacks.begin() + i);
+                    return;
+                }
+            }
+            LOG_WARN("Could not remove MouseCallback event with GUID {0}", a_FuncId);
+        }
+
+        GUID OnGamepad(GamepadCallback a_Callback)
+        {
+            GUID callbackGuid;
+            s_GamepadCallbacks.push_back({ callbackGuid, a_Callback });
+            return callbackGuid;
+        }
+
+        void OnGamepadStop(const GUID& a_FuncId)
+        {
+            for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+            {
+                if (a_FuncId == s_GamepadCallbacks[i].first)
+                {
+                    s_GamepadCallbacks.erase(s_GamepadCallbacks.begin() + i);
+                    return;
+                }
+            }
+            LOG_WARN("Could not remove GamepadCallback event with GUID {0}", a_FuncId);
         }
 
     }

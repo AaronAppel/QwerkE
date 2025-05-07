@@ -21,7 +21,7 @@ namespace QwerkE {
         extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer;
 
         extern u64 s_InputsCount;
-        extern std::vector<int> s_DeviceIds;
+        extern std::vector<int> s_GamepadIds;
 
         u8 s_Most1FrameKeyInputs;
         vec2f s_LastNonZeroMouseDelta;
@@ -146,7 +146,7 @@ namespace QwerkE {
             // #TODO Get number of gamepads and names, ids, etc
             if (ImGui::CollapsingHeader("Gamepad"))
             {
-                if (s_DeviceIds.empty())
+                if (s_GamepadIds.empty())
                 {
                     ImGui::Text("No gamepad detected");
                 }
@@ -228,7 +228,7 @@ namespace QwerkE {
                 u8 deviceId = i;
                 QGamepad deviceQKeyId = static_cast<QGamepad>(i);
 
-                if (ImGui::CollapsingHeader((GamepadName(deviceQKeyId) + std::string(" ") + std::to_string(s_DeviceIds[i])).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+                if (ImGui::CollapsingHeader((GamepadName(deviceQKeyId) + std::string(" ") + std::to_string(s_GamepadIds[i])).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
                 {
                     const int axesCount = GamepadAxesCount(deviceQKeyId);
                     ImGui::Text("AxesCount: %i", axesCount);
