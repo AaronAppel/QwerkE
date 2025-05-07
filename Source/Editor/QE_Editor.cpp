@@ -301,24 +301,22 @@ namespace QwerkE {
             }
         }
 
-        GUID s_OnKeyGuid = 0;
         void OnKey(QKey a_Key, QKeyState a_State)
         {
             if (QKey::e_1 == a_Key)
             {
                 LOG_INFO("OnKey(): {0}, {1}", a_Key, a_State);
-                Input::OnKeyStop(s_OnKeyGuid);
+                Input::OnKeyStop(OnKey);
             }
         }
 
-        GUID s_OnMouseGuid = 0;
         void OnMouse(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_Delta)
         {
             switch (a_Key)
             {
             case QwerkE::e_MouseLeft:
                 LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
-                Input::OnMouseStop(s_OnMouseGuid);
+                Input::OnMouseStop(OnMouse);
                 break;
             case QwerkE::e_MouseRight:
                 break;
@@ -346,14 +344,14 @@ namespace QwerkE {
             }
         }
 
-        GUID s_OnGamepadGuid = 0;
         void OnGamepad(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56)
         {
             switch (a_Input)
             {
             case QwerkE::e_GamepadA:
                 LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y);
-                Input::OnGamepadStop(s_OnGamepadGuid);
+                // Input::OnGamepadStop(s_OnGamepadGuid);
+                Input::OnGamepadStop(OnGamepad);
                 break;
             case QwerkE::e_GamepadAxis01:
                 LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y);
@@ -363,9 +361,9 @@ namespace QwerkE {
 
 		void local_Initialize()
 		{
-            s_OnKeyGuid = Input::OnKey(OnKey);
-            s_OnMouseGuid = Input::OnMouse(OnMouse);
-            s_OnGamepadGuid = Input::OnGamepad(OnGamepad);
+            Input::OnKey(OnKey);
+            Input::OnMouse(OnMouse);
+            Input::OnGamepad(OnGamepad);
 
             Projects::Initialize();
 

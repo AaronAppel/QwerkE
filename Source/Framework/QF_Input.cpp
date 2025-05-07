@@ -31,9 +31,9 @@ namespace QwerkE {
         static GameActions s_GameActions;
         GameActions& GetGameActions() { return s_GameActions; }
 
-        std::vector<std::pair<GUID, KeyCallback>> s_KeyCallbacks;
-        std::vector<std::pair<GUID, MouseCallback>> s_MouseCallbacks;
-        std::vector<std::pair<GUID, GamepadCallback>> s_GamepadCallbacks;
+        std::vector<KeyCallback> s_KeyCallbacks;
+        std::vector<MouseCallback> s_MouseCallbacks;
+        std::vector<GamepadCallback> s_GamepadCallbacks;
 
 #ifdef _QDEBUG
         u64 s_InputsCount = 0;
@@ -95,9 +95,9 @@ namespace QwerkE {
 #endif // _QDEBUG
             s_Keys.Write(a_Key, a_KeyState);
 
-            for (size_t i = 0; i < s_KeyCallbacks.size(); i++)
+            for (u16 i = 0; i < s_KeyCallbacks.size(); i++)
             {
-                s_KeyCallbacks[i].second(a_Key, a_KeyState);
+                s_KeyCallbacks[i](a_Key, a_KeyState);
             }
         }
 
@@ -111,9 +111,9 @@ namespace QwerkE {
             // if (mouse button down)
             s_MousePositionsBuffer.Write(a_NewPosition);
 
-            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            for (u16 i = 0; i < s_MouseCallbacks.size(); i++)
             {
-                s_MouseCallbacks[i].second(e_MouseMove, QKeyState::e_KeyStateDown, 0.f, a_NewPosition);
+                s_MouseCallbacks[i](e_MouseMove, QKeyState::e_KeyStateDown, 0.f, a_NewPosition);
             }
         }
 
@@ -124,9 +124,9 @@ namespace QwerkE {
 #endif // _QDEBUG
             s_MouseButtons.Write(a_Key, a_KeyState);
 
-            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            for (u16 i = 0; i < s_MouseCallbacks.size(); i++)
             {
-                s_MouseCallbacks[i].second(a_Key, a_KeyState, 0.f, {});
+                s_MouseCallbacks[i](a_Key, a_KeyState, 0.f, {});
             }
         }
 
@@ -159,10 +159,10 @@ namespace QwerkE {
                 // #TODO Add scroll event to history?
             }
 
-            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            for (u16 i = 0; i < s_MouseCallbacks.size(); i++)
             {
                 const QKey scrollKey = yoffset >= 0.f ? QKey::e_ScrollUp : QKey::e_ScrollDown;
-                s_MouseCallbacks[i].second(scrollKey, QKeyState::e_KeyStateDown, yoffset, {});
+                s_MouseCallbacks[i](scrollKey, QKeyState::e_KeyStateDown, yoffset, {});
             }
         }
 
@@ -177,27 +177,27 @@ namespace QwerkE {
             case 1:
                 s_GamepadAxisLeftStickBuffer.Write(a_AxisValue);
 
-                for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+                for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
                 {
-                    s_GamepadCallbacks[i].second(QGamepad::e_GamepadAxis01, QKeyState::e_KeyStateDown, s_GamepadAxisLeftStickBuffer.ReadTop(), {}, {});
+                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis01, QKeyState::e_KeyStateDown, s_GamepadAxisLeftStickBuffer.ReadTop(), {}, {});
                 }
                 break;
             case 2:
             case 3:
                 s_GamepadAxisRightStickBuffer.Write(a_AxisValue);
 
-                for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+                for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
                 {
-                    s_GamepadCallbacks[i].second(QGamepad::e_GamepadAxis23, QKeyState::e_KeyStateDown, {}, s_GamepadAxisRightStickBuffer.ReadTop(), {});
+                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis23, QKeyState::e_KeyStateDown, {}, s_GamepadAxisRightStickBuffer.ReadTop(), {});
                 }
                 break;
             case 4:
             case 5:
                 s_GamepadAxisTriggersBuffer.Write(a_AxisValue);
 
-                for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+                for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
                 {
-                    s_GamepadCallbacks[i].second(QGamepad::e_GamepadAxis45, QKeyState::e_KeyStateDown, {}, {}, s_GamepadAxisTriggersBuffer.ReadTop());
+                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis45, QKeyState::e_KeyStateDown, {}, {}, s_GamepadAxisTriggersBuffer.ReadTop());
                 }
                 break;
             }
@@ -210,9 +210,9 @@ namespace QwerkE {
 #endif // _QDEBUG
             s_GamepadButtons.Write(a_Key, a_KeyState);
 
-            for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+            for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
             {
-                s_GamepadCallbacks[i].second(a_Key, a_KeyState, {}, {}, {});
+                s_GamepadCallbacks[i](a_Key, a_KeyState, {}, {}, {});
             }
         }
 
@@ -342,64 +342,82 @@ namespace QwerkE {
             return false;
         }
 
-        GUID OnKey(KeyCallback a_Callback)
+        void OnKey(const KeyCallback& a_OnKeyFunction)
         {
-            GUID callbackGuid;
-            s_KeyCallbacks.push_back({ callbackGuid, a_Callback });
-            return callbackGuid;
+            for (u16 i = 0; i < s_KeyCallbacks.size(); i++)
+            {
+                if (a_OnKeyFunction.target_type() == s_KeyCallbacks[i].target_type())
+                {
+                    LOG_WARN("KeyCallback event already registered!");
+                    return;
+                }
+            }
+            s_KeyCallbacks.push_back(a_OnKeyFunction);
         }
 
-        void OnKeyStop(const GUID& a_FuncId)
+        void OnKeyStop(const KeyCallback& a_OnKeyFunction)
         {
-            for (size_t i = 0; i < s_KeyCallbacks.size(); i++)
+            for (u16 i = 0; i < s_KeyCallbacks.size(); i++)
             {
-                if (a_FuncId == s_KeyCallbacks[i].first)
+                if (a_OnKeyFunction.target_type() == s_KeyCallbacks[i].target_type())
                 {
                     s_KeyCallbacks.erase(s_KeyCallbacks.begin() + i);
                     return;
                 }
             }
-            LOG_WARN("Could not remove KeyCallback event with GUID {0}", a_FuncId);
+            LOG_WARN("Could not remove KeyCallback event!");
         }
 
-        GUID OnMouse(MouseCallback a_Callback)
+        void OnMouse(const MouseCallback& a_OnMouseFunction)
         {
-            GUID callbackGuid;
-            s_MouseCallbacks.push_back({ callbackGuid, a_Callback });
-            return callbackGuid;
-        }
-
-        void OnMouseStop(const GUID& a_FuncId)
-        {
-            for (size_t i = 0; i < s_MouseCallbacks.size(); i++)
+            for (u16 i = 0; i < s_MouseCallbacks.size(); i++)
             {
-                if (a_FuncId == s_MouseCallbacks[i].first)
+                if (a_OnMouseFunction.target_type() == s_MouseCallbacks[i].target_type())
+                {
+                    LOG_WARN("MouseCallback event already registered!");
+                    return;
+                }
+            }
+            s_MouseCallbacks.push_back(a_OnMouseFunction);
+        }
+
+        void OnMouseStop(const MouseCallback& a_OnMouseFunction)
+        {
+            for (u16 i = 0; i < s_MouseCallbacks.size(); i++)
+            {
+                if (a_OnMouseFunction.target_type() == s_MouseCallbacks[i].target_type())
                 {
                     s_MouseCallbacks.erase(s_MouseCallbacks.begin() + i);
                     return;
                 }
             }
-            LOG_WARN("Could not remove MouseCallback event with GUID {0}", a_FuncId);
+            LOG_WARN("Could not remove MouseCallback event!");
         }
 
-        GUID OnGamepad(GamepadCallback a_Callback)
+        void OnGamepad(const GamepadCallback& a_OnGamepadFunction)
         {
-            GUID callbackGuid;
-            s_GamepadCallbacks.push_back({ callbackGuid, a_Callback });
-            return callbackGuid;
-        }
-
-        void OnGamepadStop(const GUID& a_FuncId)
-        {
-            for (size_t i = 0; i < s_GamepadCallbacks.size(); i++)
+            for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
             {
-                if (a_FuncId == s_GamepadCallbacks[i].first)
+                if (a_OnGamepadFunction.target_type() == s_GamepadCallbacks[i].target_type())
+                {
+                    LOG_WARN("GamepadCallback event already registered!");
+                    return;
+                }
+            }
+            s_GamepadCallbacks.push_back(a_OnGamepadFunction);
+        }
+
+        void OnGamepadStop(const GamepadCallback& a_OnGamepadFunction)
+        {
+            for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
+            {
+                if (a_OnGamepadFunction.target_type() == s_GamepadCallbacks[i].target_type())
                 {
                     s_GamepadCallbacks.erase(s_GamepadCallbacks.begin() + i);
                     return;
                 }
             }
-            LOG_WARN("Could not remove GamepadCallback event with GUID {0}", a_FuncId);
+            LOG_WARN("Could not remove GamepadCallback event!");
         }
 
     }
