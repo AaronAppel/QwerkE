@@ -1,8 +1,6 @@
 #include "QF_GameActions.h"
 #include "QF_QKey.h"
 
-#include "QC_Guid.h"
-
 #include <functional>
 
 namespace QwerkE {
@@ -39,28 +37,21 @@ namespace QwerkE {
         u8 GamepadButtonCount(const QGamepad a_Key);
         u8 GamepadAxesCount(const QGamepad a_Key);
 
+        using KeyCallback = std::function<void(QKey a_Key, QKeyState a_State)>;
+        void OnKey(const KeyCallback& a_Callback);
+        void OnKeyStop(const KeyCallback& a_FuncId);
+
+        using MouseCallback = std::function<void(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_MousePosition)>;
+        void OnMouse(const MouseCallback& a_Callback);
+        void OnMouseStop(const MouseCallback& a_FuncId);
+
+        using GamepadCallback = std::function<void(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56 )>;
+        void OnGamepad(const GamepadCallback& a_Callback);
+        void OnGamepadStop(const GamepadCallback& a_Func);
+
 #ifdef _QDEBUG
         void DrawDebugWindow();
 #endif // _QDEBUG
-
-        // Stage 2 //
-        // Callbacks and events
-        using KeyCallback = std::function<void(QKey a_Key, QKeyState a_State)>;
-        void OnKey(const KeyCallback& a_Callback); // Any key register
-        // GUID OnKey(QKey a_Key, void* a_Callback) {} // Specific key register
-        void OnKeyStop(const KeyCallback& a_FuncId); // Unregister
-
-        using MouseCallback = std::function<void(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_Position)>;
-        void OnMouse(const MouseCallback& a_Callback);
-        // GUID OnMouseButton(void* a_Callback) {} // Any mouse button register
-        // GUID OnMouseScrolled(QKey a_Key, void* a_Callback) {} // Any mouse scroll register
-        // GUID OnMouseMoved(const GUID& a_FuncId) {} // Any mouse move register
-        void OnMouseStop(const MouseCallback& a_FuncId); // Unregister
-
-        using GamepadCallback = std::function<void(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56 )>;
-        void OnGamepad(const GamepadCallback& a_Callback); // Any key register
-        // GUID OnGamepad(QGamepad a_Key, void* a_Callback); // Specific gamepad button register
-        void OnGamepadStop(const GamepadCallback& a_Func); // Unregister
 
         // Stage 3 //
         // Devices and non-global or per-device input

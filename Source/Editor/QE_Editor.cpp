@@ -310,12 +310,12 @@ namespace QwerkE {
             }
         }
 
-        void OnMouse(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_Delta)
+        void OnMouse(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_MousePosition)
         {
             switch (a_Key)
             {
             case QwerkE::e_MouseLeft:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 Input::OnMouseStop(OnMouse);
                 break;
             case QwerkE::e_MouseRight:
@@ -333,13 +333,13 @@ namespace QwerkE {
             case QwerkE::e_MouseButton8:
                 break;
             case QwerkE::e_ScrollUp:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             case QwerkE::e_ScrollDown:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             case QwerkE::e_MouseMove:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_Delta.x, a_Delta.y);
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             }
         }

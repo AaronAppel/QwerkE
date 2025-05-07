@@ -11,10 +11,6 @@ namespace QwerkE {
 
     namespace Input {
 
-        ///////////// #TODO Implement
-        BitIndexRingBuffer<u32, bits4> s_CharsBuffer; // #TODO Review handling char input
-        ///////////// #TODO Implement
-
         InputStatesBitRingBuffer<QKey, bits5> s_Keys;
 
         InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
@@ -24,16 +20,17 @@ namespace QwerkE {
         InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
         BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer;
         BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer;
-        // #NOTE Triggers might be better as separate float buffers
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer;
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Triggers might be better as separate float buffers
 
-        constexpr char* s_GameActionsFileName = "GameActions.qdata";
+        static constexpr char* s_GameActionsFileName = "GameActions.qdata";
         static GameActions s_GameActions;
         GameActions& GetGameActions() { return s_GameActions; }
 
         std::vector<KeyCallback> s_KeyCallbacks;
         std::vector<MouseCallback> s_MouseCallbacks;
         std::vector<GamepadCallback> s_GamepadCallbacks;
+
+        static constexpr u8 s_LastFrameEndMarkerId = 0;
 
 #ifdef _QDEBUG
         u64 s_InputsCount = 0;
@@ -44,16 +41,16 @@ namespace QwerkE {
             Serialize::FromFile(Paths::Setting(s_GameActionsFileName).c_str(), s_GameActions, true);
 
             s_MouseScrolls.AddMarker(0);
-            s_MouseScrolls.AddMarker(1);
+            s_MouseScrolls.AddMarker(0);
             s_MousePositionsBuffer.AddMarker(0);
-            s_MousePositionsBuffer.AddMarker(1);
+            s_MousePositionsBuffer.AddMarker(0);
 
             s_GamepadAxisLeftStickBuffer.AddMarker(0);
-            s_GamepadAxisLeftStickBuffer.AddMarker(1);
+            s_GamepadAxisLeftStickBuffer.AddMarker(0);
             s_GamepadAxisRightStickBuffer.AddMarker(0);
-            s_GamepadAxisRightStickBuffer.AddMarker(1);
+            s_GamepadAxisRightStickBuffer.AddMarker(0);
             s_GamepadAxisTriggersBuffer.AddMarker(0);
-            s_GamepadAxisTriggersBuffer.AddMarker(1);
+            s_GamepadAxisTriggersBuffer.AddMarker(0);
         }
 
         void Internal_NewFrame()
@@ -72,10 +69,6 @@ namespace QwerkE {
 
         void Internal_Shutdown()
         {
-            // #TODO Reset all static state
-            // s_CharsBuffer;
-            // s_GameActions;
-
             s_Keys.Clear();
 
             s_MouseButtons.Clear();
@@ -106,9 +99,6 @@ namespace QwerkE {
 #ifdef _QDEBUG
             ++s_InputsCount;
 #endif // _QDEBUG
-            // #TODO Handle:
-            // - Mouse drag
-            // if (mouse button down)
             s_MousePositionsBuffer.Write(a_NewPosition);
 
             for (u16 i = 0; i < s_MouseCallbacks.size(); i++)
@@ -130,39 +120,17 @@ namespace QwerkE {
             }
         }
 
-        void Internal_MouseScroll(const double xoffset, const double yoffset)
+        void Internal_MouseScroll(const double a_OffsetX, const double a_OffsetY)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
 #endif // _QDEBUG
-            // #TODO Look at how to use the xoffset
-            s_MouseScrolls.Write(yoffset);
-
-            // #TODO Handle:
-            // - Scroll button up/down
-
-            if (-1.f == xoffset)
-            {
-                // #TODO Add scroll event to history?
-            }
-            else if (1.f == xoffset)
-            {
-                // #TODO Add scroll event to history?
-            }
-
-            if (-1.f == yoffset)
-            {
-                // #TODO Add scroll event to history?
-            }
-            else if (1.f == yoffset)
-            {
-                // #TODO Add scroll event to history?
-            }
+            s_MouseScrolls.Write(a_OffsetY); // #TODO Look at how to use the a_OffsetX
 
             for (u16 i = 0; i < s_MouseCallbacks.size(); i++)
             {
-                const QKey scrollKey = yoffset >= 0.f ? QKey::e_ScrollUp : QKey::e_ScrollDown;
-                s_MouseCallbacks[i](scrollKey, QKeyState::e_KeyStateDown, yoffset, {});
+                const QKey scrollKey = a_OffsetY >= 0.f ? QKey::e_ScrollUp : QKey::e_ScrollDown;
+                s_MouseCallbacks[i](scrollKey, QKeyState::e_KeyStateDown, a_OffsetY, {});
             }
         }
 
@@ -223,13 +191,9 @@ namespace QwerkE {
 
             switch (a_Key)
             {
-            case QKey::e_QKeyMax: // Invalid entry
-                return false;
-
-            case QKey::e_Any: // Support QKey::e_Any
+            case QKey::e_Any:
                 return a_BitRingBuffer.KeyThisFrame(a_Key, e_KeyState, true);
 
-                // Support e_CtrlAny, e_ShiftAny, and e_AltAny
             case QKey::e_CtrlAny:
                 return a_BitRingBuffer.KeyThisFrame(QKey::e_CtrlL, e_KeyState) || a_BitRingBuffer.KeyThisFrame(QKey::e_CtrlR, e_KeyState);
             case QKey::e_ShiftAny:
@@ -262,7 +226,7 @@ namespace QwerkE {
 
         bool MouseScrolled()
         {
-            return s_MouseScrolls.HeadIndex() != s_MouseScrolls.MarkerPosition(0); // #TODO Improve hard coded marker index
+            return s_MouseScrolls.HeadIndex() != s_MouseScrolls.MarkerPosition(s_LastFrameEndMarkerId);
         }
 
         float MouseScrollDelta()
@@ -281,7 +245,7 @@ namespace QwerkE {
 
         bool MouseMoved()
         {
-            return s_MousePositionsBuffer.HeadIndex() != s_MousePositionsBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
+            return s_MousePositionsBuffer.HeadIndex() != s_MousePositionsBuffer.MarkerPosition(s_LastFrameEndMarkerId);
         }
 
         vec2f MouseDelta()
@@ -331,13 +295,13 @@ namespace QwerkE {
             {
             case 0:
             case 1:
-                return s_GamepadAxisLeftStickBuffer.HeadIndex() != s_GamepadAxisLeftStickBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
+                return s_GamepadAxisLeftStickBuffer.HeadIndex() != s_GamepadAxisLeftStickBuffer.MarkerPosition(s_LastFrameEndMarkerId);
             case 2:
             case 3:
-                return s_GamepadAxisRightStickBuffer.HeadIndex() != s_GamepadAxisRightStickBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
+                return s_GamepadAxisRightStickBuffer.HeadIndex() != s_GamepadAxisRightStickBuffer.MarkerPosition(s_LastFrameEndMarkerId);
             case 4:
             case 5:
-                return s_GamepadAxisTriggersBuffer.HeadIndex() != s_GamepadAxisTriggersBuffer.MarkerPosition(0); // #TODO Improve hard coded marker index
+                return s_GamepadAxisTriggersBuffer.HeadIndex() != s_GamepadAxisTriggersBuffer.MarkerPosition(s_LastFrameEndMarkerId);
             }
             return false;
         }
