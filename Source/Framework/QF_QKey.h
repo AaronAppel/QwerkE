@@ -84,6 +84,9 @@ namespace QwerkE {
         e_GamepadCircle,                // Circle or O Playstation controller button
         e_GamepadSquare,                // Square Playstation controller button
         e_GamepadTriangle,              // Triangle Playstation controller button
+
+        e_QGamepadAxisIndexFirst = 0,
+        e_QGamepadAxisIndexMax = 6,
     };
 
     enum QKey : u8

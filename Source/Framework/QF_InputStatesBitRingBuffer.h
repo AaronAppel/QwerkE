@@ -128,6 +128,14 @@ namespace QwerkE {
 			m_KeysStates.reset();
 		}
 
+		InputStatesBitRingBuffer& operator=(const InputStatesBitRingBuffer& a_Other)
+		{
+			m_DownCount = a_Other.m_DownCount;
+			m_KeysBuffer = a_Other.m_KeysBuffer;
+			m_KeysStates = a_Other.m_KeysStates;
+			return *this;
+		}
+
 	private:
 		unsigned char WritesUntilCollision(const unsigned char a_LeadingIndex, const unsigned char a_TrailingIndex)
 		{

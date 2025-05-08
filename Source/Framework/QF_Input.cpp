@@ -1,7 +1,10 @@
+#include "QF_Input.h"
+
+#include <vector>
+
 #include "QC_BitIndexRingBuffer.h"
 #include "QC_TypeDefs.h"
 
-#include "QF_Input.h"
 #include "QF_InputStatesBitRingBuffer.h"
 #include "QF_Paths.h"
 #include "QF_QKey.h"
@@ -17,8 +20,8 @@ namespace QwerkE {
         BitIndexRingBuffer<float, bits2> s_MouseScrolls;
         BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer;
 
-        InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer;
+        std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>>> s_GamepadsButtons;
+        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer; // #TODO Support multiple gamepads
         BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer;
         BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Triggers might be better as separate float buffers
 
@@ -61,7 +64,10 @@ namespace QwerkE {
             s_MouseScrolls.AdvanceAllMarkers();
             s_MousePositionsBuffer.AdvanceAllMarkers();
 
-            s_GamepadButtons.Advance();
+            for (u8 i = 0; i < s_GamepadsButtons.size(); i++)
+            {
+                s_GamepadsButtons[i].second.Advance();
+            }
             s_GamepadAxisLeftStickBuffer.AdvanceAllMarkers();
             s_GamepadAxisRightStickBuffer.AdvanceAllMarkers();
             s_GamepadAxisTriggersBuffer.AdvanceAllMarkers();
@@ -75,7 +81,12 @@ namespace QwerkE {
             s_MouseScrolls.Reset();
             s_MousePositionsBuffer.Reset();
 
-            s_GamepadButtons.Clear();
+            for (u8 i = 0; i < s_GamepadsButtons.size(); i++)
+            {
+                s_GamepadsButtons[i].second.Clear();
+            }
+            s_GamepadsButtons.clear();
+
             s_GamepadAxisLeftStickBuffer.Reset();
             s_GamepadAxisRightStickBuffer.Reset();
             s_GamepadAxisTriggersBuffer.Reset();
@@ -134,7 +145,7 @@ namespace QwerkE {
             }
         }
 
-        void Internal_GamepadAxis(const unsigned char a_AxisId, const vec2f a_AxisValue)
+        void Internal_GamepadAxis(const unsigned char a_AxisId, const vec2f a_AxisValue, const QGamepad a_GamepadId)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
@@ -147,7 +158,7 @@ namespace QwerkE {
 
                 for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
                 {
-                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis01, QKeyState::e_KeyStateDown, s_GamepadAxisLeftStickBuffer.ReadTop(), {}, {});
+                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis01, QKeyState::e_KeyStateDown, s_GamepadAxisLeftStickBuffer.ReadTop(), {}, {}, a_GamepadId);
                 }
                 break;
             case 2:
@@ -156,7 +167,7 @@ namespace QwerkE {
 
                 for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
                 {
-                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis23, QKeyState::e_KeyStateDown, {}, s_GamepadAxisRightStickBuffer.ReadTop(), {});
+                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis23, QKeyState::e_KeyStateDown, {}, s_GamepadAxisRightStickBuffer.ReadTop(), {}, a_GamepadId);
                 }
                 break;
             case 4:
@@ -165,22 +176,30 @@ namespace QwerkE {
 
                 for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
                 {
-                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis45, QKeyState::e_KeyStateDown, {}, {}, s_GamepadAxisTriggersBuffer.ReadTop());
+                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis45, QKeyState::e_KeyStateDown, {}, {}, s_GamepadAxisTriggersBuffer.ReadTop(), a_GamepadId);
                 }
                 break;
             }
         }
 
-        void Internal_GamepadButton(const QGamepad a_Key, const QKeyState a_KeyState)
+        void Internal_GamepadButton(const QGamepad a_Key, const QKeyState a_KeyState, const QGamepad a_GamepadId)
         {
 #ifdef _QDEBUG
             ++s_InputsCount;
 #endif // _QDEBUG
-            s_GamepadButtons.Write(a_Key, a_KeyState);
+            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
+            for (u8 i = 0; i < s_GamepadsButtons.size(); i++)
+            {
+                if (a_GamepadId == s_GamepadsButtons[i].first)
+                {
+                    s_GamepadsButtons[i].second.Write(a_Key, a_KeyState);
+                    break;
+                }
+            }
 
             for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
             {
-                s_GamepadCallbacks[i](a_Key, a_KeyState, {}, {}, {});
+                s_GamepadCallbacks[i](a_Key, a_KeyState, {}, {}, {}, a_GamepadId);
             }
         }
 
@@ -261,18 +280,38 @@ namespace QwerkE {
             return vec2f(0.f, 0.f);
         }
 
-        bool GamepadPressed(const QGamepad a_Key)
+        bool GamepadPressed(const QGamepad a_Key, const QGamepad a_GamepadId)
         {
-            return s_GamepadButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateDown, QGamepad::e_GamepadAny == a_Key);
+            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
+            for (u8 i = 0; i < s_GamepadsButtons.size(); i++)
+            {
+                if (a_GamepadId == s_GamepadsButtons[i].first)
+                {
+                    s_GamepadsButtons[i].second.KeyThisFrame(a_Key, QKeyState::e_KeyStateDown, QGamepad::e_GamepadAny == a_Key);
+                }
+            }
+            // LOG_WARN("a_GamepadId not found!");
+            return false;
         }
 
-        bool GamepadReleased(const QGamepad a_Key)
+        bool GamepadReleased(const QGamepad a_Key, const QGamepad a_GamepadId)
         {
-            return s_GamepadButtons.KeyThisFrame(a_Key, QKeyState::e_KeyStateUp, QGamepad::e_GamepadAny == a_Key);
+            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
+            for (u8 i = 0; i < s_GamepadsButtons.size(); i++)
+            {
+                if (a_GamepadId == s_GamepadsButtons[i].first)
+                {
+                    s_GamepadsButtons[i].second.KeyThisFrame(a_Key, QKeyState::e_KeyStateUp, QGamepad::e_GamepadAny == a_Key);
+                }
+            }
+            // LOG_WARN("a_GamepadId not found!");
+            return false;
         }
 
-        vec2f GamepadAxis(const int a_AxisIndex)
+        vec2f GamepadAxis(const int a_AxisIndex, const QGamepad a_GamepadId)
         {
+            ASSERT(QGamepad::e_QGamepadAxisIndexFirst <= a_AxisIndex && QGamepad::e_QGamepadAxisIndexMax > a_AxisIndex, "Invalid axis");
+            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
             // #TODO What is more intuitive, always returning a vec2f, or individual floats? Do users want that?
             switch (a_AxisIndex)
             {
@@ -286,11 +325,14 @@ namespace QwerkE {
             case 5:
                 return s_GamepadAxisTriggersBuffer.ReadTop();
             }
+            // LOG_WARN("a_GamepadId not found!");
             return vec2f(0.f, 0.f);
         }
 
-        bool GamepadAxisMoved(const int a_AxisIndex)
+        bool GamepadAxisMoved(const int a_AxisIndex, const QGamepad a_GamepadId)
         {
+            ASSERT(QGamepad::e_QGamepadAxisIndexFirst <= a_AxisIndex && QGamepad::e_QGamepadAxisIndexMax > a_AxisIndex, "Invalid axis");
+            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
             switch (a_AxisIndex)
             {
             case 0:
@@ -303,6 +345,7 @@ namespace QwerkE {
             case 5:
                 return s_GamepadAxisTriggersBuffer.HeadIndex() != s_GamepadAxisTriggersBuffer.MarkerPosition(s_LastFrameEndMarkerId);
             }
+            // LOG_WARN("a_GamepadId not found!");
             return false;
         }
 

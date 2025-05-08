@@ -1,3 +1,5 @@
+#pragma once
+
 #include "QF_GameActions.h"
 #include "QF_QKey.h"
 
@@ -25,17 +27,17 @@ namespace QwerkE {
         bool MouseMoved();
         vec2f MouseDelta();
 
-        bool GamepadPressed(const QGamepad a_Key);
-        bool GamepadReleased(const QGamepad a_Key);
-        bool GamepadDown(const QGamepad a_Key);
+        bool GamepadPressed(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
+        bool GamepadReleased(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
+        bool GamepadDown(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
 
-        vec2f GamepadAxis(const int a_AxisIndex);
-        bool GamepadAxisMoved(const int a_AxisIndex);
-        const char* const GamepadName(const QGamepad a_Key);
+        vec2f GamepadAxis(const int a_AxisIndex, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
+        bool GamepadAxisMoved(const int a_AxisIndex, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
+        const char* const GamepadName(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
 
         u8 GamepadsCount();
-        u8 GamepadButtonCount(const QGamepad a_Key);
-        u8 GamepadAxesCount(const QGamepad a_Key);
+        u8 GamepadButtonCount(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
+        u8 GamepadAxesCount(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
 
         using KeyCallback = std::function<void(QKey a_Key, QKeyState a_State)>;
         void OnKey(const KeyCallback& a_Callback);
@@ -45,7 +47,7 @@ namespace QwerkE {
         void OnMouse(const MouseCallback& a_Callback);
         void OnMouseStop(const MouseCallback& a_FuncId);
 
-        using GamepadCallback = std::function<void(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56 )>;
+        using GamepadCallback = std::function<void(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56, QGamepad a_GamepadId)>;
         void OnGamepad(const GamepadCallback& a_Callback);
         void OnGamepadStop(const GamepadCallback& a_Func);
 

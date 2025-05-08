@@ -17,7 +17,7 @@ namespace QwerkE {
 
         extern InputStatesBitRingBuffer<QKey, bits5> s_Keys;
         extern InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons;
-        extern InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
+        extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>>> s_GamepadsButtons;
 
         extern void Internal_Initialize();
         extern void Internal_NewFrame();
@@ -29,8 +29,8 @@ namespace QwerkE {
         extern void Internal_MouseButton(const QKey a_Key, const QKeyState a_KeyState);
         extern void Internal_MouseScroll(const double xoffset, const double yoffset);
 
-        extern void Internal_GamepadButton(const QGamepad a_Key, const QKeyState a_KeyState);
-        extern void Internal_GamepadAxis(const unsigned char a_AxisId, const vec2f a_AxisValue);
+        extern void Internal_GamepadAxis(const unsigned char a_AxisId, const vec2f a_AxisValue, const QGamepad a_GamepadId);
+        extern void Internal_GamepadButton(const QGamepad a_Key, const QKeyState a_KeyState, const QGamepad a_GamepadId);
 
         std::vector<int> s_GamepadIds; // #TODO Review glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
         static std::vector<std::vector<float>> s_DeviceAxesStates;
@@ -85,7 +85,7 @@ namespace QwerkE {
                         leftStickAxes.y = axes[j];
                         if (s_DeviceAxesStates[i][0] != leftStickAxes.x || s_DeviceAxesStates[i][1] != leftStickAxes.y)
                         {
-                            Internal_GamepadAxis(j, leftStickAxes);
+                            Internal_GamepadAxis(j, leftStickAxes, static_cast<QGamepad>(s_GamepadIds[i]));
                         }
                         break;
                     case 2: // Right stick X [2]
@@ -95,7 +95,7 @@ namespace QwerkE {
                         rightStickAxes.y = axes[j];
                         if (s_DeviceAxesStates[i][2] != rightStickAxes.x || s_DeviceAxesStates[i][3] != rightStickAxes.y)
                         {
-                            Internal_GamepadAxis(j, rightStickAxes);
+                            Internal_GamepadAxis(j, rightStickAxes, static_cast<QGamepad>(s_GamepadIds[i]));
                         }
                         break;
                     case 4: // L trigger [4]
@@ -105,7 +105,7 @@ namespace QwerkE {
                         triggersAxes.y = axes[j];
                         if (s_DeviceAxesStates[i][4] != triggersAxes.x || s_DeviceAxesStates[i][5] != triggersAxes.y)
                         {
-                            Internal_GamepadAxis(j, triggersAxes);
+                            Internal_GamepadAxis(j, triggersAxes, static_cast<QGamepad>(s_GamepadIds[i]));
                         }
                         break;
                     }
@@ -130,7 +130,7 @@ namespace QwerkE {
                 {
                     if (s_DeviceButtonsStates[i][j] != buttons[j])
                     {
-                        Internal_GamepadButton(static_cast<QGamepad>(QGamepad::e_Gamepad0 + j), static_cast<QKeyState>(QKeyState::e_KeyStateDown == buttons[j]));
+                        Internal_GamepadButton(static_cast<QGamepad>(QGamepad::e_Gamepad0 + j), static_cast<QKeyState>(QKeyState::e_KeyStateDown == buttons[j]), static_cast<QGamepad>(s_GamepadIds[i]));
                     }
                     s_DeviceButtonsStates[i][j] = buttons[j];
                 }
@@ -167,8 +167,10 @@ namespace QwerkE {
             return GLFW_PRESS == glfwGetMouseButton(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
         }
 
-        bool GamepadDown(const QGamepad a_Key)
+        bool GamepadDown(const QGamepad a_Key, const QGamepad a_GamepadId)
         {
+            ASSERT(QGamepad::e_GamepadAny == a_Key || QGamepad::e_QGamepadInputMax >= a_Key && QGamepad::e_Gamepad0 <= a_Key, "Invalid Gamepad key!");
+            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
             if (s_DeviceButtonsStates.empty())
             {
                 return false;
@@ -176,21 +178,37 @@ namespace QwerkE {
 
             if (e_GamepadAny == a_Key)
             {
-                return s_GamepadButtons.DownKeys() > 0;
+                for (u8 i = 0; i < s_GamepadsButtons.size(); i++)
+                {
+                    if (a_GamepadId == s_GamepadsButtons[i].first)
+                    {
+                        return s_GamepadsButtons[i].second.DownKeys() > 0;
+                    }
+                }
             }
             // #TODO GLFWindow* reference. Remember to test multi-window input
-            // QGamepad::e_GamepadIdAny
-            int jid = GLFW_JOYSTICK_1; // #TODO Require id from caller
-            ASSERT(QGamepad::e_GamepadAny == a_Key || QGamepad::e_QGamepadInputMax >= a_Key && QGamepad::e_Gamepad0 <= a_Key, "Invalid Gamepad key!");
-            return e_KeyStateDown == s_DeviceButtonsStates[jid][a_Key];
+            s_DeviceButtonsStates;
+
+            if (QGamepad::e_GamepadAny == a_Key)
+            {
+                for (u8 i = 0; i < s_DeviceButtonsStates.size(); i++)
+                {
+                    if (e_KeyStateDown == s_DeviceButtonsStates[a_GamepadId][i])
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            return e_KeyStateDown == s_DeviceButtonsStates[a_GamepadId][a_Key];
         }
 
-        const char* const GamepadName(const QGamepad a_Key)
+        const char* const GamepadName(const QGamepad a_Key, const QGamepad a_GamepadId)
         {
             if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
             {
-                u8 deviceId = static_cast<u8>(a_Key);
-                return glfwGetJoystickName(deviceId);
+                return glfwGetJoystickName(static_cast<int>(a_Key));
             }
             return nullptr;
         }
@@ -200,25 +218,23 @@ namespace QwerkE {
             return s_GamepadIds.size();
         }
 
-        u8 GamepadButtonCount(const QGamepad a_Key)
+        u8 GamepadButtonCount(const QGamepad a_Key, const QGamepad a_GamepadId)
         {
             if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
             {
-                u8 deviceId = static_cast<u8>(a_Key); // #TODO Review using QGamepad::e_GamepadId0
                 int buttonCount;
-                const unsigned char* const buttons = glfwGetJoystickButtons(deviceId, &buttonCount);
+                const unsigned char* const buttons = glfwGetJoystickButtons(static_cast<int>(a_Key), &buttonCount);
                 return buttonCount;
             }
             return 0;
         }
 
-        u8 GamepadAxesCount(const QGamepad a_Key)
+        u8 GamepadAxesCount(const QGamepad a_Key, const QGamepad a_GamepadId)
         {
             if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
             {
-                u8 deviceId = static_cast<u8>(a_Key);
                 int axesCount;
-                const float* axes = glfwGetJoystickAxes(deviceId, &axesCount);
+                const float* axes = glfwGetJoystickAxes(static_cast<int>(a_Key), &axesCount);
                 return axesCount;
             }
             return 0;
@@ -236,6 +252,8 @@ namespace QwerkE {
             }
 
             s_GamepadIds.emplace_back(a_GamepadId);
+            std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>> var = { (QGamepad)a_GamepadId , {} };
+            s_GamepadsButtons.emplace_back(var); // #TODO Review safety
 
             int hatStatesCount;
             const unsigned char* const buttons = glfwGetJoystickButtons(a_GamepadId, &hatStatesCount);

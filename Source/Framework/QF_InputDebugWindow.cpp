@@ -1,4 +1,6 @@
 #ifdef _QDEBUG
+#include <vector>
+
 #include "QC_BitIndexRingBuffer.h"
 
 #include "QF_Input.h"
@@ -14,7 +16,7 @@ namespace QwerkE {
         extern BitIndexRingBuffer<float, bits2> s_MouseScrolls;
         extern BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer;
 
-        extern InputStatesBitRingBuffer<QGamepad, bits4> s_GamepadButtons;
+        extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>>> s_GamepadsButtons;
         extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer;
         extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer;
 
@@ -60,9 +62,16 @@ namespace QwerkE {
 
             if (ImGui::BeginChild("##CurrentlyDown", { 0.f, 3 * lineHeight}))
             {
-                ImGui::Text("         Keys down: %i", s_Keys.DownKeys());
-                ImGui::Text("     Mouse down: %i", s_MouseButtons.DownKeys());
-                ImGui::Text("Gamepad down: %i", s_GamepadButtons.DownKeys());
+                ImGui::Text("           Keys down: %i", s_Keys.DownKeys());
+                ImGui::Text("       Mouse down: %i", s_MouseButtons.DownKeys());
+                if (s_GamepadsButtons.empty())
+                {
+                    ImGui::Text("No gamepad detected");
+                }
+                else
+                {
+                    ImGui::Text("Gamepad [0] down: %i", s_GamepadsButtons[0].second.DownKeys());
+                }
             }
             ImGui::EndChild();
             ImGui::Dummy({ 0.f, 2.f });
@@ -151,13 +160,19 @@ namespace QwerkE {
                     ImGui::Text("No gamepad detected");
                 }
 
-                if (ImGui::BeginChild("Gamepad Buttons + Button States", { ImGui::g_pixelsPerCharacter * 10, s_GamepadButtons.Size() * lineHeight + lineHeight }))
+                InputStatesBitRingBuffer<QGamepad, bits4> gamepadsButtons;
+                if (!s_GamepadsButtons.empty())
+                {
+                    gamepadsButtons = s_GamepadsButtons[0].second;
+                }
+
+                if (ImGui::BeginChild("Gamepad Buttons + Button States", { ImGui::g_pixelsPerCharacter * 10, gamepadsButtons.Size() * lineHeight + lineHeight }))
                 {
                     ImGui::Text("Buttons");
-                    for (size_t i = 0; i < s_GamepadButtons.Size(); i++)
+                    for (size_t i = 0; i < gamepadsButtons.Size(); i++)
                     {
-                        ImGui::Text("%i %i", s_GamepadButtons.ReadKey(i), s_GamepadButtons.ReadKeyState(i));
-                        if (i == s_GamepadButtons.Head())
+                        ImGui::Text("%i %i", gamepadsButtons.ReadKey(i), gamepadsButtons.ReadKeyState(i));
+                        if (i == gamepadsButtons.Head())
                         {
                             ImGui::SameLine();
                             ImGui::Text("<-");
@@ -168,7 +183,7 @@ namespace QwerkE {
 
                 ImGui::SameLine();
 
-                if (ImGui::BeginChild("Gamepad Axes", { 0.f, s_GamepadButtons.Size() * lineHeight + lineHeight }))
+                if (ImGui::BeginChild("Gamepad Axes", { 0.f, gamepadsButtons.Size() * lineHeight + lineHeight }))
                 {
                     ImGui::Text("Axes");
                     ImGui::SeparatorText("Left Stick");

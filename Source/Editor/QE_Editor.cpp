@@ -344,17 +344,17 @@ namespace QwerkE {
             }
         }
 
-        void OnGamepad(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56)
+        void OnGamepad(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56, QGamepad a_GamepadId)
         {
             switch (a_Input)
             {
             case QwerkE::e_GamepadA:
-                LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y);
+                LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y, a_GamepadId);
                 // Input::OnGamepadStop(s_OnGamepadGuid);
                 Input::OnGamepadStop(OnGamepad);
                 break;
             case QwerkE::e_GamepadAxis01:
-                LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y);
+                LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y, a_GamepadId);
                 break;
             }
         }
