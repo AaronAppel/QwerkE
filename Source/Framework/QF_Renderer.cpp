@@ -393,6 +393,14 @@ namespace QwerkE {
 #endif
 		}
 
+		void OnRecompile()
+		{
+#ifdef _QDEARIMGUI
+			imguiDestroy();
+			imguiCreate(18.f);
+#endif
+		}
+
 		void ToggleDebugStats()
 		{
 			s_showRendererDebugStats = !s_showRendererDebugStats;

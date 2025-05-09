@@ -9,6 +9,7 @@
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
+#include "QF_Log.h"
 #include "QF_Window.h"
 
 // #NOTE Testing RCCpp
@@ -45,6 +46,8 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 
 	QwerkE::Time::WriteAppStartTime();
 
+	bool wasCompiling = false;
+
 	while (!QwerkE::Window::CloseRequested())
 	{
 		QwerkE::Time::StartFrame();
@@ -52,10 +55,20 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 		QwerkE::Framework::StartFrame();
 
 		RCCppUpdate(); // #NOTE Testing RCCpp
+		bool isCompiling = g_pSys->pRuntimeObjectSystem->GetIsCompiling();
 
 		QwerkE::Renderer::StartImGui(); // #TODO Remove ImGui from Game code
 
-		g_SystemTable.pRCCppMainLoopI->MainLoop(); // #NOTE Testing RCCpp
+		if (wasCompiling && !isCompiling)
+		{
+			QwerkE::Renderer::OnRecompile();
+			QwerkE::Renderer::StartImGui();
+		}
+
+		if (!isCompiling)
+		{
+			g_SystemTable.pRCCppMainLoopI->MainLoop(); // #NOTE Testing RCCpp
+		}
 
 		QwerkE::Framework::Update(static_cast<float>(QwerkE::Time::PreviousFrameDuration()));
 
@@ -66,7 +79,9 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 
 		QwerkE::Renderer::EndImGui(); // #TODO Ensure ImGui is removed from release builds
 
-		QwerkE::Framework::RenderView(1); // #TODO Review hard coded viewId 1
+		constexpr u8 imguiRenderViewId = 0; // #TODO Review hard coded viewId 1
+		constexpr u8 gameRenderViewId = 1;
+		QwerkE::Framework::RenderView(imguiRenderViewId);
 
 		QwerkE::Framework::EndFrame();
 
@@ -85,12 +100,9 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 				// glfwWaitEvents();
 			}
 		}
-
-		if (bool exampleChange = true)
-		{
-			int bp = 0;
-		}
 		//
+
+		wasCompiling = isCompiling;
 	}
 
 	RCCppCleanup(); // #NOTE Testing RCCpp
@@ -122,7 +134,7 @@ bool RCCppInit()
 	// Projects source code
 	const std::string rootDir = QwerkE::Paths::RepoRootDir();
 	// g_SystemTable.pRuntimeObjectSystem->AddIncludeDir((rootDir + "\\Source\\Common").c_str());
-	// g_SystemTable.pRuntimeObjectSystem->AddIncludeDir((rootDir + "\\Source\\Framework").c_str());
+	g_SystemTable.pRuntimeObjectSystem->AddIncludeDir((rootDir + "\\Source\\Framework").c_str());
 	// g_SystemTable.pRuntimeObjectSystem->AddIncludeDir((rootDir + "\\Source\\Editor").c_str());
 
 	g_SystemTable.pRuntimeObjectSystem->AddIncludeDir((rootDir + "\\Source").c_str());
@@ -134,6 +146,8 @@ bool RCCppInit()
 
 	// 3rd party includes
 	g_SystemTable.pRuntimeObjectSystem->AddIncludeDir((rootDir + "\\Source\\Libraries\\imgui").c_str());
+
+	g_SystemTable.pRuntimeObjectSystem->SetAutoCompile(true);
 
 	return true;
 }

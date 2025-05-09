@@ -14,6 +14,8 @@ namespace QwerkE {
 		void EndFrame();
 		void Shutdown();
 
+		void OnRecompile();
+
 		void ToggleDebugStats();
 
 		DebugDrawEncoder& DebugDrawer();

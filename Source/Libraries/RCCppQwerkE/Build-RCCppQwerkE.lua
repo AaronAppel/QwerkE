@@ -5,7 +5,7 @@ project "RCCppQwerkE"
 	files
 	{ 
 		"**.h",
-		"**.cpp",
+		"StdioLogSystem.cpp",
 	}
 	
 	links

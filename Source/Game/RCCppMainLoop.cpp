@@ -1,4 +1,6 @@
 
+#include "Libraries/imgui/QC_imgui.h"
+
 #include "Libraries/RCCppRuntimeObjectSystem/RuntimeObjectSystem/IObject.h"
 #include "Libraries/RCCppRuntimeObjectSystem/RuntimeObjectSystem/IObjectFactorySystem.h"
 #include "Libraries/RCCppRuntimeObjectSystem/RuntimeObjectSystem/IRuntimeObjectSystem.h"
@@ -30,7 +32,7 @@ enum InterfaceIDEnumConsoleExample
 
 struct RCCppMainLoop : RCCppMainLoopI, TInterface<IID_IRCCPP_MAIN_LOOP, IObject>
 {
-	bool show_demo_window = true;
+	bool show_demo_window = false;
 
 	// data for compiling window
 	static constexpr double SHOW_AFTER_COMPILE_TIME = 3.0f;
@@ -63,13 +65,17 @@ struct RCCppMainLoop : RCCppMainLoopI, TInterface<IID_IRCCPP_MAIN_LOOP, IObject>
 		SERIALIZE(compileEndTime);
 	}
 
+	bool wasCompiling = false;
 	void MainLoop() override
 	{
 		// ImGui::SetCurrentContext( PerModuleInterface::g_pSystemTable->pImContext );
 
 		if (show_demo_window)
 		{
-			ImGui::ShowDemoWindow(&show_demo_window);
+			if (ImGui::GetCurrentContext())
+			{
+				ImGui::ShowDemoWindow(&show_demo_window);
+			}
 		}
 
 		// Developer tools window
@@ -79,7 +85,21 @@ struct RCCppMainLoop : RCCppMainLoopI, TInterface<IID_IRCCPP_MAIN_LOOP, IObject>
 		bool bCompiling = g_pSys->pRuntimeObjectSystem->GetIsCompiling();
 		if (bCompiling)
 		{
-			int bp = 0;
+			int bp = 01;
+		}
+		else
+		{
+			if (wasCompiling)
+			{
+
+			}
+
+			if (ImGui::GetCurrentContext())
+			{
+				ImGui::DefaultDebugWindow([]() {
+					ImGui::Text("Runtime Recompile aa");
+					});
+			}
 		}
 
 		// Do not add any code after this point as Undo/Redo will delete this
@@ -91,6 +111,8 @@ struct RCCppMainLoop : RCCppMainLoopI, TInterface<IID_IRCCPP_MAIN_LOOP, IObject>
 		{
 			g_pSys->pRuntimeObjectSystem->GetObjectFactorySystem()->RedoObjectConstructorChange();
 		}
+
+		wasCompiling = bCompiling;
 	}
 };
 

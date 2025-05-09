@@ -8,7 +8,7 @@
 // RCC++ headers
 #include "RuntimeObjectSystem.h"
 
-// headers from our example 
+// headers from our example
 #include "StdioLogSystem.h"
 #include "SystemTable.h"
 #include "RCCppMainLoop.h"
