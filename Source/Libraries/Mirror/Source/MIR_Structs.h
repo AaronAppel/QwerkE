@@ -32,10 +32,9 @@ struct Mirror
 {
 	enum TypeInfoCategories : uint8_t
 	{
-		TypeInfoCategory_Primitive = 0,
+		TypeInfoCategory_Primitive = 0, // #TODO Review maintaining order in Mirror.h and everywhere else (class after collection)
 		TypeInfoCategory_Class,
 		TypeInfoCategory_Collection,
-		TypeInfoCategory_Pair,
 		TypeInfoCategory_Pointer,
 	};
 
@@ -79,7 +78,11 @@ struct Mirror
 		using FuncPtr_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
 		using FuncPtr_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
 		using FuncPtr_bool_constVoidPtr = bool (*)(const void*);
+		using FuncPtr_sizet_void = size_t(*)(const void*);
+		using FuncPtr_void_sizet = void (*)(void*, size_t);
 
+		FuncPtr_sizet_void collectionCountFunc = nullptr;
+		FuncPtr_void_sizet collectionReserveFunc = nullptr;
 		FuncPtr_void_voidPtr_sizet_constvoidPtr_constvoidPtr collectionAddFunc = nullptr;
 		FuncPtr_voidPtr_constVoidPtr_bool collectionAddressOfPairObjectFunc = nullptr;
 		FuncPtr_void_voidPtr collectionClearFunction = nullptr;
@@ -122,6 +125,22 @@ struct Mirror
 			if (collectionAddFunc)
 			{
 				collectionAddFunc(collectionAddress, index, first, second);
+			}
+		}
+
+		size_t Size(const void* collectionAddress) const {
+			MIRROR_ASSERT(collectionCountFunc && "Null collectionCountFunc!");
+			if (collectionCountFunc)
+			{
+				collectionCountFunc(collectionAddress);
+			}
+		}
+
+		void Reserve(void* collectionAddress, size_t elementCount) const {
+			MIRROR_ASSERT(collectionReserveFunc && "Null collectionReserveFunc!");
+			if (collectionReserveFunc)
+			{
+				collectionReserveFunc(collectionAddress, elementCount);
 			}
 		}
 

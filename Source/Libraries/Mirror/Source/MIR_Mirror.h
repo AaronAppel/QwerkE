@@ -12,16 +12,16 @@ template <typename T>
 constexpr Mirror::TypeInfoCategories GetCategory() {
 
 	static_assert(!std::is_reference_v<T>, "Reference(s) currently unsupported");
-	static_assert(!std::is_function_v<T> || !std::is_function_v<std::remove_pointer_t<T>>,  "Function object(s) and pointer(s) currently unsupported");
+	static_assert(!std::is_function_v<T> || !std::is_function_v<std::remove_pointer_t<T>>,  "Function object(s) and function pointer(s) currently unsupported");
 
-	if (std::is_enum_v<T>) return Mirror::TypeInfoCategory_Primitive;
+	if (std::is_enum_v<T>) return Mirror::TypeInfoCategory_Primitive; // #NOTE Should come before class incase of enum class
 
-	if (std::is_array_v<T>) return Mirror::TypeInfoCategory_Collection;
+	// #TODO Review if (std::is_array_v<T>) return Mirror::TypeInfoCategory_Collection;
 	if (std::is_pointer_v<T>) return Mirror::TypeInfoCategory_Pointer;
 
-	if (is_stl_pair<T>::value) return Mirror::TypeInfoCategory_Pair;
 	if (is_stl_container<T>::value) return Mirror::TypeInfoCategory_Collection;
-	if (std::is_class_v<T>) return Mirror::TypeInfoCategory_Class;
+
+	if (std::is_class_v<T>) return Mirror::TypeInfoCategory_Class; // #NOTE Should come after container/collection check as stl containers are classes
 
 	MIRROR_ASSERT(false && "Unsupported type found!");
 
@@ -53,8 +53,15 @@ static void SetCollectionLambdasVector(Mirror::TypeInfo* constTypeInfo, std::tru
 
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::value_type>();
+
+	mutableTypeInfo->collectionCountFunc = [](const void* collectionAddress) -> size_t {
+		return ((T*)collectionAddress)->size();
+	};
+	mutableTypeInfo->collectionReserveFunc = [](void* collectionAddress, size_t elementCount) {
+		((T*)collectionAddress)->reserve(elementCount);
+	};
 	mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
-		((T*)collectionAddress)->push_back(*(typename T::value_type*)elementFirst);
+		((T*)collectionAddress)->emplace_back(*(typename T::value_type*)elementFirst);
 	};
 	mutableTypeInfo->collectionClearFunction = [](void* collectionAddress) {
 		((T*)collectionAddress)->clear();
@@ -77,6 +84,9 @@ static void SetCollectionLambdasMap(Mirror::TypeInfo* constTypeInfo, std::true_t
 
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::value_type>();
+	mutableTypeInfo->collectionCountFunc = [](const void* collectionAddress) -> size_t {
+		return ((T*)collectionAddress)->size();
+	};
 	mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
 		((T*)collectionAddress)->insert(*(typename T::value_type*)elementFirst);
 	};
@@ -112,6 +122,9 @@ static void SetCollectionLambdasPair(Mirror::TypeInfo* constTypeInfo, std::true_
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::first_type>();
 	mutableTypeInfo->collectionTypeInfoSecond = Mirror::InfoForType<T::second_type>();
 
+	mutableTypeInfo->collectionCountFunc = [](const void* collectionAddress) -> size_t {
+		return 2; // #TODO Review pair return size
+	};
 	mutableTypeInfo->collectionAddFunc = [](void* pairObjAddress, size_t /*index*/, const void* elementFirst, const void* elementSecond) {
 		T* pair = (T*)pairObjAddress;
 		memcpy((void*)&pair->first, elementFirst, sizeof(T::first_type));
@@ -129,10 +142,14 @@ template<typename T>
 static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::false_type) {
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 
+	// #TODO Handle std::array
 	if (std::is_array_v<T>)
 	{
 		typedef typename std::remove_all_extents<T>::type ArrayElementType;
 		mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<ArrayElementType>();
+		mutableTypeInfo->collectionCountFunc = [](const void* collectionAddress) -> size_t {
+			return sizeof(T) / sizeof(ArrayElementType);
+		};
 		mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t index, const void* elementFirst, const void* /*elementSecond*/) {
 			memcpy((char*)collectionAddress + (sizeof(ArrayElementType) * index), elementFirst, sizeof(ArrayElementType));
 		};
@@ -160,6 +177,7 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::true_type
 
 	SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());
 	SetCollectionLambdasMap<T>(mutableTypeInfo, is_stl_map_impl::is_stl_map<T>::type());
+	SetCollectionLambdasPair<T>(mutableTypeInfo, is_stl_pair_impl::is_stl_pair<T>::type());
 }
 
 // #NOTE Required to avoid sizeof(void) C2070 compiler error
@@ -189,7 +207,6 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 	switch (localStaticTypeInfo.category)																									\
 	{																																		\
 	case TypeInfoCategory_Collection: /* #NOTE Intentional case fall through */																\
-	case TypeInfoCategory_Pair:																												\
 		SetCollectionLambdas<TYPE>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<TYPE>::type());							\
 	case TypeInfoCategory_Class:																											\
 		SetConstructionLambda<TYPE>(&localStaticTypeInfo, std::is_class<TYPE>::type());														\

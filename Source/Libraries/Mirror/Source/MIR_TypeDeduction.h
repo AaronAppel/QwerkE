@@ -19,6 +19,7 @@
 // Specialize a type for all of the STL containers.
 namespace is_stl_container_impl {
 	template <typename T>       struct is_stl_container :std::false_type {};
+
 	template <typename T, std::size_t N> struct is_stl_container<std::array    <T, N>> :std::true_type {};
 
 	template <typename... Args> struct is_stl_container<std::vector            <Args...>> :std::true_type {};
@@ -35,6 +36,7 @@ namespace is_stl_container_impl {
 	template <typename... Args> struct is_stl_container<std::unordered_multimap<Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::stack             <Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::queue             <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::pair			   <Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::priority_queue    <Args...>> :std::true_type {};
 }
 
