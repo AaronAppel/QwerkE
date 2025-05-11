@@ -132,11 +132,6 @@ MIRROR_CLASS(BgfxMesh)
 MIRROR_CLASS_END
 #endif
 
-// QC Types
-MIRROR_CLASS(QwerkE::Time::Timer)
-// MIRROR_CLASS_MEMBER(m_Duration)
-MIRROR_CLASS_END
-
 // Misc
 MIRROR_CLASS(QwerkE::GUID)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
@@ -190,6 +185,8 @@ MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::
 MIRROR_TYPE(std::unordered_map<QwerkE::GUID, std::string>)
 
 // Function pointers
+// MIRROR_TYPE(void(*)(void))
+// #TODO Remove expanded code
 template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
 	static_assert(sizeof(void(*)(void)) <= 0xffffui16, "Size is larger than member can hold!"); static Mirror::TypeInfo localStaticTypeInfo; if (!localStaticTypeInfo.stringName.empty()) {
 		return &localStaticTypeInfo;
@@ -198,12 +195,17 @@ template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
 	localStaticTypeInfo.id = Mirror::TypeId<void(*)(void)>();
 	localStaticTypeInfo.stringName = typeid(void(*)(void)).name();
 	localStaticTypeInfo.size = sizeof(void(*)(void)); switch (localStaticTypeInfo.category) {
-	case TypeInfoCategory_Collection: case TypeInfoCategory_Pair:
+	case TypeInfoCategory_Collection:
 		SetCollectionLambdas<void(*)(void)>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<void(*)(void)>::type());
 	case TypeInfoCategory_Class: SetConstructionLambda<void(*)(void)>(&localStaticTypeInfo, std::is_class<void(*)(void)>::type()); break;
 	// #TODO Don't remove pointer if the type is a function pointer. Maybe use is_function<std::remove_pointer_t<void(*)(void)>>::type
 	// case TypeInfoCategory_Pointer: localStaticTypeInfo.pointerDereferencedTypeInfo = Mirror::InfoForType<std::remove_pointer_t<void(*)(void)>>();
-	break; case TypeInfoCategory_Primitive: SetConstructionLambda<void(*)(void)>(&localStaticTypeInfo, std::is_same<void(*)(void), std::string>::type()); break;
+	case TypeInfoCategory_Pointer:
+		assert(std::is_pointer_v<void(*)(void)>);
+		// ERROR: unresolved external symbol... missing type info for Mirror::InfoForType<void __cdecl(void)>(void)
+		// localStaticTypeInfo.pointerDereferencedTypeInfo = Mirror::InfoForType<std::remove_pointer_t<void(*)(void)>>();
+	break;
+	case TypeInfoCategory_Primitive: SetConstructionLambda<void(*)(void)>(&localStaticTypeInfo, std::is_same<void(*)(void), std::string>::type()); break;
 	} return &localStaticTypeInfo;
 }
 
