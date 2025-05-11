@@ -10,17 +10,17 @@ namespace QwerkE {
 
     namespace Input {
 
-        extern InputStatesBitRingBuffer<QKey, bits5> s_Keys;
+        extern InputStatesBitRingBuffer<QKey, u5> s_Keys;
 
-        extern InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons;
-        extern BitIndexRingBuffer<float, bits2> s_MouseScrolls;
-        extern BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer;
+        extern InputStatesBitRingBuffer<QKey, u3> s_MouseButtons;
+        extern BitIndexRingBuffer<float, u2> s_MouseScrolls;
+        extern BitIndexRingBuffer<vec2f, u2> s_MousePositionsBuffer;
 
-        extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>>> s_GamepadsButtons;
-        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer;
-        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer;
+        extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>>> s_GamepadsButtons;
+        extern BitIndexRingBuffer<vec2f, u2> s_GamepadAxisLeftStickBuffer;
+        extern BitIndexRingBuffer<vec2f, u2> s_GamepadAxisRightStickBuffer;
 
-        extern BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer;
+        extern BitIndexRingBuffer<vec2f, u2> s_GamepadAxisTriggersBuffer;
 
         extern u64 s_InputsCount;
         extern std::vector<int> s_GamepadIds;
@@ -160,7 +160,7 @@ namespace QwerkE {
                     ImGui::Text("No gamepad detected");
                 }
 
-                InputStatesBitRingBuffer<QGamepad, bits4> gamepadsButtons;
+                InputStatesBitRingBuffer<QGamepad, u4> gamepadsButtons;
                 if (!s_GamepadsButtons.empty())
                 {
                     gamepadsButtons = s_GamepadsButtons[0].second;

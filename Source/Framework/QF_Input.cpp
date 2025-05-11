@@ -14,16 +14,16 @@ namespace QwerkE {
 
     namespace Input {
 
-        InputStatesBitRingBuffer<QKey, bits5> s_Keys;
+        InputStatesBitRingBuffer<QKey, u5> s_Keys;
 
-        InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
-        BitIndexRingBuffer<float, bits2> s_MouseScrolls;
-        BitIndexRingBuffer<vec2f, bits2> s_MousePositionsBuffer;
+        InputStatesBitRingBuffer<QKey, u3> s_MouseButtons; // #TODO Investigate GLFW mouse down limit (estimated 3 until loss of input)
+        BitIndexRingBuffer<float, u2> s_MouseScrolls;
+        BitIndexRingBuffer<vec2f, u2> s_MousePositionsBuffer;
 
-        std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>>> s_GamepadsButtons;
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisLeftStickBuffer; // #TODO Support multiple gamepads
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisRightStickBuffer;
-        BitIndexRingBuffer<vec2f, bits2> s_GamepadAxisTriggersBuffer; // #NOTE Triggers might be better as separate float buffers
+        std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>>> s_GamepadsButtons;
+        BitIndexRingBuffer<vec2f, u2> s_GamepadAxisLeftStickBuffer; // #TODO Support multiple gamepads
+        BitIndexRingBuffer<vec2f, u2> s_GamepadAxisRightStickBuffer;
+        BitIndexRingBuffer<vec2f, u2> s_GamepadAxisTriggersBuffer; // #NOTE Triggers might be better as separate float buffers
 
         static constexpr char* s_GameActionsFileName = "GameActions.qdata";
         static GameActions s_GameActions;
@@ -271,7 +271,7 @@ namespace QwerkE {
         {
             if (MouseMoved())
             {
-                bits2 index = s_MousePositionsBuffer.HeadIndex();
+                u2 index = s_MousePositionsBuffer.HeadIndex();
                 index.value -= 1;
                 vec2f thisFrame = s_MousePositionsBuffer.ReadRandom(index.value);
                 index.value -= 1;

@@ -15,9 +15,9 @@ namespace QwerkE {
         // #TODO Consider using extern to access GLFW window* in Window::
         // extern GLFWwindow* s_GlfwWindow;
 
-        extern InputStatesBitRingBuffer<QKey, bits5> s_Keys;
-        extern InputStatesBitRingBuffer<QKey, bits3> s_MouseButtons;
-        extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>>> s_GamepadsButtons;
+        extern InputStatesBitRingBuffer<QKey, u5> s_Keys;
+        extern InputStatesBitRingBuffer<QKey, u3> s_MouseButtons;
+        extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>>> s_GamepadsButtons;
 
         extern void Internal_Initialize();
         extern void Internal_NewFrame();
@@ -252,7 +252,7 @@ namespace QwerkE {
             }
 
             s_GamepadIds.emplace_back(a_GamepadId);
-            std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, bits4>> var = { (QGamepad)a_GamepadId , {} };
+            std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>> var = { (QGamepad)a_GamepadId , {} };
             s_GamepadsButtons.emplace_back(var); // #TODO Review safety
 
             int hatStatesCount;
