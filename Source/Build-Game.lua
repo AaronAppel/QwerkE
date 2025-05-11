@@ -23,7 +23,7 @@ project "Game"
 	postbuildcommands
 	{
 		-- Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
-		"call ../Build/CopyLibraryDLLs.bat \"../Source/Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
+		"call ../Build/PostBuild.bat \"../Source/Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 
 	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c", }

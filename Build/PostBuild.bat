@@ -1,3 +1,7 @@
+
+rem Originally used to copy DLLs, but now used for post build step reference
+exit 0
+
 rem XCOPY documentation
 rem https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/xcopy
 rem https://ss64.com/nt/xcopy.html

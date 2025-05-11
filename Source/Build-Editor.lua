@@ -25,7 +25,7 @@ project "Editor"
 	postbuildcommands
 	{
 		-- #NOTE Starts in %{wks.location}/%{prj.name} (PremakeProject/Game) directory
-		"call ../Build/CopyLibraryDLLs.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
+		"call ../Build/PostBuild.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 	
 	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c" }
