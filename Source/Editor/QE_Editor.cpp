@@ -339,7 +339,7 @@ namespace QwerkE {
                 LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             case QwerkE::e_MouseMove:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
+                // LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             }
         }

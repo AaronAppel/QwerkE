@@ -1,3 +1,4 @@
+#pragma once
 
 #ifdef _QCJSON
 #include "Libraries/cJSON/cJSON.h"
