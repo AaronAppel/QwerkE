@@ -32,7 +32,7 @@ struct Mirror
 {
 	enum TypeInfoCategories : uint8_t
 	{
-		TypeInfoCategory_Primitive = 0,
+		TypeInfoCategory_Primitive = 0, // #TODO Review maintaining order in Mirror.h and everywhere else (class after collection)
 		TypeInfoCategory_Class,
 		TypeInfoCategory_Collection,
 		TypeInfoCategory_Pair,

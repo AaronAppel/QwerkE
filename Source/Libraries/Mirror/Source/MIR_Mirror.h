@@ -54,7 +54,7 @@ static void SetCollectionLambdasVector(Mirror::TypeInfo* constTypeInfo, std::tru
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::value_type>();
 	mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
-		((T*)collectionAddress)->push_back(*(typename T::value_type*)elementFirst);
+		((T*)collectionAddress)->emplace_back(*(typename T::value_type*)elementFirst);
 	};
 	mutableTypeInfo->collectionClearFunction = [](void* collectionAddress) {
 		((T*)collectionAddress)->clear();
@@ -143,23 +143,27 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::false_typ
 			return (char*)collectionAddress + (sizeof(ArrayElementType) * index++);
 		};
 	}
-	else if (is_stl_pair<T>::value)
-	{
-		SetCollectionLambdasPair<T>(mutableTypeInfo, is_stl_pair_impl::is_stl_pair<T>::type());
-	}
 }
 
 template<typename T>
 static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::true_type) {
 	static_assert(is_stl_container<T>::value, "Type T is not a collection!");
-
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 
-	typedef typename std::remove_all_extents<T>::type CollectionElementTypeFirst;
-	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<CollectionElementTypeFirst>();
+	if (is_stl_pair<T>::value)
+	{
+		SetCollectionLambdasPair<T>(mutableTypeInfo, is_stl_pair_impl::is_stl_pair<T>::type());
+	}
+	else
+	{
+		typedef typename std::remove_all_extents<T>::type CollectionElementTypeFirst;
+		mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<CollectionElementTypeFirst>();
 
-	SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());
-	SetCollectionLambdasMap<T>(mutableTypeInfo, is_stl_map_impl::is_stl_map<T>::type());
+		// #TODO Review how std::array is handled
+		// SetCollectionLambdasArray<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_array<T>::type());
+		SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());
+		SetCollectionLambdasMap<T>(mutableTypeInfo, is_stl_map_impl::is_stl_map<T>::type());
+	}
 }
 
 // #NOTE Required to avoid sizeof(void) C2070 compiler error
