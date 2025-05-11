@@ -5,11 +5,6 @@
 #include <string>
 #include <vector>
 
-#ifdef _QBGFXFRAMEWORK
-// #include <Libraries/bgfxFramework/include/bgfxFramework/bgfx_utils.h>
-// struct bgfxFramework::Mesh;
-#endif
-
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/QwerkE_imgui.h"
 #endif
