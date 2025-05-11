@@ -375,7 +375,7 @@ namespace QwerkE {
                 Serialize::ToFile(s_FocusedWindowsStack, Paths::Setting(s_EditorWindowDataFileName).c_str());
             }
             s_FocusedWindowsStack.reserve(40);
-            Serialize::FromFile(Paths::Setting(s_EditorWindowDataFileName).c_str(), s_FocusedWindowsStack);
+            // Serialize::FromFile(Paths::Setting(s_EditorWindowDataFileName).c_str(), s_FocusedWindowsStack);
 
             bool missingMenuBarWindow = true;
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)

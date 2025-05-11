@@ -5,24 +5,23 @@
 #include "QF_Buffer.h"
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
+#include "QF_Mirror.h"
 
-// Editor
-// #TODO #if Editor
+// #if QWERKE_EDITOR // #TODO Review removing editor code from framework
 #include "../Source/Editor/QE_EditorWindowHelpers.h"
 #include "../Source/Editor/QE_Mirror.h"
+// #endif // QWERKE_EDITOR
 
 namespace QwerkE {
 
     namespace Serialize {
 
-        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
-        void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj); // TODO Review adding const std::string& name);
         void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
+        void local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
-        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
-
-        template<typename... Component>
-        void DeserializeComponent(entt::registry* registry, const cJSON* entityComponentsJsonArray);
+        bool local_TypeInfoHandleOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
         template<typename... Component>
         static void DeserializeComponents(TemplateArgumentList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray);
@@ -35,12 +34,7 @@ namespace QwerkE {
                 return;
             }
 
-            if (Mirror::TypeId<std::string>() == objTypeInfo->id)
-            {
-                int bp = 0;
-            }
-
-            if (local_TypeInfoHasOverride(objJson, objTypeInfo, obj))
+            if (local_TypeInfoHandleOverride(objJson, objTypeInfo, obj))
                 return;
 
             switch (objTypeInfo->category)
@@ -52,26 +46,11 @@ namespace QwerkE {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
                 local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
-                {
-                    if (strcmp(objJson->child->string, "nullptr") == 0)
-                    {
-                        LOG_WARN("{0} Null pointer!", __FUNCTION__);
-                        *(void**)obj = nullptr;
-                        return;
-                    }
-
-                    const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo->DerivedTypeFromTypeName(objJson->child->string);
-
-                    void* derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
-                    *(void**)obj = derefencedTypeObjAddress;
-
-                    FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
-                }
-                break;
+                local_DeserializePointer(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             }
         }
 
-        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool isPairFirst)
+        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
@@ -87,7 +66,6 @@ namespace QwerkE {
                 {
                     objTypeInfo->typeConstructorFunc(obj); // #NOTE String must be constructed before assigned to
                     *(std::string*)obj = objJson->valuestring ? objJson->valuestring : objJson->string; break;
-                    int bp = 0;
                 }
             case Mirror::TypeId<const char*>():
             case Mirror::TypeId<char*>():
@@ -102,12 +80,12 @@ namespace QwerkE {
 
             case Mirror::TypeId<const float>():
             case Mirror::TypeId<float>():
-                *(float*)obj = (float)objJson->valuedouble; break;
+                *(float*)obj = (float)objJson->valuedouble; break; // #NOTE double to float loss of precision
 
             case Mirror::TypeId<QKey>():
             case Mirror::TypeId<const char>():
             case Mirror::TypeId<char>():
-                memcpy(obj, objJson->valuestring, 1); break;
+                *(char*)obj = (char)objJson->valuestring[0]; break; // #TODO Review char assignment
 
             default:
                 if (objJson->type | cJSON_Number | cJSON_True | cJSON_False)
@@ -131,16 +109,19 @@ namespace QwerkE {
 
         void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
-            if (objTypeInfo->superTypeInfo)
+            if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Class != objTypeInfo->category)
             {
-                // #TODO Should super constructor be called?
-                local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
+                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+                return;
             }
 
+            if (objTypeInfo->superTypeInfo)
+                local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
+
+            QwerkE::Editor::EditorWindow* window = (QwerkE::Editor::EditorWindow*)obj;
+
             if (objTypeInfo->typeConstructorFunc)
-            {
                 objTypeInfo->typeConstructorFunc(obj);
-            }
 
             if (objTypeInfo->fields.empty())
                 return;
@@ -152,9 +133,13 @@ namespace QwerkE {
                 {
                     const Mirror::Field& field = objTypeInfo->fields[i];
 
-                    if (strcmp(field.name.c_str(), iterator->string) != 0 ||
+                    if (strcmp(field.name.c_str(), iterator->string) != 0
                         // #TODO Wrap editor only logic in #if Editor
-                        field.flags & FieldSerializationFlags::_InspectorOnly)
+#if QWERKE_EDITOR // #TODO Review removing editor code from framework
+                        || field.flags & FieldSerializationFlags::_InspectorOnly)
+#else
+                        )
+#endif // QWERKE_EDITOR
                         continue;
 
                     void* fieldAddress = (char*)obj + field.offset;
@@ -182,7 +167,7 @@ namespace QwerkE {
                 return;
             }
 
-            if (objTypeInfo->collectionTypeInfoSecond)
+            if (objTypeInfo->collectionTypeInfoSecond) // #TODO Refactor out pair specific logic
             {
                 const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
                 Buffer elementFirstBuffer(elementFirstTypeInfo->size);
@@ -210,33 +195,100 @@ namespace QwerkE {
                 return;
             }
 
+            if (false) // #TODO Implement
+            {
+                const Mirror::TypeInfo* currentTypeInfo = objTypeInfo->collectionTypeInfoFirst;
+                while (currentTypeInfo)
+                {
+                    // #TOOD Improve logic for handling both first and last types without repeating code
+                    Buffer elementFirstBuffer(currentTypeInfo->size);
+
+                    currentTypeInfo->Construct(obj);
+                    if (currentTypeInfo->collectionReserveFunc && currentTypeInfo->collectionCountFunc)
+                    {
+                        currentTypeInfo->collectionReserveFunc(obj, currentTypeInfo->collectionCountFunc(obj));
+                    }
+
+                    const cJSON* jsonIterator = objJson->child; // #TODO Review json pointer
+                    size_t index = 0; // #NOTE Used for contiguous collections
+
+                    while (jsonIterator)
+                    {
+                        FromJson(jsonIterator, currentTypeInfo, elementFirstBuffer.As<void>());
+                        objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
+                        jsonIterator = jsonIterator->next;
+                        ++index;
+                    }
+
+                    if (currentTypeInfo->collectionTypeInfoSecond == currentTypeInfo)
+                    {
+                        break;
+                    }
+                    currentTypeInfo = currentTypeInfo->collectionTypeInfoSecond;
+                }
+            }
+
             const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
 
-            auto vecLower = (std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)elementFirstBuffer.As<void>();
-
-            const cJSON* iterator = objJson->child;
-            size_t index = 0; // #TODO Scrap index for non-contiguous collections if possible
-
-            // #NOTE Collection constructor should be called
             objTypeInfo->Construct(obj);
-
-            // #TODO Reserve size for appending items to avoid extra dynamic allocation, moves, and copies
-
-            std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>* map = (std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)obj;
-
-            while (iterator)
+            if (objTypeInfo->collectionReserveFunc && objTypeInfo->collectionCountFunc)
             {
+                objTypeInfo->collectionReserveFunc(obj, objTypeInfo->collectionCountFunc(obj));
+            }
+
+            // #DEBUG Registry
+            auto vecLower = (std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)elementFirstBuffer.As<void>();
+            std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>* map = (std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)obj;
+            std::vector<QwerkE::Editor::EditorWindow*>* editorWindows = (std::vector<QwerkE::Editor::EditorWindow*>*)obj;
+
+            const cJSON* jsonIterator = objJson->child;
+            size_t index = 0; // #NOTE Used for contiguous collections
+
+            while (jsonIterator)
+            {
+                // #DEBUG Registry
                 std::vector<std::pair<QwerkE::GUID, std::string>>* vec = (std::vector<std::pair<QwerkE::GUID, std::string>>*)obj;
                 std::pair<QwerkE::GUID, std::string>* pair = (std::pair<QwerkE::GUID, std::string>*)elementFirstBuffer.As<void>();
-                FromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
+                QwerkE::Editor::EditorWindow* window = (QwerkE::Editor::EditorWindow*)elementFirstBuffer.As<void>();
+
+                FromJson(jsonIterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
                 objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
-                iterator = iterator->next;
+                jsonIterator = jsonIterator->next;
                 ++index;
             }
         }
 
-        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
+        void local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
+        {
+            if (!obj || !objTypeInfo || !objJson)
+            {
+                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+                return;
+            }
+
+            if (strcmp(objJson->child->string, "nullptr") == 0)
+            {
+                LOG_WARN("{0} Null pointer!", __FUNCTION__);
+                *(void**)obj = nullptr;
+                return;
+            }
+
+            const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo->DerivedTypeFromTypeName(objJson->child->string);
+            void* derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
+            *(void**)obj = derefencedTypeObjAddress;
+            FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
+            // if (constexpr bool pointersHaveObject = true)
+            // {
+            //     FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
+            // }
+            // else
+            // {
+            //     FromJson(objJson, dereferencedTypeInfo, derefencedTypeObjAddress);
+            // }
+        }
+
+        bool local_TypeInfoHandleOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
         {
             switch (objTypeInfo->id)
             {

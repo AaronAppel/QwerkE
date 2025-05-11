@@ -16,22 +16,24 @@
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Log.h"
+#include "QF_Mirror.h"
+#include "QF_QKey.h"
 
 // #if Framework
 // #include "QF_Mirror.h"
 
-// Editor types
-// #TODO Review removing
-// #if Editor
+// #if QWERKE_EDITOR // #TODO Review removing editor code from framework
 #include "../Source/Editor/QE_Mirror.h"
+// #endif // QWERKE_EDITOR
 
 namespace QwerkE {
 
     namespace Serialize {
 
-        void local_SerializePrimitive(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
-        void local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson);
-        void local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
+        void Local_SerializePrimitive(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
+        void Local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
+        void Local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
+        void Local_SerializePointer(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
 
         cJSON* CreateJsonObject(const char* key = nullptr);
 
@@ -43,12 +45,9 @@ namespace QwerkE {
         cJSON* CreateJsonString(const std::string& name, const void* obj);
 
         template<typename... Component>
-        void SerializeComponent(const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
-
-        template<typename... Component>
         static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
 
-        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
+        bool local_TypeInfoHandleOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name);
 
         void ToJson(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
@@ -58,50 +57,28 @@ namespace QwerkE {
                 return;
             }
 
-            if (Mirror::TypeId<std::string>() == objTypeInfo->id)
-            {
-                int bp = 0;
-            }
-
-            if (local_TypeInfoHasOverride(obj, objTypeInfo, objJson, name))
+            if (local_TypeInfoHandleOverride(obj, objTypeInfo, objJson, name))
                 return;
 
             switch (objTypeInfo->category)
             {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
-                local_SerializePrimitive(obj, objTypeInfo, objJson, objTypeInfo->stringName); break;
+                Local_SerializePrimitive(obj, objTypeInfo, objJson, objTypeInfo->stringName); break;
+
             case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
-                {
-                    cJSON* classJson = CreateJsonObject(name.c_str());
-                    cJSON_AddItemToArray(objJson, classJson);
-                    local_SerializeClass(obj, objTypeInfo, classJson);
-                }
-                break;
+                Local_SerializeClass(obj, objTypeInfo, objJson, name); break;
+
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
-                local_SerializeCollection(obj, objTypeInfo, objJson, name); break;
+                Local_SerializeCollection(obj, objTypeInfo, objJson, name); break;
+
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
-                {
-                    cJSON* pointerJson = CreateJsonObject(name.c_str());
-                    cJSON_AddItemToArray(objJson, pointerJson);
-
-                    if (nullptr == *(const void**)obj)
-                    {
-                        LOG_ERROR("{0} Pointer is null!", __FUNCTION__);
-                        uint8_t pointerValue = 0;
-                        local_SerializePrimitive(&pointerValue, Mirror::InfoForType<uint8_t>(), pointerJson, "nullptr");
-                        return;
-                    }
-
-                    const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType()->DerivedTypeFromPointer(obj);
-                    ToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
-                }
-                break;
+                Local_SerializePointer(obj, objTypeInfo, objJson, name); break;
             }
         }
 
-        void local_SerializePrimitive(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
+        void Local_SerializePrimitive(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
         {
-            if (!obj || !objTypeInfo || !objJson)
+            if (!obj || !objTypeInfo || !objJson) // #NOTE Don't check objTypeInfo->category in case of override
             {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
@@ -136,11 +113,13 @@ namespace QwerkE {
             case Mirror::TypeId<const bool>():
             case Mirror::TypeId<bool>():
                 cJsonItem = CreateJsonBool<bool>(name, obj); break;
+// #if QWERKE_EDITOR
             case Mirror::TypeId<Editor::EditorWindowTypes>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<Editor::EditorWindowFlags>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<Editor::EditorWindowSizingFlags>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<const eScriptTypes>():
             case Mirror::TypeId<eScriptTypes>():
+// #endif // QWERKE_EDITOR
             case Mirror::TypeId<const uint8_t>():
             case Mirror::TypeId<uint8_t>():
                 cJsonItem = CreateJsonNumber<uint8_t>(name, obj); break;
@@ -160,6 +139,8 @@ namespace QwerkE {
             case Mirror::TypeId<int32_t>():
                 cJsonItem = CreateJsonNumber<int32_t>(name, obj); break;
             case Mirror::TypeId<const int64_t>():
+
+            // case Mirror::TypeId<GUID>(): Handle GUID as primitive
             case Mirror::TypeId<int64_t>(): // #NOTE Special case of conversion on 64 bit types
             {
                 int64_t* numberAddress = (int64_t*)obj;
@@ -195,25 +176,34 @@ namespace QwerkE {
             }
         }
 
-        void local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson)
+        void Local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
         {
-            if (!obj || !objTypeInfo || !objJson || objTypeInfo->category != Mirror::TypeInfoCategory_Class)
+            if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Class != objTypeInfo->category)
             {
                 LOG_ERROR("{0} Invalid argument passed!", __FUNCTION__);
                 return;
             }
 
+            cJSON* classJson = objJson;
             if (objTypeInfo->superTypeInfo)
             {
-                local_SerializeClass(obj, objTypeInfo->superTypeInfo, objJson);
+                Local_SerializeClass(obj, objTypeInfo->superTypeInfo, classJson, name);
+                classJson = classJson->child;
+            }
+            else
+            {
+                classJson = CreateJsonObject(name.c_str());
+                cJSON_AddItemToArray(objJson, classJson);
             }
 
             for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
             {
                 const Mirror::Field& field = objTypeInfo->fields[i];
 
+// #if QWERKE_EDITOR
                 if (field.flags & FieldSerializationFlags::_InspectorOnly)
                     continue;
+// #endif // QWERKE_EDITOR
 
                 const void* fieldAddress = (char*)obj + field.offset;
 
@@ -221,16 +211,16 @@ namespace QwerkE {
                 // #TODO No if check needed?
                 if (Mirror::TypeInfoCategory_Primitive == field.typeInfo->category)
                 {   // #TODO Review handling primitive here (dependent on field name)
-                    local_SerializePrimitive(fieldAddress, field.typeInfo, objJson, field.name);
+                    Local_SerializePrimitive(fieldAddress, field.typeInfo, classJson, field.name);
                 }
                 else
                 {   // #TODO This also checks if primitive so maybe avoid redundancy
-                    ToJson(fieldAddress, field.typeInfo, objJson, field.name);
+                    ToJson(fieldAddress, field.typeInfo, classJson, field.name);
                 }
             }
         }
 
-        void local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
+        void Local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
         {
             if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Collection != objTypeInfo->category)
             {
@@ -238,13 +228,7 @@ namespace QwerkE {
                 return;
             }
 
-            if (false) // (!objTypeInfo->newIsCollection()) // || !objTypeInfo->collectionTypeInfo)
-            {
-                LOG_ERROR("{0} Invalid type info!", __FUNCTION__);
-                return;
-            }
-
-            if (objTypeInfo->collectionTypeInfoSecond)
+            if (objTypeInfo->collectionTypeInfoSecond) // #TODO Refactor pair only logic
             {
                 cJSON* pairJson = CreateJsonObject(objTypeInfo->stringName.c_str());
                 cJSON_AddItemToArray(objJson, pairJson);
@@ -259,7 +243,7 @@ namespace QwerkE {
                 {
                     cJSON* pairFirstJson = CreateJsonObject(objTypeInfoFirst->stringName.c_str());
                     cJSON_AddItemToArray(pairJson, pairFirstJson);
-                    local_SerializePrimitive(firstAddress, objTypeInfoFirst, pairFirstJson, objTypeInfoFirst->stringName);
+                    Local_SerializePrimitive(firstAddress, objTypeInfoFirst, pairFirstJson, objTypeInfoFirst->stringName);
                 }
                 else
                 {
@@ -278,7 +262,7 @@ namespace QwerkE {
                 if (Mirror::TypeId<std::string>() == objTypeInfoSecond->id ||
                     Mirror::TypeId<const char*>() == objTypeInfoSecond->id)
                 {
-                    local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
+                    Local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
                     return;
                 }
 
@@ -286,14 +270,75 @@ namespace QwerkE {
                 switch (objTypeInfoSecond->category)
                 {
                 case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
-                    local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
+                    Local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
 
                 case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
-                    local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson); break;
+                    Local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
 
                 case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
                     // #NOTE Can't add because collection already adds
-                    local_SerializeCollection(secondAddress, objTypeInfoSecond, pairJson, objTypeInfoSecond->stringName); break;
+                    Local_SerializeCollection(secondAddress, objTypeInfoSecond, pairJson, objTypeInfoSecond->stringName); break;
+
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
+                    {
+                        const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType()->DerivedTypeFromPointer(secondAddress);
+                        ToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
+                    }
+                    break;
+                }
+                return;
+            }
+
+            if (objTypeInfo->collectionTypeInfoSecond)
+            {
+                cJSON* pairJson = CreateJsonObject(objTypeInfo->stringName.c_str());
+                cJSON_AddItemToArray(objJson, pairJson);
+
+                const Mirror::TypeInfo* const objTypeInfoFirst = objTypeInfo->collectionTypeInfoFirst;
+                const Mirror::TypeInfo* const objTypeInfoSecond = objTypeInfo->collectionTypeInfoSecond;
+
+                const void* const firstAddress = objTypeInfo->collectionAddressOfPairObjectFunc(obj, true);
+                const void* const secondAddress = objTypeInfo->collectionAddressOfPairObjectFunc(obj, false);
+
+                if (objTypeInfo->collectionTypeInfoFirst->category == Mirror::TypeInfoCategory_Primitive)
+                {
+                    cJSON* pairFirstJson = CreateJsonObject(objTypeInfoFirst->stringName.c_str());
+                    cJSON_AddItemToArray(pairJson, pairFirstJson);
+                    Local_SerializePrimitive(firstAddress, objTypeInfoFirst, pairFirstJson, objTypeInfoFirst->stringName);
+                }
+                else
+                {
+                    ToJson(firstAddress, objTypeInfoFirst, pairJson, objTypeInfoFirst->stringName);
+                }
+
+                cJSON* pairSecondJson = CreateJsonObject(objTypeInfoSecond->stringName.c_str());
+                if (Mirror::TypeInfoCategories::TypeInfoCategory_Collection != objTypeInfoSecond->category)
+                {
+                    cJSON_AddItemToArray(pairJson, pairSecondJson);
+                }
+
+                // #TODO Fix std::string exception. Test const char*
+                // #TODO Call ToJson to use ensure local_TypeInfoHasOverride() override logic
+                // #TODO std::string has no fields so the value will never be written in local_SerializeClass()
+                if (Mirror::TypeId<std::string>() == objTypeInfoSecond->id ||
+                    Mirror::TypeId<const char*>() == objTypeInfoSecond->id)
+                {
+                    Local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
+                    return;
+                }
+
+                // #TODO Try to deprecate switch below with if/else above, or refactor switch
+                switch (objTypeInfoSecond->category)
+                {
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
+                    Local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
+
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
+                    Local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson, name); break;
+
+                case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
+                    // #NOTE Can't add because collection already adds
+                    Local_SerializeCollection(secondAddress, objTypeInfoSecond, pairJson, objTypeInfoSecond->stringName); break;
 
                 case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
                 {
@@ -323,6 +368,34 @@ namespace QwerkE {
                 ++counter;
                 elementAddress = (void*)objTypeInfo->collectionIterateCurrentFunc(obj, counter);
             }
+        }
+
+        void Local_SerializePointer(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)
+        {
+            if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Pointer != objTypeInfo->category)
+            {
+                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+                return;
+            }
+
+            // #TODO Consider avoiding a json object for pointers, and just use the dereferenced/absolute type instead?
+            cJSON* pointerJson = objJson;
+            if (constexpr bool pointersHaveObject = true)
+            {
+                pointerJson = CreateJsonObject(name.c_str());
+                cJSON_AddItemToArray(objJson, pointerJson);
+            }
+
+            if (nullptr == *(const void**)obj)
+            {
+                LOG_ERROR("{0} Pointer is null!", __FUNCTION__);
+                uint8_t pointerValue = 0;
+                Local_SerializePrimitive(&pointerValue, Mirror::InfoForType<uint8_t>(), pointerJson, "nullptr");
+                return;
+            }
+
+            const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType()->DerivedTypeFromPointer(obj);
+            ToJson(*(void**)obj, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
         }
 
         cJSON* CreateJsonObject(const char* key)
@@ -370,11 +443,11 @@ namespace QwerkE {
                 cJSON_AddItemToArray(entityComponentsJsonArray, componentJsonItem);
 
                 Component& component = handle.GetComponent<Component>();
-                local_SerializeClass(&component, componentTypeInfo, componentJsonItem);
+                Local_SerializeClass(&component, componentTypeInfo, componentJsonItem);
             }(), ...);
         }
 
-        bool local_TypeInfoHasOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
+        bool local_TypeInfoHandleOverride(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& name)
         {
             switch (objTypeInfo->id)
             {
@@ -404,9 +477,10 @@ namespace QwerkE {
                 return true;
 
             // #NOTE Treat some types as primitives
+            // case Mirror::TypeId<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
             case Mirror::TypeId<std::string>():
             case Mirror::TypeId<const char*>():
-                local_SerializePrimitive(obj, objTypeInfo, objJson, name);
+                Local_SerializePrimitive(obj, objTypeInfo, objJson, name);
                 return true;
             }
             return false;
@@ -423,10 +497,7 @@ namespace QwerkE {
                 const Component& component = registry->get<Component>(entityId);
                 const Mirror::TypeInfo* componentTypeInfo = Mirror::InfoForType<Component>();
 
-                cJSON* componentJsonArray = CreateJsonObject(componentTypeInfo->stringName.c_str());
-                cJSON_AddItemToArray(componentListJsonArray, componentJsonArray);
-
-                local_SerializeClass(&component, componentTypeInfo, componentJsonArray);
+                Local_SerializeClass(&component, componentTypeInfo, componentListJsonArray, componentTypeInfo->stringName.c_str());
             }(), ...);
         }
 
