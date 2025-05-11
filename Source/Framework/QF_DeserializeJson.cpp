@@ -15,14 +15,12 @@ namespace QwerkE {
 
     namespace Serialize {
 
-        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
-        void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
-        void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
+        void Local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
+        void Local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void Local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
+        void Local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
-        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
-
-        template<typename... Component>
-        void DeserializeComponent(entt::registry* registry, const cJSON* entityComponentsJsonArray);
+        bool Local_TypeInfoHandleOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
         template<typename... Component>
         static void DeserializeComponents(TemplateArgumentList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray);
@@ -35,47 +33,25 @@ namespace QwerkE {
                 return;
             }
 
-            if (Mirror::TypeId<std::string>() == objTypeInfo->id)
-            {
-                int bp = 0;
-            }
-
-            if (local_TypeInfoHasOverride(objJson, objTypeInfo, obj))
+            if (Local_TypeInfoHandleOverride(objJson, objTypeInfo, obj))
                 return;
 
             switch (objTypeInfo->category)
             {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
-                local_DeserializePrimitive(objJson, objTypeInfo, obj); break;
+                Local_DeserializePrimitive(objJson, objTypeInfo, obj); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
-                local_DeserializeClass(objJson, objTypeInfo, obj); break;
+                Local_DeserializeClass(objJson, objTypeInfo, obj); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
-                local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
+                Local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
-                {
-                    // #TODO Add local_DeserializePointer()
-                    // #TODO Local_ with a capital 'L'
-                    if (strcmp(objJson->child->string, "nullptr") == 0)
-                    {
-                        LOG_WARN("{0} Null pointer!", __FUNCTION__);
-                        *(void**)obj = nullptr;
-                        return;
-                    }
-
-                    const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo->DerivedTypeFromTypeName(objJson->child->string);
-
-                    void* derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
-                    *(void**)obj = derefencedTypeObjAddress;
-
-                    FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
-                }
-                break;
+                Local_DeserializePointer(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             }
         }
 
-        void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool isPairFirst)
+        void Local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool isPairFirst)
         {
-            if (!obj || !objTypeInfo || !objJson)
+            if (!obj || !objTypeInfo || !objJson) // #NOTE Don't compare category in case of override
             {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
@@ -131,12 +107,18 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
+        void Local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
+            if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Class != objTypeInfo->category)
+            {
+                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+                return;
+            }
+
             if (objTypeInfo->superTypeInfo)
             {
                 // #TODO Should super constructor be called?
-                local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
+                Local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
             }
 
             if (objTypeInfo->typeConstructorFunc)
@@ -163,7 +145,7 @@ namespace QwerkE {
 
                     if (field.typeInfo->category == Mirror::TypeInfoCategory_Collection)
                     {   // #NOTE Needed to pass name of member collection
-                        local_DeserializeCollection(iterator, field.typeInfo, fieldAddress, field.name);
+                        Local_DeserializeCollection(iterator, field.typeInfo, fieldAddress, field.name);
                     }
                     else
                     {
@@ -176,9 +158,9 @@ namespace QwerkE {
             }
         }
 
-        void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
+        void Local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
         {
-            if (!obj || !objTypeInfo || !objJson)
+            if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Collection != objTypeInfo->category)
             {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
@@ -238,8 +220,37 @@ namespace QwerkE {
             }
         }
 
-        bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
+        void Local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
         {
+            if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Pointer != objTypeInfo->category)
+            {
+                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+                return;
+            }
+
+            if (strcmp(objJson->child->string, "nullptr") == 0)
+            {
+                LOG_WARN("{0} Null pointer!", __FUNCTION__);
+                *(void**)obj = nullptr;
+                return;
+            }
+
+            const Mirror::TypeInfo* dereferencedTypeInfo = objTypeInfo->pointerDereferencedTypeInfo->DerivedTypeFromTypeName(objJson->child->string);
+
+            void* derefencedTypeObjAddress = new char[dereferencedTypeInfo->size];
+            *(void**)obj = derefencedTypeObjAddress;
+
+            FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
+        }
+
+        bool Local_TypeInfoHandleOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
+        {
+            if (!obj || !objTypeInfo || !objJson)
+            {
+                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
+                return false;
+            }
+
             switch (objTypeInfo->id)
             {
             case Mirror::TypeId<entt::registry>():
@@ -257,9 +268,10 @@ namespace QwerkE {
                 return true;
 
             // #NOTE Treat some types as primitives
+            // case Mirror::TypeId<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
             case Mirror::TypeId<std::string>():
             case Mirror::TypeId<const char*>():
-                local_DeserializePrimitive(objJson, objTypeInfo, obj);
+                Local_DeserializePrimitive(objJson, objTypeInfo, obj);
                 return true;
             }
             return false;
@@ -283,7 +295,7 @@ namespace QwerkE {
 
                     Component& component = registry->emplace<Component>(newEntityId);
 
-                    local_DeserializeClass(iterator, typeInfo, &component);
+                    Local_DeserializeClass(iterator, typeInfo, &component);
                     iterator = iterator->next;
 
                     if (std::is_same_v<Component, ComponentScript>)
