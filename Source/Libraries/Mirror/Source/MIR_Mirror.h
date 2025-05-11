@@ -12,16 +12,16 @@ template <typename T>
 constexpr Mirror::TypeInfoCategories GetCategory() {
 
 	static_assert(!std::is_reference_v<T>, "Reference(s) currently unsupported");
-	static_assert(!std::is_function_v<T> || !std::is_function_v<std::remove_pointer_t<T>>,  "Function object(s) and pointer(s) currently unsupported");
+	static_assert(!std::is_function_v<T> || !std::is_function_v<std::remove_pointer_t<T>>,  "Function object(s) and function pointer(s) currently unsupported");
 
-	if (std::is_enum_v<T>) return Mirror::TypeInfoCategory_Primitive;
+	if (std::is_enum_v<T>) return Mirror::TypeInfoCategory_Primitive; // #NOTE Should come before class in case of enum class
 
+	// #TODO Review if (std::is_array_v<T>) return Mirror::TypeInfoCategory_Collection;
 	if (std::is_array_v<T>) return Mirror::TypeInfoCategory_Collection;
 	if (std::is_pointer_v<T>) return Mirror::TypeInfoCategory_Pointer;
 
-	if (is_stl_pair<T>::value) return Mirror::TypeInfoCategory_Pair;
 	if (is_stl_container<T>::value) return Mirror::TypeInfoCategory_Collection;
-	if (std::is_class_v<T>) return Mirror::TypeInfoCategory_Class;
+	if (std::is_class_v<T>) return Mirror::TypeInfoCategory_Class; // #NOTE Should come after container/collection check as stl containers are classes
 
 	MIRROR_ASSERT(false && "Unsupported type found!");
 
@@ -150,20 +150,14 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::true_type
 	static_assert(is_stl_container<T>::value, "Type T is not a collection!");
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 
-	if (is_stl_pair<T>::value)
-	{
-		SetCollectionLambdasPair<T>(mutableTypeInfo, is_stl_pair_impl::is_stl_pair<T>::type());
-	}
-	else
-	{
-		typedef typename std::remove_all_extents<T>::type CollectionElementTypeFirst;
-		mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<CollectionElementTypeFirst>();
+	typedef typename std::remove_all_extents<T>::type CollectionElementTypeFirst;
+	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<CollectionElementTypeFirst>();
 
-		// #TODO Review how std::array is handled
-		// SetCollectionLambdasArray<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_array<T>::type());
-		SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());
-		SetCollectionLambdasMap<T>(mutableTypeInfo, is_stl_map_impl::is_stl_map<T>::type());
-	}
+	// #TODO Review how std::array is handled
+	// SetCollectionLambdasArray<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_array<T>::type());
+	SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());
+	SetCollectionLambdasMap<T>(mutableTypeInfo, is_stl_map_impl::is_stl_map<T>::type());
+	SetCollectionLambdasPair<T>(mutableTypeInfo, is_stl_pair_impl::is_stl_pair<T>::type());
 }
 
 // #NOTE Required to avoid sizeof(void) C2070 compiler error
@@ -192,8 +186,7 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 																																			\
 	switch (localStaticTypeInfo.category)																									\
 	{																																		\
-	case TypeInfoCategory_Collection: /* #NOTE Intentional case fall through */																\
-	case TypeInfoCategory_Pair:																												\
+	case TypeInfoCategory_Collection:																										\
 		SetCollectionLambdas<TYPE>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<TYPE>::type());							\
 	case TypeInfoCategory_Class:																											\
 		SetConstructionLambda<TYPE>(&localStaticTypeInfo, std::is_class<TYPE>::type());														\
