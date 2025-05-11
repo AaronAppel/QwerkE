@@ -35,6 +35,10 @@ namespace QwerkE {
 
 		void EditorWindowImGuiExtendedDemo::DrawInternal()
 		{
+            // #NOTe More widgets, libraries, etc can be found here:
+            // - https://github.com/ocornut/imgui/wiki/Useful-Extensions
+            // - https://github.com/TimoSalomaki/awesome-dear-imgui
+
 			bool isShowingDemo = m_WindowFlags ^ EditorWindowFlags::Hidden;
 			if (isShowingDemo)
 			{

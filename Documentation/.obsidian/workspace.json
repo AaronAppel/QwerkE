@@ -153,12 +153,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ImGui.md",
+                "file": "Shared Vault Files ❗/Visual Studio.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ImGui"
+              "title": "Visual Studio"
             }
           },
           {
@@ -320,8 +320,8 @@
   },
   "active": "f39652428c692754",
   "lastOpenFiles": [
-    "Shared Vault Files ❗/Toggle Block Comments.md",
     "ImGui.md",
+    "Shared Vault Files ❗/Toggle Block Comments.md",
     "Imgui App Example UI.md",
     "Toggle Block Comments.md",
     "Shared Vault Files ❗/Visual Studio.md",

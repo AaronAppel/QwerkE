@@ -36,7 +36,6 @@ namespace QwerkE {
         InspectFieldReturn local_InspectClassFields(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectCollection(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
-        bool local_InspectPair(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
 
         // #TODO Consider adding a read only bool argument
         // #TODO Look to make parentName a const&
@@ -56,10 +55,6 @@ namespace QwerkE {
 
                 case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
                     valueChanged |= local_InspectCollection(typeInfo, obj, parentName);
-                    break;
-
-                case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
-                    valueChanged |= local_InspectPair(typeInfo, obj, parentName);
                     break;
 
                 case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
@@ -699,19 +694,6 @@ namespace QwerkE {
 
                 break;
             }
-            return valueChanged;
-        }
-
-        bool local_InspectPair(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
-        {
-            bool valueChanged = false;
-
-            std::string elementName = parentName;
-            // switch (typeInfo->id)
-            // {
-            // default:
-            //     break;
-            // }
             return valueChanged;
         }
 
