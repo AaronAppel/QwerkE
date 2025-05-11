@@ -1,3 +1,4 @@
+#pragma once
 
 #include <array>
 #include <unordered_map>
@@ -49,101 +50,6 @@ enum FieldSerializationFlags : MIRROR_FIELD_FLAG_SIZE
 
 // Specialize TypeId to support additional types
 // #NOTE TypeIds shouldn't be stored in data as they can change in code over time
-
-#if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
-
-// #NOTE Serialized type IDs 1st to avoid re-ordering issues
-MIRROR_TYPE_ID(QwerkE::Shader)			// #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(QwerkE::Mesh)			// #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(bgfxFramework::Mesh)		// #TODO Fix value dependency in Assets registry
-MIRROR_TYPE_ID(QwerkE::Scene)			// #TODO Fix value dependency in Assets registry
-
-// dear imgui
-MIRROR_TYPE_ID(ImVec2)
-MIRROR_TYPE_ID(ImVec4)
-MIRROR_TYPE_ID(ImVec4[55])
-MIRROR_TYPE_ID(ImGuiStyle)
-
-// entt
-MIRROR_TYPE_ID(entt::registry)
-MIRROR_TYPE_ID(entt::entity)
-
-// QC Types
-MIRROR_TYPE_ID(QwerkE::Time::Timer)
-
-MIRROR_TYPE_ID(vec3f)
-MIRROR_TYPE_ID(vec2f)
-
-// Function pointers
-MIRROR_TYPE_ID(void(*)(void))
-
-// Enums
-MIRROR_TYPE_ID(QwerkE::QKey)
-MIRROR_TYPE_ID(QwerkE::eComponentTags)
-
-// Collections
-MIRROR_TYPE_ID(float[16])
-
-MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::string>)
-MIRROR_TYPE_ID(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE_ID(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE_ID(std::pair<QwerkE::GUID, void*>)
-MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::string*>)
-MIRROR_TYPE_ID(std::pair<const QwerkE::GUID, std::string>)
-MIRROR_TYPE_ID(std::pair<const QwerkE::GUID, std::string*>)
-MIRROR_TYPE_ID(std::pair<QwerkE::GUID, entt::entity>)
-MIRROR_TYPE_ID(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE_ID(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE_ID(std::pair<std::string, std::string>);
-MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::pair<std::string, std::string>>);
-MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::string[11]>)
-MIRROR_TYPE_ID(std::pair<QwerkE::GUID, std::vector<std::string>>)
-MIRROR_TYPE_ID(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
-MIRROR_TYPE_ID(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
-
-MIRROR_TYPE_ID(std::vector<std::string>)
-MIRROR_TYPE_ID(std::vector<std::string*>)
-MIRROR_TYPE_ID(std::vector<std::pair<QwerkE::GUID, std::string>>)
-MIRROR_TYPE_ID(std::vector<entt::entity>)
-MIRROR_TYPE_ID(std::vector<std::pair<QwerkE::GUID, std::pair<std::string, std::string>>>)
-MIRROR_TYPE_ID(std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>)
-
-MIRROR_TYPE_ID(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, void*>)
-MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, std::string*>)
-MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, entt::entity>)
-MIRROR_TYPE_ID(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE_ID(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
-MIRROR_TYPE_ID(std::unordered_map<QwerkE::GUID, std::string>)
-
-MIRROR_TYPE_ID(QwerkE::Input::GameActions)
-MIRROR_TYPE_ID(QwerkE::EntityHandle)
-
-MIRROR_TYPE_ID(QwerkE::ComponentScript)
-MIRROR_TYPE_ID(QwerkE::ComponentTransform)
-MIRROR_TYPE_ID(QwerkE::ComponentMesh)
-MIRROR_TYPE_ID(QwerkE::ComponentLight)
-MIRROR_TYPE_ID(QwerkE::ComponentInfo)
-MIRROR_TYPE_ID(QwerkE::ComponentCamera)
-MIRROR_TYPE_ID(QwerkE::RendererSettings)
-
-MIRROR_TYPE_ID(QwerkE::EngineSettings)
-
-MIRROR_TYPE_ID(QwerkE::ScriptGuiButton)
-
-MIRROR_TYPE_ID(QwerkE::eScriptTypes)
-MIRROR_TYPE_ID(const QwerkE::eScriptTypes)
-MIRROR_TYPE_ID(QwerkE::Scriptable)
-MIRROR_TYPE_ID(QwerkE::Scriptable*)
-MIRROR_TYPE_ID(QwerkE::ScriptableTesting)
-MIRROR_TYPE_ID(QwerkE::ScriptablePathFinder)
-MIRROR_TYPE_ID(QwerkE::ScriptablePatrol)
-MIRROR_TYPE_ID(QwerkE::GUID)
-MIRROR_TYPE_ID(const QwerkE::GUID)
-MIRROR_TYPE_ID(QwerkE::ScriptableCamera)
-MIRROR_TYPE_ID(QwerkE::ScriptableSceneTransition)
-
-#else
 
 // #NOTE Framework Ids start at +100
 
@@ -235,5 +141,3 @@ MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 164, QwerkE::GUID)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 165, const QwerkE::GUID)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 166, QwerkE::ScriptableCamera)
 MIRROR_TYPE_ID(MIRROR_USER_TYPE_ID_START + 167, QwerkE::ScriptableSceneTransition)
-
-#endif
