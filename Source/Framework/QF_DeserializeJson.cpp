@@ -18,7 +18,6 @@ namespace QwerkE {
         void local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
         void local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
         void local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
-        void local_DeserializePair(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
 
         bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
@@ -69,9 +68,6 @@ namespace QwerkE {
                     FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
                 }
                 break;
-
-            case Mirror::TypeInfoCategories::TypeInfoCategory_Pair:
-                local_DeserializePair(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
             }
         }
 
@@ -186,6 +182,34 @@ namespace QwerkE {
                 return;
             }
 
+            if (objTypeInfo->collectionTypeInfoSecond)
+            {
+                const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
+                Buffer elementFirstBuffer(elementFirstTypeInfo->size);
+                const cJSON* firstJson = objJson->child;
+                if (Mirror::TypeInfoCategory_Primitive == elementFirstTypeInfo->category)
+                {   // #TODO Review handling primitives differently
+                    firstJson = firstJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
+                }
+                FromJson(firstJson, elementFirstTypeInfo, elementFirstBuffer.As<void>());
+
+                const Mirror::TypeInfo* elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
+                Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
+                const cJSON* secondJson = objJson->child->next;
+                if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category || // #TODO Fix std::string override
+                    // #TODO Test const char*
+                    Mirror::TypeId<std::string>() == elementSecondInfo->id ||
+                    Mirror::TypeId<const char*>() == elementSecondInfo->id)
+                {   // #TODO Review handling primitives differently
+                    secondJson = secondJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
+                }
+                FromJson(secondJson, elementSecondInfo, elementSecondBuffer.As<void>());
+
+                objTypeInfo->Construct(obj);
+                objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
+                return;
+            }
+
             const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
 
@@ -210,39 +234,6 @@ namespace QwerkE {
                 iterator = iterator->next;
                 ++index;
             }
-        }
-
-        void local_DeserializePair(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
-        {
-            if (!obj || !objTypeInfo || !objJson || objTypeInfo->category != Mirror::TypeInfoCategory_Pair)
-            {
-                LOG_ERROR("{0} Invalid argument passed!", __FUNCTION__);
-                return;
-            }
-
-            const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
-            Buffer elementFirstBuffer(elementFirstTypeInfo->size);
-            const cJSON* firstJson = objJson->child;
-            if (Mirror::TypeInfoCategory_Primitive == elementFirstTypeInfo->category)
-            {   // #TODO Review handling primitives differently
-                firstJson = firstJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
-            }
-            FromJson(firstJson, elementFirstTypeInfo, elementFirstBuffer.As<void>());
-
-            const Mirror::TypeInfo* elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
-            Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
-            const cJSON* secondJson = objJson->child->next;
-            if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category || // #TODO Fix std::string override
-                // #TODO Test const char*
-                Mirror::TypeId<std::string>() == elementSecondInfo->id ||
-                Mirror::TypeId<const char*>() == elementSecondInfo->id)
-            {   // #TODO Review handling primitives differently
-                secondJson = secondJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
-            }
-            FromJson(secondJson, elementSecondInfo, elementSecondBuffer.As<void>());
-
-            objTypeInfo->Construct(obj);
-            objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
         }
 
         bool local_TypeInfoHasOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
