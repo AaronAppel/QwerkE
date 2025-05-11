@@ -186,7 +186,7 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 																																			\
 	switch (localStaticTypeInfo.category)																									\
 	{																																		\
-	case TypeInfoCategory_Collection:																										\
+	case TypeInfoCategory_Collection: /* #NOTE Intentional case fall through */																\
 		SetCollectionLambdas<TYPE>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<TYPE>::type());							\
 	case TypeInfoCategory_Class:																											\
 		SetConstructionLambda<TYPE>(&localStaticTypeInfo, std::is_class<TYPE>::type());														\
