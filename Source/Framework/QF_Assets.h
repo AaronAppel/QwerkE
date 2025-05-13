@@ -16,7 +16,7 @@
 namespace QwerkE {
 
 	using AssetsMap = std::unordered_map<GUID, void*>; // #NOTE Smart pointers require compile time types. Could look at another solution
-	using AssetsList = std::vector<std::pair<GUID, std::vector<std::string>>>;
+	using AssetsList = std::vector<std::pair<GUID, std::vector<std::string>>>; // #TODO should just be string, not vector of string. Change once shader components are in
 
 	class Assets
 	{

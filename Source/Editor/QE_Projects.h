@@ -12,8 +12,8 @@ namespace QwerkE {
 
     struct ProjectsData
     {
-        std::string LastOpenedProjectFileName = Constants::gc_DefaultStringValue;
-        std::vector<std::string> PreviousProjectFileNames;
+        std::string LastOpenedProjectFileName = Constants::gc_DefaultStringValue; // #TODO m_?
+        std::vector<std::string> PreviousProjectFileNames; // #TODO m_?
     };
 
     // #TODO Project is an editor concept

@@ -60,7 +60,7 @@ static void SetCollectionLambdasVector(Mirror::TypeInfo* constTypeInfo, std::tru
 		((T*)collectionAddress)->clear();
 	};
 	mutableTypeInfo->collectionIterateCurrentFunc = [](const void* collectionAddress, size_t aIndex) -> char* {
-		static size_t index = 0;
+		static size_t index = 0; // #TODO Support iterating backwards over a collection, and random access
 		T* vector = ((T*)collectionAddress);
 		if (aIndex < index) index = aIndex;
 		if (index >= vector->size()) { index = 0; return nullptr; }
@@ -117,12 +117,13 @@ static void SetCollectionLambdasPair(Mirror::TypeInfo* constTypeInfo, std::true_
 		memcpy((void*)&pair->first, elementFirst, sizeof(T::first_type));
 		memcpy((void*)&pair->second, elementSecond, sizeof(T::second_type));
 	};
-	mutableTypeInfo->typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) T; };
-	mutableTypeInfo->collectionAddressOfPairObjectFunc = [](const void* pairObjAddress, bool isFirst) -> void* {
+	mutableTypeInfo->collectionIterateCurrentFunc = [](const void* pairObjAddress, size_t aIndex) -> char* {
 		T* pair = (T*)pairObjAddress;
-		if (isFirst) return (void*)&pair->first;
-		return (void*)&pair->second;
+		if (0 == aIndex) return (char*)&pair->first;
+		else if (1 == aIndex) return (char*)&pair->second;
+		else return nullptr;
 	};
+	mutableTypeInfo->typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) T; };
 }
 
 template<typename T>

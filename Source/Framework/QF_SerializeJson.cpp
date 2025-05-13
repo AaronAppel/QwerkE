@@ -56,11 +56,6 @@ namespace QwerkE {
                 return;
             }
 
-            if (Mirror::TypeId<std::string>() == objTypeInfo->id)
-            {
-                int bp = 0;
-            }
-
             if (Local_TypeInfoHandleOverride(obj, objTypeInfo, objJson, name))
                 return;
 
@@ -69,7 +64,7 @@ namespace QwerkE {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
                 Local_SerializePrimitive(obj, objTypeInfo, objJson, objTypeInfo->stringName); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
-                    Local_SerializeClass(obj, objTypeInfo, objJson, name); break;
+                Local_SerializeClass(obj, objTypeInfo, objJson, name); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
                 Local_SerializeCollection(obj, objTypeInfo, objJson, name); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
@@ -223,106 +218,60 @@ namespace QwerkE {
                 return;
             }
 
-            if (false) // (!objTypeInfo->newIsCollection()) // || !objTypeInfo->collectionTypeInfo)
-            {
-                LOG_ERROR("{0} Invalid type info!", __FUNCTION__);
-                return;
-            }
-
-            if (objTypeInfo->collectionTypeInfoSecond) // #TODO Refactor pair only logic
-            {
-                cJSON* pairJson = CreateJsonObject(objTypeInfo->stringName.c_str());
-                cJSON_AddItemToArray(objJson, pairJson);
-
-                const Mirror::TypeInfo* const objTypeInfoFirst = objTypeInfo->collectionTypeInfoFirst;
-                const Mirror::TypeInfo* const objTypeInfoSecond = objTypeInfo->collectionTypeInfoSecond;
-
-                const void* const firstAddress = objTypeInfo->collectionAddressOfPairObjectFunc(obj, true);
-                const void* const secondAddress = objTypeInfo->collectionAddressOfPairObjectFunc(obj, false);
-
-                if (objTypeInfo->collectionTypeInfoFirst->category == Mirror::TypeInfoCategory_Primitive)
-                {
-                    cJSON* pairFirstJson = CreateJsonObject(objTypeInfoFirst->stringName.c_str());
-                    cJSON_AddItemToArray(pairJson, pairFirstJson);
-                    Local_SerializePrimitive(firstAddress, objTypeInfoFirst, pairFirstJson, objTypeInfoFirst->stringName);
-                }
-                else
-                {
-                    ToJson(firstAddress, objTypeInfoFirst, pairJson, objTypeInfoFirst->stringName);
-                }
-
-                cJSON* pairSecondJson = CreateJsonObject(objTypeInfoSecond->stringName.c_str());
-                if (Mirror::TypeInfoCategories::TypeInfoCategory_Collection != objTypeInfoSecond->category)
-                {
-                    cJSON_AddItemToArray(pairJson, pairSecondJson);
-                }
-
-                // #TODO Fix std::string exception. Test const char*
-                // #TODO Call ToJson to use ensure local_TypeInfoHasOverride() override logic
-                // #TODO std::string has no fields so the value will never be written in local_SerializeClass()
-                if (Mirror::TypeId<std::string>() == objTypeInfoSecond->id ||
-                    Mirror::TypeId<const char*>() == objTypeInfoSecond->id)
-                {
-                    Local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName);
-                    return;
-                }
-
-                // #TODO Try to deprecate switch below with if/else above, or refactor switch
-                switch (objTypeInfoSecond->category)
-                {
-                case Mirror::TypeInfoCategories::TypeInfoCategory_Primitive:
-                    Local_SerializePrimitive(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
-
-                case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
-                    Local_SerializeClass(secondAddress, objTypeInfoSecond, pairSecondJson, objTypeInfoSecond->stringName); break;
-
-                case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
-                    // #NOTE Can't add because collection already adds
-                    Local_SerializeCollection(secondAddress, objTypeInfoSecond, pairJson, objTypeInfoSecond->stringName); break;
-
-                case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
-                    {
-                        const Mirror::TypeInfo* secondAbsoluteTypeInfoDerived = objTypeInfoSecond->AbsoluteType()->DerivedTypeFromPointer(secondAddress);
-                        ToJson(*(void**)secondAddress, secondAbsoluteTypeInfoDerived, pairSecondJson, secondAbsoluteTypeInfoDerived->stringName);
-                    }
-                    break;
-                }
-                return;
-            }
-
-            const Mirror::TypeInfo* head = objTypeInfo->collectionTypeInfoFirst;
-            while (head) // #TODO loop over 1st, 2nd, 3rd types
-            {
-                // Serialize
-
-                if (objTypeInfo->collectionTypeInfoFirst == head)
-                {
-                    head = objTypeInfo->collectionTypeInfoSecond;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
             cJSON* collectionJsonContainer = CreateJsonObject(name.c_str());
             cJSON_AddItemToArray(objJson, collectionJsonContainer);
 
-            size_t counter = 0;
-            void* elementAddress = (void*)objTypeInfo->collectionIterateCurrentFunc(obj, counter);
-            while (elementAddress)
+            // #TODO Finish new collection implementation
+            const Mirror::TypeInfo* currentTypeInfo = objTypeInfo->collectionTypeInfoFirst;
+            const u8 collectionTypesCount = objTypeInfo->collectionTypeInfoSecond ? 2 : 1; // #TODO Review logic
+            for (size_t i = 0; i < collectionTypesCount; i++)
             {
-                if (auto firstTypeInfo = objTypeInfo->collectionTypeInfoFirst)
+                cJSON* collectionItemJsonContainer = collectionJsonContainer;
+
+                // #TODO Improve special logic for json output formatting
+                if (Mirror::TypeId<std::vector<std::string>>() != objTypeInfo->id && (
+                    Mirror::TypeInfoCategories::TypeInfoCategory_Primitive == currentTypeInfo->category ||
+                    Mirror::TypeId<std::string>() == currentTypeInfo->id ||
+                    Mirror::TypeId<const char*>() == currentTypeInfo->id))
                 {
-                    ToJson(elementAddress, firstTypeInfo, collectionJsonContainer, firstTypeInfo->stringName);
+                    collectionItemJsonContainer = CreateJsonObject(currentTypeInfo->stringName.c_str());
+                    cJSON_AddItemToArray(collectionJsonContainer, collectionItemJsonContainer);
                 }
+
+                // objTypeInfo is a collection of a collection
+                const bool isIterableCollection = currentTypeInfo->collectionIterateCurrentFunc;
+                if (isIterableCollection)
+                {
+                    // #TODO objTypeInfo is a map and currentTypeInfo is a pair. Incorrect iterate logic
+                    size_t counter = 0;
+                    while (void* elementAddress = (void*)objTypeInfo->collectionIterateCurrentFunc(obj, counter++))
+                    {
+                        ToJson(elementAddress, currentTypeInfo, collectionItemJsonContainer, currentTypeInfo->stringName);
+                    }
+                }
+                // objTypeInfo is vector, array, etc (1 dimensional)
+                // #TODO Avoid caring about non-currentTypeInfo and handle each typeInfo separately
+                else if (objTypeInfo->collectionIterateCurrentFunc && !objTypeInfo->collectionTypeInfoSecond)
+                {
+                    size_t currentTypeInfoItemCount = 0;
+                    std::vector<std::string>* vec = (std::vector<std::string>*)obj;
+                    while (void* elementAddress = (void*)objTypeInfo->collectionIterateCurrentFunc(obj, currentTypeInfoItemCount++))
+                    {
+                        std::string* string = (std::string*)elementAddress;
+                        ToJson(elementAddress, objTypeInfo->collectionTypeInfoFirst, collectionItemJsonContainer, objTypeInfo->collectionTypeInfoFirst->stringName);
+                    }
+                }
+                // objTypeInfo is just a pair/tuple?
                 else
                 {
-                    LOG_WARN("{0} First info is null!", __FUNCTION__);
+                    const void* const objAddress = objTypeInfo->collectionIterateCurrentFunc(obj, i);
+                    GUID* guid = (GUID*)objAddress;
+                    std::string* string = (std::string*)objAddress;
+                    ToJson(objAddress, currentTypeInfo, collectionItemJsonContainer, currentTypeInfo->stringName);
                 }
-                ++counter;
-                elementAddress = (void*)objTypeInfo->collectionIterateCurrentFunc(obj, counter);
+                currentTypeInfo = objTypeInfo->collectionTypeInfoSecond;
             }
+            return;
         }
 
         void Local_SerializePointer(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name)

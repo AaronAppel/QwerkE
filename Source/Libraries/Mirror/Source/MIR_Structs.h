@@ -75,12 +75,10 @@ struct Mirror
 
 		using FuncPtr_void_voidPtr_sizet_constvoidPtr_constvoidPtr = void (*)(void*, size_t, const void*, const void*);
 		using FuncPtr_void_voidPtr = void (*)(void*);
-		using FuncPtr_voidPtr_constVoidPtr_bool = void* (*)(const void*, bool);
 		using FuncPtr_charPtr_constVoidPtr_sizet = char* (*)(const void*, size_t);
 		using FuncPtr_bool_constVoidPtr = bool (*)(const void*);
 
 		FuncPtr_void_voidPtr_sizet_constvoidPtr_constvoidPtr collectionAddFunc = nullptr;
-		FuncPtr_voidPtr_constVoidPtr_bool collectionAddressOfPairObjectFunc = nullptr;
 		FuncPtr_void_voidPtr collectionClearFunction = nullptr;
 		FuncPtr_charPtr_constVoidPtr_sizet collectionIterateCurrentFunc = nullptr;
 
