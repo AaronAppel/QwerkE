@@ -187,7 +187,7 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 																																			\
 	switch (localStaticTypeInfo.category)																									\
 	{																																		\
-	case TypeInfoCategory_Collection: /* #NOTE Intentional case fall through */																\
+	case TypeInfoCategory_Collection: /* #NOTE Intentional case fall through as a collection is also a class */								\
 		SetCollectionLambdas<TYPE>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<TYPE>::type());							\
 	case TypeInfoCategory_Class:																											\
 		SetConstructionLambda<TYPE>(&localStaticTypeInfo, std::is_class<TYPE>::type());														\
@@ -249,5 +249,6 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 	const_cast<Mirror::TypeInfo*>(SUBCLASS_TYPE##Info)->superTypeInfo = &localStaticTypeInfo;												\
 
 #define MIRROR_CLASS_END																													\
+	/* #TODO Sanity checks: if (collection) { assert(collectionTypeInfoFirst) }, etc  */													\
 	return &localStaticTypeInfo;																											\
 }

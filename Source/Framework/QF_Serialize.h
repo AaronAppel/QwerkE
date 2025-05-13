@@ -93,8 +93,6 @@ namespace QwerkE {
             }
         }
 
-        void SerializeTest();
-
     }
 
 }
