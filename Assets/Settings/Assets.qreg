@@ -1,9 +1,7 @@
 {
 	"std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
-			"const unsigned long long":	{
-				"const unsigned long long":	"158"
-			},
+			"const unsigned long long":	"158",
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
@@ -64,9 +62,7 @@
 			}
 		},
 		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
-			"const unsigned long long":	{
-				"const unsigned long long":	"161"
-			},
+			"const unsigned long long":	"161",
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
@@ -87,9 +83,7 @@
 			}
 		},
 		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
-			"const unsigned long long":	{
-				"const unsigned long long":	"159"
-			},
+			"const unsigned long long":	"159",
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{

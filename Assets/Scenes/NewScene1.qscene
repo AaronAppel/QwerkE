@@ -155,9 +155,7 @@
 				"QwerkE::ComponentScript":	{
 					"m_ScriptInstances":	{
 						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"const QwerkE::eScriptTypes":	{
-								"const QwerkE::eScriptTypes":	1
-							},
+							"const QwerkE::eScriptTypes":	1,
 							"QwerkE::Scriptable*":	{
 								"QwerkE::ScriptableCamera":	{
 								}
@@ -204,10 +202,8 @@
 				},
 				"QwerkE::ComponentScript":	{
 					"m_ScriptInstances":	{
-						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"const QwerkE::eScriptTypes":	{
-								"const QwerkE::eScriptTypes":	3
-							},
+						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{							
+							"const QwerkE::eScriptTypes":	3,
 							"QwerkE::Scriptable*":	{
 								"QwerkE::ScriptablePatrol":	{
 									"m_Stride":	5,

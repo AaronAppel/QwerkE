@@ -2,43 +2,6 @@
 	"QwerkE::Scene":	{
 		"m_SceneFileName":	"GameScene1.qscene",
 		"m_Registry":	{
-			"Mesh":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Mesh",
-					"m_Guid":	{
-						"m_Guid":	"15318540641823496003"
-					},
-					"m_Enabled":	false
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1
-					}
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"0"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"0"
-					}
-				}
-			},
 			"Camera":	{
 				"QwerkE::ComponentInfo":	{
 					"m_EntityName":	"Camera",
@@ -81,14 +44,49 @@
 				"QwerkE::ComponentScript":	{
 					"m_ScriptInstances":	{
 						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
-							"const QwerkE::eScriptTypes":	{
-								"const QwerkE::eScriptTypes":	1
-							},
+							"const QwerkE::eScriptTypes":	1,
 							"QwerkE::Scriptable*":	{
 								"QwerkE::ScriptableCamera":	{
 								}
 							}
 						}
+					}
+				}
+			},
+			"Mesh":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Mesh",
+					"m_Guid":	{
+						"m_Guid":	"15318540641823496003"
+					},
+					"m_Enabled":	false
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"0"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
 					}
 				}
 			}

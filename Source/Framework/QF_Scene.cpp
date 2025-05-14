@@ -225,6 +225,13 @@ namespace QwerkE {
             script.Unbind();
         }
 
+        for (auto& guidEntityPair : m_GuidsToEntts)
+        {
+            // m_GuidsToEntts.erase(guidEntityPair.first);
+            m_Registry.destroy(guidEntityPair.second);
+        }
+        m_GuidsToEntts.clear();
+
         m_Registry.each([&](const auto entityID)
         {
             m_Registry.destroy(entityID);
@@ -234,6 +241,7 @@ namespace QwerkE {
 
         m_IsLoaded = false;
         m_IsDirty = false;
+        ASSERT(m_GuidsToEntts.empty(), "Leftover data from Scene::Unload()!");
         LOG_TRACE("{0} \"{1}\" unloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 

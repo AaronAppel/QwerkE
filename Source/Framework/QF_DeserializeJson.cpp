@@ -1,5 +1,6 @@
 #include "QF_Serialize.h"
 
+#include <stdint.h>
 #include <unordered_map>
 
 #include "QF_Buffer.h"
@@ -15,25 +16,21 @@ namespace QwerkE {
 
     namespace Serialize {
 
-        void Local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool useNameString = false);
-        void Local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
-        void Local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
-        void Local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name);
+        bool Local_OverrideDeserializeForType(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
 
-        bool Local_TypeInfoHandleOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj);
+        void Local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void Local_DeserializeClass(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void Local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
+        void Local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj);
 
         template<typename... Component>
         static void DeserializeComponents(TemplateArgumentList<Component...>, entt::registry* registry, const cJSON* entityComponentsJsonArray);
 
         void FromJson(const cJSON* objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
-            if (!obj || !objTypeInfo || !objJson)
-            {
-                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
-                return;
-            }
+            ASSERT(obj && objTypeInfo && objJson, "Null argument passed!");
 
-            if (Local_TypeInfoHandleOverride(objJson, objTypeInfo, obj))
+            if (Local_OverrideDeserializeForType(objJson, objTypeInfo, obj))
                 return;
 
             switch (objTypeInfo->category)
@@ -43,19 +40,17 @@ namespace QwerkE {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Class:
                 Local_DeserializeClass(objJson, objTypeInfo, obj); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Collection:
-                Local_DeserializeCollection(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
+                Local_DeserializeCollection(objJson, objTypeInfo, obj); break;
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
-                Local_DeserializePointer(objJson, objTypeInfo, obj, objTypeInfo->stringName); break;
+                Local_DeserializePointer(objJson, objTypeInfo, obj); break;
+            default:
+                ASSERT(false, "Invalid or unhandled objTypeInfo->category!");
             }
         }
 
-        void Local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, bool isPairFirst)
+        void Local_DeserializePrimitive(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
-            if (!obj || !objTypeInfo || !objJson) // #NOTE Don't compare category in case of override
-            {
-                LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
-                return;
-            }
+            ASSERT(obj && objTypeInfo && objJson, "Null argument passed!"); // #NOTE Don't compare category in case of override
 
             std::string* str = (std::string*)obj;
             switch (objTypeInfo->id)
@@ -117,7 +112,6 @@ namespace QwerkE {
 
             if (objTypeInfo->superTypeInfo)
             {
-                // #TODO Should super constructor be called?
                 Local_DeserializeClass(objJson, objTypeInfo->superTypeInfo, obj);
             }
 
@@ -144,8 +138,8 @@ namespace QwerkE {
                     void* fieldAddress = (char*)obj + field.offset;
 
                     if (field.typeInfo->category == Mirror::TypeInfoCategory_Collection)
-                    {   // #NOTE Needed to pass name of member collection
-                        Local_DeserializeCollection(iterator, field.typeInfo, fieldAddress, field.name);
+                    {   // #NOTE Needed to pass name of member collection // #TODO Review and fix named collection member
+                        Local_DeserializeCollection(iterator, field.typeInfo, fieldAddress);
                     }
                     else
                     {
@@ -158,28 +152,59 @@ namespace QwerkE {
             }
         }
 
-        void Local_DeserializeCollection(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
+        void Local_DeserializeCollection(const cJSON* const collectionJson, const Mirror::TypeInfo* const collectionTypeInfo, void* collectionAddress)
         {
-            if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Collection != objTypeInfo->category)
+            if (!collectionAddress || !collectionTypeInfo || !collectionJson || Mirror::TypeInfoCategory_Collection != collectionTypeInfo->category)
             {
                 LOG_ERROR("{0} Null argument passed!", __FUNCTION__);
                 return;
             }
 
-            if (objTypeInfo->collectionTypeInfoSecond) // #TODO Refactor pair only logic
+            if (true)
             {
-                const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
+                collectionTypeInfo->Construct(collectionAddress);
+
+                const cJSON* collectionItemJsonContainer = collectionJson;
+                size_t currentTypeInfoItemCount = 0;
+
+                const cJSON* jsonIterator = collectionJson->child;
+                while (jsonIterator)
+                {
+                    Buffer elementFirstBuffer(collectionTypeInfo->collectionTypeInfoFirst->size);
+                    FromJson(jsonIterator, collectionTypeInfo->collectionTypeInfoFirst, elementFirstBuffer.As<void>());
+
+                    const bool isPair = collectionTypeInfo->collectionTypeInfoSecond;
+                    Buffer elementSecondBuffer(isPair ? collectionTypeInfo->collectionTypeInfoSecond->size : 0);
+                    if (isPair)
+                    {
+                        FromJson(jsonIterator->next, collectionTypeInfo->collectionTypeInfoSecond, elementSecondBuffer.As<void>());
+                    }
+                    collectionTypeInfo->CollectionAppend(collectionAddress, currentTypeInfoItemCount, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
+
+                    if (isPair)
+                    {
+                        break; // #NOTE 1 iteration for pairs #TODO Review tuples
+                    }
+                    jsonIterator = jsonIterator->next;
+                    ++currentTypeInfoItemCount;
+                }
+                return;
+            }
+
+            if (collectionTypeInfo->collectionTypeInfoSecond) // #TODO Refactor pair only logic
+            {
+                const Mirror::TypeInfo* const elementFirstTypeInfo = collectionTypeInfo->collectionTypeInfoFirst;
                 Buffer elementFirstBuffer(elementFirstTypeInfo->size);
-                const cJSON* firstJson = objJson->child;
+                const cJSON* firstJson = collectionJson->child;
                 if (Mirror::TypeInfoCategory_Primitive == elementFirstTypeInfo->category)
                 {   // #TODO Review handling primitives differently
                     firstJson = firstJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
                 }
                 FromJson(firstJson, elementFirstTypeInfo, elementFirstBuffer.As<void>());
 
-                const Mirror::TypeInfo* elementSecondInfo = objTypeInfo->collectionTypeInfoSecond;
+                const Mirror::TypeInfo* elementSecondInfo = collectionTypeInfo->collectionTypeInfoSecond;
                 Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
-                const cJSON* secondJson = objJson->child->next;
+                const cJSON* secondJson = collectionJson->child->next;
                 if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category || // #TODO Fix std::string override
                     // #TODO Test const char*
                     Mirror::TypeId<std::string>() == elementSecondInfo->id ||
@@ -189,38 +214,38 @@ namespace QwerkE {
                 }
                 FromJson(secondJson, elementSecondInfo, elementSecondBuffer.As<void>());
 
-                objTypeInfo->Construct(obj);
-                objTypeInfo->CollectionAppend(obj, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
+                collectionTypeInfo->Construct(collectionAddress);
+                collectionTypeInfo->CollectionAppend(collectionAddress, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
                 return;
             }
 
-            const Mirror::TypeInfo* const elementFirstTypeInfo = objTypeInfo->collectionTypeInfoFirst;
+            const Mirror::TypeInfo* const elementFirstTypeInfo = collectionTypeInfo->collectionTypeInfoFirst;
             Buffer elementFirstBuffer(elementFirstTypeInfo->size);
 
             auto vecLower = (std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)elementFirstBuffer.As<void>();
 
-            const cJSON* iterator = objJson->child;
+            const cJSON* iterator = collectionJson->child;
             size_t index = 0; // #TODO Scrap index for non-contiguous collections if possible
 
             // #NOTE Collection constructor should be called
-            objTypeInfo->Construct(obj);
+            collectionTypeInfo->Construct(collectionAddress);
 
             // #TODO Reserve size for appending items to avoid extra dynamic allocation, moves, and copies
 
-            std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>* map = (std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)obj;
+            std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>* map = (std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)collectionAddress;
 
             while (iterator)
             {
-                std::vector<std::pair<QwerkE::GUID, std::string>>* vec = (std::vector<std::pair<QwerkE::GUID, std::string>>*)obj;
+                std::vector<std::pair<QwerkE::GUID, std::string>>* vec = (std::vector<std::pair<QwerkE::GUID, std::string>>*)collectionAddress;
                 std::pair<QwerkE::GUID, std::string>* pair = (std::pair<QwerkE::GUID, std::string>*)elementFirstBuffer.As<void>();
                 FromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
-                objTypeInfo->CollectionAppend(obj, index, elementFirstBuffer.As<void>(), nullptr);
+                collectionTypeInfo->CollectionAppend(collectionAddress, index, elementFirstBuffer.As<void>(), nullptr);
                 iterator = iterator->next;
                 ++index;
             }
         }
 
-        void Local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj, const std::string& name)
+        void Local_DeserializePointer(const cJSON* const objJson, const Mirror::TypeInfo* const objTypeInfo, void* obj)
         {
             if (!obj || !objTypeInfo || !objJson || Mirror::TypeInfoCategory_Pointer != objTypeInfo->category)
             {
@@ -243,7 +268,7 @@ namespace QwerkE {
             FromJson(objJson->child, dereferencedTypeInfo, derefencedTypeObjAddress);
         }
 
-        bool Local_TypeInfoHandleOverride(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
+        bool Local_OverrideDeserializeForType(const cJSON* objJson, const Mirror::TypeInfo* objTypeInfo, void* obj)
         {
             if (!obj || !objTypeInfo || !objJson)
             {
