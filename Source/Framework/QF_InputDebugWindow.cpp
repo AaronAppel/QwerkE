@@ -28,7 +28,7 @@ namespace QwerkE {
         u8 s_Most1FrameKeyInputs;
         vec2f s_LastNonZeroMouseDelta;
 
-        void DrawDebugWindow()
+        void DrawInputStates()
         {
 #if _QDEARIMGUI
             if (!ImGui::Begin("Input System"))
@@ -44,7 +44,7 @@ namespace QwerkE {
                 Shutdown();
             }
 
-            if (ImGui::BeginChild("##Misc", { ImGui::GetContentRegionAvail().x - ( strlen("Gamepad down: 00   ") * ImGui::g_pixelsPerCharacter ), 3 * lineHeight}))
+            if (ImGui::BeginChild("##Misc", { ImGui::GetContentRegionAvail().x - (strlen("Gamepad down: 00   ") * ImGui::g_pixelsPerCharacter), 3 * lineHeight }))
             {
                 // ImGui::Text("Misc");
                 unsigned char keysThisFrame = s_Keys.InputThisFrame();
@@ -60,7 +60,7 @@ namespace QwerkE {
 
             ImGui::SameLine();
 
-            if (ImGui::BeginChild("##CurrentlyDown", { 0.f, 3 * lineHeight}))
+            if (ImGui::BeginChild("##CurrentlyDown", { 0.f, 3 * lineHeight }))
             {
                 ImGui::Text("           Keys down: %i", s_Keys.DownKeys());
                 ImGui::Text("       Mouse down: %i", s_MouseButtons.DownKeys());
@@ -153,7 +153,7 @@ namespace QwerkE {
             }
 
             // #TODO Get number of gamepads and names, ids, etc
-            if (ImGui::CollapsingHeader("Gamepad"))
+            if (ImGui::CollapsingHeader("Gamepad##CollapsingHeader"))
             {
                 if (s_GamepadIds.empty())
                 {
@@ -229,7 +229,12 @@ namespace QwerkE {
                 ImGui::EndChild();
             }
             ImGui::End();
+#endif // _QDEARIMGUI
+        }
 
+        void DrawActiveGamepads()
+        {
+#if _QDEARIMGUI
             if (!ImGui::Begin("Gamepad"))
             {
                 ImGui::End();
@@ -271,6 +276,15 @@ namespace QwerkE {
                 }
             }
             ImGui::End();
+#endif // _QDEARIMGUI
+        }
+
+        void DrawDebugWindow()
+        {
+#if _QDEARIMGUI
+            // #TODO Fix bug when docking gamepad window. DebugInput window should handle window creation, rather than 2 additional windows
+            DrawInputStates();
+            DrawActiveGamepads();
 #endif // _QDEARIMGUI
         }
 
