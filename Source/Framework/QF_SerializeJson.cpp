@@ -24,23 +24,23 @@ namespace QwerkE {
 
     namespace Serialize {
 
-        bool Local_OverrideSerializeForType(const void* obj, const Mirror::TypeInfo* objTypeInfo, cJSON* objJson, const std::string& typeOrMemberName);
+        bool Local_OverrideSerializeForType(const void* objectAddress, const Mirror::TypeInfo* objectTypeInfo, cJSON* objectJson, const std::string& typeOrMemberName);
 
-        void Local_SerializePrimitive(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson, const std::string& name);
-        void Local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson);
-        void Local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson);
-        void Local_SerializePointer(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson);
+        void Local_SerializePrimitive(const void* const primitiveAddress, const Mirror::TypeInfo* const primitiveTypeInfo, cJSON* primitiveJson, const std::string& primitiveTypeOrMemberName);
+        void Local_SerializeClass(const void* const classAddress, const Mirror::TypeInfo* const classTypeInfo, cJSON* classJson);
+        void Local_SerializeCollection(const void* const collectionAddress, const Mirror::TypeInfo* const collectionTypeInfo, cJSON* collectionJson);
+        void Local_SerializePointer(const void* const pointerAddress, const Mirror::TypeInfo* const pointerTypeInfo, cJSON* pointerJson);
 
         template<typename... Component>
         static void SerializeComponents(TemplateArgumentList<Component...>, const entt::registry* const registry, entt::entity entityId, cJSON* componentListJsonArray);
 
-        cJSON* CreateJsonObject(const char* key = nullptr);
+        cJSON* CreateJsonObject(const char* typeOrMemberName = nullptr);
         template <typename T>
-        cJSON* CreateJsonBool(const std::string& name, const void* obj);
+        cJSON* CreateJsonBool(const std::string& typeOrMemberName, const void* boolAddress);
         template <typename T>
-        cJSON* CreateJsonNumber(const std::string& name, const void* obj);
+        cJSON* CreateJsonNumber(const std::string& typeOrMemberName, const void* numberAddress);
         template <typename T>
-        cJSON* CreateJsonString(const std::string& name, const void* obj);
+        cJSON* CreateJsonString(const std::string& typeOrMemberName, const void* stringAddress);
 
         void ToJson(const void* objectAddress, const Mirror::TypeInfo* objectTypeInfo, cJSON* objectJson, const std::string& typeOrMemberName)
         {
@@ -67,7 +67,7 @@ namespace QwerkE {
             case Mirror::TypeInfoCategories::TypeInfoCategory_Pointer:
                 Local_SerializePointer(objectAddress, objectTypeInfo, newObjectJson); break;
             default:
-                ASSERT(false, "Invalid or unhandled objTypeInfo->category!");
+                ASSERT(false, "Invalid or unhandled objectTypeInfo->category!");
             }
         }
 
@@ -105,20 +105,20 @@ namespace QwerkE {
             return true;
         }
 
-        void Local_SerializePrimitive(const void* const objectAddress, const Mirror::TypeInfo* const objectTypeInfo, cJSON* objectJson, const std::string& typeOrMemberName)
+        void Local_SerializePrimitive(const void* const primitiveAddress, const Mirror::TypeInfo* const primitiveTypeInfo, cJSON* primitiveJson, const std::string& primitiveTypeOrMemberName)
         {
-            ASSERT(objectAddress && objectTypeInfo && objectJson, "Null argument passed!"); // #NOTE Don't compare category in case of override
+            ASSERT(primitiveAddress && primitiveTypeInfo && primitiveJson, "Null argument passed!"); // #NOTE Don't compare category in case of override
 
             cJSON* cJsonItem = nullptr;
 
-            switch (objectTypeInfo->id)
+            switch (primitiveTypeInfo->id)
             {
                 // #TODO std::string is not a true primitive. Need a better way to handle this logic
             case Mirror::TypeId<const std::string>():
             case Mirror::TypeId<std::string>():
                 {
-                    const std::string* fieldAddress = (std::string*)objectAddress;
-                    cJsonItem = CreateJsonString<const char>(typeOrMemberName, fieldAddress->data()); // #TODO Requires ->data() so can't work with CreateJsonString()
+                    const std::string* fieldAddress = (std::string*)primitiveAddress;
+                    cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, fieldAddress->data()); // #TODO Requires ->data() so can't work with CreateJsonString()
                 }
                 break;
 
@@ -127,17 +127,17 @@ namespace QwerkE {
             case Mirror::TypeId<char>():
                 {
                     char charArr[2] = { '\0', '\0'};
-                    charArr[0] = *(char*)objectAddress;
+                    charArr[0] = *(char*)primitiveAddress;
                     cJsonItem = cJSON_CreateString(charArr);
-                    cJsonItem->string = _strdup(typeOrMemberName.c_str());
+                    cJsonItem->string = _strdup(primitiveTypeOrMemberName.c_str());
                 }
                 break;
             case Mirror::TypeId<const char*>():
             case Mirror::TypeId<char*>():
-                cJsonItem = CreateJsonString<const char>(typeOrMemberName, *(void**)objectAddress); break;
+                cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, *(void**)primitiveAddress); break;
             case Mirror::TypeId<const bool>():
             case Mirror::TypeId<bool>():
-                cJsonItem = CreateJsonBool<bool>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonBool<bool>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<Editor::EditorWindowTypes>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<Editor::EditorWindowFlags>(): // #TODO Remove editor types from framework files
             case Mirror::TypeId<Editor::EditorWindowSizingFlags>(): // #TODO Remove editor types from framework files
@@ -145,115 +145,114 @@ namespace QwerkE {
             case Mirror::TypeId<eScriptTypes>():
             case Mirror::TypeId<const uint8_t>():
             case Mirror::TypeId<uint8_t>():
-                cJsonItem = CreateJsonNumber<uint8_t>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<uint8_t>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<const uint16_t>():
             case Mirror::TypeId<uint16_t>():
-                cJsonItem = CreateJsonNumber<uint16_t>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<uint16_t>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<const uint32_t>():
             case Mirror::TypeId<uint32_t>():
-                cJsonItem = CreateJsonNumber<uint32_t>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<uint32_t>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<const int8_t>():
             case Mirror::TypeId<int8_t>():
-                cJsonItem = CreateJsonNumber<int8_t>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<int8_t>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<const int16_t>():
             case Mirror::TypeId<int16_t>():
-                cJsonItem = CreateJsonNumber<int16_t>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<int16_t>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<const int32_t>():
             case Mirror::TypeId<int32_t>():
-                cJsonItem = CreateJsonNumber<int32_t>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<int32_t>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<const int64_t>():
             case Mirror::TypeId<int64_t>(): // #NOTE Special case of conversion on 64 bit types
             {
-                int64_t* numberAddress = (int64_t*)objectAddress;
-                cJsonItem = CreateJsonString<const char>(typeOrMemberName, std::to_string(*numberAddress).c_str());
-                // #TODO Try using objJson->valuedouble and a memcpy to see if that works
+                int64_t* numberAddress = (int64_t*)primitiveAddress;
+                cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, std::to_string(*numberAddress).c_str());
+                // #TODO Try using objectJson->valuedouble and a memcpy to see if that works
             }
             break;
 
             case Mirror::TypeId<const uint64_t>():
             case Mirror::TypeId<uint64_t>(): // #NOTE Special case of conversion on 64 bit types
                 {
-                    uint64_t* numberAddress = (uint64_t*)objectAddress;
-                    cJsonItem = CreateJsonString<const char>(typeOrMemberName, std::to_string(*numberAddress).c_str());
-                    // #TODO Try using objJson->valuedouble and a memcpy to see if that works
+                    uint64_t* numberAddress = (uint64_t*)primitiveAddress;
+                    cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, std::to_string(*numberAddress).c_str());
+                    // #TODO Try using objectJson->valuedouble and a memcpy to see if that works
                 }
                 break;
 
             case Mirror::TypeId<const float>():
             case Mirror::TypeId<float>(): // #TODO write with decimals
-                cJsonItem = CreateJsonNumber<float>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<float>(primitiveTypeOrMemberName, primitiveAddress); break;
             case Mirror::TypeId<const double>():
             case Mirror::TypeId<double>():
-                cJsonItem = CreateJsonNumber<double>(typeOrMemberName, objectAddress); break;
+                cJsonItem = CreateJsonNumber<double>(primitiveTypeOrMemberName, primitiveAddress); break;
 
             default:
-                LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, typeOrMemberName.c_str(), objectTypeInfo->stringName.c_str(), (int)objectTypeInfo->id);
+                LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, primitiveTypeOrMemberName.c_str(), primitiveTypeInfo->stringName.c_str(), (int)primitiveTypeInfo->id);
                 break;
             }
 
             if (cJsonItem)
             {
-                cJSON_AddItemToArray(objectJson, cJsonItem);
+                cJSON_AddItemToArray(primitiveJson, cJsonItem);
             }
             else
             {
-                LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, typeOrMemberName.c_str(), objectTypeInfo->stringName.c_str(), (int)objectTypeInfo->id);
+                LOG_ERROR("{0} Unsupported user defined field type {1} {2}({3}) for serialization!", __FUNCTION__, primitiveTypeOrMemberName.c_str(), primitiveTypeInfo->stringName.c_str(), (int)primitiveTypeInfo->id);
             }
         }
 
-        void Local_SerializeClass(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson)
+        void Local_SerializeClass(const void* const classAddress, const Mirror::TypeInfo* const classTypeInfo, cJSON* classJson)
         {
-            ASSERT(obj && objTypeInfo && objJson && objTypeInfo->category == Mirror::TypeInfoCategory_Class, "Invalid argument passed!");
+            ASSERT(classAddress && classTypeInfo && classJson && classTypeInfo->category == Mirror::TypeInfoCategory_Class, "Invalid argument passed!");
 
-            if (objTypeInfo->superTypeInfo)
+            if (classTypeInfo->superTypeInfo)
             {
-                Local_SerializeClass(obj, objTypeInfo->superTypeInfo, objJson);
+                Local_SerializeClass(classAddress, classTypeInfo->superTypeInfo, classJson);
             }
 
-            for (size_t i = 0; i < objTypeInfo->fields.size(); i++)
+            for (size_t i = 0; i < classTypeInfo->fields.size(); i++)
             {
-                const Mirror::Field& field = objTypeInfo->fields[i];
+                const Mirror::Field& field = classTypeInfo->fields[i];
 
                 if (field.flags & FieldSerializationFlags::_InspectorOnly) // #TODO Review Editor logic in Framework domain
                     continue;
 
-                const void* fieldAddress = (char*)obj + field.offset;
-                ToJson(fieldAddress, field.typeInfo, objJson, field.name);
+                const void* fieldAddress = (char*)classAddress + field.offset;
+                ToJson(fieldAddress, field.typeInfo, classJson, field.name);
             }
         }
 
-        void Local_SerializeCollection(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson)
+        void Local_SerializeCollection(const void* const collectionAddress, const Mirror::TypeInfo* const classTypeInfo, cJSON* classJson)
         {
-            ASSERT(obj && objTypeInfo && objJson && objTypeInfo->category == Mirror::TypeInfoCategory_Collection, "Invalid argument passed!");
+            ASSERT(collectionAddress && classTypeInfo && classJson && classTypeInfo->category == Mirror::TypeInfoCategory_Collection, "Invalid argument passed!");
 
-            cJSON* collectionItemJsonContainer = objJson;
-            const Mirror::TypeInfo* currentTypeInfo = objTypeInfo->collectionTypeInfoFirst;
+            const Mirror::TypeInfo* currentTypeInfo = classTypeInfo->collectionTypeInfoFirst;
             size_t currentTypeInfoItemCount = 0;
 
-            while (const void* elementAddress = (const void*)objTypeInfo->collectionIterateCurrentFunc(obj, currentTypeInfoItemCount++))
+            while (const void* elementAddress = (const void*)classTypeInfo->collectionIterateCurrentFunc(collectionAddress, currentTypeInfoItemCount++))
             {
-                ToJson(elementAddress, currentTypeInfo, collectionItemJsonContainer, currentTypeInfo->stringName);
-                if (const bool isPair = currentTypeInfo == objTypeInfo->collectionTypeInfoFirst && objTypeInfo->collectionTypeInfoSecond)
+                ToJson(elementAddress, currentTypeInfo, classJson, currentTypeInfo->stringName);
+                if (const bool isPair = currentTypeInfo == classTypeInfo->collectionTypeInfoFirst && classTypeInfo->collectionTypeInfoSecond)
                 {
-                    currentTypeInfo = objTypeInfo->collectionTypeInfoSecond; // #NOTE Increment type when handling pairs. Can evolve to ++typeInfo esque to support tuples as well
+                    currentTypeInfo = classTypeInfo->collectionTypeInfoSecond; // #NOTE Increment type when handling pairs. Can evolve to ++typeInfo esque to support tuples as well
                 }
             }
         }
 
-        void Local_SerializePointer(const void* const obj, const Mirror::TypeInfo* const objTypeInfo, cJSON* objJson)
+        void Local_SerializePointer(const void* const pointerAddress, const Mirror::TypeInfo* const pointerTypeInfo, cJSON* pointerJson)
         {
-            ASSERT(obj && objTypeInfo && objJson && objTypeInfo->category == Mirror::TypeInfoCategory_Pointer, "Invalid argument passed!");
+            ASSERT(pointerAddress && pointerTypeInfo && pointerJson && pointerTypeInfo->category == Mirror::TypeInfoCategory_Pointer, "Invalid argument passed!");
 
-            if (nullptr == *(const void**)obj) // #TODO Review null pointer value handling
+            if (nullptr == *(const void**)pointerAddress) // #TODO Review null pointer value handling
             {
                 LOG_ERROR("{0} Pointer is null!", __FUNCTION__);
                 uint8_t pointerValue = 0;
-                Local_SerializePrimitive(&pointerValue, Mirror::InfoForType<uint8_t>(), objJson, "nullptr");
+                Local_SerializePrimitive(&pointerValue, Mirror::InfoForType<uint8_t>(), pointerJson, "nullptr");
                 return;
             }
 
-            const Mirror::TypeInfo* absoluteTypeInfo = objTypeInfo->AbsoluteType()->DerivedTypeFromPointer(obj);
-            ToJson(*(void**)obj, absoluteTypeInfo, objJson, absoluteTypeInfo->stringName);
+            const Mirror::TypeInfo* absoluteTypeInfo = pointerTypeInfo->AbsoluteType()->DerivedTypeFromPointer(pointerAddress);
+            ToJson(*(void**)pointerAddress, absoluteTypeInfo, pointerJson, absoluteTypeInfo->stringName);
         }
 
         template<typename... Component>
@@ -277,34 +276,34 @@ namespace QwerkE {
             SerializeComponent<Component...>(registry, entityId, componentListJsonArray);
         }
 
-        cJSON* CreateJsonObject(const char* key)
+        cJSON* CreateJsonObject(const char* typeOrMemberName)
         {
             cJSON* returnJSONItem = cJSON_CreateObject();
-            if (key) returnJSONItem->string = _strdup(key); // #TODO Look into deallocation responsibility
+            if (typeOrMemberName) returnJSONItem->string = _strdup(typeOrMemberName); // #TODO Look into deallocation responsibility
             return returnJSONItem;
         }
 
         template <typename T>
-        cJSON* CreateJsonBool(const std::string& name, const void* obj)
+        cJSON* CreateJsonBool(const std::string& typeOrMemberName, const void* boolAddress)
         {
-            cJSON* returnBool = cJSON_CreateBool(*(T*)obj);
-            returnBool->string = _strdup(name.c_str()); // #TODO Check memory deallocation
+            cJSON* returnBool = cJSON_CreateBool(*(T*)boolAddress);
+            returnBool->string = _strdup(typeOrMemberName.c_str()); // #TODO Check memory deallocation
             return returnBool;
         }
 
         template <typename T>
-        cJSON* CreateJsonNumber(const std::string& name, const void* obj)
+        cJSON* CreateJsonNumber(const std::string& typeOrMemberName, const void* numberAddress)
         {
-            cJSON* returnNumber = cJSON_CreateNumber(*(T*)obj);
-            returnNumber->string = _strdup(name.c_str());
+            cJSON* returnNumber = cJSON_CreateNumber(*(T*)numberAddress);
+            returnNumber->string = _strdup(typeOrMemberName.c_str());
             return returnNumber;
         }
 
         template <typename T>
-        cJSON* CreateJsonString(const std::string& name, const void* obj)
+        cJSON* CreateJsonString(const std::string& typeOrMemberName, const void* stringAddress)
         {
-            cJSON* returnString = cJSON_CreateString((T*)obj); // #NOTE (T*)obj is NOT dereferenced, unlike CreateJsonNumber() and CreateJsonBool()
-            returnString->string = _strdup(name.c_str());
+            cJSON* returnString = cJSON_CreateString((T*)stringAddress); // #NOTE (T*)obj is NOT dereferenced, unlike CreateJsonNumber() and CreateJsonBool()
+            returnString->string = _strdup(typeOrMemberName.c_str());
             return returnString;
         }
 
