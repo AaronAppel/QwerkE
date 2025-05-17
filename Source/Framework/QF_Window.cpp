@@ -277,13 +277,13 @@ namespace QwerkE {
                     {
                         if (Scene* existingScene = Scenes::GetScene(fileName.u8string()))
                         {
-                            Assets::AddToRegistry(Mirror::TypeId<Scene>(), existingScene->GetGuid(), existingScene->GetSceneName());
+                            Assets::AddToRegistry(Mirror::IdForType<Scene>(), existingScene->GetGuid(), existingScene->GetSceneName());
                         }
                         else if (Scene* newScene = Scenes::CreateSceneFromFile(scenefilePath.c_str()))
                         {
                             // #NOTE Scene transition change removes next line
                             Scenes::SetCurrentScene(newScene);
-                            Assets::AddToRegistry(Mirror::TypeId<Scene>(), newScene->GetGuid(), newScene->GetSceneName());
+                            Assets::AddToRegistry(Mirror::IdForType<Scene>(), newScene->GetGuid(), newScene->GetSceneName());
                         }
                     }
                 }
@@ -292,7 +292,7 @@ namespace QwerkE {
                     std::string meshFilePath = Paths::Mesh(fileName.string().c_str());
                     if (Files::Exists(meshFilePath.c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::TypeId<Mesh>(), GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::IdForType<Mesh>(), GUID(), fileName.string());
                     }
                 }
                 else if (strcmp(fileExtension.string().c_str(), ".bin") == 0)
@@ -300,11 +300,11 @@ namespace QwerkE {
                     // #NOTE Binary mesh files starts with "VB", and binry shaders start with "FSH" or "VSH"
                     if (Files::Exists(Paths::Mesh(fileName.string().c_str()).c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::TypeId<bgfxFramework::Mesh>(), GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::IdForType<bgfxFramework::Mesh>(), GUID(), fileName.string());
                     }
                     else if (Files::Exists(Paths::Shader(fileName.string().c_str()).c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::TypeId<Shader>(), GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::IdForType<Shader>(), GUID(), fileName.string());
                     }
                 }
                 else

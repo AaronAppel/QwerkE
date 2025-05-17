@@ -56,9 +56,6 @@ static void SetCollectionLambdasVector(Mirror::TypeInfo* constTypeInfo, std::tru
 	mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
 		((T*)collectionAddress)->emplace_back(*(typename T::value_type*)elementFirst);
 	};
-	mutableTypeInfo->collectionClearFunction = [](void* collectionAddress) {
-		((T*)collectionAddress)->clear();
-	};
 	mutableTypeInfo->collectionIterateCurrentFunc = [](const void* collectionAddress, size_t aIndex) -> char* {
 		static size_t index = 0; // #TODO Support iterating backwards over a collection, and random access
 		T* vector = ((T*)collectionAddress);
@@ -79,9 +76,6 @@ static void SetCollectionLambdasMap(Mirror::TypeInfo* constTypeInfo, std::true_t
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::value_type>();
 	mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
 		((T*)collectionAddress)->insert(*(typename T::value_type*)elementFirst);
-	};
-	mutableTypeInfo->collectionClearFunction = [](void* collectionAddress) {
-		((T*)collectionAddress)->clear();
 	};
 	mutableTypeInfo->collectionIterateCurrentFunc = [](const void* collectionAddress, size_t aIndex) -> char* {
 		static size_t index = 0;
@@ -176,7 +170,7 @@ static const Mirror::TypeInfo* Mirror::InfoForType<TYPE>() {																				
 																																			\
 	localStaticTypeInfo.category = GetCategory<TYPE>();																						\
 	localStaticTypeInfo.stringName = #TYPE;																									\
-	localStaticTypeInfo.id = Mirror::TypeId<TYPE>();																						\
+	localStaticTypeInfo.id = Mirror::IdForType<TYPE>();																						\
 
 // #NOTE Using __VA_ARGS__ to handle macro calls with comma(s) ',' like MIRROR_INFO_FOR_TYPE(std::map<int, bool>)
 // #NOTE Below switch falthrough compiler warning 26819 cannot be handled within this macro
@@ -226,15 +220,24 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 	using ClassType = TYPE;																													\
 	enum { BASE = __COUNTER__ };
 
-#define MIRROR_CLASS_MEMBER(MEMBER_NAME)  MIRROR_CLASS_MEMBER_FLAGS(MEMBER_NAME, 0)
-#define MIRROR_CLASS_MEMBER_FLAGS(MEMBER_NAME, FLAGS)																						\
+#ifndef MIRROR_OMIT_FLAGS
+#define MIRROR_CLASS_MEMBER_FLAGS(MEMBER_NAME, FLAGS) MIRROR_CLASS_MEMBER_IMPL(MEMBER_NAME, FLAGS)
+
+#define MIRROR_CLASS_MEMBER_FLAGS_IMPL(MEMBER_NAME, FLAGS)																					\
+	localStaticTypeInfo.fields[MEMBER_NAME##Index].flags = FLAGS;
+#else
+#define MIRROR_CLASS_MEMBER_FLAGS_IMPL(MEMBER_NAME, FLAGS)
+#endif // !MIRROR_OMIT_FLAGS
+
+#define MIRROR_CLASS_MEMBER(MEMBER_NAME)  MIRROR_CLASS_MEMBER_IMPL(MEMBER_NAME, 0)
+#define MIRROR_CLASS_MEMBER_IMPL(MEMBER_NAME, FLAGS)																						\
 	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 };																					\
 	Mirror::Field MEMBER_NAME##field;																										\
 	localStaticTypeInfo.fields.push_back(MEMBER_NAME##field);																				\
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].typeInfo = Mirror::InfoForType<decltype(ClassType::MEMBER_NAME)>();						\
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].name = #MEMBER_NAME;																		\
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].offset = offsetof(ClassType, MEMBER_NAME);												\
-	localStaticTypeInfo.fields[MEMBER_NAME##Index].flags = FLAGS;
+	MIRROR_CLASS_MEMBER_FLAGS_IMPL(MEMBER_NAME, FLAGS)
 
 #define MIRROR_CONSTRUCT_USING_MEMBER(MEMBER_NAME)																							\
 	localStaticTypeInfo.typeConstructorFunc = [](void* instanceAddress) {																	\

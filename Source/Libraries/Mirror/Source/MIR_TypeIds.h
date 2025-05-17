@@ -2,153 +2,75 @@
 
 #include "MIR_Structs.h"
 
-#if defined(MIRROR_NONCONFORMING) && defined(MIRROR_GENERATE_TYPE_IDS)
-
 // Void
-MIRROR_TYPE_ID(void)
-MIRROR_TYPE_ID(void*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 0, void)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 1, void*)
 
-// Mutable
-MIRROR_TYPE_ID(signed char)
-MIRROR_TYPE_ID(signed short)
-MIRROR_TYPE_ID(signed int)
-MIRROR_TYPE_ID(signed long long)
-MIRROR_TYPE_ID(unsigned char)
-MIRROR_TYPE_ID(unsigned short)
-MIRROR_TYPE_ID(unsigned int)
-MIRROR_TYPE_ID(unsigned long long)
-MIRROR_TYPE_ID(float)
-MIRROR_TYPE_ID(double)
-MIRROR_TYPE_ID(long double)
-MIRROR_TYPE_ID(char)
-MIRROR_TYPE_ID(bool)
+// Mutable primitives
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 2, signed char)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 3, signed short)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 4, signed int)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 5, signed long long)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 6, unsigned char)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 7, unsigned short)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 8, unsigned int)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 9, unsigned long long)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 10, float)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 11, double)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 12, long double)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 13, char)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 14, bool)
 
-// Const
-MIRROR_TYPE_ID(const signed char)
-MIRROR_TYPE_ID(const signed short)
-MIRROR_TYPE_ID(const signed int)
-MIRROR_TYPE_ID(const signed long long)
-MIRROR_TYPE_ID(const unsigned char)
-MIRROR_TYPE_ID(const unsigned short)
-MIRROR_TYPE_ID(const unsigned int)
-MIRROR_TYPE_ID(const unsigned long long)
-MIRROR_TYPE_ID(const float)
-MIRROR_TYPE_ID(const double)
-MIRROR_TYPE_ID(const long double)
-MIRROR_TYPE_ID(const char)
-MIRROR_TYPE_ID(const bool)
-
-// Mutable pointers
-MIRROR_TYPE_ID(signed char*)
-MIRROR_TYPE_ID(signed short*)
-MIRROR_TYPE_ID(signed int*)
-MIRROR_TYPE_ID(signed long long*)
-MIRROR_TYPE_ID(unsigned char*)
-MIRROR_TYPE_ID(unsigned short*)
-MIRROR_TYPE_ID(unsigned int*)
-MIRROR_TYPE_ID(unsigned long long*)
-MIRROR_TYPE_ID(float*)
-MIRROR_TYPE_ID(double*)
-MIRROR_TYPE_ID(long double*)
-MIRROR_TYPE_ID(char*)
-MIRROR_TYPE_ID(bool*)
-
-// Const pointers
-MIRROR_TYPE_ID(const signed char*)
-MIRROR_TYPE_ID(const signed short*)
-MIRROR_TYPE_ID(const signed int*)
-MIRROR_TYPE_ID(const signed long long*)
-MIRROR_TYPE_ID(const unsigned char*)
-MIRROR_TYPE_ID(const unsigned short*)
-MIRROR_TYPE_ID(const unsigned int*)
-MIRROR_TYPE_ID(const unsigned long long*)
-MIRROR_TYPE_ID(const float*)
-MIRROR_TYPE_ID(const double*)
-MIRROR_TYPE_ID(const long double*)
-MIRROR_TYPE_ID(const char*)
-MIRROR_TYPE_ID(const bool*)
-
-// String
-#include <string>
-MIRROR_TYPE_ID(std::string)
-MIRROR_TYPE_ID(std::string*)
-MIRROR_TYPE_ID(const std::string)
-MIRROR_TYPE_ID(const std::string*)
-
-#else
-
-MIRROR_TYPE_ID(0, void) // Void
-
-// Mutable
-MIRROR_TYPE_ID(1, signed char)
-MIRROR_TYPE_ID(2, signed short)
-MIRROR_TYPE_ID(3, signed int)
-MIRROR_TYPE_ID(4, signed long long)
-MIRROR_TYPE_ID(5, unsigned char)
-MIRROR_TYPE_ID(6, unsigned short)
-MIRROR_TYPE_ID(7, unsigned int)
-MIRROR_TYPE_ID(8, unsigned long long)
-MIRROR_TYPE_ID(9, float)
-MIRROR_TYPE_ID(10, double)
-MIRROR_TYPE_ID(11, long double)
-MIRROR_TYPE_ID(12, char)
-MIRROR_TYPE_ID(13, bool)
-
-// Const
-MIRROR_TYPE_ID(14, const signed char)
-MIRROR_TYPE_ID(15, const signed short)
-MIRROR_TYPE_ID(16, const signed int)
-MIRROR_TYPE_ID(17, const signed long long)
-MIRROR_TYPE_ID(18, const unsigned char)
-MIRROR_TYPE_ID(19, const unsigned short)
-MIRROR_TYPE_ID(20, const unsigned int)
-MIRROR_TYPE_ID(21, const unsigned long long)
-MIRROR_TYPE_ID(22, const float)
-MIRROR_TYPE_ID(23, const double)
-MIRROR_TYPE_ID(24, const long double)
-MIRROR_TYPE_ID(25, const char)
-MIRROR_TYPE_ID(26, const bool)
-
-MIRROR_TYPE_ID(27, void*) // Void pointer
+// Const primitives
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 15, const signed char)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 16, const signed short)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 17, const signed int)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 18, const signed long long)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 19, const unsigned char)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 20, const unsigned short)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 21, const unsigned int)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 22, const unsigned long long)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 23, const float)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 24, const double)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 25, const long double)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 26, const char)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 27, const bool)
 
 // Mutable pointers
-MIRROR_TYPE_ID(28, signed char*)
-MIRROR_TYPE_ID(29, signed short*)
-MIRROR_TYPE_ID(30, signed int*)
-MIRROR_TYPE_ID(31, signed long long*)
-MIRROR_TYPE_ID(32, unsigned char*)
-MIRROR_TYPE_ID(33, unsigned short*)
-MIRROR_TYPE_ID(34, unsigned int*)
-MIRROR_TYPE_ID(35, unsigned long long*)
-MIRROR_TYPE_ID(36, float*)
-MIRROR_TYPE_ID(37, double*)
-MIRROR_TYPE_ID(38, long double*)
-MIRROR_TYPE_ID(39, char*)
-MIRROR_TYPE_ID(40, bool*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 28, signed char*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 29, signed short*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 30, signed int*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 31, signed long long*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 32, unsigned char*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 33, unsigned short*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 34, unsigned int*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 35, unsigned long long*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 36, float*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 37, double*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 38, long double*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 39, char*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 40, bool*)
 
 // Const pointers
-MIRROR_TYPE_ID(41, const signed char*)
-MIRROR_TYPE_ID(42, const signed short*)
-MIRROR_TYPE_ID(43, const signed int*)
-MIRROR_TYPE_ID(44, const signed long long*)
-MIRROR_TYPE_ID(45, const unsigned char*)
-MIRROR_TYPE_ID(46, const unsigned short*)
-MIRROR_TYPE_ID(47, const unsigned int*)
-MIRROR_TYPE_ID(48, const unsigned long long*)
-MIRROR_TYPE_ID(49, const float*)
-MIRROR_TYPE_ID(50, const double*)
-MIRROR_TYPE_ID(51, const long double*)
-MIRROR_TYPE_ID(52, const char*)
-MIRROR_TYPE_ID(53, const bool*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 41, const signed char*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 42, const signed short*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 43, const signed int*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 44, const signed long long*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 45, const unsigned char*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 46, const unsigned short*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 47, const unsigned int*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 48, const unsigned long long*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 49, const float*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 50, const double*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 51, const long double*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 52, const char*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 53, const bool*)
 
-// String
+// std::string
 #include <string>
-MIRROR_TYPE_ID(54, std::string)
-MIRROR_TYPE_ID(55, std::string*)
-MIRROR_TYPE_ID(56, const std::string)
-MIRROR_TYPE_ID(57, const std::string*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 54, std::string)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 55, std::string*)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 56, const std::string)
+MIRROR_TYPE_ID(MIRROR_TYPE_ID_MAX - 57, const std::string*)
 
-// #TODO Choose how users increment from this value
-#define MIRROR_USER_TYPE_ID_START (uint8_t)58
-
-#endif
+#define MIRROR_USER_TYPE_ID_MAX MIRROR_TYPE_ID_MAX - 58

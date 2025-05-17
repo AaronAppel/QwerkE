@@ -86,7 +86,7 @@ namespace QwerkE {
 
             switch (typeInfo->id)
             {
-            case Mirror::TypeId<std::string>():
+            case Mirror::IdForType<std::string>():
                 {
                     std::string* stringAddress = (std::string*)obj;
 
@@ -102,8 +102,8 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<char*>():
-            case Mirror::TypeId<const char*>():
+            case Mirror::IdForType<char*>():
+            case Mirror::IdForType<const char*>():
                 {
                     const char** constCharPtrAddress = (const char**)obj;
 
@@ -124,8 +124,8 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<char>():
-            case Mirror::TypeId<QKey>():
+            case Mirror::IdForType<char>():
+            case Mirror::IdForType<QKey>():
                 {
                     char* charPtrAddress = (char*)obj;
                     char charEscaped[2] = { *charPtrAddress, '\0' };
@@ -142,12 +142,12 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<bool>():
+            case Mirror::IdForType<bool>():
                 if (ImGui::Checkbox(elementName.c_str(), (bool*)obj)) { valueChanged = true; } break;
-            case Mirror::TypeId<float>():
+            case Mirror::IdForType<float>():
                 if (ImGui::DragFloat(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
 
-            case Mirror::TypeId<double>():
+            case Mirror::IdForType<double>():
             {
                 double* numberAddress = (double*)obj;
                 float temp = (float)*numberAddress;
@@ -160,7 +160,7 @@ namespace QwerkE {
             }
             break;
 
-            case Mirror::TypeId<u8>():
+            case Mirror::IdForType<u8>():
                 {
                     u8* numberAddress = (u8*)obj;
                     int temp = (int)*numberAddress;
@@ -172,7 +172,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<u16>():
+            case Mirror::IdForType<u16>():
                 {
                     u16* numberAddress = (u16*)obj;
                     int temp = (int)*numberAddress;
@@ -184,7 +184,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<u32>():
+            case Mirror::IdForType<u32>():
                 {
                     u32* numberAddress = (u32*)obj;
                     s32 temp = (s32)*numberAddress;
@@ -198,7 +198,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<u64>():
+            case Mirror::IdForType<u64>():
                 {
                     u64* numberAddress = (u64*)obj;
 
@@ -253,7 +253,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<s8>():
+            case Mirror::IdForType<s8>():
                 {
                     s8* numberAddress = (s8*)obj;
                     s32 temp = (s32)*numberAddress;
@@ -265,7 +265,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<s16>():
+            case Mirror::IdForType<s16>():
                 {
                     s16* numberAddress = (s16*)obj;
                     s32 temp = (s32)*numberAddress;
@@ -277,9 +277,9 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<s32>():
+            case Mirror::IdForType<s32>():
                 if (ImGui::DragInt(elementName.c_str(), (s32*)obj), S32_MIN, S32_MAX) { valueChanged = true; } break;
-            case Mirror::TypeId<s64>():
+            case Mirror::IdForType<s64>():
                 {
                     // #TODO Change u64 solution of using a string for a larger value range
                     s64* numberAddress = (s64*)obj;
@@ -370,11 +370,11 @@ namespace QwerkE {
 
             switch (typeInfo->id)
             {
-            case Mirror::TypeId<vec2f>():
+            case Mirror::IdForType<vec2f>():
                 if (ImGui::DragFloat2(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
-            case Mirror::TypeId<vec3f>():
+            case Mirror::IdForType<vec3f>():
                 if (ImGui::DragFloat3(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
-            case Mirror::TypeId<QwerkE::ScriptGuiButton>():
+            case Mirror::IdForType<QwerkE::ScriptGuiButton>():
                 {
                     ScriptGuiButton* button = (ScriptGuiButton*)obj;
 
@@ -387,7 +387,7 @@ namespace QwerkE {
                 break;
 
             // Overrides for on change callback or on interaction special behaviour
-            case Mirror::TypeId<ComponentMesh>():
+            case Mirror::IdForType<ComponentMesh>():
                 {
                     const char* popUpNameMeshes = "ComponentMeshPopUpMeshSelection";
                     const char* popUpNameShaders = "ComponentMeshPopUpShaderSelection";
@@ -441,9 +441,9 @@ namespace QwerkE {
                         // }
 
                         std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
-                        if (assetRegistry.find(Mirror::TypeId<bgfxFramework::Mesh>()) != assetRegistry.end())
+                        if (assetRegistry.find(Mirror::IdForType<bgfxFramework::Mesh>()) != assetRegistry.end())
                         {
-                            auto meshes = assetRegistry[Mirror::TypeId<bgfxFramework::Mesh>()];
+                            auto meshes = assetRegistry[Mirror::IdForType<bgfxFramework::Mesh>()];
 
                             for (auto& guidMeshPair : meshes)
                             {
@@ -500,9 +500,9 @@ namespace QwerkE {
                         // }
 
                         std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
-                        if (assetRegistry.find(Mirror::TypeId<Shader>()) != assetRegistry.end())
+                        if (assetRegistry.find(Mirror::IdForType<Shader>()) != assetRegistry.end())
                         {
-                            auto shaders = assetRegistry[Mirror::TypeId<Shader>()];
+                            auto shaders = assetRegistry[Mirror::IdForType<Shader>()];
 
                             for (auto& guidShaderPair : shaders)
                             {
@@ -555,7 +555,7 @@ namespace QwerkE {
             std::string elementName = parentName;
             switch (typeInfo->id)
             {
-            case Mirror::TypeId<std::unordered_map<eScriptTypes, Scriptable*>>():
+            case Mirror::IdForType<std::unordered_map<eScriptTypes, Scriptable*>>():
                 {
                     std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)obj;
 
@@ -653,7 +653,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<std::vector<std::string>>(): // #TODO Support vector manipulation
+            case Mirror::IdForType<std::vector<std::string>>(): // #TODO Support vector manipulation
                 {
                     std::vector<std::string>* strings = (std::vector<std::string>*)obj;
                     for (size_t i = 0; i < strings->size(); i++)
@@ -666,7 +666,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<std::vector<std::string*>>():
+            case Mirror::IdForType<std::vector<std::string*>>():
                 {
                     std::vector<std::string>* strings = *(std::vector<std::string>**)obj;
                     for (size_t i = 0; i < strings->size(); i++)
@@ -679,7 +679,7 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<float[16]>():
+            case Mirror::IdForType<float[16]>():
                 {
                     float* f16matrix = (float*)obj;
                     valueChanged |= ImGui::DragFloat4(elementName.c_str(), f16matrix, .1f);

@@ -166,7 +166,7 @@ namespace QwerkE {
 
                     const Mirror::Field& field = styleTypeInfo->fields[i];
 
-                    if (drawSettings && field.typeInfo->id == Mirror::TypeId<float>() &&
+                    if (drawSettings && field.typeInfo->id == Mirror::IdForType<float>() &&
                         strcmp(styleTypeInfo->fields[i].name.c_str(), "Alpha") == 0)
                     {
                         ImGui::Text("Alpha");
@@ -179,7 +179,7 @@ namespace QwerkE {
 
                     switch (field.typeInfo->id)
                     {
-                    case Mirror::TypeId<float>():
+                    case Mirror::IdForType<float>():
                         if (!drawSettings) continue;
                         if (i % 2)
                         {
@@ -190,7 +190,7 @@ namespace QwerkE {
                         ImGui::DragFloat(("##" + field.name).c_str(), (float*)((char*)&style + field.offset), 0.1f);
                         break;
 
-                    case Mirror::TypeId<ImVec2>():
+                    case Mirror::IdForType<ImVec2>():
                         if (!drawSettings) continue;
                         if (i % 2)
                         {
@@ -201,7 +201,7 @@ namespace QwerkE {
                         ImGui::DragFloat2(("##" + field.name).c_str(), (float*)((char*)&style + field.offset), 0.1f);
                         break;
 
-                    case Mirror::TypeId<int>():
+                    case Mirror::IdForType<int>():
                         if (!drawSettings) continue;
                         if (i % 2)
                         {
@@ -210,7 +210,7 @@ namespace QwerkE {
                         ImGui::Text(field.name.c_str());
                         break;
 
-                    case Mirror::TypeId<ImVec4[ImGuiCol_COUNT]>():
+                    case Mirror::IdForType<ImVec4[ImGuiCol_COUNT]>():
                         if (ImGui::CollapsingHeader("Colors", ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_SpanAvailWidth))
                         {
                             ImGuiColorEditFlags_ colourPickerFlags = static_cast<ImGuiColorEditFlags_>(

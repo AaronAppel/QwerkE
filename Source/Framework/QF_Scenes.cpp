@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "QF_Mirror.h" // For Mirror::TypeId<x>()
+#include "QF_Mirror.h" // For Mirror::IdForType<x>()
 
 #include "QF_Assets.h"
 #include "QF_PathDefines.h"
@@ -156,7 +156,7 @@ namespace QwerkE {
 			std::string uniqueFileName = uniqueFileNamePath.string();
 
 			// #NOTE Scene transition change
-			// const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::TypeId<Scene>());
+			// const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::IdForType<Scene>());
 			// for (size_t i = 0; i < s_Scenes.size(); i++)
 			// {
 			// 	if (s_Scenes[i]->GetSceneName() == sceneFileName)
@@ -190,7 +190,7 @@ namespace QwerkE {
 
 		Scene* CreateScene(const GUID& sceneGuid)
 		{
-			const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::TypeId<Scene>()); // #NOTE Scene transition changes removed line
+			const AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::IdForType<Scene>()); // #NOTE Scene transition changes removed line
 			std::string sceneFileName; // #NOTE Scene transition changes removed line
 			for (size_t i = 0; i < scenesRegistry.size(); i++) // #NOTE Scene transition changes removed line
 			{

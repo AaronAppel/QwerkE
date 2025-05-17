@@ -192,7 +192,7 @@ template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
 		return &localStaticTypeInfo;
 	}
 	localStaticTypeInfo.category = GetCategory<void(*)(void)>();
-	localStaticTypeInfo.id = Mirror::TypeId<void(*)(void)>();
+	localStaticTypeInfo.id = Mirror::IdForType<void(*)(void)>();
 	localStaticTypeInfo.stringName = typeid(void(*)(void)).name();
 	localStaticTypeInfo.size = sizeof(void(*)(void)); switch (localStaticTypeInfo.category) {
 	case TypeInfoCategory_Collection:

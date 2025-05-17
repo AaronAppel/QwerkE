@@ -55,31 +55,31 @@ namespace QwerkE {
             std::string* str = (std::string*)primitiveAddress;
             switch (primitiveTypeInfo->id)
             {
-            case Mirror::TypeId<const std::string>():
-            case Mirror::TypeId<std::string>(): // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
+            case Mirror::IdForType<const std::string>():
+            case Mirror::IdForType<std::string>(): // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
                 {
                     primitiveTypeInfo->typeConstructorFunc(primitiveAddress); // #NOTE String must be constructed before assigned to
                     *(std::string*)primitiveAddress = primitiveJson->valuestring ? primitiveJson->valuestring : primitiveJson->string; break;
                     int bp = 0;
                 }
-            case Mirror::TypeId<const char*>():
-            case Mirror::TypeId<char*>():
+            case Mirror::IdForType<const char*>():
+            case Mirror::IdForType<char*>():
                 *(const char**)primitiveAddress = _strdup(primitiveJson->valuestring); break;
 
-            case Mirror::TypeId<const uint64_t>():
-            case Mirror::TypeId<uint64_t>(): // #NOTE Storing uint64 as string
+            case Mirror::IdForType<const uint64_t>():
+            case Mirror::IdForType<uint64_t>(): // #NOTE Storing uint64 as string
                 *(uint64_t*)primitiveAddress = std::stoull(primitiveJson->valuestring); break;
-            case Mirror::TypeId<const int64_t>():
-            case Mirror::TypeId<int64_t>(): // #NOTE Storing int64 as string
+            case Mirror::IdForType<const int64_t>():
+            case Mirror::IdForType<int64_t>(): // #NOTE Storing int64 as string
                 *(int64_t*)primitiveAddress = std::stoll(primitiveJson->valuestring); break;
 
-            case Mirror::TypeId<const float>():
-            case Mirror::TypeId<float>():
+            case Mirror::IdForType<const float>():
+            case Mirror::IdForType<float>():
                 *(float*)primitiveAddress = (float)primitiveJson->valuedouble; break;
 
-            case Mirror::TypeId<QKey>():
-            case Mirror::TypeId<const char>():
-            case Mirror::TypeId<char>():
+            case Mirror::IdForType<QKey>():
+            case Mirror::IdForType<const char>():
+            case Mirror::IdForType<char>():
                 memcpy(primitiveAddress, primitiveJson->valuestring, 1); break;
 
             default:
@@ -207,8 +207,8 @@ namespace QwerkE {
                 const cJSON* secondJson = collectionJson->child->next;
                 if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category || // #TODO Fix std::string override
                     // #TODO Test const char*
-                    Mirror::TypeId<std::string>() == elementSecondInfo->id ||
-                    Mirror::TypeId<const char*>() == elementSecondInfo->id)
+                    Mirror::IdForType<std::string>() == elementSecondInfo->id ||
+                    Mirror::IdForType<const char*>() == elementSecondInfo->id)
                 {   // #TODO Review handling primitives differently
                     secondJson = secondJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
                 }
@@ -278,7 +278,7 @@ namespace QwerkE {
 
             switch (objectTypeInfo->id)
             {
-            case Mirror::TypeId<entt::registry>():
+            case Mirror::IdForType<entt::registry>():
                 {
                     entt::registry* registry = (entt::registry*)obj;
 
@@ -293,9 +293,9 @@ namespace QwerkE {
                 return true;
 
             // #NOTE Treat some types as primitives
-            // case Mirror::TypeId<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
-            case Mirror::TypeId<std::string>():
-            case Mirror::TypeId<const char*>():
+            // case Mirror::IdForType<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
+            case Mirror::IdForType<std::string>():
+            case Mirror::IdForType<const char*>():
                 Local_DeserializePrimitive(objectJson, objectTypeInfo, obj);
                 return true;
             }

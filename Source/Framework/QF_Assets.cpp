@@ -53,10 +53,10 @@ namespace QwerkE {
 				// #TODO Handle loading errors (return GUID::Invalid;)
 				switch (typeId)
 				{
-				case Mirror::TypeId<bgfxFramework::Mesh>():
+				case Mirror::IdForType<bgfxFramework::Mesh>():
 					m_MapOfLoadedAssetMaps[typeId][guid] = myMeshLoad(Paths::Mesh(fileName.c_str()).c_str()); break;
 
-				case Mirror::TypeId<Mesh>():
+				case Mirror::IdForType<Mesh>():
 					{
 						Mesh* nullMesh = new Mesh();
 						nullMesh->m_vbh = bgfx::createVertexBuffer(
@@ -71,12 +71,12 @@ namespace QwerkE {
 					}
 					break;
 
-				case Mirror::TypeId<Scene>():
+				case Mirror::IdForType<Scene>():
 					// #NOTE Scene transition changes to Scenes::CreateSceneFromFile(fileName)
 					m_MapOfLoadedAssetMaps[typeId][guid] = Scenes::CreateSceneFromFile(Paths::Scene(fileName.c_str()));
 					break;
 
-				case Mirror::TypeId<Shader>():
+				case Mirror::IdForType<Shader>():
 					{
 						// #TODO Loading hard coded shader for now to test.
 						// Need to setup shaders to have both vertex and fragment files linked together.
@@ -129,7 +129,7 @@ namespace QwerkE {
 				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
 			);
 			nullMesh->m_GUID = GUID::Invalid;
-			m_MapOfLoadedAssetMaps[Mirror::TypeId<Mesh>()][nullMesh->m_GUID] = nullMesh;
+			m_MapOfLoadedAssetMaps[Mirror::IdForType<Mesh>()][nullMesh->m_GUID] = nullMesh;
 		}
 		ASSERT(Has<Mesh>(GUID::Invalid), "No null QwerkE::Mesh found!");
 
@@ -140,21 +140,21 @@ namespace QwerkE {
 				Paths::Shader("fs_cubes.bin").c_str()
 			);
 			nullShader->m_GUID = GUID::Invalid;
-			m_MapOfLoadedAssetMaps[Mirror::TypeId<Shader>()][nullShader->m_GUID] = nullShader;
+			m_MapOfLoadedAssetMaps[Mirror::IdForType<Shader>()][nullShader->m_GUID] = nullShader;
 
 			Shader* shader1 = new Shader();
 			shader1->m_Program = myLoadShaderProgram(
 				Paths::Shader("vs_mesh.bin").c_str(),
 				Paths::Shader("fs_mesh.bin").c_str()
 			);
-			m_MapOfLoadedAssetMaps[Mirror::TypeId<Shader>()][shader1->m_GUID] = shader1;
-			// m_MapOfLoadedAssetMaps[Mirror::TypeId<Shader>()][1] = new std::pair<"vs_mesh.bin", "fs_mesh.bin">();
+			m_MapOfLoadedAssetMaps[Mirror::IdForType<Shader>()][shader1->m_GUID] = shader1;
+			// m_MapOfLoadedAssetMaps[Mirror::IdForType<Shader>()][1] = new std::pair<"vs_mesh.bin", "fs_mesh.bin">();
 		}
 		ASSERT(Has<Shader>(GUID::Invalid), "No null shader found!");
 
-		// ASSERT(!GetRegistryAssetList(Mirror::TypeId<Shader>()).empty(), "No null shader found!");
-		// ASSERT(!GetRegistryAssetList(Mirror::TypeId<Mesh>()).empty(), "No null QwerkE::Mesh found!");
-		// ASSERT(!GetRegistryAssetList(Mirror::TypeId<bgfxFramework::Mesh>()).empty(), "No null bgfxFramework::Mesh found!");
+		// ASSERT(!GetRegistryAssetList(Mirror::IdForType<Shader>()).empty(), "No null shader found!");
+		// ASSERT(!GetRegistryAssetList(Mirror::IdForType<Mesh>()).empty(), "No null QwerkE::Mesh found!");
+		// ASSERT(!GetRegistryAssetList(Mirror::IdForType<bgfxFramework::Mesh>()).empty(), "No null bgfxFramework::Mesh found!");
 	}
 
 	void Assets::Shutdown()
@@ -169,7 +169,7 @@ namespace QwerkE {
 				{
 					switch (mirrorTypeAssetMapPair.first)
 					{
-					case Mirror::TypeId<bgfxFramework::Mesh>():
+					case Mirror::IdForType<bgfxFramework::Mesh>():
 						{
 							// #TODO Fix bgfx break point on delete
 							// bgfxFramework::Mesh* mesh = static_cast<bgfxFramework::Mesh*>(guidVoidPtrPair.second);
@@ -177,15 +177,15 @@ namespace QwerkE {
 							// delete mesh;
 						}
 						break;
-					case Mirror::TypeId<Mesh>():
+					case Mirror::IdForType<Mesh>():
 						delete static_cast<Mesh*>(guidVoidPtrPair.second);
 						break;
 
-					case Mirror::TypeId<Shader>():
+					case Mirror::IdForType<Shader>():
 						delete static_cast<Shader*>(guidVoidPtrPair.second);
 						break;
 
-					case Mirror::TypeId<Scene>():
+					case Mirror::IdForType<Scene>():
 						// Scenes::Shutdown(); should already be called
 						break;
 

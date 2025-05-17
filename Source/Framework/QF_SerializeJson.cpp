@@ -75,7 +75,7 @@ namespace QwerkE {
         {
             switch (objectTypeInfo->id)
             {
-            case Mirror::TypeId<entt::registry>():
+            case Mirror::IdForType<entt::registry>():
                 {
                     cJSON* entitiesJsonArray = CreateJsonObject("m_Registry"); // #TODO Improve hard coded member name
                     cJSON_AddItemToArray(objectJson, entitiesJsonArray);
@@ -95,9 +95,9 @@ namespace QwerkE {
                 break;
 
             // #NOTE Treat some types as primitives
-            // case Mirror::TypeId<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
-            case Mirror::TypeId<std::string>():
-            case Mirror::TypeId<const char*>():
+            // case Mirror::IdForType<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
+            case Mirror::IdForType<std::string>():
+            case Mirror::IdForType<const char*>():
                 Local_SerializePrimitive(objectAddress, objectTypeInfo, objectJson, typeOrMemberName); break;
             default:
                 return false;
@@ -114,17 +114,17 @@ namespace QwerkE {
             switch (primitiveTypeInfo->id)
             {
                 // #TODO std::string is not a true primitive. Need a better way to handle this logic
-            case Mirror::TypeId<const std::string>():
-            case Mirror::TypeId<std::string>():
+            case Mirror::IdForType<const std::string>():
+            case Mirror::IdForType<std::string>():
                 {
                     const std::string* fieldAddress = (std::string*)primitiveAddress;
                     cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, fieldAddress->data()); // #TODO Requires ->data() so can't work with CreateJsonString()
                 }
                 break;
 
-            case Mirror::TypeId<QKey>():
-            case Mirror::TypeId<const char>():
-            case Mirror::TypeId<char>():
+            case Mirror::IdForType<QKey>():
+            case Mirror::IdForType<const char>():
+            case Mirror::IdForType<char>():
                 {
                     char charArr[2] = { '\0', '\0'};
                     charArr[0] = *(char*)primitiveAddress;
@@ -132,37 +132,37 @@ namespace QwerkE {
                     cJsonItem->string = _strdup(primitiveTypeOrMemberName.c_str());
                 }
                 break;
-            case Mirror::TypeId<const char*>():
-            case Mirror::TypeId<char*>():
+            case Mirror::IdForType<const char*>():
+            case Mirror::IdForType<char*>():
                 cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, *(void**)primitiveAddress); break;
-            case Mirror::TypeId<const bool>():
-            case Mirror::TypeId<bool>():
+            case Mirror::IdForType<const bool>():
+            case Mirror::IdForType<bool>():
                 cJsonItem = CreateJsonBool<bool>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<Editor::EditorWindowTypes>(): // #TODO Remove editor types from framework files
-            case Mirror::TypeId<Editor::EditorWindowFlags>(): // #TODO Remove editor types from framework files
-            case Mirror::TypeId<Editor::EditorWindowSizingFlags>(): // #TODO Remove editor types from framework files
-            case Mirror::TypeId<const eScriptTypes>():
-            case Mirror::TypeId<eScriptTypes>():
-            case Mirror::TypeId<const uint8_t>():
-            case Mirror::TypeId<uint8_t>():
+            case Mirror::IdForType<Editor::EditorWindowTypes>(): // #TODO Remove editor types from framework files
+            case Mirror::IdForType<Editor::EditorWindowFlags>(): // #TODO Remove editor types from framework files
+            case Mirror::IdForType<Editor::EditorWindowSizingFlags>(): // #TODO Remove editor types from framework files
+            case Mirror::IdForType<const eScriptTypes>():
+            case Mirror::IdForType<eScriptTypes>():
+            case Mirror::IdForType<const uint8_t>():
+            case Mirror::IdForType<uint8_t>():
                 cJsonItem = CreateJsonNumber<uint8_t>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<const uint16_t>():
-            case Mirror::TypeId<uint16_t>():
+            case Mirror::IdForType<const uint16_t>():
+            case Mirror::IdForType<uint16_t>():
                 cJsonItem = CreateJsonNumber<uint16_t>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<const uint32_t>():
-            case Mirror::TypeId<uint32_t>():
+            case Mirror::IdForType<const uint32_t>():
+            case Mirror::IdForType<uint32_t>():
                 cJsonItem = CreateJsonNumber<uint32_t>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<const int8_t>():
-            case Mirror::TypeId<int8_t>():
+            case Mirror::IdForType<const int8_t>():
+            case Mirror::IdForType<int8_t>():
                 cJsonItem = CreateJsonNumber<int8_t>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<const int16_t>():
-            case Mirror::TypeId<int16_t>():
+            case Mirror::IdForType<const int16_t>():
+            case Mirror::IdForType<int16_t>():
                 cJsonItem = CreateJsonNumber<int16_t>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<const int32_t>():
-            case Mirror::TypeId<int32_t>():
+            case Mirror::IdForType<const int32_t>():
+            case Mirror::IdForType<int32_t>():
                 cJsonItem = CreateJsonNumber<int32_t>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<const int64_t>():
-            case Mirror::TypeId<int64_t>(): // #NOTE Special case of conversion on 64 bit types
+            case Mirror::IdForType<const int64_t>():
+            case Mirror::IdForType<int64_t>(): // #NOTE Special case of conversion on 64 bit types
             {
                 int64_t* numberAddress = (int64_t*)primitiveAddress;
                 cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, std::to_string(*numberAddress).c_str());
@@ -170,8 +170,8 @@ namespace QwerkE {
             }
             break;
 
-            case Mirror::TypeId<const uint64_t>():
-            case Mirror::TypeId<uint64_t>(): // #NOTE Special case of conversion on 64 bit types
+            case Mirror::IdForType<const uint64_t>():
+            case Mirror::IdForType<uint64_t>(): // #NOTE Special case of conversion on 64 bit types
                 {
                     uint64_t* numberAddress = (uint64_t*)primitiveAddress;
                     cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, std::to_string(*numberAddress).c_str());
@@ -179,11 +179,11 @@ namespace QwerkE {
                 }
                 break;
 
-            case Mirror::TypeId<const float>():
-            case Mirror::TypeId<float>(): // #TODO write with decimals
+            case Mirror::IdForType<const float>():
+            case Mirror::IdForType<float>(): // #TODO write with decimals
                 cJsonItem = CreateJsonNumber<float>(primitiveTypeOrMemberName, primitiveAddress); break;
-            case Mirror::TypeId<const double>():
-            case Mirror::TypeId<double>():
+            case Mirror::IdForType<const double>():
+            case Mirror::IdForType<double>():
                 cJsonItem = CreateJsonNumber<double>(primitiveTypeOrMemberName, primitiveAddress); break;
 
             default:

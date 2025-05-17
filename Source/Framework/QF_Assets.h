@@ -29,7 +29,7 @@ namespace QwerkE {
 		template <typename T>
 		static bool Has(GUID guid)
 		{
-			const size_t typeId = Mirror::TypeId<T>();
+			const size_t typeId = Mirror::IdForType<T>();
 			if (m_MapOfLoadedAssetMaps.find(typeId) == m_MapOfLoadedAssetMaps.end())
 				return false;
 
@@ -42,7 +42,7 @@ namespace QwerkE {
 		{
 			Load<T>(guid);
 
-			const size_t typeId = Mirror::TypeId<T>();
+			const size_t typeId = Mirror::IdForType<T>();
 			if (m_MapOfLoadedAssetMaps.find(typeId) == m_MapOfLoadedAssetMaps.end() ||
 				m_MapOfLoadedAssetMaps[typeId].find(guid) == m_MapOfLoadedAssetMaps[typeId].end())
 			{
@@ -56,7 +56,7 @@ namespace QwerkE {
 		template <typename T>
 		static void Load(GUID guid)
 		{
-			const size_t typeId = Mirror::TypeId<T>();
+			const size_t typeId = Mirror::IdForType<T>();
 
 			if (!Has<T>(guid))
 			{
@@ -69,7 +69,7 @@ namespace QwerkE {
 		template <typename T>
 		static const std::unordered_map<GUID, T*>* ViewAssets()
 		{
-			const size_t typeId = Mirror::TypeId<T>();
+			const size_t typeId = Mirror::IdForType<T>();
 			std::unordered_map<GUID, T*>* assetMap = nullptr;
 			if (m_MapOfLoadedAssetMaps.find(typeId) != m_MapOfLoadedAssetMaps.end())
 			{
@@ -85,7 +85,7 @@ namespace QwerkE {
 		template <typename T>
 		static std::string GetRegistryAssetFileName(const GUID guid)
 		{
-			const size_t typeId = Mirror::TypeId<T>();
+			const size_t typeId = Mirror::IdForType<T>();
 			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeId);
 			for (size_t i = 0; i < assetsRegistry.size(); i++)
 			{
@@ -108,7 +108,7 @@ namespace QwerkE {
 		template <typename T>
 		static bool ExistsInRegistry(const GUID& guid, const std::string& fileName)
 		{
-			return ExistsInRegistry(Mirror::TypeId<T>, guid, fileName);
+			return ExistsInRegistry(Mirror::IdForType<T>, guid, fileName);
 		}
 
 		static void AddToRegistry(const size_t mirrorType, const GUID& guid, const std::string& fileName);
