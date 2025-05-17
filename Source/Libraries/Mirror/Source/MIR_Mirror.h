@@ -222,13 +222,13 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 
 #ifndef MIRROR_OMIT_FLAGS
 #define MIRROR_CLASS_MEMBER_FLAGS(MEMBER_NAME, FLAGS) MIRROR_CLASS_MEMBER_IMPL(MEMBER_NAME, FLAGS)
-
 #define MIRROR_CLASS_MEMBER_FLAGS_IMPL(MEMBER_NAME, FLAGS)																					\
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].flags = FLAGS;
 #else
 #define MIRROR_CLASS_MEMBER_FLAGS_IMPL(MEMBER_NAME, FLAGS)
 #endif // !MIRROR_OMIT_FLAGS
 
+// #TODO Consider user exposed macros, etc, to have shorter or nicer (MirClass(), MirType(), MirId(), etc) names?
 #define MIRROR_CLASS_MEMBER(MEMBER_NAME)  MIRROR_CLASS_MEMBER_IMPL(MEMBER_NAME, 0)
 #define MIRROR_CLASS_MEMBER_IMPL(MEMBER_NAME, FLAGS)																						\
 	enum { MEMBER_NAME##Index = __COUNTER__ - BASE - 1 };																					\

@@ -234,7 +234,7 @@ MIRROR_CLASS_MEMBER(m_MinimumHeight)
 MIRROR_CLASS_MEMBER(m_WindowOptions)
 // MIRROR_CLASS_MEMBER(m_EditorWindowType)
 // #TODO Solve generic templated type list issue
-// using WindowsList = MirrorTemplateArgumentList <EditorWindowAssets>;
+// using WindowsList = Mirror::TypesList <EditorWindowAssets>;
 MirrorSubClasses<QwerkE::Editor::EditorWindow>(QwerkE::Editor::EditorWindowsList{}, localStaticTypeInfo, QwerkE::Editor::EditorWindowTypes::EditorWindowTypesInvalid + 1);
 MIRROR_CLASS_END
 MIRROR_TYPE(QwerkE::Editor::EditorWindow*)

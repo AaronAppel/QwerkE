@@ -4,7 +4,11 @@
 #include <string>
 #include <vector>
 
+// #NOTE Functionality macros. See Macros section in README.md for more info.
 // #define MIRROR_TESTING
+// #define MIRROR_OMIT_ALT_API
+// #define MIRROR_OMIT_FLAGS
+
 #ifdef MIRROR_TESTING
 #include <cassert>
 #define MIRROR_ASSERT(x) assert(x)
@@ -13,8 +17,6 @@
 #endif
 
 #define MIRROR_PRIVATE_MEMBERS friend struct Mirror;
-
-// #define MIRROR_OMIT_FLAGS
 
 #define MIRROR_FIELD_FLAG_TYPE uint8_t
 #define MIRROR_FIELD_FLAG_MAX UINT8_MAX
@@ -25,16 +27,35 @@
 #define MIRROR_TYPE_CATEGORY_TYPE uint8_t
 #define MIRROR_TYPE_CATEGORY_SIZE_MAX UINT8_MAX
 
-struct Mirror; // #TODO Finish shorter API after compile
-// using Mir = Mirror;			// #NOTE Optional, shorter API
-// typedef	Mirror Mir;			// #NOTE Optional, shorter API
+#ifndef MIRROR_OMIT_ALT_API // #NOTE Optional, alternative API
+struct Mirror;
+using Mir = Mirror;
+#endif // !#define MIRROR_OMIT_ALT_API
 
 struct Mirror
 {
 	struct TypeInfo;
 
-	using Id = uint16_t;	// #NOTE Optional, shorter API
-	using Info = TypeInfo;	// #NOTE Optional, shorter API
+#ifndef MIRROR_OMIT_ALT_API // #NOTE Optional, alternative API
+	using Id = MIRROR_TYPE_ID_TYPE;
+	using Info = TypeInfo;
+	template <typename T>
+	static auto GetInfo(const T& typeObj) -> const TypeInfo* {
+		return InfoForType(typeObj);
+	}
+	template <typename T>
+	static auto GetInfo() -> const TypeInfo* {
+		return InfoForType<T>();
+	}
+	template <typename T>
+	static auto GetId(const T& typeObj) -> MIRROR_TYPE_ID_TYPE {
+		return IdForType(typeObj);
+	}
+	template <typename T>
+	static auto GetId() -> MIRROR_TYPE_ID_TYPE {
+		return IdForType<T>();
+	}
+#endif // !#define MIRROR_OMIT_ALT_API
 
 	enum TypeInfoCategories : MIRROR_TYPE_CATEGORY_TYPE
 	{
@@ -140,13 +161,7 @@ struct Mirror
 
 #define MIRROR_TYPE_ID(ID, ...) MIRROR_TYPE_ID_IMPL(ID, __VA_ARGS__)
 
-	// template <typename T>
-	// using GetInfo = InfoForType(const T& typeObj);	// #NOTE Optional, shorter API
-	// using Id = GetId;								// #NOTE Optional, shorter API
-	// using Info = GetInfo;							// #NOTE Optional, shorter API
-
 	template<typename... T>
-	struct MirrorTemplateArgumentList { };
-	// using TypeListStruct TypesList; // #TODO Review naming
+	struct TypesList { };
 
 };
