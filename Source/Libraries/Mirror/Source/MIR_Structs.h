@@ -89,6 +89,9 @@ struct Mirror
 
 		const TypeInfo* collectionTypeInfoFirst = nullptr;
 		const TypeInfo* collectionTypeInfoSecond = nullptr;
+
+		std::vector<const TypeInfo*> collectionTypeInfos; // #TODO Review using an array or std::array
+
 		// #TODO Support tuples and handle collection logic type-agnosticly using a vector of const TypeInfo*s?
 		const TypeInfo* superTypeInfo;
 		const TypeInfo* pointerDereferencedTypeInfo;
@@ -100,6 +103,9 @@ struct Mirror
 
 		FuncPtr_void_voidPtr_sizet_constvoidPtr_constvoidPtr collectionAddFunc = nullptr;
 		FuncPtr_charPtr_constVoidPtr_sizet collectionIterateCurrentFunc = nullptr;
+
+		using FuncPtr_constVectorSizetPtr = const std::vector<size_t>* (*)();
+		FuncPtr_constVectorSizetPtr collectionOffsetsVecFunc = nullptr;
 
 		FuncPtr_void_voidPtr typeConstructorFunc = nullptr;
 		FuncPtr_bool_constVoidPtr typeDynamicCastFunc = nullptr;
@@ -145,19 +151,19 @@ struct Mirror
 	};
 
 	template <typename T>
-	static const TypeInfo* InfoForType(const T& typeObj);
+	static const TypeInfo* InfoForType(T& typeObj); // #TODO Review if this forces const type mirroring for non-const types
 
 	template <typename T>
-	static const TypeInfo* InfoForType();
+	static const TypeInfo* InfoForType(); // #TODO constexpr?
 
-	template <typename T>
-	static constexpr MIRROR_TYPE_ID_TYPE IdForType(const T& typeObj);
+	// #TODO Using an object ref not working. Needs more thought as supporting arrays, function pointers, and more need special branching logic
+	template <typename T>										// #TODO Passing by ref doesn't work for arrays and function pointers
+	static constexpr MIRROR_TYPE_ID_TYPE IdForType(T& typeObj); // #TODO Review if this forces const type mirroring for non-const types
 
 	template <typename T>
 	static constexpr MIRROR_TYPE_ID_TYPE IdForType();
 
-#define MIRROR_TYPE_ID_IMPL(ID, TYPE) \
-	template <> constexpr MIRROR_TYPE_ID_TYPE Mirror::IdForType<TYPE>() { return ID; }
+#define MIRROR_TYPE_ID_IMPL(ID, TYPE) template <> constexpr MIRROR_TYPE_ID_TYPE Mirror::IdForType<TYPE>() { return ID; }
 
 #define MIRROR_TYPE_ID(ID, ...) MIRROR_TYPE_ID_IMPL(ID, __VA_ARGS__)
 

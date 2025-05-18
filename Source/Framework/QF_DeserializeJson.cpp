@@ -6,6 +6,7 @@
 #include "QF_Buffer.h"
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
+#include "QF_Mirror.h"
 
 // Editor
 // #TODO #if Editor
@@ -160,89 +161,53 @@ namespace QwerkE {
                 return;
             }
 
-            if (true)
-            {
-                collectionTypeInfo->Construct(collectionAddress);
-
-                const cJSON* collectionItemJsonContainer = collectionJson;
-                size_t currentTypeInfoItemCount = 0;
-
-                const cJSON* jsonIterator = collectionJson->child;
-                while (jsonIterator)
-                {
-                    Buffer elementFirstBuffer(collectionTypeInfo->collectionTypeInfoFirst->size);
-                    FromJson(jsonIterator, collectionTypeInfo->collectionTypeInfoFirst, elementFirstBuffer.As<void>());
-
-                    const bool isPair = collectionTypeInfo->collectionTypeInfoSecond;
-                    Buffer elementSecondBuffer(isPair ? collectionTypeInfo->collectionTypeInfoSecond->size : 0);
-                    if (isPair)
-                    {
-                        FromJson(jsonIterator->next, collectionTypeInfo->collectionTypeInfoSecond, elementSecondBuffer.As<void>());
-                    }
-                    collectionTypeInfo->CollectionAppend(collectionAddress, currentTypeInfoItemCount, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
-
-                    if (isPair)
-                    {
-                        break; // #NOTE 1 iteration for pairs #TODO Review tuples
-                    }
-                    jsonIterator = jsonIterator->next;
-                    ++currentTypeInfoItemCount;
-                }
-                return;
-            }
-
-            if (collectionTypeInfo->collectionTypeInfoSecond) // #TODO Refactor pair only logic
-            {
-                const Mirror::TypeInfo* const elementFirstTypeInfo = collectionTypeInfo->collectionTypeInfoFirst;
-                Buffer elementFirstBuffer(elementFirstTypeInfo->size);
-                const cJSON* firstJson = collectionJson->child;
-                if (Mirror::TypeInfoCategory_Primitive == elementFirstTypeInfo->category)
-                {   // #TODO Review handling primitives differently
-                    firstJson = firstJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
-                }
-                FromJson(firstJson, elementFirstTypeInfo, elementFirstBuffer.As<void>());
-
-                const Mirror::TypeInfo* elementSecondInfo = collectionTypeInfo->collectionTypeInfoSecond;
-                Buffer elementSecondBuffer(elementSecondInfo ? elementSecondInfo->size : 0);
-                const cJSON* secondJson = collectionJson->child->next;
-                if (Mirror::TypeInfoCategory_Primitive == elementSecondInfo->category || // #TODO Fix std::string override
-                    // #TODO Test const char*
-                    Mirror::IdForType<std::string>() == elementSecondInfo->id ||
-                    Mirror::IdForType<const char*>() == elementSecondInfo->id)
-                {   // #TODO Review handling primitives differently
-                    secondJson = secondJson->child; // #NOTE Won't be wrapped in another cJSON object (like a class, collection, etc would)
-                }
-                FromJson(secondJson, elementSecondInfo, elementSecondBuffer.As<void>());
-
-                collectionTypeInfo->Construct(collectionAddress);
-                collectionTypeInfo->CollectionAppend(collectionAddress, 0, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
-                return;
-            }
-
-            const Mirror::TypeInfo* const elementFirstTypeInfo = collectionTypeInfo->collectionTypeInfoFirst;
-            Buffer elementFirstBuffer(elementFirstTypeInfo->size);
-
-            auto vecLower = (std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)elementFirstBuffer.As<void>();
-
-            const cJSON* iterator = collectionJson->child;
-            size_t index = 0; // #TODO Scrap index for non-contiguous collections if possible
-
-            // #NOTE Collection constructor should be called
             collectionTypeInfo->Construct(collectionAddress);
 
-            // #TODO Reserve size for appending items to avoid extra dynamic allocation, moves, and copies
-
-            std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>* map = (std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>*)collectionAddress;
-
-            while (iterator)
+            size_t elementIndex = 0;
+            const cJSON* jsonIterator = collectionJson->child;
+            while (jsonIterator)
             {
-                std::vector<std::pair<QwerkE::GUID, std::string>>* vec = (std::vector<std::pair<QwerkE::GUID, std::string>>*)collectionAddress;
-                std::pair<QwerkE::GUID, std::string>* pair = (std::pair<QwerkE::GUID, std::string>*)elementFirstBuffer.As<void>();
-                FromJson(iterator, elementFirstTypeInfo, elementFirstBuffer.As<void>());
-                collectionTypeInfo->CollectionAppend(collectionAddress, index, elementFirstBuffer.As<void>(), nullptr);
-                iterator = iterator->next;
-                ++index;
+                /* Testing tuple support
+                {
+                    const Mirror::TypeInfo* currentTypeInfo = collectionTypeInfo->collectionTypeInfos[typeInfoIndex];
+
+                    Buffer elementFirstBuffer(currentTypeInfo->size);
+                    FromJson(jsonIterator, currentTypeInfo, elementFirstBuffer.As<void>());
+
+                    // collectionTypeInfo->CollectionAppend(collectionAddress, elementIndex, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
+
+                    if (typeInfoIndex + 1 < collectionTypeInfo->collectionTypeInfos.size())
+                    {
+                        ++typeInfoIndex;
+                    }
+                    else
+                    {
+                        break; // #TODO Review. Shouldn't need to break. End on vector last element, or tuple last type. Both should be jsonIterator->next == nullptr
+                    }
+                    continue;
+                }
+                //*/
+
+                // Old
+                Buffer elementFirstBuffer(collectionTypeInfo->collectionTypeInfoFirst->size);
+                FromJson(jsonIterator, collectionTypeInfo->collectionTypeInfoFirst, elementFirstBuffer.As<void>());
+
+                const bool isPair = collectionTypeInfo->collectionTypeInfoSecond;
+                Buffer elementSecondBuffer(isPair ? collectionTypeInfo->collectionTypeInfoSecond->size : 0);
+                if (isPair)
+                {
+                    FromJson(jsonIterator->next, collectionTypeInfo->collectionTypeInfoSecond, elementSecondBuffer.As<void>());
+                }
+                collectionTypeInfo->CollectionAppend(collectionAddress, elementIndex, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
+
+                if (isPair)
+                {
+                    break; // #NOTE 1 iteration for pairs #TODO Review tuples
+                }
+                jsonIterator = jsonIterator->next;
+                ++elementIndex;
             }
+            return;
         }
 
         void Local_DeserializePointer(const cJSON* const pointerJson, const Mirror::TypeInfo* const pointerTypeInfo, void* pointerAddress)

@@ -8,6 +8,8 @@
 #include "MIR_TypeDeduction.h"
 #include "MIR_TypeIds.h"
 
+// #TODO Update argument naming
+
 template <typename T>
 constexpr Mirror::TypeInfoCategories GetCategory() {
 
@@ -29,14 +31,14 @@ constexpr Mirror::TypeInfoCategories GetCategory() {
 }
 
 template <class TYPE>
-static const Mirror::TypeInfo* Mirror::InfoForType(const TYPE& typeObj) {
+static const Mirror::TypeInfo* Mirror::InfoForType(TYPE& typeObj) {
 	return Mirror::InfoForType<TYPE>();
 }
 
-template<typename T>
+template <typename T>
 static void SetConstructionLambda(Mirror::TypeInfo* constTypeInfo, std::false_type) { }
 
-template<typename T>
+template <typename T>
 static void SetConstructionLambda(Mirror::TypeInfo* constTypeInfo, std::true_type) {
 	static_assert(std::is_class_v<T> || std::is_same_v<T, std::string>, "Type T is not a class!");
 
@@ -44,14 +46,15 @@ static void SetConstructionLambda(Mirror::TypeInfo* constTypeInfo, std::true_typ
 	mutableTypeInfo->typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) T; };
 }
 
-template<typename T>
+template <typename T>
 static void SetCollectionLambdasVector(Mirror::TypeInfo* constTypeInfo, std::false_type) { }
 
-template<typename T>
+template <typename T>
 static void SetCollectionLambdasVector(Mirror::TypeInfo* constTypeInfo, std::true_type) {
 	static_assert(is_stl_vector_impl::is_stl_vector<T>::type(), "Type T is not a vector!");
 
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
+	mutableTypeInfo->collectionTypeInfos.emplace_back(Mirror::InfoForType<T::value_type>());
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::value_type>();
 	mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
 		((T*)collectionAddress)->emplace_back(*(typename T::value_type*)elementFirst);
@@ -65,14 +68,15 @@ static void SetCollectionLambdasVector(Mirror::TypeInfo* constTypeInfo, std::tru
 	};
 }
 
-template<typename T>
+template <typename T>
 static void SetCollectionLambdasMap(Mirror::TypeInfo* constTypeInfo, std::false_type) { }
 
-template<typename T>
+template <typename T>
 static void SetCollectionLambdasMap(Mirror::TypeInfo* constTypeInfo, std::true_type) {
 	static_assert(is_stl_map<T>::value, "Type T is not a map!");
 
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
+	mutableTypeInfo->collectionTypeInfos.emplace_back(Mirror::InfoForType<T::value_type>());
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::value_type>();
 	mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
 		((T*)collectionAddress)->insert(*(typename T::value_type*)elementFirst);
@@ -94,20 +98,24 @@ static void SetCollectionLambdasMap(Mirror::TypeInfo* constTypeInfo, std::true_t
 	};
 }
 
-template<typename T>
+template <typename T>
 static void SetCollectionLambdasPair(Mirror::TypeInfo* constTypeInfo, std::false_type) { }
 
-template<typename T>
+template <typename T>
 static void SetCollectionLambdasPair(Mirror::TypeInfo* constTypeInfo, std::true_type) {
 	static_assert(is_stl_pair<T>::value, "Type T is not a pair!");
 
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 
+	mutableTypeInfo->collectionTypeInfos.emplace_back(Mirror::InfoForType<T::first_type>());
+	mutableTypeInfo->collectionTypeInfos.emplace_back(Mirror::InfoForType<T::second_type>());
 	mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<T::first_type>();
 	mutableTypeInfo->collectionTypeInfoSecond = Mirror::InfoForType<T::second_type>();
 
-	mutableTypeInfo->collectionAddFunc = [](void* pairObjAddress, size_t /*index*/, const void* elementFirst, const void* elementSecond) {
+	mutableTypeInfo->collectionAddFunc = [](void* pairObjAddress, size_t /*aIndex*/, const void* elementFirst, const void* elementSecond) {
 		T* pair = (T*)pairObjAddress;
+		// #TODO May need to remove elementSecond and use aIndex to determine 1st or 2nd type
+		// if (0 == aIndex) { memcpy((void*)&pair->first, elementFirst, sizeof(T::first_type)); } else { memcpy((void*)&pair->second, elementSecond, sizeof(T::second_type)); }
 		memcpy((void*)&pair->first, elementFirst, sizeof(T::first_type));
 		memcpy((void*)&pair->second, elementSecond, sizeof(T::second_type));
 	};
@@ -120,13 +128,76 @@ static void SetCollectionLambdasPair(Mirror::TypeInfo* constTypeInfo, std::true_
 	mutableTypeInfo->typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) T; };
 }
 
-template<typename T>
+template <typename T>
+static void SetCollectionLambdasTuple(Mirror::TypeInfo* constTypeInfo, std::false_type) {}
+
+// #TODO lambdas loop over args
+
+template <typename T, typename... TupleType>
+void SetCollectionLambdasTuple_Singular(T tuple, std::vector<uint64_t>& tupleVec, Mirror::TypeInfo* mutableTypeInfo)
+{
+	static int counter = 0; // #TODO Will index always match the type? Order dependency
+	([&]()
+	{
+		char* tupleAddress = &tuple;
+		char* tupleTypeAddress = &std::get<counter>(tuple);
+		tupleVec.emplace_back(tupleTypeAddress - tupleAddress); // #TODO Review dynamic emplace back allocation(s)
+		mutableTypeInfo->collectionTypeInfos.emplace_back(Mirror::InfoForType<TupleType>());
+	}(), ...);
+}
+
+template <typename T, typename... TupleType>
+static void SetCollectionLambdasTuple_Plural(Mirror::TypesList<TupleType...>, std::vector<uint64_t>& tupleVec, Mirror::TypeInfo* mutableTypeInfo)
+{
+	static T tuple; // #TODO Need to pass?
+	SetCollectionLambdasTuple_Singular<TupleType...>(tuple, tupleVec, mutableTypeInfo);
+}
+
+template <typename T>
+static void SetCollectionLambdasTuple(Mirror::TypeInfo* constTypeInfo, std::true_type) {
+	static_assert(false, "Tuple not currently supported!");
+	static_assert(is_stl_tuple<T>::value, "Type T is not a tuple!");
+
+	// #TODO Look at examples from: https://en.cppreference.com/w/cpp/utility/tuple/tuple
+	// template<class... Args>
+	// void print(std::string_view message, const std::tuple<Args...>& t)
+	// Expanding tuple arguments to send to SetCollectionLambdasTuple_Plural()
+
+	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
+	mutableTypeInfo->collectionOffsetsVecFunc = []() -> const std::vector<size_t>* {
+		static std::vector<size_t> tupleIndexOffsets;
+		if (tupleIndexOffsets.empty())
+		{
+			Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(Mirror::InfoForType<T>());
+			// SetCollectionLambdasTuple_Plural<T>(Mirror::TypesList { T... }, tupleIndexOffsets, mutableTypeInfo);
+		}
+		return &tupleIndexOffsets;
+	};
+	mutableTypeInfo->collectionAddFunc = [](void* tupleObjAddress, size_t aIndex, const void* elementFirst, const void* elementSecond) -> void {
+		T* tuple = (T*)tupleObjAddress;
+		const Mirror::TypeInfo* immutableTypeInfo = Mirror::InfoForType<T>(); // #NOTE Capturing outside mutableTypeInfo changes function pointer signature
+		char* tupleIndexAddress = (char*)&std::get<0>(*tuple);
+		tupleIndexAddress += immutableTypeInfo->size; // #TODO Get size, maybe by looping over values
+		memcpy((void*)tupleIndexAddress, elementFirst, immutableTypeInfo->collectionTypeInfos[aIndex]->size);
+	};
+	mutableTypeInfo->collectionIterateCurrentFunc = [](const void* tupleObjAddress, size_t aIndex) -> char* {
+		// T* tuple = (T*)tupleObjAddress;
+		const Mirror::TypeInfo* immutableTypeInfo = Mirror::InfoForType<T>(); // #NOTE Capturing outside mutableTypeInfo changes function pointer signature
+		const std::vector<size_t>* tupleIndexOffsets = immutableTypeInfo->collectionOffsetsVecFunc();
+		if (aIndex < immutableTypeInfo->collectionTypeInfos.size()) { return (char*)(tupleObjAddress) + tupleIndexOffsets->at(aIndex); }
+		return nullptr;
+	};
+	mutableTypeInfo->typeConstructorFunc = [](void* preallocatedMemoryAddress) { new(preallocatedMemoryAddress) T; };
+}
+
+template <typename T>
 static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::false_type) {
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
 
 	if (std::is_array_v<T>)
 	{
 		typedef typename std::remove_all_extents<T>::type ArrayElementType;
+		mutableTypeInfo->collectionTypeInfos.emplace_back(Mirror::InfoForType<ArrayElementType>());
 		mutableTypeInfo->collectionTypeInfoFirst = Mirror::InfoForType<ArrayElementType>();
 		mutableTypeInfo->collectionAddFunc = [](void* collectionAddress, size_t index, const void* elementFirst, const void* /*elementSecond*/) {
 			memcpy((char*)collectionAddress + (sizeof(ArrayElementType) * index), elementFirst, sizeof(ArrayElementType));
@@ -140,7 +211,7 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::false_typ
 	}
 }
 
-template<typename T>
+template <typename T>
 static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::true_type) {
 	static_assert(is_stl_container<T>::value, "Type T is not a collection!");
 	Mirror::TypeInfo* mutableTypeInfo = const_cast<Mirror::TypeInfo*>(constTypeInfo);
@@ -150,9 +221,10 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::true_type
 
 	// #TODO Review how std::array is handled
 	// SetCollectionLambdasArray<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_array<T>::type());
-	SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());
 	SetCollectionLambdasMap<T>(mutableTypeInfo, is_stl_map_impl::is_stl_map<T>::type());
 	SetCollectionLambdasPair<T>(mutableTypeInfo, is_stl_pair_impl::is_stl_pair<T>::type());
+	SetCollectionLambdasTuple<T>(mutableTypeInfo, is_stl_tuple_impl::is_stl_tuple<T>::type());
+	SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());
 }
 
 // #NOTE Required to avoid sizeof(void) C2070 compiler error
@@ -162,7 +234,7 @@ localStaticTypeInfo.size = sizeof(TYPE);
 
 // #NOTE Must be a macro to avoid default specialization issues causing "multiply defined..." errors dependent on order of compilation.
 #define MIRROR_TYPE_COMMON(TYPE)																											\
-template<>																																	\
+template <>																																	\
 static const Mirror::TypeInfo* Mirror::InfoForType<TYPE>() {																				\
 	static Mirror::TypeInfo localStaticTypeInfo;																							\
 																																			\
@@ -183,6 +255,7 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 	{																																		\
 	case TypeInfoCategory_Collection: /* #NOTE Intentional case fall through as a collection is also a class */								\
 		SetCollectionLambdas<TYPE>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<TYPE>::type());							\
+		/*[[fallthrough]]*/																													\
 	case TypeInfoCategory_Class:																											\
 		SetConstructionLambda<TYPE>(&localStaticTypeInfo, std::is_class<TYPE>::type());														\
 		break;																																\
@@ -239,6 +312,7 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 	localStaticTypeInfo.fields[MEMBER_NAME##Index].offset = offsetof(ClassType, MEMBER_NAME);												\
 	MIRROR_CLASS_MEMBER_FLAGS_IMPL(MEMBER_NAME, FLAGS)
 
+// #TODO Review. Does construction ordering/priority (serialize, construct, re-serialize?) need to be an option exposed to users?
 #define MIRROR_CONSTRUCT_USING_MEMBER(MEMBER_NAME)																							\
 	localStaticTypeInfo.typeConstructorFunc = [](void* instanceAddress) {																	\
 		using MemberType = decltype(ClassType::MEMBER_NAME);																				\

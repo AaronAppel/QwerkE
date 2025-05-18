@@ -33,6 +33,7 @@ namespace is_stl_container_impl {
 	template <typename... Args> struct is_stl_container<std::stack             <Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::pair			   <Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::priority_queue    <Args...>> :std::true_type {};
+	template <typename... Args> struct is_stl_container<std::tuple             <Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::unordered_set     <Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::unordered_multiset<Args...>> :std::true_type {};
 	template <typename... Args> struct is_stl_container<std::unordered_map     <Args...>> :std::true_type {};
@@ -51,6 +52,11 @@ namespace is_stl_pair_impl {
 	template <typename... Args> struct is_stl_pair<std::pair <Args...>> :std::true_type {};
 }
 
+namespace is_stl_tuple_impl {
+	template <typename T>       struct is_stl_tuple :std::false_type {};
+	template <typename... Args> struct is_stl_tuple<std::tuple <Args...>> :std::true_type {};
+}
+
 namespace is_stl_vector_impl {
 	template <typename T>       struct is_stl_vector :std::false_type {};
 	template <typename... Args> struct is_stl_vector<std::vector <Args...>> :std::true_type {};
@@ -67,6 +73,10 @@ template <typename T> struct is_stl_map {
 
 template <typename T> struct is_stl_pair {
 	static constexpr bool const value = is_stl_pair_impl::is_stl_pair<std::decay_t<T>>::value;
+};
+
+template <typename T> struct is_stl_tuple {
+	static constexpr bool const value = is_stl_tuple_impl::is_stl_tuple<std::decay_t<T>>::value;
 };
 
 template <typename T> struct is_stl_vector {
