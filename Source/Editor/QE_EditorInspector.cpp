@@ -84,6 +84,9 @@ namespace QwerkE {
             // #TODO Try to use isDraggingPayload to avoid extra value changes when using a slider as a payload source
             const bool isDraggingPayload = nullptr != ImGui::GetDragDropPayload();
 
+            // #TODO Reference drag and drop functionality in imgui_demo.cpp line 2419:
+            // if (ImGui::TreeNode("Drag and Drop"))
+
             switch (typeInfo->id)
             {
             case Mirror::IdForType<std::string>():

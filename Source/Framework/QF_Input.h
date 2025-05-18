@@ -117,6 +117,8 @@ namespace QwerkE {
 
         // Additional considerations //
         // Input layering, consumption, or otherwise avoiding/ignoring input based on context such as focused windows and gameplay state(s)
+        // Example contexts: Editor mode start scene button can then become the stop scene button when the context change to play mode.
+        // Same button/key combo, different context-dependent action.
 
     }
 

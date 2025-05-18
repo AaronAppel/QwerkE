@@ -3,7 +3,7 @@
 #include "QE_EditorWindow.h"
 #include "QE_EditorWindowAssets.h"
 #include "QE_EditorWindowConsole.h"
-#include "QE_EditorWindowDefaultDebug.h"
+#include "QE_EditorWindowDebugDefault.h"
 #include "QE_EditorWindowDebugEvents.h"
 #include "QE_EditorWindowDebugInput.h"
 #include "QE_EditorWindowDebugMemory.h"

@@ -124,4 +124,12 @@ namespace ImGui
 
 	std::string DirectoryPathAsSameLineButtons(const std::string& directory);
 
+	// #TODO Add input widgets for non-int types, from imgui_demo.cpp lines 2252 to 2348:
+	// ImGui::DragInt8(...) { ImGui::DragScalar("drag s8",        ImGuiDataType_S8,     &s8_v,  drag_speed, drag_clamp ? &s8_zero  : NULL, drag_clamp ? &s8_fifty  : NULL); }
+	// ImGui::DragIntU8(...) { ImGui::DragScalar("drag u8",        ImGuiDataType_U8,     &u8_v,  drag_speed, drag_clamp ? &u8_zero  : NULL, drag_clamp ? &u8_fifty  : NULL, "%u ms"); }
+	// etc...
+
+	// #TODO Colourful sliders from imgui_demo.cpp line 2354:
+	// if (ImGui::TreeNode("Vertical Sliders"))
+
 }

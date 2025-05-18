@@ -23,6 +23,11 @@ namespace QwerkE {
 			{
 				ImGui::Text("TODO");
 			}
+
+			// #TODO User options:
+			// - V sync enabled
+			// - Render mode: faces, wire frames, points
+			// - Debug draw enabled
 		};
 
 	}
