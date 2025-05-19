@@ -247,7 +247,6 @@ namespace QwerkE {
                 {
                     entt::registry* registry = (entt::registry*)obj;
 
-                    const Mirror::TypeInfo* componentInfoTypeInfo = Mirror::InfoForType<ComponentInfo>();
                     const cJSON* iterator = objectJson->child;
                     while (iterator)
                     {
@@ -298,8 +297,7 @@ namespace QwerkE {
                             pair.second = nullptr;
                         }
                     }
-
-                    if (std::is_same_v<Component, ComponentMesh>)
+                    else if (std::is_same_v<Component, ComponentMesh>)
                     {
                         ComponentMesh* mesh = (ComponentMesh*)&component;
                         mesh->Initialize();

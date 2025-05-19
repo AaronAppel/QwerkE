@@ -14,6 +14,7 @@
 
 #include "QC_Guid.h"
 
+#include "QF_ComponentCamera.h"
 #include "QF_Constants.h"
 
 class PhysicsSystem;
@@ -36,6 +37,7 @@ namespace QwerkE {
 
         void Update(float deltatime);
         void Draw(u16 viewId = 0);
+        void Draw(ComponentCamera camera, vec3f position, u16 viewId = 0);
 
         EntityHandle CreateEntity();
         EntityHandle CreateEntity(const GUID& existingGuid);

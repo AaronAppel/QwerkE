@@ -15,12 +15,6 @@
 
 namespace QwerkE {
 
-    namespace Renderer {
-
-        extern bgfx::FrameBufferHandle s_FrameBufferHandle; // #TODO Move to better place (Renderer?)
-
-    }
-
     struct ComponentCamera
     {
         void PreDrawSetup(const bgfx::ViewId viewId, const vec3f& position)
@@ -33,8 +27,17 @@ namespace QwerkE {
             bx::Vec3 at = { m_LookAtPosition.x, m_LookAtPosition.y, m_LookAtPosition.z };
             bx::mtxLookAt(m_View, eye, at);
 
-            bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
-            bgfx::setViewTransform(viewId, m_View, m_Proj);
+            if (m_Perspective)
+            {
+                bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
+                bgfx::setViewTransform(viewId, m_View, m_Proj);
+            }
+            else
+            {
+                // #TODO Properly setup orthographic view. Can use bgfx examples solution for reference, searching for "mtxOrtho"
+                bx::mtxOrtho(m_Ortho, 0.f, windowSize.x, windowSize.y, 0.f, m_Near, m_Far, 0.f, true);
+                bgfx::setViewTransform(viewId, NULL, m_Ortho);
+            }
 
 #ifdef _QDEBUG
             if (m_ShowSphere)
@@ -49,6 +52,7 @@ namespace QwerkE {
 
         // #TODO How will Mirror handle undefined types? May need to handle with warning or special #define macro
         bool m_ShowSphere = true;
+        bool m_Perspective = true;
 
         float m_MoveSpeed = 5.f;
 
@@ -58,6 +62,7 @@ namespace QwerkE {
         float m_Near = .1f;
         float m_Far = 100.f;
 
+        float m_Ortho[16];
         float m_View[16];
         float m_Proj[16];
     };

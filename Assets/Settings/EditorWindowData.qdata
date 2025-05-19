@@ -1,33 +1,6 @@
 {
 	"std::vector<QwerkE::Editor::EditorWindow*>":	{
 		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowDebugInput":	{
-				"m_Guid":	{
-					"m_Guid":	"5142933376871274325"
-				},
-				"m_WindowName":	"Debug Input",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	10,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
 			"QwerkE::Editor::EditorWindowSceneGraph":	{
 				"m_Guid":	{
 					"m_Guid":	"12539018069331544866"

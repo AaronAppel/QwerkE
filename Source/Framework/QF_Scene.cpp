@@ -51,7 +51,7 @@ namespace QwerkE {
         if (!m_CameraEntityGuid)
         {
             auto viewCameraInfos = m_Registry.view<ComponentCamera, ComponentInfo>();
-            for (auto& entity : viewCameraInfos)
+            for (const entt::entity& entity : viewCameraInfos)
             {
                 ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
                 m_CameraEntityGuid = info.m_Guid;
@@ -70,7 +70,7 @@ namespace QwerkE {
             }
 
             auto viewMeshes = m_Registry.view<ComponentMesh>();
-            for (auto& entity : viewMeshes)
+            for (const entt::entity& entity : viewMeshes)
             {
                 ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
                 if (m_Registry.has<ComponentTransform>(entity))
@@ -78,6 +78,22 @@ namespace QwerkE {
                     ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
                     mesh.Draw(viewId, transform);
                 }
+            }
+        }
+    }
+
+    void Scene::Draw(ComponentCamera camera, vec3f position, u16 viewId)
+    {
+        camera.PreDrawSetup(viewId, position);
+
+        auto viewMeshes = m_Registry.view<ComponentMesh>();
+        for (const entt::entity& entity : viewMeshes)
+        {
+            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
+            if (m_Registry.has<ComponentTransform>(entity))
+            {
+                ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
+                mesh.Draw(viewId, transform);
             }
         }
     }

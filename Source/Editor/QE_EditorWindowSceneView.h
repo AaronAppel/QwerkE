@@ -4,6 +4,10 @@
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
+#include "QC_Time.h"
+
+#include "QF_ComponentCamera.h"
+#include "QF_ComponentTransform.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 
@@ -15,42 +19,6 @@ namespace QwerkE {
 
 	namespace Editor {
 
-		struct EditorCamera // #TODO Refactor
-		{
-			void PreDrawSetup(bgfx::ViewId viewId)
-			{
-				const vec2f& windowSize = Window::GetSize();
-
-				bgfx::setViewRect(viewId, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
-
-				bx::mtxLookAt(m_View, m_Eye, m_LookAtTarget);
-
-				bx::mtxProj(m_Proj, m_Fov, windowSize.x / windowSize.y, m_Near, m_Far, bgfx::getCaps()->homogeneousDepth);
-				bgfx::setViewTransform(viewId, m_View, m_Proj);
-
-#ifdef _QDEBUG
-				if (m_ShowSphere)
-				{
-					DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
-					debugDrawer.begin(viewId);
-					debugDrawer.drawSphere(m_LookAtTarget.x, m_LookAtTarget.y, m_LookAtTarget.z, 3.f);
-					debugDrawer.end();
-				}
-#endif
-			}
-
-			bool m_ShowSphere = false; // #TODO Mark debug only but Mirror supported
-			bx::Vec3 m_Eye = bx::Vec3(0.f);
-			bx::Vec3 m_LookAtTarget = bx::Vec3(0.f);;
-
-			float m_Fov = 60.f;
-			float m_Near = .1f;
-			float m_Far = 100.f;
-
-			float m_View[16];
-			float m_Proj[16];
-		};
-
 		class EditorWindowSceneView : public EditorWindow
 		{
 		public:
@@ -61,12 +29,54 @@ namespace QwerkE {
 			{
 				m_ImGuiFlags = ImGuiWindowFlags_NoScrollbar;
 				snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "Scenes: %i##%llu", 0, GetGuid());
+				m_EditorCamera.m_ShowSphere = false;
+				// #TODO Improve construction of matrices
+				float temp[16] = {
+					0.99999862909317,
+					0,
+					-0.0016666054725646973,
+					0,
+					2.7775738544733031e-06,
+					0.99999862909317,
+					0.0016666031442582607,
+					0,
+					0.0016666031442582607,
+					-0.0016666054725646973,
+					0.99999725818634033,
+					0,
+					-4.401646614074707,
+					3.784186840057373,
+					-6.67338514328003,
+					1
+				};
+				memcpy(m_EditorCameraTransform.m_Matrix, temp, sizeof(float) * 16);
 			}
 
 			EditorWindowSceneView::EditorWindowSceneView(GUID guid = GUID()) :
 				EditorWindow("Scene View", EditorWindowTypes::SceneView, guid)
 			{
 				m_ImGuiFlags = ImGuiWindowFlags_NoScrollbar;
+				m_EditorCamera.m_ShowSphere = false;
+				// #TODO Improve construction of matrices
+				float temp[16] = {
+					0.99999862909317,
+					0,
+					-0.0016666054725646973,
+					0,
+					2.7775738544733031e-06,
+					0.99999862909317,
+					0.0016666031442582607,
+					0,
+					0.0016666031442582607,
+					-0.0016666054725646973,
+					0.99999725818634033,
+					0,
+					-4.401646614074707,
+					3.784186840057373,
+					-6.67338514328003,
+					1
+				};
+				memcpy(m_EditorCameraTransform.m_Matrix, temp, sizeof(float) * 16);
 			}
 
 			void SetTextureId(u8 textureId) { m_TextureId = textureId; }
@@ -94,56 +104,6 @@ namespace QwerkE {
 					return;
 				}
 
-				// #NOTE Scene transition changes
-				// constexpr u32 s_CharacterPixelSize = 10;
-				// constexpr u32 s_DropDownArrowSize = 20;
-				//
-				// const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
-				// if (!scenes.empty())
-				// {
-				// 	std::vector<const char*> sceneNames;
-				// 	sceneNames.reserve(3);
-				//
-				// 	int index = 0;
-				// 	for (size_t i = 0; i < scenes.size(); i++)
-				// 	{
-				// 		sceneNames.push_back(scenes[i]->GetSceneName().c_str());
-				// 		if (scenes[i]->GetGuid() == m_SelectedSceneGuid)
-				// 		{
-				// 			index = i;
-				// 		}
-				// 	}
-				//
-				// 	const u32 sceneFileNameWidth = (u32)strlen(sceneNames[index]) * s_CharacterPixelSize;
-				//
-				// 	ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
-				//
-				// 	char s_ScenesCombobuffer[] = "Scenes:    ";
-				// 	snprintf(s_ScenesCombobuffer, strlen(s_ScenesCombobuffer), "Scenes: %i", (int)sceneNames.size());
-				//
-				// 	// #TODO Use ImGui::SameLineEnd();
-				// 	ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(s_ScenesCombobuffer) * s_CharacterPixelSize));
-				// 	if (ImGui::Combo(s_ScenesCombobuffer, &index, sceneNames.data(), (s32)scenes.size()))
-				// 	{
-				// 		// #TODO SetActive(true/false) ?
-				// 		m_SelectedSceneGuid = index;
-				// 	}
-				// 	ImGui::PopItemWidth();
-				// }
-				// else
-				// {
-				// 	ImGui::SameLineEnd("Scenes : 0");
-				// 	ImGui::Text("Scenes : 0");
-				// }
-				//
-				// Scene* sceneToView = Scenes::GetScene(m_SelectedSceneGuid);
-				// if (!sceneToView)
-				//	 return;
-
-				// #NOTE Scene transition changes removed 2 lines below
-
-				// #TODO Buttons are squares, so maybe width = (lineheight * 3) + (padding * 2)
-				// x3 for the 2 buttons and field, plus the 2 spaces in between the 3 buttons
 				constexpr float itemWidth = 80.f;
 
 				ImGui::PushItemWidth(itemWidth);
@@ -239,40 +199,158 @@ namespace QwerkE {
 				}
 				ImGui::PopItemWidth();
 
-				// #NOTE Scene transition changes
-				// #TODO Draw grid
-				// {
-				// 	// Debug drawer calls
-				// 	constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-				// 	bgfx::setState(BGFX_STATE_DEFAULT);
-				// 	DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-				// 	debugDrawer.begin(viewIdFbo1, true);
-				//
-				// 	constexpr bx::Vec3 normal = { .0f,  1.f, .0f };
-				// 	constexpr bx::Vec3 pos = { .0f, .0f, .0f };
-				//
-				// 	debugDrawer.drawSphere(0.f, 0.f, 0.f, 1.f, Axis::X);
-				// 	// debugDrawer.drawOrb(0.f, 0.f, 0.f, 3.f, Axis::X);
-				//
-				// 	// #TODO Move grid draw to QE_EditorWindowSceneView draw call
-				// 	bx::Plane plane(bx::InitNone);
-				// 	bx::calcPlane(plane, normal, pos);
-				//
-				// 	debugDrawer.drawGrid(Axis::Y, pos, 50, 1.0f);
-				//
-				// 	debugDrawer.end();
-				// }
+				if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
+				{
+					ImGui::OpenPopup("CameraPerspective");
+				}
+
+				if (ImGui::BeginPopup("CameraPerspective"))
+				{
+					if (ImGui::MenuItem("Perspective"))
+					{
+						m_EditorCamera.m_Perspective = true;
+					}
+					if (ImGui::MenuItem("Orthographic"))
+					{
+						m_EditorCamera.m_Perspective = false;
+					}
+					ImGui::EndPopup();
+				}
 
 				// #TODO Draw scene using camera selected from Camera combo drop down
-				m_EditorCamera.PreDrawSetup(m_ViewId);
-				m_CurrentScene->Draw(m_ViewId);
+				if (ImGui::IsWindowHovered())
+				{
+					EditorCameraUpdate();
+				}
+				m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.GetPosition());
+				m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.GetPosition(), m_ViewId);
 
 				ImGui::Image(ImTextureID(m_TextureId), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
 			}
 
+			void EditorCameraUpdate()
+			{
+				const float deltaTime = Time::PreviousFrameDuration();
+
+				static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
+
+				if (Input::MouseDown(QKey::e_MouseRight))
+				{
+					static float yaw = 0.f;
+					yaw += Input::MouseDelta().x / pixelRatio * deltaTime;
+
+					// Pitch transform.m_Matrix[6];
+					static float pitch = 0.f;
+					pitch += Input::MouseDelta().y / pixelRatio * deltaTime;
+
+					constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
+					bx::Vec3 rotate = { pitch, yaw, 0.f };
+					const vec3f& translate = m_EditorCameraTransform.GetPosition();
+
+					bx::mtxSRT(m_EditorCameraTransform.m_Matrix,
+						scale.x, scale.y, scale.z,
+						rotate.x, rotate.y, rotate.z,
+						translate.x, translate.y, translate.z);
+				}
+
+				const vec3f transformForward = m_EditorCameraTransform.Forward(); // #TODO Calculate and use proper forward
+				const bx::Vec3 forward =
+				{
+					transformForward.x,
+					transformForward.y,
+					transformForward.z
+				};
+
+				// #TODO Review how hotkeys are managed by framework and customized by game
+
+				const Input::GameActions& gameActions = Input::GetGameActions();
+
+				if (Input::KeyDown(gameActions.Camera_MoveForward) ||
+					Input::GamepadDown(QGamepad::e_GamepadA))
+				{
+					vec3f pos = m_EditorCameraTransform.GetPosition();
+					bx::Vec3 eye = bx::mad(forward, deltaTime * m_EditorCamera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+					m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
+					// m_EditorCameraTransform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				}
+				if (Input::KeyDown(gameActions.Camera_MoveBackward))
+				{
+					vec3f pos = m_EditorCameraTransform.GetPosition();
+					bx::Vec3 eye = bx::mad(forward, -deltaTime * m_EditorCamera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+					m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
+					// m_EditorCameraTransform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				}
+
+				const bx::Vec3 right =
+				{
+					m_EditorCameraTransform.m_Matrix[0],
+					m_EditorCameraTransform.m_Matrix[4],
+					m_EditorCameraTransform.m_Matrix[8]
+				};
+
+				if (Input::KeyDown(gameActions.Camera_MoveLeft))
+				{
+					vec3f pos = m_EditorCameraTransform.GetPosition();
+					bx::Vec3 eye = bx::mad(right, -deltaTime * m_EditorCamera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+					m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
+					// m_EditorCameraTransform.m_Matrix[12] -= (m_EditorCamera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				}
+				if (Input::KeyDown(gameActions.Camera_MoveRight))
+				{
+					vec3f pos = m_EditorCameraTransform.GetPosition();
+					bx::Vec3 eye = bx::mad(right, deltaTime * m_EditorCamera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
+					m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
+					// m_EditorCameraTransform.m_Matrix[12] += (m_EditorCamera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				}
+
+				const bx::Vec3 up = bx::cross(right, forward);
+
+				if (Input::KeyDown(gameActions.Camera_MoveDown))
+				{
+					m_EditorCameraTransform.m_Matrix[13] -= (m_EditorCamera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				}
+				if (Input::KeyDown(gameActions.Camera_MoveUp))
+				{
+					m_EditorCameraTransform.m_Matrix[13] += (m_EditorCamera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+				}
+				if (Input::KeyDown(gameActions.Camera_RotateRight))
+				{
+					// LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
+				}
+				if (Input::KeyDown(gameActions.Camera_RotateLeft))
+				{
+					constexpr float rotationSpeed = Math::PI_f();
+					bx::mtxRotateXYZ(m_EditorCameraTransform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
+					// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
+				}
+
+				const float mouseScroll = Input::MouseScrollDelta();
+				if (mouseScroll != 0.f)
+				{
+					m_EditorCamera.m_Fov -= mouseScroll;
+				}
+
+				if (const bool useTargetLookAt = false)
+				{
+					// #TODO Add option to reference an existing transform component in the scene
+					vec3f targetPosition = m_EditorCamera.m_LookAtPosition;
+					m_EditorCamera.m_LookAtPosition = targetPosition;
+				}
+				else if (const bool useDirectionalLookAt = true)
+				{
+					// #TODO Only re-calculate if forward changed
+					constexpr float scalar = 1.f;
+					const float* position = nullptr;
+					vec3f forwardPosition = m_EditorCameraTransform.GetPosition() + (m_EditorCameraTransform.Forward() * scalar);
+					m_EditorCamera.m_LookAtPosition = forwardPosition;
+				}
+			}
+
 			MIRROR_PRIVATE_MEMBERS
 
-			EditorCamera m_EditorCamera;
+			ComponentCamera m_EditorCamera;
+			ComponentTransform m_EditorCameraTransform;
+			Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseButton2);
 
 			void OnSceneReload() override { m_CurrentScene = nullptr; }
 
