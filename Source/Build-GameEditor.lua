@@ -1,4 +1,4 @@
-project "Game"
+project "GameEditor"
 	kind "ConsoleApp"
 	location ""
 	
@@ -34,10 +34,17 @@ project "Game"
 		"%{wks.location}/Source/Framework",
 		"%{wks.location}/Source", -- #NOTE Root for accessing library source
 		"%{wks.location}/Source/Libraries/", -- #NOTE Required by 3rd party libraries
+		
+		"%{wks.location}/Source/Libraries/bx/include",
+		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
+		"%{wks.location}/Source/Libraries/bgfx/3rdparty",
+		"%{wks.location}/Source/Libraries/bgfx/include",
+		"%{wks.location}/Source/Libraries/bgfxFramework/include",
 	}
 
 	links -- Project references
 	{
+		"Editor",
 		"Framework",
 	}
 
@@ -58,13 +65,19 @@ project "Game"
 	   defines { "WINDOWS" }
 
 	filter "configurations:Debug" -- #TODO Remove LibrariesDir
-	   defines { "_QDEBUG", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines
+		{
+			"_QDEBUG",
+			"BX_CONFIG_DEBUG=1", -- Required by bgfx
+			"LibrariesDir=\"%{wks.location}/Libraries/\"",
+			LibraryDefines
+		}
 
 	filter "configurations:Release"
-	   defines { "_QRELEASE", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QRELEASE", "BX_CONFIG_DEBUG=0", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 
 	filter "configurations:Retail"
-	   defines { "_QRETAIL", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "_QRETAIL", "BX_CONFIG_DEBUG=0", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		symbols "off"
 		optimize "on"

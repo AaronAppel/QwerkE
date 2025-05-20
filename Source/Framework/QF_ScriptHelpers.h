@@ -11,6 +11,8 @@
 #include "QF_ScriptTesting.h"
 #include "QF_ScriptSceneTransition.h"
 
+// #include "../Game/QG_ScriptGameEntity.h" // #TODO Remove Game code from Framework domain
+
 namespace QwerkE {
 
     using ComponentScriptsList = TemplateArgumentList <
@@ -20,6 +22,7 @@ namespace QwerkE {
         ScriptablePatrol,
         ScriptableTesting,
         ScriptableSceneTransition
+        // ScriptGameEntity
         // #NOTE Add new Scriptable classes here
     >;
 

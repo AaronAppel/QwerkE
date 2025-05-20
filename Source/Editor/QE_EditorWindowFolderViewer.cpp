@@ -111,8 +111,7 @@ namespace QwerkE {
 			// #TODO Review empty or non-existent directory
 			for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 			{
-				// #NOTE Crashes when viewing file names containing emojis
-				const auto& path = directoryEntry.path();
+				const Path& path = directoryEntry.path(); // #TODO Review path.filename().u8string().c_str();
 				std::string filenameString = path.filename().string();
 
 				if (directoryEntry.is_directory())

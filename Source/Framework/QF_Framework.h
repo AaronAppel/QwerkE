@@ -1,5 +1,9 @@
 #pragma once
 
+#include <map>
+#include <stdint.h>
+#include <string>
+
 // #TODO Include paths for external/user use
 
 #include "QF_Enums.h"

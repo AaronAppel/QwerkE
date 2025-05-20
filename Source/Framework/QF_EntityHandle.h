@@ -6,7 +6,7 @@
 
 #include "QF_ComponentInfo.h"
 #include "QF_ComponentTransform.h"
-
+#include "QF_Debug.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 

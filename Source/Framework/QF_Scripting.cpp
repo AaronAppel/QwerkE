@@ -3,7 +3,7 @@
 #include "QF_ScriptHelpers.h"
 
 // #TODO Fix test code
-#include "../Game/QG_ScriptGameEntity.h"
+// #include "../Game/QG_ScriptGameEntity.h"
 
 namespace QwerkE {
 
@@ -30,7 +30,8 @@ namespace QwerkE {
 
             // #TODO Improve architecture for user generated types. Ideally don't modify framework files
             case eScriptTypes::UserScript1:
-                return new ScriptGameEntity();
+                // return new ScriptGameEntity();
+                // #TODO Review ScriptGameEntity();
 
             default:
                 ASSERT(false, "Unsupported script type!");

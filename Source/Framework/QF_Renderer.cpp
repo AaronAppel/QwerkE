@@ -82,7 +82,7 @@ namespace QwerkE {
 		static const bgfx::ViewId s_ViewIdImGui = 1;
 		static const bgfx::ViewId s_ViewIdFbo1 = 2;
 
-		static bgfx::FrameBufferHandle s_FrameBufferHandleFbo; // #TESTING
+		static bgfx::FrameBufferHandle s_FrameBufferHandleFbo1; // #TESTING
 		static bgfx::TextureHandle s_FrameBufferTexturesFBO1[2];
 		static bgfx::FrameBufferHandle s_FrameBufferHandleEditorCamera; // #TESTING
 		static bgfx::TextureHandle s_FrameBufferTextureEditorCamera;
@@ -166,28 +166,24 @@ namespace QwerkE {
 			// 	bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_READ_BACK | BGFX_TEXTURE_BLIT_DST);
 			// ASSERT(bgfx::isValid(s_ReadBackTexture), "Error creating read back texture!");
 
-			{
+			{	// FBO 1
+				// Create read texture
 				s_FrameBufferTexturesFBO1[0] = bgfx::createTexture2D(windowSize.x, windowSize.y,
 					has_mips, num_layers,
 					bgfx::TextureFormat::BGRA8,
 					BGFX_TEXTURE_RT);
 				ASSERT(bgfx::isValid(s_FrameBufferTexturesFBO1[0]), "Error creating frame buffer texture [0]!");
-			}
-
-			{
+				// Create write texture
 				s_FrameBufferTexturesFBO1[1] = bgfx::createTexture2D(windowSize.x, windowSize.y,
 					has_mips, num_layers,
 					bgfx::TextureFormat::D16,
 					BGFX_TEXTURE_RT_WRITE_ONLY);
 				ASSERT(bgfx::isValid(s_FrameBufferTexturesFBO1[1]), "Error creating frame buffer depth texture [1]!");
-
-				s_FrameBufferHandleFbo = bgfx::createFrameBuffer(2, s_FrameBufferTexturesFBO1); // #TESTING
-				ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandleFbo.idx, "Error creating frame buffer!");
-			}
-
-			{	// SetupFBO view
+				s_FrameBufferHandleFbo1 = bgfx::createFrameBuffer(2, s_FrameBufferTexturesFBO1); // #TESTING
+				ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandleFbo1.idx, "Error creating frame buffer!");
+				// SetupFBO view
 				bgfx::setViewName(s_ViewIdFbo1, "FBO1");
-				bgfx::setViewFrameBuffer(s_ViewIdFbo1, s_FrameBufferHandleFbo);
+				bgfx::setViewFrameBuffer(s_ViewIdFbo1, s_FrameBufferHandleFbo1);
 				bgfx::setViewClear(s_ViewIdFbo1
 					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
 					, 0x303030ff
@@ -378,7 +374,7 @@ namespace QwerkE {
 #ifdef _QDEARIMGUI
 			imguiDestroy();
 #endif
-			bgfx::destroy(s_FrameBufferHandleFbo);
+			bgfx::destroy(s_FrameBufferHandleFbo1);
 			bgfx::destroy(s_FrameBufferHandleEditorCamera);
 
 			bgfx::destroy(s_FrameBufferTexturesFBO1[0]);

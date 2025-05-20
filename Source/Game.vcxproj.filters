@@ -2,11 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Game\main.cpp" />
+    <ClCompile Include="Game\QG_Mirror.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\QG_ScriptGameEntity.h">
       <Filter>Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="Game\QG_Mirror.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scripts">

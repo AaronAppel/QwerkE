@@ -33,6 +33,7 @@
 
 #include "QF_ScriptHelpers.h"
 
+// #TODO Move this logic to Mirror
 template <typename SuperClass, typename... SubClass>
 static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo)
 {
@@ -230,6 +231,7 @@ MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ScriptableTesting)
+MIRROR_CLASS_MEMBER(m_GuiButton)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ScriptableSceneTransition)

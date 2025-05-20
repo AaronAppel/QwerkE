@@ -13,7 +13,7 @@
 
 int main(unsigned int numberOfArguments, char** commandLineArguments)
 {
-	QwerkE::Framework::SetCommandLineArgs( numberOfArguments, commandLineArguments);
+	QwerkE::Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments);
 	QwerkE::Framework::Initialize();
 
 	// #TODO Update to new loading process

@@ -218,7 +218,7 @@ namespace QwerkE {
 				}
 
 				// #TODO Draw scene using camera selected from Camera combo drop down
-				if (ImGui::IsWindowHovered())
+				if (ImGui::IsWindowHovered() || ImGui::IsWindowFocused())
 				{
 					EditorCameraUpdate();
 				}

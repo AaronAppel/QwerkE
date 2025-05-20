@@ -13,7 +13,7 @@
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
 
-namespace QwerkE {
+namespace QwerkE { // #TODO Should be in a Game namespace
 
 	class ScriptGameEntity : public Scriptable
 	{
@@ -30,10 +30,8 @@ namespace QwerkE {
 
 			ComponentTransform& transform = m_Entity.GetComponent<ComponentTransform>();
 
-			constexpr float angle = 90.f * DEG_TO_RAD;
-
 			float matrix[16];
-			bx::mtxRotateXYZ(matrix, 0.f, angle * deltaTime, 0.f);
+			bx::mtxRotateXYZ(matrix, 0.f, m_DegreesPerSecond * DEG_TO_RAD * deltaTime, 0.f);
 			bx::mtxMul(transform.m_Matrix, matrix, transform.m_Matrix);
 		}
 
@@ -44,6 +42,7 @@ namespace QwerkE {
 
 	private:
 		MIRROR_PRIVATE_MEMBERS
+		float m_DegreesPerSecond = 90.f; // #TODO Add Editor inspection support. May need to move to Editor domain
 	};
 
 }

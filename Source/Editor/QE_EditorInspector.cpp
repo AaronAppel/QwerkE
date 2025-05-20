@@ -22,6 +22,9 @@
 
 #include "QE_Mirror.h"
 
+// #include "../Game/QG_ScriptGameEntity.h"    // #TODO Remove Game code from Editor domain
+// #include "../Game/QG_Mirror.h"              // #TODO Remove Game code from Editor domain
+
 namespace QwerkE {
 
     namespace Inspector {
@@ -348,7 +351,7 @@ namespace QwerkE {
 
                 ImGui::BeginDisabled(field.flags & FieldSerializationFlags::_InspectorViewOnly);
 
-                std::string fieldName = parentName + field.name + "##";
+                std::string fieldName = field.name + "##" + parentName;
                 void* fieldAddress = (char*)obj + field.offset;
 
                 // #TODO May need to pass flags from here, at least for drag and drop payloads
@@ -611,6 +614,7 @@ namespace QwerkE {
                     }
 
                     eScriptTypes removedScriptType = eScriptTypes::Invalid;
+                    const Mirror::TypeInfo* scriptPointerTypeInfo = Mirror::InfoForType<Scriptable*>();
                     for (auto& pair : *scriptsMap)
                     {
                         ImGui::Text((std::to_string(pair.first) + " ").c_str());
@@ -624,25 +628,9 @@ namespace QwerkE {
                             removedScriptType = pair.first;
                         }
 
-                        // #TODO See how ComponentScriptsList can help reduce future script creation steps
-                        const Mirror::TypeInfo* scriptableTypeInfo = nullptr;
-                        switch (pair.first)
+                        // #TODO Support inspecting Game types. Need to extend ComponentScriptsList in QF_Mirror.cpp to know about Game scripts
+                        if (const Mirror::TypeInfo* scriptableTypeInfo = scriptPointerTypeInfo->AbsoluteType()->DerivedTypeFromPointer(&pair.second))
                         {
-                        case eScriptTypes::Patrol:
-                            scriptableTypeInfo = Mirror::InfoForType<ScriptablePatrol>(); break;
-                        case eScriptTypes::PathFinder:
-                            scriptableTypeInfo = Mirror::InfoForType<ScriptablePathFinder>(); break;
-                        case eScriptTypes::Camera:
-                            scriptableTypeInfo = Mirror::InfoForType<ScriptableCamera>(); break;
-                        case eScriptTypes::Testing:
-                            scriptableTypeInfo = Mirror::InfoForType<ScriptableTesting>(); break;
-                        case eScriptTypes::SceneTransition:
-                            scriptableTypeInfo = Mirror::InfoForType<ScriptableSceneTransition>(); break;
-                        }
-
-                        if (scriptableTypeInfo)
-                        {
-                            ScriptablePathFinder* scr = (ScriptablePathFinder*)pair.second;
                             valueChanged |= InspectType(scriptableTypeInfo, (void*)pair.second, parentName);
                         }
                     }
