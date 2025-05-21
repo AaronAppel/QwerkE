@@ -12,7 +12,7 @@
 #include <assert.h>
 
 namespace QwerkE {
-
+    // #TODO Common shouldn't have QwerkE code. Move to Qwerke::Time file
     static double s_AppStartTime = 0.;
     static double s_FrameDelta = 0.;
 

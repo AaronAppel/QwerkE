@@ -1,5 +1,6 @@
 #pragma once
 
+// #TODO namespace Math::Random
 void SeedRandomNumber();
 
 int RandomInt(int max, int min);
