@@ -71,6 +71,7 @@
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="Framework\QF_InputGlfw.cpp" />
+    <ClCompile Include="Framework\QF_InputDebugWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />

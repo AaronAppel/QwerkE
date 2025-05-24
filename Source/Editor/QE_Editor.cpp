@@ -19,13 +19,6 @@
 #endif // _QBGFXFRAMEWORK
 #endif // _QBGFX
 
-#ifdef _QDEARIMGUI
-#include "Libraries/imgui/QwerkE_imgui.h"
-#include "Libraries/ImGuizmo/ImGuizmo.h"
-
-#include "Libraries/imgui-notify/imgui_notify.h" // For RenderNotifications()
-#endif
-
 #include "QC_Guid.h"
 #include "QC_ProgramArgs.h"
 #include "QC_System.h"

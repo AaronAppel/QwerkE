@@ -911,7 +911,7 @@ namespace QwerkE {
             case 302: return QKey::e_MediaVolumeDown;
             case 304: return QKey::e_MediaVolumeUp;
             // case 302: return QKey::e_MediaVolumeMute;
-
+            // case 350: return QKey::e_power?
             default:
                 break;
             }

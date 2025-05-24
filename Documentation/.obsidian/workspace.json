@@ -151,17 +151,14 @@
             "id": "f39652428c692754",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "QwerkE Standards/Include Flow Diagram.canvas",
-                "viewState": {
-                  "x": -499.0765380859375,
-                  "y": -31.40131069637249,
-                  "zoom": 0
-                }
+                "file": "Solution Configuration/Build Targets.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Include Flow Diagram"
+              "icon": "lucide-file",
+              "title": "Build Targets"
             }
           },
           {
@@ -211,7 +208,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "build targ",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -324,6 +321,9 @@
   },
   "active": "f39652428c692754",
   "lastOpenFiles": [
+    "Development/Features/Release Mode Support.md",
+    "QwerkE Standards/Include Flow Diagram.canvas",
+    "Solution Configuration/Build Targets.md",
     "Shared Vault Files ❗/Toggle Block Comments.md",
     "ImGui.md",
     "Imgui App Example UI.md",
@@ -358,8 +358,6 @@
     "cJSON.md",
     "Mirror Library.md",
     "{CFA9FE16-39A2-4331-A8C3-40F7805AB956}.png",
-    "Solution Configuration/Library Configuration.md",
-    "QwerkE Standards/Including.md",
     "{868F4BCD-34FB-415B-9070-0CAB845B8A96}.png",
     "{AF01BB18-5095-48E5-80BE-AC95CEEAD802}.png",
     "Untitled.canvas",
