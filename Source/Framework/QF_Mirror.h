@@ -28,6 +28,7 @@
 
 #include "QF_ScriptHelpers.h"
 
+// #TODO Wrap in #ifndef MIRROR_OMIT_FLAGS
 enum FieldSerializationFlags : MIRROR_FIELD_FLAG_TYPE
 {
 	_None = 0,

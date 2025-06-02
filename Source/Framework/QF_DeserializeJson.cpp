@@ -8,11 +8,6 @@
 #include "QF_EntityHandle.h"
 #include "QF_Mirror.h"
 
-// Editor
-// #TODO #if Editor
-#include "../Source/Editor/QE_EditorWindowHelpers.h"
-#include "../Source/Editor/QE_Mirror.h"
-
 namespace QwerkE {
 
     namespace Serialize {
