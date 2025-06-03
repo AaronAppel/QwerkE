@@ -118,6 +118,7 @@ namespace QwerkE {
 
         e_Space = ' ',                  // Spacebar key
 
+        // #TODO Review the pause button being its own entry, but can't move e_Apostrophe value
         e_MediaPlay,                    // Play or pause media key
         e_MediaNext,                    // Next or skip forward media key
         e_MediaPrevious,                // Previous or skip back media key
@@ -271,6 +272,33 @@ namespace QwerkE {
         e_MouseLeft = e_MouseButton1,   // Left mouse button
         e_MouseRight = e_MouseButton2,  // Right mouse button
         e_MouseMiddle = e_MouseButton3, // Middle mouse button
+
+        // #TODO Keys to add
+        // #TODO Support all keys from Falcon 8 mappings
+        e_QKeySleep,                    // System sleep key
+        // e_QKeyPower,                    // System power key
+
+        /*
+        // #TODO Review and support all virtual keys from: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+        // VK_CLEAR  0x0C // Possibly another name for the delete key? Or e_QKeyForwardDelete. Seems Mac only, and an extended layout for a numpad
+        // VK_SELECT 0x29 // Select key
+        // VK_PRINT	0x2A	Print key
+        // VK_EXECUTE	0x2B	Execute key
+        // VK_HELP	0x2F	Help key
+        // VK_RWIN	0x5C	Right Windows logo key
+        // VK_APPS	0x5D	Application key
+        // VK_BROWSER_*
+        // VK_LAUNCH_*
+        // VK_OEM*
+        // VK_ATTN	0xF6	Attn key
+        // VK_CRSEL	0xF7	CrSel key
+        // VK_EXSEL	0xF8	ExSel key
+        // VK_EREOF	0xF9	Erase EOF key
+        // VK_ZOOM	0xFB	Zoom key
+        // VK_PA1	0xFD	PA1 key
+
+        // #TODO Review and support any remaining keys from: https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=windowsdesktop-9.0
+        */
     };
 
     // #TODO Override math operators so QKey+int doesn't convert to an int and require static_cast<QKey>(key + int) everywhere

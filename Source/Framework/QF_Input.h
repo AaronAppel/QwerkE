@@ -21,9 +21,10 @@ namespace QwerkE {
 
         bool MousePressed(const QKey a_Key);
         bool MouseReleased(const QKey a_Key);
+        bool MouseDown(const QKey a_Key);
+
         bool MouseScrolled();
         float MouseScrollDelta();
-        bool MouseDown(const QKey a_Key);
 
         vec2f MousePos();
         bool MouseMoved();
@@ -35,11 +36,12 @@ namespace QwerkE {
 
         vec2f GamepadAxis(const int a_AxisIndex, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
         bool GamepadAxisMoved(const int a_AxisIndex, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
-        const char* const GamepadName(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
 
-        u8 GamepadsCount();
         u8 GamepadButtonCount(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
         u8 GamepadAxesCount(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
+
+        u8 GamepadsCount();
+        const char* const GamepadName(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
 
         using KeyCallback = std::function<void(QKey a_Key, QKeyState a_State)>;
         void OnKey(const KeyCallback& a_Callback);
@@ -68,16 +70,6 @@ namespace QwerkE {
         // };
 
         // u8 DeviceCount();
-        // u8 KeyboardCount();
-        // u8 MouseCount();
-        // u8 GamepadCount();
-
-        // GLFW_JOYSTICK_1 to GLFW_JOYSTICK_16 or GLFW_JOYSTICK_LAST
-
-        // Already defined
-        // bool IsMouseDragging() { return false; }
-        // vec2f MouseDragDelta() { return {}; }
-        // vec2f MouseDragFrameDelta() { return {}; }
 
         // #NOTE Could be given to things like editor windows that can define a bool to know/call to enable/disable input (isFocused method or bool)
         // InputDevice* Device(int deviceIdOrType) { return 0; } // #TODO Create device for user
@@ -85,11 +77,14 @@ namespace QwerkE {
         // Stage 4 //
         // More complex input tracking. Handle for users to be more full featured and convenient
         // #NOTE Consuming input can mess with multi frame actions like holding, dragging, double click/press, repeating, counting, etc
+
+        // May need a time value as well like 0.25 seconds window for 2nd press. Can iterate over history buffer, but buffer will need timestamps added.
         // bool KeyDoubled(int key, bool consume = false) { return false; } // For double click and double button press detection
+
         // bool KeyRepeating(int key, bool consume = false) { return false; } // #TODO Look into Windows and GLFW key repeat behaviour
 
         // keyHistorySize=150, keyHistory[keyHistorySize], keyHistoryTime[keyHistorySize]
-        // Look through key history buffer for key inputs over a_TimeSeconds. What if many input come in, or a_TimeSeconds is a large value?
+        // Look through key history buffer for key inputs over a_TimeSeconds. What if many inputs come in, or a_TimeSeconds is a large value?
         // int KeyPressesInTime(const int a_Key, const float a_TimeSeconds) { return 0; }
 
         // Time management. May be too niche and add overhead to input system that one or two user calls could manage themselves
@@ -121,6 +116,19 @@ namespace QwerkE {
         // Input layering, consumption, or otherwise avoiding/ignoring input based on context such as focused windows and gameplay state(s)
         // Example contexts: Editor mode start scene button can then become the stop scene button when the context change to play mode.
         // Same button/key combo, different context-dependent action.
+
+        // EXPERIMENTAL InputHandler class (mapping and state management like enabled or game paused)
+        // Input::InputHandler m_Handler;
+        // keyMappings = {
+        //     { "Jump", QKey::A },
+        //     { "MoveLeft", QKey::Left }
+        //     { "MoveLeft", QGamepad::e_GamepadAxis01 }
+        // };
+        // m_Handler->SetKeyMappings(keyMappings);
+        // handlerContexts = { "GamePlaying" /*, "GamePaused"*/ };
+        // m_Handler->SetContexts(handlerContexts);
+        // m_Handler->RegisterEventCallbacks(true); // #NOTE To automatically disable on game events like game paused, using assigned contexts
+        // m_Handler->SetEnabled(true);
 
     }
 

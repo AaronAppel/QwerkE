@@ -204,20 +204,6 @@ namespace QwerkE {
             return e_KeyStateDown == s_DeviceButtonsStates[a_GamepadId][a_Key];
         }
 
-        const char* const GamepadName(const QGamepad a_Key, const QGamepad a_GamepadId)
-        {
-            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
-            {
-                return glfwGetJoystickName(static_cast<int>(a_Key));
-            }
-            return nullptr;
-        }
-
-        u8 GamepadsCount()
-        {
-            return s_GamepadIds.size();
-        }
-
         u8 GamepadButtonCount(const QGamepad a_Key, const QGamepad a_GamepadId)
         {
             if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
@@ -238,6 +224,20 @@ namespace QwerkE {
                 return axesCount;
             }
             return 0;
+        }
+
+        const char* const GamepadName(const QGamepad a_Key, const QGamepad a_GamepadId)
+        {
+            if (QGamepad::e_GamepadId0 <= a_Key && QGamepad::e_QGamepadIdMax > a_Key)
+            {
+                return glfwGetJoystickName(static_cast<int>(a_Key));
+            }
+            return nullptr;
+        }
+
+        u8 GamepadsCount()
+        {
+            return s_GamepadIds.size();
         }
 
         static void Local_AddGamepad(const u8 a_GamepadId)
@@ -912,7 +912,7 @@ namespace QwerkE {
             case 304: return QKey::e_MediaVolumeUp;
             // case 302: return QKey::e_MediaVolumeMute;
             // case 350: return QKey::e_power?
-            // case 351: return QKey::e_Sleep?
+            case 351: return QKey::e_QKeySleep;
             default:
                 break;
             }
