@@ -913,7 +913,7 @@ namespace QwerkE {
             // case 302: return QKey::e_MediaVolumeMute;
             // case 350: return QKey::e_power?
             case 351: return QKey::e_QKeySleep;
-            default:
+            default: // Scan code 256
                 break;
             }
 
