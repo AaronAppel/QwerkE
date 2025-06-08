@@ -907,13 +907,65 @@ namespace QwerkE {
 
             switch (a_Scancode)
             {
+            // #NOTE Used PowerToys Keyboard Manager to generate/mimic virtual keys
+            // #NOTE Max Falcon 8 key board used to trigger keys
+
+            // case 0: // Attn key, GLFW key -1
+            // case 0: // Clear key, GLFW key -1. Variant as Clear key has 2 entries in Keyboard Manager
+            // case 0: // CrSel key, GLFW key -1
+            // case 0: // ExSel key, GLFW key -1
+            // case 0: // Execute key, GLFW key -1
+            // case 0: // IME* keys, GLFW key -1
+            // case 0: // PA1 key, GLFW key -1
+            // case 0: // Packet key, GLFW key -1
+            // case 0: // Print key, GLFW key -1
+            // case 0: // Select key, GLFW key -1
+            // case 0: // Separator key, GLFW key -1
+            // case 0: // Undefined key, GLFW key -1
+            // case 0: // VK* key, GLFW key -1
+
+            case 92: return QKey::e_SystemR;
+            case 93: return QKey::e_Menu; // #NOTE Also "Erase EOF" key
+
+            // case 98: Zoom
+            // case 99: Help
+
+            // case 256: Stop Media
+            case 256: // Max falcon keys: play/pause, volume up, volume down;
+                LOG_CRITICAL("Unsupported media key scancode {0}!", a_Scancode);
+                return QKey::e_QKeyMax;
+
+            case 272: return QKey::e_MediaPrevious;
+
+            case 281: return QKey::e_MediaNext;
+
+            // case 288: Media Mute
+            // case 289: Startapp2, Calculator
+
             case 290: return QKey::e_MediaPlay;
+
             case 302: return QKey::e_MediaVolumeDown;
+
             case 304: return QKey::e_MediaVolumeUp;
+
             // case 302: return QKey::e_MediaVolumeMute;
+            // case 306: BrowserHome;
+
             // case 350: return QKey::e_power?
-            case 351: return QKey::e_QKeySleep;
-            default: // Scan code 256
+            // case 351: Sleep
+
+            // case 357: BrowserSearch
+            // case 358: BrowserFavourites
+            // case 359: BrowserRefresh
+            // case 360: BrowserStop
+            // case 361: BrowserForward
+            // case 362: BrowserBack
+            // case 363: StartApp1, File Explorer
+            // case 363: StartMail, Outlook/System default?
+
+            // case 365: Select Media, open media player
+
+            default:
                 break;
             }
 

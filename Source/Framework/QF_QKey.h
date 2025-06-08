@@ -192,7 +192,7 @@ namespace QwerkE {
         e_BackSlash,                    // '\' or '|' key
         e_BracketRight,                 // ']' or '}' key
 
-        e_Menu,                         // Menu or context or right click key
+        e_Menu,                         // App, Menu, context, or right click key
 
         e_Escape,                       // Escape key
 
@@ -213,7 +213,7 @@ namespace QwerkE {
         e_ScrollLock,                   // Scroll Lock or ScrLk key
         e_NumLock,                      // Number Lock or NumLock key
         e_PrintScreen,                  // Print Screen or PrtSc key
-        e_Pause,                        // Pause key
+        e_Pause,                        // Pause or break key
 
         e_F1,                           // F1 function key
         e_F2,                           // F2 function key
@@ -279,6 +279,7 @@ namespace QwerkE {
         // e_QKeyPower,                    // System power key
 
         /*
+        // #TODO Support virtual key codes and scan codes from this source: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit?gid=824607963#gid=824607963
         // #TODO Review and support all virtual keys from: https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
         // VK_CLEAR  0x0C // Possibly another name for the delete key? Or e_QKeyForwardDelete. Seems Mac only, and an extended layout for a numpad
         // VK_SELECT 0x29 // Select key
@@ -297,7 +298,15 @@ namespace QwerkE {
         // VK_ZOOM	0xFB	Zoom key
         // VK_PA1	0xFD	PA1 key
 
+        // Erase EOF keycode
+
         // #TODO Review and support any remaining keys from: https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=windowsdesktop-9.0
+
+        // Additional reading:
+        - Don't use VK IDs for games: https://www.reddit.com/r/cpp_questions/comments/s3fvsm/keyboard_simulations_not_working_in_game/
+          and related: https://www.reddit.com/r/AskProgramming/comments/mpise3/comment/gub3b3f/
+
+        - WinUser.h KEYEVENTF_EXTENDEDKEY, MOUSEEVENTF_MOVE, etc
         */
     };
 
