@@ -925,7 +925,7 @@ namespace QwerkE {
             // case 0: // VK* key, GLFW key -1
 
             case 92: return QKey::e_SystemR;
-            case 93: return QKey::e_Menu; // #NOTE Also "Erase EOF" key
+            case 93: return QKey::e_Menu;
 
             // case 98: Zoom
             // case 99: Help

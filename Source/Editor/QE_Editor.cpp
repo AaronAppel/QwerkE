@@ -296,6 +296,9 @@ namespace QwerkE {
 
         void OnKey(QKey a_Key, QKeyState a_State)
         {
+            LOG_INFO("OnKey(): {0}, {1}", a_Key, a_State);
+            return;
+
             if (QKey::e_1 == a_Key)
             {
                 LOG_INFO("OnKey(): {0}, {1}", a_Key, a_State);
@@ -305,11 +308,17 @@ namespace QwerkE {
 
         void OnMouse(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_MousePosition)
         {
+            if (QwerkE::e_MouseMove != a_Key)
+            {
+                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
+                return;
+            }
+
             switch (a_Key)
             {
             case QwerkE::e_MouseLeft:
                 LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
-                Input::OnMouseStop(OnMouse);
+                // Input::OnMouseStop(OnMouse);
                 break;
             case QwerkE::e_MouseRight:
                 break;

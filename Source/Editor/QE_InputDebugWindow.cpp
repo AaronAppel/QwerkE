@@ -6,6 +6,8 @@
 #include "QF_Input.h"
 #include "QF_InputStatesBitRingBuffer.h"
 
+#include "QE_Input.h"
+
 namespace QwerkE {
 
     namespace Input {
@@ -25,8 +27,12 @@ namespace QwerkE {
         extern u64 s_InputsCount;
         extern std::vector<int> s_GamepadIds;
 
-        u8 s_Most1FrameKeyInputs;
+        u8 s_Most1FrameKeyInputs = 0;
         vec2f s_LastNonZeroMouseDelta;
+
+        // #TODO Review "Send Input" section
+        s32 s_SendSystemInputKeyCode = 0;
+        bool s_SendSystemInputKeyDown = true;
 
         void DrawInputStates()
         {
@@ -36,6 +42,23 @@ namespace QwerkE {
                 ImGui::End();
                 return;
             }
+
+            if (KeyDown(QKey::e_A))
+            {
+                SendSystemInput(s_SendSystemInputKeyCode, s_SendSystemInputKeyDown, 0);
+            }
+
+            ImGui::PushItemWidth(100.f);
+            ImGui::InputInt("Vk Code", &s_SendSystemInputKeyCode, 1, 100, ImGuiInputTextFlags_::ImGuiInputTextFlags_None);
+            ImGui::PopItemWidth();
+            ImGui::SameLine();
+            ImGui::Checkbox("Up", &s_SendSystemInputKeyDown);
+            ImGui::SameLine();
+            if (ImGui::SmallButton("Send Input"))
+            {
+                SendSystemInput(s_SendSystemInputKeyCode, s_SendSystemInputKeyDown, 0);
+            }
+            ImGui::Separator();
 
             constexpr float lineHeight = 22.f;
 
