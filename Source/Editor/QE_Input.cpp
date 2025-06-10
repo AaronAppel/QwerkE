@@ -12,15 +12,18 @@ namespace QwerkE {
 
         void SendSystemInput(u16 a_VirtualKeyCode, bool a_KeyDown, u16 a_ScanCode)
         {
-            // https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendinput
             // #if WINDOWS
+            // https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendinput
 
             INPUT input;
-
             if (a_VirtualKeyCode <= VK_XBUTTON2)
             {
                 // https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput
                 input.type = INPUT_MOUSE;
+
+                input.mi.dx = 0;
+                input.mi.dy = 0;
+                input.mi.mouseData = 0;
 
                 switch (a_VirtualKeyCode)
                 {
@@ -40,7 +43,6 @@ namespace QwerkE {
                     break;
                 // case : input.mi.dwFlags = MOUSEEVENTF_MOVE
                 // case : input.mi.dwFlags = MOUSEEVENTF_WHEEL
-                // case : input.mi.dwFlags = MOUSEEVENTF_HWHEEL
                 default:
                     break;
                 }
@@ -49,22 +51,15 @@ namespace QwerkE {
             {
                 input.type = INPUT_KEYBOARD;
 
-                input.ki.wScan = a_ScanCode; // hardware scan code for key
                 input.ki.time = 0;
                 input.ki.dwExtraInfo = 0;
+                input.ki.wScan = a_ScanCode; // hardware scan code for key
                 input.ki.wVk = a_VirtualKeyCode;
+
+                input.ki.dwFlags = a_KeyDown ? 0 : KEYEVENTF_KEYUP; // 0 for key press
             }
 
-            if (a_KeyDown)
-            {
-                input.ki.dwFlags = 0; // 0 for key press
-                input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-            }
-            else
-            {
-                input.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
-                input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
-            }
+            // input.hi; // Hardware input
 
             SendInput(1, &input, sizeof(INPUT));
 
@@ -73,30 +68,9 @@ namespace QwerkE {
 
         void SendSystemInput(QKey a_Key, bool a_KeyDown)
         {
-            // #if WINDOWS
-
-            INPUT input;
-            input.type = INPUT_KEYBOARD;
-            input.ki.wScan = 0; // hardware scan code for key
-            input.ki.time = 0;
-            input.ki.dwExtraInfo = 0;
-            // input.ki.wVk = 0x41; // virtual-key code for the "A" key
-
-            // #TODO Map QwerkE keys to Windows key codes
-            // input.ki.wVk = QkeyToWindowsKey(a_Key);
-
-            if (a_KeyDown)
-            {
-                input.ki.dwFlags = 0; // 0 for key press
-            }
-            else
-            {
-                input.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
-            }
-
-            SendInput(1, &input, sizeof(INPUT));
-
-            // #endif // WINDOWS
+            u16 keyCode = a_Key; // #TODO Convert QKey to system (virtual) key code
+            u16 scanCode = 0;
+            SendSystemInput(keyCode, a_KeyDown, scanCode);
         }
 
     }

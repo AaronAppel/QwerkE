@@ -31,7 +31,7 @@ namespace QwerkE {
         vec2f s_LastNonZeroMouseDelta;
 
         // #TODO Review "Send Input" section
-        s32 s_SendSystemInputKeyCode = 0;
+        s32 s_SendSystemInputKeyCode = 65;
         bool s_SendSystemInputKeyDown = true;
 
         void DrawInputStates()
@@ -76,7 +76,7 @@ namespace QwerkE {
                 {
                     s_Most1FrameKeyInputs = keysThisFrame;
                 }
-                ImGui::Text("1 frame keys: %i", s_Most1FrameKeyInputs);
+                ImGui::Text("Most 1 frame keys: %i", s_Most1FrameKeyInputs);
                 ImGui::Text("Inputs count: %i", s_InputsCount);
             }
             ImGui::EndChild();
