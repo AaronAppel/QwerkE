@@ -10,6 +10,49 @@ namespace QwerkE {
 
     namespace Input {
 
+        InputContexts s_CurrentContext = e_None;
+        std::vector<ContextChangedCallback> s_ContextChangedCallbacks;
+
+        InputContexts CurrentContext()
+        {
+            return s_CurrentContext;
+        }
+
+        void ChangeCurrentContext(const InputContexts a_NewInputContext)
+        {
+            for (size_t i = 0; i < s_ContextChangedCallbacks.size(); i++)
+            {
+                s_ContextChangedCallbacks[i](a_NewInputContext);
+            }
+            s_CurrentContext = a_NewInputContext;
+        }
+
+        void OnContextChange(const ContextChangedCallback& a_Callback)
+        {
+            for (u16 i = 0; i < s_ContextChangedCallbacks.size(); i++)
+            {
+                if (a_Callback.target_type() == s_ContextChangedCallbacks[i].target_type())
+                {
+                    LOG_WARN("ContextChangedCallback event already registered!");
+                    return;
+                }
+            }
+            s_ContextChangedCallbacks.push_back(a_Callback);
+        }
+
+        void StopContextChange(const ContextChangedCallback& a_Callback)
+        {
+            for (u16 i = 0; i < s_ContextChangedCallbacks.size(); i++)
+            {
+                if (a_Callback.target_type() == s_ContextChangedCallbacks[i].target_type())
+                {
+                    s_ContextChangedCallbacks.erase(s_ContextChangedCallbacks.begin() + i);
+                    return;
+                }
+            }
+            LOG_WARN("Could not remove ContextChangedCallback event!");
+        }
+
         void SendSystemInput(u16 a_VirtualKeyCode, bool a_KeyDown, u16 a_ScanCode)
         {
             // #if WINDOWS

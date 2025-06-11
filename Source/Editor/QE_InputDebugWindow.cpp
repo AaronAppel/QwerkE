@@ -58,6 +58,12 @@ namespace QwerkE {
             {
                 SendSystemInput(s_SendSystemInputKeyCode, s_SendSystemInputKeyDown, 0);
             }
+            ImGui::SameLine();
+            if (ImGui::SmallButton("Send Both"))
+            {
+                SendSystemInput(s_SendSystemInputKeyCode, true, 0);
+                SendSystemInput(s_SendSystemInputKeyCode, false, 0);
+            }
             ImGui::Separator();
 
             constexpr float lineHeight = 22.f;

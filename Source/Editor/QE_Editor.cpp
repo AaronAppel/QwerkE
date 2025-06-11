@@ -30,7 +30,7 @@
 #include "QF_Framework.h"
 
 #include "QF_Input.h"
-
+#include "QF_InputMapping.h"
 #include "QF_Log.h"
 #include "QF_Mesh.h"
 #include "QF_PathDefines.h"
@@ -42,6 +42,7 @@
 #include "QF_Settings.h"
 #include "QF_Window.h"
 
+#include "QE_EditorHotKeys.h"
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
 
@@ -71,6 +72,21 @@ namespace QwerkE {
         constexpr char* s_EditorWindowDataFileName = "EditorWindowData.qdata";
 
         static EditorStateFlags s_EditorStateFlags = EditorStateFlags::EditorStateFlagsNone;
+
+        std::unordered_map<EditorHotKeys, Input::InputMapping> s_EditorHotkeys = {
+            { e_Scene_Select1, Input::InputMapping(std::vector<QKey>{ QKey::e_F1 }) },
+            { e_Scene_Select2, Input::InputMapping(std::vector<QKey>{ QKey::e_F2 }) },
+            { e_Scene_Select3, Input::InputMapping(std::vector<QKey>{ QKey::e_F3 }) },
+            { e_Scene_Select4, Input::InputMapping(std::vector<QKey>{ QKey::e_F4 }) },
+            { e_Scene_Select5, Input::InputMapping(std::vector<QKey>{ QKey::e_F5 }) },
+            { e_Scene_Select6, Input::InputMapping(std::vector<QKey>{ QKey::e_F6 }) },
+            { e_Scene_Select7, Input::InputMapping(std::vector<QKey>{ QKey::e_F7 }) },
+            { e_Scene_Select8, Input::InputMapping(std::vector<QKey>{ QKey::e_F8 }) },
+            { e_Scene_Select9, Input::InputMapping(std::vector<QKey>{ QKey::e_F9 }) },
+            { e_Scene_Select10, Input::InputMapping(std::vector<QKey>{ QKey::e_F10 }) },
+            { e_Scene_Select11, Input::InputMapping(std::vector<QKey>{ QKey::e_F11 }) },
+            { e_Scene_Select12, Input::InputMapping(std::vector<QKey>{ QKey::e_F12 }) },
+        };
 
         void local_Initialize();
         void local_Shutdown();
@@ -413,8 +429,23 @@ namespace QwerkE {
             s_FocusedWindowsStack.clear();
 		}
 
+        Input::InputMapping s_InputMapping = Input::InputMapping(std::vector<QKey>{ QKey::e_0, QKey::e_9, QKey::e_CtrlAny });
+        bool wasActive = false;
+
         void local_Update()
         {
+            bool result = s_InputMapping.IsActive();
+            if (result)
+            {
+                // LOG_INFO("Mapping IsActive()");
+            }
+
+            if (result != wasActive)
+            {
+                LOG_INFO("Mapping changed IsActive()");
+            }
+            wasActive = result;
+
             // if (Input::KeyDown(QKey::eKeys_A))
             {
                 // LOG_INFO(Log::eLogLevel::Info, "KeyState");
@@ -592,6 +623,13 @@ namespace QwerkE {
             constexpr size_t numberOfHotkeyedScenes = QKey::e_F12 - QKey::e_F1 + 1;
             for (u8 i = 0; i < numberOfHotkeyedScenes; i++)
             {
+
+                EditorHotKeys hotKey = static_cast<EditorHotKeys>(EditorHotKeys::e_Scene_Select1 + i);
+                if (s_EditorHotkeys[hotKey].IsActive())
+                {
+                    // Scenes::SetCurrentScene((int)i);
+                }
+
                 QKey qKey = static_cast<QKey>(QKey::e_F1 + i);
                 if (Input::KeyPressed(qKey))
                 {
