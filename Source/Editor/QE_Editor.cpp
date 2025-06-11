@@ -310,7 +310,7 @@ namespace QwerkE {
             }
         }
 
-        void OnKey(QKey a_Key, QKeyState a_State)
+        void TestOnKey(QKey a_Key, QKeyState a_State)
         {
             LOG_INFO("OnKey(): {0}, {1}", a_Key, a_State);
             return;
@@ -318,23 +318,23 @@ namespace QwerkE {
             if (QKey::e_1 == a_Key)
             {
                 LOG_INFO("OnKey(): {0}, {1}", a_Key, a_State);
-                Input::OnKeyStop(OnKey);
+                Input::OnKeyStop(TestOnKey);
             }
         }
 
-        void OnMouse(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_MousePosition)
+        void TestOnMouse(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_MousePosition)
         {
             if (QwerkE::e_MouseMove != a_Key)
             {
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
+                LOG_INFO("TestOnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 return;
             }
 
             switch (a_Key)
             {
             case QwerkE::e_MouseLeft:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
-                // Input::OnMouseStop(OnMouse);
+                LOG_INFO("TestOnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
+                // Input::OnMouseStop(TestOnMouse);
                 break;
             case QwerkE::e_MouseRight:
                 break;
@@ -351,37 +351,149 @@ namespace QwerkE {
             case QwerkE::e_MouseButton8:
                 break;
             case QwerkE::e_ScrollUp:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
+                LOG_INFO("TestOnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             case QwerkE::e_ScrollDown:
-                LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
+                LOG_INFO("TestOnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             case QwerkE::e_MouseMove:
-                // LOG_INFO("OnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
+                // LOG_INFO("TestOnMouse(): {0}, {1}, {2}, {3}, {4}", a_Key, a_State, a_ScrollDelta, a_MousePosition.x, a_MousePosition.y);
                 break;
             }
         }
 
-        void OnGamepad(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56, QGamepad a_GamepadId)
+        void TestOnGamepad(QGamepad a_Input, QKeyState a_State, const vec2f& a_Axis12, const vec2f& a_Axis34, const vec2f& a_Axis56, QGamepad a_GamepadId)
         {
             switch (a_Input)
             {
             case QwerkE::e_GamepadA:
                 LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y, a_GamepadId);
-                // Input::OnGamepadStop(s_OnGamepadGuid);
-                Input::OnGamepadStop(OnGamepad);
+                Input::OnGamepadStop(TestOnGamepad);
                 break;
             case QwerkE::e_GamepadAxis01:
-                LOG_INFO("OnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y, a_GamepadId);
+                LOG_INFO("TestOnGamepad(): {0}, {1}", a_Input, a_State, a_Axis12.x, a_Axis12.y, a_Axis34.x, a_Axis34.y, a_Axis56.x, a_Axis56.y, a_GamepadId);
                 break;
             }
+        }
+
+        void CheckHotkeys()
+        {
+            if (Input::KeyPressed(QKey::e_Escape))
+            {
+                Window::RequestClose();
+            }
+
+            if (!s_ShowingWindowStackPanel)
+            {
+                if (Input::KeyPressed(QKey::e_Tab) && Input::KeyDown(QKey::e_CtrlAny))
+                {
+                    s_ShowingWindowStackPanel = true;
+                }
+            }
+            else if (s_ShowingWindowStackPanel = Input::KeyDown(QKey::e_CtrlAny)) // #NOTE Assignment intentional
+            {
+                const vec2f& size = Window::GetSize();
+                ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
+
+                bool isOpen = true;
+                if (ImGui::Begin("Editor Window Stack Panel", &isOpen,
+                    ImGuiWindowFlags_NoCollapse |
+                    ImGuiWindowFlags_NoDocking |
+                    ImGuiWindowFlags_NoDecoration |
+                    ImGuiWindowFlags_NoMove |
+                    ImGuiWindowFlags_NoTitleBar |
+                    ImGuiWindowFlags_AlwaysAutoResize |
+                    (s_FocusedWindowsStack.size() > 25 ? ImGuiWindowFlags_AlwaysVerticalScrollbar : 0)
+                ))
+                {
+                    ImGui::TextUnformatted("   Windows Stack   "); // #NOTE Sets the window width
+
+                    ImGui::Separator(); // "Windows Stack"
+                    for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+                    {
+                        if (!s_WindowStackPanelLastSelected)
+                        {
+                            s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                        }
+
+                        if (s_FocusedWindowsStack[i]->WindowFlags() ^ EditorWindowFlags::Hidden)
+                        {
+                            // u32 selectedIndex = 1; // #TODO Select 2nd element on open
+                            static bool selected = false; // #TODO Since making static, assert has not been triggered, but focusing every 2nd item
+                            // causes every selectable item to be focused
+
+                            // #TODO Fix imgui.cpp(4061) assert where: IM_ASSERT(false || ...177 == ...628 || ...177 == 0 || ...177 == ...628);
+                            // Maybe related to selected being non-static or unused in some way.
+                            constexpr float itemHeight = 25.f;
+                            if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, itemHeight)))
+                            {
+                                s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                                // #TODO s_WindowStackPanelLastSelected->Highlight();
+                                // NavUpdateWindowingHighlightWindow()
+                            }
+                            else if (ImGui::IsItemClicked())
+                            {
+                                s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                                s_WindowStackPanelLastSelected->Focus();
+                            }
+                        }
+                    }
+                }
+
+                ImGui::End();
+            }
+            else // Changed since last frame (CTRL released this frame)
+            {
+                if (s_WindowStackPanelLastSelected)
+                {
+                    s_WindowStackPanelLastSelected->Focus();
+                }
+            }
+
+            if (Input::KeyPressed(QKey::e_R) && Input::KeyDown(QKey::e_CtrlAny))
+            {
+                RequestRestart();
+            }
+
+            if (Input::KeyPressed(QKey::e_U) && Input::KeyDown(QKey::e_CtrlAny))
+            {
+                s_ShowingEditorUI = !s_ShowingEditorUI;
+            }
+
+            constexpr size_t numberOfHotkeyedScenes = QKey::e_F12 - QKey::e_F1 + 1;
+            for (u8 i = 0; i < numberOfHotkeyedScenes; i++)
+            {
+
+                EditorHotKeys hotKey = static_cast<EditorHotKeys>(EditorHotKeys::e_Scene_Select1 + i);
+                if (s_EditorHotkeys[hotKey].IsActive())
+                {
+                    // Scenes::SetCurrentScene((int)i);
+                }
+
+                QKey qKey = static_cast<QKey>(QKey::e_F1 + i);
+                if (Input::KeyPressed(qKey))
+                {
+                    Scenes::SetCurrentScene((int)i);
+                    // #NOTE Scene transition changes
+                    // #TODO SetActive(true/false)
+                    // Scenes::SetCurrentScene((int)i);
+                    break;
+                }
+            }
+        }
+
+        void OnKey(QKey a_Key, QKeyState a_State)
+        {
+            CheckHotkeys();
         }
 
 		void local_Initialize()
 		{
             Input::OnKey(OnKey);
-            Input::OnMouse(OnMouse);
-            Input::OnGamepad(OnGamepad);
+
+            Input::OnKey(TestOnKey);
+            Input::OnMouse(TestOnMouse);
+            Input::OnGamepad(TestOnGamepad);
 
             Projects::Initialize();
 
@@ -537,109 +649,6 @@ namespace QwerkE {
 #ifdef _QDEBUG
             Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
 #endif // _QDEBUG
-
-            if (Input::KeyPressed(QKey::e_Escape))
-            {
-                Window::RequestClose();
-            }
-
-            if (!s_ShowingWindowStackPanel)
-            {
-                if (Input::KeyPressed(QKey::e_Tab) && Input::KeyDown(QKey::e_CtrlAny))
-                {
-                    s_ShowingWindowStackPanel = true;
-                }
-            }
-            else if (s_ShowingWindowStackPanel = Input::KeyDown(QKey::e_CtrlAny)) // #NOTE Assignment intentional
-            {
-                const vec2f& size = Window::GetSize();
-                ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
-
-                bool isOpen = true;
-                if (ImGui::Begin("Editor Window Stack Panel", &isOpen,
-                    ImGuiWindowFlags_NoCollapse |
-                    ImGuiWindowFlags_NoDocking |
-                    ImGuiWindowFlags_NoDecoration |
-                    ImGuiWindowFlags_NoMove |
-                    ImGuiWindowFlags_NoTitleBar |
-                    ImGuiWindowFlags_AlwaysAutoResize |
-                    (s_FocusedWindowsStack.size() > 25 ? ImGuiWindowFlags_AlwaysVerticalScrollbar : 0)
-                ))
-                {
-                    ImGui::TextUnformatted("   Windows Stack   "); // #NOTE Sets the window width
-
-                    ImGui::Separator(); // "Windows Stack"
-                    for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
-                    {
-                        if (!s_WindowStackPanelLastSelected)
-                        {
-                            s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
-                        }
-
-                        if (s_FocusedWindowsStack[i]->WindowFlags() ^ EditorWindowFlags::Hidden)
-                        {
-                            // u32 selectedIndex = 1; // #TODO Select 2nd element on open
-                            static bool selected = false; // #TODO Since making static, assert has not been triggered, but focusing every 2nd item
-                            // causes every selectable item to be focused
-
-                            // #TODO Fix imgui.cpp(4061) assert where: IM_ASSERT(false || ...177 == ...628 || ...177 == 0 || ...177 == ...628);
-                            // Maybe related to selected being non-static or unused in some way.
-                            constexpr float itemHeight = 25.f;
-                            if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, itemHeight)))
-                            {
-                                s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
-                                // #TODO s_WindowStackPanelLastSelected->Highlight();
-                                // NavUpdateWindowingHighlightWindow()
-                            }
-                            else if (ImGui::IsItemClicked())
-                            {
-                                s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
-                                s_WindowStackPanelLastSelected->Focus();
-                            }
-                        }
-                    }
-                }
-
-                ImGui::End();
-            }
-            else // Changed since last frame (CTRL released this frame)
-            {
-                if (s_WindowStackPanelLastSelected)
-                {
-                    s_WindowStackPanelLastSelected->Focus();
-                }
-            }
-
-            if (Input::KeyPressed(QKey::e_R) && Input::KeyDown(QKey::e_CtrlAny))
-            {
-                RequestRestart();
-            }
-
-            if (Input::KeyPressed(QKey::e_U) && Input::KeyDown(QKey::e_CtrlAny))
-            {
-                s_ShowingEditorUI = !s_ShowingEditorUI;
-            }
-
-            constexpr size_t numberOfHotkeyedScenes = QKey::e_F12 - QKey::e_F1 + 1;
-            for (u8 i = 0; i < numberOfHotkeyedScenes; i++)
-            {
-
-                EditorHotKeys hotKey = static_cast<EditorHotKeys>(EditorHotKeys::e_Scene_Select1 + i);
-                if (s_EditorHotkeys[hotKey].IsActive())
-                {
-                    // Scenes::SetCurrentScene((int)i);
-                }
-
-                QKey qKey = static_cast<QKey>(QKey::e_F1 + i);
-                if (Input::KeyPressed(qKey))
-                {
-                    Scenes::SetCurrentScene((int)i);
-                    // #NOTE Scene transition changes
-                    // #TODO SetActive(true/false)
-                    // Scenes::SetCurrentScene((int)i);
-                    break;
-                }
-            }
 
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
