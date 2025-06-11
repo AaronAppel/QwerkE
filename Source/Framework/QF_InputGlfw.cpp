@@ -148,10 +148,20 @@ namespace QwerkE {
 
         bool KeyDown(const QKey a_Key)
         {
-            if (e_Any == a_Key)
+            switch (a_Key)
             {
-                return s_Keys.DownKeys() > 0;
+            case e_Any: return s_Keys.DownKeys() > 0;
+            case QKey::e_CtrlAny:
+                return  GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(QKey::e_CtrlL)) ||
+                        GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(QKey::e_CtrlR));
+            case QKey::e_ShiftAny:
+                return  GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(QKey::e_ShiftL)) ||
+                        GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(QKey::e_ShiftR));
+            case QKey::e_AltAny:
+                return  GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(QKey::e_AltL)) ||
+                        GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(QKey::e_AltR));
             }
+
             // #TODO GLFWindow* reference. Remember to test multi-window input
             return GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), Local_QwerkEToGlfw(a_Key));
         }
