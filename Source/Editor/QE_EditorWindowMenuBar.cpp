@@ -289,7 +289,8 @@ namespace QwerkE {
                     EditorWindowTypes::ImGuiDemo,
                     EditorWindowTypes::ImGuiExtendedDemo,
                     EditorWindowTypes::Prompt,
-                    EditorWindowTypes::Notifications
+                    EditorWindowTypes::Notifications,
+                    EditorWindowTypes::StatusBar
                 }
             );
             ImGui::Separator();

@@ -39,6 +39,7 @@ namespace QwerkE {
 			// #TODO DefaultDebugWindow should minimize or hide but never really close as
 			// debug calls will still render in a default window.
 			HideInsteadOfClose		= 1 << 5,
+			HideWindowOptions		= 1 << 6,
 		};
 
 		typedef unsigned char u8;
@@ -168,7 +169,8 @@ namespace QwerkE {
 			DebugMemory,
 			DebugProfiler,
 			InputMapping,
-			FileEditor
+			FileEditor,
+			StatusBar
 			// #NOTE Serialized, so don't change ordering
 		)
 
@@ -213,12 +215,15 @@ namespace QwerkE {
 
 				if (ImGui::Begin(m_WindowName.c_str(), &isOpen, m_ImGuiFlags))
 				{
-					ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x / 2 - (10 * 7.f));
-					if (ImGui::SmallButton("Edit Window Options"))
+					if (!(m_WindowFlags & EditorWindowFlags::HideWindowOptions))
 					{
-						ImGui::OpenPopup("##EditorWindowOptionsEdit");
+						ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x / 2 - (10 * 7.f));
+						if (ImGui::SmallButton("Edit Window Options"))
+						{
+							ImGui::OpenPopup("##EditorWindowOptionsEdit");
+						}
+						m_WindowOptions.Edit();
 					}
-					m_WindowOptions.Edit();
 					DrawInternal();
 				}
 				ImGui::End();
