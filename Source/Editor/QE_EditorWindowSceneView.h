@@ -158,7 +158,9 @@ namespace QwerkE {
 				ImGui::PushItemWidth(11 * ImGui::g_pixelsPerCharacter);
 				// #TODO Game window (texture) scaling options
 				int listIndex = 0;
-				if (ImGui::Combo("Scaling", &listIndex,
+				std::string scalingComboBoxUniqueId = "Scaling##";
+				scalingComboBoxUniqueId += GetGuid();
+				if (ImGui::Combo(scalingComboBoxUniqueId.c_str(), &listIndex,
 					"Ratio\0"
 					"Size\0"
 					"Fit Window\0"
@@ -171,8 +173,7 @@ namespace QwerkE {
 				ImGui::PopItemWidth();
 
 				// #TODO Camera selection drop down
-				std::vector<const char*> cameraEntityNames;
-				static int currentCameraIndex = 0; // #TODO needs to persist and adjust for newly added camera(s)
+				std::vector<const char*> cameraEntityNames = { "EditorCam" };
 
 				auto viewCameras = m_CurrentScene->ViewComponents<ComponentCamera>();
 				for (auto& entity : viewCameras)
@@ -185,19 +186,48 @@ namespace QwerkE {
 				// ImGui::Text("Camera");
 				ImGui::SameLine();
 				ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-				if (ImGui::Combo("##Camera:", &currentCameraIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
+				std::string cameraComboBoxUniqueId = "##Camera:";
+				cameraComboBoxUniqueId += GetGuid();
+				if (ImGui::Combo(cameraComboBoxUniqueId.c_str(), &m_CurrentCameraComboIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))
 				{
-					// #TODO Change camera. Can use name or entity GUID to find camera, for now
-					for (auto& entity : viewCameras)
+					if (!UsingEditorCamera())
 					{
-						EntityHandle handle(m_CurrentScene, entity);
-						if (handle.EntityName() == cameraEntityNames[currentCameraIndex])
+						// #TODO Change camera. Can use name or entity GUID to find camera, for now
+						for (auto& entity : viewCameras)
 						{
-							Scenes::GetCurrentScene()->SetCurrentCameraEntity(handle);
+							EntityHandle handle(m_CurrentScene, entity);
+							if (handle.EntityName() == cameraEntityNames[m_CurrentCameraComboIndex])
+							{
+								Scenes::GetCurrentScene()->SetCurrentCameraEntity(handle);
+							}
 						}
 					}
 				}
 				ImGui::PopItemWidth();
+
+				// Gizmo drawing
+				if (m_LastSelectEntity)
+				{
+					const bool drawSelectedEntityGizmo = UsingEditorCamera() || !m_LastSelectEntity.HasComponent<ComponentCamera>() ||
+						m_LastSelectEntity != m_LastSelectEntity.GetScene()->GetCurrentCameraEntity();
+
+					if (drawSelectedEntityGizmo)
+					{
+						ComponentTransform& transform = m_LastSelectEntity.GetComponent<ComponentTransform>();
+						const vec3f& position = transform.GetPosition();
+#ifdef _QDEBUG
+						{   // Debug drawer call
+							constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
+							bgfx::setState(BGFX_STATE_DEFAULT);
+							DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
+							debugDrawer.begin(viewIdFbo1, true);
+
+							debugDrawer.drawOrb(position.x, position.y, position.z, 2.f, Axis::X);
+							debugDrawer.end();
+						}
+#endif
+					}
+				}
 
 				if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
 				{
@@ -217,42 +247,63 @@ namespace QwerkE {
 					ImGui::EndPopup();
 				}
 
-				// #TODO Draw scene using camera selected from Camera combo drop down
-				if (ImGui::IsWindowHovered() || ImGui::IsWindowFocused())
+				ImGui::Image(ImTextureID(m_TextureId), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
+
+				if (Input::MousePressed(QKey::e_MouseRight) && ImGui::IsItemHovered())
+				{
+					m_MouseStartedDraggingOnImage = true;
+				}
+				else if (m_MouseStartedDraggingOnImage && !Input::MouseDown(QKey::e_MouseRight))
+				{
+					m_MouseStartedDraggingOnImage = false;
+				}
+
+				if (UsingEditorCamera())
 				{
 					EditorCameraUpdate();
+					m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.GetPosition());
+					m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.GetPosition(), m_ViewId);
 				}
-				m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.GetPosition());
-				m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.GetPosition(), m_ViewId);
-
-				ImGui::Image(ImTextureID(m_TextureId), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
+				else
+				{
+					m_CurrentScene->Draw(m_ViewId);
+				}
 			}
 
 			void EditorCameraUpdate()
 			{
-				const float deltaTime = Time::PreviousFrameDuration();
+				// #TODO Keyboard input on window focused, mouse only on item focus or dragging
+				if (!ImGui::IsWindowFocused())
+					return;
 
+				const float deltaTime = Time::PreviousFrameDuration();
 				static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
 
-				if (Input::MouseDown(QKey::e_MouseRight))
+				// #TODO Abstract input type. Maybe need a context to only activate if item/window focused
+				if (m_MouseStartedDraggingOnImage || ImGui::IsItemFocused())
 				{
-					static float yaw = 0.f;
-					yaw += Input::MouseDelta().x / pixelRatio * deltaTime;
+					// Mouse (look)
+					if (Input::MouseDown(QKey::e_MouseRight))
+					{
+						static float yaw = 0.f;
+						yaw += Input::MouseDelta().x / pixelRatio * deltaTime;
 
-					// Pitch transform.m_Matrix[6];
-					static float pitch = 0.f;
-					pitch += Input::MouseDelta().y / pixelRatio * deltaTime;
+						// Pitch transform.m_Matrix[6];
+						static float pitch = 0.f;
+						pitch += Input::MouseDelta().y / pixelRatio * deltaTime;
 
-					constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
-					bx::Vec3 rotate = { pitch, yaw, 0.f };
-					const vec3f& translate = m_EditorCameraTransform.GetPosition();
+						constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
+						bx::Vec3 rotate = { pitch, yaw, 0.f };
+						const vec3f& translate = m_EditorCameraTransform.GetPosition();
 
-					bx::mtxSRT(m_EditorCameraTransform.m_Matrix,
-						scale.x, scale.y, scale.z,
-						rotate.x, rotate.y, rotate.z,
-						translate.x, translate.y, translate.z);
+						bx::mtxSRT(m_EditorCameraTransform.m_Matrix,
+							scale.x, scale.y, scale.z,
+							rotate.x, rotate.y, rotate.z,
+							translate.x, translate.y, translate.z);
+					}
 				}
 
+				// Keyboard (movement)
 				const vec3f transformForward = m_EditorCameraTransform.Forward(); // #TODO Calculate and use proper forward
 				const bx::Vec3 forward =
 				{
@@ -260,8 +311,6 @@ namespace QwerkE {
 					transformForward.y,
 					transformForward.z
 				};
-
-				// #TODO Review how hotkeys are managed by framework and customized by game
 
 				const Input::GameActions& gameActions = Input::GetGameActions();
 
@@ -346,13 +395,32 @@ namespace QwerkE {
 				}
 			}
 
+			void OnEntitySelected(EntityHandle& entity) override
+			{
+				if (const Scene* entityScene = entity.GetScene(); entityScene == m_CurrentScene)
+				{
+					m_LastSelectEntity = entity;
+				}
+			}
+
+			bool UsingEditorCamera()
+			{
+				return 0 == m_CurrentCameraComboIndex;
+			}
+
 			MIRROR_PRIVATE_MEMBERS
+
+			void OnSceneReload() override { m_CurrentScene = nullptr; }
+
+			bool m_MouseStartedDraggingOnImage = false;
+
+			EntityHandle m_LastSelectEntity = EntityHandle::InvalidHandle();
+
+			s32 m_CurrentCameraComboIndex = 0;
 
 			ComponentCamera m_EditorCamera;
 			ComponentTransform m_EditorCameraTransform;
-			Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseButton2);
-
-			void OnSceneReload() override { m_CurrentScene = nullptr; }
+			Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseRight);
 
 			Scene* m_CurrentScene = nullptr;
 			char m_ScenesComboLabelBuffer[33] = "Scenes:    ##0000000000000000000";

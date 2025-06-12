@@ -56,6 +56,10 @@ namespace QwerkE {
 
 	namespace Editor {
 
+        // QE_EditorHotkeys.cpp
+        extern std::unordered_map<EditorHotKeys, Input::InputMapping> s_EditorHotkeys;
+        extern void PollHotkeys();
+
         static bool s_ShowingEditorUI = true;
 
         // #TODO Think of creating a WindowManager, or EditorWindows:: class to manage all window access, update, create/destroy,
@@ -72,21 +76,6 @@ namespace QwerkE {
         constexpr char* s_EditorWindowDataFileName = "EditorWindowData.qdata";
 
         static EditorStateFlags s_EditorStateFlags = EditorStateFlags::EditorStateFlagsNone;
-
-        std::unordered_map<EditorHotKeys, Input::InputMapping> s_EditorHotkeys = {
-            { e_Scene_Select1, Input::InputMapping(std::vector<QKey>{ QKey::e_F1 }) },
-            { e_Scene_Select2, Input::InputMapping(std::vector<QKey>{ QKey::e_F2 }) },
-            { e_Scene_Select3, Input::InputMapping(std::vector<QKey>{ QKey::e_F3 }) },
-            { e_Scene_Select4, Input::InputMapping(std::vector<QKey>{ QKey::e_F4 }) },
-            { e_Scene_Select5, Input::InputMapping(std::vector<QKey>{ QKey::e_F5 }) },
-            { e_Scene_Select6, Input::InputMapping(std::vector<QKey>{ QKey::e_F6 }) },
-            { e_Scene_Select7, Input::InputMapping(std::vector<QKey>{ QKey::e_F7 }) },
-            { e_Scene_Select8, Input::InputMapping(std::vector<QKey>{ QKey::e_F8 }) },
-            { e_Scene_Select9, Input::InputMapping(std::vector<QKey>{ QKey::e_F9 }) },
-            { e_Scene_Select10, Input::InputMapping(std::vector<QKey>{ QKey::e_F10 }) },
-            { e_Scene_Select11, Input::InputMapping(std::vector<QKey>{ QKey::e_F11 }) },
-            { e_Scene_Select12, Input::InputMapping(std::vector<QKey>{ QKey::e_F12 }) },
-        };
 
         void local_Initialize();
         void local_Shutdown();
@@ -376,90 +365,97 @@ namespace QwerkE {
             }
         }
 
-        void CheckHotkeys()
+        void ResolveHotkeys()
         {
-            if (Input::KeyPressed(QKey::e_Escape))
+            // Global application commands
+            if (s_EditorHotkeys[e_CloseApplication].IsActive())
             {
                 Window::RequestClose();
             }
 
-            if (!s_ShowingWindowStackPanel)
-            {
-                if (Input::KeyPressed(QKey::e_Tab) && Input::KeyDown(QKey::e_CtrlAny))
-                {
-                    s_ShowingWindowStackPanel = true;
-                }
-            }
-            else if (s_ShowingWindowStackPanel = Input::KeyDown(QKey::e_CtrlAny)) // #NOTE Assignment intentional
-            {
-                const vec2f& size = Window::GetSize();
-                ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
-
-                bool isOpen = true;
-                if (ImGui::Begin("Editor Window Stack Panel", &isOpen,
-                    ImGuiWindowFlags_NoCollapse |
-                    ImGuiWindowFlags_NoDocking |
-                    ImGuiWindowFlags_NoDecoration |
-                    ImGuiWindowFlags_NoMove |
-                    ImGuiWindowFlags_NoTitleBar |
-                    ImGuiWindowFlags_AlwaysAutoResize |
-                    (s_FocusedWindowsStack.size() > 25 ? ImGuiWindowFlags_AlwaysVerticalScrollbar : 0)
-                ))
-                {
-                    ImGui::TextUnformatted("   Windows Stack   "); // #NOTE Sets the window width
-
-                    ImGui::Separator(); // "Windows Stack"
-                    for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
-                    {
-                        if (!s_WindowStackPanelLastSelected)
-                        {
-                            s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
-                        }
-
-                        if (s_FocusedWindowsStack[i]->WindowFlags() ^ EditorWindowFlags::Hidden)
-                        {
-                            // u32 selectedIndex = 1; // #TODO Select 2nd element on open
-                            static bool selected = false; // #TODO Since making static, assert has not been triggered, but focusing every 2nd item
-                            // causes every selectable item to be focused
-
-                            // #TODO Fix imgui.cpp(4061) assert where: IM_ASSERT(false || ...177 == ...628 || ...177 == 0 || ...177 == ...628);
-                            // Maybe related to selected being non-static or unused in some way.
-                            constexpr float itemHeight = 25.f;
-                            if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, itemHeight)))
-                            {
-                                s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
-                                // #TODO s_WindowStackPanelLastSelected->Highlight();
-                                // NavUpdateWindowingHighlightWindow()
-                            }
-                            else if (ImGui::IsItemClicked())
-                            {
-                                s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
-                                s_WindowStackPanelLastSelected->Focus();
-                            }
-                        }
-                    }
-                }
-
-                ImGui::End();
-            }
-            else // Changed since last frame (CTRL released this frame)
-            {
-                if (s_WindowStackPanelLastSelected)
-                {
-                    s_WindowStackPanelLastSelected->Focus();
-                }
-            }
-
-            if (Input::KeyPressed(QKey::e_R) && Input::KeyDown(QKey::e_CtrlAny))
+            if (s_EditorHotkeys[e_RestartApplication].IsActive())
             {
                 RequestRestart();
             }
 
-            if (Input::KeyPressed(QKey::e_U) && Input::KeyDown(QKey::e_CtrlAny))
+            if (s_EditorHotkeys[e_HideEditorUi].IsActive())
             {
                 s_ShowingEditorUI = !s_ShowingEditorUI;
             }
 
+            // Windows
+            if (bool stackPanelEnabled = false) // #TODO Stack panel broke after connecting ImGui input, and InputMapping/s_EditorHotkeys update
+            {
+                if (!s_ShowingWindowStackPanel)
+                {
+                    if (s_EditorHotkeys[e_WindowStackPanelOpen].IsActive())
+                    {
+                        s_ShowingWindowStackPanel = true;
+                    }
+                }
+                // #TODO Change to use new input mapping s_EditorHotkeys
+                else if (s_ShowingWindowStackPanel = Input::KeyDown(QKey::e_CtrlAny)) // #NOTE Assignment intentional
+                {
+                    const vec2f& size = Window::GetSize();
+                    ImGui::SetNextWindowSizeConstraints(ImVec2(0.f, 0.f), ImVec2(size.x * 0.3f, size.y * .7f));
+
+                    bool isOpen = true;
+                    if (ImGui::Begin("Editor Window Stack Panel", &isOpen,
+                        ImGuiWindowFlags_NoCollapse |
+                        ImGuiWindowFlags_NoDocking |
+                        ImGuiWindowFlags_NoDecoration |
+                        ImGuiWindowFlags_NoMove |
+                        ImGuiWindowFlags_NoTitleBar |
+                        ImGuiWindowFlags_AlwaysAutoResize |
+                        (s_FocusedWindowsStack.size() > 25 ? ImGuiWindowFlags_AlwaysVerticalScrollbar : 0)
+                    ))
+                    {
+                        ImGui::TextUnformatted("   Windows Stack   "); // #NOTE Sets the window width
+
+                        ImGui::Separator(); // "Windows Stack"
+                        for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+                        {
+                            if (!s_WindowStackPanelLastSelected)
+                            {
+                                s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                            }
+
+                            if (s_FocusedWindowsStack[i]->WindowFlags() ^ EditorWindowFlags::Hidden)
+                            {
+                                // u32 selectedIndex = 1; // #TODO Select 2nd element on open
+                                static bool selected = false; // #TODO Since making static, assert has not been triggered, but focusing every 2nd item
+                                // causes every selectable item to be focused
+
+                                // #TODO Fix imgui.cpp(4061) assert where: IM_ASSERT(false || ...177 == ...628 || ...177 == 0 || ...177 == ...628);
+                                // Maybe related to selected being non-static or unused in some way.
+                                constexpr float itemHeight = 25.f;
+                                if (ImGui::Selectable((s_FocusedWindowsStack[i]->Name() + "##Selectable").data(), &selected, ImGuiSelectableFlags_SelectOnNav, ImVec2(ImGui::GetContentRegionAvail().x, itemHeight)))
+                                {
+                                    s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                                    // #TODO s_WindowStackPanelLastSelected->Highlight();
+                                    // NavUpdateWindowingHighlightWindow()
+                                }
+                                else if (ImGui::IsItemClicked())
+                                {
+                                    s_WindowStackPanelLastSelected = s_FocusedWindowsStack[i];
+                                    s_WindowStackPanelLastSelected->Focus();
+                                }
+                            }
+                        }
+                    }
+
+                    ImGui::End();
+                }
+                else // Changed since last frame (CTRL released this frame)
+                {
+                    if (s_WindowStackPanelLastSelected)
+                    {
+                        s_WindowStackPanelLastSelected->Focus();
+                    }
+                }
+            }
+
+            // Scenes
             constexpr size_t numberOfHotkeyedScenes = QKey::e_F12 - QKey::e_F1 + 1;
             for (u8 i = 0; i < numberOfHotkeyedScenes; i++)
             {
@@ -469,28 +465,11 @@ namespace QwerkE {
                 {
                     // Scenes::SetCurrentScene((int)i);
                 }
-
-                QKey qKey = static_cast<QKey>(QKey::e_F1 + i);
-                if (Input::KeyPressed(qKey))
-                {
-                    Scenes::SetCurrentScene((int)i);
-                    // #NOTE Scene transition changes
-                    // #TODO SetActive(true/false)
-                    // Scenes::SetCurrentScene((int)i);
-                    break;
-                }
             }
-        }
-
-        void OnKey(QKey a_Key, QKeyState a_State)
-        {
-            CheckHotkeys();
         }
 
 		void local_Initialize()
 		{
-            Input::OnKey(OnKey);
-
             Input::OnKey(TestOnKey);
             Input::OnMouse(TestOnMouse);
             Input::OnGamepad(TestOnGamepad);
@@ -655,7 +634,8 @@ namespace QwerkE {
                 s_FocusedWindowsStack[i]->Draw();
             }
 
-            if (constexpr bool notificationsEnabled = true)
+            // #TODO Move
+            if (constexpr bool notificationsEnabled = false)
             {
                 // Render toasts on top of everything, at the end of your code!
                 // You should push style vars here
@@ -664,6 +644,12 @@ namespace QwerkE {
                 ImGui::RenderNotifications();
                 ImGui::PopStyleVar(1); // Don't forget to Pop()
                 ImGui::PopStyleColor(1);
+            }
+
+            if (Input::KeyPressed(e_Any) || Input::KeyReleased(e_Any))
+            {
+                PollHotkeys(); // Update mapping IsActive states
+                ResolveHotkeys(); // React to hotkey states
             }
         }
 

@@ -20,7 +20,7 @@ namespace QwerkE {
 				EditorWindow("Folder Viewer", EditorWindowTypes::FolderViewer, guid)
 			{
 				m_SearchOrFilterBuffer.reserve(250);
-				m_SearchOrFilterBuffer = "Search/filter";
+				m_SearchOrFilterBuffer = "#TODO Search/filter";
 			}
 
 		private:

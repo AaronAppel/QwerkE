@@ -8,7 +8,7 @@
 					"m_Guid":	{
 						"m_Guid":	"15318540641823496003"
 					},
-					"m_Enabled":	false
+					"m_Enabled":	true
 				},
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{
@@ -56,7 +56,7 @@
 					"m_Guid":	{
 						"m_Guid":	"8186617831649296184"
 					},
-					"m_Enabled":	false
+					"m_Enabled":	true
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{

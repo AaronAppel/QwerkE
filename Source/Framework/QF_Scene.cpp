@@ -41,8 +41,12 @@ namespace QwerkE {
         auto scripts = m_Registry.view<ComponentScript>();
         for (auto& entity : scripts)
         {
-            auto& script = m_Registry.get<ComponentScript>(entity);
-            script.Update(deltaTime);
+            ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
+            if (info.m_Enabled)
+            {
+                auto& script = m_Registry.get<ComponentScript>(entity);
+                script.Update(deltaTime);
+            }
         }
     }
 
@@ -72,11 +76,15 @@ namespace QwerkE {
             auto viewMeshes = m_Registry.view<ComponentMesh>();
             for (const entt::entity& entity : viewMeshes)
             {
-                ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
-                if (m_Registry.has<ComponentTransform>(entity))
+                ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
+                if (info.m_Enabled)
                 {
-                    ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
-                    mesh.Draw(viewId, transform);
+                    ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
+                    if (m_Registry.has<ComponentTransform>(entity))
+                    {
+                        ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
+                        mesh.Draw(viewId, transform);
+                    }
                 }
             }
         }
@@ -89,11 +97,15 @@ namespace QwerkE {
         auto viewMeshes = m_Registry.view<ComponentMesh>();
         for (const entt::entity& entity : viewMeshes)
         {
-            ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
-            if (m_Registry.has<ComponentTransform>(entity))
+            ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
+            if (info.m_Enabled)
             {
-                ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
-                mesh.Draw(viewId, transform);
+                ComponentMesh& mesh = m_Registry.get<ComponentMesh>(entity);
+                if (m_Registry.has<ComponentTransform>(entity))
+                {
+                    ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
+                    mesh.Draw(viewId, transform);
+                }
             }
         }
     }

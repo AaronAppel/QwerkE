@@ -18,9 +18,9 @@ namespace QwerkE {
 					(EditorWindowFlags)(EditorWindowFlags::HideWindowOptions))
 			{
 				m_StatusText = m_StatusPrefix;
-				m_StatusText += "Message";
+				m_StatusText += "Example status message";
 
-				m_RightText = "Example text, text";
+				m_RightText = "Right bottom text";
 			}
 
 		private:

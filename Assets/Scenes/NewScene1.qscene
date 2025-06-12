@@ -8,7 +8,7 @@
 					"m_Guid":	{
 						"m_Guid":	"9197424376144239504"
 					},
-					"m_Enabled":	false
+					"m_Enabled":	true
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
@@ -45,7 +45,7 @@
 					"m_Guid":	{
 						"m_Guid":	"12653664972659247131"
 					},
-					"m_Enabled":	false
+					"m_Enabled":	true
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
@@ -82,7 +82,7 @@
 					"m_Guid":	{
 						"m_Guid":	"15318540641823496003"
 					},
-					"m_Enabled":	false
+					"m_Enabled":	true
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
@@ -119,7 +119,7 @@
 					"m_Guid":	{
 						"m_Guid":	"8186617831649296184"
 					},
-					"m_Enabled":	false
+					"m_Enabled":	true
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{

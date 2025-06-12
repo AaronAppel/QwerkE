@@ -13,7 +13,7 @@ namespace QwerkE {
 
         std::string m_EntityName = Constants::gc_DefaultStringValue;
         GUID m_Guid;
-        bool m_Enabled = false;
+        bool m_Enabled = true;
     };
 
 }

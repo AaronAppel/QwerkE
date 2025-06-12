@@ -21,7 +21,7 @@ namespace QwerkE {
 
         bool MousePressed(const QKey a_Key);
         bool MouseReleased(const QKey a_Key);
-        bool MouseDown(const QKey a_Key);
+        bool MouseDown(const QKey a_Key); // #TODO Use QMouseButton
 
         bool MouseScrolled();
         float MouseScrollDelta();

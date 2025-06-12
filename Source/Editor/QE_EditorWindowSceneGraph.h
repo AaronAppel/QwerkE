@@ -127,6 +127,11 @@ namespace QwerkE {
 					EntityHandle handle(m_CurrentScene, entity);
 					ComponentInfo& info = handle.GetComponent<ComponentInfo>();
 
+					if (!info.m_Enabled)
+					{
+						// #TODO Communicate disabled state
+					}
+
 					if (ImGui::Button((info.m_EntityName + "##" + std::to_string(info.m_Guid)).c_str()))
 					{
 						Editor::OnEntitySelected(handle);

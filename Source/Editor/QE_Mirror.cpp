@@ -177,6 +177,8 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowSceneView)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_MEMBER(m_TextureId)
 MIRROR_CLASS_MEMBER(m_ViewId)
+MIRROR_CLASS_MEMBER(m_EditorCamera)
+MIRROR_CLASS_MEMBER(m_EditorCameraTransform)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowSettings)

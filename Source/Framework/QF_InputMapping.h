@@ -46,18 +46,65 @@ namespace QwerkE {
             InputMapping(std::vector<QKey>& a_Keys)
             {
                 m_Keys = a_Keys;
+                if (m_Keys.empty())
+                {
+                    m_IsEnabled = false;
+                }
+            }
+
+            void Poll()
+            {
+                m_IsChanged = false;
+                if (m_IsEnabled)
+                {
+                    for (size_t i = 0; i < m_Keys.size(); i++)
+                    {
+                        if (!Input::KeyDown(m_Keys[i]))
+                        {
+                            if (m_LastStateIsActive)
+                            {
+                                m_IsChanged = true;
+                            }
+                            m_LastStateIsActive = false;
+                            return;
+                        }
+                    }
+
+                    if (!m_LastStateIsActive)
+                    {
+                        m_IsChanged = true;
+                    }
+                    m_LastStateIsActive = true;
+                }
+            }
+
+            bool Pressed()
+            {
+                return m_IsChanged && m_LastStateIsActive;
+            }
+
+            bool Released()
+            {
+                return m_IsChanged && !m_LastStateIsActive;
+            }
+
+            bool Changed()
+            {
+                return m_IsChanged;
             }
 
             bool IsActive()
             {
-                for (size_t i = 0; i < m_Keys.size(); i++)
+                return m_LastStateIsActive;
+            }
+
+            void SetEnabled(const bool a_IsEnabled)
+            {
+                if (a_IsEnabled != m_IsEnabled)
                 {
-                    if (!Input::KeyDown(m_Keys[i]))
-                    {
-                        return false;
-                    }
+                    m_LastStateIsActive = false;
                 }
-                return true;
+                m_IsEnabled = a_IsEnabled;
             }
 
         protected:
@@ -66,6 +113,7 @@ namespace QwerkE {
         private:
             std::vector<QKey> m_Keys;
             bool m_LastStateIsActive = false;
+            bool m_IsChanged = false;
         };
 
         class InputMappingContextual : public InputMapping
@@ -127,6 +175,46 @@ namespace QwerkE {
             }
 
             std::vector<InputContexts> m_Contexts;
+        };
+
+        // Input mappings that have multiple "stages", like Visual Studio mappings. Could move to main Input:: namespace to set current mode, if it makes sense
+        class InputMappingStepped // #TODO Improve name: Modes, Stages, Steps,
+        {
+        public:
+            InputMappingStepped() = default;
+
+            InputMappingStepped(std::vector<InputMapping>& a_Mappings)
+            {
+                m_Mappings = a_Mappings;
+            }
+
+            bool IsActive()
+            {
+                if (m_Mappings.size() <= m_CurrentStep)
+                {
+                    return false;
+                }
+
+                bool result = m_Mappings[m_CurrentStep].IsActive();
+                if (result)
+                {
+                    ++m_CurrentStep;
+                    if (m_Mappings.size() <= m_CurrentStep)
+                    {
+                        m_CurrentStep = 0;
+                    }
+                }
+                return result;
+            }
+
+            void ResetStep()
+            {
+                m_CurrentStep = 0;
+            }
+
+        private:
+            std::vector<InputMapping> m_Mappings;
+            u8 m_CurrentStep = 0;
         };
 
     }

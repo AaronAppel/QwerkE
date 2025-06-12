@@ -9,6 +9,7 @@
 #include "QF_Scenes.h"
 #include "QF_ScriptHelpers.h"
 
+#include "QE_EditorHotKeys.h"
 #include "QE_EditorInspector.h"
 
 namespace QwerkE {
@@ -38,26 +39,13 @@ namespace QwerkE {
                     return;
                 }
 
-                const bool drawSelectedEntityGizmo = !m_CurrentEntity.HasComponent<ComponentCamera>() ||
-                    m_CurrentEntity != m_CurrentEntity.GetScene()->GetCurrentCameraEntity();
-
-                if (drawSelectedEntityGizmo)
+                if (ImGui::IsWindowFocused())
                 {
-                    ComponentTransform& transform = m_CurrentEntity.GetComponent<ComponentTransform>();
-                    const vec3f& position = transform.GetPosition();
-
-#ifdef _QDEBUG
-                    {   // Debug drawer call
-                        // #TODO Debug::DrawOrb();
-                        constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-                        bgfx::setState(BGFX_STATE_DEFAULT);
-                        DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
-                        debugDrawer.begin(viewIdFbo1, true);
-
-                        debugDrawer.drawOrb(position.x, position.y, position.z, 2.f, Axis::X);
-                        debugDrawer.end();
+                    if (IsHotkeyPressed(e_SceneGraphToggleActive))
+                    {
+                        m_CurrentEntity.SetIsEnabled(!m_CurrentEntity.IsEnabled());
+                        HotkeyPoll(e_SceneGraphToggleActive); // #TODO Poll resets m_IsChanged flag. Find a better way to do that
                     }
-#endif
                 }
 
                 {   // Edit entity name

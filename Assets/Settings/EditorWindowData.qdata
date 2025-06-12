@@ -1,6 +1,33 @@
 {
 	"std::vector<QwerkE::Editor::EditorWindow*>":	{
 		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowStatusBar":	{
+				"m_Guid":	{
+					"m_Guid":	"4841911099039470909"
+				},
+				"m_WindowName":	"Status Bar##4841911099039470909",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	64,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
 			"QwerkE::Editor::EditorWindowSceneGraph":	{
 				"m_Guid":	{
 					"m_Guid":	"12539018069331544866"
@@ -107,7 +134,38 @@
 					"m_FontScaling":	1
 				},
 				"m_TextureId":	3,
-				"m_ViewId":	2
+				"m_ViewId":	2,
+				"m_EditorCamera":	{
+					"m_MoveSpeed":	5,
+					"m_LookAtPosition":	{
+						"x":	-4.403313159942627,
+						"y":	3.785853385925293,
+						"z":	-5.6733880043029785
+					},
+					"m_Fov":	60,
+					"m_Near":	0.10000000149011612,
+					"m_Far":	100
+				},
+				"m_EditorCameraTransform":	{
+					"m_Matrix":	{
+						"float":	0.99999862909317,
+						"float":	0,
+						"float":	-0.0016666054725646973,
+						"float":	0,
+						"float":	2.7775738544733031e-06,
+						"float":	0.99999862909317,
+						"float":	0.0016666031442582607,
+						"float":	0,
+						"float":	0.0016666031442582607,
+						"float":	-0.0016666054725646973,
+						"float":	0.99999725818634033,
+						"float":	0,
+						"float":	-4.401646614074707,
+						"float":	3.784186840057373,
+						"float":	-6.67338514328003,
+						"float":	1
+					}
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -244,7 +302,38 @@
 					"m_FontScaling":	1
 				},
 				"m_TextureId":	3,
-				"m_ViewId":	1
+				"m_ViewId":	1,
+				"m_EditorCamera":	{
+					"m_MoveSpeed":	5,
+					"m_LookAtPosition":	{
+						"x":	-4.403313159942627,
+						"y":	3.785853385925293,
+						"z":	-5.6733880043029785
+					},
+					"m_Fov":	60,
+					"m_Near":	0.10000000149011612,
+					"m_Far":	100
+				},
+				"m_EditorCameraTransform":	{
+					"m_Matrix":	{
+						"float":	0.99999862909317,
+						"float":	0,
+						"float":	-0.0016666054725646973,
+						"float":	0,
+						"float":	2.7775738544733031e-06,
+						"float":	0.99999862909317,
+						"float":	0.0016666031442582607,
+						"float":	0,
+						"float":	0.0016666031442582607,
+						"float":	-0.0016666054725646973,
+						"float":	0.99999725818634033,
+						"float":	0,
+						"float":	-4.401646614074707,
+						"float":	3.784186840057373,
+						"float":	-6.67338514328003,
+						"float":	1
+					}
+				}
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
