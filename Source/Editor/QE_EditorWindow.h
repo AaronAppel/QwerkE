@@ -4,6 +4,7 @@
 #include "Libraries/imgui/QwerkE_imgui.h"
 #include "Libraries/imgui_toggle/imgui_toggle.h"
 #include "Libraries/imgui/imgui_extended.h"
+#include "Libraries/imgui/imgui_internal.h"
 #endif
 
 #ifdef _QENUM
@@ -17,6 +18,7 @@
 #include "QC_Guid.h"
 
 #include "QF_EntityHandle.h"
+#include "QF_Input.h"
 #include "QF_Window.h"
 
 #include "QE_Editor.h"
@@ -215,6 +217,13 @@ namespace QwerkE {
 
 				if (ImGui::Begin(m_WindowName.c_str(), &isOpen, m_ImGuiFlags))
 				{
+					// #TODO Console doesn't focus on middle and right click because it doesn't execute this code
+					if (ImGui::IsWindowHovered() &&
+						(Input::MousePressed(e_MouseRight) || Input::MousePressed(e_MouseMiddle)))
+					{
+						ImGui::FocusWindow(ImGui::GetCurrentWindow());
+					}
+
 					if (!(m_WindowFlags & EditorWindowFlags::HideWindowOptions))
 					{
 						ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x / 2 - (10 * 7.f));
