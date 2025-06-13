@@ -7,6 +7,7 @@
 #include "QF_ComponentInfo.h"
 #include "QF_ComponentTransform.h"
 #include "QF_Debug.h"
+#include "QF_Log.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 
@@ -22,7 +23,7 @@ namespace QwerkE {
 			m_Scene(scene)
 		{
 			ASSERT(m_Scene, "Null m_Scene reference!");
-			m_EnttId = m_Scene->m_Registry.create(); // #TODO Review if EntityHandle should create new scene entitites
+			m_EnttId = m_Scene->m_Registry.create(); // #TODO Review if EntityHandle should create new scene entities
 			if (!HasComponent<ComponentInfo>())
 			{
 				AddComponent<ComponentInfo>();
