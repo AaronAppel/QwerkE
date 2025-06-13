@@ -28,6 +28,7 @@ workspace "QwerkE"
 		buildoptions { "/Zc:__cplusplus" }
 		systemversion "latest"
 		defines { "_QWINDOWS", "WIN32_LEAN_AND_MEAN", }
+		buildoptions { "/CGTHREADS:8" }
 		
 	filter "configurations:Debug"
 		defines { "_QDEBUG", "WIN32_LEAN_AND_MEAN", }
