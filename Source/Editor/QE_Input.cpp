@@ -55,7 +55,7 @@ namespace QwerkE {
 
         void SendSystemInput(u16 a_VirtualKeyCode, bool a_KeyDown, u16 a_ScanCode)
         {
-            // #if WINDOWS
+#if _QWINDOWS
             // https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendinput
 
             INPUT input;
@@ -105,12 +105,14 @@ namespace QwerkE {
             // input.hi; // Hardware input
 
             SendInput(1, &input, sizeof(INPUT));
-
-            // #endif // WINDOWS
+#else
+#error "Unsupported platform!"
+#endif // _QWINDOWS
         }
 
         void SendSystemInput(QKey a_Key, bool a_KeyDown)
         {
+            ASSERT(false, "Not implemented!");
             u16 keyCode = a_Key; // #TODO Convert QKey to system (virtual) key code
             u16 scanCode = 0;
             SendSystemInput(keyCode, a_KeyDown, scanCode);
