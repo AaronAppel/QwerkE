@@ -50,6 +50,7 @@ namespace QwerkE {
 
     void LoadImGuiStyleFromFile() // #TODO Move somewhere else
     {
+        // #TODO Check for user specified style, and create one from the default if one does not exist
         ImGuiStyle& style = ImGui::GetStyle();
         Serialize::FromFile(Paths::Style(Settings::GetStyleFileName()).c_str(), style, true);
     }
@@ -142,7 +143,20 @@ namespace QwerkE {
 
 					Framework::Update((float)Time::PreviousFrameDuration());
 
+                    if (s_ShowingEditorUI)
+                    {
+                        for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+                        {
+                            s_FocusedWindowsStack[i]->Draw();
+                        }
+                    }
+
                     Renderer::EndImGui();
+
+                    if (!s_ShowingEditorUI)
+                    {
+                        Scenes::DrawCurrentScene(2); // #TODO Review hard coded viewId
+                    }
 
                     local_EndFrame();
                     // #TODO Review Framework::EndFrame();
@@ -151,7 +165,7 @@ namespace QwerkE {
 				{
                     // #TODO Review sleep function
                     // From: https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L1006
-#ifdef _WIN32
+#ifdef _QWINDOWS
 					YieldProcessor();
                     // ::Sleep(milliseconds);
 #else
@@ -474,6 +488,8 @@ namespace QwerkE {
             Input::OnMouse(TestOnMouse);
             Input::OnGamepad(TestOnGamepad);
 
+            Settings::LoadUserSettings("Aaron.qpref"); // #TODO Set an expected default user/editor settings file to load or generate
+
             Projects::Initialize();
 
             LoadImGuiStyleFromFile();
@@ -487,18 +503,36 @@ namespace QwerkE {
             Serialize::FromFile(Paths::Setting(s_EditorWindowDataFileName).c_str(), s_FocusedWindowsStack);
 
             bool missingMenuBarWindow = true;
+            bool shouldOpenWelcomeWindow = Settings::GetUserSettings().showWelcomeWindow;
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
                 if (EditorWindowTypes::MenuBar == (u32)s_FocusedWindowsStack[i]->Type())
                 {
+                    // #TODO If the menu bar is missing, did the user close it? The menu should not be closable, or serializable really since it is forced
                     missingMenuBarWindow = false;
-                    break;
+                    if (!shouldOpenWelcomeWindow)
+                    {
+                        break;
+                    }
+                }
+                else if (EditorWindowTypes::WelcomeWindow == (u32)s_FocusedWindowsStack[i]->Type())
+                {
+                    shouldOpenWelcomeWindow = false;
+                    if (!missingMenuBarWindow)
+                    {
+                        break;
+                    }
                 }
             }
 
             if (missingMenuBarWindow)
             {
                 NewEditorWindow(EditorWindowTypes::MenuBar);
+            }
+
+            if (shouldOpenWelcomeWindow)
+            {
+                NewEditorWindow(EditorWindowTypes::WelcomeWindow);
             }
 
             // #TODO Move to Settings::Initialize()?
@@ -525,6 +559,12 @@ namespace QwerkE {
 
         void local_Update()
         {
+            if (Input::KeyPressed(e_Any) || Input::KeyReleased(e_Any))
+            {
+                PollHotkeys(); // Update mapping IsActive states
+                ResolveHotkeys(); // React to hotkey states
+            }
+
             bool result = s_InputMapping.IsActive();
             if (result)
             {
@@ -629,11 +669,6 @@ namespace QwerkE {
             Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
 #endif // _QDEBUG
 
-            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
-            {
-                s_FocusedWindowsStack[i]->Draw();
-            }
-
             // #TODO Move
             if (constexpr bool notificationsEnabled = false)
             {
@@ -644,12 +679,6 @@ namespace QwerkE {
                 ImGui::RenderNotifications();
                 ImGui::PopStyleVar(1); // Don't forget to Pop()
                 ImGui::PopStyleColor(1);
-            }
-
-            if (Input::KeyPressed(e_Any) || Input::KeyReleased(e_Any))
-            {
-                PollHotkeys(); // Update mapping IsActive states
-                ResolveHotkeys(); // React to hotkey states
             }
         }
 

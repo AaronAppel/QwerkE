@@ -33,6 +33,7 @@
 #include "QE_EditorWindowStatusBar.h"
 #include "QE_EditorWindowStylePicker.h"
 #include "QE_EditorWindowTimeline.h"
+#include "QE_EditorWindowWelcomeWindow.h"
 
 namespace QwerkE {
 
@@ -71,7 +72,8 @@ namespace QwerkE {
 			EditorWindowDebugProfiler,
 			EditorWindowInputMapping,
 			EditorWindowFileEditor,
-			EditorWindowStatusBar
+			EditorWindowStatusBar,
+			EditorWindowWelcomeWindow
         >;
 
 		template <typename... T>

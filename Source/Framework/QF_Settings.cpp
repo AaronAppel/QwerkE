@@ -36,7 +36,7 @@ namespace QwerkE {
 
 		void SaveEngineSettings()
 		{
-			SaveEngineSettings(Paths::Setting("Editor.qsetting"));
+			SaveEngineSettings(Paths::Setting("Editor.qsetting")); // #TODO Editor or framework settings?
 		}
 
 	}

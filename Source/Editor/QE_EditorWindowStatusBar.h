@@ -35,9 +35,9 @@ namespace QwerkE {
 			}
 
 			const char* const m_StatusPrefix = "Status: ";
-			std::string m_StatusText;
+			std::string m_StatusText = "";
 
-			std::string m_RightText;
+			std::string m_RightText = "";
 		};
 
 	}

@@ -96,7 +96,7 @@ namespace QwerkE {
 
                 input.ki.time = 0;
                 input.ki.dwExtraInfo = 0;
-                input.ki.wScan = a_ScanCode; // hardware scan code for key
+                input.ki.wScan = a_ScanCode; // Hardware scan code for key
                 input.ki.wVk = a_VirtualKeyCode;
 
                 input.ki.dwFlags = a_KeyDown ? 0 : KEYEVENTF_KEYUP; // 0 for key press

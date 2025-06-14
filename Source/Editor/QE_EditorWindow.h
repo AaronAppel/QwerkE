@@ -42,6 +42,7 @@ namespace QwerkE {
 			// debug calls will still render in a default window.
 			HideInsteadOfClose		= 1 << 5,
 			HideWindowOptions		= 1 << 6,
+			InitWithWindowSettings	= 1 << 7,
 		};
 
 		typedef unsigned char u8;
@@ -57,6 +58,13 @@ namespace QwerkE {
 
 		struct EditorWindowOptions
 		{
+			// Init
+			float m_InitialWidth = 320.f;
+			float m_InitialHeight = 180.f;
+
+			float m_InitialPositionX = 0.f;
+			float m_InitialPositionY = 0.f;
+
 			// Sizing
 			EditorWindowSizingFlags m_SizingFlags = EditorWindowSizingFlagsNone;
 			float m_WidthMinimum = 0;
@@ -172,7 +180,8 @@ namespace QwerkE {
 			DebugProfiler,
 			InputMapping,
 			FileEditor,
-			StatusBar
+			StatusBar,
+			WelcomeWindow
 			// #NOTE Serialized, so don't change ordering
 		)
 
@@ -198,6 +207,14 @@ namespace QwerkE {
 				{
 					DrawInternal();
 					return;
+				}
+
+				if (!m_HasInitialized && m_WindowFlags & EditorWindowFlags::InitWithWindowSettings)
+				{
+					// #TODO InitWithWindowSettings can be removed. Always init a new window, but need to determine if it was newly created, not de-serialized.
+					ImGui::SetNextWindowSize(ImVec2(m_WindowOptions.m_InitialWidth, m_WindowOptions.m_InitialHeight));
+					ImGui::SetNextWindowPos(ImVec2(m_WindowOptions.m_InitialPositionX, m_WindowOptions.m_InitialPositionY));
+					m_HasInitialized = true;
 				}
 
 				if (m_WindowFlags & EditorWindowFlags::AlignCentered)
@@ -289,7 +306,9 @@ namespace QwerkE {
 
 			const GUID& GetGuid() { return m_Guid; }
 
-			const float m_StartingWidth = 100.f;
+			bool m_HasInitialized = false;
+
+			const float m_StartingWidth = 100.f; // #TODO Review as m_WindowOptions has been added
 			const float m_StartingHeight = 150.f;
 
 			float m_MinimumWidth = m_StartingWidth;

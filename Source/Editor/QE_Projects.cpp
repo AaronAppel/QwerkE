@@ -25,6 +25,7 @@ namespace QwerkE {
 
 		void Initialize()
 		{
+			// #TODO Check for user or default project settings
 			const std::string lastOpenedDataFilePath = Paths::Setting(ProjectsDataFileName).c_str();
 			if (!Files::Exists(lastOpenedDataFilePath.c_str()))
 			{

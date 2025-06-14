@@ -11,7 +11,8 @@ namespace QwerkE {
     {
         // Interface: Window open, UI layout and scaling, styles, etc
         bool isDirty = false; // #TODO Use Editor state flag
-        bool startInPlayMode = true; // #TODO Serialize value
+        bool startInPlayMode = true;
+        bool showWelcomeWindow = true;
 
         // #TODO Key bindings
     };

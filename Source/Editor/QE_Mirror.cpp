@@ -38,6 +38,7 @@ static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo
 
 MIRROR_CLASS(QwerkE::UserSettings)
 MIRROR_CLASS_MEMBER(startInPlayMode)
+MIRROR_CLASS_MEMBER(showWelcomeWindow)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Project)
@@ -228,6 +229,11 @@ MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowTimeline)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowTimeline)
+MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Editor::EditorWindowWelcomeWindow)
+// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowWelcomeWindow)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
