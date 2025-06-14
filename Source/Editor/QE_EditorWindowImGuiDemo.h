@@ -19,15 +19,12 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
-				bool isShowingDemo = m_WindowFlags ^ EditorWindowFlags::Hidden;
-				if (isShowingDemo)
-				{
-					ImGui::ShowDemoWindow(&isShowingDemo);
+				bool isShowingDemo = true;
+				ImGui::ShowDemoWindow(&isShowingDemo);
 
-					if (!isShowingDemo)
-					{
-						ToggleHidden();
-					}
+				if (!isShowingDemo)
+				{
+					ToggleHidden();
 				}
 			}
 		};

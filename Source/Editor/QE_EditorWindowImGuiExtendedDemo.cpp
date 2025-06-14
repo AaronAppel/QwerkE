@@ -39,139 +39,130 @@ namespace QwerkE {
             // - https://github.com/ocornut/imgui/wiki/Useful-Extensions
             // - https://github.com/TimoSalomaki/awesome-dear-imgui
 
-			bool isShowingDemo = m_WindowFlags ^ EditorWindowFlags::Hidden;
-			if (isShowingDemo)
-			{
-                ImGui::Checkbox("Knobs", &s_IsShowingKnobs);
-                ImGui::SameLine();
-                ImGui::Checkbox("Toggles", &s_IsShowingToggles);
-                ImGui::SameLine();
-                ImGui::Checkbox("Cool Bar", &s_IsShowingCoolBar);
-                ImGui::SameLine();
-                ImGui::Checkbox("Pie Select", &m_IsShowingPieSelector);
-                ImGui::SameLine();
-                ImGui::Checkbox("Scrollers", &m_IsShowingScrollers);
-                ImGui::SameLine();
-                ImGui::Checkbox("Progress", &m_IsShowingProgressIndicators);
-                ImGui::SameLine();
-                ImGui::Checkbox("ZoomSlider", &m_IsShowingImZoomSlider);
+            ImGui::Checkbox("Knobs", &s_IsShowingKnobs);
+            ImGui::SameLine();
+            ImGui::Checkbox("Toggles", &s_IsShowingToggles);
+            ImGui::SameLine();
+            ImGui::Checkbox("Cool Bar", &s_IsShowingCoolBar);
+            ImGui::SameLine();
+            ImGui::Checkbox("Pie Select", &m_IsShowingPieSelector);
+            ImGui::SameLine();
+            ImGui::Checkbox("Scrollers", &m_IsShowingScrollers);
+            ImGui::SameLine();
+            ImGui::Checkbox("Progress", &m_IsShowingProgressIndicators);
+            ImGui::SameLine();
+            ImGui::Checkbox("ZoomSlider", &m_IsShowingImZoomSlider);
+            ImGui::Separator();
+
+            if (ImGui::CollapsingHeader("Spinners"))
+            {
+                ImSpinner::demoSpinners();
                 ImGui::Separator();
+            }
 
-                if (ImGui::CollapsingHeader("Spinners"))
+            if (s_IsShowingKnobs)
+            {
+                local_DrawKnobs();
+                ImGui::Separator();
+            }
+
+            if (s_IsShowingToggles)
+            {
+                static bool toggleExample = false;
+                ImGui::Toggle("##AnimatedToggle", &toggleExample, ImGuiToggleFlags_Animated);
+                ImGui::SameLine();
+                ImGui::Text("Toggles");
+                if (ImGui::CollapsingHeader("Example"))
                 {
-                    ImSpinner::demoSpinners();
-                    ImGui::Separator();
+                    imgui_toggle_example();
                 }
-
-                if (s_IsShowingKnobs)
+                if (ImGui::CollapsingHeader("Simple"))
                 {
-                    local_DrawKnobs();
-                    ImGui::Separator();
+                    imgui_toggle_simple();
                 }
-
-                if (s_IsShowingToggles)
+                if (ImGui::CollapsingHeader("Custom"))
                 {
-                    static bool toggleExample = false;
-                    ImGui::Toggle("##AnimatedToggle", &toggleExample, ImGuiToggleFlags_Animated);
-                    ImGui::SameLine();
-                    ImGui::Text("Toggles");
-                    if (ImGui::CollapsingHeader("Example"))
-                    {
-                        imgui_toggle_example();
-                    }
-                    if (ImGui::CollapsingHeader("Simple"))
-                    {
-                        imgui_toggle_simple();
-                    }
-                    if (ImGui::CollapsingHeader("Custom"))
-                    {
-                        imgui_toggle_custom();
-                    }
-                    // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
-                    ImGui::Separator();
+                    imgui_toggle_custom();
                 }
+                // imgui_toggle_state(const ImGuiToggleConfig & config, ImGuiToggleStateConfig & state);
+                ImGui::Separator();
+            }
 
-                if (s_IsShowingCoolBar)
-                {
-                    local_DrawImCoolBar();
-                }
+            if (s_IsShowingCoolBar)
+            {
+                local_DrawImCoolBar();
+            }
 
-                if (m_IsShowingPieSelector)
-                {
-                    // From: https://github.com/ocornut/imgui/issues/434
-                    static const char* test_data = "Menu";
-                    const char* items[] = { "Orange", "Blue", "Purple", "Gray", "Yellow", "Las Vegas" };
-                    int items_count = sizeof(items) / sizeof(*items);
+            if (m_IsShowingPieSelector)
+            {
+                // From: https://github.com/ocornut/imgui/issues/434
+                static const char* test_data = "Menu";
+                const char* items[] = { "Orange", "Blue", "Purple", "Gray", "Yellow", "Las Vegas" };
+                int items_count = sizeof(items) / sizeof(*items);
 
-                    static int selected = -1;
+                static int selected = -1;
 
-                    ImGui::Button(selected >= 0 ? items[selected] : "Menu", ImVec2(50, 50));
-                    if (ImGui::IsItemActive())          // Don't wait for button release to activate the pie menu
-                        ImGui::OpenPopup("##piepopup");
+                ImGui::Button(selected >= 0 ? items[selected] : "Menu", ImVec2(50, 50));
+                if (ImGui::IsItemActive())          // Don't wait for button release to activate the pie menu
+                    ImGui::OpenPopup("##piepopup");
 
-                    ImVec2 pie_menu_center = ImGui::GetIO().MouseClickedPos[0];
-                    int n = ImGui::PiePopupSelectMenu(pie_menu_center, "##piepopup", items, items_count, &selected);
-                    // if (n >= 0)
-                    //     printf("returned %d\n", n);
-                    ImGui::Separator();
-                }
+                ImVec2 pie_menu_center = ImGui::GetIO().MouseClickedPos[0];
+                int n = ImGui::PiePopupSelectMenu(pie_menu_center, "##piepopup", items, items_count, &selected);
+                // if (n >= 0)
+                //     printf("returned %d\n", n);
+                ImGui::Separator();
+            }
 
-                if (m_IsShowingScrollers)
-                {
-                    static int spinInt = 0;
-                    static float spinFloat = 0.f;
-                    static double spinDouble = 0;
+            if (m_IsShowingScrollers)
+            {
+                static int spinInt = 0;
+                static float spinFloat = 0.f;
+                static double spinDouble = 0;
 
-                    ImGui::PushItemWidth(150.f);
-                    ImGui::ScrollerInt("Spin Int", &spinInt);
-                    ImGui::ScrollerFloat("Spin Float", &spinFloat);
-                    ImGui::ScrollerDouble("Spin Double", &spinDouble);
-                    ImGui::PopItemWidth();
-                    ImGui::Separator();
-                }
+                ImGui::PushItemWidth(150.f);
+                ImGui::ScrollerInt("Spin Int", &spinInt);
+                ImGui::ScrollerFloat("Spin Float", &spinFloat);
+                ImGui::ScrollerDouble("Spin Double", &spinDouble);
+                ImGui::PopItemWidth();
+                ImGui::Separator();
+            }
 
-                if (m_IsShowingProgressIndicators)
-                {
-                    const ImU32 col = ImGui::GetColorU32(ImGuiCol_ButtonHovered);
-                    const ImU32 bg = ImGui::GetColorU32(ImGuiCol_Button);
+            if (m_IsShowingProgressIndicators)
+            {
+                const ImU32 col = ImGui::GetColorU32(ImGuiCol_ButtonHovered);
+                const ImU32 bg = ImGui::GetColorU32(ImGuiCol_Button);
 
-                    const float indicator_radius = 45.f;
-                    const ImVec4 main_color = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);
-                    const ImVec4 backdrop_color = ImVec4(0.25f, .75f, 1.0f, 1.0f);
+                const float indicator_radius = 45.f;
+                const ImVec4 main_color = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);
+                const ImVec4 backdrop_color = ImVec4(0.25f, .75f, 1.0f, 1.0f);
 
-                    const int circle_count = 25;
-                    static float speed = 5.f;
+                const int circle_count = 25;
+                static float speed = 5.f;
 
-                    ImGui::Knob("IndicatorSpeedKnob", &speed, 0.f, 10.f, .05f);
-                    ImGui::SameLine();
-                    ImGui::LoadingIndicatorCircle("##LoadingCirclesIndicator",
-                        indicator_radius,
-                        main_color,
-                        backdrop_color,
-                        circle_count, speed
-                    );
+                ImGui::Knob("IndicatorSpeedKnob", &speed, 0.f, 10.f, .05f);
+                ImGui::SameLine();
+                ImGui::LoadingIndicatorCircle("##LoadingCirclesIndicator",
+                    indicator_radius,
+                    main_color,
+                    backdrop_color,
+                    circle_count, speed
+                );
 
-                    ImGui::Spinner("##spinner", 15, 6, col);
-                    ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
-                    ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
-                    ImGui::Separator();
-                }
+                ImGui::Spinner("##spinner", 15, 6, col);
+                ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
+                ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
+                ImGui::Separator();
+            }
 
-                if (m_IsShowingImZoomSlider)
-                {
-                    ImGui::SameLine();
-                    ImGui::PushID(18);
-                    static float viewLower = 1.0f;
-                    static float viewHigher = 100.0f;
-                    ImZoomSlider::ImZoomSlider(0.f, 1.f, viewLower, viewHigher, 0.01f, ImZoomSlider::ImGuiZoomSliderFlags_Vertical);
-                    ImGui::PopID();
-                }
-
-				if (!isShowingDemo)
-				{
-					ToggleHidden();
-				}
-			}
+            if (m_IsShowingImZoomSlider)
+            {
+                ImGui::SameLine();
+                ImGui::PushID(18);
+                static float viewLower = 1.0f;
+                static float viewHigher = 100.0f;
+                ImZoomSlider::ImZoomSlider(0.f, 1.f, viewLower, viewHigher, 0.01f, ImZoomSlider::ImGuiZoomSliderFlags_Vertical);
+                ImGui::PopID();
+            }
 		}
 
         void local_DrawKnobs()

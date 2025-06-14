@@ -21,6 +21,8 @@ public:
      */
     explicit ImGuiConsole(std::string c_name = "imgui-console", size_t inputBufferSize = 256);
 
+    ~ImGuiConsole();
+
     /*!
      * \brief Render the Dear ImGui Console
      */

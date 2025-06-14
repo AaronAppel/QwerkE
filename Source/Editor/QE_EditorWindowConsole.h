@@ -16,15 +16,12 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
-				bool isShowingConsole = m_WindowFlags ^ EditorWindowFlags::Hidden;
-				if (isShowingConsole)
-				{
-					m_Console.Draw(&isShowingConsole);
+				bool isShowingConsole = true;
+				m_Console.Draw(&isShowingConsole);
 
-					if (!isShowingConsole)
-					{
-						ToggleHidden();
-					}
+				if (!isShowingConsole)
+				{
+					ToggleHidden();
 				}
 			}
 

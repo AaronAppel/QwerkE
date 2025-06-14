@@ -85,7 +85,11 @@ namespace QwerkE {
 				if (returnPointer)
 					return;
 
-				T stackInstance = T(GUID()); // #TODO Add a static Type() function to each EditorWindow type
+				// #TODO Avoid required stack editor window instance
+				// A static Type() function couldn't be virtual, but a virtual method requires an instance anyways
+				// Really just avoiding writing a switch statement for every window type, but it would be way more performant
+
+				T stackInstance = T(GUID());
 				if (stackInstance.Type() == editorWindowType)
 				{
 					returnPointer = new T(GUID());

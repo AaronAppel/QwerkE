@@ -192,8 +192,7 @@ namespace QwerkE {
 
 			void EditorWindow::Draw()
 			{
-				if (!Editor::ShowingEditorUI() || Window::IsMinimized() ||
-					m_WindowFlags & EditorWindowFlags::Hidden)
+				if (!Editor::ShowingEditorUI() || Window::IsMinimized() || m_WindowFlags & EditorWindowFlags::Hidden)
 					return;
 
 				// #TODO Find why new windows are still too small, and if this check does anything
@@ -203,7 +202,7 @@ namespace QwerkE {
 				}
 
 				// #TODO Check if the window is also EditorWindowFlags::IsOpen?
-				if (m_WindowFlags & EditorWindowFlags::Headless)
+				if (m_WindowFlags & EditorWindowFlags::Headless) // #TODO Headless windows need to check if focused and call Editor::OnEditoreWindowFocused(this)
 				{
 					DrawInternal();
 					return;
@@ -262,15 +261,16 @@ namespace QwerkE {
 
 			virtual bool IsUnique() { return false; } // #TODO Can EditorWindowFlags::Singleton flag replace method or true/false?
 
-			GUID Guid() { return m_Guid; }
-			GUID* GuidAddress() { return &m_Guid; }
-			EditorWindowTypes Type() { return m_EditorWindowType; } // #TODO Make static
-			EditorWindowFlags WindowFlags() { return m_WindowFlags; }
-			const std::string& Name() { return m_WindowName; };
+			const GUID& Guid() { return m_Guid; }
+			EditorWindowTypes Type() const { return m_EditorWindowType; }
+			EditorWindowFlags WindowFlags() const { return m_WindowFlags; }
+			const std::string& Name() const { return m_WindowName; };
 
-			virtual void OnEntitySelected(EntityHandle& entity) { }
+			virtual void OnEditorWindowFocused(EditorWindow* a_FocusedWindow) { }
+			virtual void OnEntitySelected(EntityHandle& entity) {}
 			virtual void OnSceneReload() { }
 
+			bool IsHidden() { return (EditorWindowFlags)(m_WindowFlags & Hidden); }// #TODO Singleton check? Can only singletons be hidden?
 			void ToggleHidden() { m_WindowFlags = (EditorWindowFlags)(m_WindowFlags ^ Hidden); }
 			void Focus() { ImGui::SetWindowFocus(m_WindowName.data()); Editor::OnEditorWindowFocused(this); }
 			// #TODO void Highlight() { ImGui::NavUpdateWindowingHighlightWindow(); }

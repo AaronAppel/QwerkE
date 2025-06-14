@@ -38,6 +38,8 @@ namespace QwerkE {
 
 		bool ShowingEditorUI();
 
+		u64 CurrentFrame();
+
 		// Editor windows
 		void NewEditorWindow(u32 editorWindowType);
 		void CloseEditorWindow(const GUID& guid);

@@ -85,6 +85,8 @@ namespace QwerkE {
 
         void local_FileDropCallback(const char* filePath);
 
+        u64 s_FramesCompleted = 0;
+
         bool s_ReloadRequested = false; // #TODO FEATURE
 
         void RunReloadable(unsigned int numberOfArguments, char** commandLineArguments);
@@ -132,7 +134,7 @@ namespace QwerkE {
 
 					Framework::StartFrame();
 
-                    Renderer::StartImGui();
+                    Renderer::StartImGui(); // #NOTE Can move above Framework::StartFrame(), but might be a sign of poor imgui use (calling while not inside a begin/end block/scope)
 
                     if (s_ShowingEditorUI)
                     {
@@ -147,7 +149,7 @@ namespace QwerkE {
                     {
                         for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
                         {
-                            s_FocusedWindowsStack[i]->Draw();
+                            s_FocusedWindowsStack[i]->Draw(); // #TODO It's possible to add a new window during update, so a delayed ad to list is needed
                         }
                     }
 
@@ -155,7 +157,7 @@ namespace QwerkE {
 
                     if (!s_ShowingEditorUI)
                     {
-                        Scenes::DrawCurrentScene(2); // #TODO Review hard coded viewId
+                        Scenes::DrawCurrentScene(4); // #TODO Review hard coded viewId
                     }
 
                     local_EndFrame();
@@ -208,9 +210,14 @@ namespace QwerkE {
             return s_ShowingEditorUI;
         }
 
-        void NewEditorWindow(u32 enumToInt)
+        u64 CurrentFrame()
         {
-            EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(enumToInt);
+            return s_FramesCompleted;
+        }
+
+        void NewEditorWindow(u32 a_EditorWindowTypeInt)
+        {
+            EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(a_EditorWindowTypeInt);
 
             if (editorWindowType == s_EditorWindowDockingContext.Type())
             {
@@ -221,7 +228,7 @@ namespace QwerkE {
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
                 if (s_FocusedWindowsStack[i]->WindowFlags() & EditorWindowFlags::Singleton &&
-                    s_FocusedWindowsStack[i]->Type() == enumToInt)
+                    s_FocusedWindowsStack[i]->Type() == a_EditorWindowTypeInt)
                 {
                     s_FocusedWindowsStack[i]->ToggleHidden();
                     // #TODO Set editor UI state to dirty
@@ -240,13 +247,12 @@ namespace QwerkE {
 
         void CloseEditorWindow(const GUID& guid)
         {
-            bool closed = false;
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
                 if (guid == s_FocusedWindowsStack[i]->Guid())
                 {
-                    if (EditorWindowTypes::Console == (s8)s_FocusedWindowsStack[i]->Type() ||
-                        EditorWindowTypes::MenuBar == (s8)s_FocusedWindowsStack[i]->Type())
+                    if (EditorWindowTypes::Console == (u32)s_FocusedWindowsStack[i]->Type() ||
+                        EditorWindowTypes::MenuBar == (u32)s_FocusedWindowsStack[i]->Type())
                     {
                         // #TODO Handle deleting console window properly
                         // #TODO Decide what windows can be closed, or just hidden (menu bar, docking, etc)
@@ -693,6 +699,8 @@ namespace QwerkE {
             }
 #endif // _QDEBUG
             Framework::EndFrame();
+
+            ++s_FramesCompleted;
         }
 
         void local_FileDropCallback(const char* filePath)

@@ -73,6 +73,22 @@ ImGuiConsole::ImGuiConsole(std::string c_name, size_t inputBufferSize) : m_Conso
     RegisterConsoleCommands();
 }
 
+ImGuiConsole::~ImGuiConsole()
+{
+    ImGuiContext* g = ImGui::GetCurrentContext();
+    if (g && g->Initialized && !g->SettingsLoaded && !m_LoadedFromIni)
+    {
+        for (size_t i = 0; i < g->SettingsHandlers.size(); i++)
+        {
+            if (SettingsHandler_ApplyAll == g->SettingsHandlers[i].ApplyAllFn)
+            {
+                g->SettingsHandlers.erase(g->SettingsHandlers.begin() + i);
+                break;
+            }
+        }
+    }
+}
+
 void ImGuiConsole::Draw(bool* p_open)
 {
     ///////////////////////////////////////////////////////////////////////////
