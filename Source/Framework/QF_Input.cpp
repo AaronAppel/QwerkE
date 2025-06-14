@@ -353,6 +353,7 @@ namespace QwerkE {
         {
             for (u16 i = 0; i < s_KeyCallbacks.size(); i++)
             {
+                // #TODO Check fails for multiple globally defined or static functions try to register
                 if (a_OnKeyFunction.target_type() == s_KeyCallbacks[i].target_type())
                 {
                     LOG_WARN("KeyCallback event already registered!");

@@ -142,7 +142,12 @@ namespace ImGui {
 		const bool result = ImGui::SpinInt(label, v, step, step_fast, flags);
 		if (IsItemHovered())
 		{
-			*v += GetIO().MouseWheel * step;
+			int scrollValue = GetIO().MouseWheel;
+			if (0 != scrollValue)
+			{
+				*v += scrollValue * step;
+				return true;
+			}
 		}
 		return result;
 	}
@@ -153,7 +158,12 @@ namespace ImGui {
 		const bool result = SpinFloat(label, v, step, step_fast, format, flags);
 		if (IsItemHovered())
 		{
-			*v += GetIO().MouseWheel * step;
+			float scrollValue = GetIO().MouseWheel;
+			if (0.f != scrollValue)
+			{
+				*v += scrollValue * step;
+				return true;
+			}
 		}
 		return result;
 	}
@@ -164,7 +174,12 @@ namespace ImGui {
 		const bool result = SpinDouble(label, v, step, step_fast, format, flags);
 		if (IsItemHovered())
 		{
-			*v += GetIO().MouseWheel * step;
+			double scrollValue = GetIO().MouseWheel;
+			if (0.f != scrollValue)
+			{
+				*v += scrollValue * step;
+				return true;
+			}
 		}
 		return result;
 	}

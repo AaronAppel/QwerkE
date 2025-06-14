@@ -43,8 +43,10 @@ namespace QwerkE {
         u8 GamepadsCount();
         const char* const GamepadName(const QGamepad a_Key, const QGamepad a_GamepadId = QGamepad::e_GamepadId0);
 
+        // #TODO Test: auto binder = std::bind(&Class::OnKey, this, (QKey)0, (QKeyState)0); OnKey(binder); // May work but has call timing implications
+        // #TODO Review to fix OnKey method registration: ..\QwerkE\Documentation\FunctionCallbackRegistration.cpp
         using KeyCallback = std::function<void(QKey a_Key, QKeyState a_State)>;
-        void OnKey(const KeyCallback& a_Callback);
+        void OnKey(const KeyCallback& a_Callback); // #NOTE Potential issue updating game objects at input poll time, order dependent update bugs can occur and be hard to comprehend
         void OnKeyStop(const KeyCallback& a_FuncId);
 
         using MouseCallback = std::function<void(QKey a_Key, QKeyState a_State, float a_ScrollDelta, const vec2f& a_MousePosition)>;

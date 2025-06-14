@@ -2,49 +2,49 @@
 
 // Primitive types
 // Integers
-#include <stdint.h>
-typedef int8_t s8;
-#define S8_MIN INT8_MIN
-#define S8_MAX INT8_MAX
+#include <stdint.h>         // Comments for mouse over IDE context info
+typedef int8_t s8;          // -128 to 127
+#define S8_MIN INT8_MIN     // -128
+#define S8_MAX INT8_MAX     //  127
 #define S8_MAX_DIGITS 3
 
-typedef int16_t s16;
-#define S16_MIN INT16_MIN
-#define S16_MAX INT16_MAX
+typedef int16_t s16;        // -32,768 to 32,767
+#define S16_MIN INT16_MIN   // -32,768
+#define S16_MAX INT16_MAX   //  32,767
 #define S16_MAX_DIGITS 5
 
-typedef int32_t s32;
-#define S32_MIN INT32_MIN
-#define S32_MAX INT32_MAX
+typedef int32_t s32;        // -2,147,483,648 to 2,147,483,647
+#define S32_MIN INT32_MIN   // -2,147,483,648
+#define S32_MAX INT32_MAX   //  2,147,483,647
 #define S32_MAX_DIGITS 10
 
-typedef int64_t s64;
-#define S64_MIN INT64_MIN
-#define S64_MAX INT64_MAX
+typedef int64_t s64;        // -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+#define S64_MIN INT64_MIN   // -9,223,372,036,854,775,808
+#define S64_MAX INT64_MAX   //  9,223,372,036,854,775,807
 #define S64_MAX_DIGITS 19
 
-typedef uint8_t u8;
-#define U8_MIN 0
-#define U8_MAX UINT8_MAX
+typedef uint8_t u8;         //  0 to 255
+#define U8_MIN 0            //  0
+#define U8_MAX UINT8_MAX    //  255
 #define U8_MAX_DIGITS 3
 
-typedef uint16_t u16;
-#define U16_MIN 0
-#define U16_MAX UINT16_MAX
+typedef uint16_t u16;       //  0 to 65,535
+#define U16_MIN 0           //  0
+#define U16_MAX UINT16_MAX  //  65,535
 #define U16_MAX_DIGITS 5
 
-typedef uint32_t u32;
-#define U32_MIN 0
-#define U32_MAX UINT32_MAX
+typedef uint32_t u32;       //  0 to 4,294,967,295
+#define U32_MIN 0           //  0
+#define U32_MAX UINT32_MAX  //  4,294,967,295
 #define U32_MAX_DIGITS 10
 
-typedef uint64_t u64;
-#define U64_MIN 0
-#define U64_MAX UINT64_MAX
+typedef uint64_t u64;       //  0 to 18,446,744,073,709,551,615
+#define U64_MIN 0           //  0
+#define U64_MAX UINT64_MAX  //  18,446,744,073,709,551,615
 #define U64_MAX_DIGITS 20
 
-#include "QC_BitTypes.h"
-using u1 = ubits1;
+#include "QC_BitTypes.h"    // #TODO Comments for mouse over IDE context info
+using u1 = ubits1;          // size of 1 byte, value range of 0 to 1
 using u2 = ubits2;
 using u3 = ubits3;
 using u4 = ubits4;

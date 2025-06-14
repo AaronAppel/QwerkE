@@ -45,17 +45,14 @@
             "id": "c793cb1eb4174075",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Canvases/Systems Diagram Expanded.canvas",
-                "viewState": {
-                  "x": -856.1928835732136,
-                  "y": 69.42071650336042,
-                  "zoom": -0.002302785869420676
-                }
+                "file": "typeId vs dynamic_cast.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Systems Diagram Expanded"
+              "icon": "lucide-file",
+              "title": "typeId vs dynamic_cast"
             }
           }
         ],
@@ -203,15 +200,23 @@
   },
   "active": "c793cb1eb4174075",
   "lastOpenFiles": [
-    "Canvases/Include Flow Diagram.canvas",
-    "Canvases/Systems Diagram Expanded.canvas",
-    "Canvases/QwerkE File Domains.canvas",
+    "References/Visual Studio.md",
+    "Images",
+    "References/Variadic or Variable Arguments (__VA_ARGS__).md",
+    "References/Library References.md",
+    "Assets and Data/Supported File and Data Types.md",
+    "Assets and Data/Null Asset Handling.md",
+    "Solution Configuration/Additional Includes.md",
     "Canvases/QwerkE Structure Diagram.canvas",
-    "Canvases",
+    "Canvases/Systems Diagram Expanded.canvas",
+    "Images/VisualStudio_ForcedIncludes.png",
+    "Development/Features/x64 Architecture Support.md",
     "Kohi Engine.md",
     "Solution Configuration/Projects.md",
     "README.md",
-    "{CFA9FE16-39A2-4331-A8C3-40F7805AB956}.png",
+    "Canvases/Include Flow Diagram.canvas",
+    "Canvases/QwerkE File Domains.canvas",
+    "Canvases",
     "Solution Configuration/Build Targets.md",
     "Development/Features/Release Mode Support.md",
     "Shared Vault Files ❗/Toggle Block Comments.md",
@@ -236,13 +241,7 @@
     "Shared Vault Files ❗/New Project Checklist.md",
     "Shared Vault Files ❗/C++ Tests.md",
     "Shared Vault Files ❗/Assets Wishlist.md",
-    "Shared Vault Files ❗/0 Overhead principle.md",
     "Shared Vault Files ❗",
-    "Solution Configuration/C++ Project Setup.md",
-    "Solution Configuration/Visual Studio.md",
-    "Dear Imgui Node Editor.md",
-    "RCCpp Runtime Compilation.md",
-    "Windows Console Window.md",
     "{868F4BCD-34FB-415B-9070-0CAB845B8A96}.png",
     "{AF01BB18-5095-48E5-80BE-AC95CEEAD802}.png",
     "Untitled.canvas",

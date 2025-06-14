@@ -38,7 +38,7 @@ namespace ImGui {
 		const float padding = ImGui::GetStyle().FramePadding.x;
 		const float lineHeight = ImGui::GetFontSize() + padding * 2.0f;
 		const float contentWidth = lineHeight + (numberOfChars * g_pixelsPerCharacter * horizontalScaling);
-		const float offset = (ImGui::GetWindowWidth() / 2.f) - contentWidth; // #TODO Try GetContentRegionAvail().x
+		const float offset = (ImGui::GetWindowWidth() / 2.f) - (contentWidth / 2.f);
 		ImGui::SameLine(offset);
 	}
 

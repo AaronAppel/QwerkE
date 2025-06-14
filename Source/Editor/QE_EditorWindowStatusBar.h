@@ -29,7 +29,7 @@ namespace QwerkE {
 				ImGui::SameLine(ImGui::g_pixelsPerCharacter * 2.f); // #NOTE Two chars for left spacing
 				ImGui::Text(m_StatusText.c_str());
 
-				const float charCount = m_RightText.size() + 1.f; // #NOTE Extra char for right spacing
+				const float charCount = m_RightText.size() + 1.5f; // #NOTE Extra chars for right spacing
 				ImGui::SameLine(ImGui::GetWindowWidth() - (charCount * ImGui::g_pixelsPerCharacter));
 				ImGui::Text(m_RightText.c_str());
 			}

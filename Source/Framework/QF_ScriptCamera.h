@@ -39,6 +39,8 @@ namespace QwerkE {
 
 			static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
 
+			// #TODO Consider using contextualized input or polling the game state to know if the window is focused, or if the game is paused vs running
+
 			m_MouseDragTracker.Update();
 			if (m_MouseDragTracker.IsActive())
 			{
