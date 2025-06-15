@@ -13,6 +13,16 @@ namespace QwerkE {
 		#define RAD_TO_DEG  57.295779513082320876798154814105
 
 		template <typename T>
+		inline T Abs(T value)
+		{
+			if (value < (T)0)
+			{
+				return -value;
+			}
+			return value;
+		}
+
+		template <typename T>
 		inline T Clamp(T min, T value, T max)
 		{
 			if (value < min)

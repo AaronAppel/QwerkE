@@ -154,7 +154,7 @@ namespace QwerkE {
             {
             case 0:
             case 1:
-                s_GamepadAxisLeftStickBuffer.Write(a_AxisValue);
+                s_GamepadAxisLeftStickBuffer.Write(a_AxisValue); // #TODO Y axis is inverted. Should I invert it again here?
 
                 for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
                 {
@@ -310,8 +310,8 @@ namespace QwerkE {
 
         vec2f GamepadAxis(const int a_AxisIndex, const QGamepad a_GamepadId)
         {
-            ASSERT(QGamepad::e_QGamepadAxisIndexFirst <= a_AxisIndex && QGamepad::e_QGamepadAxisIndexMax > a_AxisIndex, "Invalid axis");
-            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
+            ASSERT(QGamepad::e_QGamepadAxisIndexFirst <= a_AxisIndex && QGamepad::e_QGamepadAxisIndexMax >= a_AxisIndex, "Invalid axis");
+            ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax >= a_GamepadId, "Invalid a_GamepadId!");
             // #TODO What is more intuitive, always returning a vec2f, or individual floats? Do users want that?
             switch (a_AxisIndex)
             {

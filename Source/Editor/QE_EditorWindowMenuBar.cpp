@@ -9,6 +9,7 @@
 #include "QF_Paths.h"
 #include "QF_Serialize.h"
 
+#include "QE_EditorWindowPrompt.h"
 #include "QE_Projects.h"
 #include "QE_Settings.h"
 
@@ -63,7 +64,7 @@ namespace QwerkE {
         {
             if (Input::KeyPressed(QKey::e_N) && Input::KeyDown(QKey::e_CtrlAny))
             {
-                Editor::NewEditorWindow(EditorWindowTypes::Prompt);
+                Editor::OpenEditorWindowPrompt(EditorWindowPromptTypes::PromptCreateNewProject);
             }
             else if (Input::KeyPressed(QKey::e_O) && Input::KeyDown(QKey::e_CtrlAny))
             {
@@ -79,6 +80,10 @@ namespace QwerkE {
                 {
                     Projects::SaveProject();
                 }
+            }
+            else if (Input::KeyPressed(QKey::e_T) && Input::KeyDown(QKey::e_CtrlAny))
+            {
+                Editor::OpenEditorWindowPrompt(EditorWindowPromptTypes::PromptOpenNewEditorWindow);
             }
         }
 

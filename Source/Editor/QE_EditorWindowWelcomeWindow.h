@@ -65,7 +65,8 @@ namespace QwerkE {
 				ImGui::PushItemWidth(halfContentWidth * 0.5f);
 				if (ImGui::Button(cacheString.c_str()))
 				{
-					Close();
+					ImGui::PopItemWidth();
+					Editor::CloseEditorWindow(this->Guid());
 					return;
 				}
 				ImGui::PopItemWidth();

@@ -22,7 +22,6 @@ namespace QwerkE {
 			EditorWindowEntityInspector(GUID guid = GUID()) : EditorWindow("Entity Inspector", EditorWindowTypes::EntityInspector, guid) { }
 
 		private:
-
 			void DrawInternal()
 			{
                 if (!m_CurrentEntity)
@@ -39,7 +38,9 @@ namespace QwerkE {
                     return;
                 }
 
-                if (ImGui::IsWindowFocused())
+                // #TODO Could also use same hotkey in scene graph to disable from there. Probably better
+                const EditorWindow* focusedWindow = Editor::GetLastFocusedWindow();
+                if (ImGui::IsWindowFocused() || focusedWindow && EditorWindowTypes::SceneGraph == (u32)focusedWindow->Type())
                 {
                     if (IsHotkeyPressed(e_SceneGraphToggleActive))
                     {

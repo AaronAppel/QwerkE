@@ -3,6 +3,7 @@
 #include "QF_PathDefines.h"
 
 #include "QE_EditorWindow.h"
+#include "QE_Projects.h"
 
 namespace QwerkE {
 
@@ -12,7 +13,8 @@ namespace QwerkE {
 		{
 			PromptInvalid = 0,
 			PromptCreateNewProject,
-			// PromptUnsavedChanges
+			PromptUnsavedChanges,  // #TODO Stop closing of window or editor if the user has not confirmed deleting unsaved changes
+			PromptOpenNewEditorWindow
 		};
 
 		class EditorWindowPrompt : public EditorWindow
@@ -20,13 +22,16 @@ namespace QwerkE {
 		public:
 			EditorWindowPrompt(GUID guid = GUID()) : EditorWindow("Prompt", EditorWindowTypes::Prompt, guid, (EditorWindowFlags)(AlignCentered | Singleton))
 			{
-				m_NewProjectNameBuffer.reserve(INT8_MAX);
-				m_MinimumHeight = 50.f;
-				m_MinimumWidth = 300.f;
+				m_PromptStringBuffer.reserve(INT8_MAX);
+				m_MinimumHeight = 150.f;
+				m_MinimumWidth = 350.f;
 				m_ImGuiFlags =	ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration |
 								ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoMove |
 								ImGuiWindowFlags_NoResize;
 			}
+
+			void SetPromptType(EditorWindowPromptTypes a_PromptType) { m_PromptType = a_PromptType; }
+			EditorWindowPromptTypes GetPromptType() const { return m_PromptType; }
 
 		private:
 			void DrawInternal() override
@@ -35,6 +40,10 @@ namespace QwerkE {
 				{
 				case EditorWindowPromptTypes::PromptCreateNewProject:
 					NewProjectPrompt();
+					break;
+
+				case EditorWindowPromptTypes::PromptOpenNewEditorWindow:
+					OpenNewEditorWindowPrompt();
 					break;
 
 				default:
@@ -47,15 +56,15 @@ namespace QwerkE {
 			{
 				ImGui::Text("New Project Name: ");
 				ImGui::SameLine();
-				if (ImGui::InputText("##InputTextNewProjectName", m_NewProjectNameBuffer.data(), m_NewProjectNameBuffer.capacity()))
+				if (ImGui::InputText("##InputTextNewProjectName", m_PromptStringBuffer.data(), m_PromptStringBuffer.capacity()))
 				{
-					m_NewProjectNameBuffer.resize(strlen(m_NewProjectNameBuffer.data()));
+					m_PromptStringBuffer.resize(strlen(m_PromptStringBuffer.data()));
 				}
 
 				ImGui::Separator();
 				if (ImGui::Button(("Create new project##" + std::string(m_WindowName)).c_str()))
 				{
-					if (m_NewProjectNameBuffer.empty())
+					if (m_PromptStringBuffer.empty())
 					{
 						LOG_ERROR("{0} Project name cannot be empty!", __FUNCTION__);
 						return;
@@ -63,9 +72,9 @@ namespace QwerkE {
 					// #TODO Add more sanity checks
 
 					Project& currentProject = Projects::CurrentProject();
-					currentProject.projectName = m_NewProjectNameBuffer;
+					currentProject.projectName = m_PromptStringBuffer;
 
-					std::string newProjectFileName = m_NewProjectNameBuffer + "." + projects_file_ext;
+					std::string newProjectFileName = m_PromptStringBuffer + "." + projects_file_ext;
 					currentProject.projectFileName = newProjectFileName;
 					Projects::SaveProjectToFile(newProjectFileName);
 					Projects::LoadProject(newProjectFileName);
@@ -79,9 +88,15 @@ namespace QwerkE {
 				}
 			}
 
-			// #TODO Allow setting different prompt types
-			EditorWindowPromptTypes m_PromptType = EditorWindowPromptTypes::PromptCreateNewProject;
-			std::string m_NewProjectNameBuffer = "New Project Name";
+			void OpenNewEditorWindowPrompt()
+			{
+				// #TODO Open up a text input (cursor focused) for user to enter the name of a window type
+				// Can store recently opened window types, and maybe even favourites
+				ImGui::Text("#TODO Open new window by type name");
+			}
+
+			EditorWindowPromptTypes m_PromptType = EditorWindowPromptTypes::PromptInvalid;
+			std::string m_PromptStringBuffer = "New Project Name";
 		};
 
 	}

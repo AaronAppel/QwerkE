@@ -33,6 +33,12 @@ namespace QwerkE {
                 // m_WindowFlags)
                 (EditorWindowFlags)(EditorWindowFlags::Headless | EditorWindowFlags::Singleton))
         {
+            // #TODO Update editor last focused on console window focused
+            // if (ImGui::IsWindowFocused() && this != Editor::GetLastFocusedWindow())
+            // {
+            //     Editor::OnEditoreWindowFocused(this);
+            // }
+
             m_Console.System().RegisterVariable("background_color", m_ClearColor, imvec4_setter);
 
             // #TODO Move to scripts folder or find a better way to handle console script files

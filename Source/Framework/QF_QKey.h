@@ -34,7 +34,7 @@ namespace QwerkE {
         e_Gamepad14,                    // Gamepad device button 14
 
         e_GamepadAxis01,                // For OnGamepad() event axis
-        e_GamepadAxis23,                //
+        e_GamepadAxis23,                // #TODO Review axis enum values. Should they map to indices 0-5?
         e_GamepadAxis45,                //
 
         e_QGamepadInputMax,             // Null or invalid gamepad button entry
@@ -68,8 +68,8 @@ namespace QwerkE {
         e_GamepadB,                     // B controller button
         e_GamepadX,                     // X controller button
         e_GamepadY,                     // Y controller button
-        e_GamepadYBumperLeft,           // Left shoulder controller button
-        e_GamepadYBumperRight,          // Right shoulder controller button
+        e_GamepadBumperLeft,           // Left shoulder controller button
+        e_GamepadBumperRight,          // Right shoulder controller button
         e_GamepadBack,                  // Back controller button
         e_GamepadStart,                 // Start controller button
         e_GamepadGuide,                 // Guide or center or branded controller button
@@ -85,8 +85,17 @@ namespace QwerkE {
         e_GamepadSquare,                // Square Playstation controller button
         e_GamepadTriangle,              // Triangle Playstation controller button
 
+        // #TODO Remove Q prefix, or add to all?
+        e_QGamepadAxisLeftStick = 0,    // 0 + 1 // #TODO Better comment
+        e_QGamepadAxisRightStick = 2,   // 2 + 3
+        e_QGamepadAxisTriggers = 4,     // 4 + 5
+
         e_QGamepadAxisIndexFirst = 0,
-        e_QGamepadAxisIndexMax = 6,
+        e_QGamepadAxisIndexMax = 5,
+
+        // #TODO Improve trigger axis aliases
+        // e_QGamepadAxisTriggersLeft = 0,
+        // e_QGamepadAxisTriggersRight = 1,
     };
 
     enum QKey : u8

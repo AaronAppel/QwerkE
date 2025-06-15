@@ -188,12 +188,24 @@ namespace QwerkE {
 		class EditorWindow
 		{
 		public:
-			virtual ~EditorWindow() = default;
+			~EditorWindow()
+			{
+				if (this == Editor::GetLastFocusedWindow())
+				{
+					Editor::OnEditorWindowFocused(nullptr);
+				}
+			}
 
 			void EditorWindow::Draw()
 			{
 				if (!Editor::ShowingEditorUI() || Window::IsMinimized() || m_WindowFlags & EditorWindowFlags::Hidden)
+				{
+					if (this == Editor::GetLastFocusedWindow())
+					{
+					    Editor::OnEditorWindowFocused(nullptr);
+					}
 					return;
+				}
 
 				// #TODO Find why new windows are still too small, and if this check does anything
 				if ((m_WindowFlags & EditorWindowFlags::Hidden) == 0)
@@ -233,6 +245,11 @@ namespace QwerkE {
 
 				if (ImGui::Begin(m_WindowName.c_str(), &isOpen, m_ImGuiFlags))
 				{
+					if (ImGui::IsWindowFocused() && this != Editor::GetLastFocusedWindow())
+					{
+						Editor::OnEditorWindowFocused(this);
+					}
+
 					// #TODO Console doesn't focus on middle and right click because it doesn't execute this code
 					if (ImGui::IsWindowHovered() &&
 						(Input::MousePressed(e_MouseRight) || Input::MousePressed(e_MouseMiddle)))
@@ -261,12 +278,13 @@ namespace QwerkE {
 
 			virtual bool IsUnique() { return false; } // #TODO Can EditorWindowFlags::Singleton flag replace method or true/false?
 
-			const GUID& Guid() { return m_Guid; }
-			EditorWindowTypes Type() const { return m_EditorWindowType; }
+			GUID Guid() { return m_Guid; }
+			GUID* GuidAddress() { return &m_Guid; }
+			EditorWindowTypes Type() const { return m_EditorWindowType; } // #TODO Make static?
 			EditorWindowFlags WindowFlags() const { return m_WindowFlags; }
 			const std::string& Name() const { return m_WindowName; };
 
-			virtual void OnEditorWindowFocused(EditorWindow* a_FocusedWindow) { }
+			virtual void OnEditorWindowFocused(const EditorWindow* const a_FocusedWindow) { }
 			virtual void OnEntitySelected(EntityHandle& entity) {}
 			virtual void OnSceneReload() { }
 

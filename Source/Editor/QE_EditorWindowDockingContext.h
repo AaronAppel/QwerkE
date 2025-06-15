@@ -48,6 +48,12 @@ namespace QwerkE {
 
                 ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
                 ImGui::Begin("DockSpace Demo", &open, window_flags);
+
+                if (ImGui::IsWindowFocused() && this != Editor::GetLastFocusedWindow())
+                {
+                    Editor::OnEditorWindowFocused(this);
+                }
+
                 ImGui::PopStyleVar();
                 if (opt_fullscreen)
                 {

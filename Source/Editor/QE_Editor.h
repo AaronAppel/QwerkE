@@ -9,6 +9,8 @@ namespace QwerkE {
 
 	namespace Editor {
 
+		enum EditorWindowPromptTypes : uint8_t;
+
 		class EditorWindow;
 
 		typedef unsigned int u32;
@@ -42,10 +44,16 @@ namespace QwerkE {
 
 		// Editor windows
 		void NewEditorWindow(u32 editorWindowType);
+		void OpenEditorWindowPrompt(EditorWindowPromptTypes a_PromptType);
 		void CloseEditorWindow(const GUID& guid);
+
 		const std::vector<EditorWindow*>& GetOpenWindows();
 
+		const EditorWindow* GetLastFocusedWindow();
+
 		void OnEditorWindowFocused(const EditorWindow* const focusedWindow);
+
+		// Editor window callbacks
 		void OnEntitySelected(EntityHandle& entity);
 		void OnSceneReloaded();
 

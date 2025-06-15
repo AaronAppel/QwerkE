@@ -71,6 +71,7 @@ namespace QwerkE {
         // #TODO Editor overlays(notifications), pop ups(cycle windows, load/save project), prompts(save unsaved change before quitting/closing scene/window)
         // #TODO Replace with ring buffer or better container to avoid "bubbling"/swapping all elements
         static std::vector<EditorWindow*> s_FocusedWindowsStack = std::vector<EditorWindow*>();
+        static std::vector<std::pair<bool, EditorWindow*>> s_DelayedWindowsToAddOrDelete = std::vector<std::pair<bool, EditorWindow*>>();
 
         static EditorWindowDockingContext s_EditorWindowDockingContext(GUID::Invalid); // #NOTE Draw order dependency with other EditorWindows
 
@@ -87,7 +88,7 @@ namespace QwerkE {
 
         u64 s_FramesCompleted = 0;
 
-        bool s_ReloadRequested = false; // #TODO FEATURE
+        bool s_ReloadRequested = false; // #TODO bgfx destructor asserts when re-initializing framework
 
         void RunReloadable(unsigned int numberOfArguments, char** commandLineArguments);
 
@@ -154,6 +155,37 @@ namespace QwerkE {
                     }
 
                     Renderer::EndImGui();
+
+                    if (!s_DelayedWindowsToAddOrDelete.empty())
+                    {
+                        for (size_t i = 0; i < s_DelayedWindowsToAddOrDelete.size(); i++)
+                        {
+                            std::pair<bool, EditorWindow*> pair = s_DelayedWindowsToAddOrDelete[i];
+                            if (pair.first) // Add
+                            {
+                                s_FocusedWindowsStack.insert(s_FocusedWindowsStack.begin(), pair.second); // #TODO Review windows stack addition
+                            }
+                            else            // Delete
+                            {
+                                u16 index = U16_MAX;
+                                for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+                                {
+                                    if (pair.second == s_FocusedWindowsStack[i])
+                                    {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+
+                                if (index <= s_FocusedWindowsStack.size())
+                                {
+                                    delete pair.second;
+                                    s_FocusedWindowsStack.erase(s_FocusedWindowsStack.begin() + index);
+                                }
+                            }
+                        }
+                    }
+                    s_DelayedWindowsToAddOrDelete.clear();
 
                     if (!s_ShowingEditorUI)
                     {
@@ -240,13 +272,60 @@ namespace QwerkE {
             {
                 // #TODO Consider reversing direction and storing recently interacted windows at the back of the vector.
                 // This would avoid swapping the entire list for new windows (just push instead) and deleted windows probably had focus anyways (just pop the top).
-                s_FocusedWindowsStack.insert(s_FocusedWindowsStack.begin(), newWindow);
+                s_DelayedWindowsToAddOrDelete.push_back({true, newWindow });
+                OnEditorWindowFocused(newWindow);
+            }
+        }
+
+        void OpenEditorWindowPrompt(EditorWindowPromptTypes a_PromptType)
+        {
+            // #TODO Close prompt type method as well.
+            // #TODO This function is pretty much the same as above. The other could return a reference to the found window for this function to operate on
+            // #TODO Consider storing a reference to singletons like prompt window, as done with docking context
+
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+            {
+                if (s_FocusedWindowsStack[i]->WindowFlags() & EditorWindowFlags::Singleton &&
+                    (u32)s_FocusedWindowsStack[i]->Type() == EditorWindowTypes::Prompt)
+                {
+                    EditorWindowPrompt* promptWindow = static_cast<EditorWindowPrompt*>(s_FocusedWindowsStack[i]);
+                    if (promptWindow)
+                    {
+                        if (promptWindow->IsHidden())
+                        {
+                            promptWindow->ToggleHidden();
+                        }
+                        else if (promptWindow->GetPromptType() == a_PromptType)
+                        {
+                            promptWindow->ToggleHidden();
+                            return; // #NOTE Currently hiding if already open with same prompt type
+                        }
+
+                        promptWindow->SetPromptType(a_PromptType);
+                    }
+                    return;
+                }
+            }
+
+            if (EditorWindow* newWindow = NewEditorWindowByType(EditorWindowsList{}, EditorWindowTypes::Prompt))
+            {
+                EditorWindowPrompt* promptWindow = static_cast<EditorWindowPrompt*>(newWindow);
+                promptWindow->SetPromptType(a_PromptType);
+                if (promptWindow->IsHidden())
+                {
+                    promptWindow->ToggleHidden();
+                }
+
+                // #TODO Consider reversing direction and storing recently interacted windows at the back of the vector.
+                // This would avoid swapping the entire list for new windows (just push instead) and deleted windows probably had focus anyways (just pop the top).
+                s_DelayedWindowsToAddOrDelete.push_back({ true, newWindow });
                 OnEditorWindowFocused(newWindow);
             }
         }
 
         void CloseEditorWindow(const GUID& guid)
         {
+            bool closed = false;
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
                 if (guid == s_FocusedWindowsStack[i]->Guid())
@@ -258,8 +337,7 @@ namespace QwerkE {
                         // #TODO Decide what windows can be closed, or just hidden (menu bar, docking, etc)
                         return;
                     }
-                    delete s_FocusedWindowsStack[i];
-                    s_FocusedWindowsStack.erase(s_FocusedWindowsStack.begin() + i);
+                    s_DelayedWindowsToAddOrDelete.push_back({ false, s_FocusedWindowsStack[i] });
                     return;
                 }
             }
@@ -272,10 +350,22 @@ namespace QwerkE {
             return s_FocusedWindowsStack;
         }
 
+        const EditorWindow* s_LastFocusedWindow; // #TODO Move somewhere better
         void OnEditorWindowFocused(const EditorWindow* const focusedWindow)
         {
             // #TODO Consider moving to a static function in EditorWindow.h
-            ASSERT(focusedWindow, "Null focusedWindow pointer!");
+            // ASSERT(focusedWindow, "Null focusedWindow pointer!");
+
+            for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
+            {
+                s_FocusedWindowsStack[i]->OnEditorWindowFocused(focusedWindow);
+            }
+
+            s_LastFocusedWindow = focusedWindow;
+            if (nullptr == s_LastFocusedWindow) // #TODO Handle nullptr if last focused window was closed
+            {
+                return; // #TODO Go through stack and remove closed window?
+            }
 
             s16 index = -1;
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
@@ -301,6 +391,11 @@ namespace QwerkE {
                     s_FocusedWindowsStack[i - 1] = cache;
                 }
             }
+        }
+
+        const EditorWindow* GetLastFocusedWindow()
+        {
+            return s_LastFocusedWindow;
         }
 
         void OnEntitySelected(EntityHandle& entity)
