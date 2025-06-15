@@ -155,16 +155,18 @@ namespace QwerkE {
 
 			m_up = bx::cross(right, forward);
 
-			ImGui::DefaultWindow([&]()
+			if (constexpr bool debugUiEnabled = false)
 			{
-				ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
+				ImGui::DefaultWindow([&]() {
+					ImGui::DragFloat("PixelRatio", &pixelRatio, .05f);
 
-				vec2f mouseTrackerDelta = m_MouseDragTracker.MouseFrameDelta();
-				ImGui::DragFloat2("MouseDragTracker", &mouseTrackerDelta.x, .05f);
+					vec2f mouseTrackerDelta = m_MouseDragTracker.MouseFrameDelta();
+					ImGui::DragFloat2("MouseDragTracker", &mouseTrackerDelta.x, .05f);
 
-				vec3f forward = transformForward;
-				ImGui::DragFloat3("TransformForward", &forward.x, .05f);
-			});
+					vec3f forward = transformForward;
+					ImGui::DragFloat3("TransformForward", &forward.x, .05f);
+				});
+			}
 		}
 
 		eScriptTypes ScriptType() override

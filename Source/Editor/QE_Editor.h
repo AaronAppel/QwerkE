@@ -13,7 +13,7 @@ namespace QwerkE {
 
 		class EditorWindow;
 
-		typedef unsigned int u32;
+		typedef unsigned int u32; // 0 to 4,294,967,295
 		enum EditorStateFlags : u32
 		{
 			EditorStateFlagsNone			= 0,
@@ -40,7 +40,7 @@ namespace QwerkE {
 
 		bool ShowingEditorUI();
 
-		u64 CurrentFrame();
+		u32 CurrentFrame();
 
 		// Editor windows
 		void NewEditorWindow(u32 editorWindowType);
