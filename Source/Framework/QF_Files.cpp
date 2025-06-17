@@ -23,7 +23,7 @@ namespace QwerkE {
 			return std::filesystem::status(filePath).type() == std::filesystem::file_type::regular;
 		}
 
-		Buffer LoadFile(const char* filePath)
+		Buffer LoadFile(const char* filePath) // #TODO Can I optimize return? Maybe using a reference instead?
 		{
 			// #TODO Validate adding null terminating character
 			constexpr u8 addNullTerminatingChar = 1;

@@ -421,35 +421,10 @@ namespace QwerkE {
 
                     if (ImGui::BeginPopup(popUpNameMeshes))
                     {
-                        // const std::unordered_map<GUID, bgfxFramework::Mesh*>& meshes = Assets::ViewAssets<bgfxFramework::Mesh>();
-                        // for (auto& guidMeshPair : meshes)
-                        // {
-                        //     bool clicked = false;
-                        //     ImGui::Text("GUID: ");
-                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
-                        //     {
-                        //         clicked = true;
-                        //     }
-                        //     ImGui::SameLine();
-                        //     ImGui::Text(std::to_string(guidMeshPair.first).c_str());
-                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
-                        //     {
-                        //         clicked = true;
-                        //     }
-                        //
-                        //     if (clicked)
-                        //     {
-                        //         ComponentMesh* mesh = (ComponentMesh*)obj;
-                        //         mesh->SetMeshGuid(guidMeshPair.first);
-                        //         mesh->Initialize();
-                        //         break;
-                        //     }
-                        // }
-
                         std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
-                        if (assetRegistry.find(Mirror::IdForType<bgfxFramework::Mesh>()) != assetRegistry.end())
+                        if (assetRegistry.find(Mirror::IdForType<Mesh>()) != assetRegistry.end())
                         {
-                            auto meshes = assetRegistry[Mirror::IdForType<bgfxFramework::Mesh>()];
+                            auto meshes = assetRegistry[Mirror::IdForType<Mesh>()];
 
                             for (auto& guidMeshPair : meshes)
                             {
@@ -480,31 +455,6 @@ namespace QwerkE {
                     }
                     else if (ImGui::BeginPopup(popUpNameShaders))
                     {
-                        // const std::unordered_map<GUID, Shader*>& shaders = Assets::ViewAssets<Shader>();
-                        // for (auto& guidShaderPair : shaders)
-                        // {
-                        //     bool clicked = false;
-                        //     ImGui::Text("GUID: ");
-                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
-                        //     {
-                        //         clicked = true;
-                        //     }
-                        //     ImGui::SameLine();
-                        //     ImGui::Text(std::to_string(guidShaderPair.first).c_str());
-                        //     if (ImGui::IsItemClicked(ImGui::MouseLeft))
-                        //     {
-                        //         clicked = true;
-                        //     }
-                        //
-                        //     if (clicked)
-                        //     {
-                        //         ComponentMesh* meshComp = (ComponentMesh*)obj;
-                        //         meshComp->SetShaderGuid(guidShaderPair.first);
-                        //         meshComp->Initialize();
-                        //         break;
-                        //     }
-                        // }
-
                         std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
                         if (assetRegistry.find(Mirror::IdForType<Shader>()) != assetRegistry.end())
                         {

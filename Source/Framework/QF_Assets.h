@@ -18,7 +18,7 @@ namespace QwerkE {
 	using AssetsMap = std::unordered_map<GUID, void*>; // #NOTE Smart pointers require compile time types. Could look at another solution
 	using AssetsList = std::vector<std::pair<GUID, std::vector<std::string>>>; // #TODO should just be string, not vector of string. Change once shader components are in
 
-	class Assets
+	class Assets // #NOTE Class to hide static members that are used in public templated methods
 	{
 	public:
 		Assets() = delete;
@@ -46,7 +46,10 @@ namespace QwerkE {
 			if (m_MapOfLoadedAssetMaps.find(typeId) == m_MapOfLoadedAssetMaps.end() ||
 				m_MapOfLoadedAssetMaps[typeId].find(guid) == m_MapOfLoadedAssetMaps[typeId].end())
 			{
-				ASSERT(Has<T>(GUID::Invalid), "No null asset found!");
+				LOG_WARN("No loaded {0} with GUID: {1}", Mirror::InfoForType<T>()->stringName.c_str(), guid);
+				ASSERT(m_MapOfNullAssetMaps[typeId].find(guid) != m_MapOfNullAssetMaps[typeId].end(), "No null asset found!");
+				void* assetPtr = m_MapOfNullAssetMaps[typeId][GUID::Invalid];
+				return static_cast<T*>(assetPtr);
 			}
 
 			void* assetPtr = m_MapOfLoadedAssetMaps[typeId][guid];
@@ -56,11 +59,13 @@ namespace QwerkE {
 		template <typename T>
 		static void Load(GUID guid)
 		{
-			const size_t typeId = Mirror::IdForType<T>();
-
 			if (!Has<T>(guid))
 			{
-				guid = LoadAsset(typeId, guid);
+				const size_t typeId = Mirror::IdForType<T>();
+				if (GUID::Invalid == LoadAsset(typeId, guid))
+				{
+					LOG_WARN("Unable to load {0} asset with GUID: {1}", Mirror::InfoForType<T>()->stringName.c_str(), guid);
+				}
 			}
 		}
 
@@ -70,12 +75,12 @@ namespace QwerkE {
 		static const std::unordered_map<GUID, T*>* ViewAssets()
 		{
 			const size_t typeId = Mirror::IdForType<T>();
-			std::unordered_map<GUID, T*>* assetMap = nullptr;
+			const std::unordered_map<GUID, T*>* assetMap = nullptr;
 			if (m_MapOfLoadedAssetMaps.find(typeId) != m_MapOfLoadedAssetMaps.end())
 			{
-				// #TODO Avoid below C-style cast
-				// assetMap = static_cast<std::unordered_map<GUID, T*>*>(&m_MapOfLoadedAssetMaps[typeId]);
-				assetMap = (std::unordered_map<GUID, T*>*) & m_MapOfLoadedAssetMaps[typeId];
+				// #TODO Avoid C-style cast
+				// assetMap = static_cast<const std::unordered_map<GUID, T*>*>(&m_MapOfLoadedAssetMaps[typeId]);
+				assetMap = (const std::unordered_map<GUID, T*>*) &m_MapOfLoadedAssetMaps[typeId];
 			}
 			return assetMap;
 		}
@@ -118,6 +123,7 @@ namespace QwerkE {
 		static GUID LoadAsset(const size_t type, const GUID& guid);
 
 		static std::unordered_map<size_t, AssetsMap> m_MapOfLoadedAssetMaps;
+		static std::unordered_map<size_t, AssetsMap> m_MapOfNullAssetMaps; // Safe default assets to use in cases of errors. Only the framework should care about these
 	};
 
 }

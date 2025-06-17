@@ -20,7 +20,6 @@ struct PosColorVertex
 	static bgfx::VertexLayout ms_layout;
 };
 
-
 static PosColorVertex s_cubeVertices[] =
 {
 	{-1.0f,  1.0f,  1.0f, 0xff000000 },

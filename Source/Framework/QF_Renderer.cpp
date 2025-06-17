@@ -56,6 +56,7 @@ namespace QwerkE {
 
 #define ID_DIM 8  // Size of the ID buffer
 
+		// Mouse picking
 		bgfxFramework::Mesh* m_meshes[12];
 		float m_meshScale[12];
 		float m_idsF[12][4];

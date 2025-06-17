@@ -15,7 +15,7 @@ namespace QwerkE {
 		}
 
 		// private: // #TODO Hide as members?
-		bgfx::ProgramHandle m_Program;
+		bgfx::ProgramHandle m_Program = BGFX_INVALID_HANDLE;
 		GUID m_GUID;
 	};
 

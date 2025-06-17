@@ -1,9 +1,5 @@
 #pragma once
 
-#ifdef _QBGFXFRAMEWORK
-namespace bgfxFramework { struct Mesh; }
-#endif
-
 #include "QF_Assets.h"
 #include "QF_Mesh.h"
 #include "QF_Shader.h"
@@ -37,20 +33,7 @@ namespace QwerkE {
 
                     // #TODO Consider a button to unload an asset from RAM
 
-                    if (ImGui::CollapsingHeader("bgfxFramework::Mesh"))
-                    {
-                        if (const std::unordered_map<GUID, bgfxFramework::Mesh*>* meshes = Assets::ViewAssets<bgfxFramework::Mesh>())
-                        {
-                            for (auto& guidMeshPair : *meshes)
-                            {
-                                ImGui::Text("GUID: ");
-                                ImGui::SameLine();
-                                ImGui::Text(std::to_string(guidMeshPair.first).c_str());
-                            }
-                        }
-                    }
-
-                    if (ImGui::CollapsingHeader("QwerkE::Mesh"))
+                    if (ImGui::CollapsingHeader("QwerkE::Mesh"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                     {
                         if (const std::unordered_map<GUID, Mesh*>* meshes = Assets::ViewAssets<Mesh>())
                         {
@@ -59,11 +42,15 @@ namespace QwerkE {
                                 ImGui::Text("GUID: ");
                                 ImGui::SameLine();
                                 ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidMeshPair.second->m_vbh.idx).c_str());
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidMeshPair.second->m_vbh.idx).c_str());
                             }
                         }
                     }
 
-                    if (ImGui::CollapsingHeader("Shaders"))
+                    if (ImGui::CollapsingHeader("Shaders"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                     {
                         if (const std::unordered_map<GUID, Shader*>* shaders = Assets::ViewAssets<Shader>())
                         {
@@ -72,11 +59,13 @@ namespace QwerkE {
                                 ImGui::Text("GUID: ");
                                 ImGui::SameLine();
                                 ImGui::Text(std::to_string(guidShaderPair.first).c_str());
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidShaderPair.second->m_Program.idx).c_str());
                             }
                         }
                     }
 
-                    if (ImGui::CollapsingHeader("Scenes"))
+                    if (ImGui::CollapsingHeader("Scenes"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                     {
                         if (const std::unordered_map<GUID, Scene*>* scenes = Assets::ViewAssets<Scene>())
                         {
@@ -123,7 +112,10 @@ namespace QwerkE {
 
                     for (auto& pairMirrorTypesVector : assetRegistry)
                     {
-                        size_t type = pairMirrorTypesVector.first;
+                        std::string message = "Type: ";
+                        message += std::to_string(pairMirrorTypesVector.first);
+                        ImGui::Text(message.c_str());
+
                         for (size_t i = 0; i < pairMirrorTypesVector.second.size(); i++)
                         {
                             auto pairGuidString = pairMirrorTypesVector.second[i];
@@ -154,6 +146,7 @@ namespace QwerkE {
                             // #TODO Decide how to search for shader and materials that have more than 1 string in vector
                             ImGui::Text(pairGuidString.second[0].c_str());
                         }
+                        ImGui::Dummy({ 0.f, 5.f });
                     }
                 }
 			}

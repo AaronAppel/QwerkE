@@ -1,16 +1,8 @@
 {
 	"std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
 		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
-			"const unsigned long long":	"158",
+			"const unsigned long long":	"160",
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
-						"m_Guid":	"0"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"cube.bin"
-					}
-				},
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
 						"m_Guid":	"11140931355107737998"
@@ -57,6 +49,14 @@
 					},
 					"std::vector<std::string>":	{
 						"std::string":	"tree.bin"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"16501966795655844838"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"cube.bin"
 					}
 				}
 			}

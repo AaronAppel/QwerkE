@@ -11,16 +11,24 @@ namespace QwerkE {
 	public:
 		Mesh::~Mesh()
 		{
-			if (true) // #TODO Validate if destroy is needed
+			// #TODO Review bgfxFramework::Mesh::unload();
+			// #TODO Not deleting bgfx data properly could throw bgfx allocator assert when restarting editor
+
+			if (bgfx::isValid(m_vbh))
 			{
 				bgfx::destroy(m_vbh);
+			}
+
+			if (bgfx::isValid(m_ibh))
+			{
 				bgfx::destroy(m_ibh);
 			}
 		}
 
 		void PreDrawSetup()
 		{
-			bgfx::setVertexBuffer(0, m_vbh);
+			constexpr uint8_t stream = 0;
+			bgfx::setVertexBuffer(stream, m_vbh);
 			bgfx::setIndexBuffer(m_ibh);
 		}
 

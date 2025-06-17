@@ -2,114 +2,53 @@
 	"QwerkE::Scene":	{
 		"m_SceneFileName":	"NewScene1.qscene",
 		"m_Registry":	{
-			"Bunny":	{
+			"Chaser":	{
 				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Bunny",
+					"m_EntityName":	"Chaser",
 					"m_Guid":	{
-						"m_Guid":	"9197424376144239504"
+						"m_Guid":	"13298806619783215903"
 					},
 					"m_Enabled":	true
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
+						"float":	0.5,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0.5,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0.5,
+						"float":	0,
+						"float":	15.86351203918457,
 						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	-4,
-						"float":	0,
-						"float":	0,
+						"float":	1.2330000400543213,
 						"float":	1
 					}
 				},
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{
-						"m_Guid":	"11140931355107737998"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"18015078069625190773"
-					}
-				}
-			},
-			"BigCube":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"BigCube",
-					"m_Guid":	{
-						"m_Guid":	"12653664972659247131"
-					},
-					"m_Enabled":	true
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	3,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	3,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	3,
-						"float":	0,
-						"float":	-4.5,
-						"float":	3,
-						"float":	5,
-						"float":	1
-					}
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"0"
+						"m_Guid":	"17511105768294075930"
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"0"
 					}
-				}
-			},
-			"Small Cube":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Small Cube",
-					"m_Guid":	{
-						"m_Guid":	"15318540641823496003"
-					},
-					"m_Enabled":	true
 				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	-2.5,
-						"float":	7,
-						"float":	3,
-						"float":	1
-					}
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"0"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"0"
+				"QwerkE::ComponentScript":	{
+					"m_ScriptInstances":	{
+						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{
+							"const QwerkE::eScriptTypes":	3,
+							"QwerkE::Scriptable*":	{
+								"QwerkE::ScriptablePatrol":	{
+									"m_Stride":	5,
+									"m_Speed":	1
+								}
+							}
+						}
 					}
 				}
 			},
@@ -164,53 +103,114 @@
 					}
 				}
 			},
-			"Chaser":	{
+			"Small Cube":	{
 				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Chaser",
+					"m_EntityName":	"Small Cube",
 					"m_Guid":	{
-						"m_Guid":	"13298806619783215903"
+						"m_Guid":	"15318540641823496003"
 					},
 					"m_Enabled":	true
 				},
 				"QwerkE::ComponentTransform":	{
 					"m_Matrix":	{
-						"float":	0.5,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0.5,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0.5,
-						"float":	0,
-						"float":	15.86351203918457,
 						"float":	1,
-						"float":	1.2330000400543213,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	-2.5,
+						"float":	7,
+						"float":	3,
 						"float":	1
 					}
 				},
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{
-						"m_Guid":	"17511105768294075930"
+						"m_Guid":	"16501966795655844838"
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"0"
 					}
+				}
+			},
+			"BigCube":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"BigCube",
+					"m_Guid":	{
+						"m_Guid":	"12653664972659247131"
+					},
+					"m_Enabled":	true
 				},
-				"QwerkE::ComponentScript":	{
-					"m_ScriptInstances":	{
-						"std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>":	{							
-							"const QwerkE::eScriptTypes":	3,
-							"QwerkE::Scriptable*":	{
-								"QwerkE::ScriptablePatrol":	{
-									"m_Stride":	5,
-									"m_Speed":	1
-								}
-							}
-						}
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	3,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	3,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	3,
+						"float":	0,
+						"float":	-4.5,
+						"float":	3,
+						"float":	5,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"16501966795655844838"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					}
+				}
+			},
+			"Bunny":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Bunny",
+					"m_Guid":	{
+						"m_Guid":	"9197424376144239504"
+					},
+					"m_Enabled":	true
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	-4,
+						"float":	0,
+						"float":	0,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"11140931355107737998"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"18015078069625190773"
 					}
 				}
 			}

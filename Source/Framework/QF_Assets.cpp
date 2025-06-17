@@ -27,13 +27,14 @@
 
 namespace QwerkE {
 
-	// #TODO How does the registry work without the editor, for the Game solution?
-
-	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfLoadedAssetMaps;
+	// #TODO How does the registry work without the editor, for the Game solution? Simply hide extra functions?
 
 	// #TODO https://stackoverflow.com/questions/38955940/how-to-concatenate-static-strings-at-compile-time
 	const char* const s_AssetsRegistryFileName = "Assets.qreg"; // Files::Extensions::Registry
 	static std::unordered_map<size_t, AssetsList> s_AssetGuidToFileRegistry;
+
+	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfLoadedAssetMaps;
+	std::unordered_map<size_t, AssetsMap> Assets::m_MapOfNullAssetMaps;
 
 	GUID Assets::LoadAsset(const size_t typeId, const GUID& guid)
 	{
@@ -53,26 +54,31 @@ namespace QwerkE {
 				// #TODO Handle loading errors (return GUID::Invalid;)
 				switch (typeId)
 				{
-				case Mirror::IdForType<bgfxFramework::Mesh>():
-					m_MapOfLoadedAssetMaps[typeId][guid] = myMeshLoad(Paths::Mesh(fileName.c_str()).c_str()); break;
-
 				case Mirror::IdForType<Mesh>():
 					{
-						Mesh* nullMesh = new Mesh();
-						nullMesh->m_vbh = bgfx::createVertexBuffer(
-							bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)), // Static data can be passed with bgfx::makeRef
-							PosColorVertex::ms_layout
-						);
-						nullMesh->m_ibh = bgfx::createIndexBuffer(
-							bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
-						);
-						nullMesh->m_GUID = guid;
-						m_MapOfLoadedAssetMaps[typeId][guid] = nullMesh;
+						if (constexpr bool loadFromMeshFile = true)
+						{
+							// #TODO Deprecate bgfxFramework::Mesh
+							bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::Mesh(fileName.c_str()).c_str());
+
+							Mesh* meshFromFile = new Mesh();
+							meshFromFile->m_ibh = bgfxMesh->m_groups[0].m_ibh;
+							meshFromFile->m_vbh = bgfxMesh->m_groups[0].m_vbh;
+
+							// #TODO ASSERT(!Has<QwerkE::Mesh>(guid), "Mesh with GUID {0} already exists!", guid);
+							m_MapOfLoadedAssetMaps[typeId][guid] = meshFromFile;
+
+							// #TODO Free remaining memory from bgfxFramework::Mesh
+						}
+						else // #TODO Create a null mesh from code (avoid serialization? Maybe keep it out of registry, but still show in assets lists UI)
+						{
+						}
 					}
 					break;
 
 				case Mirror::IdForType<Scene>():
 					// #NOTE Scene transition changes to Scenes::CreateSceneFromFile(fileName)
+					ASSERT(!Has<Scene>(guid), "Scene with GUID {0} already exists!", guid);
 					m_MapOfLoadedAssetMaps[typeId][guid] = Scenes::CreateSceneFromFile(Paths::Scene(fileName.c_str()));
 					break;
 
@@ -95,13 +101,14 @@ namespace QwerkE {
 						}
 						else
 						{
+							ASSERT(!Has<Shader>(guid), "Shader with GUID {0} already exists!", guid);
 							m_MapOfLoadedAssetMaps[typeId][guid] = newShader;
 						}
 					}
 					break;
 
 				default:
-					// #TODO LOG_ERROR("Unsupported asset type!");
+					LOG_ERROR("Unsupported asset type {0}!", typeId);
 					return GUID::Invalid;
 				}
 
@@ -109,6 +116,7 @@ namespace QwerkE {
 				return guid;
 			}
 		}
+		LOG_WARN("Could not find registry entry for asset of type {0} and GUID {1}", typeId, guid);
 		return GUID::Invalid;
 	}
 
@@ -122,16 +130,15 @@ namespace QwerkE {
 		{	// Default QwerkE::Mesh entry
 			Mesh* nullMesh = new Mesh();
 			nullMesh->m_vbh = bgfx::createVertexBuffer(
-				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)), // Static data can be passed with bgfx::makeRef
+				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)),
 				PosColorVertex::ms_layout
 			);
 			nullMesh->m_ibh = bgfx::createIndexBuffer(
 				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
 			);
 			nullMesh->m_GUID = GUID::Invalid;
-			m_MapOfLoadedAssetMaps[Mirror::IdForType<Mesh>()][nullMesh->m_GUID] = nullMesh;
+			m_MapOfNullAssetMaps[Mirror::IdForType<Mesh>()][GUID::Invalid] = nullMesh;
 		}
-		ASSERT(Has<Mesh>(GUID::Invalid), "No null QwerkE::Mesh found!");
 
 		{	// Default Shader entry
 			Shader* nullShader = new Shader();
@@ -140,8 +147,9 @@ namespace QwerkE {
 				Paths::Shader("fs_cubes.bin").c_str()
 			);
 			nullShader->m_GUID = GUID::Invalid;
-			m_MapOfLoadedAssetMaps[Mirror::IdForType<Shader>()][nullShader->m_GUID] = nullShader;
+			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->m_GUID] = nullShader;
 
+			// #TODO Move additional shader to data or better code file
 			Shader* shader1 = new Shader();
 			shader1->m_Program = myLoadShaderProgram(
 				Paths::Shader("vs_mesh.bin").c_str(),
@@ -150,54 +158,44 @@ namespace QwerkE {
 			m_MapOfLoadedAssetMaps[Mirror::IdForType<Shader>()][shader1->m_GUID] = shader1;
 			// m_MapOfLoadedAssetMaps[Mirror::IdForType<Shader>()][1] = new std::pair<"vs_mesh.bin", "fs_mesh.bin">();
 		}
-		ASSERT(Has<Shader>(GUID::Invalid), "No null shader found!");
-
-		// ASSERT(!GetRegistryAssetList(Mirror::IdForType<Shader>()).empty(), "No null shader found!");
-		// ASSERT(!GetRegistryAssetList(Mirror::IdForType<Mesh>()).empty(), "No null QwerkE::Mesh found!");
-		// ASSERT(!GetRegistryAssetList(Mirror::IdForType<bgfxFramework::Mesh>()).empty(), "No null bgfxFramework::Mesh found!");
 	}
 
 	void Assets::Shutdown()
 	{
-		for (auto& mirrorTypeAssetMapPair : m_MapOfLoadedAssetMaps)
+		for (auto& assetsList : { m_MapOfLoadedAssetMaps, m_MapOfNullAssetMaps })
 		{
-			AssetsMap assetsMap = mirrorTypeAssetMapPair.second;
-
-			for (auto& guidVoidPtrPair : assetsMap)
+			for (auto& mirrorTypeAssetMapPair : assetsList)
 			{
-				if (guidVoidPtrPair.second)
+				AssetsMap assetsMap = mirrorTypeAssetMapPair.second;
+
+				for (auto& guidVoidPtrPair : assetsMap)
 				{
-					switch (mirrorTypeAssetMapPair.first)
+					if (guidVoidPtrPair.second)
 					{
-					case Mirror::IdForType<bgfxFramework::Mesh>():
+						switch (mirrorTypeAssetMapPair.first)
 						{
-							// #TODO Fix bgfx break point on delete
-							// bgfxFramework::Mesh* mesh = static_cast<bgfxFramework::Mesh*>(guidVoidPtrPair.second);
-							// mesh->unload();
-							// delete mesh;
+						case Mirror::IdForType<Mesh>():
+							delete static_cast<Mesh*>(guidVoidPtrPair.second); break;
+
+						case Mirror::IdForType<Shader>():
+							delete static_cast<Shader*>(guidVoidPtrPair.second); break;
+
+						case Mirror::IdForType<Scene>():
+							// Scenes::Shutdown(); should already be called
+							// #TODO If this gets hit, is that an error? Assert?
+							break;
+
+						default:
+							LOG_CRITICAL("{0} Unsupported type!", __FUNCTION__);
+							break;
 						}
-						break;
-					case Mirror::IdForType<Mesh>():
-						delete static_cast<Mesh*>(guidVoidPtrPair.second);
-						break;
-
-					case Mirror::IdForType<Shader>():
-						delete static_cast<Shader*>(guidVoidPtrPair.second);
-						break;
-
-					case Mirror::IdForType<Scene>():
-						// Scenes::Shutdown(); should already be called
-						break;
-
-					default:
-						LOG_CRITICAL("{0} Unsupported type!", __FUNCTION__);
-						break;
 					}
 				}
+				assetsMap.clear();
 			}
-			assetsMap.clear();
 		}
 		m_MapOfLoadedAssetMaps.clear();
+		m_MapOfNullAssetMaps.clear();
 
 		// #TODO ASSERT all assets were properly released
 	}
@@ -225,7 +223,7 @@ namespace QwerkE {
 			constexpr int index = 0;
 			if (pair.first == guid || pair.second[index] == fileName)
 			{
-				LOG_WARN("{0} Asset exists in registry ({1}, {2})", __FUNCTION__, std::to_string(pair.first).c_str(), pair.second[index].c_str());
+				LOG_TRACE("{0} Asset exists in registry ({1}, {2})", __FUNCTION__, std::to_string(pair.first).c_str(), pair.second[index].c_str());
 				return true;
 			}
 		}
@@ -244,6 +242,7 @@ namespace QwerkE {
 
 	AssetsList& Assets::GetRegistryAssetList(const size_t assetListTypeId)
 	{
+		// #TODO Create registry if it doesn't exist?
 		ASSERT(s_AssetGuidToFileRegistry.find(assetListTypeId) != s_AssetGuidToFileRegistry.end(), "Cannot return reference for registry asset list!");
 		return s_AssetGuidToFileRegistry[assetListTypeId];
 	}
