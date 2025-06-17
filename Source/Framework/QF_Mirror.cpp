@@ -7,10 +7,6 @@
 
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 
-#ifdef _QBGFXFRAMEWORK
-#include <bgfxFramework/bgfx_utils.h>
-#endif
-
 #ifdef _QDEARIMGUI
 #include "Libraries/imgui/imgui.h"
 #endif
@@ -28,6 +24,7 @@
 #include "QF_Input.h"
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
+#include "QF_Shader.h"
 
 #include "QF_ComponentHelpers.h"
 
@@ -125,12 +122,6 @@ MIRROR_CLASS_END
 #ifdef _QENTT
 MIRROR_TYPE(entt::registry) // #TODO Deprecate MIRROR_TYPE
 MIRROR_TYPE(entt::entity)
-#endif
-
-#ifdef _QBGFXFRAMEWORK
-typedef bgfxFramework::Mesh BgfxMesh;
-MIRROR_CLASS(BgfxMesh)
-MIRROR_CLASS_END
 #endif
 
 // Misc

@@ -23,6 +23,7 @@
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
+#include "QF_Shader.h"
 
 #include "QF_ComponentHelpers.h"
 
@@ -49,7 +50,6 @@ enum FieldSerializationFlags : MIRROR_FIELD_FLAG_TYPE
 
 /* START */
 // Serialized (value dependent) type IDs
-MIRROR_TYPE_ID(158, bgfxFramework::Mesh)
 MIRROR_TYPE_ID(159, QwerkE::Shader)
 MIRROR_TYPE_ID(160, QwerkE::Mesh)
 MIRROR_TYPE_ID(161, QwerkE::Scene)

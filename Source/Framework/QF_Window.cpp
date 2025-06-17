@@ -297,10 +297,10 @@ namespace QwerkE {
                 }
                 else if (strcmp(fileExtension.string().c_str(), ".bin") == 0)
                 {
-                    // #NOTE Binary mesh files starts with "VB", and binry shaders start with "FSH" or "VSH"
+                    // #NOTE Binary mesh files starts with "VB", and binary shaders start with "FSH" or "VSH"
                     if (Files::Exists(Paths::Mesh(fileName.string().c_str()).c_str()))
                     {
-                        Assets::AddToRegistry(Mirror::IdForType<bgfxFramework::Mesh>(), GUID(), fileName.string());
+                        Assets::AddToRegistry(Mirror::IdForType<Mesh>(), GUID(), fileName.string());
                     }
                     else if (Files::Exists(Paths::Shader(fileName.string().c_str()).c_str()))
                     {

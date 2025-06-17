@@ -426,6 +426,7 @@ namespace QwerkE {
                         {
                             auto meshes = assetRegistry[Mirror::IdForType<Mesh>()];
 
+                            ImGui::Text("Meshes:");
                             for (auto& guidMeshPair : meshes)
                             {
                                 bool clicked = false;
@@ -460,6 +461,7 @@ namespace QwerkE {
                         {
                             auto shaders = assetRegistry[Mirror::IdForType<Shader>()];
 
+                            ImGui::Text("Shaders:");
                             for (auto& guidShaderPair : shaders)
                             {
                                 bool clicked = false;

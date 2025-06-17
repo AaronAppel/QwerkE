@@ -59,8 +59,14 @@ namespace QwerkE {
                                 ImGui::Text("GUID: ");
                                 ImGui::SameLine();
                                 ImGui::Text(std::to_string(guidShaderPair.first).c_str());
-                                ImGui::SameLine();
-                                ImGui::Text(std::to_string(guidShaderPair.second->m_Program.idx).c_str());
+
+                                // #TODO Draw names of all shader components
+                                // std::vector<std::string>* shaderComponents = &guidShaderPair.second;
+                                for (size_t i = 0; i < 1; i++)
+                                {
+                                    ImGui::SameLine();
+                                    ImGui::Text(std::to_string(guidShaderPair.second->m_Program.idx).c_str());
+                                }
                             }
                         }
                     }

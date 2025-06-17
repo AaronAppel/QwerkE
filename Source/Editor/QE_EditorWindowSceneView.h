@@ -133,17 +133,14 @@ namespace QwerkE {
 					sceneNames.push_back(scenes[i]->GetSceneName().c_str());
 				}
 
-				constexpr u32 s_CharacterPixelSize = 10;
+				constexpr float scenesDropDownScalar = 1.25f;
+				const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * ImGui::g_pixelsPerCharacter * scenesDropDownScalar;
+
 				constexpr u32 s_DropDownArrowSize = 20;
-
-				const u32 sceneFileNameWidth = (u32)strlen(sceneNames[m_LastSceneIndex]) * s_CharacterPixelSize;
-
 				ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
 
 				snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
 
-				// ImGui::Dummy(ImVec2(0, 0));
-				// ImGui::SameLine(ImGui::GetWindowWidth() - sceneFileNameWidth - (strlen(m_ScenesComboLabelBuffer) * s_CharacterPixelSize));
 				ImGui::SameLine();
 				if (ImGui::Combo(m_ScenesComboLabelBuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
 				{
