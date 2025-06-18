@@ -9,6 +9,11 @@ namespace QwerkE {
 	class Mesh
 	{
 	public:
+		Mesh(GUID a_Guid = GUID())
+		{
+			m_GUID = a_Guid;
+		}
+
 		Mesh::~Mesh()
 		{
 			// #TODO Review bgfxFramework::Mesh::unload();
@@ -33,9 +38,9 @@ namespace QwerkE {
 		}
 
 		// private: // #TODO Hide as members?
-		bgfx::VertexBufferHandle m_vbh;
-		bgfx::IndexBufferHandle m_ibh;
-		GUID m_GUID;
+		bgfx::VertexBufferHandle m_vbh = BGFX_INVALID_HANDLE;
+		bgfx::IndexBufferHandle m_ibh = BGFX_INVALID_HANDLE;
+		GUID m_GUID = GUID::Invalid;
 	};
 
 

@@ -64,8 +64,6 @@ namespace QwerkE {
 		uint32_t m_highlighted;
 
 		// Resource handles
-		Shader* m_shadingProgram = nullptr;
-		Shader* m_idProgram = nullptr;
 		bgfx::UniformHandle u_tint;
 		bgfx::UniformHandle u_id;
 		bgfx::TextureHandle m_pickingRT;
@@ -229,20 +227,6 @@ namespace QwerkE {
 				u_tint = bgfx::createUniform("u_tint", bgfx::UniformType::Vec4); // Tint for when you click on items
 				u_id = bgfx::createUniform("u_id", bgfx::UniformType::Vec4); // ID for drawing into ID buffer
 
-				// Create program from shaders.
-				m_shadingProgram = new Shader();
-				// #TODO Consider moving below shader creation code to utility or renderer
-				m_shadingProgram->m_Program = myLoadShaderProgram( // Blinn shading
-					Paths::Shader("vs_picking_shaded.bin").c_str(),
-					Paths::Shader("fs_picking_shaded.bin").c_str()
-				);
-
-				m_idProgram = new Shader();
-				m_idProgram->m_Program = myLoadShaderProgram( // Shader for drawing into ID buffer
-					Paths::Shader("vs_picking_shaded.bin").c_str(),
-					Paths::Shader("fs_picking_id.bin").c_str()
-				);
-
 				// #TODO Call Assets to find and create shaders (Assets calling utility load function)
 				// m_shadingProgram = Assets::Get<Shader>( );
 				// m_idProgram = Assets::Get<Shader>( );
@@ -342,7 +326,7 @@ namespace QwerkE {
 				, s_ViewIdImGui
 			);
 
-			bgfx::touch(s_ViewIdImGui); // #REVIEW
+			bgfx::touch(s_ViewIdImGui);
 		}
 
 		void EndImGui()
@@ -369,7 +353,7 @@ namespace QwerkE {
 		void Shutdown()
 		{
 			if (Window::IsMinimized())
-				return;
+				return; // #TODO Review shutdown while minimized
 
 #ifdef _QBGFX
 #ifdef _QDEARIMGUI

@@ -85,32 +85,14 @@ namespace QwerkE {
 				case Mirror::IdForType<Shader>():
 					{
 						ASSERT(!Has<Shader>(guid), "Shader with GUID {0} already exists!", guid);
-						// #TODO Loading hard coded shader for now to test.
-						// Need to setup shaders to have both vertex and fragment files linked together.
-						// Might need to create shader component struct with 2 pointers and shaders just reference shader components.
 
 						constexpr u8 vertexFileNameIndex = 0;
 						const std::string& vertexFileName = currentAssetListPair.second[vertexFileNameIndex];
 						constexpr u8 fragmentFileNameIndex = 1;
 						const std::string& fragmentFileName = currentAssetListPair.second[fragmentFileNameIndex];
 
-						Shader* newShader = new Shader();
-						newShader->m_GUID = guid;
-						newShader->m_Program = myLoadShaderProgram( // Blinn shading
-							Paths::Shader(vertexFileName.c_str()).c_str(), // Paths::Shader("vs_mesh.bin").c_str(),
-							Paths::Shader(fragmentFileName.c_str()).c_str()  // Paths::Shader("fs_mesh.bin").c_str()
-						);
-
-						const bool error = false; // #TODO Catch shader creation error
-						// newShader->m_Program != 0?
-						if (error)
-						{
-							delete newShader;
-						}
-						else
-						{
-							m_MapOfLoadedAssetMaps[typeId][guid] = newShader;
-						}
+						Shader* newShader = new Shader(vertexFileName.c_str(), fragmentFileName.c_str(), guid);
+						m_MapOfLoadedAssetMaps[typeId][guid] = newShader;
 					}
 					break;
 
@@ -149,13 +131,8 @@ namespace QwerkE {
 
 		{   // Default Shader entry
 			// #TODO Use coded data instead of relying on a file to exist
-			Shader* nullShader = new Shader();
-			nullShader->m_Program = myLoadShaderProgram(
-				Paths::Shader("vs_cubes.bin").c_str(),
-				Paths::Shader("fs_cubes.bin").c_str()
-			);
-			nullShader->m_GUID = GUID::Invalid;
-			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->m_GUID] = nullShader;
+			Shader* nullShader = new Shader("vs_cubes.bin", "fs_cubes.bin", GUID::Invalid);
+			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->Guid()] = nullShader;
 		}
 	}
 

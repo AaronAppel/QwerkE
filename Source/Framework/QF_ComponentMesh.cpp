@@ -4,10 +4,7 @@
 #include <bgfx/bgfx.h>
 #endif
 
-#include "QC_Guid.h"
-
 #include "QF_Assets.h"
-#include "QF_ComponentTransform.h"
 #include "QF_Mesh.h"
 #include "QF_Mirror.h" // #TODO Needed for Release build, but should it be?
 #include "QF_Shader.h"
@@ -30,7 +27,7 @@ namespace QwerkE {
         bgfx::setVertexBuffer(stream, m_Mesh->m_vbh);
         bgfx::setIndexBuffer(m_Mesh->m_ibh);
 
-        bgfx::submit(viewId, m_Shader->m_Program);
+        bgfx::submit(viewId, m_Shader->Program());
     }
 
 }

@@ -7,14 +7,15 @@
 #include "QC_Guid.h"
 
 #include "QF_ComponentTransform.h"
-#include "QF_Mesh.h"
-#include "QF_Shader.h"
 
 namespace bgfxFramework {
     struct Mesh;
 }
 
 namespace QwerkE {
+
+    class Mesh;
+    class Shader;
 
     class ComponentMesh
     {
@@ -28,7 +29,6 @@ namespace QwerkE {
     private:
         MIRROR_PRIVATE_MEMBERS
 
-        bgfxFramework::Mesh* m_BgfxMesh = nullptr;
         Mesh* m_Mesh = nullptr;
         Shader* m_Shader = nullptr;
 
