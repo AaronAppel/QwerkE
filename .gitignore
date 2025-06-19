@@ -94,7 +94,7 @@ Documentation/README.md
 
 # .bat files
 START HERE.bat
-*.bat
+// *.bat
 !CleanupBuildFiles.bat
 !Setup-Windows-Vs2022.bat
 !CopyLibraryDLLs.bat
