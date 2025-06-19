@@ -44,23 +44,37 @@ typedef uint64_t u64;       //  0 to 18,446,744,073,709,551,615
 #define U64_MAX_DIGITS 20
 
 #include "QC_BitTypes.h"    // #TODO Comments for mouse over IDE context info
-using u1 = ubits1;          // size of 1 byte, value range of 0 to 1
-using u2 = ubits2;
-using u3 = ubits3;
-using u4 = ubits4;
-using u5 = ubits5;
-using u6 = ubits6;
-using u7 = ubits7;
-using u9 = ubits9;
+using u1    = ubits1;       // size of 1 byte, value range of 0 to 1
+using u2    = ubits2;
+using u3    = ubits3;
+using u4    = ubits4;
+using u5    = ubits5;
+using u6    = ubits6;
+using u7    = ubits7;
+// using u8 = uint8_t;
+using u9    = ubits9;
+using u10   = ubits10;
+using u11   = ubits11;
+using u12   = ubits12;
+using u13   = ubits13;
+using u14   = ubits14;
+using u15   = ubits15;
 
-using s1 = sbits1;
-using s2 = sbits2;
-using s3 = sbits3;
-using s4 = sbits4;
-using s5 = sbits5;
-using s6 = sbits6;
-using s7 = sbits7;
-using s9 = sbits9;
+using s1    = sbits1;
+using s2    = sbits2;
+using s3    = sbits3;
+using s4    = sbits4;
+using s5    = sbits5;
+using s6    = sbits6;
+using s7    = sbits7;
+// using s8 = int8_t;
+using s9    = sbits9;
+using s10   = sbits10;
+using s11   = sbits11;
+using s12   = sbits12;
+using s13   = sbits13;
+using s14   = sbits14;
+using s15   = sbits15;
 
 // String
 #include <string>
