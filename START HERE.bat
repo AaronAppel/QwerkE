@@ -1,7 +1,7 @@
 
 rem Create shortcut to build script to use from now on
 set TARGET='Build\Setup-Windows-Vs2022.bat'
-set SHORTCUT='Build Project Windows Vs 2022.lnk'
+set SHORTCUT='Build Vs 2022 Windows.lnk'
 set PWS=powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile
 
 rem #TODO Verify shortcut creation
@@ -9,7 +9,7 @@ rem #TODO Verify shortcut creation
 
 rem Build solution files
 pushd Build
-call premake5.exe --file="premake.lua" vs2022
+call premake5.exe --file="Build-QwerkE.lua" vs2022
 popd
 
 @echo off
