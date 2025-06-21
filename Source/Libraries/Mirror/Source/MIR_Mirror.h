@@ -229,24 +229,24 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::true_type
 
 // #NOTE Required to avoid sizeof(void) C2070 compiler error
 #define MIRROR_TYPE_NON_VOID(TYPE)																											\
-static_assert(sizeof(TYPE) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");												\
-localStaticTypeInfo.size = sizeof(TYPE);
+static_assert(sizeof(TYPE_WRAP(TYPE)) <= MIRROR_TYPE_SIZE_MAX, "Size is larger than member can hold!");										\
+localStaticTypeInfo.size = sizeof(TYPE_WRAP(TYPE));
 
 // #NOTE Must be a macro to avoid default specialization issues causing "multiply defined..." errors dependent on order of compilation.
 #define MIRROR_TYPE_COMMON(TYPE)																											\
 template <>																																	\
-static const Mirror::TypeInfo* Mirror::InfoForType<TYPE>() {																				\
+static const Mirror::TypeInfo* Mirror::InfoForType<TYPE_WRAP(TYPE)>() {																		\
 	static Mirror::TypeInfo localStaticTypeInfo;																							\
 																																			\
 	if (!localStaticTypeInfo.stringName.empty()) { return &localStaticTypeInfo; }															\
 																																			\
-	localStaticTypeInfo.category = GetCategory<TYPE>();																						\
-	localStaticTypeInfo.stringName = #TYPE;																									\
-	localStaticTypeInfo.id = Mirror::IdForType<TYPE>();																						\
+	localStaticTypeInfo.category = GetCategory<TYPE_WRAP(TYPE)>();																			\
+	localStaticTypeInfo.stringName = TYPE_WRAP_STRING(TYPE);																				\
+	localStaticTypeInfo.id = Mirror::IdForType<TYPE_WRAP(TYPE)>();																			\
 
 // #NOTE Using __VA_ARGS__ to handle macro calls with comma(s) ',' like MIRROR_INFO_FOR_TYPE(std::map<int, bool>)
-// #NOTE Below switch falthrough compiler warning 26819 cannot be handled within this macro
-#define MIRROR_TYPE(...) MIRROR_TYPE_IMPL(__VA_ARGS__)
+// #NOTE Below switch fallthrough compiler warning 26819 cannot be handled within this macro
+#define MIRROR_TYPE(...) MIRROR_TYPE_IMPL((__VA_ARGS__))
 #define MIRROR_TYPE_IMPL(TYPE)																												\
 MIRROR_TYPE_COMMON(TYPE)																													\
 MIRROR_TYPE_NON_VOID(TYPE)																													\
@@ -254,18 +254,18 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 	switch (localStaticTypeInfo.category)																									\
 	{																																		\
 	case TypeInfoCategory_Collection: /* #NOTE Intentional case fall through as a collection is also a class */								\
-		SetCollectionLambdas<TYPE>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<TYPE>::type());							\
+		SetCollectionLambdas<TYPE_WRAP(TYPE)>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<TYPE_WRAP(TYPE)>::type());		\
 		/*[[fallthrough]]*/																													\
 	case TypeInfoCategory_Class:																											\
-		SetConstructionLambda<TYPE>(&localStaticTypeInfo, std::is_class<TYPE>::type());														\
+		SetConstructionLambda<TYPE_WRAP(TYPE)>(&localStaticTypeInfo, std::is_class<TYPE_WRAP(TYPE)>::type());								\
 		break;																																\
 																																			\
 	case TypeInfoCategory_Pointer:																											\
-		localStaticTypeInfo.pointerDereferencedTypeInfo = Mirror::InfoForType<std::remove_pointer_t<TYPE>>();								\
+		localStaticTypeInfo.pointerDereferencedTypeInfo = Mirror::InfoForType<std::remove_pointer_t<TYPE_WRAP(TYPE)>>();					\
 		break;																																\
 																																			\
 	case TypeInfoCategory_Primitive:																										\
-		SetConstructionLambda<TYPE>(&localStaticTypeInfo, std::is_same<TYPE, std::string>::type());											\
+		SetConstructionLambda<TYPE_WRAP(TYPE)>(&localStaticTypeInfo, std::is_same<TYPE_WRAP(TYPE), std::string>::type());					\
 		break;																																\
 	}																																		\
 																																			\
@@ -273,7 +273,8 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 }
 
 // #NOTE Avoids sizeof(void) C2070 compile error
-#define MIRROR_TYPE_VOID(TYPE)																												\
+#define MIRROR_TYPE_VOID(...) MIRROR_TYPE_VOID_IMPL((__VA_ARGS__))
+#define MIRROR_TYPE_VOID_IMPL(TYPE)																											\
 MIRROR_TYPE_COMMON(TYPE)																													\
 	return &localStaticTypeInfo;																											\
 }
@@ -282,7 +283,8 @@ MIRROR_TYPE_COMMON(TYPE)																													\
 #define MIRROR_MEMBER_FIELDS_COUNT_DEFAULT 3
 #endif
 
-#define MIRROR_CLASS(TYPE)																													\
+#define MIRROR_CLASS(...) MIRROR_CLASS_IMPL((__VA_ARGS__))
+#define MIRROR_CLASS_IMPL(TYPE)																												\
 MIRROR_TYPE_COMMON(TYPE)																													\
 MIRROR_TYPE_NON_VOID(TYPE)																													\
 																																			\
@@ -290,7 +292,7 @@ MIRROR_TYPE_NON_VOID(TYPE)																													\
 	const int fieldsCount = MIRROR_MEMBER_FIELDS_COUNT_DEFAULT;																				\
 	localStaticTypeInfo.fields.reserve(fieldsCount);																						\
 																																			\
-	using ClassType = TYPE;																													\
+	using ClassType = TYPE_WRAP(TYPE);																										\
 	enum { BASE = __COUNTER__ };
 
 #ifndef MIRROR_OMIT_FLAGS

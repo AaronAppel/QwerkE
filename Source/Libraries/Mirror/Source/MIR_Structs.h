@@ -151,21 +151,37 @@ struct Mirror
 	};
 
 	template <typename T>
-	static const TypeInfo* InfoForType(T& typeObj); // #TODO Review if this forces const type mirroring for non-const types
+	static const TypeInfo* InfoForType(T& typeObj); // #TODO Review if this forces const type mirroring when passing non-const types
 
 	template <typename T>
-	static const TypeInfo* InfoForType(); // #TODO constexpr?
+	static const TypeInfo* InfoForType();
 
-	// #TODO Using an object ref not working. Needs more thought as supporting arrays, function pointers, and more need special branching logic
-	template <typename T>										// #TODO Passing by ref doesn't work for arrays and function pointers
-	static constexpr MIRROR_TYPE_ID_TYPE IdForType(T& typeObj); // #TODO Review if this forces const type mirroring for non-const types
+	template <typename T>
+	static constexpr MIRROR_TYPE_ID_TYPE IdForType(const T& typeObj);
 
 	template <typename T>
 	static constexpr MIRROR_TYPE_ID_TYPE IdForType();
 
-#define MIRROR_TYPE_ID_IMPL(ID, TYPE) template <> constexpr MIRROR_TYPE_ID_TYPE Mirror::IdForType<TYPE>() { return ID; }
+#if _MSC_VER && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL) // Compile option disabled: /Zc:preprocessor
+#define MIRROR_TYPE_ID_IMPL(ID, TYPE) \
+	template <> constexpr MIRROR_TYPE_ID_TYPE Mirror::IdForType<TYPE>() { return ID; }
 
 #define MIRROR_TYPE_ID(ID, ...) MIRROR_TYPE_ID_IMPL(ID, __VA_ARGS__)
+
+#else // Compile option enabled: /Zc:preprocessor
+#define VA_ARGS_STRING(...) #__VA_ARGS__
+#define VA_ARGS(...) __VA_ARGS__
+#define STRIP_PARENTHESES(X) X
+
+#define TYPE_WRAP_STRING(TYPE) STRIP_PARENTHESES( VA_ARGS_STRING TYPE )
+#define TYPE_WRAP(TYPE) STRIP_PARENTHESES(VA_ARGS TYPE)
+
+#define MIRROR_TYPE_ID_IMPL(ID, TYPE) \
+	template <> constexpr MIRROR_TYPE_ID_TYPE Mirror::IdForType<TYPE_WRAP(TYPE)>() { return ID; }
+
+#define MIRROR_TYPE_ID(ID, ...) MIRROR_TYPE_ID_IMPL(ID, (__VA_ARGS__))
+
+#endif // _MSC_VER && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL)
 
 	template<typename... T>
 	struct TypesList { };
