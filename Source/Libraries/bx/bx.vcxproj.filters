@@ -159,9 +159,6 @@
     <ClInclude Include="include\bx\macros.h">
       <Filter>include\bx</Filter>
     </ClInclude>
-    <ClInclude Include="include\bx\maputil.h">
-      <Filter>include\bx</Filter>
-    </ClInclude>
     <ClInclude Include="include\bx\math.h">
       <Filter>include\bx</Filter>
     </ClInclude>

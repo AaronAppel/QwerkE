@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2024 Branimir Karadzic. All rights reserved.
+ * Copyright 2010-2025 Branimir Karadzic. All rights reserved.
  * License: https://github.com/bkaradzic/bx/blob/master/LICENSE
  */
 
@@ -13,7 +13,7 @@ namespace bx
 	//
 	StringView tokenizeCommandLine(const StringView& _commandLine, char* _buffer, uint32_t& _bufferSize, int32_t& _argc, char* _argv[], int32_t _maxArgvs, char _term)
 	{
-		int32_t numberOfArguments = 0;
+		int32_t argc = 0;
 		const char* curr = _commandLine.getPtr();
 		const char* end  = _commandLine.getTerm();
 		char* currOut = _buffer;
@@ -33,7 +33,7 @@ namespace bx
 
 		while (end != curr
 		&&     _term != *curr
-		&&     numberOfArguments < _maxArgvs)
+		&&     argc < _maxArgvs)
 		{
 			switch (state)
 			{
@@ -53,8 +53,8 @@ namespace bx
 						term = ' ';
 					}
 
-					_argv[numberOfArguments] = currOut;
-					++numberOfArguments;
+					_argv[argc] = currOut;
+					++argc;
 
 					state = Copy;
 					break;
@@ -122,14 +122,14 @@ namespace bx
 		}
 
 		*currOut = '\0';
-		if (0 < numberOfArguments
-		&&  '\0' == _argv[numberOfArguments-1][0])
+		if (0 < argc
+		&&  '\0' == _argv[argc-1][0])
 		{
-			--numberOfArguments;
+			--argc;
 		}
 
 		_bufferSize = (uint32_t)(currOut - _buffer);
-		_argc = numberOfArguments;
+		_argc = argc;
 
 		if ('\0' != *curr)
 		{

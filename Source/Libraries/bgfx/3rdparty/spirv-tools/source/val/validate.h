@@ -94,6 +94,13 @@ spv_result_t ValidateInterfaces(ValidationState_t& _);
 /// @return SPV_SUCCESS if no errors are found.
 spv_result_t ValidateFloatControls2(ValidationState_t& _);
 
+/// @brief Validates duplicated execution modes for each entry point.
+///
+/// @param[in] _ the validation state of the module
+///
+/// @return SPV_SUCCESS if no errors are found.
+spv_result_t ValidateDuplicateExecutionModes(ValidationState_t& _);
+
 /// @brief Validates memory instructions
 ///
 /// @param[in] _ the validation state of the module
@@ -216,8 +223,17 @@ spv_result_t RayReorderNVPass(ValidationState_t& _, const Instruction* inst);
 /// Validates correctness of mesh shading instructions.
 spv_result_t MeshShadingPass(ValidationState_t& _, const Instruction* inst);
 
+/// Validates correctness of tensor instructions.
+spv_result_t TensorPass(ValidationState_t& _, const Instruction* inst);
+
+/// Validates correctness of certain special type instructions.
+spv_result_t InvalidTypePass(ValidationState_t& _, const Instruction* inst);
+
 /// Calculates the reachability of basic blocks.
 void ReachabilityPass(ValidationState_t& _);
+
+/// Validates tensor layout and view instructions.
+spv_result_t TensorLayoutPass(ValidationState_t& _, const Instruction* inst);
 
 /// Validates execution limitations.
 ///

@@ -11,7 +11,6 @@ namespace ImGui
         {
             Regular,
             Mono,
-            Bold,
 
             Count
         };
@@ -51,5 +50,4 @@ namespace ImGui
 #include "widgets/file_list.h"
 #include "widgets/gizmo.h"
 #include "widgets/markdown.h"
-#include "widgets/memory_editor.h"
 #include "widgets/range_slider.h"

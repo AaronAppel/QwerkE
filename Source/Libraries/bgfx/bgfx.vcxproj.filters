@@ -4,9 +4,6 @@
     <Filter Include="3rdparty">
       <UniqueIdentifier>{3E7DA5C5-2A4A-00D1-5363-EE783F8F355F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rdparty\dear-imgui">
-      <UniqueIdentifier>{11FB4EC6-7D5C-2CD4-06CA-7286722A6393}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3rdparty\meshoptimizer">
       <UniqueIdentifier>{9D1582F4-890F-AB46-727C-41575E1511B3}</UniqueIdentifier>
     </Filter>
@@ -27,12 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3rdparty\dear-imgui\imgui_user.h">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\dear-imgui\imgui_user.inl">
-      <Filter>3rdparty\dear-imgui</Filter>
-    </ClInclude>
     <ClInclude Include="include\bgfx\bgfx.h">
       <Filter>include\bgfx</Filter>
     </ClInclude>

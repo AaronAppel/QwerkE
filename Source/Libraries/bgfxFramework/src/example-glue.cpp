@@ -4,7 +4,7 @@
  */
 
 #include "imguiCommon/imguiCommon.h"
-#include <dear-imgui/imgui_user.h>" // Modified by Aaron Appel Mar 23rd 2024
+#include <dear-imgui/imgui_user.h> // Modified by Aaron Appel Mar 23rd 2024
 #include "entry/entry.h"
 #include "entry/cmd.h"
 #include "entry/dialog.h"

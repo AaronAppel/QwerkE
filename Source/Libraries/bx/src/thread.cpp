@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2024 Branimir Karadzic. All rights reserved.
+ * Copyright 2010-2025 Branimir Karadzic. All rights reserved.
  * License: https://github.com/bkaradzic/bx/blob/master/LICENSE
  */
 
@@ -13,18 +13,9 @@
 #endif
 
 #if BX_CRT_NONE
-#	include "crt0.h"
-#elif  BX_PLATFORM_ANDROID \
-	|| BX_PLATFORM_LINUX   \
-	|| BX_PLATFORM_IOS     \
-	|| BX_PLATFORM_OSX     \
-	|| BX_PLATFORM_PS4     \
-	|| BX_PLATFORM_RPI     \
-	|| BX_PLATFORM_NX
+#	include <bx/crt0.h>
+#elif  BX_PLATFORM_POSIX
 #	include <pthread.h>
-#	if BX_PLATFORM_LINUX && (BX_CRT_GLIBC < 21200)
-#		include <sys/prctl.h>
-#	endif // BX_PLATFORM_
 #elif  BX_PLATFORM_WINDOWS \
 	|| BX_PLATFORM_WINRT   \
 	|| BX_PLATFORM_XBOXONE \
@@ -82,13 +73,8 @@ namespace bx
 	void* ThreadInternal::threadFunc(void* _arg)
 	{
 		Thread* thread = (Thread*)_arg;
-		union
-		{
-			void* ptr;
-			int32_t i;
-		} cast;
-		cast.i = thread->entry();
-		return cast.ptr;
+		intptr_t result = thread->entry();
+		return bitCast<void*>(result);
 	}
 #endif // BX_PLATFORM_
 
@@ -100,7 +86,7 @@ namespace bx
 		, m_exitCode(kExitSuccess)
 		, m_running(false)
 	{
-		BX_STATIC_ASSERT(sizeof(ThreadInternal) <= sizeof(m_internal) );
+		static_assert(sizeof(ThreadInternal) <= sizeof(m_internal) );
 
 		ThreadInternal* ti = (ThreadInternal*)m_internal;
 #if BX_CRT_NONE
@@ -130,6 +116,16 @@ namespace bx
 		m_fn = _fn;
 		m_userData = _userData;
 		m_stackSize = _stackSize;
+
+		if (NULL != _name)
+		{
+			BX_WARN(strLen(_name) < int32_t(BX_COUNTOF(m_name) )-1, "Truncating thread name.");
+			strCopy(m_name, BX_COUNTOF(m_name), _name);
+		}
+		else
+		{
+			m_name[0] = '\0';
+		}
 
 		ThreadInternal* ti = (ThreadInternal*)m_internal;
 #if BX_CRT_NONE
@@ -189,11 +185,6 @@ namespace bx
 		m_running = true;
 		m_sem.wait();
 
-		if (NULL != _name)
-		{
-			setThreadName(_name);
-		}
-
 		return true;
 	}
 
@@ -213,13 +204,9 @@ namespace bx
 		CloseHandle(ti->m_handle);
 		ti->m_handle = INVALID_HANDLE_VALUE;
 #elif BX_PLATFORM_POSIX
-		union
-		{
-			void* ptr;
-			int32_t i;
-		} cast;
-		pthread_join(ti->m_handle, &cast.ptr);
-		m_exitCode = cast.i;
+		void* ptr;
+		pthread_join(ti->m_handle, &ptr);
+		m_exitCode = narrowCast<int32_t>(bitCast<intptr_t>(ptr) );
 		ti->m_handle = 0;
 #endif // BX_PLATFORM_
 
@@ -243,9 +230,10 @@ namespace bx
 #if BX_CRT_NONE
 		BX_UNUSED(_name);
 #elif  BX_PLATFORM_OSX \
-	|| BX_PLATFORM_IOS
+	|| BX_PLATFORM_IOS   \
+	|| BX_PLATFORM_VISIONOS
 		pthread_setname_np(_name);
-#elif (BX_CRT_GLIBC >= 21200)
+#elif BX_CRT_GLIBC
 		pthread_setname_np(ti->m_handle, _name);
 #elif BX_PLATFORM_LINUX
 		prctl(PR_SET_NAME,_name, 0, 0, 0);
@@ -258,7 +246,7 @@ namespace bx
 		{
 			uint32_t length = (uint32_t)strLen(_name)+1;
 			uint32_t size = length*sizeof(wchar_t);
-			wchar_t* name = (wchar_t*)alloca(size);
+			wchar_t* name = (wchar_t*)BX_STACK_ALLOC(size);
 			mbstowcs(name, _name, size-2);
 			SetThreadDescription(ti->m_handle, name);
 		}
@@ -314,6 +302,7 @@ namespace bx
 #endif // BX_PLATFORM_WINDOWS
 
 		m_sem.post();
+		setThreadName(m_name);
 		int32_t result = m_fn(this, m_userData);
 		return result;
 	}
@@ -331,7 +320,7 @@ namespace bx
 #if BX_CRT_NONE
 	TlsData::TlsData()
 	{
-		BX_STATIC_ASSERT(sizeof(TlsDataInternal) <= sizeof(m_internal) );
+		static_assert(sizeof(TlsDataInternal) <= sizeof(m_internal) );
 
 		TlsDataInternal* ti = (TlsDataInternal*)m_internal;
 		BX_UNUSED(ti);
@@ -358,7 +347,7 @@ namespace bx
 #elif BX_PLATFORM_WINDOWS
 	TlsData::TlsData()
 	{
-		BX_STATIC_ASSERT(sizeof(TlsDataInternal) <= sizeof(m_internal) );
+		static_assert(sizeof(TlsDataInternal) <= sizeof(m_internal) );
 
 		TlsDataInternal* ti = (TlsDataInternal*)m_internal;
 		ti->m_id = TlsAlloc();
@@ -388,7 +377,7 @@ namespace bx
 
 	TlsData::TlsData()
 	{
-		BX_STATIC_ASSERT(sizeof(TlsDataInternal) <= sizeof(m_internal) );
+		static_assert(sizeof(TlsDataInternal) <= sizeof(m_internal) );
 
 		TlsDataInternal* ti = (TlsDataInternal*)m_internal;
 		int result = pthread_key_create(&ti->m_id, NULL);
