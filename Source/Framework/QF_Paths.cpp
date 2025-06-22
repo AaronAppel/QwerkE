@@ -5,8 +5,8 @@ namespace QwerkE {
 	namespace Paths {
 
 		static std::string s_ExePath = "";
-		static std::string s_AssetsDir = "Assets";
-		static std::string s_NullAssetsDir = "Assets";
+		static std::string s_AssetsDir = "Assets";		// #TODO Review paths
+		static std::string s_NullAssetsDir = "Assets";  // #TODO Review paths
 
 		void SetExePath(std::string newExePath)
 		{
@@ -26,6 +26,11 @@ namespace QwerkE {
 		void SetNullAssetsDir(std::string newNullAssetsDir)
 		{
 			s_NullAssetsDir = newNullAssetsDir;
+		}
+
+		const std::string& GetExePath()
+		{
+			return s_ExePath;
 		}
 
 		std::string AssetsDir()

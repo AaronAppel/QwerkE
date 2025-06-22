@@ -87,20 +87,11 @@
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
-						"m_Guid":	"6900853547483118241"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"vs_picking_shaded.bin",
-						"std::string":	"fs_picking_id.bin"
-					}
-				},
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
 						"m_Guid":	"18015078069625190773"
 					},
 					"std::vector<std::string>":	{
-						"std::string":	"vs_picking_shaded.bin",
-						"std::string":	"fs_picking_shaded.bin"
+						"std::string":	"Cubes.vert.bin",
+						"std::string":	"Cubes.frag.bin"
 					}
 				},
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
@@ -108,8 +99,8 @@
 						"m_Guid":	"1030711180692038478"
 					},
 					"std::vector<std::string>":	{
-						"std::string":	"vs_cubes.bin",
-						"std::string":	"fs_cubes.bin"
+						"std::string":	"Test.vert.bin",
+						"std::string":	"Test.frag.bin"
 					}
 				}
 			}

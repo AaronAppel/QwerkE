@@ -131,7 +131,7 @@ namespace QwerkE {
 
 		{   // Default Shader entry
 			// #TODO Use coded data instead of relying on a file to exist
-			Shader* nullShader = new Shader("vs_cubes.bin", "fs_cubes.bin", GUID::Invalid);
+			Shader* nullShader = new Shader("Cubes.vert.bin", "Cubes.frag.bin", GUID::Invalid);
 			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->Guid()] = nullShader;
 		}
 	}

@@ -216,7 +216,14 @@ namespace QwerkE {
 #ifdef _QDEBUG
 						{   // Debug drawer call
 							constexpr bgfx::ViewId viewIdFbo1 = 2; // #TODO Fix hard coded value
-							bgfx::setState(BGFX_STATE_DEFAULT);
+
+							uint64_t bgfxState = 0
+								| BGFX_STATE_DEPTH_TEST_MASK
+								| BGFX_STATE_WRITE_Z
+								| BGFX_STATE_CULL_CW
+								| BGFX_STATE_CULL_CCW
+								;
+							bgfx::setState(bgfxState);
 							DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
 							debugDrawer.begin(viewIdFbo1, true);
 
@@ -245,6 +252,7 @@ namespace QwerkE {
 					ImGui::EndPopup();
 				}
 
+				// #NOTE Order dependencies with ImGui::IsItemFocused() calls in EditorCameraUpdate()
 				ImGui::Image(ImTextureID(m_TextureId), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
 
 				if (Input::MousePressed(QKey::e_MouseRight) && ImGui::IsItemHovered())
@@ -270,6 +278,16 @@ namespace QwerkE {
 
 			void EditorCameraUpdate()
 			{
+				// #NOTE Support editor camera zoom when scene view image is hovered, even if window is not focused
+				if (ImGui::IsItemHovered())
+				{
+					const float mouseScroll = Input::MouseScrollDelta();
+					if (mouseScroll != 0.f)
+					{
+						m_EditorCamera.m_Fov -= mouseScroll;
+					}
+				}
+
 				// #TODO Keyboard input on window focused, mouse only on item focus or dragging
 				if (!ImGui::IsWindowFocused() && !m_IsLastFocusedSceneView)
 					return;
@@ -284,7 +302,7 @@ namespace QwerkE {
 				static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
 
 				// #TODO Abstract input type. Maybe need a context to only activate if item/window focused
-				if (m_MouseStartedDraggingOnImage || ImGui::IsItemFocused())
+				if (m_MouseStartedDraggingOnImage)
 				{
 					// Mouse (look)
 					if (Input::MouseDown(QKey::e_MouseRight))
@@ -406,12 +424,6 @@ namespace QwerkE {
 					bx::mtxRotateXYZ(rotationMatrix, -rotationSpeed * deltaTime, 0.f, 0.f);
 					bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
 					// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
-				}
-
-				const float mouseScroll = Input::MouseScrollDelta();
-				if (mouseScroll != 0.f)
-				{
-					m_EditorCamera.m_Fov -= mouseScroll;
 				}
 
 				if (const bool useTargetLookAt = false)

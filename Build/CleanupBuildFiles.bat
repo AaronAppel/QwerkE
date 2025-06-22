@@ -1,3 +1,4 @@
+
 del shaderc.exe
 
 rem Start in repo root dir
@@ -10,6 +11,11 @@ del /Q /F /S /AH bin
 rmdir /Q /S bin
 
 del *.sln
+
+if exist Assets\Shaders\Bin\ (
+	del /Q /F /S /AH Assets\Shaders\Bin
+	rmdir /Q /S Assets\Shaders\Bin
+)
 
 pushd Source
 call Cleanup.bat

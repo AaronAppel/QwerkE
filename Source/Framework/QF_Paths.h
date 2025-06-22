@@ -1,6 +1,6 @@
 #pragma once
 
-#include <filesystem>
+#include <filesystem> // #TODO Review including here vs .cpp
 #include <string>
 
 typedef std::filesystem::path Path;
@@ -13,9 +13,9 @@ namespace QwerkE {
 
 		void SetExePath(std::string newExePath);
 		void SetAssetsDir(std::string newAssetsDir);
-		void SetNullAssetsDir(std::string newRootDir);
+		void SetNullAssetsDir(std::string newNullAssetsDir);
 
-		std::string RootDir();
+		const std::string& GetExePath();
 
 		std::string AssetsDir();
 

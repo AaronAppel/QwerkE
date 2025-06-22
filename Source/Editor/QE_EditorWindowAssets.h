@@ -3,9 +3,11 @@
 #include "QF_Assets.h"
 #include "QF_Mesh.h"
 #include "QF_Shader.h"
+#include "QF_System.h"
 
 #include "QE_Editor.h"
 #include "QE_EditorWindow.h"
+#include "QE_Paths.h"
 #include "QE_Settings.h"
 
 namespace QwerkE {
@@ -52,6 +54,11 @@ namespace QwerkE {
 
                     if (ImGui::CollapsingHeader("Shaders"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                     {
+                        if (ImGui::SmallButton("Recompile All Shaders"))
+                        {
+                            System::StartProcess(Paths::Script("CompileShaders.bat")); // #TODO move hard coded file name somewhere better
+                        }
+
                         if (const std::unordered_map<GUID, Shader*>* shaders = Assets::ViewAssets<Shader>())
                         {
                             for (auto& guidShaderPair : *shaders)
