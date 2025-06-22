@@ -23,6 +23,7 @@ project "bx"
 	
 	filter "action:vs*"
 		defines "_CRT_SECURE_NO_WARNINGS"
+		buildoptions { "/Zc:preprocessor" }
 	
 	filter "configurations:Debug"
 		defines

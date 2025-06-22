@@ -79,7 +79,7 @@ project "Framework"
 		"%{LibraryLib.glfw}",
 	}
 	
-	vpaths -- VS Filters
+	vpaths -- VS Filters (Solution Explorer folders)
 	{
 		-- ["Headers"] = { "**.h", "**.hpp" },
 		-- ["Sources/*"] = {"**.c", "**.cpp"},
@@ -97,7 +97,10 @@ project "Framework"
 	-- filter "configurations:*64"
 	-- 	architecture "x86_64"
 	--	defines { "_Q64BIT", }
-
+			
+	filter "action:vs*"
+		buildoptions { "/Zc:preprocessor" } -- bx dependency
+	
 	filter "configurations:Debug"
 		defines
 		{

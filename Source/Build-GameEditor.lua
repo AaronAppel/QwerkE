@@ -37,7 +37,6 @@ project "GameEditor"
 		
 		"%{wks.location}/Source/Libraries/bx/include",
 		"%{wks.location}/Source/Libraries/bx/include/compat/msvc",
-		"%{wks.location}/Source/Libraries/bgfx/3rdparty",
 		"%{wks.location}/Source/Libraries/bgfx/include",
 		"%{wks.location}/Source/Libraries/bgfxFramework/include",
 	}
@@ -59,6 +58,9 @@ project "GameEditor"
 	-- filter "configurations:*64"
 	-- 	architecture "x86_64"
 	--	defines { "_Q64BIT", }
+			
+	filter "action:vs*"
+		buildoptions { "/Zc:preprocessor" } -- bx dependency
 	
 	filter "system:windows"
 	   systemversion "latest"

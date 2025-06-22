@@ -31,6 +31,9 @@ project "bgfxFramework"
 	{
 		"bgfx",
 	}
+	
+	filter "action:vs*"
+		buildoptions { "/Zc:preprocessor" } -- bx dependency
 
 	filter "configurations:Debug"
 		defines

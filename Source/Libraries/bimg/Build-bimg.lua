@@ -32,6 +32,9 @@ project "bimg"
 		"_HAS_EXCEPTIONS=0", -- #TODO Add to target configuration
 	}
 	
+	filter "action:vs*"
+		buildoptions { "/Zc:preprocessor" }
+	
 	filter "configurations:Debug"
 		defines { "BX_CONFIG_DEBUG=1", "_DEBUG", }
 		

@@ -8,3 +8,6 @@ project "Mirror"
 		"**.cpp",
 	}
 	
+	filter "action:vs*"
+		buildoptions { "/Zc:preprocessor" } -- bx dependency
+		
