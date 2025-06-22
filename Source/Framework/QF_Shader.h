@@ -8,6 +8,7 @@
 
 #include "QC_GUID.h"
 
+#include "QF_Buffer.h"
 #include "QF_Files.h"
 #include "QF_Paths.h"
 
@@ -46,7 +47,7 @@ namespace QwerkE {
 			bgfx::ShaderHandle m_FragmentShader = BGFX_INVALID_HANDLE;
 
 			m_VertexFileBuffer.Release();
-			m_VertexFileBuffer = Files::LoadFile(Paths::Shader(m_VertexShaderFileName.c_str()).c_str());
+			m_VertexFileBuffer = Files::LoadFile(Paths::ShaderBin(m_VertexShaderFileName.c_str()).c_str());
 			if (m_VertexFileBuffer)
 			{
 				const bgfx::Memory* vertMemory = bgfx::makeRef(m_VertexFileBuffer.As<const void*>(), m_VertexFileBuffer.SizeInBytes() - 1);
@@ -57,7 +58,7 @@ namespace QwerkE {
 			}
 
 			m_FragmentFileBuffer.Release();
-			m_FragmentFileBuffer = Files::LoadFile(Paths::Shader(m_FragmentShaderFileName.c_str()).c_str());
+			m_FragmentFileBuffer = Files::LoadFile(Paths::ShaderBin(m_FragmentShaderFileName.c_str()).c_str());
 			if (m_FragmentFileBuffer)
 			{
 				const bgfx::Memory* fragMemory = bgfx::makeRef(m_FragmentFileBuffer.As<const void*>(), m_FragmentFileBuffer.SizeInBytes() - 1);
@@ -71,6 +72,8 @@ namespace QwerkE {
 			{
 				m_Program = bgfx::createProgram(m_VertexShader, m_FragmentShader, false);
 			}
+
+			ASSERT(m_InvalidBgfxId != m_Program.idx, "Invalid vertex and/or fragment shader!");
 
 			if (bgfx::isValid(m_VertexShader))
 			{
@@ -86,6 +89,7 @@ namespace QwerkE {
 		const GUID& Guid() { return m_GUID; }
 
 	private:
+		static constexpr unsigned short m_InvalidBgfxId = U16_MAX;
 		bgfx::ProgramHandle m_Program = BGFX_INVALID_HANDLE;
 
 		std::string m_VertexShaderFileName = "";

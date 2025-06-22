@@ -111,8 +111,35 @@ namespace QwerkE {
 
 		std::string Shader(const char* shaderFileName)
 		{
-			// #TODO Should the RendererType be used to find a shader sub directory (dx11/, openGL/, etc?
 			return ShadersDir() + "\\" + shaderFileName;
+		}
+
+		std::string ShadersBinDir()
+		{
+			return ShadersDir() + "\\Bin";
+		}
+
+		std::string ShaderBin(const char* shaderBinaryFileName)
+		{
+			ASSERT(shaderBinaryFileName, "Invalid shaderBinaryFileName argument!");
+
+			std::string returnPath = ShadersBinDir();
+
+			switch (bgfx::getRendererType()) {
+			case bgfx::RendererType::Direct3D11:
+			case bgfx::RendererType::Direct3D12: returnPath += "\\dx11\\";  break;
+			case bgfx::RendererType::Gnm:        returnPath += "\\pssl\\";  break;
+			case bgfx::RendererType::Metal:      returnPath += "\\metal\\"; break;
+			case bgfx::RendererType::OpenGL:     returnPath += "\\glsl\\";  break;
+			case bgfx::RendererType::OpenGLES:   returnPath += "\\essl\\";  break;
+			case bgfx::RendererType::Vulkan:     returnPath += "\\spirv\\"; break;
+
+			case bgfx::RendererType::Noop:
+			default:
+				LOG_ERROR("{0}(): Error loading binary shader {1}", __FUNCTION__, shaderBinaryFileName ? shaderBinaryFileName : "null");
+			}
+
+			return returnPath + shaderBinaryFileName;
 		}
 
 		std::string StylesDir()

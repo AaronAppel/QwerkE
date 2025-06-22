@@ -302,7 +302,7 @@ namespace QwerkE {
                     {
                         Assets::AddToRegistry(Mirror::IdForType<Mesh>(), GUID(), fileName.string());
                     }
-                    else if (Files::Exists(Paths::Shader(fileName.string().c_str()).c_str()))
+                    else if (Files::Exists(Paths::ShaderBin(fileName.string().c_str()).c_str()))
                     {
                         Assets::AddToRegistry(Mirror::IdForType<Shader>(), GUID(), fileName.string());
                     }
