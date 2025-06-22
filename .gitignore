@@ -1,6 +1,7 @@
 // #TODO Update .gitignore data
 .vs/
 /bin
+/Assets/Shaders/Bin
 
 *.tlog
 *.log
@@ -16,7 +17,6 @@
 
 *.dll
 !QwerkE_Framework/Libraries/**/*.dll
-
 
 // Profiler log file
 instrumentor_log.json

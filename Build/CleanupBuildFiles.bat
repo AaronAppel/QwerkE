@@ -1,3 +1,5 @@
+del shaderc.exe
+
 rem Start in repo root dir
 cd ../
 

@@ -1,0 +1,1 @@
+call ..\Source\Libraries\bgfx\BuildShaderCompilerExe.bat
