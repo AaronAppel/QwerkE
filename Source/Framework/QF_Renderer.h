@@ -18,9 +18,10 @@ namespace QwerkE {
 
 		void EndFrame();
 
-		void ToggleDebugStats();
+		u16 NextViewId();
 
 #ifdef _QDEBUG
+		void ToggleDebugStats();
 		DebugDrawEncoder& DebugDrawer();
 #endif
 

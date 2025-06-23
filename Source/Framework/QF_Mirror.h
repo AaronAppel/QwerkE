@@ -19,11 +19,13 @@
 #include "QF_GameActions.h"
 #include "QF_EntityHandle.h"
 #include "QF_Enums.h"
+#include "QF_FrameBuffer.h"
 #include "QF_Input.h"
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
 #include "QF_Settings.h"
 #include "QF_Shader.h"
+#include "QF_Texture.h"
 
 #include "QF_ComponentHelpers.h"
 
@@ -53,6 +55,8 @@ enum FieldSerializationFlags : MIRROR_FIELD_FLAG_TYPE
 MIRROR_TYPE_ID(159, QwerkE::Shader)
 MIRROR_TYPE_ID(160, QwerkE::Mesh)
 MIRROR_TYPE_ID(161, QwerkE::Scene)
+MIRROR_TYPE_ID(162, QwerkE::Texture)
+MIRROR_TYPE_ID(163, QwerkE::FrameBuffer)
 /* END */
 
 // #NOTE Framework Ids start at +1000

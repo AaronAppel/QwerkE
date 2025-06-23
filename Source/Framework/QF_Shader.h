@@ -17,6 +17,7 @@ namespace QwerkE {
 	class Shader
 	{
 	public:
+		// #TODO Can hide constructor and friend with Assets class
 		Shader(const char* a_VertexShaderFileName, const char* a_FragmentShaderFileName, GUID a_Guid = GUID())
 		{
 			ASSERT(a_VertexShaderFileName && a_FragmentShaderFileName, "Invalid file name(s)!");
@@ -28,7 +29,11 @@ namespace QwerkE {
 
 		Shader::~Shader()
 		{
-			bgfx::destroy(m_Program);
+			if (bgfx::isValid(m_ProgramHandle))
+			{
+				bgfx::destroy(m_ProgramHandle);
+				m_ProgramHandle = BGFX_INVALID_HANDLE;
+			}
 		}
 
 		// #TODO Consider hiding (private) for release builds?
@@ -36,9 +41,9 @@ namespace QwerkE {
 		{
 			ASSERT(!m_VertexShaderFileName.empty() && !m_FragmentShaderFileName.empty(), "Invalid file name(s)!");
 
-			if (bgfx::isValid(m_Program))
+			if (bgfx::isValid(m_ProgramHandle))
 			{
-				bgfx::destroy(m_Program);
+				bgfx::destroy(m_ProgramHandle);
 			}
 
 			// #TODO Better error handling
@@ -70,10 +75,10 @@ namespace QwerkE {
 
 			if (bgfx::isValid(m_VertexShader) && bgfx::isValid(m_FragmentShader))
 			{
-				m_Program = bgfx::createProgram(m_VertexShader, m_FragmentShader, false);
+				m_ProgramHandle = bgfx::createProgram(m_VertexShader, m_FragmentShader, false);
 			}
 
-			ASSERT(m_InvalidBgfxId != m_Program.idx, "Invalid vertex and/or fragment shader!");
+			ASSERT(m_InvalidBgfxId != m_ProgramHandle.idx, "Invalid vertex and/or fragment shader!");
 
 			if (bgfx::isValid(m_VertexShader))
 			{
@@ -85,12 +90,12 @@ namespace QwerkE {
 			}
 		}
 
-		const bgfx::ProgramHandle& Program() { return m_Program; }
+		const bgfx::ProgramHandle& ProgramHandle() { return m_ProgramHandle; }
 		const GUID& Guid() { return m_GUID; }
 
 	private:
 		static constexpr unsigned short m_InvalidBgfxId = U16_MAX;
-		bgfx::ProgramHandle m_Program = BGFX_INVALID_HANDLE;
+		bgfx::ProgramHandle m_ProgramHandle = BGFX_INVALID_HANDLE;
 
 		std::string m_VertexShaderFileName = "";
 		std::string m_FragmentShaderFileName = "";

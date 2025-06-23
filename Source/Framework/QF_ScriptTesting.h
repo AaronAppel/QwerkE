@@ -33,7 +33,7 @@ namespace QwerkE {
 			ComponentTransform& myTransform = m_Entity.GetComponent<ComponentTransform>();
 			vec3f endPosition = myTransform.GetPosition();
 			endPosition += 1.f;
-			Debug::DrawLine(myTransform.GetPosition(), endPosition);
+			Debug::DrawLine(2, myTransform.GetPosition(), endPosition); // #TODO Hard coded view ID
 			// Debug::DrawCylinder(myTransform.GetPosition(), adjustedTransform, 0.1f);
 #endif
 		}

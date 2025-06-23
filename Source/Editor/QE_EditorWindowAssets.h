@@ -72,7 +72,7 @@ namespace QwerkE {
                                 for (size_t i = 0; i < 1; i++)
                                 {
                                     ImGui::SameLine();
-                                    ImGui::Text(std::to_string(guidShaderPair.second->Program().idx).c_str());
+                                    ImGui::Text(std::to_string(guidShaderPair.second->ProgramHandle().idx).c_str());
                                 }
                                 ImGui::SameLine();
                                 if (ImGui::SmallButton("Reload"))

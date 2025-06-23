@@ -30,7 +30,7 @@ namespace QwerkE {
         // #TODO Review setting renderer state
         // bgfx::setState(BGFX_STATE_DEFAULT); // uint64_t
 
-        bgfx::submit(viewId, m_Shader->Program());
+        bgfx::submit(viewId, m_Shader->ProgramHandle());
     }
 
 }

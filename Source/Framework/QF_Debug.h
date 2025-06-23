@@ -29,7 +29,7 @@ else { LOG_CRITICAL("Assert! {0}, {1}, in {2}() in {3}({4})", #x, __VA_ARGS__, _
 
 namespace QwerkE {
 
-	namespace Debug {
+	namespace Debug { // #TODO Review having rendering and bgfx logic in the Debug namespace. Maybe in a new DebugDraw?
 
 		const uint32_t g_White = 0xffffffff;
 		const uint32_t g_Black = 0xff000000;
@@ -59,17 +59,17 @@ namespace QwerkE {
 		void DrawCapsule(const uint32_t a_Color = g_White);
 		void DrawCircle(const uint32_t a_Color = g_White);
 		void DrawCone(const uint32_t a_Color = g_White);
-		void DrawCube(const vec3f a_Position, const float a_Size = 1.f, const bool a_Wireframe = false, const uint32_t a_Color = g_White);
+		void DrawCube(const uint16_t a_ViewId, const vec3f a_Position, const float a_Size = 1.f, const bool a_Wireframe = false, const uint32_t a_Color = g_White);
 		void DrawCylinder(const uint32_t a_Color = g_White);
 		void DrawFrustum(const uint32_t a_Color = g_White);
-		void DrawGrid(const vec3f a_Position, const u16 a_Size, const uint32_t a_Color = g_White);
+		void DrawGrid(const uint16_t a_ViewId, const vec3f a_Position, const u16 a_Size, const uint32_t a_Color = g_White);
 
-		void DrawLine(const vec3f a_Start, const vec3f a_End, const uint32_t a_Color = g_White);
+		void DrawLine(const uint16_t a_ViewId, const vec3f a_Start, const vec3f a_End, const uint32_t a_Color = g_White);
 		void DrawLineList(const uint32_t a_Color = g_White);
 
 		void DrawOrb(const uint32_t a_Color = g_White);
 		void DrawQuad(const uint32_t a_Color = g_White);
-		void DrawSphere(const vec3f a_Position, const float a_Scale = 1.f, const uint32_t a_Color = g_White);
+		void DrawSphere(const uint16_t a_ViewId, const vec3f a_Position, const float a_Scale = 1.f, const uint32_t a_Color = g_White);
 		void DrawTriList(const uint32_t a_Color = g_White);
 
 	}

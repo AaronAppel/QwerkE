@@ -9,6 +9,7 @@ namespace QwerkE {
 	class Mesh
 	{
 	public:
+		// #TODO Can hide constructor and friend with Assets class
 		Mesh(GUID a_Guid = GUID())
 		{
 			m_GUID = a_Guid;

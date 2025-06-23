@@ -1,9 +1,7 @@
 #include "QF_Mirror.h"
 
 #include <stdint.h>
-#include <string>
 #include <map>
-#include <vector>
 
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 
@@ -14,21 +12,6 @@
 #ifdef _QENTT
 #include "Libraries/entt/entt.hpp"
 #endif
-
-#include "QC_Guid.h"
-
-#include "QF_QKey.h"
-#include "QF_GameActions.h"
-#include "QF_EntityHandle.h"
-#include "QF_Enums.h"
-#include "QF_Input.h"
-#include "QF_Mesh.h"
-#include "QF_Scene.h"
-#include "QF_Shader.h"
-
-#include "QF_ComponentHelpers.h"
-
-#include "QF_ScriptHelpers.h"
 
 // #TODO Move this logic to Mirror
 template <typename SuperClass, typename... SubClass>
@@ -316,6 +299,12 @@ MIRROR_CLASS(QwerkE::Mesh)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Shader)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Texture)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::FrameBuffer)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Input::GameActions)

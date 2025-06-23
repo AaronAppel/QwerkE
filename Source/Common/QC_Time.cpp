@@ -24,7 +24,8 @@ namespace QwerkE {
 
         void WriteAppStartTime()
         {
-            assert(!s_AppStartTime && "App start time has already been set");
+			// #TODO Review if re-initialization is okay. Restarting app may want to write a new time
+            // assert(!s_AppStartTime && "App start time has already been set");
             s_AppStartTime = Now();
             s_LatestFrameStartTime = s_AppStartTime;
         }

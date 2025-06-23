@@ -6,6 +6,15 @@ namespace QwerkE {
 
 	namespace System {
 
+        void YieldTime()
+        {
+#ifdef _WINDOWS_
+            YieldProcessor();
+#else
+// #error Platform unsupported!
+#endif // _WINDOWS_
+        }
+
 		void Command(const std::string& a_Command)
 		{
             // #TODO Stalls QwerkE and doesn't execute command as expected

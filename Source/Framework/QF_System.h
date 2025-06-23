@@ -6,9 +6,10 @@ namespace QwerkE {
 
 	namespace System {
 
-		// #TODO Implement system or OS operations
 		// void Sleep(double/float milliseconds/seconds);
-		// void Yield();
+		// #TODO ::Sleep(milliseconds);
+
+		void YieldTime(); // #TODO Rename "Yield" after fixing WinBase.h include name collision
 
 		void Command(const std::string& a_Command);
 

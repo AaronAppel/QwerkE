@@ -111,7 +111,7 @@ namespace QwerkE {
 
             Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments); // #TODO Improve name
 
-            Settings::LoadEngineSettings("Editor.qsetting");
+            Settings::LoadEngineSettings("Editor.qsetting"); // #TODO How to load? From where and what if a default file doesn't exist?
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
 			Framework::Initialize(engineSettings.windowWidthPixels, engineSettings.windowHeightPixels);
 
@@ -187,8 +187,7 @@ namespace QwerkE {
                     // #TODO Review sleep function
                     // From: https://github.com/ocornut/imgui/blob/docking/backends/imgui_impl_glfw.cpp#L1006
 #ifdef _QWINDOWS
-					YieldProcessor();
-                    // ::Sleep(milliseconds);
+                    System::YieldTime();
 #else
                     usleep(milliseconds * 1000);
 #endif
@@ -771,24 +770,11 @@ namespace QwerkE {
             {
                 // LOG_WARN("e_ScrollDownReleased()");
             }
-
-#ifdef _QDEBUG
-            Debug::DrawCube({}, 1.f, false, Debug::g_Purple);
-#endif // _QDEBUG
         }
 
         void local_EndFrame()
         {
-#ifdef _QDEBUG
-            if (!Window::IsMinimized())
-            {
-                // #TODO Replace editor draws by moving to EditorWindowSceneView class
-                Debug::DrawSphere(vec3f(.0f, .0f, .0f), 0.1f);
-                Debug::DrawGrid(vec3f(.0f, .0f, .0f), 50);
-            }
-#endif // _QDEBUG
             Framework::EndFrame();
-
             ++s_FramesCompleted;
         }
 

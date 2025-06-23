@@ -21,6 +21,7 @@
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
 #include "QF_Shader.h"
+#include "QF_Texture.h"
 #include "QF_RendererHelpers.h"
 // #include "QF_Scene.h" #TODO Add scenes to asset registry
 #include "QF_Serialize.h"
@@ -96,6 +97,12 @@ namespace QwerkE {
 					}
 					break;
 
+				case Mirror::IdForType<Texture>():
+					ASSERT(false, "Unimplemented!");
+					// Texture newTexture = new Texture();
+					// m_MapOfLoadedAssetMaps[typeId][guid] = newTexture;
+					break;
+
 				default:
 					LOG_ERROR("Unsupported asset type {0}!", typeId);
 					return GUID::Invalid;
@@ -133,6 +140,10 @@ namespace QwerkE {
 			// #TODO Use coded data instead of relying on a file to exist
 			Shader* nullShader = new Shader("Cubes.vert.bin", "Cubes.frag.bin", GUID::Invalid);
 			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->Guid()] = nullShader;
+		}
+
+		{
+			// #TODO Null texture
 		}
 	}
 

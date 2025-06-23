@@ -37,9 +37,11 @@
 
 #include "QF_Assets.h"
 #include "QF_Enums.h"
+#include "QF_FrameBuffer.h"
 #include "QF_Paths.h"
 #include "QF_RendererHelpers.h"
 #include "QF_Shader.h"
+#include "QF_Texture.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
@@ -49,43 +51,9 @@ namespace QwerkE {
 		static bool s_showRendererDebugStats = false;
 
 #ifdef _QBGFX
-		// Object picking
-// #define RENDER_PASS_SHADING 0  // Default forward rendered geo with simple shading
-// #define RENDER_PASS_ID      1  // ID buffer for picking
-// #define RENDER_PASS_BLIT    2  // Blit GPU render target to CPU texture
-
-#define ID_DIM 8  // Size of the ID buffer
-
-		// Mouse picking
-		bgfxFramework::Mesh* m_meshes[12];
-		float m_meshScale[12];
-		float m_idsF[12][4];
-		uint32_t m_idsU[12];
-		uint32_t m_highlighted;
-
-		// Resource handles
-		bgfx::UniformHandle u_tint;
-		bgfx::UniformHandle u_id;
-		bgfx::TextureHandle m_pickingRT;
-		bgfx::TextureHandle m_pickingRTDepth;
-		bgfx::TextureHandle m_blitTex;
-		bgfx::FrameBufferHandle m_pickingFB;
-
-		uint8_t m_blitData[ID_DIM * ID_DIM * 4]; // Read blit into this
-
-		uint32_t m_reading;
-		uint32_t m_currFrame;
-		static const bgfx::ViewId s_ViewIdPicking = 3;
-		//
 		static const bgfx::ViewId s_ViewIdMain = 0;
 		static const bgfx::ViewId s_ViewIdImGui = 1;
-		static const bgfx::ViewId s_ViewIdFbo1 = 2;
-
-		static bgfx::FrameBufferHandle s_FrameBufferHandleFbo1; // #TESTING
-		static bgfx::TextureHandle s_FrameBufferTexturesFBO1[2];
-		static bgfx::FrameBufferHandle s_FrameBufferHandleEditorCamera; // #TESTING
-		static bgfx::TextureHandle s_FrameBufferTextureEditorCamera;
-
+		static bgfx::ViewId s_NextViewId = s_ViewIdImGui + 1;
 #ifdef _QDEBUG
 		static DebugDrawEncoder* s_DebugDrawer = nullptr;
 #endif
@@ -155,153 +123,33 @@ namespace QwerkE {
 			imguiCreate(18.f);
 #ifdef _QDEBUG
 			ddInit();
+			s_DebugDrawer = new DebugDrawEncoder();
 #endif
 #endif
-			const bool has_mips = false;
-			const uint16_t num_layers = 1;
-
-			// s_ReadBackTexture = bgfx::createTexture2D(windowSize.x, windowSize.y,
-			// 	has_mips, num_layers,
-			// 	bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_READ_BACK | BGFX_TEXTURE_BLIT_DST);
-			// ASSERT(bgfx::isValid(s_ReadBackTexture), "Error creating read back texture!");
-
-			{	// FBO 1
-				// Create read texture
-				s_FrameBufferTexturesFBO1[0] = bgfx::createTexture2D(windowSize.x, windowSize.y,
-					has_mips, num_layers,
-					bgfx::TextureFormat::BGRA8,
-					BGFX_TEXTURE_RT);
-				ASSERT(bgfx::isValid(s_FrameBufferTexturesFBO1[0]), "Error creating frame buffer texture [0]!");
-				// Create write texture
-				s_FrameBufferTexturesFBO1[1] = bgfx::createTexture2D(windowSize.x, windowSize.y,
-					has_mips, num_layers,
-					bgfx::TextureFormat::D16,
-					BGFX_TEXTURE_RT_WRITE_ONLY);
-				ASSERT(bgfx::isValid(s_FrameBufferTexturesFBO1[1]), "Error creating frame buffer depth texture [1]!");
-				s_FrameBufferHandleFbo1 = bgfx::createFrameBuffer(2, s_FrameBufferTexturesFBO1); // #TESTING
-				ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandleFbo1.idx, "Error creating frame buffer!");
-				// SetupFBO view
-				bgfx::setViewName(s_ViewIdFbo1, "FBO1");
-				bgfx::setViewFrameBuffer(s_ViewIdFbo1, s_FrameBufferHandleFbo1);
-				bgfx::setViewClear(s_ViewIdFbo1
-					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
-					, 0x303030ff
-					, 1.0f
-					, 0
-				);
-			}
-
-			{
-				s_FrameBufferTextureEditorCamera = bgfx::createTexture2D(windowSize.x, windowSize.y,
-					has_mips, num_layers,
-					bgfx::TextureFormat::BGRA8,
-					BGFX_TEXTURE_RT);
-				ASSERT(bgfx::isValid(s_FrameBufferTextureEditorCamera), "Error creating frame buffer texture [0]!");
-
-				s_FrameBufferHandleEditorCamera = bgfx::createFrameBuffer(1, &s_FrameBufferTextureEditorCamera); // #TESTING
-				ASSERT(bgfx::kInvalidHandle != s_FrameBufferHandleEditorCamera.idx, "Error creating frame buffer!");
-			}
-
-			{	// Setup editor camera view
-				bgfx::setViewName(s_ViewIdMain, "Main");
-				bgfx::setViewFrameBuffer(s_ViewIdMain, s_FrameBufferHandleEditorCamera);
-				bgfx::setViewClear(s_ViewIdMain
-					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
-					, 0x303030ff
-					, 1.0f
-					, 0
-				);
-			}
-
-			{	// Object picking
-				bgfx::setViewName(s_ViewIdPicking, "Picking");
-				bgfx::setViewFrameBuffer(s_ViewIdPicking, m_pickingFB);
-				bgfx::setViewClear(s_ViewIdPicking
-					, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
-					, 0x000000ff
-					, 1.0f
-					, 0
-				);
-
-				// Create uniforms
-				u_tint = bgfx::createUniform("u_tint", bgfx::UniformType::Vec4); // Tint for when you click on items
-				u_id = bgfx::createUniform("u_id", bgfx::UniformType::Vec4); // ID for drawing into ID buffer
-
-				// #TODO Call Assets to find and create shaders (Assets calling utility load function)
-				// m_shadingProgram = Assets::Get<Shader>( );
-				// m_idProgram = Assets::Get<Shader>( );
-
-				m_highlighted = UINT32_MAX;
-				m_reading = 0;
-				m_currFrame = UINT32_MAX;
-
-				bx::RngMwc mwc;  // Random number generator
-				for (uint32_t ii = 0; ii < 12; ++ii)
-				{
-					// #TODO See how m_meshes is used in bgfx example
-					// m_meshes[ii] = meshLoad(meshPaths[ii % BX_COUNTOF(meshPaths)]);
-					// m_meshScale[ii] = meshScale[ii % BX_COUNTOF(meshPaths)];
-
-					// For the sake of this example, we'll give each mesh a random color,  so the debug output looks colorful.
-					// In an actual app, you'd probably just want to count starting from 1
-					uint32_t rr = mwc.gen() % 256;
-					uint32_t gg = mwc.gen() % 256;
-					uint32_t bb = mwc.gen() % 256;
-					m_idsF[ii][0] = rr / 255.0f;
-					m_idsF[ii][1] = gg / 255.0f;
-					m_idsF[ii][2] = bb / 255.0f;
-					m_idsF[ii][3] = 1.0f;
-					m_idsU[ii] = rr + (gg << 8) + (bb << 16) + (255u << 24);
-				}
-
-				// Set up ID buffer, which has a color target and depth buffer
-				m_pickingRT = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
-					| BGFX_TEXTURE_RT
-					| BGFX_SAMPLER_MIN_POINT
-					| BGFX_SAMPLER_MAG_POINT
-					| BGFX_SAMPLER_MIP_POINT
-					| BGFX_SAMPLER_U_CLAMP
-					| BGFX_SAMPLER_V_CLAMP
-				);
-				m_pickingRTDepth = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::D32F, 0
-					| BGFX_TEXTURE_RT
-					| BGFX_SAMPLER_MIN_POINT
-					| BGFX_SAMPLER_MAG_POINT
-					| BGFX_SAMPLER_MIP_POINT
-					| BGFX_SAMPLER_U_CLAMP
-					| BGFX_SAMPLER_V_CLAMP
-				);
-
-				// CPU texture for blitting to and reading ID buffer so we can see what was clicked on.
-				// Impossible to read directly from a render target, you *must* blit to a CPU texture
-				// first. Algorithm Overview: Render on GPU -> Blit to CPU texture -> Read from CPU
-				// texture.
-				m_blitTex = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
-					| BGFX_TEXTURE_BLIT_DST
-					| BGFX_TEXTURE_READ_BACK
-					| BGFX_SAMPLER_MIN_POINT
-					| BGFX_SAMPLER_MAG_POINT
-					| BGFX_SAMPLER_MIP_POINT
-					| BGFX_SAMPLER_U_CLAMP
-					| BGFX_SAMPLER_V_CLAMP
-				);
-
-				bgfx::TextureHandle rt[2] =
-				{
-					m_pickingRT,
-					m_pickingRTDepth
-				};
-				m_pickingFB = bgfx::createFrameBuffer(BX_COUNTOF(rt), rt, true);
-			}
-
 			bgfx::touch(s_ViewIdMain); // Render main view 1st frame
 #endif
 
-#ifdef _QDEBUG
-			s_DebugDrawer = new DebugDrawEncoder();
+			return eOperationResult::Success;
+		}
+
+		void Shutdown()
+		{
+			if (Window::IsMinimized())
+				return; // #TODO Review shutdown while minimized
+
+#ifdef _QBGFX
+#ifdef _QDEARIMGUI
+			imguiDestroy();
+#endif
+			ddShutdown();
+
+			bgfx::setGraphicsDebuggerPresent(true); //#TODO Investigate debug break
+			bgfx::shutdown();
 #endif
 
-			return eOperationResult::Success;
+#ifdef _QDEBUG
+			delete s_DebugDrawer;
+#endif
 		}
 
 #if _QDEARIMGUI
@@ -350,39 +198,17 @@ namespace QwerkE {
 #endif
 		}
 
-		void Shutdown()
+		u16 NextViewId()
 		{
-			if (Window::IsMinimized())
-				return; // #TODO Review shutdown while minimized
-
-#ifdef _QBGFX
-#ifdef _QDEARIMGUI
-			imguiDestroy();
-#endif
-			bgfx::destroy(s_FrameBufferHandleFbo1);
-			bgfx::destroy(s_FrameBufferHandleEditorCamera);
-
-			bgfx::destroy(s_FrameBufferTexturesFBO1[0]);
-			bgfx::destroy(s_FrameBufferTexturesFBO1[1]);
-			bgfx::destroy(s_FrameBufferTextureEditorCamera);
-
-			ddShutdown();
-
-			bgfx::setGraphicsDebuggerPresent(true); //#TODO Investigate debug break
-			bgfx::shutdown();
-#endif
-
-#ifdef _QDEBUG
-			delete s_DebugDrawer;
-#endif
+			return s_NextViewId++;
 		}
 
+#ifdef _QDEBUG
 		void ToggleDebugStats()
 		{
 			s_showRendererDebugStats = !s_showRendererDebugStats;
 		}
 
-#ifdef _QDEBUG
 		DebugDrawEncoder& DebugDrawer()
 		{
 			ASSERT(s_DebugDrawer, "Debug Drawer is null!");
