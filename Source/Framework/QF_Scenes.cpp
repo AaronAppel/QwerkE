@@ -375,6 +375,18 @@ namespace QwerkE {
 			return s_CurrentSceneIndex;
 		}
 
+		int GetSceneIndex(const Scene* a_Scene)
+		{
+			for (size_t i = 0; i < s_Scenes.size(); i++)
+			{
+				if (a_Scene == s_Scenes[i])
+				{
+					return i;
+				}
+			}
+			return 0; // #TODO Is 0 acceptable return value? Is a_Scene null, in the list, or is the list empty?
+		}
+
 		// #NOTE Scene transition change
 		// bool HasScene(const Scene* scene)
 		// {

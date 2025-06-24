@@ -66,7 +66,7 @@
 			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
-						"m_Guid":	"5515617290093115200"
+						"m_Guid":	"15538032833040342314"
 					},
 					"std::vector<std::string>":	{
 						"std::string":	"NewScene1.qscene"
@@ -74,42 +74,10 @@
 				},
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
-						"m_Guid":	"18264920608085666888"
+						"m_Guid":	"12494459921426365588"
 					},
 					"std::vector<std::string>":	{
 						"std::string":	"GameScene1.qscene"
-					}
-				},
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
-						"m_Guid":	"17441732634043826981"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"NewScene5.qscene"
-					}
-				},
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
-						"m_Guid":	"9788585351930178655"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"NewScene6.qscene"
-					}
-				},
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
-						"m_Guid":	"10075335882208621323"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"NewScene7.qscene"
-					}
-				},
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
-						"m_Guid":	"3087632003632543771"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"NewScene8.qscene"
 					}
 				}
 			}
@@ -124,6 +92,15 @@
 					"std::vector<std::string>":	{
 						"std::string":	"Cubes.vert.bin",
 						"std::string":	"Cubes.frag.bin"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"6679565844562264290"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"vs_mesh.vert.bin",
+						"std::string":	"fs_mesh.frag.bin"
 					}
 				},
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{

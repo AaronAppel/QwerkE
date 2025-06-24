@@ -181,6 +181,7 @@ MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_MEMBER(m_EditorCamera)
 MIRROR_CLASS_MEMBER(m_EditorCameraTransform)
 MIRROR_CLASS_MEMBER(m_IsLastFocusedSceneView)
+MIRROR_CLASS_MEMBER(m_CurrentSceneGuid)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowSettings)

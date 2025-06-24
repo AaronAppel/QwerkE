@@ -84,10 +84,12 @@ namespace QwerkE {
 
 		void AddScript(const eScriptTypes scriptType, const EntityHandle& entityHandle)
 		{
-			Scriptable* newScript = Scripting::InstantiateScript(scriptType);
-			newScript->SetEntity(entityHandle);
-			newScript->OnCreate();
-			m_ScriptInstances[scriptType] = newScript;
+			if (Scriptable* newScript = Scripting::InstantiateScript(scriptType))
+			{
+				newScript->SetEntity(entityHandle);
+				newScript->OnCreate();
+				m_ScriptInstances[scriptType] = newScript;
+			}
 		}
 
 		bool RemoveScript(const eScriptTypes scriptType)

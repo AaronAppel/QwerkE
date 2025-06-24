@@ -34,11 +34,13 @@ namespace QwerkE {
         const double& AppStartTime();
 
         void SetMaximumFramerate(unsigned short maximumFramerate);
+        void SetTimeScale(double timeScale);
 
         bool ShouldProcessNextFrame();
         void StartFrame();
 
         const double& PreviousFrameDuration();
+        const double& PreviousFrameDurationUnscaled();
 
         float NowFloat();
 

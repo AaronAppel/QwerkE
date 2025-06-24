@@ -98,6 +98,11 @@ namespace QwerkE {
             OnLoaded();
         }
 
+        Scene(GUID a_Guid) : m_SceneGuid(a_Guid)
+        {
+            OnLoaded();
+        }
+
         Scene(const std::string& sceneFileName) :
             m_SceneFileName(sceneFileName)
         { }
@@ -112,7 +117,7 @@ namespace QwerkE {
 
         std::string m_SceneFileName = Constants::gc_DefaultStringValue;
 
-        GUID m_SceneGuid = GUID();
+        GUID m_SceneGuid = GUID::Invalid;
 
         PhysicsSystem* m_PhysicsSystem = nullptr;
 

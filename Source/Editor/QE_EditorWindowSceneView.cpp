@@ -2,20 +2,13 @@
 
 #include "QC_Time.h"
 
+#include "QF_Assets.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 
 namespace QwerkE {
 
 	namespace Editor {
-
-		// EditorWindowSceneView::EditorWindowSceneView(u8 textureId, u8 viewId) :
-		// 	EditorWindow("Scene View", EditorWindowTypes::SceneView),
-		// 	m_TextureId(textureId),
-		// 	m_ViewId(viewId)
-		// {
-		// 	Init();
-		// }
 
 		EditorWindowSceneView::EditorWindowSceneView(GUID guid) :
 			EditorWindow("Scene View", EditorWindowTypes::SceneView, guid)
@@ -79,14 +72,29 @@ namespace QwerkE {
 				, 1.0f
 				, 0
 			);
+
+			m_CurrentScene = Scenes::GetScene(m_CurrentSceneGuid); // #TODO Serialize constsruct using guid member
+			if (nullptr == m_CurrentScene && GUID::Invalid != m_CurrentSceneGuid)
+			{
+				m_CurrentScene = Assets::Get<Scene>(m_CurrentSceneGuid);
+			}
 		}
 
 		void EditorWindowSceneView::DrawInternal()
 		{
 			if (nullptr == m_CurrentScene)
 			{
-				m_CurrentScene = Scenes::GetCurrentScene();
-				m_LastSceneIndex = Scenes::GetCurrentSceneIndex();
+				m_CurrentScene = Scenes::GetScene(m_CurrentSceneGuid);
+				if (!m_CurrentScene)
+				{
+					m_CurrentSceneGuid = GUID::Invalid;
+					m_LastSceneIndex = Scenes::GetCurrentSceneIndex();
+					m_CurrentScene = Scenes::GetCurrentScene();
+				}
+				else
+				{
+					m_LastSceneIndex = Scenes::GetSceneIndex(m_CurrentScene);
+				}
 			}
 
 			const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
@@ -99,6 +107,7 @@ namespace QwerkE {
 			if (!m_CurrentScene)
 			{
 				ImGui::Text("Null scene selected");
+				m_CurrentSceneGuid = GUID::Invalid;
 				return;
 			}
 
@@ -133,6 +142,7 @@ namespace QwerkE {
 			if (ImGui::Combo(m_ScenesComboLabelBuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
 			{
 				m_CurrentScene = scenes[m_LastSceneIndex];
+				m_CurrentSceneGuid = m_CurrentScene->GetGuid();
 				// #NOTE Scene transition changes removes above lines for below
 				// #TODO SetActive(true/false) ?
 				// Scenes::SetCurrentScene(index);
@@ -174,6 +184,14 @@ namespace QwerkE {
 					currentItemNameLength = handle.EntityName().size();
 				}
 				++i;
+			}
+
+			ImGui::SameLine();
+			std::string buttonName = "?##";
+			buttonName += std::to_string(GetGuid());
+			if (ImGui::Button(buttonName.c_str()))
+			{
+				ImGui::OpenPopup("TimeControls");
 			}
 
 			const float camerasItemWidth = currentItemNameLength * ImGui::g_pixelsPerCharacter + 20.f; // #NOTE Slight increase for shorter names
@@ -249,6 +267,21 @@ namespace QwerkE {
 				ImGui::EndPopup();
 			}
 
+			if (ImGui::BeginPopup("TimeControls"))
+			{
+				static float timeScale = 1.f; // #TODO Add Time::TimeScale
+				if (ImGui::SliderFloat("Time", &timeScale, 0.f, 10.f)) // Max = FLT_MAX / 2.f
+				{
+					Time::SetTimeScale(timeScale);
+				}
+				if (ImGui::IsItemClicked(ImGui::MouseRight))
+				{
+					timeScale = 1.f;
+					Time::SetTimeScale(timeScale);
+				}
+				ImGui::EndPopup();
+			}
+
 			// #NOTE Order dependencies with ImGui::IsItemFocused() calls in EditorCameraUpdate()
 			ImGui::Image(ImTextureID(m_FrameBufferTextures[0].TextureHandle().idx), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
 
@@ -295,7 +328,7 @@ namespace QwerkE {
 				return;
 			}
 
-			const float deltaTime = Time::PreviousFrameDuration();
+			const float unscaledDeltaTime = Time::PreviousFrameDurationUnscaled();
 			static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
 
 			// #TODO Abstract input type. Maybe need a context to only activate if item/window focused
@@ -305,11 +338,11 @@ namespace QwerkE {
 				if (Input::MouseDown(QKey::e_MouseRight))
 				{
 					static float yaw = 0.f;
-					yaw += Input::MouseDelta().x / pixelRatio * deltaTime;
+					yaw += Input::MouseDelta().x / pixelRatio * unscaledDeltaTime;
 
 					// Pitch transform.m_Matrix[6];
 					static float pitch = 0.f;
-					pitch += Input::MouseDelta().y / pixelRatio * deltaTime;
+					pitch += Input::MouseDelta().y / pixelRatio * unscaledDeltaTime;
 
 					constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
 					bx::Vec3 rotate = { pitch, yaw, 0.f };
@@ -341,14 +374,14 @@ namespace QwerkE {
 			{
 				// #TODO Use stick magnitude to allow different speed based on stick deviation
 				vec3f pos = m_EditorCameraTransform.GetPosition();
-				bx::Vec3 eye = bx::mad(forward, deltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
+				bx::Vec3 eye = bx::mad(forward, unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
 				m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// m_EditorCameraTransform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveBackward) || Input::GamepadAxis(e_QGamepadAxisLeftStick).y > controllerStickDeadzone)
 			{
 				vec3f pos = m_EditorCameraTransform.GetPosition();
-				bx::Vec3 eye = bx::mad(forward, deltaTime * -m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
+				bx::Vec3 eye = bx::mad(forward, unscaledDeltaTime * -m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
 				m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// m_EditorCameraTransform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
@@ -363,14 +396,14 @@ namespace QwerkE {
 			if (Input::KeyDown(gameActions.Camera_MoveLeft) || Input::GamepadAxis(e_QGamepadAxisLeftStick).x < -controllerStickDeadzone)
 			{
 				vec3f pos = m_EditorCameraTransform.GetPosition();
-				bx::Vec3 eye = bx::mad(right, -deltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
+				bx::Vec3 eye = bx::mad(right, -unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
 				m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// m_EditorCameraTransform.m_Matrix[12] -= (m_EditorCamera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveRight) || Input::GamepadAxis(e_QGamepadAxisLeftStick).x > controllerStickDeadzone)
 			{
 				vec3f pos = m_EditorCameraTransform.GetPosition();
-				bx::Vec3 eye = bx::mad(right, deltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
+				bx::Vec3 eye = bx::mad(right, unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
 				m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// m_EditorCameraTransform.m_Matrix[12] += (m_EditorCamera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
@@ -378,11 +411,11 @@ namespace QwerkE {
 			constexpr u8 yPositionIndex = 13;
 			if (Input::KeyDown(gameActions.Camera_MoveDown) || Input::GamepadDown(e_GamepadBumperLeft))
 			{
-				m_EditorCameraTransform.m_Matrix[yPositionIndex] -= (m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * deltaTime);
+				m_EditorCameraTransform.m_Matrix[yPositionIndex] -= (m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * unscaledDeltaTime);
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveUp) || Input::GamepadDown(e_GamepadBumperRight))
 			{
-				m_EditorCameraTransform.m_Matrix[yPositionIndex] += (m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * deltaTime);
+				m_EditorCameraTransform.m_Matrix[yPositionIndex] += (m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * unscaledDeltaTime);
 			}
 
 			if (Input::KeyDown(gameActions.Camera_RotateRight) || Input::GamepadAxis(e_QGamepadAxisRightStick).x > controllerStickDeadzone)
@@ -392,7 +425,7 @@ namespace QwerkE {
 				static float angle = 0.f;
 				// angle += rotationSpeed * deltaTime;
 				float rotationMatrix[16];
-				bx::mtxRotateXYZ(rotationMatrix, 0.f, rotationSpeed * deltaTime, 0.f);
+				bx::mtxRotateXYZ(rotationMatrix, 0.f, rotationSpeed * unscaledDeltaTime, 0.f);
 				bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
 				// LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
 			}
@@ -402,7 +435,7 @@ namespace QwerkE {
 				static float angle = 0.f;
 				// angle += rotationSpeed * deltaTime;
 				float rotationMatrix[16];
-				bx::mtxRotateXYZ(rotationMatrix, 0.f, -rotationSpeed * deltaTime, 0.f);
+				bx::mtxRotateXYZ(rotationMatrix, 0.f, -rotationSpeed * unscaledDeltaTime, 0.f);
 				bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
 				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
@@ -410,7 +443,7 @@ namespace QwerkE {
 			{
 				constexpr float rotationSpeed = 0.5f;
 				float rotationMatrix[16];
-				bx::mtxRotateXYZ(rotationMatrix, rotationSpeed * deltaTime, 0.f, 0.f);
+				bx::mtxRotateXYZ(rotationMatrix, rotationSpeed * unscaledDeltaTime, 0.f, 0.f);
 				bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
 				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
@@ -418,7 +451,7 @@ namespace QwerkE {
 			{
 				constexpr float rotationSpeed = 0.5f;
 				float rotationMatrix[16];
-				bx::mtxRotateXYZ(rotationMatrix, -rotationSpeed * deltaTime, 0.f, 0.f);
+				bx::mtxRotateXYZ(rotationMatrix, -rotationSpeed * unscaledDeltaTime, 0.f, 0.f);
 				bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
 				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}

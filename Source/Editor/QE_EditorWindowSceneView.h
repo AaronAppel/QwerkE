@@ -73,6 +73,8 @@ namespace QwerkE {
 			Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseRight);
 
 			Scene* m_CurrentScene = nullptr;
+			GUID m_CurrentSceneGuid = GUID::Invalid;
+
 			char m_ScenesComboLabelBuffer[33] = "Scenes:    ##0000000000000000000";
 			s32 m_LastSceneIndex = 0;
 

@@ -46,6 +46,7 @@ namespace QwerkE {
 
         Scene* GetCurrentScene(); // #NOTE Scene transition changes removes line
         int GetCurrentSceneIndex(); // #NOTE Scene transition changes removes line
+        int GetSceneIndex(const Scene* a_Scene);
         int SceneCount();
         Scene* GetScene(const GUID& guid);
 

@@ -15,6 +15,7 @@ namespace QwerkE {
     // #TODO Common shouldn't have QwerkE code. Move to Qwerke::Time file
     static double s_AppStartTime = 0.;
     static double s_FrameDelta = 0.;
+    static double s_TimeScale = 1.;
 
     static double s_MinimumtimeBetweenFrames = 0.;
     static double s_LatestFrameStartTime = 0.;
@@ -36,6 +37,11 @@ namespace QwerkE {
             s_MinimumtimeBetweenFrames = 1.0 / (double)maximumFramerate;
         }
 
+        void SetTimeScale(double timeScale)
+        {
+            s_TimeScale = timeScale;
+        }
+
         bool ShouldProcessNextFrame()
         {
             const double now = Now();
@@ -55,6 +61,11 @@ namespace QwerkE {
         }
 
         const double& PreviousFrameDuration()
+        {
+            return s_PreviousFrameDuration * s_TimeScale;
+        }
+
+        const double& PreviousFrameDurationUnscaled()
         {
             return s_PreviousFrameDuration;
         }
