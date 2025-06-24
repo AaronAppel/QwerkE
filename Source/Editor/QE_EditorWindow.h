@@ -259,11 +259,15 @@ namespace QwerkE {
 
 					if (!(m_WindowFlags & EditorWindowFlags::HideWindowOptions))
 					{
-						ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x / 2 - (10 * 7.f));
-						if (ImGui::SmallButton("Edit Window Options"))
+						const ImVec2 previousCursorPos = ImGui::GetCursorPos();
+						// ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x / 2 - (10 * 7.f));
+						// if (ImGui::SmallButton("Edit Window Options"))
+						ImGui::SameLine(0.f, ImGui::GetContentRegionAvail().x - 7.f);
+						if (ImGui::SmallButton(":"))
 						{
 							ImGui::OpenPopup("##EditorWindowOptionsEdit");
 						}
+						ImGui::SetCursorPos(previousCursorPos - ImVec2{ 0.f, 2.f });
 						m_WindowOptions.Edit();
 					}
 					DrawInternal();

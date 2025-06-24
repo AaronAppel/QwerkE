@@ -4,6 +4,9 @@ del shaderc.exe
 rem Start in repo root dir
 cd ../
 
+del /Q /F /S /AH enc_temp_folder
+rmdir /Q /S "enc_temp_folder"
+
 del /Q /F /S /AH .vs
 rmdir /Q /S ".vs"
 

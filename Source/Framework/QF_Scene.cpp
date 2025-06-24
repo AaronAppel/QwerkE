@@ -202,7 +202,7 @@ namespace QwerkE {
             return;
         }
 
-        m_SceneFileName = oldName;
+        m_SceneFileName = oldName; // #NOTE Overwrite serialized name
 
         OnLoaded();
 

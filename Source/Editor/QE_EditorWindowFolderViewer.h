@@ -34,7 +34,7 @@ namespace QwerkE {
 				e_ExcludeDirectories,
 				e_ExcludeFiles,
 			};
-			FolderViewerFiltering m_Filtering = e_None;
+			FolderViewerFiltering m_Filtering = e_None; // #TODO Implement
 			float m_UiScalar = 1.f;
 			std::string m_SearchOrFilterBuffer;
 			Path m_CurrentDirectory = Paths::AssetsDir();

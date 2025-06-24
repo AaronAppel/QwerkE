@@ -29,13 +29,18 @@ namespace QwerkE {
 				m_CurrentDirectory = result;
 			}
 
-			ImGui::SameLineEnd(55.f);
-			ImGui::PushItemWidth(150.f);
+			if (ImGui::GetWindowWidth() > 650.f)
+			{
+				constexpr float roomForDirectoryButtons = 370.f;
+				ImGui::SameLine(roomForDirectoryButtons);
+			}
+
+			ImGui::PushItemWidth(135.f);
 			// #TODO Add search or filter feature
 			ImGui::InputText("##SearchOrFilter", m_SearchOrFilterBuffer.data(), m_SearchOrFilterBuffer.capacity(), ImGuiInputTextFlags_::ImGuiInputTextFlags_None);
 			ImGui::PopItemWidth();
 
-			ImGui::SameLineEnd(27.f);
+			ImGui::SameLine();
 			const bool excludingDirs = m_Filtering & e_ExcludeDirectories;
 			if (excludingDirs)
 			{
@@ -92,17 +97,14 @@ namespace QwerkE {
 			}
 			ImGui::PopStyleColor(3);
 
-			ImGui::SameLineEnd(11.f);
-			ImGui::PushItemWidth(100);
-			ImGui::SliderFloat("##ScalarSlider", &m_UiScalar, 0.3f, 3.f, "Scale", ImGuiSliderFlags_::ImGuiSliderFlags_AlwaysClamp);
+			ImGui::SameLine();
+			ImGui::PushItemWidth(60.f);
+			ImGui::SliderFloat("##ScalarSlider", &m_UiScalar, 0.1f, 2.f, "Scale", ImGuiSliderFlags_::ImGuiSliderFlags_AlwaysClamp);
 			ImGui::PopItemWidth();
 
-			constexpr float padding = 5.f;
 			float thumbnailSize = 128.f * m_UiScalar;
-			float cellSize = thumbnailSize + padding;
-
 			float panelWidth = ImGui::GetContentRegionAvail().x;
-			int columnCount = (int)(panelWidth / cellSize);
+			int columnCount = (int)(panelWidth / thumbnailSize);
 			if (columnCount < 1)
 				columnCount = 1;
 

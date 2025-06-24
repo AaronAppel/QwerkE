@@ -64,7 +64,7 @@ namespace ImGui {
 				}
 				if (i < directory.size() - 1)
 				{
-					ImGui::SameLine();
+					ImGui::SameLine(0, 1.f); // #NOTE Reduce space between buttons
 				}
 			}
 			else if (i == directory.size() - 1)

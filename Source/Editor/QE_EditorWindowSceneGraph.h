@@ -75,7 +75,7 @@ namespace QwerkE {
 					return;
 				}
 
-				ImGui::SameLine(ImGui::GetContentRegionAvail().x - 8.f);
+				ImGui::SameLine(ImGui::GetContentRegionAvail().x - 20.f); // #NOTE Make room for window options ":"
 				if (ImGui::Button("+"))
 				{
 					ImGui::OpenPopup("Create Entity");

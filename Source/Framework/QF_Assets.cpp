@@ -219,17 +219,16 @@ namespace QwerkE {
 
 	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
 	{
+		// #TODO Error checking
 		if (!ExistsInRegistry(mirrorTypeId, guid, fileName))
 		{
 			auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
-			// #TODO Decide how to search for shader and materials that have more than 1 string in vector
 			vectorGuidStrings.push_back({ guid, { fileName } });
 		}
 	}
 
 	AssetsList& Assets::GetRegistryAssetList(const size_t assetListTypeId)
 	{
-		// #TODO Create registry if it doesn't exist?
 		ASSERT(s_AssetGuidToFileRegistry.find(assetListTypeId) != s_AssetGuidToFileRegistry.end(), "Cannot return reference for registry asset list!");
 		return s_AssetGuidToFileRegistry[assetListTypeId];
 	}

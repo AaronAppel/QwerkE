@@ -115,4 +115,4 @@ Assets/Settings/EditorWindowData.qdata
 # To Resume: git update-index --no-skip-worktree <file path>
 
 # Recovery files
-/QwerkE
+/enc_temp_folder
