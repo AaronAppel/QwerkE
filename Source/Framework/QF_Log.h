@@ -55,13 +55,15 @@ namespace QwerkE {
 #define LOG_ERROR(...)      QwerkE::Log::Logger::s_Logger->error(__VA_ARGS__);
 #define LOG_CRITICAL(...)   QwerkE::Log::Logger::s_Logger->critical(__VA_ARGS__);
 
+// #TODO Experiment with verbose on/off flags. *VisualStudio output format for clicking: "fileName.cpp(23)..."
+#define LOG_VERBOSE(...)      LOG_TRACE("{0}({1}) {2}() : {3}", __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
+
 #define LOG_CRITICAL_ONCE(...) \
     { static bool logMessage = true; \
     if (logMessage) { logMessage = false; QwerkE::Log::Logger::s_Logger->critical(__VA_ARGS__); } }
 
 // Variadic argument passing : https://thispointer.com/c11-variadic-template-function-tutorial-examples/
-
-#define LOG_INFO_ONCE(...) { static bool s_logged = false; if (!s_logged) { s_logged = true; QwerkE::Log::s_Logger->info(__VA_ARGS__); } }
+#define LOG_INFO_ONCE(...) { static bool s_logged = false; if (!s_logged) { s_logged = true; QwerkE::Log::Logger::s_Logger->info(__VA_ARGS__); } }
 
 // #TODO Back trace message : https://github.com/gabime/spdlog?tab=readme-ov-file#backtrace-support
 

@@ -9,6 +9,7 @@
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
+#include "QF_Shader.h"
 #include "QF_Window.h"
 
 int main(unsigned int numberOfArguments, char** commandLineArguments)
@@ -20,6 +21,10 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 	// Remove #include "QF_Scenes.h"
 	// QwerkE::Assets::Load<QwerkE::Scene>(QwerkE::Paths::Scene("NewScene1.qscene"));
 	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("NewScene1.qscene"));
+
+	// #TODO Define API for framework to call and load assets. Should the registry be stripped for framework API?
+	// Defining on start could be nice if the assets only get loaded on request and can also be unloaded the same as in editor builds.
+	// QwerkE::Assets::AddToRegistry(Mirror::IdForType<QwerkE::Shader>(), 0, "Example");
 
 	QwerkE::Time::WriteAppStartTime();
 

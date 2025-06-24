@@ -12,6 +12,8 @@ namespace QwerkE {
 		enum EditorWindowPromptTypes : uint8_t;
 
 		class EditorWindow;
+		class EditorWindowEntityInspector;
+		class EditorWindowSceneView;
 
 		typedef unsigned int u32; // 0 to 4,294,967,295
 		enum EditorStateFlags : u32
@@ -49,6 +51,8 @@ namespace QwerkE {
 
 		const std::vector<EditorWindow*>& GetOpenWindows();
 
+		const EditorWindowEntityInspector* LastFocusedInspectorWindow();
+		const EditorWindowSceneView* LastFocusedSceneViewWindow();
 		const EditorWindow* GetLastFocusedWindow();
 
 		void OnEditorWindowFocused(const EditorWindow* const focusedWindow);

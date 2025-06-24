@@ -25,7 +25,8 @@ namespace QwerkE {
     namespace Scenes
     {
         Scene* CreateSceneFromFile(const std::string& sceneFilePath);
-        Scene* CreateScene(const char* const sceneFileNamePrefix);
+        Scene* CreateScene(const char* const sceneFileName);
+        Scene* CreateScene(const std::string& a_SceneFileName);
     }
 
     class EntityHandle;
@@ -90,13 +91,19 @@ namespace QwerkE {
     private:
         friend Scene* Scenes::CreateSceneFromFile(const std::string& sceneFilePath);
         friend Scene* Scenes::CreateScene(const char* const sceneFileNamePrefix);
+        friend Scene* Scenes::CreateScene(const std::string& a_SceneFileName);
+
+        Scene()
+        {
+            OnLoaded();
+        }
+
         Scene(const std::string& sceneFileName) :
             m_SceneFileName(sceneFileName)
         { }
 
         MIRROR_PRIVATE_MEMBERS
         friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
-        friend class SceneCreator;
 
         GUID m_CameraEntityGuid = GUID::Invalid;
 
@@ -105,7 +112,7 @@ namespace QwerkE {
 
         std::string m_SceneFileName = Constants::gc_DefaultStringValue;
 
-        GUID m_SceneGuid;
+        GUID m_SceneGuid = GUID();
 
         PhysicsSystem* m_PhysicsSystem = nullptr;
 

@@ -21,16 +21,19 @@ namespace QwerkE {
 
         void SetScenePaused(const GUID& sceneGuid, const bool isPaused); // #NOTE Scene transition changes removes line
 
+        // #TODO Consider hiding creation functions to force using Assets using friend Assets
         // #TODO Replace scene references with GUIDS instead of strings
         // #TODO Review scene creation. Maybe scenes can only be created from scene files using file paths,
         // or Assets need to check the registry for existing file names and/or GUIDs
         Scene* CreateSceneFromFile(const std::string& sceneFilePath); // #TODO Could only expose to Assets.
         Scene* CreateScene(const char* const sceneFileNamePrefix); // #NOTE Scene transition changes removes line
         Scene* CreateScene(const GUID& sceneGuid);
+        Scene* CreateScene(const std::string& a_SceneFileName); // #TODO Define API for creating a new, empty scene
         // #NOTE Scene transition changes Scene* CreateScene(const std::string& sceneFileName);
 
         // #TODO Need to specify argument as file path vs file name
         bool SceneExists(const char* const sceneFileName);
+        bool SceneExists(const GUID& a_Guid);
 
         void DestroyScene(const Scene* const scene);
 

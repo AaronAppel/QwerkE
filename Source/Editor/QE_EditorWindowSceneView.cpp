@@ -105,12 +105,12 @@ namespace QwerkE {
 			constexpr float itemWidth = 80.f;
 
 			 ImGui::PushItemWidth(itemWidth);
-			 ImGui::Text(std::to_string(m_ViewId).c_str());
+			 ImGui::Text(("vID " + std::to_string(m_ViewId)).c_str());
 			 ImGui::PopItemWidth();
 
 			 ImGui::PushItemWidth(itemWidth);
 			 ImGui::SameLine();
-			 ImGui::Text(std::to_string(m_FrameBufferTextures[0].TextureHandle().idx).c_str());
+			 ImGui::Text(("tID " + std::to_string(m_FrameBufferTextures[0].TextureHandle().idx)).c_str());
 			 ImGui::PopItemWidth();
 
 			std::vector<const char*> sceneNames;
@@ -160,18 +160,25 @@ namespace QwerkE {
 
 			// #TODO Camera selection drop down
 			std::vector<const char*> cameraEntityNames = { "EditorCam" };
+			u16 currentItemNameLength = 0 == m_CurrentCameraComboIndex ? 9 : 0;
 
 			auto viewCameras = m_CurrentScene->ViewComponents<ComponentCamera>();
+			u16 i = 0;
 			for (auto& entity : viewCameras)
 			{
 				EntityHandle handle(m_CurrentScene, entity);
-				cameraEntityNames.push_back(handle.EntityName().c_str());
+				cameraEntityNames.emplace_back(handle.EntityName().c_str());
+
+				if (i + 1 == m_CurrentCameraComboIndex)
+				{
+					currentItemNameLength = handle.EntityName().size();
+				}
+				++i;
 			}
 
-			// ImGui::SameLineEnd(22);
-			// ImGui::Text("Camera");
-			ImGui::SameLine();
-			ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+			const float camerasItemWidth = currentItemNameLength * ImGui::g_pixelsPerCharacter + 20.f; // #NOTE Slight increase for shorter names
+			ImGui::SameLine(ImGui::GetContentRegionAvail().x - camerasItemWidth - s_DropDownArrowSize - 10.f); // #NOTE Leave 10.f for window options ":"
+			ImGui::PushItemWidth(camerasItemWidth + s_DropDownArrowSize);
 			std::string cameraComboBoxUniqueId = "##Camera:";
 			cameraComboBoxUniqueId += GetGuid();
 			if (ImGui::Combo(cameraComboBoxUniqueId.c_str(), &m_CurrentCameraComboIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))

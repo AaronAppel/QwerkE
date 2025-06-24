@@ -210,13 +210,25 @@ namespace QwerkE {
 
 		Path UniqueFilePath(const char* const filePath)
 		{
+			// #TODO Review logic
+			Path path = filePath;
+			std::string fileExt = path.has_extension() ? path.extension().string() : "";
+			std::string fileNameNoExt = path.stem().string();
+			while (Files::Exists(path.string().c_str()))
+			{
+				fileNameNoExt = NumberAppendOrIncrement(fileNameNoExt.c_str());
+				path = path.parent_path() / (fileNameNoExt + fileExt);
+			}
+			return path.filename();
+
 			const char* fullFileExtension = strrchr(filePath, '.');
 			if (!fullFileExtension)
 			{
-				return Helpers::NumberAppendOrIncrement(filePath).get();
+				// return Helpers::NumberAppendOrIncrement(filePath).get();
+				fullFileExtension = 0;
 			}
 
-			std::string fileNameNoExt = filePath;
+			// std::string fileNameNoExt = filePath;
 			const u64 size = fullFileExtension - filePath; // Subtract pointer addresses
 			const u8 extensionWithPeriodLength = static_cast<u8>(strlen(filePath) - size);
 			fileNameNoExt.resize(size);

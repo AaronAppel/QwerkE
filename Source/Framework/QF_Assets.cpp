@@ -149,6 +149,8 @@ namespace QwerkE {
 
 	void Assets::Shutdown()
 	{
+		SaveRegistry(); // #TODO Expose as option in editor/framework settings to auto save on exit
+
 		for (auto& assetsList : { m_MapOfLoadedAssetMaps, m_MapOfNullAssetMaps })
 		{
 			for (auto& mirrorTypeAssetMapPair : assetsList)
@@ -217,7 +219,7 @@ namespace QwerkE {
 		return false;
 	}
 
-	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName)
+	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName) // #TODO Take in std::vector<string> to support shader and materials
 	{
 		// #TODO Error checking
 		if (!ExistsInRegistry(mirrorTypeId, guid, fileName))

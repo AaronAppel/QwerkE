@@ -211,6 +211,31 @@ namespace QwerkE {
 			return CreateSceneFromFile(Paths::Scene(sceneFileName.c_str()));
 		}
 
+		Scene* CreateScene(const std::string& a_SceneFileName) // #TODO Define API for creating a new, empty scene
+		{
+			// #TODO Error checking, and how should the registry learn about the new file?
+			Scene* newScene = new Scene();
+			newScene->m_SceneFileName = a_SceneFileName;
+			newScene->SaveScene();
+
+			GUID guid = newScene->GetGuid();
+
+			// delete newScene; // #TODO Improve new scene Assets:: loading
+
+			// AssetsList& scenesRegistry = Assets::GetRegistryAssetList(Mirror::IdForType<Scene>()); // #NOTE Scene transition changes removed line
+			Assets::Add<Scene>(newScene, guid);
+			Assets::AddToRegistry(Mirror::IdForType<Scene>(), guid, a_SceneFileName);
+			Scene* getScene = Assets::Get<Scene>(guid);
+			if (const std::unordered_map<GUID, Scene*>* scenes = Assets::ViewAssets<Scene>())
+			{
+				int bp = 0;
+			}
+
+			LOG_TRACE("{0} New Scene {1} created with GUID {2}", __FUNCTION__, newScene->GetSceneName(), newScene->GetGuid());
+			s_Scenes.push_back(newScene);
+			return newScene;
+		}
+
 		bool SceneExists(const char* const sceneFileName)
 		{
 			if (!sceneFileName)
@@ -218,6 +243,15 @@ namespace QwerkE {
 				return false;
 			}
 			return nullptr != GetScene(sceneFileName);
+		}
+
+		bool SceneExists(const GUID& a_Guid)
+		{
+			if (GUID::Invalid == a_Guid)
+			{
+				return false;
+			}
+			return nullptr != GetScene(a_Guid);
 		}
 
 		void DestroyScene(const Scene* const scene)

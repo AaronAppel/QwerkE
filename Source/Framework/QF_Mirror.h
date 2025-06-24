@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <filesystem>
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -62,6 +63,9 @@ MIRROR_TYPE_ID(163, QwerkE::FrameBuffer)
 // #NOTE Framework Ids start at +1000
 
 // Non-serialized (value independent) type IDs
+// std::filesystem
+MIRROR_TYPE_ID(1000, std::filesystem::path)
+
 // ImGui
 MIRROR_TYPE_ID(1004, ImVec2)
 MIRROR_TYPE_ID(1005, ImVec4)

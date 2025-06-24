@@ -21,7 +21,23 @@ namespace QwerkE {
             ASSERT(!s_Initialized, "Log is already initialized!");
             if (!s_Initialized)
             {
-                spdlog::set_pattern("%^[%T] %n: %v%$");
+                // #TODO Presets: Verbose, Minimal, Omit, OnlyCritical, OnlyTrace, etc
+                // #TODO Flags: Time, File, Line, Function, etc
+                // spdlog::set_pattern("%^[%T] %n: %v%$"); [22:13:54] Logger1: B:\QwerkE\Source\Editor\QE_Editor.cpp(123) QwerkE::Editor::RunReloadable() : Test
+                std::string spdLogPattern = "";
+
+                if (constexpr bool includeTime = true)
+                {
+                    spdLogPattern += "%^[%T]";
+                }
+                if (constexpr bool includeLoggerName = false)
+                {
+                    spdLogPattern += " %n:";
+                }
+
+                spdLogPattern += " %v%$"; // #TODO Review format of output: https://github.com/gabime/spdlog
+                spdlog::set_pattern(spdLogPattern.c_str());
+
                 const char* loggerName = "Logger1";
                 Logger::s_Logger = spdlog::stdout_color_mt(loggerName);
                 Logger::s_Logger->set_level(spdlog::level::trace);

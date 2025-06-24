@@ -35,8 +35,17 @@ namespace QwerkE {
 
                     // #TODO Consider a button to unload an asset from RAM
 
+                    const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
+                    const float buttonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
+
                     if (ImGui::CollapsingHeader("QwerkE::Mesh"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                     {
+                        // ImGui::SameLine(buttonWidth);
+                        // if (ImGui::Button("+##Mesh", {lineHeight, lineHeight}))
+                        {
+                            // #TODO Create a new mesh
+                        }
+
                         if (const std::unordered_map<GUID, Mesh*>* meshes = Assets::ViewAssets<Mesh>())
                         {
                             for (auto& guidMeshPair : *meshes)
@@ -54,6 +63,12 @@ namespace QwerkE {
 
                     if (ImGui::CollapsingHeader("Shaders"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                     {
+                        // ImGui::SameLine(buttonWidth);
+                        // if (ImGui::Button("+##Shader", { lineHeight, lineHeight }))
+                        {
+                            // #TODO Create a new shader. Maybe open in shader editor
+                        }
+
                         if (ImGui::SmallButton("Recompile All Shaders"))
                         {
                             System::StartProcess(Paths::Script("CompileShaders.bat")); // #TODO move hard coded file name somewhere better
@@ -83,8 +98,28 @@ namespace QwerkE {
                         }
                     }
 
-                    if (ImGui::CollapsingHeader("Scenes"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
+                    // #NOTE Using TreeNodeEx so buttons render in line with collapsible header
+                    const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+                    const bool scenesTreeNodeOpen = ImGui::TreeNodeEx((void*)typeid(Scene).hash_code(), treeNodeFlags, "ScenesTree");
+                    ImGui::SameLine(buttonWidth - lineHeight * 1.5f);
+                    if (ImGui::Button("+##Scene", ImVec2{ lineHeight, lineHeight }))
                     {
+                        Path newSceneFileName = Files::UniqueFilePath(Paths::Scene("NewScene.qscene").c_str()); // #TODO Use ".qscene" constant
+                        Scenes::CreateScene(newSceneFileName.filename().string());
+                    }
+                    ImGui::SameLine(buttonWidth);
+                    if (ImGui::Button(":##Scene", { lineHeight, lineHeight }))
+                    {
+                        // #TODO Delete scene
+                    }
+                    if (scenesTreeNodeOpen)
+                    {
+
+                        if (ImGui::Button("-##Scene", { lineHeight, lineHeight }))
+                        {
+                            // #TODO Delete scene
+                        }
+
                         if (const std::unordered_map<GUID, Scene*>* scenes = Assets::ViewAssets<Scene>())
                         {
                             for (auto& guidScenePair : *scenes)
@@ -96,17 +131,7 @@ namespace QwerkE {
                                 ImGui::Text(guidScenePair.second->GetSceneName().c_str());
                             }
                         }
-
-                        // #NOTE Scene transition change
-                        // std::vector<Scene*> scenes = Scenes::LookAtScenes();
-                        // for (size_t i = 0; i < scenes.size(); i++)
-                        // {
-                        //     ImGui::Text("GUID: ");
-                        //     ImGui::SameLine();
-                        //     ImGui::Text(std::to_string(scenes[i]->GetGuid()).c_str());
-                        //     ImGui::SameLine();
-                        //     ImGui::Text(scenes[i]->GetSceneName().c_str());
-                        // }
+                        ImGui::TreePop();
                     }
                 }
                 else

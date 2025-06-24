@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <string>
 #include <vector>
 
 #ifdef _QBGFX
@@ -13,18 +14,84 @@
 
 #include "QC_Guid.h"
 
+struct GLFWwindow;
+
 namespace QwerkE {
 
 	using AssetsMap = std::unordered_map<GUID, void*>; // #NOTE Smart pointers require compile time types. Could look at another solution
 	using AssetsList = std::vector<std::pair<GUID, std::vector<std::string>>>; // #TODO should just be string, not vector of string. Change once shader components are in
 
-	class Assets // #NOTE Class to hide static members that are used in public templated methods
+	class Scene;
+	namespace Scenes
+	{
+		Scene* CreateScene(const GUID& sceneGuid);
+		Scene* CreateScene(const std::string& a_SceneFileName);
+	}
+
+	namespace Window
+	{
+		void local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths);
+	}
+
+	class Assets // #NOTE Class to hide static members that are used in public templated methods, and for friend functions
 	{
 	public:
 		Assets() = delete;
 
 		static void Initialize();
 		static void Shutdown();
+
+		template <typename T>
+		[[nodiscard]] static void* Create(std::string a_FileName) // #TODO bool a_AddToRegistry?
+		{
+			ASSERT(false, "Not implemented!")
+
+			// #TODO See if restricting Assets to manage all asset allocations is safe but still convenient enough.
+			// See if there is a generic API for creating all asset types.
+			// See if LoadAsset can be updated to register new asset instances and registry entries.
+			// if (!Has<T>(a_FileName)) // #TODO May need a_fileName check to see if the instance already exists
+			{
+				const size_t typeId = Mirror::IdForType<T>();
+				switch (typeId)
+				{
+				case Mirror::IdForType<Scene>():
+					Scene* newScene = CreateScene(const std::string & a_SceneFileName)
+					// #TODO Add to registry?
+					AddToRegistry(typeId, newScene->GetGuid(), a_SceneFileName);
+					return newScene;
+
+				default:
+					// #TODO Error, unhandled type!
+					break;
+				}
+			}
+			return nullptr;
+		}
+
+		template <typename T>
+		static void Load(GUID guid)
+		{
+			if (!Has<T>(guid))
+			{
+				const size_t typeId = Mirror::IdForType<T>();
+				if (GUID::Invalid == LoadAsset(typeId, guid))
+				{
+					LOG_WARN("Unable to load {0} asset with GUID: {1}", Mirror::InfoForType<T>()->stringName.c_str(), guid);
+				}
+			}
+		}
+
+		template <typename T>
+		static void Add(T* a_Instance, GUID a_Guid) // #TODO Meant for editor only creation of new asset files
+		{
+			if (!Has<T>(a_Guid) && GUID::Invalid != a_Guid)
+			{
+				const size_t typeId = Mirror::IdForType<T>();
+				m_MapOfLoadedAssetMaps[typeId][a_Guid] = a_Instance;
+				// #TODO Add to registry?
+				// AddToRegistry(Mirror::IdForType<T>(), guid, a_SceneFileName);
+			}
+		}
 
 		template <typename T>
 		static bool Has(GUID guid)
@@ -56,23 +123,10 @@ namespace QwerkE {
 			return static_cast<T*>(assetPtr);
 		}
 
-		template <typename T>
-		static void Load(GUID guid)
-		{
-			if (!Has<T>(guid))
-			{
-				const size_t typeId = Mirror::IdForType<T>();
-				if (GUID::Invalid == LoadAsset(typeId, guid))
-				{
-					LOG_WARN("Unable to load {0} asset with GUID: {1}", Mirror::InfoForType<T>()->stringName.c_str(), guid);
-				}
-			}
-		}
-
 // #TODO Decide how Release and Retail builds should work, in Game and Editor projects
 // #ifndef _QRETAIL
 		template <typename T>
-		static const std::unordered_map<GUID, T*>* ViewAssets()
+		[[nodiscard]] static const std::unordered_map<GUID, T*>* ViewAssets()
 		{
 			const size_t typeId = Mirror::IdForType<T>();
 			const std::unordered_map<GUID, T*>* assetMap = nullptr;
@@ -85,10 +139,8 @@ namespace QwerkE {
 			return assetMap;
 		}
 
-		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
-
 		template <typename T>
-		static std::string GetRegistryAssetFileName(const GUID guid)
+		[[nodiscard]] static std::string GetRegistryAssetFileName(const GUID guid)
 		{
 			const size_t typeId = Mirror::IdForType<T>();
 			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeId);
@@ -97,30 +149,36 @@ namespace QwerkE {
 				auto guidStringPair = assetsRegistry[i];
 				if (guid == guidStringPair.first)
 				{
-					// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+					// #TODO Decide how to search for shaders and materials that have more than 1 string in vector
 					return guidStringPair.second[0];
 				}
 			}
 			return std::string("");
 		}
 
-		static std::unordered_map<size_t, AssetsList>& ViewRegistry();
+		[[nodiscard]] static std::unordered_map<size_t, AssetsList>& ViewRegistry();
 		static void SaveRegistry();
 
-		static bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName);
+		[[nodiscard]] static bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName);
 
 		// #TODO Unable to use currently. Compiler error on argument conversion
 		template <typename T>
-		static bool ExistsInRegistry(const GUID& guid, const std::string& fileName)
+		[[nodiscard]] static bool ExistsInRegistry(const GUID& guid, const std::string& fileName)
 		{
 			return ExistsInRegistry(Mirror::IdForType<T>, guid, fileName);
 		}
 
-		static void AddToRegistry(const size_t mirrorType, const GUID& guid, const std::string& fileName);
 // #endif // _QRETAIL
 
 	private:
+		friend void Window::local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths);
+		friend Scene* Scenes::CreateScene(const std::string& a_SceneFileName);
+		friend Scene* Scenes::CreateScene(const GUID& sceneGuid);
+
+		static void AddToRegistry(const size_t mirrorType, const GUID& guid, const std::string& fileName);
+
 		static GUID LoadAsset(const size_t type, const GUID& guid);
+		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
 
 		static std::unordered_map<size_t, AssetsMap> m_MapOfLoadedAssetMaps;
 		static std::unordered_map<size_t, AssetsMap> m_MapOfNullAssetMaps; // Safe default assets to use in cases of errors. Only the framework should care about these

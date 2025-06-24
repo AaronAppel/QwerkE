@@ -1,5 +1,6 @@
 #include "QF_Serialize.h"
 
+#include <filesystem>
 #include <string>
 
 #ifdef _QDEARIMGUI
@@ -96,6 +97,7 @@ namespace QwerkE {
 
             // #NOTE Treat some types as primitives
             // case Mirror::IdForType<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
+            case Mirror::IdForType<std::filesystem::path>():
             case Mirror::IdForType<std::string>():
             case Mirror::IdForType<const char*>():
                 Local_SerializePrimitive(objectAddress, objectTypeInfo, objectJson, typeOrMemberName); break;
@@ -113,15 +115,19 @@ namespace QwerkE {
 
             switch (primitiveTypeInfo->id)
             {
-                // #TODO std::string is not a true primitive. Need a better way to handle this logic
-            case Mirror::IdForType<const std::string>():
+            case Mirror::IdForType<std::filesystem::path>(): // #TODO std::filesystem::path is not a true primitive. Need a better way to handle this logic
+                {
+                    const std::filesystem::path* fieldAddress = (std::filesystem::path*)primitiveAddress;
+                    cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, fieldAddress->string().data());
+                }
+                break;
+            case Mirror::IdForType<const std::string>(): // #TODO std::string is not a true primitive. Need a better way to handle this logic
             case Mirror::IdForType<std::string>():
                 {
                     const std::string* fieldAddress = (std::string*)primitiveAddress;
                     cJsonItem = CreateJsonString<const char>(primitiveTypeOrMemberName, fieldAddress->data()); // #TODO Requires ->data() so can't work with CreateJsonString()
                 }
                 break;
-
             case Mirror::IdForType<QKey>():
             case Mirror::IdForType<const char>():
             case Mirror::IdForType<char>():

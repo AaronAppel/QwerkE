@@ -107,7 +107,10 @@ MIRROR_TYPE(entt::registry) // #TODO Deprecate MIRROR_TYPE
 MIRROR_TYPE(entt::entity)
 #endif
 
-// Misc
+// std::filesystem
+MIRROR_TYPE(std::filesystem::path)
+
+// GUID
 MIRROR_CLASS(QwerkE::GUID)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_MEMBER(m_Guid)
@@ -252,6 +255,7 @@ MIRROR_CLASS_END
 
 // MIRROR_DEPENDENT_CLASS_START(QwerkE::Scene)
 MIRROR_CLASS(QwerkE::Scene)
+MIRROR_CLASS_MEMBER(m_SceneGuid)
 MIRROR_CLASS_MEMBER(m_SceneFileName)
 MIRROR_CLASS_MEMBER(m_Registry)
 MIRROR_CLASS_END

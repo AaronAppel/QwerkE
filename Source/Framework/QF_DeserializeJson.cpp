@@ -1,6 +1,8 @@
 #include "QF_Serialize.h"
 
+#include <filesystem>
 #include <stdint.h>
+#include <string>
 #include <unordered_map>
 
 #include "QF_Buffer.h"
@@ -51,12 +53,17 @@ namespace QwerkE {
             std::string* str = (std::string*)primitiveAddress;
             switch (primitiveTypeInfo->id)
             {
+            case Mirror::IdForType<std::filesystem::path>():            {
+                primitiveTypeInfo->typeConstructorFunc(primitiveAddress); // #NOTE String must be constructed before assigned to
+                *(std::filesystem::path*)primitiveAddress = primitiveJson->valuestring ? primitiveJson->valuestring : primitiveJson->string; break;
+                int bp = 0;
+            }
+                break;
             case Mirror::IdForType<const std::string>():
             case Mirror::IdForType<std::string>(): // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
                 {
                     primitiveTypeInfo->typeConstructorFunc(primitiveAddress); // #NOTE String must be constructed before assigned to
                     *(std::string*)primitiveAddress = primitiveJson->valuestring ? primitiveJson->valuestring : primitiveJson->string; break;
-                    int bp = 0;
                 }
             case Mirror::IdForType<const char*>():
             case Mirror::IdForType<char*>():
@@ -253,6 +260,7 @@ namespace QwerkE {
 
             // #NOTE Treat some types as primitives
             // case Mirror::IdForType<GUID>(): // #TODO Look at treating a GUID as a primitive type, and use owner member name before m_Guid class member name
+            case Mirror::IdForType<std::filesystem::path>():
             case Mirror::IdForType<std::string>():
             case Mirror::IdForType<const char*>():
                 Local_DeserializePrimitive(objectJson, objectTypeInfo, obj);

@@ -79,6 +79,9 @@ namespace QwerkE {
 
         static EditorStateFlags s_EditorStateFlags = EditorStateFlags::EditorStateFlagsNone;
 
+        static const EditorWindowEntityInspector* s_LastFocusedInspector = nullptr;
+        static const EditorWindowSceneView* s_LastFocusedSceneView = nullptr;
+
         void local_Initialize();
         void local_Shutdown();
         void local_Update();
@@ -337,17 +340,29 @@ namespace QwerkE {
         }
 
         const EditorWindow* s_LastFocusedWindow; // #TODO Move somewhere better
-        void OnEditorWindowFocused(const EditorWindow* const focusedWindow)
+        void OnEditorWindowFocused(const EditorWindow* const a_FocusedWindow)
         {
             // #TODO Consider moving to a static function in EditorWindow.h
             // ASSERT(focusedWindow, "Null focusedWindow pointer!");
 
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                s_FocusedWindowsStack[i]->OnEditorWindowFocused(focusedWindow);
+                s_FocusedWindowsStack[i]->OnEditorWindowFocused(a_FocusedWindow);
             }
 
-            s_LastFocusedWindow = focusedWindow;
+            if (a_FocusedWindow)
+            {
+                if (a_FocusedWindow->Type() == (u32)EditorWindowTypes::EntityInspector)
+                {
+                    s_LastFocusedInspector = static_cast<const EditorWindowEntityInspector*>(a_FocusedWindow);
+                }
+                else if (a_FocusedWindow->Type() == (u32)EditorWindowTypes::SceneView)
+                {
+                    s_LastFocusedSceneView = static_cast<const EditorWindowSceneView*>(a_FocusedWindow);
+                }
+            }
+
+            s_LastFocusedWindow = a_FocusedWindow;
             if (nullptr == s_LastFocusedWindow) // #TODO Handle nullptr if last focused window was closed
             {
                 return; // #TODO Go through stack and remove closed window?
@@ -356,7 +371,7 @@ namespace QwerkE {
             s16 index = -1;
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                if (focusedWindow == s_FocusedWindowsStack[i])
+                if (a_FocusedWindow == s_FocusedWindowsStack[i])
                 {
                     index = i;
                     break;
@@ -377,6 +392,16 @@ namespace QwerkE {
                     s_FocusedWindowsStack[i - 1] = cache;
                 }
             }
+        }
+
+        const EditorWindowEntityInspector* LastFocusedInspectorWindow()
+        {
+            return s_LastFocusedInspector;
+        }
+
+        const EditorWindowSceneView* LastFocusedSceneViewWindow()
+        {
+            return s_LastFocusedSceneView;
         }
 
         const EditorWindow* GetLastFocusedWindow()

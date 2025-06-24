@@ -79,6 +79,38 @@
 					"std::vector<std::string>":	{
 						"std::string":	"GameScene1.qscene"
 					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"17441732634043826981"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"NewScene5.qscene"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"9788585351930178655"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"NewScene6.qscene"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"10075335882208621323"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"NewScene7.qscene"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"3087632003632543771"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"NewScene8.qscene"
+					}
 				}
 			}
 		},
