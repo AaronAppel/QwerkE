@@ -147,7 +147,7 @@ namespace QwerkE {
 				}
 			}
 
-			void OnSceneReload() override { m_CurrentScene = nullptr; }
+			void OnSceneReload(const Scene* a_ReloadedScene) override { m_CurrentScene = nullptr; }
 
 			Scene* m_CurrentScene = nullptr;
 			char m_ScenesComboLabelBuffer[33] = "Scenes:    ##0000000000000000000";

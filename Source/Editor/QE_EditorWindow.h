@@ -155,7 +155,7 @@ namespace QwerkE {
 			EntityInspector,
 			ImGuiDemo,
 			MenuBar,
-			SceneControls,
+			Unused, /* Previously SceneControls*/
 			SceneGraph,
 			SceneView,
 			Settings,
@@ -290,7 +290,7 @@ namespace QwerkE {
 
 			virtual void OnEditorWindowFocused(const EditorWindow* const a_FocusedWindow) { }
 			virtual void OnEntitySelected(EntityHandle& entity) {}
-			virtual void OnSceneReload() { }
+			virtual void OnSceneReload(const Scene* a_ReloadedScene) { }
 
 			bool IsHidden() { return (EditorWindowFlags)(m_WindowFlags & Hidden); }// #TODO Singleton check? Can only singletons be hidden?
 			void ToggleHidden() { m_WindowFlags = (EditorWindowFlags)(m_WindowFlags ^ Hidden); }

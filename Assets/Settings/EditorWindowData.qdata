@@ -1,11 +1,205 @@
 {
 	"std::vector<QwerkE::Editor::EditorWindow*>":	{
 		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowSceneGraph":	{
+				"m_Guid":	{
+					"m_Guid":	"12539018069331544866"
+				},
+				"m_WindowName":	"Scene Graph##12539018069331544866",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	0,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowSettings":	{
+				"m_Guid":	{
+					"m_Guid":	"9689900933082917293"
+				},
+				"m_WindowName":	"Settings##9689900933082917293",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	0,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				},
+				"m_SettingsEditorOption":	{
+					"_value":	1
+				}
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
 			"QwerkE::Editor::EditorWindowAssets":	{
 				"m_Guid":	{
 					"m_Guid":	"15814122887568357250"
 				},
 				"m_WindowName":	"Assets##15814122887568357250",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	0,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowStylePicker":	{
+				"m_Guid":	{
+					"m_Guid":	"2045226856109020958"
+				},
+				"m_WindowName":	"Style Picker##2045226856109020958",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	0,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowDebugDefault":	{
+				"m_Guid":	{
+					"m_Guid":	"10713593537024778871"
+				},
+				"m_WindowName":	"Debug Default##EditorWindow",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	10,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowStatusBar":	{
+				"m_Guid":	{
+					"m_Guid":	"4841911099039470909"
+				},
+				"m_WindowName":	"Status Bar##4841911099039470909",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	64,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				}
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowFolderViewer":	{
+				"m_Guid":	{
+					"m_Guid":	"13856966934147751507"
+				},
+				"m_WindowName":	"Folder Viewer##13856966934147751507",
+				"m_ImGuiFlags":	0,
+				"m_WindowFlags":	0,
+				"m_MinimumWidth":	100,
+				"m_MinimumHeight":	150,
+				"m_WindowOptions":	{
+					"m_SizingFlags":	0,
+					"m_WidthMinimum":	0,
+					"m_WidthMaximum":	3.4028234663852886e+38,
+					"m_HeightMinimum":	0,
+					"m_HeightMaximum":	3.4028234663852886e+38,
+					"m_LockWidth":	false,
+					"m_LockHeight":	false,
+					"m_RatioWidth":	1,
+					"m_RatioHeight":	1,
+					"m_IncrementWidth":	1,
+					"m_IncrementHeight":	1,
+					"m_ItemScaling":	1,
+					"m_FontScaling":	1
+				},
+				"m_UiScalar":	0.87608766555786133,
+				"m_CurrentDirectory":	"B:\\QwerkE\\Assets"
+			}
+		},
+		"QwerkE::Editor::EditorWindow*":	{
+			"QwerkE::Editor::EditorWindowEntityInspector":	{
+				"m_Guid":	{
+					"m_Guid":	"567582532353716773"
+				},
+				"m_WindowName":	"Entity Inspector##567582532353716773",
 				"m_ImGuiFlags":	0,
 				"m_WindowFlags":	0,
 				"m_MinimumWidth":	100,
@@ -85,226 +279,8 @@
 				},
 				"m_IsLastFocusedSceneView":	false,
 				"m_CurrentSceneGuid":	{
-					"m_Guid":	"15538032833040342314"
+					"m_Guid":	"12494459921426365588"
 				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowSceneControls":	{
-				"m_Guid":	{
-					"m_Guid":	"7664722301008991640"
-				},
-				"m_WindowName":	"Scene Controls##7664722301008991640",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	0,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowEntityInspector":	{
-				"m_Guid":	{
-					"m_Guid":	"567582532353716773"
-				},
-				"m_WindowName":	"Entity Inspector##567582532353716773",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	0,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowStylePicker":	{
-				"m_Guid":	{
-					"m_Guid":	"2045226856109020958"
-				},
-				"m_WindowName":	"Style Picker##2045226856109020958",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	0,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowDebugDefault":	{
-				"m_Guid":	{
-					"m_Guid":	"10713593537024778871"
-				},
-				"m_WindowName":	"Debug Default##EditorWindow",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	10,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowSettings":	{
-				"m_Guid":	{
-					"m_Guid":	"9689900933082917293"
-				},
-				"m_WindowName":	"Settings##9689900933082917293",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	0,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowStatusBar":	{
-				"m_Guid":	{
-					"m_Guid":	"4841911099039470909"
-				},
-				"m_WindowName":	"Status Bar##4841911099039470909",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	64,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowSceneGraph":	{
-				"m_Guid":	{
-					"m_Guid":	"12539018069331544866"
-				},
-				"m_WindowName":	"Scene Graph##12539018069331544866",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	0,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				}
-			}
-		},
-		"QwerkE::Editor::EditorWindow*":	{
-			"QwerkE::Editor::EditorWindowFolderViewer":	{
-				"m_Guid":	{
-					"m_Guid":	"13856966934147751507"
-				},
-				"m_WindowName":	"Folder Viewer##13856966934147751507",
-				"m_ImGuiFlags":	0,
-				"m_WindowFlags":	0,
-				"m_MinimumWidth":	100,
-				"m_MinimumHeight":	150,
-				"m_WindowOptions":	{
-					"m_SizingFlags":	0,
-					"m_WidthMinimum":	0,
-					"m_WidthMaximum":	3.4028234663852886e+38,
-					"m_HeightMinimum":	0,
-					"m_HeightMaximum":	3.4028234663852886e+38,
-					"m_LockWidth":	false,
-					"m_LockHeight":	false,
-					"m_RatioWidth":	1,
-					"m_RatioHeight":	1,
-					"m_IncrementWidth":	1,
-					"m_IncrementHeight":	1,
-					"m_ItemScaling":	1,
-					"m_FontScaling":	1
-				},
-				"m_UiScalar":	0.87608766555786133,
-				"m_CurrentDirectory":	"B:\\QwerkE\\Assets"
 			}
 		},
 		"QwerkE::Editor::EditorWindow*":	{
@@ -335,9 +311,9 @@
 				"m_EditorCamera":	{
 					"m_MoveSpeed":	5,
 					"m_LookAtPosition":	{
-						"x":	-8.6586208343505859,
-						"y":	5.7921848297119141,
-						"z":	-6.7800440788269043
+						"x":	9.689208984375,
+						"y":	4.7464132308959961,
+						"z":	-6.852104663848877
 					},
 					"m_Fov":	60,
 					"m_Near":	0.10000000149011612,
@@ -345,21 +321,21 @@
 				},
 				"m_EditorCameraTransform":	{
 					"m_Matrix":	{
-						"float":	0.75738775730133057,
+						"float":	0.98720401525497437,
 						"float":	0,
-						"float":	0.65296542644500732,
+						"float":	0.15946245193481445,
 						"float":	0,
-						"float":	0.22415933012962341,
-						"float":	0.9392278790473938,
-						"float":	-0.26000690460205078,
+						"float":	0.0635717064142227,
+						"float":	0.91709768772125244,
+						"float":	-0.39356124401092529,
 						"float":	0,
-						"float":	-0.613283336162567,
-						"float":	0.34329432249069214,
-						"float":	0.711359679698944,
+						"float":	-0.1462426483631134,
+						"float":	0.39866253733634949,
+						"float":	0.90536254644393921,
 						"float":	0,
-						"float":	-9.3115863800048828,
-						"float":	6.0521917343139648,
-						"float":	-7.4914035797119141,
+						"float":	9.52974605560303,
+						"float":	5.13997459411621,
+						"float":	-7.75746726989746,
 						"float":	1
 					}
 				},

@@ -122,7 +122,7 @@ namespace QwerkE {
 
                     case eSettingsOptions::Project:
                         Projects::LoadProject("Project1.qproj"); // #TODO Load proper file
-                        Editor::OnSceneReloaded();
+                        Editor::OnSceneReloaded(nullptr); // #TODO Review
                         break;
 
                     case eSettingsOptions::UserSettings:

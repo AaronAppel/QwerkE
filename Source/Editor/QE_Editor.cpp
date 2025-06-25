@@ -417,11 +417,11 @@ namespace QwerkE {
             }
         }
 
-        void OnSceneReloaded()
+        void OnSceneReloaded(const Scene* a_ReloadedScene)
         {
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
-                s_FocusedWindowsStack[i]->OnSceneReload();
+                s_FocusedWindowsStack[i]->OnSceneReload(a_ReloadedScene);
             }
         }
 

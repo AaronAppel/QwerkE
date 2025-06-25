@@ -14,6 +14,7 @@
 
 #include "QC_Guid.h"
 
+#include "QF_Assets.h" // #NOTE For friend-ing constructor
 #include "QF_ComponentCamera.h"
 #include "QF_Constants.h"
 
@@ -92,6 +93,7 @@ namespace QwerkE {
         friend Scene* Scenes::CreateSceneFromFile(const std::string& sceneFilePath);
         friend Scene* Scenes::CreateScene(const char* const sceneFileNamePrefix);
         friend Scene* Scenes::CreateScene(const std::string& a_SceneFileName);
+        friend void Assets::Initialize();
 
         Scene()
         {
@@ -105,7 +107,16 @@ namespace QwerkE {
 
         Scene(const std::string& sceneFileName) :
             m_SceneFileName(sceneFileName)
-        { }
+        {
+            OnLoaded();
+        }
+
+        Scene(const std::string& sceneFileName, GUID guid) :
+            m_SceneFileName(sceneFileName),
+            m_SceneGuid(guid)
+        {
+            OnLoaded();
+        }
 
         MIRROR_PRIVATE_MEMBERS
         friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
@@ -124,6 +135,8 @@ namespace QwerkE {
         bool m_IsLoaded = false;
         bool m_IsDirty = false; // #TODO Editor only state. Move out of here
         bool m_IsPaused = false; // #TODO Move state to editor as it's really for higher control (editor, or cutscene state, etc)
+
+        // #TODO Consider having per scene time scaling, as well as a global timescale
     };
 
 }

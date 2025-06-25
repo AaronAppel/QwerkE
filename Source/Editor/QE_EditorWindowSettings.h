@@ -4,6 +4,10 @@
 #include "Libraries/enum/QC_enum.h"
 #endif
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
+#endif
+
 #include "QE_EditorWindow.h"
 
 namespace QwerkE {
@@ -22,6 +26,7 @@ namespace QwerkE {
             void DrawInternal() override;
 
         private:
+            MIRROR_PRIVATE_MEMBERS
             eSettingsOptions m_SettingsEditorOption = eSettingsOptions::Null;
             s8 m_LastPopUpIndex = -1;
 		};

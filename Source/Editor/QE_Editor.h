@@ -6,6 +6,7 @@ namespace QwerkE {
 
 	class GUID;
 	class EntityHandle;
+	class Scene;
 
 	namespace Editor {
 
@@ -59,7 +60,7 @@ namespace QwerkE {
 
 		// Editor window callbacks
 		void OnEntitySelected(EntityHandle& entity);
-		void OnSceneReloaded();
+		void OnSceneReloaded(const Scene* a_ReloadedScene);
 
 	}
 

@@ -257,7 +257,6 @@ namespace QwerkE {
             ImGui::Separator();
 
             local_DrawWindowsList("Scene", {
-                    EditorWindowTypes::SceneControls,
                     EditorWindowTypes::SceneGraph,
                     EditorWindowTypes::SceneView,
                     EditorWindowTypes::PrefabScene

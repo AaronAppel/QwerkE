@@ -25,7 +25,6 @@
 #include "QE_EditorWindowNotifications.h"
 #include "QE_EditorWindowPrefabScene.h"
 #include "QE_EditorWindowPrompt.h"
-#include "QE_EditorWindowSceneControls.h"
 #include "QE_EditorWindowSceneGraph.h"
 #include "QE_EditorWindowSceneView.h"
 #include "QE_EditorWindowSettings.h"
@@ -50,7 +49,6 @@ namespace QwerkE {
 			EditorWindowMaterialEditor,
 			EditorWindowMenuBar,
 			EditorWindowNodeEditor,
-			EditorWindowSceneControls,
 			EditorWindowSceneGraph,
 			EditorWindowSceneView,
 			EditorWindowSettings,

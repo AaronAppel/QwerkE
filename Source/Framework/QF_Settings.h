@@ -28,8 +28,8 @@ namespace QwerkE {
         // bool windowStartFullScreen = false;
     };
 
-    namespace Settings
-    {
+    namespace Settings {
+
         void LoadEngineSettings(const std::string& engineSettingsFilePath); // #TODO Write and chain with above overloaded method
         void SaveEngineSettings(const std::string& engineSettingsFileName);
         void SaveEngineSettings();

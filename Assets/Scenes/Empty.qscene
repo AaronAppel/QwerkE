@@ -1,5 +1,8 @@
 {
 	"QwerkE::Scene":	{
+		"m_SceneGuid":	{
+			"m_Guid":	"17515011370875961871"
+		},
 		"m_SceneFileName":	"Empty.qscene",
 		"m_Registry":	{
 		}

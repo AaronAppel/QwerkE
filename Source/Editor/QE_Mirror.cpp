@@ -165,11 +165,6 @@ MIRROR_CLASS(QwerkE::Editor::EditorWindowMenuBar)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
 MIRROR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowSceneControls)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneControls)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
-
 MIRROR_CLASS(QwerkE::Editor::EditorWindowSceneGraph)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneGraph)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
@@ -184,9 +179,14 @@ MIRROR_CLASS_MEMBER(m_IsLastFocusedSceneView)
 MIRROR_CLASS_MEMBER(m_CurrentSceneGuid)
 MIRROR_CLASS_END
 
+MIRROR_CLASS(QwerkE::Editor::eSettingsOptions)
+MIRROR_CLASS_MEMBER(_value)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::Editor::EditorWindowSettings)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSettings)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_MEMBER(m_SettingsEditorOption)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowStatusBar)

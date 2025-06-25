@@ -11,7 +11,7 @@ namespace QwerkE {
 	namespace Settings {
 
 		constexpr char* s_ImGuiStyleFileName = "Default.style"; // #TODO Review default settings files list
-		constexpr char* s_ImGuiStyleFileName2 = "Vekor64.style"; // #TODO Move to QE_Settings.h::UserSettings
+		constexpr char* s_ImGuiStyleFileName2 = "PurpleComfy.style"; // #TODO Move to QE_Settings.h::UserSettings
 
 		UserSettings s_userSettings;
 		RendererSettings s_rendererSettings;

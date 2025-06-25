@@ -58,7 +58,7 @@ namespace QwerkE {
 
 			MIRROR_PRIVATE_MEMBERS
 
-			void OnSceneReload() override { m_CurrentScene = nullptr; }
+			// void OnSceneReload(const Scene* a_ReloadedScene) override { m_CurrentScene = nullptr; } // #TODO Review if needed
 
 			bool m_IsLastFocusedSceneView = false;
 

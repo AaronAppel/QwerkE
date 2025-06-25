@@ -139,11 +139,18 @@ namespace QwerkE {
 		{   // Default Shader entry
 			// #TODO Use coded data instead of relying on a file to exist
 			Shader* nullShader = new Shader("Cubes.vert.bin", "Cubes.frag.bin", GUID::Invalid);
+			ASSERT(nullShader, "Could not load null shader!")
 			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->Guid()] = nullShader;
 		}
 
 		{
 			// #TODO Null texture
+		}
+
+		{
+			Scene* nullScene = new Scene("Empty.qscene", GUID::Invalid);// Scenes::CreateSceneFromFile(Paths::Scene("Empty.qscene"));
+			ASSERT(nullScene, "Could not load null scene!")
+			m_MapOfNullAssetMaps[Mirror::IdForType<Scene>()][GUID::Invalid] = nullScene;
 		}
 	}
 

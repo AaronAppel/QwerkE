@@ -114,7 +114,7 @@ namespace QwerkE {
 				m_MapOfLoadedAssetMaps[typeId].find(guid) == m_MapOfLoadedAssetMaps[typeId].end())
 			{
 				LOG_WARN("No loaded {0} with GUID: {1}", Mirror::InfoForType<T>()->stringName.c_str(), guid);
-				ASSERT(m_MapOfNullAssetMaps[typeId].find(guid) != m_MapOfNullAssetMaps[typeId].end(), "No null asset found!");
+				ASSERT(m_MapOfNullAssetMaps[typeId].find(GUID::Invalid) != m_MapOfNullAssetMaps[typeId].end(), "No null asset found!");
 				void* assetPtr = m_MapOfNullAssetMaps[typeId][GUID::Invalid];
 				return static_cast<T*>(assetPtr);
 			}
