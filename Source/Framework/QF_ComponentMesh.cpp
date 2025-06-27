@@ -27,9 +27,6 @@ namespace QwerkE {
         bgfx::setVertexBuffer(stream, m_Mesh->m_vbh);
         bgfx::setIndexBuffer(m_Mesh->m_ibh);
 
-        // #TODO Review setting renderer state
-        // bgfx::setState(BGFX_STATE_DEFAULT); // uint64_t
-
         bgfx::setState(0
             | BGFX_STATE_WRITE_RGB
             | BGFX_STATE_WRITE_A

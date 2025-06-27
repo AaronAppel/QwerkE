@@ -75,6 +75,8 @@ namespace QwerkE {
 			Scene* m_CurrentScene = nullptr;
 			GUID m_CurrentSceneGuid = GUID::Invalid;
 
+			bool m_RenderingScene = true; // #TODO Consider serializing if useful
+
 			char m_ScenesComboLabelBuffer[33] = "Scenes:    ##0000000000000000000";
 			s32 m_LastSceneIndex = 0;
 

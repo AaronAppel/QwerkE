@@ -1,14 +1,14 @@
 {
 	"QwerkE::EngineSettings":	{
-		"windowWidthPixels":	2160,
-		"windowHeightPixels":	1440,
+		"windowOpenWidthPixels":	2160,
+		"windowOpenHeightPixels":	1440,
+		"windowOpenPositionX":	2899,
+		"windowOpenPositionY":	348,
 		"limitFramerate":	true,
 		"maxFramesPerSecond":	60,
 		"maxEnabledScenes":	1,
 		"maxJobsAdditionalThreadCount":	1,
 		"consoleOutputWindowEnabled":	true,
-		"windowOpenPositionX":	2899,
-		"windowOpenPositionY":	348,
 		"vSyncEnabled":	false,
 		"windowAutoFocusOnStart":	false
 	}

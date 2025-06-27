@@ -6,8 +6,8 @@ namespace QwerkE {
     {
         bool isDirty = false; // #TODO Use Editor state flag
 
-        u16 windowWidthPixels = 1920;
-        u16 windowHeightPixels = 1080;
+        u16 windowOpenWidthPixels = 1920;
+        u16 windowOpenHeightPixels = 1080;
 
         u16 windowOpenPositionX = 200;
         u16 windowOpenPositionY = 200;

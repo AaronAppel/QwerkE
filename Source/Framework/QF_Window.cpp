@@ -18,6 +18,7 @@
 #include "QF_Files.h"
 #include "QF_Mesh.h"
 #include "QF_Paths.h"
+#include "QF_Renderer.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Shader.h"
@@ -76,7 +77,7 @@ namespace QwerkE {
 
         void local_WindowResizedCallback(GLFWwindow* window, int width, int height)
         {
-            // Renderer::OnWindowResized(vec2(width, height));
+            Renderer::OnWindowResized((u32) width, (u32)height);
             if (s_WindowResizedCallback)
             {
                 (*s_WindowResizedCallback)(width, height);

@@ -47,6 +47,15 @@ namespace ImGui {
 		SameLineCentered(strlen(text), horizontalScaling);
 	}
 
+	void SameLineIfSpace(float itemSize)
+	{
+		ImGui::SameLine();
+		if (ImGui::GetContentRegionAvail().x < itemSize)
+		{
+			ImGui::Dummy({});
+		}
+	}
+
 	std::string DirectoryPathAsSameLineButtons(const std::string& directory)
 	{
 		uint16_t index = 0;

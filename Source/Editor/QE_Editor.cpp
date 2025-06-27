@@ -48,7 +48,7 @@
 
 namespace QwerkE {
 
-    void LoadImGuiStyleFromFile() // #TODO Move somewhere else
+    void LoadDefaultImGuiStyleFromFile() // #TODO Move somewhere else
     {
         // #TODO Check for user specified style, and create one from the default if one does not exist
         ImGuiStyle& style = ImGui::GetStyle();
@@ -116,7 +116,7 @@ namespace QwerkE {
 
             Settings::LoadEngineSettings("Editor.qsetting"); // #TODO How to load? From where and what if a default file doesn't exist?
             const EngineSettings& engineSettings = Settings::GetEngineSettings();
-			Framework::Initialize(engineSettings.windowWidthPixels, engineSettings.windowHeightPixels);
+			Framework::Initialize(engineSettings.windowOpenWidthPixels, engineSettings.windowOpenHeightPixels);
 
             local_Initialize();
 
@@ -600,15 +600,16 @@ namespace QwerkE {
 
 		void local_Initialize()
 		{
-            Input::OnKey(TestOnKey);
-            Input::OnMouse(TestOnMouse);
-            Input::OnGamepad(TestOnGamepad);
+            // #TODO Debug code
+            // Input::OnKey(TestOnKey);
+            // Input::OnMouse(TestOnMouse);
+            // Input::OnGamepad(TestOnGamepad);
 
             Settings::LoadUserSettings("Aaron.qpref"); // #TODO Set an expected default user/editor settings file to load or generate
 
             Projects::Initialize();
 
-            LoadImGuiStyleFromFile();
+            LoadDefaultImGuiStyleFromFile();
 
             const std::string windowsDataFilePath = Paths::Setting(s_EditorWindowDataFileName);
             if (!Files::Exists(windowsDataFilePath.c_str()))

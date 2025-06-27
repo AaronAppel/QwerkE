@@ -59,10 +59,10 @@ namespace QwerkE {
 #endif
 #endif
 
-		void OnWindowResize(int newWidth, int newHeight)
+		void OnWindowResized(u32 newWidth, u32 newHeight)
 		{
 #ifdef _QBGFX
-			bgfx::reset((uint32_t)newWidth, (uint32_t)newHeight, BGFX_RESET_VSYNC);
+			bgfx::reset(newWidth, newHeight, BGFX_RESET_VSYNC);
 			bgfx::setViewRect(s_ViewIdMain, 0, 0, bgfx::BackbufferRatio::Equal);
 #endif
 		}
@@ -112,7 +112,7 @@ namespace QwerkE {
 			);
 #endif
 			const vec2f& size = Window::GetSize();
-			OnWindowResize(size.x, size.y);
+			OnWindowResized(size.x, size.y);
 
 #ifdef _QDEBUG
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
@@ -168,8 +168,8 @@ namespace QwerkE {
 				| glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == 1 ? IMGUI_MBUT_RIGHT : 0
 				| glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == 1 ? IMGUI_MBUT_MIDDLE : 0
 				, 0
-				, uint16_t(windowSize.x)
-				, uint16_t(windowSize.y)
+				, u16(windowSize.x)
+				, u16(windowSize.y)
 				, -1
 				, s_ViewIdImGui
 			);

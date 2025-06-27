@@ -110,6 +110,8 @@ namespace ImGui
 	void SameLineCentered(uint16_t numberOfChars, float horizontalScaling = 1.f);
 	void SameLineCentered(const char* text, float horizontalScaling = 1.f);
 
+	void SameLineIfSpace(float itemSize);
+
 	const char* const g_DefaultDebugWindowName = "Debug Default##EditorWindow";
 	template <typename Function>
 	void DefaultWindow(Function function)

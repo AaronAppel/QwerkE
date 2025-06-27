@@ -11,6 +11,8 @@ namespace QwerkE {
 		eOperationResult Initialize();
 		void Shutdown();
 
+		void OnWindowResized(u32 newWidth, u32 newHeight);
+
 #if _QDEARIMGUI
 		void StartImGui();
 		void EndImGui();

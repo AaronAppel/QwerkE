@@ -256,6 +256,10 @@ namespace QwerkE {
                 m_CurrentScene->ToggleIsPaused();
             }
 
+            std::string renderingCheckboxName = "R##Rendering" + std::to_string(GetGuid());
+            ImGui::SameLine();
+            ImGui::Checkbox(renderingCheckboxName.c_str(), &m_RenderingScene);
+
             const float camerasItemWidth = currentItemNameLength * ImGui::g_pixelsPerCharacter + 20.f; // #NOTE Slight increase for shorter names
             ImGui::SameLine(ImGui::GetContentRegionAvail().x - camerasItemWidth - s_DropDownArrowSize - 10.f); // #NOTE Leave 10.f for window options ":"
             ImGui::PushItemWidth(camerasItemWidth + s_DropDownArrowSize);
@@ -359,10 +363,13 @@ namespace QwerkE {
             if (UsingEditorCamera())
             {
                 EditorCameraUpdate();
-                m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.GetPosition());
-                m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.GetPosition(), m_ViewId);
+                if (m_RenderingScene)
+                {
+                    m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.GetPosition());
+                    m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.GetPosition(), m_ViewId);
+                }
             }
-            else
+            else if (m_RenderingScene)
             {
                 m_CurrentScene->Draw(m_ViewId);
             }

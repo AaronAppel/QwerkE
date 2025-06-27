@@ -34,18 +34,23 @@ namespace QwerkE {
 
 				if (ImGui::Button("Load file from explorer"))
 				{
-					std::string returnValue;
+					std::string returnValue = "";
+					const char* shaderFilesFilter =
+						"All files (*.*)\0*.*\0"
+						"Vertex file (*.vert)\0*.vert\0"
+						"Fragment file (*.frag)\0*.frag\0";
+
 					if (Directory::Exists(m_CurrentShaderFilePath.string().c_str()))
 					{
-						returnValue = Files::ExplorerOpen("Text file (*.txt)\0*.txt\0", m_CurrentShaderFilePath.string().c_str());
+						returnValue = Files::ExplorerOpen(shaderFilesFilter, m_CurrentShaderFilePath.string().c_str());
 					}
 					else if (Files::Exists(m_CurrentShaderFilePath.string().c_str()))
 					{
-						returnValue = Files::ExplorerOpen("Text file (*.txt)\0*.txt\0", m_CurrentShaderFilePath.parent_path().string().c_str());
+						returnValue = Files::ExplorerOpen(shaderFilesFilter, m_CurrentShaderFilePath.parent_path().string().c_str());
 					}
 					else
 					{
-						returnValue = Files::ExplorerOpen("Text file (*.txt)\0*.txt\0", Paths::ShadersDir().c_str());
+						returnValue = Files::ExplorerOpen(shaderFilesFilter, Paths::ShadersDir().c_str());
 					}
 
 					if (m_LatestFilePathExists = Files::Exists(returnValue.c_str()))
@@ -55,9 +60,38 @@ namespace QwerkE {
 					}
 				}
 
-				if (m_LatestFilePathExists && ImGui::Button("Reload file from disk"))
+				ImGui::SameLineIfSpace(150.f);
+				if (ImGui::Button("Save"))
 				{
-					LoadFile(m_CurrentShaderFilePath);
+					// #TODO Save over existing file data
+					LOG_WARN("Unimplemented save button");
+				}
+				ImGui::SameLineIfSpace(150.f);
+				if (ImGui::Button("Save As"))
+				{
+					// #TODO Save using file explorer
+					LOG_WARN("Unimplemented save as button");
+				}
+				ImGui::SameLineIfSpace(150.f);
+				if (ImGui::Button("Recompile binary"))
+				{
+					// #TODO Recompile binary
+					LOG_WARN("Unimplemented recompile button");
+				}
+				ImGui::SameLineIfSpace(150.f);
+				if (ImGui::Button("Reload shader program"))
+				{
+					// #TODO Reload Assets shader program using (presumably newly generated) shader binaries
+					LOG_WARN("Unimplemented reload button");
+				}
+
+				if (m_LatestFilePathExists)
+				{
+					ImGui::SameLineIfSpace(150.f);
+					if (ImGui::Button("Reload file from disk"))
+					{
+						LoadFile(m_CurrentShaderFilePath);
+					}
 				}
 
 				ImGui::InputTextMultiline("##ShaderFileTextBuffer", m_FileBuffer.As<char>(), m_FileBuffer.SizeInBytes(), ImGui::GetContentRegionAvail(), ImGuiInputTextFlags_AllowTabInput);
