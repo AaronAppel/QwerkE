@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
+#endif
+
 #include "QF_Buffer.h"
 #include "QF_Directory.h"
 #include "QF_Files.h"
@@ -22,10 +26,29 @@ namespace QwerkE {
 			}
 
 		private:
+			void DirectoryPathSetterButton(std::filesystem::path& path)
+			{
+				ImGui::SetNextItemWidth(10.f);
+				if (ImGui::Button(":##ShaderEditor")) // #TODO Add window guid
+				{
+					path = QwerkE::Files::ExplorerOpen("All files (*.*)\0*.*\0", path.string().c_str());
+					if (path.has_parent_path())
+					{
+						path = path.parent_path(); // #TODO Can't select directories, so return parent path of selected file
+					}
+				}
+			}
+
 			void DrawInternal() override
 			{
 				// #TODO Path validation
 				ImGui::Text("Shader file path:");
+
+				DirectoryPathSetterButton(m_CurrentShaderFilePath);
+				if (ImGui::IsAtStartOfNewLine())
+				{
+					ImGui::SameLine(0, 3.f); // #NOTE Reduce space between buttons
+				}
 				const std::string result = ImGui::DirectoryPathAsSameLineButtons(m_CurrentShaderFilePath.string());
 				if (!result.empty())
 				{
@@ -94,7 +117,16 @@ namespace QwerkE {
 					}
 				}
 
-				ImGui::InputTextMultiline("##ShaderFileTextBuffer", m_FileBuffer.As<char>(), m_FileBuffer.SizeInBytes(), ImGui::GetContentRegionAvail(), ImGuiInputTextFlags_AllowTabInput);
+				if (m_FileContentsDirty)
+				{
+					// #TODO Look at ImGui example to mark tab or window as "*" unchanged settings state
+				}
+
+				if (ImGui::InputTextMultiline("##ShaderFileTextBuffer", m_FileBuffer.As<char>(), m_FileBuffer.SizeInBytes(), ImGui::GetContentRegionAvail(), ImGuiInputTextFlags_AllowTabInput))
+				{
+					m_FileContentsDirty = true;
+					// #TODO Look at ImGui example to mark tab or window as "*" unchanged settings state
+				}
 			}
 
 			void LoadFile(const Path& shaderFilePath)
@@ -109,10 +141,13 @@ namespace QwerkE {
 				}
 			}
 
+			MIRROR_PRIVATE_MEMBERS
+
 			const u16 m_StartingBufferSize = 10000;
 			Path m_CurrentShaderFilePath = Paths::ShadersDir();
 			Buffer m_FileBuffer;
 			bool m_LatestFilePathExists = false;
+			bool m_FileContentsDirty = false;
 		};
 
 	}

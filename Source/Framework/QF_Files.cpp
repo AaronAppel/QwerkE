@@ -152,13 +152,14 @@ namespace QwerkE {
 
 		std::string FileExplorer(DWORD flags, LPCSTR filter, bool save, const char* relativeDirPath = nullptr)
 		{
+			// #TODO Select directories/folders, not just files: https://stackoverflow.com/questions/14596493/usage-of-getopenfilename-api-in-vc-for-opening-a-folder-not-a-file
 			OPENFILENAMEA ofn;
 			CHAR szFile[260] = { 0 };
 			CHAR currentDir[256] = { 0 }; // #TODO Optional argument to starting directory
 			ZeroMemory(&ofn, sizeof(OPENFILENAME));
 			ofn.lStructSize = sizeof(OPENFILENAME);
 			GLFWwindow* window = static_cast<GLFWwindow*>(Window::GetContext());
-			ofn.hwndOwner = glfwGetWin32Window(window);
+			ofn.hwndOwner = glfwGetWin32Window(window); // #TODO glfw call needs to be #ifdef wrapped and reviewed
 			ofn.lpstrFile = szFile;
 			ofn.nMaxFile = sizeof(szFile);
 

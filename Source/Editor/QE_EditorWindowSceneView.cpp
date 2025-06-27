@@ -134,6 +134,7 @@ namespace QwerkE {
                 ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
                 ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
             }
+
             std::string saveButtonName = "S##";
             saveButtonName += std::to_string(GetGuid());
             if (ImGui::Button(saveButtonName.c_str())) m_CurrentScene->SaveScene();
@@ -143,6 +144,7 @@ namespace QwerkE {
             }
             ImGui::SameLine();
             std::string reloadButtonName = "R##";
+            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
             saveButtonName += std::to_string(GetGuid());
             if (ImGui::Button(reloadButtonName.c_str()))
             {
@@ -161,13 +163,13 @@ namespace QwerkE {
 
             constexpr float itemWidth = 80.f;
 
-            ImGui::SameLine();
             ImGui::PushItemWidth(itemWidth);
+            ImGui::SameLineIfSpace(itemWidth);
             ImGui::Text(("vID " + std::to_string(m_ViewId)).c_str());
             ImGui::PopItemWidth();
 
             ImGui::PushItemWidth(itemWidth);
-            ImGui::SameLine();
+            ImGui::SameLineIfSpace(itemWidth);
             ImGui::Text(("tID " + std::to_string(m_FrameBufferTextures[0].TextureHandle().idx)).c_str());
             ImGui::PopItemWidth();
 
@@ -184,10 +186,10 @@ namespace QwerkE {
 
             constexpr u32 s_DropDownArrowSize = 20;
             ImGui::PushItemWidth((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
+            ImGui::SameLineIfSpace((float)sceneFileNameWidth + (float)s_DropDownArrowSize);
 
             snprintf(m_ScenesComboLabelBuffer, sizeof(m_ScenesComboLabelBuffer), "##Scenes: %i##%llu", (int)sceneNames.size(), GetGuid());
 
-            ImGui::SameLine();
             if (ImGui::Combo(m_ScenesComboLabelBuffer, &m_LastSceneIndex, sceneNames.data(), (s32)scenes.size()))
             {
                 m_CurrentScene = scenes[m_LastSceneIndex];
@@ -198,8 +200,8 @@ namespace QwerkE {
             }
             ImGui::PopItemWidth();
 
-            ImGui::SameLine();
             ImGui::PushItemWidth(11.f * ImGui::g_pixelsPerCharacter); // #TODO Improve hard coded scaling
+            ImGui::SameLineIfSpace(11.f * ImGui::g_pixelsPerCharacter);
             // #TODO Game window (texture) scaling options
             int listIndex = 0;
             std::string scalingComboBoxUniqueId = "Scaling##";
@@ -235,16 +237,16 @@ namespace QwerkE {
                 ++i;
             }
 
-            ImGui::SameLine();
             std::string timeScaleButtonName = "T##";
+            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
             timeScaleButtonName += std::to_string(GetGuid());
             if (ImGui::Button(timeScaleButtonName.c_str()))
             {
                 ImGui::OpenPopup("TimeControls");
             }
 
-            ImGui::SameLine();
             std::string togglePauseButtonName = m_CurrentScene->GetIsPaused() ? "<##" : "||##";
+            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
             togglePauseButtonName += std::to_string(GetGuid());
             if (ImGui::Button(togglePauseButtonName.c_str()) || (Input::KeyPressed(e_P) && ImGui::IsWindowFocused()))
             {
@@ -257,12 +259,13 @@ namespace QwerkE {
             }
 
             std::string renderingCheckboxName = "R##Rendering" + std::to_string(GetGuid());
-            ImGui::SameLine();
+            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
             ImGui::Checkbox(renderingCheckboxName.c_str(), &m_RenderingScene);
 
             const float camerasItemWidth = currentItemNameLength * ImGui::g_pixelsPerCharacter + 20.f; // #NOTE Slight increase for shorter names
-            ImGui::SameLine(ImGui::GetContentRegionAvail().x - camerasItemWidth - s_DropDownArrowSize - 10.f); // #NOTE Leave 10.f for window options ":"
             ImGui::PushItemWidth(camerasItemWidth + s_DropDownArrowSize);
+            // ImGui::SameLine(ImGui::GetContentRegionAvail().x - camerasItemWidth - s_DropDownArrowSize - 10.f); // #NOTE Leave 10.f for window options ":"
+            ImGui::SameLineIfSpace(camerasItemWidth - s_DropDownArrowSize - 10.f);
             std::string cameraComboBoxUniqueId = "##Camera:";
             cameraComboBoxUniqueId += GetGuid();
             if (ImGui::Combo(cameraComboBoxUniqueId.c_str(), &m_CurrentCameraComboIndex, cameraEntityNames.data(), (int)cameraEntityNames.size()))

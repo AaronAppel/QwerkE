@@ -22,9 +22,12 @@ namespace QwerkE {
         {
             EngineSettings& engineSettings = Settings::GetEngineSettings();
 
-            for (size_t i = 1; i < eSettingsOptions::_size_constant; i++)
+            for (size_t i = 1; i < eSettingsOptions::_size_constant; i++) // #NOTE eSettingsOptions::Null = 0
             {
-                if (i > 1) ImGui::SameLine();
+                if (i > 1)
+                {
+                    ImGui::SameLineIfSpace(strlen(ENUM_TO_STR(eSettingsOptions::_from_index(i))) * ImGui::g_pixelsPerCharacterButton);
+                }
 
                 bool pushIsDirtyStyleColor = false;
 
@@ -65,7 +68,7 @@ namespace QwerkE {
 
                 if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
                 {
-                    m_LastPopUpIndex = (s8)i;
+                    m_LastPopUpIndex = (u8)i;
                     ImGui::OpenPopup("Settings Context Pop Up");
                 }
 

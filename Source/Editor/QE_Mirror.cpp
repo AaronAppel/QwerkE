@@ -71,6 +71,7 @@ MIRROR_CLASS_END
 MIRROR_CLASS(QwerkE::Editor::EditorWindowAssets)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_MEMBER(m_ViewingLoadedAssets)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowConsole)
@@ -217,6 +218,7 @@ MIRROR_CLASS_END
 MIRROR_CLASS(QwerkE::Editor::EditorWindowShaderEditor)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowShaderEditor)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_MEMBER(m_CurrentShaderFilePath)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowPrefabScene)

@@ -214,7 +214,7 @@ namespace QwerkE {
 		Scene* CreateScene(const std::string& a_SceneFileName) // #TODO Define API for creating a new, empty scene
 		{
 			// #TODO Error checking, and how should the registry learn about the new file?
-			Scene* newScene = new Scene();
+			Scene* newScene = new Scene(GUID()); // #NOTE This method creates a new Scene in data to later save on disk. Review of how Scene guids should be generated
 			newScene->m_SceneFileName = a_SceneFileName;
 			newScene->SaveScene();
 

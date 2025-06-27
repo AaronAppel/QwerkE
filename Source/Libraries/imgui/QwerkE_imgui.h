@@ -67,9 +67,10 @@ QC_ENUM(ImGuiCol_qw, int, // For stringification
 
 namespace ImGui
 {
-	constexpr float g_pixelsPerCharacter = 6.5f; // #TODO Consider a Constants namespace or organization
-	constexpr float g_pixelsBorderWidth = 8.f; // #TODO Consider a Constants namespace or organization
-	constexpr float g_pixelsScrollBarWidth = 25.f; // #TODO Consider a Constants namespace or organization
+	constexpr float g_pixelsPerCharacter = 6.5f;		// #TODO Consider a Constants namespace or organization
+	constexpr float g_pixelsBorderWidth = 8.f;			// #TODO Consider a Constants namespace or organization
+	constexpr float g_pixelsScrollBarWidth = 25.f;		// #TODO Consider a Constants namespace or organization
+	constexpr float g_pixelsPerCharacterButton = 9.f;	// #TODO Consider a Constants namespace or organization
 
 	enum Buttons
 	{
@@ -111,6 +112,8 @@ namespace ImGui
 	void SameLineCentered(const char* text, float horizontalScaling = 1.f);
 
 	void SameLineIfSpace(float itemSize);
+
+	bool IsAtStartOfNewLine();
 
 	const char* const g_DefaultDebugWindowName = "Debug Default##EditorWindow";
 	template <typename Function>

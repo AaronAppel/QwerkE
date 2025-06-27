@@ -56,6 +56,11 @@ namespace ImGui {
 		}
 	}
 
+	bool IsAtStartOfNewLine() // #TODO Review
+	{
+		return ImGui::GetCursorPosX() == 8.0f;
+	}
+
 	std::string DirectoryPathAsSameLineButtons(const std::string& directory)
 	{
 		uint16_t index = 0;

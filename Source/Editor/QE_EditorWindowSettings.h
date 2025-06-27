@@ -28,7 +28,7 @@ namespace QwerkE {
         private:
             MIRROR_PRIVATE_MEMBERS
             eSettingsOptions m_SettingsEditorOption = eSettingsOptions::Null;
-            s8 m_LastPopUpIndex = -1;
+            u8 m_LastPopUpIndex = 0;
 		};
 
 	}
