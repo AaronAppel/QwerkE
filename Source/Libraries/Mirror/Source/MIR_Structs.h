@@ -40,7 +40,7 @@ struct Mirror
 	using Id = MIRROR_TYPE_ID_TYPE;
 	using Info = TypeInfo;
 	template <typename T>
-	static auto GetInfo(const T& typeObj) -> const TypeInfo* {
+	static auto GetInfo(T& typeObj) -> const TypeInfo* {
 		return InfoForType(typeObj);
 	}
 	template <typename T>
@@ -48,11 +48,11 @@ struct Mirror
 		return InfoForType<T>();
 	}
 	template <typename T>
-	static auto GetId(const T& typeObj) -> MIRROR_TYPE_ID_TYPE {
-		return IdForType(typeObj);
+	static constexpr auto GetId(T& typeObj) -> MIRROR_TYPE_ID_TYPE {
+		return IdForType<T>();
 	}
 	template <typename T>
-	static auto GetId() -> MIRROR_TYPE_ID_TYPE {
+	static constexpr auto GetId() -> MIRROR_TYPE_ID_TYPE {
 		return IdForType<T>();
 	}
 #endif // !#define MIRROR_OMIT_ALT_API
@@ -151,16 +151,23 @@ struct Mirror
 	};
 
 	template <typename T>
-	static const TypeInfo* InfoForType(T& typeObj); // #TODO Review if this forces const type mirroring when passing non-const types
+	static const TypeInfo* InfoForType(T& typeObj); // #NOTE Making arg const, reference, etc, requires additional reflecting of T as const, reference, etc
 
 	template <typename T>
 	static const TypeInfo* InfoForType();
 
 	template <typename T>
-	static constexpr MIRROR_TYPE_ID_TYPE IdForType(const T& typeObj);
+	static constexpr MIRROR_TYPE_ID_TYPE IdForType(T& typeObj); // #NOTE Making arg const, reference, etc, requires additional reflecting of T as const, reference, etc
 
 	template <typename T>
 	static constexpr MIRROR_TYPE_ID_TYPE IdForType();
+
+#define VA_ARGS_STRING(...) #__VA_ARGS__
+#define VA_ARGS(...) __VA_ARGS__
+#define STRIP_PARENTHESES(X) X
+
+#define TYPE_WRAP_STRING(TYPE) STRIP_PARENTHESES( VA_ARGS_STRING TYPE )
+#define TYPE_WRAP(TYPE) STRIP_PARENTHESES(VA_ARGS TYPE)
 
 #if _MSC_VER && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL) // Compile option disabled: /Zc:preprocessor
 #define MIRROR_TYPE_ID_IMPL(ID, TYPE) \
@@ -169,13 +176,6 @@ struct Mirror
 #define MIRROR_TYPE_ID(ID, ...) MIRROR_TYPE_ID_IMPL(ID, __VA_ARGS__)
 
 #else // Compile option enabled: /Zc:preprocessor
-#define VA_ARGS_STRING(...) #__VA_ARGS__
-#define VA_ARGS(...) __VA_ARGS__
-#define STRIP_PARENTHESES(X) X
-
-#define TYPE_WRAP_STRING(TYPE) STRIP_PARENTHESES( VA_ARGS_STRING TYPE )
-#define TYPE_WRAP(TYPE) STRIP_PARENTHESES(VA_ARGS TYPE)
-
 #define MIRROR_TYPE_ID_IMPL(ID, TYPE) \
 	template <> constexpr MIRROR_TYPE_ID_TYPE Mirror::IdForType<TYPE_WRAP(TYPE)>() { return ID; }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/MIR_TypeIds.h"
+#include "Libraries/Mirror/Source/MIR_Ids.h"
 #endif
 
 #include "QF_Mirror.h" // #TOD Review need

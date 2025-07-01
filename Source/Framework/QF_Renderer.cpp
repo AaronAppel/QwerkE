@@ -54,6 +54,7 @@ namespace QwerkE {
 		static const bgfx::ViewId s_ViewIdMain = 0;
 		static const bgfx::ViewId s_ViewIdImGui = 1;
 		static bgfx::ViewId s_NextViewId = s_ViewIdImGui + 1;
+		static u16 s_ViewIdMax = 100;
 #ifdef _QDEBUG
 		static DebugDrawEncoder* s_DebugDrawer = nullptr;
 #endif
@@ -200,6 +201,7 @@ namespace QwerkE {
 
 		u16 NextViewId()
 		{
+			ASSERT(s_NextViewId < s_ViewIdMax, "ViewId limit reached!");
 			return s_NextViewId++;
 		}
 

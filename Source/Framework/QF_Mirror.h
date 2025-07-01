@@ -11,7 +11,7 @@
 #endif
 
 #ifdef _QMIRROR
-#include "Libraries/Mirror/Source/MIR_TypeIds.h"
+#include "Libraries/Mirror/Source/MIR_Ids.h"
 #endif
 
 #include "QC_Guid.h"

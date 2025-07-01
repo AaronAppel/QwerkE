@@ -78,7 +78,7 @@ namespace QwerkE {
 
         const std::unordered_map<GUID, entt::entity>& EntitiesMap() { return m_GuidsToEntts; }
 
-        EntityHandle GetCurrentCameraEntity();
+        [[nodiscard]] EntityHandle GetCurrentCameraEntity();
         void SetCurrentCameraEntity(EntityHandle newCameraEntity);
 
         const GUID& GetGuid() const { return m_SceneGuid; }

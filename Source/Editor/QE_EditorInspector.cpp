@@ -22,9 +22,6 @@
 
 #include "QE_Mirror.h"
 
-// #include "../Game/QG_ScriptGameEntity.h"    // #TODO Remove Game code from Editor domain
-// #include "../Game/QG_Mirror.h"              // #TODO Remove Game code from Editor domain
-
 namespace QwerkE {
 
     namespace Inspector {
@@ -40,11 +37,90 @@ namespace QwerkE {
         bool local_InspectClass(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
         bool local_InspectCollection(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
 
+        bool local_TypeHasOverride(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        {
+            switch (typeInfo->id)
+            {
+            case Mirror::IdForType<GUID>():
+                return true;
+            }
+            return false;
+        }
+
+        bool local_TypeOverride(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
+        {
+            bool valueChanged = false;
+            std::string elementName = parentName;
+
+            switch (typeInfo->id)
+            {
+            case Mirror::IdForType<GUID>():
+                u64* numberAddress = (u64*)obj;
+
+                char buffer[U64_MAX_DIGITS + 1] = { '\0' };
+                strcpy(buffer, std::to_string(*numberAddress).c_str());
+
+                ImGui::PushItemWidth(165);
+                if (ImGui::InputText(elementName.c_str(), buffer, U64_MAX_DIGITS))
+                {
+                    if (buffer[0] != '\0')
+                    {
+                        *numberAddress = std::stoull(buffer); // #NOTE stoull crashes on empty string
+                    }
+                    else
+                    {
+                        *numberAddress = '\0';
+                    }
+                    valueChanged = true;
+                }
+                ImGui::PopItemWidth();
+
+                std::string popUpName = "Context ";
+                popUpName += elementName;
+                if (ImGui::IsItemClicked(ImGui::MouseRight))
+                {
+                    ImGui::OpenPopup(popUpName.c_str());
+                }
+
+                // #TODO Support copy/paste context for all types
+                if (ImGui::BeginPopup(popUpName.c_str()))
+                {
+                    if (ImGui::Button(("Paste From Clipboard##" + elementName).c_str()))
+                    {
+                        std::string clipBoardText = ImGui::GetClipboardText();
+                        LOG_INFO("{0} Pasting from clipboard: {1}", __FUNCTION__, clipBoardText.c_str());
+                        *numberAddress = std::stoull(clipBoardText.c_str());
+                        valueChanged = true;
+                    }
+                    if (ImGui::Button(("Copy To Clipboard##" + elementName).c_str()))
+                    {
+                        std::string numberAsString = buffer;
+                        ImGui::SetClipboardText(numberAsString.c_str());
+                        LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
+                    }
+                    if (ImGui::Button(("Regenerate GUID##" + elementName).c_str()))
+                    {
+                        *numberAddress = GUID();
+                        valueChanged = true;
+                        LOG_INFO("{0} Regenerated GUID: {1}", __FUNCTION__, *numberAddress);
+                    }
+                    ImGui::EndPopup();
+                }
+                break;
+            }
+            return valueChanged;
+        }
+
         // #TODO Consider adding a read only bool argument
         // #TODO Look to make parentName a const&
         bool InspectType(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName)
         {
             bool valueChanged = false;
+
+            if (local_TypeHasOverride(typeInfo, obj, parentName))
+            {
+                return valueChanged || local_TypeOverride(typeInfo, obj, parentName);
+            }
 
             switch (typeInfo->category)
             {
@@ -225,37 +301,6 @@ namespace QwerkE {
                         valueChanged = true;
                     }
                     ImGui::PopItemWidth();
-
-                    std::string popUpName = "Context ";
-                    popUpName += elementName;
-                    if (ImGui::IsItemClicked(ImGui::MouseRight))
-                    {
-                        ImGui::OpenPopup(popUpName.c_str());
-                    }
-
-                    if (ImGui::BeginPopup(popUpName.c_str()))
-                    {
-                        if (ImGui::Button(("Paste From Clipboard##" + elementName).c_str()))
-                        {
-                            std::string clipBoardText = ImGui::GetClipboardText();
-                            LOG_INFO("{0} Pasting from clipboard: {1}", __FUNCTION__, clipBoardText.c_str());
-                            *numberAddress = std::stoull(clipBoardText.c_str());
-                            valueChanged = true;
-                        }
-                        if (ImGui::Button(("Copy To Clipboard##" + elementName).c_str()))
-                        {
-                            std::string numberAsString = buffer;
-                            ImGui::SetClipboardText(numberAsString.c_str());
-                            LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
-                        }
-                        if (ImGui::Button(("Regenerate GUID##" + elementName).c_str()))
-                        {
-                            *numberAddress = GUID();
-                            valueChanged = true;
-                            LOG_INFO("{0} Regenerated GUID: {1}", __FUNCTION__, *numberAddress);
-                        }
-                        ImGui::EndPopup();
-                    }
                 }
                 break;
 
@@ -330,9 +375,33 @@ namespace QwerkE {
                 ImGui::EndDragDropTarget();
             }
 
-            if (ImGui::IsItemClicked())
+            // #TODO Support copy/paste context for all types
+            std::string popUpName = "Context ";
+            popUpName += elementName;
+            if (ImGui::IsItemClicked(ImGui::MouseRight))
             {
-                int bp = 0;
+                ImGui::OpenPopup(popUpName.c_str());
+            }
+
+            if (ImGui::BeginPopup(popUpName.c_str()))
+            {
+                // #TODO Review safety for all possible types
+                if (ImGui::Button(("Paste From Clipboard##" + elementName).c_str()))
+                {
+                    std::string clipBoardText = ImGui::GetClipboardText();
+                    LOG_INFO("{0} Pasting from clipboard: {1}", __FUNCTION__, clipBoardText.c_str());
+                    memcpy(obj, clipBoardText.c_str(), typeInfo->size);
+                    valueChanged = true;
+                }
+                if (ImGui::Button(("Copy To Clipboard##" + elementName).c_str()))
+                {
+                    std::string stringBuffer; // #TODO Format the value so '<' reads as 60 when copying an int, and support other types
+                    stringBuffer.reserve(typeInfo->size);
+                    memcpy(stringBuffer.data(), obj, typeInfo->size);
+                    ImGui::SetClipboardText(stringBuffer.c_str());
+                    LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, stringBuffer.c_str());
+                }
+                ImGui::EndPopup();
             }
 
 #endif // #if _QDEARIMGUI
