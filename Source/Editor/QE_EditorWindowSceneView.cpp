@@ -1,14 +1,21 @@
 #include "QE_EditorWindowSceneView.h"
 
+#ifdef _QBGFX
+#include "Libraries/bx/include/bx/rng.h" // #TODO Abstract out bgfx from QE domain
+#endif
+
 #include "QC_Time.h"
 
 #include "QF_Assets.h"
+#include "QF_ComponentCamera.h"
+#include "QF_ComponentTransform.h"
 #include "QF_Files.h"
 #include "QF_Input.h"
 #include "QF_Paths.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
+#include "QF_Shader.h"
 
 #include "QE_Settings.h"
 
@@ -94,6 +101,97 @@ namespace QwerkE {
                 Serialize::FromFile(Paths::Style(Settings::GetStyleFileName2()).c_str(), s_PlayModeStyle);
                 s_LoadedStyle = true;
             }
+
+            PickingSetup();
+        }
+
+        void EditorWindowSceneView::PickingSetup()
+        {
+            bx::RngMwc mwc;  // Random number generator
+
+            for (uint32_t ii = 0; ii < m_Count; ++ii)
+            {
+                // For the sake of this example, we'll give each mesh a random color,  so the debug output looks colorful.
+                // In an actual app, you'd probably just want to count starting from 1
+                uint32_t rr = mwc.gen() % 256;
+                uint32_t gg = mwc.gen() % 256;
+                uint32_t bb = mwc.gen() % 256;
+                m_idsF[ii][0] = rr / 255.0f;
+                m_idsF[ii][1] = gg / 255.0f;
+                m_idsF[ii][2] = bb / 255.0f;
+                m_idsF[ii][3] = 1.0f;
+                m_idsU[ii] = rr + (gg << 8) + (bb << 16) + (255u << 24);
+            }
+
+            // Set up screen clears
+            m_ViewIdShadingPass = Renderer::NextViewId();
+            m_ViewIdIdPass = Renderer::NextViewId();
+            m_ViewIdBlitPass = Renderer::NextViewId();
+
+            bgfx::setViewClear(m_ViewIdShadingPass
+                , BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
+                , 0x303030ff
+                , 1.0f
+                , 0
+            );
+
+            // ID buffer clears to black, which represents clicking on nothing (background)
+            bgfx::setViewClear(m_ViewIdIdPass
+                , BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
+                , 0x000000ff
+                , 1.0f
+                , 0
+            );
+
+            m_highlighted = UINT32_MAX;
+            m_reading = 0;
+            m_currFrame = UINT32_MAX;
+
+            // Create uniforms
+            u_tint = bgfx::createUniform("u_tint", bgfx::UniformType::Vec4); // Tint for when you click on items
+            u_id = bgfx::createUniform("u_id", bgfx::UniformType::Vec4); // ID for drawing into ID buffer
+
+            m_shadingProgram = Assets::Get<Shader>(1034563466966038478);    // ("vs_picking_shaded", "fs_picking_shaded"); // Blinn shading
+            m_idProgram = Assets::Get<Shader>(934563662924383823);         // ("vs_picking_shaded", "fs_picking_id");     // Shader for drawing into ID buffer
+
+            // Set up ID buffer, which has a color target and depth buffer
+            m_pickingRT = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
+                | BGFX_TEXTURE_RT
+                | BGFX_SAMPLER_MIN_POINT
+                | BGFX_SAMPLER_MAG_POINT
+                | BGFX_SAMPLER_MIP_POINT
+                | BGFX_SAMPLER_U_CLAMP
+                | BGFX_SAMPLER_V_CLAMP
+            );
+            m_pickingRTDepth = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::D32F, 0
+                | BGFX_TEXTURE_RT
+                | BGFX_SAMPLER_MIN_POINT
+                | BGFX_SAMPLER_MAG_POINT
+                | BGFX_SAMPLER_MIP_POINT
+                | BGFX_SAMPLER_U_CLAMP
+                | BGFX_SAMPLER_V_CLAMP
+            );
+
+            // CPU texture for blitting to and reading ID buffer so we can see what was clicked on.
+            // Impossible to read directly from a render target, you *must* blit to a CPU texture
+            // first. Algorithm Overview: Render on GPU -> Blit to CPU texture -> Read from CPU
+            // texture.
+            m_blitTex = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
+                | BGFX_TEXTURE_BLIT_DST
+                | BGFX_TEXTURE_READ_BACK
+                | BGFX_SAMPLER_MIN_POINT
+                | BGFX_SAMPLER_MAG_POINT
+                | BGFX_SAMPLER_MIP_POINT
+                | BGFX_SAMPLER_U_CLAMP
+                | BGFX_SAMPLER_V_CLAMP
+            );
+
+            bgfx::TextureHandle rt[2] =
+            {
+                m_pickingRT,
+                m_pickingRTDepth
+            };
+            m_pickingFB = bgfx::createFrameBuffer(BX_COUNTOF(rt), rt, true);
         }
 
         void EditorWindowSceneView::DrawInternal()
@@ -302,6 +400,7 @@ namespace QwerkE {
                             | BGFX_STATE_WRITE_Z
                             | BGFX_STATE_CULL_CW
                             | BGFX_STATE_CULL_CCW
+                            | BGFX_STATE_MSAA
                             ;
                         bgfx::setState(bgfxState);
                         DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
@@ -352,7 +451,7 @@ namespace QwerkE {
             }
 
             // #NOTE Order dependencies with ImGui::IsItemFocused() calls in EditorCameraUpdate()
-            ImGui::Image(ImTextureID(m_FrameBufferTextures[0].TextureHandle().idx), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
+            ImGui::Image(ImTextureID(m_FrameBufferTextures[0].TextureHandle().idx), ImGui::GetContentRegionAvail() * 0.5f, ImVec2(0, 0), ImVec2(1, 1));
 
             if (Input::MousePressed(QKey::e_MouseRight) && ImGui::IsItemHovered())
             {
@@ -382,6 +481,185 @@ namespace QwerkE {
                 ImGuiStyle& style = ImGui::GetStyle();
                 style = previousStyle;
             }
+
+            PickingUpdate();
+        }
+
+        void EditorWindowSceneView::PickingUpdate()
+        {
+            const vec2f& windowSize = Window::GetSize();
+            ImGui::Image(ImTextureID(m_pickingRT.idx), ImVec2(windowSize.x / 5.0f - 16.0f, windowSize.x / 5.0f - 16.0f));
+
+            bgfx::setViewFrameBuffer(m_ViewIdIdPass, m_pickingFB);
+
+            bx::Vec3 at = { 0.0f, 0.0f, 0.0f };
+            bx::Vec3 eye =
+            {
+                0.0f,
+                0.0f,
+                0.0f
+            };
+
+            EntityHandle cameraHandle = m_CurrentScene->GetCurrentCameraEntity();
+            if (cameraHandle)
+            {
+                if (cameraHandle.HasComponent<ComponentCamera>())
+                {
+                    const ComponentCamera& cameraCamera = cameraHandle.GetComponent<ComponentCamera>();
+                    at = {
+                        cameraCamera.m_LookAtPosition.x,
+                        cameraCamera.m_LookAtPosition.y,
+                        cameraCamera.m_LookAtPosition.z
+                    };
+                }
+
+                const ComponentTransform& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
+                const vec3f pos = cameraTransform.GetPosition();
+                eye = {
+                    pos.x,
+                    pos.y,
+                    pos.z
+                };
+            }
+
+            float view[16];
+            bx::mtxLookAt(view, eye, at);
+
+            static bool homogeneousDepth = false;
+            float proj[16];
+            bx::mtxProj(proj, 60.0f, float(windowSize.x) / float(windowSize.y), 0.1f, 100.0f, homogeneousDepth);
+
+            // Set up view rect and transform for the shaded pass
+            bgfx::setViewRect(m_ViewIdShadingPass, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
+            bgfx::setViewTransform(m_ViewIdShadingPass, view, proj);
+
+            // Set up picking pass
+            float viewProj[16];
+            bx::mtxMul(viewProj, view, proj);
+
+            float invViewProj[16];
+            bx::mtxInverse(invViewProj, viewProj);
+
+            // Mouse coord in NDC
+            float mouseXNDC = (Input::MousePos().x / (float)windowSize.x) * 2.0f - 1.0f;
+            float mouseYNDC = ((windowSize.y - Input::MousePos().y) / (float)windowSize.y) * 2.0f - 1.0f;
+
+            const bx::Vec3 pickEye = bx::mulH({ mouseXNDC, mouseYNDC, 0.0f }, invViewProj);
+            const bx::Vec3 pickAt = bx::mulH({ mouseXNDC, mouseYNDC, 1.0f }, invViewProj);
+
+            // Look at our unprojected point
+            float pickView[16];
+            bx::mtxLookAt(pickView, pickEye, pickAt);
+
+            // Tight FOV is best for picking
+            float fov = 3.f;
+            float pickProj[16];
+            bx::mtxProj(pickProj, fov, 1, 0.1f, 100.0f, homogeneousDepth);
+
+            // View rect and transforms for picking pass
+            bgfx::setViewRect(m_ViewIdIdPass, 0, 0, ID_DIM, ID_DIM);
+            bgfx::setViewTransform(m_ViewIdIdPass, pickView, pickProj);
+
+            // Picking highlights a mesh so we'll set up this tint color
+            const float tintBasic[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+            const float tintHighlighted[4] = { 0.3f, 0.3f, 2.0f, 1.0f };
+
+            // Submit mesh to both of our render passes
+            // Set uniform based on if this is the highlighted mesh
+            GUID m_DummyGuid = 0;
+            GUID m_HighlightedGuid = 1;
+            bgfx::setUniform(u_tint
+                , m_DummyGuid == m_HighlightedGuid
+                ? tintHighlighted
+                : tintBasic
+            );
+            // m_CurrentScene->Draw(RENDER_PASS_SHADING); // m_shadingProgram
+
+            // Submit ID pass based on mesh ID
+            u8 meshIndex = 0;
+            bgfx::setUniform(u_id, m_idsF[meshIndex]); // #TODO Change per mesh during rendering
+            m_CurrentScene->Draw(m_ViewIdIdPass); // m_idProgram
+
+            // If the user previously clicked, and we're done reading data from GPU, look at ID buffer on CPU
+            // Whatever mesh has the most pixels in the ID buffer is the one the user clicked on.
+            if (m_reading == m_currFrame)
+            {
+                m_reading = 0;
+                std::map<uint32_t, uint32_t> ids;  // This contains all the IDs found in the buffer
+                uint32_t maxAmount = 0;
+                for (uint8_t* x = m_blitData; x < m_blitData + ID_DIM * ID_DIM * 4;)
+                {
+                    uint8_t rr = *x++;
+                    uint8_t gg = *x++;
+                    uint8_t bb = *x++;
+                    uint8_t aa = *x++;
+
+                    if (0 == (rr | gg | bb)) // Skip background
+                    {
+                        continue;
+                    }
+
+                    uint32_t hashKey = rr + (gg << 8) + (bb << 16) + (aa << 24);
+                    std::map<uint32_t, uint32_t>::iterator mapIter = ids.find(hashKey);
+                    uint32_t amount = 1;
+                    if (mapIter != ids.end())
+                    {
+                        amount = mapIter->second + 1;
+                    }
+
+                    ids[hashKey] = amount; // Amount of times this ID (color) has been clicked on in buffer
+                    maxAmount = maxAmount > amount
+                        ? maxAmount
+                        : amount
+                        ;
+                }
+
+                uint32_t idKey = 0;
+                m_highlighted = UINT32_MAX;
+                if (maxAmount)
+                {
+                    for (std::map<uint32_t, uint32_t>::iterator mapIter = ids.begin(); mapIter != ids.end(); mapIter++)
+                    {
+                        if (mapIter->second == maxAmount)
+                        {
+                            idKey = mapIter->first;
+                            break;
+                        }
+                    }
+
+                    for (uint32_t ii = 0; ii < 12; ++ii)
+                    {
+                        if (m_idsU[ii] == idKey)
+                        {
+                            m_highlighted = ii;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Start a new readback?
+            if (!m_reading && Input::MousePressed(e_MouseLeft))
+            {
+                // Blit and read
+                bgfx::blit(m_ViewIdBlitPass, m_blitTex, 0, 0, m_pickingRT);
+                m_reading = bgfx::readTexture(m_blitTex, m_blitData);
+            }
+        }
+
+        void EditorWindowSceneView::PickingShutdown()
+        {
+            // Cleanup.
+            bgfx::destroy(u_tint);
+            bgfx::destroy(u_id);
+
+            bgfx::destroy(m_pickingFB);
+            bgfx::destroy(m_pickingRT);
+            bgfx::destroy(m_pickingRTDepth);
+            bgfx::destroy(m_blitTex);
+
+            // Shutdown bgfx.
+            bgfx::shutdown();
         }
 
         void EditorWindowSceneView::EditorCameraUpdate()
