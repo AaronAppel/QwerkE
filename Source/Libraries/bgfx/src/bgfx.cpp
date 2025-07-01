@@ -3653,6 +3653,7 @@ namespace bgfx
 		s_threadIndex = 0;
 		g_callback    = NULL;
 		g_allocator   = NULL;
+		s_renderFrameCalled = false;
 	}
 
 	void reset(uint32_t _width, uint32_t _height, uint32_t _flags, TextureFormat::Enum _format)
