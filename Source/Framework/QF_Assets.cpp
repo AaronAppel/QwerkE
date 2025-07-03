@@ -18,6 +18,7 @@
 
 #include "QF_Files.h"
 #include "QF_Mesh.h"
+#include "QF_Meshes.h"
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
 #include "QF_Shader.h"
@@ -124,6 +125,8 @@ namespace QwerkE {
 		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 
 		{	// Default QwerkE::Mesh entry
+			// #TODO Switch to using Meshes:: functions
+			// Mesh* nullMesh = Meshes::NewSquareMesh();
 			Mesh* nullMesh = new Mesh();
 			nullMesh->m_vbh = bgfx::createVertexBuffer(
 				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)),

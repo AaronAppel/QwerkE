@@ -1,4 +1,8 @@
-rem cd ../
+IF NOT EXIST .build (
+	cd ../
+)
 
-del /Q /F /S /AH .buil
-rmdir /Q /S ".build"
+IF EXIST .build (
+	del /Q /F /S /AH .build
+	rmdir /Q /S ".build"
+)

@@ -10,7 +10,7 @@ rem For !errorlevel! to be evaluated on execution
 
 @echo off
 
-set shaderCompiler=shaderc
+set shaderCompiler=..\Source\Libraries\bgfx\.build\win64_vs2022\bin\shadercRelease.exe
 set outputShadersFolder=..\Assets\Shaders\Bin
 set sourceShadersFolder=..\Assets\Shaders
 set bgfxSource=..\Source\Libraries\bgfx\src

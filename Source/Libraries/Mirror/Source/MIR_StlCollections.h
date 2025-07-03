@@ -244,7 +244,43 @@ static void SetCollectionLambdasMap(Mirror::TypeInfo* constTypeInfo, std::true_t
 	mutableTypeInfo->collectionAddFunc = [](void* collectionObjAddress, size_t /*index*/, const void* elementFirst, const void* /*elementSecond*/) {
 		((T*)collectionObjAddress)->insert(*(typename T::value_type*)elementFirst);
 	};
-	GENERIC_ITERATE_LAMBDA
+	mutableTypeInfo->collectionIterateCurrentFunc = [](const void* collectionObjAddress, size_t aIndex) -> char* {
+		T* collection = (T*)collectionObjAddress;
+		T* lastCollectionAddress = nullptr;
+		static auto iterator = collection->begin();
+		static size_t lastIndex = UINT64_MAX;
+
+		if (aIndex < lastIndex || lastCollectionAddress != collectionObjAddress)
+		{
+			lastCollectionAddress = (T*)collectionObjAddress;
+			iterator = collection->begin();
+			for (size_t i = 0; i < aIndex; i++)
+			{
+				++iterator;
+				if (collection->end() == iterator)
+				{
+					return nullptr;
+				}
+			}
+		}
+		else {
+			for (size_t i = 0; i < aIndex - lastIndex; i++)
+			{
+				++iterator;
+				if (collection->end() == iterator)
+				{
+					return nullptr;
+				}
+			}
+		}
+		lastIndex = aIndex;
+
+		if (collection->end() == iterator)
+		{
+			return nullptr;
+		}
+		return (char*)&(*iterator);
+	};
 }
 #endif // defined(MIRROR_COLLECTION_STD_MAP) && MIRROR_COLLECTION_STD_MAP
 
