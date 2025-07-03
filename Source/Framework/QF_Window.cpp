@@ -290,22 +290,59 @@ namespace QwerkE {
                 }
                 else if (strcmp(fileExtension.string().c_str(), ".obj") == 0)
                 {
+                    // #TODO When dragging source files, should the binary versions be looked for instead?
                     std::string meshFilePath = Paths::Mesh(fileName.string().c_str());
                     if (Files::Exists(meshFilePath.c_str()))
                     {
                         Assets::AddToRegistry(Mirror::IdForType<Mesh>(), GUID(), fileName.string());
                     }
                 }
+                else if (strcmp(fileExtension.string().c_str(), ".vert") == 0)
+                {
+                    // #TODO When dragging source files, should the binary versions be looked for instead?
+                    LOG_WARN(".vert support not yet implemented: {0}", fileExtension.string().c_str());
+                }
+                else if (strcmp(fileExtension.string().c_str(), ".frag") == 0)
+                {
+                    // #TODO When dragging source files, should the binary versions be looked for instead?
+                    LOG_WARN(".frag support not yet implemented: {0}", fileExtension.string().c_str());
+                }
                 else if (strcmp(fileExtension.string().c_str(), ".bin") == 0)
                 {
-                    // #NOTE Binary mesh files starts with "VB", and binary shaders start with "FSH" or "VSH"
-                    if (Files::Exists(Paths::Mesh(fileName.string().c_str()).c_str()))
+                    Buffer buffer = Files::LoadFile(filePaths[i]);
+                    if (buffer.SizeInBytes() >= 3)
                     {
-                        Assets::AddToRegistry(Mirror::IdForType<Mesh>(), GUID(), fileName.string());
+                        if (buffer.Data()[0] == 'V' && buffer.Data()[1] == 'B') // Mesh
+                        {
+                            // Mesh
+                            // #TODO Update to use Meshes/bin folder
+                            if (Files::Exists(Paths::MeshBin(fileName.string().c_str()).c_str()))
+                            {
+                                Assets::AddToRegistry(Mirror::IdForType<Mesh>(), GUID(), fileName.string());
+                            }
+                        }
+                        else if (buffer.Data()[0] == 'V' && buffer.Data()[1] == 'S' && buffer.Data()[2] == 'H') // Vertex shader
+                        {
+                            if (Files::Exists(Paths::ShaderBin(fileName.string().c_str()).c_str()))
+                            {
+                                Assets::AddToRegistry(Mirror::IdForType<Shader>(), GUID(), fileName.string());
+                            }
+                        }
+                        else if (buffer.Data()[0] == 'F' && buffer.Data()[1] == 'S' && buffer.Data()[2] == 'H') // Fragment shader
+                        {
+                            if (Files::Exists(Paths::ShaderBin(fileName.string().c_str()).c_str()))
+                            {
+                                Assets::AddToRegistry(Mirror::IdForType<Shader>(), GUID(), fileName.string());
+                            }
+                        }
+                        else
+                        {
+                            LOG_WARN("Invalid file type ID data: {0}", fileName.string().c_str());
+                        }
                     }
-                    else if (Files::Exists(Paths::ShaderBin(fileName.string().c_str()).c_str()))
+                    else
                     {
-                        Assets::AddToRegistry(Mirror::IdForType<Shader>(), GUID(), fileName.string());
+                        LOG_WARN("Invalid file data: {0}", fileName.string().c_str());
                     }
                 }
                 else

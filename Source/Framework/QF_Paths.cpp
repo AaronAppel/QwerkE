@@ -58,6 +58,16 @@ namespace QwerkE {
 			return MeshesDir() + "\\" + meshFileName;
 		}
 
+		std::string MeshesBinDir()
+		{
+			return MeshesDir() + "\\Bin";
+		}
+
+		std::string MeshBin(const char* meshFileName)
+		{
+			return MeshesBinDir() + "\\" + meshFileName;
+		}
+
 		std::string NullAssetsDir()
 		{
 			return s_NullAssetsDir;

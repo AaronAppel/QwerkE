@@ -24,6 +24,8 @@ namespace QwerkE {
 
 		std::string MeshesDir();
 		std::string Mesh(const char* meshFileName);
+		std::string MeshesBinDir();
+		std::string MeshBin(const char* meshFileName);
 
 		std::string NullAssetsDir();
 		std::string NullAsset(const char* sceneFileName);
@@ -42,7 +44,6 @@ namespace QwerkE {
 
 		std::string ShadersDir();
 		std::string Shader(const char* shaderFileName);
-
 		std::string ShadersBinDir();
 		std::string ShaderBin(const char* shaderFileName);
 

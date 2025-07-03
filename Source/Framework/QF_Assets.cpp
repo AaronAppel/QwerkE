@@ -60,7 +60,7 @@ namespace QwerkE {
 						if (constexpr bool loadFromMeshFile = true)
 						{
 							// #TODO Deprecate bgfxFramework::Mesh
-							bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::Mesh(fileName.c_str()).c_str());
+							bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::MeshBin(fileName.c_str()).c_str());
 
 							Mesh* meshFromFile = new Mesh();
 							meshFromFile->m_ibh = bgfxMesh->m_groups[0].m_ibh;

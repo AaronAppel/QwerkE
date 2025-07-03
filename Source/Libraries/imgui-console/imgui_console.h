@@ -45,6 +45,8 @@ protected:
 
     // Main
 
+    static bool m_Initialized;
+
     std::string m_Buffer;            //!< Input buffer.
     std::string m_HintBuffer;        //!< Input post buffer for autocomplete hints.
     std::string m_ConsoleName;       //!< Console name string buffer.

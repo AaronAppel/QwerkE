@@ -53,8 +53,24 @@ namespace ImGui
     }
 }
 
+bool ImGuiConsole::m_Initialized = false;
+
 ImGuiConsole::ImGuiConsole(std::string c_name, size_t inputBufferSize) : m_ConsoleName(std::move(c_name))
 {
+    if (m_Initialized)
+    {
+        // assert(!m_Initialized, "Already initialized!");
+        return;
+    }
+
+    m_Initialized = true;
+
+    if (m_ConsoleName.empty())
+    {
+        m_ConsoleName = "imgui-console";
+        inputBufferSize = 256;
+    }
+
     // Set input buffer size.
     m_Buffer.resize(inputBufferSize);
     m_HintBuffer.resize(inputBufferSize);
@@ -75,6 +91,11 @@ ImGuiConsole::ImGuiConsole(std::string c_name, size_t inputBufferSize) : m_Conso
 
 ImGuiConsole::~ImGuiConsole()
 {
+    if (!m_Initialized)
+    {
+        return;
+    }
+
     ImGuiContext* g = ImGui::GetCurrentContext();
     if (g && g->Initialized && !g->SettingsLoaded && !m_LoadedFromIni)
     {
@@ -83,6 +104,7 @@ ImGuiConsole::~ImGuiConsole()
             if (SettingsHandler_ApplyAll == g->SettingsHandlers[i].ApplyAllFn)
             {
                 g->SettingsHandlers.erase(g->SettingsHandlers.begin() + i);
+				m_Initialized = false;
                 break;
             }
         }
