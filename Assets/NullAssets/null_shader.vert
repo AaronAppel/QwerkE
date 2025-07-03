@@ -1,17 +1,15 @@
-// null_shader.vert
-#version 330 core
+$input a_position, a_color0
+$output v_color0
 
-// Attribute input
-in vec3 a_Position;
+/*
+ * Copyright 2011-2025 Branimir Karadzic. All rights reserved.
+ * License: https://github.com/bkaradzic/bgfx/blob/master/LICENSE
+ */
 
-// Uniforms
-uniform mat4 u_WorldMat;
-uniform mat4 u_ViewMat;
-uniform mat4 u_ProjMat;
-
-// Output
+#include <bgfx_shader.sh>
 
 void main()
 {
-    gl_Position = u_ProjMat * u_ViewMat * u_WorldMat * vec4(a_Position, 1.0);
+	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0) );
+	v_color0 = a_color0;
 }
