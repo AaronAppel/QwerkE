@@ -3,7 +3,7 @@
 /bin
 /Assets/Shaders/Bin
 /Assets/Meshes/Bin
-/Source/Libraries/bgfx/build
+/Source/Libraries/bgfx/.build
 
 *.tlog
 *.log
