@@ -114,7 +114,14 @@ namespace QwerkE {
 			if (!rendererInitialized)
 				return;
 
-			bgfx::setState(BGFX_STATE_DEFAULT);
+			uint64_t bgfxState = 0
+				| BGFX_STATE_DEPTH_TEST_MASK
+				| BGFX_STATE_WRITE_Z
+				| BGFX_STATE_CULL_CW
+				| BGFX_STATE_CULL_CCW
+				| BGFX_STATE_MSAA
+				;
+			bgfx::setState(bgfxState); // BGFX_STATE_DEFAULT
 
 			DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TESTING
 			debugDrawer.begin(a_ViewId, true);

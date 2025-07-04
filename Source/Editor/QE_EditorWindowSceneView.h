@@ -4,6 +4,10 @@
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
+#ifdef _QBGFX
+#include "Libraries/bgfx/include/bgfx/bgfx.h" // #TODO Abstract out bgfx from QE domain
+#endif
+
 #include "QF_ComponentCamera.h"
 #include "QF_ComponentTransform.h"
 #include "QF_FrameBuffer.h"
@@ -15,6 +19,7 @@
 namespace QwerkE {
 
 	class Scene;
+	class Shader;
 
 	namespace Editor {
 
@@ -30,8 +35,12 @@ namespace QwerkE {
 
 		private:
 			void Init();
+			void PickingSetup();
 
 			void DrawInternal();
+			void PickingUpdate();
+
+			void PickingShutdown();
 
 			void EditorCameraUpdate();
 
@@ -87,6 +96,33 @@ namespace QwerkE {
 
 			Texture m_FrameBufferTextures[2];
 			FrameBuffer m_FrameBuffer;
+
+			// Picking
+			bgfx::ViewId m_ViewIdShadingPass = 8; // Default forward rendered geo with simple shading
+			bgfx::ViewId m_ViewIdIdPass = 9; // ID buffer for picking
+			bgfx::ViewId m_ViewIdBlitPass = 10; // Blit GPU render target to CPU texture
+
+#define ID_DIM 8  // Size of the ID buffer
+
+			Shader* m_shadingProgram				= nullptr;
+			Shader* m_idProgram						= nullptr;
+			bgfx::UniformHandle u_tint				= BGFX_INVALID_HANDLE;
+			bgfx::UniformHandle u_id				= BGFX_INVALID_HANDLE;
+			bgfx::TextureHandle m_pickingRT			= BGFX_INVALID_HANDLE;
+			bgfx::TextureHandle m_pickingRTDepth	= BGFX_INVALID_HANDLE;
+			bgfx::TextureHandle m_blitTex			= BGFX_INVALID_HANDLE;
+			bgfx::FrameBufferHandle m_pickingFB		= BGFX_INVALID_HANDLE;
+
+			uint8_t m_blitData[ID_DIM * ID_DIM * 4]; // Read blit into this
+
+			static const u8 m_Count = 12;
+			float m_idsF[m_Count][4];
+			uint32_t m_idsU[m_Count];
+
+			uint32_t m_highlighted;
+
+			uint32_t m_reading;
+			uint32_t m_currFrame;
 		};
 
 	}
