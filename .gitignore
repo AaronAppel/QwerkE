@@ -2,6 +2,8 @@
 .vs/
 /bin
 /Assets/Shaders/Bin
+/Assets/Meshes/Bin
+/Source/Libraries/bgfx/.build
 
 *.tlog
 *.log
@@ -13,7 +15,7 @@
 *.VC.db
 *.suo
 *.opendb
-*.obj
+// *.obj // Include mesh files, but still need to avoid committing .obj code compilation files
 
 *.dll
 !QwerkE_Framework/Libraries/**/*.dll
@@ -36,7 +38,7 @@ Documentation/README.md
 *.slo
 *.lo
 *.o
-*.obj
+// *.obj // Include mesh files, but still need to avoid committing .obj code compilation files
 
 # Precompiled Headers
 *.gch

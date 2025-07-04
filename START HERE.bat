@@ -1,4 +1,7 @@
 
+start Source\Libraries\bgfx\1stTimeSetup.bat
+echo Building bgfx shader and mesh compilers
+
 rem Create shortcut to build script to use from now on
 set TARGET='Build\Setup-Windows-Vs2022.bat'
 set SHORTCUT='Build Vs 2022 Windows.lnk'

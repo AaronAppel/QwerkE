@@ -9,3 +9,5 @@
 .svn
 .vscode
 tags
+.build/
+build/

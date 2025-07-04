@@ -18,6 +18,7 @@
 
 #include "QF_Files.h"
 #include "QF_Mesh.h"
+#include "QF_Meshes.h"
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
 #include "QF_Shader.h"
@@ -60,7 +61,7 @@ namespace QwerkE {
 						if (constexpr bool loadFromMeshFile = true)
 						{
 							// #TODO Deprecate bgfxFramework::Mesh
-							bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::Mesh(fileName.c_str()).c_str());
+							bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::MeshBin(fileName.c_str()).c_str());
 
 							Mesh* meshFromFile = new Mesh();
 							meshFromFile->m_ibh = bgfxMesh->m_groups[0].m_ibh;
@@ -92,7 +93,8 @@ namespace QwerkE {
 						constexpr u8 fragmentFileNameIndex = 1;
 						const std::string& fragmentFileName = currentAssetListPair.second[fragmentFileNameIndex];
 
-						Shader* newShader = new Shader(vertexFileName.c_str(), fragmentFileName.c_str(), guid);
+						Shader* newShader = new Shader(Paths::ShaderBin(vertexFileName.c_str()).c_str(),
+							Paths::ShaderBin(fragmentFileName.c_str()).c_str(), guid);
 						m_MapOfLoadedAssetMaps[typeId][guid] = newShader;
 					}
 					break;
@@ -123,7 +125,9 @@ namespace QwerkE {
 
 		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 
-		{	// Default QwerkE::Mesh entry
+		{	// Default Mesh entry
+			// #TODO Switch to using Meshes:: functions
+			// Mesh* nullMesh = Meshes::NewSquareMesh();
 			Mesh* nullMesh = new Mesh();
 			nullMesh->m_vbh = bgfx::createVertexBuffer(
 				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)),
@@ -138,13 +142,14 @@ namespace QwerkE {
 
 		{   // Default Shader entry
 			// #TODO Use coded data instead of relying on a file to exist
-			Shader* nullShader = new Shader("Cubes.vert.bin", "Cubes.frag.bin", GUID::Invalid);
+			Shader* nullShader = new Shader(Paths::NullAsset("null_shader.vert.bin").c_str(), Paths::NullAsset("null_shader.frag.bin").c_str(), GUID::Invalid);
 			ASSERT(nullShader, "Could not load null shader!")
 			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->Guid()] = nullShader;
 		}
 
 		{
 			// #TODO Null texture
+			Texture texture; // Paths::NullAsset("null_texture.png").c_str();
 		}
 
 		{

@@ -1,9 +1,13 @@
-// null_shader.frag
-#version 330 core
+$input v_color0
 
-out vec4 t_Color;
+/*
+ * Copyright 2011-2025 Branimir Karadzic. All rights reserved.
+ * License: https://github.com/bkaradzic/bgfx/blob/master/LICENSE
+ */
+
+#include <bgfx_shader.sh>
 
 void main()
 {
-    t_Color = vec4(1,0,1,1);
+	gl_FragColor = v_color0;
 }

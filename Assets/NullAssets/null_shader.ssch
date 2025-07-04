@@ -1,8 +1,0 @@
-{
-	"ShaderProgram":	[{
-		"m_Name":	"null_shader.ssch",
-		"m_VertName":	"null_shader.vert",
-		"m_FragName":	"null_shader.frag",
-		"m_GeoName":	"null"
-	}]
-}
