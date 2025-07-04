@@ -58,6 +58,14 @@
 					"std::vector<std::string>":	{
 						"std::string":	"cube.bin"
 					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"11031772710732157330"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"nanosuit.obj.bin"
+					}
 				}
 			}
 		},
