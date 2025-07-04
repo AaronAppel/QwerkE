@@ -111,6 +111,15 @@
 						"std::string":	"Test.vert.bin",
 						"std::string":	"Test.frag.bin"
 					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"1034563466966038478"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"vs_picking_shaded.vert.bin",
+						"std::string":	"fs_picking_shaded.frag.bin"
+					}
 				}
 			}
 		}
