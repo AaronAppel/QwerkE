@@ -8,6 +8,8 @@
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
+#include "QC_Math.h"
+
 #include "QF_Buffer.h"
 #include "QF_ComponentScript.h"
 #include "QF_Enums.h"
@@ -698,6 +700,138 @@ namespace QwerkE {
                     valueChanged |= ImGui::DragFloat4("##m_arr_float16_1", &f16matrix[4], .1f);
                     valueChanged |= ImGui::DragFloat4("##m_arr_float16_2", &f16matrix[8], .1f);
                     valueChanged |= ImGui::DragFloat4("##m_arr_float16_3", &f16matrix[12], .1f);
+
+                    float R[3][3];
+                    for (int i = 0; i < 3; ++i)
+                        for (int j = 0; j < 3; ++j)
+                        {
+                            uint16_t index = i * 4 + j;
+                            R[i][j] = f16matrix[index];
+                        }
+
+                    std::array<float, 3> xyz = Math::RotationMatrixToEulerZYX(R);
+                    ImGui::Text(std::to_string(xyz[0]).c_str());
+                    ImGui::Text(std::to_string(xyz[1]).c_str());
+                    ImGui::Text(std::to_string(xyz[2]).c_str());
+
+                    static float angleX = 0;
+                    if (ImGui::DragFloat("X", &angleX, 0.1f))
+                    {
+                        // bx:::mtxMul();
+
+                        if (Input::KeyDown(QKey::e_CtrlAny))
+                        {
+                            // #TODO Snap to nearest increment of number math helper method
+                            // angleX = (int)angleX % 5;
+                        }
+                        const float radians = Math::DegToRad(angleX);
+
+                        f16matrix[0]  = 1;
+                        f16matrix[1]  = 0;
+                        f16matrix[2]  = 0;
+
+                        f16matrix[4]  = 0;
+                        f16matrix[5]  = cos(radians);
+                        f16matrix[6]  = -sin(radians);
+
+                        f16matrix[8]  = 0;
+                        f16matrix[9]  = sin(radians);
+                        f16matrix[10] = cos(radians);
+                    }
+
+                    static float angleY = 0;
+                    if (ImGui::DragFloat("Y", &angleY, 0.1f))
+                    {
+                        // bx:::mtxMul();
+
+                        if (Input::KeyDown(QKey::e_CtrlAny))
+                        {
+                            // #TODO Snap to nearest increment of number math helper method
+                            // angleY = (int)angleY % 5;
+                        }
+                        const float radians = Math::DegToRad(angleY);
+
+                        f16matrix[0]  = cos(radians);
+                        f16matrix[1]  = 0;
+                        f16matrix[2]  = sin(radians);
+
+                        f16matrix[4]  = 0;
+                        f16matrix[5]  = 1;
+                        f16matrix[6]  = 0;
+
+                        f16matrix[8]  = -sin(radians);
+                        f16matrix[9]  = 0;
+                        f16matrix[10] = cos(radians);
+                    }
+
+                    static float angleZ = 0;
+                    if (ImGui::DragFloat("Z", &angleZ, 0.1f))
+                    {
+                        if (Input::KeyDown(QKey::e_CtrlAny))
+                        {
+                            // #TODO Snap to nearest increment of number math helper method
+                            // angleZ = (int)angleZ % 5;
+                        }
+
+                        const float radians = Math::DegToRad(angleZ);
+
+                        f16matrix[0]  = cos(radians);
+                        f16matrix[1]  = -sin(radians);
+                        f16matrix[2]  = 0;
+
+                        f16matrix[4]  = sin(radians);
+                        f16matrix[5]  = cos(radians);
+                        f16matrix[6]  = 0;
+
+                        f16matrix[8]  = 0;
+                        f16matrix[9]  = 0;
+                        f16matrix[10] = 1;
+                    }
+
+                    if (ImGui::Button("YStep"))
+                    {
+                        if (Input::KeyDown(QKey::e_CtrlAny))
+                        {
+                            // #TODO Snap to nearest increment of number math helper method
+                            // angleY = (int)angleY % 5;
+                        }
+                        const float radians = Math::DegToRad(angleY);
+
+                        f16matrix[0] = cos(radians);
+                        f16matrix[1] = 0;
+                        f16matrix[2] = sin(radians);
+
+                        f16matrix[4] = 0;
+                        f16matrix[5] = 1;
+                        f16matrix[6] = 0;
+
+                        f16matrix[8] = -sin(radians);
+                        f16matrix[9] = 0;
+                        f16matrix[10] = cos(radians);
+                    }
+
+                    // #TODO Can I re-create a Unity/Unreal esq transform UI?
+                    float arrX[3] = { f16matrix[0], f16matrix[4], f16matrix [8] };
+                    if (ImGui::DragFloat3("Rotation X##", arrX))
+                    {
+                        f16matrix[0] = arrX[0];
+                        f16matrix[4] = arrX[1];
+                        f16matrix[8] = arrX[2];
+                    }
+                    float arrY[3] = { f16matrix[1], f16matrix[5], f16matrix[9] };
+                    if (ImGui::DragFloat3("Rotation Y##", arrY))
+                    {
+                        f16matrix[1] = arrY[0];
+                        f16matrix[5] = arrY[1];
+                        f16matrix[9] = arrY[2];
+                    }
+                    float arrZ[3] = { f16matrix[2], f16matrix[6], f16matrix[10] };
+                    if (ImGui::DragFloat3("Rotation Z##", arrZ))
+                    {
+                        f16matrix[2]  = arrZ[0];
+                        f16matrix[6]  = arrZ[1];
+                        f16matrix[10] = arrZ[2];
+                    }
                 }
                 break;
 

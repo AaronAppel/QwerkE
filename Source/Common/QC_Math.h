@@ -1,16 +1,34 @@
 #pragma once
 
+// #TODO Improve
+#include <iostream>
+#include <cmath>
+#include <array>
+
 #include "QC_TypeDefs.h"
 
 namespace QwerkE {
 
-	namespace Math
-	{
+	namespace Math {
+
+#define M_PI       3.14159265358979323846f   // pi
+#define DEG(x) ((x) * 180.0f / M_PI)
+
 		constexpr double PI() { return 3.1415926535897932384626433832795; }
 		constexpr float PI_f() { return 3.1415926535897932384626433832795f; }
 
 		#define DEG_TO_RAD  0.01745329251994329576923690768489
 		#define RAD_TO_DEG  57.295779513082320876798154814105
+
+		inline float DegToRad(float degrees)
+		{
+			return degrees * M_PI / 180.f;
+		}
+
+		inline float RadToDeg(float radians)
+		{
+			return radians * 180.f / M_PI;
+		}
 
 		template <typename T>
 		inline T Abs(T value)
@@ -74,6 +92,8 @@ namespace QwerkE {
 			}
 			return result;
 		}
+
+		std::array<float, 3> RotationMatrixToEulerZYX(const float R[3][3]);
 
 #ifdef _QGLM
 		inline float Magnitude(const vec2f& a_Other) { return glm::length(a_Other); }
