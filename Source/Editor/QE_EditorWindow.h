@@ -188,7 +188,7 @@ namespace QwerkE {
 		class EditorWindow
 		{
 		public:
-			~EditorWindow()
+			virtual ~EditorWindow()
 			{
 				if (this == Editor::GetLastFocusedWindow())
 				{

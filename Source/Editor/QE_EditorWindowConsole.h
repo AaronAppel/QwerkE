@@ -12,6 +12,7 @@ namespace QwerkE {
 		{
 		public:
 			EditorWindowConsole(GUID guid);
+			~EditorWindowConsole();
 
 		private:
 			void DrawInternal() override

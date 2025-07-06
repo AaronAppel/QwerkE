@@ -53,17 +53,15 @@ namespace ImGui
     }
 }
 
-bool ImGuiConsole::m_Initialized = false;
+bool ImGuiConsole::m_RegisteredImGuiHandler = false;
 
 ImGuiConsole::ImGuiConsole(std::string c_name, size_t inputBufferSize) : m_ConsoleName(std::move(c_name))
 {
-    if (m_Initialized)
+    if (m_RegisteredImGuiHandler)
     {
         // assert(!m_Initialized, "Already initialized!");
         return;
     }
-
-    m_Initialized = true;
 
     if (m_ConsoleName.empty())
     {
@@ -91,20 +89,26 @@ ImGuiConsole::ImGuiConsole(std::string c_name, size_t inputBufferSize) : m_Conso
 
 ImGuiConsole::~ImGuiConsole()
 {
-    if (!m_Initialized)
+    UnregisterImGuiHandler();
+}
+
+void ImGuiConsole::UnregisterImGuiHandler()
+{
+    if (!m_RegisteredImGuiHandler)
     {
         return;
     }
 
-    ImGuiContext* g = ImGui::GetCurrentContext();
-    if (g && g->Initialized && !g->SettingsLoaded && !m_LoadedFromIni)
+    if (m_RegisteredImGuiHandler)
     {
+        ImGuiContext* g = ImGui::GetCurrentContext();
         for (size_t i = 0; i < g->SettingsHandlers.size(); i++)
         {
             if (SettingsHandler_ApplyAll == g->SettingsHandlers[i].ApplyAllFn)
             {
+                // #TODO Compare unique names g->SettingsHandlers[i].TypeName
                 g->SettingsHandlers.erase(g->SettingsHandlers.begin() + i);
-				m_Initialized = false;
+                m_RegisteredImGuiHandler = false;
                 break;
             }
         }
@@ -176,6 +180,7 @@ void ImGuiConsole::InitIniSettings()
         console_ini_handler.WriteAllFn = SettingsHandler_WriteAll;
         console_ini_handler.UserData = this;
         g.SettingsHandlers.push_back(console_ini_handler);
+        m_RegisteredImGuiHandler = true;
     }
     // else Ini settings already loaded!
 }

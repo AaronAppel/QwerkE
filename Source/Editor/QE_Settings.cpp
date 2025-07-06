@@ -12,19 +12,10 @@ namespace QwerkE {
 
 		constexpr char* s_ImGuiStyleFileName = "Default.style"; // #TODO Review default settings files list
 		constexpr char* s_ImGuiStyleFileName2 = "PurpleComfy.style"; // #TODO Move to QE_Settings.h::UserSettings
+		constexpr char* s_EditorSettingsFileName = "Editor.qsetting"; // #TODO Move to QE_Settings.h::UserSettings
 
-		UserSettings s_userSettings;
+		EditorSettings s_editorSettings;
 		RendererSettings s_rendererSettings;
-
-		UserSettings& GetUserSettings()
-		{
-			return s_userSettings;
-		}
-
-		RendererSettings& GetRendererSettings()
-		{
-			return s_rendererSettings;
-		}
 
 		const char* GetStyleFileName()
 		{
@@ -36,21 +27,30 @@ namespace QwerkE {
 			return s_ImGuiStyleFileName2;
 		}
 
-		void LoadUserSettings(const std::string& userSettingsFileName)
+		void LoadEditorSettings()
 		{
-			std::string userSettingsFilePath = Paths::Setting(userSettingsFileName.c_str());
-			if (userSettingsFileName.empty() || userSettingsFilePath.empty() ||
-				!Files::Exists(userSettingsFilePath.c_str()))
+			std::string editorSettingsFilePath = Paths::Setting(s_EditorSettingsFileName);
+			if (Files::Exists(editorSettingsFilePath.c_str()))
 			{
-				userSettingsFilePath = Paths::NullAsset("UserSettings.qpref"); // #TODO Add to path/file defines
+				Serialize::FromFile(editorSettingsFilePath.c_str(), s_editorSettings);
 			}
-			Serialize::FromFile(userSettingsFilePath.c_str(), s_userSettings);
-			s_userSettings.isDirty = false;
+			else
+			{
+				SaveEditorSettings();
+				if (Files::Exists(editorSettingsFilePath.c_str()))
+				{
+					LOG_WARN("Missing editor settings file created: {0}", s_EditorSettingsFileName);
+				}
+				else
+				{
+					LOG_WARN("Error creating editor settings file: {0}", s_EditorSettingsFileName);
+				}
+			}
 		}
 
-		void SaveUserSettings()
+		void SaveEditorSettings()
 		{
-			Serialize::ToFile(s_userSettings, Paths::Setting("Aaron.qpref").c_str());
+			Serialize::ToFile(s_editorSettings, Paths::Setting(s_EditorSettingsFileName).c_str());
 		}
 
 		void LoadRendererSettings(const std::string& rendererSettingsFileName)
@@ -69,6 +69,16 @@ namespace QwerkE {
 		{
 			// #TODO Serialize to file
 			s_rendererSettings.isDirty = false;
+		}
+
+		EditorSettings& GetEditorSettings()
+		{
+			return s_editorSettings;
+		}
+
+		RendererSettings& GetRendererSettings()
+		{
+			return s_rendererSettings;
 		}
 
 	}

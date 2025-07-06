@@ -24,7 +24,6 @@
 #include "QF_Input.h"
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
-#include "QF_Settings.h"
 #include "QF_Shader.h"
 #include "QF_Texture.h"
 
@@ -134,7 +133,7 @@ MIRROR_TYPE_ID(1052, QwerkE::ComponentInfo)
 MIRROR_TYPE_ID(1053, QwerkE::ComponentCamera)
 MIRROR_TYPE_ID(1054, QwerkE::RendererSettings)
 
-MIRROR_TYPE_ID(1055, QwerkE::EngineSettings)
+// Unused MIRROR_TYPE_ID(1055, QwerkE::EngineSettings)
 
 MIRROR_TYPE_ID(1056, QwerkE::ScriptGuiButton)
 
@@ -149,3 +148,5 @@ MIRROR_TYPE_ID(1064, QwerkE::GUID)
 MIRROR_TYPE_ID(1065, const QwerkE::GUID)
 MIRROR_TYPE_ID(1066, QwerkE::ScriptableCamera)
 MIRROR_TYPE_ID(1067, QwerkE::ScriptableSceneTransition)
+
+MIRROR_TYPE_ID(1067, QwerkE::Framework::StartUpData)

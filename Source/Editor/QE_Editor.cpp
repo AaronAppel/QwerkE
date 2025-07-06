@@ -39,12 +39,12 @@
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
-#include "QF_Settings.h"
 #include "QF_Window.h"
 
 #include "QE_EditorHotKeys.h"
 #include "QE_EditorWindowHelpers.h"
 #include "QE_Projects.h"
+#include "QE_Settings.h"
 
 namespace QwerkE {
 
@@ -114,19 +114,7 @@ namespace QwerkE {
 
             Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments); // #TODO Improve name
 
-            Settings::LoadEngineSettings("Editor.qsetting"); // #TODO How to load? From where and what if a default file doesn't exist?
-            const EngineSettings& engineSettings = Settings::GetEngineSettings();
-			Framework::Initialize(engineSettings.windowOpenWidthPixels, engineSettings.windowOpenHeightPixels);
-
             local_Initialize();
-
-            Settings::LoadUserSettings("Aaron.qpref"); // #TODO Testing user settings. Move somewhere better
-            const UserSettings& userSettings = Settings::GetUserSettings();
-            const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
-            for (size_t i = 0; i < scenes.size(); i++)
-            {
-                scenes[i]->SetIsPaused(!userSettings.startInPlayMode);
-            }
 
             Time::WriteAppStartTime();
 
@@ -197,12 +185,12 @@ namespace QwerkE {
 				}
 			}
 
-			Settings::SaveEngineSettings();
+			Settings::SaveEditorSettings();
 
             // #TODO Save editor state for next launch
 
-			Framework::Shutdown();
             local_Shutdown();
+			Framework::Shutdown();
 		}
 
         const EditorStateFlags& GetEditorStateFlags()
@@ -600,14 +588,18 @@ namespace QwerkE {
 
 		void local_Initialize()
 		{
+            Settings::LoadEditorSettings();
+            const EditorSettings& engineSettings = Settings::GetEditorSettings();
+            Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.maxAllowedFramesPerSecond);
+
+            Framework::Initialize(engineSettings.startUpData);
+
             // #TODO Debug code
             // Input::OnKey(TestOnKey);
             // Input::OnMouse(TestOnMouse);
             // Input::OnGamepad(TestOnGamepad);
 
-            Settings::LoadUserSettings("Aaron.qpref"); // #TODO Set an expected default user/editor settings file to load or generate
-
-            Projects::Initialize();
+            Projects::Initialize(); // #NOTE User settings load order dependency
 
             LoadDefaultImGuiStyleFromFile();
 
@@ -620,7 +612,7 @@ namespace QwerkE {
             Serialize::FromFile(Paths::Setting(s_EditorWindowDataFileName).c_str(), s_FocusedWindowsStack);
 
             bool missingMenuBarWindow = true;
-            bool shouldOpenWelcomeWindow = Settings::GetUserSettings().showWelcomeWindow;
+            bool shouldOpenWelcomeWindow = Settings::GetEditorSettings().showWelcomeWindow;
             for (size_t i = 0; i < s_FocusedWindowsStack.size(); i++)
             {
                 if (EditorWindowTypes::MenuBar == (u32)s_FocusedWindowsStack[i]->Type())
@@ -651,14 +643,16 @@ namespace QwerkE {
             {
                 NewEditorWindow(EditorWindowTypes::WelcomeWindow);
             }
-
-            // #TODO Move to Settings::Initialize()?
-            const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.maxAllowedFramesPerSecond);
 		}
 
 		void local_Shutdown()
 		{
+            vec2f windowPosition = Window::GetPosition();
+            EditorSettings& engineSettings = Settings::GetEditorSettings();
+            engineSettings.startUpData.windowOpenPositionX = windowPosition.x;
+            engineSettings.startUpData.windowOpenPositionY = windowPosition.y;
+            Settings::SaveEditorSettings();
+
             Projects::Shutdown();
             // #TODO Save loaded data information
             // s_EditorLastOpenedData.LastUserSettingsFileName = Settings::GetUserSettings();

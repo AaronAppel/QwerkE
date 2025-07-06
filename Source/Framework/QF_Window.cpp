@@ -16,6 +16,7 @@
 #include "QF_Assets.h"
 #include "QF_Debug.h"
 #include "QF_Files.h"
+#include "QF_Framework.h"
 #include "QF_Mesh.h"
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
@@ -25,8 +26,6 @@
 
 #include "QF_Mirror.h" // #TODO Review how to include reflection. Needs basis or forced include precompiled header?
 
-#include "../Source/Editor/QE_Projects.h" // #TODO Remove from QF_* domain
-#include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
 const char* g_WindowTitle = "QwerkEngine";
 
@@ -107,7 +106,7 @@ namespace QwerkE {
         }
     #endif
 
-        void Window::Initialize(u16 windowWidth, u16 windowHeight)
+        void Initialize(const Framework::StartUpData& startUpData)
         {
     #ifdef _QGLFW3
             const int glfwInitCode = glfwInit();
@@ -131,25 +130,24 @@ namespace QwerkE {
             glfwWindowHint(GLFW_DEPTH_BITS, 0);
             glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
-            const EngineSettings& engineSettings = Settings::GetEngineSettings();
-            glfwWindowHint(GLFW_POSITION_X, engineSettings.windowOpenPositionX);
-            glfwWindowHint(GLFW_POSITION_Y, engineSettings.windowOpenPositionY);
+            glfwWindowHint(GLFW_POSITION_X, startUpData.windowOpenPositionX);
+            glfwWindowHint(GLFW_POSITION_Y, startUpData.windowOpenPositionY);
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
-            s_GlfwWindow = glfwCreateWindow((int)windowWidth, (int)windowHeight, g_WindowTitle, NULL, NULL);
+            s_GlfwWindow = glfwCreateWindow((int)startUpData.windowWidth, (int)startUpData.windowHeight, g_WindowTitle, NULL, NULL);
             ASSERT(s_GlfwWindow, "Critical error creating GLFWWindow*!");
             if (!s_GlfwWindow)
             {
                 local_CheckGlfwErrors();
                 // #TODO Exit app properly
             }
-            s_aspectRatio = (float)windowHeight / (float)windowHeight;
+            s_aspectRatio = (float)startUpData.windowHeight / (float)startUpData.windowHeight;
 
-            glfwSwapInterval(engineSettings.vSyncEnabled);
+            glfwSwapInterval(startUpData.vSyncEnabled);
             glfwMakeContextCurrent(s_GlfwWindow);
 
-            if (engineSettings.windowAutoFocusOnStart)
+            if (startUpData.windowAutoFocusOnStart)
             {
                 glfwFocusWindow(s_GlfwWindow);
             }

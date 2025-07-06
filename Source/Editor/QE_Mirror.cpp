@@ -36,9 +36,19 @@ static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo
 	MirrorSubClass<SuperClass, SubClass...>(localStaticTypeInfo, enumStartOffset);
 }
 
-MIRROR_CLASS(QwerkE::UserSettings)
-MIRROR_CLASS_MEMBER(startInPlayMode)
+struct EditorSettings // #NOTE Single instance. Cannot be overridden and is used to initialize other settings
+{
+	std::string lastUserSettingsFileName = "Default.quser";
+};
+
+MIRROR_CLASS(QwerkE::EditorSettings)
 MIRROR_CLASS_MEMBER(showWelcomeWindow)
+MIRROR_CLASS_MEMBER(startUpData)
+MIRROR_CLASS_MEMBER(limitFramerate)
+MIRROR_CLASS_MEMBER(maxFramesPerSecond)
+MIRROR_CLASS_MEMBER(maxEnabledScenes)
+MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
+MIRROR_CLASS_MEMBER(startInPlayMode)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Project)

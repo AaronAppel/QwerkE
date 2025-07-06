@@ -4,9 +4,13 @@
 
 namespace QwerkE {
 
+    namespace Framework {
+        struct StartUpData;
+    }
+
     namespace Window {
 
-        void Initialize(u16 windowWidth = 1920, u16 windowHeight = 1080);
+        void Initialize(const Framework::StartUpData& startUpData);
         void Shutdown();
 
         void NewFrame();

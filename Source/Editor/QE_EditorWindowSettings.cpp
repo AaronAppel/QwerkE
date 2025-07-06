@@ -7,7 +7,6 @@
 
 #include "QF_Directory.h"
 #include "QF_Input.h"
-#include "QF_Settings.h"
 
 #include "QE_EditorInspector.h"
 #include "QF_Paths.h"
@@ -20,7 +19,7 @@ namespace QwerkE {
 
         void EditorWindowSettings::DrawInternal()
         {
-            EngineSettings& engineSettings = Settings::GetEngineSettings();
+            EditorSettings& engineSettings = Settings::GetEditorSettings();
 
             for (size_t i = 1; i < eSettingsOptions::_size_constant; i++) // #NOTE eSettingsOptions::Null = 0
             {
@@ -33,8 +32,8 @@ namespace QwerkE {
 
                 switch (i)
                 {
-                case eSettingsOptions::Engine:
-                    pushIsDirtyStyleColor = Settings::GetEngineSettings().isDirty;
+                case eSettingsOptions::EditorSettings:
+                    pushIsDirtyStyleColor = Settings::GetEditorSettings().isDirty;
                     break;
 
                 case eSettingsOptions::GameActions:
@@ -47,10 +46,6 @@ namespace QwerkE {
 
                 case eSettingsOptions::Project:
                     pushIsDirtyStyleColor = Projects::CurrentProject().isDirty;
-                    break;
-
-                case eSettingsOptions::UserSettings:
-                    pushIsDirtyStyleColor = Settings::GetUserSettings().isDirty;
                     break;
                 }
 
@@ -84,8 +79,8 @@ namespace QwerkE {
                 {
                     switch (m_LastPopUpIndex)
                     {
-                    case eSettingsOptions::Engine:
-                        Settings::SaveEngineSettings();
+                    case eSettingsOptions::EditorSettings:
+                        Settings::SaveEditorSettings();
                         break;
 
                     case eSettingsOptions::GameActions:
@@ -99,10 +94,6 @@ namespace QwerkE {
                     case eSettingsOptions::Project:
                         Projects::SaveProject();
                         break;
-
-                    case eSettingsOptions::UserSettings:
-                        Settings::SaveUserSettings();
-                        break;
                     }
                 }
 
@@ -111,8 +102,8 @@ namespace QwerkE {
                     // #TODO Load local user settings instead of default
                     switch (m_LastPopUpIndex)
                     {
-                    case eSettingsOptions::Engine:
-                        Settings::LoadEngineSettings("");
+                    case eSettingsOptions::EditorSettings:
+                        Settings::SaveEditorSettings();
                         break;
 
                     case eSettingsOptions::GameActions:
@@ -126,10 +117,6 @@ namespace QwerkE {
                     case eSettingsOptions::Project:
                         Projects::LoadProject("Project1.qproj"); // #TODO Load proper file
                         Editor::OnSceneReloaded(nullptr); // #TODO Review
-                        break;
-
-                    case eSettingsOptions::UserSettings:
-                        Settings::LoadUserSettings("Aaron.qproj"); // #TODO Load proper file
                         break;
                     }
                 }
@@ -146,12 +133,12 @@ namespace QwerkE {
 
                 switch (m_SettingsEditorOption)
                 {
-                case eSettingsOptions::Engine:
+                case eSettingsOptions::EditorSettings:
                     {
                         ImGui::SameLine();
-                        ImGui::Text("          Changes require engine restart");
-                        EngineSettings& engineSettings = Settings::GetEngineSettings();
-                        engineSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<EngineSettings>(), &engineSettings, buffer);
+                        ImGui::Text("          Changes require editor restart");
+                        EditorSettings& editorSettings = Settings::GetEditorSettings();
+                        editorSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<EditorSettings>(), &editorSettings, buffer);
                     }
                     break;
 
@@ -174,13 +161,6 @@ namespace QwerkE {
                     {
                         Project& project = Projects::CurrentProject();
                         project.isDirty |= Inspector::InspectType(Mirror::InfoForType<Project>(), &project, buffer);
-                    }
-                    break;
-
-                case eSettingsOptions::UserSettings:
-                    {
-                        UserSettings& userSettings = Settings::GetUserSettings();
-                        userSettings.isDirty |= Inspector::InspectType(Mirror::InfoForType<UserSettings>(), &userSettings, buffer);
                     }
                     break;
                 }

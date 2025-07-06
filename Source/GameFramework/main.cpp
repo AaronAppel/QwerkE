@@ -15,7 +15,11 @@
 int main(unsigned int numberOfArguments, char** commandLineArguments)
 {
 	QwerkE::Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments);
-	QwerkE::Framework::Initialize();
+
+	QwerkE::Framework::StartUpData startUpData;
+	startUpData.windowWidth = 1920;
+	startUpData.windowHeight = 1080;
+	QwerkE::Framework::Initialize(startUpData);
 
 	// #TODO Update to new loading process
 	// Remove #include "QF_Scenes.h"

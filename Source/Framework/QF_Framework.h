@@ -12,10 +12,22 @@ namespace QwerkE {
 
 	namespace Framework {
 
+		struct StartUpData
+		{
+			u16 windowWidth = 1920;
+			u16 windowHeight = 1080;
+
+			u16 windowOpenPositionX = 200;
+			u16 windowOpenPositionY = 200;
+
+			bool vSyncEnabled = false;
+			bool windowAutoFocusOnStart = false;
+		};
+
 		// #NOTE Set CLI args 1st. Order dependency with QF_Paths
 		void SetCommandLineArgs(unsigned int numberOfArguments, char** commandLineArguments);
 
-		eOperationResult Initialize(uint16_t windowWidth = 1920, uint16_t windowHeight = 1080);
+		eOperationResult Initialize(const StartUpData& startUpData);
 
 		eOperationResult Shutdown();
 

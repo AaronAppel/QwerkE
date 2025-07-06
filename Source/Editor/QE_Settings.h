@@ -4,17 +4,29 @@
 #include <vector>
 
 #include "QF_QKey.h"
+#include "QF_Framework.h"
 
 namespace QwerkE {
 
-    struct UserSettings
+    struct EditorSettings
     {
-        // Interface: Window open, UI layout and scaling, styles, etc
         bool isDirty = false; // #TODO Use Editor state flag
-        bool startInPlayMode = true;
+
         bool showWelcomeWindow = true;
 
-        // #TODO Key bindings
+        Framework::StartUpData startUpData;
+
+        bool limitFramerate = true;
+        u16 maxFramesPerSecond = 120;
+        u16 maxAllowedFramesPerSecond = 360;
+
+        u8 maxEnabledScenes = 1;
+        u8 maxJobsAdditionalThreadCount = 1;
+
+        bool startInPlayMode = true;
+
+        // #TODO Support
+        // bool windowStartFullScreen = false;
     };
 
     struct RendererSettings
@@ -29,13 +41,13 @@ namespace QwerkE {
         const char* GetStyleFileName();
         const char* GetStyleFileName2();
 
-        void LoadUserSettings(const std::string& userSettingsFileName);
-        void SaveUserSettings();
+        void LoadEditorSettings();
+        void SaveEditorSettings();
 
         void LoadRendererSettings(const std::string& rendererSettingsFileName);
         void SaveRendererSettings();
 
-        UserSettings& GetUserSettings();
+        EditorSettings& GetEditorSettings();
         RendererSettings& GetRendererSettings();
 
     }

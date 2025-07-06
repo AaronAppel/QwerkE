@@ -75,13 +75,13 @@ namespace QwerkE {
 				ImGui::Dummy({ 0, 0.f });
 				cacheString = "  Show welcome window on start up";
 				ImGui::SameLine(halfContentWidth - cacheString.size() * halfPixelsPerChar);
-				if (ImGui::Checkbox(cacheString.c_str(), &m_UserSettings.showWelcomeWindow))
+				if (ImGui::Checkbox(cacheString.c_str(), &m_EditorSettings.showWelcomeWindow))
 				{
-					Settings::SaveUserSettings();
+					Settings::SaveEditorSettings();
 				}
 			}
 
-			UserSettings& m_UserSettings = Settings::GetUserSettings();
+			EditorSettings& m_EditorSettings = Settings::GetEditorSettings();
 		};
 
 	}

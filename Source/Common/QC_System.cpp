@@ -1,9 +1,11 @@
 #include "QC_System.h"
 
-#ifdef _WINDOWS_
+#define _QWINDOWS 1
+
+#if defined(_WINDOWS_) || defined(_QWINDOWS)
 #include <windows.h>    // For getting user name
 #include <Lmcons.h>     // For getting user name
-#endif // _WINDOWS_
+#endif // defined(_WINDOWS_) || defined(_QWINDOWS)
 
 #include "QC_StringHelpers.h"
 
@@ -13,15 +15,14 @@ namespace QwerkE {
 
 		std::string UserName()
 		{
-#ifdef _WINDOWS_
+#if defined(_WINDOWS_) || defined(_QWINDOWS)
 			TCHAR userName[UNLEN + 1];
 			DWORD size = UNLEN + 1;
 			GetUserName((TCHAR*)userName, &size);
-
 			return wstrtostr(userName);
 #else
-// #error Current platform unsupported!
-#endif // _WINDOWS_
+#error Current platform unsupported!
+#endif // defined(_WINDOWS_) || defined(_QWINDOWS)
 			return std::string();
 		}
 
@@ -31,7 +32,7 @@ namespace QwerkE {
 		// #TODO Explore process launching helpers
 		void StartProcess()
 		{
-#ifdef _WINDOWS_
+#if defined(_WINDOWS_) || defined(_QWINDOWS)
 			CreateProcess(
 				LPCWSTR(""),				// lpApplicationName
 				LPWSTR(""),					// lpCommandLine
@@ -46,26 +47,26 @@ namespace QwerkE {
 			);
 #else
 // #error Current platform unsupported!
-#endif // _WINDOWS_
+#endif // defined(_WINDOWS_) || defined(_QWINDOWS)
 		}
 
 		// #TODO Expose system sleep/pause helper
 		void Sleep()
 		{
-#ifdef _WINDOWS_
+#if defined(_WINDOWS_) || defined(_QWINDOWS)
 			// system("pause/sleep");
 #else
 // #error Current platform unsupported!
-#endif // _WINDOWS_
+#endif // defined(_WINDOWS_) || defined(_QWINDOWS)
 		}
 
 		void Command()
 		{
-#ifdef _WINDOWS_
+#if defined(_WINDOWS_) || defined(_QWINDOWS)
 			system("");
 #else
 			// #error Current platform unsupported!
-#endif // _WINDOWS_
+#endif // defined(_WINDOWS_) || defined(_QWINDOWS)
 		}
 
 	}

@@ -10,6 +10,7 @@
 
 #include "QE_Editor.h"
 #include "QE_EditorWindowPrompt.h"
+#include "QE_Settings.h"
 
 namespace QwerkE {
 
@@ -37,7 +38,18 @@ namespace QwerkE {
 			Projects::LoadProject(projectsData.LastOpenedProjectFileName);
 			if (!Projects::CurrentProject().isLoaded)
 			{
+				// #TODO Handle load project error
 				NewEditorWindow(Editor::EditorWindowTypes::Prompt);
+			}
+
+			const EditorSettings& editorSettings = Settings::GetEditorSettings();
+			if (editorSettings.startInPlayMode)
+			{
+				const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
+				for (size_t i = 0; i < scenes.size(); i++)
+				{
+					scenes[i]->SetIsPaused(editorSettings.startInPlayMode);
+				}
 			}
 		}
 

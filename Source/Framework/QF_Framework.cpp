@@ -11,7 +11,6 @@
 #include "QF_Paths.h"
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
-#include "QF_Settings.h"
 #include "QF_Window.h"
 
 namespace QwerkE {
@@ -31,16 +30,17 @@ namespace QwerkE {
 			local_ProgramArguments(numberOfArguments, commandLineArguments);
 		}
 
-		eOperationResult Initialize(uint16_t windowWidth, uint16_t windowHeight)
+		eOperationResult Initialize(const StartUpData& startUpData)
 		{
 			ASSERT(!s_ProgramArgumentPairs.empty(), "Initialize() called before SetCommandLineArgs()!");
+			// #TODO Assign any startUpData arguments from command line?
 
 			// #TODO Review return values. Could chain successful calls together using return value like
 			// if (Log::Initialize() && Events::Initialize() && ... etc) { return eOperationResult::Success }
 
 			Log::Initialize();
 			Events::Initialize();
-			Window::Initialize(windowWidth, windowHeight); // #TODO Try to remove window size arguments dependency
+			Window::Initialize(startUpData);
 			Renderer::Initialize();
 			Input::Initialize();
 			Assets::Initialize(); // #TODO bgfx init order dependency for mesh creation
@@ -50,12 +50,6 @@ namespace QwerkE {
 
 		eOperationResult Shutdown()
 		{
-			vec2f position = Window::GetPosition(); // #TODO Decide where else to put this
-			EngineSettings& engineSettings = Settings::GetEngineSettings();
-			engineSettings.windowOpenPositionX = position.x;
-			engineSettings.windowOpenPositionY = position.y;
-			Settings::SaveEngineSettings();
-
 			Scenes::Shutdown();
 			Window::Shutdown();
 			Assets::Shutdown(); // #TODO bgfx shutdown order dependency pthread_mutex_unlock(_mutex) in bx/mutex.cpp line 95

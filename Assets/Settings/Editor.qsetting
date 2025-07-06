@@ -1,15 +1,18 @@
 {
-	"QwerkE::EngineSettings":	{
-		"windowOpenWidthPixels":	2160,
-		"windowOpenHeightPixels":	1440,
-		"windowOpenPositionX":	2899,
-		"windowOpenPositionY":	348,
+	"QwerkE::EditorSettings":	{
+		"showWelcomeWindow":	true,
+		"startUpData":	{
+			"windowWidth":	2160,
+			"windowHeight":	1440,
+			"windowOpenPositionX":	2632,
+			"windowOpenPositionY":	617,
+			"vSyncEnabled":	false,
+			"windowAutoFocusOnStart":	false
+		},
 		"limitFramerate":	true,
 		"maxFramesPerSecond":	60,
 		"maxEnabledScenes":	1,
 		"maxJobsAdditionalThreadCount":	1,
-		"consoleOutputWindowEnabled":	true,
-		"vSyncEnabled":	false,
-		"windowAutoFocusOnStart":	false
+		"startInPlayMode":	true
 	}
 }

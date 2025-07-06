@@ -62,6 +62,11 @@ namespace QwerkE {
             m_Console.System().Log(csys::ItemType::INFO) << "Welcome to imgui-console!" << csys::endl;
         }
 
+        EditorWindowConsole::~EditorWindowConsole()
+        {
+            m_Console.UnregisterImGuiHandler();
+        }
+
 	}
 
 }

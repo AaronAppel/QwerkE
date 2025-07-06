@@ -21,7 +21,7 @@ MIRROR_TYPE_ID(2002, QwerkE::Editor::EditorWindowFlags)
 MIRROR_TYPE_ID(2003, QwerkE::Editor::EditorWindowTypes)
 
 MIRROR_TYPE_ID(2007, QwerkE::ProjectsData)
-MIRROR_TYPE_ID(2008, QwerkE::UserSettings)
+MIRROR_TYPE_ID(2008, QwerkE::EditorSettings)
 MIRROR_TYPE_ID(2009, QwerkE::Project)
 
 MIRROR_TYPE_ID(2010, QwerkE::Editor::EditorWindowAssets)

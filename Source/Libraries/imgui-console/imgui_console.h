@@ -22,6 +22,7 @@ public:
     explicit ImGuiConsole(std::string c_name = "imgui-console", size_t inputBufferSize = 256);
 
     ~ImGuiConsole();
+    void UnregisterImGuiHandler();
 
     /*!
      * \brief Render the Dear ImGui Console
@@ -45,7 +46,7 @@ protected:
 
     // Main
 
-    static bool m_Initialized;
+    static bool m_RegisteredImGuiHandler;
 
     std::string m_Buffer;            //!< Input buffer.
     std::string m_HintBuffer;        //!< Input post buffer for autocomplete hints.
