@@ -21,7 +21,12 @@ set sourceMeshesFolder=..\Assets\Meshes
 rem .obj files
 @FOR %%G in ("%sourceMeshesFolder%\*.obj") DO (
 	rem #TODO Errors are being detected incorrectly. Could be incorrectly expanding !errorlevel!. Could Check casing
-	%meshCompiler% -f %%G -o %outputMeshesFolder%\%%~nxG.bin
+	echo Compiling %%~nG
+	%meshCompiler% -f %%G -o %outputMeshesFolder%\%%~nG.bin
+	rem echo %%~nG file name no extension
+	rem echo %%~nxG file name
+	rem echo %%~dpnG absolute file path no extension
+	rem echo %%~G relative file path
     rem IF !errorlevel! NEQ 0 (echo Error(s) in %%G && goto error) ELSE (echo Built dx11 %%G)
 )
 
