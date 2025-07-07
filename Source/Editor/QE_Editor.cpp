@@ -577,7 +577,6 @@ namespace QwerkE {
             constexpr size_t numberOfHotkeyedScenes = QKey::e_F12 - QKey::e_F1 + 1;
             for (u8 i = 0; i < numberOfHotkeyedScenes; i++)
             {
-
                 EditorHotKeys hotKey = static_cast<EditorHotKeys>(EditorHotKeys::e_Scene_Select1 + i);
                 if (s_EditorHotkeys[hotKey].IsActive())
                 {

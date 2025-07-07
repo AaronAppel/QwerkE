@@ -14,6 +14,9 @@ namespace QwerkE {
 
     namespace Serialize {
 
+        // using OverrideFunc = bool(const cJSON* objectJson, const Mirror::TypeInfo* objectTypeInfo, void* objectAddress);
+        // bool Local_OverrideDeserializeForType(const cJSON* objectJson, const Mirror::TypeInfo* objectTypeInfo, void* objectAddress, OverrideFunc a = nullptr);
+
         bool Local_OverrideDeserializeForType(const cJSON* objectJson, const Mirror::TypeInfo* objectTypeInfo, void* objectAddress);
 
         void Local_DeserializePrimitive(const cJSON* const primitiveJson, const Mirror::TypeInfo* const primitiveTypeInfo, void* primitiveAddress);

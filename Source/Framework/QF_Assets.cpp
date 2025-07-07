@@ -58,22 +58,22 @@ namespace QwerkE {
 				{
 				case Mirror::IdForType<Mesh>():
 					{
-						if (constexpr bool loadFromMeshFile = true)
-						{
-							// #TODO Deprecate bgfxFramework::Mesh
-							bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::MeshBin(fileName.c_str()).c_str());
+						// #TODO Deprecate bgfxFramework::Mesh
+						bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::MeshBin(fileName.c_str()).c_str());
 
+						if (bgfxMesh)
+						{
 							Mesh* meshFromFile = new Mesh();
 							meshFromFile->m_ibh = bgfxMesh->m_groups[0].m_ibh;
 							meshFromFile->m_vbh = bgfxMesh->m_groups[0].m_vbh;
 
 							// #TODO ASSERT(!Has<QwerkE::Mesh>(guid), "Mesh with GUID {0} already exists!", guid);
 							m_MapOfLoadedAssetMaps[typeId][guid] = meshFromFile;
-
-							// #TODO Free remaining memory from bgfxFramework::Mesh
 						}
-						else // #TODO Create a null mesh from code (avoid serialization? Maybe keep it out of registry, but still show in assets lists UI)
+						else
 						{
+							LOG_ERROR("Could not load asset: {0}", Paths::MeshBin(fileName.c_str()));
+							return GUID::Invalid;
 						}
 					}
 					break;

@@ -1,6 +1,6 @@
-#include "QF_Scripting.h"
+#include "QE_Scripting.h"
 
-#include "QF_ScriptHelpers.h"
+#include "QE_ScriptHelpers.h"
 
 // #TODO Fix test code
 // #include "../Game/QG_ScriptGameEntity.h"

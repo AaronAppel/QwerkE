@@ -1,15 +1,15 @@
 #pragma once
 
-#include "QF_ComponentScript.h"
+#include "QE_ComponentScript.h"
 
-#include "QF_Scriptable.h"
-#include "QF_Scripting.h"
+#include "QE_Scriptable.h"
+#include "QE_Scripting.h"
 
-#include "QF_ScriptCamera.h"
-#include "QF_ScriptPathFinder.h"
-#include "QF_ScriptPatrol.h"
-#include "QF_ScriptTesting.h"
-#include "QF_ScriptSceneTransition.h"
+#include "QE_ScriptCamera.h"
+#include "QE_ScriptPathFinder.h"
+#include "QE_ScriptPatrol.h"
+#include "QE_ScriptTesting.h"
+#include "QE_ScriptSceneTransition.h"
 
 // #include "../Game/QG_ScriptGameEntity.h" // #TODO Remove Game code from Framework domain
 

@@ -171,39 +171,52 @@ namespace QwerkE {
 
                 for (auto& pairMirrorTypesVector : assetRegistry)
                 {
-                    std::string message = "Type: ";
+                    std::string message = "Type: "; // #TODO Get type name string
                     message += std::to_string(pairMirrorTypesVector.first);
                     ImGui::Text(message.c_str());
 
-                    for (size_t i = 0; i < pairMirrorTypesVector.second.size(); i++)
+                    const size_t numColumns = 4;
+                    if (ImGui::BeginTable((std::string("##Table") + std::to_string(pairMirrorTypesVector.first)).c_str(), numColumns, ImGuiTableFlags_SizingFixedFit))
                     {
-                        auto pairGuidString = pairMirrorTypesVector.second[i];
-                        ImGui::Text("GUID: ");
-                        ImGui::SameLine();
-                        std::string guidString = std::to_string(pairGuidString.first).c_str();
-                        ImGui::Text(guidString.c_str());
-
-                        std::string popUpName = "Context GUID" + guidString;
-                        if (ImGui::IsItemClicked(ImGui::MouseRight))
+                        for (size_t i = 0; i < pairMirrorTypesVector.second.size(); i++)
                         {
-                            ImGui::OpenPopup(popUpName.c_str());
-                        }
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::Text("File:");
 
-                        if (ImGui::BeginPopup(popUpName.c_str()))
-                        {
-                            if (ImGui::Button("Copy To Clipboard"))
+                            ImGui::SameLine();
+                            ImGui::TableSetColumnIndex(1);
+                            auto pairGuidString = pairMirrorTypesVector.second[i];
+                            // #TODO Decide how to search for shader and materials that have more than 1 string in vector
+                            ImGui::Text(pairGuidString.second[0].c_str());
+
+                            ImGui::SameLine();
+                            ImGui::TableSetColumnIndex(2);
+
+                            ImGui::Text("GUID:");
+
+                            ImGui::SameLine();
+                            ImGui::TableSetColumnIndex(3);
+                            std::string guidString = std::to_string(pairGuidString.first).c_str();
+                            ImGui::Text(guidString.c_str());
+
+                            std::string popUpName = "Context GUID" + guidString;
+                            if (ImGui::IsItemClicked(ImGui::MouseRight))
                             {
-                                ImGui::SetClipboardText(guidString.c_str());
-                                LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, guidString.c_str());
+                                ImGui::OpenPopup(popUpName.c_str());
                             }
-                            ImGui::EndPopup();
-                        }
 
-                        ImGui::SameLine();
-                        ImGui::Text(" File: ");
-                        ImGui::SameLine();
-                        // #TODO Decide how to search for shader and materials that have more than 1 string in vector
-                        ImGui::Text(pairGuidString.second[0].c_str());
+                            if (ImGui::BeginPopup(popUpName.c_str()))
+                            {
+                                if (ImGui::Button("Copy To Clipboard"))
+                                {
+                                    ImGui::SetClipboardText(guidString.c_str());
+                                    LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, guidString.c_str());
+                                }
+                                ImGui::EndPopup();
+                            }
+                        }
+                        ImGui::EndTable();
                     }
                     ImGui::Dummy({ 0.f, 5.f });
                 }

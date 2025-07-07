@@ -12,6 +12,8 @@
 #include "QF_Shader.h"
 #include "QF_Window.h"
 
+void Update();
+
 int main(unsigned int numberOfArguments, char** commandLineArguments)
 {
 	QwerkE::Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments);
@@ -32,28 +34,31 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 
 	QwerkE::Time::WriteAppStartTime();
 
+	const u16 mainViewId = 1; // #TODO Review hard coded viewId 1
+
 	while (!QwerkE::Window::CloseRequested())
 	{
 		QwerkE::Time::StartFrame();
 
 		QwerkE::Framework::StartFrame();
 
-		QwerkE::Renderer::StartImGui(); // #TODO Remove ImGui from Game code
-
-		QwerkE::Framework::Update(static_cast<float>(QwerkE::Time::PreviousFrameDuration()));
-
 		if (QwerkE::Input::KeyPressed(QwerkE::QKey::e_Escape))
 		{
 			QwerkE::Window::RequestClose(); // #TODO For convenience during development
 		}
 
-		QwerkE::Renderer::EndImGui(); // #TODO Ensure ImGui is removed from release builds
-
-		QwerkE::Framework::RenderView(1); // #TODO Review hard coded viewId 1
+		QwerkE::Framework::RenderView(mainViewId);
 
 		QwerkE::Framework::EndFrame();
 	}
 
 	QwerkE::Framework::Shutdown();
 	return 0;
+}
+
+void Update()
+{
+	float deltaTime = QwerkE::Time::PreviousFrameDuration();
+
+	// #TODO Create objects and operate on them
 }

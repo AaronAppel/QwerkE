@@ -1,11 +1,11 @@
 {
 	"QwerkE::EditorSettings":	{
-		"showWelcomeWindow":	true,
+		"showWelcomeWindow":	false,
 		"startUpData":	{
 			"windowWidth":	2160,
 			"windowHeight":	1440,
-			"windowOpenPositionX":	2632,
-			"windowOpenPositionY":	617,
+			"windowOpenPositionX":	2685,
+			"windowOpenPositionY":	327,
 			"vSyncEnabled":	false,
 			"windowAutoFocusOnStart":	false
 		},

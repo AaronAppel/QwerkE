@@ -89,12 +89,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ImGui docking tab button.md",
+                "file": "Shared Vault Files ❗/Visual Studio/Visual Studio.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ImGui docking tab button"
+              "title": "Visual Studio"
             }
           }
         ],
@@ -242,9 +242,9 @@
   },
   "active": "05bc5d74a6c19933",
   "lastOpenFiles": [
-    "C++ Macros Reference.md",
-    "ImGui docking tab button.md",
     "Windows Taskbar Custom App Jump List.md",
+    "ImGui docking tab button.md",
+    "C++ Macros Reference.md",
     "typeId vs dynamic_cast.md",
     "Shared Vault Files ❗/Obsidian Assets/MissingJumpLists.png",
     "References/Visual Studio.md",
