@@ -19,9 +19,11 @@ namespace QwerkE {
 
 		static std::map<std::string, const char*> s_ProgramArgumentPairs;
 
+		// #TODO Review moving Scene and Scenes to Editor as Framework users may handle their own scenes
 		// #TODO Review moving scenes to framework, deprecating QF_Scenes.h/cpp
 		// static std::vector<Scene*> s_ActiveScenes;
 
+		// #TODO Review moving CLI arguments to Editor as Framework users may just want to handle CLI themselves, or not at all
 		void local_ProgramArguments(unsigned int numberOfArguments, char** commandLineArguments);
 
 		void SetCommandLineArgs(unsigned int numberOfArguments, char** commandLineArguments)
@@ -33,6 +35,12 @@ namespace QwerkE {
 		eOperationResult Initialize(const StartUpData& startUpData)
 		{
 			ASSERT(!s_ProgramArgumentPairs.empty(), "Initialize() called before SetCommandLineArgs()!");
+
+			if (startUpData.numberOfCommandLineArguments && startUpData.commandLineArguments)
+			{
+				QwerkE::Framework::SetCommandLineArgs(startUpData.numberOfCommandLineArguments, startUpData.commandLineArguments);
+			}
+
 			// #TODO Assign any startUpData arguments from command line?
 
 			// #TODO Review return values. Could chain successful calls together using return value like

@@ -28,6 +28,7 @@
 #include "QF_Directory.h"
 #include "QF_Files.h"
 #include "QF_Framework.h"
+#include "QF_Macros.h"
 
 #include "QF_Input.h"
 #include "QF_InputMapping.h"
@@ -110,8 +111,9 @@ namespace QwerkE {
 
 		void RunReloadable(unsigned int numberOfArguments, char** commandLineArguments)
 		{
-            Log::Console("-- Qwerk Editor %s --\n", std::to_string(QWERKE_VERSION).c_str()); // #TODO Review QWERKE_VERSION as const char*
+            Log::Console("-- Qwerk Editor %s --\n", QW_STRINGIFY(QWERKE_VERSION));
 
+            // #TODO Framework probably should let users handle or ignore CLI arguments
             Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments); // #TODO Improve name
 
             local_Initialize();
@@ -591,7 +593,8 @@ namespace QwerkE {
             Settings::LoadEditorSettings();
             const EditorSettings& engineSettings = Settings::GetEditorSettings();
             Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.maxAllowedFramesPerSecond);
-
+            engineSettings.startUpData.numberOfCommandLineArguments = ;
+            engineSettings.startUpData.commandLineArguments = ;
             Framework::Initialize(engineSettings.startUpData);
 
             // #TODO Debug code

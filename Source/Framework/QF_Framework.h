@@ -14,6 +14,9 @@ namespace QwerkE {
 
 		struct StartUpData
 		{
+			unsigned int numberOfCommandLineArguments = 0;
+			char** commandLineArguments = nullptr;
+
 			u16 windowWidth = 1920;
 			u16 windowHeight = 1080;
 

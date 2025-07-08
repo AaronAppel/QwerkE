@@ -13,8 +13,9 @@
 
 int main(unsigned int numberOfArguments, char** commandLineArguments)
 {
-	QwerkE::Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments);
 	QwerkE::Framework::StartUpData startUpData;
+	startUpData.numberOfCommandLineArguments = numberOfArguments;
+	startUpData.commandLineArguments = commandLineArguments;
 	startUpData.windowWidth = 1920;
 	startUpData.windowHeight = 1080;
 	QwerkE::Framework::Initialize(startUpData);
@@ -25,6 +26,8 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 	QwerkE::Scenes::CreateSceneFromFile(QwerkE::Paths::Scene("NewScene1.qscene"));
 
 	QwerkE::Time::WriteAppStartTime();
+
+	const u16 mainViewId = 1; // #TODO Review hard coded viewId 1
 
 	while (!QwerkE::Window::CloseRequested())
 	{
@@ -43,7 +46,7 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 
 		QwerkE::Renderer::EndImGui(); // #TODO Ensure ImGui is removed from release builds
 
-		QwerkE::Framework::RenderView(1); // #TODO Review hard coded viewId 1
+		QwerkE::Framework::RenderView(mainViewId);
 
 		QwerkE::Framework::EndFrame();
 	}

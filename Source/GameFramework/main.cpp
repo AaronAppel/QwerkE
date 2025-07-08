@@ -14,9 +14,9 @@
 
 int main(unsigned int numberOfArguments, char** commandLineArguments)
 {
-	QwerkE::Framework::SetCommandLineArgs(numberOfArguments, commandLineArguments);
-
 	QwerkE::Framework::StartUpData startUpData;
+	startUpData.numberOfCommandLineArguments = numberOfArguments;
+	startUpData.commandLineArguments = commandLineArguments;
 	startUpData.windowWidth = 1920;
 	startUpData.windowHeight = 1080;
 	QwerkE::Framework::Initialize(startUpData);
