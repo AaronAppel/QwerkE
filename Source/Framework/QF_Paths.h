@@ -47,8 +47,11 @@ namespace QwerkE {
 		std::string ShadersBinDir();
 		std::string ShaderBin(const char* shaderFileName);
 
+		std::string TexturesDir();
+		std::string Texture(const char* textureFileName);
+
 		std::string StylesDir();
-		std::string Style(const char* shaderFileName);
+		std::string Style(const char* styleFileName);
 
 	}
 

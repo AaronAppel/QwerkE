@@ -14,6 +14,10 @@
 #include "QF_Mirror.h"
 #endif
 
+#ifdef _QSTB_IMAGE
+#include "Libraries/stb_image/stb_image.h"
+#endif
+
 #include "QC_Guid.h"
 
 #include "QF_Files.h"
@@ -40,6 +44,9 @@ namespace QwerkE {
 
 	GUID Assets::LoadAsset(const size_t typeId, const GUID& guid)
 	{
+		ASSERT(m_MapOfLoadedAssetMaps.find(typeId) == m_MapOfLoadedAssetMaps.end() ||
+			m_MapOfLoadedAssetMaps[typeId].find(guid) == m_MapOfLoadedAssetMaps[typeId].end(), "Entry already exists!");
+
 		AssetsList assetsForTypeInRegistry = GetRegistryAssetList(typeId);
 		for (size_t i = 0; i < assetsForTypeInRegistry.size(); i++)
 		{
@@ -100,9 +107,21 @@ namespace QwerkE {
 					break;
 
 				case Mirror::IdForType<Texture>():
-					ASSERT(false, "Unimplemented!");
-					// Texture newTexture = new Texture();
-					// m_MapOfLoadedAssetMaps[typeId][guid] = newTexture;
+					{
+						ASSERT(!Has<Texture>(guid), "Texture with GUID {0} already exists!", guid);
+
+						std::string textureFilePath = Paths::Texture(fileName.c_str());
+						if (Files::Exists(textureFilePath.c_str()))
+						{
+							Texture* newTexture = new Texture(textureFilePath.c_str(), guid);
+							ASSERT(newTexture, "Could not load texture!");
+							m_MapOfLoadedAssetMaps[Mirror::IdForType<Texture>()][newTexture->Guid()] = newTexture;
+						}
+						else
+						{
+							LOG_ERROR("Could not find texture file: {0}!", fileName);
+						}
+					}
 					break;
 
 				default:
@@ -148,8 +167,9 @@ namespace QwerkE {
 		}
 
 		{
-			// #TODO Null texture
-			Texture texture; // Paths::NullAsset("null_texture.png").c_str();
+			Texture* nullTexture = new Texture(Paths::NullAsset("null_texture.png").c_str(), GUID::Invalid);
+			ASSERT(nullTexture, "Could not load null texture!");
+			m_MapOfNullAssetMaps[Mirror::IdForType<Texture>()][nullTexture->Guid()] = nullTexture;
 		}
 
 		{

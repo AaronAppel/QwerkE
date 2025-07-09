@@ -1,4 +1,4 @@
-project "std_image"
+project "stb_image"
 	kind "StaticLib"
 	location ""
 	

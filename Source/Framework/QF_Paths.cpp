@@ -157,14 +157,24 @@ namespace QwerkE {
 			return returnPath + shaderBinaryFileName;
 		}
 
+		std::string TexturesDir()
+		{
+			return AssetsDir() + "\\Textures";
+		}
+
+		std::string Texture(const char* textureFileName)
+		{
+			return TexturesDir() + "\\" + textureFileName;
+		}
+
 		std::string StylesDir()
 		{
 			return AssetsDir() + "\\Styles";
 		}
 
-		std::string Style(const char* stylesFileName)
+		std::string Style(const char* styleFileName)
 		{
-			return StylesDir() + "\\" + stylesFileName;
+			return StylesDir() + "\\" + styleFileName;
 		}
 
 	}

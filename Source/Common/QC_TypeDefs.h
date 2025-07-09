@@ -135,7 +135,9 @@ struct TemplateArgumentList { };
 
 typedef glm::vec2		vec2f;
 
-typedef glm::u16vec2	vec2u16; // #TODO Review aliasing and it's usefulness and clarity
+typedef glm::u8vec2	    vec2u8; // #TODO Review aliasing vectors and it's usefulness vs clarity
+typedef glm::u16vec2	vec2u16;
+typedef glm::u32vec2	vec2u32;
 
 typedef glm::vec3		vec3f;
 typedef glm::vec4		vec4f;

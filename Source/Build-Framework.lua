@@ -72,6 +72,7 @@ project "Framework"
 		"lodepng",
 		"Mirror",
 		"spdlog",
+		"stb_image",
 		
 		"Common",
 		

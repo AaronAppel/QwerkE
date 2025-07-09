@@ -8,6 +8,7 @@
 #include "QF_Mesh.h"
 #include "QF_Shader.h"
 #include "QF_System.h"
+#include "QF_Texture.h"
 
 #include "QE_Editor.h"
 #include "QE_EditorWindow.h"
@@ -53,10 +54,9 @@ namespace QwerkE {
 
                 if (ImGui::CollapsingHeader("QwerkE::Mesh"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                 {
-                    // ImGui::SameLine(buttonWidth);
-                    // if (ImGui::Button("+##Mesh", {lineHeight, lineHeight}))
+                    if (ImGui::SmallButton("Recompile All Meshes"))
                     {
-                        // #TODO Create a new mesh
+                        System::StartProcess(Paths::Script("CompileMeshes.bat")); // #TODO move hard coded file name somewhere better
                     }
 
                     if (const std::unordered_map<GUID, Mesh*>* meshes = Assets::ViewAssets<Mesh>())
@@ -70,6 +70,7 @@ namespace QwerkE {
                             ImGui::Text(std::to_string(guidMeshPair.second->m_vbh.idx).c_str());
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidMeshPair.second->m_vbh.idx).c_str());
+                            // #TODO Recompile and/or reload a single mesh
                         }
                     }
                 }
@@ -106,6 +107,26 @@ namespace QwerkE {
                             if (ImGui::SmallButton("Reload"))
                             {
                                 guidShaderPair.second->Reload();
+                            }
+                        }
+                    }
+                }
+
+                if (ImGui::CollapsingHeader("Textures"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
+                {
+                    if (const std::unordered_map<GUID, Texture*>* textures = Assets::ViewAssets<Texture>())
+                    {
+                        for (auto& guidTexturePair : *textures)
+                        {
+                            ImGui::Text("GUID: ");
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(guidTexturePair.first).c_str());
+
+                            for (size_t i = 0; i < 1; i++)
+                            {
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidTexturePair.second->TextureHandle().idx).c_str());
+                                // #TODO Option to load texture file to RAM via context menu
                             }
                         }
                     }

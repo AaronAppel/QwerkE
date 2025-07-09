@@ -64,7 +64,7 @@
 						"m_Guid":	"11031772710732157330"
 					},
 					"std::vector<std::string>":	{
-						"std::string":	"nanosuit.obj.bin"
+						"std::string":	"nanosuit.bin"
 					}
 				}
 			}
@@ -136,6 +136,19 @@
 					"std::vector<std::string>":	{
 						"std::string":	"vs_picking_shaded.vert.bin",
 						"std::string":	"fs_picking_id.frag.bin"
+					}
+				}
+			}
+		},
+		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
+			"const unsigned long long":	"162",
+			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"15538032833040342356"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"container.png"
 					}
 				}
 			}

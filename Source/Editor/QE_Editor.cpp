@@ -593,8 +593,9 @@ namespace QwerkE {
             Settings::LoadEditorSettings();
             const EditorSettings& engineSettings = Settings::GetEditorSettings();
             Time::SetMaximumFramerate(engineSettings.limitFramerate ? engineSettings.maxFramesPerSecond : engineSettings.maxAllowedFramesPerSecond);
-            engineSettings.startUpData.numberOfCommandLineArguments = ;
-            engineSettings.startUpData.commandLineArguments = ;
+            // #TODO Handle CLI arguments in Editor, not Framework
+            // engineSettings.startUpData.numberOfCommandLineArguments = ;
+            // engineSettings.startUpData.commandLineArguments = ;
             Framework::Initialize(engineSettings.startUpData);
 
             // #TODO Debug code
