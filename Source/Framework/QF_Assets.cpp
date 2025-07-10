@@ -162,6 +162,15 @@ namespace QwerkE {
 		nullMesh->m_GUID = GUID::Invalid;
 		m_MapOfNullAssetMaps[Mirror::IdForType<Mesh>()][GUID::Invalid] = nullMesh;
 
+		// #TODO Clean up
+		// Meshes::Initialize(); // #TODO Move somewhere better, like rendering code
+		// Mesh* planeMesh = Meshes::CreatePlane();
+		// m_MapOfLoadedAssetMaps[Mirror::IdForType<Mesh>()][planeMesh->m_GUID] = planeMesh;
+		// AddToRegistry(Mirror::IdForType<Mesh>(), planeMesh->m_GUID, "DeleteMe");
+		// Mesh* triangleMesh = Meshes::CreateTriangle();
+		// m_MapOfLoadedAssetMaps[Mirror::IdForType<Mesh>()][triangleMesh->m_GUID] = triangleMesh;
+		// AddToRegistry(Mirror::IdForType<Mesh>(), triangleMesh->m_GUID, "DeleteMe2");
+
 		// Default Shader entry
 		// #TODO Use coded data instead of relying on a file to exist
 		Shader* nullShader = new Shader(Paths::NullAsset("null_shader.vert.bin").c_str(), Paths::NullAsset("null_shader.frag.bin").c_str(), GUID::Invalid);

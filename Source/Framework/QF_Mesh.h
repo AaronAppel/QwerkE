@@ -4,6 +4,8 @@
 #include <bgfx/bgfx.h>
 #endif
 
+#include "QC_GUID.h"
+
 namespace QwerkE {
 
 	class Mesh

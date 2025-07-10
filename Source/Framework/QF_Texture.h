@@ -23,11 +23,17 @@ namespace QwerkE {
 	public:
 		Texture() = default;
 
-		// #TODO Can hide constructor and friend with Assets class
-		Texture(const char* a_TextureFilePath, GUID a_Guid)
+		Texture(float a_WindowWidth, float a_WindowHeight, bool a_HasMipMaps, uint16_t a_NumLayers,
+			bgfx::TextureFormat::Enum a_TextureFormat, uint64_t a_Flags, GUID a_Guid = GUID()) :
+			m_GUID(a_Guid)
 		{
-			m_GUID = a_Guid;
-			Init(a_TextureFilePath); // #TODO Review a coherent API
+			Init(a_WindowWidth, a_WindowHeight, a_HasMipMaps, a_NumLayers, a_TextureFormat, a_Flags);
+		}
+
+		Texture(const char* a_TextureFilePath, GUID a_Guid = GUID()) :
+			m_GUID(a_Guid)
+		{
+			Init(a_TextureFilePath);
 		}
 
 		Texture::~Texture()
@@ -43,6 +49,8 @@ namespace QwerkE {
 
 		void Init(const char* a_TextureFilePath)
 		{
+			// #TODO Handle reloadable textures and reloading textures?
+
 			Buffer imageFileBuffer = Files::LoadFile(a_TextureFilePath);
 
 			// Have stb_image decompress png from memory into a raw color array.

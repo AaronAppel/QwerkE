@@ -23,7 +23,6 @@ namespace QwerkE {
 
     namespace Editor {
 
-
         static ImGuiStyle s_PlayModeStyle;
         static bool s_LoadedStyle = false; // #TODO Deprecate?
 
