@@ -8,6 +8,7 @@
 #include "QF_Mesh.h"
 #include "QF_Mirror.h" // #TODO Needed for Release build, but should it be?
 #include "QF_Shader.h"
+#include "QF_Texture.h"
 
 namespace QwerkE {
 
@@ -15,6 +16,10 @@ namespace QwerkE {
     {
         m_Mesh = Assets::Get<QwerkE::Mesh>(m_MeshGuid);
         m_Shader = Assets::Get<Shader>(m_ShaderGuid);
+        if (m_TextureGuid)
+        {
+            m_Texture = Assets::Get<Texture>(m_TextureGuid);
+        }
     }
 
     void ComponentMesh::Draw(u16 viewId, const ComponentTransform& transform)

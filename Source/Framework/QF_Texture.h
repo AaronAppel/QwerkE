@@ -51,8 +51,8 @@ namespace QwerkE {
 			int channels;
 
 			stbi_set_flip_vertically_on_load(true);
-			unsigned char* pixels = stbi_load_from_memory(imageFileBuffer.As<unsigned char>(), imageFileBuffer.SizeInBytes(), &width, &height, &channels, 4);
-			ASSERT(pixels != nullptr, "Error loading null texture!");
+			unsigned char* pixelsBuffer = stbi_load_from_memory(imageFileBuffer.As<unsigned char>(), imageFileBuffer.SizeInBytes(), &width, &height, &channels, 4);
+			ASSERT(pixelsBuffer != nullptr, "Error loading texture!"); // #TODO Recovery if statement early exit instead of asserting
 
 			m_Format = bgfx::TextureFormat::Unknown;
 			m_Size = vec2u32(width, height);
@@ -60,7 +60,7 @@ namespace QwerkE {
 			m_NumLayers = 1;
 			m_Flags = 0;
 
-			bgfx::TextureFormat::Enum bgfxFormat = bgfx::TextureFormat::RGB8;
+			bgfx::TextureFormat::Enum bgfxFormat = bgfx::TextureFormat::RGBA8;
 			unsigned int bufferSize = 0;
 
 			switch (bgfxFormat)
@@ -79,7 +79,8 @@ namespace QwerkE {
 			break;
 			}
 
-			m_TextureHandle = bgfx::createTexture2D(m_Size.x, m_Size.y, m_HasMips, m_NumLayers, bgfxFormat, m_Flags);
+			m_TextureHandle = bgfx::createTexture2D(m_Size.x, m_Size.y, m_HasMips, m_NumLayers, bgfxFormat, m_Flags, bgfx::copy(pixelsBuffer, bufferSize));
+			stbi_image_free(pixelsBuffer);
 		}
 
 		void Unload()

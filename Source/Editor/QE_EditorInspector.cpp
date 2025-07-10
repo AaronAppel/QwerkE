@@ -106,6 +106,12 @@ namespace QwerkE {
                         valueChanged = true;
                         LOG_INFO("{0} Regenerated GUID: {1}", __FUNCTION__, *numberAddress);
                     }
+                    if (ImGui::Button(("Reset to 0##" + elementName).c_str()))
+                    {
+                        *numberAddress = GUID::Invalid;
+                        valueChanged = true;
+                        LOG_INFO("{0} Reset GUID: {1}", __FUNCTION__, *numberAddress);
+                    }
                     ImGui::EndPopup();
                 }
                 break;
@@ -468,6 +474,7 @@ namespace QwerkE {
                 {
                     const char* popUpNameMeshes = "ComponentMeshPopUpMeshSelection";
                     const char* popUpNameShaders = "ComponentMeshPopUpShaderSelection";
+                    const char* popUpNameTextures = "ComponentMeshPopUpTextureSelection";
 
                     // #TODO Address redundancy and safety of automatic mesh data re-intialization
                     if (ImGui::Button("Initialize"))
@@ -487,6 +494,10 @@ namespace QwerkE {
                         else if (result.selectedFieldName == "m_ShaderGuid")
                         {
                             ImGui::OpenPopup(popUpNameShaders);
+                        }
+                        else if (result.selectedFieldName == "m_TextureGuid")
+                        {
+                            ImGui::OpenPopup(popUpNameTextures);
                         }
                     }
 
@@ -558,6 +569,40 @@ namespace QwerkE {
                             }
                         }
 
+                        ImGui::EndPopup();
+                    }
+                    else if (ImGui::BeginPopup(popUpNameTextures))
+                    {
+                        std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
+                        if (assetRegistry.find(Mirror::IdForType<Texture>()) != assetRegistry.end())
+                        {
+                            auto textures = assetRegistry[Mirror::IdForType<Texture>()];
+
+                            ImGui::Text("Textures:");
+                            for (auto& guidTexturePair : textures)
+                            {
+                                bool clicked = false;
+                                ImGui::Text("GUID: ");
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                                {
+                                    clicked = true;
+                                }
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidTexturePair.first).c_str());
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                                {
+                                    clicked = true;
+                                }
+
+                                if (clicked)
+                                {
+                                    ComponentMesh* meshComp = (ComponentMesh*)obj;
+                                    meshComp->SetTextureGuid(guidTexturePair.first);
+                                    meshComp->Initialize();
+                                    break;
+                                }
+                            }
+                        }
                         ImGui::EndPopup();
                     }
 

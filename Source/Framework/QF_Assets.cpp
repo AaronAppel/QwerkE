@@ -35,6 +35,8 @@ namespace QwerkE {
 
 	// #TODO How does the registry work without the editor, for the Game solution? Simply hide extra functions?
 
+	static bool s_Initialized = false;
+
 	// #TODO https://stackoverflow.com/questions/38955940/how-to-concatenate-static-strings-at-compile-time
 	const char* const s_AssetsRegistryFileName = "Assets.qreg"; // Files::Extensions::Registry
 	static std::unordered_map<size_t, AssetsList> s_AssetGuidToFileRegistry;
@@ -139,44 +141,42 @@ namespace QwerkE {
 
 	void Assets::Initialize()
 	{
+		ASSERT(!s_Initialized, "Assets:: already initialized!");
+
 		// #TODO #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
 		// #TODO Handle types that have multiple components, like shaders and materials
 
 		Serialize::FromFile(Paths::Setting(s_AssetsRegistryFileName).c_str(), s_AssetGuidToFileRegistry);
 
-		{	// Default Mesh entry
+		// Default Mesh entry
 			// #TODO Switch to using Meshes:: functions
 			// Mesh* nullMesh = Meshes::NewSquareMesh();
-			Mesh* nullMesh = new Mesh();
-			nullMesh->m_vbh = bgfx::createVertexBuffer(
-				bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)),
-				PosColorVertex::ms_layout
-			);
-			nullMesh->m_ibh = bgfx::createIndexBuffer(
-				bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
-			);
-			nullMesh->m_GUID = GUID::Invalid;
-			m_MapOfNullAssetMaps[Mirror::IdForType<Mesh>()][GUID::Invalid] = nullMesh;
-		}
+		Mesh* nullMesh = new Mesh();
+		nullMesh->m_vbh = bgfx::createVertexBuffer(
+			bgfx::makeRef(s_cubeVertices, sizeof(s_cubeVertices)),
+			PosColorVertex::ms_layout
+		);
+		nullMesh->m_ibh = bgfx::createIndexBuffer(
+			bgfx::makeRef(s_cubeTriList, sizeof(s_cubeTriList))
+		);
+		nullMesh->m_GUID = GUID::Invalid;
+		m_MapOfNullAssetMaps[Mirror::IdForType<Mesh>()][GUID::Invalid] = nullMesh;
 
-		{   // Default Shader entry
-			// #TODO Use coded data instead of relying on a file to exist
-			Shader* nullShader = new Shader(Paths::NullAsset("null_shader.vert.bin").c_str(), Paths::NullAsset("null_shader.frag.bin").c_str(), GUID::Invalid);
-			ASSERT(nullShader, "Could not load null shader!")
-			m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->Guid()] = nullShader;
-		}
+		// Default Shader entry
+		// #TODO Use coded data instead of relying on a file to exist
+		Shader* nullShader = new Shader(Paths::NullAsset("null_shader.vert.bin").c_str(), Paths::NullAsset("null_shader.frag.bin").c_str(), GUID::Invalid);
+		ASSERT(nullShader, "Could not load null shader!");
+		m_MapOfNullAssetMaps[Mirror::IdForType<Shader>()][nullShader->Guid()] = nullShader;
 
-		{
-			Texture* nullTexture = new Texture(Paths::NullAsset("null_texture.png").c_str(), GUID::Invalid);
-			ASSERT(nullTexture, "Could not load null texture!");
-			m_MapOfNullAssetMaps[Mirror::IdForType<Texture>()][nullTexture->Guid()] = nullTexture;
-		}
+		Texture* nullTexture = new Texture(Paths::NullAsset("null_texture.png").c_str(), GUID::Invalid);
+		ASSERT(nullTexture, "Could not load null texture!");
+		m_MapOfNullAssetMaps[Mirror::IdForType<Texture>()][nullTexture->Guid()] = nullTexture;
 
-		{
-			Scene* nullScene = new Scene("Empty.qscene", GUID::Invalid);// Scenes::CreateSceneFromFile(Paths::Scene("Empty.qscene"));
-			ASSERT(nullScene, "Could not load null scene!")
-			m_MapOfNullAssetMaps[Mirror::IdForType<Scene>()][GUID::Invalid] = nullScene;
-		}
+		Scene* nullScene = new Scene("Empty.qscene", GUID::Invalid);// Scenes::CreateSceneFromFile(Paths::Scene("Empty.qscene"));
+		ASSERT(nullScene, "Could not load null scene!");
+		m_MapOfNullAssetMaps[Mirror::IdForType<Scene>()][GUID::Invalid] = nullScene;
+
+		s_Initialized = true;
 	}
 
 	void Assets::Shutdown()
@@ -206,6 +206,9 @@ namespace QwerkE {
 							// #TODO If this gets hit, is that an error? Assert?
 							break;
 
+						case Mirror::IdForType<Texture>():
+							delete static_cast<Texture*>(guidVoidPtrPair.second); break;
+
 						default:
 							LOG_CRITICAL("{0} Unsupported type!", __FUNCTION__);
 							break;
@@ -219,6 +222,7 @@ namespace QwerkE {
 		m_MapOfNullAssetMaps.clear();
 
 		// #TODO ASSERT all assets were properly released
+		s_Initialized = false;
 	}
 
 #ifndef _QRETAIL

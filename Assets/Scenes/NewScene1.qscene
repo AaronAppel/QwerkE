@@ -39,6 +39,9 @@
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"1034563466966038478"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
 					}
 				}
 			},
@@ -76,6 +79,9 @@
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"1030711180692038478"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
 					}
 				}
 			},
@@ -101,9 +107,9 @@
 						"float":	0,
 						"float":	1,
 						"float":	0,
-						"float":	-2.5,
-						"float":	7,
-						"float":	3,
+						"float":	-3.5,
+						"float":	5,
+						"float":	4,
 						"float":	1
 					}
 				},
@@ -112,7 +118,10 @@
 						"m_Guid":	"16501966795655844838"
 					},
 					"m_ShaderGuid":	{
-						"m_Guid":	"1030711180692038478"
+						"m_Guid":	"6679565844562264290"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
 					}
 				}
 			},
@@ -201,6 +210,9 @@
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"1030711180692038478"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
 					}
 				},
 				"QwerkE::ComponentScript":	{

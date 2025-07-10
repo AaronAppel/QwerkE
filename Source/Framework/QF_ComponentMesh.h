@@ -16,6 +16,7 @@ namespace QwerkE {
 
     class Mesh;
     class Shader;
+    class Texture;
 
     class ComponentMesh
     {
@@ -25,15 +26,18 @@ namespace QwerkE {
 
         void SetMeshGuid(const GUID& newMeshGuid) { m_MeshGuid = newMeshGuid; }
         void SetShaderGuid(const GUID& newShaderGuid) { m_ShaderGuid = newShaderGuid; }
+        void SetTextureGuid(const GUID& newShaderGuid) { m_TextureGuid = newShaderGuid; }
 
     private:
         MIRROR_PRIVATE_MEMBERS
 
         Mesh* m_Mesh = nullptr;
         Shader* m_Shader = nullptr;
+        Texture* m_Texture = nullptr;
 
         GUID m_MeshGuid = GUID::Invalid;
         GUID m_ShaderGuid = GUID::Invalid;
+        GUID m_TextureGuid = GUID::Invalid;
     };
 
 }
