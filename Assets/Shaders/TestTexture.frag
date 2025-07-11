@@ -1,4 +1,4 @@
-$input v_pos, v_view, v_normal, v_color0
+$input v_color0
 
 /*
  * Copyright 2011-2025 Branimir Karadzic. All rights reserved.
@@ -7,10 +7,7 @@ $input v_pos, v_view, v_normal, v_color0
 
 #include <bgfx_shader.sh>
 
-uniform vec4 u_id;
-
 void main()
 {
-	gl_FragColor.xyz = u_id.xyz; // This is dumb, should use u8 texture
-	gl_FragColor.w = 1.0;
+	gl_FragColor = v_color0;
 }

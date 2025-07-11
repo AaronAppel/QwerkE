@@ -6,7 +6,6 @@ $input v_pos, v_view, v_normal, v_color0
  */
 
 #include <bgfx_shader.sh>
-#include "shaderlib.sh"
 
 vec2 blinn(vec3 _lightDir, vec3 _normal, vec3 _viewDir)
 {

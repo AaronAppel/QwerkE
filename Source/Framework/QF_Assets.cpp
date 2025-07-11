@@ -67,7 +67,7 @@ namespace QwerkE {
 				{
 				case Mirror::IdForType<Mesh>():
 					{
-						if (constexpr bool loadFromMeshFile = true)
+						if (Files::Exists(Paths::MeshBin(fileName.c_str()).c_str()))
 						{
 							// #TODO Deprecate bgfxFramework::Mesh
 							bgfxFramework::Mesh* bgfxMesh = myMeshLoad(Paths::MeshBin(fileName.c_str()).c_str());
@@ -81,8 +81,20 @@ namespace QwerkE {
 
 							// #TODO Free remaining memory from bgfxFramework::Mesh
 						}
-						else // #TODO Create a null mesh from code (avoid serialization? Maybe keep it out of registry, but still show in assets lists UI)
+						else if (strcmp(fileName.c_str(), "Cube") == 0)
 						{
+							Mesh* meshFromCode = Meshes::CreateCube();
+							m_MapOfLoadedAssetMaps[typeId][guid] = meshFromCode;
+						}
+						else if (strcmp(fileName.c_str(), "Plane") == 0)
+						{
+							Mesh* meshFromCode = Meshes::CreatePlane();
+							m_MapOfLoadedAssetMaps[typeId][guid] = meshFromCode;
+						}
+						else if (strcmp(fileName.c_str(), "Triangle") == 0)
+						{
+							Mesh* meshFromCode = Meshes::CreateTriangle();
+							m_MapOfLoadedAssetMaps[typeId][guid] = meshFromCode;
 						}
 					}
 					break;
@@ -163,13 +175,7 @@ namespace QwerkE {
 		m_MapOfNullAssetMaps[Mirror::IdForType<Mesh>()][GUID::Invalid] = nullMesh;
 
 		// #TODO Clean up
-		// Meshes::Initialize(); // #TODO Move somewhere better, like rendering code
-		// Mesh* planeMesh = Meshes::CreatePlane();
-		// m_MapOfLoadedAssetMaps[Mirror::IdForType<Mesh>()][planeMesh->m_GUID] = planeMesh;
-		// AddToRegistry(Mirror::IdForType<Mesh>(), planeMesh->m_GUID, "DeleteMe");
-		// Mesh* triangleMesh = Meshes::CreateTriangle();
-		// m_MapOfLoadedAssetMaps[Mirror::IdForType<Mesh>()][triangleMesh->m_GUID] = triangleMesh;
-		// AddToRegistry(Mirror::IdForType<Mesh>(), triangleMesh->m_GUID, "DeleteMe2");
+		Meshes::Initialize(); // #TODO Move somewhere better, like rendering code
 
 		// Default Shader entry
 		// #TODO Use coded data instead of relying on a file to exist

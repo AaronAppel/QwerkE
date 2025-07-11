@@ -7,7 +7,6 @@ $output v_pos, v_view, v_normal, v_color0
  */
 
 #include <bgfx_shader.sh>
-#include "shaderlib.sh"
 
 uniform vec4 u_time;
 

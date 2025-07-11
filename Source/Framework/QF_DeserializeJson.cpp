@@ -75,7 +75,37 @@ namespace QwerkE {
 
             case Mirror::IdForType<const uint64_t>():
             case Mirror::IdForType<uint64_t>(): // #NOTE Storing uint64 as string
+            {
+                size_t length = strlen(primitiveJson->valuestring);
+                if (length > 20)
+                {
+                    ASSERT(false, "Invalid string value to convert u64!");
+                    return;
+                }
+                else if (length == 20)
+                {
+                    for (size_t i = 0; i < 20; i++)
+                    {
+                        const char u64Chars[20] = { '1', '8', '4', '4', '6', '7', '4', '4', '0', '7', '3', '7', '0', '9', '5', '5', '1', '6', '1', '5' };
+                        if (primitiveJson->valuestring[i] < u64Chars[i])
+                        {
+                            break;
+                        }
+                        else if (primitiveJson->valuestring[i] > u64Chars[i])
+                        {
+                            ASSERT(false, "Invalid string value to convert u64!");
+                            return;
+                        }
+                    }
+                }
+                else if (length == 0)
+                {
+                    LOG_WARN("Empty u64 string");
+                    *(uint64_t*)primitiveAddress = 0; break;
+                    return;
+                }
                 *(uint64_t*)primitiveAddress = std::stoull(primitiveJson->valuestring); break;
+            }
             case Mirror::IdForType<const int64_t>():
             case Mirror::IdForType<int64_t>(): // #NOTE Storing int64 as string
                 *(int64_t*)primitiveAddress = std::stoll(primitiveJson->valuestring); break;

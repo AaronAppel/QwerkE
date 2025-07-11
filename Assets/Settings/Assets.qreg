@@ -66,6 +66,30 @@
 					"std::vector<std::string>":	{
 						"std::string":	"nanosuit.bin"
 					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"3252328281067745513"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"Plane"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"14057768421059583452"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"Triangle"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"4669136610990924444"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"Cube"
+					}
 				}
 			}
 		},
@@ -136,6 +160,33 @@
 					"std::vector<std::string>":	{
 						"std::string":	"vs_picking_shaded.vert.bin",
 						"std::string":	"fs_picking_id.frag.bin"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"7235877850588061835"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"Texture.frag.bin",
+						"std::string":	"Texture.vert.bin"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"2865877850588061098"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"Texture.frag.bin",
+						"std::string":	"Texture.vert.bin"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"18207111806920384098"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"TestTexture.vert.bin",
+						"std::string":	"TestTexture.frag.bin"
 					}
 				}
 			}

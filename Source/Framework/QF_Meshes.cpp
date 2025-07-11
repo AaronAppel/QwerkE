@@ -44,7 +44,7 @@ namespace QwerkE {
 		};
 
 		// From bgfx example "Instancing"
-		static const uint16_t s_cubeTriList_[36] =
+		static const uint16_t s_cubeTriList_[36] = // #TODO Faces seem inverted so maybe change winding order to match other models
 		{
 			0, 1, 2, // 0
 			1, 3, 2,

@@ -1,0 +1,4 @@
+
+Review contents of:
+#include "shaderlib.sh"
+and see how to properly include it when compiling shaders

@@ -12,6 +12,9 @@
 
 namespace QwerkE {
 
+    bgfx::TextureHandle s_TextureHandle;
+    bgfx::UniformHandle s_UniformHandle;
+
     void ComponentMesh::Initialize()
     {
         m_Mesh = Assets::Get<QwerkE::Mesh>(m_MeshGuid);
@@ -19,6 +22,8 @@ namespace QwerkE {
         if (m_TextureGuid)
         {
             m_Texture = Assets::Get<Texture>(m_TextureGuid);
+            s_TextureHandle.idx = m_Texture->TextureHandle().idx;
+            bgfx::createUniform("u_TextureColor", bgfx::UniformType::Sampler);
         }
     }
 
@@ -26,6 +31,15 @@ namespace QwerkE {
     {
         // #TODO Instanced rendering. Refer to bgfx example project, instancing.cpp line 242
         // void bgfxFramework::Mesh::submit(const MeshState* const* _state, uint8_t _numPasses, const float* _mtx, uint16_t _numMatrices) const;
+
+        if (m_TextureGuid)
+        {
+            // #TODO Set uniform;
+            // u_TextureColor
+            // uniform vec4 u_Time;
+            // uniform vec4 u_UVScaleOffset;
+            // bgfx::setTexture(0, s_UniformHandle, s_TextureHandle);
+        }
 
         bgfx::setTransform(transform.GetMatrix());
         constexpr uint8_t stream = 0;
