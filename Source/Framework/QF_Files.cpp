@@ -102,9 +102,14 @@ namespace QwerkE {
 			return buffer;
 		}
 
-		Path FileName(const char* const filePath) // #TODO Consider a version with a bool to include file ".extension"
+		Path FileName(const char* const filePath)
 		{
 			return Path(filePath).filename();
+		}
+
+		Path FileNameNoExt(const char* const filePath)
+		{
+			return Path(filePath).stem();
 		}
 
 		Path FileExtension(const char* filePath)

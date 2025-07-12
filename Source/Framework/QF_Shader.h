@@ -78,7 +78,12 @@ namespace QwerkE {
 				m_ProgramHandle = bgfx::createProgram(m_VertexShader, m_FragmentShader, false);
 			}
 
-			ASSERT(m_InvalidBgfxId != m_ProgramHandle.idx, "Invalid vertex and/or fragment shader!");
+			if (!bgfx::isValid(m_ProgramHandle))
+			{
+				ValidateVaryings(m_VertexShaderFilePath.c_str(), m_FragmentShaderFilePath.c_str());
+			}
+
+			ASSERT(m_InvalidBgfxId != m_ProgramHandle.idx && bgfx::isValid(m_ProgramHandle), "Invalid vertex and/or fragment shader!");
 
 			if (bgfx::isValid(m_VertexShader))
 			{
@@ -94,6 +99,8 @@ namespace QwerkE {
 		const GUID& Guid() { return m_GUID; }
 
 	private:
+		void Shader::ValidateVaryings(const char* a_VertexFilePath, const char* a_FragmentFilePath);
+
 		static constexpr unsigned short m_InvalidBgfxId = U16_MAX;
 		bgfx::ProgramHandle m_ProgramHandle = BGFX_INVALID_HANDLE;
 

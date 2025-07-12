@@ -26,7 +26,7 @@ rem Additional targets: pssl, nvm, metal
 rem Vertex files
 @FOR %%G in ("%sourceShadersFolder%\*.vert") DO (
 	rem #TODO Errors are being detected incorrectly. Could be incorrectly expanding !errorlevel!. Could Check casing
-	echo Compiling %%~nG
+	echo Compiling %%~nxG
     %shaderCompiler% -f %%G -o %outputShadersFolder%\dx11\%%~nxG.bin  --type v --platform windows -i %bgfxSource% -p s_5_0
     rem IF !errorlevel! NEQ 0 (echo Error(s) in %%G && goto error) ELSE (echo Built dx11 %%G)
     %shaderCompiler% -f %%G -o %outputShadersFolder%\glsl\%%~nxG.bin  --type v --platform windows -i %bgfxSource% -p 440
@@ -40,7 +40,7 @@ IF !errorlevel! NEQ 0 (goto error)
 rem Fragment files
 @FOR %%G in ("%sourceShadersFolder%\*.frag") DO (
 	rem #TODO Errors are being detected incorrectly. Could be incorrectly expanding !errorlevel!. Could Check casing	
-	echo Compiling %%~nG
+	echo Compiling %%~nxG
     %shaderCompiler% -f %%G -o %outputShadersFolder%\dx11\%%~nxG.bin  --type f --platform windows -i %bgfxSource% -p s_5_0
     rem IF !errorlevel! NEQ 0 (echo Error(s) in %%G && goto error) ELSE (echo Built dx11 %%G)
     %shaderCompiler% -f %%G -o %outputShadersFolder%\glsl\%%~nxG.bin  --type f --platform windows -i %bgfxSource% -p 440

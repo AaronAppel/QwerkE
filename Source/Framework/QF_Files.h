@@ -27,6 +27,7 @@ namespace QwerkE {
         Buffer LoadWav(const char* filePath);
 
         Path FileName(const char* filePath);
+        Path FileNameNoExt(const char* const filePath);
         Path FileExtension(const char* filePath);
 
         void CreateEmptyFile(const char* const filePath);

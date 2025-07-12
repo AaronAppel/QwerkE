@@ -167,26 +167,8 @@
 						"m_Guid":	"7235877850588061835"
 					},
 					"std::vector<std::string>":	{
-						"std::string":	"Texture.frag.bin",
-						"std::string":	"Texture.vert.bin"
-					}
-				},
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
-						"m_Guid":	"2865877850588061098"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"Texture.frag.bin",
-						"std::string":	"Texture.vert.bin"
-					}
-				},
-				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
-					"QwerkE::GUID":	{
-						"m_Guid":	"18207111806920384098"
-					},
-					"std::vector<std::string>":	{
-						"std::string":	"TestTexture.vert.bin",
-						"std::string":	"TestTexture.frag.bin"
+						"std::string":	"Texture.vert.bin",
+						"std::string":	"Texture.frag.bin"
 					}
 				}
 			}
