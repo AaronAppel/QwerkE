@@ -582,16 +582,34 @@ namespace QwerkE {
                             for (auto& guidTexturePair : textures)
                             {
                                 bool clicked = false;
+                                bool hovered = false;
+
                                 ImGui::Text("GUID: ");
                                 if (ImGui::IsItemClicked(ImGui::MouseLeft))
                                 {
                                     clicked = true;
+                                }
+                                if (ImGui::IsItemHovered())
+                                {
+                                    hovered = true;
                                 }
                                 ImGui::SameLine();
                                 ImGui::Text(std::to_string(guidTexturePair.first).c_str());
                                 if (ImGui::IsItemClicked(ImGui::MouseLeft))
                                 {
                                     clicked = true;
+                                }
+                                else if (ImGui::IsItemHovered())
+                                {
+                                    ImGui::BeginTooltip();
+                                    std::string fileName = Assets::GetRegistryAssetFileName<Texture>(guidTexturePair.first);
+                                    if (Assets::Has<Texture>(guidTexturePair.first))
+                                    {
+                                        Texture* texture = Assets::Get<Texture>(guidTexturePair.first);
+                                        ImGui::Image(ImTextureID(texture->TextureHandle().idx), ImVec2(50.f, 50.f));
+                                    }
+                                    ImGui::Text(fileName.c_str());
+                                    ImGui::EndTooltip();
                                 }
 
                                 if (clicked)

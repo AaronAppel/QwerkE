@@ -58,7 +58,23 @@ namespace QwerkE {
 // #TODO Experiment with verbose on/off flags. *VisualStudio output format for clicking: "fileName.cpp(23)..."
 #define LOG_VERBOSE(...)      LOG_TRACE("{0}({1}) {2}() : {3}", __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__);
 
-#define LOG_CRITICAL_ONCE(...) \
+#define LOG_ONCE_TRACE(...) \
+    { static bool logMessage = true; \
+    if (logMessage) { logMessage = false; QwerkE::Log::Logger::s_Logger->trace(__VA_ARGS__); } }
+
+#define LOG_ONCE_INFO(...) \
+    { static bool logMessage = true; \
+    if (logMessage) { logMessage = false; QwerkE::Log::Logger::s_Logger->info(__VA_ARGS__); } }
+
+#define LOG_ONCE_WARN(...) \
+    { static bool logMessage = true; \
+    if (logMessage) { logMessage = false; QwerkE::Log::Logger::s_Logger->warn(__VA_ARGS__); } }
+
+#define LOG_ONCE_ERROR(...) \
+    { static bool logMessage = true; \
+    if (logMessage) { logMessage = false; QwerkE::Log::Logger::s_Logger->error(__VA_ARGS__); } }
+
+#define LOG_ONCE_CRITICAL(...) \
     { static bool logMessage = true; \
     if (logMessage) { logMessage = false; QwerkE::Log::Logger::s_Logger->critical(__VA_ARGS__); } }
 

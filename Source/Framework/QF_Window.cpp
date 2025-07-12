@@ -343,6 +343,13 @@ namespace QwerkE {
                         LOG_WARN("Invalid file data: {0}", fileName.string().c_str());
                     }
                 }
+                else if (strcmp(fileExtension.string().c_str(), ".png") == 0)
+                {
+                    if (Files::Exists(Paths::Texture(fileName.string().c_str()).c_str()))
+                    {
+                        Assets::AddToRegistry(Mirror::IdForType<Texture>(), GUID(), fileName.string());
+                    }
+                }
                 else
                 {
                     LOG_WARN("Drag file type unsupported: {0}", fileExtension.string().c_str());

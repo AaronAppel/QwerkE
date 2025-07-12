@@ -48,9 +48,6 @@ namespace QwerkE {
 
 			// #TODO Better error handling
 
-			bgfx::ShaderHandle m_VertexShader = BGFX_INVALID_HANDLE;
-			bgfx::ShaderHandle m_FragmentShader = BGFX_INVALID_HANDLE;
-
 			m_VertexFileBuffer.Release();
 			m_VertexFileBuffer = Files::LoadFile(m_VertexShaderFilePath.c_str());
 			if (m_VertexFileBuffer)
@@ -58,7 +55,7 @@ namespace QwerkE {
 				const bgfx::Memory* vertMemory = bgfx::makeRef(m_VertexFileBuffer.As<const void*>(), m_VertexFileBuffer.SizeInBytes() - 1);
 				if (vertMemory)
 				{
-					m_VertexShader = bgfx::createShader(vertMemory);
+					m_VertexShaderHandle = bgfx::createShader(vertMemory);
 				}
 			}
 
@@ -66,39 +63,54 @@ namespace QwerkE {
 			m_FragmentFileBuffer = Files::LoadFile(m_FragmentShaderFilePath.c_str());
 			if (m_FragmentFileBuffer)
 			{
-				const bgfx::Memory* fragMemory = bgfx::makeRef(m_FragmentFileBuffer.As<const void*>(), m_FragmentFileBuffer.SizeInBytes() - 1);
+				const bgfx::Memory* fragMemory = bgfx::makeRef(m_FragmentFileBuffer.As<const void*>(), m_FragmentFileBuffer.SizeInBytes() - 1,
+					// #TODO Review delayed deletion. Maybe a Memory:: namespace could hold short term memory like buffers
+					[](void* _ptr, void* _userData) {
+						Buffer* buffer = (Buffer*)_userData;
+						buffer->Release();
+					},
+				&m_FragmentFileBuffer);
+
 				if (fragMemory)
 				{
-					m_FragmentShader = bgfx::createShader(fragMemory);
+					m_FragmentShaderHandle = bgfx::createShader(fragMemory);
 				}
 			}
 
-			if (bgfx::isValid(m_VertexShader) && bgfx::isValid(m_FragmentShader))
+			if (bgfx::isValid(m_VertexShaderHandle) && bgfx::isValid(m_FragmentShaderHandle))
 			{
-				m_ProgramHandle = bgfx::createProgram(m_VertexShader, m_FragmentShader, false);
+				m_ProgramHandle = bgfx::createProgram(m_VertexShaderHandle, m_FragmentShaderHandle, false);
 			}
 
-			if (!bgfx::isValid(m_ProgramHandle))
+			if (bgfx::isValid(m_ProgramHandle))
+			{
+				PrepUniformState();
+			}
+			else
 			{
 				ValidateVaryings(m_VertexShaderFilePath.c_str(), m_FragmentShaderFilePath.c_str());
 			}
 
 			ASSERT(m_InvalidBgfxId != m_ProgramHandle.idx && bgfx::isValid(m_ProgramHandle), "Invalid vertex and/or fragment shader!");
 
-			if (bgfx::isValid(m_VertexShader))
+			if (bgfx::isValid(m_VertexShaderHandle))
 			{
-				bgfx::destroy(m_VertexShader);
+				bgfx::destroy(m_VertexShaderHandle);
 			}
-			if (bgfx::isValid(m_FragmentShader))
+			if (bgfx::isValid(m_FragmentShaderHandle))
 			{
-				bgfx::destroy(m_FragmentShader);
+				bgfx::destroy(m_FragmentShaderHandle);
 			}
 		}
+
+		bool HasTextureUniform() { return m_HasTextureUniform; }
+		bool HasUniform(const char* a_UniformName);
 
 		const bgfx::ProgramHandle& ProgramHandle() { return m_ProgramHandle; }
 		const GUID& Guid() { return m_GUID; }
 
 	private:
+		void PrepUniformState();
 		void Shader::ValidateVaryings(const char* a_VertexFilePath, const char* a_FragmentFilePath);
 
 		static constexpr unsigned short m_InvalidBgfxId = U16_MAX;
@@ -107,10 +119,16 @@ namespace QwerkE {
 		std::string m_VertexShaderFilePath = "";
 		std::string m_FragmentShaderFilePath = "";
 
+		bgfx::ShaderHandle m_VertexShaderHandle = BGFX_INVALID_HANDLE;
+		bgfx::ShaderHandle m_FragmentShaderHandle = BGFX_INVALID_HANDLE;
+
 		Buffer m_VertexFileBuffer; // #TODO bgfx defers instantiation so buffers can't be stack scoped to Load(). Look at avoiding holding extra RAM
-		Buffer m_FragmentFileBuffer;
+		Buffer m_FragmentFileBuffer; // #TODO Pass a ReleaseFn to bgfx
 
 		GUID m_GUID = GUID::Invalid;
+
+		// #TODO Dynamic uniform handling
+		bool m_HasTextureUniform = false;
 	};
 
 

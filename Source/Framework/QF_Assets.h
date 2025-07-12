@@ -81,6 +81,17 @@ namespace QwerkE {
 			}
 		}
 
+		static void Load(const size_t typeId, GUID guid)
+		{
+			if (!Has(typeId, guid))
+			{
+				if (GUID::Invalid == LoadAsset(typeId, guid))
+				{
+					LOG_WARN("Unable to load asset with typeId {0} and GUID: {1}", typeId, guid);
+				}
+			}
+		}
+
 		template <typename T>
 		static void Add(T* a_Instance, GUID a_Guid) // #TODO Meant for editor only creation of new asset files
 		{
@@ -103,6 +114,8 @@ namespace QwerkE {
 			std::unordered_map<GUID, T*>* assetMap = (std::unordered_map<GUID, T*>*)&m_MapOfLoadedAssetMaps[typeId];
 			return assetMap->find(guid) != assetMap->end();
 		}
+
+		static bool Has(const size_t typeId, GUID guid);
 
 		template <typename T>
 		[[nodiscard]] static T* Get(GUID guid)
@@ -143,6 +156,21 @@ namespace QwerkE {
 		[[nodiscard]] static std::string GetRegistryAssetFileName(const GUID guid)
 		{
 			const size_t typeId = Mirror::IdForType<T>();
+			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeId);
+			for (size_t i = 0; i < assetsRegistry.size(); i++)
+			{
+				auto guidStringPair = assetsRegistry[i];
+				if (guid == guidStringPair.first)
+				{
+					// #TODO Decide how to search for shaders and materials that have more than 1 string in vector
+					return guidStringPair.second[0];
+				}
+			}
+			return std::string("");
+		}
+
+		[[nodiscard]] static std::string GetRegistryAssetFileName(const size_t typeId, const GUID guid)
+		{
 			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeId);
 			for (size_t i = 0; i < assetsRegistry.size(); i++)
 			{

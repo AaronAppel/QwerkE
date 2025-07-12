@@ -38,6 +38,8 @@ namespace QwerkE {
         GUID m_MeshGuid = GUID::Invalid;
         GUID m_ShaderGuid = GUID::Invalid;
         GUID m_TextureGuid = GUID::Invalid;
+
+        bool m_SetUvOffsetUniform = false; // #TODO Improve
     };
 
 }

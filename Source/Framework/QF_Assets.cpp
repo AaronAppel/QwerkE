@@ -240,6 +240,14 @@ namespace QwerkE {
 		s_Initialized = false;
 	}
 
+	bool Assets::Has(const size_t typeId, GUID guid)
+	{
+		if (m_MapOfLoadedAssetMaps.find(typeId) == m_MapOfLoadedAssetMaps.end())
+			return false;
+
+		return m_MapOfLoadedAssetMaps[typeId].find(guid) != m_MapOfLoadedAssetMaps[typeId].end();
+	}
+
 #ifndef _QRETAIL
 	std::unordered_map<size_t, AssetsList>& Assets::ViewRegistry()
 	{

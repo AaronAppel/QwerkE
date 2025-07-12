@@ -47,6 +47,12 @@ namespace QwerkE {
                     m_ViewingLoadedAssets = false;
                 }
 
+                ImGui::SameLine();
+                if (ImGui::Button("Save Asset Registry"))
+                {
+                    Assets::SaveRegistry();
+                }
+
                 // #TODO Consider a button to unload an asset from RAM
 
                 const float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
@@ -112,12 +118,28 @@ namespace QwerkE {
                     }
                 }
 
+                static bool showImages = true;
                 if (ImGui::CollapsingHeader("Textures"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
                 {
                     if (const std::unordered_map<GUID, Texture*>* textures = Assets::ViewAssets<Texture>())
                     {
                         for (auto& guidTexturePair : *textures)
                         {
+                            if (showImages)
+                            {
+                                const ImVec2 imageSize = { 50.f, 50.f };
+                                ImGui::Image(ImTextureID(guidTexturePair.second->TextureHandle().idx), imageSize);
+                                if (ImGui::IsItemHovered())
+                                {
+                                    ImGui::BeginTooltip();
+                                    ImGui::Text("GUID: ");
+                                    ImGui::SameLine();
+                                    ImGui::Text(std::to_string(guidTexturePair.first).c_str());
+                                    ImGui::SameLine();
+                                    ImGui::Text(std::to_string(guidTexturePair.second->TextureHandle().idx).c_str());
+                                    ImGui::EndTooltip();
+                                }
+                            }
                             ImGui::Text("GUID: ");
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidTexturePair.first).c_str());
@@ -180,6 +202,7 @@ namespace QwerkE {
                     m_ViewingLoadedAssets = true;
                 }
 
+                ImGui::SameLine();
                 if (ImGui::Button("Save Asset Registry"))
                 {
                     Assets::SaveRegistry();
@@ -199,6 +222,21 @@ namespace QwerkE {
                     for (size_t i = 0; i < pairMirrorTypesVector.second.size(); i++)
                     {
                         auto pairGuidString = pairMirrorTypesVector.second[i];
+
+                        if (Assets::Has(pairMirrorTypesVector.first, pairGuidString.first))
+                        {
+                            ImGui::Text("L"); // #TODO Is loaded into ram or not. Add a button to load
+                        }
+                        else
+                        {
+                            ImGui::Text("X"); // #TODO Is loaded into ram or not. Add a button to load
+                            if (ImGui::IsItemClicked(ImGui::MouseRight) ||
+                                ImGui::IsItemClicked(ImGui::MouseLeft))
+                            {
+                                Assets::Load(pairMirrorTypesVector.first, pairGuidString.first);
+                            }
+                        }
+                        ImGui::SameLine();
                         ImGui::Text("GUID: ");
                         ImGui::SameLine();
                         std::string guidString = std::to_string(pairGuidString.first).c_str();
