@@ -519,17 +519,19 @@ namespace QwerkE {
                                 }
                                 ImGui::SameLine();
                                 ImGui::Text(std::to_string(guidMeshPair.first).c_str());
-                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
-                                {
-                                    clicked = true;
-                                }
-
-                                if (clicked)
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft) || clicked)
                                 {
                                     ComponentMesh* meshComp = (ComponentMesh*)obj;
                                     meshComp->SetMeshGuid(guidMeshPair.first);
                                     meshComp->Initialize();
                                     break;
+                                }
+                                else if (ImGui::IsItemHovered())
+                                {
+                                    ImGui::BeginTooltip();
+                                    std::string fileName = Assets::GetRegistryAssetFileName<Mesh>(guidMeshPair.first);
+                                    ImGui::Text(fileName.c_str());
+                                    ImGui::EndTooltip();
                                 }
                             }
                         }
@@ -554,17 +556,19 @@ namespace QwerkE {
                                 }
                                 ImGui::SameLine();
                                 ImGui::Text(std::to_string(guidShaderPair.first).c_str());
-                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
-                                {
-                                    clicked = true;
-                                }
-
-                                if (clicked)
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft) || clicked)
                                 {
                                     ComponentMesh* meshComp = (ComponentMesh*)obj;
                                     meshComp->SetShaderGuid(guidShaderPair.first);
                                     meshComp->Initialize();
                                     break;
+                                }
+                                else if (ImGui::IsItemHovered())
+                                {
+                                    ImGui::BeginTooltip();
+                                    std::string fileName = Assets::GetRegistryAssetFileName<Shader>(guidShaderPair.first);
+                                    ImGui::Text(fileName.c_str());
+                                    ImGui::EndTooltip();
                                 }
                             }
                         }

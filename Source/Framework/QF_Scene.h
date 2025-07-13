@@ -43,6 +43,7 @@ namespace QwerkE {
 
         EntityHandle CreateEntity();
         EntityHandle CreateEntity(const GUID& existingGuid);
+        EntityHandle DuplicateEntity(const EntityHandle& entity);
 
         void DestroyEntity(EntityHandle& entity);
 

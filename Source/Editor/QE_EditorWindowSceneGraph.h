@@ -127,15 +127,38 @@ namespace QwerkE {
 					EntityHandle handle(m_CurrentScene, entity);
 					ComponentInfo& info = handle.GetComponent<ComponentInfo>();
 
-					if (!info.m_Enabled)
+					ImGui::Checkbox(("##Enabled" + std::to_string(info.m_Guid)).c_str(), &info.m_Enabled);
+
+					const float buttonHeight = 50.f; // Row height
+
+					ImGui::SameLine();
+					if (ImGui::Button(("Dup##" + std::to_string(info.m_Guid)).c_str(), { 30.f, buttonHeight }))
 					{
-						// #TODO Communicate disabled state
+						m_CurrentScene->DuplicateEntity(handle);
+						break; // #NOTE Avoid list change while iterating exceptions
 					}
 
-					if (ImGui::Button((info.m_EntityName + "##" + std::to_string(info.m_Guid)).c_str()))
+					if (!info.m_Enabled)
+					{
+						ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.3f, 0.3f, 0.3f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.4f, 0.4f, 0.4f));
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.5f, 0.5f, 0.5f));
+					}
+					ImGui::SameLine();
+					if (ImGui::Button((info.m_EntityName + "##" + std::to_string(info.m_Guid)).c_str(), { ImGui::GetContentRegionAvail().x - 35.f, buttonHeight }))
 					{
 						Editor::OnEntitySelected(handle);
-						break;
+					}
+					if (!info.m_Enabled)
+					{
+						ImGui::PopStyleColor(3);
+					}
+
+					ImGui::SameLine();
+					if (ImGui::Button(("Del##" + std::to_string(info.m_Guid)).c_str(), { ImGui::GetContentRegionAvail().x, buttonHeight }))
+					{
+						m_CurrentScene->DestroyEntity(handle);
+						break; // #NOTE Avoid list change while iterating exceptions
 					}
 
 					// #TODO Testing drag and drop behaviour

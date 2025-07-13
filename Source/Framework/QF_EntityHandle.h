@@ -149,6 +149,15 @@ namespace QwerkE {
 		}
 
 		template <typename T>
+		const T& GetComponent() const // #NOTE Keep in sync with non-const method above
+		{
+			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
+			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
+			return m_Scene->m_Registry.get<T>(m_EnttId);
+		}
+
+		template <typename T>
 		void RemoveComponent()
 		{
 			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");

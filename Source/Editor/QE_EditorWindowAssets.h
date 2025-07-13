@@ -132,6 +132,11 @@ namespace QwerkE {
                                 if (ImGui::IsItemHovered())
                                 {
                                     ImGui::BeginTooltip();
+                                    if (ImGui::IsMouseDown(ImGui::MouseLeft))
+                                    {
+                                        const ImVec2 imageSize = { 150.f, 150.f };
+                                        ImGui::Image(ImTextureID(guidTexturePair.second->TextureHandle().idx), imageSize);
+                                    }
                                     ImGui::Text("GUID: ");
                                     ImGui::SameLine();
                                     ImGui::Text(std::to_string(guidTexturePair.first).c_str());
@@ -226,6 +231,12 @@ namespace QwerkE {
                         if (Assets::Has(pairMirrorTypesVector.first, pairGuidString.first))
                         {
                             ImGui::Text("L"); // #TODO Is loaded into ram or not. Add a button to load
+                            if (ImGui::IsItemHovered())
+                            {
+                                ImGui::BeginTooltip();
+                                ImGui::Text("Loaded");
+                                ImGui::EndTooltip();
+                            }
                         }
                         else
                         {
@@ -235,12 +246,25 @@ namespace QwerkE {
                             {
                                 Assets::Load(pairMirrorTypesVector.first, pairGuidString.first);
                             }
+                            else if (ImGui::IsItemHovered())
+                            {
+                                ImGui::BeginTooltip();
+                                ImGui::Text("Not loaded");
+                                ImGui::EndTooltip();
+                            }
                         }
                         ImGui::SameLine();
                         ImGui::Text("GUID: ");
                         ImGui::SameLine();
                         std::string guidString = std::to_string(pairGuidString.first).c_str();
                         ImGui::Text(guidString.c_str());
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::BeginTooltip();
+                            std::string fileName = Assets::GetRegistryAssetFileName(pairMirrorTypesVector.first, pairGuidString.first);
+                            ImGui::Text(fileName.c_str());
+                            ImGui::EndTooltip();
+                        }
 
                         std::string popUpName = "Context GUID" + guidString;
                         if (ImGui::IsItemClicked(ImGui::MouseRight))

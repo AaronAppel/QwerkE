@@ -169,20 +169,7 @@ namespace QwerkE {
 			return std::string("");
 		}
 
-		[[nodiscard]] static std::string GetRegistryAssetFileName(const size_t typeId, const GUID guid)
-		{
-			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeId);
-			for (size_t i = 0; i < assetsRegistry.size(); i++)
-			{
-				auto guidStringPair = assetsRegistry[i];
-				if (guid == guidStringPair.first)
-				{
-					// #TODO Decide how to search for shaders and materials that have more than 1 string in vector
-					return guidStringPair.second[0];
-				}
-			}
-			return std::string("");
-		}
+		[[nodiscard]] static std::string GetRegistryAssetFileName(const size_t typeId, const GUID guid);
 
 		[[nodiscard]] static std::unordered_map<size_t, AssetsList>& ViewRegistry();
 		static void SaveRegistry();

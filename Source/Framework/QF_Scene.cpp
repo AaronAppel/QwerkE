@@ -28,6 +28,29 @@
 
 namespace QwerkE {
 
+    template <typename... Component>
+    void CopyEntityComponent(const EntityHandle& a_SourceEntity, EntityHandle& a_TargetEntity)
+    {
+        ([&]() {
+            // const Mirror::TypeInfo* typeInfo = Mirror::InfoForType<Component>();
+            if (a_SourceEntity.HasComponent<Component>())
+            {
+                if (!a_TargetEntity.HasComponent<Component>())
+                {
+                    a_TargetEntity.AddComponent<Component>(); // #TODO Could pass component reference to copy when allocating
+                }
+
+                memcpy(&a_TargetEntity.GetComponent<Component>(), &a_SourceEntity.GetComponent<Component>(), sizeof(Component));
+        }
+        }(), ...);
+    }
+
+    template<typename... Components>
+    void CopyEntityComponents(TemplateArgumentList<Components...>, const EntityHandle& a_SourceEntity, EntityHandle& a_TargetEntity)
+    {
+        CopyEntityComponent<Components...>(a_SourceEntity, a_TargetEntity);
+    }
+
     Scene::~Scene()
     {
         UnloadScene();
@@ -130,6 +153,26 @@ namespace QwerkE {
         m_GuidsToEntts[existingGuid] = m_Registry.create();
         return EntityHandle(this, existingGuid);
     }
+
+    EntityHandle Scene::DuplicateEntity(const EntityHandle& a_ExistingEntity)
+    {
+        if (!a_ExistingEntity)
+        {
+            LOG_ERROR("Invalid entity to duplicate!");
+            return EntityHandle::InvalidHandle();
+        }
+
+        EntityHandle newEntity = EntityHandle(this);
+        const GUID guid = newEntity.GetComponent<ComponentInfo>().m_Guid;
+
+        CopyEntityComponents(EntityComponentsList{}, a_ExistingEntity, newEntity);
+
+        newEntity.GetComponent<ComponentInfo>().m_Guid = guid;
+        m_GuidsToEntts[guid] = newEntity.m_EnttId;
+
+        return newEntity;
+    }
+
 
     void Scene::DestroyEntity(EntityHandle& entity)
     {
