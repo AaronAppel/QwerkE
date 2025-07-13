@@ -15,3 +15,8 @@ fa-solid-900.ttf
 https://github.com/FortAwesome/Font-Awesome/blob/5.x/webfonts/fa-solid-900.ttf
 License: SIL OFL 1.1 License
 Copyright (c) 2024 Fonticons, Inc. (https://fontawesome.com)
+
+KenneySpace.ttf
+License (Creative Commons Zero, CC0)
+http://creativecommons.org/publicdomain/zero/1.0/
+https://kenney.nl/
