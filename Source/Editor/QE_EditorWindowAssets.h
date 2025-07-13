@@ -279,6 +279,10 @@ namespace QwerkE {
                                 ImGui::SetClipboardText(guidString.c_str());
                                 LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, guidString.c_str());
                             }
+                            if (ImGui::Button("Delete From Registry"))
+                            {
+                                Assets::RemoveFromRegistry(pairMirrorTypesVector.first, pairGuidString.first);
+                            }
                             ImGui::EndPopup();
                         }
 

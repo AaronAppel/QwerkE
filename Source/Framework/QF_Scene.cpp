@@ -40,7 +40,18 @@ namespace QwerkE {
                     a_TargetEntity.AddComponent<Component>(); // #TODO Could pass component reference to copy when allocating
                 }
 
-                memcpy(&a_TargetEntity.GetComponent<Component>(), &a_SourceEntity.GetComponent<Component>(), sizeof(Component));
+                if (std::is_same_v<Component, ComponentInfo>)
+                {
+                    ComponentInfo* info = &a_TargetEntity.GetComponent<ComponentInfo>();
+                    info->m_EntityName = a_SourceEntity.GetComponent<ComponentInfo>().m_EntityName;
+
+                    // #TODO Write all other values but avoid copying guid, and string as a shallow copy to avoid multiple string deletions
+                    // memcpy(&a_TargetEntity.GetComponent<Component>(), &a_SourceEntity.GetComponent<Component>(), sizeof(Component));
+                }
+                else
+                {
+                    memcpy(&a_TargetEntity.GetComponent<Component>(), &a_SourceEntity.GetComponent<Component>(), sizeof(Component));
+                }
         }
         }(), ...);
     }
@@ -163,12 +174,8 @@ namespace QwerkE {
         }
 
         EntityHandle newEntity = EntityHandle(this);
-        const GUID guid = newEntity.GetComponent<ComponentInfo>().m_Guid;
-
         CopyEntityComponents(EntityComponentsList{}, a_ExistingEntity, newEntity);
-
-        newEntity.GetComponent<ComponentInfo>().m_Guid = guid;
-        m_GuidsToEntts[guid] = newEntity.m_EnttId;
+        m_GuidsToEntts[newEntity.GetComponent<ComponentInfo>().m_Guid] = newEntity.m_EnttId;
 
         return newEntity;
     }

@@ -293,13 +293,51 @@ namespace QwerkE {
 		return false;
 	}
 
+	bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid)
+	{
+		// #TODO Review using type name strings instead of id values as are considered unstable ids should not be written to data
+		auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
+		for (size_t i = 0; i < vectorGuidStrings.size(); i++)
+		{
+			const std::pair<GUID, std::vector<std::string>>& pair = vectorGuidStrings[i];
+			// #TODO Decide how to search for shader and materials that have more than 1 string in vector
+			// #TODO ShaderComponenent should solve this issue
+			constexpr int index = 0;
+			if (pair.first == guid)
+			{
+				LOG_TRACE("{0} Asset exists in registry ({1}, {2})", __FUNCTION__, std::to_string(pair.first).c_str(), pair.second[index].c_str());
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void Assets::AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName) // #TODO Take in std::vector<string> to support shader and materials
 	{
-		// #TODO Error checking
+		// #TODO More error checking
 		if (!ExistsInRegistry(mirrorTypeId, guid, fileName))
 		{
 			auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
 			vectorGuidStrings.push_back({ guid, { fileName } });
+			LOG_INFO("{0} Added guid {1} to registry of type {2}", __FUNCTION__, guid, mirrorTypeId);
+		}
+	}
+
+	void Assets::RemoveFromRegistry(const size_t mirrorTypeId, const GUID& guid)
+	{
+		// #TODO More error checking
+		if (ExistsInRegistry(mirrorTypeId, guid))
+		{
+			auto& vectorGuidStrings = s_AssetGuidToFileRegistry[mirrorTypeId];
+			for (size_t i = 0; i < vectorGuidStrings.size(); i++)
+			{
+				if (guid == vectorGuidStrings[i].first)
+				{
+					vectorGuidStrings.erase(vectorGuidStrings.begin() + i);
+					LOG_INFO("{0} Removed guid {1} from registry of type {2}", __FUNCTION__, guid, mirrorTypeId);
+					break;
+				}
+			}
 		}
 	}
 

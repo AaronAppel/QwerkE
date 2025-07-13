@@ -156,7 +156,7 @@ namespace QwerkE {
 		[[nodiscard]] static std::string GetRegistryAssetFileName(const GUID guid)
 		{
 			const size_t typeId = Mirror::IdForType<T>();
-			const AssetsList& assetsRegistry = Assets::GetRegistryAssetList(typeId);
+			const AssetsList& assetsRegistry = GetRegistryAssetList(typeId);
 			for (size_t i = 0; i < assetsRegistry.size(); i++)
 			{
 				auto guidStringPair = assetsRegistry[i];
@@ -174,7 +174,9 @@ namespace QwerkE {
 		[[nodiscard]] static std::unordered_map<size_t, AssetsList>& ViewRegistry();
 		static void SaveRegistry();
 
-		[[nodiscard]] static bool Assets::ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName);
+		// #TODO Should an overload exist that doesn't require the file name?
+		[[nodiscard]] static bool ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName);
+		[[nodiscard]] static bool ExistsInRegistry(const size_t mirrorTypeId, const GUID& guid);
 
 		// #TODO Unable to use currently. Compiler error on argument conversion
 		template <typename T>
@@ -185,12 +187,15 @@ namespace QwerkE {
 
 // #endif // _QRETAIL
 
+// #TODO #ifdef _QEditor
+		static void RemoveFromRegistry(const size_t mirrorTypeId, const GUID& guid);
+
 	private:
 		friend void Window::local_FileDropCallback(GLFWwindow* window, int fileCount, const char** filePaths);
 		friend Scene* Scenes::CreateScene(const std::string& a_SceneFileName);
 		friend Scene* Scenes::CreateScene(const GUID& sceneGuid);
 
-		static void AddToRegistry(const size_t mirrorType, const GUID& guid, const std::string& fileName);
+		static void AddToRegistry(const size_t mirrorTypeId, const GUID& guid, const std::string& fileName);
 
 		static GUID LoadAsset(const size_t type, const GUID& guid);
 		static AssetsList& GetRegistryAssetList(const size_t assetListTypeId);
