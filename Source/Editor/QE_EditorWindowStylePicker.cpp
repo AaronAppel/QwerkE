@@ -227,7 +227,7 @@ namespace QwerkE {
                             constexpr u8 pickersPerRow = 7;
                             const float scalar = 1.02 * m_UiScaling; // #NOTE Slightly shrink to fit
 
-                            int popUpSelectedItemIndex = 0;
+                            static int popUpSelectedItemIndex = 0;
                             for (int j = 0; j < range; j++)
                             {
                                 if (j % pickersPerRow)
@@ -240,6 +240,7 @@ namespace QwerkE {
                                 {
                                     m_Edited = true;
                                 }
+                                ImGui::PopItemWidth();
                                 if (ImGui::IsItemHovered())
                                 {
                                     if (ImGui::BeginItemTooltip())
@@ -258,25 +259,48 @@ namespace QwerkE {
                             if (ImGui::BeginPopup("ColorPickerCopyPaste"))
                             {
                                 // #TODO Implement when less tired
-                                // if (ImGui::Button("Copy"))
-                                // {
-                                //     std::string numberAsString;
-                                //     numberAsString.reserve(32);
-                                //     numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].x));
-                                //     numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].y));
-                                //     numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].z));
-                                //     numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].w));
-                                //     ImGui::SetClipboardText(numberAsString.c_str());
-                                //     LOG_INFO("{0} Copied to clipboard: {1}", __FUNCTION__, numberAsString.c_str());
-                                // }
-                                // if (ImGui::Button("Paste"))
-                                // {
-                                //     std::string clipBoardText = ImGui::GetClipboardText();
-                                //     LOG_INFO("{0} Pasting from clipboard: {1}", __FUNCTION__, clipBoardText.c_str());
-                                //     memcpy(&style.Colors[popUpSelectedItemIndex], clipBoardText.data(), sizeof(float) * 4);
-                                //     m_Edited = true;
-                                // }
-                                // ImGui::EndPopup();
+                                if (ImGui::Button("Copy"))
+                                {
+                                    std::string numberAsString;
+                                    numberAsString.reserve(32);
+                                    // #TODO Add header to clipboard for copy/paste targets? Need sanitization logic
+                                    numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].x) + ","); // #NOTE ',' delimiter
+                                    numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].y) + ",");
+                                    numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].z) + ",");
+                                    numberAsString.append(std::to_string(style.Colors[popUpSelectedItemIndex].w));
+                                    ImGui::SetClipboardText(numberAsString.c_str());
+                                    LOG_INFO("{0} Copied index {1} to clipboard: {2}", __FUNCTION__, popUpSelectedItemIndex, numberAsString.c_str());
+                                }
+                                if (ImGui::Button("Paste"))
+                                {
+                                    std::string clipBoardText = ImGui::GetClipboardText();
+                                    if (clipBoardText.size() >= 16 && clipBoardText.size() < 90) // #TODO Find maximum valid size ~80
+                                    {
+                                        LOG_INFO("{0} Pasting index {1} from clipboard: {2}", __FUNCTION__, popUpSelectedItemIndex, clipBoardText.c_str());
+
+                                        const float x = std::stof(clipBoardText);
+
+                                        u8 stride = clipBoardText.find_first_of(",") + 1;
+                                        clipBoardText = clipBoardText.substr(stride);
+                                        const float y = std::stof(clipBoardText);
+
+                                        stride = clipBoardText.find_first_of(",") + 1;
+                                        clipBoardText = clipBoardText.substr(stride);
+                                        const float z = std::stof(clipBoardText);
+
+                                        stride = clipBoardText.find_first_of(",") + 1;
+                                        clipBoardText = clipBoardText.substr(stride);
+                                        const float w = std::stof(clipBoardText);
+
+                                        style.Colors[popUpSelectedItemIndex].x = x;
+                                        style.Colors[popUpSelectedItemIndex].y = y;
+                                        style.Colors[popUpSelectedItemIndex].z = z;
+                                        style.Colors[popUpSelectedItemIndex].w = w;
+
+                                        m_Edited = true;
+                                    }
+                                }
+                                ImGui::EndPopup();
                             }
                         }
                         break;

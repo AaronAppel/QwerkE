@@ -155,7 +155,7 @@ namespace QwerkE {
 			EntityInspector,
 			ImGuiDemo,
 			MenuBar,
-			Unused, /* Previously SceneControls*/
+			Physics,
 			SceneGraph,
 			SceneView,
 			Settings,

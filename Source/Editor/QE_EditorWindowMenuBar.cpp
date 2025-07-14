@@ -226,6 +226,7 @@ namespace QwerkE {
                 local_UpdateStyleFilesList(styleFiles, currentStyleFileIndex);
             }
 
+            ImGui::SetNextWindowSizeConstraints({ 200.0f, 50.0f }, { 1000.f, 1000.f });
             if (ImGui::ListBox("##StylesListBox", &currentStyleFileIndex, styleFiles.data(), styleFiles.size(), 5))
             {
                 ImGuiStyle& style = ImGui::GetStyle();
@@ -270,6 +271,7 @@ namespace QwerkE {
                     EditorWindowTypes::InputMapping,
                     EditorWindowTypes::MaterialEditor,
                     EditorWindowTypes::NodeEditor,
+                    EditorWindowTypes::Physics,
                     EditorWindowTypes::ShaderEditor,
                     EditorWindowTypes::HexEditor,
                     EditorWindowTypes::Settings,

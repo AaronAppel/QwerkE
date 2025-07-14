@@ -23,6 +23,7 @@
 #include "QE_EditorWindowMenuBar.h"
 #include "QE_EditorWindowNodeEditor.h"
 #include "QE_EditorWindowNotifications.h"
+#include "QE_EditorWindowPhysics.h"
 #include "QE_EditorWindowPrefabScene.h"
 #include "QE_EditorWindowPrompt.h"
 #include "QE_EditorWindowSceneGraph.h"
@@ -71,7 +72,8 @@ namespace QwerkE {
 			EditorWindowInputMapping,
 			EditorWindowFileEditor,
 			EditorWindowStatusBar,
-			EditorWindowWelcomeWindow
+			EditorWindowWelcomeWindow,
+			EditorWindowPhysics
         >;
 
 		template <typename... T>
