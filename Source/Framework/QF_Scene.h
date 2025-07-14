@@ -12,15 +12,19 @@
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
+#ifdef _QJOLT
+// class PhysicsSystem;
+#endif
+
 #include "QC_Guid.h"
 
 #include "QF_Assets.h" // #NOTE For friend-ing constructor
 #include "QF_ComponentCamera.h"
 #include "QF_Constants.h"
 
-class PhysicsSystem;
-
 namespace QwerkE {
+
+    class EntityHandle;
 
     class Scene;
     namespace Scenes
@@ -29,8 +33,6 @@ namespace QwerkE {
         Scene* CreateScene(const char* const sceneFileName);
         Scene* CreateScene(const std::string& a_SceneFileName);
     }
-
-    class EntityHandle;
 
     class Scene final
     {
@@ -131,7 +133,7 @@ namespace QwerkE {
 
         GUID m_SceneGuid = GUID::Invalid;
 
-        PhysicsSystem* m_PhysicsSystem = nullptr;
+        // PhysicsSystem* m_PhysicsSystem = nullptr;
 
         bool m_IsLoaded = false;
         bool m_IsDirty = false; // #TODO Editor only state. Move out of here

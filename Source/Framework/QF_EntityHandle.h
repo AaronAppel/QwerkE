@@ -76,40 +76,35 @@ namespace QwerkE {
 
 		GUID& EntityGuid()
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_Guid;
 		}
 
 		std::string& EntityName()
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_EntityName;
 		}
 
 		void SetEntityName(const std::string& newEntityName)
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			GetComponent<ComponentInfo>().m_EntityName = newEntityName;
 		}
 
 		bool IsEnabled()
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			return GetComponent<ComponentInfo>().m_Enabled;
 		}
 
 		void SetIsEnabled(bool isEnabled)
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<ComponentInfo>(m_EnttId), "Entity does not have ComponentInfo!");
 			GetComponent<ComponentInfo>().m_Enabled = isEnabled;
 		}
@@ -117,8 +112,7 @@ namespace QwerkE {
 		template <typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(!m_Scene->m_Registry.has<T>(m_EnttId), "Entity already has component!");
 			return m_Scene->m_Registry.emplace<T>(m_EnttId, std::forward<Args>(args)...);
 		}
@@ -126,24 +120,21 @@ namespace QwerkE {
 		template <typename T>
 		bool HasComponent() const
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			return m_Scene->m_Registry.has<T>(m_EnttId);
 		}
 
 		template <typename... Args>
 		bool HasAllComponents() const // #TODO Would be cool to pass in multiple components to check
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			return m_Scene->m_Registry.has<Args...>(m_EnttId);
 		}
 
 		template <typename T>
 		T& GetComponent()
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
 			return m_Scene->m_Registry.get<T>(m_EnttId);
 		}
@@ -151,8 +142,7 @@ namespace QwerkE {
 		template <typename T>
 		const T& GetComponent() const // #NOTE Keep in sync with non-const method above
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
 			return m_Scene->m_Registry.get<T>(m_EnttId);
 		}
@@ -160,8 +150,7 @@ namespace QwerkE {
 		template <typename T>
 		void RemoveComponent()
 		{
-			ASSERT(m_EnttId != entt::null, "m_EnttId is null!");
-			ASSERT(m_Scene->m_Registry.valid(m_EnttId), "m_EnttId is Invalid!");
+			IsValid();
 			ASSERT(m_Scene->m_Registry.has<T>(m_EnttId), "Entity doesn't have component!");
 			if (std::is_same_v<T, ComponentTransform> ||
 				std::is_same_v<T, ComponentInfo>)
@@ -173,6 +162,7 @@ namespace QwerkE {
 
 		Scene* GetScene() { return m_Scene; }
 
+		inline bool IsValid() const { return m_EnttId != entt::null && m_Scene && m_Scene->m_Registry.valid(m_EnttId); } // #TODO Consider using operator overload
 		void Invalidate() { m_EnttId = entt::null; m_Scene = nullptr; }
 		static EntityHandle InvalidHandle() { return EntityHandle(); }
 

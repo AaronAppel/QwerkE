@@ -9,6 +9,7 @@
 
 #include "QF_Log.h"
 #include "QF_Paths.h"
+#include "QF_Physics.h"
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Window.h"
@@ -52,13 +53,15 @@ namespace QwerkE {
 			Renderer::Initialize();
 			Input::Initialize();
 			Assets::Initialize(); // #TODO bgfx init order dependency for mesh creation
-			Scenes::Initialize();
+			Physics::Initialize();
+			Scenes::Initialize(); // #TODO Depends on physics?
 			return eOperationResult::Success;
 		}
 
 		eOperationResult Shutdown()
 		{
 			Scenes::Shutdown();
+			Physics::Shutdown();
 			Window::Shutdown();
 			Assets::Shutdown(); // #TODO bgfx shutdown order dependency pthread_mutex_unlock(_mutex) in bx/mutex.cpp line 95
 			Renderer::Shutdown();
@@ -79,6 +82,7 @@ namespace QwerkE {
 		void Update(float deltatime)
 		{
 			Scenes::Update(deltatime);
+			Physics::StepSimulation(); // #TODO Handle fixed time step logic
 		}
 
 		void RenderView(u16 viewId)
