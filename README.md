@@ -43,6 +43,7 @@ Libraries or external code I utilize to deliver features (may be outdated) :
 - Jolt: https://github.com/jrouwe/JoltPhysics
 - lodepng: www.github.com/lvandeve/lodepng
 - Mirror: www.github.com/AaronAppel/Mirror
+- OpenAL: https://github.com/kcat/openal-soft
 - spdlog: https://github.com/gabime/spdlog
 - stb_image: www.github.com/nothings/stb
 
