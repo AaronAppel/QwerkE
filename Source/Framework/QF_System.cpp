@@ -6,6 +6,13 @@ namespace QwerkE {
 
 	namespace System {
 
+        void Sleep()
+        {
+            // #include <thread>
+            // #include <chrono>
+            // std::this_thread::sleep_for(milliseconds);
+        }
+
         void YieldTime()
         {
 #ifdef _WINDOWS_

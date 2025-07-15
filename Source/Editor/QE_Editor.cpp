@@ -14,7 +14,6 @@
 #include <bgfxFramework/SampleRenderData.h>
 #include <bgfxFramework/LoadShader.h>
 #ifdef _QDEBUG
-#include <bgfxFramework/debugDraw/debugdraw.h>
 #endif // _QDEBUG
 #endif // _QBGFXFRAMEWORK
 #endif // _QBGFX

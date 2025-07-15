@@ -7,6 +7,7 @@
 
 #include "QF_Input.h"
 
+#include "QF_Audio.h"
 #include "QF_Log.h"
 #include "QF_Paths.h"
 #include "QF_Physics.h"
@@ -52,18 +53,22 @@ namespace QwerkE {
 			Window::Initialize(startUpData);
 			Renderer::Initialize();
 			Input::Initialize();
-			Assets::Initialize(); // #TODO bgfx init order dependency for mesh creation
+			Assets::Initialize(); // #TODO Depends on Renderer (bgfx) init for mesh, shader, texture creation, Audio (OpenAL) for sound creation
 			Physics::Initialize();
-			Scenes::Initialize(); // #TODO Depends on physics?
+			Audio::Initialize();
+
+			Scenes::Initialize(); // #TODO Depends on physics, and Assets? Last just to be safe
 			return eOperationResult::Success;
 		}
 
 		eOperationResult Shutdown()
 		{
-			Scenes::Shutdown();
+			Scenes::Shutdown(); // First just to be safe
+
+			Audio::Shutdown();
 			Physics::Shutdown();
 			Window::Shutdown();
-			Assets::Shutdown(); // #TODO bgfx shutdown order dependency pthread_mutex_unlock(_mutex) in bx/mutex.cpp line 95
+			Assets::Shutdown(); // #TODO Renderer (bgfx pthread_mutex_unlock(_mutex) in bx/mutex.cpp line 95) shutdown order dependency
 			Renderer::Shutdown();
 			Events::Shutdown();
 			Log::Shutdown();

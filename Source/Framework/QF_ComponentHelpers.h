@@ -4,6 +4,7 @@
 #include "QF_ComponentInfo.h"
 #include "QF_ComponentLight.h"
 #include "QF_ComponentMesh.h"
+#include "QF_ComponentPhysics.h"
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"
 
@@ -18,7 +19,8 @@ namespace QwerkE {
         ComponentCamera,
         ComponentLight,
         ComponentMesh,
-        ComponentScript
+        ComponentScript,
+        ComponentPhysics
         // #NOTE Add new Component/Components here
     >;
 

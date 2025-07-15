@@ -14,6 +14,7 @@ LibraryDefines = {
 "_QJOLT",
 "_QLODEPNG",
 "_QMIRROR",
+"_QOPENAL",
 "_QSPDLOG",
 "_QSTB_IMAGE",
 }

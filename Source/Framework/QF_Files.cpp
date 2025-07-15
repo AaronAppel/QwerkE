@@ -11,6 +11,7 @@
 #include "QC_StringHelpers.h" // NumberAppendOrIncrement
 
 #include "QF_Helpers.h" // NumberAppendOrIncrement
+#include "QF_Sound.h"
 #include "QF_Window.h" // For Window::GetContext()
 
 namespace QwerkE {
@@ -88,8 +89,10 @@ namespace QwerkE {
 			ASSERT(!fileExtension.compare(".wav"), "File missing .wav extension!");
 
 #ifdef _QOPENAL
-			buffer.Allocate();
-			soundFile.s_Data = (char*)LoadWavFileData(filePath, soundFile.s_Size, soundFile.s_Channels, soundFile.s_Frequency, soundFile.s_BitsPerSample);
+			buffer = Files::LoadFile(filePath);
+			Sound* sound = new Sound();
+			// #TODO
+			// soundFile.s_Data = (char*)LoadWavFileData(filePath, soundFile.s_Size, soundFile.s_Channels, soundFile.s_Frequency, soundFile.s_BitsPerSample);
 #else
 			// #TODO Add checks if no supported audio library is loaded and asserts
 			// error

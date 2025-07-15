@@ -150,3 +150,4 @@ MIRROR_TYPE_ID(1066, QwerkE::ScriptableCamera)
 MIRROR_TYPE_ID(1067, QwerkE::ScriptableSceneTransition)
 
 MIRROR_TYPE_ID(1067, QwerkE::Framework::StartUpData)
+MIRROR_TYPE_ID(1068, QwerkE::ComponentPhysics)

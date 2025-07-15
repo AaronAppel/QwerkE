@@ -25,6 +25,7 @@ using namespace JPH;
 using namespace JPH::literals;
 
 #include "QF_Input.h" // For debug testing
+#include "QF_Renderer.h" // For debug testing
 #include "QF_Scene.h" // For debug testing
 #include "QF_Scenes.h" // For debug testing
 #include "QF_EntityHandle.h" // For debug testing
@@ -357,35 +358,57 @@ namespace QwerkE {
 		EntityHandle entity;
 		void StepSimulation()
 		{
-			if (Input::KeyPressed(QKey::e_O) || Input::KeyDown(QKey::e_P))
+			static bool runningSimulation = true;
+			if (Input::KeyDown(QKey::e_P))
 			{
-				if (body_interface_ptr->IsActive(sphere_id))
+				runningSimulation = !runningSimulation;
+			}
+
+			if (Input::KeyPressed(QKey::e_O))
+			{
+				runningSimulation = false;
+			}
+
+			if (runningSimulation || Input::KeyPressed(QKey::e_O) || Input::KeyPressed(QKey::e_L))
+			{
+				if (Input::KeyPressed(QKey::e_L))
 				{
-					// Output current position and velocity of the sphere
-					RVec3 position = body_interface_ptr->GetCenterOfMassPosition(sphere_id);
-					Vec3 velocity = body_interface_ptr->GetLinearVelocity(sphere_id);
-					cout << "Step " << step << ": Position = (" << position.GetX() << ", " << position.GetY() << ", " << position.GetZ() << "), Velocity = (" << velocity.GetX() << ", " << velocity.GetY() << ", " << velocity.GetZ() << ")" << endl;
-
-					// If you take larger steps than 1 / 60th of a second you need to do multiple collision steps in order to keep the simulation stable. Do 1 collision step per 1 / 60th of a second (round up).
-					const int cCollisionSteps = 1;
-
-					// Step the world
-					// We simulate the physics world in discrete time steps. 60 Hz is a good rate to update the physics system.
-					constexpr float cDeltaTime = 1.0f / 60.0f;
-					physics_system->Update(cDeltaTime, cCollisionSteps, temp_allocator, job_system);
-					++step;
-
-					// TESTING
-					if (!entity.IsValid())
+					if (!body_interface_ptr->IsActive(sphere_id))
 					{
-						entity = Scenes::GetCurrentScene()->GetEntityByGuid(12866074809634171352);
+						body_interface_ptr->ActivateBody(sphere_id);
 					}
+					body_interface_ptr->SetLinearVelocity(sphere_id, Vec3(0.0f, 5.0f, 0.0f));
+				}
 
-					if (entity.IsValid())
-					{
-						vec3f pos = { position.GetX(), position.GetY(), position.GetZ() };
-						entity.GetComponent<ComponentTransform>().SetPosition(pos);
-					}
+				// Output current position and velocity of the sphere
+				RVec3 position = body_interface_ptr->GetCenterOfMassPosition(sphere_id);
+				Vec3 velocity = body_interface_ptr->GetLinearVelocity(sphere_id);
+				// cout << "Step " << step << ": Position = (" << position.GetX() << ", " << position.GetY() << ", " << position.GetZ() << "), Velocity = (" << velocity.GetX() << ", " << velocity.GetY() << ", " << velocity.GetZ() << ")" << endl;
+
+				// If you take larger steps than 1 / 60th of a second you need to do multiple collision steps in order to keep the simulation stable. Do 1 collision step per 1 / 60th of a second (round up).
+				const int cCollisionSteps = 1;
+
+				// Step the world
+				// We simulate the physics world in discrete time steps. 60 Hz is a good rate to update the physics system.
+				constexpr float cDeltaTime = 1.0f / 60.0f;
+				physics_system->Update(cDeltaTime, cCollisionSteps, temp_allocator, job_system);
+				++step;
+
+				// TESTING
+				if (!entity.IsValid())
+				{
+					entity = Scenes::GetCurrentScene()->GetEntityByGuid(12866074809634171352);
+				}
+
+				vec3f pos = { position.GetX(), position.GetY(), position.GetZ() };
+				DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
+				debugDrawer.begin(3);
+				debugDrawer.drawSphere(pos.x, pos.y, pos.z, 0.5f);
+				debugDrawer.end();
+
+				if (entity.IsValid())
+				{
+					entity.GetComponent<ComponentTransform>().SetPosition(pos);
 				}
 			}
 		}
