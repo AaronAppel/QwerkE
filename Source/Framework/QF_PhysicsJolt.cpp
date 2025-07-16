@@ -397,12 +397,13 @@ namespace QwerkE {
 				// TESTING
 				if (!entity.IsValid())
 				{
-					entity = Scenes::GetCurrentScene()->GetEntityByGuid(12866074809634171352);
+					entity = Scenes::GetCurrentScene()->GetEntityByGuid(4131277061482423251); // #TODO Hard coded guid
 				}
 
 				vec3f pos = { position.GetX(), position.GetY(), position.GetZ() };
-				DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
-				debugDrawer.begin(3);
+
+				DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
+				debugDrawer.begin(2); // #TODO Hard coded view ID
 				debugDrawer.drawSphere(pos.x, pos.y, pos.z, 0.5f);
 				debugDrawer.end();
 

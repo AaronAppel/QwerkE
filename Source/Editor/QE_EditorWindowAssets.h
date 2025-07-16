@@ -261,6 +261,11 @@ namespace QwerkE {
                         if (ImGui::IsItemHovered())
                         {
                             ImGui::BeginTooltip();
+                            if (Assets::Has<Texture>(pairGuidString.first))
+                            {
+                                Texture* texture = Assets::Get<Texture>(pairGuidString.first);
+                                ImGui::Image(ImTextureID(texture->TextureHandle().idx), ImVec2(50.f, 50.f));
+                            }
                             std::string fileName = Assets::GetRegistryAssetFileName(pairMirrorTypesVector.first, pairGuidString.first);
                             ImGui::Text(fileName.c_str());
                             ImGui::EndTooltip();
@@ -274,6 +279,13 @@ namespace QwerkE {
 
                         if (ImGui::BeginPopup(popUpName.c_str()))
                         {
+                            if (!Assets::Has(pairMirrorTypesVector.first, pairGuidString.first))
+                            {
+                                if (ImGui::Button("Load"))
+                                {
+                                    Assets::Load(pairMirrorTypesVector.first, pairGuidString.first);
+                                }
+                            }
                             if (ImGui::Button("Copy To Clipboard"))
                             {
                                 ImGui::SetClipboardText(guidString.c_str());

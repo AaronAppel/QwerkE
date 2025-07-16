@@ -51,6 +51,7 @@ project "Editor"
 	{
 		"Common",
 		"Framework",
+		"openal-soft",
 	}
 	
 	forceincludes { "QE_PCH.h", "QF_ForcedIncludes.h" }

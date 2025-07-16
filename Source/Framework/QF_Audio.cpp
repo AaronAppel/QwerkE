@@ -4,12 +4,15 @@
 #include <vector>
 
 #ifdef _QOPENAL
-// #include "../../Libraries/OpenAL/include/al.h"
-// #include "../../Libraries/OpenAL/include/alc.h"
+#define AL_LIBTYPE_STATIC
+#include "Libraries/openal-soft/include/AL/al.h"
+#include "Libraries/openal-soft/include/AL/alc.h"
 #endif
 
+#include "QF_Assets.h"
 // #include "QF_FileSystem.h"
 #include "QF_Log.h"
+#include "QF_Sound.h"
 
 namespace QwerkE {
 
@@ -40,24 +43,24 @@ namespace QwerkE {
     }
 
     // TODO: Source this or rewrite
-    // std::string list_audio_devices(const ALCchar* devices)
-    std::string list_audio_devices() // #TODO Exists in openal-info.c printDeviceList()
+    // std::string list_audio_devices() // #TODO Exists in openal-info.c printDeviceList()
+    std::string list_audio_devices(const ALCchar* devices)
     {
         std::string retValue = "";
         // TODO: Improve device detection and assignment
-        // const ALCchar* device = devices, * next = devices + 1;
-        // retValue = device;
-        // size_t len = 0;
-        //
-        // LOG_INFO("OpenAL devices list:");
-        // LOG_INFO("----------");
-        // while (device && *device != '\0' && next && *next != '\0') {
-        //     LOG_INFO("{0}", (char*)device);
-        //     len = strlen(device);
-        //     device += (len + 1);
-        //     next += (len + 2);
-        // }
-        // LOG_INFO("----------");
+        const ALCchar* device = devices, * next = devices + 1;
+        retValue = device;
+        size_t len = 0;
+
+        LOG_INFO("OpenAL devices list:");
+        LOG_INFO("----------");
+        while (device && *device != '\0' && next && *next != '\0') {
+            LOG_INFO("{0}", (char*)device);
+            len = strlen(device);
+            device += (len + 1);
+            next += (len + 2);
+        }
+        LOG_INFO("----------");
         return retValue;
     }
 
@@ -104,17 +107,13 @@ namespace QwerkE {
 
     namespace Audio {
 
-        class AudioSource;
-        class ALCdevice;
-        class ALCcontext;
-
         ALCdevice* m_Device = nullptr;
         ALCcontext* m_Context = nullptr;
 
         // ALboolean g_bEAX; // Why?
 
         // ALboolean loop = AL_FALSE;
-        AudioSource* m_Source = nullptr;
+        Sound* s_Sound = nullptr;
 
         // #TODO Abstract OpenAL to some "QF_AudioOpenAL.cpp" file
         class OpenALAudioManager;
@@ -127,28 +126,31 @@ namespace QwerkE {
         {
             ASSERT(!s_Initialized, "Audio:: is already initialized!");
 
-            // std::string deviceName = list_audio_devices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
-            // m_Device = alcOpenDevice(deviceName.c_str());
-            //
-            // if (!m_Device)
-            // {
-            // 	LOG_ERROR("Error initializing audio device! OpenAL error code {0}", alGetError());
-            // 	return false;
-            // }
-            //
-            // m_Context = alcCreateContext(m_Device, NULL); // #TODO there is a print in alc code that would be nice to avoid
-            // if (!m_Context)
-            // {
-            // 	LOG_ERROR("Error initializing audio context! OpenAL error code {0}", alGetError());
-            // 	return false;
-            // }
-            // alcMakeContextCurrent(m_Context);
-            //
-            // m_Source = new AudioSource();
-            // m_Source->SetOrientation(vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0));
-            // SetListenerOrientation(vec3(0, 0, 0), vec3(0, 0, 0)); // #TODO Review listener orientation set
-            //
-            // LOG_TRACE("OpenAL loaded successfully");
+            const ALCchar* devices = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+            std::string deviceName = list_audio_devices(devices);
+            m_Device = alcOpenDevice(deviceName.c_str());
+
+            if (!m_Device)
+            {
+            	LOG_ERROR("Error initializing audio device! OpenAL error code {0}", alGetError());
+            	// return false;
+            }
+
+            m_Context = alcCreateContext(m_Device, NULL); // #TODO there is a print in alc code that would be nice to avoid
+            if (!m_Context)
+            {
+            	LOG_ERROR("Error initializing audio context! OpenAL error code {0}", alGetError());
+            	// return false;
+            }
+            alcMakeContextCurrent(m_Context);
+
+            // Assets::Load<Sound>(0);
+
+            // s_Sound = new Sound();
+            // s_Sound->SetOrientation(vec3f(0, 0, 0), vec3f(0, 0, 0), vec3f(0, 0, 0));
+            // SetListenerOrientation(vec3f(0, 0, 0), vec3f(0, 0, 0)); // #TODO Review listener orientation set
+
+            LOG_TRACE("OpenAL loaded successfully");
 
 #ifdef _QOPENAL
             // s_AudioManagers.push_back(new OpenALAudioManager());
@@ -197,11 +199,11 @@ namespace QwerkE {
 
             // // TODO: Create an AudioListener() object or component/routine pair
             // // that will remember and manipulate listener data.
-            // alListenerf(AL_GAIN, 0.5f);
-            // alListener3f(AL_POSITION, position.x, position.y, position.z);
-            // alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
-            // ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
-            // alListenerfv(AL_ORIENTATION, listenerOri);
+            alListenerf(AL_GAIN, 0.5f);
+            alListener3f(AL_POSITION, a_Position.x, a_Position.y, a_Position.z);
+            alListener3f(AL_VELOCITY, a_Velocity.x, a_Velocity.y, a_Velocity.z);
+            ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
+            alListenerfv(AL_ORIENTATION, listenerOri);
 
             // s_AudioManagers[s_MainAudioManagerIndex]->SetListenerOrientation(a_Position, a_Velocity);
             // #TODO vec3f expansion helper/macro

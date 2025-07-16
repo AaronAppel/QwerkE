@@ -71,6 +71,7 @@ project "Framework"
 		"Jolt",
 		"lodepng",
 		"Mirror",
+		"openal-soft",
 		"spdlog",
 		"stb_image",
 		

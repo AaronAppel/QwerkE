@@ -522,6 +522,7 @@ namespace QwerkE {
                                 if (ImGui::IsItemClicked(ImGui::MouseLeft) || clicked)
                                 {
                                     ComponentMesh* meshComp = (ComponentMesh*)obj;
+                                    Assets::Load<Mesh>(guidMeshPair.first);
                                     meshComp->SetMeshGuid(guidMeshPair.first);
                                     meshComp->Initialize();
                                     break;
@@ -559,6 +560,7 @@ namespace QwerkE {
                                 if (ImGui::IsItemClicked(ImGui::MouseLeft) || clicked)
                                 {
                                     ComponentMesh* meshComp = (ComponentMesh*)obj;
+                                    Assets::Load<Shader>(guidShaderPair.first);
                                     meshComp->SetShaderGuid(guidShaderPair.first);
                                     meshComp->Initialize();
                                     break;
@@ -619,6 +621,7 @@ namespace QwerkE {
                                 if (clicked)
                                 {
                                     ComponentMesh* meshComp = (ComponentMesh*)obj;
+                                    Assets::Load<Texture>(guidTexturePair.first);
                                     meshComp->SetTextureGuid(guidTexturePair.first);
                                     meshComp->Initialize();
                                     break;

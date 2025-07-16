@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Editor\QE_Editor.cpp" />
-    <ClCompile Include="Editor\QE_Mirror.cpp" />
     <ClCompile Include="Editor\QE_PCH.cpp" />
     <ClCompile Include="Editor\QE_EditorWindowSettings.cpp">
       <Filter>Windows\Instanced</Filter>
@@ -31,9 +30,6 @@
     <ClCompile Include="Editor\QE_EditorWindowTimeline.cpp">
       <Filter>Windows\Instanced</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\QE_EditorWindowSceneControls.cpp">
-      <Filter>Windows\Instanced</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\QE_EditorInspector.cpp">
       <Filter>Inspector</Filter>
     </ClCompile>
@@ -49,10 +45,19 @@
     <ClCompile Include="Editor\QE_EditorInspectorJson.cpp">
       <Filter>Inspector</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\QE_EditorHotkeys.cpp" />
+    <ClCompile Include="Editor\QE_Input.cpp" />
+    <ClCompile Include="Editor\QE_Paths.cpp" />
+    <ClCompile Include="Editor\QE_EditorWindowSceneView.cpp">
+      <Filter>Windows\Instanced</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\QE_InputDebugWindow.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\QE_Mirror.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\QE_Editor.h" />
-    <ClInclude Include="Editor\QE_MaterialEditor.h" />
     <ClInclude Include="Editor\QE_PCH.h" />
     <ClInclude Include="Editor\QE_EditorWindowAssets.h">
       <Filter>Windows\Instanced</Filter>
@@ -64,9 +69,6 @@
       <Filter>Windows\Singleton</Filter>
     </ClInclude>
     <ClInclude Include="Editor\QE_EditorWindowStylePicker.h">
-      <Filter>Windows\Instanced</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\QE_EditorWindowSceneControls.h">
       <Filter>Windows\Instanced</Filter>
     </ClInclude>
     <ClInclude Include="Editor\QE_EditorWindowSceneGraph.h">
@@ -108,7 +110,6 @@
     <ClInclude Include="Editor\QE_EditorWindow.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\QE_Mirror.h" />
     <ClInclude Include="Editor\QE_EditorWindowConsole.h">
       <Filter>Windows\Singleton</Filter>
     </ClInclude>
@@ -136,9 +137,6 @@
     <ClInclude Include="Editor\QE_EditorWindowDebugInput.h">
       <Filter>Windows\Singleton\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\QE_EditorWindowDefaultDebug.h">
-      <Filter>Windows\Singleton\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\QE_EditorWindowDebugRenderer.h">
       <Filter>Windows\Singleton\Debug</Filter>
     </ClInclude>
@@ -163,6 +161,22 @@
     <ClInclude Include="Editor\QE_EditorWindowFileEditor.h">
       <Filter>Windows\Instanced</Filter>
     </ClInclude>
+    <ClInclude Include="Editor\QE_EditorHotKeys.h" />
+    <ClInclude Include="Editor\QE_Input.h" />
+    <ClInclude Include="Editor\QE_Paths.h" />
+    <ClInclude Include="Editor\QE_EditorWindowDebugDefault.h">
+      <Filter>Windows\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowStatusBar.h">
+      <Filter>Windows\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowPhysics.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_EditorWindowWelcomeWindow.h">
+      <Filter>Windows\Instanced</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\QE_Mirror.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

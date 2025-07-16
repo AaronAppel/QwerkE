@@ -13,7 +13,7 @@ namespace QwerkE {
 		e_Fragment
 	};
 
-	class ShaderComponent
+	class ShaderComponent // #TODO Review for deprecation
 	{
 	public:
 		ShaderComponent::~ShaderComponent()

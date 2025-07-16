@@ -66,12 +66,17 @@
     <ClCompile Include="Framework\QF_Directory.cpp">
       <Filter>Utils\Directory</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QF_Settings.cpp" />
     <ClCompile Include="Framework\QF_Debug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="Framework\QF_InputGlfw.cpp" />
-    <ClCompile Include="Framework\QF_InputDebugWindow.cpp" />
+    <ClCompile Include="Framework\QF_Audio.cpp" />
+    <ClCompile Include="Framework\QF_Meshes.cpp" />
+    <ClCompile Include="Framework\QF_PhysicsJolt.cpp" />
+    <ClCompile Include="Framework\QF_ShaderErrorCheck.cpp" />
+    <ClCompile Include="Framework\QF_ShaderUniforms.cpp" />
+    <ClCompile Include="Framework\QF_Sound.cpp" />
+    <ClCompile Include="Framework\QF_System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />
@@ -214,13 +219,26 @@
     <ClInclude Include="Framework\QF_EntityHandle.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\QF_Settings.h" />
     <ClInclude Include="Framework\QF_QKey.h">
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_InputStatesBitRingBuffer.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\QF_Audio.h" />
+    <ClInclude Include="Framework\QF_ComponentAudio.h" />
+    <ClInclude Include="Framework\QF_ComponentPhysics.h" />
+    <ClInclude Include="Framework\QF_ComponentSprite.h" />
+    <ClInclude Include="Framework\QF_ComponentText.h" />
+    <ClInclude Include="Framework\QF_FrameBuffer.h" />
+    <ClInclude Include="Framework\QF_InputMapping.h" />
+    <ClInclude Include="Framework\QF_Macros.h" />
+    <ClInclude Include="Framework\QF_Meshes.h" />
+    <ClInclude Include="Framework\QF_Physics.h" />
+    <ClInclude Include="Framework\QF_ShaderComponent.h" />
+    <ClInclude Include="Framework\QF_Sound.h" />
+    <ClInclude Include="Framework\QF_System.h" />
+    <ClInclude Include="Framework\QF_Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">
