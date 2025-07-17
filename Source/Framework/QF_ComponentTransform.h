@@ -15,6 +15,8 @@ namespace QwerkE {
 
 		void SetPosition(const vec3f& newPosition);
 		vec3f GetPosition() const { return vec3f(m_Matrix[12], m_Matrix[13], m_Matrix[14]); }
+		vec3f GetRotation() const;
+		vec3f GetScale() const;
 
 		vec3f Forward() const;
 

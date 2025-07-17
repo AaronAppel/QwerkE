@@ -212,6 +212,22 @@
 					"std::vector<std::string>":	{
 						"std::string":	"Quack_Sound.wav"
 					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"4935407472766467957"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"poker-chips-daniel_simon.wav"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"12064751356682493733"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"bounce.wav"
+					}
 				}
 			}
 		}

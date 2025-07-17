@@ -95,8 +95,13 @@ namespace QwerkE {
 
 		std::array<float, 3> RotationMatrixToEulerZYX(const float R[3][3]);
 
+		inline vec3f MatrixPosition(const float a_Matrix[16]) { return vec3f(a_Matrix[12], a_Matrix[13], a_Matrix[14]); }
+		vec3f MatrixRotation(const float a_Matrix[16]);
+		vec3f MatrixScale(const float a_Matrix[16]);
+
 #ifdef _QGLM
 		inline float Magnitude(const vec2f& a_Other) { return glm::length(a_Other); }
+		inline float Magnitude(const vec3f& a_Other) { return glm::length(a_Other); }
 #endif // _QGLM
 
 	}

@@ -52,7 +52,7 @@ namespace QwerkE {
         alSource3f(m_SourceHandle, AL_POSITION, 0.0f, 0.0f, 0.0f);
     }
 
-    void ComponentAudio::SetSound(GUID soundGuid)
+    void ComponentAudio::SetSoundGuid(GUID soundGuid)
     {
         m_Sound = Assets::Get<Sound>(soundGuid);
         m_SoundGuid = m_Sound->Guid();

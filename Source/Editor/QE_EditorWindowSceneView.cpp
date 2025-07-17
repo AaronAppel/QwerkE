@@ -321,7 +321,10 @@ namespace QwerkE {
                         DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
                         debugDrawer.begin(m_ViewId, true);
 
-                        debugDrawer.drawOrb(position.x, position.y, position.z, 2.f, Axis::X);
+                        vec3f scale = transform.GetScale();
+                        float magnitude = Math::Magnitude(scale);
+
+                        debugDrawer.drawOrb(position.x, position.y, position.z, 0.55 * magnitude, Axis::X);
                         debugDrawer.end();
                     }
 #endif

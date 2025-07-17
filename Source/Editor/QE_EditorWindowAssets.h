@@ -172,7 +172,12 @@ namespace QwerkE {
                             ImGui::Text(std::to_string(guidSoundPair.second->Format()).c_str());
 
                             ImGui::SameLine();
-                            if (ImGui::SmallButton("Play"))
+                            if (ImGui::SmallButton("Play 0"))
+                            {
+                                Assets::Get<Sound>(0)->Play(1);
+                            }
+                            ImGui::SameLine();
+                            if (ImGui::SmallButton("Play Guid"))
                             {
                                 guidSoundPair.second->Play(1);
                             }

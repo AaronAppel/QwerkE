@@ -537,7 +537,7 @@ namespace QwerkE {
                             }
                         }
 
-                        ImGui::EndPopup();
+ImGui::EndPopup();
                     }
                     else if (ImGui::BeginPopup(popUpNameShaders))
                     {
@@ -628,6 +628,66 @@ namespace QwerkE {
                                 }
                             }
                         }
+                        ImGui::EndPopup();
+                    }
+
+                    valueChanged |= !result.selectedFieldName.empty();
+                }
+                break;
+
+            case Mirror::IdForType<ComponentAudio>():
+                {
+                    const char* popUpNameSound = "ComponentAudioPopUpSoundSelection";
+
+                    // #TODO Address redundancy and safety of automatic mesh data re-intialization
+                    if (ImGui::Button("Initialize"))
+                    {
+                        ComponentAudio* audio = (ComponentAudio*)obj;
+                        audio->Initialize();
+                    }
+
+                    InspectFieldReturn result = local_InspectClassFields(typeInfo, obj, parentName);
+                    if (!result.selectedFieldName.empty() && result.selectedFieldName == "m_SoundGuid")
+                    {
+                        ImGui::OpenPopup(popUpNameSound);
+                    }
+
+                    if (ImGui::BeginPopup(popUpNameSound))
+                    {
+                        std::unordered_map<size_t, AssetsList>& assetRegistry = Assets::ViewRegistry();
+                        if (assetRegistry.find(Mirror::IdForType<Sound>()) != assetRegistry.end())
+                        {
+                            auto sounds = assetRegistry[Mirror::IdForType<Sound>()];
+
+                            ImGui::Text("Sounds:");
+                            for (auto& guidSoundPair : sounds)
+                            {
+                                bool clicked = false;
+                                ImGui::Text("GUID: ");
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft))
+                                {
+                                    clicked = true;
+                                }
+                                ImGui::SameLine();
+                                ImGui::Text(std::to_string(guidSoundPair.first).c_str());
+                                if (ImGui::IsItemClicked(ImGui::MouseLeft) || clicked)
+                                {
+                                    ComponentAudio* audioComp = (ComponentAudio*)obj;
+                                    Assets::Load<Sound>(guidSoundPair.first);
+                                    audioComp->SetSoundGuid(guidSoundPair.first);
+                                    audioComp->Initialize();
+                                    break;
+                                }
+                                else if (ImGui::IsItemHovered())
+                                {
+                                    ImGui::BeginTooltip();
+                                    std::string fileName = Assets::GetRegistryAssetFileName<Mesh>(guidSoundPair.first);
+                                    ImGui::Text(fileName.c_str());
+                                    ImGui::EndTooltip();
+                                }
+                            }
+                        }
+
                         ImGui::EndPopup();
                     }
 
@@ -783,6 +843,40 @@ namespace QwerkE {
                     ImGui::Text(std::to_string(xyz[0]).c_str());
                     ImGui::Text(std::to_string(xyz[1]).c_str());
                     ImGui::Text(std::to_string(xyz[2]).c_str());
+
+                    static float arr[16] =
+                    {
+                        1.f, 0.f, 0.f, 0.f,
+                        0.f, 1.f, 0.f, 0.f,
+                        0.f, 0.f, 1.f, 0.f,
+                        0.f, 0.f, 0.f, 1.f,
+                    };
+
+                    vec3f rot = Math::MatrixRotation(arr);
+                    if (ImGui::DragFloat("X 4x4", &rot.x, 1.0f))
+                    {
+                        const float radians = Math::DegToRad(rot.x);
+
+                        arr[0] = 1;
+                        arr[1] = 0;
+                        arr[2] = 0;
+
+                        arr[4] = 0;
+                        arr[5] = cos(radians);
+                        arr[6] = -sin(radians);
+
+                        arr[8] = 0;
+                        arr[9] = sin(radians);
+                        arr[10] = cos(radians);
+                    }
+                    if (ImGui::DragFloat("Y 4x4", &rot.y, 1.0f))
+                    {
+
+                    }
+                    if (ImGui::DragFloat("Z 4x4", &rot.z, 1.0f))
+                    {
+
+                    }
 
                     static float angleX = 0;
                     if (ImGui::DragFloat("X", &angleX, 0.1f))

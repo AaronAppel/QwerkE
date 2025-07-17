@@ -22,7 +22,7 @@ namespace QwerkE {
         void Initialize();
 
         void SetOrientation(vec3f pos, vec3f rot, vec3f vel);
-        void SetSound(GUID soundGuid);
+        void SetSoundGuid(GUID soundGuid);
 
         void Play();
 
