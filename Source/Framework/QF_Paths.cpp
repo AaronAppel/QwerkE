@@ -114,9 +114,9 @@ namespace QwerkE {
 			return AssetsDir() + "\\Settings";
 		}
 
-		std::string Setting(const char* settingsFileName)
+		std::string Setting(const char* settingFileName)
 		{
-			return SettingsDir() + "\\" + settingsFileName;
+			return SettingsDir() + "\\" + settingFileName;
 		}
 
 		std::string ShadersDir()
@@ -140,6 +140,7 @@ namespace QwerkE {
 
 			std::string returnPath = ShadersBinDir();
 
+			// #TODO Handle bgfx dependency better like moving logic to Renderer::
 			switch (bgfx::getRendererType()) {
 			case bgfx::RendererType::Direct3D11:
 			case bgfx::RendererType::Direct3D12: returnPath += "\\dx11\\";  break;
@@ -155,6 +156,16 @@ namespace QwerkE {
 			}
 
 			return returnPath + shaderBinaryFileName;
+		}
+
+		std::string SoundsDir()
+		{
+			return AssetsDir() + "\\Sounds";
+		}
+
+		std::string Sound(const char* soundFileName)
+		{
+			return SoundsDir() + "\\" + soundFileName;
 		}
 
 		std::string TexturesDir()

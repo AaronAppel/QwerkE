@@ -28,7 +28,7 @@
 						"float":	1,
 						"float":	0,
 						"float":	0,
-						"float":	0.47999989986419678,
+						"float":	3,
 						"float":	0,
 						"float":	1
 					}
@@ -42,6 +42,51 @@
 					},
 					"m_TextureGuid":	{
 						"m_Guid":	"15538032833040342356"
+					}
+				}
+			},
+			"Triangle":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Triangle",
+					"m_Guid":	{
+						"m_Guid":	"1110951367557801390"
+					},
+					"m_Enabled":	true
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	2.4000000953674316,
+						"float":	2,
+						"float":	6.3000001907348633,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentAudio":	{
+					"m_SoundGuid":	{
+						"m_Guid":	"17273937767492765688"
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"14057768421059583452"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"0"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
 					}
 				}
 			},
@@ -76,46 +121,6 @@
 				"QwerkE::ComponentMesh":	{
 					"m_MeshGuid":	{
 						"m_Guid":	"4669136610990924444"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"0"
-					},
-					"m_TextureGuid":	{
-						"m_Guid":	"0"
-					}
-				}
-			},
-			"Triangle":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Triangle",
-					"m_Guid":	{
-						"m_Guid":	"1110951367557801390"
-					},
-					"m_Enabled":	true
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	2.4000000953674316,
-						"float":	2,
-						"float":	6.3000001907348633,
-						"float":	1
-					}
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"14057768421059583452"
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"0"
@@ -218,6 +223,86 @@
 					}
 				}
 			},
+			"Nanosuit":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Nanosuit",
+					"m_Guid":	{
+						"m_Guid":	"9197424376144239504"
+					},
+					"m_Enabled":	true
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	-4,
+						"float":	0,
+						"float":	0,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"11031772710732157330"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"1034563466966038478"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
+					}
+				}
+			},
+			"Small Cube":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Small Cube",
+					"m_Guid":	{
+						"m_Guid":	"15318540641823496003"
+					},
+					"m_Enabled":	true
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1,
+						"float":	0,
+						"float":	-3.5,
+						"float":	5,
+						"float":	4,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"16501966795655844838"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"6679565844562264290"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
+					}
+				}
+			},
 			"Camera":	{
 				"QwerkE::ComponentInfo":	{
 					"m_EntityName":	"Camera",
@@ -269,46 +354,6 @@
 					}
 				}
 			},
-			"Small Cube":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Small Cube",
-					"m_Guid":	{
-						"m_Guid":	"15318540641823496003"
-					},
-					"m_Enabled":	true
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	-3.5,
-						"float":	5,
-						"float":	4,
-						"float":	1
-					}
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"16501966795655844838"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"6679565844562264290"
-					},
-					"m_TextureGuid":	{
-						"m_Guid":	"0"
-					}
-				}
-			},
 			"BigCube":	{
 				"QwerkE::ComponentInfo":	{
 					"m_EntityName":	"BigCube",
@@ -343,46 +388,6 @@
 					},
 					"m_ShaderGuid":	{
 						"m_Guid":	"1030711180692038478"
-					},
-					"m_TextureGuid":	{
-						"m_Guid":	"0"
-					}
-				}
-			},
-			"Nanosuit":	{
-				"QwerkE::ComponentInfo":	{
-					"m_EntityName":	"Nanosuit",
-					"m_Guid":	{
-						"m_Guid":	"9197424376144239504"
-					},
-					"m_Enabled":	true
-				},
-				"QwerkE::ComponentTransform":	{
-					"m_Matrix":	{
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	0,
-						"float":	1,
-						"float":	0,
-						"float":	-4,
-						"float":	0,
-						"float":	0,
-						"float":	1
-					}
-				},
-				"QwerkE::ComponentMesh":	{
-					"m_MeshGuid":	{
-						"m_Guid":	"11031772710732157330"
-					},
-					"m_ShaderGuid":	{
-						"m_Guid":	"1034563466966038478"
 					},
 					"m_TextureGuid":	{
 						"m_Guid":	"0"

@@ -339,6 +339,11 @@ namespace QwerkE {
                         ComponentMesh* mesh = (ComponentMesh*)&component;
                         mesh->Initialize();
                     }
+                    else if (std::is_same_v<Component, ComponentAudio>)
+                    {
+                        ComponentAudio* audio = (ComponentAudio*)&component;
+                        audio->Initialize();
+                    }
                 }
             }(), ...);
         }

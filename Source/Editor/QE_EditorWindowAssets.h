@@ -7,6 +7,7 @@
 #include "QF_Assets.h"
 #include "QF_Mesh.h"
 #include "QF_Shader.h"
+#include "QF_Sound.h"
 #include "QF_System.h"
 #include "QF_Texture.h"
 
@@ -149,11 +150,31 @@ namespace QwerkE {
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidTexturePair.first).c_str());
 
-                            for (size_t i = 0; i < 1; i++)
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(guidTexturePair.second->TextureHandle().idx).c_str());
+                        }
+                    }
+                }
+
+                if (ImGui::CollapsingHeader("Sounds"), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen)
+                {
+                    if (const std::unordered_map<GUID, Sound*>* sounds = Assets::ViewAssets<Sound>())
+                    {
+                        for (auto& guidSoundPair : *sounds)
+                        {
+                            ImGui::Text("GUID: ");
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(guidSoundPair.first).c_str());
+
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(guidSoundPair.second->BufferHandle()).c_str());
+                            ImGui::SameLine();
+                            ImGui::Text(std::to_string(guidSoundPair.second->Format()).c_str());
+
+                            ImGui::SameLine();
+                            if (ImGui::SmallButton("Play"))
                             {
-                                ImGui::SameLine();
-                                ImGui::Text(std::to_string(guidTexturePair.second->TextureHandle().idx).c_str());
-                                // #TODO Option to load texture file to RAM via context menu
+                                guidSoundPair.second->Play(1);
                             }
                         }
                     }
@@ -261,7 +282,8 @@ namespace QwerkE {
                         if (ImGui::IsItemHovered())
                         {
                             ImGui::BeginTooltip();
-                            if (Assets::Has<Texture>(pairGuidString.first))
+
+                            if (pairMirrorTypesVector.first == Mirror::IdForType<Texture>() && Assets::Has<Texture>(pairGuidString.first))
                             {
                                 Texture* texture = Assets::Get<Texture>(pairGuidString.first);
                                 ImGui::Image(ImTextureID(texture->TextureHandle().idx), ImVec2(50.f, 50.f));

@@ -183,6 +183,35 @@
 					"std::vector<std::string>":	{
 						"std::string":	"container.png"
 					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"10438569601533161653"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"brickwall.png"
+					}
+				},
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"13379753070007076039"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"brickwall_normal.png"
+					}
+				}
+			}
+		},
+		"std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>":	{
+			"const unsigned long long":	"164",
+			"std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>":	{
+				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
+					"QwerkE::GUID":	{
+						"m_Guid":	"17273937767492765688"
+					},
+					"std::vector<std::string>":	{
+						"std::string":	"Quack_Sound.wav"
+					}
 				}
 			}
 		}

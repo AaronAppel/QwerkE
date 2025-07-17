@@ -340,7 +340,7 @@ namespace QwerkE {
 
 			// Now create a dynamic body to bounce on the floor
 			// Note that this uses the shorthand version of creating and adding a body to the world
-			BodyCreationSettings sphere_settings(new SphereShape(0.5f), RVec3(0.0_r, 2.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Dynamic, Layers::MOVING);
+			BodyCreationSettings sphere_settings(new SphereShape(0.5f), RVec3(0.0_r, 3.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Dynamic, Layers::MOVING);
 			sphere_id = body_interface.CreateAndAddBody(sphere_settings, EActivation::Activate);
 
 			// Now you can interact with the dynamic body, in this case we're going to give it a velocity.
@@ -358,8 +358,11 @@ namespace QwerkE {
 		EntityHandle entity;
 		void StepSimulation()
 		{
+			// #TODO Refactor test scenario
+
 			static bool runningSimulation = true;
-			if (Input::KeyDown(QKey::e_P))
+
+			if (Input::KeyDown(QKey::e_M))
 			{
 				runningSimulation = !runningSimulation;
 			}
@@ -369,7 +372,7 @@ namespace QwerkE {
 				runningSimulation = false;
 			}
 
-			if (runningSimulation || Input::KeyPressed(QKey::e_O) || Input::KeyPressed(QKey::e_L))
+			if ((!Scenes::GetCurrentScene()->GetIsPaused() && runningSimulation) || Input::KeyPressed(QKey::e_O) || Input::KeyPressed(QKey::e_L))
 			{
 				if (Input::KeyPressed(QKey::e_L))
 				{

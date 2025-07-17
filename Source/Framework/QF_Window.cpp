@@ -350,6 +350,13 @@ namespace QwerkE {
                         Assets::AddToRegistry(Mirror::IdForType<Texture>(), GUID(), fileName.string());
                     }
                 }
+                else if (strcmp(fileExtension.string().c_str(), ".wav") == 0)
+                {
+                    if (Files::Exists(Paths::Sound(fileName.string().c_str()).c_str()))
+                    {
+                        Assets::AddToRegistry(Mirror::IdForType<Sound>(), GUID(), fileName.string());
+                    }
+                }
                 else
                 {
                     LOG_WARN("Drag file type unsupported: {0}", fileExtension.string().c_str());

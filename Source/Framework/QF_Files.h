@@ -8,6 +8,8 @@ namespace QwerkE {
 
     typedef std::filesystem::path Path;
 
+    struct SoundFile;
+
     namespace Files {
 
         struct Extensions
@@ -24,7 +26,7 @@ namespace QwerkE {
 
         Buffer LoadFile(const char* filePath);
         Buffer LoadPng(const char* filePath, unsigned int* imageWidth, unsigned int* imageHeight, u16& channels);
-        Buffer LoadWav(const char* filePath);
+        SoundFile* LoadWav(const char* filePath);
 
         Path FileName(const char* filePath);
         Path FileNameNoExt(const char* const filePath);

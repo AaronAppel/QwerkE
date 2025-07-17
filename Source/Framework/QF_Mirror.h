@@ -24,6 +24,7 @@
 #include "QF_Input.h"
 #include "QF_Mesh.h"
 #include "QF_Scene.h"
+#include "QF_Sound.h"
 #include "QF_Shader.h"
 #include "QF_Texture.h"
 
@@ -57,6 +58,7 @@ MIRROR_TYPE_ID(160, QwerkE::Mesh)
 MIRROR_TYPE_ID(161, QwerkE::Scene)
 MIRROR_TYPE_ID(162, QwerkE::Texture)
 MIRROR_TYPE_ID(163, QwerkE::FrameBuffer)
+MIRROR_TYPE_ID(164, QwerkE::Sound)
 /* END */
 
 // #NOTE Framework Ids start at +1000
@@ -151,3 +153,4 @@ MIRROR_TYPE_ID(1067, QwerkE::ScriptableSceneTransition)
 
 MIRROR_TYPE_ID(1067, QwerkE::Framework::StartUpData)
 MIRROR_TYPE_ID(1068, QwerkE::ComponentPhysics)
+MIRROR_TYPE_ID(1068, QwerkE::ComponentAudio)

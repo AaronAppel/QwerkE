@@ -64,47 +64,6 @@ namespace QwerkE {
         return retValue;
     }
 
-    // ALuint OpenAL_LoadSound(const QSoundFile& soundFile)
-    // ALuint OpenAL_LoadSound(const Buffer& a_SoundFileBuffer)
-    u32 OpenAL_LoadSound()
-    {
-        u32 retValue = 0;
-        // if (soundFile.s_Data == nullptr) return 0;
-        //
-        // ALuint retValue = 0;
-        // GLenum format = 0;
-        //
-        // if (soundFile.s_Channels == 1)
-        // {
-        //     if (soundFile.s_BitsPerSample == 16)
-        //         format = AL_FORMAT_MONO16;
-        //     else if (soundFile.s_BitsPerSample == 8)
-        //         format = AL_FORMAT_MONO8;
-        //     else
-        //         LOG_ERROR("OpenAL_LoadSound(): Invalid bits per sample in file {0}", soundFile.s_Name);
-        // }
-        // else if (soundFile.s_Channels == 2)
-        // {
-        //     if (soundFile.s_BitsPerSample == 16)
-        //         format = AL_FORMAT_STEREO16;
-        //     else if (soundFile.s_BitsPerSample == 8)
-        //         format = AL_FORMAT_STEREO8;
-        //     else
-        //         LOG_ERROR("OpenAL_LoadSound(): Invalid bits per sample in file {0}", soundFile.s_Name);
-        // }
-        // else
-        // {
-        //     LOG_ERROR("OpenAL_LoadSound(): Invalid number of channels in file {0}", soundFile.s_Name);
-        //     return 0; // invalid number of channels
-        // }
-        //
-        // alGenBuffers(1, &retValue);
-        // alBufferData(retValue, format, soundFile.s_Data, soundFile.s_Size, soundFile.s_Frequency);
-        //
-        // CheckForOpenALErrors(__FILE__, __LINE__);
-        return retValue;
-    }
-
     namespace Audio {
 
         ALCdevice* m_Device = nullptr;
@@ -144,11 +103,7 @@ namespace QwerkE {
             }
             alcMakeContextCurrent(m_Context);
 
-            // Assets::Load<Sound>(0);
-
-            // s_Sound = new Sound();
-            // s_Sound->SetOrientation(vec3f(0, 0, 0), vec3f(0, 0, 0), vec3f(0, 0, 0));
-            // SetListenerOrientation(vec3f(0, 0, 0), vec3f(0, 0, 0)); // #TODO Review listener orientation set
+            Assets::Load<Sound>(0);
 
             LOG_TRACE("OpenAL loaded successfully");
 
@@ -156,22 +111,19 @@ namespace QwerkE {
             // s_AudioManagers.push_back(new OpenALAudioManager());
 #endif
             s_Initialized = true; // m_AudioManager->Initialize()
+
+            SetListenerOrientation(vec3f(0, 0, 0), vec3f(0, 0, 0)); // #TODO Review listener orientation set
         }
 
         void Shutdown()
         {
             ASSERT(s_Initialized, "Audio:: not yet initialized!");
 
-            // delete m_Source;
-            // TODO: cleanup openal
-            /*
-            alDeleteBuffers(NUM_BUFFERS, g_Buffers);
-            Context = alcGetCurrentContext();
-            Device = alcGetContextsDevice(Context);
+            // m_Context = alcGetCurrentContext();
+            // m_Device = alcGetContextsDevice(Context);
             alcMakeContextCurrent(NULL);
-            alcDestroyContext(Context);
-            alcCloseDevice(Device);
-            */
+            alcDestroyContext(m_Context);
+            alcCloseDevice(m_Device);
 
             for (size_t i = 0; i < s_AudioManagers.size(); i++)
             {
@@ -197,8 +149,7 @@ namespace QwerkE {
         {
             ASSERT(s_Initialized, "Audio:: not yet initialized!");
 
-            // // TODO: Create an AudioListener() object or component/routine pair
-            // // that will remember and manipulate listener data.
+            // #TODO Create an AudioListener() class/struct
             alListenerf(AL_GAIN, 0.5f);
             alListener3f(AL_POSITION, a_Position.x, a_Position.y, a_Position.z);
             alListener3f(AL_VELOCITY, a_Velocity.x, a_Velocity.y, a_Velocity.z);

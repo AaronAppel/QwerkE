@@ -26,6 +26,7 @@
 #include "QF_Paths.h"
 #include "QF_Scenes.h"
 #include "QF_Shader.h"
+#include "QF_Sound.h"
 #include "QF_Texture.h"
 #include "QF_RendererHelpers.h"
 // #include "QF_Scene.h" #TODO Add scenes to asset registry
@@ -128,12 +129,28 @@ namespace QwerkE {
 						if (Files::Exists(textureFilePath.c_str()))
 						{
 							Texture* newTexture = new Texture(textureFilePath.c_str(), guid);
-							ASSERT(newTexture, "Could not load texture!");
 							m_MapOfLoadedAssetMaps[Mirror::IdForType<Texture>()][newTexture->Guid()] = newTexture;
 						}
 						else
 						{
 							LOG_ERROR("Could not find texture file: {0}!", fileName);
+						}
+					}
+					break;
+
+				case Mirror::IdForType<Sound>():
+					{
+						ASSERT(!Has<Sound>(guid), "Sound with GUID {0} already exists!", guid);
+
+						std::string soundFilePath = Paths::Sound(fileName.c_str());
+						if (Files::Exists(soundFilePath.c_str()))
+						{
+							Sound* newSound = new Sound(soundFilePath.c_str(), guid);
+							m_MapOfLoadedAssetMaps[Mirror::IdForType<Sound>()][newSound->Guid()] = newSound;
+						}
+						else
+						{
+							LOG_ERROR("Could not find sound file: {0}!", fileName);
 						}
 					}
 					break;
@@ -187,9 +204,14 @@ namespace QwerkE {
 		ASSERT(nullTexture, "Could not load null texture!");
 		m_MapOfNullAssetMaps[Mirror::IdForType<Texture>()][nullTexture->Guid()] = nullTexture;
 
+		// #TODO Pass scene file path to allow loading scenes in other directories
 		Scene* nullScene = new Scene("Empty.qscene", GUID::Invalid);// Scenes::CreateSceneFromFile(Paths::Scene("Empty.qscene"));
 		ASSERT(nullScene, "Could not load null scene!");
 		m_MapOfNullAssetMaps[Mirror::IdForType<Scene>()][GUID::Invalid] = nullScene;
+
+		Sound* nullSound = new Sound(Paths::NullAsset("null_sound.wav").c_str(), 0);
+		ASSERT(nullSound, "Could not load null sound!");
+		m_MapOfNullAssetMaps[Mirror::IdForType<Sound>()][GUID::Invalid] = nullSound;
 
 		s_Initialized = true;
 	}
@@ -223,6 +245,9 @@ namespace QwerkE {
 
 						case Mirror::IdForType<Texture>():
 							delete static_cast<Texture*>(guidVoidPtrPair.second); break;
+
+						case Mirror::IdForType<Sound>():
+							delete static_cast<Sound*>(guidVoidPtrPair.second); break;
 
 						default:
 							LOG_CRITICAL("{0} Unsupported type!", __FUNCTION__);

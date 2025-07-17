@@ -1,5 +1,6 @@
 #pragma once
 
+#include "QF_ComponentAudio.h"
 #include "QF_ComponentCamera.h"
 #include "QF_ComponentInfo.h"
 #include "QF_ComponentLight.h"
@@ -16,6 +17,7 @@ namespace QwerkE {
         ComponentInfo,
         ComponentTransform,
 
+        ComponentAudio,
         ComponentCamera,
         ComponentLight,
         ComponentMesh,

@@ -81,28 +81,124 @@ namespace QwerkE {
 			return returnBuffer;
 		}
 
-		Buffer LoadWav(const char* filePath)
+		// wav loading: https://blog.csdn.net/u011417605/article/details/49662535
+		// https://ffainelli.github.io/openal-example/
+		// https://stackoverflow.com/questions/13660777/c-reading-the-dataToWrite-part-of-a-wav-file/13661263
+		// https://stackoverflow.com/questions/38022123/openal-not-playing-sound/50429578#50429578
+		// http://soundfile.sapp.org/doc/WaveFormat/
+		unsigned char* LoadWavFileData(const char* filePath, unsigned long& bufferSize, unsigned short& channels, unsigned int& frequency, unsigned short& bitsPerSample)
 		{
-			Buffer buffer;
+			// TODO: Cleaner error handling
+			// NOTE: I explicitly hard coded the fread() values to work cross platform
 
+			FILE* f;
+			fopen_s(&f, filePath, "rb"); // "rb" instead of "r"
+
+			if (!f)
+			{
+				LOG_ERROR("LoadWaveFileData(): Error opening file: {0}", filePath);
+				return nullptr;
+			}
+
+			unsigned int chunkSize = 0;
+			unsigned short formatType = 0;
+			unsigned int sampleRate, byteRate = 0;
+			unsigned short blockAlign = 0;
+
+			char type[4];
+			char subChunk1ID[4]; // , subChunk2ID[4];
+
+			DWORD subChunk1Size; // , subChunk2Size;
+
+			// read first chunk
+			fread(type, 4, 1, f); // ChunkID "RIFF"
+			if (!strcmp(type, "RIFF"))
+			{
+				LOG_ERROR("LoadWaveFileData(): Not a \"RIFF\" file: {0}", filePath);
+				fclose(f);
+				return nullptr;
+			}
+
+			fread(&chunkSize, sizeof(DWORD), 1, f); // ChunkSize == "fmt "(4) + (8 + SubChunk1Size) + (8 + SubChunk2Size)
+
+			fread(type, 4, 1, f);
+			if (!strcmp(type, "WAVE"))
+			{
+				LOG_ERROR("LoadWaveFileData(): Not a \"WAVE\" file: {0}", filePath);
+				fclose(f);
+				return nullptr;
+			}
+
+			// read "fmt " chunk
+			fread(&subChunk1ID, 4, 1, f); // "fmt "
+			if (!strcmp(type, "fmt "))
+			{
+				LOG_ERROR("LoadWaveFileData(): No format found in file: {0}", filePath);
+				fclose(f);
+				return nullptr;
+			}
+
+			fread(&subChunk1Size, 4, 1, f);
+
+			fread(&formatType, 2, 1, f); // not 1 == compression
+			fread(&channels, 2, 1, f);
+			fread(&sampleRate, 4, 1, f);
+			fread(&byteRate, 4, 1, f);
+			fread(&blockAlign, 2, 1, f);
+			fread(&bitsPerSample, 2, 1, f);
+
+			frequency = sampleRate;
+
+			// read "dataToWrite" chunk
+			fread(type, 4, 1, f);
+			if (!strcmp(type, "data"))
+			{
+				LOG_ERROR("LoadWaveFileData(): No data in file: {0}", filePath);
+				fclose(f);
+				return nullptr;
+			}
+
+			fread(&bufferSize, 4, 1, f);
+
+			unsigned char* buffer = new unsigned char[bufferSize]; //RAM: new
+
+			int result = fread(buffer, 1, bufferSize, f);
+
+			if (result != bufferSize || ferror(f) != 0)
+			{
+				LOG_ERROR("LoadWaveFileData(): Error reading data in file: {0}", filePath);
+				fclose(f);
+				return nullptr;
+			}
+
+			fclose(f);
+
+			return buffer;
+		}
+
+		SoundFile* LoadWav(const char* filePath)
+		{
 			const Path fileExtension = FileExtension(filePath);
 			ASSERT(!fileExtension.compare(".wav"), "File missing .wav extension!");
 
+			SoundFile* soundFile = nullptr;
+
 #ifdef _QOPENAL
-			buffer = Files::LoadFile(filePath);
-			Sound* sound = new Sound();
-			// #TODO
-			// soundFile.s_Data = (char*)LoadWavFileData(filePath, soundFile.s_Size, soundFile.s_Channels, soundFile.s_Frequency, soundFile.s_BitsPerSample);
+			Buffer soundFileBuffer;
+
+			soundFile = new SoundFile();
+			soundFileBuffer = Files::LoadFile(filePath);
+			soundFile->fileData = LoadWavFileData(filePath, soundFile->bufferSize, soundFile->channels, soundFile->frequency, soundFile->bitsPerSample);
 #else
 			// #TODO Add checks if no supported audio library is loaded and asserts
 			// error
 #endif
 
-			if (!buffer)
+			if (!soundFileBuffer || !soundFile->fileData)
 			{
 				LOG_ERROR("{0} Error loading sound file!", __FUNCTION__);
 			}
-			return buffer;
+			return soundFile;
 		}
 
 		Path FileName(const char* const filePath)

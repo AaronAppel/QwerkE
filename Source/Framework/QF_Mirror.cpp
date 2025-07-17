@@ -257,6 +257,10 @@ MIRROR_CLASS_MEMBER(m_Registry)
 MIRROR_CLASS_END
 
 // Components
+MIRROR_CLASS(QwerkE::ComponentAudio)
+MIRROR_CLASS_MEMBER(m_SoundGuid)
+MIRROR_CLASS_END
+
 MIRROR_CLASS(QwerkE::ComponentCamera)
 MIRROR_CLASS_MEMBER_FLAGS(m_ShowSphere, FieldSerializationFlags::_InspectorOnly)
 MIRROR_CLASS_MEMBER(m_MoveSpeed)
@@ -303,6 +307,9 @@ MIRROR_CLASS(QwerkE::Mesh)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Shader)
+MIRROR_CLASS_END
+
+MIRROR_CLASS(QwerkE::Sound)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Texture)

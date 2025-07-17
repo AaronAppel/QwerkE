@@ -65,10 +65,10 @@ namespace QwerkE {
 		{
 			Scenes::Shutdown(); // First just to be safe
 
-			Audio::Shutdown();
 			Physics::Shutdown();
 			Window::Shutdown();
 			Assets::Shutdown(); // #TODO Renderer (bgfx pthread_mutex_unlock(_mutex) in bx/mutex.cpp line 95) shutdown order dependency
+			Audio::Shutdown(); // After Assets::Shutdown so Sound files have been destroyed or OpenAL will complain of lingering sound buffers
 			Renderer::Shutdown();
 			Events::Shutdown();
 			Log::Shutdown();

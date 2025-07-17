@@ -1,33 +1,68 @@
 #include "QF_Sound.h"
 
-// #include "Libraries/OpenAL/include/al.h"
+#ifdef _QOPENAL
+#define AL_LIBTYPE_STATIC
+#include "Libraries/openal-soft/include/AL/al.h"
+#endif
 
 namespace QwerkE {
 
-    Sound::Sound()
+    Sound::Sound(const char* a_SoundFilePath, GUID a_Guid) :
+		m_Guid(a_Guid)
     {
-        // alGenSources(1, &m_SourceID);
+		// #TODO Rewrite from old, deprecated format/style
+        SoundFile* soundFile = Files::LoadWav(a_SoundFilePath);
+		if (nullptr == soundFile)
+			return;
+
+		if (soundFile->channels == 1)
+		{
+			if (soundFile->bitsPerSample == 16)
+				m_Format = AL_FORMAT_MONO16;
+			else if (soundFile->bitsPerSample == 8)
+				m_Format = AL_FORMAT_MONO8;
+			else
+			{
+				LOG_ERROR("OpenAL_LoadSound(): Invalid bits per sample in file {0}", a_SoundFilePath);
+				return;
+			}
+		}
+		else if (soundFile->channels == 2)
+		{
+			if (soundFile->bitsPerSample == 16)
+				m_Format = AL_FORMAT_STEREO16;
+			else if (soundFile->bitsPerSample == 8)
+				m_Format = AL_FORMAT_STEREO8;
+			else
+			{
+				LOG_ERROR("OpenAL_LoadSound(): Invalid bits per sample in file {0}", a_SoundFilePath);
+				return;
+			}
+		}
+		else
+		{
+			LOG_ERROR("OpenAL_LoadSound(): Unsupported number of channels in file {0}", a_SoundFilePath);
+			return;
+		}
+
+		alGenBuffers(1, &m_SoundBufferHandle);
+		alBufferData(m_SoundBufferHandle, m_Format, soundFile->fileData, soundFile->bufferSize, soundFile->frequency);
+
+		delete soundFile;
     }
 
     Sound::~Sound()
     {
-        // alDeleteSources(1, &m_SourceID);
+		alDeleteBuffers(1, &m_SoundBufferHandle);
     }
 
-    void Sound::SetOrientation(vec3f pos, vec3f rot, vec3f vel)
+    void Sound::Play(ALuint a_SourceHandle)
     {
-        // alSourcef(m_SourceID, AL_GAIN, 1.0f);
-        // alSourcef(m_SourceID, AL_PITCH, 1.0f);
-        // alSource3f(m_SourceID, AL_VELOCITY, vel.x, vel.y, vel.z);
-        // alSource3f(m_SourceID, AL_POSITION, 0.0f, 0.0f, 0.0f);
-    }
+		// if (a_SourceHandle) // #TODO Validate source
 
-    // void Sound::Play(ALuint buffer)
-    void Sound::Play()
-    {
-        // alSourcei(m_SourceID, AL_LOOPING, AL_FALSE);
-        // alSourcei(m_SourceID, AL_BUFFER, buffer);
-        // alSourcePlay(m_SourceID);
+        alSourcei(a_SourceHandle, AL_LOOPING, AL_FALSE);
+        alSourcei(a_SourceHandle, AL_BUFFER, m_SoundBufferHandle);
+        alSourcePlay(a_SourceHandle);
     }
 
 }

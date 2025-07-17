@@ -40,12 +40,15 @@ namespace QwerkE {
 		std::string Schematic(const char* schematicFileName);
 
 		std::string SettingsDir();
-		std::string Setting(const char* settingsFileName);
+		std::string Setting(const char* settingFileName);
 
 		std::string ShadersDir();
 		std::string Shader(const char* shaderFileName);
 		std::string ShadersBinDir();
 		std::string ShaderBin(const char* shaderFileName);
+
+		std::string SoundsDir();
+		std::string Sound(const char* soundFileName);
 
 		std::string TexturesDir();
 		std::string Texture(const char* textureFileName);
