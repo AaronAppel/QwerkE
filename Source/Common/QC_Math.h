@@ -20,12 +20,12 @@ namespace QwerkE {
 		#define DEG_TO_RAD  0.01745329251994329576923690768489
 		#define RAD_TO_DEG  57.295779513082320876798154814105
 
-		inline float DegToRad(float degrees)
+		inline constexpr float DegToRad(const float degrees)
 		{
 			return degrees * M_PI / 180.f;
 		}
 
-		inline float RadToDeg(float radians)
+		inline constexpr float RadToDeg(const float radians)
 		{
 			return radians * 180.f / M_PI;
 		}
@@ -98,6 +98,9 @@ namespace QwerkE {
 		inline vec3f MatrixPosition(const float a_Matrix[16]) { return vec3f(a_Matrix[12], a_Matrix[13], a_Matrix[14]); }
 		vec3f MatrixRotation(const float a_Matrix[16]);
 		vec3f MatrixScale(const float a_Matrix[16]);
+
+		void MatrixRotateAroundY(float a_Matrix[16], const float a_YawDegrees);
+		void MatrixRotateAxis(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees);
 
 #ifdef _QGLM
 		inline float Magnitude(const vec2f& a_Other) { return glm::length(a_Other); }

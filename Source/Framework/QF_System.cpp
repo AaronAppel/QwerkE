@@ -1,5 +1,7 @@
 #include "QF_System.h"
 
+#include <cstdlib> // for system() command calls
+
 #include "QF_Files.h"
 
 namespace QwerkE {
@@ -24,6 +26,9 @@ namespace QwerkE {
 
 		void Command(const std::string& a_Command)
 		{
+#ifdef _WINDOWS_
+            system(a_Command.c_str());
+
             // #TODO Stalls QwerkE and doesn't execute command as expected
             return;
 
@@ -139,6 +144,7 @@ namespace QwerkE {
             Error Handling:
             GetLastError() is used to retrieve extended error information if CreateProcess fails.
             */
+#endif // _WINDOWS_
 		}
 
         void StartProcess(const string& a_PathToProcess)

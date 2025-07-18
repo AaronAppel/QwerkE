@@ -16,32 +16,6 @@
 
 namespace QwerkE {
 
-    // #TODO Reference helpers in utils\openal-info.c
-
-    void CheckForOpenALErrors(const char* file, int line) // #TODO Exists in openal-info.c checkALErrors() and checkALCErrors(), plus printALCInfo()
-    {
-        // switch (alGetError())
-        // {
-        //     // case AL_INVALID_DEVICE:
-        //     // case AL_INVALID_CONTEXT:
-        // case AL_INVALID_NAME:
-        //     LOG_ERROR("AL_INVALID_NAME");
-        //     break;
-        // case AL_INVALID_ENUM:
-        //     LOG_ERROR("AL_INVALID_ENUM");
-        //     break;
-        // case AL_INVALID_VALUE:
-        //     LOG_ERROR("AL_INVALID_VALUE");
-        //     break;
-        // case AL_OUT_OF_MEMORY:
-        //     LOG_ERROR("AL_OUT_OF_MEMORY");
-        //     break;
-        // default:
-        //     LOG_ERROR("alGetError: Unknown error caught in file {0}({1})", file, line);
-        //     break;
-        // }
-    }
-
     // TODO: Source this or rewrite
     // std::string list_audio_devices() // #TODO Exists in openal-info.c printDeviceList()
     std::string list_audio_devices(const ALCchar* devices)
@@ -81,9 +55,21 @@ namespace QwerkE {
 
         bool s_Initialized = false;
 
+        ALenum _CheckALErrors(const char* file, int line)
+        {
+            ASSERT(s_Initialized, "Audio:: is already initialized!");
+
+            ALenum err = alGetError();
+            if (err != AL_NO_ERROR)
+                printf("OpenAL Error: %s (0x%x), @ %d %s\n", alGetString(err), err, line, file);
+            return err;
+        }
+
         void Initialize()
         {
             ASSERT(!s_Initialized, "Audio:: is already initialized!");
+
+            s_Initialized = true; // m_AudioManager->Initialize()
 
             const ALCchar* devices = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
             std::string deviceName = list_audio_devices(devices);
@@ -102,16 +88,23 @@ namespace QwerkE {
             	// return false;
             }
             alcMakeContextCurrent(m_Context);
-
-            Assets::Load<Sound>(0);
+            CheckALErrors();
 
             LOG_TRACE("OpenAL loaded successfully");
+
+            ALboolean enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATION_EXT");
+            if (enumeration == AL_FALSE)
+            {
+                // enumeration not supported
+            }
+            else
+            {
+                // enumeration supported
+            }
 
 #ifdef _QOPENAL
             // s_AudioManagers.push_back(new OpenALAudioManager());
 #endif
-            s_Initialized = true; // m_AudioManager->Initialize()
-
             SetListenerOrientation(vec3f(0, 0, 0), vec3f(0, 0, 0)); // #TODO Review listener orientation set
         }
 
@@ -153,7 +146,7 @@ namespace QwerkE {
             alListenerf(AL_GAIN, 0.5f);
             alListener3f(AL_POSITION, a_Position.x, a_Position.y, a_Position.z);
             alListener3f(AL_VELOCITY, a_Velocity.x, a_Velocity.y, a_Velocity.z);
-            ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
+            ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f }; // #TODO May need to invert Z axis. At and up vectors
             alListenerfv(AL_ORIENTATION, listenerOri);
 
             // s_AudioManagers[s_MainAudioManagerIndex]->SetListenerOrientation(a_Position, a_Velocity);

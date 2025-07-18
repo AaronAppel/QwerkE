@@ -24,6 +24,8 @@ namespace QwerkE {
         void SetOrientation(vec3f pos, vec3f rot, vec3f vel);
         void SetSoundGuid(GUID soundGuid);
 
+        const GUID& GetSoundGuid() { return m_SoundGuid; }
+
         void Play();
 
     private:

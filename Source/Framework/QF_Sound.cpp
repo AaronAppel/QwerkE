@@ -3,7 +3,11 @@
 #ifdef _QOPENAL
 #define AL_LIBTYPE_STATIC
 #include "Libraries/openal-soft/include/AL/al.h"
+// #include "Libraries/openal-soft/utils/openal-info.c"
+// checkALErrors();
 #endif
+
+#include "QF_Audio.h"
 
 namespace QwerkE {
 
@@ -46,7 +50,9 @@ namespace QwerkE {
 		}
 
 		alGenBuffers(1, &m_SoundBufferHandle);
+		CheckALErrors();
 		alBufferData(m_SoundBufferHandle, m_Format, soundFile->fileData, soundFile->bufferSize, soundFile->frequency);
+		CheckALErrors();
 
 		delete soundFile;
     }

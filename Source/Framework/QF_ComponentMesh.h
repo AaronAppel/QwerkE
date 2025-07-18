@@ -28,6 +28,10 @@ namespace QwerkE {
         void SetShaderGuid(const GUID& newShaderGuid) { m_ShaderGuid = newShaderGuid; }
         void SetTextureGuid(const GUID& newShaderGuid) { m_TextureGuid = newShaderGuid; }
 
+        const GUID& GetMeshGuid() { return m_MeshGuid; }
+        const GUID& GetShaderGuid() { return m_ShaderGuid; }
+        const GUID& GetTextureGuid() { return m_TextureGuid; }
+
     private:
         MIRROR_PRIVATE_MEMBERS
 

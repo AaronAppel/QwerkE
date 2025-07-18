@@ -53,9 +53,9 @@ namespace QwerkE {
 			Window::Initialize(startUpData);
 			Renderer::Initialize();
 			Input::Initialize();
+			Audio::Initialize();
 			Assets::Initialize(); // #TODO Depends on Renderer (bgfx) init for mesh, shader, texture creation, Audio (OpenAL) for sound creation
 			Physics::Initialize();
-			Audio::Initialize();
 
 			Scenes::Initialize(); // #TODO Depends on physics, and Assets? Last just to be safe
 			return eOperationResult::Success;

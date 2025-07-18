@@ -73,6 +73,14 @@ namespace QwerkE {
                             ImGui::Text("GUID: ");
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidMeshPair.first).c_str());
+
+                            if (ImGui::IsItemHovered())
+                            {
+                                ImGui::BeginTooltip();
+                                ImGui::Text(Assets::GetRegistryAssetFileName<Mesh>(guidMeshPair.first).c_str());
+                                ImGui::EndTooltip();
+                            }
+
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidMeshPair.second->m_vbh.idx).c_str());
                             ImGui::SameLine();
@@ -103,6 +111,13 @@ namespace QwerkE {
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidShaderPair.first).c_str());
 
+                            if (ImGui::IsItemHovered())
+                            {
+                                ImGui::BeginTooltip();
+                                ImGui::Text(Assets::GetRegistryAssetFileName<Shader>(guidShaderPair.first).c_str());
+                                ImGui::EndTooltip();
+                            }
+
                             // #TODO Draw names of all shader components
                             // std::vector<std::string>* shaderComponents = &guidShaderPair.second;
                             for (size_t i = 0; i < 1; i++)
@@ -111,9 +126,51 @@ namespace QwerkE {
                                 ImGui::Text(std::to_string(guidShaderPair.second->ProgramHandle().idx).c_str());
                             }
                             ImGui::SameLine();
-                            if (ImGui::SmallButton("Reload"))
+                            std::string reloadButton = "Reload##";
+                            reloadButton += std::to_string(guidShaderPair.first).c_str();
+                            if (ImGui::SmallButton(reloadButton.c_str()))
                             {
                                 guidShaderPair.second->Reload();
+                            }
+                            ImGui::SameLine();
+                            std::string recompileButton = "Recompile##";
+                            recompileButton += std::to_string(guidShaderPair.first).c_str();
+                            if (ImGui::SmallButton(recompileButton.c_str()))
+                            {
+                                std::string vertexFileName = Assets::GetRegistryAssetFileName<Shader>(guidShaderPair.first);
+                                vertexFileName = Files::FileNameNoExt(vertexFileName.c_str()).string();
+                                std::string fragmentFileName = Files::FileNameNoExt(vertexFileName.c_str()).string() + ".frag";
+
+                                // std::string compilerPath = repoRootDir + "/Source/Libraries/bgfx/.build/win64_vs2022/bin/geometrycRelease.exe";
+                                std::string bgfxSource = Paths::RepoRootDir() + "/Source/Libraries/bgfx";
+                                std::string compilerPath = bgfxSource + "/.build/win64_vs2022/bin/shadercRelease.exe";
+
+                                std::string platformDirs[] = { "dx11", "glsl", "spirv" };
+                                std::string platformArgs[] = { "s_5_0", "440", "spirv" };
+
+                                // #TODO Compile vertex and fragment separately?
+                                std::string shaderTypes[] = { "v", "f" };
+                                for (size_t i = 0; i < sizeof(shaderTypes) / sizeof(std::string); ++i)
+                                {
+                                    for (size_t j = 0; j < sizeof(platformDirs) / sizeof(std::string); ++j)
+                                    {
+                                        std::string fileName = i == 0 ? vertexFileName : fragmentFileName;
+                                        std::string cliCommand = compilerPath + " -f " + Paths::ShadersDir() + "/" + fileName + " -o " + Paths::ShadersBinDir() + "/" + platformDirs[j] + "/" + fileName + ".bin --type " + shaderTypes[i] + " --platform windows -i " + bgfxSource + "/src";
+
+                                        cliCommand = cliCommand + " -p " + platformArgs[j];
+
+                                        for (size_t k = 0; k < cliCommand.size(); ++k)
+                                        {
+                                            if (cliCommand[k] == '/')
+                                            {
+                                                cliCommand[k] = '\\';
+                                            }
+                                        }
+
+                                        System::Command(cliCommand);
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -150,6 +207,13 @@ namespace QwerkE {
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidTexturePair.first).c_str());
 
+                            if (ImGui::IsItemHovered())
+                            {
+                                ImGui::BeginTooltip();
+                                ImGui::Text(Assets::GetRegistryAssetFileName<Texture>(guidTexturePair.first).c_str());
+                                ImGui::EndTooltip();
+                            }
+
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidTexturePair.second->TextureHandle().idx).c_str());
                         }
@@ -165,6 +229,13 @@ namespace QwerkE {
                             ImGui::Text("GUID: ");
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidSoundPair.first).c_str());
+
+                            if (ImGui::IsItemHovered())
+                            {
+                                ImGui::BeginTooltip();
+                                ImGui::Text(Assets::GetRegistryAssetFileName<Sound>(guidSoundPair.first).c_str());
+                                ImGui::EndTooltip();
+                            }
 
                             ImGui::SameLine();
                             ImGui::Text(std::to_string(guidSoundPair.second->BufferHandle()).c_str());

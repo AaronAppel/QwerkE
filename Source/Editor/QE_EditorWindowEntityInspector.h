@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef _QMIRROR
+#include "Libraries/Mirror/Source/MIR_Mirror.h"
+#endif
+
 #include "QE_EditorWindow.h"
 
 #include "QF_Buffer.h"
@@ -24,15 +28,25 @@ namespace QwerkE {
 		private:
 			void DrawInternal()
 			{
-                if (!m_CurrentEntity)
+                if (!m_CurrentSelectedEntity)
                 {
+                    // #TODO Also need to serialize the scene of last selected entity
                     if (Scene* currentScene = Scenes::GetCurrentScene())
                     {
-                        m_CurrentEntity = currentScene->GetCurrentCameraEntity();
+                        if (GUID::Invalid != m_LastSelectedEntityGuid)
+                        {
+                            m_CurrentSelectedEntity = currentScene->GetEntityByGuid(m_LastSelectedEntityGuid);
+                        }
+                        else
+                        {
+                            auto viewTransforms = currentScene->ViewComponents<ComponentTransform>();
+                            m_CurrentSelectedEntity = EntityHandle(currentScene, viewTransforms[0]); // #TODO Error checking
+                        }
+                        m_LastSelectedEntityGuid = m_CurrentSelectedEntity ? m_CurrentSelectedEntity.EntityGuid() : GUID::Invalid;
                     }
                 }
 
-                if (!m_CurrentEntity)
+                if (!m_CurrentSelectedEntity)
                 {
                     ImGui::Text("Null current entity");
                     return;
@@ -44,7 +58,7 @@ namespace QwerkE {
                 {
                     if (IsHotkeyPressed(e_SceneGraphToggleActive))
                     {
-                        m_CurrentEntity.SetIsEnabled(!m_CurrentEntity.IsEnabled());
+                        m_CurrentSelectedEntity.SetIsEnabled(!m_CurrentSelectedEntity.IsEnabled());
                         HotkeyPoll(e_SceneGraphToggleActive); // #TODO Poll resets m_IsChanged flag. Find a better way to do that
                     }
                 }
@@ -52,28 +66,29 @@ namespace QwerkE {
                 {   // Edit entity name
                     Buffer buffer(INT8_MAX); // #TODO Could be re-used/persistent and updated on entity change
                     buffer.Fill('\0');
-                    strcpy(buffer.As<char>(), m_CurrentEntity.EntityName().c_str());
+                    strcpy(buffer.As<char>(), m_CurrentSelectedEntity.EntityName().c_str());
 
                     ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x / 1.8f); // #NOTE Aesthetic scalar value
                     if (ImGui::InputText(("##" + m_WindowName + "EntityName").c_str(), buffer.As<char>(), buffer.SizeInBytes()))
                     {
-                        m_CurrentEntity.GetComponent<ComponentInfo>().m_EntityName = buffer.As<char>();
+                        m_CurrentSelectedEntity.GetComponent<ComponentInfo>().m_EntityName = buffer.As<char>();
                     }
                 }
 
-                const char* enabledState = m_CurrentEntity.IsEnabled() ? "Deactivate" : "Activate";
+                const char* enabledState = m_CurrentSelectedEntity.IsEnabled() ? "Deactivate" : "Activate";
                 ImGui::Separator();
                 if (ImGui::Button(enabledState))
                 {
-                    m_CurrentEntity.SetIsEnabled(!m_CurrentEntity.IsEnabled());
+                    m_CurrentSelectedEntity.SetIsEnabled(!m_CurrentSelectedEntity.IsEnabled());
                 }
                 ImGui::SameLine();
                 if (ImGui::Button("Destroy"))
                 {
-                    if (Scene* entityScene = m_CurrentEntity.GetScene())
+                    if (Scene* entityScene = m_CurrentSelectedEntity.GetScene())
                     {
-                        entityScene->DestroyEntity(m_CurrentEntity);
-                        m_CurrentEntity.Invalidate();
+                        entityScene->DestroyEntity(m_CurrentSelectedEntity);
+                        m_CurrentSelectedEntity.Invalidate();
+                        m_LastSelectedEntityGuid = GUID::Invalid;
                     }
                     else
                     {
@@ -90,11 +105,11 @@ namespace QwerkE {
 
                 if (ImGui::BeginPopup("ComponentList"))
                 {
-                    priv_AddComponentEntries(EntityComponentsList{}, m_CurrentEntity);
+                    priv_AddComponentEntries(EntityComponentsList{}, m_CurrentSelectedEntity);
                     ImGui::EndPopup();
                 }
 
-                priv_EditComponentEntries(EntityComponentsList{}, m_CurrentEntity);
+                priv_EditComponentEntries(EntityComponentsList{}, m_CurrentSelectedEntity);
 			}
 
             template <typename... Component>
@@ -206,19 +221,19 @@ namespace QwerkE {
                         if (Inspector::InspectObject(component) &&
                             std::is_same_v<Component, ComponentScript>)
                         {
-                            ComponentScript& script = m_CurrentEntity.GetComponent<ComponentScript>();
+                            ComponentScript& script = m_CurrentSelectedEntity.GetComponent<ComponentScript>();
 
                             // #TODO Review script.AddScript(pair.first) use rather than below logic
                             for (auto& pair : script.ScriptInstances())
                             {
                                 if (pair.second && !pair.second->GetEntity())
                                 {
-                                    pair.second->SetEntity(EntityHandle(m_CurrentEntity.GetScene(), m_CurrentEntity.EntityGuid()));
+                                    pair.second->SetEntity(EntityHandle(m_CurrentSelectedEntity.GetScene(), m_CurrentSelectedEntity.EntityGuid()));
                                     pair.second->OnCreate(); // #TODO OnCreate() nested calls can remove component and break pair iterator
                                     break;
                                 }
                             }
-                            script.Bind(m_CurrentEntity);
+                            script.Bind(m_CurrentSelectedEntity);
                         }
                     }
                 }(), ...);
@@ -230,9 +245,17 @@ namespace QwerkE {
                 priv_EditComponentEntry<Components...>(entityHandle);
             }
 
-            void OnEntitySelected(EntityHandle& entity) override { m_CurrentEntity = entity; }
+            void OnEntitySelected(EntityHandle& entity) override
+            {
+                m_CurrentSelectedEntity = entity;
+                m_LastSelectedEntityGuid = m_CurrentSelectedEntity ? m_CurrentSelectedEntity.EntityGuid() : GUID::Invalid;
+            }
 
-            EntityHandle m_CurrentEntity;
+            MIRROR_PRIVATE_MEMBERS
+
+            EntityHandle m_CurrentSelectedEntity;
+
+            GUID m_LastSelectedEntityGuid = GUID::Invalid;
 		};
 
 	}

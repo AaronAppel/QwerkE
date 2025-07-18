@@ -139,6 +139,7 @@ MIRROR_CLASS_END
 MIRROR_CLASS(QwerkE::Editor::EditorWindowEntityInspector)
 // #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowEntityInspector)
 MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIRROR_CLASS_MEMBER(m_LastSelectedEntityGuid)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::Editor::EditorWindowFileEditor)

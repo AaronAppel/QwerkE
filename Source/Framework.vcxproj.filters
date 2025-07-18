@@ -240,6 +240,7 @@
     <ClInclude Include="Framework\QF_Sound.h" />
     <ClInclude Include="Framework\QF_System.h" />
     <ClInclude Include="Framework\QF_Texture.h" />
+    <ClInclude Include="Framework\QF_ScriptCameraThirdPerson.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

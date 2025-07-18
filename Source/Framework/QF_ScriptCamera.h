@@ -17,6 +17,74 @@
 
 #include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
+#ifdef _QGLM
+#include "Libraries/glm/glm.hpp"
+#include "Libraries/glm/gtc/matrix_transform.hpp"
+#include "Libraries/glm/gtc/constants.hpp"
+#endif // _QGLM
+
+class FirstPersonCamera
+{
+public:
+	FirstPersonCamera(glm::vec3 startPos, float startYaw = -90.0f, float startPitch = 0.0f)
+		: position(startPos), yaw(startYaw), pitch(startPitch) {
+	}
+
+	void Keyboard(char direction, float deltaTime)
+	{
+		float velocity = movementSpeed * deltaTime;
+		glm::vec3 front = Forward();
+		glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0, 1, 0)));
+
+		if (direction == 'W')
+			position += front * velocity;
+		if (direction == 'S')
+			position -= front * velocity;
+		if (direction == 'A')
+			position -= right * velocity;
+		if (direction == 'D')
+			position += right * velocity;
+	}
+
+	void Mouse(float xOffset, float yOffset)
+	{
+		xOffset *= mouseSensitivity;
+		yOffset *= mouseSensitivity;
+
+		yaw += xOffset;
+		pitch += yOffset;
+
+		// Clamp pitch to avoid flipping
+		if (pitch > 89.0f)  pitch = 89.0f;
+		if (pitch < -89.0f) pitch = -89.0f;
+	}
+
+	glm::mat4 getViewMatrix() const
+	{
+		return glm::lookAt(position, position + Forward(), glm::vec3(0, 1, 0));
+	}
+
+private:
+	glm::vec3 Forward() const
+	{
+		float yawRad = glm::radians(yaw);
+		float pitchRad = glm::radians(pitch);
+
+		glm::vec3 front;
+		front.x = cos(yawRad) * cos(pitchRad);
+		front.y = sin(pitchRad);
+		front.z = sin(yawRad) * cos(pitchRad);
+		return glm::normalize(front);
+	}
+
+	glm::vec3 position;
+	float yaw;    // Y-axis rotation (left/right)
+	float pitch;  // X-axis rotation (up/down)
+
+	float movementSpeed = 2.5f;
+	float mouseSensitivity = 0.1f;
+};
+
 namespace QwerkE {
 
 	class ScriptableCamera : public Scriptable
@@ -113,6 +181,7 @@ namespace QwerkE {
 
 			const bx::Vec3 up = bx::cross(right, forward);
 
+			constexpr float rotationSpeed = Math::PI_f();
 			if (Input::KeyDown(gameActions.Camera_MoveDown))
 			{
 				transform.m_Matrix[13] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
@@ -123,12 +192,13 @@ namespace QwerkE {
 			}
 			if (Input::KeyDown(gameActions.Camera_RotateRight))
 			{
+				Math::MatrixRotateAxis(transform.m_Matrix, vec3f(0.f, 1.f, 0.f), rotationSpeed * -rotationSpeed * Time::PreviousFrameDuration());
 				// LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
 			}
 			if (Input::KeyDown(gameActions.Camera_RotateLeft))
 			{
-				constexpr float rotationSpeed = Math::PI_f();
-				bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
+				Math::MatrixRotateAxis(transform.m_Matrix, vec3f(0.f, 1.f, 0.f), rotationSpeed * rotationSpeed * Time::PreviousFrameDuration());
+				// bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
 				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
 

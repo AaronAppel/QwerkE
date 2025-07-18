@@ -146,7 +146,7 @@
 				},
 				"std::pair<QwerkE::GUID, std::vector<std::string>>":	{
 					"QwerkE::GUID":	{
-						"m_Guid":	"1034563466966038478"
+						"m_Guid":	"1234563466966038835"
 					},
 					"std::vector<std::string>":	{
 						"std::string":	"vs_picking_shaded.vert.bin",

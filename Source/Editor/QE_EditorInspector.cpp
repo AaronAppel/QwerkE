@@ -31,7 +31,8 @@ namespace QwerkE {
         // #TESTING
         struct InspectFieldReturn
         {
-            std::string selectedFieldName;
+            std::string selectedFieldName = "";
+            std::string hoveredFieldName = "";
         };
 
         bool local_InspectPrimitive(const Mirror::TypeInfo* typeInfo, void* obj, std::string parentName);
@@ -440,6 +441,10 @@ namespace QwerkE {
                 {
                     returnValue.selectedFieldName = field.name;
                 }
+                else if (ImGui::IsItemHovered())
+                {
+                    returnValue.hoveredFieldName = field.name;
+                }
 
                 ImGui::EndDisabled();
             }
@@ -476,11 +481,12 @@ namespace QwerkE {
                     const char* popUpNameShaders = "ComponentMeshPopUpShaderSelection";
                     const char* popUpNameTextures = "ComponentMeshPopUpTextureSelection";
 
+                    ComponentMesh* meshComponent = (ComponentMesh*)obj;
+
                     // #TODO Address redundancy and safety of automatic mesh data re-intialization
                     if (ImGui::Button("Initialize"))
                     {
-                        ComponentMesh* mesh = (ComponentMesh*)obj;
-                        mesh->Initialize();
+                        meshComponent->Initialize();
                     }
 
                     InspectFieldReturn result = local_InspectClassFields(typeInfo, obj, parentName);
@@ -498,6 +504,51 @@ namespace QwerkE {
                         else if (result.selectedFieldName == "m_TextureGuid")
                         {
                             ImGui::OpenPopup(popUpNameTextures);
+                        }
+                    }
+                    else if (!result.hoveredFieldName.empty())
+                    {
+                        if (result.hoveredFieldName == "m_MeshGuid")
+                        {
+                            ImGui::BeginTooltip();
+                            if (GUID::Invalid == meshComponent->GetMeshGuid())
+                            {
+                                ImGui::Text("Null");
+                            }
+                            else
+                            {
+                                std::string fileName = Assets::GetRegistryAssetFileName<Mesh>(meshComponent->GetMeshGuid());
+                                ImGui::Text(fileName.c_str());
+                            }
+                            ImGui::EndTooltip();
+                        }
+                        else if (result.hoveredFieldName == "m_ShaderGuid")
+                        {
+                            ImGui::BeginTooltip();
+                            if (GUID::Invalid == meshComponent->GetShaderGuid())
+                            {
+                                ImGui::Text("Null");
+                            }
+                            else
+                            {
+                                std::string fileName = Assets::GetRegistryAssetFileName<Shader>(meshComponent->GetShaderGuid());
+                                ImGui::Text(fileName.c_str());
+                            }
+                            ImGui::EndTooltip();
+                        }
+                        else if (result.hoveredFieldName == "m_TextureGuid")
+                        {
+                            ImGui::BeginTooltip();
+                            if (GUID::Invalid == meshComponent->GetTextureGuid())
+                            {
+                                ImGui::Text("Null");
+                            }
+                            else
+                            {
+                                std::string fileName = Assets::GetRegistryAssetFileName<Texture>(meshComponent->GetTextureGuid());
+                                ImGui::Text(fileName.c_str());
+                            }
+                            ImGui::EndTooltip();
                         }
                     }
 
@@ -638,18 +689,30 @@ ImGui::EndPopup();
             case Mirror::IdForType<ComponentAudio>():
                 {
                     const char* popUpNameSound = "ComponentAudioPopUpSoundSelection";
+                    ComponentAudio* audioComponent = (ComponentAudio*)obj;
 
                     // #TODO Address redundancy and safety of automatic mesh data re-intialization
-                    if (ImGui::Button("Initialize"))
+                    if (ImGui::SmallButton("Initialize"))
                     {
-                        ComponentAudio* audio = (ComponentAudio*)obj;
-                        audio->Initialize();
+                        audioComponent->Initialize();
+                    }
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("Play"))
+                    {
+                        audioComponent->Play();
                     }
 
                     InspectFieldReturn result = local_InspectClassFields(typeInfo, obj, parentName);
                     if (!result.selectedFieldName.empty() && result.selectedFieldName == "m_SoundGuid")
                     {
                         ImGui::OpenPopup(popUpNameSound);
+                    }
+                    else if (!result.hoveredFieldName.empty() && result.hoveredFieldName == "m_SoundGuid")
+                    {
+                        ImGui::BeginTooltip();
+                        std::string fileName = Assets::GetRegistryAssetFileName<Sound>(audioComponent->GetSoundGuid());
+                        ImGui::Text(fileName.c_str());
+                        ImGui::EndTooltip();
                     }
 
                     if (ImGui::BeginPopup(popUpNameSound))
@@ -681,7 +744,7 @@ ImGui::EndPopup();
                                 else if (ImGui::IsItemHovered())
                                 {
                                     ImGui::BeginTooltip();
-                                    std::string fileName = Assets::GetRegistryAssetFileName<Mesh>(guidSoundPair.first);
+                                    std::string fileName = Assets::GetRegistryAssetFileName<Sound>(guidSoundPair.first);
                                     ImGui::Text(fileName.c_str());
                                     ImGui::EndTooltip();
                                 }

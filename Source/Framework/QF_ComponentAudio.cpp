@@ -5,6 +5,7 @@
 #include "Libraries/openal-soft/include/AL/al.h"
 #endif
 
+#include "QF_Audio.h"
 #include "QF_Assets.h"
 #include "QF_Sound.h"
 
@@ -13,10 +14,11 @@ namespace QwerkE {
     ComponentAudio::ComponentAudio()
     {
         alGenSources(1, &m_SourceHandle);
+        CheckALErrors();
 
-        // if (m_SourceHandle) #TODO Validate handle
-
+        // #TODO Add listener and source component functionality
         ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
+        // alListenerfv(AL_ORIENTATION, listenerOri);
 
         // #TODO Support all source values in al.h, lines 121-486
 

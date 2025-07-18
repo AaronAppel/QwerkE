@@ -516,6 +516,10 @@ namespace QwerkE {
                 m_EditorCameraTransform.m_Matrix[yPositionIndex] += (m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * unscaledDeltaTime);
             }
 
+            static float yaw = 0.f;
+            static float pitch = 0.f;
+            constexpr float rotationSpeed = 10.f; // #TODO Determine which value to use below
+
             if (Input::KeyDown(gameActions.Camera_RotateRight) || Input::GamepadAxis(e_QGamepadAxisRightStick).x > controllerStickDeadzone)
             {
                 // #TODO Fix rotation also changing position
