@@ -73,7 +73,7 @@ namespace QwerkE {
                 Shutdown();
             }
 
-            if (ImGui::BeginChild("##Misc", { ImGui::GetContentRegionAvail().x - (strlen("Gamepad down: 00   ") * ImGui::g_pixelsPerCharacter), 3 * lineHeight }))
+            if (ImGui::BeginChild("##Misc", { ImGui::GetContentRegionAvail().x - (strlen("Gamepad [0] down: %i  ") * ImGui::g_pixelsPerCharacter), 3 * lineHeight }))
             {
                 // ImGui::Text("Misc");
                 unsigned char keysThisFrame = s_Keys.InputThisFrame();
@@ -88,11 +88,10 @@ namespace QwerkE {
             ImGui::EndChild();
 
             ImGui::SameLine();
-
             if (ImGui::BeginChild("##CurrentlyDown", { 0.f, 3 * lineHeight }))
             {
-                ImGui::Text("           Keys down: %i", s_Keys.DownKeys());
-                ImGui::Text("       Mouse down: %i", s_MouseButtons.DownKeys());
+                ImGui::Text("               Keys down: %i", s_Keys.DownKeys());
+                ImGui::Text("           Mouse down: %i", s_MouseButtons.DownKeys());
                 if (s_GamepadsButtons.empty())
                 {
                     ImGui::Text("No gamepad detected");
