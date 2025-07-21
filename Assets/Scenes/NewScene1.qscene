@@ -43,6 +43,8 @@
 					"m_TextureGuid":	{
 						"m_Guid":	"15538032833040342356"
 					}
+				},
+				"QwerkE::ComponentPhysics":	{
 				}
 			},
 			"Triangle":	{
@@ -75,7 +77,7 @@
 				},
 				"QwerkE::ComponentAudio":	{
 					"m_SoundGuid":	{
-						"m_Guid":	"17273937767492765688"
+						"m_Guid":	"12064751356682493733"
 					}
 				},
 				"QwerkE::ComponentMesh":	{

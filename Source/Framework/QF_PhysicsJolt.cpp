@@ -14,7 +14,6 @@
 #include "Libraries/Jolt/Physics/Body/BodyCreationSettings.h"
 #include "Libraries/Jolt/Physics/Body/BodyActivationListener.h"
 
-
 // Disable common warnings triggered by Jolt, you can use JPH_SUPPRESS_WARNING_PUSH / JPH_SUPPRESS_WARNING_POP to store and restore the warning state
 JPH_SUPPRESS_WARNINGS
 
@@ -23,6 +22,9 @@ using namespace JPH;
 
 // If you want your code to compile using single or double precision write 0.0_r to get a Real value that compiles to double or float depending if JPH_DOUBLE_PRECISION is set or not.
 using namespace JPH::literals;
+
+// We're also using STL classes in this example
+using namespace std;
 
 #include "QF_Input.h" // For debug testing
 #include "QF_Renderer.h" // For debug testing
@@ -36,17 +38,6 @@ namespace QwerkE {
     namespace Physics {
 
 #ifdef _QJOLT
-		// Disable common warnings triggered by Jolt, you can use JPH_SUPPRESS_WARNING_PUSH / JPH_SUPPRESS_WARNING_POP to store and restore the warning state
-		JPH_SUPPRESS_WARNINGS
-
-		// All Jolt symbols are in the JPH namespace
-		using namespace JPH;
-
-		// If you want your code to compile using single or double precision write 0.0_r to get a Real value that compiles to double or float depending if JPH_DOUBLE_PRECISION is set or not.
-		using namespace JPH::literals;
-
-		// We're also using STL classes in this example
-		using namespace std;
 
 		// Callback for traces, connect this to your own trace function if you have one
 		static void TraceImpl(const char* inFMT, ...)
@@ -82,6 +73,7 @@ namespace QwerkE {
 		// but only if you do collision testing).
 		namespace Layers
 		{
+			// #TODO Define in data
 			static constexpr ObjectLayer NON_MOVING = 0;
 			static constexpr ObjectLayer MOVING = 1;
 			static constexpr ObjectLayer NUM_LAYERS = 2;
@@ -220,8 +212,8 @@ namespace QwerkE {
 			}
 		};
 
-		// Create the actual rigid body
-		Body* floor = nullptr;
+		// #TODO Move to persist in a class or namespace
+		Body* floor = nullptr; // Create the actual rigid body
 		BodyID sphere_id;
 		PhysicsSystem* physics_system = nullptr;
 		uint step = 0;
@@ -251,6 +243,18 @@ namespace QwerkE {
 		// number then these contacts will be ignored and bodies will start interpenetrating / fall through the world.
 		// Note: This value is low because this is a simple test. For a real project use something in the order of 10240.
 		constexpr uint cMaxContactConstraints = 1024;
+
+		Body* CreateBody(const BodyCreationSettings& a_BodySettings)
+		{
+			BodyInterface& body_interface = physics_system->GetBodyInterface();
+			return body_interface.CreateBody(a_BodySettings); // Note that if we run out of bodies this can return nullptr;
+		}
+
+		void AddBody(JPH::Body& a_Body, JPH::EActivation a_Activation)
+		{
+			BodyInterface& body_interface = physics_system->GetBodyInterface();
+			body_interface.AddBody(a_Body.GetID(), a_Activation);
+		}
 
 		void Initialize()
 		{
@@ -355,7 +359,12 @@ namespace QwerkE {
 			// Now we're ready to simulate the body, keep simulating until it goes to sleep
 		}
 
-		EntityHandle entity;
+		BodyInterface& _GetbodyInterface()
+		{
+			return physics_system->GetBodyInterface();
+		}
+
+		EntityHandle entity; // #TODO Improve
 		void StepSimulation()
 		{
 			// #TODO Refactor test scenario
@@ -374,18 +383,18 @@ namespace QwerkE {
 
 			if ((!Scenes::GetCurrentScene()->GetIsPaused() && runningSimulation) || Input::KeyPressed(QKey::e_O) || Input::KeyPressed(QKey::e_L))
 			{
-				if (Input::KeyPressed(QKey::e_L))
-				{
-					if (!body_interface_ptr->IsActive(sphere_id))
-					{
-						body_interface_ptr->ActivateBody(sphere_id);
-					}
-					body_interface_ptr->SetLinearVelocity(sphere_id, Vec3(0.0f, 5.0f, 0.0f));
-				}
+				// if (Input::KeyPressed(QKey::e_L))
+				// {
+				// 	if (!body_interface_ptr->IsActive(sphere_id))
+				// 	{
+				// 		body_interface_ptr->ActivateBody(sphere_id);
+				// 	}
+				// 	body_interface_ptr->SetLinearVelocity(sphere_id, Vec3(0.0f, 5.0f, 0.0f));
+				// }
 
 				// Output current position and velocity of the sphere
-				RVec3 position = body_interface_ptr->GetCenterOfMassPosition(sphere_id);
-				Vec3 velocity = body_interface_ptr->GetLinearVelocity(sphere_id);
+				// RVec3 position = body_interface_ptr->GetCenterOfMassPosition(sphere_id);
+				// Vec3 velocity = body_interface_ptr->GetLinearVelocity(sphere_id);
 				// cout << "Step " << step << ": Position = (" << position.GetX() << ", " << position.GetY() << ", " << position.GetZ() << "), Velocity = (" << velocity.GetX() << ", " << velocity.GetY() << ", " << velocity.GetZ() << ")" << endl;
 
 				// If you take larger steps than 1 / 60th of a second you need to do multiple collision steps in order to keep the simulation stable. Do 1 collision step per 1 / 60th of a second (round up).
@@ -398,21 +407,21 @@ namespace QwerkE {
 				++step;
 
 				// TESTING
-				if (!entity.IsValid())
+				// if (!entity.IsValid())
+				// {
+				// 	entity = Scenes::GetCurrentScene()->GetEntityByGuid(4131277061482423251); // #TODO Hard coded guid
+				// }
+
+				// vec3f pos = { position.GetX(), position.GetY(), position.GetZ() };
+
+				// DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
+				// debugDrawer.begin(2); // #TODO Hard coded view ID
+				// debugDrawer.drawSphere(pos.x, pos.y, pos.z, 0.5f);
+				// debugDrawer.end();
+
+				// if (entity.IsValid())
 				{
-					entity = Scenes::GetCurrentScene()->GetEntityByGuid(4131277061482423251); // #TODO Hard coded guid
-				}
-
-				vec3f pos = { position.GetX(), position.GetY(), position.GetZ() };
-
-				DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
-				debugDrawer.begin(2); // #TODO Hard coded view ID
-				debugDrawer.drawSphere(pos.x, pos.y, pos.z, 0.5f);
-				debugDrawer.end();
-
-				if (entity.IsValid())
-				{
-					entity.GetComponent<ComponentTransform>().SetPosition(pos);
+					// entity.GetComponent<ComponentTransform>().SetPosition(pos);
 				}
 			}
 		}
@@ -422,22 +431,21 @@ namespace QwerkE {
 			BodyInterface& body_interface = physics_system->GetBodyInterface();
 
 			// Remove the sphere from the physics system. Note that the sphere itself keeps all of its state and can be re-added at any time.
-			body_interface.RemoveBody(sphere_id);
+			body_interface.RemoveBody(sphere_id); // #TODO Could become a PhysicsWorld->Deactive(), or RigidBody()
 
 			// Destroy the sphere. After this the sphere ID is no longer valid.
-			body_interface.DestroyBody(sphere_id);
+			body_interface.DestroyBody(sphere_id); // #TODO Could create some handle type and invalidate it here
 
 			// Remove and destroy the floor
 			body_interface.RemoveBody(floor->GetID());
 			body_interface.DestroyBody(floor->GetID());
 
 			// Unregisters all types with the factory and cleans up the default material
-			UnregisterTypes();
+			UnregisterTypes(); // #TODO Physics system wide shutdown?
 
 			// Destroy the factory
-			delete Factory::sInstance;
+			delete Factory::sInstance; // #TODO Physics system wide shutdown?
 			Factory::sInstance = nullptr;
-
 		}
 
 #endif // _QJOLT

@@ -82,6 +82,35 @@ namespace QwerkE {
                 script.Update(deltaTime);
             }
         }
+
+        // #TODO if (m_PhysicsSystem)
+        auto physics = m_Registry.view<ComponentPhysics>();
+        for (auto& entity : physics)
+        {
+            ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
+            if (info.m_Enabled)
+            {
+                // #TODO if (!StaticBody)
+                ComponentPhysics& physics = m_Registry.get<ComponentPhysics>(entity);
+                ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
+                vec3f bodyPosition = physics.BodyPosition();
+                transform.SetPosition(bodyPosition);
+
+                DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
+                debugDrawer.begin(2); // #TODO Hard coded view ID
+                debugDrawer.drawSphere(bodyPosition.x, bodyPosition.y, bodyPosition.z, 0.5f);
+                debugDrawer.end();
+
+                if (Input::KeyPressed(QKey::e_L))
+                {
+                	if (!physics.IsActive())
+                	{
+                        physics.SetActive(true);
+                	}
+                    physics.SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f));
+                }
+            }
+        }
     }
 
     void Scene::Draw(u16 viewId)

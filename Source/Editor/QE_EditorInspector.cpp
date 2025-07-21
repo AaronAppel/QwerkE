@@ -758,7 +758,35 @@ ImGui::EndPopup();
                 }
                 break;
 
-            // Fall through statements (no break)
+            case Mirror::IdForType<ComponentPhysics>():
+                {
+                    ComponentPhysics* physicsComponent = (ComponentPhysics*)obj;
+
+                    s32 index = physicsComponent->Shape();
+                    if (ImGui::Combo("Shape##", &index,
+                        "Sphere\0"
+                        "Box\0")
+                        )
+                    {
+                        physicsComponent->Shape();
+                    }
+                    if (!physicsComponent->Created() && ImGui::SmallButton("Create"))
+                    {
+                        physicsComponent->Create();
+                    }
+
+                    if (!physicsComponent->IsActive() && ImGui::SmallButton("Activate"))
+                    {
+                        physicsComponent->SetActive(true);
+                    }
+                    if (ImGui::SmallButton("ApplyVelocity"))
+                    {
+                        physicsComponent->SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f));
+                    }
+                    InspectFieldReturn result = local_InspectClassFields(typeInfo, obj, parentName);
+                    valueChanged |= !result.selectedFieldName.empty();
+                }
+                break;
 
             default:
                 // #TODO ComponentScript fields for scripts like ScriptablePatrol are not unique

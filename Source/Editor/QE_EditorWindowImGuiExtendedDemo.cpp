@@ -152,6 +152,10 @@ namespace QwerkE {
                 ImGui::BufferingBar("##buffer_bar", 0.7f, ImVec2(400, 6), bg, col);
                 ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
                 ImGui::Separator();
+
+                static float progress = 0.5f;
+                ImGui::DragFloat("##", &progress);
+                ImGui::ProgressBar(progress);
             }
 
             if (m_IsShowingImZoomSlider)
@@ -163,6 +167,9 @@ namespace QwerkE {
                 ImZoomSlider::ImZoomSlider(0.f, 1.f, viewLower, viewHigher, 0.01f, ImZoomSlider::ImGuiZoomSliderFlags_Vertical);
                 ImGui::PopID();
             }
+
+            ImGui::Bullet();
+            ImGui::Text("Bullet");
 		}
 
         void local_DrawKnobs()

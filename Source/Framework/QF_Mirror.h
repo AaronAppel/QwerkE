@@ -153,4 +153,4 @@ MIRROR_TYPE_ID(1067, QwerkE::ScriptableSceneTransition)
 
 MIRROR_TYPE_ID(1067, QwerkE::Framework::StartUpData)
 MIRROR_TYPE_ID(1068, QwerkE::ComponentPhysics)
-MIRROR_TYPE_ID(1068, QwerkE::ComponentAudio)
+MIRROR_TYPE_ID(1069, QwerkE::ComponentAudio)
