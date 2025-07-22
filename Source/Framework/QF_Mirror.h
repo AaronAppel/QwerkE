@@ -23,6 +23,7 @@
 #include "QF_FrameBuffer.h"
 #include "QF_Input.h"
 #include "QF_Mesh.h"
+#include "QF_Physics.h"
 #include "QF_Scene.h"
 #include "QF_Sound.h"
 #include "QF_Shader.h"
@@ -154,3 +155,4 @@ MIRROR_TYPE_ID(1067, QwerkE::ScriptableSceneTransition)
 MIRROR_TYPE_ID(1067, QwerkE::Framework::StartUpData)
 MIRROR_TYPE_ID(1068, QwerkE::ComponentPhysics)
 MIRROR_TYPE_ID(1069, QwerkE::ComponentAudio)
+MIRROR_TYPE_ID(1070, QwerkE::Physics::BodyShapes)

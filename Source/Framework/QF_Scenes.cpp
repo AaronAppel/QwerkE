@@ -398,7 +398,7 @@ namespace QwerkE {
 			return (int)s_Scenes.size();
 		}
 
-		const std::vector<Scene*>& LookAtScenes()
+		const std::vector<Scene*>& LookAtScenes() // #TODO const
 		{
 			return s_Scenes;
 		}

@@ -197,8 +197,8 @@ namespace QwerkE {
 			}
 			if (Input::KeyDown(gameActions.Camera_RotateLeft))
 			{
-				Math::MatrixRotateAxis(transform.m_Matrix, vec3f(0.f, 1.f, 0.f), rotationSpeed * rotationSpeed * Time::PreviousFrameDuration());
-				// bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
+				// Math::MatrixRotateAxis(transform.m_Matrix, vec3f(0.f, 1.f, 0.f), rotationSpeed * rotationSpeed * Time::PreviousFrameDuration());
+				bx::mtxRotateXYZ(transform.m_Matrix, 0.f, rotationSpeed * deltaTime, 0.f);
 				// LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
 			}
 

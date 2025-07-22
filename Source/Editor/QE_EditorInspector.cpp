@@ -760,30 +760,25 @@ ImGui::EndPopup();
 
             case Mirror::IdForType<ComponentPhysics>():
                 {
+                    InspectFieldReturn result = local_InspectClassFields(typeInfo, obj, parentName);
                     ComponentPhysics* physicsComponent = (ComponentPhysics*)obj;
 
-                    s32 index = physicsComponent->Shape();
-                    if (ImGui::Combo("Shape##", &index,
-                        "Sphere\0"
-                        "Box\0")
-                        )
-                    {
-                        physicsComponent->Shape();
-                    }
-                    if (!physicsComponent->Created() && ImGui::SmallButton("Create"))
-                    {
-                        physicsComponent->Create();
-                    }
-
-                    if (!physicsComponent->IsActive() && ImGui::SmallButton("Activate"))
-                    {
-                        physicsComponent->SetActive(true);
-                    }
-                    if (ImGui::SmallButton("ApplyVelocity"))
-                    {
-                        physicsComponent->SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f));
-                    }
-                    InspectFieldReturn result = local_InspectClassFields(typeInfo, obj, parentName);
+                    // s32 index = physicsComponent->Shape();
+                    // if (ImGui::Combo("Shape##", &index,
+                    //     "Sphere\0"
+                    //     "Box\0")
+                    //     )
+                    // {
+                    //     physicsComponent->SetShape((Physics::BodyShapes)index);
+                    // }
+                    // if (!physicsComponent->IsActive() && ImGui::SmallButton("Activate"))
+                    // {
+                    //     physicsComponent->SetActive(true);
+                    // }
+                    // if (ImGui::SmallButton("ApplyVelocity"))
+                    // {
+                    //     physicsComponent->SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f));
+                    // }
                     valueChanged |= !result.selectedFieldName.empty();
                 }
                 break;
@@ -818,7 +813,7 @@ ImGui::EndPopup();
                     {
                         ComponentScript* script = (ComponentScript*)obj;
 
-                        Scene* scene = Scenes::GetCurrentScene();
+                        Scene* scene = Scenes::GetCurrentScene(); // #TODO Get proper scene
 
                         EntityHandle entity = EntityHandle::InvalidHandle();
                         for (auto& pair : scene->EntitiesMap())

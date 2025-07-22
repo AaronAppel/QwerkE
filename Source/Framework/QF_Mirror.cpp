@@ -126,6 +126,7 @@ MIRROR_TYPE(QwerkE::eScriptTypes)
 MIRROR_TYPE(const QwerkE::eScriptTypes)
 MIRROR_TYPE(QwerkE::eComponentTags)
 MIRROR_TYPE(QwerkE::QKey)
+MIRROR_TYPE(QwerkE::Physics::BodyShapes)
 
 // Arrays
 MIRROR_TYPE(float[16])
@@ -288,6 +289,7 @@ MIRROR_CLASS_MEMBER(m_TextureGuid)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ComponentPhysics)
+MIRROR_CLASS_MEMBER(m_Shape)
 MIRROR_CLASS_END
 
 MIRROR_CLASS(QwerkE::ComponentTransform)

@@ -18,6 +18,8 @@
 #include "QF_EntityHandle.h"
 #include "QF_Files.h"
 #include "QF_Paths.h"
+#include "QF_Physics.h"
+#include "QF_PhysicsWorld.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
 
@@ -67,7 +69,7 @@ namespace QwerkE {
         UnloadScene();
     }
 
-    void Scene::Update(float deltaTime)
+    void Scene::Update(float a_DeltaTime)
     {
         if (m_IsPaused)
             return;
@@ -79,35 +81,31 @@ namespace QwerkE {
             if (info.m_Enabled)
             {
                 auto& script = m_Registry.get<ComponentScript>(entity);
-                script.Update(deltaTime);
+                script.Update(a_DeltaTime);
             }
         }
 
-        // #TODO if (m_PhysicsSystem)
-        auto physics = m_Registry.view<ComponentPhysics>();
-        for (auto& entity : physics)
+        if (m_PhysicsWorld)
         {
-            ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
-            if (info.m_Enabled)
+            m_TimeSinceLastPhysicsStep = a_DeltaTime;
+            while (m_TimeSinceLastPhysicsStep > 0)
             {
-                // #TODO if (!StaticBody)
-                ComponentPhysics& physics = m_Registry.get<ComponentPhysics>(entity);
-                ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
-                vec3f bodyPosition = physics.BodyPosition();
-                transform.SetPosition(bodyPosition);
+                m_PhysicsWorld->StepSimulation();
+                m_TimeSinceLastPhysicsStep -= 1 / 60.f; // #TODO Project/physics settings fixed time step FPS/frequency
+            }
 
-                DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
-                debugDrawer.begin(2); // #TODO Hard coded view ID
-                debugDrawer.drawSphere(bodyPosition.x, bodyPosition.y, bodyPosition.z, 0.5f);
-                debugDrawer.end();
-
-                if (Input::KeyPressed(QKey::e_L))
+            auto physics = m_Registry.view<ComponentPhysics>();
+            for (auto& entity : physics)
+            {
+                ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
+                if (info.m_Enabled)
                 {
-                	if (!physics.IsActive())
-                	{
-                        physics.SetActive(true);
-                	}
-                    physics.SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f));
+                    // #TODO if (!StaticBody)
+                    ComponentPhysics& physics = m_Registry.get<ComponentPhysics>(entity);
+                    vec3f bodyPosition = physics.BodyPosition(this);
+
+                    ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
+                    transform.SetPosition(bodyPosition);
                 }
             }
         }
@@ -283,7 +281,7 @@ namespace QwerkE {
 
         m_SceneFileName = oldName; // #NOTE Overwrite serialized name
 
-        OnLoaded();
+        OnSceneLoaded();
 
         LOG_TRACE("{0} \"{1}\" loaded from file", __FUNCTION__, otherSceneFilePath);
 
@@ -309,7 +307,7 @@ namespace QwerkE {
             Serialize::FromFile(Paths::Scene(m_SceneFileName.c_str()).c_str(), *this);
         }
 
-        OnLoaded();
+        OnSceneLoaded();
 
         LOG_TRACE("{0} \"{1}\" loaded", __FUNCTION__, m_SceneFileName.c_str());
 
@@ -346,6 +344,11 @@ namespace QwerkE {
 
         m_CameraEntityGuid = GUID::Invalid;
 
+        if (m_PhysicsWorld)
+        {
+            delete m_PhysicsWorld;
+        }
+
         m_IsLoaded = false;
         m_IsDirty = false;
         ASSERT(m_GuidsToEntts.empty(), "Leftover data from Scene::Unload()!");
@@ -359,7 +362,29 @@ namespace QwerkE {
         LOG_TRACE("{0} \"{1}\" reloaded", __FUNCTION__, m_SceneFileName.c_str());
     }
 
-    void Scene::OnLoaded()
+    EntityHandle Scene::GetCurrentCameraEntity()
+    {
+        if (m_GuidsToEntts.find(m_CameraEntityGuid) != m_GuidsToEntts.end())
+        {
+            return EntityHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
+        }
+        return EntityHandle::InvalidHandle();
+    }
+
+    void Scene::SetCurrentCameraEntity(EntityHandle newCameraEntity)
+    {
+        if (newCameraEntity.HasComponent<ComponentCamera>())
+        {
+            const GUID newCameraGuid = newCameraEntity.GetComponent<ComponentInfo>().m_Guid;
+            if (m_GuidsToEntts.find(newCameraGuid) != m_GuidsToEntts.end())
+            {
+                m_GuidsToEntts[newCameraGuid] = newCameraEntity.m_EnttId;
+            }
+            m_CameraEntityGuid = newCameraGuid;
+        }
+    }
+
+    void Scene::OnSceneLoaded()
     {
         ASSERT(m_GuidsToEntts.empty(), "Leftover data from Scene::Unload()!");
 
@@ -386,28 +411,19 @@ namespace QwerkE {
                 break;
             }
         }
+
         // ASSERT(GUID::Invalid != m_CameraEntityGuid, "Could not find camera component!");
-    }
 
-    EntityHandle Scene::GetCurrentCameraEntity()
-    {
-        if (m_GuidsToEntts.find(m_CameraEntityGuid) != m_GuidsToEntts.end())
+        if (!m_PhysicsWorld)
         {
-            return EntityHandle(this, m_GuidsToEntts[m_CameraEntityGuid]);
+            m_PhysicsWorld = new Physics::PhysicsWorld();
         }
-        return EntityHandle::InvalidHandle();
-    }
 
-    void Scene::SetCurrentCameraEntity(EntityHandle newCameraEntity)
-    {
-        if (newCameraEntity.HasComponent<ComponentCamera>())
+        auto physics = m_Registry.view<ComponentPhysics>();
+        for (auto& entity : physics)
         {
-            const GUID newCameraGuid = newCameraEntity.GetComponent<ComponentInfo>().m_Guid;
-            if (m_GuidsToEntts.find(newCameraGuid) != m_GuidsToEntts.end())
-            {
-                m_GuidsToEntts[newCameraGuid] = newCameraEntity.m_EnttId;
-            }
-            m_CameraEntityGuid = newCameraGuid;
+            ComponentPhysics& physics = m_Registry.get<ComponentPhysics>(entity);
+            physics.Initialize(this);
         }
     }
 

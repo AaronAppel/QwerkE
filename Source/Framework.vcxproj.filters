@@ -79,6 +79,7 @@
     <ClCompile Include="Framework\QF_System.cpp" />
     <ClCompile Include="Framework\QF_ComponentAudio.cpp" />
     <ClCompile Include="Framework\QF_ComponentPhysics.cpp" />
+    <ClCompile Include="Framework\QF_PhysicsWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Framework\QF_System.h" />
     <ClInclude Include="Framework\QF_Texture.h" />
     <ClInclude Include="Framework\QF_ScriptCameraThirdPerson.h" />
+    <ClInclude Include="Framework\QF_PhysicsWorld.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

@@ -87,7 +87,6 @@ namespace QwerkE {
 		void Update(float deltatime)
 		{
 			Scenes::Update(deltatime);
-			Physics::StepSimulation(); // #TODO Handle fixed time step logic
 		}
 
 		void RenderView(u16 viewId)

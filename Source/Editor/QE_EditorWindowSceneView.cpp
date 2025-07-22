@@ -8,10 +8,12 @@
 
 #include "QF_Assets.h"
 #include "QF_ComponentCamera.h"
+#include "QF_ComponentPhysics.h"
 #include "QF_ComponentTransform.h"
 #include "QF_Files.h"
 #include "QF_Input.h"
 #include "QF_Paths.h"
+#include "QF_PhysicsWorld.h"
 #include "QF_Scene.h"
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
@@ -334,6 +336,38 @@ namespace QwerkE {
             // Scene view specific draws
             Debug::DrawSphere(m_ViewId, vec3f(.0f, .0f, .0f), 0.1f);
             Debug::DrawGrid(m_ViewId, vec3f(.0f, .0f, .0f), 50);
+
+            auto physicsComponents = m_CurrentScene->ViewComponents<ComponentPhysics>();
+            for (auto& entity : physicsComponents)
+            {
+                EntityHandle handle(m_CurrentScene, entity);
+                ComponentPhysics& physics = handle.GetComponent<ComponentPhysics>();
+                ComponentTransform& transform = handle.GetComponent<ComponentTransform>();
+                vec3f bodyPosition = physics.BodyPosition(m_CurrentScene);
+                transform.SetPosition(bodyPosition);
+
+                DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
+                debugDrawer.begin(m_ViewId);
+                switch (physics.Shape(m_CurrentScene))
+                {
+                case Physics::BodyShapes::Sphere:
+                    debugDrawer.drawSphere(bodyPosition.x, bodyPosition.y, bodyPosition.z, 0.5f);
+                    break;
+                case Physics::BodyShapes::Box:
+                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, 0.5f);
+                    break;
+                }
+                debugDrawer.end();
+
+                if (Input::KeyPressed(QKey::e_L))
+                {
+                    if (!physics.IsActive(m_CurrentScene))
+                    {
+                        physics.SetActive(true, m_CurrentScene);
+                    }
+                    physics.SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f), m_CurrentScene);
+                }
+            }
 
             if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
             {

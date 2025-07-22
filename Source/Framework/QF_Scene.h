@@ -26,6 +26,11 @@ namespace QwerkE {
 
     class EntityHandle;
 
+    namespace Physics
+    {
+        class PhysicsWorld;
+    }
+
     class Scene;
     namespace Scenes
     {
@@ -56,8 +61,6 @@ namespace QwerkE {
         void LoadScene();
         void UnloadScene();
         void ReloadScene();
-
-        void OnLoaded();
 
         bool GetIsPaused() { return m_IsPaused; }
         const std::string& GetSceneName() const { return m_SceneFileName; }
@@ -97,29 +100,34 @@ namespace QwerkE {
         friend Scene* Scenes::CreateScene(const char* const sceneFileNamePrefix);
         friend Scene* Scenes::CreateScene(const std::string& a_SceneFileName);
         friend void Assets::Initialize();
+        friend class ComponentPhysics;
 
         Scene()
         {
-            OnLoaded();
+            OnSceneLoaded();
         }
 
         Scene(GUID a_Guid) : m_SceneGuid(a_Guid)
         {
-            OnLoaded();
+            OnSceneLoaded();
         }
 
         Scene(const std::string& sceneFileName) :
             m_SceneFileName(sceneFileName)
         {
-            OnLoaded();
+            OnSceneLoaded();
         }
 
         Scene(const std::string& sceneFileName, GUID guid) :
             m_SceneFileName(sceneFileName),
             m_SceneGuid(guid)
         {
-            OnLoaded();
+            OnSceneLoaded();
         }
+
+        void OnSceneLoaded();
+
+        Physics::PhysicsWorld* GetPhysicsWorld() { return m_PhysicsWorld; }
 
         MIRROR_PRIVATE_MEMBERS
         friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
@@ -140,6 +148,9 @@ namespace QwerkE {
         bool m_IsPaused = false; // #TODO Move state to editor as it's really for higher control (editor, or cutscene state, etc)
 
         // #TODO Consider having per scene time scaling, as well as a global timescale
+
+        Physics::PhysicsWorld* m_PhysicsWorld = nullptr;
+        float m_TimeSinceLastPhysicsStep = 0.f;
     };
 
 }

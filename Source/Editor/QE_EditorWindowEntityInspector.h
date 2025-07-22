@@ -142,6 +142,11 @@ namespace QwerkE {
                             ComponentAudio* audio = (ComponentAudio*)&component;
                             audio->Initialize();
                         }
+                        else if (std::is_same_v<Component, ComponentPhysics>)
+                        {
+                            ComponentPhysics* physics = (ComponentPhysics*)&component;
+                            // #TODO physics->Initialize();
+                        }
 
                         ImGui::CloseCurrentPopup();
                     }

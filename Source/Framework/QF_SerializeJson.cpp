@@ -144,6 +144,7 @@ namespace QwerkE {
             case Mirror::IdForType<const bool>():
             case Mirror::IdForType<bool>():
                 cJsonItem = CreateJsonBool<bool>(primitiveTypeOrMemberName, primitiveAddress); break;
+            case Mirror::IdForType<Physics::BodyShapes>(): // #TODO Remove editor types from framework files
             case Mirror::IdForType<Editor::EditorWindowTypes>(): // #TODO Remove editor types from framework files
             case Mirror::IdForType<Editor::EditorWindowFlags>(): // #TODO Remove editor types from framework files
             case Mirror::IdForType<Editor::EditorWindowSizingFlags>(): // #TODO Remove editor types from framework files
