@@ -14,31 +14,34 @@ namespace QwerkE {
 
     namespace Physics {
         enum BodyShapes : u8;
+        class PhysicsWorld;
     }
 
     class ComponentPhysics
     {
     public:
-        ComponentPhysics();
+        ComponentPhysics() = default;
         ComponentPhysics(Scene* a_Scene);
         ~ComponentPhysics();
 
         void Initialize(Scene* a_Scene);
+        void Initialize(Physics::PhysicsWorld* a_PhysicsWorld);
 
         // #TODO Remove Scene* dependency in every function
 
-        bool IsActive(Scene* a_Scene);
-        void SetActive(bool a_Activate, Scene* a_Scene);
+        bool IsActive();
+        void SetActive(bool a_Activate);
 
-        void SetLinearVelocity(vec3f a_Velocity, Scene* a_Scene);
+        void SetLinearVelocity(vec3f a_Velocity);
 
-        vec3f BodyPosition(Scene* a_Scene);
+        vec3f BodyPosition();
+        vec3f BodyScale();
 
-        Physics::BodyShapes Shape(Scene* a_Scene) { return m_Shape; }
-        void SetShape(Physics::BodyShapes a_NewShape, Scene* a_Scene);
+        Physics::BodyShapes Shape() { return m_Shape; }
+        void SetShape(Physics::BodyShapes a_NewShape);
 
     private:
-        void Create(Scene* a_Scene);
+        void Create(Physics::PhysicsWorld* a_PhysicsWorld);
         bool Created() { return m_Body; }
 
         // friend class PhysicsSystem; // #TODO Friend class?
@@ -46,6 +49,7 @@ namespace QwerkE {
 
         MIRROR_PRIVATE_MEMBERS
 
+        Physics::PhysicsWorld* m_PhysicsWorld = nullptr;
         JPH::Body* m_Body = nullptr;
         Physics::BodyShapes m_Shape;
     };

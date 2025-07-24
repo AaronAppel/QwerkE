@@ -45,6 +45,7 @@
 					}
 				},
 				"QwerkE::ComponentPhysics":	{
+					"m_Shape":	0
 				}
 			},
 			"Triangle":	{
@@ -394,6 +395,49 @@
 					"m_TextureGuid":	{
 						"m_Guid":	"0"
 					}
+				}
+			},
+			"Floor":	{
+				"QwerkE::ComponentInfo":	{
+					"m_EntityName":	"Floor",
+					"m_Guid":	{
+						"m_Guid":	"11681206627170218022"
+					},
+					"m_Enabled":	true
+				},
+				"QwerkE::ComponentTransform":	{
+					"m_Matrix":	{
+						"float":	50,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1.1924880638503055e-08,
+						"float":	50,
+						"float":	0,
+						"float":	0,
+						"float":	-1,
+						"float":	50,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	0,
+						"float":	1
+					}
+				},
+				"QwerkE::ComponentMesh":	{
+					"m_MeshGuid":	{
+						"m_Guid":	"3252328281067745513"
+					},
+					"m_ShaderGuid":	{
+						"m_Guid":	"1234563466966038835"
+					},
+					"m_TextureGuid":	{
+						"m_Guid":	"0"
+					}
+				},
+				"QwerkE::ComponentPhysics":	{
+					"m_Shape":	1
 				}
 			}
 		}

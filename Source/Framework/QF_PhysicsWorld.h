@@ -46,6 +46,7 @@ namespace QwerkE {
 		{
 			Sphere = 0,
 			Box,
+			Plane,
 			Count,
 		};
 

@@ -343,29 +343,31 @@ namespace QwerkE {
                 EntityHandle handle(m_CurrentScene, entity);
                 ComponentPhysics& physics = handle.GetComponent<ComponentPhysics>();
                 ComponentTransform& transform = handle.GetComponent<ComponentTransform>();
-                vec3f bodyPosition = physics.BodyPosition(m_CurrentScene);
+                vec3f bodyPosition = physics.BodyPosition();
                 transform.SetPosition(bodyPosition);
 
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
                 debugDrawer.begin(m_ViewId);
-                switch (physics.Shape(m_CurrentScene))
+                switch (physics.Shape())
                 {
                 case Physics::BodyShapes::Sphere:
                     debugDrawer.drawSphere(bodyPosition.x, bodyPosition.y, bodyPosition.z, 0.5f);
                     break;
                 case Physics::BodyShapes::Box:
-                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, 0.5f);
+                    // #TODO transform.Down()
+                    // #TODO Draw shapes using Jolt body properties or better support all shapes
+                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, transform.GetScale().length());
                     break;
                 }
                 debugDrawer.end();
 
                 if (Input::KeyPressed(QKey::e_L))
                 {
-                    if (!physics.IsActive(m_CurrentScene))
+                    if (!physics.IsActive())
                     {
-                        physics.SetActive(true, m_CurrentScene);
+                        physics.SetActive(true);
                     }
-                    physics.SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f), m_CurrentScene);
+                    physics.SetLinearVelocity(vec3f(0.0f, 5.0f, 0.0f));
                 }
             }
 

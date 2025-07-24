@@ -145,7 +145,7 @@ namespace QwerkE {
                         else if (std::is_same_v<Component, ComponentPhysics>)
                         {
                             ComponentPhysics* physics = (ComponentPhysics*)&component;
-                            // #TODO physics->Initialize();
+                            physics->Initialize(entityHandle.GetScene());
                         }
 
                         ImGui::CloseCurrentPopup();

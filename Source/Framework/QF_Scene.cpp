@@ -102,7 +102,7 @@ namespace QwerkE {
                 {
                     // #TODO if (!StaticBody)
                     ComponentPhysics& physics = m_Registry.get<ComponentPhysics>(entity);
-                    vec3f bodyPosition = physics.BodyPosition(this);
+                    vec3f bodyPosition = physics.BodyPosition();
 
                     ComponentTransform& transform = m_Registry.get<ComponentTransform>(entity);
                     transform.SetPosition(bodyPosition);

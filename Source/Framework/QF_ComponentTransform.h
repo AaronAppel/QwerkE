@@ -20,6 +20,8 @@ namespace QwerkE {
 
 		vec3f Forward() const;
 
+		// #TODO Up, Right, Forward, Down, Left, Backward
+
 		const float* const GetMatrix() const { return m_Matrix; }
 
 		// #TODO Consider changing to private and using a class if direct matrix access is improper

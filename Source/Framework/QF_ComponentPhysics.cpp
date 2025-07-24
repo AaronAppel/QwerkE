@@ -7,6 +7,7 @@
 #include "Libraries/Jolt/Physics/Body/BodyInterface.h"
 
 #include "Libraries/Jolt/Physics/Collision/Shape/BoxShape.h"
+// #include "Libraries/Jolt/Physics/Collision/Shape/PlaneShape.h"
 #include "Libraries/Jolt/Physics/Collision/Shape/SphereShape.h"
 
 #include "Libraries/Jolt/Math/Real.h"
@@ -23,25 +24,10 @@ using namespace JPH::literals;
 
 namespace QwerkE {
 
-    ComponentPhysics::ComponentPhysics()
-    {
-        Create(Scenes::GetCurrentScene());
-
-        // #TODO Find proper scene
-        const std::vector<Scene*>& scenes = Scenes::LookAtScenes();
-        for (size_t i = 0; i < scenes.size(); i++)
-        {
-            // if (scenes[i]->)
-            {
-                // Create(scenes[i]);
-            }
-        }
-    }
-
     ComponentPhysics::ComponentPhysics(Scene* a_Scene) :
         m_Shape(Physics::BodyShapes::Sphere) // #TODO Make sure serialized value persists
     {
-        Create(a_Scene);
+        Initialize(a_Scene);
     }
 
     ComponentPhysics::~ComponentPhysics()
@@ -51,15 +37,24 @@ namespace QwerkE {
 
     void ComponentPhysics::Initialize(Scene* a_Scene)
     {
-        Create(a_Scene);
+        if (a_Scene)
+        {
+            Create(a_Scene->GetPhysicsWorld());
+        }
     }
 
-    void ComponentPhysics::Create(Scene* a_Scene)
+    void ComponentPhysics::Initialize(Physics::PhysicsWorld* a_PhysicsWorld)
     {
-        if (m_Body)
+        Create(a_PhysicsWorld);
+    }
+
+    void ComponentPhysics::Create(Physics::PhysicsWorld* a_PhysicsWorld)
+    {
+        if (!a_PhysicsWorld || m_PhysicsWorld || m_Body)
         {
             return;
         }
+        m_PhysicsWorld = a_PhysicsWorld;
 
         // #TODO UINT numOfBodies = Physics::BodyCount();
 
@@ -71,9 +66,8 @@ namespace QwerkE {
                 // Note that this uses the shorthand version of creating and adding a body to the world
                 JPH::BodyCreationSettings sphere_settings(new JPH::SphereShape(0.5f), JPH::RVec3(0.0_r, 3.0_r, 0.0_r), JPH::Quat::sIdentity(), JPH::EMotionType::Dynamic, Physics::Layers::MOVING);
 
-                Physics::PhysicsWorld* world = a_Scene->GetPhysicsWorld();
-                m_Body = world->CreateBody(sphere_settings);
-                world->AddBody(*m_Body, JPH::EActivation::Activate);
+                m_Body = m_PhysicsWorld->CreateBody(sphere_settings);
+                m_PhysicsWorld->AddBody(*m_Body, JPH::EActivation::Activate);
             }
             break;
         case QwerkE::Physics::Box:
@@ -81,7 +75,7 @@ namespace QwerkE {
                 // Next we can create a rigid body to serve as the floor, we make a large box
                 // Create the settings for the collision volume (the shape).
                 // Note that for simple shapes (like boxes) you can also directly construct a BoxShape.
-                JPH::BoxShapeSettings floor_shape_settings(JPH::Vec3(50.0f, 1.0f, 50.0f));
+                JPH::BoxShapeSettings floor_shape_settings(JPH::Vec3(25.0f, 0.1f, 25.0f));
                 floor_shape_settings.SetEmbedded(); // A ref counted object on the stack (base class RefTarget) should be marked as such to prevent it from being freed when its reference count goes to 0.
 
                 // Create the shape
@@ -92,16 +86,32 @@ namespace QwerkE {
                 JPH::BodyCreationSettings floor_settings(floor_shape, JPH::RVec3(0.0_r, 0.0_r, 0.0_r), JPH::Quat::sIdentity(), JPH::EMotionType::Static, Physics::Layers::NON_MOVING);
 
                 // Add it to the world
-                Physics::PhysicsWorld* world = a_Scene->GetPhysicsWorld();
-                m_Body = world->CreateBody(floor_settings);
+                m_Body = m_PhysicsWorld->CreateBody(floor_settings);
                 if (m_Body)
                 {
-                    world->AddBody(*m_Body, JPH::EActivation::DontActivate);
+                    m_PhysicsWorld->AddBody(*m_Body, JPH::EActivation::DontActivate);
                 }
                 else
                 {
                     // #TODO Error
                 }
+            }
+            break;
+
+        case QwerkE::Physics::Plane:
+            {
+                // JPH::BodyInterface& bodyInterface = m_PhysicsWorld->GetbodyInterface();
+                // JPH::BodyCreationSettings planeSettings = JPH::BodyCreationSettings(new JPH::PlaneShape(JPH::Plane(JPH::Vec3(0.1f, 1.0f, 0.0f).Normalized(), 1.0f), nullptr, 100), JPH::RVec3(0, 0, 0), JPH::Quat::sIdentity(), JPH::EMotionType::Static, Physics::Layers::NON_MOVING);
+                //
+                // m_Body = m_PhysicsWorld->CreateBody(planeSettings);
+                // if (m_Body)
+                // {
+                //     m_PhysicsWorld->AddBody(*m_Body, JPH::EActivation::DontActivate);
+                // }
+                // else
+                // {
+                //     // #TODO Error
+                // }
             }
             break;
 
@@ -113,34 +123,34 @@ namespace QwerkE {
         // ASSERT(numOfBodies < Physics::BodyCount(), "Error creating physics body!");
     }
 
-    bool ComponentPhysics::IsActive(Scene* a_Scene)
+    bool ComponentPhysics::IsActive()
     {
-        return m_Body && m_Body->IsActive();
+        return m_PhysicsWorld && m_Body && m_Body->IsActive();
     }
 
-    void ComponentPhysics::SetActive(bool a_Activate, Scene* a_Scene)
+    void ComponentPhysics::SetActive(bool a_Activate)
     {
-        if (!IsActive(a_Scene))
+        if (!IsActive())
         {
-            JPH::BodyInterface& bodyInterface = a_Scene->GetPhysicsWorld()->GetbodyInterface();
+            JPH::BodyInterface& bodyInterface = m_PhysicsWorld->GetbodyInterface();
             bodyInterface.ActivateBody(m_Body->GetID());
         }
     }
 
-    void ComponentPhysics::SetLinearVelocity(vec3f a_Velocity, Scene* a_Scene)
+    void ComponentPhysics::SetLinearVelocity(vec3f a_Velocity)
     {
         if (m_Body)
         {
-            if (!IsActive(a_Scene))
+            if (!IsActive())
             {
-                SetActive(true, a_Scene);
+                SetActive(true);
             }
-            JPH::BodyInterface& bodyInterface = a_Scene->GetPhysicsWorld()->GetbodyInterface();
+            JPH::BodyInterface& bodyInterface = m_PhysicsWorld->GetbodyInterface();
             bodyInterface.SetLinearVelocity(m_Body->GetID(), JPH::Vec3(a_Velocity.x, a_Velocity.y, a_Velocity.z));
         }
     }
 
-    vec3f ComponentPhysics::BodyPosition(Scene* a_Scene)
+    vec3f ComponentPhysics::BodyPosition()
     {
         if (m_Body)
         {
@@ -151,7 +161,17 @@ namespace QwerkE {
         return vec3f();
     }
 
-    void ComponentPhysics::SetShape(Physics::BodyShapes a_NewShape, Scene* a_Scene)
+    vec3f ComponentPhysics::BodyScale()
+    {
+        if (m_Body)
+        {
+            JPH::Vec3 bodyPosition = m_Body->GetPosition();
+            return vec3f(bodyPosition.GetX(), bodyPosition.GetY(), bodyPosition.GetZ());
+        }
+        return vec3f();
+    }
+
+    void ComponentPhysics::SetShape(Physics::BodyShapes a_NewShape)
     {
         if (true)
         {
