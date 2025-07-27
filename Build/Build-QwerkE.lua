@@ -28,7 +28,7 @@ workspace "QwerkE"
 		buildoptions { "/Zc:__cplusplus" }
 		systemversion "latest"
 		defines { "_QWINDOWS", "WIN32_LEAN_AND_MEAN", }
-		buildoptions { "/CGTHREADS:8" }
+		buildoptions { "/CGTHREADS:8 /MP" }
 		
 	filter "configurations:Debug"
 		defines { "_QDEBUG", "WIN32_LEAN_AND_MEAN", }
@@ -70,7 +70,7 @@ workspace "QwerkE"
 	include "../Source/Libraries/Jolt/Build-Jolt.lua"
 	include "../Source/Libraries/lodepng/Build-lodepng.lua"
 	include "../Source/Libraries/Mirror/Build-Mirror.lua"
-	include "../Source/Libraries/openal-soft/Build-openal-soft.lua"	
+	include "../Source/Libraries/openal-soft/Build-openal-soft.lua"
 	include "../Source/Libraries/spdlog/Build-spdlog.lua"
 	include "../Source/Libraries/stb_image/Build-stb_image.lua"
 	group ""

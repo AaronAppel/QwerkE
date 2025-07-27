@@ -26,23 +26,31 @@ project "openal-soft"
 		
 		-- .h files
 		-- .h al
+		"al/auxeffectslot.h",
+		"al/buffer.h",
 		"al/debug.h",
 		"al/direct_defs.h",
 		"al/effect.h",
-		"al/eax/effect.h",
-		"al/effects/effects.h",
 		"al/event.h",		
 		"al/filter.h",
 		"al/listener.h",
 		"al/source.h",
 		
-		"al/eax/api.h",
+		"al/eax/api.h",		
+		"al/eax/call.h",
+		"al/eax/exception.h",
+		"al/eax/effect.h",
+		"al/eax/fx_slot_index.h",
+		"al/eax/fx_slots.h",
+		"al/eax/globals.h",
+		"al/eax/utils.h",
+		"al/eax/x_ram.h",
+		
+		"al/effects/effects.h",
 		
 		-- .h alc
 		"alc/alconfig.h",
 		"alc/alu.h",
-		"al/auxeffectslot.h",
-		"al/buffer.h",
 		"alc/context.h",
 		"alc/device.h",		
 		"alc/events.h",		
@@ -56,14 +64,6 @@ project "openal-soft"
 		"alc/backends/wasapi.h",
 		"alc/backends/wave.h",
 		"alc/backends/winmm.h",
-		
-		"al/eax/call.h",
-		"al/eax/exception.h",
-		"al/eax/fx_slot_index.h",
-		"al/eax/fx_slots.h",
-		"al/eax/globals.h",
-		"al/eax/utils.h",
-		"al/eax/x_ram.h",
 		
 		"alc/effects/base.h",		
 		
@@ -96,9 +96,7 @@ project "openal-soft"
 		"core/ambdec.h",
 		"core/ambidefs.h",
 		"core/async_event.h",
-		"core/effects/base.h",
 		"core/bformatdec.h",
-		"core/filters/biquad.h",
 		"core/bs2b.h",
 		"core/bsinc_defs.h",
 		"core/bsinc_tables.h",
@@ -120,13 +118,17 @@ project "openal-soft"
 		"core/hrtf.h",
 		"core/logging.h",
 		"core/mastering.h",
-		"core/filters/nfc.h",
 		"core/resampler_limits.h",
-		"core/filters/splitter.h",
 		"core/storage_formats.h",
 		"core/uhjfilter.h",
 		"core/voice.h",
 		"core/voice_change.h",
+		
+		"core/effects/base.h",
+		
+		"core/filters/biquad.h",
+		"core/filters/nfc.h",
+		"core/filters/splitter.h",
 		
 		-- .h core mixer
 		"core/mixer.h",
@@ -145,8 +147,8 @@ project "openal-soft"
 		"al/extension.cpp",
 		"al/filter.cpp",
 		"al/listener.cpp",
-		"al/state.cpp",
 		"al/source.cpp",
+		"al/state.cpp",
 		
 		"al/eax/api.cpp",
 		"al/eax/call.cpp",
@@ -157,6 +159,7 @@ project "openal-soft"
 		
 		"al/effects/autowah.cpp",
 		"al/effects/compressor.cpp",
+		"al/effects/chorus.cpp",
 		"al/effects/convolution.cpp",
 		"al/effects/dedicated.cpp",
 		"al/effects/distortion.cpp",
@@ -179,13 +182,13 @@ project "openal-soft"
 		"alc/events.cpp",
 		"alc/panning.cpp",
 		
-		"alc/backends/null.cpp",
 		"alc/backends/base.cpp",
 		"alc/backends/dsound.cpp",
-		"alc/backends/loopback.cpp",
-		"alc/backends/wasapi.cpp",
-		"alc/backends/wave.cpp",
-		"alc/backends/winmm.cpp",
+		-- "alc/backends/loopback.cpp",
+		"alc/backends/null.cpp",
+		-- "alc/backends/wasapi.cpp",
+		-- "alc/backends/wave.cpp",
+		-- "alc/backends/winmm.cpp",
 		
 		"alc/effects/autowah.cpp",
 		"alc/effects/chorus.cpp",
@@ -213,7 +216,6 @@ project "openal-soft"
 		"common/strutils.cpp",
 		
 		-- .cpp core
-		"core/effectslot.cpp",
 		"core/ambdec.cpp",
 		"core/ambidefs.cpp",
 		"core/bformatdec.cpp",
@@ -226,6 +228,7 @@ project "openal-soft"
 		"core/cubic_tables.cpp",
 		"core/devformat.cpp",
 		"core/device.cpp",
+		"core/effectslot.cpp",
 		"core/except.cpp",
 		"core/fpu_ctrl.cpp",
 		"core/helpers.cpp",
@@ -238,8 +241,8 @@ project "openal-soft"
 		"core/voice.cpp",
 		
 		"core/filters/biquad.cpp",
-		"core/filters/splitter.cpp",
 		"core/filters/nfc.cpp",
+		"core/filters/splitter.cpp",
 		
 		-- .cpp core mixer
 		"core/mixer.cpp",
@@ -288,6 +291,9 @@ project "openal-soft"
 	
 	links
 	{
+		"openal-softfmt",
+		"winmm.lib",
+		"Avrt.lib"
 	}
 	
 	filter "action:vs*"

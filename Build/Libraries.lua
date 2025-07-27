@@ -21,3 +21,4 @@ LibraryDefines = {
 
 LibraryLib = {}
 LibraryLib["glfw"] = "%{wks.location}/Source/Libraries/glfw/glfw3.lib"
+LibraryLib["OpenAL"] = "%{wks.location}/Source/Libraries/openal-soft/OpenAL32.lib"

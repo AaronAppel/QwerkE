@@ -79,6 +79,11 @@ project "Framework"
 		
 		-- Libraries .lib/.dll
 		"%{LibraryLib.glfw}",
+		"%{LibraryLib.OpenAL}",
+		
+		-- OpenAl dependencies
+		-- "winmm.lib",
+		-- "Avrt.lib"
 	}
 	
 	vpaths -- VS Filters (Solution Explorer folders)
