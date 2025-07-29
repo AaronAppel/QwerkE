@@ -297,23 +297,13 @@ project "openal-soft"
 	}
 	
 	filter "action:vs*"
-		buildoptions { "/w14640 /utf-8"}
+		buildoptions { "/w14640 /utf-8 /machine:x64"}
 
 	filter "configurations:Debug"
 		defines
 		{
 			"WIN32",
 			"_WINDOWS",
-			"AL_LIBTYPE_STATIC",
-			"AL_BUILD_LIBRARY",
-			"AL_ALEXT_PROTOTYPES",
-			"ALC_API=",
-			"AL_API=",
-			"_WIN32",
-			"NOMINMAX",
-			"WIN32_LEAN_AND_MEAN",
-			"_CRT_SECURE_NO_WARNINGS",
-			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
 			"CMAKE_INTDIR=\"Debug\"",
 		}
 		
@@ -322,17 +312,6 @@ project "openal-soft"
 		{
 			"WIN32",
 			"_WINDOWS",
-			"NDEBUG",
-			"AL_LIBTYPE_STATIC",
-			"AL_BUILD_LIBRARY",
-			"AL_ALEXT_PROTOTYPES",
-			"ALC_API=",
-			"AL_API=",
-			"_WIN32",
-			"NOMINMAX",
-			"WIN32_LEAN_AND_MEAN",
-			"_CRT_SECURE_NO_WARNINGS",
-			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
 			"CMAKE_INTDIR=\"Release\"",
 		}
 		
@@ -341,16 +320,5 @@ project "openal-soft"
 		{
 			"WIN32",
 			"_WINDOWS",
-			"NDEBUG",
-			"AL_LIBTYPE_STATIC",
-			"AL_BUILD_LIBRARY",
-			"AL_ALEXT_PROTOTYPES",
-			"ALC_API=",
-			"AL_API=",
-			"_WIN32",
-			"NOMINMAX",
-			"WIN32_LEAN_AND_MEAN",
-			"_CRT_SECURE_NO_WARNINGS",
-			"_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
 			"CMAKE_INTDIR=\"Release\"",
 		}
