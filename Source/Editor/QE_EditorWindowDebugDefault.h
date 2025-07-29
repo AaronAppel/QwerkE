@@ -29,6 +29,8 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override
 			{
+				return;
+
 				ImGui::PushItemWidth(80);
 				s32 tempIntTextureId = m_TextureId;
 				if (ImGui::ScrollerInt("Texture Id", &tempIntTextureId, 1))
