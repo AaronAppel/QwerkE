@@ -21,9 +21,6 @@
     <ClCompile Include="Framework\QF_ComponentMesh.cpp">
       <Filter>Entities\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QF_ComponentTransform.cpp">
-      <Filter>Entities\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\QF_Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
@@ -77,9 +74,13 @@
     <ClCompile Include="Framework\QF_ShaderUniforms.cpp" />
     <ClCompile Include="Framework\QF_Sound.cpp" />
     <ClCompile Include="Framework\QF_System.cpp" />
-    <ClCompile Include="Framework\QF_ComponentAudio.cpp" />
-    <ClCompile Include="Framework\QF_ComponentPhysics.cpp" />
     <ClCompile Include="Framework\QF_PhysicsWorld.cpp" />
+    <ClCompile Include="Framework\QF_ComponentAudio.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\QF_ComponentPhysics.cpp">
+      <Filter>Entities\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\QF_Enums.h" />
@@ -229,10 +230,6 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="Framework\QF_Audio.h" />
-    <ClInclude Include="Framework\QF_ComponentAudio.h" />
-    <ClInclude Include="Framework\QF_ComponentPhysics.h" />
-    <ClInclude Include="Framework\QF_ComponentSprite.h" />
-    <ClInclude Include="Framework\QF_ComponentText.h" />
     <ClInclude Include="Framework\QF_FrameBuffer.h" />
     <ClInclude Include="Framework\QF_InputMapping.h" />
     <ClInclude Include="Framework\QF_Macros.h" />
@@ -244,6 +241,18 @@
     <ClInclude Include="Framework\QF_Texture.h" />
     <ClInclude Include="Framework\QF_ScriptCameraThirdPerson.h" />
     <ClInclude Include="Framework\QF_PhysicsWorld.h" />
+    <ClInclude Include="Framework\QF_ComponentText.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_ComponentAudio.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_ComponentPhysics.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_ComponentSprite.h">
+      <Filter>Entities\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

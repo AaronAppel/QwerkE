@@ -177,6 +177,7 @@
       <Filter>Windows\Instanced</Filter>
     </ClInclude>
     <ClInclude Include="Editor\QE_Mirror.h" />
+    <ClInclude Include="Editor\QE_EditorWindowSceneGraphCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

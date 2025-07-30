@@ -68,7 +68,7 @@ namespace QwerkE {
 
         // LOG_ONCE_ERROR();
 
-        bgfx::setTransform(transform.GetMatrix());
+        bgfx::setTransform(transform.m_Matrix);
         constexpr uint8_t stream = 0;
         bgfx::setVertexBuffer(stream, m_Mesh->m_vbh); // #TODO Mesh->PreDraw(); abstract members
         bgfx::setIndexBuffer(m_Mesh->m_ibh);

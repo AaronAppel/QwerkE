@@ -131,7 +131,7 @@ namespace QwerkE {
                 auto& camera = cameraHandle.GetComponent<ComponentCamera>();
                 auto& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
 
-                camera.PreDrawSetup(viewId, cameraTransform.GetPosition());
+                camera.PreDrawSetup(viewId, cameraTransform.Position());
             }
 
             auto viewMeshes = m_Registry.view<ComponentMesh>();

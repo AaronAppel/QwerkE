@@ -64,7 +64,7 @@ namespace QwerkE {
 				const ComponentTransform& otherTransform = oldTargetHandle.GetComponent<ComponentTransform>();
 				ComponentTransform& myTransform = m_Entity.GetComponent<ComponentTransform>();
 
-				const vec3f distanceBeforeMove = otherTransform.GetPosition() - myTransform.GetPosition();
+				const vec3f distanceBeforeMove = otherTransform.Position() - myTransform.Position();
 				if (glm::length(distanceBeforeMove) <= m_DistanceToChangeTargets)
 				{
 					IncrementTarget();
@@ -72,10 +72,10 @@ namespace QwerkE {
 
 				EntityHandle& newTargetHandle = m_TransformHandles[m_CurrentTransformTargetIndex];
 				const ComponentTransform& currentTargetTransform = newTargetHandle.GetComponent<ComponentTransform>();
-				vec3f directionToTarget = currentTargetTransform.GetPosition() - myTransform.GetPosition();
+				vec3f directionToTarget = currentTargetTransform.Position() - myTransform.Position();
 				directionToTarget = glm::normalize(directionToTarget);
 
-				vec3f currentPosition = myTransform.GetPosition();
+				vec3f currentPosition = myTransform.Position();
 				currentPosition = currentPosition + (directionToTarget * m_MovementSpeed * deltaTime);
 				myTransform.SetPosition(currentPosition);
 			}

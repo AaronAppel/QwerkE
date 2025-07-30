@@ -36,6 +36,28 @@ namespace QwerkE {
             return { DEG(x), DEG(y), DEG(z) };  // Return degrees
         }
 
+        void MatrixRotationXYZ(const float a_Matrix[16], float& pitch, float& yaw, float& roll) {
+            // Column-major matrix layout:
+            // [m00, m10, m20, m30]
+            // [m01, m11, m21, m31]
+            // [m02, m12, m22, m32]
+            // [m03, m13, m23, m33]
+
+            // Extracting rotation values
+            float m00 = a_Matrix[0], m01 = a_Matrix[4], m02 = a_Matrix[8];
+            float m10 = a_Matrix[1], m11 = a_Matrix[5], m12 = a_Matrix[9];
+            float m20 = a_Matrix[2], m21 = a_Matrix[6], m22 = a_Matrix[10];
+
+            // Pitch (rotation about X-axis)
+            pitch = std::atan2(m21, m22);
+
+            // Yaw (rotation about Y-axis)
+            yaw = std::atan2(-m20, std::sqrt(m21 * m21 + m22 * m22));
+
+            // Roll (rotation about Z-axis)
+            roll = std::atan2(m10, m00);
+        }
+
         vec3f MatrixRotation(const float a_Matrix[16])
         {
             vec3f returnRotation; // x=pitch, y=yaw, z=roll
@@ -88,7 +110,7 @@ namespace QwerkE {
             return returnRotation;
         }
 
-        vec3f MatrixScale(const float a_Matrix[16])
+        vec3f MatrixScale(const float a_Matrix[16]) // Column Major
         {
             vec3f returnScale;
 

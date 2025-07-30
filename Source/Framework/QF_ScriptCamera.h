@@ -121,7 +121,7 @@ namespace QwerkE {
 
 				constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
 				bx::Vec3 rotate = { pitch, yaw, 0.f };
-				const vec3f& translate = transform.GetPosition();
+				const vec3f& translate = transform.Position();
 
 				bx::mtxSRT(transform.m_Matrix,
 					scale.x, scale.y, scale.z,
@@ -144,14 +144,14 @@ namespace QwerkE {
 			if (Input::KeyDown(gameActions.Camera_MoveForward) ||
 				Input::GamepadDown(QGamepad::e_GamepadA))
 			{
-				vec3f pos = transform.GetPosition();
+				vec3f pos = transform.Position();
 				bx::Vec3 eye = bx::mad(forward, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveBackward))
 			{
-				vec3f pos = transform.GetPosition();
+				vec3f pos = transform.Position();
 				bx::Vec3 eye = bx::mad(forward, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
@@ -166,14 +166,14 @@ namespace QwerkE {
 
 			if (Input::KeyDown(gameActions.Camera_MoveLeft))
 			{
-				vec3f pos = transform.GetPosition();
+				vec3f pos = transform.Position();
 				bx::Vec3 eye = bx::mad(right, -deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[12] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveRight))
 			{
-				vec3f pos = transform.GetPosition();
+				vec3f pos = transform.Position();
 				bx::Vec3 eye = bx::mad(right, deltaTime * camera.m_MoveSpeed, bx::Vec3(pos.x, pos.y, pos.z));
 				transform.SetPosition(vec3f(eye.x, eye.y, eye.z));
 				// transform.m_Matrix[12] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
@@ -219,7 +219,7 @@ namespace QwerkE {
 				// #TODO Only re-calculate if forward changed
 				constexpr float scalar = 1.f;
 				const float* position = nullptr;
-				vec3f forwardPosition = transform.GetPosition() + (transform.Forward() * scalar);
+				vec3f forwardPosition = transform.Position() + (transform.Forward() * scalar);
 				camera.m_LookAtPosition = forwardPosition;
 			}
 

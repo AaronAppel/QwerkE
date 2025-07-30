@@ -22,6 +22,9 @@
 #include "QE_EditorInspector.h"
 #include "QE_Settings.h"
 
+inline vec3f Vec3(bx::Vec3 a_BxVec3) { return vec3f(a_BxVec3.x, a_BxVec3.y, a_BxVec3.z); }
+inline bx::Vec3 Vec3(vec3f a_Vec3) { return bx::Vec3(a_Vec3.x, a_Vec3.y, a_Vec3.z); }
+
 namespace QwerkE {
 
     namespace Editor {
@@ -310,7 +313,7 @@ namespace QwerkE {
                 if (drawSelectedEntityGizmo)
                 {
                     ComponentTransform& transform = m_LastSelectEntity.GetComponent<ComponentTransform>();
-                    const vec3f& position = transform.GetPosition();
+                    const vec3f& position = transform.Position();
 #ifdef _QDEBUG
                     {   // Debug drawer call
                         uint64_t bgfxState = 0
@@ -324,7 +327,7 @@ namespace QwerkE {
                         DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
                         debugDrawer.begin(m_ViewId, true);
 
-                        vec3f scale = transform.GetScale();
+                        vec3f scale = transform.Scale();
                         float magnitude = Math::Magnitude(scale);
 
                         debugDrawer.drawOrb(position.x, position.y, position.z, 0.55 * magnitude, Axis::X);
@@ -357,7 +360,7 @@ namespace QwerkE {
                 case Physics::BodyShapes::Box:
                     // #TODO transform.Down()
                     // #TODO Draw shapes using Jolt body properties or better support all shapes
-                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, transform.GetScale().length());
+                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, transform.Scale().length());
                     break;
                 }
                 debugDrawer.end();
@@ -429,8 +432,8 @@ namespace QwerkE {
                 EditorCameraUpdate();
                 if (m_RenderingScene)
                 {
-                    m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.GetPosition());
-                    m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.GetPosition(), m_ViewId);
+                    m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.Position());
+                    m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.Position(), m_ViewId);
                 }
             }
             else if (m_RenderingScene)
@@ -479,86 +482,7 @@ namespace QwerkE {
                 m_Pitch += mouseLookSpeedMultiplier * float(mouseDelta.y);
             }
 
-            // entry::GamepadHandle handle = { 0 };
-            // m_horizontalAngle += m_gamepadSpeed * inputGetGamepadAxis(handle, entry::GamepadAxis::RightX)/32768.0f;
-            // m_verticalAngle   -= m_gamepadSpeed * inputGetGamepadAxis(handle, entry::GamepadAxis::RightY)/32768.0f;
-            // const int32_t gpx = inputGetGamepadAxis(handle, entry::GamepadAxis::LeftX);
-            // const int32_t gpy = inputGetGamepadAxis(handle, entry::GamepadAxis::LeftY);
-            // m_keys |= gpx < -16834 ? CAMERA_KEY_LEFT     : 0;
-            // m_keys |= gpx >  16834 ? CAMERA_KEY_RIGHT    : 0;
-            // m_keys |= gpy < -16834 ? CAMERA_KEY_FORWARD  : 0;
-            // m_keys |= gpy >  16834 ? CAMERA_KEY_BACKWARD : 0;
-
-            // const bx::Vec3 forward2 =
-            // {
-            //     bx::cos(m_Pitch) * bx::sin(s_Yaw),
-            //     bx::sin(m_Pitch),
-            //     bx::cos(m_Pitch) * bx::cos(s_Yaw),
-            // };
-            //
-            // const bx::Vec3 right2 =
-            // {
-            //     bx::sin(s_Yaw - bx::kPiHalf),
-            //     0.0f,
-            //     bx::cos(s_Yaw - bx::kPiHalf),
-            // };
-            //
-            // const bx::Vec3 up = bx::cross(right2, forward2);
-            //
-            // m_eye = bx::mad(forward2, deltaZ * unscaledDeltaTime * moveSpeedMultiplier, m_eye);
-            //
-            // if (Input::KeyDown(gameActions.Camera_MoveForward) || Input::GamepadAxis(e_QGamepadAxisLeftStick).y < -controllerStickDeadzone)
-            // {
-            //     // m_eye = bx::mad(forward2, unscaledDeltaTime * moveSpeedMultiplier, m_eye);
-            //
-            //     m_eye = bx::Vec3(m_eye.x + forward2.x * moveSpeedMultiplier, m_eye.y + forward2.y * moveSpeedMultiplier, m_eye.z + forward2.z * moveSpeedMultiplier);
-            // }
-            //
-            // if (Input::KeyDown(gameActions.Camera_MoveBackward) || Input::GamepadAxis(e_QGamepadAxisLeftStick).y > controllerStickDeadzone)
-            // {
-            //     // m_eye = bx::mad(forward2, -unscaledDeltaTime * moveSpeedMultiplier, m_eye);
-            //
-            //     m_eye = bx::Vec3(m_eye.x + forward2.x * -moveSpeedMultiplier, m_eye.y + forward2.y * -moveSpeedMultiplier, m_eye.z + forward2.z * -moveSpeedMultiplier);
-            // }
-            //
-            // if (Input::KeyDown(gameActions.Camera_MoveLeft) || Input::GamepadAxis(e_QGamepadAxisLeftStick).x < -controllerStickDeadzone)
-            // {
-            //     m_eye = bx::mad(right2, unscaledDeltaTime * moveSpeedMultiplier, m_eye);
-            // }
-            //
-            // if (Input::KeyDown(gameActions.Camera_MoveRight) || Input::GamepadAxis(e_QGamepadAxisLeftStick).x > controllerStickDeadzone)
-            // {
-            //     m_eye = bx::mad(right2, -unscaledDeltaTime * moveSpeedMultiplier, m_eye);
-            // }
-            //
-            // if (Input::KeyDown(gameActions.Camera_MoveUp) || Input::GamepadDown(e_GamepadBumperRight))
-            // {
-            //     m_eye = bx::mad(up, unscaledDeltaTime * -moveSpeedMultiplier, m_eye);
-            //     m_at = bx::mad(up, unscaledDeltaTime * -moveSpeedMultiplier, m_at);
-            // }
-            //
-            // if (Input::KeyDown(gameActions.Camera_MoveDown) || Input::GamepadDown(e_GamepadBumperLeft))
-            // {
-            //     m_eye = bx::mad(up, unscaledDeltaTime * moveSpeedMultiplier, m_eye);
-            //     m_at = bx::mad(up, unscaledDeltaTime * moveSpeedMultiplier, m_at);
-            // }
-            //
-            // m_at = bx::add(m_eye, forward2);
-            // m_up = bx::cross(right2, forward2);
-            // bx::mtxLookAt(m_EditorCameraTransform.m_Matrix, bx::load<bx::Vec3>(&m_eye.x), bx::load<bx::Vec3>(&m_at.x), bx::load<bx::Vec3>(&m_up.x));
-            //
-            // ImGui::DefaultWindow([]() {
-            //     ImGui::Text(("m_Yaw" + std::to_string(s_Yaw)).c_str());
-            //     ImGui::Text(("m_Pitch" + std::to_string(m_Pitch)).c_str());
-            //     ImGui::SliderFloat3("At", &m_at.x, -1000.f, 1000.f);
-            //     ImGui::SliderFloat3("Eye", &m_eye.x, -1000.f, 1000.f);
-            //     ImGui::SliderFloat3("Up", &m_up.x, -1000.f, 1000.f);
-            // });
-            //
-            // return;
-
-            // #NOTE Support editor camera zoom when scene view image is hovered, even if window is not focused
-            if (ImGui::IsItemHovered())
+            if (ImGui::IsItemHovered()) // #NOTE Support editor camera zoom when scene view image is hovered, even if window is not focused
             {
                 const float mouseScroll = Input::MouseScrollDelta();
                 if (mouseScroll != 0.f)
@@ -588,136 +512,119 @@ namespace QwerkE {
                     static float yaw = 0.f;
                     yaw -= Input::MouseDelta().x / pixelRatio * unscaledDeltaTime;
 
-                    // Pitch transform.m_Matrix[6];
                     static float pitch = 0.f;
                     pitch -= Input::MouseDelta().y / pixelRatio * unscaledDeltaTime;
 
-                    constexpr bx::Vec3 scale = { 1.f, 1.f, 1.f };
-                    bx::Vec3 rotate = { pitch, yaw, 0.f };
-                    const vec3f& translate = m_EditorCameraTransform.GetPosition();
+                    const vec3f& scale = m_EditorCameraTransform.Scale();
+                    const vec3f& translate = m_EditorCameraTransform.Position();
+
+                    // #TODO Review mouse rotation without statics or yaw and pitch members
+                    // vec3f cameraRotation = Math::MatrixRotation(m_EditorCameraTransform.m_Matrix);
+                    //
+                    // cameraRotation.x -= Input::MouseDelta().y / pixelRatio * unscaledDeltaTime;
+                    // cameraRotation.y -= Input::MouseDelta().x / pixelRatio * unscaledDeltaTime;
+
+                    // if (Input::MouseDelta().x != 0.0f)
+                    // {
+                    //     Math::MatrixRotateAxis(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Up(), Input::MouseDelta().x * unscaledDeltaTime);
+                    // }
+                    // if (Input::MouseDelta().y != 0.0f)
+                    // {
+                    //     Math::MatrixRotateAxis(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Right(), Input::MouseDelta().y * unscaledDeltaTime);
+                    // }
 
                     bx::mtxSRT(m_EditorCameraTransform.m_Matrix,
                         scale.x, scale.y, scale.z,
-                        rotate.x, rotate.y, rotate.z,
+                        pitch, yaw, 0.f,
                         translate.x, translate.y, translate.z);
+                }
+
+                if (Input::MouseDown(QKey::e_MouseMiddle))
+                {
+                    // #TODO Middle mouse drag pan
                 }
             }
 
-            // Keyboard (movement)
-            const vec3f transformForward = m_EditorCameraTransform.Forward(); // #TODO Calculate and use proper forward
-            const bx::Vec3 forward =
-            {
-                transformForward.x,
-                transformForward.y,
-                transformForward.z
-            };
+            // Keyboard + Gamepad Movement
+            vec3f moveDir = { 0.0f, 0.0f, 0.0f };
 
-            if (Input::KeyDown(gameActions.Camera_MoveForward) || Input::GamepadAxis(e_QGamepadAxisLeftStick).y < -controllerStickDeadzone)
+            if (Input::GamepadsCount > 0)
             {
                 // #TODO Use stick magnitude to allow different speed based on stick deviation
-                vec3f pos = m_EditorCameraTransform.GetPosition();
-                bx::Vec3 eye = bx::mad(forward, unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
-                m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
-                // m_EditorCameraTransform.m_Matrix[14] += (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
-            }
-            if (Input::KeyDown(gameActions.Camera_MoveBackward) || Input::GamepadAxis(e_QGamepadAxisLeftStick).y > controllerStickDeadzone)
-            {
-                vec3f pos = m_EditorCameraTransform.GetPosition();
-                bx::Vec3 eye = bx::mad(forward, unscaledDeltaTime * -m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
-                m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
-                // m_EditorCameraTransform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
-            }
+                vec2f leftStick = Input::GamepadAxis(e_QGamepadAxisLeftStick);
+                leftStick.x = (leftStick.x > controllerStickDeadzone || leftStick.x < -controllerStickDeadzone) ? leftStick.x : 0.0f;
+                leftStick.y = (leftStick.y > controllerStickDeadzone || leftStick.y < -controllerStickDeadzone) ? leftStick.y : 0.0f;
+                moveDir += leftStick.x * m_EditorCameraTransform.Right();
+                moveDir += leftStick.y * m_EditorCameraTransform.Forward();
 
-            const vec3f transformRight = m_EditorCameraTransform.Right();
-            const bx::Vec3 right =
-            {
-                transformRight.x,
-                transformRight.y,
-                transformRight.z
-            };
-
-            if (Input::KeyDown(gameActions.Camera_MoveLeft) || Input::GamepadAxis(e_QGamepadAxisLeftStick).x < -controllerStickDeadzone)
-            {
-                vec3f pos = m_EditorCameraTransform.GetPosition();
-                m_EditorCameraTransform.m_Matrix[12] += -transformRight.x * unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier;
-                m_EditorCameraTransform.m_Matrix[13] += -transformRight.y * unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier;
-                m_EditorCameraTransform.m_Matrix[14] += -transformRight.z * unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier;
-            }
-            if (Input::KeyDown(gameActions.Camera_MoveRight) || Input::GamepadAxis(e_QGamepadAxisLeftStick).x > controllerStickDeadzone)
-            {
-                m_EditorCameraTransform.m_Matrix[12] += transformRight.x * unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier;
-                m_EditorCameraTransform.m_Matrix[13] += transformRight.y * unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier;
-                m_EditorCameraTransform.m_Matrix[14] += transformRight.z * unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier;
+                if (Input::GamepadDown(e_GamepadBumperLeft))
+                {
+                    moveDir += m_EditorCameraTransform.Down();
+                }
+                if (Input::GamepadDown(e_GamepadBumperRight))
+                {
+                    moveDir += m_EditorCameraTransform.Up();
+                }
             }
 
-            const vec3f transformUp = m_EditorCameraTransform.Up();
-            const bx::Vec3 up =
+            if (Input::KeyDown(gameActions.Camera_MoveForward))
             {
-                transformUp.x,
-                transformUp.y,
-                transformUp.z
-            };
-
-            constexpr u8 yPositionIndex = 13;
-            if (Input::KeyDown(gameActions.Camera_MoveDown) || Input::GamepadDown(e_GamepadBumperLeft))
-            {
-                // m_EditorCameraTransform.m_Matrix[yPositionIndex] -= (m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * unscaledDeltaTime);
-
-                vec3f pos = m_EditorCameraTransform.GetPosition();
-                bx::Vec3 eye = bx::mad(up, unscaledDeltaTime * -m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
-                m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
-                // m_EditorCameraTransform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+                moveDir += m_EditorCameraTransform.Forward();
             }
-            if (Input::KeyDown(gameActions.Camera_MoveUp) || Input::GamepadDown(e_GamepadBumperRight))
+            if (Input::KeyDown(gameActions.Camera_MoveBackward))
             {
-                // m_EditorCameraTransform.m_Matrix[yPositionIndex] += (m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * unscaledDeltaTime);
-
-                vec3f pos = m_EditorCameraTransform.GetPosition();
-                bx::Vec3 eye = bx::mad(up, -unscaledDeltaTime * -m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier, bx::Vec3(pos.x, pos.y, pos.z));
-                m_EditorCameraTransform.SetPosition(vec3f(eye.x, eye.y, eye.z));
-                // m_EditorCameraTransform.m_Matrix[14] -= (camera.m_MoveSpeed * (float)Time::PreviousFrameDuration());
+                moveDir += m_EditorCameraTransform.Backward();
+            }
+            if (Input::KeyDown(gameActions.Camera_MoveRight))
+            {
+                moveDir += m_EditorCameraTransform.Right();
+            }
+            if (Input::KeyDown(gameActions.Camera_MoveLeft))
+            {
+                moveDir += m_EditorCameraTransform.Left();
+            }
+            if (Input::KeyDown(gameActions.Camera_MoveDown))
+            {
+                moveDir += m_EditorCameraTransform.Down();
+            }
+            if (Input::KeyDown(gameActions.Camera_MoveUp))
+            {
+                moveDir += m_EditorCameraTransform.Up();
             }
 
-            static float yaw = 0.f;
-            static float pitch = 0.f;
-            constexpr float rotationSpeed = 10.f; // #TODO Determine which value to use below
-
-            if (Input::KeyDown(gameActions.Camera_RotateRight) || Input::GamepadAxis(e_QGamepadAxisRightStick).x > controllerStickDeadzone)
+            if (moveDir.x || 0.0f && moveDir.y != 0.0f || moveDir.z != 0.0f)
             {
-                // #TODO Fix rotation also changing position
+                m_EditorCameraTransform.Translate(moveDir, unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier);
+            }
+
+            // #TODO Gamepad rotation
+            if (Input::KeyDown(gameActions.Camera_RotateRight) || Input::GamepadAxis(e_QGamepadAxisRightStick).x < -controllerStickDeadzone)
+            {
                 constexpr float rotationSpeed = 1.f;
-                static float angle = 0.f;
-                // angle += rotationSpeed * deltaTime;
                 float rotationMatrix[16];
                 bx::mtxRotateXYZ(rotationMatrix, 0.f, rotationSpeed * unscaledDeltaTime, 0.f);
                 bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
-                // LOG_TRACE("{0} Camera rotate right", __FUNCTION__);
             }
-            if (Input::KeyDown(gameActions.Camera_RotateLeft) || Input::GamepadAxis(e_QGamepadAxisRightStick).x < -controllerStickDeadzone)
+            if (Input::KeyDown(gameActions.Camera_RotateLeft) || Input::GamepadAxis(e_QGamepadAxisRightStick).x > controllerStickDeadzone)
             {
                 constexpr float rotationSpeed = 1.f;
-                static float angle = 0.f;
-                // angle += rotationSpeed * deltaTime;
                 float rotationMatrix[16];
                 bx::mtxRotateXYZ(rotationMatrix, 0.f, -rotationSpeed * unscaledDeltaTime, 0.f);
                 bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
-                // LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
             }
             if (Input::GamepadAxis(e_QGamepadAxisRightStick).y > controllerStickDeadzone)
             {
                 constexpr float rotationSpeed = 0.5f;
                 float rotationMatrix[16];
-                bx::mtxRotateXYZ(rotationMatrix, rotationSpeed * unscaledDeltaTime, 0.f, 0.f);
+                bx::mtxRotateXYZ(rotationMatrix, Input::GamepadAxis(e_QGamepadAxisRightStick).y * rotationSpeed * unscaledDeltaTime, 0.f, 0.f);
                 bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
-                // LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
             }
             if (Input::GamepadAxis(e_QGamepadAxisRightStick).y < -controllerStickDeadzone)
             {
                 constexpr float rotationSpeed = 0.5f;
                 float rotationMatrix[16];
-                bx::mtxRotateXYZ(rotationMatrix, -rotationSpeed * unscaledDeltaTime, 0.f, 0.f);
+                bx::mtxRotateXYZ(rotationMatrix, Input::GamepadAxis(e_QGamepadAxisRightStick).y * rotationSpeed * unscaledDeltaTime, 0.f, 0.f);
                 bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, rotationMatrix);
-                // LOG_TRACE("{0} Camera rotate left", __FUNCTION__);
             }
 
             if (const bool useTargetLookAt = false)
@@ -731,7 +638,7 @@ namespace QwerkE {
                 // #TODO Only re-calculate if forward changed
                 constexpr float scalar = 1.f;
                 const float* position = nullptr;
-                vec3f forwardPosition = m_EditorCameraTransform.GetPosition() + (m_EditorCameraTransform.Forward() * scalar);
+                vec3f forwardPosition = m_EditorCameraTransform.Position() + (m_EditorCameraTransform.Forward() * scalar);
                 m_EditorCamera.m_LookAtPosition = forwardPosition;
             }
         }

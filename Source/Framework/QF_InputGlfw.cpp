@@ -64,6 +64,15 @@ namespace QwerkE {
             {
                 // #TODO Review glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
 
+                if (i > s_GamepadIds.size()
+#if _QDEBUG
+                    || !glfwJoystickPresent(s_GamepadIds[i])
+#endif // _QDEBUG
+                    )
+                {
+                    continue;
+                }
+
                 ASSERT(glfwJoystickPresent(s_GamepadIds[i]), "Device no longer present!");
 
                 int axesCount;

@@ -31,9 +31,9 @@ namespace QwerkE {
 
 #ifdef _QDEBUG
 			ComponentTransform& myTransform = m_Entity.GetComponent<ComponentTransform>();
-			vec3f endPosition = myTransform.GetPosition();
+			vec3f endPosition = myTransform.Position();
 			endPosition += 1.f;
-			Debug::DrawLine(2, myTransform.GetPosition(), endPosition); // #TODO Hard coded view ID
+			Debug::DrawLine(2, myTransform.Position(), endPosition); // #TODO Hard coded view ID
 			// Debug::DrawCylinder(myTransform.GetPosition(), adjustedTransform, 0.1f);
 #endif
 		}
