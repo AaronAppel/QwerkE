@@ -911,18 +911,43 @@ ImGui::EndPopup();
 
             case Mirror::IdForType<float[16]>():
                 {
-                    float* f16matrix = (float*)obj;
-                    valueChanged |= ImGui::DragFloat4(elementName.c_str(), f16matrix, .1f);
-                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_1", &f16matrix[4], .1f);
-                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_2", &f16matrix[8], .1f);
-                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_3", &f16matrix[12], .1f);
+                    bool openToolTip = false;
+                    float* f16Matrix = (float*)obj;
+                    valueChanged |= ImGui::DragFloat4(elementName.c_str(), f16Matrix, .1f);
+                    openToolTip |= ImGui::IsItemClicked(ImGui::MouseRight);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_1", &f16Matrix[4], .1f);
+                    openToolTip |= ImGui::IsItemClicked(ImGui::MouseRight);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_2", &f16Matrix[8], .1f);
+                    openToolTip |= ImGui::IsItemClicked(ImGui::MouseRight);
+                    valueChanged |= ImGui::DragFloat4("##m_arr_float16_3", &f16Matrix[12], .1f);
+                    openToolTip |= ImGui::IsItemClicked(ImGui::MouseRight);
+
+                    const char* popUpName = "#MatrixPopUpName";
+                    if (openToolTip)
+                    {
+                        ImGui::OpenPopup(popUpName);
+                    }
+
+                    if (ImGui::BeginPopup(popUpName))
+                    {
+                        if (ImGui::Button("Zero"))
+                        {
+                            Math::MatrixZero(f16Matrix);
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button("Identity"))
+                        {
+                            Math::MatrixIdentity(f16Matrix);
+                        }
+                        ImGui::EndPopup();
+                    }
 
                     float R[3][3];
                     for (int i = 0; i < 3; ++i)
                         for (int j = 0; j < 3; ++j)
                         {
                             uint16_t index = i * 4 + j;
-                            R[i][j] = f16matrix[index];
+                            R[i][j] = f16Matrix[index];
                         }
 
                     std::array<float, 3> xyz = Math::RotationMatrixToEulerZYX(R);
@@ -976,17 +1001,17 @@ ImGui::EndPopup();
                         }
                         const float radians = Math::DegToRad(angleX);
 
-                        f16matrix[0]  = 1;
-                        f16matrix[1]  = 0;
-                        f16matrix[2]  = 0;
+                        f16Matrix[0]  = 1;
+                        f16Matrix[1]  = 0;
+                        f16Matrix[2]  = 0;
 
-                        f16matrix[4]  = 0;
-                        f16matrix[5]  = cos(radians);
-                        f16matrix[6]  = -sin(radians);
+                        f16Matrix[4]  = 0;
+                        f16Matrix[5]  = cos(radians);
+                        f16Matrix[6]  = -sin(radians);
 
-                        f16matrix[8]  = 0;
-                        f16matrix[9]  = sin(radians);
-                        f16matrix[10] = cos(radians);
+                        f16Matrix[8]  = 0;
+                        f16Matrix[9]  = sin(radians);
+                        f16Matrix[10] = cos(radians);
                     }
 
                     static float angleY = 0;
@@ -1001,17 +1026,17 @@ ImGui::EndPopup();
                         }
                         const float radians = Math::DegToRad(angleY);
 
-                        f16matrix[0]  = cos(radians);
-                        f16matrix[1]  = 0;
-                        f16matrix[2]  = sin(radians);
+                        f16Matrix[0]  = cos(radians);
+                        f16Matrix[1]  = 0;
+                        f16Matrix[2]  = sin(radians);
 
-                        f16matrix[4]  = 0;
-                        f16matrix[5]  = 1;
-                        f16matrix[6]  = 0;
+                        f16Matrix[4]  = 0;
+                        f16Matrix[5]  = 1;
+                        f16Matrix[6]  = 0;
 
-                        f16matrix[8]  = -sin(radians);
-                        f16matrix[9]  = 0;
-                        f16matrix[10] = cos(radians);
+                        f16Matrix[8]  = -sin(radians);
+                        f16Matrix[9]  = 0;
+                        f16Matrix[10] = cos(radians);
                     }
 
                     static float angleZ = 0;
@@ -1025,17 +1050,17 @@ ImGui::EndPopup();
 
                         const float radians = Math::DegToRad(angleZ);
 
-                        f16matrix[0]  = cos(radians);
-                        f16matrix[1]  = -sin(radians);
-                        f16matrix[2]  = 0;
+                        f16Matrix[0]  = cos(radians);
+                        f16Matrix[1]  = -sin(radians);
+                        f16Matrix[2]  = 0;
 
-                        f16matrix[4]  = sin(radians);
-                        f16matrix[5]  = cos(radians);
-                        f16matrix[6]  = 0;
+                        f16Matrix[4]  = sin(radians);
+                        f16Matrix[5]  = cos(radians);
+                        f16Matrix[6]  = 0;
 
-                        f16matrix[8]  = 0;
-                        f16matrix[9]  = 0;
-                        f16matrix[10] = 1;
+                        f16Matrix[8]  = 0;
+                        f16Matrix[9]  = 0;
+                        f16Matrix[10] = 1;
                     }
 
                     if (ImGui::Button("YStep"))
@@ -1047,40 +1072,40 @@ ImGui::EndPopup();
                         }
                         const float radians = Math::DegToRad(angleY);
 
-                        f16matrix[0] = cos(radians);
-                        f16matrix[1] = 0;
-                        f16matrix[2] = sin(radians);
+                        f16Matrix[0] = cos(radians);
+                        f16Matrix[1] = 0;
+                        f16Matrix[2] = sin(radians);
 
-                        f16matrix[4] = 0;
-                        f16matrix[5] = 1;
-                        f16matrix[6] = 0;
+                        f16Matrix[4] = 0;
+                        f16Matrix[5] = 1;
+                        f16Matrix[6] = 0;
 
-                        f16matrix[8] = -sin(radians);
-                        f16matrix[9] = 0;
-                        f16matrix[10] = cos(radians);
+                        f16Matrix[8] = -sin(radians);
+                        f16Matrix[9] = 0;
+                        f16Matrix[10] = cos(radians);
                     }
 
                     // #TODO Can I re-create a Unity/Unreal esq transform UI?
-                    float arrX[3] = { f16matrix[0], f16matrix[4], f16matrix [8] };
+                    float arrX[3] = { f16Matrix[0], f16Matrix[4], f16Matrix [8] };
                     if (ImGui::DragFloat3("Rotation X##", arrX))
                     {
-                        f16matrix[0] = arrX[0];
-                        f16matrix[4] = arrX[1];
-                        f16matrix[8] = arrX[2];
+                        f16Matrix[0] = arrX[0];
+                        f16Matrix[4] = arrX[1];
+                        f16Matrix[8] = arrX[2];
                     }
-                    float arrY[3] = { f16matrix[1], f16matrix[5], f16matrix[9] };
+                    float arrY[3] = { f16Matrix[1], f16Matrix[5], f16Matrix[9] };
                     if (ImGui::DragFloat3("Rotation Y##", arrY))
                     {
-                        f16matrix[1] = arrY[0];
-                        f16matrix[5] = arrY[1];
-                        f16matrix[9] = arrY[2];
+                        f16Matrix[1] = arrY[0];
+                        f16Matrix[5] = arrY[1];
+                        f16Matrix[9] = arrY[2];
                     }
-                    float arrZ[3] = { f16matrix[2], f16matrix[6], f16matrix[10] };
+                    float arrZ[3] = { f16Matrix[2], f16Matrix[6], f16Matrix[10] };
                     if (ImGui::DragFloat3("Rotation Z##", arrZ))
                     {
-                        f16matrix[2]  = arrZ[0];
-                        f16matrix[6]  = arrZ[1];
-                        f16matrix[10] = arrZ[2];
+                        f16Matrix[2]  = arrZ[0];
+                        f16Matrix[6]  = arrZ[1];
+                        f16Matrix[10] = arrZ[2];
                     }
                 }
                 break;

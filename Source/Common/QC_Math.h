@@ -115,6 +115,10 @@ namespace QwerkE {
 		void MatrixRotateAroundY(float a_Matrix[16], const float a_YawDegrees);
 		void MatrixRotateAxis(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees);
 
+		void MatrixRotateAxis2(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees);
+
+		void MatrixRotateAxis3(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees);
+
 		// #NOTE Column major 4x4 direction vectors
 		// 1, 0, 0, 0,  Right (X)
 		// 0, 1, 0, 0,  Up (Y)
@@ -127,6 +131,8 @@ namespace QwerkE {
 		inline vec3f MatrixForward(const float a_Matrix[16]) { return vec3f(a_Matrix[8], a_Matrix[9], a_Matrix[10]); }
 		inline vec3f MatrixBackward(const float a_Matrix[16]) { return vec3f(-a_Matrix[8], -a_Matrix[9], -a_Matrix[10]); }
 
+		void MatrixIdentity(float a_Matrix[16]);
+		inline void MatrixZero(float a_Matrix[16]) { memset(a_Matrix, 0.0f, 16 * sizeof(float)); }
 	}
 
 }

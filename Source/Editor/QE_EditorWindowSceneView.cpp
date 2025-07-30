@@ -533,10 +533,21 @@ namespace QwerkE {
                     //     Math::MatrixRotateAxis(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Right(), Input::MouseDelta().y * unscaledDeltaTime);
                     // }
 
-                    bx::mtxSRT(m_EditorCameraTransform.m_Matrix,
-                        scale.x, scale.y, scale.z,
-                        pitch, yaw, 0.f,
-                        translate.x, translate.y, translate.z);
+                    // bx::mtxSRT(m_EditorCameraTransform.m_Matrix,
+                    //     scale.x, scale.y, scale.z,
+                    //     pitch, yaw, 0.f,
+                    //     translate.x, translate.y, translate.z);
+
+                    // Math::MatrixRotateAxis2(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Up(), DEG_TO_RAD * 720.f * Input::MouseDelta().x * unscaledDeltaTime);
+                    // Math::MatrixRotateAxis2(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Right(), DEG_TO_RAD * 720.f * Input::MouseDelta().y * unscaledDeltaTime);
+
+                    Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Up(), DEG_TO_RAD * 720.f * Input::MouseDelta().x * unscaledDeltaTime);
+                    Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Right(), DEG_TO_RAD * 720.f * Input::MouseDelta().y * unscaledDeltaTime);
+
+                    // Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, vec3fUp, M_PI * 4.f * Input::MouseDelta().x * unscaledDeltaTime);
+                    // Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, vec3fRight, M_PI * 4.f * Input::MouseDelta().y * unscaledDeltaTime);
+
+                    // #TODO May also want to do a mouse set position to lock the cursor, or call the Window:: to lock the cursor to keep it in the current window
                 }
 
                 if (Input::MouseDown(QKey::e_MouseMiddle))

@@ -219,6 +219,96 @@ namespace QwerkE {
             a_Matrix[15] = matrix[3][3];
         }
 
+        // Multiplies two 4x4 column-major matrices: result = a * b
+        void multiplyMatrices(const float a[16], const float b[16], float result[16]) {
+            float temp[16];
+            for (int col = 0; col < 4; ++col) {
+                for (int row = 0; row < 4; ++row) {
+                    temp[col * 4 + row] =
+                        a[0 * 4 + row] * b[col * 4 + 0] +
+                        a[1 * 4 + row] * b[col * 4 + 1] +
+                        a[2 * 4 + row] * b[col * 4 + 2] +
+                        a[3 * 4 + row] * b[col * 4 + 3];
+                }
+            }
+            std::memcpy(result, temp, 16 * sizeof(float));
+        }
+
+        void MatrixRotateAxis2(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees)
+        {
+            const float radians = DegToRad(a_Degrees);
+            // Normalize the axis
+            float length = std::sqrt(a_Axis.x * a_Axis.x + a_Axis.y * a_Axis.y + a_Axis.z * a_Axis.z);
+            if (length == 0.0f) return; // Avoid division by zero
+            float x = a_Axis.x / length;
+            float y = a_Axis.y / length;
+            float z = a_Axis.z / length;
+
+            float c = std::cos(radians);
+            float s = std::sin(radians);
+            float one_minus_c = 1.0f - c;
+
+            // Build the rotation matrix (column-major order)
+            float rotation[16] = {
+                c + x * x * one_minus_c,       y * x * one_minus_c + z * s, z * x * one_minus_c - y * s, 0.0f,
+                x * y * one_minus_c - z * s,   c + y * y * one_minus_c,     z * y * one_minus_c + x * s, 0.0f,
+                x * z * one_minus_c + y * s,   y * z * one_minus_c - x * s, c + z * z * one_minus_c,     0.0f,
+                0.0f,                          0.0f,                        0.0f,                        1.0f
+            };
+
+            // Multiply: matrix = rotation * matrix
+            float result[16];
+            multiplyMatrices(rotation, a_Matrix, result);
+            std::memcpy(a_Matrix, result, 16 * sizeof(float));
+        }
+
+        void MatrixRotateAxis3(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees)
+        {
+            const float radians = DegToRad(a_Degrees);
+            // Normalize the axis
+            float length = std::sqrt(a_Axis.x * a_Axis.x + a_Axis.y * a_Axis.y + a_Axis.z * a_Axis.z);
+            if (length == 0.0f) return; // Avoid division by zero
+            float x = a_Axis.x / length;
+            float y = a_Axis.y / length;
+            float z = a_Axis.z / length;
+
+            float c = std::cos(radians);
+            float s = std::sin(radians);
+            float one_minus_c = 1.0f - c;
+
+            // Build the rotation matrix (column-major order)
+            float rotation[16] = {
+                c + x * x * one_minus_c,       y * x * one_minus_c + z * s, z * x * one_minus_c - y * s, 0.0f,
+                x * y * one_minus_c - z * s,   c + y * y * one_minus_c,     z * y * one_minus_c + x * s, 0.0f,
+                x * z * one_minus_c + y * s,   y * z * one_minus_c - x * s, c + z * z * one_minus_c,     0.0f,
+                0.0f,                          0.0f,                        0.0f,                        1.0f
+            };
+
+            // Multiply: matrix = rotation * matrix
+            // float result[16];
+            // multiplyMatrices(rotation, a_Matrix, result);
+            // std::memcpy(a_Matrix, result, 16 * sizeof(float));
+
+            // Only rotate the top-left 3x3 (orientation)
+            float temp[16];
+            multiplyMatrices(rotation, a_Matrix, temp);
+
+            // Copy only the upper-left 3x3 back into the original matrix
+            for (int col = 0; col < 3; ++col) {
+                for (int row = 0; row < 3; ++row) {
+                    a_Matrix[col * 4 + row] = temp[col * 4 + row];
+                }
+            }
+            // Leave translation (last column) untouched
+        }
+
+        void MatrixIdentity(float a_Matrix[16])
+        {
+            a_Matrix[0] = 1.f; a_Matrix[4] = 0.f; a_Matrix[8] = 0.f; a_Matrix[12] = 0.f;
+            a_Matrix[1] = 0.f; a_Matrix[5] = 1.f; a_Matrix[9] = 0.f; a_Matrix[13] = 0.f;
+            a_Matrix[2] = 0.f; a_Matrix[6] = 0.f; a_Matrix[10] = 1.f; a_Matrix[14] = 0.f;
+            a_Matrix[3] = 0.f; a_Matrix[7] = 0.f; a_Matrix[11] = 0.f; a_Matrix[15] = 1.f;
+        }
 
     }
 

@@ -144,4 +144,12 @@ typedef glm::vec4		vec4f;
 typedef glm::mat3		mat3;
 typedef glm::mat4		mat4;
 typedef glm::quat		quat;
+
+const vec3f vec3fForward = vec3f(0.f, 0.f, 1.f);
+const vec3f vec3fBackward = vec3f(0.f, 0.f, -1.f);
+const vec3f vec3fUp = vec3f(0.f, 1.f, 0.f);
+const vec3f vec3fDown = vec3f(0.f, -1.f, 0.f);
+const vec3f vec3fRight = vec3f(1.f, 0.f, 0.f);
+const vec3f vec3fLeft = vec3f(-1.f, 0.f, 0.f);
+
 #endif
