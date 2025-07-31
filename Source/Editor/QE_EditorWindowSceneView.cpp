@@ -541,13 +541,19 @@ namespace QwerkE {
                     // Math::MatrixRotateAxis2(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Up(), DEG_TO_RAD * 720.f * Input::MouseDelta().x * unscaledDeltaTime);
                     // Math::MatrixRotateAxis2(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Right(), DEG_TO_RAD * 720.f * Input::MouseDelta().y * unscaledDeltaTime);
 
-                    Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Up(), DEG_TO_RAD * 720.f * Input::MouseDelta().x * unscaledDeltaTime);
-                    Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Right(), DEG_TO_RAD * 720.f * Input::MouseDelta().y * unscaledDeltaTime);
+                    // Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, vec3fUp, DEG_TO_RAD * 720.f * Input::MouseDelta().x * unscaledDeltaTime);
+                    // Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.Right(), DEG_TO_RAD * 720.f * Input::MouseDelta().y * unscaledDeltaTime);
 
                     // Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, vec3fUp, M_PI * 4.f * Input::MouseDelta().x * unscaledDeltaTime);
                     // Math::MatrixRotateAxis3(m_EditorCameraTransform.m_Matrix, vec3fRight, M_PI * 4.f * Input::MouseDelta().y * unscaledDeltaTime);
 
                     // #TODO May also want to do a mouse set position to lock the cursor, or call the Window:: to lock the cursor to keep it in the current window
+
+                    // vec3f up = m_EditorCameraTransform.Up();
+                    // up *= Input::MouseDelta().x * unscaledDeltaTime;
+                    // float result[16];
+                    // bx::mtxRotateXYZ(result, up.x, up.y, up.z);
+                    // bx::mtxMul(m_EditorCameraTransform.m_Matrix, m_EditorCameraTransform.m_Matrix, result);
                 }
 
                 if (Input::MouseDown(QKey::e_MouseMiddle))
@@ -603,7 +609,7 @@ namespace QwerkE {
                 moveDir += m_EditorCameraTransform.Up();
             }
 
-            if (moveDir.x || 0.0f && moveDir.y != 0.0f || moveDir.z != 0.0f)
+            if (moveDir.x != 0.0f || moveDir.y != 0.0f || moveDir.z != 0.0f)
             {
                 m_EditorCameraTransform.Translate(moveDir, unscaledDeltaTime * m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier);
             }
