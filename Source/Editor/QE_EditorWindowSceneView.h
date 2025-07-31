@@ -63,6 +63,8 @@ namespace QwerkE {
 				return 0 == m_CurrentCameraComboIndex;
 			}
 
+			void UpdateEditorCameraRotation();
+
 			MIRROR_PRIVATE_MEMBERS
 
 			// void OnSceneReload(const Scene* a_ReloadedScene) override { m_CurrentScene = nullptr; } // #TODO Review if needed
@@ -78,6 +80,8 @@ namespace QwerkE {
 			ComponentCamera m_EditorCamera;
 			ComponentTransform m_EditorCameraTransform;
 			Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseRight);
+			float m_EditorCameraPitch = 0.0f;
+			float m_EditorCameraYaw = 0.0f;
 
 			Scene* m_CurrentScene = nullptr;
 			GUID m_CurrentSceneGuid = GUID::Invalid;

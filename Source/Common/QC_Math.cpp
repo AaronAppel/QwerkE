@@ -265,9 +265,10 @@ namespace QwerkE {
         void MatrixRotateAxis3(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees)
         {
             const float radians = DegToRad(a_Degrees);
-            // Normalize the axis
+
             float length = std::sqrt(a_Axis.x * a_Axis.x + a_Axis.y * a_Axis.y + a_Axis.z * a_Axis.z);
             if (length == 0.0f) return; // Avoid division by zero
+
             float x = a_Axis.x / length;
             float y = a_Axis.y / length;
             float z = a_Axis.z / length;
@@ -294,12 +295,12 @@ namespace QwerkE {
             multiplyMatrices(rotation, a_Matrix, temp);
 
             // Copy only the upper-left 3x3 back into the original matrix
+            // Leave translation (last column) untouched
             for (int col = 0; col < 3; ++col) {
                 for (int row = 0; row < 3; ++row) {
                     a_Matrix[col * 4 + row] = temp[col * 4 + row];
                 }
             }
-            // Leave translation (last column) untouched
         }
 
         void MatrixIdentity(float a_Matrix[16])
