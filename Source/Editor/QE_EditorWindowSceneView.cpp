@@ -425,7 +425,7 @@ namespace QwerkE {
             if (strcmp(m_CurrentScene->GetSceneName().c_str(), "NewScene1.qscene") == 0)
             {
                 ImGui::DefaultWindow([&]() {
-                    Inspector::InspectObject(m_EditorCameraTransform.m_Matrix);
+                    // Inspector::InspectObject(m_EditorCameraTransform.m_Matrix);
                 });
             }
 
@@ -465,7 +465,11 @@ namespace QwerkE {
                 const float mouseScroll = Input::MouseScrollDelta();
                 if (mouseScroll != 0.f)
                 {
-                    m_EditorCamera.m_Fov -= mouseScroll;
+                    // #TODO Consider other FoV hotkey
+                    // m_EditorCamera.m_Fov -= mouseScroll;
+
+                    const float scrollSpeedModifier = 2.0f; // #TODO Expose in data
+                    editorCameraMovement += m_EditorCameraTransform.Forward() * mouseScroll * scrollSpeedModifier;
                 }
             }
 
@@ -481,7 +485,6 @@ namespace QwerkE {
 
             if (m_MouseStartedDraggingOnImage)
             {
-                // Mouse (look)
                 if (Input::MouseDown(QKey::e_MouseRight))
                 {
                     static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
@@ -594,7 +597,7 @@ namespace QwerkE {
                 vec3f targetPosition = m_EditorCamera.m_LookAtPosition;
                 m_EditorCamera.m_LookAtPosition = targetPosition;
             }
-            else if (const bool useDirectionalLookAt = true)
+            else if (const bool useDirectionalLookAt = false)
             {
                 // #TODO Only re-calculate if forward changed
                 constexpr float scalar = 1.f;
