@@ -21,9 +21,9 @@ namespace QwerkE {
         BitIndexRingBuffer<vec2f, u2> s_MousePositionsBuffer;
 
         std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>>> s_GamepadsButtons;
-        BitIndexRingBuffer<vec2f, u2> s_GamepadAxisLeftStickBuffer; // #TODO Support multiple gamepads
-        BitIndexRingBuffer<vec2f, u2> s_GamepadAxisRightStickBuffer;
-        BitIndexRingBuffer<vec2f, u2> s_GamepadAxisTriggersBuffer; // #NOTE Triggers might be better as separate float buffers
+        std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisLeftStickBuffers;
+        std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisRightStickBuffers;
+        std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisTriggersBuffers; // #NOTE Triggers might be better as separate float buffers
 
         static constexpr char* s_GameActionsFileName = "GameActions.qdata";
         static GameActions s_GameActions;
@@ -47,13 +47,6 @@ namespace QwerkE {
             s_MouseScrolls.AddMarker(0);
             s_MousePositionsBuffer.AddMarker(0);
             s_MousePositionsBuffer.AddMarker(0);
-
-            s_GamepadAxisLeftStickBuffer.AddMarker(0);
-            s_GamepadAxisLeftStickBuffer.AddMarker(0);
-            s_GamepadAxisRightStickBuffer.AddMarker(0);
-            s_GamepadAxisRightStickBuffer.AddMarker(0);
-            s_GamepadAxisTriggersBuffer.AddMarker(0);
-            s_GamepadAxisTriggersBuffer.AddMarker(0);
         }
 
         void Internal_NewFrame()
@@ -68,9 +61,19 @@ namespace QwerkE {
             {
                 s_GamepadsButtons[i].second.Advance();
             }
-            s_GamepadAxisLeftStickBuffer.AdvanceAllMarkers();
-            s_GamepadAxisRightStickBuffer.AdvanceAllMarkers();
-            s_GamepadAxisTriggersBuffer.AdvanceAllMarkers();
+
+            for (size_t i = 0; i < s_GamepadAxisLeftStickBuffers.size(); i++)
+            {
+                s_GamepadAxisLeftStickBuffers[i].second.AdvanceAllMarkers();
+            }
+            for (size_t i = 0; i < s_GamepadAxisRightStickBuffers.size(); i++)
+            {
+                s_GamepadAxisRightStickBuffers[i].second.AdvanceAllMarkers();
+            }
+            for (size_t i = 0; i < s_GamepadAxisTriggersBuffers.size(); i++)
+            {
+                s_GamepadAxisTriggersBuffers[i].second.AdvanceAllMarkers();
+            }
         }
 
         void Internal_Shutdown()
@@ -87,9 +90,21 @@ namespace QwerkE {
             }
             s_GamepadsButtons.clear();
 
-            s_GamepadAxisLeftStickBuffer.Reset();
-            s_GamepadAxisRightStickBuffer.Reset();
-            s_GamepadAxisTriggersBuffer.Reset();
+            for (size_t i = 0; i < s_GamepadAxisLeftStickBuffers.size(); i++)
+            {
+                s_GamepadAxisLeftStickBuffers[i].second.RemoveAllMarkers();
+            }
+            s_GamepadAxisLeftStickBuffers.clear();
+            for (size_t i = 0; i < s_GamepadAxisRightStickBuffers.size(); i++)
+            {
+                s_GamepadAxisRightStickBuffers[i].second.RemoveAllMarkers();
+            }
+            s_GamepadAxisRightStickBuffers.clear();
+            for (size_t i = 0; i < s_GamepadAxisTriggersBuffers.size(); i++)
+            {
+                s_GamepadAxisTriggersBuffers[i].second.RemoveAllMarkers();
+            }
+            s_GamepadAxisTriggersBuffers.clear();
         }
 
         void Internal_KeyChanged(const QKey a_Key, const QKeyState a_KeyState)
@@ -150,35 +165,41 @@ namespace QwerkE {
 #ifdef _QDEBUG
             ++s_InputsCount;
 #endif // _QDEBUG
-            switch (a_AxisId)
+            for (u8 i = 0; i < s_GamepadAxisLeftStickBuffers.size(); i++)
             {
-            case 0:
-            case 1:
-                s_GamepadAxisLeftStickBuffer.Write(a_AxisValue); // #TODO Y axis is inverted. Should I invert it again here?
-
-                for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
+                if (a_GamepadId == s_GamepadAxisLeftStickBuffers[i].first)
                 {
-                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis01, QKeyState::e_KeyStateDown, s_GamepadAxisLeftStickBuffer.ReadTop(), {}, {}, a_GamepadId);
-                }
-                break;
-            case 2:
-            case 3:
-                s_GamepadAxisRightStickBuffer.Write(a_AxisValue);
+                    switch (a_AxisId)
+                    {
+                    case 0:
+                    case 1:
+                        s_GamepadAxisLeftStickBuffers[i].second.Write(a_AxisValue); // #TODO Y axis is inverted. Should I invert it again here?
 
-                for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
-                {
-                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis23, QKeyState::e_KeyStateDown, {}, s_GamepadAxisRightStickBuffer.ReadTop(), {}, a_GamepadId);
-                }
-                break;
-            case 4:
-            case 5:
-                s_GamepadAxisTriggersBuffer.Write(a_AxisValue);
+                        for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
+                        {
+                            s_GamepadCallbacks[i](QGamepad::e_GamepadAxis01, QKeyState::e_KeyStateDown, s_GamepadAxisLeftStickBuffers[i].second.ReadTop(), {}, {}, a_GamepadId);
+                        }
+                        break;
+                    case 2:
+                    case 3:
+                        s_GamepadAxisRightStickBuffers[i].second.Write(a_AxisValue);
 
-                for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
-                {
-                    s_GamepadCallbacks[i](QGamepad::e_GamepadAxis45, QKeyState::e_KeyStateDown, {}, {}, s_GamepadAxisTriggersBuffer.ReadTop(), a_GamepadId);
+                        for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
+                        {
+                            s_GamepadCallbacks[i](QGamepad::e_GamepadAxis23, QKeyState::e_KeyStateDown, {}, s_GamepadAxisRightStickBuffers[i].second.ReadTop(), {}, a_GamepadId);
+                        }
+                        break;
+                    case 4:
+                    case 5:
+                        s_GamepadAxisTriggersBuffers[i].second.Write(a_AxisValue);
+
+                        for (u16 i = 0; i < s_GamepadCallbacks.size(); i++)
+                        {
+                            s_GamepadCallbacks[i](QGamepad::e_GamepadAxis45, QKeyState::e_KeyStateDown, {}, {}, s_GamepadAxisTriggersBuffers[i].second.ReadTop(), a_GamepadId);
+                        }
+                        break;
+                    }
                 }
-                break;
             }
         }
 
@@ -312,19 +333,27 @@ namespace QwerkE {
         {
             ASSERT(QGamepad::e_QGamepadAxisIndexFirst <= a_AxisIndex && QGamepad::e_QGamepadAxisIndexMax >= a_AxisIndex, "Invalid axis");
             ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax >= a_GamepadId, "Invalid a_GamepadId!");
-            // #TODO What is more intuitive, always returning a vec2f, or individual floats? Do users want that?
-            switch (a_AxisIndex)
+            // #TODO What is more intuitive, always returning a vec2f, or individual floats? Which would users prefer?
+
+            for (u8 i = 0; i < s_GamepadAxisLeftStickBuffers.size(); i++)
             {
-            case 0:
-            case 1:
-                return s_GamepadAxisLeftStickBuffer.ReadTop();
-            case 2:
-            case 3:
-                return s_GamepadAxisRightStickBuffer.ReadTop();
-            case 4:
-            case 5:
-                return s_GamepadAxisTriggersBuffer.ReadTop();
+                if (a_GamepadId == s_GamepadAxisLeftStickBuffers[i].first)
+                {
+                    switch (a_AxisIndex)
+                    {
+                    case 0:
+                    case 1:
+                        return s_GamepadAxisLeftStickBuffers[i].second.ReadTop();
+                    case 2:
+                    case 3:
+                        return s_GamepadAxisLeftStickBuffers[i].second.ReadTop();
+                    case 4:
+                    case 5:
+                        return s_GamepadAxisLeftStickBuffers[i].second.ReadTop();
+                    }
+                }
             }
+
             // LOG_WARN("a_GamepadId not found!");
             return vec2f(0.f, 0.f);
         }
@@ -333,17 +362,23 @@ namespace QwerkE {
         {
             ASSERT(QGamepad::e_QGamepadAxisIndexFirst <= a_AxisIndex && QGamepad::e_QGamepadAxisIndexMax > a_AxisIndex, "Invalid axis");
             ASSERT(QGamepad::e_GamepadId0 <= a_GamepadId && QGamepad::e_QGamepadIdMax > a_GamepadId, "Invalid a_GamepadId!");
-            switch (a_AxisIndex)
+            for (u8 i = 0; i < s_GamepadAxisLeftStickBuffers.size(); i++)
             {
-            case 0:
-            case 1:
-                return s_GamepadAxisLeftStickBuffer.HeadIndex() != s_GamepadAxisLeftStickBuffer.MarkerPosition(s_LastFrameEndMarkerId);
-            case 2:
-            case 3:
-                return s_GamepadAxisRightStickBuffer.HeadIndex() != s_GamepadAxisRightStickBuffer.MarkerPosition(s_LastFrameEndMarkerId);
-            case 4:
-            case 5:
-                return s_GamepadAxisTriggersBuffer.HeadIndex() != s_GamepadAxisTriggersBuffer.MarkerPosition(s_LastFrameEndMarkerId);
+                if (a_GamepadId == s_GamepadAxisLeftStickBuffers[i].first)
+                {
+                    switch (a_AxisIndex)
+                    {
+                    case 0:
+                    case 1:
+                        return s_GamepadAxisLeftStickBuffers[i].second.HeadIndex() != s_GamepadAxisLeftStickBuffers[i].second.MarkerPosition(s_LastFrameEndMarkerId);
+                    case 2:
+                    case 3:
+                        return s_GamepadAxisRightStickBuffers[i].second.HeadIndex() != s_GamepadAxisRightStickBuffers[i].second.MarkerPosition(s_LastFrameEndMarkerId);
+                    case 4:
+                    case 5:
+                        return s_GamepadAxisTriggersBuffers[i].second.HeadIndex() != s_GamepadAxisTriggersBuffers[i].second.MarkerPosition(s_LastFrameEndMarkerId);
+                    }
+                }
             }
             // LOG_WARN("a_GamepadId not found!");
             return false;

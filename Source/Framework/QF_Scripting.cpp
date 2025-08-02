@@ -13,7 +13,7 @@ namespace QwerkE {
         {
             switch (scriptType)
             {
-            case eScriptTypes::Camera:
+            case eScriptTypes::e_Camera:
                 return new ScriptableCamera();
 
             case eScriptTypes::Testing:

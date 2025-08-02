@@ -11,7 +11,7 @@ namespace QwerkE {
 	QC_ENUM(eScriptTypesStr, u8,
 		// #NOTE These values are serialized so value changes matter
 		Invalid = 0,
-		Camera,
+		e_Camera, // #TODO e_Camera to avoid naming collision with Camera class
 		Testing,
 		Patrol,
 		PathFinder,
@@ -28,7 +28,7 @@ namespace QwerkE {
 	{
 		// #NOTE These values are serialized so value changes matter
 		Invalid = 0,
-		Camera,
+		e_Camera,
 		Testing,
 		Patrol,
 		PathFinder,
@@ -86,7 +86,7 @@ namespace QwerkE {
 				if (m_Entity.HasComponent<ComponentScript>())
 				{
 					ComponentScript& script = m_Entity.GetComponent<ComponentScript>();
-					script.RemoveScript(eScriptTypes::Camera);
+					script.RemoveScript(eScriptTypes::e_Camera);
 				}
 				else
 				{

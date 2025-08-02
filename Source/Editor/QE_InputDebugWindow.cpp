@@ -19,10 +19,9 @@ namespace QwerkE {
         extern BitIndexRingBuffer<vec2f, u2> s_MousePositionsBuffer;
 
         extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>>> s_GamepadsButtons;
-        extern BitIndexRingBuffer<vec2f, u2> s_GamepadAxisLeftStickBuffer;
-        extern BitIndexRingBuffer<vec2f, u2> s_GamepadAxisRightStickBuffer;
-
-        extern BitIndexRingBuffer<vec2f, u2> s_GamepadAxisTriggersBuffer;
+        extern std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisLeftStickBuffers;
+        extern std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisRightStickBuffers;
+        extern std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisTriggersBuffers;
 
         extern u64 s_InputsCount;
         extern std::vector<int> s_GamepadIds;
@@ -214,40 +213,36 @@ namespace QwerkE {
                 if (ImGui::BeginChild("Gamepad Axes", { 0.f, gamepadsButtons.Size() * lineHeight + lineHeight }))
                 {
                     ImGui::Text("Axes");
-                    ImGui::SeparatorText("Left Stick");
-                    for (size_t i = 0; i < s_GamepadAxisLeftStickBuffer.Size(); i++)
+                    for (size_t i = 0; i < Input::GamepadsCount(); i++)
                     {
+                        ImGui::SeparatorText("Left Stick");
                         ImGui::Dummy({ (ImGui::GetContentRegionAvail().x - ImGui::g_pixelsPerCharacter * 17) * 0.5f, 0.f });
                         ImGui::SameLine();
-                        vec2f axis = s_GamepadAxisLeftStickBuffer.ReadRandom(i);
-                        ImGui::Text("%.4f, %.4f", axis.x, axis.y);
-                        if (i == s_GamepadAxisLeftStickBuffer.HeadIndex())
+                        vec2f axisLeft = s_GamepadAxisLeftStickBuffers[i].second.ReadRandom(i);
+                        ImGui::Text("%.4f, %.4f", axisLeft.x, axisLeft.y);
+                        if (i == s_GamepadAxisLeftStickBuffers[i].second.HeadIndex())
                         {
                             ImGui::SameLine();
                             ImGui::Text("<-");
                         }
-                    }
-                    ImGui::SeparatorText("Right Stick");
-                    for (size_t i = 0; i < s_GamepadAxisRightStickBuffer.Size(); i++)
-                    {
+                        ImGui::SeparatorText("Right Stick");
+
                         ImGui::Dummy({ (ImGui::GetContentRegionAvail().x - ImGui::g_pixelsPerCharacter * 17) * 0.5f, 0.f });
                         ImGui::SameLine();
-                        vec2f axis = s_GamepadAxisRightStickBuffer.ReadRandom(i);
-                        ImGui::Text("%.4f, %.4f", axis.x, axis.y);
-                        if (i == s_GamepadAxisRightStickBuffer.HeadIndex())
+                        vec2f axisRight = s_GamepadAxisRightStickBuffers[i].second.ReadRandom(i);
+                        ImGui::Text("%.4f, %.4f", axisRight.x, axisRight.y);
+                        if (i == s_GamepadAxisRightStickBuffers[i].second.HeadIndex())
                         {
                             ImGui::SameLine();
                             ImGui::Text("<-");
                         }
-                    }
-                    ImGui::SeparatorText("Triggers");
-                    for (size_t i = 0; i < s_GamepadAxisTriggersBuffer.Size(); i++)
-                    {
+
+                        ImGui::SeparatorText("Triggers");
                         ImGui::Dummy({ (ImGui::GetContentRegionAvail().x - ImGui::g_pixelsPerCharacter * 17) * 0.5f, 0.f });
                         ImGui::SameLine();
-                        vec2f axis = s_GamepadAxisTriggersBuffer.ReadRandom(i);
-                        ImGui::Text("%.4f, %.4f", axis.x, axis.y);
-                        if (i == s_GamepadAxisTriggersBuffer.HeadIndex())
+                        vec2f axisTriggers = s_GamepadAxisTriggersBuffers[i].second.ReadRandom(i);
+                        ImGui::Text("%.4f, %.4f", axisTriggers.x, axisTriggers.y);
+                        if (i == s_GamepadAxisTriggersBuffers[i].second.HeadIndex())
                         {
                             ImGui::SameLine();
                             ImGui::Text("<-");
@@ -283,13 +278,13 @@ namespace QwerkE {
 
                     for (size_t j = 0; j < axesCount; j++)
                     {
-                        if (i % 2)
+                        if (j % 2)
                         {
-                            ImGui::Text("Axes[%i]: %f", j, GamepadAxis(j).x);
+                            ImGui::Text("Axes[%i]: %f", j, GamepadAxis(j, deviceQKeyId).x);
                         }
                         else
                         {
-                            ImGui::Text("Axes[%i]: %f", j, GamepadAxis(j).y);
+                            ImGui::Text("Axes[%i]: %f", j, GamepadAxis(j, deviceQKeyId).y);
                         }
                     }
 
@@ -299,7 +294,7 @@ namespace QwerkE {
                     for (u8 j = 0; j < buttonCount; j++)
                     {
                         QGamepad buttonQKey = static_cast<QGamepad>(j);
-                        ImGui::Text("Buttons[%i]: %i", j, GamepadDown(buttonQKey));
+                        ImGui::Text("Buttons[%i]: %i", j, GamepadDown(buttonQKey, deviceQKeyId));
                     }
                 }
             }

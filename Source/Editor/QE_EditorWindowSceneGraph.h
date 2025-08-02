@@ -13,7 +13,7 @@ namespace QwerkE {
 
 	namespace Editor {
 
-		QC_ENUM(eSceneGraphCreateTypes, u8, Empty, Light, Camera, Script, Mesh) // #TODO Use a proper eComponentTypes enum everywhere
+		QC_ENUM(eSceneGraphCreateTypes, u8, Empty, Light, e_Camera, Script, Mesh) // #TODO Use a proper eComponentTypes enum everywhere
 
 		class EditorWindowSceneGraph : public EditorWindow
 		{
@@ -104,7 +104,7 @@ namespace QwerkE {
 								m_CurrentScene->CreateEntity().AddComponent<ComponentLight>();
 								break;
 
-							case eSceneGraphCreateTypes::Camera:
+							case eSceneGraphCreateTypes::e_Camera:
 								m_CurrentScene->CreateEntity().AddComponent<ComponentCamera>();
 								break;
 

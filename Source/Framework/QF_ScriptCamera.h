@@ -23,68 +23,6 @@
 #include "Libraries/glm/gtc/constants.hpp"
 #endif // _QGLM
 
-class FirstPersonCamera
-{
-public:
-	FirstPersonCamera(glm::vec3 startPos, float startYaw = -90.0f, float startPitch = 0.0f)
-		: position(startPos), yaw(startYaw), pitch(startPitch) {
-	}
-
-	void Keyboard(char direction, float deltaTime)
-	{
-		float velocity = movementSpeed * deltaTime;
-		glm::vec3 front = Forward();
-		glm::vec3 right = glm::normalize(glm::cross(front, glm::vec3(0, 1, 0)));
-
-		if (direction == 'W')
-			position += front * velocity;
-		if (direction == 'S')
-			position -= front * velocity;
-		if (direction == 'A')
-			position -= right * velocity;
-		if (direction == 'D')
-			position += right * velocity;
-	}
-
-	void Mouse(float xOffset, float yOffset)
-	{
-		xOffset *= mouseSensitivity;
-		yOffset *= mouseSensitivity;
-
-		yaw += xOffset;
-		pitch += yOffset;
-
-		// Clamp pitch to avoid flipping
-		if (pitch > 89.0f)  pitch = 89.0f;
-		if (pitch < -89.0f) pitch = -89.0f;
-	}
-
-	glm::mat4 getViewMatrix() const
-	{
-		return glm::lookAt(position, position + Forward(), glm::vec3(0, 1, 0));
-	}
-
-private:
-	glm::vec3 Forward() const
-	{
-		float yawRad = glm::radians(yaw);
-		float pitchRad = glm::radians(pitch);
-
-		glm::vec3 front;
-		front.x = cos(yawRad) * cos(pitchRad);
-		front.y = sin(pitchRad);
-		front.z = sin(yawRad) * cos(pitchRad);
-		return glm::normalize(front);
-	}
-
-	glm::vec3 position;
-	float yaw;    // Y-axis rotation (left/right)
-	float pitch;  // X-axis rotation (up/down)
-
-	float movementSpeed = 2.5f;
-	float mouseSensitivity = 0.1f;
-};
-
 namespace QwerkE {
 
 	// #TODO See how hard/complex it would be to support 1 camera class that handles all types of behaviour.
@@ -248,7 +186,7 @@ namespace QwerkE {
 
 		eScriptTypes ScriptType() override
 		{
-			return eScriptTypes::Camera;
+			return eScriptTypes::e_Camera;
 		}
 
 		Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseButton2);

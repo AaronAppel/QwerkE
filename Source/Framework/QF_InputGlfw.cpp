@@ -18,6 +18,9 @@ namespace QwerkE {
         extern InputStatesBitRingBuffer<QKey, u5> s_Keys;
         extern InputStatesBitRingBuffer<QKey, u3> s_MouseButtons;
         extern std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>>> s_GamepadsButtons;
+        extern std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisLeftStickBuffers;
+        extern std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisRightStickBuffers;
+        extern std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisTriggersBuffers;
 
         extern void Internal_Initialize();
         extern void Internal_NewFrame();
@@ -271,8 +274,21 @@ namespace QwerkE {
             }
 
             s_GamepadIds.emplace_back(a_GamepadId);
-            std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>> var = { (QGamepad)a_GamepadId , {} };
-            s_GamepadsButtons.emplace_back(var); // #TODO Review safety
+            std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>> buttonsPair = { (QGamepad)a_GamepadId , {} };
+            s_GamepadsButtons.emplace_back(buttonsPair); // #TODO Review safety
+
+            std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> leftStickPair = { (QGamepad)a_GamepadId , {} };
+            std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> rightStickPair = { (QGamepad)a_GamepadId , {} };
+            std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> triggersPair = { (QGamepad)a_GamepadId , {} };
+            leftStickPair.second.AddMarker(0);
+            leftStickPair.second.AddMarker(0);
+            rightStickPair.second.AddMarker(0);
+            rightStickPair.second.AddMarker(0);
+            triggersPair.second.AddMarker(0);
+            triggersPair.second.AddMarker(0);
+            s_GamepadAxisLeftStickBuffers.emplace_back(leftStickPair);
+            s_GamepadAxisRightStickBuffers.emplace_back(rightStickPair);
+            s_GamepadAxisTriggersBuffers.emplace_back(triggersPair);
 
             int hatStatesCount;
             const unsigned char* const buttons = glfwGetJoystickButtons(a_GamepadId, &hatStatesCount);
@@ -294,6 +310,43 @@ namespace QwerkE {
             // glfwGetJoystickName
             // glfwGetJoystickGUID
             // glfwJoystickIsGamepad
+        }
+
+        static void Local_RemoveGamepad(const u8 a_GamepadId)
+        {
+            for (size_t i = 0; i < s_GamepadIds.size(); i++)
+            {
+                if (a_GamepadId == s_GamepadIds[i])
+                {
+                    // #TODO Remove buttons and axes entries
+
+                    for (size_t i = 0; i < s_GamepadAxisLeftStickBuffers.size(); i++)
+                    {
+                        if (a_GamepadId == s_GamepadAxisLeftStickBuffers[i].first)
+                        {
+                            s_GamepadAxisLeftStickBuffers.erase(s_GamepadAxisLeftStickBuffers.begin() + i);
+                        }
+                    }
+                    for (size_t i = 0; i < s_GamepadAxisRightStickBuffers.size(); i++)
+                    {
+                        if (a_GamepadId == s_GamepadAxisRightStickBuffers[i].first)
+                        {
+                            s_GamepadAxisRightStickBuffers.erase(s_GamepadAxisRightStickBuffers.begin() + i);
+                        }
+                    }
+                    for (size_t i = 0; i < s_GamepadAxisTriggersBuffers.size(); i++)
+                    {
+                        if (a_GamepadId == s_GamepadAxisTriggersBuffers[i].first)
+                        {
+                            s_GamepadAxisTriggersBuffers.erase(s_GamepadAxisTriggersBuffers.begin() + i);
+                        }
+                    }
+
+                    s_GamepadIds.erase(s_GamepadIds.begin() + i);
+                    return;
+                }
+            }
+            ASSERT(false, "Device disconnected but not registered!");
         }
 
 #ifdef _QDEARIMGUI
@@ -384,15 +437,7 @@ namespace QwerkE {
                 break;
 
             case GLFW_DISCONNECTED: // 262146
-                for (size_t i = 0; i < s_GamepadIds.size(); i++)
-                {
-                    if (a_JoystickId == s_GamepadIds[i])
-                    {
-                        s_GamepadIds.erase(s_GamepadIds.begin() + i);
-                        return;
-                    }
-                }
-                ASSERT(false, "Device disconnected but not registered!");
+                Local_RemoveGamepad(a_JoystickId);
                 break;
 
             default:

@@ -8,6 +8,7 @@
 #include "Libraries/bgfx/include/bgfx/bgfx.h" // #TODO Abstract out bgfx from QE domain
 #endif
 
+#include "QF_Camera.h"
 #include "QF_ComponentCamera.h"
 #include "QF_ComponentTransform.h"
 #include "QF_FrameBuffer.h"
@@ -82,6 +83,8 @@ namespace QwerkE {
 			Input::MouseDragTracker m_MouseDragTracker = Input::MouseDragTracker(QKey::e_MouseRight);
 			float m_EditorCameraPitch = 0.0f;
 			float m_EditorCameraYaw = 0.0f;
+
+			Camera m_EditorCameraNew;
 
 			Scene* m_CurrentScene = nullptr;
 			GUID m_CurrentSceneGuid = GUID::Invalid;
