@@ -71,7 +71,7 @@ project "Framework"
 		"Jolt",
 		"lodepng",
 		"Mirror",
-		"openal-soft",
+		-- #TODO Fix compilation "openal-soft",
 		"spdlog",
 		"stb_image",
 		
@@ -94,7 +94,7 @@ project "Framework"
 	}
 		
 	filter "system:windows"
-		links { "psapi", } -- bgfx requires psapi
+		links { "psapi.lib; winmm.lib; Avrt.lib", } -- bgfx requires psapi.lib, OpenAL requires winmm.lib and Avrt.lib
 		systemversion "latest"
 
 	-- filter "configurations:*32"
