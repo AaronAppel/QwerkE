@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "QC_BitIndexRingBuffer.h"
+#include "QC_EventCallback.h"
 #include "QC_TypeDefs.h"
 
 #include "QF_InputStatesBitRingBuffer.h"
@@ -20,6 +21,7 @@ namespace QwerkE {
         BitIndexRingBuffer<float, u2> s_MouseScrolls;
         BitIndexRingBuffer<vec2f, u2> s_MousePositionsBuffer;
 
+        // #TODO Other names to consider: "RollingBuffer", "OverflowBuffer", "WrappingBuffer", "Circular/CircleBuffer"
         std::vector<std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>>> s_GamepadsButtons;
         std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisLeftStickBuffers;
         std::vector<std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>>> s_GamepadAxisRightStickBuffers;
@@ -28,6 +30,17 @@ namespace QwerkE {
         static constexpr char* s_GameActionsFileName = "GameActions.qdata";
         static GameActions s_GameActions;
         GameActions& GetGameActions() { return s_GameActions; }
+
+        // #TODO Move to using new EventCallback() class
+        // auto s_EventCallbackKeys = MakeEventCallback<QKey, QKeyState>();
+        EventCallback<QKey, QKeyState> s_EventCallbackKeys;
+
+        EventCallbackHandle<QKey, QKeyState> handle;
+        void OnInput(QKey a, QKeyState b)
+        {
+            int bp = 0;
+            LOG_INFO("OnInput");
+        }
 
         std::vector<KeyCallback> s_KeyCallbacks;
         std::vector<MouseCallback> s_MouseCallbacks;
@@ -113,6 +126,26 @@ namespace QwerkE {
             ++s_InputsCount;
 #endif // _QDEBUG
             s_Keys.Write(a_Key, a_KeyState);
+
+            if (QKeyState::e_KeyStateDown == a_KeyState)
+            {
+                if (QKey::e_1 == a_Key)
+                {
+                    s_EventCallbackKeys.Invoke(a_Key, a_KeyState);
+                    LOG_INFO("Invoke");
+                }
+                else if (QKey::e_2 == a_Key)
+                {
+                    handle = s_EventCallbackKeys += OnInput;
+                    LOG_INFO("Register");
+                }
+                else if (QKey::e_3 == a_Key)
+                {
+                    s_EventCallbackKeys -= handle;
+                    // handle.Unregister();
+                    LOG_INFO("Unregister");
+                }
+            }
 
             for (u16 i = 0; i < s_KeyCallbacks.size(); i++)
             {

@@ -25,7 +25,7 @@ namespace QwerkE {
         private:
             void DrawInternal() override;
 
-            MIRROR_PRIVATE_MEMBERS
+            MIR_FRIEND
 
             bool m_ShowMoreInfo = false;
             float m_UiScaling = .8f;

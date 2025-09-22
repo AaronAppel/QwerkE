@@ -406,7 +406,7 @@ namespace QwerkE {
                 }
             }
 
-            MIRROR_PRIVATE_MEMBERS
+            MIR_FRIEND
 
             // #TODO bool m_AutoSaveRegistryOnFileDrop = true;
             bool m_ViewingLoadedAssets = true;

@@ -229,19 +229,24 @@ namespace QwerkE {
             }
         }
 
-        void Local_SerializeCollection(const void* const collectionAddress, const Mirror::TypeInfo* const classTypeInfo, cJSON* classJson)
+        void Local_SerializeCollection(const void* const collectionAddress, const Mirror::TypeInfo* const collectionTypeInfo, cJSON* classJson)
         {
-            ASSERT(collectionAddress && classTypeInfo && classJson && classTypeInfo->category == Mirror::TypeInfoCategory_Collection, "Invalid argument passed!");
+            ASSERT(collectionAddress && collectionTypeInfo && classJson && collectionTypeInfo->category == Mirror::TypeInfoCategory_Collection, "Invalid argument passed!");
 
-            const Mirror::TypeInfo* currentTypeInfo = classTypeInfo->collectionTypeInfoFirst;
+            // #TODO Change from collectionTypeInfoFirst and collectionTypeInfoSecond, to array collectionTypeInfos[i]
+            // #TODO ASSERT(collectionTypeInfo->collectionTypeInfos.size() > 0, "")
+
+            ASSERT(collectionTypeInfo->collectionTypeInfos.size() > 0, "No valid type info!")
+
+            const Mirror::TypeInfo* currentTypeInfo = collectionTypeInfo->collectionTypeInfos[0];
             size_t currentTypeInfoItemCount = 0;
 
-            while (const void* elementAddress = (const void*)classTypeInfo->collectionIterateCurrentFunc(collectionAddress, currentTypeInfoItemCount++))
+            while (const void* elementAddress = (const void*)collectionTypeInfo->collectionIterateCurrentFunc(collectionAddress, currentTypeInfoItemCount++))
             {
                 ToJson(elementAddress, currentTypeInfo, classJson, currentTypeInfo->stringName);
-                if (const bool isPair = currentTypeInfo == classTypeInfo->collectionTypeInfoFirst && classTypeInfo->collectionTypeInfoSecond)
+                if (collectionTypeInfo->collectionTypeInfos.size() > currentTypeInfoItemCount)
                 {
-                    currentTypeInfo = classTypeInfo->collectionTypeInfoSecond; // #NOTE Increment type when handling pairs. Can evolve to ++typeInfo esque to support tuples as well
+                    currentTypeInfo = collectionTypeInfo->collectionTypeInfos[currentTypeInfoItemCount];
                 }
             }
         }

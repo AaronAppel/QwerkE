@@ -18,7 +18,8 @@ namespace QwerkE {
 
         void Initialize()
         {
-            ASSERT(!s_Initialized, "Log is already initialized!");
+            // #TODO Can't log error in Log:: if not initialized
+            // ASSERT(!s_Initialized, "Log is already initialized!");
             if (!s_Initialized)
             {
                 // #TODO Presets: Verbose, Minimal, Omit, OnlyCritical, OnlyTrace, etc
@@ -45,6 +46,11 @@ namespace QwerkE {
                 s_Initialized = true;
                 LOG_TRACE("{0} Logger \"{1}\" initialized", __FUNCTION__, loggerName);
             }
+        }
+
+        bool Initialized()
+        {
+            return s_Initialized;
         }
 
         void Shutdown()

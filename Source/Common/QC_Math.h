@@ -131,6 +131,11 @@ namespace QwerkE {
 		inline vec3f MatrixForward(const float a_Matrix[16]) { return vec3f(a_Matrix[8], a_Matrix[9], a_Matrix[10]); }
 		inline vec3f MatrixBackward(const float a_Matrix[16]) { return vec3f(-a_Matrix[8], -a_Matrix[9], -a_Matrix[10]); }
 
+		inline void MatrixTranslate(float a_Matrix[16], const vec3f& a_Offset)
+			{ a_Matrix[12] += a_Offset.x; a_Matrix[13] += a_Offset.y; a_Matrix[14] += a_Offset.z; }
+		inline void MatrixTranslate(float a_Matrix[16], const vec3f& a_Axis, const float a_Magnitude)
+			{ a_Matrix[12] += a_Axis.x * a_Magnitude; a_Matrix[13] += a_Axis.y * a_Magnitude; a_Matrix[14] += a_Axis.z * a_Magnitude; }
+
 		void MatrixIdentity(float a_Matrix[16]);
 		inline void MatrixZero(float a_Matrix[16]) { memset(a_Matrix, 0.0f, 16 * sizeof(float)); }
 	}

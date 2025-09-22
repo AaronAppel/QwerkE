@@ -26,7 +26,7 @@ namespace QwerkE {
 		private:
 			void DrawInternal() override;
 
-			MIRROR_PRIVATE_MEMBERS
+			MIR_FRIEND
 
 			enum FolderViewerFiltering : u8
 			{

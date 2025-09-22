@@ -29,7 +29,7 @@ namespace QwerkE {
 			return eScriptTypes::SceneTransition;
 		}
 
-		MIRROR_PRIVATE_MEMBERS
+		MIR_FRIEND
 
 		GUID m_SceneToTransitionToGuid = GUID::Invalid;
 	};

@@ -392,6 +392,15 @@ namespace QwerkE {
                 {
                     m_EditorCamera.m_Perspective = false;
                 }
+                if (ImGui::MenuItem("Reset 0"))
+                {
+                    Math::MatrixZero
+                    (m_EditorCameraTransform.m_Matrix);
+                }
+                if (ImGui::MenuItem("Reset Identity"))
+                {
+                    Math::MatrixIdentity(m_EditorCameraTransform.m_Matrix);
+                }
                 ImGui::EndPopup();
             }
 
@@ -451,6 +460,13 @@ namespace QwerkE {
 
             const float tintBasic[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
             bgfx::setUniform(u_tint, tintBasic);
+
+            ImGui::DefaultWindow([&]() {
+                ImGui::DragFloat("Pitch", &m_EditorCameraPitch);
+                ImGui::DragFloat("Yaw", &m_EditorCameraYaw);
+                Inspector::InspectObject(m_EditorCameraTransform.m_Matrix);
+                }
+            );
         }
 
         void EditorWindowSceneView::EditorCameraUpdate()
@@ -584,6 +600,11 @@ namespace QwerkE {
                 m_EditorCameraYaw -= editorCameraRotation.x * rotationSpeedMultiplier * Time::PreviousFrameDurationUnscaled();
                 UpdateEditorCameraRotation();
             }
+
+            ImGui::DefaultWindow([&](){
+                ImGui::DragFloat3("editorCameraMovement", &editorCameraMovement.x, 0.1f, 1.0f);
+                }
+            );
 
             if (editorCameraMovement.x != 0.0f || editorCameraMovement.y != 0.0f || editorCameraMovement.z != 0.0f)
             {

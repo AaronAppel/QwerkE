@@ -29,7 +29,7 @@ namespace QwerkE {
         void Play();
 
     private:
-        MIRROR_PRIVATE_MEMBERS
+        MIR_FRIEND
 
         Sound* m_Sound = nullptr;
 

@@ -112,7 +112,7 @@ namespace QwerkE {
 		std::unordered_map<eScriptTypes, Scriptable*>& ScriptInstances() { return m_ScriptInstances; }
 
 	private:
-		MIRROR_PRIVATE_MEMBERS
+		MIR_FRIEND
 
 		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
 	};

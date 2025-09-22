@@ -66,7 +66,7 @@ namespace QwerkE {
 
 			void UpdateEditorCameraRotation();
 
-			MIRROR_PRIVATE_MEMBERS
+			MIR_FRIEND
 
 			// void OnSceneReload(const Scene* a_ReloadedScene) override { m_CurrentScene = nullptr; } // #TODO Review if needed
 

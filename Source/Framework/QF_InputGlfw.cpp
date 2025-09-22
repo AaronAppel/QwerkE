@@ -135,6 +135,7 @@ namespace QwerkE {
                 // #TODO Checkout glfwGetJoystickHats
 
                 int hatStatesCount;
+                // #TODO Review swapping for glfwGetGamepadState. May handle different devices better as mentioned here: https://www.reddit.com/r/opengl/comments/gr77ev/gamepad_mapping_with_most_available_controllers/
                 const unsigned char* const buttons = glfwGetJoystickButtons(s_GamepadIds[i], &hatStatesCount);
                 ASSERT(buttons, "Null device buttons!");
 

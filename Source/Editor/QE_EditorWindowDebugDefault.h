@@ -46,7 +46,7 @@ namespace QwerkE {
 				ImGui::Image(ImTextureID(m_TextureId), imageSize, ImVec2(0, 0), ImVec2(1, 1));
 			}
 
-			MIRROR_PRIVATE_MEMBERS
+			MIR_FRIEND
 
 			u8 m_TextureId = 0;
 			float m_Scaler = 1.f;

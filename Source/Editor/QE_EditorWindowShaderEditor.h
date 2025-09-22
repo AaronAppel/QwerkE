@@ -141,7 +141,7 @@ namespace QwerkE {
 				}
 			}
 
-			MIRROR_PRIVATE_MEMBERS
+			MIR_FRIEND
 
 			const u16 m_StartingBufferSize = 10000;
 			Path m_CurrentShaderFilePath = Paths::ShadersDir();

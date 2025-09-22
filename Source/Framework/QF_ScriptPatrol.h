@@ -40,7 +40,7 @@ namespace QwerkE {
 		}
 
 	private:
-		MIRROR_PRIVATE_MEMBERS
+		MIR_FRIEND
 
 		float m_Stride = 5.f;
 		float m_Speed = 1.f;

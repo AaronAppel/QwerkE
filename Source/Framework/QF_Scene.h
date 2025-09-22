@@ -129,7 +129,7 @@ namespace QwerkE {
 
         Physics::PhysicsWorld* GetPhysicsWorld() { return m_PhysicsWorld; }
 
-        MIRROR_PRIVATE_MEMBERS
+        MIR_FRIEND
         friend class EntityHandle; // #TODO Review. Remove public registry if proper, and expose entity map instead
 
         GUID m_CameraEntityGuid = GUID::Invalid;

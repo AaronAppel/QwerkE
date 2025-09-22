@@ -92,14 +92,14 @@ namespace QwerkE {
 			m_CurrentTransformTargetIndex = (u8)Math::ClampRollover((size_t)0, (size_t)m_CurrentTransformTargetIndex + 1, m_TransformHandles.size() - 1);
 		}
 
-		MIRROR_PRIVATE_MEMBERS
+		MIR_FRIEND
 
 		float m_MovementSpeed = 1.f;
 		float m_DistanceToChangeTargets = 1.f;
 		u8 m_CurrentTransformTargetIndex = 0;
 		std::vector<EntityHandle> m_TransformHandles;
 
-		ScriptGuiButton m_Button; // Editor only
+		ScriptGuiButton m_Button; // #TODO Editor only
 	};
 
 }

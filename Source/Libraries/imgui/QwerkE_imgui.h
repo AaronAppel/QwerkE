@@ -126,6 +126,9 @@ namespace ImGui
 		}
 		ImGui::End();
 	}
+#define	ImguiDefaultWindow(X) ImGui::DefaultWindow([&](){	\
+		X													\
+	}
 
 	std::string DirectoryPathAsSameLineButtons(const std::string& directory);
 

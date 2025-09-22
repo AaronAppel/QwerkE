@@ -256,7 +256,7 @@ namespace QwerkE {
                 m_LastSelectedEntityGuid = m_CurrentSelectedEntity ? m_CurrentSelectedEntity.EntityGuid() : GUID::Invalid;
             }
 
-            MIRROR_PRIVATE_MEMBERS
+            MIR_FRIEND
 
             EntityHandle m_CurrentSelectedEntity;
 

@@ -7,9 +7,19 @@
 #include "QE_Projects.h"
 #include "QE_Settings.h"
 
-MIRROR_TYPE(QwerkE::Editor::EditorWindowFlags)
-MIRROR_CLASS(QwerkE::Editor::EditorWindowTypes)
-MIRROR_CLASS_END
+MIR_TYPE(std::tuple<int, bool, std::string, vec3f>)
+
+MIR_CLASS(MyClass)
+	MIR_CLASS_MEMBER(a)
+	MIR_CLASS_MEMBER(b)
+	MIR_CLASS_MEMBER(c)
+	MIR_CLASS_MEMBER(tuple)
+MIR_CLASS_END
+
+MIR_TYPE(QwerkE::Editor::EditorWindowFlags)
+
+MIR_CLASS(QwerkE::Editor::EditorWindowTypes)
+MIR_CLASS_END
 
 // #TODO Move to Mirror
 template <typename SuperClass, typename... SubClass>
@@ -41,245 +51,245 @@ struct EditorSettings // #NOTE Single instance. Cannot be overridden and is used
 	std::string lastUserSettingsFileName = "Default.quser";
 };
 
-MIRROR_CLASS(QwerkE::EditorSettings)
-MIRROR_CLASS_MEMBER(showWelcomeWindow)
-MIRROR_CLASS_MEMBER(startUpData)
-MIRROR_CLASS_MEMBER(limitFramerate)
-MIRROR_CLASS_MEMBER(maxFramesPerSecond)
-MIRROR_CLASS_MEMBER(maxEnabledScenes)
-MIRROR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
-MIRROR_CLASS_MEMBER(startInPlayMode)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::EditorSettings)
+	MIR_CLASS_MEMBER(showWelcomeWindow)
+	MIR_CLASS_MEMBER(startUpData)
+	MIR_CLASS_MEMBER(limitFramerate)
+	MIR_CLASS_MEMBER(maxFramesPerSecond)
+	MIR_CLASS_MEMBER(maxEnabledScenes)
+	MIR_CLASS_MEMBER(maxJobsAdditionalThreadCount)
+	MIR_CLASS_MEMBER(startInPlayMode)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Project)
-MIRROR_CLASS_MEMBER(projectFileName)
-MIRROR_CLASS_MEMBER(projectName)
-MIRROR_CLASS_MEMBER(startUpSceneName)
-MIRROR_CLASS_MEMBER(scenesList)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Project)
+	MIR_CLASS_MEMBER(projectFileName)
+	MIR_CLASS_MEMBER(projectName)
+	MIR_CLASS_MEMBER(startUpSceneName)
+	MIR_CLASS_MEMBER(scenesList)
+MIR_CLASS_END
 
-MIRROR_TYPE(QwerkE::Editor::EditorWindowSizingFlags)
+MIR_TYPE(QwerkE::Editor::EditorWindowSizingFlags)
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowOptions)
-MIRROR_CLASS_MEMBER(m_SizingFlags)
-MIRROR_CLASS_MEMBER(m_WidthMinimum)
-MIRROR_CLASS_MEMBER(m_WidthMaximum)
-MIRROR_CLASS_MEMBER(m_HeightMinimum)
-MIRROR_CLASS_MEMBER(m_HeightMaximum)
-MIRROR_CLASS_MEMBER(m_LockWidth)
-MIRROR_CLASS_MEMBER(m_LockHeight)
-MIRROR_CLASS_MEMBER(m_RatioWidth)
-MIRROR_CLASS_MEMBER(m_RatioHeight)
-MIRROR_CLASS_MEMBER(m_IncrementWidth)
-MIRROR_CLASS_MEMBER(m_IncrementHeight)
-MIRROR_CLASS_MEMBER(m_ItemScaling)
-MIRROR_CLASS_MEMBER(m_FontScaling)
-// #TODO ImGuiStyle m_Style;
-// #TODO ImFont m_Font;
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowOptions)
+	MIR_CLASS_MEMBER(m_SizingFlags)
+	MIR_CLASS_MEMBER(m_WidthMinimum)
+	MIR_CLASS_MEMBER(m_WidthMaximum)
+	MIR_CLASS_MEMBER(m_HeightMinimum)
+	MIR_CLASS_MEMBER(m_HeightMaximum)
+	MIR_CLASS_MEMBER(m_LockWidth)
+	MIR_CLASS_MEMBER(m_LockHeight)
+	MIR_CLASS_MEMBER(m_RatioWidth)
+	MIR_CLASS_MEMBER(m_RatioHeight)
+	MIR_CLASS_MEMBER(m_IncrementWidth)
+	MIR_CLASS_MEMBER(m_IncrementHeight)
+	MIR_CLASS_MEMBER(m_ItemScaling)
+	MIR_CLASS_MEMBER(m_FontScaling)
+	// #TODO ImGuiStyle m_Style;
+	// #TODO ImFont m_Font;
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowAssets)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_ViewingLoadedAssets)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowAssets)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_ViewingLoadedAssets)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowConsole)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowConsole)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowAssets)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugDefault)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugDefault)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_TextureId)
-MIRROR_CLASS_MEMBER(m_Scaler)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugDefault)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugDefault)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_TextureId)
+	MIR_CLASS_MEMBER(m_Scaler)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugEvents)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugEvents)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugEvents)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugEvents)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugInput)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugInput)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugInput)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugInput)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugMemory)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugMemory)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugMemory)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugMemory)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugPhysics)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugPhysics)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugPhysics)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugPhysics)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugProfiler)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugProfiler)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugProfiler)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugProfiler)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugRenderer)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugRenderer)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugRenderer)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugRenderer)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDebugWindows)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugWindows)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDebugWindows)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDebugWindows)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowDockingContext)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDockingContext)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowDockingContext)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowDockingContext)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowEntityInspector)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowEntityInspector)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_LastSelectedEntityGuid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowEntityInspector)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowEntityInspector)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_LastSelectedEntityGuid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowFileEditor)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFileEditor)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowFileEditor)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFileEditor)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowFolderViewer)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_UiScalar)
-MIRROR_CLASS_MEMBER(m_CurrentDirectory)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowFolderViewer)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowFolderViewer)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_UiScalar)
+	MIR_CLASS_MEMBER(m_CurrentDirectory)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowHexEditor)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowHexEditor)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowHexEditor)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowHexEditor)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowInputMapping)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowInputMapping)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowInputMapping)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowInputMapping)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowImGuiDemo)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiDemo)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowImGuiDemo)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiDemo)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowImGuiExtendedDemo)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiExtendedDemo)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowImGuiExtendedDemo)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowImGuiExtendedDemo)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowMenuBar)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowMenuBar)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowMenuBar)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowMenuBar)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowPhysics)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowPhysics)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowPhysics)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowPhysics)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowSceneGraph)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneGraph)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowSceneGraph)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneGraph)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowSceneView)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneView)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_EditorCamera)
-MIRROR_CLASS_MEMBER(m_EditorCameraTransform)
-MIRROR_CLASS_MEMBER(m_EditorCameraPitch)
-MIRROR_CLASS_MEMBER(m_EditorCameraYaw)
-MIRROR_CLASS_MEMBER(m_IsLastFocusedSceneView)
-MIRROR_CLASS_MEMBER(m_CurrentSceneGuid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowSceneView)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSceneView)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_EditorCamera)
+	MIR_CLASS_MEMBER(m_EditorCameraTransform)
+	MIR_CLASS_MEMBER(m_EditorCameraPitch)
+	MIR_CLASS_MEMBER(m_EditorCameraYaw)
+	MIR_CLASS_MEMBER(m_IsLastFocusedSceneView)
+	MIR_CLASS_MEMBER(m_CurrentSceneGuid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::eSettingsOptions)
-MIRROR_CLASS_MEMBER(_value)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::eSettingsOptions)
+	MIR_CLASS_MEMBER(_value)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowSettings)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSettings)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_SettingsEditorOption)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowSettings)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowSettings)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_SettingsEditorOption)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowStatusBar)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowStatusBar)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowStatusBar)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowStatusBar)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowStylePicker)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowStylePicker)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowStylePicker)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowStylePicker)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowMaterialEditor)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowMaterialEditor)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowMaterialEditor)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowMaterialEditor)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowNodeEditor)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNodeEditor)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowNodeEditor)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNodeEditor)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowNotifications)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNotifications)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowNotifications)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowNotifications)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowShaderEditor)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowShaderEditor)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_CurrentShaderFilePath)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowShaderEditor)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowShaderEditor)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_CurrentShaderFilePath)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowPrefabScene)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowPrefabScene)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowPrefabScene)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowPrefabScene)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowPrompt)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowPrompt)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowPrompt)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowPrompt)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowTimeline)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowTimeline)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowTimeline)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowTimeline)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindowWelcomeWindow)
-// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowWelcomeWindow)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Editor::EditorWindowWelcomeWindow)
+	// #TODO Review MIRROR_DEPENDENT_CLASS_START(EditorWindowWelcomeWindow)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Editor::EditorWindow)
-// #TODO Review MIRROR_ABSTRACT_CLASS_START(EditorWindow)
-MIRROR_CLASS_MEMBER(m_Guid) // Order dependency! 1st // #TODO Review dependency
-MIRROR_CLASS_MEMBER(m_WindowName)
-MIRROR_CLASS_MEMBER(m_ImGuiFlags)
-MIRROR_CLASS_MEMBER(m_WindowFlags)
-MIRROR_CLASS_MEMBER(m_MinimumWidth)
-MIRROR_CLASS_MEMBER(m_MinimumHeight)
-MIRROR_CLASS_MEMBER(m_WindowOptions)
-// MIRROR_CLASS_MEMBER(m_EditorWindowType)
-// #TODO Solve generic templated type list issue
-// using WindowsList = Mirror::TypesList <EditorWindowAssets>;
-MirrorSubClasses<QwerkE::Editor::EditorWindow>(QwerkE::Editor::EditorWindowsList{}, localStaticTypeInfo, QwerkE::Editor::EditorWindowTypes::EditorWindowTypesInvalid + 1);
-MIRROR_CLASS_END
-MIRROR_TYPE(QwerkE::Editor::EditorWindow*)
+MIR_CLASS(QwerkE::Editor::EditorWindow)
+	// #TODO Review MIRROR_ABSTRACT_CLASS_START(EditorWindow)
+	MIR_CLASS_MEMBER(m_Guid) // Order dependency! 1st // #TODO Review dependency
+	MIR_CLASS_MEMBER(m_WindowName)
+	MIR_CLASS_MEMBER(m_ImGuiFlags)
+	MIR_CLASS_MEMBER(m_WindowFlags)
+	MIR_CLASS_MEMBER(m_MinimumWidth)
+	MIR_CLASS_MEMBER(m_MinimumHeight)
+	MIR_CLASS_MEMBER(m_WindowOptions)
+	// MIR_CLASS_MEMBER(m_EditorWindowType)
+	// #TODO Solve generic templated type list issue
+	// using WindowsList = Mirror::TypesList <EditorWindowAssets>;
+	MirrorSubClasses<QwerkE::Editor::EditorWindow>(QwerkE::Editor::EditorWindowsList{}, localStaticTypeInfo, QwerkE::Editor::EditorWindowTypes::EditorWindowTypesInvalid + 1);
+MIR_CLASS_END
+MIR_TYPE(QwerkE::Editor::EditorWindow*)
 
-MIRROR_CLASS(QwerkE::ProjectsData)
-MIRROR_CLASS_MEMBER(LastOpenedProjectFileName)
-MIRROR_CLASS_MEMBER(PreviousProjectFileNames)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ProjectsData)
+	MIR_CLASS_MEMBER(LastOpenedProjectFileName)
+	MIR_CLASS_MEMBER(PreviousProjectFileNames)
+MIR_CLASS_END
 
-MIRROR_TYPE(std::vector<QwerkE::Editor::EditorWindow*>)
+MIR_TYPE(std::vector<QwerkE::Editor::EditorWindow*>)

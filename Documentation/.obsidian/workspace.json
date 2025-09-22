@@ -89,12 +89,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ImGui docking tab button.md",
+                "file": "References/Library References.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ImGui docking tab button"
+              "title": "Library References"
             }
           }
         ],
@@ -130,7 +130,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "openAL",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -151,7 +151,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -242,8 +243,9 @@
   },
   "active": "05bc5d74a6c19933",
   "lastOpenFiles": [
-    "C++ Macros Reference.md",
+    "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
     "ImGui docking tab button.md",
+    "C++ Macros Reference.md",
     "Windows Taskbar Custom App Jump List.md",
     "typeId vs dynamic_cast.md",
     "Shared Vault Files ❗/Obsidian Assets/MissingJumpLists.png",
@@ -281,7 +283,6 @@
     "Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "Shared Vault Files ❗/Watched.md",
     "Shared Vault Files ❗/To Watch.md",
-    "Shared Vault Files ❗/To Watch SimonDev.md",
     "Shared Vault Files ❗/template.gitignore",
     "Shared Vault Files ❗/Obsidian",
     "Shared Vault Files ❗",

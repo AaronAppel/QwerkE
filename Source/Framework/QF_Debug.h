@@ -18,6 +18,7 @@ else { LOG_CRITICAL("Assert! {0}, {1}, in {2}() in {3}({4})", #x, msg, __FUNCTIO
 
 #else // Compile option disabled: /Zc:preprocessor
 // #TODO Ensure msg is supported by simply expanding variable args ...
+// #TODO ASSERT(Log::Initialized(), "Log is not initialized!")
 #define ASSERT(x, ...)   \
 if ((x)) { /* !x not guaranteed safe for all type comparisons */ } \
 else { LOG_CRITICAL("Assert! {0}, {1}, in {2}() in {3}({4})", #x, __VA_ARGS__, __FUNCTION__, __FILE__, __LINE__); BREAK }

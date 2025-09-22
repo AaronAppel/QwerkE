@@ -37,143 +37,147 @@ static void MirrorSubClasses(TemplateArgumentList<SubClass...>, Mirror::TypeInfo
 }
 
 #ifdef _QDEARIMGUI
-MIRROR_CLASS(ImVec2)
-MIRROR_CLASS_MEMBER(x)
-MIRROR_CLASS_MEMBER(y)
-MIRROR_CLASS_END
+MIR_CLASS(ImVec2)
+	MIR_CLASS_MEMBER(x)
+	MIR_CLASS_MEMBER(y)
+MIR_CLASS_END
 
-MIRROR_CLASS(ImVec4)
-MIRROR_CLASS_MEMBER(x)
-MIRROR_CLASS_MEMBER(y)
-MIRROR_CLASS_MEMBER(z)
-MIRROR_CLASS_MEMBER(w)
-MIRROR_CLASS_END
+MIR_CLASS(ImVec4)
+	MIR_CLASS_MEMBER(x)
+	MIR_CLASS_MEMBER(y)
+	MIR_CLASS_MEMBER(z)
+	MIR_CLASS_MEMBER(w)
+MIR_CLASS_END
 
-MIRROR_TYPE(ImVec4[ImGuiCol_COUNT])
+MIR_TYPE(ImVec4[ImGuiCol_COUNT])
 
-MIRROR_CLASS(ImGuiStyle)
-MIRROR_CLASS_MEMBER(Alpha)
-MIRROR_CLASS_MEMBER(DisabledAlpha)
-MIRROR_CLASS_MEMBER(WindowPadding)
-MIRROR_CLASS_MEMBER(WindowRounding)
-MIRROR_CLASS_MEMBER(WindowBorderSize)
-MIRROR_CLASS_MEMBER(WindowMinSize)
-MIRROR_CLASS_MEMBER(WindowTitleAlign)
-MIRROR_CLASS_MEMBER(WindowMenuButtonPosition)
-MIRROR_CLASS_MEMBER(ChildRounding)
-MIRROR_CLASS_MEMBER(ChildBorderSize)
-MIRROR_CLASS_MEMBER(PopupRounding)
-MIRROR_CLASS_MEMBER(PopupBorderSize)
-MIRROR_CLASS_MEMBER(FramePadding)
-MIRROR_CLASS_MEMBER(FrameRounding)
-MIRROR_CLASS_MEMBER(FrameBorderSize)
-MIRROR_CLASS_MEMBER(ItemSpacing)
-MIRROR_CLASS_MEMBER(ItemInnerSpacing)
-MIRROR_CLASS_MEMBER(CellPadding)
-MIRROR_CLASS_MEMBER(TouchExtraPadding)
-MIRROR_CLASS_MEMBER(IndentSpacing)
-MIRROR_CLASS_MEMBER(ColumnsMinSpacing)
-MIRROR_CLASS_MEMBER(ScrollbarSize)
-MIRROR_CLASS_MEMBER(ScrollbarRounding)
-MIRROR_CLASS_MEMBER(GrabMinSize)
-MIRROR_CLASS_MEMBER(GrabRounding)
-MIRROR_CLASS_MEMBER(LogSliderDeadzone)
-MIRROR_CLASS_MEMBER(TabRounding)
-MIRROR_CLASS_MEMBER(TabBorderSize)
-MIRROR_CLASS_MEMBER(TabMinWidthForCloseButton)
-MIRROR_CLASS_MEMBER(TabBarBorderSize)
-MIRROR_CLASS_MEMBER(TableAngledHeadersAngle)
-MIRROR_CLASS_MEMBER(ColorButtonPosition)
-MIRROR_CLASS_MEMBER(ButtonTextAlign)
-MIRROR_CLASS_MEMBER(SelectableTextAlign)
-MIRROR_CLASS_MEMBER(SeparatorTextBorderSize)
-MIRROR_CLASS_MEMBER(SeparatorTextAlign)
-MIRROR_CLASS_MEMBER(SeparatorTextPadding)
-MIRROR_CLASS_MEMBER(DisplayWindowPadding)
-MIRROR_CLASS_MEMBER(DisplaySafeAreaPadding)
-MIRROR_CLASS_MEMBER(DockingSeparatorSize)
-MIRROR_CLASS_MEMBER(MouseCursorScale)
-MIRROR_CLASS_MEMBER(AntiAliasedLines)
-MIRROR_CLASS_MEMBER(AntiAliasedLinesUseTex)
-MIRROR_CLASS_MEMBER(AntiAliasedFill)
-MIRROR_CLASS_MEMBER(CurveTessellationTol)
-MIRROR_CLASS_MEMBER(CircleTessellationMaxError)
-MIRROR_CLASS_MEMBER(Colors)
-MIRROR_CLASS_END
+MIR_CLASS(ImGuiStyle)
+	MIR_CLASS_MEMBER(Alpha)
+	MIR_CLASS_MEMBER(DisabledAlpha)
+	MIR_CLASS_MEMBER(WindowPadding)
+	MIR_CLASS_MEMBER(WindowRounding)
+	MIR_CLASS_MEMBER(WindowBorderSize)
+	MIR_CLASS_MEMBER(WindowMinSize)
+	MIR_CLASS_MEMBER(WindowTitleAlign)
+	MIR_CLASS_MEMBER(WindowMenuButtonPosition)
+	MIR_CLASS_MEMBER(ChildRounding)
+	MIR_CLASS_MEMBER(ChildBorderSize)
+	MIR_CLASS_MEMBER(PopupRounding)
+	MIR_CLASS_MEMBER(PopupBorderSize)
+	MIR_CLASS_MEMBER(FramePadding)
+	MIR_CLASS_MEMBER(FrameRounding)
+	MIR_CLASS_MEMBER(FrameBorderSize)
+	MIR_CLASS_MEMBER(ItemSpacing)
+	MIR_CLASS_MEMBER(ItemInnerSpacing)
+	MIR_CLASS_MEMBER(CellPadding)
+	MIR_CLASS_MEMBER(TouchExtraPadding)
+	MIR_CLASS_MEMBER(IndentSpacing)
+	MIR_CLASS_MEMBER(ColumnsMinSpacing)
+	MIR_CLASS_MEMBER(ScrollbarSize)
+	MIR_CLASS_MEMBER(ScrollbarRounding)
+	MIR_CLASS_MEMBER(GrabMinSize)
+	MIR_CLASS_MEMBER(GrabRounding)
+	MIR_CLASS_MEMBER(LogSliderDeadzone)
+	MIR_CLASS_MEMBER(TabRounding)
+	MIR_CLASS_MEMBER(TabBorderSize)
+	MIR_CLASS_MEMBER(TabMinWidthForCloseButton)
+	MIR_CLASS_MEMBER(TabBarBorderSize)
+	MIR_CLASS_MEMBER(TableAngledHeadersAngle)
+	MIR_CLASS_MEMBER(ColorButtonPosition)
+	MIR_CLASS_MEMBER(ButtonTextAlign)
+	MIR_CLASS_MEMBER(SelectableTextAlign)
+	MIR_CLASS_MEMBER(SeparatorTextBorderSize)
+	MIR_CLASS_MEMBER(SeparatorTextAlign)
+	MIR_CLASS_MEMBER(SeparatorTextPadding)
+	MIR_CLASS_MEMBER(DisplayWindowPadding)
+	MIR_CLASS_MEMBER(DisplaySafeAreaPadding)
+	MIR_CLASS_MEMBER(DockingSeparatorSize)
+	MIR_CLASS_MEMBER(MouseCursorScale)
+	MIR_CLASS_MEMBER(AntiAliasedLines)
+	MIR_CLASS_MEMBER(AntiAliasedLinesUseTex)
+	MIR_CLASS_MEMBER(AntiAliasedFill)
+	MIR_CLASS_MEMBER(CurveTessellationTol)
+	MIR_CLASS_MEMBER(CircleTessellationMaxError)
+MIR_CLASS_MEMBER(Colors)
+MIR_CLASS_END
 #endif
 
 #ifdef _QENTT
-MIRROR_TYPE(entt::registry) // #TODO Deprecate MIRROR_TYPE
-MIRROR_TYPE(entt::entity)
+MIR_TYPE(entt::registry) // #TODO Deprecate MIR_TYPE
+MIR_TYPE(entt::entity)
 #endif
 
 // std::filesystem
-MIRROR_TYPE(std::filesystem::path)
+MIR_TYPE(std::filesystem::path)
 
 // GUID
-MIRROR_CLASS(QwerkE::GUID)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::GUID)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_Guid)
+MIR_CLASS_END
 
-MIRROR_CLASS(const QwerkE::GUID)
-MIRROR_CONSTRUCT_USING_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_Guid)
-MIRROR_CLASS_END
+MIR_CLASS(const QwerkE::GUID)
+	MIR_CONSTRUCT_USING_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_Guid)
+MIR_CLASS_END
 
 // Enums
-MIRROR_TYPE(QwerkE::eScriptTypes)
-MIRROR_TYPE(const QwerkE::eScriptTypes)
-MIRROR_TYPE(QwerkE::eComponentTags)
-MIRROR_TYPE(QwerkE::QKey)
-MIRROR_TYPE(QwerkE::Physics::BodyShapes)
+MIR_TYPE(QwerkE::eScriptTypes)
+MIR_TYPE(const QwerkE::eScriptTypes)
+MIR_TYPE(QwerkE::eComponentTags)
+MIR_TYPE(QwerkE::QKey)
+MIR_TYPE(QwerkE::Physics::BodyShapes)
 
 // Arrays
-MIRROR_TYPE(float[16])
+MIR_TYPE(float[16])
 
 // Pairs
-MIRROR_TYPE(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE(std::pair<QwerkE::GUID, entt::entity>)
-MIRROR_TYPE(std::pair<QwerkE::GUID, std::string>)
-MIRROR_TYPE(std::pair<const QwerkE::GUID, std::string>)
-MIRROR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE(std::pair<QwerkE::GUID, void*>)
-MIRROR_TYPE(std::pair<QwerkE::GUID, std::string*>)
-MIRROR_TYPE(std::pair<const QwerkE::GUID, std::string*>)
-MIRROR_TYPE(std::pair<std::string, std::string>)
-MIRROR_TYPE(std::pair<QwerkE::GUID, std::pair<std::string, std::string>>)
-MIRROR_TYPE(std::pair<QwerkE::GUID, std::vector<std::string>>)
-MIRROR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
-MIRROR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIR_TYPE(std::pair<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIR_TYPE(std::pair<const QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIR_TYPE(std::pair<QwerkE::GUID, entt::entity>)
+MIR_TYPE(std::pair<QwerkE::GUID, std::string>)
+MIR_TYPE(std::pair<const QwerkE::GUID, std::string>)
+MIR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIR_TYPE(std::pair<QwerkE::GUID, void*>)
+MIR_TYPE(std::pair<QwerkE::GUID, std::string*>)
+MIR_TYPE(std::pair<const QwerkE::GUID, std::string*>)
+MIR_TYPE(std::pair<std::string, std::string>)
+MIR_TYPE(std::pair<QwerkE::GUID, std::pair<std::string, std::string>>)
+MIR_TYPE(std::pair<QwerkE::GUID, std::vector<std::string>>)
+MIR_TYPE(std::pair<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIR_TYPE(std::pair<const size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
 
 // Vectors
-MIRROR_TYPE(std::vector<entt::entity>)
-MIRROR_TYPE(std::vector<std::string>)
-MIRROR_TYPE(std::vector<std::string*>)
-MIRROR_TYPE(std::vector<std::pair<QwerkE::GUID, std::string>>)
-MIRROR_TYPE(std::vector<std::pair<QwerkE::GUID, std::pair<std::string, std::string>>>)
-MIRROR_TYPE(std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>)
+MIR_TYPE(std::vector<entt::entity>)
+MIR_TYPE(std::vector<std::string>)
+MIR_TYPE(std::vector<std::string*>)
+MIR_TYPE(std::vector<std::pair<QwerkE::GUID, std::string>>)
+MIR_TYPE(std::vector<std::pair<QwerkE::GUID, std::pair<std::string, std::string>>>)
+MIR_TYPE(std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>)
 
 // Maps
-MIRROR_TYPE(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
-MIRROR_TYPE(std::unordered_map<QwerkE::GUID, std::string*>)
-MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
-MIRROR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
-MIRROR_TYPE(std::unordered_map<QwerkE::GUID, std::string>)
+MIR_TYPE(std::unordered_map<QwerkE::eScriptTypes, QwerkE::Scriptable*>)
+MIR_TYPE(std::unordered_map<QwerkE::GUID, std::string*>)
+MIR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::string>>>)
+MIR_TYPE(std::unordered_map<size_t, std::vector<std::pair<QwerkE::GUID, std::vector<std::string>>>>)
+MIR_TYPE(std::unordered_map<QwerkE::GUID, std::string>)
 
 // Function pointers
-// MIRROR_TYPE(void(*)(void))
+// MIR_TYPE(void(*)(void))
 // #TODO Remove expanded code
 template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
-	static_assert(sizeof(void(*)(void)) <= 0xffffui16, "Size is larger than member can hold!"); static Mirror::TypeInfo localStaticTypeInfo; if (!localStaticTypeInfo.stringName.empty()) {
+	static_assert(sizeof(void(*)(void)) <= 0xffffui16, "Size is larger than member can hold!");
+	static Mirror::TypeInfo localStaticTypeInfo;
+	if (!localStaticTypeInfo.stringName.empty()) {
 		return &localStaticTypeInfo;
 	}
+
 	localStaticTypeInfo.category = GetCategory<void(*)(void)>();
 	localStaticTypeInfo.id = Mirror::IdForType<void(*)(void)>();
 	localStaticTypeInfo.stringName = typeid(void(*)(void)).name();
 	localStaticTypeInfo.size = sizeof(void(*)(void)); switch (localStaticTypeInfo.category) {
+
 	case TypeInfoCategory_Collection:
 		SetCollectionLambdas<void(*)(void)>(&localStaticTypeInfo, is_stl_container_impl::is_stl_container<void(*)(void)>::type());
 	case TypeInfoCategory_Class: SetConstructionLambda<void(*)(void)>(&localStaticTypeInfo, std::is_class<void(*)(void)>::type()); break;
@@ -185,148 +189,150 @@ template<> static const Mirror::TypeInfo* Mirror::InfoForType<void(*)(void)>() {
 		// localStaticTypeInfo.pointerDereferencedTypeInfo = Mirror::InfoForType<std::remove_pointer_t<void(*)(void)>>();
 		break;
 	case TypeInfoCategory_Primitive: SetConstructionLambda<void(*)(void)>(&localStaticTypeInfo, std::is_same<void(*)(void), std::string>::type()); break;
-	} return &localStaticTypeInfo;
+	}
+	return &localStaticTypeInfo;
 }
 
 // Scripts
-MIRROR_CLASS(QwerkE::ScriptableCamera)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ScriptableCamera)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ScriptGuiButton)
-MIRROR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ScriptGuiButton)
+	MIR_CLASS_MEMBER_FLAGS(m_CallbackFunction, FieldSerializationFlags::_InspectorOnly)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ScriptablePatrol)
-MIRROR_CLASS_MEMBER(m_Stride)
-MIRROR_CLASS_MEMBER(m_Speed)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ScriptablePatrol)
+	MIR_CLASS_MEMBER(m_Stride)
+	MIR_CLASS_MEMBER(m_Speed)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ScriptablePathFinder)
-MIRROR_CLASS_MEMBER(m_MovementSpeed)
-MIRROR_CLASS_MEMBER(m_DistanceToChangeTargets)
-MIRROR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
-MIRROR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ScriptablePathFinder)
+	MIR_CLASS_MEMBER(m_MovementSpeed)
+	MIR_CLASS_MEMBER(m_DistanceToChangeTargets)
+	MIR_CLASS_MEMBER_FLAGS(m_CurrentTransformTargetIndex, FieldSerializationFlags::_InspectorOnly)
+	MIR_CLASS_MEMBER_FLAGS(m_Button, FieldSerializationFlags::_InspectorOnly)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ScriptableTesting)
-MIRROR_CLASS_MEMBER(m_GuiButton)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ScriptableTesting)
+	MIR_CLASS_MEMBER(m_GuiButton)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ScriptableSceneTransition)
-MIRROR_CLASS_MEMBER(m_SceneToTransitionToGuid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ScriptableSceneTransition)
+	MIR_CLASS_MEMBER(m_SceneToTransitionToGuid)
+MIR_CLASS_END
 
 // MIRROR_ABSTRACT_CLASS_START(QwerkE::Scriptable)
-MIRROR_CLASS(QwerkE::Scriptable)
-// #TODO Look at generating empty types or not yet declared types automatically as well.
-// Would save a step when creating a new type and still allow exposing members for specific types
-MirrorSubClasses<QwerkE::Scriptable>(QwerkE::ComponentScriptsList{}, localStaticTypeInfo);
-MIRROR_CLASS_END
-MIRROR_TYPE(QwerkE::Scriptable*)
+MIR_CLASS(QwerkE::Scriptable)
+	// #TODO Look at generating empty types or not yet declared types automatically as well.
+	// Would save a step when creating a new type and still allow exposing members for specific types
+	MirrorSubClasses<QwerkE::Scriptable>(QwerkE::ComponentScriptsList{}, localStaticTypeInfo);
+MIR_CLASS_END
+
+MIR_TYPE(QwerkE::Scriptable*)
 
 // Structs
-MIRROR_CLASS(vec2f)
-MIRROR_CLASS_MEMBER(x)
-MIRROR_CLASS_MEMBER(y)
-MIRROR_CLASS_END
+MIR_CLASS(vec2f)
+	MIR_CLASS_MEMBER(x)
+	MIR_CLASS_MEMBER(y)
+MIR_CLASS_END
 
-MIRROR_CLASS(vec3f)
-MIRROR_CLASS_MEMBER(x)
-MIRROR_CLASS_MEMBER(y)
-MIRROR_CLASS_MEMBER(z)
-MIRROR_CLASS_END
+MIR_CLASS(vec3f)
+	MIR_CLASS_MEMBER(x)
+	MIR_CLASS_MEMBER(y)
+	MIR_CLASS_MEMBER(z)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Framework::StartUpData)
-MIRROR_CLASS_MEMBER(windowWidth)
-MIRROR_CLASS_MEMBER(windowHeight)
-MIRROR_CLASS_MEMBER(windowOpenPositionX)
-MIRROR_CLASS_MEMBER(windowOpenPositionY)
-MIRROR_CLASS_MEMBER(vSyncEnabled)
-MIRROR_CLASS_MEMBER(windowAutoFocusOnStart)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Framework::StartUpData)
+	MIR_CLASS_MEMBER(windowWidth)
+	MIR_CLASS_MEMBER(windowHeight)
+	MIR_CLASS_MEMBER(windowOpenPositionX)
+	MIR_CLASS_MEMBER(windowOpenPositionY)
+	MIR_CLASS_MEMBER(vSyncEnabled)
+	MIR_CLASS_MEMBER(windowAutoFocusOnStart)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::RendererSettings)
-MIRROR_CLASS_MEMBER(drawingPrimitiveType)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::RendererSettings)
+	MIR_CLASS_MEMBER(drawingPrimitiveType)
+MIR_CLASS_END
 
 // MIRROR_DEPENDENT_CLASS_START(QwerkE::Scene)
-MIRROR_CLASS(QwerkE::Scene)
-// #TODO MIRROR_CONSTRUCT_USING_MEMBER(m_SceneGuid)
-MIRROR_CLASS_MEMBER(m_SceneGuid)
-MIRROR_CLASS_MEMBER(m_SceneFileName)
-MIRROR_CLASS_MEMBER(m_Registry)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Scene)
+	// #TODO MIR_CONSTRUCT_USING_MEMBER(m_SceneGuid)
+	MIR_CLASS_MEMBER(m_SceneGuid)
+	MIR_CLASS_MEMBER(m_SceneFileName)
+	MIR_CLASS_MEMBER(m_Registry)
+MIR_CLASS_END
 
 // Components
-MIRROR_CLASS(QwerkE::ComponentAudio)
-MIRROR_CLASS_MEMBER(m_SoundGuid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentAudio)
+	MIR_CLASS_MEMBER(m_SoundGuid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ComponentCamera)
-MIRROR_CLASS_MEMBER_FLAGS(m_ShowSphere, FieldSerializationFlags::_InspectorOnly)
-MIRROR_CLASS_MEMBER(m_MoveSpeed)
-MIRROR_CLASS_MEMBER_FLAGS(m_LookAtPosition, FieldSerializationFlags::_InspectorViewOnly)
-MIRROR_CLASS_MEMBER(m_Fov)
-MIRROR_CLASS_MEMBER(m_Near)
-MIRROR_CLASS_MEMBER(m_Far)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentCamera)
+	MIR_CLASS_MEMBER_FLAGS(m_ShowSphere, FieldSerializationFlags::_InspectorOnly)
+	MIR_CLASS_MEMBER(m_MoveSpeed)
+	MIR_CLASS_MEMBER_FLAGS(m_LookAtPosition, FieldSerializationFlags::_InspectorViewOnly)
+	MIR_CLASS_MEMBER(m_Fov)
+	MIR_CLASS_MEMBER(m_Near)
+	MIR_CLASS_MEMBER(m_Far)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ComponentInfo)
-MIRROR_CLASS_MEMBER_FLAGS(m_EntityName, FieldSerializationFlags::_HideInInspector)
-// #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
-// Assigned through EntityHandle constructor
-MIRROR_CLASS_MEMBER(m_Guid)
-MIRROR_CLASS_MEMBER(m_Enabled)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentInfo)
+	MIR_CLASS_MEMBER_FLAGS(m_EntityName, FieldSerializationFlags::_HideInInspector)
+	// #NOTE Unserialized as needed earlier during deserialization (parent array name instead)
+	// Assigned through EntityHandle constructor
+	MIR_CLASS_MEMBER(m_Guid)
+	MIR_CLASS_MEMBER(m_Enabled)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ComponentLight)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentLight)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ComponentMesh)
-MIRROR_CLASS_MEMBER(m_MeshGuid)
-MIRROR_CLASS_MEMBER(m_ShaderGuid)
-MIRROR_CLASS_MEMBER(m_TextureGuid)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentMesh)
+	MIR_CLASS_MEMBER(m_MeshGuid)
+	MIR_CLASS_MEMBER(m_ShaderGuid)
+	MIR_CLASS_MEMBER(m_TextureGuid)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ComponentPhysics)
-MIRROR_CLASS_MEMBER(m_Shape)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentPhysics)
+	MIR_CLASS_MEMBER(m_Shape)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ComponentTransform)
-MIRROR_CLASS_MEMBER(m_Matrix)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentTransform)
+	MIR_CLASS_MEMBER(m_Matrix)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::ComponentScript)
-MIRROR_CLASS_MEMBER(m_ScriptInstances)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ComponentScript)
+	MIR_CLASS_MEMBER(m_ScriptInstances)
+MIR_CLASS_END
 
 // Misc
-MIRROR_CLASS(QwerkE::EntityHandle)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::EntityHandle)
+MIR_CLASS_END
 
 // Assets
-MIRROR_CLASS(QwerkE::Mesh)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Mesh)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Shader)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Shader)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Sound)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Sound)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Texture)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Texture)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::FrameBuffer)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::FrameBuffer)
+MIR_CLASS_END
 
-MIRROR_CLASS(QwerkE::Input::GameActions)
-MIRROR_CLASS_MEMBER(Camera_MoveForward)
-MIRROR_CLASS_MEMBER(Camera_MoveBackward)
-MIRROR_CLASS_MEMBER(Camera_MoveLeft)
-MIRROR_CLASS_MEMBER(Camera_MoveRight)
-MIRROR_CLASS_MEMBER(Camera_MoveUp)
-MIRROR_CLASS_MEMBER(Camera_MoveDown)
-MIRROR_CLASS_MEMBER(Camera_RotateLeft)
-MIRROR_CLASS_MEMBER(Camera_RotateRight)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::Input::GameActions)
+	MIR_CLASS_MEMBER(Camera_MoveForward)
+	MIR_CLASS_MEMBER(Camera_MoveBackward)
+	MIR_CLASS_MEMBER(Camera_MoveLeft)
+	MIR_CLASS_MEMBER(Camera_MoveRight)
+	MIR_CLASS_MEMBER(Camera_MoveUp)
+	MIR_CLASS_MEMBER(Camera_MoveDown)
+	MIR_CLASS_MEMBER(Camera_RotateLeft)
+	MIR_CLASS_MEMBER(Camera_RotateRight)
+MIR_CLASS_END

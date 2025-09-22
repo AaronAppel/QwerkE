@@ -131,6 +131,7 @@ struct TemplateArgumentList { };
 // #TODO This file should probably not define anything and just list other files to include in all other files
 // #TODO Move GLM type aliasing to another/better file/place
 #ifdef _QGLM
+// #define GLM_FORCE_SWIZZLE
 #include "Libraries/glm/glm.hpp"
 
 typedef glm::vec2		vec2f;
@@ -151,5 +152,12 @@ const vec3f vec3fUp = vec3f(0.f, 1.f, 0.f);
 const vec3f vec3fDown = vec3f(0.f, -1.f, 0.f);
 const vec3f vec3fRight = vec3f(1.f, 0.f, 0.f);
 const vec3f vec3fLeft = vec3f(-1.f, 0.f, 0.f);
+
+const float mat4Identity[16] = {
+    1.f, 0.f, 0.f, 0.f,
+    0.f, 1.f, 0.f, 0.f,
+    0.f, 0.f, 1.f, 0.f,
+    0.f, 0.f, 0.f, 1.f
+};
 
 #endif

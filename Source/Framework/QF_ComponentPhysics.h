@@ -47,7 +47,7 @@ namespace QwerkE {
         // friend class PhysicsSystem; // #TODO Friend class?
         void Destroy();
 
-        MIRROR_PRIVATE_MEMBERS
+        MIR_FRIEND
 
         Physics::PhysicsWorld* m_PhysicsWorld = nullptr;
         JPH::Body* m_Body = nullptr;

@@ -43,6 +43,7 @@ namespace QwerkE {
 
 	struct ScriptGuiButton
 	{
+		// #TODO Probably need to store a class instance pointer, or safer handle style pointer wrapper
 		using CallBackFunction = void(*)(void);
 		CallBackFunction m_CallbackFunction = nullptr;
 		std::string m_ButtonName = Constants::gc_DefaultStringValue;

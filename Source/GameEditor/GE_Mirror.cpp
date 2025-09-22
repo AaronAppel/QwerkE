@@ -2,6 +2,6 @@
 
 #include "GE_ScriptGameEntity.h"
 
-MIRROR_CLASS(QwerkE::ScriptGameEntity)
-MIRROR_CLASS_MEMBER(m_DegreesPerSecond)
-MIRROR_CLASS_END
+MIR_CLASS(QwerkE::ScriptGameEntity)
+MIR_CLASS_MEMBER(m_DegreesPerSecond)
+MIR_CLASS_END

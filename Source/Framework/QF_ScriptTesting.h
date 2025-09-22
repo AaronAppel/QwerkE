@@ -49,7 +49,7 @@ namespace QwerkE {
 			LOG_ERROR("Script call back");
 		}
 
-		MIRROR_PRIVATE_MEMBERS
+		MIR_FRIEND
 
 		ScriptGuiButton m_GuiButton;
 	};

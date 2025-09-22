@@ -339,7 +339,7 @@ namespace QwerkE {
 			std::string m_WindowName = Constants::gc_DefaultStringValue;
 
 		private:
-			MIRROR_PRIVATE_MEMBERS
+			MIR_FRIEND
 
 			GUID m_Guid = GUID::Invalid; // #NOTE Singleton windows are static and have GUID dependency with init
 

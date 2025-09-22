@@ -8,4 +8,4 @@
 // #NOTE TypeIds shouldn't be stored in data as they can change in code, between run times
 
 // #NOTE Game Ids start at +3000
-MIRROR_TYPE_ID(3000, QwerkE::ScriptGameEntity)
+MIR_TYPE_ID(3000, QwerkE::ScriptGameEntity)

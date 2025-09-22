@@ -63,11 +63,16 @@ public:
 		}
 	}
 
-	void RemoveMarker(const unsigned char a_MarkerIndex)
+	void RemoveAllMarkers()
 	{
-		assert(m_Markers.size() > a_MarkerIndex);
-		m_Markers.removeat(a_MarkerIndex);
+		m_Markers.clear();
 	}
+
+	// void RemoveMarker(const unsigned char a_MarkerIndex)
+	// {
+	// 	assert(m_Markers.size() > a_MarkerIndex);
+	// 	m_Markers.removeat(a_MarkerIndex);
+	// }
 
 	unsigned char WritesUntilNextMarkerCollision()
 	{

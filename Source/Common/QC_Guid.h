@@ -24,7 +24,7 @@ namespace QwerkE {
 		// #NOTE Spdlog doesn't like this : operator bool() const { return m_Guid != Invalid; }
 
 	private:
-		MIRROR_PRIVATE_MEMBERS
+		MIR_FRIEND
 		unsigned long long m_Guid = Invalid;
 	};
 

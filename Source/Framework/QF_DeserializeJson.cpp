@@ -58,7 +58,7 @@ namespace QwerkE {
             switch (primitiveTypeInfo->id)
             {
             case Mirror::IdForType<std::filesystem::path>():            {
-                primitiveTypeInfo->typeConstructorFunc(primitiveAddress); // #NOTE String must be constructed before assigned to
+                primitiveTypeInfo->Construct(primitiveAddress); // #NOTE String must be constructed before assigned to
                 *(std::filesystem::path*)primitiveAddress = primitiveJson->valuestring ? primitiveJson->valuestring : primitiveJson->string; break;
                 int bp = 0;
             }
@@ -66,7 +66,7 @@ namespace QwerkE {
             case Mirror::IdForType<const std::string>():
             case Mirror::IdForType<std::string>(): // #TODO Handles when obj is pair.first better. This will break if key and value are both string/char*
                 {
-                    primitiveTypeInfo->typeConstructorFunc(primitiveAddress); // #NOTE String must be constructed before assigned to
+                    primitiveTypeInfo->Construct(primitiveAddress); // #NOTE String must be constructed before assigned to
                     *(std::string*)primitiveAddress = primitiveJson->valuestring ? primitiveJson->valuestring : primitiveJson->string; break;
                 }
             case Mirror::IdForType<const char*>():
@@ -152,10 +152,7 @@ namespace QwerkE {
                 Local_DeserializeClass(classJson, classTypeInfo->superTypeInfo, classAddress);
             }
 
-            if (classTypeInfo->typeConstructorFunc)
-            {
-                classTypeInfo->typeConstructorFunc(classAddress);
-            }
+            classTypeInfo->Construct(classAddress);
 
             if (classTypeInfo->fields.empty())
                 return;
@@ -201,47 +198,28 @@ namespace QwerkE {
 
             size_t elementIndex = 0;
             const cJSON* jsonIterator = collectionJson->child;
+
+            ASSERT(collectionTypeInfo->collectionTypeInfos.size() > 0, "No valid type info!")
+            const Mirror::TypeInfo* currentTypeInfo = collectionTypeInfo->collectionTypeInfos[0];
+
+            ASSERT(currentTypeInfo, "Null currentTypeInfo!");
+
             while (jsonIterator)
             {
-                /* Testing tuple support
-                {
-                    const Mirror::TypeInfo* currentTypeInfo = collectionTypeInfo->collectionTypeInfos[typeInfoIndex];
+                // #TODO Review allocating temporary object buffers, then copying into collections causing new allocations.
+                // Look to utilize move semantics or constructing in place
 
-                    Buffer elementFirstBuffer(currentTypeInfo->size);
-                    FromJson(jsonIterator, currentTypeInfo, elementFirstBuffer.As<void>());
+                Buffer elementFirstBuffer(currentTypeInfo->size);
+                FromJson(jsonIterator, currentTypeInfo, elementFirstBuffer.As<void>());
+                collectionTypeInfo->CollectionAppend(collectionAddress, elementIndex, elementFirstBuffer.As<void>());
 
-                    // collectionTypeInfo->CollectionAppend(collectionAddress, elementIndex, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
-
-                    if (typeInfoIndex + 1 < collectionTypeInfo->collectionTypeInfos.size())
-                    {
-                        ++typeInfoIndex;
-                    }
-                    else
-                    {
-                        break; // #TODO Review. Shouldn't need to break. End on vector last element, or tuple last type. Both should be jsonIterator->next == nullptr
-                    }
-                    continue;
-                }
-                //*/
-
-                // Old
-                Buffer elementFirstBuffer(collectionTypeInfo->collectionTypeInfoFirst->size);
-                FromJson(jsonIterator, collectionTypeInfo->collectionTypeInfoFirst, elementFirstBuffer.As<void>());
-
-                const bool isPair = collectionTypeInfo->collectionTypeInfoSecond;
-                Buffer elementSecondBuffer(isPair ? collectionTypeInfo->collectionTypeInfoSecond->size : 0);
-                if (isPair)
-                {
-                    FromJson(jsonIterator->next, collectionTypeInfo->collectionTypeInfoSecond, elementSecondBuffer.As<void>());
-                }
-                collectionTypeInfo->CollectionAppend(collectionAddress, elementIndex, elementFirstBuffer.As<void>(), elementSecondBuffer.As<void>());
-
-                if (isPair)
-                {
-                    break; // #NOTE 1 iteration for pairs #TODO Review tuples
-                }
                 jsonIterator = jsonIterator->next;
                 ++elementIndex;
+
+                if (jsonIterator && collectionTypeInfo->collectionTypeInfos.size() > elementIndex)
+                {
+                    currentTypeInfo = collectionTypeInfo->collectionTypeInfos[elementIndex];
+                }
             }
             return;
         }

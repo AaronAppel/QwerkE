@@ -41,7 +41,7 @@ namespace QwerkE { // #TODO Should be in a Game namespace
 		}
 
 	private:
-		MIRROR_PRIVATE_MEMBERS
+		MIR_FRIEND
 		float m_DegreesPerSecond = 90.f; // #TODO Add Editor inspection support. May need to move to Editor domain
 	};
 

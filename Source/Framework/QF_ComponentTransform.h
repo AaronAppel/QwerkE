@@ -35,10 +35,8 @@ namespace QwerkE {
 		inline void SetPosition(const vec3f& newPosition) { m_Matrix[12] = newPosition.x; m_Matrix[13] = newPosition.y; m_Matrix[14] = newPosition.z; }
 		// #TODO inline void SetRotation() { ; }
 
-		inline void Translate(const vec3f& a_Offset)
-			{ m_Matrix[12] += a_Offset.x; m_Matrix[13] += a_Offset.y; m_Matrix[14] += a_Offset.z; }
-		inline void Translate(const vec3f& a_Axis, float a_Magnitude)
-			{ m_Matrix[12] += a_Axis.x * a_Magnitude; m_Matrix[13] += a_Axis.y * a_Magnitude; m_Matrix[14] += a_Axis.z * a_Magnitude; }
+		inline void Translate(const vec3f& a_Offset) { Math::MatrixTranslate(m_Matrix, a_Offset); }
+		inline void Translate(const vec3f& a_Axis, float a_Magnitude) { Math::MatrixTranslate(m_Matrix, a_Axis, a_Magnitude); }
 
 		inline vec3f Position() const { return Math::MatrixPosition(m_Matrix); }
 		inline vec3f Rotation() const { return Math::MatrixRotation(m_Matrix); }

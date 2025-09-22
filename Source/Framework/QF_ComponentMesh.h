@@ -33,7 +33,7 @@ namespace QwerkE {
         const GUID& GetTextureGuid() { return m_TextureGuid; }
 
     private:
-        MIRROR_PRIVATE_MEMBERS
+        MIR_FRIEND
 
         Mesh* m_Mesh = nullptr;
         Shader* m_Shader = nullptr;

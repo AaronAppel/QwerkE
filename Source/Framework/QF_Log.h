@@ -33,6 +33,7 @@ namespace QwerkE {
         };
 
         void Initialize();
+        bool Initialized();
         void Shutdown();
 
         void Console(const char* message);

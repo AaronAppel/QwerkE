@@ -26,7 +26,7 @@ namespace QwerkE {
             void DrawInternal() override;
 
         private:
-            MIRROR_PRIVATE_MEMBERS
+            MIR_FRIEND
             eSettingsOptions m_SettingsEditorOption = eSettingsOptions::Null;
             u8 m_LastPopUpIndex = 0;
 		};
