@@ -13,7 +13,6 @@
 // #TESTING
 #include "QE_Editor.h"
 
-MIR_TYPE_ID(9000, MyClass)
 MIR_TYPE_ID(9001, std::tuple<int, bool, std::string, vec3f>)
 
 // Specialize TypeId to support additional types

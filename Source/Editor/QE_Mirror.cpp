@@ -9,13 +9,6 @@
 
 MIR_TYPE(std::tuple<int, bool, std::string, vec3f>)
 
-MIR_CLASS(MyClass)
-	MIR_CLASS_MEMBER(a)
-	MIR_CLASS_MEMBER(b)
-	MIR_CLASS_MEMBER(c)
-	MIR_CLASS_MEMBER(tuple)
-MIR_CLASS_END
-
 MIR_TYPE(QwerkE::Editor::EditorWindowFlags)
 
 MIR_CLASS(QwerkE::Editor::EditorWindowTypes)
