@@ -71,7 +71,7 @@ project "Framework"
 		"Jolt",
 		"lodepng",
 		"Mirror",
-		-- #TODO Fix compilation "openal-soft",
+		"openal-soft",
 		"spdlog",
 		"stb_image",
 		
@@ -79,7 +79,7 @@ project "Framework"
 		
 		-- Libraries .lib/.dll
 		"%{LibraryLib.glfw}",
-		"%{LibraryLib.OpenAL}",
+		"%{LibraryLib.OpenAL}", -- #TODO Remove after fixing OpenAL as static lib from source
 		
 		-- OpenAl dependencies
 		-- "winmm.lib",
