@@ -253,6 +253,8 @@
     <ClInclude Include="Framework\QF_ComponentSprite.h">
       <Filter>Entities\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\QF_Camera.h" />
+    <ClInclude Include="Framework\QF_Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

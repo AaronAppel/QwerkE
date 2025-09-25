@@ -11,26 +11,42 @@ namespace QwerkE {
 
 	namespace Math {
 
-
 #define ROW_MAJOR 0 // #TODO Use to more easily swap, or even just to confirm matrix operations behaviour
 
-#define M_PI       3.14159265358979323846f   // pi
-#define DEG(x) ((x) * 180.0f / M_PI)
+		constexpr float PI = 3.1415927f;
+		constexpr double PI_d = 3.14159265358979323846;
 
-		constexpr double PI() { return 3.1415926535897932384626433832795; }
-		constexpr float PI_f() { return 3.1415926535897932384626433832795f; }
+		constexpr float ToDeg = 180.f / PI; // 57.295776f
+		constexpr float ToRad = PI / 180.f; // 0.017453292f
 
-		#define DEG_TO_RAD  0.01745329251994329576923690768489
-		#define RAD_TO_DEG  57.295779513082320876798154814105
+		constexpr double ToDeg_d = 180 / PI_d; // 57.29577951308232
+		constexpr double ToRad_d = PI_d / 180; // 0.017453292519943295
 
 		inline constexpr float DegToRad(const float degrees)
 		{
-			return degrees * M_PI / 180.f;
+			return degrees * PI / 180.f;
 		}
 
 		inline constexpr float RadToDeg(const float radians)
 		{
-			return radians * 180.f / M_PI;
+			return radians * 180.f / PI;
+		}
+
+		template <typename T>
+		inline bool Equal(const T a, const T b, const T tolerance)
+		{
+			T result = a - b;
+			T absResult = result > 0 ? result : result * -1;
+			T absTolerance = tolerance > 0 ? tolerance : tolerance * -1;
+			return absResult < absTolerance;
+		}
+
+		inline bool Equal(const float a, const float b, const float tolerance = 0.0001f) // 1e-4
+		{
+			float result = a - b;
+			float absResult = result > 0 ? result : result * -1;
+			float absTolerance = tolerance > 0 ? tolerance : tolerance * -1;
+			return absResult < absTolerance;
 		}
 
 		template <typename T>
@@ -120,10 +136,10 @@ namespace QwerkE {
 		void MatrixRotateAxis3(float a_Matrix[16], const vec3f& a_Axis, const float a_Degrees);
 
 		// #NOTE Column major 4x4 direction vectors
-		// 1, 0, 0, 0,  Right (X)
-		// 0, 1, 0, 0,  Up (Y)
-		// 0, 0, 1, 0,  Forward (Z)
-		// 0, 0, 0, 1   Translation
+		// 1, 0, 0, 0,  (X) Right
+		// 0, 1, 0, 0,  (Y) Up
+		// 0, 0, 1, 0,  (Z) Forward
+		// 0, 0, 0, 1   (T) Translation
 		inline vec3f MatrixRight(const float a_Matrix[16]) { return vec3f(a_Matrix[0], a_Matrix[1], a_Matrix[2]); }
 		inline vec3f MatrixLeft(const float a_Matrix[16]) { return vec3f(-a_Matrix[0], -a_Matrix[1], -a_Matrix[2]); }
 		inline vec3f MatrixUp(const float a_Matrix[16]) { return vec3f(a_Matrix[4], a_Matrix[5], a_Matrix[6]); }
