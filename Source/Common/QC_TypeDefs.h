@@ -160,4 +160,8 @@ const float mat4Identity[16] = {
     0.f, 0.f, 0.f, 1.f
 };
 
+// #TODO Switch to use new vector type
+// #include "QF_Vector3.h"
+// typedef Vector3f vec3f;
+
 #endif
