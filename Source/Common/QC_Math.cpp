@@ -1,10 +1,9 @@
 #include "QC_Math.h"
 
-#if _QGLM
-#include "Libraries/glm/glm.hpp"
-#include "Libraries/glm/gtc/matrix_transform.hpp"  // for glm::rotate
-#include "Libraries/glm/gtc/constants.hpp"         // for glm::pi
-#endif // _QGLM
+#include <array>
+#include <cmath>
+
+#include "QC_TypeDefs.h"
 
 namespace QwerkE {
 
@@ -12,7 +11,7 @@ namespace QwerkE {
 
         std::array<float, 3> RotationMatrixToEulerZYX(const float R[3][3])
         {
-            float x, y, z;
+            float x, y, z = 0.f;
 
             if (std::abs(R[2][0]) != 1.0f) {
                 y = -std::asin(R[2][0]);
@@ -24,16 +23,16 @@ namespace QwerkE {
                 // Gimbal lock
                 z = 0;
                 if (R[2][0] == -1.0f) {
-                    y = M_PI / 2.0f;
+                    y = PI / 2.0f;
                     x = z + std::atan2(R[0][1], R[0][2]);
                 }
                 else {
-                    y = -M_PI / 2.0f;
+                    y = -PI / 2.0f;
                     x = -z + std::atan2(-R[0][1], -R[0][2]);
                 }
             }
 
-            return { DEG(x), DEG(y), DEG(z) };  // Return degrees
+            return { ToDeg * x, ToDeg * y, ToDeg * z };
         }
 
         void MatrixRotationXYZ(const float a_Matrix[16], float& pitch, float& yaw, float& roll) {
@@ -89,20 +88,20 @@ namespace QwerkE {
                 }
                 else {
                     // r20 == -1
-                    returnRotation.x = M_PI / 2.0f;
+                    returnRotation.x = PI / 2.0f;
                     returnRotation.y = -std::atan2(-r12, r11);
                     returnRotation.z = 0.0f;
                 }
             }
             else {
                 // r20 == +1
-                returnRotation.x = -M_PI / 2.0f;
+                returnRotation.x = -PI / 2.0f;
                 returnRotation.y = std::atan2(-r12, r11);
                 returnRotation.z = 0.0f;
             }
 
             // Convert radians to degrees (optional)
-            const float RAD2DEG = 180.0f / static_cast<float>(M_PI);
+            const float RAD2DEG = 180.0f / static_cast<float>(PI);
             returnRotation.x *= RAD2DEG;
             returnRotation.y *= RAD2DEG;
             returnRotation.z *= RAD2DEG;
@@ -196,7 +195,7 @@ namespace QwerkE {
                 a_Matrix[12], a_Matrix[13], a_Matrix[14], a_Matrix[15],
             };
             glm::vec3 normalizedAxis = glm::normalize(glm::vec3(a_Axis.x, a_Axis.y, a_Axis.z));
-            glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), radians, normalizedAxis);
+            glm::mat4 rotation = ;
 
             matrix = rotation * matrix; // world space: rotate relative to global axes
             // matrix = matrix * rotation; // #NOTE Local space: rotate relative to object's axes
@@ -301,6 +300,31 @@ namespace QwerkE {
                     a_Matrix[col * 4 + row] = temp[col * 4 + row];
                 }
             }
+        }
+
+        glm::mat4 myRotate(const glm::mat4& m, float angle, const glm::vec3& axis) {
+            glm::vec3 a = glm::normalize(axis);
+            float x = a.x, y = a.y, z = a.z;
+
+            float c = cos(angle);
+            float s = sin(angle);
+            float t = 1.0f - c;
+
+            glm::mat4 rot(1.0f);
+            rot[0][0] = t * x * x + c;
+            rot[0][1] = t * x * y + s * z;
+            rot[0][2] = t * x * z - s * y;
+
+            rot[1][0] = t * x * y - s * z;
+            rot[1][1] = t * y * y + c;
+            rot[1][2] = t * y * z + s * x;
+
+            rot[2][0] = t * x * z + s * y;
+            rot[2][1] = t * y * z - s * x;
+            rot[2][2] = t * z * z + c;
+
+            // Final result
+            return m * rot; // Note: glm uses column-major order
         }
 
         void MatrixIdentity(float a_Matrix[16])

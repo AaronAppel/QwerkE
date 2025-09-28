@@ -106,7 +106,7 @@ namespace QwerkE {
             ImGui::Text("Mouse pos: %.0f, %.0f", Input::MousePos().x, Input::MousePos().y);
             const vec2f newMouseDelta = Input::MouseDelta();
             ImGui::Text("Mouse delta: %.0f, %.0f", newMouseDelta.x, newMouseDelta.y);
-            if (Math::Magnitude(newMouseDelta) > 1.0f)
+            if (newMouseDelta.Magnitude() > 1.0f)
             {
                 s_LastNonZeroMouseDelta = newMouseDelta;
             }

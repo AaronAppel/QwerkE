@@ -8,7 +8,7 @@
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
-#include "QC_Math.h"
+#include "QC_MathMatrices.h"
 
 #include "QF_Buffer.h"
 #include "QF_ComponentScript.h"
