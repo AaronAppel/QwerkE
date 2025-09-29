@@ -4,7 +4,7 @@
 
 #include "QC_Math.h"
 
-// #TODO Circular include dependency
+// #TODO Resolve circular dependency. May need to use .cpp files
 // #include "Vector3.h"
 // #include "Vector4.h"
 
