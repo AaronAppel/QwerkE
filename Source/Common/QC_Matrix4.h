@@ -6,28 +6,22 @@
 
 #include "QC_Vector3.h"
 
-#define COLUMN_MAJOR 1
-
 namespace QwerkE {
 
-    struct AddressProxy final
-    {
-        float* start;
-
-        float& operator[](int index)
-        {
-            return start[index];
-        }
-
-        const float& operator[](int index) const
-        {
-            return start[index];
-        }
-    };
-
+    // #NOTE Column-major layout
     struct Matrix4f final
     {
-        // #TODO Review value copying to replace looping with memcpy or multi-entry copying
+        union {
+            struct {
+                float m[16];
+            };
+            struct {
+                float cr[4][4];
+            };
+            struct {
+                float column_row[4][4];
+            };
+        };
 
         Matrix4f()
         {
@@ -36,8 +30,13 @@ namespace QwerkE {
 
         Matrix4f(const float values[16])
         {
+            memcpy(m, values, sizeof(float) * 16);
+        }
+
+        Matrix4f(const float value)
+        {
             for (int i = 0; i < 16; ++i)
-                m[i] = values[i];
+                m[i] = value;
         }
 
         Matrix4f(float m00, float m01, float m02, float m03,
@@ -83,7 +82,7 @@ namespace QwerkE {
             };
         }
 
-        static Matrix4f RotationX(float angleRad)
+        static Matrix4f RotationX(float angleRad) // #TODO Angle in degrees
         {
             float c = std::cos(angleRad);
             float s = std::sin(angleRad);
@@ -96,10 +95,10 @@ namespace QwerkE {
             };
         }
 
-        static Matrix4f RotationY(float angleRad)
+        static Matrix4f RotationY(float angleRad) // #TODO Angle in degrees
         {
-            float c = std::cos(angleRad);
-            float s = std::sin(angleRad);
+            const float c = std::cos(angleRad);
+            const float s = std::sin(angleRad);
 
             return Matrix4f {
                  c, 0, s, 0,
@@ -109,7 +108,7 @@ namespace QwerkE {
             };
         }
 
-        static Matrix4f RotationZ(float angleRad)
+        static Matrix4f RotationZ(float angleRad) // #TODO Angle in degrees
         {
             float c = std::cos(angleRad);
             float s = std::sin(angleRad);
@@ -124,12 +123,12 @@ namespace QwerkE {
 
         // #TODO Look at point rotation method
 
-        static Matrix4f Rotation(float angleRad, const Vector3f& axis)
+        static Matrix4f Rotation(float angleRad, const Vector3f& axis) // #TODO Angle in degrees
         {
             return Rotation(angleRad, axis.x, axis.y, axis.z);
         }
 
-        static Matrix4f Rotation(float angleRad, float x, float y, float z)
+        static Matrix4f Rotation(float angleRad, float x, float y, float z) // #TODO Angle in degrees
         {
             // Normalize the axis
             float length = std::sqrt(x * x + y * y + z * z);
@@ -209,7 +208,7 @@ namespace QwerkE {
             };
         }
 
-        static Matrix4f Perspective(float fovYRadians, float aspect, float nearZ, float farZ)
+        static Matrix4f Perspective(float fovYRadians, float aspect, float nearZ, float farZ) // #TODO Angle in degrees
         {
             float f = 1.0f / std::tan(fovYRadians / 2.0f);
             float depth = nearZ - farZ;
@@ -270,38 +269,16 @@ namespace QwerkE {
             return result;
         }
 
-#if COLUMN_MAJOR
-        AddressProxy operator[](int col) {
-            return AddressProxy{ &m[col * 4] }; // column-major layout
-#else
-        AddressProxy operator[](int row) {
-            return AddressProxy{ &m[row * 4] };
-#endif // COLUMN_MAJOR
+        float& operator[](int col) {
+            return m[col * 4];
         }
 
-#if COLUMN_MAJOR
-        const AddressProxy operator[](int col) const {
-            return AddressProxy{ const_cast<float*>(&m[col * 4]) };
-#else
-        const AddressProxy operator[](int row) const {
-            return AddressProxy{ const_cast<float*>(&m[row * 4]) };
-#endif // COLUMN_MAJOR
-        }
-
-#if COLUMN_MAJOR
         float& operator()(int col, int row)
-#else
-        float& operator()(int row, int col)
-#endif // COLUMN_MAJOR
         {
             return m[col * 4 + row];
         }
 
-#if COLUMN_MAJOR
         const float& operator()(int col, int row) const
-#else
-        const float& operator()(int row, int col) const
-#endif // COLUMN_MAJOR
         {
             return m[col * 4 + row];
         }
@@ -589,18 +566,6 @@ namespace QwerkE {
             }
             return oss.str();
         }
-
-        union { // Member fields and aliases
-            struct {
-                float m[16];
-            };
-            struct {
-                float cr[4][4];
-            };
-            struct {
-                float column_row[4][4];
-            };
-        };
     };
 
 }
