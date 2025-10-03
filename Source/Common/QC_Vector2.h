@@ -33,7 +33,6 @@ namespace QwerkE {
     {
         Vector2f() : x(0.f), y(0.f) {}
         Vector2f(const float otherX, const float otherY) : x(otherX), y(otherY) {}
-        Vector2f(const double otherX, const double otherY) : x(otherX), y(otherY) {}
         Vector2f(const float other[]) : x(other[0]), y(other[1]) {}
         // Vector2f(const Vector3f& other) : x(other.x), y(other.y) { }
         // Vector2f(const Vector4f& other) : x(other.x), y(other.y) {}
