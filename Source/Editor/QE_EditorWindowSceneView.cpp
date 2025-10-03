@@ -315,7 +315,7 @@ namespace QwerkE {
                 if (drawSelectedEntityGizmo)
                 {
                     ComponentTransform& transform = m_LastSelectEntity.GetComponent<ComponentTransform>();
-                    const vec3f& position = transform.m_Matrix.Position();
+                    const vec3f& position = transform.Position();
 #ifdef _QDEBUG
                     {   // Debug drawer call
                         uint64_t bgfxState = 0
@@ -329,8 +329,8 @@ namespace QwerkE {
                         DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();
                         debugDrawer.begin(m_ViewId, true);
 
-                        vec3f scale = transform.m_Matrix.Scale();
-                        float magnitude = scale.Magnitude();
+                        vec3f scale = transform.Scale();
+                        float magnitude = Math::Magnitude(scale);
 
                         debugDrawer.drawOrb(position.x, position.y, position.z, 0.55 * magnitude, Axis::X);
                         debugDrawer.end();
@@ -350,7 +350,7 @@ namespace QwerkE {
                 ComponentPhysics& physics = handle.GetComponent<ComponentPhysics>();
                 ComponentTransform& transform = handle.GetComponent<ComponentTransform>();
                 vec3f bodyPosition = physics.BodyPosition();
-                transform.m_Matrix.SetPosition(bodyPosition);
+                transform.SetPosition(bodyPosition);
 
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer(); // #TODO Move physics debug drawing
                 debugDrawer.begin(m_ViewId);
@@ -362,7 +362,7 @@ namespace QwerkE {
                 case Physics::BodyShapes::Box:
                     // #TODO transform.Down()
                     // #TODO Draw shapes using Jolt body properties or better support all shapes
-                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, transform.m_Matrix.Scale().Magnitude());
+                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, transform.Scale().length());
                     break;
                 }
                 debugDrawer.end();
@@ -392,9 +392,14 @@ namespace QwerkE {
                 {
                     m_EditorCamera.m_Perspective = false;
                 }
-                if (ImGui::MenuItem("Reset 0") || ImGui::MenuItem("Reset Identity"))
+                if (ImGui::MenuItem("Reset 0"))
                 {
-                    m_EditorCameraTransform.m_Matrix = m_EditorCameraTransform.m_Matrix.Identity();
+                    Math::MatrixZero
+                    (m_EditorCameraTransform.m_Matrix);
+                }
+                if (ImGui::MenuItem("Reset Identity"))
+                {
+                    Math::MatrixIdentity(m_EditorCameraTransform.m_Matrix);
                 }
                 ImGui::EndPopup();
             }
@@ -438,8 +443,8 @@ namespace QwerkE {
                 EditorCameraUpdate();
                 if (m_RenderingScene)
                 {
-                    m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.m_Matrix.Position());
-                    m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.m_Matrix.Position(), m_ViewId);
+                    m_EditorCamera.PreDrawSetup(m_ViewId, m_EditorCameraTransform.Position());
+                    m_CurrentScene->Draw(m_EditorCamera, m_EditorCameraTransform.Position(), m_ViewId);
                 }
             }
             else if (m_RenderingScene)
@@ -480,7 +485,7 @@ namespace QwerkE {
                     // m_EditorCamera.m_Fov -= mouseScroll;
 
                     const float scrollSpeedModifier = 2.0f; // #TODO Expose in data
-                    editorCameraMovement += m_EditorCameraTransform.m_Matrix.Forward() * mouseScroll * scrollSpeedModifier;
+                    editorCameraMovement += m_EditorCameraTransform.Forward() * mouseScroll * scrollSpeedModifier;
                 }
             }
 
@@ -517,16 +522,16 @@ namespace QwerkE {
                 vec2f leftStick = Input::GamepadAxis(e_QGamepadAxisLeftStick);
                 leftStick.x = (leftStick.x > controllerStickDeadzone || leftStick.x < -controllerStickDeadzone) ? leftStick.x : 0.0f;
                 leftStick.y = (leftStick.y > controllerStickDeadzone || leftStick.y < -controllerStickDeadzone) ? leftStick.y : 0.0f;
-                editorCameraMovement += leftStick.x * m_EditorCameraTransform.m_Matrix.Right();
-                editorCameraMovement -= leftStick.y * m_EditorCameraTransform.m_Matrix.Forward();
+                editorCameraMovement += leftStick.x * m_EditorCameraTransform.Right();
+                editorCameraMovement -= leftStick.y * m_EditorCameraTransform.Forward();
 
                 if (Input::GamepadDown(e_GamepadBumperLeft))
                 {
-                    editorCameraMovement += m_EditorCameraTransform.m_Matrix.Down();
+                    editorCameraMovement += m_EditorCameraTransform.Down();
                 }
                 if (Input::GamepadDown(e_GamepadBumperRight))
                 {
-                    editorCameraMovement += m_EditorCameraTransform.m_Matrix.Up();
+                    editorCameraMovement += m_EditorCameraTransform.Up();
                 }
 
                 const float gamepadCameraRotationSpeed = 1.5f;
@@ -550,27 +555,27 @@ namespace QwerkE {
 
             if (Input::KeyDown(gameActions.Camera_MoveForward))
             {
-                editorCameraMovement += m_EditorCameraTransform.m_Matrix.Forward();
+                editorCameraMovement += m_EditorCameraTransform.Forward();
             }
             if (Input::KeyDown(gameActions.Camera_MoveBackward))
             {
-                editorCameraMovement += m_EditorCameraTransform.m_Matrix.Backward();
+                editorCameraMovement += m_EditorCameraTransform.Backward();
             }
             if (Input::KeyDown(gameActions.Camera_MoveRight))
             {
-                editorCameraMovement += m_EditorCameraTransform.m_Matrix.Right();
+                editorCameraMovement += m_EditorCameraTransform.Right();
             }
             if (Input::KeyDown(gameActions.Camera_MoveLeft))
             {
-                editorCameraMovement += m_EditorCameraTransform.m_Matrix.Left();
+                editorCameraMovement += m_EditorCameraTransform.Left();
             }
             if (Input::KeyDown(gameActions.Camera_MoveDown))
             {
-                editorCameraMovement += m_EditorCameraTransform.m_Matrix.Down();
+                editorCameraMovement += m_EditorCameraTransform.Down();
             }
             if (Input::KeyDown(gameActions.Camera_MoveUp))
             {
-                editorCameraMovement += m_EditorCameraTransform.m_Matrix.Up();
+                editorCameraMovement += m_EditorCameraTransform.Up();
             }
 
             const float keyboardCameraRotationSpeed = 1.0f;
@@ -604,7 +609,7 @@ namespace QwerkE {
             if (editorCameraMovement.x != 0.0f || editorCameraMovement.y != 0.0f || editorCameraMovement.z != 0.0f)
             {
                 const float moveSpeedMultiplier = Input::KeyDown(QKey::e_ShiftAny) ? 2.5f : 1.5f; // #TODO Expose in data
-                m_EditorCameraTransform.m_Matrix.Translate(editorCameraMovement, m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * Time::PreviousFrameDurationUnscaled());
+                m_EditorCameraTransform.Translate(editorCameraMovement, m_EditorCamera.m_MoveSpeed * moveSpeedMultiplier * Time::PreviousFrameDurationUnscaled());
             }
 
             if (const bool useTargetLookAt = false)
@@ -618,17 +623,17 @@ namespace QwerkE {
                 // #TODO Only re-calculate if forward changed
                 constexpr float scalar = 1.f;
                 const float* position = nullptr;
-                vec3f forwardPosition = m_EditorCameraTransform.m_Matrix.Position() + (m_EditorCameraTransform.Forward() * scalar);
+                vec3f forwardPosition = m_EditorCameraTransform.Position() + (m_EditorCameraTransform.Forward() * scalar);
                 m_EditorCamera.m_LookAtPosition = forwardPosition;
             }
         }
 
         void EditorWindowSceneView::UpdateEditorCameraRotation()
         {
-            const vec3f& scale = m_EditorCameraTransform.m_Matrix.Scale();
-            const vec3f& translate = m_EditorCameraTransform.m_Matrix.Position();
+            const vec3f& scale = m_EditorCameraTransform.Scale();
+            const vec3f& translate = m_EditorCameraTransform.Position();
 
-            bx::mtxSRT(m_EditorCameraTransform.m_Matrix.m,
+            bx::mtxSRT(m_EditorCameraTransform.m_Matrix,
                 scale.x, scale.y, scale.z,
                 m_EditorCameraPitch, m_EditorCameraYaw, 0.f,
                 translate.x, translate.y, translate.z);
