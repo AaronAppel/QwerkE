@@ -108,13 +108,13 @@ namespace QwerkE {
 		bgfx::VertexLayout VertexFormat_PosUV::format;
 		static const VertexFormat_PosUV g_SpriteVerts[] =
 		{
-			{ vec3f(-0.5f, 0.5f, 0.0f), vec2f(0, 1) }, // Top-left
-			{ vec3f(-0.5f,-0.5f, 0.0f), vec2f(0, 0) }, // Bottom-left
-			{ vec3f(0.5f,-0.5f, 0.0f), vec2f(1, 0) }, // Bottom-right
+			{ vec3f(-0.5f, 0.5f, 0.0f), vec2f(0,1) }, // Top-left
+			{ vec3f(-0.5f,-0.5f, 0.0f), vec2f(0,0) }, // Bottom-left
+			{ vec3f(0.5f,-0.5f, 0.0f), vec2f(1,0) }, // Bottom-right
 
-			{ vec3f(-0.5f, 0.5f, 0.0f), vec2f(0, 1) }, // Top-left
-			{ vec3f(0.5f,-0.5f, 0.0f), vec2f(1, 0) }, // Bottom-right
-			{ vec3f(0.5f, 0.5f, 0.0f), vec2f(1, 1) }, // Top-right
+			{ vec3f(-0.5f, 0.5f, 0.0f), vec2f(0,1) }, // Top-left
+			{ vec3f(0.5f,-0.5f, 0.0f), vec2f(1,0) }, // Bottom-right
+			{ vec3f(0.5f, 0.5f, 0.0f), vec2f(1,1) }, // Top-right
 		};
 		static const uint16_t g_SpriteIndices[] =
 		{

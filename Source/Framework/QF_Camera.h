@@ -6,7 +6,6 @@
 
 #include "QC_Math.h"
 #include "QC_Time.h"
-#include "QC_Matrix4.h"
 
 #include "QF_ComponentHelpers.h"
 
@@ -58,7 +57,7 @@ namespace QwerkE {
 
 		Camera() = default;
 
-		void Update(const Input::GameActions& gameActions, mat4f& a_Matrix, float deltaTime)
+		void Update(const Input::GameActions& gameActions, float* a_Matrix, float deltaTime)
 		{
 			vec2f cameraRotation = vec2f(0.0f, 0.0f);
 			vec3f cameraMovement = { 0.0f, 0.0f, 0.0f };
@@ -75,7 +74,7 @@ namespace QwerkE {
 				// m_EditorCamera.m_Fov -= mouseScroll;
 
 				const float scrollSpeedModifier = 2.0f; // #TODO Expose in data
-				cameraMovement += a_Matrix.Forward() * mouseScroll * scrollSpeedModifier;
+				cameraMovement += Math::MatrixForward(a_Matrix) * mouseScroll * scrollSpeedModifier;
 			}
 
 			if (Input::GamepadsCount > 0)
@@ -84,16 +83,16 @@ namespace QwerkE {
 				vec2f leftStick = Input::GamepadAxis(e_QGamepadAxisLeftStick);
 				leftStick.x = (leftStick.x > controllerStickDeadzone || leftStick.x < -controllerStickDeadzone) ? leftStick.x : 0.0f;
 				leftStick.y = (leftStick.y > controllerStickDeadzone || leftStick.y < -controllerStickDeadzone) ? leftStick.y : 0.0f;
-				cameraMovement += leftStick.x * a_Matrix.Right();
-				cameraMovement -= leftStick.y * a_Matrix.Forward();
+				cameraMovement += leftStick.x * Math::MatrixRight(a_Matrix);
+				cameraMovement -= leftStick.y * Math::MatrixForward(a_Matrix);
 
 				if (Input::GamepadDown(e_GamepadBumperLeft))
 				{
-					cameraMovement += a_Matrix.Down();
+					cameraMovement += Math::MatrixDown(a_Matrix);
 				}
 				if (Input::GamepadDown(e_GamepadBumperRight))
 				{
-					cameraMovement += a_Matrix.Up();
+					cameraMovement += Math::MatrixUp(a_Matrix);
 				}
 
 				const float gamepadCameraRotationSpeed = 1.5f;
@@ -117,27 +116,27 @@ namespace QwerkE {
 
 			if (Input::KeyDown(gameActions.Camera_MoveForward))
 			{
-				cameraMovement += a_Matrix.Forward();
+				cameraMovement += Math::MatrixForward(a_Matrix);
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveBackward))
 			{
-				cameraMovement += a_Matrix.Backward();
+				cameraMovement += Math::MatrixBackward(a_Matrix);
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveRight))
 			{
-				cameraMovement += a_Matrix.Right();
+				cameraMovement += Math::MatrixRight(a_Matrix);
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveLeft))
 			{
-				cameraMovement += a_Matrix.Left();
+				cameraMovement += Math::MatrixLeft(a_Matrix);
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveDown))
 			{
-				cameraMovement += a_Matrix.Down();
+				cameraMovement += Math::MatrixDown(a_Matrix);
 			}
 			if (Input::KeyDown(gameActions.Camera_MoveUp))
 			{
-				cameraMovement += a_Matrix.Up();
+				cameraMovement += Math::MatrixUp(a_Matrix);
 			}
 
 			const float keyboardCameraRotationSpeed = 1.0f;
@@ -163,10 +162,10 @@ namespace QwerkE {
 
 				// UpdateCameraRotation();
 
-				const vec3f& scale = a_Matrix.Scale();
-				const vec3f& translate = a_Matrix.Position();
+				const vec3f& scale = Math::MatrixScale(a_Matrix);
+				const vec3f& translate = Math::MatrixPosition(a_Matrix);
 
-				bx::mtxSRT(a_Matrix.m,
+				bx::mtxSRT(a_Matrix,
 					scale.x, scale.y, scale.z,
 					m_CameraParams.m_Pitch, m_CameraParams.m_Yaw, 0.f,
 					translate.x, translate.y, translate.z);
@@ -175,27 +174,27 @@ namespace QwerkE {
 			if (cameraMovement.x != 0.0f || cameraMovement.y != 0.0f || cameraMovement.z != 0.0f)
 			{
 				const float moveSpeedMultiplier = Input::KeyDown(QKey::e_ShiftAny) ? 2.5f : 1.5f; // #TODO Expose in data
-				a_Matrix.Translate(cameraMovement, m_CameraParams.m_MovementSpeed * moveSpeedMultiplier * Time::PreviousFrameDurationUnscaled());
+				Math::MatrixTranslate(a_Matrix, cameraMovement, m_CameraParams.m_MovementSpeed * moveSpeedMultiplier * Time::PreviousFrameDurationUnscaled());
 			}
 		}
 
-		void Move(mat4f& a_Matrix, const vec3f& a_PositionOffset)
+		void Move(float* a_Matrix, const vec3f& a_PositionOffset)
 		{
-			a_Matrix.Translate(a_PositionOffset, 1.f);
+			Math::MatrixTranslate(a_Matrix, a_PositionOffset, 1.f);
 		}
 
-		void Move(mat4f& a_Matrix, const vec3f& a_Axis, const float a_Magnitude)
+		void Move(float* a_Matrix, const vec3f& a_Axis, const float a_Magnitude)
 		{
-			a_Matrix.Translate(a_Axis, a_Magnitude);
+			Math::MatrixTranslate(a_Matrix, a_Axis, a_Magnitude);
 		}
 
-		void Pitch(mat4f& a_Matrix, float a_PitchOffset)
+		void Pitch(float* a_Matrix, float a_PitchOffset)
 		{
 			m_CameraParams.m_Pitch += a_PitchOffset;
 			UpdateCameraRotation(a_Matrix);
 		}
 
-		void Yaw(mat4f& a_Matrix, float a_YawOffset)
+		void Yaw(float* a_Matrix, float a_YawOffset)
 		{
 			m_CameraParams.m_Yaw += a_YawOffset;
 			UpdateCameraRotation(a_Matrix);
@@ -207,11 +206,11 @@ namespace QwerkE {
 		}
 
 	private:
-		void UpdateCameraRotation(mat4f& a_Matrix) {
-			const vec3f& scale = a_Matrix.Scale();
-			const vec3f& translate = a_Matrix.Position();
+		void UpdateCameraRotation(float* a_Matrix) {
+			const vec3f& scale = Math::MatrixScale(a_Matrix);
+			const vec3f& translate = Math::MatrixPosition(a_Matrix);
 
-			bx::mtxSRT(a_Matrix.m,
+			bx::mtxSRT(a_Matrix,
 				scale.x, scale.y, scale.z,
 				m_CameraParams.m_Pitch, m_CameraParams.m_Yaw, 0.f,
 				translate.x, translate.y, translate.z);

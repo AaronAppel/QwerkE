@@ -32,7 +32,6 @@ namespace QwerkE {
     struct Vector2f final // #TODO Vec3 capital or not? Should types always be capitalized? Does anyone want the vec3 variable name available?
     {
         Vector2f() : x(0.f), y(0.f) {}
-        Vector2f(const int otherX, const int otherY) : x(otherX), y(otherY) {}
         Vector2f(const float otherX, const float otherY) : x(otherX), y(otherY) {}
         Vector2f(const double otherX, const double otherY) : x(otherX), y(otherY) {}
         Vector2f(const float other[]) : x(other[0]), y(other[1]) {}
