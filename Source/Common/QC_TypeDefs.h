@@ -172,7 +172,4 @@ typedef QwerkE::Vector3f vec3f;
 #include "QC_Vector4.h"
 typedef QwerkE::Vector4f vec4f;
 
-#include "QC_Matrix4.h"
-typedef QwerkE::Matrix4f mat4f;
-
 #endif

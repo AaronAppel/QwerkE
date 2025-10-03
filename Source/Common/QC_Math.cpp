@@ -188,14 +188,15 @@ namespace QwerkE {
         {
             const float radians = DegToRad(a_Degrees);
 
-            mat4f matrix = {
+            glm::mat4 matrix = {
                 a_Matrix[0], a_Matrix[1], a_Matrix[2], a_Matrix[3],
                 a_Matrix[4], a_Matrix[5], a_Matrix[6], a_Matrix[7],
                 a_Matrix[8], a_Matrix[9], a_Matrix[10], a_Matrix[11],
                 a_Matrix[12], a_Matrix[13], a_Matrix[14], a_Matrix[15],
             };
+            glm::vec3 normalizedAxis = glm::normalize(glm::vec3(a_Axis.x, a_Axis.y, a_Axis.z));
+            glm::mat4 rotation = ;
 
-            mat4f rotation = mat4f().Rotation(radians, a_Axis.Normalized());
             matrix = rotation * matrix; // world space: rotate relative to global axes
             // matrix = matrix * rotation; // #NOTE Local space: rotate relative to object's axes
 
