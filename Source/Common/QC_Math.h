@@ -6,8 +6,6 @@
 #include <array>
 
 #include "QC_TypeDefs.h"
-#include "QC_Vector2.h"
-#include "QC_Vector3.h"
 
 namespace QwerkE {
 
@@ -155,7 +153,7 @@ namespace QwerkE {
 			{ a_Matrix[12] += a_Axis.x * a_Magnitude; a_Matrix[13] += a_Axis.y * a_Magnitude; a_Matrix[14] += a_Axis.z * a_Magnitude; }
 
 		void MatrixIdentity(float a_Matrix[16]);
-		inline void MatrixZero(float a_Matrix[16]) { memset(a_Matrix, 0.f, 16.f * sizeof(float)); }
+		inline void MatrixZero(float a_Matrix[16]) { memset(a_Matrix, 0.0f, 16 * sizeof(float)); }
 	}
 
 }
