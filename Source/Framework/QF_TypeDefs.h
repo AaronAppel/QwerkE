@@ -43,7 +43,7 @@ typedef uint64_t u64;       //  0 to 18,446,744,073,709,551,615
 #define U64_MAX UINT64_MAX  //  18,446,744,073,709,551,615
 #define U64_MAX_DIGITS 20
 
-#include "QC_BitTypes.h"    // #TODO Comments for mouse over IDE context info
+#include "QF_BitTypes.h"    // #TODO Comments for mouse over IDE context info
 using u1    = ubits1;       // size of 1 byte, value range of 0 to 1
 using u2    = ubits2;
 using u3    = ubits3;

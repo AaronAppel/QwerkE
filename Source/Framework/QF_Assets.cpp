@@ -18,7 +18,7 @@
 #include "Libraries/stb_image/stb_image.h"
 #endif
 
-#include "QC_Guid.h"
+#include "QF_Guid.h"
 
 #include "QF_Files.h"
 #include "QF_Mesh.h"

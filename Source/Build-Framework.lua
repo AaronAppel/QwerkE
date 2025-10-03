@@ -75,8 +75,6 @@ project "Framework"
 		"spdlog",
 		"stb_image",
 		
-		"Common",
-		
 		-- Libraries .lib/.dll
 		"%{LibraryLib.glfw}",
 		"%{LibraryLib.OpenAL}", -- #TODO Remove after fixing OpenAL as static lib from source

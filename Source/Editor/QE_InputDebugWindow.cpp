@@ -1,8 +1,7 @@
 #ifdef _QDEBUG
 #include <vector>
 
-#include "QC_BitIndexRingBuffer.h"
-
+#include "QF_BitIndexRingBuffer.h"
 #include "QF_Input.h"
 #include "QF_InputStatesBitRingBuffer.h"
 

@@ -12,8 +12,6 @@
 #include "Libraries/Jolt/Physics/PhysicsSystem.h"
 #endif
 
-#include "QC_StringHelpers.h"
-
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Files.h"
@@ -26,6 +24,8 @@
 #include "QF_Scriptable.h"
 #include "QF_ScriptCamera.h"
 #include "QF_Scripting.h"
+#include "QF_StringHelpers.h"
+
 #include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
 namespace QwerkE {

@@ -18,10 +18,10 @@
 #endif // _QBGFXFRAMEWORK
 #endif // _QBGFX
 
-#include "QC_Guid.h"
-#include "QC_ProgramArgs.h"
-#include "QC_System.h"
-#include "QC_Time.h"
+#include "QF_Guid.h"
+#include "QF_ProgramArgs.h"
+#include "QF_System.h"
+#include "QF_Time.h"
 
 #include "QF_Assets.h"
 #include "QF_Directory.h"

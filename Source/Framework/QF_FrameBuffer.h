@@ -4,7 +4,7 @@
 #include <bgfx/bgfx.h>
 #endif
 
-#include "QC_GUID.h"
+#include "QF_Guid.h"
 
 #include "QF_Texture.h"
 

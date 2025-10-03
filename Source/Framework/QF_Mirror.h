@@ -14,7 +14,7 @@
 #include "Libraries/Mirror/Source/MIR_Ids.h"
 #endif
 
-#include "QC_Guid.h"
+#include "QF_Guid.h"
 
 #include "QF_QKey.h"
 #include "QF_GameActions.h"

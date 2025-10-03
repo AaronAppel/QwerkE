@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "QC_TypeDefs.h"
+#include "QF_TypeDefs.h"
 
 #include "QF_GameActions.h"
 #include "QF_QKey.h"

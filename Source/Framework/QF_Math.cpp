@@ -1,10 +1,11 @@
-#include "QC_Math.h"
 
 #if _QGLM
 #include "Libraries/glm/glm.hpp"
 #include "Libraries/glm/gtc/matrix_transform.hpp"  // for glm::rotate
 #include "Libraries/glm/gtc/constants.hpp"         // for glm::pi
 #endif // _QGLM
+
+#include "QF_Math.h"
 
 namespace QwerkE {
 

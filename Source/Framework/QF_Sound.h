@@ -2,7 +2,7 @@
 
 // #include "Libraries/OpenAL/include/al.h"
 
-#include "QC_GUID.h"
+#include "QF_Guid.h"
 
 #include "QF_Files.h"
 

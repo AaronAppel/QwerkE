@@ -4,8 +4,6 @@
 #include "Libraries/bx/include/bx/rng.h" // #TODO Abstract out bgfx from QE domain
 #endif
 
-#include "QC_Time.h"
-
 #include "QF_Assets.h"
 #include "QF_ComponentCamera.h"
 #include "QF_ComponentPhysics.h"
@@ -18,6 +16,7 @@
 #include "QF_Scenes.h"
 #include "QF_Serialize.h"
 #include "QF_Shader.h"
+#include "QF_Time.h"
 
 #include "QE_EditorInspector.h"
 #include "QE_Settings.h"

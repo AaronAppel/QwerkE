@@ -1,17 +1,15 @@
 
 #include <filesystem>
 
-#include "QE_EditorWindowSettings.h"
-
-#include "QC_StringHelpers.h"
-
 #include "QF_Directory.h"
 #include "QF_Input.h"
+#include "QF_Paths.h"
+#include "QF_StringHelpers.h"
 
 #include "QE_EditorInspector.h"
-#include "QF_Paths.h"
 #include "QE_Projects.h"
 #include "QE_Settings.h"
+#include "QE_EditorWindowSettings.h"
 
 namespace QwerkE {
 

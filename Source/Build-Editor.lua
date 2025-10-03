@@ -49,7 +49,6 @@ project "Editor"
 	
 	links -- Project references
 	{
-		"Common",
 		"Framework",
 	}
 	

@@ -11,7 +11,7 @@
 #include "Libraries/entt/entt.hpp"
 #endif
 
-#include "QC_Guid.h"
+#include "QF_Guid.h"
 
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"

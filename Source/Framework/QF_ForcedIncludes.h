@@ -7,9 +7,8 @@
 
 #define _QIGNORED(x) (static_cast<void>(x))
 
-#include "QC_CallbackFunction.h" // #TODO Force include? Seems more niche and should be included on a needs basis
-#include "QC_Math.h"
-#include "QC_TypeDefs.h"
-
+#include "QF_CallbackFunction.h" // #TODO Force include? Seems more niche and should be included on a needs basis
 #include "QF_Debug.h"
+#include "QF_Math.h"
 #include "QF_Log.h"
+#include "QF_TypeDefs.h"

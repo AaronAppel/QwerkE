@@ -12,7 +12,7 @@
 #include "Libraries/Mirror/Source/MIR_Structs.h"
 #endif
 
-#include "QC_Guid.h"
+#include "QF_Guid.h"
 
 struct GLFWwindow;
 

@@ -4,7 +4,7 @@
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
 #endif
 
-#include "QC_Guid.h"
+#include "QF_Guid.h"
 
 #include "QF_ComponentTransform.h"
 

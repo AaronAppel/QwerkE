@@ -10,7 +10,7 @@
 #include "Libraries/stb_image/stb_image.h"
 #endif
 
-#include "QC_GUID.h"
+#include "QF_Guid.h"
 
 #include "QF_Buffer.h"
 #include "QF_Files.h"

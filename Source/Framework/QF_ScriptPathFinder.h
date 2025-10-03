@@ -12,9 +12,8 @@
 
 #include "QF_ComponentTransform.h"
 #include "QF_ComponentScript.h"
-#include "QC_Math.h"
-
 #include "QF_EntityHandle.h"
+#include "QF_Math.h"
 #include "QF_Scriptable.h"
 
 namespace QwerkE {

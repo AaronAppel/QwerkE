@@ -8,10 +8,9 @@
 #include "Libraries/lodepng/lodepng.h"
 #endif
 
-#include "QC_StringHelpers.h" // NumberAppendOrIncrement
-
 #include "QF_Helpers.h" // NumberAppendOrIncrement
 #include "QF_Sound.h"
+#include "QF_StringHelpers.h" // NumberAppendOrIncrement
 #include "QF_Window.h" // For Window::GetContext()
 
 namespace QwerkE {

@@ -1,6 +1,4 @@
 
-#include "QC_Time.h"
-
 #include "QF_ForcedIncludes.h"
 
 #include "QF_Assets.h"
@@ -10,6 +8,7 @@
 #include "QF_Renderer.h"
 #include "QF_Scenes.h"
 #include "QF_Shader.h"
+#include "QF_Time.h"
 #include "QF_Window.h"
 
 int main(unsigned int numberOfArguments, char** commandLineArguments)

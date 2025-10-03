@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QC_StringHelpers.h"
+#include "QF_StringHelpers.h"
 
 //USER: Set the offset from your project working directory
 // You must #define AssetDir "Assets/" (path to assets)

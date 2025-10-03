@@ -1,6 +1,7 @@
-#include "QC_MathFunctions.h"
 
 #include <stdlib.h>
+
+#include "QF_MathFunctions.h"
 
 #define DEFAULT_RANDOM_SEED 17
 

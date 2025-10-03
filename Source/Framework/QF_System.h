@@ -6,6 +6,8 @@ namespace QwerkE {
 
 	namespace System {
 
+		std::string UserName();
+		
 		// void Sleep(double/float milliseconds/seconds);
 		// #TODO ::Sleep(milliseconds);
 

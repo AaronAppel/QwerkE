@@ -8,6 +8,7 @@ typedef glm::vec3		vec3f;
 #ifdef _QDEBUG
 
 #include "QF_Log.h"
+#include "QF_TypeDefs.h"
 
 #define BREAK __debugbreak();
 
@@ -32,7 +33,7 @@ namespace QwerkE {
 
 	namespace Debug { // #TODO Review having rendering and bgfx logic in the Debug namespace. Maybe in a new DebugDraw?
 
-		const uint32_t g_White = 0xffffffff;
+		constexpr uint32_t g_White = 0xffffffff;
 		const uint32_t g_Black = 0xff000000;
 
 		const uint32_t g_Red = 0xff0000ff; // #NOTE ABGR

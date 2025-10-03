@@ -8,7 +8,7 @@
 #include "Libraries/bx/include/bx/math.h"
 #endif
 
-#include "QC_Math.h"
+#include "QF_Math.h"
 
 #include "QF_ComponentScript.h"
 #include "QF_ComponentTransform.h"

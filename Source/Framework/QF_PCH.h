@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "QC_TypeDefs.h"
+#include "QF_TypeDefs.h"
 
 #ifdef _QBGFX
 #include "Libraries/bx/include/bx/bx.h"

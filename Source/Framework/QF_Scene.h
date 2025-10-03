@@ -16,7 +16,7 @@
 // class PhysicsSystem;
 #endif
 
-#include "QC_Guid.h"
+#include "QF_Guid.h"
 
 #include "QF_Assets.h" // #NOTE For friend-ing constructor
 #include "QF_ComponentCamera.h"

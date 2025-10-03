@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <bitset>
 
-#include "QC_BitIndexRingBuffer.h"
+#include "QF_BitIndexRingBuffer.h"
 
 #include "QF_QKey.h"
 
