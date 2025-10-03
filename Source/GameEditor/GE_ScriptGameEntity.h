@@ -31,7 +31,7 @@ namespace QwerkE { // #TODO Should be in a Game namespace
 			ComponentTransform& transform = m_Entity.GetComponent<ComponentTransform>();
 
 			float matrix[16];
-			bx::mtxRotateXYZ(matrix, 0.f, m_DegreesPerSecond * Math::ToRad * deltaTime, 0.f);
+			bx::mtxRotateXYZ(matrix, 0.f, m_DegreesPerSecond * DEG_TO_RAD * deltaTime, 0.f);
 			bx::mtxMul(transform.m_Matrix, matrix, transform.m_Matrix);
 		}
 
