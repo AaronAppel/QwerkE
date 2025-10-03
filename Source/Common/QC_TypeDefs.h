@@ -130,7 +130,6 @@ struct TemplateArgumentList { };
 
 // #TODO This file should probably not define anything and just list other files to include in all other files
 // #TODO Move GLM type aliasing to another/better file/place
-#undef _QGLM
 #ifdef _QGLM
 // #define GLM_FORCE_SWIZZLE
 #include "Libraries/glm/glm.hpp"
@@ -160,16 +159,9 @@ const float mat4Identity[16] = {
     0.f, 0.f, 1.f, 0.f,
     0.f, 0.f, 0.f, 1.f
 };
-#else
 
-#include "QC_Vector2.h"
-typedef QwerkE::Vector2f vec2f;
-typedef QwerkE::Vector2u16 vec2u16;
-
-#include "QC_Vector3.h"
-typedef QwerkE::Vector3f vec3f;
-
-#include "QC_Vector4.h"
-typedef QwerkE::Vector4f vec4f;
+// #TODO Switch to use new vector type
+// #include "QF_Vector3.h"
+// typedef Vector3f vec3f;
 
 #endif

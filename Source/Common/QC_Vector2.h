@@ -10,24 +10,6 @@
 
 namespace QwerkE {
 
-    // #TODO Template or support other types
-    struct Vector2u16 final
-    {
-        Vector2u16(uint16_t _x, uint16_t _y) : x(_x), y(_y){ }
-
-        // Member fields and aliases
-        union {
-            struct { // 2D Position
-                uint16_t x, y; // #NOTE Default member initialization not allowed in anonymous structs inside of unions
-            };
-            struct { // Texture coordinates
-                uint16_t u, v;
-            };
-            struct {
-                // #TODO Rotating alias? float roll;
-            };
-        };
-    };
 
     struct Vector2f final // #TODO Vec3 capital or not? Should types always be capitalized? Does anyone want the vec3 variable name available?
     {

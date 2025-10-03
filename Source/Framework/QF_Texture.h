@@ -119,7 +119,7 @@ namespace QwerkE {
 		GUID m_GUID = GUID::Invalid;
 
 		bgfx::TextureFormat::Enum m_Format = bgfx::TextureFormat::Unknown;
-		vec2u16 m_Size = vec2u16(0, 0);
+		vec2u32 m_Size = vec2u32(0, 0);
 		bool m_HasMips = false;
 		u16 m_NumLayers = 1;
 		u64 m_Flags = 0;
