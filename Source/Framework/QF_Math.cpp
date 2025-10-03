@@ -25,16 +25,16 @@ namespace QwerkE {
                 // Gimbal lock
                 z = 0;
                 if (R[2][0] == -1.0f) {
-                    y = M_PI / 2.0f;
+                    y = PI / 2.0f;
                     x = z + std::atan2(R[0][1], R[0][2]);
                 }
                 else {
-                    y = -M_PI / 2.0f;
+                    y = -PI / 2.0f;
                     x = -z + std::atan2(-R[0][1], -R[0][2]);
                 }
             }
 
-            return { DEG(x), DEG(y), DEG(z) };  // Return degrees
+            return { x * ToDeg, y * ToDeg, z * ToDeg };
         }
 
         void MatrixRotationXYZ(const float a_Matrix[16], float& pitch, float& yaw, float& roll) {
@@ -90,20 +90,20 @@ namespace QwerkE {
                 }
                 else {
                     // r20 == -1
-                    returnRotation.x = M_PI / 2.0f;
+                    returnRotation.x = PI / 2.0f;
                     returnRotation.y = -std::atan2(-r12, r11);
                     returnRotation.z = 0.0f;
                 }
             }
             else {
                 // r20 == +1
-                returnRotation.x = -M_PI / 2.0f;
+                returnRotation.x = -PI / 2.0f;
                 returnRotation.y = std::atan2(-r12, r11);
                 returnRotation.z = 0.0f;
             }
 
             // Convert radians to degrees (optional)
-            const float RAD2DEG = 180.0f / static_cast<float>(M_PI);
+            const float RAD2DEG = 180.0f / static_cast<float>(PI);
             returnRotation.x *= RAD2DEG;
             returnRotation.y *= RAD2DEG;
             returnRotation.z *= RAD2DEG;

@@ -160,4 +160,19 @@ const float mat4Identity[16] = {
     0.f, 0.f, 0.f, 1.f
 };
 
+#else
+
 #endif
+
+// #include "QC_Vector2.h"
+// typedef QwerkE::Vector2f vec2f;
+// typedef QwerkE::Vector2u16 vec2u16;
+
+// #include "QC_Vector3.h"
+// typedef QwerkE::Vector3f vec3f;
+
+// #include "QC_Vector4.h"
+// typedef QwerkE::Vector4f vec4f;
+
+#include "QF_Matrix4.h"
+typedef QwerkE::Matrix4f mat4f;
