@@ -137,7 +137,6 @@ struct TemplateArgumentList { };
 typedef glm::vec2		vec2f;
 
 typedef glm::u8vec2	    vec2u8; // #TODO Review aliasing vectors and it's usefulness vs clarity
-typedef glm::u16vec2	vec2u16;
 typedef glm::u32vec2	vec2u32;
 
 typedef glm::vec3		vec3f;
@@ -164,9 +163,9 @@ const float mat4Identity[16] = {
 
 #endif
 
-// #include "QF_Vector2.h"
+#include "QF_Vector2.h"
 // typedef QwerkE::Vector2f vec2f;
-// typedef QwerkE::Vector2u16 vec2u16;
+typedef QwerkE::Vector2u16 vec2u16;
 
 // #include "QF_Vector3.h"
 // typedef QwerkE::Vector3f vec3f;
