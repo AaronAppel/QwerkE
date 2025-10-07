@@ -4,6 +4,7 @@
 #include "QF_BitIndexRingBuffer.h"
 #include "QF_Input.h"
 #include "QF_InputStatesBitRingBuffer.h"
+#include "QF_MathVector.h"
 
 #include "QE_Input.h"
 

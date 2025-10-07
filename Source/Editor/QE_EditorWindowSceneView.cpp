@@ -10,6 +10,7 @@
 #include "QF_ComponentTransform.h"
 #include "QF_Files.h"
 #include "QF_Input.h"
+#include "QF_MathVector.h"
 #include "QF_Paths.h"
 #include "QF_PhysicsWorld.h"
 #include "QF_Scene.h"
