@@ -137,42 +137,11 @@ typedef QwerkE::Vector2u32 vec2u32;
 typedef QwerkE::Vector3f vec3f;
 
 #include "QF_Vector4.h"
-// typedef QwerkE::Vector4f vec4f;
+typedef QwerkE::Vector4f vec4f;
 
 #include "QF_Matrix4.h"
 typedef QwerkE::Matrix4f mat4f;
 
 #include "QF_Quaternion.h"
-// typedef QwerkE::Quaternion		quat;
-// typedef QwerkE::Quaternion		quaternion;
-
-// #TODO This file should probably not define anything and just list other files to include in all other files
-// #TODO Move GLM type aliasing to another/better file/place
-#ifdef _QGLM
-// #define GLM_FORCE_SWIZZLE
-#include "Libraries/glm/glm.hpp"
-
-// typedef glm::vec2		vec2f;
-
-typedef glm::vec4		vec4f;
-typedef glm::mat3		mat3;
-typedef glm::mat4		mat4;
-typedef glm::quat		quat;
-
-const vec3f vec3fForward = vec3f(0.f, 0.f, 1.f);
-const vec3f vec3fBackward = vec3f(0.f, 0.f, -1.f);
-const vec3f vec3fUp = vec3f(0.f, 1.f, 0.f);
-const vec3f vec3fDown = vec3f(0.f, -1.f, 0.f);
-const vec3f vec3fRight = vec3f(1.f, 0.f, 0.f);
-const vec3f vec3fLeft = vec3f(-1.f, 0.f, 0.f);
-
-const float mat4Identity[16] = {
-    1.f, 0.f, 0.f, 0.f,
-    0.f, 1.f, 0.f, 0.f,
-    0.f, 0.f, 1.f, 0.f,
-    0.f, 0.f, 0.f, 1.f
-};
-
-#else
-
-#endif
+typedef QwerkE::Quaternion		quat;
+typedef QwerkE::Quaternion		quaternion;
