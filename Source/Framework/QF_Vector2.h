@@ -29,6 +29,24 @@ namespace QwerkE {
         };
     };
 
+    struct Vector2u32 final
+    {
+        Vector2u32(uint32_t _x, uint32_t _y) : x(_x), y(_y) {}
+
+        // Member fields and aliases
+        union {
+            struct { // 2D Position
+                uint32_t x, y; // #NOTE Default member initialization not allowed in anonymous structs inside of unions
+            };
+            struct { // Texture coordinates
+                uint32_t u, v;
+            };
+            struct {
+                // #TODO Rotating alias? float roll;
+            };
+        };
+    };
+
     struct Vector2f final // #TODO Vec3 capital or not? Should types always be capitalized? Does anyone want the vec3 variable name available?
     {
         Vector2f() : x(0.f), y(0.f) {}
