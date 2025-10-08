@@ -507,7 +507,7 @@ namespace QwerkE {
                     }
                     else if (!result.hoveredFieldName.empty())
                     {
-                        if (result.hoveredFieldName == "m_MeshGuid")
+                        if (result.hoveredFieldName == "m_MeshGuid") // #TODO Improve from using string comparisons
                         {
                             ImGui::BeginTooltip();
                             if (GUID::Invalid == meshComponent->GetMeshGuid())
@@ -546,6 +546,12 @@ namespace QwerkE {
                             {
                                 std::string fileName = Assets::GetRegistryAssetFileName<Texture>(meshComponent->GetTextureGuid());
                                 ImGui::Text(fileName.c_str());
+
+                                if (Assets::Has<Texture>(meshComponent->GetTextureGuid()))
+                                {
+                                    Texture* texture = Assets::Get<Texture>(meshComponent->GetTextureGuid());
+                                    ImGui::Image(ImTextureID(texture->TextureHandle().idx), ImVec2(50.f, 50.f));
+                                }
                             }
                             ImGui::EndTooltip();
                         }
