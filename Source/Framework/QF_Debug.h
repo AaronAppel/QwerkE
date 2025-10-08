@@ -1,10 +1,5 @@
 #pragma once
 
-#ifdef _QGLM
-#include "Libraries/glm/glm.hpp"
-typedef glm::vec3		vec3f;
-#endif
-
 #ifdef _QDEBUG
 
 #include "QF_Log.h"

@@ -10,7 +10,6 @@
 #include "QF_ComponentTransform.h"
 #include "QF_Files.h"
 #include "QF_Input.h"
-#include "QF_MathVector.h"
 #include "QF_Paths.h"
 #include "QF_PhysicsWorld.h"
 #include "QF_Scene.h"
@@ -330,7 +329,7 @@ namespace QwerkE {
                         debugDrawer.begin(m_ViewId, true);
 
                         vec3f scale = transform.Scale();
-                        float magnitude = Math::Magnitude(scale);
+                        float magnitude = scale.Magnitude();
 
                         debugDrawer.drawOrb(position.x, position.y, position.z, 0.55 * magnitude, Axis::X);
                         debugDrawer.end();
@@ -362,7 +361,7 @@ namespace QwerkE {
                 case Physics::BodyShapes::Box:
                     // #TODO transform.Down()
                     // #TODO Draw shapes using Jolt body properties or better support all shapes
-                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, transform.Scale().length());
+                    debugDrawer.drawQuad({ 0, -1, 0 }, { bodyPosition.x, bodyPosition.y, bodyPosition.z }, transform.Scale().Magnitude());
                     break;
                 }
                 debugDrawer.end();

@@ -128,6 +128,19 @@ using wPtr = std::weak_ptr<T>;
 template<typename... T>
 struct TemplateArgumentList { };
 
+#include "QF_Vector2.h"
+typedef QwerkE::Vector2f vec2f;
+typedef QwerkE::Vector2u16 vec2u16;
+
+#include "QF_Vector3.h"
+typedef QwerkE::Vector3f vec3f;
+
+#include "QF_Vector4.h"
+// typedef QwerkE::Vector4f vec4f;
+
+#include "QF_Matrix4.h"
+typedef QwerkE::Matrix4f mat4f;
+
 // #TODO This file should probably not define anything and just list other files to include in all other files
 // #TODO Move GLM type aliasing to another/better file/place
 #ifdef _QGLM
@@ -139,7 +152,6 @@ struct TemplateArgumentList { };
 typedef glm::u8vec2	    vec2u8; // #TODO Review aliasing vectors and it's usefulness vs clarity
 typedef glm::u32vec2	vec2u32;
 
-typedef glm::vec3		vec3f;
 typedef glm::vec4		vec4f;
 typedef glm::mat3		mat3;
 typedef glm::mat4		mat4;
@@ -162,16 +174,3 @@ const float mat4Identity[16] = {
 #else
 
 #endif
-
-#include "QF_Vector2.h"
-typedef QwerkE::Vector2f vec2f;
-typedef QwerkE::Vector2u16 vec2u16;
-
-#include "QF_Vector3.h"
-// typedef QwerkE::Vector3f vec3f;
-
-#include "QF_Vector4.h"
-// typedef QwerkE::Vector4f vec4f;
-
-#include "QF_Matrix4.h"
-typedef QwerkE::Matrix4f mat4f;
