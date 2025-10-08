@@ -141,6 +141,10 @@ typedef QwerkE::Vector3f vec3f;
 #include "QF_Matrix4.h"
 typedef QwerkE::Matrix4f mat4f;
 
+#include "QF_Quaternion.h"
+// typedef QwerkE::Quaternion		quat;
+// typedef QwerkE::Quaternion		quaternion;
+
 // #TODO This file should probably not define anything and just list other files to include in all other files
 // #TODO Move GLM type aliasing to another/better file/place
 #ifdef _QGLM

@@ -1,3 +1,4 @@
+#pragma once
 
 #include <cmath>
 #include <string>
@@ -238,7 +239,7 @@ namespace QwerkE {
         {
             // Normalize the axis
             float length = std::sqrt(x * x + y * y + z * z);
-            if (length == 0.0f) return Identity(); // Fallback to identity if invalid
+            if (length == 0.0f) return Identity(); // Fall back to identity if invalid
 
             x /= length;
             y /= length;
