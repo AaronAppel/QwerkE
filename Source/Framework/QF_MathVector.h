@@ -13,7 +13,6 @@ namespace QwerkE {
 
 		// Vectors
 #ifdef _QGLM
-		inline float Magnitude(const vec2f& a_Other) { return glm::length(a_Other); }
 		inline float Magnitude(const vec3f& a_Other) { return glm::length(a_Other); }
 #endif // _QGLM
 		inline float VectorMagnitude(float a_X, float a_Y) { return std::sqrt(a_X * a_X + a_Y * a_Y); }
