@@ -1,10 +1,3 @@
-
-#if _QGLM
-#include "Libraries/glm/glm.hpp"
-#include "Libraries/glm/gtc/matrix_transform.hpp"  // for glm::rotate
-#include "Libraries/glm/gtc/constants.hpp"         // for glm::pi
-#endif // _QGLM
-
 #include "QF_Math.h"
 
 namespace QwerkE {
@@ -190,34 +183,33 @@ namespace QwerkE {
         {
             const float radians = DegToRad(a_Degrees);
 
-            glm::mat4 matrix = {
+            mat4f matrix = {
                 a_Matrix[0], a_Matrix[1], a_Matrix[2], a_Matrix[3],
                 a_Matrix[4], a_Matrix[5], a_Matrix[6], a_Matrix[7],
                 a_Matrix[8], a_Matrix[9], a_Matrix[10], a_Matrix[11],
                 a_Matrix[12], a_Matrix[13], a_Matrix[14], a_Matrix[15],
             };
-            glm::vec3 normalizedAxis = glm::normalize(glm::vec3(a_Axis.x, a_Axis.y, a_Axis.z));
-            glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), radians, normalizedAxis);
+            vec3f normalizedAxis = vec3f(a_Axis.x, a_Axis.y, a_Axis.z).Normalized();
+            mat4f rotation = mat4f::Rotation(radians, normalizedAxis);
 
             matrix = rotation * matrix; // world space: rotate relative to global axes
             // matrix = matrix * rotation; // #NOTE Local space: rotate relative to object's axes
-
-            a_Matrix[0] = matrix[0][0];
-            a_Matrix[1] = matrix[0][1];
-            a_Matrix[2] = matrix[0][2];
-            a_Matrix[3] = matrix[0][3];
-            a_Matrix[4] = matrix[1][0];
-            a_Matrix[5] = matrix[1][1];
-            a_Matrix[6] = matrix[1][2];
-            a_Matrix[7] = matrix[1][3];
-            a_Matrix[8] = matrix[2][0];
-            a_Matrix[9] = matrix[2][1];
-            a_Matrix[10] = matrix[2][2];
-            a_Matrix[11] = matrix[2][3];
-            a_Matrix[12] = matrix[3][0];
-            a_Matrix[13] = matrix[3][1];
-            a_Matrix[14] = matrix[3][2];
-            a_Matrix[15] = matrix[3][3];
+            a_Matrix[0] = matrix.cr[0][0];
+            a_Matrix[1] = matrix.cr[0][1];
+            a_Matrix[2] = matrix.cr[0][2];
+            a_Matrix[3] = matrix.cr[0][3];
+            a_Matrix[4] = matrix.cr[1][0];
+            a_Matrix[5] = matrix.cr[1][1];
+            a_Matrix[6] = matrix.cr[1][2];
+            a_Matrix[7] = matrix.cr[1][3];
+            a_Matrix[8] = matrix.cr[2][0];
+            a_Matrix[9] = matrix.cr[2][1];
+            a_Matrix[10] = matrix.cr[2][2];
+            a_Matrix[11] = matrix.cr[2][3];
+            a_Matrix[12] = matrix.cr[3][0];
+            a_Matrix[13] = matrix.cr[3][1];
+            a_Matrix[14] = matrix.cr[3][2];
+            a_Matrix[15] = matrix.cr[3][3];
         }
 
         // Multiplies two 4x4 column-major matrices: result = a * b

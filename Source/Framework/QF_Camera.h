@@ -15,12 +15,6 @@
 
 #include "../Source/Editor/QE_Settings.h" // #TODO Remove from QF_* domain
 
-#ifdef _QGLM
-#include "Libraries/glm/glm.hpp"
-#include "Libraries/glm/gtc/matrix_transform.hpp"
-#include "Libraries/glm/gtc/constants.hpp"
-#endif // _QGLM
-
 namespace QwerkE {
 
 	// #TODO See how hard/complex it would be to support 1 camera class that handles all types of behaviour.

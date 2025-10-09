@@ -602,8 +602,7 @@ namespace QwerkE {
 
             ImGui::DefaultWindow([&](){
                 ImGui::DragFloat3("editorCameraMovement", &editorCameraMovement.x, 0.1f, 1.0f);
-                }
-            );
+            });
 
             if (editorCameraMovement.x != 0.0f || editorCameraMovement.y != 0.0f || editorCameraMovement.z != 0.0f)
             {

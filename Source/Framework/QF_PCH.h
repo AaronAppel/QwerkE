@@ -1,13 +1,13 @@
 #pragma once
 
+// System files
 #include <map>
 #include <queue>
 #include <stack>
 #include <string>
 #include <vector>
 
-#include "QF_TypeDefs.h"
-
+// External or 3rd party library files
 #ifdef _QBGFX
 #include "Libraries/bx/include/bx/bx.h"
 #include "Libraries/bimg/include/bimg/bimg.h"
@@ -31,14 +31,6 @@
 #ifdef _QGLFW3
 #include "Libraries/glfw/QC_glfw3.h"
 #endif // _QGLFW3
-
-#ifdef _QGLM
-#pragma warning( disable : 26495 )
-#include "Libraries/glm/glm.hpp"
-#include "Libraries/glm/gtc/matrix_transform.hpp"
-#include "Libraries/glm//gtc/type_ptr.hpp"
-#pragma warning( default : 26495 )
-#endif // _QGLM
 
 #ifdef _QJOLT
 #include "Libraries/Jolt/Jolt.h"
@@ -69,4 +61,8 @@
 #pragma warning( default : 6285 )
 #endif // _QSPDLOG
 
-// #NOTE: Add additional .h files below, if they rarely change
+// QwerkE files
+#include "QF_TypeDefs.h"
+
+// Additional framework .h files below that rarely change
+

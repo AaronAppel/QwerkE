@@ -1,30 +1,23 @@
 #pragma once
 
-#ifdef _QGLM
-#include "Libraries/glm/glm.hpp"
-#include "Libraries/glm/gtc/matrix_transform.hpp"
-#endif // _QGLM
-
 namespace QwerkE {
 
     class ThirdPersonCamera
     {
     public:
-        ThirdPersonCamera(glm::vec3 targetPos = glm::vec3(0.0f))
-            : target(targetPos) {
-        }
+        ThirdPersonCamera(vec3f targetPos = vec3f::Zero())
+            : target(targetPos)
+        { }
 
         void Mouse(float xOffset, float yOffset)
         {
-            xOffset *= mouseSensitivity;
-            yOffset *= mouseSensitivity;
+            xOffset *= mouseSensitivityX;
+            yOffset *= mouseSensitivityY;
 
-            yaw += xOffset;
-            pitch -= yOffset; // invert Y if needed
+            yawDegrees += xOffset;
+            pitchDegrees -= yOffset; // invert Y if needed
 
-            // Clamp pitch to avoid flipping
-            if (pitch > 89.0f)  pitch = 89.0f;
-            if (pitch < -89.0f) pitch = -89.0f;
+            pitchDegrees = Math::Clamp(-89.0f, pitchDegrees, 89.0f); // Clamp pitch to avoid flipping
         }
 
         void MouseScroll(float scrollOffset)
@@ -34,37 +27,37 @@ namespace QwerkE {
             if (distanceToTarget > maxDistance) distanceToTarget = maxDistance;
         }
 
-        glm::mat4 getViewMatrix() const
+        mat4f getViewMatrix() const
         {
-            glm::vec3 cameraPos = calculateCameraPosition();
-            return glm::lookAt(cameraPos, target, glm::vec3(0, 1, 0));
+            vec3f cameraPos = calculateCameraPosition();
+            return mat4f::LookAt(cameraPos, target, vec3f(0, 1, 0));
 
             // #TODO Camera collision detection for avoiding clipping other objects
-            // glm::vec3 desiredPos = calculateCameraPosition();
-            // glm::vec3 dir = glm::normalize(desiredPos - target);
+            // vec3f desiredPos = calculateCameraPosition();
+            // vec3f dir = glm::normalize(desiredPos - target);
             // float desiredDist = glm::length(desiredPos - target);
             //
             // // Pseudocode collision check (replace with actual query)
             // float blockedDist = physics.raycast(target, dir, desiredDist); // returns distance or desiredDist if clear
             //
-            // glm::vec3 actualPos = target + dir * blockedDist;
-            // return glm::lookAt(actualPos, target, glm::vec3(0, 1, 0));
+            // vec3f actualPos = target + dir * blockedDist;
+            // return glm::lookAt(actualPos, target, vec3f(0, 1, 0));
         }
 
         void Update()
         {
-            glm::vec3 currentTarget = glm::vec3(0.0f); // Intermediate/adjusted target position
+            vec3f currentTarget = vec3f(0.0f); // Intermediate/adjusted target position
 
             // currentTarget = glm::mix(currentTarget, newTarget, followSpeed * deltaTime);
             target = currentTarget;
         }
 
     private:
-        glm::vec3 calculateCameraPosition() const {
-            float yawRad = glm::radians(yaw);
-            float pitchRad = glm::radians(pitch);
+        vec3f calculateCameraPosition() const {
+            float yawRad = Math::ToRad * yawDegrees;
+            float pitchRad = Math::ToRad * pitchDegrees;
 
-            glm::vec3 offset;
+            vec3f offset;
             offset.x = distanceToTarget * cos(pitchRad) * cos(yawRad);
             offset.y = distanceToTarget * sin(pitchRad);
             offset.z = distanceToTarget * cos(pitchRad) * sin(yawRad);
@@ -72,31 +65,32 @@ namespace QwerkE {
             // return target - offset; // camera is behind the target
 
             // Additional over-the-shoulder offset
-            glm::vec3 cameraPos = target - offset;
+            vec3f cameraPos = target - offset;
 
             // Over-the-shoulder offset (rotate with yaw)
-            glm::vec3 right = glm::normalize(glm::cross(glm::vec3(0, 1, 0), glm::normalize(offset)));
-            glm::vec3 up(0, 1, 0);
+            vec3f right = vec3f::Up().Cross(offset.Normalized()).Normalized(); // #TODO Review hard coded up vector
 
             cameraPos += right * shoulderOffset.x;
-            cameraPos += up * shoulderOffset.y;
+            cameraPos += vec3f::Up() * shoulderOffset.y;
 
             return cameraPos;
         }
 
-        glm::vec3 target = glm::vec3(0.0f); // position to orbit around
+        vec3f target = vec3f(0.0f); // position to orbit around
         float distanceToTarget = 5.0f;
-        float pitch = 20.0f;   // vertical angle (up/down)
-        float yaw = -90.0f;    // horizontal angle (left/right)
+        float pitchDegrees = 20.0f;   // vertical angle (up/down)
+        float yawDegrees = -90.0f;    // horizontal angle (left/right)
 
-        float mouseSensitivity = 0.1f;
+        float mouseSensitivityX = 0.1f; // #TODO Review controller or alternate sensitivity
+        float mouseSensitivityY = 0.1f;
+
         float zoomSensitivity = 1.0f;
         float minDistance = 2.0f;
         float maxDistance = 15.0f;
 
         float followTargetSpeed = 5.0f;
 
-        glm::vec3 shoulderOffset = glm::vec3(0.5f, 1.0f, 0.0f); // Right and up
+        vec3f shoulderOffset = vec3f(0.5f, 1.0f, 0.0f); // Right and up
     };
 
 }

@@ -61,7 +61,7 @@ namespace QwerkE {
 		}
 
 		template <typename T>
-		inline T Clamp(T min, T value, T max)
+		inline T Clamp(T min, T value, T max) // #TODO Review standardized value, min, max ordering
 		{
 			if (value < min)
 			{

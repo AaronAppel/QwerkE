@@ -15,8 +15,10 @@
 namespace QwerkE {
 
     // #NOTE Column-major layout
-    struct Matrix4f final
+    struct Matrix4f final // #TODO Review naming mat4f instead of using type def for faster definition navigation
     {
+        // #TODO Review naming. Can support single and double square brackets entry access [16], and [4][4]
+        // Double [4][4] access may be preferred default, with .i[15] being required for array index access
         union {
             struct {
                 float m[16];
@@ -26,6 +28,9 @@ namespace QwerkE {
             };
             struct {
                 float column_row[4][4];
+            };
+            struct {
+                float index[16];
             };
         };
 
@@ -50,10 +55,16 @@ namespace QwerkE {
             float m20, float m21, float m22, float m23,
             float m30, float m31, float m32, float m33)
         {
+            // #TODO Review if taking in row major, converting to column major?
             m[0] = m00; m[4] = m01; m[8] = m02; m[12] = m03;
             m[1] = m10; m[5] = m11; m[9] = m12; m[13] = m13;
             m[2] = m20; m[6] = m21; m[10] = m22; m[14] = m23;
             m[3] = m30; m[7] = m31; m[11] = m32; m[15] = m33;
+            // #TODO or column-row indices?
+            // cr[0][0] = m00; cr[1][0] = m01; m[8] = m02; m[12] = m03;
+            // cr[1][0] = m10; cr[1][1] = m11; m[9] = m12; m[13] = m13;
+            // cr[2][0] = m20; cr[1][2] = m21; m[10] = m22; m[14] = m23;
+            // cr[3][0] = m30; cr[1][3] = m31; m[11] = m32; m[15] = m33;
         }
 
 #ifdef _QBGFX
@@ -230,10 +241,10 @@ namespace QwerkE {
 
         // #TODO Look at point rotation method
 
-        // static Matrix4f Rotation(float angleRad, const Vector3f& axis) // #TODO Angle in degrees
-        // {
-        //     return Rotation(angleRad, axis.x, axis.y, axis.z);
-        // }
+        static Matrix4f Rotation(float angleRad, const Vector3f& axis) // #TODO Angle in degrees
+        {
+            return Rotation(angleRad, axis.x, axis.y, axis.z);
+        }
 
         static Matrix4f Rotation(float angleRad, float x, float y, float z) // #TODO Angle in degrees
         {
@@ -298,22 +309,23 @@ namespace QwerkE {
         // }
 
         // Projection
-        // static Matrix4f LookAt(const Vector3f& eye, const Vector3f& center, const Vector3f& up)
-        // {
-        //     Vector3f f = (center - eye).Normalized();
-        //     Vector3f r = f.Cross(up).Normalized();
-        //     Vector3f u = r.Cross(f);
-        //
-        //     return Matrix4f{
-        //          r.x,  u.x, -f.x, 0.0f,
-        //          r.y,  u.y, -f.y, 0.0f,
-        //          r.z,  u.z, -f.z, 0.0f,
-        //         -Vector3f::Dot(r, eye),
-        //         -Vector3f::Dot(u, eye),
-        //          Vector3f::Dot(f, eye),
-        //          1.0f
-        //     };
-        // }
+        // #TODO vec3f include dependency
+        static Matrix4f LookAt(const Vector3f& eye, const Vector3f& center, const Vector3f& up)
+        {
+            Vector3f f = (center - eye).Normalized();
+            Vector3f r = f.Cross(up).Normalized();
+            Vector3f u = r.Cross(f);
+
+            return Matrix4f{
+                 r.x,  u.x, -f.x, 0.0f,
+                 r.y,  u.y, -f.y, 0.0f,
+                 r.z,  u.z, -f.z, 0.0f,
+                -Vector3f::Dot(r, eye),
+                -Vector3f::Dot(u, eye),
+                 Vector3f::Dot(f, eye),
+                 1.0f
+            };
+        }
 
         static Matrix4f Perspective(float fovYRadians, float aspect, float nearZ, float farZ) // #TODO Angle in degrees
         {
