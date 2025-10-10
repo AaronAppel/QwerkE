@@ -10,10 +10,10 @@ rem #TODO Verify shortcut creation
 %PWS% -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut(%SHORTCUT%); $S.TargetPath = %TARGET%; $S.Save()"
 
 rem BGFX solutions and compilers
-pushd Source/Libraries/bgfx
+cd Source/Libraries/bgfx
 echo Building bgfx shader and mesh compilers
 call 1stTimeSetup.bat
-popd
+cd ../../../
 
 rem Build solution files
 pushd Build
