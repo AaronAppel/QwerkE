@@ -57,8 +57,7 @@ namespace QwerkE {
 
 	namespace Editor {
 
-        // QE_EditorHotkeys.cpp
-        extern std::unordered_map<EditorHotKeys, Input::InputMapping> s_EditorHotkeys;
+        extern std::unordered_map<EditorHotKeys, Input::InputMapping> s_EditorHotkeys; // From QE_EditorHotkeys.cpp
         extern void PollHotkeys();
 
         static bool s_ShowingEditorUI = true;
@@ -582,6 +581,7 @@ namespace QwerkE {
                 EditorHotKeys hotKey = static_cast<EditorHotKeys>(EditorHotKeys::e_Scene_Select1 + i);
                 if (s_EditorHotkeys[hotKey].IsActive())
                 {
+                    // #TODO Set scene using rebindable hotkeys
                     // Scenes::SetCurrentScene((int)i);
                 }
             }
@@ -597,6 +597,7 @@ namespace QwerkE {
             // engineSettings.startUpData.commandLineArguments = ;
             Framework::Initialize(engineSettings.startUpData);
 
+            // #TODO Remove input testing code
             // #TODO Debug code
             // Input::OnKey(TestOnKey);
             // Input::OnMouse(TestOnMouse);
@@ -706,6 +707,7 @@ namespace QwerkE {
             }
             wasActive = result;
 
+            // #TODO Remove input testing code
             // if (Input::KeyDown(QKey::eKeys_A))
             {
                 // LOG_INFO(Log::eLogLevel::Info, "KeyState");
