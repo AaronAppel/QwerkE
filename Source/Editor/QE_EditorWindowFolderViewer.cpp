@@ -54,6 +54,7 @@ namespace QwerkE {
 				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
 				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.4f, 1.f, 0.4f));
 			}
+
 			if (ImGui::SmallButton("Dirs"))
 			{
 				if (m_Filtering & e_ExcludeDirectories)

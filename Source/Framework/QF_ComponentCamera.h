@@ -51,7 +51,7 @@ namespace QwerkE {
         }
 
         // #TODO How will Mirror handle undefined types? May need to handle with warning or special #define macro
-        bool m_ShowSphere = true;
+        bool m_ShowSphere = true; // #TODO Editor only, strip from build
         bool m_Perspective = true;
 
         float m_MoveSpeed = 5.f;

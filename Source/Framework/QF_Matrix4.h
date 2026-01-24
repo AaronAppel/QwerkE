@@ -71,7 +71,7 @@ namespace QwerkE {
         // #TODO See if this conversion could be more "implicit" using overloading and move to vec3f file
         inline bx::Vec3 PositionBx() const { vec3f pos = Position(); return bx::Vec3(pos.x, pos.y, pos.z); }
         inline bx::Vec3 RotationBx() const { vec3f rot = Rotation(); return bx::Vec3(rot.x, rot.y, rot.z); }
-        inline bx::Vec3 ScaleBx()	 const { vec3f scale = Scale();    return bx::Vec3(scale.x, scale.y, scale.z); }
+        inline bx::Vec3 ScaleBx()	 const { vec3f scale = Scale();  return bx::Vec3(scale.x, scale.y, scale.z); }
 
         inline void SetPosition(const bx::Vec3& a_NewPosition) { SetPosition(a_NewPosition.x, a_NewPosition.y, a_NewPosition.z); }
 #endif

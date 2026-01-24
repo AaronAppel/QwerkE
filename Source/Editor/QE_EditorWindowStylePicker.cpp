@@ -90,7 +90,7 @@ namespace QwerkE {
                 ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(1.f, 0.6f, 0.6f));
             }
 
-            if (ImGui::Button("Save Style Current Style"))
+            if (ImGui::Button("Save Current Style"))
             {
                 Serialize::ToFile(style, Paths::Style(Settings::GetStyleFileName()).c_str());
                 if (m_Edited)
