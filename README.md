@@ -51,10 +51,10 @@ Libraries or external code I utilize to deliver features (may be outdated) :
 This project is licensed under the BSD3 License - see the LICENSE file for full details.
 
 ## References
-Joey DeVries [learnopengl.com](learnopengl.com)
-The Cherno : [YouTube](https://www.youtube.com/user/TheChernoProject), [GitHub](https://github.com/TheCherno)
-Thin Matrix : [YouTube](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ)
-[Game engine Architecture](https://www.gameenginebook.com/), Third Edition by Jason Gregory
+Joey DeVries [learnopengl.com](learnopengl.com)  
+The Cherno : [YouTube](https://www.youtube.com/user/TheChernoProject), [GitHub](https://github.com/TheCherno)  
+Thin Matrix : [YouTube](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ)  
+[Game engine Architecture](https://www.gameenginebook.com/), Third Edition by Jason Gregory  
 
 ## Resources and Tools
 - [Visual Studio](https://visualstudio.microsoft.com/vs/) 2017, 2019, 2022
@@ -65,10 +65,3 @@ Thin Matrix : [YouTube](https://www.youtube.com/channel/UCUkRj4qoT1bsWpE_C8lZYoQ
 - [StackOverflow](https://stackoverflow.com/questions?sort=votes)
 - [Entrian Source Search](https://entrian.com/source-search/)
 - [Notepad++](https://notepad-plus-plus.org/downloads/)
-
-## Acknowledgments and Appreciation
-In no particular order :
-- Jimmy Lord : [FlatheadGames](http://www.flatheadgames.com)  https://github.com/jimmylord
-- Eric Bibeau
-- Aurelien Simoni
-- Antonio Santamaria
