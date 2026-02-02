@@ -302,13 +302,14 @@ MIR_CLASS(QwerkE::ComponentTransform)
 	MIR_CLASS_MEMBER(m_Matrix)
 MIR_CLASS_END
 
+MIR_CLASS(QwerkE::EntityHandle)
+MIR_CLASS_END
 MIR_CLASS(QwerkE::ComponentScript)
+    MIR_CLASS_MEMBER(m_EntityHandle)
 	MIR_CLASS_MEMBER(m_ScriptInstances)
 MIR_CLASS_END
 
 // Misc
-MIR_CLASS(QwerkE::EntityHandle)
-MIR_CLASS_END
 
 // Assets
 MIR_CLASS(QwerkE::Mesh)

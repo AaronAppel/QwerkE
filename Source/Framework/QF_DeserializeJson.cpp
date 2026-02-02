@@ -307,6 +307,7 @@ namespace QwerkE {
                         // #TODO Ensure Scriptable* is null to trigger instantiation later
                         // #TODO Review nullifying pointers during deserialization
                         ComponentScript* scriptPtr = (ComponentScript*)&component;
+                        // #TODO: Review setting owning entity handle: scriptPtr->SetEntity(EntityHandle(scene, newEntityId));
                         for (auto& pair : scriptPtr->ScriptInstances())
                         {
                             pair.second = nullptr;

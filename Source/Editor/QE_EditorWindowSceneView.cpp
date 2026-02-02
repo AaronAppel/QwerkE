@@ -80,7 +80,7 @@ namespace QwerkE {
                 has_mips, num_layers,
                 bgfx::TextureFormat::BGRA8,
                 BGFX_TEXTURE_RT);
-            ASSERT(bgfx::isValid(m_FrameBufferTextures[0].TextureHandle()), "Error creating frame buffer texture [0]!");
+            ASSERT(m_FrameBufferTextures[0].IsValid(), "Error creating frame buffer texture [0]!");
 
             // Create write texture
             m_FrameBufferTextures[1].Init(windowSize.x, windowSize.y,
@@ -99,7 +99,7 @@ namespace QwerkE {
                 , 0
             );
 
-            m_CurrentScene = Scenes::GetScene(m_CurrentSceneGuid); // #TODO Serialize constsruct using guid member
+            m_CurrentScene = Scenes::GetScene(m_CurrentSceneGuid); // #TODO Serialize construct using guid member
             if (nullptr == m_CurrentScene && GUID::Invalid != m_CurrentSceneGuid)
             {
                 m_CurrentScene = Assets::Get<Scene>(m_CurrentSceneGuid);
@@ -305,6 +305,48 @@ namespace QwerkE {
             }
             ImGui::PopItemWidth();
 
+            if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
+            {
+                ImGui::OpenPopup("CameraPerspective");
+            }
+
+            if (ImGui::BeginPopup("CameraPerspective"))
+            {
+                if (ImGui::MenuItem("Perspective"))
+                {
+                    m_EditorCamera.m_Perspective = true;
+                }
+                if (ImGui::MenuItem("Orthographic"))
+                {
+                    m_EditorCamera.m_Perspective = false;
+                }
+                if (ImGui::MenuItem("Reset 0"))
+                {
+                    Math::MatrixZero
+                    (m_EditorCameraTransform.m_Matrix);
+                }
+                if (ImGui::MenuItem("Reset Identity"))
+                {
+                    Math::MatrixIdentity(m_EditorCameraTransform.m_Matrix);
+                }
+                ImGui::EndPopup();
+            }
+
+            if (ImGui::BeginPopup("TimeControls"))
+            {
+                static float timeScale = 1.f; // #TODO Add Time::TimeScale
+                if (ImGui::SliderFloat("Time", &timeScale, 0.f, 10.f)) // Max = FLT_MAX / 2.f
+                {
+                    Time::SetTimeScale(timeScale);
+                }
+                if (ImGui::IsItemClicked(ImGui::MouseRight))
+                {
+                    timeScale = 1.f;
+                    Time::SetTimeScale(timeScale);
+                }
+                ImGui::EndPopup();
+            }
+
             // Gizmo drawing
             if (m_LastSelectEntity)
             {
@@ -376,47 +418,41 @@ namespace QwerkE {
                 }
             }
 
-            if (ImGui::IsItemClicked(ImGui::Buttons::MouseRight))
+            if (Input::KeyPressed(QKey::e_B))
             {
-                ImGui::OpenPopup("CameraPerspective");
-            }
+                // Recreate frame buffers
+                const vec2f& windowSize = Window::GetSize();
+                const bool has_mips = false;
+                const uint16_t num_layers = 1;
 
-            if (ImGui::BeginPopup("CameraPerspective"))
-            {
-                if (ImGui::MenuItem("Perspective"))
-                {
-                    m_EditorCamera.m_Perspective = true;
-                }
-                if (ImGui::MenuItem("Orthographic"))
-                {
-                    m_EditorCamera.m_Perspective = false;
-                }
-                if (ImGui::MenuItem("Reset 0"))
-                {
-                    Math::MatrixZero
-                    (m_EditorCameraTransform.m_Matrix);
-                }
-                if (ImGui::MenuItem("Reset Identity"))
-                {
-                    Math::MatrixIdentity(m_EditorCameraTransform.m_Matrix);
-                }
-                ImGui::EndPopup();
-            }
+                m_FrameBuffer.Unload();
+                m_FrameBufferTextures[0].Unload();
+                m_FrameBufferTextures[1].Unload();
 
-            if (ImGui::BeginPopup("TimeControls"))
-            {
-                static float timeScale = 1.f; // #TODO Add Time::TimeScale
-                if (ImGui::SliderFloat("Time", &timeScale, 0.f, 10.f)) // Max = FLT_MAX / 2.f
-                {
-                    Time::SetTimeScale(timeScale);
-                }
-                if (ImGui::IsItemClicked(ImGui::MouseRight))
-                {
-                    timeScale = 1.f;
-                    Time::SetTimeScale(timeScale);
-                }
-                ImGui::EndPopup();
+                // #TODO Copied from Init() so duplicated and needs improving or at least a helper method
+                m_FrameBufferTextures[0].Init(windowSize.x, windowSize.y,
+                    has_mips, num_layers,
+                    bgfx::TextureFormat::BGRA8,
+                    BGFX_TEXTURE_RT);
+                ASSERT(m_FrameBufferTextures[0].IsValid(), "Error creating frame buffer texture [0]!");
+
+                // Create write texture
+                m_FrameBufferTextures[1].Init(windowSize.x, windowSize.y,
+                    has_mips, num_layers,
+                    bgfx::TextureFormat::D16,
+                    BGFX_TEXTURE_RT_WRITE_ONLY);
+                ASSERT(bgfx::isValid(m_FrameBufferTextures[1].TextureHandle()), "Error creating frame buffer depth texture [1]!");
+
+                // Create FBO
+                m_FrameBuffer.Init(2, m_FrameBufferTextures);
+                ASSERT(bgfx::kInvalidHandle != m_FrameBuffer.FrameBufferHandle().idx, "Error creating frame buffer!");
             }
+            m_FrameBuffer.SetupView(m_ViewId, std::string("FBO_") + m_WindowName
+                , BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
+                , 0x303030ff
+                , 1.0f
+                , 0
+            );
 
             // #NOTE Order dependencies with ImGui::IsItemFocused() calls in EditorCameraUpdate()
             ImGui::Image(ImTextureID(m_FrameBufferTextures[0].TextureHandle().idx), ImGui::GetContentRegionAvail(), ImVec2(0, 0), ImVec2(1, 1));
@@ -505,8 +541,12 @@ namespace QwerkE {
                     static float pixelRatio = 5.f; // #TODO Review name and purpose. Higher values mean slower camera movement
 
                     // #TODO May also want to do a mouse set position to lock the cursor, or call the Window:: to lock the cursor to keep it in the current window
-                    editorCameraRotation.x += Input::MouseDelta().x / pixelRatio;
-                    editorCameraRotation.y += Input::MouseDelta().y / pixelRatio;
+                    // editorCameraRotation.x += Input::MouseDelta().x / pixelRatio;
+                    // editorCameraRotation.y += Input::MouseDelta().y / pixelRatio;
+
+                    const float mouseCameraRotationSpeed = 1.0f;
+                    editorCameraRotation.x += mouseCameraRotationSpeed * Input::MouseDelta().x;
+                    editorCameraRotation.y += mouseCameraRotationSpeed * Input::MouseDelta().y;
                 }
 
                 if (Input::MouseDown(QKey::e_MouseMiddle))

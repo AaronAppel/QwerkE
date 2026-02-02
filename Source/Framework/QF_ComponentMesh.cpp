@@ -12,7 +12,7 @@
 
 namespace QwerkE {
 
-    bgfx::TextureHandle s_TextureHandle;
+    bgfx::TextureHandle s_TextureHandle; // #TODO Review statics for refactor
     bgfx::UniformHandle s_UniformHandleTexture;
     bgfx::UniformHandle s_UniformHandleUvOffset;
     vec4f uvOffset = vec4f(1, 1, 0, 0);
@@ -27,7 +27,6 @@ namespace QwerkE {
             s_TextureHandle.idx = m_Texture->TextureHandle().idx;
             s_UniformHandleTexture = bgfx::createUniform("u_TextureColor", bgfx::UniformType::Sampler);
 
-            // if (7235877850588061835 == m_ShaderGuid) // #TODO Remove hard coded shader guid
             if (m_Shader->HasUniform("u_UVScaleOffset"))
             {
                 s_UniformHandleUvOffset = bgfx::createUniform("u_UVScaleOffset", bgfx::UniformType::Vec4);
@@ -60,7 +59,8 @@ namespace QwerkE {
                 // #TODO Create Material class to handle setting multiple textures
                 // #TODO Review adding uniform helpers to Texture
                 // bgfx::setUniform(s_UniformHandleUvOffset, &uvOffset);
-                bgfx::setTexture(0, s_UniformHandleTexture, s_TextureHandle); // #NOTE Needs to be set every frame, even if other textures are not submitted
+                constexpr uint8_t stage = 0; // #TODO Hard coded stage
+                bgfx::setTexture(stage, s_UniformHandleTexture, s_TextureHandle); // #NOTE Needs to be set every frame, even if other textures are not submitted
             }
         }
 
@@ -69,7 +69,7 @@ namespace QwerkE {
         // LOG_ONCE_ERROR();
 
         bgfx::setTransform(transform.m_Matrix);
-        constexpr uint8_t stream = 0;
+        constexpr uint8_t stream = 0; // #TODO Hard coded stream
         bgfx::setVertexBuffer(stream, m_Mesh->m_vbh); // #TODO Mesh->PreDraw(); abstract members
         bgfx::setIndexBuffer(m_Mesh->m_ibh);
 
@@ -79,7 +79,8 @@ namespace QwerkE {
             | BGFX_STATE_WRITE_Z
             | BGFX_STATE_DEPTH_TEST_LESS
             | BGFX_STATE_CULL_CCW
-            | BGFX_STATE_MSAA
+            | BGFX_STATE_MSAA,
+            0U
         );
 
         bgfx::submit(viewId, m_Shader->ProgramHandle());

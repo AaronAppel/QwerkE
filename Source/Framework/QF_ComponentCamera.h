@@ -21,6 +21,10 @@ namespace QwerkE {
         {
             const vec2f& windowSize = Window::GetSize();
 
+            // #TODO Not required every frame unless window resize or other event?
+            // "BGFX does not persist view state across frames unless you reapply it.
+            // That means these should usually be set every frame, not just on resize" - ChatGPT
+            // #TODO Confirm BGFX behaviour
             bgfx::setViewRect(viewId, 0, 0, uint16_t(windowSize.x), uint16_t(windowSize.y));
 
             bx::Vec3 eye = { position.x, position.y, position.z };

@@ -20,7 +20,7 @@ project "bgfx"
 		"include",
 		"3rdparty",
 		"3rdparty/directx-headers/include/directx",
-		"3rdparty/dxsdk/include",
+		"3rdparty/dxsdk/include", -- #TODO Review for removal
 		"3rdparty/khronos",
 		
 		"%{wks.location}/Source/Libraries/bx/include",

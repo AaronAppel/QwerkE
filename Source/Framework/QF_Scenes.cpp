@@ -283,10 +283,20 @@ namespace QwerkE {
 		{
 			PROFILE_SCOPE("Scene Manager Update");
 
-			if (s_CurrentScene)
+			// #TODO Handle scene removed in update or by delayed scene removal/unload event
+			for (Scene* scene : s_Scenes)
 			{
-				s_CurrentScene->Update(deltatime);
+				if (scene)
+				{
+					scene->Update(deltatime);
+				}
 			}
+
+			// #TODO Deprecate
+			// if (s_CurrentScene)
+			// {
+			// 	s_CurrentScene->Update(deltatime);
+			// }
 		}
 
 		void DrawCurrentScene(u16 viewId)

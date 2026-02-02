@@ -8,6 +8,7 @@ namespace QwerkE {
         struct StartUpData;
     }
 
+    // #TODO For editor and maybe even game purposes, there can be multiple Window(s) so this could be a manager, or be owned by a manager
     namespace Window {
 
         void Initialize(const Framework::StartUpData& startUpData);

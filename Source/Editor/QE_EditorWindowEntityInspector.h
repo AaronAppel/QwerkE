@@ -123,6 +123,7 @@ namespace QwerkE {
                         if (std::is_same_v<Component, ComponentScript>)
                         {
                             ComponentScript* script = (ComponentScript*)&component;
+                            script->SetEntity(entityHandle);
 
                             for (auto& pair : script->ScriptInstances())
                             {
@@ -220,6 +221,7 @@ namespace QwerkE {
                             entityHandle.HasComponent<ComponentCamera>() &&
                             ImGui::Button("Switch To"))
                         {
+                            // m_CurrentSelectedEntity.GetScene()->SetCurrentCameraEntity(entityHandle);
                             Scenes::GetCurrentScene()->SetCurrentCameraEntity(entityHandle);
                         }
 

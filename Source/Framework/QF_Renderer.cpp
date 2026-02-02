@@ -37,7 +37,6 @@
 
 #include "QF_Assets.h"
 #include "QF_Enums.h"
-#include "QF_FrameBuffer.h"
 #include "QF_Paths.h"
 #include "QF_RendererHelpers.h"
 #include "QF_Shader.h"
@@ -50,7 +49,11 @@ namespace QwerkE {
 
 		static bool s_showRendererDebugStats = false;
 
-#ifdef _QBGFX
+#ifdef _QBGFX // #TODO Move library specific code to some QF_Renderer_XXXX file
+
+		// #TODO Look at using 0 or back buffer to catch poor renderer state, rendering to back buffer (possibly after bgfx::reset)
+		// static const bgfx::ViewId s_ViewIdBackBuffer = 0;
+
 		static const bgfx::ViewId s_ViewIdMain = 0;
 		static const bgfx::ViewId s_ViewIdImGui = 1;
 		static bgfx::ViewId s_NextViewId = s_ViewIdImGui + 1;
@@ -62,9 +65,32 @@ namespace QwerkE {
 
 		void OnWindowResized(u32 newWidth, u32 newHeight)
 		{
+			// assert(newWidth > 0 && newHeight > 0);
+			if (1 > newWidth || 1 > newHeight)
+			{
+				return;
+				// #TODO Potentially invalid resolution.
+				// May need to enforce a minimum, but at least handle resetting/updating differently
+			}
+
 #ifdef _QBGFX
-			bgfx::reset(newWidth, newHeight, BGFX_RESET_VSYNC);
-			bgfx::setViewRect(s_ViewIdMain, 0, 0, bgfx::BackbufferRatio::Equal);
+			// u32 featurestateFlags = vsyncEnabled(BGFX_RESET_VSYNC) | ToBitFlag(multiSamplingAntiAliasingLevel(BGFX_RESET_MSAA_X0/4/8/16/etc));
+			bgfx::reset(newWidth, newHeight, BGFX_RESET_VSYNC); // BGFX_RESET_NONE, BGFX_RESET_MSAA_X16
+			// bgfx::setViewRect(s_ViewIdMain, 0, 0, bgfx::BackbufferRatio::Equal);
+
+			// bgfx::setViewRect(s_ViewIdMain, 0, 0, newWidth, newHeight);
+			// bgfx::setViewRect(s_ViewIdImGui, 0, 0, newWidth, newHeight);
+
+			for (size_t i = 0; i < s_NextViewId - 1; i++)
+			{
+				bgfx::setViewRect(i, 0, 0, newWidth, newHeight);
+				bgfx::setViewFrameBuffer(i, BGFX_INVALID_HANDLE);
+
+				// DEBUG Change clear color to red to better catch writing to the back buffer
+				// bgfx::setViewClear(i,
+				// 	BGFX_CLEAR_COLOR,
+				// 	0xff0000ff, 1.0f, 0);
+			}
 #endif
 		}
 
@@ -76,7 +102,7 @@ namespace QwerkE {
 
 #ifdef _QBGFX
 			// #TODO Crash here on (re)loading engine a 2nd time
-			bgfx::renderFrame(); // Prevent bgfx from creating a separate render thread
+			bgfx::renderFrame(); // #NOTE Prevent bgfx from creating a separate render thread
 			bgfx::Init init;
 
 			PosColorVertex::init(); // Create vertex stream declaration.
@@ -162,6 +188,9 @@ namespace QwerkE {
 			glfwGetCursorPos(window, &x, &y);
 
 			const vec2f& windowSize = Window::GetSize();
+
+			// #TODO Review StartFrame() logic IF main view needs constant updating
+			// bgfx::setViewRect(s_ViewIdMain, 0, 0, windowSize.x, windowSize.y);
 
 			imguiBeginFrame(
 				x, y

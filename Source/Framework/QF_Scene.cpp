@@ -134,6 +134,16 @@ namespace QwerkE {
                 camera.PreDrawSetup(viewId, cameraTransform.Position());
             }
 
+            // #TODO Draw scene by multiple passes given renderable object data
+            // enum ViewId {
+            //     View_Shadow,
+            //     View_GBuffer,
+            //     View_Lighting,
+            //     View_Transparent,
+            //     View_PostFX,
+            //     View_UI,
+            // };
+
             auto viewMeshes = m_Registry.view<ComponentMesh>();
             for (const entt::entity& entity : viewMeshes)
             {
@@ -396,6 +406,7 @@ namespace QwerkE {
             {
                 ComponentScript& script = m_Registry.get<ComponentScript>(entityId);
                 script.Bind(EntityHandle(this, entityId));
+                script.SetEntity(EntityHandle(this, entityId));
             }
         });
 

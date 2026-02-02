@@ -76,6 +76,8 @@ namespace QwerkE {
 
         void local_WindowResizedCallback(GLFWwindow* window, int width, int height)
         {
+            // #TODO Consider using a global event system to de-couple framework systems.
+            // Mostly an editor hot reloading consideration so could also be editor only implemented.
             Renderer::OnWindowResized((u32) width, (u32)height);
             if (s_WindowResizedCallback)
             {
@@ -134,6 +136,8 @@ namespace QwerkE {
             glfwWindowHint(GLFW_POSITION_Y, startUpData.windowOpenPositionY);
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
+
+            // #TODO (Editor only) Load windowWidth from file, saved on editor close
 
             s_GlfwWindow = glfwCreateWindow((int)startUpData.windowWidth, (int)startUpData.windowHeight, g_WindowTitle, NULL, NULL);
             ASSERT(s_GlfwWindow, "Critical error creating GLFWWindow*!");

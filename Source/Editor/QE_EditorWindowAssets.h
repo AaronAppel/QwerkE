@@ -319,6 +319,10 @@ namespace QwerkE {
                 {
                     std::string message = "Type: ";
                     message += std::to_string(pairMirrorTypesVector.first);
+                    message += "(";
+                    // message += Mir::GetInfo<>(pairMirrorTypesVector.first)->stringName;
+                    message += "TODO: Type name";
+                    message += ")";
                     ImGui::Text(message.c_str());
 
                     for (size_t i = 0; i < pairMirrorTypesVector.second.size(); i++)

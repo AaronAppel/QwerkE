@@ -45,6 +45,7 @@ namespace QwerkE {
 			bgfx::TextureFormat::Enum a_TextureFormat, uint64_t a_Flags)
 		{
 			m_TextureHandle = bgfx::createTexture2D(a_WindowWidth, a_WindowHeight, a_HasMipMaps, a_NumLayers, a_TextureFormat, a_Flags);
+			ASSERT(IsValid(), "Error creating BGFX texture!");
 		}
 
 		void Init(const char* a_TextureFilePath)
@@ -89,6 +90,8 @@ namespace QwerkE {
 
 			m_TextureHandle = bgfx::createTexture2D(m_Size.x, m_Size.y, m_HasMips, m_NumLayers, bgfxFormat, m_Flags, bgfx::copy(pixelsBuffer, bufferSize));
 			stbi_image_free(pixelsBuffer);
+
+			ASSERT(IsValid(), "Error creating BGFX texture!");
 		}
 
 		void Unload()
@@ -98,10 +101,13 @@ namespace QwerkE {
 				bgfx::destroy(m_TextureHandle);
 				m_TextureHandle = BGFX_INVALID_HANDLE;
 			}
+			ASSERT(!IsValid(), "Error destroying BGFX texture!");
 		}
 
 		const bgfx::TextureHandle& TextureHandle() { return m_TextureHandle; }
 		const GUID& Guid() { return m_GUID; }
+
+		bool IsValid() { return bgfx::isValid(m_TextureHandle); }
 
 	private:
 		// void Reload()

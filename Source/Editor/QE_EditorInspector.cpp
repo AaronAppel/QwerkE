@@ -457,6 +457,18 @@ namespace QwerkE {
 
             switch (typeInfo->id)
             {
+            case Mirror::IdForType<EntityHandle>():
+                {
+                    EntityHandle* entity = (EntityHandle*)obj;
+                    if (entity->IsValid())
+                    {
+                        ImGui::Text(entity->EntityName().c_str());
+                    }
+                    else
+                    {
+                        ImGui::Text("NULL");
+                    }
+                } break;
             case Mirror::IdForType<vec2f>():
                 if (ImGui::DragFloat2(elementName.c_str(), (float*)obj, .1f)) { valueChanged = true; } break;
             case Mirror::IdForType<vec3f>():
@@ -809,6 +821,9 @@ ImGui::EndPopup();
                 {
                     std::unordered_map<eScriptTypes, Scriptable*>* scriptsMap = (std::unordered_map<eScriptTypes, Scriptable*>*)obj;
 
+                    // #TODO Properly get entity handle when no scripts exist
+                    EntityHandle* entity = (EntityHandle*)((char*)obj - sizeof(EntityHandle));
+
                     if (ImGui::Button("+"))
                     {
                         ImGui::OpenPopup("ScriptList");
@@ -816,34 +831,29 @@ ImGui::EndPopup();
 
                     if (ImGui::BeginPopup("ScriptList"))
                     {
-                        ComponentScript* script = (ComponentScript*)obj;
+                        // auto var = scriptsMap->at(eScriptTypes::Patrol);
+                        // auto entity = var->GetEntity();
+                        // if (entity.IsValid() && entity.HasComponent<ComponentScript>())
+                        // {
+                        //     ComponentScript& componentScript = entity.GetComponent<ComponentScript>();
+                        //     componentScript.AddScript(eScriptTypes::e_Camera, entity);
+                        // }
 
-                        Scene* scene = Scenes::GetCurrentScene(); // #TODO Get proper scene
-
-                        EntityHandle entity = EntityHandle::InvalidHandle();
-                        for (auto& pair : scene->EntitiesMap())
+                        // ComponentScript* script = (ComponentScript*)obj; // #TODO obj is not a Component
+                        if (entity && entity->HasComponent<ComponentScript>())
                         {
-                            EntityHandle tempEntity = EntityHandle(scene, pair.first);
+                            ComponentScript& componentScript = entity->GetComponent<ComponentScript>();
 
-                            if (tempEntity.HasComponent<ComponentScript>() &&
-                                &tempEntity.GetComponent<ComponentScript>() == script)
-                            {
-                                entity = tempEntity;
-                                break;
-                            }
-                        }
-
-                        if (entity)
-                        {
                             constexpr u8 start = (u8)eScriptTypes::Invalid + 1;
                             constexpr u8 range = (u8)eScriptTypes::COUNT;
 
                             for (size_t i = start; i < range; i++)
                             {
+                                // if (scriptsMap[i] != null) or a map.find(key) == end
                                 eScriptTypes scriptType = (eScriptTypes)i;
-                                if (!script->HasScript(scriptType) && ImGui::Button(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)i))))
+                                if (!componentScript.HasScript(scriptType) && ImGui::Button(ENUM_TO_STR(eScriptTypesStr::_from_index((u8)i))))
                                 {
-                                    script->AddScript(scriptType, entity);
+                                    componentScript.AddScript(scriptType, componentScript.Entity());
                                     valueChanged = true;
                                     ImGui::CloseCurrentPopup();
                                 }

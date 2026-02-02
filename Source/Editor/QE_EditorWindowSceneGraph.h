@@ -109,7 +109,11 @@ namespace QwerkE {
 								break;
 
 							case eSceneGraphCreateTypes::Script:
-								m_CurrentScene->CreateEntity().AddComponent<ComponentScript>();
+								{
+									EntityHandle entity = m_CurrentScene->CreateEntity();
+									entity.AddComponent<ComponentScript>();
+									entity.GetComponent<ComponentScript>().SetEntity(entity);
+								}
 								break;
 
 							case eSceneGraphCreateTypes::Mesh:

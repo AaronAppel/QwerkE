@@ -20,8 +20,18 @@ namespace QwerkE {
 			// Unbind();
 		}
 
+		void SetEntity(EntityHandle entityHandle)
+		{
+			m_EntityHandle = entityHandle;
+		}
+
 		void Bind(const EntityHandle& entityHandle)
 		{
+			if (!entityHandle || entityHandle != m_EntityHandle)
+			{
+				// #TODO: Passed bad entity handle
+			}
+
 			for (auto& enumScriptablePair : m_ScriptInstances)
 			{
 				if (!enumScriptablePair.second)
@@ -109,11 +119,14 @@ namespace QwerkE {
 			return false;
 		}
 
+		EntityHandle Entity() { return m_EntityHandle; }
+
 		std::unordered_map<eScriptTypes, Scriptable*>& ScriptInstances() { return m_ScriptInstances; }
 
 	private:
 		MIR_FRIEND
 
+		EntityHandle m_EntityHandle = EntityHandle::InvalidHandle();
 		std::unordered_map<eScriptTypes, Scriptable*> m_ScriptInstances;
 	};
 
