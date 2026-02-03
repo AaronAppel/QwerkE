@@ -16,8 +16,8 @@ int main(unsigned int numberOfArguments, char** commandLineArguments)
 	QwerkE::Framework::StartUpData startUpData;
 	startUpData.numberOfCommandLineArguments = numberOfArguments;
 	startUpData.commandLineArguments = commandLineArguments;
-	startUpData.windowWidth = 1920;
-	startUpData.windowHeight = 1080;
+	startUpData.windowOpenWidth = 1920;
+	startUpData.windowOpenHeight = 1080;
 	QwerkE::Framework::Initialize(startUpData);
 
 	// #TODO Update to new loading process
