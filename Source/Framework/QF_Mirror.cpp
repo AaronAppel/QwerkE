@@ -243,8 +243,8 @@ MIR_CLASS(vec3f)
 MIR_CLASS_END
 
 MIR_CLASS(QwerkE::Framework::StartUpData)
-	MIR_CLASS_MEMBER(windowWidth)
-	MIR_CLASS_MEMBER(windowHeight)
+	MIR_CLASS_MEMBER(windowOpenWidth)
+	MIR_CLASS_MEMBER(windowOpenHeight)
 	MIR_CLASS_MEMBER(windowOpenPositionX)
 	MIR_CLASS_MEMBER(windowOpenPositionY)
 	MIR_CLASS_MEMBER(vSyncEnabled)

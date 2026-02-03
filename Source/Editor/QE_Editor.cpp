@@ -651,10 +651,16 @@ namespace QwerkE {
 
 		void local_Shutdown()
 		{
-            vec2f windowPosition = Window::GetPosition();
             EditorSettings& engineSettings = Settings::GetEditorSettings();
+
+            const vec2f windowSize = Window::GetSize();
+            engineSettings.startUpData.windowOpenWidth = windowSize.x;
+            engineSettings.startUpData.windowOpenHeight = windowSize.y;
+
+            const vec2f windowPosition = Window::GetPosition();
             engineSettings.startUpData.windowOpenPositionX = windowPosition.x;
             engineSettings.startUpData.windowOpenPositionY = windowPosition.y;
+
             Settings::SaveEditorSettings();
 
             Projects::Shutdown();

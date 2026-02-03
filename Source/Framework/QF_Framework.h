@@ -17,8 +17,8 @@ namespace QwerkE {
 			unsigned int numberOfCommandLineArguments = 0;
 			char** commandLineArguments = nullptr;
 
-			u16 windowWidth = 1920;
-			u16 windowHeight = 1080;
+			u16 windowOpenWidth = 1920;
+			u16 windowOpenHeight = 1080;
 
 			u16 windowOpenPositionX = 200;
 			u16 windowOpenPositionY = 200;
