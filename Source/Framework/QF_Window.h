@@ -16,7 +16,7 @@ namespace QwerkE {
 
         void NewFrame();
 
-        void RequestClose();
+        void RequestClose(); // #TODO Multi viewport means an application close and window close request need to be explicit
         bool CloseRequested();
 
         const vec2f GetSize(); // #TODO Change to integers like vec2u16

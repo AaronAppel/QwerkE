@@ -23,6 +23,8 @@
 
 #ifdef _QDEARIMGUI
 #include "bgfxFramework/imguiCommon/imguiCommon.h"
+#include "bgfxFramework/imguiCommon/imgui_impl_bgfx.h"
+#include "Libraries/imgui/backends/imgui_impl_glfw.h"
 #endif
 
 #endif
@@ -37,6 +39,7 @@
 
 #include "QF_Assets.h"
 #include "QF_Enums.h"
+#include "QF_FrameBuffer.h"
 #include "QF_Paths.h"
 #include "QF_RendererHelpers.h"
 #include "QF_Shader.h"
@@ -51,6 +54,17 @@ namespace QwerkE {
 
 #ifdef _QBGFX // #TODO Move library specific code to some QF_Renderer_XXXX file
 
+		struct ViewportData
+		{
+			GLFWwindow* window = nullptr;
+			bgfx::FrameBufferHandle framebuffer = BGFX_INVALID_HANDLE;
+			// #TODO Use: FrameBuffer framebuffer;
+			uint16_t viewId = 0;
+
+			uint16_t width = 0;
+			uint16_t height = 0;
+		};
+
 		// #TODO Look at using 0 or back buffer to catch poor renderer state, rendering to back buffer (possibly after bgfx::reset)
 		// static const bgfx::ViewId s_ViewIdBackBuffer = 0;
 
@@ -61,6 +75,17 @@ namespace QwerkE {
 #ifdef _QDEBUG
 		static DebugDrawEncoder* s_DebugDrawer = nullptr;
 #endif
+
+		// Multi viewport function callbacks
+		static void priv_CreateWindow(ImGuiViewport* viewport);
+		static void DestroyWindow(ImGuiViewport* viewport);
+		static void SetWindowPos(ImGuiViewport* viewport, ImVec2 pos);
+		static ImVec2 GetWindowPos(ImGuiViewport* viewport);
+		static void SetWindowSize(ImGuiViewport* viewport, ImVec2 size);
+		static ImVec2 GetWindowSize(ImGuiViewport* viewport);
+		static void RenderWindow(ImGuiViewport* viewport, void*);
+		static void SwapBuffers(ImGuiViewport*, void*);
+		static void RecreateFramebuffer(ImGuiViewport* viewport);
 #endif
 
 		void OnWindowResized(u32 newWidth, u32 newHeight)
@@ -147,7 +172,31 @@ namespace QwerkE {
 
 #ifdef _QBGFX
 #ifdef _QDEARIMGUI
-			imguiCreate(18.f);
+			const float fontSize = 18.f;
+			imguiCreate(fontSize);
+
+			ImGui_ImplGlfw_InitForOther(window, true);
+			ImGui_Implbgfx_Init(s_ViewIdImGui);
+
+			ImGuiIO& io = ImGui::GetIO();
+			io.DisplaySize = ImVec2(windowSize.x, windowSize.y);
+			io.BackendFlags |= ImGuiBackendFlags_RendererHasViewports;
+
+			// #TODO Review ImGui styling
+			// ImGuiStyle& style = ImGui::GetStyle();
+			// style.WindowRounding = 0.0f;
+			// style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+
+			// Register viewport platform backend
+			ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+			platform_io.Platform_CreateWindow = priv_CreateWindow;
+			platform_io.Platform_DestroyWindow = DestroyWindow;
+			platform_io.Platform_SetWindowPos = SetWindowPos;
+			platform_io.Platform_GetWindowPos = GetWindowPos;
+			platform_io.Platform_SetWindowSize = SetWindowSize;
+			platform_io.Platform_GetWindowSize = GetWindowSize;
+			platform_io.Platform_RenderWindow = RenderWindow;
+			platform_io.Platform_SwapBuffers = SwapBuffers;
 #ifdef _QDEBUG
 			ddInit();
 			s_DebugDrawer = new DebugDrawEncoder();
@@ -166,6 +215,11 @@ namespace QwerkE {
 
 #ifdef _QBGFX
 #ifdef _QDEARIMGUI
+
+			// #TODO Shutdown multi viewport properly
+			// ImGui_Implbgfx_Shutdown();
+			// ImGui_ImplGlfw_Shutdown();
+
 			imguiDestroy();
 #endif
 			ddShutdown();
@@ -246,6 +300,151 @@ namespace QwerkE {
 			return *s_DebugDrawer;
 		}
 #endif
+
+#if _QBGFX
+		// Multi viewport function callbacks
+
+		// #TODO Improve naming of all functions, but especially this one abused by Windows
+		static void priv_CreateWindow(ImGuiViewport* viewport)
+		{
+			GLFWwindow* window = glfwCreateWindow(
+				(int)viewport->Size.x,
+				(int)viewport->Size.y,
+				"ImGui Viewport",
+				nullptr,
+				nullptr
+			);
+
+			HWND hwnd = glfwGetWin32Window(window);
+
+			auto* data = new ViewportData();
+			data->window = window;
+			data->viewId = NextViewId();
+
+			viewport->PlatformUserData = data;
+			viewport->PlatformHandle = window;
+
+			RecreateFramebuffer(viewport);
+		}
+
+		static void DestroyWindow(ImGuiViewport* viewport)
+		{
+			auto* data = (ViewportData*)viewport->PlatformUserData;
+			if (!data)
+				return;
+
+			if (bgfx::isValid(data->framebuffer))
+				bgfx::destroy(data->framebuffer);
+
+			glfwDestroyWindow(data->window);
+			delete data;
+
+			viewport->PlatformUserData = nullptr;
+			viewport->PlatformHandle = nullptr;
+		}
+
+		static void SetWindowPos(ImGuiViewport* viewport, ImVec2 pos)
+		{
+			auto* data = (ViewportData*)viewport->PlatformUserData;
+			glfwSetWindowPos(data->window, (int)pos.x, (int)pos.y);
+		}
+
+		static ImVec2 GetWindowPos(ImGuiViewport* viewport)
+		{
+			auto* data = (ViewportData*)viewport->PlatformUserData;
+			int x, y;
+			glfwGetWindowPos(data->window, &x, &y);
+			return ImVec2((float)x, (float)y);
+		}
+
+		static void SetWindowSize(ImGuiViewport* viewport, ImVec2 size)
+		{
+			auto* data = (ViewportData*)viewport->PlatformUserData;
+			glfwSetWindowSize(data->window, (int)size.x, (int)size.y);
+		}
+
+		static ImVec2 GetWindowSize(ImGuiViewport* viewport)
+		{
+			auto* data = (ViewportData*)viewport->PlatformUserData;
+			int w, h;
+			glfwGetWindowSize(data->window, &w, &h);
+			return ImVec2((float)w, (float)h);
+		}
+
+		static void RenderWindow(ImGuiViewport* viewport, void*)
+		{
+			ViewportData* viewportData = (ViewportData*)viewport->PlatformUserData;
+
+			RecreateFramebuffer(viewport);
+
+			if (!bgfx::isValid(viewportData->framebuffer))
+				return;
+
+			// #TODO Review framebuffer data
+			bgfx::setViewFrameBuffer(viewportData->viewId, viewportData->framebuffer);
+			bgfx::setViewRect(
+				viewportData->viewId,
+				0, 0,
+				viewportData->width,
+				viewportData->height
+			);
+
+			bgfx::setViewClear(
+				viewportData->viewId,
+				BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,
+				0x2b2b2bff
+			);
+
+			bgfx::touch(viewportData->viewId);
+		}
+
+		static void SwapBuffers(ImGuiViewport*, void*)
+		{
+			// GLFW handles swap internally per-window
+		}
+
+		static bool IsWindowMinimized(GLFWwindow* w)
+		{
+			int iconified = glfwGetWindowAttrib(w, GLFW_ICONIFIED);
+			return iconified == GLFW_TRUE;
+		}
+
+		static void RecreateFramebuffer(ImGuiViewport* viewport)
+		{
+			auto* data = (ViewportData*)viewport->PlatformUserData;
+
+			if (IsWindowMinimized(data->window))
+				return;
+
+			// Why glfwGetFramebufferSize instead of GetWindowSize ?
+			// - Correct for DPI scaling
+			// - Matches what bgfx expects
+			int w, h;
+			glfwGetFramebufferSize(data->window, &w, &h);
+
+			if (w <= 0 || h <= 0)
+				return; // minimized or invalid
+
+			uint16_t newW = (uint16_t)w;
+			uint16_t newH = (uint16_t)h;
+
+			// No change? Do nothing.
+			if (data->width == newW && data->height == newH)
+				return;
+
+			// Destroy old framebuffer
+			if (bgfx::isValid(data->framebuffer))
+				bgfx::destroy(data->framebuffer);
+
+			HWND hwnd = glfwGetWin32Window(data->window);
+
+			data->framebuffer = bgfx::createFrameBuffer(hwnd, newW, newH);
+
+			data->width = newW;
+			data->height = newH;
+		}
+#endif // _QBGFX
+
 
 	}
 

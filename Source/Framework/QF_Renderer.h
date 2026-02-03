@@ -8,6 +8,12 @@ namespace QwerkE {
 
 	namespace Renderer {
 
+		// #TODO Think of having a viewport struct to manage rendering state for each view
+		// struct ViewportState
+		// {
+		//	window*, viewId, width, height, frameBuffer
+		// };
+
 		eOperationResult Initialize();
 		void Shutdown();
 

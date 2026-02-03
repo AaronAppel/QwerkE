@@ -78,6 +78,7 @@ namespace QwerkE {
         {
             // #TODO Consider using a global event system to de-couple framework systems.
             // Mostly an editor hot reloading consideration so could also be editor only implemented.
+            // #TODO May need to start using window GUIDs to support multi viewport
             Renderer::OnWindowResized((u32) width, (u32)height);
             if (s_WindowResizedCallback)
             {
@@ -139,14 +140,14 @@ namespace QwerkE {
 
             // #TODO (Editor only) Load windowWidth from file, saved on editor close
 
-            s_GlfwWindow = glfwCreateWindow((int)startUpData.windowWidth, (int)startUpData.windowHeight, g_WindowTitle, NULL, NULL);
+            s_GlfwWindow = glfwCreateWindow((int)startUpData.windowOpenWidth, (int)startUpData.windowOpenHeight, g_WindowTitle, NULL, NULL);
             ASSERT(s_GlfwWindow, "Critical error creating GLFWWindow*!");
             if (!s_GlfwWindow)
             {
                 local_CheckGlfwErrors();
                 // #TODO Exit app properly
             }
-            s_aspectRatio = (float)startUpData.windowHeight / (float)startUpData.windowHeight;
+            s_aspectRatio = (float)startUpData.windowOpenHeight / (float)startUpData.windowOpenHeight;
 
             glfwSwapInterval(startUpData.vSyncEnabled);
             glfwMakeContextCurrent(s_GlfwWindow);

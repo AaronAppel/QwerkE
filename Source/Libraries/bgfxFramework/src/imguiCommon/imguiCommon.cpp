@@ -17,6 +17,7 @@
 #include <imgui_internal.h> // Modified by Aaron Appel
 
 #include <imguiCommon/imguiCommon.h> // Modified by Aaron Appel
+#include <imguiCommon/imgui_impl_bgfx.h>
 #include <bgfx_utils.h>
 #include <dear-imgui/imgui_user.h>
 
@@ -303,14 +304,6 @@ struct OcornutImguiContext
 
 		m_imgui = ImGui::CreateContext();
 
-		// #TODO Setup viewports for ImGui and bgfx
-		ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
-		// platform_io.Renderer_CreateWindow = renderer_create_window;
-		// platform_io.Renderer_DestroyWindow = renderer_destroy_window;
-		// platform_io.Renderer_SetWindowSize = renderer_set_window_size;
-		// platform_io.Renderer_RenderWindow = renderer_render_window;
-		// platform_io.Renderer_SwapBuffers = renderer_swap_buffers;
-
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
@@ -319,7 +312,7 @@ struct OcornutImguiContext
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
 		io.DisplaySize = ImVec2(1280.0f, 720.0f); // #TODO Get proper display size
-		io.DeltaTime   = 1.0f / 60.0f;
+		io.DeltaTime   = 1.0f / 60.0f; // #TODO Set proper FPS
 
 		io.IniFilename = "imgui.ini"; // #TODO Assign to a Paths::Setting(...) directory
 
@@ -380,7 +373,7 @@ struct OcornutImguiContext
 			ImFontConfig config;
 			config.FontDataOwnedByAtlas = false;
 			config.MergeMode = false;
-//			config.MergeGlyphCenterV = true;
+			// config.MergeGlyphCenterV = true;
 
 			const ImWchar* ranges = io.Fonts->GetGlyphRangesCyrillic();
 			m_font[ImGui::Font::Regular] = io.Fonts->AddFontFromMemoryTTF( (void*)s_robotoRegularTtf,     sizeof(s_robotoRegularTtf),     _fontSize,      &config, ranges);
@@ -493,6 +486,8 @@ struct OcornutImguiContext
 		ImGuiIO& io = ImGui::GetIO();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
+			// ImGui_Implbgfx_RenderDrawLists(ImGui::GetDrawData());
+
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
 		}

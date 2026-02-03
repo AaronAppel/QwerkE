@@ -10,7 +10,6 @@ project "bgfxFramework"
 	
 	excludes
 	{
-		-- "3rdparty/dear-imgui/*.inl", -- #TODO Review
 	}
 
 	includedirs

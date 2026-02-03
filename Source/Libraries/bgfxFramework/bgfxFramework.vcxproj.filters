@@ -63,6 +63,9 @@
     <ClInclude Include="include\bgfxFramework\imguiCommon\imguiCommon.h">
       <Filter>include\bgfxFramework\imguiCommon</Filter>
     </ClInclude>
+    <ClInclude Include="include\bgfxFramework\imguiCommon\imgui_impl_bgfx.h">
+      <Filter>include\bgfxFramework\imguiCommon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\LoadShader.cpp">
@@ -135,6 +138,9 @@
       <Filter>src\font</Filter>
     </ClCompile>
     <ClCompile Include="src\imguiCommon\imguiCommon.cpp">
+      <Filter>src\imguiCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imguiCommon\imgui_impl_bgfx.cpp">
       <Filter>src\imguiCommon</Filter>
     </ClCompile>
     <ClCompile Include="src\particleSystem\particle_system.cpp">
