@@ -21,6 +21,7 @@ static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumS
 	uint16_t enumValue = enumStartOffset;
 	([&]()
 	{
+		static_assert(std::is_base_of<SuperClass, SubClass>::value, "SubClass class must derive from SuperClass.");
 		const Mirror::TypeInfo* subclassTypeInfo = Mirror::InfoForType<SubClass>();
 		localStaticTypeInfo.derivedTypes.push_back(subclassTypeInfo);
 		const_cast<Mirror::TypeInfo*>(subclassTypeInfo)->superTypeInfo = &localStaticTypeInfo;
@@ -29,7 +30,7 @@ static void MirrorSubClass(Mirror::TypeInfo& localStaticTypeInfo, uint16_t enumS
 			SubClass* subClass = (SubClass*)pointerToInstance;
 			return dynamic_cast<SubClass*>(*(SuperClass**)pointerToInstance) != nullptr;
 			};
-		++enumValue;
+		++enumValue; // #TODO Review deprecated enum
 	}(), ...);
 }
 
