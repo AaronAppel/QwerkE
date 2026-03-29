@@ -12,3 +12,8 @@ int RandInRange(int min, int max);
 
 // #TODO seed rand()
 // #TODO float RandomNumberInRange(float min, float max) { return ((rand()) / (RAND_MAX / (max - min)) + min); };
+
+// TODO Grid helpers
+// IndexTo2DRowColumn(index, numRows, numColums)
+// IndexTo2DColumnRow(index, numRows, numColums)
+// RowColunmTo1DIndex(row, column, numRows, numColumns)
