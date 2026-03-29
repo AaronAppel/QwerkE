@@ -33,6 +33,8 @@ namespace QwerkE {
 					return;
 				}
 
+				// #TODO Scene ref (prefab like) rendering
+
 				std::vector<const char*> sceneNames;
 				sceneNames.reserve(3);
 
