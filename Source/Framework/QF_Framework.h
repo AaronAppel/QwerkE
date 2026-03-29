@@ -17,6 +17,9 @@ namespace QwerkE {
 			unsigned int numberOfCommandLineArguments = 0;
 			char** commandLineArguments = nullptr;
 
+			// #TODO Support option: Don't set default values to allow windowing apps like PowerToys to set window initial size and position when opening
+			// bool disableSettingWindowStartPositionAndSize = false;
+
 			u16 windowOpenWidth = 1920;
 			u16 windowOpenHeight = 1080;
 
