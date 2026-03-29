@@ -138,14 +138,15 @@ namespace QwerkE {
 
             // GLFWmonitor* glfwPrimaryMonitor = glfwGetPrimaryMonitor(); // #BUG Bricks PC when going fullscreen
 
-            // #TODO (Editor only) Load windowWidth from file, saved on editor close
-
+            // #TODO (Make Editor only) Load windowWidth from file, saved on editor close
+            // #TODO Check bounds of monitor and "best fit" the window.
+            //   Could have changed monitors or resolutions so don't create window off screen
             s_GlfwWindow = glfwCreateWindow((int)startUpData.windowOpenWidth, (int)startUpData.windowOpenHeight, g_WindowTitle, NULL, NULL);
             ASSERT(s_GlfwWindow, "Critical error creating GLFWWindow*!");
             if (!s_GlfwWindow)
             {
                 local_CheckGlfwErrors();
-                // #TODO Exit app properly
+                // #TODO Exit app properly. Change function to bool/ResultObject TryInitialize()?
             }
             s_aspectRatio = (float)startUpData.windowOpenHeight / (float)startUpData.windowOpenHeight;
 
