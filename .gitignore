@@ -49,10 +49,6 @@ Documentation/README.md
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
 # Compiled Static libraries
 *.lai
 *.la
@@ -78,6 +74,9 @@ Documentation/README.md
 *.sln
 *.vcxproj
 *.user
+
+# Visual Studio extension files
+favorites.json
 
 # Local only special exclude
 *❗*
