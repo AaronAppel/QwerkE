@@ -16,25 +16,24 @@ workspace "QwerkE"
 	-- 	architecture "x86"
 	-- filter "configurations:*64"
 	-- 	architecture "x86_64"
-	
-	filter "configurations:*"
-		architecture "x64"
 		
 	OutputDir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 	targetdir ("%{wks.location}/bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("%{wks.location}/bin/int/" .. OutputDir .. "/%{prj.name}")
-
+	
+	filter "configurations:*" -- https://premake.github.io/docs/filter
+		architecture "x64"
+		
 	filter "system:windows" -- #TODO Review moving defines lower, below Dependencies
-		buildoptions { "/Zc:__cplusplus" }
-		systemversion "latest"
-		defines { "_QWINDOWS", "WIN32_LEAN_AND_MEAN", }
-		buildoptions { "/CGTHREADS:8 /MP" }
+		buildoptions { "/Zc:__cplusplus", "/CGTHREADS:8", "/MP" } -- https://premake.github.io/docs/buildoptions
+		systemversion "latest" -- https://premake.github.io/docs/systemversion
+		defines { "_QWINDOWS", "WIN32_LEAN_AND_MEAN", } -- https://premake.github.io/docs/defines
 		
 	filter "configurations:Debug"
-		defines { "_QDEBUG", "WIN32_LEAN_AND_MEAN", }
-		runtime "Debug"
-		symbols "on"
-		optimize "off"
+		defines { "_QDEBUG" }
+		runtime "Debug" -- https://premake.github.io/docs/runtime
+		symbols "on" -- https://premake.github.io/docs/symbols
+		optimize "off" -- https://premake.github.io/docs/optimize
 		
 	filter "configurations:Release"
 		runtime "Release"
@@ -46,7 +45,7 @@ workspace "QwerkE"
 		symbols "off"
 		optimize "on"
 	
-	group "Dependencies"
+	group "Dependencies" -- https://premake.github.io/docs/group
 	include "../Source/Libraries/bgfx/Build-bgfx.lua"
 	include "../Source/Libraries/bgfxFramework/Build-bgfxFramework.lua"
 	include "../Source/Libraries/bimg/Build-bimg.lua"

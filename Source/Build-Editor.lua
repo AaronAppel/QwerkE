@@ -1,7 +1,7 @@
 include "Libraries.lua"
 
 project "Editor"
-	kind "ConsoleApp" -- #TODO Check for non-console app type
+	kind "ConsoleApp" -- #TODO Change to "WindowedApp" when the system console isn't preferred anymore
 	location ""
 	rtti "On" -- #NOTE Enabled for Mirror serialization
 	debugargs { "-applicationName", "Test Game" }
