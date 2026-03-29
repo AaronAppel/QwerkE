@@ -115,10 +115,11 @@ namespace QwerkE {
     {
         if (!m_CameraEntityGuid)
         {
-            auto viewCameraInfos = m_Registry.view<ComponentCamera, ComponentInfo>();
-            for (const entt::entity& entity : viewCameraInfos)
+            const auto viewCameraEntities = m_Registry.view<ComponentCamera>();
+            for (const entt::entity& entity : viewCameraEntities)
             {
-                ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
+                ASSERT(m_Registry.has<ComponentInfo>(entity), "Entity missing ComponentInfo!");
+                const ComponentInfo& info = m_Registry.get<ComponentInfo>(entity);
                 m_CameraEntityGuid = info.m_Guid;
             }
         }
@@ -129,6 +130,7 @@ namespace QwerkE {
             if (cameraHandle && cameraHandle.HasComponent<ComponentCamera>())
             {
                 auto& camera = cameraHandle.GetComponent<ComponentCamera>();
+                ASSERT(cameraHandle.HasComponent<ComponentTransform>(), "Camera entity missing ComponentTransform!");
                 auto& cameraTransform = cameraHandle.GetComponent<ComponentTransform>();
 
                 camera.PreDrawSetup(viewId, cameraTransform.Position());
