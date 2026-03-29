@@ -233,6 +233,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -243,6 +244,7 @@
   },
   "active": "05bc5d74a6c19933",
   "lastOpenFiles": [
+    "Untitled.md",
     "0. Getting Started With QwerkE/Known Issues and Gotchas.md",
     "ImGui docking tab button.md",
     "C++ Macros Reference.md",
@@ -282,7 +284,6 @@
     "Shared Vault Files ❗/Obsidian/FocusInSolutionExplorerOnOpen.png",
     "Shared Vault Files ❗/Obsidian/DisableIntellisenseTemplateInfo.png",
     "Shared Vault Files ❗/Watched.md",
-    "Shared Vault Files ❗/To Watch.md",
     "Shared Vault Files ❗/template.gitignore",
     "Shared Vault Files ❗/Obsidian",
     "Shared Vault Files ❗",
