@@ -373,9 +373,8 @@ namespace QwerkE {
                 ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
                 // #NOTE ImGui_ImplGlfw_TranslateUntranslatedKey() contents were stripped by #ifs so removed entirely
 
-                ImGuiIO& io = ImGui::GetIO();
                 ImGuiKey imgui_key = ImGui_ImplGlfw_KeyToImGuiKey(a_KeyCode, a_Scancode);
-                io.AddKeyEvent(imgui_key, (a_Action == GLFW_PRESS));
+                ImGui::GetIO().AddKeyEvent(imgui_key, (a_Action == GLFW_PRESS));
 #endif // _QDEARIMGUI
             }
         }
@@ -395,8 +394,7 @@ namespace QwerkE {
             Internal_MouseMove({ xpos, ypos });
 
 #ifdef _QDEARIMGUI
-            ImGuiIO& io = ImGui::GetIO();
-            io.AddMousePosEvent((float)xpos, (float)ypos);
+            ImGui::GetIO().AddMousePosEvent((float)xpos, (float)ypos);
 #endif // _QDEARIMGUI
         }
 
@@ -408,10 +406,9 @@ namespace QwerkE {
 #ifdef _QDEARIMGUI
             ImGui_ImplGlfw_UpdateKeyModifiers(a_Window);
 
-            ImGuiIO& io = ImGui::GetIO();
             if (a_Button >= 0 && a_Button < ImGuiMouseButton_COUNT)
             {
-                io.AddMouseButtonEvent(a_Button, a_Action == GLFW_PRESS);
+                ImGui::GetIO().AddMouseButtonEvent(a_Button, a_Action == GLFW_PRESS);
             }
 #endif // _QDEARIMGUI
         }
@@ -421,8 +418,7 @@ namespace QwerkE {
             Internal_MouseScroll(a_OffsetX, a_OffsetY);
 
 #ifdef _QDEARIMGUI
-            ImGuiIO& io = ImGui::GetIO();
-            io.AddMouseWheelEvent(static_cast<float>(a_OffsetX), static_cast<float>(a_OffsetY));
+            ImGui::GetIO().AddMouseWheelEvent(static_cast<float>(a_OffsetX), static_cast<float>(a_OffsetY));
 #endif // _QDEARIMGUI
         }
 
