@@ -2,6 +2,12 @@
 
 #include <unordered_map>
 
+namespace QwerkE::Input { // #TODO Merge QwerkE and Input namespace scope to reduce indentation
+
+	const int a = 0; // #TODO Also consider switching to 2 spaces if maintaining a constant 1 indentation everywhere
+
+}
+
 namespace QwerkE {
 
 	class GUID;
