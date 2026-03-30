@@ -89,6 +89,11 @@ namespace QwerkE {
 				// A static Type() function couldn't be virtual, but a virtual method requires an instance anyways
 				// Really just avoiding writing a switch statement for every window type, but it would be way more performant
 
+				// #TODO Look at simplifying, taking in TypeInfo* or TypeId to instantiate the correct type without requiring a local stack member
+				// const Mirror::TypeInfo* info = Mirror::InfoForType<T>();
+				// void* buffer = new char[info->size];
+				// info->Construct(buffer);
+
 				T stackInstance = T(GUID());
 				if (stackInstance.Type() == editorWindowType)
 				{
@@ -101,6 +106,8 @@ namespace QwerkE {
 		template <typename... T>
 		EditorWindow* NewEditorWindowByType(TemplateArgumentList<T...>, EditorWindowTypes editorWindowType)
 		{
+			// #TODO Look at saving absolute (lowest derived) type ID to file so TypeInfo->Construct(new char[TypeInfo->size]) can create object type-agnosticly.
+			// Or map TypeIds so reading the id from file directly maps to some switch statement with hand-rolled new T() calls.
 			if (EditorWindow* window = NewEditorWindowByType<T...>(editorWindowType))
 				return window;
 			return nullptr;

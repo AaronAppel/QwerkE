@@ -226,6 +226,11 @@ namespace QwerkE {
 
         void NewEditorWindow(u32 a_EditorWindowTypeInt)
         {
+            // #TODO Look at simplifying, taking in TypeInfo* or TypeId to instantiate the correct type without further calls
+			// const Mirror::TypeInfo* info = Mirror::InfoForType<T>();
+			// void* buffer = new char[info->size];
+			// info->Construct(buffer);
+
             EditorWindowTypes editorWindowType = EditorWindowTypes::_from_index(a_EditorWindowTypeInt);
 
             if (editorWindowType == s_EditorWindowDockingContext.Type())

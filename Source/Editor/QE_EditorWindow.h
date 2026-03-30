@@ -146,6 +146,8 @@ namespace QwerkE {
 			// #TODO Add options to each window, set them, serialize, load, and save/edit using a button pop up that is added to all inherited windows
 		};
 
+		// #TODO Review enum for deprecation. Where is it strictly required over using reflection of EditorWindowsList, Mir::Id<T>() and Mir::Info<T>()->name?
+		// QC_ENUM seems to use runtime string building so performance may even improve, aside from reflection overhead.
 		QC_ENUM(EditorWindowTypes, u32,
 			// #NOTE Order matters! Serialized! Match enum EditorWindowsList order
 			EditorWindowTypesInvalid = 0,
