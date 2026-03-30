@@ -1,11 +1,5 @@
 #include "QwerkE_imgui.h"
 
-#include <cmath> // For LoadingIndicatorCircle
-
-#include "imgui_internal.h"
-
-#include "../imgui-spin-value/imgui_spin_value.h" // For SpinInt(), SpinFloat(), SpinDouble(), and SpinScalar()
-
 namespace ImGui {
 
 	void PushFontQw(Fonts font)
@@ -17,6 +11,21 @@ namespace ImGui {
 	void PopFontQw()
 	{
 		ImGui::PopFont();
+	}
+
+	bool SpaceForSameLine(float itemSize)
+	{
+		return ImGui::GetContentRegionAvail().x >= itemSize;
+	}
+
+	void SameLineIfSpace(float itemSize)
+	{
+		// #TODO Add a comment to explain why always calling SameLine(), but using a dummy when no space works over avoiding the SameLine() call 
+		ImGui::SameLine();
+		if (ImGui::GetContentRegionAvail().x < itemSize)
+		{
+			ImGui::Dummy({});
+		}
 	}
 
 	void SameLineEnd(uint16_t numberOfChars, float horizontalScaling)
@@ -45,15 +54,6 @@ namespace ImGui {
 	void SameLineCentered(const char* text, float horizontalScaling)
 	{
 		SameLineCentered(strlen(text), horizontalScaling);
-	}
-
-	void SameLineIfSpace(float itemSize)
-	{
-		ImGui::SameLine();
-		if (ImGui::GetContentRegionAvail().x < itemSize)
-		{
-			ImGui::Dummy({});
-		}
 	}
 
 	bool IsAtStartOfNewLine() // #TODO Review

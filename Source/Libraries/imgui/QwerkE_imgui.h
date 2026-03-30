@@ -105,13 +105,14 @@ namespace ImGui
 	void PushFontQw(Fonts font);
 	void PopFontQw();
 
+	bool SpaceForSameLine(float itemSize);
+	void SameLineIfSpace(float itemSize);
+
 	void SameLineEnd(uint16_t numberOfChars= 0 , float horizontalScaling = 1.f);
 	void SameLineEnd(const char* text, float horizontalScaling = 1.f);
 
 	void SameLineCentered(uint16_t numberOfChars, float horizontalScaling = 1.f);
 	void SameLineCentered(const char* text, float horizontalScaling = 1.f);
-
-	void SameLineIfSpace(float itemSize);
 
 	bool IsAtStartOfNewLine();
 
