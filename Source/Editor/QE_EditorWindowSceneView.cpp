@@ -162,9 +162,8 @@ namespace QwerkE {
             {
                 ImGui::PopStyleColor(3);
             }
-            ImGui::SameLine();
             std::string reloadButtonName = "R##";
-            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
+            ImGui::SameLineIfSpace(ImGui::g_pixelsPerCharacterButton * reloadButtonName.length() - 2);
             saveButtonName += std::to_string(GetGuid());
             if (ImGui::Button(reloadButtonName.c_str()))
             {
@@ -258,7 +257,7 @@ namespace QwerkE {
             }
 
             std::string timeScaleButtonName = "T##";
-            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
+            ImGui::SameLineIfSpace(ImGui::g_pixelsPerCharacterButton * timeScaleButtonName.length() - 2);
             timeScaleButtonName += std::to_string(GetGuid());
             if (ImGui::Button(timeScaleButtonName.c_str()))
             {
@@ -266,7 +265,7 @@ namespace QwerkE {
             }
 
             std::string togglePauseButtonName = m_CurrentScene->GetIsPaused() ? "<##" : "||##";
-            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
+            ImGui::SameLineIfSpace(ImGui::g_pixelsPerCharacterButton * togglePauseButtonName.length() - 2);
             togglePauseButtonName += std::to_string(GetGuid());
             if (ImGui::Button(togglePauseButtonName.c_str()) || (Input::KeyPressed(e_P) && ImGui::IsWindowFocused()))
             {
@@ -278,9 +277,20 @@ namespace QwerkE {
                 m_CurrentScene->ToggleIsPaused();
             }
 
-            std::string renderingCheckboxName = "R##Rendering" + std::to_string(GetGuid());
-            ImGui::SameLineIfSpace(1.f * ImGui::g_pixelsPerCharacterButton);
+            std::string renderingCheckboxName = "Re##Rendering";
+            ImGui::SameLineIfSpace(ImGui::g_pixelsPerCharacterButton * renderingCheckboxName.length() - 11);
+            renderingCheckboxName += std::to_string(GetGuid());
             ImGui::Checkbox(renderingCheckboxName.c_str(), &m_RenderingScene);
+
+            std::string soundButtonName = "So##";
+            ImGui::SameLineIfSpace(ImGui::g_pixelsPerCharacterButton * soundButtonName.length() - 2);
+            soundButtonName += std::to_string(GetGuid());
+            if (ImGui::Button(soundButtonName.c_str()))
+            {
+                // #TODO Add a sound enable/disable mute option
+                // m_CurrentScene->ToggleSound();
+                // m_CurrentScene->SetSoundEnabled(m_soundEnabled);
+            }
 
             const float camerasItemWidth = currentItemNameLength * ImGui::g_pixelsPerCharacter + 20.f; // #NOTE Slight increase for shorter names
             ImGui::PushItemWidth(camerasItemWidth + s_DropDownArrowSize);
