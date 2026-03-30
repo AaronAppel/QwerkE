@@ -51,9 +51,6 @@
     <ClCompile Include="Framework\QF_PrintFunctions.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QF_Mirror.cpp">
-      <Filter>Utils\Serialization</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\QF_SerializeJson.cpp">
       <Filter>Utils\Serialization</Filter>
     </ClCompile>
@@ -80,6 +77,16 @@
     </ClCompile>
     <ClCompile Include="Framework\QF_ComponentPhysics.cpp">
       <Filter>Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\QF_Guid.cpp" />
+    <ClCompile Include="Framework\QF_Math.cpp" />
+    <ClCompile Include="Framework\QF_MathFunctions.cpp" />
+    <ClCompile Include="Framework\QF_ProgramArgs.cpp" />
+    <ClCompile Include="Framework\QF_StringHelpers.cpp" />
+    <ClCompile Include="Framework\QF_Time.cpp" />
+    <ClCompile Include="Framework\QF_Tween.cpp" />
+    <ClCompile Include="Framework\QF_Mirror.cpp">
+      <Filter>Utils\Serialization</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +220,6 @@
     <ClInclude Include="Framework\QF_Callbacks.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\QF_Mirror.h">
-      <Filter>Utils\Serialization</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\QF_ScriptSceneTransition.h">
       <Filter>Scripting</Filter>
     </ClInclude>
@@ -252,6 +256,30 @@
     </ClInclude>
     <ClInclude Include="Framework\QF_ComponentSprite.h">
       <Filter>Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_BitIndexRingBuffer.h" />
+    <ClInclude Include="Framework\QF_BitTypes.h" />
+    <ClInclude Include="Framework\QF_CallbackFunction.h" />
+    <ClInclude Include="Framework\QF_Camera.h" />
+    <ClInclude Include="Framework\QF_EventCallback.h" />
+    <ClInclude Include="Framework\QF_Guid.h" />
+    <ClInclude Include="Framework\QF_Math.h" />
+    <ClInclude Include="Framework\QF_MathFunctions.h" />
+    <ClInclude Include="Framework\QF_MathMatrix.h" />
+    <ClInclude Include="Framework\QF_Matrix4.h" />
+    <ClInclude Include="Framework\QF_ProgramArgs.h" />
+    <ClInclude Include="Framework\QF_Quaternion.h" />
+    <ClInclude Include="Framework\QF_Ruid.h" />
+    <ClInclude Include="Framework\QF_StringHelpers.h" />
+    <ClInclude Include="Framework\QF_Time.h" />
+    <ClInclude Include="Framework\QF_TypeDefs.h" />
+    <ClInclude Include="Framework\QF_Vector2.h" />
+    <ClInclude Include="Framework\QF_Vector3.h" />
+    <ClInclude Include="Framework\QF_Vector4.h" />
+    <ClInclude Include="Framework\QF_Vectors.h" />
+    <ClInclude Include="Framework\QF_VectorsHelpers.h" />
+    <ClInclude Include="Framework\QF_Mirror.h">
+      <Filter>Utils\Serialization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
