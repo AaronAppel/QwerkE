@@ -11,6 +11,7 @@
 # include "builders.h"
 # include <imgui_internal.h>
 
+#include "../imgui_layout_compat.h"
 
 //------------------------------------------------------------------------------
 namespace ed   = ax::NodeEditor;
@@ -116,7 +117,8 @@ void util::BlueprintNodeBuilder::Input(ed::PinId id)
 
     Pin(id, PinKind::Input);
 
-    ImGui::BeginHorizontal(id.AsPointer());
+    ImGui::PushID(id.AsPointer());
+    ImGui::BeginHorizontal("##horizontal");
 }
 
 void util::BlueprintNodeBuilder::EndInput()
@@ -148,7 +150,8 @@ void util::BlueprintNodeBuilder::Output(ed::PinId id)
 
     Pin(id, PinKind::Output);
 
-    ImGui::BeginHorizontal(id.AsPointer());
+    ImGui::PushID(id.AsPointer());
+    ImGui::BeginHorizontal("##horizontal");
 }
 
 void util::BlueprintNodeBuilder::EndOutput()
