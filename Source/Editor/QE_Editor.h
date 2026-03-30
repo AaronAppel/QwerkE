@@ -8,6 +8,10 @@ namespace QwerkE::Input { // #TODO Merge QwerkE and Input namespace scope to red
 
 }
 
+// #TODO Consider using shorthand for errors, notes, etc like "// ! Fix ___"
+// Can use something like: https://marketplace.visualstudio.com/items?itemName=mhoumann.CommentsPlusDev17Preview
+// Or other extensions to read as different colors. Mostly for fun, but slightly more readable, assuming the user has the same extension
+
 namespace QwerkE {
 
 	class GUID;
