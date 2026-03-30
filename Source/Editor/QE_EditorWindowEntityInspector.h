@@ -210,6 +210,11 @@ namespace QwerkE {
                         if (ImGui::Button("-", ImVec2{ lineHeight, lineHeight }))
                         {
                             entityHandle.RemoveComponent<Component>();
+                            if (nodeOpen)
+                            {
+                                ImGui::TreePop();
+                            }
+                            return;
                         }
                     }
 
