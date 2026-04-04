@@ -8,8 +8,6 @@ project "imgui-node-editor"
 		"**.inl",
 		"**.cpp"
 	}
-	
-	removefiles { "utilities/**" } -- Experimental files
 
 	includedirs
 	{
