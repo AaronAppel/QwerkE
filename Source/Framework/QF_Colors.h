@@ -15,40 +15,41 @@ namespace QwerkE {
         // - RGB to HSV conversion helpers, and vice versa
         // - Int to Color by range vec4f IntToColor(min, value, max), and vec4f IntToColor(float percentage);
         // - Color categories and palettes: Complementary, pastels, saturated, dark/light, etc
+        // - Conversions to ImColor
 
         // Constants
-        inline vec3f White()        { return { 255, 255, 255 }; }
-        inline vec3f Gray()         { return { 128, 128, 128 }; }
-        inline vec3f Black()        { return {   0,   0,   0 }; }
+        inline vec3f White()      { return { 1.f,   1.f,   1.f   }; }
+        inline vec3f Gray()       { return { 0.5f,  0.5f,  0.5f  }; }
+        inline vec3f Black()      { return { 0.f,   0.f,   0.f   }; }
 
-        inline vec3f Red()          { return { 255,   0,   0 }; };
-        inline vec3f Green()        { return {   0, 255,   0 }; };
-        inline vec3f Blue()         { return {   0,   0, 255 }; };
+        inline vec3f Red()        { return { 1.f,   0.f,   0.f   }; };
+        inline vec3f Green()      { return { 0.f,   1.f,   0.f   }; };
+        inline vec3f Blue()       { return { 0.f,   0.f,   1.f   }; };
 
-        inline vec3f Magenta()      { return { 255,  0, 255 }; }
-        inline vec3f Yellow()       { return { 255, 255,   0 }; }
+        inline vec3f Magenta()    { return { 1.f,   0.f,   1.f   }; }
+        inline vec3f Yellow()     { return { 1.f,   1.f,   0.f   }; }
 
-        inline vec3f Lime()         { return {   0, 255,   0 }; }
-        inline vec3f Cyan()         { return {   0, 255, 255 }; }
-        inline vec3f Silver()       { return { 192, 192, 192 }; }
-        inline vec3f Maroon()       { return { 128,   0,   0 }; }
-        inline vec3f Olive()        { return { 128, 128,   0 }; }
-        inline vec3f Purple()       { return { 128,   0, 128 }; }
-        inline vec3f Teal()         { return {   0, 128, 128 }; }
-        inline vec3f Navy()         { return {   0,   0, 128 }; }
-        inline vec3f Orange()       { return { 255, 165,   0 }; }
-        inline vec3f Pink()         { return { 255, 192, 203 }; }
-        inline vec3f Brown()        { return { 165,  42,  42 }; }
-        inline vec3f Gold()         { return { 255, 215,   0 }; }
-        inline vec3f Salmon()       { return { 250, 128, 114 }; }
-        inline vec3f Coral()        { return { 255, 127,  80 }; }
-        inline vec3f Indigo()       { return {  75,   0, 130 }; }
-        inline vec3f Violet()       { return { 238, 130, 238 }; }
-        inline vec3f Turquoise()    { return {  64, 224, 208 }; }
-        inline vec3f Beige()        { return { 245, 245, 220 }; }
-        inline vec3f Mint()         { return { 189, 252, 201 }; }
-        inline vec3f Lavender()     { return { 230, 230, 250 }; }
-        inline vec3f CornFlower()   { return { 100, 149, 237 }; }
+        inline vec3f Lime()       { return { 0.f,   1.f,   0.f   }; }
+        inline vec3f Cyan()       { return { 0.f,   1.f,   1.f   }; }
+        inline vec3f Silver()     { return { 0.75f, 0.75f, 0.75f }; }
+        inline vec3f Maroon()     { return { 0.5f,  0.f,   0.f   }; }
+        inline vec3f Olive()      { return { 0.75f, 0.75f, 0.f   }; }
+        inline vec3f Purple()     { return { 0.75f, 0.f,   0.75f }; }
+        inline vec3f Teal()       { return { 0.f,   0.75f, 0.75f }; }
+        inline vec3f Navy()       { return { 0.f,   0.f,   0.75f }; }
+        inline vec3f Orange()     { return { 1.f,   0.65f, 0.f   }; }
+        inline vec3f Pink()       { return { 1.f,   0.75f, 0.8f  }; }
+        inline vec3f Brown()      { return { 0.65f, 0.16f, 0.16f }; }
+        inline vec3f Gold()       { return { 1.f,   0.84f, 0.f   }; }
+        inline vec3f Salmon()     { return { 0.98f, 0.75f, 0.45f }; }
+        inline vec3f Coral()      { return { 1.f,   0.5f,  0.31f }; }
+        inline vec3f Indigo()     { return { 0.29f, 0.f,   0.51f }; }
+        inline vec3f Violet()     { return { 0.93f, 0.51f, 0.93f }; }
+        inline vec3f Turquoise()  { return { 0.25f, 0.88f, 0.82f }; }
+        inline vec3f Beige()      { return { 0.96f, 0.96f, 0.86f }; }
+        inline vec3f Mint()       { return { 0.74f, 0.99f, 0.8f  }; }
+        inline vec3f Lavender()   { return { 0.9f,  0.9f,  0.98f }; }
+        inline vec3f CornFlower() { return { 0.39f, 0.58f, 0.93f }; }
 
         // #TODO vec4 entries
         // static vec4f White4 = { 1.f, 1.f, 1.f, 1.f };

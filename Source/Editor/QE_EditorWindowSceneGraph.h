@@ -4,6 +4,7 @@
 #include "Libraries/Enum/QC_enum.h"
 #endif
 
+#include "QF_Colors.h"
 #include "QF_ComponentHelpers.h"
 #include "QF_Scene.h"
 
@@ -144,12 +145,30 @@ namespace QwerkE {
 						break; // #NOTE Avoid list change while iterating exceptions
 					}
 
+					ImGui::SameLine();
+					if (info.m_Enabled)
+					{
+						const Color4 hsvColor = Colors::IdToHsv((u64)info.m_Guid);
+						ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(hsvColor.h, hsvColor.s, hsvColor.v));
+					}
+					else
+					{
+						const Color4 gray = Colors::Gray();
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(gray.r, gray.g, gray.b, gray.a));
+					}
+					if (ImGui::Button(("##SceneGraphColorBar" + std::to_string(info.m_Guid)).c_str(), { 15.f, buttonHeight }))
+					{
+						Editor::OnEntitySelected(handle);
+					}
+					ImGui::PopStyleColor(1);
+
 					if (!info.m_Enabled)
 					{
-						ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.3f, 0.3f, 0.3f));
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.5f, 0.5f, 0.5f, 1.f));
 						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.4f, 0.4f, 0.4f));
 						ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.5f, 0.5f, 0.5f));
 					}
+
 					ImGui::SameLine();
 					if (ImGui::Button((info.m_EntityName + "##" + std::to_string(info.m_Guid)).c_str(), { ImGui::GetContentRegionAvail().x - 35.f, buttonHeight }))
 					{

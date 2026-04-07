@@ -7,6 +7,7 @@
 #include "QE_EditorWindow.h"
 
 #include "QF_Buffer.h"
+#include "QF_Colors.h"
 #include "QF_ComponentHelpers.h"
 #include "QF_EntityHandle.h"
 #include "QF_Scene.h"
@@ -63,6 +64,24 @@ namespace QwerkE {
                     }
                 }
 
+                const GUID& guid = m_CurrentSelectedEntity.EntityGuid();
+                const Color4 hsvColor = Colors::IdToHsv((u64)guid);
+                if (m_CurrentSelectedEntity.IsEnabled())
+                {
+                    ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(hsvColor.h, hsvColor.s, hsvColor.v));
+                }
+                else
+                {
+                    const Color4 gray = Colors::Gray();
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(gray.r, gray.g, gray.b, gray.a));
+                }
+                const float buttonHeight = ImGui::GetTextLineHeight() * 1.4f;
+                if (ImGui::Button(("##InspectorColorBar" + std::to_string(guid)).c_str(), { 7.f, buttonHeight }))
+                {
+                }
+                ImGui::PopStyleColor(1);
+
+                ImGui::SameLine();
                 {   // Edit entity name
                     Buffer buffer(INT8_MAX); // #TODO Could be re-used/persistent and updated on entity change
                     buffer.Fill('\0');
