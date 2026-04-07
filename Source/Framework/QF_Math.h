@@ -1,10 +1,5 @@
 #pragma once
 
-// #TODO Improve
-#include <iostream>
-#include <cmath>
-#include <array>
-
 namespace QwerkE {
 
 	namespace Math {
@@ -22,6 +17,8 @@ namespace QwerkE {
 
 		#define DEG_TO_RAD  0.01745329251994329576923690768489
 		#define RAD_TO_DEG  57.295779513082320876798154814105
+
+		constexpr float goldenRatio = 0.61803398875f;
 
 		template <typename T>
 		inline bool Equal(const T a, const T b, const T tolerance)
