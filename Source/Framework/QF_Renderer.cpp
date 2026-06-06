@@ -180,7 +180,7 @@ namespace QwerkE {
 
 			ImGuiIO& io = ImGui::GetIO();
 			io.DisplaySize = ImVec2(windowSize.x, windowSize.y);
-			io.BackendFlags |= ImGuiBackendFlags_RendererHasViewports;
+			// io.BackendFlags |= ImGuiBackendFlags_RendererHasViewports;
 
 			// #TODO Review ImGui styling
 			// ImGuiStyle& style = ImGui::GetStyle();
@@ -249,7 +249,9 @@ namespace QwerkE {
 			imguiBeginFrame(
 				x, y
 				, glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == 1 ? IMGUI_MBUT_LEFT : 0
+				// #TODO warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
 				| glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == 1 ? IMGUI_MBUT_RIGHT : 0
+				// #TODO warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
 				| glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == 1 ? IMGUI_MBUT_MIDDLE : 0
 				, 0
 				, u16(windowSize.x)

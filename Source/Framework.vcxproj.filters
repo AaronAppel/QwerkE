@@ -187,9 +187,6 @@
     <ClInclude Include="Framework\QF_Mesh.h">
       <Filter>Rendering\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\QF_Colours.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\QF_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -280,6 +277,15 @@
     <ClInclude Include="Framework\QF_VectorsHelpers.h" />
     <ClInclude Include="Framework\QF_Mirror.h">
       <Filter>Utils\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_Color.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_Colors.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QF_ColorPalettes.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

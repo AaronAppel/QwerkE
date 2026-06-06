@@ -21,6 +21,9 @@ namespace QwerkE {
 
 		static std::map<std::string, const char*> s_ProgramArgumentPairs;
 
+		// #NOTE Rollover intended. U32_MAX is invalid state.
+		static u32 s_CurrentFrame = -1; // Estimated ~207 days at 240 FPS
+
 		// #TODO Review moving Scene and Scenes to Editor as Framework users may handle their own scenes
 		// #TODO Review moving scenes to framework, deprecating QF_Scenes.h/cpp
 		// static std::vector<Scene*> s_ActiveScenes;
@@ -76,8 +79,14 @@ namespace QwerkE {
 			return eOperationResult::Success;
 		}
 
+		u32 CurrentFrame()
+		{
+			return s_CurrentFrame;
+		}
+
 		void StartFrame()
 		{
+			++s_CurrentFrame;
 			Input::NewFrame();
 			Events::ProcessEvents();
 			// Jobs::ProcessTasks();

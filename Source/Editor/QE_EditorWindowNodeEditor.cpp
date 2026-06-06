@@ -174,6 +174,7 @@ namespace QwerkE {
 #ifdef _QIMGUINODEEDITOR
 			// #TODO On opening a new window Editor::NewEditorWindowByType() double constructs and
 			// singly destructs immediately.
+			DestroyBluePrintsExample();
 			ax::NodeEditor::DestroyEditor(m_Context);
 			m_Context = nullptr;
 #endif // _QIMGUINODEEDITOR
@@ -186,6 +187,7 @@ namespace QwerkE {
 		void EditorWindowNodeEditor::DrawInternal()
 		{
 			char buffer[5];
+			ImGui::SetNextItemWidth(150);
 			if (ImGui::Combo("Node Editor Style", &m_NodeExample,
 					"Simple\0"
 					"Widget\0"

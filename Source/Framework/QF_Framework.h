@@ -37,6 +37,8 @@ namespace QwerkE {
 
 		eOperationResult Shutdown();
 
+		u32 CurrentFrame();
+
 		void StartFrame();
 		void Update(float deltatime);
 		void RenderView(uint16_t viewId = 0);

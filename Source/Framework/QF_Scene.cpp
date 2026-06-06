@@ -85,6 +85,8 @@ namespace QwerkE {
             }
         }
 
+        // #TODO Look at using events for cases like this where we don't need to check if (exists/valid)
+        // just register for an update callback on successful initialization, and unregister on destroy, error, etc
         if (m_PhysicsWorld)
         {
             m_TimeSinceLastPhysicsStep = a_DeltaTime;

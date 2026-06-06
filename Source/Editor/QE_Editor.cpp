@@ -102,8 +102,19 @@ namespace QwerkE {
                 {
                     Log::Console("\n-- Reloading Editor --\n\n");
                 }
-                s_ReloadRequested = false;
-                RunReloadable(numberOfArguments, commandLineArguments);
+
+                // #TODO Consider a try/catch here to handle unexpected crashes,
+                // restarting the editor instead of crashing.
+                // Need to consider corrupted state infinite looping.
+                try {
+                    s_ReloadRequested = false;
+                    RunReloadable(numberOfArguments, commandLineArguments);
+                }
+                catch (const std::exception&) {
+                    // #TODO Exception handling
+                    ASSERT(false, "Fatal exception. Attempting editor reload");
+                    s_ReloadRequested = true;
+                }
             } while (s_ReloadRequested);
         }
 
