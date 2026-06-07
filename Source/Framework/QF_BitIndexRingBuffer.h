@@ -81,7 +81,7 @@ public:
 
 	constexpr unsigned char Size()
 	{
-		return Bits::SIZE;
+		return Bits::RANGE;
 	}
 
 	void Reset()
@@ -101,7 +101,7 @@ public:
 
 private:
 	Bits m_Head = 0;
-	std::array<T, Bits::SIZE> m_Values;
+	std::array<T, Bits::RANGE> m_Values;
 	std::vector<Bits> m_Markers;
 	// #TODO Could simplify by making this class specific. Use 3 pointers and always advance [1] and [2] to match [0]
 	// Rename to something like TwoStateRingBuffer, or TwoWindowRingBuffer, etc.

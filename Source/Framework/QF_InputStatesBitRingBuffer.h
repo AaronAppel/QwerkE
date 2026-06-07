@@ -29,7 +29,7 @@ namespace QwerkE {
 		{
 			unsigned char thisFrame = InputThisFrame();
 			unsigned char lastframe = InputLastFrame();
-			unsigned char writesRemaining = Bits::SIZE - thisFrame - lastframe;
+			unsigned char writesRemaining = Bits::RANGE - thisFrame - lastframe;
 
 			ASSERT(0 < writesRemaining, "Collision detected!");
 			m_KeysStates[m_KeysBuffer.HeadIndex()] = a_KeyState;
@@ -52,7 +52,7 @@ namespace QwerkE {
 
 		bool ReadKeyState(unsigned char a_Index)
 		{
-			assert(a_Index < Bits::SIZE);
+			assert(a_Index < Bits::RANGE);
 			return m_KeysStates[a_Index];
 		}
 
@@ -119,7 +119,7 @@ namespace QwerkE {
 
 		constexpr unsigned char Size()
 		{
-			return Bits::SIZE;
+			return Bits::RANGE;
 		}
 
 		void Clear()
@@ -143,7 +143,7 @@ namespace QwerkE {
 			{
 				return a_LeadingIndex - a_TrailingIndex;
 			}
-			return Bits::SIZE - (a_TrailingIndex - a_LeadingIndex);
+			return Bits::RANGE - (a_TrailingIndex - a_LeadingIndex);
 		}
 
 		unsigned char m_DownCount = 0;
@@ -151,7 +151,7 @@ namespace QwerkE {
 		const unsigned char m_LastFrameStartMarkerIndex = 1; // #TODO Review need for last frame start index. Could simplify collection without it. Depends on future feature needs
 
 		BitIndexRingBuffer<T, Bits> m_KeysBuffer;
-		std::bitset<Bits::SIZE> m_KeysStates;
+		std::bitset<Bits::RANGE> m_KeysStates;
 	};
 
 }
