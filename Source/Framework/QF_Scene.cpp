@@ -361,6 +361,7 @@ namespace QwerkE {
         if (m_PhysicsWorld)
         {
             delete m_PhysicsWorld;
+				m_PhysicsWorld = nullptr;
         }
 
         m_IsLoaded = false;
