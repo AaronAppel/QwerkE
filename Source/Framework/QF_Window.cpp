@@ -33,7 +33,7 @@ namespace QwerkE {
 
 #ifdef _QGLFW3
     namespace Input {
-        extern void Input_RegisterGlfwCallbacks(GLFWwindow* window);
+        extern void InputRegisterGlfwCallbacks(GLFWwindow* window);
     }
 #endif
 
@@ -159,7 +159,7 @@ namespace QwerkE {
             }
 
 #if _QGLFW3
-            Input::Input_RegisterGlfwCallbacks(s_GlfwWindow);
+            Input::InputRegisterGlfwCallbacks(s_GlfwWindow);
 #endif // _QGLFW3
 
             glfwSetErrorCallback(local_ErrorCallback);
