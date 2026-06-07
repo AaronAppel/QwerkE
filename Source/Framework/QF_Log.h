@@ -4,18 +4,22 @@
 
 // #include "QF_PathDefines.h"
 
+// #TODO Review using push and pop instead
 #pragma warning( disable : 26437 )
 #pragma warning( disable : 26451 )
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 26498 )
 #pragma warning( disable : 6387 )
 #pragma warning( disable : 4996 )
+#pragma warning( disable : 4169 ) // clang: format.h(4169): warning: identifier '_a' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator]
 #include "Libraries/spdlog/spdlog.h"
 #pragma warning( default : 26437 )
 #pragma warning( default : 26451 )
 #pragma warning( default : 26495 )
 #pragma warning( default : 26498 )
 #pragma warning( default : 6387 )
+#pragma warning( default : 4996 )
+#pragma warning( default : 4169 )
 // #pragma warning( default : 4996 ) // #TODO Fix 4996 error "error C4996: 'fmt::v9::detail::arg_mapper<Context>::map': was declared deprecated" in ShaderFactory.cpp
 // Maybe move spdlog include and references into .cpp so it's only compiled once in there
 
@@ -29,7 +33,7 @@ namespace QwerkE {
             Info,
             Warn,
             Error,
-            Critical
+            Critical // #TODO Decide Fatal vs Critical
         };
 
         void Initialize();
