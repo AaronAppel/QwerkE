@@ -1,4 +1,4 @@
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 #include <vector>
 
 #include "QF_BitIndexRingBuffer.h"
@@ -257,11 +257,11 @@ void DrawActiveGamepads() {
 
 void DrawDebugWindow() {
 #if _QDEARIMGUI
-				// #TODO Fix bug when docking gamepad window. DebugInput window should handle window creation, rather than 2 additional windows
+	// #TODO Fix bug when docking gamepad window. DebugInput window should handle window creation, rather than 2 additional windows
 	DrawInputStates();
 	DrawActiveGamepads();
 #endif // _QDEARIMGUI
 }
 
 }
-#endif // _QDEBUG
+#endif // QE_DEBUG

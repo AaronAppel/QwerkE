@@ -75,7 +75,8 @@ project "Editor"
 	filter "configurations:Debug"
 		defines
 		{
-			"_QDebug",
+			"QE_DEBUG",
+			"QE_EDITOR", -- #TODO Define how to determine if running in editor or compiled build
 			"LibrariesDir=\"%{wks.location}/Libraries/\"",
 			LibraryDefines,
 			"BX_CONFIG_DEBUG=1", -- Required by bgfx
@@ -87,7 +88,7 @@ project "Editor"
 	filter "configurations:Release"
 		defines
 		{
-			"_QRelease",
+			"QF_Release",
 			"LibrariesDir=\"%{wks.location}/Libraries/\"",
 			LibraryDefines,
 			"BX_CONFIG_DEBUG=0", -- Required by bgfx
@@ -99,7 +100,7 @@ project "Editor"
 	filter "configurations:Retail"
 		defines
 		{
-			"_QRetail",
+			"QF_Retail",
 			"LibrariesDir=\"%{wks.location}/Libraries/\"",
 			LibraryDefines,
 			"BX_CONFIG_DEBUG=0", -- Required by bgfx

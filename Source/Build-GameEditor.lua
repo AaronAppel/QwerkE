@@ -69,17 +69,17 @@ project "GameEditor"
 	filter "configurations:Debug" -- #TODO Remove LibrariesDir
 	   defines
 		{
-			"_QDEBUG",
+			"QG_DEBUG",
 			"BX_CONFIG_DEBUG=1", -- Required by bgfx
 			"LibrariesDir=\"%{wks.location}/Libraries/\"",
 			LibraryDefines
 		}
 
 	filter "configurations:Release"
-	   defines { "_QRELEASE", "BX_CONFIG_DEBUG=0", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "QG_RELEASE", "BX_CONFIG_DEBUG=0", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 
 	filter "configurations:Retail"
-	   defines { "_QRETAIL", "BX_CONFIG_DEBUG=0", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
+	   defines { "QG_RETAIL", "BX_CONFIG_DEBUG=0", "LibrariesDir=\"%{wks.location}/Libraries/\"", LibraryDefines }
 		runtime "Release"
 		symbols "off"
 		optimize "on"

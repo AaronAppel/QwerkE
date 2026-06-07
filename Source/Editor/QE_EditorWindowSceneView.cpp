@@ -234,7 +234,7 @@ namespace QwerkE {
             ))
             {
                 // #TODO: Make Menu Ratios -> [16:9, 3:4, etc...]
-                // #TODO: Make Menu Size -> [1024×576, 1280×720, etc..., Custom]
+                // #TODO: Make Menu Size -> [1024Ã—576, 1280Ã—720, etc..., Custom]
             }
             ImGui::PopItemWidth();
 
@@ -367,7 +367,7 @@ namespace QwerkE {
                 {
                     ComponentTransform& transform = m_LastSelectEntity.GetComponent<ComponentTransform>();
                     const vec3f& position = transform.Position();
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
                     {   // Debug drawer call
                         uint64_t bgfxState = 0
                             | BGFX_STATE_DEPTH_TEST_MASK

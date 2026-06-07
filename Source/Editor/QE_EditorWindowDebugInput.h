@@ -24,9 +24,9 @@ namespace QwerkE {
 			void DrawInternal() override
 			{
 				// #TODO Review wrapping window
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 				Input::DrawDebugWindow();
-#endif // _QDEBUG
+#endif // QE_DEBUG
 			}
 		};
 

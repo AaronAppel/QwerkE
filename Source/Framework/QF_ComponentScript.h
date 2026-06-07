@@ -76,7 +76,7 @@ namespace QwerkE {
 						continue;
 					}
 				}
-				// #ifdef _QDEBUG
+				// #ifdef QE_DEBUG
 				else
 				{
 					// #TODO Test

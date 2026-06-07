@@ -1,6 +1,6 @@
 #include "QF_Debug.h"
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 
 #ifdef _QBGFX
 #include <bgfx/bgfx.h>
@@ -205,4 +205,4 @@ namespace QwerkE {
 	}
 
 }
-#endif // _QDEBUG
+#endif // QE_DEBUG

@@ -29,7 +29,7 @@ namespace QwerkE {
 				// LOG_INFO("{0} Key \"H\" is pressed", __FUNCTION__);
 			}
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 			ComponentTransform& myTransform = m_Entity.GetComponent<ComponentTransform>();
 			vec3f endPosition = myTransform.Position();
 			endPosition += 1.f;

@@ -46,9 +46,9 @@ std::vector<GamepadCallback> sGamepadCallbacks;
 
 static constexpr u8 sLastFrameEndMarkerId = 0;
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 u64 s_InputsCount = 0;
-#endif // _QDEBUG
+#endif // QE_DEBUG
 
 void InternalInitialize() {
 	Serialize::FromFile(Paths::Setting(sGameActionsFileName).c_str(), sGameActions, true);
@@ -108,9 +108,9 @@ void InternalShutdown() {
 }
 
 void InternalKeyChanged(const QKey aKey, const QKeyState aKeyState) {
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	++s_InputsCount;
-#endif // _QDEBUG
+#endif // QE_DEBUG
 	sKeys.Write(aKey, aKeyState);
 
 	if (QKeyState::e_KeyStateDown == aKeyState) {
@@ -135,9 +135,9 @@ void InternalKeyChanged(const QKey aKey, const QKeyState aKeyState) {
 }
 
 void InternalMouseMove(const vec2f& aNewPosition) {
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	++s_InputsCount;
-#endif // _QDEBUG
+#endif // QE_DEBUG
 	sMousePositionsBuffer.Write(aNewPosition);
 
 	for (u16 i = 0; i < sMouseCallbacks.size(); i++) {
@@ -146,9 +146,9 @@ void InternalMouseMove(const vec2f& aNewPosition) {
 }
 
 void InternalMouseButton(const QKey aKey, const QKeyState aKeyState) {
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	++s_InputsCount;
-#endif // _QDEBUG
+#endif // QE_DEBUG
 	sMouseButtons.Write(aKey, aKeyState);
 
 	for (u16 i = 0; i < sMouseCallbacks.size(); i++) {
@@ -157,9 +157,9 @@ void InternalMouseButton(const QKey aKey, const QKeyState aKeyState) {
 }
 
 void InternalMouseScroll(const double aOffsetX, const double aOffsetY) {
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	++s_InputsCount;
-#endif // _QDEBUG
+#endif // QE_DEBUG
 	sMouseScrolls.Write(aOffsetY); // #TODO Look at how to use the aOffsetX
 
 	for (u16 i = 0; i < sMouseCallbacks.size(); i++) {
@@ -169,9 +169,9 @@ void InternalMouseScroll(const double aOffsetX, const double aOffsetY) {
 }
 
 void InternalGamepadAxis(const unsigned char aAxisId, const vec2f aAxisValue, const QGamepad aGamepadId) {
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	++s_InputsCount;
-#endif // _QDEBUG
+#endif // QE_DEBUG
 	for (u8 i = 0; i < sGamepadAxisLeftStickBuffers.size(); i++) {
 		if (aGamepadId == sGamepadAxisLeftStickBuffers[i].first) {
 			switch (aAxisId) {
@@ -205,9 +205,9 @@ void InternalGamepadAxis(const unsigned char aAxisId, const vec2f aAxisValue, co
 }
 
 void InternalGamepadButton(const QGamepad aKey, const QKeyState aKeyState, const QGamepad aGamepadId) {
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	++s_InputsCount;
-#endif // _QDEBUG
+#endif // QE_DEBUG
 	ASSERT(QGamepad::e_GamepadId0 <= aGamepadId && QGamepad::e_QGamepadIdMax > aGamepadId, "Invalid aGamepadId!");
 	for (u8 i = 0; i < sGamepadsButtons.size(); i++) {
 		if (aGamepadId == sGamepadsButtons[i].first) {

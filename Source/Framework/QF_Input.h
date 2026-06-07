@@ -59,9 +59,9 @@ namespace QwerkE {
 
         GameActions& GetGameActions();
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
         void DrawDebugWindow();
-#endif // _QDEBUG
+#endif // QE_DEBUG
 
         // bool ActionPressed(const InputAction a_Action);
         // bool ActionReleased(const InputAction a_Action);

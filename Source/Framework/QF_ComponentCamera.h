@@ -43,7 +43,7 @@ namespace QwerkE {
                 bgfx::setViewTransform(viewId, NULL, m_Ortho);
             }
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
             if (m_ShowSphere)
             {
                 DebugDrawEncoder& debugDrawer = Renderer::DebugDrawer();

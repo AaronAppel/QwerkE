@@ -62,7 +62,7 @@ static const bgfx::ViewId sViewIdMain = 0;
 static const bgfx::ViewId sViewIdImGui = 1;
 static bgfx::ViewId sNextViewId = sViewIdImGui + 1;
 static u16 sViewIdMax = 100;
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 static DebugDrawEncoder* sDebugDrawer = nullptr;
 #endif
 
@@ -152,7 +152,7 @@ eOperationResult Initialize() {
 	const vec2f& size = Window::GetSize();
 	OnWindowResized(size.x, size.y);
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	bgfx::setDebug(BGFX_DEBUG_TEXT);
 #endif
 
@@ -183,7 +183,7 @@ eOperationResult Initialize() {
 	platform_io.Platform_GetWindowSize = GetWindowSize;
 	platform_io.Platform_RenderWindow = RenderWindow;
 	platform_io.Platform_SwapBuffers = SwapBuffers;
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	ddInit();
 	sDebugDrawer = new DebugDrawEncoder();
 #endif
@@ -213,7 +213,7 @@ void Shutdown() {
 	bgfx::shutdown();
 #endif
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	delete sDebugDrawer;
 #endif
 }
@@ -259,7 +259,7 @@ void EndFrame() {
 #ifdef _QBGFX
 	bgfx::frame();
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 	bgfx::setDebug(sShowRendererDebugStats ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT);
 	bgfx::dbgTextClear();
 #endif
@@ -271,7 +271,7 @@ u16 NextViewId() {
 	return sNextViewId++;
 }
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 void ToggleDebugStats() {
 	sShowRendererDebugStats = !sShowRendererDebugStats;
 }

@@ -30,7 +30,7 @@ workspace "QwerkE"
 		defines { "_QWINDOWS", "WIN32_LEAN_AND_MEAN", } -- https://premake.github.io/docs/defines
 		
 	filter "configurations:Debug"
-		defines { "_QDEBUG" }
+		defines { "QE_DEBUG" }
 		runtime "Debug" -- https://premake.github.io/docs/runtime
 		symbols "on" -- https://premake.github.io/docs/symbols
 		optimize "off" -- https://premake.github.io/docs/optimize

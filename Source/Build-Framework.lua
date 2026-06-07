@@ -109,7 +109,7 @@ project "Framework"
 	filter "configurations:Debug"
 		defines
 		{
-			"_QDEBUG",
+			"QF_DEBUG",
 			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"", -- #TODO Remove
 			LibraryDefines, 
 			"BX_CONFIG_DEBUG=1", -- Required by bgfx
@@ -122,7 +122,7 @@ project "Framework"
 	filter "configurations:Release"
 		defines
 		{
-			"_QRELEASE",
+			"QF_RELEASE",
 			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"",
 			LibraryDefines,
 			"BX_CONFIG_DEBUG=0", -- Required by bgfx
@@ -134,7 +134,7 @@ project "Framework"
 	filter "configurations:Retail"
 		defines
 		{
-			"_QRETAIL",
+			"QF_RETAIL",
 			"LibrariesDir=\"%{wks.location}/Source/Libraries/\"",
 			LibraryDefines,
 			"BX_CONFIG_DEBUG=0", -- Required by bgfx

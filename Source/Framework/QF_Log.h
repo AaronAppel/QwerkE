@@ -53,7 +53,7 @@ namespace QwerkE {
 
 }
 
-#if _QDEBUG
+#if QE_DEBUG
 #define LOG_TRACE(...)      QwerkE::Log::Logger::s_Logger->trace(__VA_ARGS__);
 #define LOG_INFO(...)       QwerkE::Log::Logger::s_Logger->info(__VA_ARGS__);
 #define LOG_WARN(...)       QwerkE::Log::Logger::s_Logger->warn(__VA_ARGS__);

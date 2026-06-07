@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 
 #include "QF_Log.h"
 #include "QF_TypeDefs.h"

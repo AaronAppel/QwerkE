@@ -29,7 +29,7 @@ namespace QwerkE {
 
 		u16 NextViewId();
 
-#ifdef _QDEBUG
+#ifdef QE_DEBUG
 		void ToggleDebugStats();
 		DebugDrawEncoder& DebugDrawer();
 #endif

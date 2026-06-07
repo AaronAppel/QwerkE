@@ -135,9 +135,9 @@ void NewFrame() {
 		 // #TODO Review glfwGetGamepadState https://www.glfw.org/docs/latest/group__input.html#gadccddea8bce6113fa459de379ddaf051
 
 		if (i > sGamepadIds.size()
-#if _QDEBUG
+#if QE_DEBUG
 			|| !glfwJoystickPresent(sGamepadIds[i])
-#endif // _QDEBUG
+#endif // QE_DEBUG
 			) {
 			continue;
 		}
