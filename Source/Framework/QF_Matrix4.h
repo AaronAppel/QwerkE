@@ -94,8 +94,8 @@ namespace QwerkE {
 
             // Step 2: Normalize the rotation part (upper 3x3) by removing scale
             float r00 = m[0] / scaleX;
-            float r01 = m[4] / scaleY;
-            float r02 = m[8] / scaleZ;
+            // float r01 = m[4] / scaleY; // #TODO Unused
+            // float r02 = m[8] / scaleZ; // #TODO Unused
 
             float r10 = m[1] / scaleX;
             float r11 = m[5] / scaleY;

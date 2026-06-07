@@ -10,8 +10,8 @@ namespace QwerkE {
 	{
 		Color3() = default;
 
-		Color3(float a_R, float a_G, float a_B) :
-			r(a_R), g(a_G), b(a_B)
+		Color3(float aRed, float aGreen, float aBlue) :
+			r(aRed), g(aGreen), b(aBlue)
 		{
 		}
 
@@ -29,33 +29,7 @@ namespace QwerkE {
 
 	struct Color4
 	{
-		Color4() = default;
-
-		Color4(const vec3f& a_Other) :
-			r(a_Other.r), g(a_Other.g), b(a_Other.b), a(a_Other.a)
-		{
-		}
-
-		Color4(const vec3f& a_Other, float a_OtherAlpha) :
-			r(a_Other.x), g(a_Other.y), b(a_Other.z), a(a_Other.a)
-		{
-		}
-
-		Color4(float a_OtherX, float a_OtherY, float a_OtherZ, float a_OtherAlpha) :
-			r(a_OtherX), g(a_OtherY), b(a_OtherZ), a(a_OtherAlpha)
-		{
-		}
-
-		Color4 operator*(float v) const {
-			return { r * v, g * v, b * v, a };
-		}
-
-		Color4 operator+(const Color4& other) const {
-			return { r + other.r, g + other.g, b + other.b, a + other.a };
-		}
-
 		union {
-
 			struct {
 				float r, g, b, a;
 			};
@@ -64,6 +38,31 @@ namespace QwerkE {
 				float h, s, v;
 			};
 		};
+
+		Color4() = default;
+
+		Color4(const vec3f& aOther) :
+			r(aOther.r), g(aOther.g), b(aOther.b)
+		{
+		}
+
+		Color4(const vec3f& aOther, float aAlpha) :
+			r(aOther.x), g(aOther.y), b(aOther.z), a(aAlpha)
+		{
+		}
+
+		Color4(float aX, float aY, float aZ, float aAlpha) :
+			r(aX), g(aY), b(aZ), a(aAlpha)
+		{
+		}
+
+		Color4 operator*(float aValue) const {
+			return { r * aValue, g * aValue, b * aValue, a };
+		}
+
+		Color4 operator+(const Color4& aOther) const {
+			return { r + aOther.r, g + aOther.g, b + aOther.b, a + aOther.a };
+		}
 	};
 
 }

@@ -11,6 +11,29 @@ namespace QwerkE {
 
     struct Vector3f final
     {
+        // Member fields and aliases
+        union {
+            struct { // 3D Position
+                float x, y, z; // #NOTE Default member initialization not allowed in anonymous structs inside of unions
+            };
+            struct { // Texture coordinates
+                float u, v, w;
+            };
+            struct { // Alternative texture coordinates
+                float s, t, p;
+            };
+            struct { // Rotation
+                float pitch, yaw, roll;
+            };
+            struct { // Colour
+                float r, g, b;
+            };
+            struct { // Local frames
+                float tangent, bitangent, normal;
+            };
+            // Barycentric coordinates: float a, b, c;
+        };
+
         // Constructors
         inline Vector3f() : x(0.f), y(0.f), z(0.f) {};
         inline Vector3f(const float other) : x(other), y(other), z(other) {}
@@ -234,31 +257,6 @@ namespace QwerkE {
         inline Vector3f operator /(const Vector3f& other) const { return Vector3f(x / other.x, y / other.y, z / other.z); }
 
         // #TODO Consider overloading all methods support Vector4f& arguments and treat them as Vector3f, ignoring w component so no conversions to Vector3f are needed
-
-        // Member fields and aliases
-        union {
-            struct { // 3D Position
-                float x, y, z; // #NOTE Default member initialization not allowed in anonymous structs inside of unions
-            };
-            struct { // Texture coordinates
-                float u, v, w;
-            };
-            struct { // Alternative texture coordinates
-                float s, t, p;
-            };
-            struct { // Rotation
-                float pitch, yaw, roll;
-            };
-            struct { // Colour
-                float r, g, b;
-            };
-            struct { // Barycentric coordinates
-                float a, b, c;
-            };
-            struct { // Local frames
-                float tangent, bitangent, normal;
-            };
-        };
     };
 
     // #TODO Explore more operators

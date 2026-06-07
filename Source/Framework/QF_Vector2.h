@@ -23,9 +23,6 @@ namespace QwerkE {
             struct { // Texture coordinates
                 uint16_t u, v;
             };
-            struct {
-                // #TODO Rotating alias? float roll;
-            };
         };
     };
 
@@ -41,9 +38,8 @@ namespace QwerkE {
             struct { // Texture coordinates
                 uint32_t u, v;
             };
-            struct {
-                // #TODO Rotating alias? float roll;
-            };
+
+            // #TODO Rotating alias? float roll;
         };
     };
 
@@ -87,9 +83,8 @@ namespace QwerkE {
             struct { // Texture coordinates
                 float u, v;
             };
-            struct {
-                // #TODO Rotating alias? float roll;
-            };
+
+            // #TODO Rotating alias? float roll;
         };
     };
 

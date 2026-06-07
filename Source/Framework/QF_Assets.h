@@ -1,6 +1,5 @@
 #pragma once
 
-#include <array>
 #include <string>
 #include <vector>
 
@@ -13,6 +12,7 @@
 #endif
 
 #include "QF_Guid.h"
+#include "QF_Log.h"
 
 struct GLFWwindow;
 

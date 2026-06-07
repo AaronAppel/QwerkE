@@ -574,7 +574,7 @@ static void SetCollectionLambdas(Mirror::TypeInfo* constTypeInfo, std::true_type
 
 #ifdef MIR_COLLECTION_STD_TUPLE
 	SetCollectionLambdasTuple<T>(mutableTypeInfo, is_stl_tuple_impl::is_stl_tuple<T>::type());
-#endif MIR_COLLECTION_STD_TUPLE
+#endif // MIR_COLLECTION_STD_TUPLE
 
 #ifdef MIR_COLLECTION_STD_VECTOR
 	SetCollectionLambdasVector<T>(mutableTypeInfo, is_stl_vector_impl::is_stl_vector<T>::type());

@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <string>
 
+#include "QF_Debug.h"
 #include "QF_Paths.h"
 
 namespace QwerkE {
@@ -10,7 +11,7 @@ namespace QwerkE {
 	namespace Paths {
 
 		std::string s_RepoRootDir = "";
-		constexpr char* s_RepoRootSearchKey = "bin"; // #NOTE Requires "bin" directory to be part of the exe path
+		const char* s_RepoRootSearchKey = "bin"; // #TODO Improve #NOTE Requires "bin" directory to be part of the exe path
 
 		std::string RepoRootDir()
 		{
@@ -43,7 +44,7 @@ namespace QwerkE {
 
 		std::string ScriptsDir()
 		{
-			return RepoRootDir() + "\\Build"; // #TODO Update to "\\Scripts"
+			return RepoRootDir() + "\\Build"; // #TODO Update to "\\BuildScripts" and change directory name
 		}
 
 		std::string Script(const char* scriptFileName)
