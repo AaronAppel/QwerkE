@@ -229,7 +229,8 @@ void DrawActiveGamepads() {
 		u8 deviceId = i;
 		QGamepad deviceQKeyId = static_cast<QGamepad>(i);
 
-		if (ImGui::CollapsingHeader((GamepadName(deviceQKeyId) + std::string(" ") + std::to_string(sGamepadIds[i])).c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+		const std::string str = std::string("ID ") + std::to_string(sGamepadIds[i]) + std::string(": "); // #TODO Move to new line to catch crash when controller disconnects
+		if (ImGui::CollapsingHeader((str + GamepadName(deviceQKeyId)).c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
 			const int axesCount = GamepadAxesCount(deviceQKeyId);
 			ImGui::Text("AxesCount: %i", axesCount);
 
@@ -244,6 +245,7 @@ void DrawActiveGamepads() {
 
 			int buttonCount = GamepadButtonCount(deviceQKeyId);
 			ImGui::Text("ButtonCount: %i%", buttonCount);
+			// ASSERT(QGamepad::e_QGamepadButtonCount > buttonCount, "Too many buttons for gamepad!");
 
 			for (u8 j = 0; j < buttonCount; j++) {
 				QGamepad buttonQKey = static_cast<QGamepad>(j);

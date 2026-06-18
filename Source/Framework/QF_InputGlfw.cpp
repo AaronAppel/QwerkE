@@ -4,8 +4,9 @@
 #include "Libraries/glfw/glfw3.h"
 #include "Libraries/imgui/imgui.h"
 
-#include "QF_QKey.h"
 #include "QF_InputStatesBitRingBuffer.h"
+#include "QF_Log.h"
+#include "QF_QKey.h"
 #include "QF_Window.h"
 
 namespace QwerkE::Input {
@@ -33,6 +34,7 @@ extern void InternalMouseScroll(const double aOffsetX, const double aOffsetY);
 extern void InternalGamepadAxis(const unsigned char aAxisId, const vec2f aAxisValue, const QGamepad aGamepadId);
 extern void InternalGamepadButton(const QGamepad aKey, const QKeyState aKeyState, const QGamepad aGamepadId);
 
+// #TODO Make vector of QGamepad enum values
 std::vector<int> sGamepadIds; // #TODO Review glfwUpdateGamepadMappings, glfwGetGamepadName, glfwGetGamepadState
 static std::vector<std::vector<float>> sDeviceAxesStates;
 static std::vector<std::vector<int>> sDeviceButtonsStates;
@@ -40,7 +42,39 @@ static std::vector<std::vector<int>> sDeviceButtonsStates;
 static constexpr int LocalQwerkEToGlfw(const QKey aQwerkEKey);
 static constexpr QKey LocalGlfwToQwerkE(const int aGlfwKey, int aScancode);
 
+u8 GamepadButtonCount(const QGamepad aKey, const QGamepad aGamepadId) {
+	if (QGamepad::e_GamepadId0 <= aKey && QGamepad::e_QGamepadIdMax > aKey) {
+		int buttonCount;
+		const unsigned char* const buttons = glfwGetJoystickButtons(static_cast<int>(aKey), &buttonCount);
+		// ASSERT(QGamepad::e_QGamepadButtonCount > buttonCount, "Too many buttons for gamepad!");
+		return buttonCount;
+	}
+	return 0;
+}
+
+u8 GamepadAxesCount(const QGamepad aKey, const QGamepad aGamepadId) {
+	if (QGamepad::e_GamepadId0 <= aKey && QGamepad::e_QGamepadIdMax > aKey) {
+		int axesCount;
+		const float* axes = glfwGetJoystickAxes(static_cast<int>(aKey), &axesCount);
+		return axesCount;
+	}
+	return 0;
+}
+
+const char* const GamepadName(const QGamepad aGamepadId) {
+	if (QGamepad::e_GamepadId0 <= aGamepadId && QGamepad::e_QGamepadIdMax > aGamepadId) {
+		return glfwGetJoystickName(static_cast<int>(aGamepadId));
+	}
+	return nullptr;
+}
+
+u8 GamepadsCount() {
+	return sGamepadIds.size();
+}
+
 static void AddGamepad(const u8 aGamepadId) {
+	const QGamepad aGAMEPAD_ID = static_cast<QGamepad>(aGamepadId);
+
 	for (size_t i = 0; i < sGamepadIds.size(); i++) {
 		if (aGamepadId == sGamepadIds[i]) {
 			ASSERT(false, "Device already registered!");
@@ -48,29 +82,33 @@ static void AddGamepad(const u8 aGamepadId) {
 		}
 	}
 
-	sGamepadIds.emplace_back(aGamepadId);
-	std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>> buttonsPair = { (QGamepad)aGamepadId , {} };
+	sGamepadIds.emplace_back(aGamepadId); // #TODO Use aGAMEPAD_ID when vector type changes to match enum type, and below
+	std::pair<QGamepad, InputStatesBitRingBuffer<QGamepad, u4>> buttonsPair = { aGAMEPAD_ID , {} };
 	sGamepadsButtons.emplace_back(buttonsPair); // #TODO Review safety
 
-	std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> leftStickPair = { (QGamepad)aGamepadId , {} };
+	std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> leftStickPair = { aGAMEPAD_ID , {} };
 	leftStickPair.second.AddMarker(0);
 	leftStickPair.second.AddMarker(0);
 	sGamepadAxisLeftStickBuffers.emplace_back(leftStickPair);
 
-	std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> rightStickPair = { (QGamepad)aGamepadId , {} };
+	std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> rightStickPair = { aGAMEPAD_ID , {} };
 	rightStickPair.second.AddMarker(0);
 	rightStickPair.second.AddMarker(0);
 	sGamepadAxisRightStickBuffers.emplace_back(rightStickPair);
 
-	std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> triggersPair = { (QGamepad)aGamepadId , {} };
+	std::pair<QGamepad, BitIndexRingBuffer<vec2f, u2>> triggersPair = { aGAMEPAD_ID , {} };
 	triggersPair.second.AddMarker(0);
 	triggersPair.second.AddMarker(0);
 	sGamepadAxisTriggersBuffers.emplace_back(triggersPair);
 
-	int hatStatesCount;
-	const unsigned char* const buttons = glfwGetJoystickButtons(aGamepadId, &hatStatesCount);
+	int buttonCount;
+	const unsigned char* const buttons = glfwGetJoystickButtons(aGamepadId, &buttonCount);
+	if (QGamepad::e_QGamepadButtonCount <= buttonCount) {
+		LOG_WARN("Unable to support all Gamepad buttons!\n{0}\n{1}({2})\nID:      {3}\nName:    {4}\nButtons: {5}", __FILE__, __FUNCTION__, __LINE__, aGamepadId, GamepadName(aGAMEPAD_ID), buttonCount);
+	}
+	// ASSERT(QGamepad::e_QGamepadButtonCount > buttonCount, "Too many buttons for gamepad!");
 	sDeviceButtonsStates.emplace_back(0);
-	for (size_t i = 0; i < hatStatesCount; i++) {
+	for (size_t i = 0; i < buttonCount; i++) {
 		sDeviceButtonsStates[sDeviceButtonsStates.size() - 1].emplace_back(buttons[i]);
 	}
 
@@ -109,6 +147,7 @@ static void RemoveGamepad(const u8 aGamepadId) {
 			}
 
 			sGamepadIds.erase(sGamepadIds.begin() + i);
+			sDeviceButtonsStates.erase(sDeviceButtonsStates.begin() + i);
 			return;
 		}
 	}
@@ -245,8 +284,18 @@ bool MouseDown(const QKey aKey) {
 }
 
 bool GamepadDown(const QGamepad aKey, const QGamepad aGamepadId) {
-	ASSERT(QGamepad::e_GamepadAny == aKey || QGamepad::e_QGamepadInputMax >= aKey && QGamepad::e_Gamepad0 <= aKey, "Invalid Gamepad key!");
-	ASSERT(QGamepad::e_GamepadId0 <= aGamepadId && QGamepad::e_QGamepadIdMax > aGamepadId, "Invalid aGamepadId!");
+	// ASSERT(QGamepad::e_GamepadAny == aKey || QGamepad::e_QGamepadInputMax > aKey && QGamepad::e_Gamepad0 <= aKey, "Invalid Gamepad key!");
+	// ASSERT(QGamepad::e_GamepadId0 <= aGamepadId && QGamepad::e_QGamepadIdMax > aGamepadId, "Invalid aGamepadId!");
+
+	if (QGamepad::e_GamepadAny != aKey && (QGamepad::e_QGamepadInputMax <= aKey || QGamepad::e_Gamepad0 > aKey)) {
+		// LOG_WARN("Gamepad button unsupported!");
+		return false;
+	}
+
+	if (QGamepad::e_QGamepadIdMax <= aGamepadId || QGamepad::e_GamepadId0 > aGamepadId) {
+		// LOG_WARN("Invalid aGamepadId!");
+		return false;
+	}
 
 	if (sDeviceButtonsStates.empty()) {
 		return false;
@@ -272,35 +321,6 @@ bool GamepadDown(const QGamepad aKey, const QGamepad aGamepadId) {
 	}
 
 	return e_KeyStateDown == sDeviceButtonsStates[aGamepadId][aKey];
-}
-
-u8 GamepadButtonCount(const QGamepad aKey, const QGamepad aGamepadId) {
-	if (QGamepad::e_GamepadId0 <= aKey && QGamepad::e_QGamepadIdMax > aKey) {
-		int buttonCount;
-		const unsigned char* const buttons = glfwGetJoystickButtons(static_cast<int>(aKey), &buttonCount);
-		return buttonCount;
-	}
-	return 0;
-}
-
-u8 GamepadAxesCount(const QGamepad aKey, const QGamepad aGamepadId) {
-	if (QGamepad::e_GamepadId0 <= aKey && QGamepad::e_QGamepadIdMax > aKey) {
-		int axesCount;
-		const float* axes = glfwGetJoystickAxes(static_cast<int>(aKey), &axesCount);
-		return axesCount;
-	}
-	return 0;
-}
-
-const char* const GamepadName(const QGamepad aKey, const QGamepad aGamepadId) {
-	if (QGamepad::e_GamepadId0 <= aKey && QGamepad::e_QGamepadIdMax > aKey) {
-		return glfwGetJoystickName(static_cast<int>(aKey));
-	}
-	return nullptr;
-}
-
-u8 GamepadsCount() {
-	return sGamepadIds.size();
 }
 
 #ifdef _QDEARIMGUI
