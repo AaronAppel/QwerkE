@@ -22,14 +22,6 @@ namespace ed = ax::NodeEditor;
 
 namespace QwerkE {
 
-	std::array<Colors::ColorStop, 5> HeatmapStops = { {
-		{0.0f,  Color4(0.f, 0.f, 1.f, 1.f)}, // Blue
-		{0.25f, Color4(0.f, 1.f, 1.f, 1.f)}, // Cyan
-		{0.5f,  Color4(0.f, 1.f, 0.f, 1.f)}, // Green
-		{0.75f, Color4(1.f, 1.f, 0.f, 1.f)}, // Yellow
-		{1.0f,  Color4(1.f, 0.f, 0.f, 1.f)}  // Red
-	} };
-
 	namespace Editor {
 
 		class NodeBranch : public EditorWindowNodeEditor::BlueprintEditor::Node
@@ -298,8 +290,16 @@ namespace QwerkE {
 				{
 					timer = 0.f;
 				}
-				// Color4 c = Gradient(timer, HeatmapStops);
-				Color4 c = Colors::Spectrum(timer);
+
+				std::array<Colors::ColorStop, 5> HeatmapStops = { {
+					{0.0f,  Color4(0.f, 0.f, 1.f, 1.f)}, // Blue
+					{0.25f, Color4(0.f, 1.f, 1.f, 1.f)}, // Cyan
+					{0.5f,  Color4(0.f, 1.f, 0.f, 1.f)}, // Green
+					{0.75f, Color4(1.f, 1.f, 0.f, 1.f)}, // Yellow
+					{1.0f,  Color4(1.f, 0.f, 0.f, 1.f)}  // Red
+				} };
+				Color4 c = Gradient(timer, HeatmapStops);
+				// Color4 c = Colors::Spectrum(timer);
 				ed::PushStyleColor(ed::StyleColor_NodeBg, ImColor(c.r, c.g, c.b, c.a));
 
 				ed::BeginNode(comment.Id);

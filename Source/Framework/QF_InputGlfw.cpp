@@ -261,13 +261,13 @@ bool KeyDown(const QKey aKey) {
 	case e_Any: return sKeys.DownKeys() > 0;
 	case QKey::e_CtrlAny:
 		return	GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_CtrlL)) ||
-					GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_CtrlR));
+			GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_CtrlR));
 	case QKey::e_ShiftAny:
 		return	GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_ShiftL)) ||
-					GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_ShiftR));
+			GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_ShiftR));
 	case QKey::e_AltAny:
 		return	GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_AltL)) ||
-					GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_AltR));
+			GLFW_PRESS == glfwGetKey(static_cast<GLFWwindow*>(Window::GetContext()), LocalQwerkEToGlfw(QKey::e_AltR));
 	}
 
 	// #TODO GLFWindow* reference. Remember to test multi-window input
