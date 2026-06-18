@@ -320,10 +320,10 @@ vec2f GamepadAxis(const int aAxisIndex, const QGamepad aGamepadId) {
 				return sGamepadAxisLeftStickBuffers[i].second.ReadTop();
 			case 2:
 			case 3:
-				return sGamepadAxisLeftStickBuffers[i].second.ReadTop();
+				return sGamepadAxisRightStickBuffers[i].second.ReadTop();
 			case 4:
 			case 5:
-				return sGamepadAxisLeftStickBuffers[i].second.ReadTop();
+				return sGamepadAxisTriggersBuffers[i].second.ReadTop();
 			}
 		}
 	}
