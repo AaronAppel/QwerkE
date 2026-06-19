@@ -410,6 +410,15 @@ struct OcornutImguiContext
 
 	void destroy()
 	{
+// BEGIN DIVERGENCE | aappel MJun 19th, 2026 | Handling BGFX ImGui shutdown
+		// Clear ImGui backend pointers to avoid assertions in ImGui::Shutdown()
+		if (ImGui::GetCurrentContext()) {
+			ImGuiIO& io = ImGui::GetIO();
+			io.BackendRendererUserData = NULL;
+			io.BackendPlatformUserData = NULL;
+		}
+// END DIVERGENCE
+
 		ImGui::DestroyContext(m_imgui);
 
 		bgfx::destroy(s_tex);

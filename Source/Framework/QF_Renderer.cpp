@@ -201,9 +201,9 @@ void Shutdown() {
 #ifdef _QBGFX
 #ifdef _QDEARIMGUI
 
-			// #TODO Shutdown multi viewport properly
-			// ImGui_Implbgfx_Shutdown();
-			// ImGui_ImplGlfw_Shutdown();
+	// #TODO Shutdown multi viewport properly
+	// ImGui_Implbgfx_Shutdown();
+	// ImGui_ImplGlfw_Shutdown();
 
 	imguiDestroy();
 #endif
@@ -312,8 +312,10 @@ static void DestroyWindow(ImGuiViewport* viewport) {
 	if (!data)
 		return;
 
-	if (bgfx::isValid(data->framebuffer))
-		bgfx::destroy(data->framebuffer);
+	// #NOTE BGFX will assert on shutdown if the main FBO (handle=0) has already been destroyed
+	// if (bgfx::isValid(data->framebuffer)) {
+	// 	bgfx::destroy(data->framebuffer);
+	// }
 
 	glfwDestroyWindow(data->window);
 	delete data;
@@ -404,8 +406,9 @@ static void RecreateFramebuffer(ImGuiViewport* viewport) {
 		return;
 
 	// Destroy old framebuffer
-	if (bgfx::isValid(data->framebuffer))
+	if (bgfx::isValid(data->framebuffer)) {
 		bgfx::destroy(data->framebuffer);
+	}
 
 	HWND hwnd = glfwGetWin32Window(data->window);
 
