@@ -153,9 +153,12 @@ namespace QwerkE {
                 ImGui::Text("Loading %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
                 ImGui::Separator();
 
-                static float progress = 0.5f;
-                ImGui::DragFloat("##", &progress);
-                ImGui::ProgressBar(progress);
+                static float sDragFloatProgress = 0.5f;
+					 ImGui::SetNextItemWidth(100.f);
+                ImGui::DragFloat("##ProgressBarDrag", &sDragFloatProgress, .01f, 0.f, 1.f);
+					 ImGui::SetNextItemWidth(100.f);
+					 ImGui::SliderFloat("##ProgressBarSlider", &sDragFloatProgress, 0.f, 1.f);
+                ImGui::ProgressBar(sDragFloatProgress);
             }
 
             if (m_IsShowingImZoomSlider)
@@ -169,7 +172,11 @@ namespace QwerkE {
             }
 
             ImGui::Bullet();
-            ImGui::Text("Bullet");
+            ImGui::Text("Bullet 1");
+				ImGui::Bullet();
+				ImGui::Text("Bullet 2");
+				ImGui::Bullet();
+				ImGui::Text("Bullet 3");
 		}
 
         void local_DrawKnobs()
@@ -482,14 +489,16 @@ namespace QwerkE {
 
         // From: https://github.com/aiekick/ImCoolBar
         auto coolbar_button = [](const char* label) -> bool {
-            float w = ImGui::GetCoolBarItemWidth();
-            auto font_ptr = ImGui::GetIO().Fonts->Fonts[0];
-            font_ptr->Scale = ImGui::GetCoolBarItemScale();
-            ImGui::PushFont(font_ptr);
-            bool res = ImGui::Button(label, ImVec2(w, w));
+            const float ITEM_WDITH = ImGui::GetCoolBarItemWidth();
+            ImFont* const imFont = ImGui::GetIO().Fonts->Fonts[0];
+            const float PREVIOUS_FONT_SCALE = imFont->Scale;
+            imFont->Scale = ImGui::GetCoolBarItemScale();
+            ImGui::PushFont(imFont);
+            const bool RESULT = ImGui::Button(label, ImVec2(ITEM_WDITH, ITEM_WDITH));
+            imFont->Scale = PREVIOUS_FONT_SCALE;
             ImGui::PopFont();
-            return res;
-            };
+				return RESULT;
+			};
 
         // From: https://github.com/aiekick/ImCoolBar
         static void local_DrawImCoolBar()
