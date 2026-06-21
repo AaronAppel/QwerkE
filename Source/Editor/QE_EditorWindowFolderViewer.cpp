@@ -1,11 +1,5 @@
 #include "QE_EditorWindowFolderViewer.h"
 
-// #TODO Clean up test code
-#define _QICONFONT
-#ifdef _QICONFONT
-#include "Libraries/IconFont/IconsFontAwesome5.h"
-#endif
-
 #include "Libraries/ImFileDialog/ImFileDialog.h"
 
 #include <filesystem>

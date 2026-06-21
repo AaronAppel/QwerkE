@@ -25,6 +25,8 @@
 #include "bgfxFramework/imguiCommon/imguiCommon.h"
 #include "bgfxFramework/imguiCommon/imgui_impl_bgfx.h"
 #include "Libraries/imgui/backends/imgui_impl_glfw.h"
+
+#include "Libraries/IconFontCppHeaders/IconsFontAwesome7.h"
 #endif // _QDEARIMGUI
 
 #endif // _QBGFXFRAMEWORK
@@ -161,10 +163,42 @@ eOperationResult Initialize() {
 	const float fontSize = 18.f;
 	imguiCreate(fontSize);
 
+	ImGuiIO& io = ImGui::GetIO();
+	// Add a regular system font (adjust path/size as needed)
+	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeui.ttf", fontSize);
+	// Merge FontAwesome icons (use the FA solid font file present in repository)
+	ImFontConfig icons_config;
+	icons_config.MergeMode = true;
+	icons_config.PixelSnapH = true;
+	// Restrict to only the specific icons used (LOCK, LOCK_OPEN) so icon font doesn't add other glyphs
+	// ICON_FA_LOCK -> U+f023, ICON_FA_LOCK_OPEN -> U+f3c1
+	static const ImWchar icons_ranges[] = { 0xf023, 0xf023, 0xf3c1, 0xf3c1, 0 };
+	io.Fonts->AddFontFromFileTTF("B:\\QwerkE\\Source\\Libraries\\Font-Awesome\\webfonts\\fa-solid-900.ttf", fontSize, &icons_config, icons_ranges);
+
+	// Build atlas and upload to bgfx as a texture so ImGui can sample it.
+	unsigned char* pixels = nullptr;
+	int texWidth = 0, texHeight = 0;
+	io.Fonts->GetTexDataAsRGBA32(&pixels, &texWidth, &texHeight);
+	if (pixels && texWidth > 0 && texHeight > 0) {
+		// Create bgfx texture from font atlas. Keep reference to texture handle via TexID.
+		bgfx::TextureHandle fontTex = bgfx::createTexture2D(
+			(uint16_t)texWidth,
+			(uint16_t)texHeight,
+			false,
+			1,
+			bgfx::TextureFormat::RGBA8,
+			BGFX_TEXTURE_NONE,
+			bgfx::makeRef(pixels, texWidth * texHeight * 4)
+		);
+		io.Fonts->TexID = (ImTextureID)(uintptr_t)fontTex.idx;
+	}
+
+	// --- end font setup ---
+
 	ImGui_ImplGlfw_InitForOther(window, true);
 	ImGui_Implbgfx_Init(sViewIdImGui);
 
-	ImGuiIO& io = ImGui::GetIO();
+	// ImGuiIO& io = ImGui::GetIO();
 	io.DisplaySize = ImVec2(windowSize.x, windowSize.y);
 	// io.BackendFlags |= ImGuiBackendFlags_RendererHasViewports;
 

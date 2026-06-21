@@ -2,7 +2,11 @@
 
 #ifdef _QMIRROR
 #include "Libraries/Mirror/Source/MIR_Mirror.h"
-#endif
+#endif _QMIRROR
+
+#ifdef _QDEARIMGUI
+#include "Libraries/IconFontCppHeaders/IconsFontAwesome7.h"
+#endif // _QDEARIMGUI
 
 #include "QE_EditorWindow.h"
 
@@ -63,6 +67,19 @@ namespace QwerkE {
                         HotkeyPoll(e_SceneGraphToggleActive); // #TODO Poll resets m_IsChanged flag. Find a better way to do that
                     }
                 }
+
+					 static bool sEntitySelectionLocked = true;
+					 if (sEntitySelectionLocked) {
+						 if (ImGui::Button(ICON_FA_LOCK)) {
+							 sEntitySelectionLocked = !sEntitySelectionLocked;
+						 }
+					 }
+					 else {
+						 if (ImGui::Button(ICON_FA_LOCK_OPEN)) {
+							sEntitySelectionLocked = !sEntitySelectionLocked;
+						 }
+					 }
+					 ImGui::SameLine();
 
                 const GUID& guid = m_CurrentSelectedEntity.EntityGuid();
                 const Color4 hsvColor = Colors::IdToHsv((u64)guid);
