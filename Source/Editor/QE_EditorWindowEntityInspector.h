@@ -193,7 +193,7 @@ namespace QwerkE {
 
                     const float buttonWidth = ImGui::GetContentRegionAvail().x - lineHeight * 0.5f;
 
-                    const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+                    const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowOverlap | ImGuiTreeNodeFlags_FramePadding;
                     const bool nodeOpen = ImGui::TreeNodeEx((void*)typeid(Component).hash_code(), treeNodeFlags, typeInfo->stringName.c_str()); // #TODO Review typeid().hash_code()
 
                     if (std::is_same_v<Component, ComponentMesh>)

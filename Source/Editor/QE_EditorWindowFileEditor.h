@@ -10,6 +10,9 @@
 #include "QF_Files.h"
 #include "QF_Paths.h"
 
+// Dear ImGui Color Text Edit
+#include "../Libraries/ImGuiColorTextEdit/TextEditor.h"
+
 // struct cJSON;
 
 namespace QwerkE {
@@ -57,12 +60,27 @@ namespace QwerkE {
 				}
 				ImGui::EndChild();
 
-				if (ImGui::BeginChild("##JsonFileContents"), ImGui::GetContentRegionAvail().x - 10.f)
+				// Split area: left = text editor, right = inspector
+				ImGui::BeginChild("##FileEditorSplit", ImGui::GetContentRegionAvail());
 				{
-					// #TODO Save file data to send to inspector instead of loading the file every frame
+					float fullW = ImGui::GetContentRegionAvail().x;
+					float halfW = fullW * 0.6f; // editor gets 60%
 
-					// Inspector::InspectJsonFile(Paths::Scene("NewScene1.qscene").c_str(), true);
-					Inspector::InspectJsonFile(m_JsonRootObject, true);
+					ImGui::BeginChild("##TextEditorPane", { halfW, 0 }, true);
+					{
+						// Render the TextEditor instance
+						m_TextEditor.Render("TextEditor");
+					}
+					ImGui::EndChild();
+
+					ImGui::SameLine();
+
+					ImGui::BeginChild("##InspectorPane", { 0, 0 }, true);
+					{
+						// Show JSON inspector on the right
+						Inspector::InspectJsonFile(m_JsonRootObject, true);
+					}
+					ImGui::EndChild();
 				}
 				ImGui::EndChild();
 			}
@@ -78,6 +96,8 @@ namespace QwerkE {
 					{
 						LOG_ERROR("{0} Could not parse JSON file {1}! Possible compile error. Check file for typos", __FUNCTION__, m_JsonFilePath.c_str());
 					}
+					// Also set the text editor buffer to the file contents
+					m_TextEditor.SetText(std::string(jsonFileBuffer.As<char>()));
 				}
 				else
 				{
@@ -87,6 +107,9 @@ namespace QwerkE {
 
 			std::string m_JsonFilePath;
 			cJSON* m_JsonRootObject = nullptr;
+
+			// ImGui Color Text Editor instance
+			TextEditor m_TextEditor;
 		};
 
 	}

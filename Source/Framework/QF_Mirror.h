@@ -156,3 +156,5 @@ MIR_TYPE_ID(1067, QwerkE::Framework::StartUpData)
 MIR_TYPE_ID(1068, QwerkE::ComponentPhysics)
 MIR_TYPE_ID(1069, QwerkE::ComponentAudio)
 MIR_TYPE_ID(1070, QwerkE::Physics::BodyShapes)
+
+MIR_TYPE_ID(1071, ImGuiDir)

@@ -270,6 +270,7 @@ namespace QwerkE {
 							ImGui::OpenPopup("##EditorWindowOptionsEdit");
 						}
 						ImGui::SetCursorPos(previousCursorPos - ImVec2{ 0.f, 2.f });
+						ImGui::Dummy(ImVec2(0.0f, 0.0f)); // To appease imgui.cpp(11553) assert
 						m_WindowOptions.Edit();
 					}
 					DrawInternal();
