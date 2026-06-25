@@ -56,6 +56,7 @@ project "Framework"
 		"cJSON",
 		"bgfxFramework",
 		"FlatHeadGames",
+		-- TODO Move Editor ImGui dependencies to Build-Editor.lua
 		"ImFileDialog",
 		"ImCoolBar",
 		"imgui",

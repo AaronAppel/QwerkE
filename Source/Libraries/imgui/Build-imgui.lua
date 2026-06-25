@@ -12,4 +12,5 @@ project "imgui"
 	{
 		"%{wks.location}/Source/Libraries/imgui",
 		"%{wks.location}/Source/Libraries/glfw",
+		"%{wks.location}/Source/Libraries/",
 	}

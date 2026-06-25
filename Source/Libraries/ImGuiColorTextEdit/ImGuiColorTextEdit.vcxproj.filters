@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="TextDiff.h" />
+    <ClInclude Include="TextEditor.h" />
+    <ClInclude Include="dtl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TextDiff.cpp" />
+    <ClCompile Include="TextEditor.cpp" />
+  </ItemGroup>
+</Project>

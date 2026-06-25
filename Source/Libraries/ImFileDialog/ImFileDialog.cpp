@@ -24,7 +24,9 @@
 #include <pwd.h>
 #endif
 
-#define ICON_SIZE ImGui::GetFont()->FontSize + 3
+// BEGIN DIVERGENCE | aappel Jun 21st 2026 | Supporting Dear ImGui 1.92.9
+#define ICON_SIZE ImGui::GetFontSize() + 3
+// END DIVERGENCE
 #define GUI_ELEMENT_SIZE std::max(GImGui->FontSize + 10.f, 24.f)
 #define DEFAULT_ICON_SIZE 32
 #define PI 3.141592f
@@ -1177,7 +1179,9 @@ namespace ifd {
 
 				bool isSelected = std::count(m_selections.begin(), m_selections.end(), entry.Path);
 
-				if (FileIcon(filename.c_str(), isSelected, entry.HasIconPreview ? entry.IconPreview : (ImTextureID)m_getIcon(entry.Path), ImVec2(32 + 16 * m_zoom, 32 + 16 * m_zoom), entry.HasIconPreview, entry.IconPreviewWidth, entry.IconPreviewHeight)) {
+// BEGIN DIVERGENCE | aappel Jun 21st 2026 | Supporting Dear ImGui 1.92.9
+				if (FileIcon(filename.c_str(), isSelected, entry.HasIconPreview ? (ImTextureID)entry.IconPreview : (ImTextureID)m_getIcon(entry.Path), ImVec2(32 + 16 * m_zoom, 32 + 16 * m_zoom), entry.HasIconPreview, entry.IconPreviewWidth, entry.IconPreviewHeight)) {
+// END DIVERGENCE
 					std::error_code ec;
 					bool isDir = std::filesystem::is_directory(entry.Path, ec);
 

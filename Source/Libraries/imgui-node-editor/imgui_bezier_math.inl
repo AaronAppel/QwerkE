@@ -239,10 +239,13 @@ inline ImCubicBezierSplitResultT<T> ImCubicBezierSplit(const ImCubicBezierPoints
 
 inline ImRect ImCubicBezierBoundingRect(const ImVec2& p0, const ImVec2& p1, const ImVec2& p2, const ImVec2& p3)
 {
-    auto a = 3 * p3 - 9 * p2 + 9 * p1 - 3 * p0;
-    auto b = 6 * p0 - 12 * p1 + 6 * p2;
-    auto c = 3 * p1 - 3 * p0;
-    auto delta_squared = ImMul(b, b) - 4 * ImMul(a, c);
+    auto a = ImVec2(3.0f * p3.x - 9.0f * p2.x + 9.0f * p1.x - 3.0f * p0.x,
+                     3.0f * p3.y - 9.0f * p2.y + 9.0f * p1.y - 3.0f * p0.y);
+    auto b = ImVec2(6.0f * p0.x - 12.0f * p1.x + 6.0f * p2.x,
+                    6.0f * p0.y - 12.0f * p1.y + 6.0f * p2.y);
+    auto c = ImVec2(3.0f * p1.x - 3.0f * p0.x,
+                    3.0f * p1.y - 3.0f * p0.y);
+    auto delta_squared = ImMul(b, b) - ImVec2(4.0f * ImMul(a, c).x, 4.0f * ImMul(a, c).y);
 
     auto tl = ImMin(p0, p3);
     auto rb = ImMax(p0, p3);

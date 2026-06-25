@@ -23,7 +23,8 @@ bool ImGui::SpinScaler(const char* label, ImGuiDataType data_type, void* data_pt
 	if ((flags & (ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_CharsScientific)) == 0)
 		flags |= ImGuiInputTextFlags_CharsDecimal;
 	flags |= ImGuiInputTextFlags_AutoSelectAll;
-	flags |= ImGuiInputTextFlags_NoMarkEdited;  // We call MarkItemEdited() ourselve by comparing the actual data rather than the string.
+	// ImGuiInputTextFlags_NoMarkEdited was removed; examples should avoid relying on it.
+	// The widget will manage marking edits manually if needed.
 
 	if (step != NULL)
 	{
@@ -38,9 +39,13 @@ bool ImGui::SpinScaler(const char* label, ImGuiDataType data_type, void* data_pt
 		// Step buttons
 		const ImVec2 backup_frame_padding = style.FramePadding;
 		style.FramePadding.x = style.FramePadding.y;
-		ImGuiButtonFlags button_flags = ImGuiButtonFlags_Repeat | ImGuiButtonFlags_DontClosePopups;
+		// ImGuiButtonFlags_Repeat and ImGuiButtonFlags_DontClosePopups were obsoleted.
+		// Use PushItemFlag to enable button repeat and prevent auto-close popups.
 		if (flags & ImGuiInputTextFlags_ReadOnly)
-			button_flags |= ImGuiItemFlags_Disabled;
+			PushItemFlag(ImGuiItemFlags_Disabled, true);
+		PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
+		// Disable auto-closing parent popups for these buttons
+		PushItemFlag(ImGuiItemFlags_AutoClosePopups, false);
 		SameLine(0, style.ItemInnerSpacing.x);
 
 		// start diffs
@@ -55,13 +60,13 @@ bool ImGui::SpinScaler(const char* label, ImGuiDataType data_type, void* data_pt
 		float org_font_size = GetDrawListSharedData()->FontSize;
 		GetDrawListSharedData()->FontSize = arrow_size;
 
-		if (ArrowButtonEx("+", ImGuiDir_Up, ImVec2(arrow_size, arrow_size), button_flags))
+		if (ArrowButtonEx("+", ImGuiDir_Up, ImVec2(arrow_size, arrow_size), 0))
 		{
 			DataTypeApplyOp(data_type, '+', data_ptr, data_ptr, g.IO.KeyCtrl && step_fast ? step_fast : step);
 			value_changed = true;
 		}
 
-		if (ArrowButtonEx("-", ImGuiDir_Down, ImVec2(arrow_size, arrow_size), button_flags))
+		if (ArrowButtonEx("-", ImGuiDir_Down, ImVec2(arrow_size, arrow_size), 0))
 		{
 			DataTypeApplyOp(data_type, '-', data_ptr, data_ptr, g.IO.KeyCtrl && step_fast ? step_fast : step);
 			value_changed = true;
@@ -73,6 +78,11 @@ bool ImGui::SpinScaler(const char* label, ImGuiDataType data_type, void* data_pt
 		PopStyleVar(1);
 		EndGroup();
 		// end diffs
+
+		PopItemFlag(); // AutoClosePopups (was disabled)
+		PopItemFlag(); // ButtonRepeat
+		if (flags & ImGuiInputTextFlags_ReadOnly)
+			PopItemFlag(); // Disabled
 
 		const char* label_end = FindRenderedTextEnd(label);
 		if (label != label_end)

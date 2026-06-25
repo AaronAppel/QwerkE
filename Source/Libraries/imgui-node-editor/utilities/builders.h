@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // LICENSE
 //   This software is dual-licensed to the public domain and under the following
 //   license: you are granted a perpetual, irrevocable license to copy, modify,
@@ -23,7 +23,9 @@ namespace Utilities {
 //------------------------------------------------------------------------------
 struct BlueprintNodeBuilder
 {
-    BlueprintNodeBuilder(ImTextureID texture = nullptr, int textureWidth = 0, int textureHeight = 0);
+// BEGIN DIVERGENCE | aappel Jun 21st, 2026 | Merging Dear ImGui 1.92.9
+    BlueprintNodeBuilder(ImTextureID texture = (ImTextureID)0, int textureWidth = 0, int textureHeight = 0);
+// END DIVERGENCE
 
     void Begin(NodeId id);
     void End();

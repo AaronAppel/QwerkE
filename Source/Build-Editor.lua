@@ -28,7 +28,13 @@ project "Editor"
 		"call ../Build/PostBuild.bat \"../Libraries/\" \"../bin/" .. OutputDir .. "/%{prj.name}/\"",
 	}
 	
-	files { "%{prj.name}/**.h", "%{prj.name}/**.cpp", "%{prj.name}/**.hpp", "%{prj.name}/**.c" }
+	files
+	{
+		"%{prj.name}/**.h",
+		"%{prj.name}/**.cpp",
+		"%{prj.name}/**.hpp",
+		"%{prj.name}/**.c"
+	}
 
 	includedirs
 	{
@@ -50,6 +56,7 @@ project "Editor"
 	links -- Project references
 	{
 		"Framework",
+		"ImGuiColorTextEdit",
 	}
 	
 	forceincludes { "QE_PCH.h", "QF_ForcedIncludes.h" }

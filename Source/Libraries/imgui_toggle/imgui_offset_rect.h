@@ -38,4 +38,18 @@ IM_MSVC_RUNTIME_CHECKS_OFF
 static inline ImOffsetRect operator+(const ImOffsetRect& lhs, const ImOffsetRect& rhs) { return ImOffsetRect(lhs.Top + rhs.Top, lhs.Left + rhs.Left, lhs.Bottom + rhs.Bottom, lhs.Right + rhs.Right); }
 static inline ImOffsetRect operator-(const ImOffsetRect& lhs, const ImOffsetRect& rhs) { return ImOffsetRect(lhs.Top - rhs.Top, lhs.Left - rhs.Left, lhs.Bottom - rhs.Bottom, lhs.Right - rhs.Right); }
 static inline ImOffsetRect operator*(const ImOffsetRect& lhs, const ImOffsetRect& rhs) { return ImOffsetRect(lhs.Top * rhs.Top, lhs.Left * rhs.Left, lhs.Bottom * rhs.Bottom, lhs.Right * rhs.Right); }
+// Scalar ops to interoperate with ImLerp and other helpers
+static inline ImOffsetRect operator*(const ImOffsetRect& lhs, float s) { return ImOffsetRect(lhs.Top * s, lhs.Left * s, lhs.Bottom * s, lhs.Right * s); }
+static inline ImOffsetRect operator*(float s, const ImOffsetRect& rhs) { return ImOffsetRect(rhs.Top * s, rhs.Left * s, rhs.Bottom * s, rhs.Right * s); }
+static inline ImOffsetRect operator/(const ImOffsetRect& lhs, float s) { return ImOffsetRect(lhs.Top / s, lhs.Left / s, lhs.Bottom / s, lhs.Right / s); }
+
+// Component-wise linear interpolation for ImOffsetRect to support ImLerp overload resolution
+static inline ImOffsetRect ImLerp(const ImOffsetRect& a, const ImOffsetRect& b, float t) {
+    return ImOffsetRect(
+        a.Top + (b.Top - a.Top) * t,
+        a.Left + (b.Left - a.Left) * t,
+        a.Bottom + (b.Bottom - a.Bottom) * t,
+        a.Right + (b.Right - a.Right) * t
+    );
+}
 IM_MSVC_RUNTIME_CHECKS_RESTORE

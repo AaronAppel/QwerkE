@@ -3159,13 +3159,17 @@ namespace ImApp
             return 0;
          case WM_KEYDOWN:
          case WM_SYSKEYDOWN:
-            if (wParam < 256)
-               io.KeysDown[wParam] = 1;
+            if (wParam < 256) {
+               io.AddKeyEvent((ImGuiKey)wParam, true);
+               io.SetKeyEventNativeData((ImGuiKey)wParam, (int)wParam, 0);
+            }
             return 0;
          case WM_KEYUP:
          case WM_SYSKEYUP:
-            if (wParam < 256)
-               io.KeysDown[wParam] = 0;
+            if (wParam < 256) {
+               io.AddKeyEvent((ImGuiKey)wParam, false);
+               io.SetKeyEventNativeData((ImGuiKey)wParam, (int)wParam, 0);
+            }
             return 0;
          case WM_CHAR:
             // You can also use ToAscii()+GetKeyboardState() to retrieve characters.
@@ -3255,7 +3259,7 @@ namespace ImApp
                }
                else
                {
-                  glBindTexture(GL_TEXTURE_2D, (GLuint)(intptr_t)pcmd->TextureId);
+                  glBindTexture(GL_TEXTURE_2D, (GLuint)(intptr_t)pcmd->GetTexID());
                   glScissor((int)pcmd->ClipRect.x, (int)(fb_height - pcmd->ClipRect.w), (int)(pcmd->ClipRect.z - pcmd->ClipRect.x), (int)(pcmd->ClipRect.w - pcmd->ClipRect.y));
                   glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount, sizeof(ImDrawIdx) == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, idx_buffer_offset);
                }
@@ -3450,7 +3454,7 @@ namespace ImApp
          if (g_FontTexture)
          {
             glDeleteTextures(1, &g_FontTexture);
-            ImGui::GetIO().Fonts->TexID = 0;
+            ImGui::GetIO().Fonts->SetTexID((ImTextureID)0);
             g_FontTexture = 0;
          }
       }
@@ -3458,25 +3462,8 @@ namespace ImApp
       bool    ImGui_Init()
       {
          ImGuiIO& io = ImGui::GetIO();
-         io.KeyMap[ImGuiKey_Tab] = VK_TAB;                       // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array that we will update during the application lifetime.
-         io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
-         io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
-         io.KeyMap[ImGuiKey_UpArrow] = VK_UP;
-         io.KeyMap[ImGuiKey_DownArrow] = VK_DOWN;
-         io.KeyMap[ImGuiKey_PageUp] = VK_PRIOR;
-         io.KeyMap[ImGuiKey_PageDown] = VK_NEXT;
-         io.KeyMap[ImGuiKey_Home] = VK_HOME;
-         io.KeyMap[ImGuiKey_End] = VK_END;
-         io.KeyMap[ImGuiKey_Delete] = VK_DELETE;
-         io.KeyMap[ImGuiKey_Backspace] = VK_BACK;
-         io.KeyMap[ImGuiKey_Enter] = VK_RETURN;
-         io.KeyMap[ImGuiKey_Escape] = VK_ESCAPE;
-         io.KeyMap[ImGuiKey_A] = 'A';
-         io.KeyMap[ImGuiKey_C] = 'C';
-         io.KeyMap[ImGuiKey_V] = 'V';
-         io.KeyMap[ImGuiKey_X] = 'X';
-         io.KeyMap[ImGuiKey_Y] = 'Y';
-         io.KeyMap[ImGuiKey_Z] = 'Z';
+         // Newer ImGui versions use AddKeyEvent()/SetKeyEventNativeData() instead of io.KeyMap/io.KeysDown.
+         // Backends should call io.AddKeyEvent() on key events. The example WndProc maps keys directly.
 
          //io.ImeWindowHandle = this->wininfo.hWnd;
          //io.RenderDrawListsFn = ImGui_RenderDrawLists;       // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.

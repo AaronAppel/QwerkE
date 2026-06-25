@@ -27,6 +27,8 @@ static bgfx_program_handle_t g_ShaderHandle = BGFX_INVALID_HANDLE;
 static bgfx_uniform_handle_t g_AttribLocationTex = BGFX_INVALID_HANDLE;
 static bgfx_vertex_layout_t g_VertexLayout;
 
+bool ImGui_Implbgfx_CreateFontsTexture();
+
 // This is the main rendering function that you have to implement and call after
 // ImGui::Render(). Pass ImGui::GetDrawData() to this function.
 // Note: If text or lines are blurry when integrating ImGui into your engine,
@@ -60,6 +62,50 @@ void ImGui_Implbgfx_RenderDrawLists(ImDrawData* draw_data) {
         caps->homogeneousDepth);
     bgfx_set_view_transform(g_View, NULL, ortho);
     bgfx_set_view_rect(g_View, 0, 0, (uint16_t)fb_width, (uint16_t)fb_height);
+
+    // Handle ImTextureData lifecycle (ImGui 1.92+): satisfy WantCreate/WantaDelete requests so GetTexID won't assert
+    if (draw_data->Textures != NULL && draw_data->Textures->Size > 0) {
+        ImVector<ImTextureData*>& texVec = *draw_data->Textures;
+        for (int ti = 0; ti < texVec.Size; ++ti) {
+            ImTextureData* td = texVec[ti];
+            if (td == nullptr) continue;
+            switch (td->Status) {
+            case ImTextureStatus_WantCreate:
+                // Ensure font texture exists as a minimal fallback; create it if missing.
+                if (!BGFX_HANDLE_IS_VALID(g_FontTexture)) {
+                    ImGui_Implbgfx_CreateFontsTexture();
+                }
+                if (BGFX_HANDLE_IS_VALID(g_FontTexture)) {
+                    td->SetTexID((ImTextureID)(intptr_t)g_FontTexture.idx);
+                } else {
+                    td->SetTexID(ImTextureID_Invalid);
+                }
+                break;
+            case ImTextureStatus_WantDestroy:
+                // Mark texture as invalid. If backend needs to free native resource, add release logic here.
+                td->SetTexID(ImTextureID_Invalid);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    // Debug: print texture statuses to help diagnose missing SetTexID asserts
+    for (int ti = 0; draw_data->Textures != NULL && ti < draw_data->Textures->Size; ++ti) {
+        ImTextureData* td = (*draw_data->Textures)[ti];
+        if (td == nullptr) continue;
+        uintptr_t tid = (uintptr_t)td->GetTexID();
+        const char* statusName = "?";
+        switch (td->Status) {
+        case ImTextureStatus_OK: statusName = "OK"; break;
+        case ImTextureStatus_Destroyed: statusName = "Destroyed"; break;
+        case ImTextureStatus_WantCreate: statusName = "WantCreate"; break;
+        case ImTextureStatus_WantUpdates: statusName = "WantUpdates"; break;
+        case ImTextureStatus_WantDestroy: statusName = "WantDestroy"; break;
+        }
+        printf("[ImGui-Texture] idx=%d status=%s TexID=0x%p BackendUserData=%p\n", ti, statusName, (void*)tid, td->BackendUserData);
+    }
 
     // Render command lists
     for (int n = 0; n < draw_data->CmdListsCount; n++) {
@@ -104,9 +150,9 @@ void ImGui_Implbgfx_RenderDrawLists(ImDrawData* draw_data) {
                     (uint16_t)bx::min(pcmd->ClipRect.w, 65535.0f) - yy);
 
                 bgfx_set_state(state, 0);
-                bgfx_texture_handle_t texture = {
-                  (uint16_t)((intptr_t)pcmd->TextureId & 0xffff) };
-                bgfx_set_texture(0, g_AttribLocationTex, texture, UINT32_MAX);
+                ImTextureID tex_id = pcmd->GetTexID();
+                                bgfx_texture_handle_t texture = { (uint16_t)((intptr_t)tex_id & 0xffff) };
+                                bgfx_set_texture(0, g_AttribLocationTex, texture, UINT32_MAX);
                 bgfx_set_transient_vertex_buffer(0, &tvb, 0, numVertices);
                 bgfx_set_transient_index_buffer(&tib, pcmd->IdxOffset, pcmd->ElemCount);
                 bgfx_submit(g_View, g_ShaderHandle, 0, BGFX_DISCARD_ALL);
@@ -127,8 +173,8 @@ bool ImGui_Implbgfx_CreateFontsTexture() {
         (uint16_t)width, (uint16_t)height, false, 1, BGFX_TEXTURE_FORMAT_BGRA8, 0,
         bgfx_copy(pixels, width * height * 4));
 
-    // Store our identifier
-    io.Fonts->TexID = (ImTextureID)(intptr_t)g_FontTexture.idx;
+    // Store our identifier (use SetTexID to be correct with ImTextureData API)
+    io.Fonts->SetTexID((ImTextureID)(intptr_t)g_FontTexture.idx);
 
     return true;
 }
@@ -197,7 +243,7 @@ void ImGui_Implbgfx_InvalidateDeviceObjects() {
 
     if (BGFX_HANDLE_IS_VALID(g_FontTexture)) {
         bgfx_destroy_texture(g_FontTexture);
-        ImGui::GetIO().Fonts->TexID = 0;
+        ImGui::GetIO().Fonts->SetTexID(ImTextureID_Invalid);
         g_FontTexture.idx = BGFX_INVALID_HANDLE;
     }
 }
@@ -211,6 +257,12 @@ void ImGui_Implbgfx_Shutdown() {
 }
 
 void ImGui_Implbgfx_NewFrame() {
+    // Opt out of new dynamic ImTextureData API: keep legacy path where backend does not claim
+    // support for ImGuiBackendFlags_RendererHasTextures. This avoids requiring backends to
+    // process ImTextureData requests for dynamic textures. Enable full support later if needed.
+    ImGuiIO& io = ImGui::GetIO();
+    io.BackendFlags &= ~ImGuiBackendFlags_RendererHasTextures;
+
     if (!BGFX_HANDLE_IS_VALID(g_FontTexture)) {
         ImGui_Implbgfx_CreateDeviceObjects();
     }
