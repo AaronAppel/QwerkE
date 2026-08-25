@@ -1,4 +1,4 @@
-call BuildBgfxSolutionTools.bat
+call BuildSolutionTools.bat
 
 set msbuildPath="C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
 set vcxProjectPath=".build\projects\vs2022\shaderc.vcxproj"
