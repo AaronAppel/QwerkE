@@ -1,6 +1,11 @@
 call BuildSolutionTools.bat
 
 set msbuildPath="C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
+
+if not exist %msbuildPath%
+echo Could not find VS 2022 Community install in expected path: %msbuildPath%
+exit /B 1
+
 set vcxProjectPath=".build\projects\vs2022\geometryc.vcxproj"
 
 rem msbuild MySolution.sln /t:MyProjectName /p:Configuration=Debug /p:Platform="Any CPU"
