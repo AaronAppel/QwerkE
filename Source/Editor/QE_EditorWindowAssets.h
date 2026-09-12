@@ -257,7 +257,7 @@ namespace QwerkE {
                 }
 
                 // #NOTE Using TreeNodeEx so buttons render in line with collapsible header
-                const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+                const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
                 const bool scenesTreeNodeOpen = ImGui::TreeNodeEx((void*)typeid(Scene).hash_code(), treeNodeFlags, "ScenesTree");
 
                 ImGui::SameLine(buttonWidth - lineHeight * 1.5f);
