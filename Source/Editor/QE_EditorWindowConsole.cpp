@@ -2,6 +2,10 @@
 
 #include "Libraries/imgui-console/imgui_console.h"
 
+#include "QF_Files.h"
+
+#include "QE_Paths.h"
+
 csys::ItemLog& operator<<(csys::ItemLog& log, ImVec4& vec)
 {
     log << "ImVec4: [" << vec.x << ", "
@@ -41,9 +45,14 @@ namespace QwerkE {
 
             m_Console.System().RegisterVariable("background_color", m_ClearColor, imvec4_setter);
 
-            // #TODO Move to scripts folder or find a better way to handle console script files
-            const std::string path = "B:/QwerkE/Source/Libraries/imgui-console/console.script";
-            m_Console.System().RegisterScript("test_script", path);
+				{
+					// #TODO Move to scripts folder or find a better way to handle console script files
+					const std::string path = Paths::RepoRootDir() + "/Source/Libraries/imgui-console/console.script";
+					if (Files::Exists(path.data()))
+					{
+						m_Console.System().RegisterScript("test_script", path);
+					}
+				}
 
             m_Console.System().RegisterCommand("random_background_color", "Assigns a random color to the background application",
                 [this]()
