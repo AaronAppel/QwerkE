@@ -51,6 +51,8 @@ MIR_CLASS_END
 
 MIR_TYPE(ImVec4[ImGuiCol_COUNT])
 
+MIR_TYPE(ImGuiDir)
+
 MIR_CLASS(ImGuiStyle)
 	MIR_CLASS_MEMBER(Alpha)
 	MIR_CLASS_MEMBER(DisabledAlpha)
@@ -80,7 +82,6 @@ MIR_CLASS(ImGuiStyle)
 	MIR_CLASS_MEMBER(LogSliderDeadzone)
 	MIR_CLASS_MEMBER(TabRounding)
 	MIR_CLASS_MEMBER(TabBorderSize)
-	MIR_CLASS_MEMBER(TabMinWidthForCloseButton)
 	MIR_CLASS_MEMBER(TabBarBorderSize)
 	MIR_CLASS_MEMBER(TableAngledHeadersAngle)
 	MIR_CLASS_MEMBER(ColorButtonPosition)
