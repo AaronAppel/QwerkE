@@ -73,6 +73,7 @@ MIR_TYPE_ID(1004, ImVec2)
 MIR_TYPE_ID(1005, ImVec4)
 MIR_TYPE_ID(1006, ImVec4[ImGuiCol_COUNT])
 MIR_TYPE_ID(1007, ImGuiStyle)
+MIR_TYPE_ID(1071, ImGuiDir)
 
 MIR_TYPE_ID(1008, entt::registry)
 MIR_TYPE_ID(1009, entt::entity)
