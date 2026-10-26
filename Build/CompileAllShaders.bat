@@ -58,4 +58,4 @@ exit /B 1
 
 :end
 echo Successfully compiled shaders
-pause
+rem pause
